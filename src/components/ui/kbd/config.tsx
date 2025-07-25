@@ -1,15 +1,39 @@
 import { type ComponentConfig } from "@/lib/component-config-types";
 
-export const kbdConfig: ComponentConfig = {
+export const componentConfig: ComponentConfig = {
   name: "Kbd",
   id: "kbd",
   description: "Display keyboard shortcuts in a consistent, styled format",
   category: "text" as const,
   icon: "Keyboard",
 
-  componentId: "kbd",
+  componentId: "KbdExample",
   importStatement: 'import { Kbd } from "@/components/ui/kbd/kbd";',
-  examples: [],
+  examples: [
+    {
+      id: "default",
+      title: "Default",
+      description: "Basic keyboard shortcut display",
+      code: `<Kbd>K</Kbd>`,
+    },
+    {
+      id: "combination",
+      title: "Key Combination",
+      description: "Multiple keys for complex shortcuts",
+      code: `<Kbd keys={["cmd", "shift", "k"]}>Command palette</Kbd>`,
+    },
+    {
+      id: "sizes",
+      title: "Sizes",
+      description: "Different size variants",
+      code: `<div className="flex gap-2">
+  <Kbd size="xs">Esc</Kbd>
+  <Kbd size="sm">Esc</Kbd>
+  <Kbd size="base">Esc</Kbd>
+  <Kbd size="lg">Esc</Kbd>
+</div>`,
+    },
+  ],
   props: [
     {
       name: "keys",

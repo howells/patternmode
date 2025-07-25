@@ -1,24 +1,5 @@
 import { Kbd } from "./kbd";
 
-// Default example - basic keyboard shortcut
-export const DefaultExample = () => <Kbd>K</Kbd>;
-
-// Key combination example - multiple keys
-export const CombinationExample = () => (
-  <Kbd keys={["cmd", "shift", "k"]}>Command palette</Kbd>
-);
-
-// Sizes example - different size variants
-export const SizesExample = () => (
-  <div className="flex gap-2">
-    <Kbd size="xs">Esc</Kbd>
-    <Kbd size="sm">Esc</Kbd>
-    <Kbd size="base">Esc</Kbd>
-    <Kbd size="lg">Esc</Kbd>
-  </div>
-);
-
-// Keep the original KbdExample for the preview component
 export const KbdExample = ({
   keys,
   platform = "auto",

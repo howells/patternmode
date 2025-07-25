@@ -29,6 +29,7 @@ import { componentConfig as gridConfig } from "@/components/ui/grid/config";
 import { componentConfig as headingElementConfig } from "@/components/ui/heading-element/config";
 import { componentConfig as iconSelectConfig } from "@/components/ui/icon-select/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
+import { componentConfig as kbdConfig } from "@/components/ui/kbd/config";
 import { componentConfig as lineChartConfig } from "@/components/ui/line-chart/config";
 import { componentConfig as loaderConfig } from "@/components/ui/loader/config";
 import { componentConfig as meterConfig } from "@/components/ui/meter/config";
@@ -158,7 +159,6 @@ const inspectorConfig = createPlaceholderConfig(
   "Inspector",
   "utility"
 );
-const kbdConfig = createPlaceholderConfig("kbd", "Kbd", "text");
 
 // Placeholder configurations for inputs category
 const datePickerConfig = createPlaceholderConfig(
