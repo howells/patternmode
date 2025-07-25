@@ -4,6 +4,7 @@ import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Icon } from "../icon";
 
 /**
  * A select dropdown component built on Base UI's Select primitive.
@@ -140,7 +141,7 @@ const SelectScrollUpButton = React.forwardRef<
     )}
     {...props}
   >
-    <ChevronUp className="size-3 shrink-0" aria-hidden="true" />
+    <Icon icon={ChevronUp} size="sm" aria-hidden="true" />
   </BaseSelect.ScrollUpArrow>
 ));
 SelectScrollUpButton.displayName = "SelectScrollUpButton";
@@ -163,8 +164,9 @@ const SelectScrollDownButton = React.forwardRef<
     )}
     {...props}
   >
-    <ChevronDown
-      className="size-3 shrink-0"
+    <Icon
+      icon={ChevronDown}
+      size="sm"
       strokeWidth={config.getIconStrokeWidth()}
       aria-hidden="true"
     />
@@ -381,8 +383,10 @@ const SelectItem = React.forwardRef<
         {children}
       </BaseSelect.ItemText>
       <BaseSelect.ItemIndicator>
-        <Check
-          className="size-5 shrink-0 text-zinc-800 dark:text-zinc-200"
+        <Icon
+          icon={Check}
+          size="lg"
+          className="text-zinc-800 dark:text-zinc-200"
           aria-hidden="true"
         />
       </BaseSelect.ItemIndicator>

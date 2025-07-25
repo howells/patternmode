@@ -64,10 +64,16 @@
 
 "use client";
 
-import { InfiniteQueryCombobox } from "@/components/ui/combobox/combobox-infinite-query";
+import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
 import { config } from "@/lib/config";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
+
+// Icon data structure that extends ComboboxOption
+interface IconOption extends ComboboxOption {
+  kebab: string;
+  pascal: string;
+}
 
 /**
  * Props for the IconSelect component.
@@ -115,8 +121,18 @@ async function fetchIcons({
 
   const data = await response.json();
 
+  // Transform API response to match IconOption interface
+  const iconOptions: IconOption[] = data.icons.map(
+    (icon: { kebab: string; pascal: string }) => ({
+      value: icon.pascal,
+      label: icon.pascal,
+      kebab: icon.kebab,
+      pascal: icon.pascal,
+    })
+  );
+
   return {
-    items: data.icons, // Now returns array of { kebab: string, pascal: string }
+    items: iconOptions,
     totalCount: data.totalCount,
     hasMore: data.hasMore,
     nextPage: data.hasMore ? pageParam + 1 : undefined,
@@ -305,11 +321,11 @@ export function IconSelect({
   iconStrokeWidth = config.getIconStrokeWidth(),
 }: IconSelectProps) {
   return (
-    <InfiniteQueryCombobox
+    <Combobox<IconOption>
       queryKey={["icons", "search"]}
       fetchData={fetchIcons}
       value={value}
-      onValueChange={onValueChange}
+      onValueChange={(newValue) => onValueChange?.(newValue || "")}
       placeholder={placeholder}
       searchPlaceholder="Search icons..."
       emptyMessage="No icons found."
@@ -317,12 +333,9 @@ export function IconSelect({
       className={className}
       searchDebounce={300} // 300ms search debounce
       iconStrokeWidth={iconStrokeWidth}
-      getItemValue={(item: { kebab: string; pascal: string }) => item.pascal}
-      getItemLabel={(item: { kebab: string; pascal: string }) => item.pascal}
-      renderItem={(
-        item: { kebab: string; pascal: string },
-        isSelected: boolean
-      ) => (
+      getItemValue={(item) => item.pascal}
+      getItemLabel={(item) => item.pascal}
+      renderItem={(item, isHighlighted, isSelected) => (
         <>
           <div className="flex items-center gap-2 flex-1">
             <IconErrorBoundary className="size-4 shrink-0">
@@ -345,9 +358,7 @@ export function IconSelect({
           )}
         </>
       )}
-      renderTrigger={(
-        selectedItem: { kebab: string; pascal: string } | null
-      ) => {
+      renderTrigger={(selectedItem) => {
         if (selectedItem) {
           return (
             <>

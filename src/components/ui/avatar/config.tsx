@@ -1,80 +1,143 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, SquareExample, WithImageExample } from "./examples";
+import {
+  AvatarGroupExample,
+  DefaultExample,
+  DynamicBackgroundExample,
+  InitialsExample,
+  ProfileHeaderExample,
+  SizeVariantsExample,
+  SquareVariantsExample,
+  UserListExample,
+  WithFallbackExample,
+} from "./examples";
 
-// Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {
   id: "avatar",
   name: "Avatar",
   description:
-    "A circular or square avatar component with support for images and initials fallback.",
+    "User profile picture display component with size variants, initials fallback, and dynamic background colors.",
   category: "media" as const,
   icon: "User",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
-  importStatement: `import { Avatar } from "@/components/ui/avatar/avatar";`,
+  importStatement: `import { Avatar } from "@/components/ui/avatar";`,
   componentId: "AvatarExample",
-
-  // Props that users can experiment with
   props: [
     {
       name: "src",
-      type: "select",
-      description: "The image source URL for the avatar.",
+      type: "string",
+      description: "Image source URL for the avatar",
       defaultValue: "",
-      options: [
-        "",
-        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&h=150&fit=crop&crop=face",
-      ]
+    },
+    {
+      name: "size",
+      type: "string",
+      options: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl"],
+      description: "Size variant of the avatar",
+      defaultValue: "base",
     },
     {
       name: "square",
       type: "boolean",
-      description: "If true, displays a square avatar instead of circular.",
-      defaultValue: false
+      description: "Whether to render with square corners instead of circular",
+      defaultValue: false,
     },
     {
       name: "initials",
       type: "string",
-      description: "The initials to display when no image is provided.",
-      defaultValue: "DH"
+      description: "Initials to display when no image is provided",
+      defaultValue: "",
     },
     {
       name: "alt",
       type: "string",
-      description: "Alt text for the avatar image.",
-      defaultValue: "Avatar"
+      description: "Alt text for accessibility",
+      defaultValue: "",
     },
     {
       name: "dynamicBackground",
       type: "boolean",
       description:
-        "Whether to use a dynamic background color based on initials/alt text.",
-      defaultValue: false
+        "Whether to use a dynamic background color based on initials/alt text",
+      defaultValue: false,
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes",
+      defaultValue: "",
+    },
+    {
+      name: "showWithImage",
+      type: "boolean",
+      description: "Show avatar with image in preview",
+      defaultValue: false,
+    },
+    {
+      name: "showInitials",
+      type: "boolean",
+      description: "Show avatar with initials in preview",
+      defaultValue: true,
     },
   ],
   examples: [
     {
       id: "default",
-      title: "Default",
-      description: "Basic avatar with initials.",
-      code: jsxToString(<DefaultExample />)
+      title: "Basic Avatars",
+      description: "Avatar with image, initials, and dynamic background",
+      code: jsxToString(<DefaultExample />),
     },
     {
-      id: "with-image",
-      title: "With Image",
-      description: "Avatar with a profile image.",
-      code: jsxToString(<WithImageExample />)
+      id: "size-variants",
+      title: "Size Variants",
+      description: "All available avatar sizes from xs to 3xl",
+      code: jsxToString(<SizeVariantsExample />),
     },
     {
-      id: "square",
-      title: "Square",
-      description: "Square-shaped avatar.",
-      code: jsxToString(<SquareExample />)
+      id: "initials",
+      title: "Initials Only",
+      description: "Avatars with initials in different sizes",
+      code: jsxToString(<InitialsExample />),
     },
-  ]
+    {
+      id: "square-variants",
+      title: "Square Variants",
+      description: "Square avatars with images and initials",
+      code: jsxToString(<SquareVariantsExample />),
+    },
+    {
+      id: "dynamic-background",
+      title: "Dynamic Backgrounds",
+      description: "Avatars with automatically generated background colors",
+      code: jsxToString(<DynamicBackgroundExample />),
+    },
+    {
+      id: "with-fallback",
+      title: "With Base UI Fallback",
+      description:
+        "Using Base UI Avatar components for automatic fallback behavior",
+      code: jsxToString(<WithFallbackExample />),
+    },
+    {
+      id: "user-list",
+      title: "User List",
+      description: "Real-world example with user list and mixed avatar states",
+      code: jsxToString(<UserListExample />),
+    },
+    {
+      id: "avatar-group",
+      title: "Avatar Groups",
+      description: "Stacked avatars for team displays with overflow indicators",
+      code: jsxToString(<AvatarGroupExample />),
+    },
+    {
+      id: "profile-header",
+      title: "Profile Header",
+      description: "Large avatar used in a profile header layout",
+      code: jsxToString(<ProfileHeaderExample />),
+    },
+  ],
 };

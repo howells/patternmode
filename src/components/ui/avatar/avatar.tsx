@@ -5,17 +5,44 @@ import { cx } from "@/lib/utils";
 import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
 import Image from "next/image";
 import * as React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
+
+const avatarVariants = tv({
+  base: [
+    // Basic layout - using CSS Grid like Catalyst for better layering
+    "inline-grid shrink-0 align-middle [--avatar-radius:20%] *:col-start-1 *:row-start-1",
+    // Semi-transparent inset ring for better visual definition
+    "inset-ring-1 inset-ring-black/15 dark:inset-ring-white/15",
+  ],
+  variants: {
+    size: {
+      xs: "size-6", // 24px - for compact UI, tags
+      sm: "size-8", // 32px - for small contexts, lists
+      base: "size-10", // 40px - default size, most common
+      lg: "size-12", // 48px - for headers, prominent display
+      xl: "size-16", // 64px - for profile pages, large display
+      "2xl": "size-20", // 80px - for hero sections, main profiles
+      "3xl": "size-24", // 96px - for very large display contexts
+    },
+    square: {
+      true: "rounded-[--avatar-radius] *:rounded-[--avatar-radius]",
+      false: "rounded-full *:rounded-full",
+    },
+  },
+  defaultVariants: {
+    size: "base",
+    square: false,
+  },
+});
 
 /**
  * Props for the Avatar component.
  *
  * @interface AvatarProps
  */
-interface AvatarProps {
+interface AvatarProps extends VariantProps<typeof avatarVariants> {
   /** Image source URL for the avatar */
   src?: string | null;
-  /** Whether to render the avatar with square corners instead of circular */
-  square?: boolean;
   /** Initials to display when no image is provided */
   initials?: string;
   /** Alt text for accessibility */
@@ -26,24 +53,43 @@ interface AvatarProps {
   className?: string;
 }
 
+// Size mapping for Next.js Image component dimensions
+const imageSizeMap = {
+  xs: { width: 24, height: 24, sizes: "24px" },
+  sm: { width: 32, height: 32, sizes: "32px" },
+  base: { width: 40, height: 40, sizes: "40px" },
+  lg: { width: 48, height: 48, sizes: "48px" },
+  xl: { width: 64, height: 64, sizes: "64px" },
+  "2xl": { width: 80, height: 80, sizes: "80px" },
+  "3xl": { width: 96, height: 96, sizes: "96px" },
+} as const;
+
 /**
- * A user profile picture display component with initials fallback.
+ * A user profile picture display component with initials fallback and size variants.
  *
  * Displays user profile pictures with automatic fallback to initials when no image is provided.
  * Supports both circular and square variants with proper layering using CSS Grid.
- * Uses Next.js Image component for optimized loading.
+ * Uses Next.js Image component for optimized loading with size-appropriate dimensions.
  *
  * @component
  * @example
  * ```tsx
- * // With image
+ * // Basic avatar with default size
  * <Avatar src="/profile.jpg" alt="John Doe" />
  *
+ * // Different sizes
+ * <Avatar src="/profile.jpg" alt="John Doe" size="xs" />
+ * <Avatar src="/profile.jpg" alt="John Doe" size="lg" />
+ * <Avatar src="/profile.jpg" alt="John Doe" size="2xl" />
+ *
  * // With initials fallback
- * <Avatar initials="DH" alt="John Doe" />
+ * <Avatar initials="DH" alt="John Doe" size="lg" />
  *
  * // Square variant
- * <Avatar src="/profile.jpg" square alt="John Doe" />
+ * <Avatar src="/profile.jpg" square size="xl" alt="John Doe" />
+ *
+ * // Dynamic background color
+ * <Avatar initials="AB" dynamicBackground size="lg" />
  * ```
  */
 const Avatar = React.forwardRef<
@@ -53,6 +99,7 @@ const Avatar = React.forwardRef<
   (
     {
       src = null,
+      size = "base",
       square = false,
       initials,
       alt = "",
@@ -67,23 +114,14 @@ const Avatar = React.forwardRef<
       ? getColorFromName(initials || alt || "default")
       : undefined;
 
+    // Get image dimensions for the current size
+    const imageSize = imageSizeMap[size || "base"];
+
     return (
       <span
         ref={ref}
         {...props}
-        className={cx(
-          // Basic layout - using CSS Grid like Catalyst for better layering
-          "inline-grid shrink-0 align-middle [--avatar-radius:20%] *:col-start-1 *:row-start-1",
-          // Semi-transparent inset ring for better visual definition
-          "inset-ring-1 inset-ring-black/15 dark:inset-ring-white/15",
-          // Default size
-          "size-10",
-          // Border radius based on square prop
-          square
-            ? "rounded-[--avatar-radius] *:rounded-[--avatar-radius]"
-            : "rounded-full *:rounded-full",
-          className
-        )}
+        className={cx(avatarVariants({ size, square }), className)}
         style={backgroundColor ? { backgroundColor } : undefined}
       >
         {initials && (
@@ -111,9 +149,9 @@ const Avatar = React.forwardRef<
             className="size-full object-cover"
             src={src}
             alt={alt}
-            width={40}
-            height={40}
-            sizes="40px"
+            width={imageSize.width}
+            height={imageSize.height}
+            sizes={imageSize.sizes}
           />
         )}
       </span>
@@ -132,7 +170,7 @@ Avatar.displayName = "Avatar";
  * @component
  * @example
  * ```tsx
- * <AvatarWithFallback>
+ * <AvatarWithFallback className="size-12">
  *   <AvatarImage src="/profile.jpg" alt="John Doe" />
  *   <AvatarFallback>DH</AvatarFallback>
  * </AvatarWithFallback>
@@ -215,6 +253,7 @@ export {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  avatarVariants,
   AvatarWithFallback,
   type AvatarProps,
 };

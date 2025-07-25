@@ -2,6 +2,7 @@
 
 import { Code, Palette, User } from "lucide-react";
 import React from "react";
+import { Icon } from "../icon";
 import { Combobox, ComboboxOption, useComboboxState } from "./combobox";
 
 // Sample data for preview
@@ -95,7 +96,7 @@ export const ComboboxExample = ({
           return (
             <div className="flex items-center gap-2">
               {selectedOption.leftIcon && (
-                <selectedOption.leftIcon className="size-4" />
+                <Icon icon={selectedOption.leftIcon} />
               )}
               <div className="flex flex-col items-start">
                 <span className="text-sm font-medium">
@@ -116,7 +117,7 @@ export const ComboboxExample = ({
             ${isSelected ? "font-medium" : ""}
           `}
           >
-            {option.leftIcon && <option.leftIcon className="size-4" />}
+            {option.leftIcon && <Icon icon={option.leftIcon} />}
             <div className="flex flex-col">
               <span className="text-sm">{option.label}</span>
               <span className="text-xs text-zinc-500">

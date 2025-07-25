@@ -14,7 +14,6 @@ import {
 import { ScrollArea } from "../scroll-area";
 import { Separator } from "../separator/separator";
 import { Subheading } from "../subheading";
-import { TouchTarget } from "../touch-target";
 
 export function Sidebar({
   className,
@@ -260,43 +259,17 @@ export const SidebarItem = forwardRef(function SidebarItem(
     className,
     children,
     isCollapsed,
+    href,
     ...props
   }: {
     current?: boolean;
     className?: string;
     children: React.ReactNode;
     isCollapsed?: boolean;
-  } & (
-    | (Omit<React.ComponentPropsWithoutRef<"a">, "className"> & {
-        href: string;
-      })
-    | Omit<React.ComponentPropsWithoutRef<"button">, "className">
-  ),
-  ref: React.ForwardedRef<HTMLAnchorElement | HTMLButtonElement>
+    href?: string;
+  } & Omit<React.ComponentPropsWithoutRef<"button">, "className">,
+  ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  const classes = clsx(
-    // Base
-    "flex w-full px-2 items-center gap-3 rounded-md text-left text-base/6  text-zinc-950 sm:text-sm/5 transition-all duration-200",
-    isCollapsed ? "px-1 py-2 justify-center" : "py-2.5 sm:py-2",
-    // Leading icon/icon-only
-    "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
-    // Trailing icon (down chevron or similar)
-    "*:last:data-[slot=icon]:ml-auto *:last:data-[slot=icon]:size-5 sm:*:last:data-[slot=icon]:size-4",
-    // Avatar
-    "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 sm:*:data-[slot=avatar]:size-6",
-    // Hover
-    "data-hover:bg-zinc-950/5 data-hover:*:data-[slot=icon]:fill-zinc-950",
-    // Active
-    "data-active:bg-zinc-950/5 data-active:*:data-[slot=icon]:fill-zinc-950",
-    // Current
-    "data-current:bg-zinc-950/10 data-current:text-zinc-950 data-current:*:data-[slot=icon]:fill-zinc-950",
-    // Dark mode
-    "dark:text-white dark:*:data-[slot=icon]:fill-zinc-400",
-    "dark:data-hover:bg-white/5 dark:data-hover:*:data-[slot=icon]:fill-white",
-    "dark:data-active:bg-white/5 dark:data-active:*:data-[slot=icon]:fill-white",
-    "dark:data-current:bg-white/10 dark:data-current:text-white dark:data-current:*:data-[slot=icon]:fill-white"
-  );
-
   return (
     <span className={clsx(className, "relative")}>
       {current && !isCollapsed && (
@@ -305,31 +278,39 @@ export const SidebarItem = forwardRef(function SidebarItem(
           className="absolute inset-y-2 -left-2 w-0.5 rounded-full bg-zinc-950 dark:bg-white"
         />
       )}
-      {"href" in props ? (
-        <Link
-          href={props.href}
-          className={classes}
-          data-current={current ? "true" : undefined}
-          ref={ref as React.ForwardedRef<HTMLAnchorElement>}
-          title={
-            isCollapsed && typeof children === "string" ? children : undefined
-          }
-        >
-          <TouchTarget>{children}</TouchTarget>
-        </Link>
-      ) : (
-        <Button
-          className={clsx("cursor-default", classes)}
-          data-current={current ? "true" : undefined}
-          ref={ref as React.ForwardedRef<HTMLButtonElement>}
-          title={
-            isCollapsed && typeof children === "string" ? children : undefined
-          }
-          variant="ghost"
-        >
-          <TouchTarget>{children}</TouchTarget>
-        </Button>
-      )}
+      <Button
+        render={href ? <Link href={href} /> : undefined}
+        className={clsx(
+          // Base
+          "w-full flex px-2 items-center gap-3 rounded-md text-left text-base/6 text-zinc-950 sm:text-sm/5 transition-all duration-200",
+          isCollapsed ? "px-1 py-2 justify-center" : "py-2.5 sm:py-2 justify-start",
+          // Leading icon/icon-only
+          "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
+          // Trailing icon (down chevron or similar)
+          "*:last:data-[slot=icon]:ml-auto *:last:data-[slot=icon]:size-5 sm:*:last:data-[slot=icon]:size-4",
+          // Avatar
+          "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 sm:*:data-[slot=avatar]:size-6",
+          // Hover
+          "data-hover:bg-zinc-950/5 data-hover:*:data-[slot=icon]:fill-zinc-950",
+          // Active
+          "data-active:bg-zinc-950/5 data-active:*:data-[slot=icon]:fill-zinc-950",
+          // Current
+          "data-current:bg-zinc-950/10 data-current:text-zinc-950 data-current:*:data-[slot=icon]:fill-zinc-950",
+          // Dark mode
+          "dark:text-white dark:*:data-[slot=icon]:fill-zinc-400",
+          "dark:data-hover:bg-white/5 dark:data-hover:*:data-[slot=icon]:fill-white",
+          "dark:data-active:bg-white/5 dark:data-active:*:data-[slot=icon]:fill-white",
+          "dark:data-current:bg-white/10 dark:data-current:text-white dark:data-current:*:data-[slot=icon]:fill-white",
+          !href && "cursor-default"
+        )}
+        variant="ghost"
+        data-current={current ? "true" : undefined}
+        ref={ref}
+        title={isCollapsed && typeof children === "string" ? children : undefined}
+        {...props}
+      >
+        {children}
+      </Button>
     </span>
   );
 });

@@ -28,6 +28,7 @@ import { componentConfig as fieldConfig } from "@/components/ui/field/config";
 import { componentConfig as gridConfig } from "@/components/ui/grid/config";
 import { componentConfig as headingElementConfig } from "@/components/ui/heading-element/config";
 import { componentConfig as iconSelectConfig } from "@/components/ui/icon-select/config";
+import { componentConfig as iconConfig } from "@/components/ui/icon/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
 import { componentConfig as kbdConfig } from "@/components/ui/kbd/config";
 import { componentConfig as lineChartConfig } from "@/components/ui/line-chart/config";
@@ -49,6 +50,7 @@ import { componentConfig as stackedListConfig } from "@/components/ui/stacked-li
 import { componentConfig as statusDotConfig } from "@/components/ui/status-dot/config";
 import { componentConfig as switchConfig } from "@/components/ui/switch/config";
 import { componentConfig as tabsConfig } from "@/components/ui/tabs/config";
+import { componentConfig as tagInputConfig } from "@/components/ui/tag-input/config";
 import { componentConfig as tagConfig } from "@/components/ui/tag/config";
 import { componentConfig as textConfig } from "@/components/ui/text/config";
 
@@ -216,6 +218,7 @@ export const componentRegistry: ComponentConfigRegistry = {
   divider: dividerConfig,
   "empty-state": emptyStateConfig,
   grid: gridConfig,
+  icon: iconConfig,
   loader: loaderConfig,
   meter: meterConfig,
   separator: separatorConfig,
@@ -265,6 +268,7 @@ export const componentRegistry: ComponentConfigRegistry = {
   table: tableConfig,
   tabs: tabsConfig,
   tag: tagConfig,
+  "tag-input": tagInputConfig,
   text: textConfig,
   toast: toastConfig,
   toggle: toggleConfig,
@@ -374,6 +378,7 @@ export const COMPONENT_LIST = {
     "scroll-area",
     "touch-target",
     "tracker",
+    "icon",
   ],
   inputs: [
     "button",
@@ -399,7 +404,7 @@ export const COMPONENT_LIST = {
     "toggle",
     "toggle-group",
   ],
-  forms: ["field", "fieldset", "form"],
+  forms: ["field", "fieldset", "form", "tag-input"],
   charts: [
     "area-chart",
     "bar-chart",

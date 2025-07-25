@@ -1,4 +1,4 @@
-import React from "react";
+import { Icon } from "@/components/ui/icon";
 import {
   MenuBar,
   MenuBarContent,
@@ -6,7 +6,8 @@ import {
   MenuBarMenu,
   MenuBarTrigger,
 } from "@/components/ui/menu-bar";
-import { Plus, Edit, Trash } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
+import React from "react";
 
 export function BasicMenuBarExample() {
   return (
@@ -38,16 +39,22 @@ export function WithIconsExample() {
         <MenuBarTrigger>Actions</MenuBarTrigger>
         <MenuBarContent>
           <MenuBarItem>
-            <Plus className="size-4 mr-2" />
-            New Item
+            <div className="flex items-center gap-2">
+              <Icon icon={Plus} />
+              New Item
+            </div>
           </MenuBarItem>
           <MenuBarItem>
-            <Edit className="size-4 mr-2" />
-            Edit Item
+            <div className="flex items-center gap-2">
+              <Icon icon={Edit} />
+              Edit Item
+            </div>
           </MenuBarItem>
           <MenuBarItem>
-            <Trash className="size-4 mr-2" />
-            Delete Item
+            <div className="flex items-center gap-2">
+              <Icon icon={Trash} />
+              Delete Item
+            </div>
           </MenuBarItem>
         </MenuBarContent>
       </MenuBarMenu>

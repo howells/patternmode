@@ -55,10 +55,16 @@
 
 "use client";
 
-import { InfiniteQueryCombobox } from "@/components/ui/combobox/combobox-infinite-query";
+import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
 import { config } from "@/lib/config";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
+
+// Icon data structure that extends ComboboxOption
+interface IconOption extends ComboboxOption {
+  kebab: string;
+  pascal: string;
+}
 
 /**
  * Props for the IconSelectQuery component.
@@ -92,13 +98,13 @@ async function fetchIconsForQuery({
   pageParam = 0,
   queryKey,
   signal,
+  search,
 }: {
   pageParam: number;
   queryKey: readonly unknown[];
-  signal: AbortSignal;
+  signal?: AbortSignal;
+  search: string;
 }) {
-  const [, search] = queryKey as [string, string];
-
   const params = new URLSearchParams({
     page: pageParam.toString(),
     limit: "50",
@@ -113,8 +119,18 @@ async function fetchIconsForQuery({
 
   const data = await response.json();
 
+  // Transform API response to match IconOption interface
+  const iconOptions: IconOption[] = data.icons.map(
+    (icon: { kebab: string; pascal: string }) => ({
+      value: icon.pascal,
+      label: icon.pascal,
+      kebab: icon.kebab,
+      pascal: icon.pascal,
+    })
+  );
+
   return {
-    items: data.icons,
+    items: iconOptions,
     totalCount: data.totalCount,
     hasMore: data.hasMore,
     nextPage: data.hasMore ? pageParam + 1 : undefined,
@@ -140,11 +156,11 @@ export function IconSelectQuery({
   refetchOnWindowFocus = true,
 }: IconSelectQueryProps) {
   return (
-    <InfiniteQueryCombobox
+    <Combobox<IconOption>
       queryKey={["icons"]}
       fetchData={fetchIconsForQuery}
       value={value}
-      onValueChange={onValueChange}
+      onValueChange={(newValue) => onValueChange?.(newValue || "")}
       placeholder={placeholder}
       searchPlaceholder="Search icons..."
       emptyMessage="No icons found."
@@ -155,15 +171,21 @@ export function IconSelectQuery({
       staleTime={staleTime}
       cacheTime={cacheTime}
       refetchOnWindowFocus={refetchOnWindowFocus}
-      renderItem={(iconName: string, isSelected: boolean) => {
+      getItemValue={(item) => item.pascal}
+      getItemLabel={(item) => item.pascal}
+      renderItem={(
+        iconOption: IconOption,
+        isHighlighted: boolean,
+        isSelected: boolean
+      ) => {
         const IconPreview = React.memo(() => (
           <DynamicIcon
-            name={iconName.toLowerCase() as any}
+            name={iconOption.kebab as never}
             className="size-4 shrink-0"
             strokeWidth={iconStrokeWidth}
           />
         ));
-        IconPreview.displayName = `IconPreview_${iconName}`;
+        IconPreview.displayName = `IconPreview_${iconOption.pascal}`;
 
         const CheckIcon = React.memo(() => (
           <DynamicIcon
@@ -178,17 +200,17 @@ export function IconSelectQuery({
           <>
             <div className="flex items-center gap-2 flex-1">
               <IconPreview />
-              <span className="truncate">{iconName}</span>
+              <span className="truncate">{iconOption.pascal}</span>
             </div>
             {isSelected && <CheckIcon />}
           </>
         );
       }}
-      renderTrigger={(selectedIcon: string | null) => {
+      renderTrigger={(selectedIcon: IconOption | null) => {
         const TriggerIcon = React.memo(() =>
           selectedIcon ? (
             <DynamicIcon
-              name={selectedIcon.toLowerCase() as any}
+              name={selectedIcon.kebab as never}
               className="size-4 shrink-0"
               strokeWidth={iconStrokeWidth}
             />
@@ -200,10 +222,11 @@ export function IconSelectQuery({
           return (
             <>
               <TriggerIcon />
-              <span className="truncate">{selectedIcon}</span>
+              <span className="truncate">{selectedIcon.pascal}</span>
             </>
           );
         }
+
         return placeholder;
       }}
     />

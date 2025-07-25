@@ -44,3 +44,6 @@ export function MenuExample({
     </div>
   );
 }
+
+// Default export for the preview system
+export default MenuExample;

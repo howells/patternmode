@@ -7,6 +7,7 @@ import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import * as React from "react";
 
 import { cx } from "@/lib/utils";
+import { Icon as IconComponent } from "../icon";
 
 const Menu = BaseMenu.Root;
 
@@ -40,7 +41,7 @@ const MenuSubmenuTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto size-4 shrink-0" aria-hidden="true" />
+    <IconComponent icon={ChevronRight} className="ml-auto" aria-hidden="true" />
   </BaseMenu.SubmenuTrigger>
 ));
 MenuSubmenuTrigger.displayName = "MenuSubmenuTrigger";
@@ -168,7 +169,10 @@ const MenuItem = React.forwardRef<
     >
       {Icon && (
         <span className="absolute left-2 flex size-4 items-center justify-center">
-          <Icon className="size-4 shrink-0 text-zinc-600 dark:text-zinc-400 group-data-disabled/MenuItem:text-zinc-400 dark:group-data-disabled/MenuItem:text-zinc-700" />
+          <IconComponent
+            icon={Icon}
+            className="text-zinc-600 dark:text-zinc-400 group-data-disabled/MenuItem:text-zinc-400 dark:group-data-disabled/MenuItem:text-zinc-700"
+          />
         </span>
       )}
       {children}
@@ -226,9 +230,10 @@ const MenuCheckboxItem = React.forwardRef<
     >
       <span className="absolute left-2 flex size-4 items-center justify-center">
         <BaseMenu.CheckboxItemIndicator>
-          <Check
+          <IconComponent
+            icon={Check}
             aria-hidden="true"
-            className="size-full shrink-0 text-zinc-800 dark:text-zinc-200"
+            className="size-full text-zinc-800 dark:text-zinc-200"
           />
         </BaseMenu.CheckboxItemIndicator>
       </span>
@@ -282,15 +287,17 @@ const MenuRadioItem = React.forwardRef<
   >
     <span className="absolute left-2 flex size-4 items-center justify-center">
       <BaseMenu.RadioItemIndicator>
-        <CircleDot
+        <IconComponent
+          icon={CircleDot}
           aria-hidden="true"
-          className="size-full shrink-0 text-blue-500 dark:text-blue-500"
+          className="size-full text-blue-500 dark:text-blue-500"
         />
       </BaseMenu.RadioItemIndicator>
       <span className="data-checked:hidden">
-        <Circle
+        <IconComponent
+          icon={Circle}
           aria-hidden="true"
-          className="size-full shrink-0 text-zinc-300 dark:text-zinc-700"
+          className="size-full text-zinc-300 dark:text-zinc-700"
         />
       </span>
     </span>

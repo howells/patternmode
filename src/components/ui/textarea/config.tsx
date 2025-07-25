@@ -1,141 +1,159 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import {
+  DefaultExample,
+  DisabledExample,
+  FixedHeightExample,
+  FormIntegrationExample,
+  PerformanceExample,
+  WithContentExample,
+  WithErrorExample,
+  WithHeightCallbackExample,
+  WithRowConstraintsExample,
+} from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "textarea",
   name: "Textarea",
   description:
-    "Displays a form textarea or a component that looks like a textarea.",
+    "Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.",
   category: "inputs" as const,
-  icon: "AlignLeft",
+  icon: "Type",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "react-textarea-autosize",
   },
-  importStatement: `import { Textarea } from "@/components/ui/textarea/textarea";`,
+  importStatement: `import { Textarea } from "@/components/ui/textarea";`,
   componentId: "TextareaExample",
   props: [
     {
       name: "placeholder",
       type: "string",
-      description: "Placeholder text",
-      defaultValue: "Type your message here."
+      description: "Placeholder text shown when empty",
+      defaultValue: "",
+    },
+    {
+      name: "value",
+      type: "string",
+      description: "Current value of the textarea",
+      defaultValue: "",
+    },
+    {
+      name: "onChange",
+      type: "(event: ChangeEvent<HTMLTextAreaElement>) => void",
+      description: "Callback fired when value changes",
+      defaultValue: "",
+    },
+    {
+      name: "hasError",
+      type: "boolean",
+      description: "Whether to display error styling",
+      defaultValue: false,
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the textarea is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
     {
-      name: "rows",
+      name: "autoResize",
+      type: "boolean",
+      description: "Whether to enable auto-resizing functionality",
+      defaultValue: true,
+    },
+    {
+      name: "minRows",
       type: "number",
-      description: "Number of visible text lines",
-      defaultValue: 4
+      description: "Minimum number of rows to display",
+      defaultValue: 2,
+    },
+    {
+      name: "maxRows",
+      type: "number",
+      description: "Maximum number of rows before scrolling",
+      defaultValue: "",
+    },
+    {
+      name: "onHeightChange",
+      type: "(height: number, meta: { rowHeight: number }) => void",
+      description: "Callback fired when textarea height changes",
+      defaultValue: "",
+    },
+    {
+      name: "cacheMeasurements",
+      type: "boolean",
+      description: "Cache measurements for better performance",
+      defaultValue: false,
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes",
+      defaultValue: "",
+    },
+    {
+      name: "showWithContent",
+      type: "boolean",
+      description: "Show textarea with initial content in preview",
+      defaultValue: false,
     },
   ],
   examples: [
     {
       id: "default",
-      title: "Basic Textarea",
-      description: "A simple textarea input",
-      code: `<Textarea placeholder="Type your message here." />`
+      title: "Auto-Resizing Textarea",
+      description:
+        "Basic textarea that automatically adjusts height based on content",
+      code: jsxToString(<DefaultExample />),
     },
     {
-      id: "with-label",
-      title: "Textarea with Label",
-      description: "Textarea with a form label",
-      code: `<div className="space-y-2">
-  <label htmlFor="message" className="text-sm font-medium">
-    Message
-  </label>
-  <Textarea
-    id="message"
-    placeholder="Enter your message"
-    rows={6}
-  />
-</div>`
+      id: "with-content",
+      title: "With Initial Content",
+      description: "Textarea with pre-filled content demonstrating auto-resize",
+      code: jsxToString(<WithContentExample />),
+    },
+    {
+      id: "row-constraints",
+      title: "With Row Constraints",
+      description: "Textarea with minimum and maximum row limits",
+      code: jsxToString(<WithRowConstraintsExample />),
+    },
+    {
+      id: "error-state",
+      title: "Error State",
+      description: "Textarea with error styling and validation",
+      code: jsxToString(<WithErrorExample />),
     },
     {
       id: "disabled",
-      title: "Disabled Textarea",
-      description: "Textarea in disabled state",
-      code: `<Textarea
-  placeholder="This textarea is disabled"
-  disabled
-  defaultValue="You cannot edit this content."
-/>`
+      title: "Disabled State",
+      description: "Non-interactive textarea with disabled styling",
+      code: jsxToString(<DisabledExample />),
     },
     {
-      id: "with-hint",
-      title: "Textarea with Hint Text",
-      description: "Textarea with helper text below",
-      code: `<div className="space-y-2">
-  <label htmlFor="bio" className="text-sm font-medium">
-    Bio
-  </label>
-  <Textarea
-    id="bio"
-    placeholder="Tell us about yourself"
-    rows={4}
-  />
-  <p className="text-sm text-zinc-600">
-    Write a short bio. This will be displayed on your profile.
-  </p>
-</div>`
+      id: "fixed-height",
+      title: "Fixed Height",
+      description: "Textarea with auto-resize disabled for fixed height",
+      code: jsxToString(<FixedHeightExample />),
     },
     {
-      id: "character-count",
-      title: "With Character Count",
-      description: "Textarea with character limit indicator",
-      code: `<div className="space-y-2">
-  <label htmlFor="tweet" className="text-sm font-medium">
-    Compose Tweet
-  </label>
-  <Textarea
-    id="tweet"
-    placeholder="What's happening?"
-    rows={3}
-    maxLength={280}
-  />
-  <div className="flex justify-between text-sm">
-    <span className="text-zinc-600">Max 280 characters</span>
-    <span className="text-zinc-600">0/280</span>
-  </div>
-</div>`
+      id: "height-callback",
+      title: "Height Change Tracking",
+      description: "Textarea with callback to track height changes",
+      code: jsxToString(<WithHeightCallbackExample />),
     },
     {
-      id: "form-example",
-      title: "In a Form",
-      description: "Textarea as part of a complete form",
-      code: `<form className="space-y-4">
-  <div className="space-y-2">
-    <label htmlFor="name" className="text-sm font-medium">
-      Name
-    </label>
-    <input
-      id="name"
-      type="text"
-      placeholder="Your name"
-      className="w-full rounded-md border border-zinc-300 px-3 py-2"
-    />
-  </div>
-  <div className="space-y-2">
-    <label htmlFor="feedback" className="text-sm font-medium">
-      Feedback
-    </label>
-    <Textarea
-      id="feedback"
-      placeholder="Share your thoughts..."
-      rows={5}
-    />
-  </div>
-  <button
-    type="submit"
-    className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-  >
-    Submit Feedback
-  </button>
-</form>`
+      id: "form-integration",
+      title: "Form Integration",
+      description: "Complete form example with multiple textareas",
+      code: jsxToString(<FormIntegrationExample />),
     },
-  ]
+    {
+      id: "performance",
+      title: "Performance Optimization",
+      description: "Textarea with measurement caching for better performance",
+      code: jsxToString(<PerformanceExample />),
+    },
+  ],
 };

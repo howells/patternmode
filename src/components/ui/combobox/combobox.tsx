@@ -11,6 +11,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button/button";
 import { cx } from "@/lib/utils";
+import { Icon } from "../icon";
 
 /**
  * Basic option type for simple comboboxes
@@ -411,8 +412,8 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>({
       return (
         <div className="flex items-center gap-2 flex-1 min-w-0">
           {selectedOption.leftIcon && (
-            <selectedOption.leftIcon
-              className="size-4 shrink-0"
+            <Icon
+              icon={selectedOption.leftIcon}
               strokeWidth={iconStrokeWidth}
             />
           )}
@@ -440,15 +441,13 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>({
     return (
       <div className="flex items-center gap-2 flex-1 min-w-0">
         {option.leftIcon && (
-          <option.leftIcon
-            className="size-4 shrink-0"
-            strokeWidth={iconStrokeWidth}
-          />
+          <Icon icon={option.leftIcon} strokeWidth={iconStrokeWidth} />
         )}
         <span className="truncate">{getItemLabel(option)}</span>
         {isSelected && (
-          <Check
-            className="ml-auto size-4 shrink-0"
+          <Icon
+            icon={Check}
+            className="ml-auto"
             strokeWidth={iconStrokeWidth}
           />
         )}
@@ -501,12 +500,13 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>({
               className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
               aria-label="Clear selection"
             >
-              <X className="size-3" strokeWidth={iconStrokeWidth} />
+              <Icon icon={X} size="sm" strokeWidth={iconStrokeWidth} />
             </button>
           )}
-          <ChevronsUpDown
+          <Icon
+            icon={ChevronsUpDown}
             className={cx(
-              "size-4 transition-transform duration-200",
+              "transition-transform duration-200",
               isOpen && "rotate-180"
             )}
             strokeWidth={iconStrokeWidth}

@@ -6,6 +6,7 @@ import { useRender } from "@base-ui-components/react/use-render";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Icon, getIconSizeForContext } from "../icon";
 import { Kbd } from "../kbd/kbd";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader";
@@ -46,6 +47,67 @@ const buttonVariants = tv({
     rounded: false,
   },
 });
+
+/**
+ * Creates button-style variants for other components that want to look like buttons
+ * but maintain their own semantic behavior (like toggles, tabs, etc.)
+ */
+export const createButtonStyleVariants = (
+  pressedVariant: keyof typeof componentVariants.button = "destructive"
+) => ({
+  base: buttonVariants.base,
+  variants: {
+    // Map button variants to toggle states
+    default: [
+      ...componentVariants.button.default,
+      // Add pressed state using the specified variant
+      `data-[pressed]:${componentVariants.button[pressedVariant].join(
+        " data-[pressed]:"
+      )}`,
+    ],
+    secondary: [
+      ...componentVariants.button.secondary,
+      `data-[pressed]:${componentVariants.button[pressedVariant].join(
+        " data-[pressed]:"
+      )}`,
+    ],
+    outline: [
+      ...componentVariants.button.outline,
+      `data-[pressed]:${componentVariants.button[pressedVariant].join(
+        " data-[pressed]:"
+      )}`,
+    ],
+    ghost: [
+      ...componentVariants.button.ghost,
+      `data-[pressed]:${componentVariants.button[pressedVariant].join(
+        " data-[pressed]:"
+      )}`,
+    ],
+    destructive: [
+      ...componentVariants.button.destructive,
+      // When destructive is pressed, make it even more intense
+      "data-[pressed]:bg-red-700 data-[pressed]:hover:bg-red-800 dark:data-[pressed]:bg-red-600 dark:data-[pressed]:hover:bg-red-700",
+    ],
+  },
+  sizes: buttonVariants.variants.size,
+});
+
+/**
+ * Utility function to render an icon with appropriate sizing for buttons
+ */
+function renderButtonIcon(
+  IconComponent: React.ComponentType<{
+    className?: string;
+    strokeWidth?: number;
+  }>,
+  size: string | undefined,
+  iconStrokeWidth: number
+) {
+  const iconSize = getIconSizeForContext(size);
+  return (
+    <Icon icon={IconComponent} size={iconSize} strokeWidth={iconStrokeWidth} />
+  );
+}
 
 /**
  * Props for the Button component.
@@ -166,14 +228,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ? "onDarkButton"
         : "onLightButton";
 
-    // Icon size based on button size - adjusted for better proportions
-    const iconSize =
-      size === "sm" || size === "icon-sm"
-        ? "size-3.5" // 12px for small buttons
-        : size === "lg" || size === "icon-lg"
-        ? "size-4" // 16px for large buttons
-        : "size-3.5"; // 14px for default buttons (was size-4/16px)
-    const iconClassName = `${iconSize} shrink-0`;
+    // Icon sizing is now handled by the Icon component via renderButtonIcon
+    // Helper to get icon container size for loader positioning
+    const getIconContainerSize = () => {
+      const sizeStr = size as string;
+      return sizeStr === "sm" || sizeStr === "icon-sm"
+        ? "size-3.5"
+        : sizeStr === "lg" || sizeStr === "icon-lg"
+        ? "size-4"
+        : "size-3.5";
+    };
 
     // When loading, Loader replaces leftIcon, and we show loadingText or original children
     const effectiveChildren = isLoading && loadingText ? loadingText : children;
@@ -211,10 +275,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         !isLoading &&
         !kbd
       ) {
-        return React.createElement(LeftIcon, {
-          className: iconClassName,
-          strokeWidth: iconStrokeWidth,
-        });
+        return renderButtonIcon(LeftIcon, size, iconStrokeWidth);
       }
 
       // For icon buttons, wrap any text children in sr-only span
@@ -288,7 +349,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 )}
               >
                 <div
-                  className={`relative ${iconSize} flex items-center justify-center`}
+                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
                 >
                   {/* Loader */}
                   <div
@@ -321,10 +382,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                       )}
                     >
                       {effectiveLeftIcon &&
-                        React.createElement(effectiveLeftIcon, {
-                          className: iconClassName,
-                          strokeWidth: iconStrokeWidth,
-                        })}
+                        renderButtonIcon(
+                          effectiveLeftIcon,
+                          size,
+                          iconStrokeWidth
+                        )}
                     </div>
                   )}
                 </div>
@@ -351,10 +413,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {hasRightIcon && (
               <span className="flex items-center">
                 {RightIcon &&
-                  React.createElement(RightIcon, {
-                    className: iconClassName,
-                    strokeWidth: iconStrokeWidth,
-                  })}
+                  renderButtonIcon(RightIcon, size, iconStrokeWidth)}
                 {kbd && (
                   <Kbd
                     keys={Array.isArray(kbd) ? kbd : undefined}
@@ -379,7 +438,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {(isLoading || hasLeftIcon) && (
               <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
                 <div
-                  className={`relative ${iconSize} flex items-center justify-center`}
+                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
                 >
                   <div
                     className={cx(
@@ -406,10 +465,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                       )}
                     >
                       {effectiveLeftIcon &&
-                        React.createElement(effectiveLeftIcon, {
-                          className: iconClassName,
-                          strokeWidth: iconStrokeWidth,
-                        })}
+                        renderButtonIcon(
+                          effectiveLeftIcon,
+                          size,
+                          iconStrokeWidth
+                        )}
                     </div>
                   )}
                 </div>
@@ -424,11 +484,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
             {/* Right icon */}
             <span className="flex items-center">
-              {RightIcon &&
-                React.createElement(RightIcon, {
-                  className: iconClassName,
-                  strokeWidth: iconStrokeWidth,
-                })}
+              {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
             </span>
           </span>
         );
@@ -442,7 +498,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {(isLoading || hasLeftIcon) && (
               <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
                 <div
-                  className={`relative ${iconSize} flex items-center justify-center`}
+                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
                 >
                   <div
                     className={cx(
@@ -463,10 +519,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                       )}
                     >
                       {effectiveLeftIcon &&
-                        React.createElement(effectiveLeftIcon, {
-                          className: iconClassName,
-                          strokeWidth: iconStrokeWidth,
-                        })}
+                        renderButtonIcon(
+                          effectiveLeftIcon,
+                          size,
+                          iconStrokeWidth
+                        )}
                     </div>
                   )}
                 </div>
@@ -480,11 +537,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
             {/* Right icon with ml-auto to push to right */}
             <span className={`flex items-center ${fullWidth ? "ml-auto" : ""}`}>
-              {RightIcon &&
-                React.createElement(RightIcon, {
-                  className: iconClassName,
-                  strokeWidth: iconStrokeWidth,
-                })}
+              {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
             </span>
           </span>
         );
@@ -497,7 +550,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {(isLoading || hasLeftIcon) && (
             <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
               <div
-                className={`relative ${iconSize} flex items-center justify-center`}
+                className={`relative ${
+                  size === "sm" || size === "icon-sm"
+                    ? "size-3.5"
+                    : size === "lg" || size === "icon-lg"
+                    ? "size-4"
+                    : "size-3.5"
+                } flex items-center justify-center`}
               >
                 <div
                   className={cx(
@@ -518,10 +577,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     )}
                   >
                     {effectiveLeftIcon &&
-                      React.createElement(effectiveLeftIcon, {
-                        className: iconClassName,
-                        strokeWidth: iconStrokeWidth,
-                      })}
+                      renderButtonIcon(
+                        effectiveLeftIcon,
+                        size,
+                        iconStrokeWidth
+                      )}
                   </div>
                 )}
               </div>

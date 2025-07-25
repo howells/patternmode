@@ -5,6 +5,7 @@ import React from "react";
 
 import { config } from "@/lib/config";
 import { cx, iconUtils } from "@/lib/utils";
+import { Icon } from "../icon";
 
 interface DismissButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -110,7 +111,7 @@ const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
         aria-label={ariaLabel}
         {...props}
       >
-        <Icon
+        <X
           className={cx(iconSizeClass, "shrink-0")}
           strokeWidth={iconStrokeWidth}
           aria-hidden="true"

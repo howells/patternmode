@@ -1,10 +1,10 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import {
-  BasicExample,
+  ColoredExample,
   ComplexExample,
+  DefaultExample,
   DismissibleExample,
-  InteractiveExample,
   WithAvatarsExample,
   WithCountsExample,
   WithLabelsExample,
@@ -21,7 +21,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Tag } from "@/components/ui/tag/tag";`,
+  importStatement: `import { Tag } from "@/components/ui/tag";`,
   componentId: "TagExample",
   props: [
     {
@@ -38,7 +38,7 @@ export const componentConfig: ComponentConfig = {
     },
     {
       name: "count",
-      type: "string",
+      type: "string | number",
       description: "Optional count or secondary text",
       defaultValue: "",
     },
@@ -59,6 +59,12 @@ export const componentConfig: ComponentConfig = {
       type: "object",
       description:
         "Avatar configuration for user tags (object with src, alt, initials)",
+      defaultValue: "",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes",
       defaultValue: "",
     },
     {
@@ -100,46 +106,46 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "Basic",
+      id: "default",
       title: "Basic Tags",
-      description: "Simple tags with different values",
-      code: jsxToString(<BasicExample />),
+      description: "Simple tags for categorizing content",
+      code: jsxToString(<DefaultExample />),
     },
     {
-      id: "WithLabels",
-      title: "Tags with Labels",
+      id: "with-labels",
+      title: "With Labels",
       description: "Tags with descriptive labels",
       code: jsxToString(<WithLabelsExample />),
     },
     {
-      id: "WithCounts",
-      title: "Tags with Counts",
-      description: "Tags displaying counts or additional info",
+      id: "with-counts",
+      title: "With Counts",
+      description: "Tags displaying counts or additional information",
       code: jsxToString(<WithCountsExample />),
     },
     {
-      id: "Dismissible",
+      id: "dismissible",
       title: "Dismissible Tags",
-      description: "Tags that can be removed",
+      description: "Tags that can be removed by the user",
       code: jsxToString(<DismissibleExample />),
     },
     {
-      id: "WithAvatars",
-      title: "Tags with Avatars",
-      description: "User tags with avatar images or initials",
+      id: "with-avatars",
+      title: "With Avatars",
+      description: "Tags displaying user avatars",
       code: jsxToString(<WithAvatarsExample />),
     },
     {
-      id: "Complex",
-      title: "Complex Tags",
-      description: "Tags combining multiple features",
+      id: "complex",
+      title: "Complex Example",
+      description: "Advanced tag usage with multiple features",
       code: jsxToString(<ComplexExample />),
     },
     {
-      id: "Interactive",
-      title: "Interactive Tags",
-      description: "Stateful example with real dismiss functionality",
-      code: jsxToString(<InteractiveExample />),
+      id: "colored",
+      title: "Colored Tags",
+      description: "Tags with custom colors for different states",
+      code: jsxToString(<ColoredExample />),
     },
   ],
 };

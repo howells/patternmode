@@ -60,6 +60,38 @@ const badgeVariants = tv({
       size: "lg",
       class: "has-[button]:pr-1.5",
     },
+    // Add extra horizontal padding for rounded badges to prevent cramped appearance
+    {
+      rounded: true,
+      size: "sm",
+      class: "px-2.5", // increased from px-1.5
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "px-3", // increased from px-2
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "px-3.5", // increased from px-2.5
+    },
+    // When rounded AND has dismiss button, adjust right padding accordingly
+    {
+      rounded: true,
+      size: "sm",
+      class: "has-[button]:pr-1.5", // slightly more than regular rounded
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "has-[button]:pr-1.5", // slightly more than regular rounded
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "has-[button]:pr-2", // slightly more than regular rounded
+    },
   ],
 });
 
@@ -87,6 +119,7 @@ interface BadgeProps
   bordered?: boolean;
   /**
    * Whether to use full border radius for a pill shape.
+   * Automatically adds extra horizontal padding for better visual balance.
    * @default false
    */
   rounded?: boolean;
@@ -147,7 +180,7 @@ interface BadgeProps
  * // With or without border
  * <Badge bordered>Bordered</Badge>
  *
- * // Rounded (pill-shaped)
+ * // Rounded (pill-shaped) with automatic extra padding
  * <Badge rounded>Pill Badge</Badge>
  * <Badge rounded variant="success">Success Pill</Badge>
  *

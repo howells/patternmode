@@ -1,18 +1,21 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import {
-  DefaultExample,
-  WithIconsExample,
-  WithDisabledOptionsExample,
+  AsyncExample,
+  ClearableExample,
   CustomRenderExample,
-  ControlledStateExample,
-  WithHookExample
+  DefaultExample,
+  InfiniteScrollExample,
+  NonSearchableExample,
+  WithHookExample,
+  WithIconsExample,
 } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "combobox",
   name: "Combobox",
-  description: "Searchable select component built with Command and Popover, combining text input with dropdown selection.",
+  description:
+    "Searchable select component built with Command and Popover, combining text input with dropdown selection.",
   category: "inputs" as const,
   icon: "Search",
 
@@ -23,26 +26,26 @@ export const componentConfig: ComponentConfig = {
       name: "placeholder",
       type: "string",
       defaultValue: "Select option...",
-      description: "Placeholder text for the trigger button."
+      description: "Placeholder text for the trigger button.",
     },
     {
       name: "searchPlaceholder",
       type: "string",
       defaultValue: "Search options...",
-      description: "Placeholder text for the search input."
+      description: "Placeholder text for the search input.",
     },
     {
       name: "emptyMessage",
       type: "string",
       defaultValue: "No options found.",
-      description: "Message to show when no options match the search."
+      description: "Message to show when no options match the search.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the combobox is disabled."
-    }
+      description: "Whether the combobox is disabled.",
+    },
   ],
   examples: [
     {
@@ -69,7 +72,8 @@ export const componentConfig: ComponentConfig = {
       searchPlaceholder="Search fruits..."
     />
   );
-};`},
+};`,
+    },
     {
       id: "with-icons",
       title: "With Icons",
@@ -78,24 +82,24 @@ export const componentConfig: ComponentConfig = {
   const [value, setValue] = useState("");
 
   const options: ComboboxOption[] = [
-    { 
-      value: "home", 
-      label: "Home", 
+    {
+      value: "home",
+      label: "Home",
       leftIcon: ({ className }) => <Home className={className} />
     },
-    { 
-      value: "profile", 
-      label: "Profile", 
+    {
+      value: "profile",
+      label: "Profile",
       leftIcon: ({ className }) => <User className={className} />
     },
-    { 
-      value: "settings", 
-      label: "Settings", 
+    {
+      value: "settings",
+      label: "Settings",
       leftIcon: ({ className }) => <Settings className={className} />
     },
-    { 
-      value: "help", 
-      label: "Help", 
+    {
+      value: "help",
+      label: "Help",
       leftIcon: ({ className }) => <HelpCircle className={className} />
     }
   ];
@@ -109,7 +113,8 @@ export const componentConfig: ComponentConfig = {
       searchPlaceholder="Search pages..."
     />
   );
-};`},
+};`,
+    },
     {
       id: "with-disabled-options",
       title: "With Disabled Options",
@@ -134,7 +139,8 @@ export const componentConfig: ComponentConfig = {
       searchPlaceholder="Search options..."
     />
   );
-};`},
+};`,
+    },
     {
       id: "custom-render",
       title: "Custom Render",
@@ -143,19 +149,19 @@ export const componentConfig: ComponentConfig = {
   const [value, setValue] = useState("");
 
   const options: ComboboxOption[] = [
-    { 
-      value: "john", 
-      label: "John Doe", 
+    {
+      value: "john",
+      label: "John Doe",
       leftIcon: ({ className }) => <User className={className} />
     },
-    { 
-      value: "jane", 
-      label: "Jane Smith", 
+    {
+      value: "jane",
+      label: "Jane Smith",
       leftIcon: ({ className }) => <User className={className} />
     },
-    { 
-      value: "bob", 
-      label: "Bob Johnson", 
+    {
+      value: "bob",
+      label: "Bob Johnson",
       leftIcon: ({ className }) => <User className={className} />
     }
   ];
@@ -167,7 +173,7 @@ export const componentConfig: ComponentConfig = {
       onValueChange={setValue}
       placeholder="Select a user..."
       searchPlaceholder="Search users..."
-      renderTrigger={(selectedOption) => 
+      renderTrigger={(selectedOption) =>
         selectedOption ? (
           <div className="flex items-center gap-2">
             <User className="size-4" />
@@ -190,7 +196,8 @@ export const componentConfig: ComponentConfig = {
       )}
     />
   );
-};`},
+};`,
+    },
     {
       id: "controlled-state",
       title: "Controlled State",
@@ -216,7 +223,7 @@ export const componentConfig: ComponentConfig = {
       <div className="text-sm">
         <strong>Selected:</strong> {value || "None"}
       </div>
-      
+
       <Combobox
         options={filteredOptions}
         value={value}
@@ -224,16 +231,16 @@ export const componentConfig: ComponentConfig = {
         placeholder="Select a fruit..."
         searchPlaceholder="Search fruits..."
       />
-      
+
       <div className="flex gap-2">
-        <Button 
+        <Button
           onClick={() => setValue("banana")}
           size="sm"
           variant="outline"
         >
           Select Banana
         </Button>
-        <Button 
+        <Button
           onClick={() => setValue("")}
           size="sm"
           variant="outline"
@@ -243,7 +250,8 @@ export const componentConfig: ComponentConfig = {
       </div>
     </div>
   );
-};`},
+};`,
+    },
     {
       id: "with-hook",
       title: "With useCombobox Hook",
@@ -264,7 +272,7 @@ export const componentConfig: ComponentConfig = {
       <div className="text-sm">
         <strong>Selected:</strong> {combobox.value || "None"}
       </div>
-      
+
       <Combobox
         options={options}
         value={combobox.value}
@@ -274,6 +282,7 @@ export const componentConfig: ComponentConfig = {
       />
     </div>
   );
-};`}
-  ]
+};`,
+    },
+  ],
 };

@@ -3,40 +3,89 @@
 import React from "react";
 import { Textarea } from "./textarea";
 
-// Example component for preview system
-export const TextareaExample = ({
-  placeholder = "Enter your text here...",
-  rows = 3,
-  disabled = false,
-  hasError = false,
-  resize = "vertical",
-  ...props
-}: {
-  placeholder?: string;
-  rows?: number;
-  disabled?: boolean;
+interface TextareaExampleProps {
   hasError?: boolean;
-  resize?: "none" | "both" | "horizontal" | "vertical";
+  disabled?: boolean;
+  autoResize?: boolean;
+  minRows?: number;
+  maxRows?: number;
+  placeholder?: string;
+  showWithContent?: boolean;
   [key: string]: unknown;
-}) => {
-  // Map resize prop to className
-  const resizeClass = {
-    none: "resize-none",
-    both: "resize",
-    horizontal: "resize-x",
-    vertical: "resize-y",
-  }[resize];
+}
+
+export function TextareaExample({
+  hasError = false,
+  disabled = false,
+  autoResize = true,
+  minRows = 2,
+  maxRows = 6,
+  placeholder = "Start typing to see auto-resize in action...",
+  showWithContent = false,
+  ...props
+}: TextareaExampleProps) {
+  const [value, setValue] = React.useState(
+    showWithContent
+      ? "This textarea demonstrates auto-resize functionality.\n\nTry adding more lines to see it expand automatically."
+      : ""
+  );
 
   return (
-    <div className="w-full max-w-md">
-      <Textarea
-        placeholder={placeholder}
-        rows={rows}
-        disabled={disabled}
-        hasError={hasError}
-        className={resizeClass}
-        {...props}
-      />
+    <Textarea
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      hasError={hasError}
+      disabled={disabled}
+      autoResize={autoResize}
+      minRows={minRows}
+      maxRows={maxRows}
+      {...props}
+    />
+  );
+}
+
+// Default export for the preview system
+export default function Example() {
+  return (
+    <div className="space-y-8">
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Textarea</h3>
+        <div className="space-y-4">
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">Auto-resizing textarea</p>
+            <TextareaExample />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">With initial content</p>
+            <TextareaExample showWithContent />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">Error state</p>
+            <TextareaExample
+              hasError
+              placeholder="This field has an error..."
+            />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">Disabled state</p>
+            <TextareaExample
+              disabled
+              showWithContent
+              placeholder="This textarea is disabled"
+            />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">
+              Fixed height (no auto-resize)
+            </p>
+            <TextareaExample
+              autoResize={false}
+              placeholder="Fixed height - content will scroll when it overflows..."
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}

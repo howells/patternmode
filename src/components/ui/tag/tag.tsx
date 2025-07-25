@@ -4,6 +4,7 @@ import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { X } from "lucide-react";
 import React from "react";
+import { Icon } from "../icon";
 
 import { cx } from "@/lib/utils";
 import { Avatar, type AvatarProps } from "../avatar/avatar";

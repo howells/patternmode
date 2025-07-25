@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
 import {
   Menu,
-  MenuTrigger,
+  MenuCheckboxItem,
   MenuContent,
   MenuItem,
-  MenuSeparator,
   MenuLabel,
-  MenuCheckboxItem,
   MenuRadioGroup,
   MenuRadioItem,
+  MenuSeparator,
   MenuSubmenu,
-  MenuSubmenuTrigger,
   MenuSubmenuContent,
+  MenuSubmenuTrigger,
+  MenuTrigger,
 } from "@/components/ui/menu";
-import { Button } from "@/components/ui/button";
-import { Plus, Copy, Clipboard } from "lucide-react";
+import { Clipboard, Copy, Plus } from "lucide-react";
+import React, { useState } from "react";
 
 export function DefaultMenuExample() {
   return (
@@ -39,18 +40,24 @@ export function WithIconsExample() {
       <MenuTrigger render={<Button />}>Edit Menu</MenuTrigger>
       <MenuContent>
         <MenuItem>
-          <Plus className="mr-2 size-4" />
-          New
+          <div className="flex items-center gap-2">
+            <Icon icon={Plus} />
+            New
+          </div>
           <span className="ml-auto text-xs">⌘N</span>
         </MenuItem>
         <MenuItem>
-          <Copy className="mr-2 size-4" />
-          Copy
+          <div className="flex items-center gap-2">
+            <Icon icon={Copy} />
+            Copy
+          </div>
           <span className="ml-auto text-xs">⌘C</span>
         </MenuItem>
         <MenuItem>
-          <Clipboard className="mr-2 size-4" />
-          Paste
+          <div className="flex items-center gap-2">
+            <Icon icon={Clipboard} />
+            Paste
+          </div>
           <span className="ml-auto text-xs">⌘V</span>
         </MenuItem>
       </MenuContent>

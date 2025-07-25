@@ -7,6 +7,9 @@ import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { createButtonStyleVariants } from "../button/button";
+
+const buttonStyleVariants = createButtonStyleVariants("destructive");
 
 const toggleGroupVariants = tv({
   slots: {
@@ -48,6 +51,42 @@ const toggleGroupVariants = tv({
         root: "border-transparent bg-transparent",
         item: "hover:bg-zinc-100 dark:hover:bg-zinc-800",
       },
+      // Button-style variants using shared button styling
+      "button-default": {
+        root: "border-transparent bg-transparent gap-2 p-0",
+        item: [
+          ...buttonStyleVariants.base,
+          ...buttonStyleVariants.variants.default,
+        ],
+      },
+      "button-secondary": {
+        root: "border-transparent bg-transparent gap-2 p-0",
+        item: [
+          ...buttonStyleVariants.base,
+          ...buttonStyleVariants.variants.secondary,
+        ],
+      },
+      "button-outline": {
+        root: "border-transparent bg-transparent gap-2 p-0",
+        item: [
+          ...buttonStyleVariants.base,
+          ...buttonStyleVariants.variants.outline,
+        ],
+      },
+      "button-ghost": {
+        root: "border-transparent bg-transparent gap-2 p-0",
+        item: [
+          ...buttonStyleVariants.base,
+          ...buttonStyleVariants.variants.ghost,
+        ],
+      },
+      "button-destructive": {
+        root: "border-transparent bg-transparent gap-2 p-0",
+        item: [
+          ...buttonStyleVariants.base,
+          ...buttonStyleVariants.variants.destructive,
+        ],
+      },
     },
     size: {
       sm: {
@@ -61,6 +100,19 @@ const toggleGroupVariants = tv({
       lg: {
         root: "gap-1 p-1",
         item: "size-10 text-base rounded-md",
+      },
+      // Button-style sizes using shared button sizing
+      "button-sm": {
+        root: "gap-2 p-0",
+        item: buttonStyleVariants.sizes.sm,
+      },
+      "button-default": {
+        root: "gap-2 p-0",
+        item: buttonStyleVariants.sizes.default,
+      },
+      "button-lg": {
+        root: "gap-2 p-0",
+        item: buttonStyleVariants.sizes.lg,
       },
     },
     orientation: {

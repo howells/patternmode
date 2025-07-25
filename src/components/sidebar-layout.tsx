@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useSidebarView } from "@/hooks/use-sidebar-view";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import {
   COMPONENT_LIST,
@@ -10,9 +11,24 @@ import {
 import { useWindowSize } from "@uidotdev/usehooks";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
-import { Pilcrow } from "lucide-react";
+import { List, Pilcrow, Rows3 } from "lucide-react";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
+import { getDynamicIconByName } from "@/components/ui/icon-select/icon-select";
+
+// Create a stable icon component cache to prevent re-renders
+const iconComponentCache = new Map<string, React.ComponentType<any> | null>();
+
+function getStableIconComponent(iconName: string | undefined) {
+  if (!iconName) return null;
+  
+  if (!iconComponentCache.has(iconName)) {
+    const IconComponent = getDynamicIconByName(iconName);
+    iconComponentCache.set(iconName, IconComponent);
+  }
+  
+  return iconComponentCache.get(iconName) || null;
+}
 import { ComponentSearch } from "./component-search";
 import { Badge } from "./ui/badge/badge";
 import {
@@ -24,6 +40,7 @@ import {
   SidebarLabel,
   SidebarSection,
 } from "./ui/sidebar";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group/toggle-group";
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
@@ -48,6 +65,14 @@ function SidebarContent() {
   const pathname = usePathname();
   const segments = useSelectedLayoutSegments();
   const { isCollapsed, toggleCollapsed } = useSidebar();
+  const {
+    viewMode,
+    toggleViewMode,
+    isGrouped,
+    isAlphabetical,
+    setGroupedView,
+    setAlphabeticalView,
+  } = useSidebarView();
 
   // Category display names and order
   const categoryConfig = [
@@ -73,6 +98,28 @@ function SidebarContent() {
     );
   };
 
+  // Get all components for alphabetical view
+  const getAllComponents = () => {
+    const allComponents: Array<
+      ComponentConfig & { category: string; categoryName: string }
+    > = [];
+
+    categoryConfig.forEach((category) => {
+      const components = getComponentsByCategory(
+        category.key as keyof typeof COMPONENT_LIST
+      );
+      components.forEach((component) => {
+        allComponents.push({
+          ...component,
+          category: category.key,
+          categoryName: category.name,
+        });
+      });
+    });
+
+    return allComponents.sort((a, b) => a.name.localeCompare(b.name));
+  };
+
   // Helper function to render a category section
   const renderCategorySection = (
     categoryName: string,
@@ -90,18 +137,22 @@ function SidebarContent() {
           defaultOpen={true}
           isCollapsed={isCollapsed}
         >
-          {components.map((config) => (
-            <SidebarItem
-              key={config.id}
-              href={`/${categoryPath}/${config.id}`}
-              current={isCurrentComponent(categoryPath, config.id)}
-              isCollapsed={isCollapsed}
-            >
-              <SidebarLabel isCollapsed={isCollapsed}>
-                {config.name}
-              </SidebarLabel>
-            </SidebarItem>
-          ))}
+          {components.map((config) => {
+            const IconComponent = getStableIconComponent(config.icon);
+            return (
+              <SidebarItem
+                key={config.id}
+                href={`/${categoryPath}/${config.id}`}
+                current={isCurrentComponent(categoryPath, config.id)}
+                isCollapsed={isCollapsed}
+                leftIcon={IconComponent}
+              >
+                <SidebarLabel isCollapsed={isCollapsed}>
+                  {config.name}
+                </SidebarLabel>
+              </SidebarItem>
+            );
+          })}
         </SidebarSection>
         {showDivider && components.length > 0 && (
           <SidebarDivider isCollapsed={isCollapsed} />
@@ -144,22 +195,121 @@ function SidebarContent() {
 
         <SidebarDivider isCollapsed={isCollapsed} />
 
-        {categoryConfig.map((category, index) => {
-          const components = getComponentsByCategory(
-            category.key as keyof typeof COMPONENT_LIST
-          ).sort((a, b) => a.name.localeCompare(b.name));
-          const isLastCategory = index === categoryConfig.length - 1;
-          return (
-            <React.Fragment key={category.key}>
-              {renderCategorySection(
-                category.name,
-                category.key,
-                components,
-                !isLastCategory
-              )}
-            </React.Fragment>
-          );
-        })}
+        {/* View Toggle Button */}
+        {!isCollapsed && (
+          <div className="px-3 py-2">
+            <ToggleGroup
+              value={[viewMode]}
+              onValueChange={(value) => {
+                if (value.length > 0) {
+                  const newMode = value[0] as "grouped" | "alphabetical";
+                  if (newMode === "grouped") {
+                    setGroupedView();
+                  } else {
+                    setAlphabeticalView();
+                  }
+                }
+              }}
+              className="w-full"
+            >
+              <ToggleGroupItem
+                value="grouped"
+                aria-label="Grouped view"
+                className="flex-1"
+              >
+                <Rows3 className="size-4 mr-2" />
+                Grouped
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="alphabetical"
+                aria-label="Alphabetical view"
+                className="flex-1"
+              >
+                <List className="size-4 mr-2" />
+                Alphabetical
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        )}
+
+        {isCollapsed && (
+          <div className="px-2 py-2">
+            <ToggleGroup
+              value={[viewMode]}
+              onValueChange={(value) => {
+                if (value.length > 0) {
+                  const newMode = value[0] as "grouped" | "alphabetical";
+                  if (newMode === "grouped") {
+                    setGroupedView();
+                  } else {
+                    setAlphabeticalView();
+                  }
+                }
+              }}
+              size="sm"
+            >
+              <ToggleGroupItem value="grouped" aria-label="Grouped view">
+                <Rows3 className="size-3" />
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="alphabetical"
+                aria-label="Alphabetical view"
+              >
+                <List className="size-3" />
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        )}
+
+        <SidebarDivider isCollapsed={isCollapsed} />
+
+        {isGrouped ? (
+          // Grouped view (original)
+          categoryConfig.map((category, index) => {
+            const components = getComponentsByCategory(
+              category.key as keyof typeof COMPONENT_LIST
+            ).sort((a, b) => a.name.localeCompare(b.name));
+            const isLastCategory = index === categoryConfig.length - 1;
+            return (
+              <React.Fragment key={category.key}>
+                {renderCategorySection(
+                  category.name,
+                  category.key,
+                  components,
+                  !isLastCategory
+                )}
+              </React.Fragment>
+            );
+          })
+        ) : (
+          // Alphabetical view
+          <SidebarSection
+            title="All Components"
+            defaultOpen={true}
+            isCollapsed={isCollapsed}
+          >
+            {getAllComponents().map((component) => (
+              <SidebarItem
+                key={component.id}
+                href={`/${component.category}/${component.id}`}
+                current={isCurrentComponent(component.category, component.id)}
+                isCollapsed={isCollapsed}
+              >
+                <SidebarLabel isCollapsed={isCollapsed}>
+                  {component.name}
+                  {!isCollapsed && (
+                    <Badge
+                      variant="neutral"
+                      className="ml-auto text-xs opacity-60"
+                    >
+                      {component.categoryName}
+                    </Badge>
+                  )}
+                </SidebarLabel>
+              </SidebarItem>
+            ))}
+          </SidebarSection>
+        )}
       </SidebarBody>
     </>
   );

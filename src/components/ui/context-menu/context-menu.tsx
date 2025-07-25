@@ -2,11 +2,11 @@
 
 /**
  * Context Menu Components
- * 
+ *
  * A collection of components for creating context menus that appear on right-click
  * or long press. Built on Base UI Context Menu (https://base-ui.com/react/components/context-menu)
  * for accessibility and keyboard navigation.
- * 
+ *
  * Features:
  * - Right-click and long-press activation
  * - Nested submenu support
@@ -14,7 +14,7 @@
  * - Keyboard shortcuts and hints
  * - Accessible design with proper ARIA attributes
  * - Smooth animations and positioning
- * 
+ *
  * @example
  * ```tsx
  * // Basic context menu
@@ -28,7 +28,7 @@
  *     <ContextMenuItem>Paste</ContextMenuItem>
  *   </ContextMenuContent>
  * </ContextMenu>
- * 
+ *
  * // With shortcuts and separators
  * <ContextMenu>
  *   <ContextMenuTrigger>
@@ -42,7 +42,7 @@
  *     <ContextMenuItem>Delete</ContextMenuItem>
  *   </ContextMenuContent>
  * </ContextMenu>
- * 
+ *
  * // With checkbox and radio items
  * <ContextMenu>
  *   <ContextMenuTrigger>
@@ -61,7 +61,7 @@
  *     </ContextMenuRadioGroup>
  *   </ContextMenuContent>
  * </ContextMenu>
- * 
+ *
  * // With submenu
  * <ContextMenu>
  *   <ContextMenuTrigger>
@@ -80,7 +80,7 @@
  *     <ContextMenuItem>Settings</ContextMenuItem>
  *   </ContextMenuContent>
  * </ContextMenu>
- * 
+ *
  * // With icons
  * <ContextMenu>
  *   <ContextMenuTrigger>
@@ -115,10 +115,11 @@ import { cx } from "@/lib/utils";
 import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import * as React from "react";
+import { Icon as IconComponent } from "../icon";
 
 /**
  * Root context menu component.
- * 
+ *
  * Based on Base UI Context Menu (https://base-ui.com/react/components/context-menu),
  * creates the context menu context that appears on right-click or long press.
  * Provides accessible, unstyled foundation for context menus.
@@ -127,7 +128,7 @@ const ContextMenu = BaseContextMenu.Root;
 
 /**
  * Context menu trigger component.
- * 
+ *
  * Defines the area that will open the context menu when right-clicked or long-pressed.
  * Wraps content that should respond to context menu interactions.
  */
@@ -135,7 +136,7 @@ const ContextMenuTrigger = BaseContextMenu.Trigger;
 
 /**
  * Context menu group component.
- * 
+ *
  * Groups related menu items together for better organization and accessibility.
  * Used to create logical sections within the menu.
  */
@@ -143,7 +144,7 @@ const ContextMenuGroup = BaseContextMenu.Group;
 
 /**
  * Context menu submenu root component.
- * 
+ *
  * Creates nested submenu functionality within context menus.
  * Provides context for submenu triggers and content.
  */
@@ -151,7 +152,7 @@ const ContextMenuSubmenu = BaseContextMenu.SubmenuRoot;
 
 /**
  * Context menu radio group component.
- * 
+ *
  * Groups radio items together for mutually exclusive selection.
  * Only one radio item can be selected within a group.
  */
@@ -159,7 +160,7 @@ const ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
 
 /**
  * Context menu submenu trigger component.
- * 
+ *
  * Trigger element for opening nested submenus. Displays a chevron
  * indicator and handles submenu positioning and interaction.
  *
@@ -188,13 +189,13 @@ const ContextMenuSubmenuTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto size-4 shrink-0" aria-hidden="true" />
+    <IconComponent icon={ChevronRight} className="ml-auto" aria-hidden="true" />
   </BaseContextMenu.SubmenuTrigger>
 ));
 
 /**
  * Context menu submenu content component.
- * 
+ *
  * Container for submenu items with proper positioning and styling.
  * Appears adjacent to the parent menu with smooth animations.
  *
@@ -236,7 +237,7 @@ const ContextMenuSubmenuContent = React.forwardRef<
 
 /**
  * Main context menu content component.
- * 
+ *
  * Container for menu items with positioning, styling, and animation support.
  * Appears at the pointer location with configurable offset and alignment.
  *
@@ -303,7 +304,7 @@ const ContextMenuContent = React.forwardRef<
 
 /**
  * Context menu item component.
- * 
+ *
  * Individual interactive menu item with support for shortcuts and hints.
  * Provides hover and focus states with accessible keyboard navigation.
  *
@@ -359,7 +360,7 @@ const ContextMenuItem = React.forwardRef<
 
 /**
  * Context menu checkbox item component.
- * 
+ *
  * Menu item with checkbox functionality for toggleable options.
  * Shows check indicator when selected with optional shortcuts and hints.
  *
@@ -402,9 +403,10 @@ const ContextMenuCheckboxItem = React.forwardRef<
     >
       <span className="absolute left-2 flex size-4 items-center justify-center">
         <BaseContextMenu.CheckboxItemIndicator>
-          <Check
+          <IconComponent
+            icon={Check}
             aria-hidden="true"
-            className="size-full shrink-0 text-zinc-800 dark:text-zinc-200"
+            className="size-full text-zinc-800 dark:text-zinc-200"
           />
         </BaseContextMenu.CheckboxItemIndicator>
       </span>
@@ -433,7 +435,7 @@ const ContextMenuCheckboxItem = React.forwardRef<
 
 /**
  * Context menu radio item component.
- * 
+ *
  * Menu item with radio button functionality for mutually exclusive selection.
  * Shows dot indicator when selected with optional shortcuts and hints.
  *
@@ -470,15 +472,17 @@ const ContextMenuRadioItem = React.forwardRef<
   >
     <span className="absolute left-2 flex size-4 items-center justify-center">
       <BaseContextMenu.RadioItemIndicator>
-        <CircleDot
+        <IconComponent
+          icon={CircleDot}
           aria-hidden="true"
-          className="size-full shrink-0 text-blue-500 dark:text-blue-500"
+          className="size-full text-blue-500 dark:text-blue-500"
         />
       </BaseContextMenu.RadioItemIndicator>
       <span className="data-checked:hidden">
-        <Circle
+        <IconComponent
+          icon={Circle}
           aria-hidden="true"
-          className="size-full shrink-0 text-zinc-300 dark:text-zinc-700"
+          className="size-full text-zinc-300 dark:text-zinc-700"
         />
       </span>
     </span>
@@ -506,7 +510,7 @@ const ContextMenuRadioItem = React.forwardRef<
 
 /**
  * Context menu label component.
- * 
+ *
  * Label for menu groups providing section headers and organization.
  * Displays as non-interactive text with subtle styling.
  *
@@ -531,7 +535,7 @@ const ContextMenuLabel = React.forwardRef<
 
 /**
  * Context menu separator component.
- * 
+ *
  * Visual divider between menu sections for better organization.
  * Renders as a subtle horizontal line.
  *
@@ -554,7 +558,7 @@ const ContextMenuSeparator = React.forwardRef<
 
 /**
  * Context menu icon wrapper component.
- * 
+ *
  * Wrapper for icons in menu items with consistent styling and theming.
  * Provides proper color states for normal and disabled items.
  *

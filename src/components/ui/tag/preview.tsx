@@ -1,156 +1,101 @@
 "use client";
 
+import { Code, MapPin, User } from "lucide-react";
 import React from "react";
 import { Tag } from "./tag";
 
-// Example component for preview system
-export const TagExample = ({
-  label,
-  value = "Design",
-  count,
-  countClassName,
-  dismissible = false,
-  onDismiss,
-  avatar,
-  dismissAriaLabel = "Remove tag",
-  showBasicTags = false,
-  showWithLabels = false,
-  showWithCounts = false,
+// Tag examples
+export function TagExample({
+  showLabels = false,
+  showCounts = false,
   showDismissible = false,
-  showWithAvatars = false,
-  showComplex = false,
+  showAvatars = false,
   ...props
 }: {
-  label?: string;
-  value?: string;
-  count?: string | number;
-  countClassName?: string;
-  dismissible?: boolean;
-  onDismiss?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  avatar?: {
-    src?: string;
-    alt?: string;
-    initials?: string;
-  };
-  dismissAriaLabel?: string;
-  showBasicTags?: boolean;
-  showWithLabels?: boolean;
-  showWithCounts?: boolean;
+  showLabels?: boolean;
+  showCounts?: boolean;
   showDismissible?: boolean;
-  showWithAvatars?: boolean;
-  showComplex?: boolean;
+  showAvatars?: boolean;
   [key: string]: unknown;
-}) => {
-  // Show basic tags
-  if (showBasicTags) {
+}) {
+  if (showAvatars) {
     return (
-      <div className="flex flex-wrap gap-2" {...props}>
-        <Tag value="Design" />
-        <Tag value="Development" />
-        <Tag value="Marketing" />
-        <Tag value="Research" />
-      </div>
-    );
-  }
-
-  // Show tags with labels
-  if (showWithLabels) {
-    return (
-      <div className="flex flex-wrap gap-2" {...props}>
-        <Tag label="Department" value="Engineering" />
-        <Tag label="Location" value="San Francisco" />
-        <Tag label="Team" value="Frontend" />
-        <Tag label="Role" value="Senior" />
-      </div>
-    );
-  }
-
-  // Show tags with counts
-  if (showWithCounts) {
-    return (
-      <div className="flex flex-wrap gap-2" {...props}>
-        <Tag value="Issues" count={12} />
-        <Tag value="Pull Requests" count="3 open" />
-        <Tag value="Contributors" count={45} />
-        <Tag value="Stars" count="1.2k" />
-      </div>
-    );
-  }
-
-  // Show dismissible tags
-  if (showDismissible) {
-    return (
-      <div className="flex flex-wrap gap-2" {...props}>
-        <Tag
-          value="React"
-          dismissible
-          onDismiss={() => console.log("Dismissed React")}
-        />
-        <Tag
-          value="TypeScript"
-          dismissible
-          onDismiss={() => console.log("Dismissed TypeScript")}
-        />
-        <Tag
-          value="Next.js"
-          dismissible
-          onDismiss={() => console.log("Dismissed Next.js")}
-        />
-      </div>
-    );
-  }
-
-  // Show tags with avatars
-  if (showWithAvatars) {
-    return (
-      <div className="flex flex-wrap gap-2" {...props}>
+      <div className="flex gap-2">
         <Tag value="John Doe" avatar={{ initials: "JD" }} />
-        <Tag
-          value="Jane Smith"
-          avatar={{ initials: "JS" }}
-          dismissible
-          onDismiss={() => console.log("Dismissed Jane Smith")}
-        />
+        <Tag value="Jane Smith" avatar={{ initials: "JS" }} dismissible />
         <Tag value="Alex Johnson" avatar={{ initials: "AJ" }} count="Admin" />
       </div>
     );
   }
 
-  // Show complex tags
-  if (showComplex) {
+  if (showDismissible) {
     return (
-      <div className="flex flex-wrap gap-2" {...props}>
-        <Tag
-          label="Assignee"
-          value="Sarah Wilson"
-          avatar={{ initials: "SW" }}
-          dismissible
-          onDismiss={() => console.log("Dismissed assignee")}
-        />
-        <Tag
-          label="Priority"
-          value="High"
-          count="3 days left"
-          dismissible
-          onDismiss={() => console.log("Dismissed priority tag")}
-        />
+      <div className="flex gap-2">
+        <Tag value="React" dismissible />
+        <Tag value="TypeScript" dismissible />
+        <Tag value="Next.js" dismissible />
       </div>
     );
   }
 
-  // Default single tag
+  if (showCounts) {
+    return (
+      <div className="flex gap-2">
+        <Tag value="Issues" count={12} />
+        <Tag value="Pull Requests" count="3 open" />
+        <Tag value="Contributors" count={45} />
+      </div>
+    );
+  }
+
+  if (showLabels) {
+    return (
+      <div className="flex gap-2">
+        <Tag label="Department" value="Engineering" />
+        <Tag label="Location" value="San Francisco" />
+        <Tag label="Team" value="Frontend" />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center p-8" {...props}>
-      <Tag
-        label={label}
-        value={value}
-        count={count}
-        countClassName={countClassName}
-        dismissible={dismissible}
-        onDismiss={onDismiss}
-        avatar={avatar}
-        dismissAriaLabel={dismissAriaLabel}
-      />
+    <div className="flex gap-2">
+      <Tag value="Design" />
+      <Tag value="Development" />
+      <Tag value="Marketing" />
     </div>
   );
-};
+}
+
+// Default export for the preview system
+export function Example() {
+  return (
+    <div className="space-y-8">
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium">Tags</h3>
+        <div className="space-y-4">
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">Basic tags</p>
+            <TagExample />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">With labels</p>
+            <TagExample showLabels />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">With counts</p>
+            <TagExample showCounts />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">Dismissible</p>
+            <TagExample showDismissible />
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 mb-2">With avatars</p>
+            <TagExample showAvatars />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
