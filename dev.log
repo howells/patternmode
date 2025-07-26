@@ -1,0 +1,296 @@
+
+> patternmode@0.1.0 dev /Users/danielhowells/Sites/patternmode
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by process 15167
+56626, using available port 3001 instead.
+   ▲ Next.js 15.4.3 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.68.66:3001
+
+ ✓ Starting...
+ ✓ Ready in 900ms
+ ○ Compiling /[category]/[component] ...
+ ✓ Compiled /[category]/[component] in 8.2s
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+ GET /inputs/combobox 200 in 9835ms
+ ✓ Compiled /favicon.ico in 97ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 340ms
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+ GET /inputs/combobox 200 in 307ms
+ ○ Compiling /[category]/[component] ...
+ ✓ Compiled in 8.9s
+ ⚠ Fast Refresh had to perform a full reload when ./node_modules/.pnpm/@tanstack+query-devtools@5.81.2/node_modules/@tanstack/query-devtools/build/DevtoolsComponent/HH7B3BHX.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /[category]/[component] in 4s
+ ✓ Compiled in 194ms
+ ⚠ Fast Refresh had to perform a full reload when ./node_modules/.pnpm/@tanstack+query-devtools@5.81.2/node_modules/@tanstack/query-devtools/build/DevtoolsComponent/HH7B3BHX.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /inputs/combobox 200 in 532ms
+ ○ Compiling /[category]/[component] ...
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+ ✓ Compiled /[category]/[component] in 2.7s
+ GET /inputs/combobox 200 in 7145ms
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+ GET /inputs/combobox 200 in 2943ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 217ms
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `Stack`. It was passed a child from ComponentExamples. See https://react.dev/link/warning-keys for more information.
+ GET /inputs/combobox 200 in 323ms
+ ✓ Compiled in 511ms
+ ✓ Compiled /[category]/[component] in 206ms
+ GET /inputs/combobox 200 in 480ms
+ GET /inputs/combobox 200 in 868ms
+ ✓ Compiled in 341ms
+ ✓ Compiled in 234ms
+ ✓ Compiled /[category]/[component] in 136ms
+ GET /inputs/combobox 200 in 330ms
+ ✓ Compiled /[category]/[component] in 141ms
+ GET /inputs/combobox 200 in 373ms
+ ○ Compiling /api/icons ...
+ ✓ Compiled /api/icons in 1962ms
+ GET /api/icons?page=0&limit=20 200 in 2166ms
+ GET /inputs/combobox 200 in 1024ms
+ GET /api/icons?page=0&limit=20 200 in 32ms
+ GET /api/icons?page=0&limit=20&search=arrow 200 in 29ms
+ GET /api/icons?page=0&limit=20&search=ArrowDown 200 in 18ms
+ GET /inputs/combobox 200 in 322ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 221ms
+ GET /api/icons?page=0&limit=20 200 in 22ms
+ GET /api/icons?page=0&limit=20 200 in 76ms
+ GET /inputs/combobox 200 in 272ms
+ GET /api/icons?page=0&limit=20 200 in 94ms
+ GET /api/icons?page=0&limit=20 200 in 39ms
+ ✓ Compiled in 320ms
+ ✓ Compiled /[category]/[component] in 198ms
+ GET /inputs/combobox 200 in 440ms
+ GET /inputs/combobox 200 in 1027ms
+ GET /api/icons?page=0&limit=20 200 in 70ms
+ GET /api/icons?page=0&limit=20 200 in 54ms
+ GET /inputs/combobox 200 in 325ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 222ms
+ GET /api/icons?page=0&limit=20 200 in 51ms
+ GET /api/icons?page=0&limit=20 200 in 32ms
+ GET /inputs/combobox 200 in 379ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 220ms
+ GET /api/icons?page=0&limit=20 200 in 58ms
+ GET /api/icons?page=0&limit=20 200 in 49ms
+ ✓ Compiled in 232ms
+ ✓ Compiled /[category]/[component] in 253ms
+ GET /inputs/combobox 200 in 471ms
+ GET /inputs/combobox 200 in 789ms
+ GET /api/icons?page=0&limit=20 200 in 53ms
+ GET /api/icons?page=0&limit=20 200 in 52ms
+ GET /inputs/combobox 200 in 378ms
+ GET /inputs/combobox 200 in 420ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 226ms
+ GET /api/icons?page=0&limit=20 200 in 28ms
+ GET /api/icons?page=0&limit=20 200 in 128ms
+ ✓ Compiled in 365ms
+ ✓ Compiled /[category]/[component] in 298ms
+ GET /inputs/combobox 200 in 583ms
+ GET /inputs/combobox 200 in 801ms
+ GET /api/icons?page=0&limit=20 200 in 82ms
+ GET /api/icons?page=0&limit=20 200 in 16ms
+ ✓ Compiled in 284ms
+ ✓ Compiled /[category]/[component] in 205ms
+ GET /inputs/combobox 200 in 470ms
+ GET /inputs/combobox 200 in 818ms
+ GET /api/icons?page=0&limit=20 200 in 61ms
+ GET /api/icons?page=0&limit=20 200 in 45ms
+ GET /inputs/combobox 200 in 369ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 227ms
+ GET /api/icons?page=0&limit=20 200 in 168ms
+ GET /api/icons?page=0&limit=20 200 in 31ms
+ ✓ Compiled in 251ms
+ ✓ Compiled /[category]/[component] in 160ms
+ GET /inputs/combobox 200 in 404ms
+ GET /inputs/combobox 200 in 875ms
+ GET /api/icons?page=0&limit=20 200 in 245ms
+ GET /api/icons?page=0&limit=20 200 in 19ms
+ GET /inputs/combobox 200 in 351ms
+ GET /api/icons?page=0&limit=20 200 in 192ms
+ GET /api/icons?page=0&limit=20 200 in 36ms
+ ✓ Compiled in 403ms
+ ✓ Compiled /[category]/[component] in 316ms
+ GET /inputs/combobox 200 in 583ms
+ GET /inputs/combobox 200 in 850ms
+ GET /api/icons?page=0&limit=20 200 in 69ms
+ GET /api/icons?page=0&limit=20 200 in 47ms
+ GET /inputs/combobox 200 in 350ms
+ GET /api/icons?page=0&limit=20 200 in 155ms
+ GET /api/icons?page=0&limit=20 200 in 37ms
+ GET /inputs/date-picker 200 in 55ms
+ GET /inputs/combobox 200 in 360ms
+ GET /api/icons?page=0&limit=20 200 in 75ms
+ GET /api/icons?page=0&limit=20 200 in 32ms
+ ✓ Compiled in 404ms
+ ✓ Compiled /[category]/[component] in 357ms
+ GET /inputs/combobox 200 in 660ms
+ GET /inputs/combobox 200 in 845ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 222ms
+ GET /api/icons?page=0&limit=20 200 in 45ms
+ GET /api/icons?page=0&limit=20 200 in 37ms
+ GET /inputs/combobox 200 in 326ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 219ms
+ GET /api/icons?page=0&limit=20 200 in 43ms
+ GET /api/icons?page=0&limit=20 200 in 37ms
+ ✓ Compiled in 226ms
+ ✓ Compiled /[category]/[component] in 177ms
+ GET /inputs/combobox 200 in 441ms
+ ✓ Compiled in 225ms
+ ✓ Compiled /[category]/[component] in 150ms
+ GET /inputs/combobox 200 in 393ms
+ ✓ Compiled in 336ms
+ ✓ Compiled /[category]/[component] in 165ms
+ GET /inputs/combobox 200 in 348ms
+ ✓ Compiled /[category]/[component] in 127ms
+ GET /inputs/combobox 200 in 309ms
+ ✓ Compiled /[category]/[component] in 134ms
+ GET /inputs/combobox 200 in 340ms
+ ✓ Compiled in 226ms
+ ✓ Compiled /[category]/[component] in 143ms
+ GET /inputs/combobox 200 in 333ms
+ ✓ Compiled in 368ms
+ ✓ Compiled /[category]/[component] in 200ms
+ GET /inputs/combobox 200 in 422ms
+ GET /inputs/combobox 200 in 1227ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 225ms
+ GET /api/icons?page=0&limit=20 200 in 217ms
+ GET /api/icons?page=0&limit=20 200 in 24ms
+ GET /inputs/combobox 200 in 296ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 224ms
+ GET /api/icons?page=0&limit=20 200 in 51ms
+ GET /api/icons?page=0&limit=20 200 in 37ms
+ ✓ Compiled in 506ms
+ ✓ Compiled /[category]/[component] in 399ms
+ GET /inputs/combobox 200 in 686ms
+ ✓ Compiled in 244ms
+ ✓ Compiled /[category]/[component] in 142ms
+ GET /inputs/combobox 200 in 327ms
+ ✓ Compiled /[category]/[component] in 313ms
+ GET /inputs/combobox 200 in 523ms
+ ✓ Compiled in 343ms
+ ✓ Compiled /[category]/[component] in 221ms
+ GET /inputs/combobox 200 in 462ms
+ GET /inputs/combobox 200 in 1262ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 224ms
+ GET /api/icons?page=0&limit=20 200 in 170ms
+ GET /api/icons?page=0&limit=20 200 in 92ms
+ ✓ Compiled in 410ms
+ ✓ Compiled /[category]/[component] in 391ms
+ GET /inputs/combobox 200 in 707ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 472ms
+ ✓ Compiled /[category]/[component] in 173ms
+ GET /inputs/combobox 200 in 1284ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 223ms
+ GET /api/icons?page=0&limit=20 200 in 63ms
+ GET /api/icons?page=0&limit=20 200 in 52ms
+ GET /inputs/combobox 200 in 322ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 220ms
+ GET /api/icons?page=0&limit=20 200 in 63ms
+ GET /api/icons?page=0&limit=20 200 in 40ms

@@ -60,6 +60,17 @@ function getStringOptions(prop: PropMetadata): string[] {
   return (prop.options as { value: string }[]).map((opt) => opt.value);
 }
 
+// Helper component to prevent render function recreation
+function IconSelectControl({
+  value,
+  onValueChange,
+}: {
+  value: string;
+  onValueChange: (value: string) => void;
+}) {
+  return <IconSelect value={value} onValueChange={onValueChange} />;
+}
+
 export function PropExplorerContent({ config }: PropExplorerContentProps) {
   const { props, updateProp, resetProps } = usePropExplorer();
 
@@ -147,7 +158,7 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
               <PropField key={prop.name} prop={prop}>
                 <FieldControl
                   render={() => (
-                    <IconSelect
+                    <IconSelectControl
                       value={currentValue as string}
                       onValueChange={(value) => updateProp(prop.name, value)}
                     />

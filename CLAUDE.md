@@ -58,6 +58,33 @@ All components must be registered in `src/lib/component-registry.ts`:
 - Add to `componentRegistry` object
 - Categories: "ui", "inputs", "forms", "charts"
 
+## Focus Styling
+
+**ALWAYS use the standardized focus utilities for consistency:**
+
+- **`@focusInput`** - For input elements (text fields, selects, etc.)
+
+  - Provides ring-based focus styling with blue color scheme
+  - Includes both ring and border color changes
+
+- **`@focusRing`** - For interactive elements (buttons, links, etc.)
+  - Provides outline-based focus styling with blue color scheme
+  - Uses outline-offset for proper visual separation
+
+Import from `src/lib/utils.ts` and use in tailwind-variants:
+
+```tsx
+import { focusInput, focusRing } from "@/lib/utils";
+
+const variants = tv({
+  base: [
+    "...",
+    focusRing, // or focusInput for input elements
+    "...",
+  ],
+});
+```
+
 ## TypeScript Standards
 
 - **NEVER use `any` type or `as unknown as` casting**

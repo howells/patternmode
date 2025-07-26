@@ -1,310 +1,209 @@
 "use client";
 
-import { Code, Globe, Palette, Settings, User } from "lucide-react";
 import React from "react";
-import { Icon } from "../icon";
-import { Combobox, ComboboxOption, useComboboxState } from "./combobox";
+import { Combobox, type ComboboxOption } from "./combobox";
 
-// Sample data for examples
-const fruits: ComboboxOption[] = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "cherry", label: "Cherry" },
-  { value: "date", label: "Date" },
-  { value: "elderberry", label: "Elderberry" },
-  { value: "fig", label: "Fig" },
-  { value: "grape", label: "Grape" },
-  { value: "honeydew", label: "Honeydew" },
+// Sample data
+interface FruitOption extends ComboboxOption {
+  color: string;
+}
+
+const fruits: FruitOption[] = [
+  { id: "1", label: "Apple", value: "apple", color: "red" },
+  { id: "2", label: "Banana", value: "banana", color: "yellow" },
+  { id: "3", label: "Cherry", value: "cherry", color: "red" },
+  { id: "4", label: "Date", value: "date", color: "brown" },
+  { id: "5", label: "Elderberry", value: "elderberry", color: "purple" },
+  { id: "6", label: "Fig", value: "fig", color: "purple" },
+  { id: "7", label: "Grape", value: "grape", color: "green" },
+  { id: "8", label: "Honeydew", value: "honeydew", color: "green" },
 ];
 
-const languages: ComboboxOption[] = [
-  { value: "js", label: "JavaScript", leftIcon: Code },
-  { value: "ts", label: "TypeScript", leftIcon: Code },
-  { value: "py", label: "Python", leftIcon: Code },
-  { value: "go", label: "Go", leftIcon: Code },
-  { value: "rust", label: "Rust", leftIcon: Code },
-  { value: "java", label: "Java", leftIcon: Code },
-];
+// Mock async function to simulate data fetching
+async function fetchFruits({ search }: { search?: string }) {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  const filtered = search 
+    ? fruits.filter(fruit => 
+        fruit.label.toLowerCase().includes(search.toLowerCase())
+      )
+    : fruits;
+    
+  return {
+    data: filtered,
+    hasNextPage: false,
+  };
+}
 
-const users: ComboboxOption[] = [
-  {
-    value: "1",
-    label: "John Doe",
-    leftIcon: User,
-    data: { email: "john@example.com", role: "Admin" },
-  },
-  {
-    value: "2",
-    label: "Jane Smith",
-    leftIcon: User,
-    data: { email: "jane@example.com", role: "Editor" },
-  },
-  {
-    value: "3",
-    label: "Bob Johnson",
-    leftIcon: User,
-    data: { email: "bob@example.com", role: "Viewer" },
-  },
-  {
-    value: "4",
-    label: "Alice Brown",
-    leftIcon: User,
-    data: { email: "alice@example.com", role: "Admin" },
-  },
-];
+// Real async function to fetch icons from API
+async function fetchIcons({ search }: { search?: string }) {
+  const params = new URLSearchParams({
+    page: "0",
+    limit: "20",
+    ...(search && { search })
+  });
+  
+  const response = await fetch(`/api/icons?${params}`);
+  const data = await response.json();
+  
+  // Transform API response to ComboboxOption format
+  const options = data.icons.map((icon: { kebab: string; pascal: string }) => ({
+    id: icon.kebab,
+    label: icon.pascal,
+    value: icon.kebab,
+  }));
+  
+  return {
+    data: options,
+    hasNextPage: data.hasMore,
+  };
+}
 
-const themes: ComboboxOption[] = [
-  { value: "light", label: "Light Theme", leftIcon: Palette },
-  { value: "dark", label: "Dark Theme", leftIcon: Palette },
-  { value: "auto", label: "Auto Theme", leftIcon: Settings },
-];
-
-// Basic example
-export const DefaultExample = () => {
-  const [value, setValue] = React.useState("");
+export function DefaultExample() {
+  const [value, setValue] = React.useState<string>();
 
   return (
-    <Combobox
-      options={fruits}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Select a fruit..."
-      searchPlaceholder="Search fruits..."
-    />
-  );
-};
-
-// With icons and custom styling
-export const WithIconsExample = () => {
-  const [value, setValue] = React.useState("");
-
-  return (
-    <Combobox
-      options={languages}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Select a programming language..."
-      searchPlaceholder="Search languages..."
-    />
-  );
-};
-
-// Clearable combobox
-export const ClearableExample = () => {
-  const [value, setValue] = React.useState("apple");
-
-  return (
-    <Combobox
-      options={fruits}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Select a fruit..."
-      clearable
-    />
-  );
-};
-
-// Custom rendering
-export const CustomRenderExample = () => {
-  const [value, setValue] = React.useState("");
-
-  return (
-    <Combobox
-      options={users}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Select a user..."
-      renderTrigger={(selectedOption) => {
-        if (!selectedOption) return null;
-
-        return (
-          <div className="flex items-center gap-2">
-            {selectedOption.leftIcon && <Icon icon={selectedOption.leftIcon} />}
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-medium">
-                {selectedOption.label}
-              </span>
-              <span className="text-xs text-zinc-500">
-                {selectedOption.data?.email as string}
-              </span>
-            </div>
-          </div>
-        );
-      }}
-      renderItem={(option, isHighlighted, isSelected) => (
-        <div
-          className={`
-          flex items-center gap-3 p-3
-          ${isHighlighted ? "bg-zinc-100 dark:bg-zinc-800" : ""}
-          ${isSelected ? "font-medium" : ""}
-        `}
-        >
-          {option.leftIcon && <Icon icon={option.leftIcon} />}
-          <div className="flex flex-col">
-            <span className="text-sm">{option.label}</span>
-            <span className="text-xs text-zinc-500">
-              {option.data?.email as string} • {option.data?.role as string}
-            </span>
-          </div>
-        </div>
-      )}
-    />
-  );
-};
-
-// Non-searchable combobox
-export const NonSearchableExample = () => {
-  const [value, setValue] = React.useState("");
-
-  return (
-    <Combobox
-      options={themes}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Select a theme..."
-      searchable={false}
-    />
-  );
-};
-
-// Using the hook for state management
-export const WithHookExample = () => {
-  const combobox = useComboboxState("", fruits);
-
-  return (
-    <div className="space-y-2">
+    <div className="w-64">
       <Combobox
         options={fruits}
-        value={combobox.value}
-        onValueChange={combobox.setValue}
-        placeholder="Select a fruit..."
+        value={value}
+        onValueChange={setValue}
+        placeholder="Choose a fruit..."
       />
-      <div className="text-sm text-zinc-600">
-        Selected: {combobox.selectedOption?.label || "None"}
-        {combobox.selectedOption && (
-          <button
-            onClick={combobox.clear}
-            className="ml-2 text-blue-600 hover:underline"
-          >
-            Clear
-          </button>
+    </div>
+  );
+}
+
+export function AsyncExample() {
+  const [value, setValue] = React.useState<string>();
+
+  return (
+    <div className="w-64">
+      <Combobox<FruitOption>
+        fetchData={fetchFruits}
+        queryKey={["fruits"]}
+        value={value}
+        onValueChange={setValue}
+        placeholder="Search fruits..."
+        searchPlaceholder="Type to search..."
+      />
+    </div>
+  );
+}
+
+export function IconsExample() {
+  const [value, setValue] = React.useState<string>();
+
+  return (
+    <div className="w-64">
+      <Combobox
+        fetchData={fetchIcons}
+        queryKey={["icons"]}
+        value={value}
+        onValueChange={setValue}
+        placeholder="Search icons..."
+        searchPlaceholder="Type to search icons..."
+      />
+    </div>
+  );
+}
+
+export function CustomRenderingExample() {
+  const [value, setValue] = React.useState<string>();
+
+  return (
+    <div className="w-64">
+      <Combobox<FruitOption>
+        options={fruits}
+        value={value}
+        onValueChange={setValue}
+        placeholder="Choose a fruit..."
+        renderItem={(item) => (
+          <div className="flex items-center gap-2 py-2 px-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+            <div 
+              className="w-3 h-3 rounded-full" 
+              style={{ backgroundColor: item.color }}
+            />
+            <span>{item.label}</span>
+          </div>
         )}
+        renderTrigger={({ value: triggerValue, placeholder, isOpen }) => (
+          <div className="flex items-center gap-2">
+            {triggerValue && (
+              <div 
+                className="w-3 h-3 rounded-full" 
+                style={{ backgroundColor: triggerValue.color }}
+              />
+            )}
+            <span className="flex-1">
+              {triggerValue ? triggerValue.label : placeholder}
+            </span>
+            <span className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+              ↓
+            </span>
+          </div>
+        )}
+      />
+    </div>
+  );
+}
+
+export function SizesExample() {
+  const [smValue, setSmValue] = React.useState<string>();
+  const [baseValue, setBaseValue] = React.useState<string>();
+  const [lgValue, setLgValue] = React.useState<string>();
+
+  return (
+    <div className="space-y-4">
+      <div className="w-48">
+        <label className="block text-xs font-medium mb-1">Small</label>
+        <Combobox
+          size="sm"
+          options={fruits}
+          value={smValue}
+          onValueChange={setSmValue}
+          placeholder="Small combobox"
+        />
+      </div>
+      
+      <div className="w-56">
+        <label className="block text-sm font-medium mb-1">Base (Default)</label>
+        <Combobox
+          size="base"
+          options={fruits}
+          value={baseValue}
+          onValueChange={setBaseValue}
+          placeholder="Base combobox"
+        />
+      </div>
+      
+      <div className="w-64">
+        <label className="block text-base font-medium mb-1">Large</label>
+        <Combobox
+          size="lg"
+          options={fruits}
+          value={lgValue}
+          onValueChange={setLgValue}
+          placeholder="Large combobox"
+        />
       </div>
     </div>
   );
-};
+}
 
-// Async example with simulated API
-export const AsyncExample = () => {
-  const [value, setValue] = React.useState("");
-
-  // Simulate an API call
-  const fetchUsers = async ({ pageParam = 0, search = "" }) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // Filter users based on search
-    const filteredUsers = users.filter(
-      (user) =>
-        user.label.toLowerCase().includes(search.toLowerCase()) ||
-        (user.data?.email as string)
-          .toLowerCase()
-          .includes(search.toLowerCase())
-    );
-
-    // Simulate pagination
-    const pageSize = 3;
-    const start = pageParam * pageSize;
-    const end = start + pageSize;
-    const pageUsers = filteredUsers.slice(start, end);
-
-    return {
-      items: pageUsers,
-      totalCount: filteredUsers.length,
-      hasMore: end < filteredUsers.length,
-      nextPage: end < filteredUsers.length ? pageParam + 1 : undefined,
-    };
-  };
+export function ErrorExample() {
+  const [value, setValue] = React.useState<string>();
 
   return (
-    <Combobox
-      queryKey={["users"]}
-      fetchData={fetchUsers}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Search users..."
-      searchPlaceholder="Type to search users..."
-      renderItem={(option, isHighlighted, isSelected) => (
-        <div
-          className={`
-          flex items-center gap-3 p-2
-          ${isHighlighted ? "bg-zinc-100 dark:bg-zinc-800" : ""}
-          ${isSelected ? "font-medium" : ""}
-        `}
-        >
-          {option.leftIcon && <Icon icon={option.leftIcon} />}
-          <div className="flex flex-col">
-            <span className="text-sm">{option.label}</span>
-            <span className="text-xs text-zinc-500">
-              {option.data?.email as string}
-            </span>
-          </div>
-        </div>
-      )}
-    />
+    <div className="w-64">
+      <Combobox
+        options={fruits}
+        value={value}
+        onValueChange={setValue}
+        placeholder="Choose a fruit..."
+        hasError={true}
+      />
+    </div>
   );
-};
-
-// Large dataset example with infinite scroll
-export const InfiniteScrollExample = () => {
-  const [value, setValue] = React.useState("");
-
-  // Simulate a large dataset
-  const generateUsers = (page: number, search: string) => {
-    const pageSize = 20;
-    const totalUsers = 1000;
-
-    const users = Array.from({ length: pageSize }, (_, i) => {
-      const id = page * pageSize + i + 1;
-      return {
-        value: id.toString(),
-        label: `User ${id}`,
-        leftIcon: User,
-        data: {
-          email: `user${id}@example.com`,
-          role: ["Admin", "Editor", "Viewer"][id % 3],
-        },
-      };
-    }).filter(
-      (user) =>
-        search === "" ||
-        user.label.toLowerCase().includes(search.toLowerCase()) ||
-        user.data.email.toLowerCase().includes(search.toLowerCase())
-    );
-
-    return {
-      items: users,
-      totalCount: totalUsers,
-      hasMore: (page + 1) * pageSize < totalUsers,
-      nextPage: (page + 1) * pageSize < totalUsers ? page + 1 : undefined,
-    };
-  };
-
-  const fetchLargeDataset = async ({ pageParam = 0, search = "" }) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return generateUsers(pageParam, search);
-  };
-
-  return (
-    <Combobox
-      queryKey={["large-users"]}
-      fetchData={fetchLargeDataset}
-      value={value}
-      onValueChange={(newValue) => setValue(newValue || "")}
-      placeholder="Search from 1000+ users..."
-      searchPlaceholder="Type to search users..."
-      maxHeight={400}
-    />
-  );
-};
+}

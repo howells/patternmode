@@ -181,27 +181,6 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
     return () => clearTimeout(timer);
   }, [name]);
 
-  // Temporarily suppress Lucide console errors for invalid icons
-  React.useEffect(() => {
-    const originalError = console.error;
-    console.error = (...args: unknown[]) => {
-      const message = args[0];
-      if (
-        message instanceof Error &&
-        message.message.includes("Name in Lucide DynamicIcon not found")
-      ) {
-        // Suppress this specific error and trigger our error state
-        setHasError(true);
-        return;
-      }
-      originalError(...args);
-    };
-
-    return () => {
-      console.error = originalError;
-    };
-  }, [name]);
-
   const fallbackElement = React.useMemo(
     () =>
       fallback || (
@@ -243,7 +222,10 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
   try {
     // Name is already in kebab-case from the API, so use it directly
     return (
-      <div className={`${className} shrink-0 flex items-center justify-center`}>
+      <div
+        key={name}
+        className={`${className} shrink-0 flex items-center justify-center`}
+      >
         <DynamicIcon
           name={name as Parameters<typeof DynamicIcon>[0]["name"]}
           className="w-full h-full"
@@ -252,7 +234,10 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
       </div>
     );
   } catch (error) {
-    // Silently handle the error to prevent console spam
+    // Handle any synchronous errors during icon creation
+    if (process.env.NODE_ENV === "development") {
+      console.warn(`[IconSelect] Failed to render icon "${name}":`, error);
+    }
     setHasError(true);
     return fallbackElement;
   }
@@ -279,13 +264,26 @@ class IconErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Only log in development
-    if (process.env.NODE_ENV === "development") {
+    // Only log in development and for specific Lucide errors
+    if (
+      process.env.NODE_ENV === "development" &&
+      error.message?.includes("Lucide")
+    ) {
       console.warn(
-        "[IconSelect] Error boundary caught icon error:",
-        error,
-        errorInfo
+        "[IconSelect] Error boundary caught Lucide icon error:",
+        error.message
       );
+    }
+  }
+
+  componentDidUpdate(prevProps: {
+    children: React.ReactNode;
+    fallback?: React.ReactNode;
+    className?: string;
+  }) {
+    // Reset error state when children change (different icon)
+    if (prevProps.children !== this.props.children && this.state.hasError) {
+      this.setState({ hasError: false });
     }
   }
 
@@ -320,12 +318,71 @@ export function IconSelect({
   className,
   iconStrokeWidth = config.getIconStrokeWidth(),
 }: IconSelectProps) {
+  // Memoize the render functions to prevent unnecessary re-renders that could break downshift
+  const renderItem = React.useCallback(
+    (item: IconOption, isHighlighted: boolean, isSelected: boolean) => (
+      <>
+        <div className="flex items-center gap-2 flex-1">
+          <IconErrorBoundary className="size-4 shrink-0" key={item.kebab}>
+            <SafeDynamicIcon
+              name={item.kebab} // Use kebab-case name for DynamicIcon
+              className="size-4 shrink-0"
+              strokeWidth={iconStrokeWidth}
+            />
+          </IconErrorBoundary>
+          <span className="truncate">{item.pascal}</span>
+        </div>
+        {isSelected && (
+          <IconErrorBoundary className="ml-2 h-4 w-4 shrink-0" key="check">
+            <SafeDynamicIcon
+              name="check" // Known valid kebab-case name
+              className="ml-2 h-4 w-4 shrink-0"
+              strokeWidth={iconStrokeWidth}
+            />
+          </IconErrorBoundary>
+        )}
+      </>
+    ),
+    [iconStrokeWidth]
+  );
+
+  const renderTrigger = React.useCallback(
+    (selectedItem: IconOption | null) => {
+      if (selectedItem) {
+        return (
+          <>
+            <IconErrorBoundary
+              className="size-4 shrink-0"
+              key={selectedItem.kebab}
+            >
+              <SafeDynamicIcon
+                name={selectedItem.kebab} // Use kebab-case name for DynamicIcon
+                className="size-4 shrink-0"
+                strokeWidth={iconStrokeWidth}
+              />
+            </IconErrorBoundary>
+            <span className="truncate">{selectedItem.pascal}</span>
+          </>
+        );
+      }
+      return placeholder;
+    },
+    [placeholder, iconStrokeWidth]
+  );
+
+  const handleValueChange = React.useCallback(
+    (newValue: string | null) => {
+      onValueChange?.(newValue || "");
+    },
+    [onValueChange]
+  );
+
   return (
     <Combobox<IconOption>
       queryKey={["icons", "search"]}
       fetchData={fetchIcons}
       value={value}
-      onValueChange={(newValue) => onValueChange?.(newValue || "")}
+      onValueChange={handleValueChange}
       placeholder={placeholder}
       searchPlaceholder="Search icons..."
       emptyMessage="No icons found."
@@ -335,46 +392,8 @@ export function IconSelect({
       iconStrokeWidth={iconStrokeWidth}
       getItemValue={(item) => item.pascal}
       getItemLabel={(item) => item.pascal}
-      renderItem={(item, isHighlighted, isSelected) => (
-        <>
-          <div className="flex items-center gap-2 flex-1">
-            <IconErrorBoundary className="size-4 shrink-0">
-              <SafeDynamicIcon
-                name={item.kebab} // Use kebab-case name for DynamicIcon
-                className="size-4 shrink-0"
-                strokeWidth={iconStrokeWidth}
-              />
-            </IconErrorBoundary>
-            <span className="truncate">{item.pascal}</span>
-          </div>
-          {isSelected && (
-            <IconErrorBoundary className="ml-2 h-4 w-4 shrink-0">
-              <SafeDynamicIcon
-                name="check" // Known valid kebab-case name
-                className="ml-2 h-4 w-4 shrink-0"
-                strokeWidth={iconStrokeWidth}
-              />
-            </IconErrorBoundary>
-          )}
-        </>
-      )}
-      renderTrigger={(selectedItem) => {
-        if (selectedItem) {
-          return (
-            <>
-              <IconErrorBoundary className="size-4 shrink-0">
-                <SafeDynamicIcon
-                  name={selectedItem.kebab} // Use kebab-case name for DynamicIcon
-                  className="size-4 shrink-0"
-                  strokeWidth={iconStrokeWidth}
-                />
-              </IconErrorBoundary>
-              <span className="truncate">{selectedItem.pascal}</span>
-            </>
-          );
-        }
-        return placeholder;
-      }}
+      renderItem={renderItem}
+      renderTrigger={renderTrigger}
     />
   );
 }

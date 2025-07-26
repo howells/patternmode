@@ -1,267 +1,193 @@
-"use client";
-
 import { config } from "@/lib/config";
-import {
-  useInfiniteQuery,
-  UseInfiniteQueryResult,
-} from "@tanstack/react-query";
+import { cx, hasErrorInput } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
-import { Check, ChevronsUpDown, Loader2, X } from "lucide-react";
-import * as React from "react";
-
-import { Button } from "@/components/ui/button/button";
-import { cx } from "@/lib/utils";
+import { Check, ChevronDown } from "lucide-react";
+import React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
+import { Button } from "../button";
 import { Icon } from "../icon";
+import { Input } from "../input";
+import { Loader } from "../loader";
 
 /**
- * Basic option type for simple comboboxes
+ * Base interface for combobox options
  */
 export interface ComboboxOption {
-  /** Unique identifier for the option */
-  value: string;
-  /** Display text for the option */
+  id: string;
   label: string;
-  /** Whether the option is disabled */
-  disabled?: boolean;
-  /** Icon to display on the left side */
-  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Icon to display on the right side */
-  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Additional data for the option */
-  data?: Record<string, unknown>;
+  value: string;
+  [key: string]: unknown;
 }
 
 /**
- * Fetch function signature for async data loading
+ * Function signature for fetching data with search and pagination
  */
-export type ComboboxFetchFunction<T = ComboboxOption> = (context: {
-  pageParam: number;
-  queryKey: readonly unknown[];
+export type ComboboxFetchFunction<T = ComboboxOption> = (params: {
+  search?: string;
+  pageParam?: number;
   signal?: AbortSignal;
-  search: string;
 }) => Promise<{
-  items: T[];
-  totalCount: number;
-  hasMore: boolean;
-  nextPage?: number;
+  data: T[];
+  hasNextPage: boolean;
+  nextCursor?: number;
 }>;
 
+const comboboxVariants = tv({
+  base: ["relative w-full"],
+  variants: {
+    size: {
+      sm: "",
+      base: "",
+      lg: "",
+    },
+  },
+  defaultVariants: {
+    size: "base",
+  },
+});
+
+const comboboxListVariants = tv({
+  base: [
+    // base
+    "absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg dark:bg-zinc-950",
+    // border
+    "border-zinc-200 dark:border-zinc-800",
+    // scrollbar
+    "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
+  ],
+  variants: {
+    size: {
+      sm: "text-xs",
+      base: "text-sm",
+      lg: "text-base",
+    },
+  },
+  defaultVariants: {
+    size: "base",
+  },
+});
+
+const comboboxItemVariants = tv({
+  base: [
+    // base
+    "relative flex cursor-pointer select-none items-center justify-between py-2 px-3 outline-none transition-colors",
+    // hover
+    "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
+    // highlighted
+    "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
+    // selected
+    "data-[selected]:bg-blue-50 data-[selected]:text-blue-900 dark:data-[selected]:bg-blue-900/20 dark:data-[selected]:text-blue-100",
+  ],
+  variants: {
+    size: {
+      sm: "text-xs py-1.5 px-2.5",
+      base: "text-sm py-2 px-3",
+      lg: "text-base py-2.5 px-4",
+    },
+  },
+  defaultVariants: {
+    size: "base",
+  },
+});
+
 /**
- * Props for the unified Combobox component
+ * Props for the Combobox component
  */
-export interface ComboboxProps<T = ComboboxOption> {
-  // Basic props
-  /** Array of options for static data */
+interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
+  extends VariantProps<typeof comboboxVariants> {
+  /** Static options array (alternative to fetchData) */
   options?: T[];
-  /** Currently selected value */
+  /** Function to fetch data dynamically with React Query */
+  fetchData?: ComboboxFetchFunction<T>;
+  /** React Query key for caching */
+  queryKey?: (string | number)[];
+  /** Current selected value */
   value?: string;
   /** Callback when selection changes */
-  onValueChange?: (value: string | null) => void;
-  /** Placeholder text for the trigger button */
+  onValueChange?: (value: string | undefined) => void;
+  /** Placeholder text for the input */
   placeholder?: string;
-  /** Placeholder text for the search input */
+  /** Placeholder text for search input */
   searchPlaceholder?: string;
-  /** Message shown when no options match search */
+  /** Message to show when no items found */
   emptyMessage?: string;
   /** Whether the combobox is disabled */
   disabled?: boolean;
-  /** Whether the combobox allows clearing the selection */
-  clearable?: boolean;
-  /** Whether to show the search input */
-  searchable?: boolean;
-
-  // Async/Infinite props
-  /** Query key for React Query (enables async mode) */
-  queryKey?: readonly unknown[];
-  /** Fetch function for async data loading */
-  fetchData?: ComboboxFetchFunction<T>;
-  /** Search debounce delay in ms (default: 300) */
-  searchDebounce?: number;
-  /** React Query stale time in ms (default: 0 for fresh data) */
-  staleTime?: number;
-  /** React Query cache time in ms (default: 10 minutes) */
-  cacheTime?: number;
-  /** Enable background refetching (default: true) */
-  refetchOnWindowFocus?: boolean;
-
-  // Styling props
-  /** Additional CSS classes for container */
+  /** Whether to show error state */
+  hasError?: boolean;
+  /** Additional CSS classes */
   className?: string;
-  /** Additional CSS classes for trigger button */
-  buttonClassName?: string;
-  /** Additional CSS classes for dropdown content */
-  dropdownClassName?: string;
-  /** Additional CSS classes for input */
-  inputClassName?: string;
-  /** Whether trigger button should take full width */
-  triggerFullWidth?: boolean;
-  /** Maximum height for dropdown */
-  maxHeight?: number;
+  /** Search debounce delay in ms */
+  searchDebounce?: number;
   /** Stroke width for icons */
   iconStrokeWidth?: number;
-
-  // Customization props
-  /** Custom render function for trigger content */
-  renderTrigger?: (selectedOption: T | null) => React.ReactNode;
-  /** Custom render function for option items */
-  renderItem?: (
-    option: T,
-    isHighlighted: boolean,
-    isSelected: boolean
-  ) => React.ReactNode;
-  /** Custom filter function for static options */
-  filterOptions?: (options: T[], inputValue: string) => T[];
-  /** Function to convert item to string value */
+  /** Function to get the value from an item */
   getItemValue?: (item: T) => string;
-  /** Function to get display label for item */
+  /** Function to get the label from an item */
   getItemLabel?: (item: T) => string;
-  /** Custom item to string function for accessibility */
-  itemToString?: (item: T | null) => string;
-
-  // Behavior props
-  /** Whether to close dropdown on selection */
-  closeOnSelect?: boolean;
+  /** Custom render function for items */
+  renderItem?: (item: T, index: number) => React.ReactNode;
+  /** Custom render function for the trigger */
+  renderTrigger?: (props: {
+    value?: T;
+    placeholder?: string;
+    isOpen: boolean;
+    disabled?: boolean;
+  }) => React.ReactNode;
 }
 
 /**
- * Default filter function for static options
- */
-const defaultFilterOptions = <T extends ComboboxOption>(
-  options: T[],
-  inputValue: string
-): T[] => {
-  if (!inputValue) return options;
-
-  const lowercaseInput = inputValue.toLowerCase();
-  return options.filter((option) =>
-    option.label.toLowerCase().includes(lowercaseInput)
-  );
-};
-
-/**
- * Default item to string function for accessibility
- */
-const defaultItemToString = <T extends ComboboxOption>(
-  item: T | null
-): string => {
-  return item ? item.label : "";
-};
-
-/**
- * Default get item value function
- */
-const defaultGetItemValue = <T extends ComboboxOption>(item: T): string => {
-  return item.value;
-};
-
-/**
- * Default get item label function
- */
-const defaultGetItemLabel = <T extends ComboboxOption>(item: T): string => {
-  return item.label;
-};
-
-/**
- * A powerful, unified combobox component built with Downshift.
+ * A flexible combobox component built with Downshift and React Query.
  *
- * Supports multiple modes:
- * - Static options with local filtering
- * - Async data loading with React Query
- * - Infinite scrolling for large datasets
- * - Full customization of rendering and behavior
+ * Supports both static options and dynamic data fetching with search,
+ * pagination, and caching via React Query.
  *
  * @example
  * ```tsx
- * // Basic static combobox
+ * // Static options
  * <Combobox
- *   options={[
- *     { value: "apple", label: "Apple" },
- *     { value: "banana", label: "Banana" },
- *     { value: "cherry", label: "Cherry" }
- *   ]}
- *   placeholder="Select fruit..."
- *   onValueChange={setFruit}
+ *   options={[{id: "1", label: "Option 1", value: "1"}]}
+ *   value={value}
+ *   onValueChange={setValue}
  * />
  *
- * // Async combobox with React Query
+ * // Dynamic data with React Query
  * <Combobox
- *   queryKey={['users']}
- *   fetchData={async ({ pageParam, search }) => {
- *     const response = await fetch(`/api/users?page=${pageParam}&search=${search}`);
- *     return response.json();
- *   }}
- *   placeholder="Search users..."
- *   onValueChange={setUser}
- * />
- *
- * // Custom rendering with icons
- * <Combobox
- *   options={languages}
- *   renderItem={(option, isHighlighted, isSelected) => (
- *     <div className={cx(
- *       "flex items-center gap-2 p-2",
- *       isHighlighted && "bg-zinc-100 dark:bg-zinc-800"
- *     )}>
- *       {option.leftIcon && <option.leftIcon className="size-4" />}
- *       <span>{option.label}</span>
- *       {isSelected && <Check className="ml-auto size-4" />}
- *     </div>
- *   )}
+ *   fetchData={async ({search}) => ({
+ *     data: await searchItems(search),
+ *     hasNextPage: false
+ *   })}
+ *   queryKey={["items"]}
+ *   value={value}
+ *   onValueChange={setValue}
  * />
  * ```
  */
-export function Combobox<T extends ComboboxOption = ComboboxOption>({
-  // Basic props
-  options = [],
+const Combobox = <T extends ComboboxOption = ComboboxOption>({
+  options,
+  fetchData,
+  queryKey = ["combobox"],
   value,
   onValueChange,
-  placeholder = "Select option...",
+  placeholder = "Select an option...",
   searchPlaceholder = "Search...",
-  emptyMessage = "No options found.",
+  emptyMessage = "No results found.",
   disabled = false,
-  clearable = false,
-  searchable = true,
-
-  // Async props
-  queryKey,
-  fetchData,
-  searchDebounce = 300,
-  staleTime = 0,
-  cacheTime = 10 * 60 * 1000,
-  refetchOnWindowFocus = true,
-
-  // Styling props
+  hasError = false,
   className,
-  buttonClassName,
-  dropdownClassName,
-  inputClassName,
-  triggerFullWidth = true,
-  maxHeight = 300,
+  size = "base",
+  searchDebounce = 300,
   iconStrokeWidth = config.getIconStrokeWidth(),
-
-  // Customization props
-  renderTrigger,
+  getItemValue = (item: T) => item.value,
+  getItemLabel = (item: T) => item.label,
   renderItem,
-  filterOptions = defaultFilterOptions,
-  getItemValue = defaultGetItemValue,
-  getItemLabel = defaultGetItemLabel,
-  itemToString = defaultItemToString,
-
-  // Behavior props
-  closeOnSelect = true,
-}: ComboboxProps<T>) {
+  renderTrigger,
+}: ComboboxProps<T>) => {
   const [inputValue, setInputValue] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
-  const [sessionId, setSessionId] = React.useState(() => Date.now());
 
-  // Determine if we're in async mode
-  const isAsyncMode = !!(queryKey && fetchData);
-
-  // Refs for infinite scroll
-  const loadMoreRef = React.useRef<HTMLDivElement>(null);
-  const observerRef = React.useRef<IntersectionObserver | null>(null);
-
-  // Debounced search effect
+  // Debounce search input
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(inputValue);
@@ -270,402 +196,250 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>({
     return () => clearTimeout(timer);
   }, [inputValue, searchDebounce]);
 
-  // React Query for async mode
-  const queryResult = useInfiniteQuery({
-    queryKey: queryKey
-      ? [...queryKey, debouncedSearch, sessionId]
-      : ["disabled"],
-    queryFn: fetchData
-      ? ({ pageParam = 0, queryKey, signal }) =>
-          fetchData({ pageParam, queryKey, signal, search: debouncedSearch })
-      : async () => ({ items: [], totalCount: 0, hasMore: false }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage: {
-      items: T[];
-      totalCount: number;
-      hasMore: boolean;
-      nextPage?: number;
-    }) =>
-      lastPage.hasMore
-        ? lastPage.nextPage ??
-          (lastPage.items.length > 0 ? lastPage.nextPage ?? 1 : undefined)
-        : undefined,
-    staleTime,
-    gcTime: cacheTime,
-    refetchOnWindowFocus,
-    enabled: isAsyncMode,
+  // Fetch data with React Query (only if fetchData is provided)
+  const {
+    data: queryData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [...queryKey, debouncedSearch],
+    queryFn: async ({ signal }) => {
+      if (!fetchData) return { data: [], hasNextPage: false };
+      return fetchData({
+        search: debouncedSearch,
+        pageParam: 0,
+        signal,
+      });
+    },
+    enabled: !!fetchData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
-  // Get items based on mode
-  const allItems = React.useMemo(() => {
-    if (isAsyncMode) {
-      return (
-        queryResult.data?.pages.flatMap(
-          (page: {
-            items: T[];
-            totalCount: number;
-            hasMore: boolean;
-            nextPage?: number;
-          }) => page.items
-        ) ?? []
-      );
-    } else {
-      return searchable ? filterOptions(options, inputValue) : options;
+  // Use either static options or fetched data
+  const allItems: T[] = options || queryData?.data || [];
+
+  // Find selected item first (needed for filtering logic)
+  const selectedItem = allItems.find((item) => getItemValue(item) === value);
+
+  // Filter static options based on search input
+  const items: T[] = React.useMemo(() => {
+    if (!options || !inputValue.trim()) {
+      return allItems;
     }
-  }, [
-    isAsyncMode,
-    queryResult.data,
-    options,
-    inputValue,
-    searchable,
-    filterOptions,
-  ]);
 
-  // Get loading states
-  const isLoading = isAsyncMode ? queryResult.isFetching : false;
-  const isLoadingMore = isAsyncMode ? queryResult.isFetchingNextPage : false;
-  const hasMore = isAsyncMode ? queryResult.hasNextPage ?? false : false;
-  const error = isAsyncMode ? queryResult.error : null;
+    // If the input value exactly matches the selected item's label,
+    // show all items (user just opened the menu)
+    if (selectedItem && inputValue === getItemLabel(selectedItem)) {
+      return allItems;
+    }
 
-  // Find selected item
-  const selectedOption =
-    allItems.find((option) => getItemValue(option) === value) || null;
+    // Filter static options by label
+    return allItems.filter((item) =>
+      getItemLabel(item).toLowerCase().includes(inputValue.toLowerCase())
+    );
+  }, [allItems, inputValue, options, getItemLabel, selectedItem]);
 
-  // Downshift setup
   const {
     isOpen,
     getToggleButtonProps,
-    getLabelProps,
     getMenuProps,
     getInputProps,
-    highlightedIndex,
     getItemProps,
-    selectItem,
+    highlightedIndex,
     openMenu,
-    closeMenu,
-  } = useCombobox({
-    items: allItems,
-    itemToString,
-    selectedItem: selectedOption,
+  } = useCombobox<T>({
+    items,
+    itemToString: (item) => (item ? getItemLabel(item) : ""),
+    selectedItem: selectedItem || null,
     inputValue,
+    stateReducer: (state, actionAndChanges) => {
+      const { type, changes } = actionAndChanges;
+
+      switch (type) {
+        case useCombobox.stateChangeTypes.InputKeyDownEscape:
+        case useCombobox.stateChangeTypes.InputBlur:
+        case useCombobox.stateChangeTypes.ItemClick:
+          return {
+            ...changes,
+            inputValue: "", // Clear search input when closing or selecting
+          };
+        case useCombobox.stateChangeTypes.ToggleButtonClick:
+          return {
+            ...changes,
+            inputValue: "", // Clear input when toggling open
+          };
+        default:
+          return changes;
+      }
+    },
     onInputValueChange: ({ inputValue: newInputValue }) => {
       setInputValue(newInputValue || "");
     },
-    onSelectedItemChange: ({ selectedItem }) => {
-      onValueChange?.(selectedItem ? getItemValue(selectedItem) : null);
-      if (closeOnSelect) {
-        setInputValue("");
-        closeMenu();
-      }
-    },
-    onIsOpenChange: ({ isOpen: newIsOpen }) => {
-      if (newIsOpen && isAsyncMode) {
-        // Reset session for fresh data
-        setSessionId(Date.now());
-        setInputValue("");
-        setDebouncedSearch("");
+    onSelectedItemChange: ({ selectedItem: newSelectedItem }) => {
+      if (newSelectedItem) {
+        onValueChange?.(getItemValue(newSelectedItem));
+      } else {
+        onValueChange?.(undefined);
       }
     },
   });
 
-  // Intersection observer for infinite scroll
-  React.useEffect(() => {
-    if (!isOpen || !hasMore || isLoadingMore || !isAsyncMode) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          queryResult.fetchNextPage();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
-
-    observerRef.current = observer;
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [isOpen, hasMore, isLoadingMore, isAsyncMode, queryResult]);
-
-  // Handle clear
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    selectItem(null);
-    setInputValue("");
-    onValueChange?.(null);
-  };
-
-  // Render trigger content
-  const renderTriggerContent = () => {
-    if (renderTrigger) {
-      return renderTrigger(selectedOption);
-    }
-
-    if (selectedOption) {
-      return (
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          {selectedOption.leftIcon && (
-            <Icon
-              icon={selectedOption.leftIcon}
-              strokeWidth={iconStrokeWidth}
-            />
-          )}
-          <span className="truncate">{getItemLabel(selectedOption)}</span>
-        </div>
-      );
-    }
-
-    return (
-      <span className="text-zinc-500 dark:text-zinc-400">{placeholder}</span>
-    );
-  };
-
-  // Render item content
-  const renderItemContent = (option: T, index: number) => {
-    const isHighlighted = highlightedIndex === index;
-    const isSelected = Boolean(
-      selectedOption && getItemValue(selectedOption) === getItemValue(option)
-    );
-
-    if (renderItem) {
-      return renderItem(option, isHighlighted, isSelected);
-    }
-
-    return (
-      <div className="flex items-center gap-2 flex-1 min-w-0">
-        {option.leftIcon && (
-          <Icon icon={option.leftIcon} strokeWidth={iconStrokeWidth} />
-        )}
-        <span className="truncate">{getItemLabel(option)}</span>
-        {isSelected && (
-          <Icon
-            icon={Check}
-            className="ml-auto"
-            strokeWidth={iconStrokeWidth}
-          />
-        )}
-      </div>
-    );
-  };
-
-  // Handle retry on error
-  const handleRetry = () => {
-    if (isAsyncMode) {
-      queryResult.refetch();
-    }
-  };
-
-  return (
-    <div className={cx("relative", className)}>
-      {/* Hidden label for accessibility */}
-      <label {...getLabelProps()} className="sr-only">
-        {placeholder}
-      </label>
-
-      {/* Trigger Button */}
-      <Button
-        {...getToggleButtonProps({
-          disabled,
-          onClick: () => {
-            if (!isOpen) {
-              openMenu();
-            }
-          },
-        })}
-        variant="outline"
-        fullWidth={triggerFullWidth}
-        textAlign={triggerFullWidth ? "left" : "center"}
-        className={cx(
-          "justify-between",
-          !selectedOption && "text-zinc-500 dark:text-zinc-400",
-          buttonClassName
-        )}
-      >
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          {renderTriggerContent()}
-        </div>
-
-        <div className="flex items-center gap-1 shrink-0">
-          {clearable && selectedOption && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
-              aria-label="Clear selection"
-            >
-              <Icon icon={X} size="sm" strokeWidth={iconStrokeWidth} />
-            </button>
-          )}
-          <Icon
-            icon={ChevronsUpDown}
-            className={cx(
-              "transition-transform duration-200",
-              isOpen && "rotate-180"
-            )}
-            strokeWidth={iconStrokeWidth}
-          />
-        </div>
-      </Button>
-
-      {/* Dropdown Menu */}
-      {isOpen && (
-        <div
-          {...getMenuProps()}
-          className={cx(
-            "absolute z-50 w-full mt-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-lg",
-            "overflow-hidden",
-            dropdownClassName
-          )}
-          style={{ maxHeight }}
-        >
-          {searchable && (
-            <div className="p-2 border-b border-zinc-200 dark:border-zinc-800">
-              <input
-                {...getInputProps({
-                  placeholder: searchPlaceholder,
-                  className: cx(
-                    "w-full px-3 py-2 text-sm bg-transparent border border-zinc-200 dark:border-zinc-700 rounded-md",
-                    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-                    "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
-                    inputClassName
-                  ),
-                })}
-              />
-            </div>
-          )}
-
-          <div
-            className="overflow-auto"
-            style={{ maxHeight: maxHeight - (searchable ? 60 : 0) }}
-          >
-            {error ? (
-              <div className="flex flex-col items-center gap-2 p-4">
-                <div className="text-sm text-zinc-500 dark:text-zinc-400">
-                  Error: {error.message}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRetry}
-                  className="text-xs"
-                >
-                  Try Again
-                </Button>
-              </div>
-            ) : allItems.length === 0 && !isLoading ? (
-              <div className="px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400">
-                {emptyMessage}
-              </div>
-            ) : (
-              <>
-                {allItems.map((option, index) => (
-                  <div
-                    key={`${getItemValue(option)}-${index}`}
-                    {...getItemProps({
-                      item: option,
-                      index,
-                      disabled: option.disabled,
-                    })}
-                    className={cx(
-                      "px-3 py-2 cursor-pointer text-sm flex items-center gap-2",
-                      "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-                      highlightedIndex === index &&
-                        "bg-zinc-100 dark:bg-zinc-800",
-                      selectedOption &&
-                        getItemValue(selectedOption) === getItemValue(option) &&
-                        "font-medium",
-                      option.disabled && "opacity-50 cursor-not-allowed"
-                    )}
-                  >
-                    {renderItemContent(option, index)}
-                  </div>
-                ))}
-
-                {/* Infinite scroll loading indicator */}
-                {isAsyncMode && hasMore && (
-                  <div
-                    ref={loadMoreRef}
-                    className="flex items-center justify-center p-4"
-                  >
-                    {isLoadingMore ? (
-                      <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                        <Loader2
-                          className="h-4 w-4 animate-spin"
-                          strokeWidth={iconStrokeWidth}
-                        />
-                        Loading more...
-                      </div>
-                    ) : (
-                      <div className="text-sm text-zinc-500 dark:text-zinc-400">
-                        Scroll for more
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Initial loading state */}
-                {isAsyncMode && isLoading && allItems.length === 0 && (
-                  <div className="flex items-center justify-center p-8">
-                    <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                      <Loader2
-                        className="h-4 w-4 animate-spin"
-                        strokeWidth={iconStrokeWidth}
-                      />
-                      Loading...
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </div>
+  // Default item renderer
+  const defaultRenderItem = (item: T, index: number) => (
+    <div
+      key={getItemValue(item)}
+      className={cx(
+        comboboxItemVariants({ size }),
+        highlightedIndex === index && "data-[highlighted]:true",
+        selectedItem &&
+          getItemValue(selectedItem) === getItemValue(item) &&
+          "data-[selected]:true"
+      )}
+      {...getItemProps({ item, index })}
+    >
+      <span className="flex-1 truncate">{getItemLabel(item)}</span>
+      {selectedItem && getItemValue(selectedItem) === getItemValue(item) && (
+        <Icon
+          icon={Check}
+          size="sm"
+          strokeWidth={iconStrokeWidth}
+          className="text-current"
+        />
       )}
     </div>
   );
-}
 
-/**
- * Hook for managing combobox state with additional utilities
- */
-export function useComboboxState<T extends ComboboxOption = ComboboxOption>(
-  initialValue = "",
-  options: T[] = []
-) {
-  const [value, setValue] = React.useState(initialValue);
-
-  const selectedOption = React.useMemo(
-    () => options.find((option) => option.value === value) || null,
-    [options, value]
+  // Default trigger renderer
+  const defaultRenderTrigger = ({
+    value: triggerValue,
+    placeholder: triggerPlaceholder,
+    isOpen: triggerIsOpen,
+  }: {
+    value?: T;
+    placeholder?: string;
+    isOpen: boolean;
+    disabled?: boolean;
+  }) => (
+    <div className="flex w-full items-center justify-between">
+      <span
+        className={cx(
+          "flex-1 truncate text-left",
+          !triggerValue && "text-zinc-500 dark:text-zinc-400"
+        )}
+      >
+        {triggerValue ? getItemLabel(triggerValue) : triggerPlaceholder}
+      </span>
+      <Icon
+        icon={ChevronDown}
+        size="sm"
+        strokeWidth={iconStrokeWidth}
+        className={cx(
+          "transition-transform duration-200",
+          triggerIsOpen && "rotate-180"
+        )}
+      />
+    </div>
   );
 
-  const isValid = React.useMemo(
-    () => !value || options.some((option) => option.value === value),
-    [options, value]
+  const inputProps = getInputProps({
+    placeholder: searchPlaceholder,
+    disabled,
+  });
+
+  // Map combobox sizes to button sizes
+  const buttonSize = size === "base" ? "default" : size;
+
+  return (
+    <div className={cx(comboboxVariants({ size }), className)}>
+      {/* Trigger Button */}
+      <Button
+        variant="outline"
+        size={buttonSize}
+        disabled={disabled}
+        className={cx(
+          "w-full justify-between font-normal",
+          hasError && hasErrorInput,
+          !selectedItem && "text-zinc-500 dark:text-zinc-400"
+        )}
+        {...getToggleButtonProps()}
+      >
+        {renderTrigger
+          ? renderTrigger({
+              value: selectedItem,
+              placeholder,
+              isOpen,
+              disabled,
+            })
+          : defaultRenderTrigger({
+              value: selectedItem,
+              placeholder,
+              isOpen,
+              disabled,
+            })}
+      </Button>
+
+      {/* Dropdown Menu */}
+      <div
+        className={cx(comboboxListVariants({ size }), !isOpen && "hidden")}
+        {...getMenuProps()}
+      >
+        {/* Search Input */}
+        <div className="border-b border-zinc-200 dark:border-zinc-800 p-2">
+          <input
+            {...inputProps}
+            className={cx(
+              "w-full rounded-md border border-zinc-200 bg-white px-3 text-sm placeholder:text-zinc-500",
+              "focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500",
+              "dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400",
+              "dark:focus:border-blue-400 dark:focus:ring-blue-400",
+              size === "sm" && "py-1.5",
+              size === "base" && "py-2",
+              size === "lg" && "py-2.5"
+            )}
+            autoFocus
+          />
+        </div>
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-4">
+            <Loader size="sm" />
+            <span className="ml-2 text-sm text-zinc-500">Loading...</span>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !isLoading && (
+          <div className="flex items-center justify-center py-4 text-red-500">
+            <span className="text-sm">Failed to load options</span>
+          </div>
+        )}
+
+        {/* Items List */}
+        {!isLoading && !error && items.length > 0 && (
+          <div className="py-1">
+            {items.map((item, index) => (
+              <div key={`${getItemValue(item)}-${index}`}>
+                {renderItem
+                  ? renderItem(item, index)
+                  : defaultRenderItem(item, index)}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && !error && items.length === 0 && (
+          <div className="flex items-center justify-center py-4 text-zinc-500">
+            <span className="text-sm">{emptyMessage}</span>
+          </div>
+        )}
+      </div>
+    </div>
   );
+};
 
-  const handleValueChange = React.useCallback((newValue: string | null) => {
-    setValue(newValue || "");
-  }, []);
+Combobox.displayName = "Combobox";
 
-  return {
-    /** Current selected value */
-    value,
-    /** Update selected value */
-    setValue: handleValueChange,
-    /** Currently selected option object */
-    selectedOption,
-    /** Whether current value is valid (exists in options) */
-    isValid,
-    /** Clear the selection */
-    clear: () => setValue(""),
-    /** Check if a specific value is selected */
-    isSelected: (checkValue: string) => value === checkValue,
-  };
-}
+export { Combobox, comboboxVariants };
+export type { ComboboxProps };
