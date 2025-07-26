@@ -22,14 +22,14 @@ const fruits: FruitOption[] = [
 // Mock async function to simulate data fetching
 async function fetchFruits({ search }: { search?: string }) {
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  const filtered = search 
-    ? fruits.filter(fruit => 
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  const filtered = search
+    ? fruits.filter((fruit) =>
         fruit.label.toLowerCase().includes(search.toLowerCase())
       )
     : fruits;
-    
+
   return {
     data: filtered,
     hasNextPage: false,
@@ -41,19 +41,19 @@ async function fetchIcons({ search }: { search?: string }) {
   const params = new URLSearchParams({
     page: "0",
     limit: "20",
-    ...(search && { search })
+    ...(search && { search }),
   });
-  
+
   const response = await fetch(`/api/icons?${params}`);
   const data = await response.json();
-  
+
   // Transform API response to ComboboxOption format
   const options = data.icons.map((icon: { kebab: string; pascal: string }) => ({
     id: icon.kebab,
     label: icon.pascal,
     value: icon.kebab,
   }));
-  
+
   return {
     data: options,
     hasNextPage: data.hasMore,
@@ -121,27 +121,11 @@ export function CustomRenderingExample() {
         placeholder="Choose a fruit..."
         renderItem={(item) => (
           <div className="flex items-center gap-2 py-2 px-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
-            <div 
-              className="w-3 h-3 rounded-full" 
+            <div
+              className="w-3 h-3 rounded-full"
               style={{ backgroundColor: item.color }}
             />
             <span>{item.label}</span>
-          </div>
-        )}
-        renderTrigger={({ value: triggerValue, placeholder, isOpen }) => (
-          <div className="flex items-center gap-2">
-            {triggerValue && (
-              <div 
-                className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: triggerValue.color }}
-              />
-            )}
-            <span className="flex-1">
-              {triggerValue ? triggerValue.label : placeholder}
-            </span>
-            <span className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}>
-              ↓
-            </span>
           </div>
         )}
       />
@@ -166,7 +150,7 @@ export function SizesExample() {
           placeholder="Small combobox"
         />
       </div>
-      
+
       <div className="w-56">
         <label className="block text-sm font-medium mb-1">Base (Default)</label>
         <Combobox
@@ -177,7 +161,7 @@ export function SizesExample() {
           placeholder="Base combobox"
         />
       </div>
-      
+
       <div className="w-64">
         <label className="block text-base font-medium mb-1">Large</label>
         <Combobox
