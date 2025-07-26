@@ -9,6 +9,7 @@ import { Button } from "../button";
 import { Icon } from "../icon";
 import { Input } from "../input";
 import { Loader } from "../loader";
+import { ScrollArea } from "../scroll-area";
 
 /**
  * Base interface for combobox options
@@ -451,11 +452,9 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         </div>
 
         {/* Scrollable Content Area */}
-        <div
+        <ScrollArea
           className={cx(
-            "max-h-60 overflow-auto rounded-b-md",
-            // scrollbar
-            "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
+            "max-h-60 rounded-b-md",
             size === "sm" && "text-xs",
             size === "base" && "text-sm",
             size === "lg" && "text-base"
@@ -495,7 +494,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
               <span className="text-sm">{emptyMessage}</span>
             </div>
           )}
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
