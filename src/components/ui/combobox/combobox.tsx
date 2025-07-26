@@ -249,7 +249,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     openMenu,
   } = useCombobox<T>({
     items,
-    itemToString: (item) => (item ? getItemLabel(item) : ""),
+    itemToString: () => "", // Always return empty to prevent auto-filling input
     selectedItem: selectedItem || null,
     inputValue,
     stateReducer: (state, actionAndChanges) => {
@@ -262,11 +262,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           return {
             ...changes,
             inputValue: "", // Clear search input when closing or selecting
-          };
-        case useCombobox.stateChangeTypes.ToggleButtonClick:
-          return {
-            ...changes,
-            inputValue: "", // Clear input when toggling open
           };
         default:
           return changes;

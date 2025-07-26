@@ -294,3 +294,26 @@ Check the render method of `Stack`. It was passed a child from ComponentExamples
  GET /favicon.ico?favicon.45db1c09.ico 200 in 220ms
  GET /api/icons?page=0&limit=20 200 in 63ms
  GET /api/icons?page=0&limit=20 200 in 40ms
+ ✓ Compiled in 555ms
+ ✓ Compiled /[category]/[component] in 374ms
+ GET /inputs/combobox 200 in 646ms
+ ✓ Compiled /[category]/[component] in 141ms
+ GET /inputs/combobox 200 in 339ms
+ GET /inputs/combobox 200 in 959ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 222ms
+ GET /api/icons?page=0&limit=20 200 in 154ms
+ GET /api/icons?page=0&limit=20 200 in 38ms
+ GET /inputs/combobox 200 in 335ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 221ms
+ GET /api/icons?page=0&limit=20 200 in 66ms
+ GET /api/icons?page=0&limit=20 200 in 21ms
+ ✓ Compiled in 419ms
+ ✓ Compiled /[category]/[component] in 278ms
+ GET /inputs/combobox 200 in 557ms
+ ✓ Compiled in 226ms
+ ✓ Compiled /[category]/[component] in 172ms
+ GET /inputs/combobox 200 in 364ms
+ GET /inputs/combobox 200 in 947ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 225ms
+ GET /api/icons?page=0&limit=20 200 in 54ms
+ GET /api/icons?page=0&limit=20 200 in 47ms
