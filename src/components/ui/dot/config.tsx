@@ -2,15 +2,17 @@ import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import {
   AnimatedExample,
-  ColorsExample,
-  DefaultExample,
+  BasicExample,
+  ColorVariantsExample,
+  SemanticVariantsExample,
   SizesExample,
   WithLabelsExample,
+  WithoutLabelsExample,
 } from "./examples";
 
 export const componentConfig: ComponentConfig = {
-  id: "status-dot",
-  name: "Status Dot",
+  id: "dot",
+  name: "Dot",
   description: "A small dot indicator to show status or state.",
   category: "feedback" as const,
   icon: "Circle",
@@ -18,13 +20,13 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { StatusDot } from "@/components/ui/status-dot/status-dot";`,
-  componentId: "StatusDotExample",
+  importStatement: `import { Dot } from "@/components/ui/dot/dot";`,
+  componentId: "DotExample",
   props: [
     {
       name: "variant",
       type: "select",
-      description: "Status variant",
+      description: "Semantic variant for the dot",
       options: [
         "default",
         "neutral",
@@ -57,7 +59,7 @@ export const componentConfig: ComponentConfig = {
     {
       name: "size",
       type: "select",
-      description: "Size of the status dot",
+      description: "Size of the dot",
       options: ["sm", "default", "lg"],
       defaultValue: "default",
     },
@@ -76,33 +78,45 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "default",
-      title: "Basic Status Dots",
-      description: "Status dots in different variants",
-      code: jsxToString(<DefaultExample />),
+      id: "basic",
+      title: "Basic Usage",
+      description: "Simple dot indicators in common variants",
+      code: jsxToString(<BasicExample />),
     },
     {
-      id: "with-labels",
-      title: "Status Dots with Labels",
-      description: "Status indicators with text labels",
-      code: jsxToString(<WithLabelsExample />),
+      id: "semantic-variants",
+      title: "Semantic Variants",
+      description: "All semantic variants with labels",
+      code: jsxToString(<SemanticVariantsExample />),
     },
     {
-      id: "colors",
+      id: "color-variants",
       title: "Color Variants",
-      description: "Status dots in various colors",
-      code: jsxToString(<ColorsExample />),
+      description: "Dots using Tailwind color variants",
+      code: jsxToString(<ColorVariantsExample />),
     },
     {
       id: "sizes",
-      title: "Different Sizes",
-      description: "Status dots in various sizes",
+      title: "Sizes",
+      description: "Dots in different sizes",
       code: jsxToString(<SizesExample />),
     },
     {
+      id: "with-labels",
+      title: "With Labels",
+      description: "Dot indicators with descriptive text labels",
+      code: jsxToString(<WithLabelsExample />),
+    },
+    {
+      id: "without-labels",
+      title: "Without Labels",
+      description: "Minimal dot indicators without text",
+      code: jsxToString(<WithoutLabelsExample />),
+    },
+    {
       id: "animated",
-      title: "Animated Status Dots",
-      description: "Animated status indicators",
+      title: "Animated",
+      description: "Animated dots for active states",
       code: jsxToString(<AnimatedExample />),
     },
   ],

@@ -66,7 +66,7 @@ export function ComponentExampleRenderer({
 
   if (error) {
     return (
-      <div className="text-red-500 text-sm p-4 border border-red-200 rounded bg-red-50 dark:bg-red-950/20">
+      <div className="text-red-500 text-xs p-4 border border-red-200 rounded bg-red-50 dark:bg-red-950/20">
         <p className="font-medium">Example Load Error</p>
         <p className="text-xs mt-1">{error}</p>
       </div>
@@ -75,7 +75,7 @@ export function ComponentExampleRenderer({
 
   if (!ExampleComponent) {
     return (
-      <div className="text-amber-600 text-sm p-4 border border-amber-200 rounded bg-amber-50 dark:bg-amber-950/20">
+      <div className="text-amber-600 text-xs p-4 border border-amber-200 rounded bg-amber-50 dark:bg-amber-950/20">
         <p className="font-medium">Example Not Found</p>
         <p className="text-xs mt-1">
           Could not find example component for {exampleId}

@@ -3,19 +3,19 @@ import Link from "next/link";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const textVariants = tv({
-  base: "m-0 text-current",
+  base: "m-0 text-current leading-relaxed",
   variants: {
     size: {
-      "2xs": "text-2xs/3",
-      xs: "text-xs/4",
-      sm: "text-sm/5",
-      base: "text-base/6",
-      lg: "text-lg/7",
-      xl: "text-xl/8",
+      "2xs": "text-2xs",
+      xs: "text-xs",
+      sm: "text-sm",
+      base: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
     },
   },
   defaultVariants: {
-    size: "sm",
+    size: "xs",
   },
 });
 

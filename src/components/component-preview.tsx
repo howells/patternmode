@@ -216,7 +216,7 @@ const createDynamicComponent = (
                           <p className="font-medium">
                             Component not found: {componentId}
                           </p>
-                          <p className="text-sm mt-1">Tried paths:</p>
+                          <p className="text-xs mt-1">Tried paths:</p>
                           <ul className="text-xs mt-1 space-y-1">
                             <li>• {importPath}</li>
                             <li>• {flatPath}</li>
@@ -243,7 +243,7 @@ const createDynamicComponent = (
                     <p className="font-medium">
                       Component not found: {componentId}
                     </p>
-                    <p className="text-sm mt-1">Tried paths:</p>
+                    <p className="text-xs mt-1">Tried paths:</p>
                     <ul className="text-xs mt-1 space-y-1">
                       <li>• {importPath}</li>
                       <li>• {flatPath}</li>

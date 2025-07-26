@@ -63,7 +63,7 @@ export const defaultValueFormatter = (
 export const progressLabelVariants = tv({
   base: [
     // base
-    "text-sm font-medium leading-none",
+    "text-xs font-medium leading-none",
     // text color
     "text-zinc-900 dark:text-zinc-50",
   ],
@@ -73,7 +73,7 @@ export const progressLabelVariants = tv({
 export const progressValueVariants = tv({
   base: [
     // base
-    "text-sm font-medium leading-none",
+    "text-xs font-medium leading-none",
     // text color
     "text-zinc-900 dark:text-zinc-50",
   ],

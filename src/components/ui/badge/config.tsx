@@ -198,7 +198,7 @@ export const componentConfig: ComponentConfig = {
       code: jsxToString(<RoundedExample />),
     },
     {
-      id: "status-dot",
+      id: "dot",
       title: "Status Dot",
       description: "Badge with a status dot.",
       code: jsxToString(<StatusDotExample />),

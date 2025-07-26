@@ -33,25 +33,7 @@ export type ButtonVariant =
   | "link"
   | "minimal";
 
-// Badge-specific variants (semantic + curated colors)
-export type BadgeVariant =
-  | GlobalSemanticVariant
-  | "purple"
-  | "pink"
-  | "rose"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "teal"
-  | "cyan"
-  | "sky"
-  | "blue"
-  | "indigo"
-  | "violet"
-  | "fuchsia";
+// Remove component-specific types - components should define their own
 
 // Combined semantic variant types
 export type SemanticVariant = GlobalSemanticVariant | ButtonVariant;
@@ -420,183 +402,10 @@ export function getVariantClasses(
 }
 
 /**
- * Predefined variant configurations for different component types
+ * Predefined variant configurations for core component types
+ * Components should import utilities and create their own variants
  */
 export const componentVariants = {
-  // Badge uses global semantic variants + curated color variants
-  badge: {
-    default: getVariantClasses("default"),
-    neutral: getVariantClasses("neutral"),
-    success: getVariantClasses("success"),
-    info: getVariantClasses("info"),
-    warning: getVariantClasses("warning"),
-    error: getVariantClasses("error"),
-    critical: getVariantClasses("critical"),
-    positive: getVariantClasses("positive"),
-    negative: getVariantClasses("negative"),
-    // Static color variants (so Tailwind can detect them)
-    purple: [
-      "bg-purple-50",
-      "text-purple-900",
-      "border-purple-500/30",
-      "ring-purple-500/30",
-      "dark:bg-purple-400/10",
-      "dark:text-purple-400",
-      "dark:border-purple-400/30",
-      "dark:ring-purple-400/30",
-    ],
-    pink: [
-      "bg-pink-50",
-      "text-pink-900",
-      "border-pink-500/30",
-      "ring-pink-500/30",
-      "dark:bg-pink-400/10",
-      "dark:text-pink-400",
-      "dark:border-pink-400/30",
-      "dark:ring-pink-400/30",
-    ],
-    rose: [
-      "bg-rose-50",
-      "text-rose-900",
-      "border-rose-500/30",
-      "ring-rose-500/30",
-      "dark:bg-rose-400/10",
-      "dark:text-rose-400",
-      "dark:border-rose-400/30",
-      "dark:ring-rose-400/30",
-    ],
-    orange: [
-      "bg-orange-50",
-      "text-orange-900",
-      "border-orange-500/30",
-      "ring-orange-500/30",
-      "dark:bg-orange-400/10",
-      "dark:text-orange-400",
-      "dark:border-orange-400/30",
-      "dark:ring-orange-400/30",
-    ],
-    amber: [
-      "bg-amber-50",
-      "text-amber-900",
-      "border-amber-500/30",
-      "ring-amber-500/30",
-      "dark:bg-amber-400/10",
-      "dark:text-amber-400",
-      "dark:border-amber-400/30",
-      "dark:ring-amber-400/30",
-    ],
-    yellow: [
-      "bg-yellow-50",
-      "text-yellow-900",
-      "border-yellow-500/30",
-      "ring-yellow-500/30",
-      "dark:bg-yellow-400/10",
-      "dark:text-yellow-400",
-      "dark:border-yellow-400/30",
-      "dark:ring-yellow-400/30",
-    ],
-    lime: [
-      "bg-lime-50",
-      "text-lime-900",
-      "border-lime-500/30",
-      "ring-lime-500/30",
-      "dark:bg-lime-400/10",
-      "dark:text-lime-400",
-      "dark:border-lime-400/30",
-      "dark:ring-lime-400/30",
-    ],
-    green: [
-      "bg-green-50",
-      "text-green-900",
-      "border-green-500/30",
-      "ring-green-500/30",
-      "dark:bg-green-400/10",
-      "dark:text-green-400",
-      "dark:border-green-400/30",
-      "dark:ring-green-400/30",
-    ],
-    emerald: [
-      "bg-emerald-50",
-      "text-emerald-900",
-      "border-emerald-600/30",
-      "ring-emerald-600/30",
-      "dark:bg-emerald-400/10",
-      "dark:text-emerald-400",
-      "dark:border-emerald-400/30",
-      "dark:ring-emerald-400/30",
-    ],
-    teal: [
-      "bg-teal-50",
-      "text-teal-900",
-      "border-teal-500/30",
-      "ring-teal-500/30",
-      "dark:bg-teal-400/10",
-      "dark:text-teal-400",
-      "dark:border-teal-400/30",
-      "dark:ring-teal-400/30",
-    ],
-    cyan: [
-      "bg-cyan-50",
-      "text-cyan-900",
-      "border-cyan-500/30",
-      "ring-cyan-500/30",
-      "dark:bg-cyan-400/10",
-      "dark:text-cyan-400",
-      "dark:border-cyan-400/30",
-      "dark:ring-cyan-400/30",
-    ],
-    sky: [
-      "bg-sky-50",
-      "text-sky-900",
-      "border-sky-500/30",
-      "ring-sky-500/30",
-      "dark:bg-sky-400/10",
-      "dark:text-sky-400",
-      "dark:border-sky-400/30",
-      "dark:ring-sky-400/30",
-    ],
-    blue: [
-      "bg-blue-50",
-      "text-blue-900",
-      "border-blue-500/30",
-      "ring-blue-500/30",
-      "dark:bg-blue-400/10",
-      "dark:text-blue-400",
-      "dark:border-blue-400/30",
-      "dark:ring-blue-400/30",
-    ],
-    indigo: [
-      "bg-indigo-50",
-      "text-indigo-900",
-      "border-indigo-500/30",
-      "ring-indigo-500/30",
-      "dark:bg-indigo-400/10",
-      "dark:text-indigo-400",
-      "dark:border-indigo-400/30",
-      "dark:ring-indigo-400/30",
-    ],
-    violet: [
-      "bg-violet-50",
-      "text-violet-900",
-      "border-violet-500/30",
-      "ring-violet-500/30",
-      "dark:bg-violet-400/10",
-      "dark:text-violet-400",
-      "dark:border-violet-400/30",
-      "dark:ring-violet-400/30",
-    ],
-    fuchsia: [
-      "bg-fuchsia-50",
-      "text-fuchsia-900",
-      "border-fuchsia-500/30",
-      "ring-fuchsia-500/30",
-      "dark:bg-fuchsia-400/10",
-      "dark:text-fuchsia-400",
-      "dark:border-fuchsia-400/30",
-      "dark:ring-fuchsia-400/30",
-    ],
-  },
-
   // Button uses global variants + button-specific interactive variants
   button: {
     // Global semantic variants with simple styling
@@ -650,3 +459,49 @@ export function createCustomVariant(
 export type ExtendedVariant<T extends Record<string, unknown>> = T & {
   [K in TailwindColor]?: ClassValue[];
 };
+
+/**
+ * Simple helper to get color classes for any semantic variant or Tailwind color
+ * This is the recommended approach for components that need color variants
+ */
+export function getColorClasses(
+  variant: GlobalSemanticVariant | TailwindColor
+) {
+  // Semantic variant to color mapping
+  const semanticColorMap: Record<GlobalSemanticVariant, TailwindColor> = {
+    default: "blue",
+    neutral: "zinc",
+    success: "emerald",
+    info: "sky",
+    warning: "amber",
+    error: "red",
+    critical: "rose",
+    positive: "teal",
+    negative: "rose",
+  };
+
+  // Get the actual Tailwind color to use
+  const actualColor =
+    variant in semanticColorMap
+      ? semanticColorMap[variant as GlobalSemanticVariant]
+      : (variant as TailwindColor);
+
+  return {
+    // Common text colors
+    text: `text-${actualColor}-900 dark:text-${actualColor}-400`,
+    textLight: `text-${actualColor}-600 dark:text-${actualColor}-300`,
+    textMuted: `text-${actualColor}-500 dark:text-${actualColor}-400`,
+
+    // Common background colors
+    bg: `bg-${actualColor}-50 dark:bg-${actualColor}-950`,
+    bgSolid: `bg-${actualColor}-500 dark:bg-${actualColor}-500`,
+    bgMuted: `bg-${actualColor}-100 dark:bg-${actualColor}-900`,
+
+    // Common border colors
+    border: `border-${actualColor}-200 dark:border-${actualColor}-800`,
+    borderSolid: `border-${actualColor}-500 dark:border-${actualColor}-500`,
+
+    // Raw color name for custom usage
+    color: actualColor,
+  };
+}

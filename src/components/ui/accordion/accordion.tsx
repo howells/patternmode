@@ -1,5 +1,7 @@
 // Tremor Accordion [v1.0.0] - Base UI
 
+import { Subheading } from "@/components/ui/subheading/subheading";
+import { Text } from "@/components/ui/text/text";
 import { config } from "@/lib/config";
 import { cx } from "@/lib/utils";
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
@@ -66,7 +68,7 @@ const AccordionTrigger = React.forwardRef<
     <BaseAccordion.Trigger
       className={cx(
         // base
-        "group flex flex-1 cursor-pointer items-center justify-between py-3 text-left text-sm leading-none font-medium",
+        "group flex flex-1 cursor-pointer items-center justify-between py-3 text-left font-medium",
         // text color
         "text-zinc-900 dark:text-zinc-50",
         // disabled
@@ -78,7 +80,11 @@ const AccordionTrigger = React.forwardRef<
       {...props}
       ref={forwardedRef}
     >
-      {children}
+      {typeof children === "string" ? (
+        <Subheading level={3}>{children}</Subheading>
+      ) : (
+        children
+      )}
       <Plus
         className={cx(
           // base
@@ -118,8 +124,14 @@ const AccordionContent = React.forwardRef<
     ref={forwardedRef}
     {...props}
   >
-    <div className="pb-3 pt-1 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
-      {children}
+    <div className="pb-3 pt-1">
+      {typeof children === "string" ? (
+        <Text size="xs" className="text-zinc-700 dark:text-zinc-300">
+          {children}
+        </Text>
+      ) : (
+        children
+      )}
     </div>
   </BaseAccordion.Panel>
 ));

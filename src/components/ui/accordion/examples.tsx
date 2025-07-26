@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge/badge";
+import { Text } from "@/components/ui/text/text";
 import React from "react";
 import {
   Accordion,
@@ -45,6 +47,62 @@ export const MultipleOpenExample = () => (
         You can install Patternmode components using npm or pnpm. Each component
         is built on Base UI primitives for excellent accessibility and
         performance.
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+);
+
+// Mixed content types - demonstrates string vs component handling
+export const MixedContentExample = () => (
+  <Accordion>
+    <AccordionItem value="string-content">
+      <AccordionTrigger>String Content (Auto Text Component)</AccordionTrigger>
+      <AccordionContent>
+        This is a plain string that gets automatically wrapped with the Text
+        component, inheriting the muted text colors and proper typography from
+        the design system.
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="component-content">
+      <AccordionTrigger>
+        <div className="flex items-center gap-2">
+          Component Trigger
+          <Badge variant="info" size="sm">
+            New
+          </Badge>
+        </div>
+      </AccordionTrigger>
+      <AccordionContent>
+        <div className="space-y-3">
+          <Text className="text-blue-600 font-medium">
+            This content uses components that manage their own styling.
+          </Text>
+          <Text size="sm" className="text-green-700">
+            Each Text component can have its own colors and sizes.
+          </Text>
+          <div className="flex gap-2">
+            <Badge variant="success">Feature</Badge>
+            <Badge variant="blue">Documentation</Badge>
+          </div>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="mixed-trigger">
+      <AccordionTrigger>Mixed String Trigger</AccordionTrigger>
+      <AccordionContent>
+        <div className="space-y-2">
+          <Text>This demonstrates mixed content:</Text>
+          <ul className="list-disc list-inside space-y-1 ml-4">
+            <li>
+              <Text size="sm">List items with custom Text components</Text>
+            </li>
+            <li>
+              <Text size="sm" className="text-amber-600">
+                Custom colored text that overrides defaults
+              </Text>
+            </li>
+          </ul>
+        </div>
       </AccordionContent>
     </AccordionItem>
   </Accordion>

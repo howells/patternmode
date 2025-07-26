@@ -278,7 +278,7 @@ export const SidebarItem = forwardRef<
         render={href ? <Link href={href} /> : undefined}
         className={clsx(
           // Base styles
-          "w-full flex items-center gap-3 rounded-md text-left text-sm transition-all duration-200",
+          "w-full flex items-center gap-3 rounded-md text-left text-xs transition-all duration-200",
           // Force no shadow
           "!shadow-none",
           // Layout

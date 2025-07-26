@@ -23,6 +23,7 @@ import { componentConfig as copyButtonConfig } from "@/components/ui/copy-button
 import { componentConfig as dismissButtonConfig } from "@/components/ui/dismiss-button/config";
 import { componentConfig as dividerConfig } from "@/components/ui/divider/config";
 import { componentConfig as donutChartConfig } from "@/components/ui/donut-chart/config";
+import { componentConfig as dotConfigActual } from "@/components/ui/dot/config";
 import { componentConfig as emptyStateConfig } from "@/components/ui/empty-state/config";
 import { componentConfig as fieldConfig } from "@/components/ui/field/config";
 import { componentConfig as gridConfig } from "@/components/ui/grid/config";
@@ -47,7 +48,6 @@ import { componentConfig as sparkChartConfig } from "@/components/ui/spark-chart
 import { componentConfig as splitButtonConfig } from "@/components/ui/split-button/config";
 import { componentConfig as stackConfig } from "@/components/ui/stack/config";
 import { componentConfig as stackedListConfig } from "@/components/ui/stacked-list/config";
-import { componentConfig as statusDotConfig } from "@/components/ui/status-dot/config";
 import { componentConfig as switchConfig } from "@/components/ui/switch/config";
 import { componentConfig as tabsConfig } from "@/components/ui/tabs/config";
 import { componentConfig as tagInputConfig } from "@/components/ui/tag-input/config";
@@ -64,6 +64,7 @@ import {
 const createPlaceholderConfig = (
   id: string,
   name: string,
+  icon: string,
   category:
     | "text"
     | "layout"
@@ -82,6 +83,7 @@ const createPlaceholderConfig = (
   description: `${name} component - conversion to new structure pending`,
   category,
   badge: category.charAt(0).toUpperCase() + category.slice(1),
+  icon,
   importStatement: `// TODO: Convert to new structure`,
   componentId: `${name.replace(/\s+/g, "")}Example`,
   props: [],
@@ -96,101 +98,202 @@ const createPlaceholderConfig = (
 });
 
 // Placeholder configurations for components not yet converted to three-file structure
-// (Only for components that don't already have imports above)
 const contextMenuConfig = createPlaceholderConfig(
   "context-menu",
-  "Context Menu"
+  "Context Menu",
+  "MousePointer2",
+  "overlay"
 );
-const descriptionListConfig = createPlaceholderConfig(
-  "description-list",
-  "Description List"
-);
-const dialogConfig = createPlaceholderConfig("dialog", "Dialog");
-const drawerConfig = createPlaceholderConfig("drawer", "Drawer");
-const headingConfig = createPlaceholderConfig("heading", "Heading");
-const subheadingConfig = createPlaceholderConfig("subheading", "Subheading");
-const labelConfig = createPlaceholderConfig("label", "Label");
-const menuConfig = createPlaceholderConfig("menu", "Menu");
-const menuBarConfig = createPlaceholderConfig("menu-bar", "Menu Bar");
-const navbarConfig = createPlaceholderConfig("navbar", "Navbar");
-const navigationMenuConfig = createPlaceholderConfig(
-  "navigation-menu",
-  "Navigation Menu"
-);
-const popoverConfig = createPlaceholderConfig("popover", "Popover");
-const previewCardConfig = createPlaceholderConfig(
-  "preview-card",
-  "Preview Card"
-);
-const progressConfig = createPlaceholderConfig("progress", "Progress");
-const progressCircleConfig = createPlaceholderConfig(
-  "progress-circle",
-  "Progress Circle"
-);
-const responsiveDrawerConfig = createPlaceholderConfig(
-  "responsive-drawer",
-  "Responsive Drawer"
-);
-// scrollAreaConfig is now imported from the actual config file
-const sheetConfig = createPlaceholderConfig("sheet", "Sheet");
-const sidebarConfig = createPlaceholderConfig("sidebar", "Sidebar");
-const skeletonConfig = createPlaceholderConfig("skeleton", "Skeleton");
-const tabNavigationConfig = createPlaceholderConfig(
-  "tab-navigation",
-  "Tab Navigation"
-);
-const tableConfig = createPlaceholderConfig("table", "Table");
-
-const toastConfig = createPlaceholderConfig("toast", "Toast");
-const toggleConfig = createPlaceholderConfig("toggle", "Toggle");
-const toggleGroupConfig = createPlaceholderConfig(
-  "toggle-group",
-  "Toggle Group"
-);
-const toolbarConfig = createPlaceholderConfig("toolbar", "Toolbar");
-const tooltipConfig = createPlaceholderConfig("tooltip", "Tooltip");
-const touchTargetConfig = createPlaceholderConfig(
-  "touch-target",
-  "Touch Target"
-);
-const trackerConfig = createPlaceholderConfig("tracker", "Tracker");
-
-// Missing components that need placeholders
-const inspectorConfig = createPlaceholderConfig(
-  "inspector",
-  "Inspector",
-  "utility"
-);
-
-// Placeholder configurations for inputs category
 const datePickerConfig = createPlaceholderConfig(
   "date-picker",
   "Date Picker",
+  "Calendar",
   "inputs"
 );
 const dateRangePickerConfig = createPlaceholderConfig(
   "date-range-picker",
   "Date Range Picker",
+  "CalendarRange",
   "inputs"
 );
-
+const descriptionListConfig = createPlaceholderConfig(
+  "description-list",
+  "Description List",
+  "List",
+  "data"
+);
+const dialogConfig = createPlaceholderConfig(
+  "dialog",
+  "Dialog",
+  "MessageSquare",
+  "overlay"
+);
+// Dot config is now imported as dotConfigActual
+const drawerConfig = createPlaceholderConfig(
+  "drawer",
+  "Drawer",
+  "PanelRight",
+  "overlay"
+);
+const fieldsetConfig = createPlaceholderConfig(
+  "fieldset",
+  "Fieldset",
+  "Square",
+  "forms"
+);
+const formConfig = createPlaceholderConfig("form", "Form", "FileText", "forms");
+const headingConfig = createPlaceholderConfig(
+  "heading",
+  "Heading",
+  "Heading1",
+  "text"
+);
+const inspectorConfig = createPlaceholderConfig(
+  "inspector",
+  "Inspector",
+  "Search",
+  "utility"
+);
+const labelConfig = createPlaceholderConfig("label", "Label", "Tag", "text");
+const menuConfig = createPlaceholderConfig(
+  "menu",
+  "Menu",
+  "Menu",
+  "navigation"
+);
+const menuBarConfig = createPlaceholderConfig(
+  "menu-bar",
+  "Menu Bar",
+  "MenuSquare",
+  "navigation"
+);
+const navbarConfig = createPlaceholderConfig(
+  "navbar",
+  "Navbar",
+  "Navigation",
+  "navigation"
+);
+const navigationMenuConfig = createPlaceholderConfig(
+  "navigation-menu",
+  "Navigation Menu",
+  "Navigation2",
+  "navigation"
+);
 const numberFieldConfig = createPlaceholderConfig(
   "number-field",
   "Number Field",
+  "Hash",
   "inputs"
 );
-// selectConfig is now imported from the actual config file
+const popoverConfig = createPlaceholderConfig(
+  "popover",
+  "Popover",
+  "MessageCircle",
+  "overlay"
+);
+const previewCardConfig = createPlaceholderConfig(
+  "preview-card",
+  "Preview Card",
+  "Eye",
+  "data"
+);
+const progressConfig = createPlaceholderConfig(
+  "progress",
+  "Progress",
+  "TrendingUp",
+  "feedback"
+);
+const progressCircleConfig = createPlaceholderConfig(
+  "progress-circle",
+  "Progress Circle",
+  "CircleProgress",
+  "feedback"
+);
+const responsiveDrawerConfig = createPlaceholderConfig(
+  "responsive-drawer",
+  "Responsive Drawer",
+  "PanelLeftOpen",
+  "overlay"
+);
+const sheetConfig = createPlaceholderConfig(
+  "sheet",
+  "Sheet",
+  "RectangleHorizontal",
+  "overlay"
+);
+const sidebarConfig = createPlaceholderConfig(
+  "sidebar",
+  "Sidebar",
+  "PanelLeft",
+  "navigation"
+);
+const skeletonConfig = createPlaceholderConfig(
+  "skeleton",
+  "Skeleton",
+  "Loader2",
+  "feedback"
+);
+const subheadingConfig = createPlaceholderConfig(
+  "subheading",
+  "Subheading",
+  "Heading2",
+  "text"
+);
+const tabNavigationConfig = createPlaceholderConfig(
+  "tab-navigation",
+  "Tab Navigation",
+  "Tabs",
+  "navigation"
+);
+const tableConfig = createPlaceholderConfig("table", "Table", "Table", "data");
 const textareaConfig = createPlaceholderConfig(
   "textarea",
   "Textarea",
+  "AlignLeft",
   "inputs"
 );
-
-// Placeholder configurations for forms category
-const fieldsetConfig = createPlaceholderConfig("fieldset", "Fieldset", "forms");
-const formConfig = createPlaceholderConfig("form", "Form", "forms");
-
-// Placeholder configurations for charts category
+const toastConfig = createPlaceholderConfig(
+  "toast",
+  "Toast",
+  "Bell",
+  "feedback"
+);
+const toggleConfig = createPlaceholderConfig(
+  "toggle",
+  "Toggle",
+  "ToggleLeft",
+  "inputs"
+);
+const toggleGroupConfig = createPlaceholderConfig(
+  "toggle-group",
+  "Toggle Group",
+  "ToggleRight",
+  "inputs"
+);
+const toolbarConfig = createPlaceholderConfig(
+  "toolbar",
+  "Toolbar",
+  "Wrench",
+  "navigation"
+);
+const tooltipConfig = createPlaceholderConfig(
+  "tooltip",
+  "Tooltip",
+  "Info",
+  "overlay"
+);
+const touchTargetConfig = createPlaceholderConfig(
+  "touch-target",
+  "Touch Target",
+  "Fingerprint",
+  "utility"
+);
+const trackerConfig = createPlaceholderConfig(
+  "tracker",
+  "Tracker",
+  "Activity",
+  "utility"
+);
 
 // Component registry with components using new config structure
 export const componentRegistry: ComponentConfigRegistry = {
@@ -213,63 +316,73 @@ export const componentRegistry: ComponentConfigRegistry = {
   "checkbox-group": checkboxGroupConfig,
   "code-block": codeBlockConfig,
   collapsible: collapsibleConfig,
+  "combo-chart": comboChartConfig,
+  combobox: comboboxConfig,
+  command: commandConfig,
   "copy-button": copyButtonConfig,
   "dismiss-button": dismissButtonConfig,
   divider: dividerConfig,
+  "donut-chart": donutChartConfig,
   "empty-state": emptyStateConfig,
+  field: fieldConfig,
   grid: gridConfig,
+  "heading-element": headingElementConfig,
   icon: iconConfig,
+  "icon-select": iconSelectConfig,
+  input: inputConfig,
+  kbd: kbdConfig,
+  "line-chart": lineChartConfig,
   loader: loaderConfig,
   meter: meterConfig,
-  separator: separatorConfig,
-  "stacked-list": stackedListConfig,
-  command: commandConfig,
-  combobox: comboboxConfig,
+  pagination: paginationConfig,
   radio: radioConfig,
-  "radio-group": radioGroupConfig,
   "radio-card-group": radioCardGroupConfig,
-  slider: sliderConfig,
-  switch: switchConfig,
+  "radio-group": radioGroupConfig,
+  "scroll-area": scrollAreaConfig,
+  select: selectConfig,
   "select-native": selectNativeConfig,
-  "combo-chart": comboChartConfig,
-  "donut-chart": donutChartConfig,
-  "line-chart": lineChartConfig,
+  separator: separatorConfig,
+  slider: sliderConfig,
   "spark-chart": sparkChartConfig,
   "split-button": splitButtonConfig,
   stack: stackConfig,
-  "status-dot": statusDotConfig,
+  "stacked-list": stackedListConfig,
+  dot: dotConfigActual,
+  switch: switchConfig,
+  tabs: tabsConfig,
+  tag: tagConfig,
+  "tag-input": tagInputConfig,
+  text: textConfig,
 
-  // UI Components (placeholders)
+  // UI Components (placeholders - need to be converted to new structure)
   "context-menu": contextMenuConfig,
+  "date-picker": datePickerConfig,
+  "date-range-picker": dateRangePickerConfig,
   "description-list": descriptionListConfig,
   dialog: dialogConfig,
   drawer: drawerConfig,
+  fieldset: fieldsetConfig,
+  form: formConfig,
   heading: headingConfig,
-  "heading-element": headingElementConfig,
   inspector: inspectorConfig,
-  kbd: kbdConfig,
-  subheading: subheadingConfig,
   label: labelConfig,
   menu: menuConfig,
   "menu-bar": menuBarConfig,
   navbar: navbarConfig,
   "navigation-menu": navigationMenuConfig,
-  pagination: paginationConfig,
+  "number-field": numberFieldConfig,
   popover: popoverConfig,
   "preview-card": previewCardConfig,
   progress: progressConfig,
   "progress-circle": progressCircleConfig,
   "responsive-drawer": responsiveDrawerConfig,
-  "scroll-area": scrollAreaConfig,
   sheet: sheetConfig,
   sidebar: sidebarConfig,
   skeleton: skeletonConfig,
+  subheading: subheadingConfig,
   "tab-navigation": tabNavigationConfig,
   table: tableConfig,
-  tabs: tabsConfig,
-  tag: tagConfig,
-  "tag-input": tagInputConfig,
-  text: textConfig,
+  textarea: textareaConfig,
   toast: toastConfig,
   toggle: toggleConfig,
   "toggle-group": toggleGroupConfig,
@@ -277,22 +390,6 @@ export const componentRegistry: ComponentConfigRegistry = {
   tooltip: tooltipConfig,
   "touch-target": touchTargetConfig,
   tracker: trackerConfig,
-
-  // Input Components (placeholders)
-  "date-picker": datePickerConfig,
-  "date-range-picker": dateRangePickerConfig,
-  "icon-select": iconSelectConfig,
-  input: inputConfig,
-  "number-field": numberFieldConfig,
-  select: selectConfig,
-  textarea: textareaConfig,
-
-  // Form Components (placeholders)
-  field: fieldConfig,
-  fieldset: fieldsetConfig,
-  form: formConfig,
-
-  // Chart Components (placeholders)
 };
 
 // Helper to register a component config
@@ -343,12 +440,12 @@ export const COMPONENT_LIST = {
   feedback: [
     "badge",
     "callout",
+    "dot",
     "loader",
     "meter",
     "progress",
     "progress-circle",
     "skeleton",
-    "status-dot",
     "tag",
     "toast",
   ],

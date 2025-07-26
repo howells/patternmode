@@ -172,10 +172,8 @@ export function ComponentSearch({
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                  <Subheading className="text-sm">
-                                    {component.name}
-                                  </Subheading>
-                                  <Badge variant="neutral" className="text-xs">
+                                  <Subheading>{component.name}</Subheading>
+                                  <Badge variant="neutral">
                                     {component.badge ||
                                       component.category
                                         .charAt(0)

@@ -12,7 +12,7 @@ const COMPONENT_CATEGORIES = {
     "label", "loader", "menu", "menu-bar", "meter", "navbar", "navigation-menu", 
     "pagination", "popover", "preview-card", "progress", "progress-circle", 
     "responsive-drawer", "scroll-area", "separator", "sheet", "sidebar", 
-    "skeleton", "split-button", "stack", "stacked-list", "status-dot", 
+    "skeleton", "split-button", "stack", "stacked-list", "dot", 
     "tab-navigation", "table", "tabs", "tag", "text", "toast", "toggle", 
     "toggle-group", "toolbar", "tooltip", "touch-target", "tracker"
   ],

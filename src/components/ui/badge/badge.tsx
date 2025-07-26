@@ -8,16 +8,57 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 import { config } from "@/lib/config";
 import { cx, iconUtils, type ComponentWithIconsProps } from "@/lib/utils";
-import { componentVariants, type BadgeVariant } from "@/lib/variants";
+import {
+  getVariantClasses,
+  type GlobalSemanticVariant,
+  type TailwindColor,
+} from "@/lib/variants";
 import { DismissButton } from "../dismiss-button/dismiss-button";
-import { StatusDot } from "../status-dot/status-dot";
+import { Dot } from "../dot/dot";
 
-// Define variants structure using centralized system
+// Badge-specific variant type (semantic + all Tailwind colors)
+export type BadgeVariant = GlobalSemanticVariant | TailwindColor;
+
+// Badge variant configurations - generate dynamically for all supported colors
+const badgeVariantStyles = {
+  // Global semantic variants
+  default: getVariantClasses("default"),
+  neutral: getVariantClasses("neutral"),
+  success: getVariantClasses("success"),
+  info: getVariantClasses("info"),
+  warning: getVariantClasses("warning"),
+  error: getVariantClasses("error"),
+  critical: getVariantClasses("critical"),
+  positive: getVariantClasses("positive"),
+  negative: getVariantClasses("negative"),
+  // All Tailwind colors
+  slate: getVariantClasses("slate"),
+  gray: getVariantClasses("gray"),
+  zinc: getVariantClasses("zinc"),
+  stone: getVariantClasses("stone"),
+  red: getVariantClasses("red"),
+  orange: getVariantClasses("orange"),
+  amber: getVariantClasses("amber"),
+  yellow: getVariantClasses("yellow"),
+  lime: getVariantClasses("lime"),
+  green: getVariantClasses("green"),
+  emerald: getVariantClasses("emerald"),
+  teal: getVariantClasses("teal"),
+  cyan: getVariantClasses("cyan"),
+  sky: getVariantClasses("sky"),
+  blue: getVariantClasses("blue"),
+  indigo: getVariantClasses("indigo"),
+  violet: getVariantClasses("violet"),
+  purple: getVariantClasses("purple"),
+  fuchsia: getVariantClasses("fuchsia"),
+  pink: getVariantClasses("pink"),
+  rose: getVariantClasses("rose"),
+} as const;
+
+// Define variants structure using badge-specific variants
 const badgeVariantsDefinition = {
   variants: {
-    variant: {
-      ...componentVariants.badge,
-    },
+    variant: badgeVariantStyles,
     size: {
       sm: "px-1.5 py-0.5 text-xs font-medium",
       base: "px-2 py-1 text-xs font-medium",
@@ -245,8 +286,8 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     const effectiveVariant = variant;
 
     const renderBadgeContent = () => {
-      const hasLeftIcon = LeftIcon && !statusDot; // StatusDot overrides left icon
-      const hasRightIcon = RightIcon && !statusDot; // StatusDot overrides right icon
+      const hasLeftIcon = LeftIcon && !statusDot; // Dot overrides left icon
+      const hasRightIcon = RightIcon && !statusDot; // Dot overrides right icon
       const hasDismissButton = Boolean(onDismiss);
       const hasStatusDot = Boolean(statusDot);
 
@@ -260,7 +301,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       return (
         <>
           {hasStatusDot && (
-            <StatusDot
+            <Dot
               variant={effectiveVariant}
               size={statusDotSize}
               animated={shouldAnimate}
