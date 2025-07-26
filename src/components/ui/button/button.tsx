@@ -14,13 +14,13 @@ import { Loader } from "../loader";
 const buttonVariants = tv({
   base: [
     // base
-    "relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-center text-sm shadow-xs outline-hidden",
+    "relative inline-flex items-center whitespace-nowrap rounded-md text-sm outline-hidden",
     // cursor - explicit hand pointer for all interactive buttons
     "cursor-pointer",
     // add transparent border to match input height
     "border border-transparent",
-    // background transition with Apple easing - only animate colors and shadows, not position
-    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+    // background transition - only animate colors and shadows, not position
+    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-in-out",
     // disabled
     "disabled:pointer-events-none disabled:shadow-none disabled:cursor-not-allowed",
     // focus
@@ -34,7 +34,7 @@ const buttonVariants = tv({
     },
     size: {
       default: "py-2 px-3 text-sm has-[>svg]:px-2.5",
-      sm: "py-1.5 px-2.5 text-xs has-[>svg]:px-2",
+      sm: "py-1.5 px-2.5 text-sm has-[>svg]:px-2",
       lg: "py-2.5 px-4 text-base has-[>svg]:px-3",
       icon: "p-2.5",
       "icon-sm": "p-2",
@@ -288,7 +288,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       // Determine layout class
       const layoutClassName = cx(
-        "flex items-center w-full transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+        "flex items-center w-full transition-all duration-150 ease-in-out",
         // For icon-only buttons, center everything
         size === "icon" || size === "icon-sm"
           ? "justify-center"
@@ -348,7 +348,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {(isLoading || hasLeftIcon) && (
               <span
                 className={cx(
-                  "flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]"
+                  "flex items-center relative transition-all duration-150 ease-in-out"
                 )}
               >
                 <div
@@ -357,7 +357,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   {/* Loader */}
                   <div
                     className={cx(
-                      "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+                      "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
                       isLoading
                         ? "opacity-100"
                         : "opacity-0 pointer-events-none"
@@ -378,7 +378,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   {hasLeftIcon && (
                     <div
                       className={cx(
-                        "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+                        "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
                         !isLoading
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
@@ -439,7 +439,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span className={layoutClassName}>
             {/* Left spacer/icon */}
             {(isLoading || hasLeftIcon) && (
-              <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
+              <span className="flex items-center relative transition-all duration-150 ease-in-out">
                 <div
                   className={`relative ${getIconContainerSize()} flex items-center justify-center`}
                 >
@@ -496,10 +496,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Full width with left/right alignment and right icon: single flex container
       if (hasRightIcon) {
         return (
-          <span className="flex items-center gap-x-2 w-full transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
+          <span className="flex items-center gap-x-2 w-full transition-all duration-150 ease-in-out">
             {/* Left icon container */}
             {(isLoading || hasLeftIcon) && (
-              <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
+              <span className="flex items-center relative transition-all duration-150 ease-in-out">
                 <div
                   className={`relative ${getIconContainerSize()} flex items-center justify-center`}
                 >
@@ -551,7 +551,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <span className={layoutClassName}>
           {/* Left icon container */}
           {(isLoading || hasLeftIcon) && (
-            <span className="flex items-center relative transition-all duration-150 ease-[cubic-bezier(0,0,0.58,1)]">
+            <span className="flex items-center relative transition-all duration-150 ease-in-out">
               <div
                 className={`relative ${
                   size === "sm" || size === "icon-sm"
@@ -601,19 +601,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className: cx(
         buttonVariants({ variant, size, rounded }),
         fullWidth && "w-full max-w-[95vw]",
-        // Apply shadow conditionally
-        !shadow && "shadow-none",
-        // Only apply text alignment classes when not using fullWidth center (which has its own layout)
-        !(fullWidth && textAlign === "center") &&
-          textAlign === "left" &&
-          "text-left",
-        !(fullWidth && textAlign === "center") &&
-          textAlign === "center" &&
-          "text-center",
-        !(fullWidth && textAlign === "center") &&
-          textAlign === "right" &&
-          "text-right",
-        !(fullWidth && textAlign === "center") && !textAlign && "text-center", // default to center
+        // Derive shadow from prop
+        shadow ? "shadow-xs" : "shadow-none",
+        // Derive flex justification from textAlign and fullWidth
+        fullWidth && textAlign === "left"
+          ? "justify-start"
+          : fullWidth && textAlign === "right"
+          ? "justify-end"
+          : fullWidth && textAlign === "center"
+          ? "justify-center"
+          : "justify-center", // default justify for non-fullWidth or no textAlign
+        // Derive text alignment - only when not using fullWidth center (which has its own layout)
+        !(fullWidth && textAlign === "center") && textAlign === "left"
+          ? "text-left"
+          : !(fullWidth && textAlign === "center") && textAlign === "right"
+          ? "text-right"
+          : "text-center", // default text alignment
         className
       ),
       disabled: disabled || isLoading,

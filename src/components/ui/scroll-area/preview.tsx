@@ -41,7 +41,7 @@ export function ScrollAreaExample({
             <Card key={i} padding={3} className="w-44 flex-none">
               <Stack gap={1}>
                 <Subheading level={3}>Item {i + 1}</Subheading>
-                <Text size="xs">Horizontal content.</Text>
+                <Text>Horizontal content.</Text>
               </Stack>
             </Card>
           ))}
@@ -63,7 +63,7 @@ export function ScrollAreaExample({
                 <Card padding={2} className="w-full h-full">
                   <Stack gap={1}>
                     <Subheading level={3}>Item {i + 1}</Subheading>
-                    <Text size="xs">
+                    <Text>
                       Content that overflows both horizontally and vertically.
                     </Text>
                   </Stack>
@@ -82,9 +82,7 @@ export function ScrollAreaExample({
           <Card key={i} padding={3}>
             <Stack gap={1}>
               <Subheading level={3}>Item {i + 1}</Subheading>
-              <Text size="xs">
-                Scrollable content item with description text.
-              </Text>
+              <Text>Scrollable content item with description text.</Text>
             </Stack>
           </Card>
         ))}

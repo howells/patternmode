@@ -61,7 +61,7 @@ const badgeVariantsDefinition = {
     variant: badgeVariantStyles,
     size: {
       sm: "px-1.5 py-0.5 text-xs font-medium",
-      base: "px-2 py-1 text-xs font-medium",
+      base: "px-2 py-1 text-sm font-medium",
       lg: "px-2.5 py-1.5 text-sm font-medium",
     },
     bordered: {

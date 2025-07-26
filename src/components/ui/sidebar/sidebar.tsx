@@ -6,14 +6,8 @@ import { PanelLeft, PanelLeftDashed } from "lucide-react";
 import Link from "next/link";
 import React, { forwardRef, useId, useState } from "react";
 import { Button } from "../button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../collapsible";
 import { ScrollArea } from "../scroll-area";
 import { Separator } from "../separator/separator";
-import { Subheading } from "../subheading";
 
 // Sidebar-specific title component for navigation hierarchy
 function SidebarTitle({
@@ -205,7 +199,7 @@ export function SidebarGroup({
       <div
         {...props}
         data-component="SidebarGroup"
-        className={clsx(className, "space-y-3")}
+        className={clsx(className, "space-y-2 py-2")}
       >
         {title && (
           <div className="flex items-center justify-between px-4">
@@ -297,7 +291,7 @@ export function SidebarDivider({
     <Separator
       {...props}
       data-component="SidebarDivider"
-      className={clsx(className, "my-4")}
+      className={clsx(className, "")}
     />
   );
 }

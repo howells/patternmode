@@ -8,10 +8,7 @@ import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { createButtonStyleVariants } from "../button/button";
 import { Icon, getIconSizeForContext } from "../icon";
-
-const buttonStyleVariants = createButtonStyleVariants("destructive");
 
 const toggleGroupVariants = tv({
   slots: {
@@ -53,44 +50,12 @@ const toggleGroupVariants = tv({
         root: "border-transparent bg-transparent",
         item: "hover:bg-zinc-100 dark:hover:bg-zinc-800",
       },
-      // Button-style variants using shared button styling
-      "button-default": {
-        root: "border-transparent bg-transparent gap-2 p-0",
-        item: [
-          ...buttonStyleVariants.base,
-          ...buttonStyleVariants.variants.default,
-        ],
-      },
-      "button-secondary": {
-        root: "border-transparent bg-transparent gap-2 p-0",
-        item: [
-          ...buttonStyleVariants.base,
-          ...buttonStyleVariants.variants.secondary,
-        ],
-      },
-      "button-outline": {
-        root: "border-transparent bg-transparent gap-2 p-0",
-        item: [
-          ...buttonStyleVariants.base,
-          ...buttonStyleVariants.variants.outline,
-        ],
-      },
-      "button-ghost": {
-        root: "border-transparent bg-transparent gap-2 p-0",
-        item: [
-          ...buttonStyleVariants.base,
-          ...buttonStyleVariants.variants.ghost,
-        ],
-      },
-      "button-destructive": {
-        root: "border-transparent bg-transparent gap-2 p-0",
-        item: [
-          ...buttonStyleVariants.base,
-          ...buttonStyleVariants.variants.destructive,
-        ],
-      },
     },
     size: {
+      xs: {
+        root: "gap-0.5 p-0.5",
+        item: "h-5 px-1.5 text-xs rounded-sm min-w-5", // Extra small size
+      },
       sm: {
         root: "gap-0.5 p-0.5",
         item: "h-6 px-2 text-xs rounded-sm min-w-6", // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
@@ -102,19 +67,6 @@ const toggleGroupVariants = tv({
       lg: {
         root: "gap-1 p-1",
         item: "h-10 px-4 text-base rounded-md min-w-10", // Match button lg: py-2.5 px-4 text-base
-      },
-      // Button-style sizes using shared button sizing
-      "button-sm": {
-        root: "gap-2 p-0",
-        item: buttonStyleVariants.sizes.sm,
-      },
-      "button-default": {
-        root: "gap-2 p-0",
-        item: buttonStyleVariants.sizes.default,
-      },
-      "button-lg": {
-        root: "gap-2 p-0",
-        item: buttonStyleVariants.sizes.lg,
       },
     },
     orientation: {
@@ -239,6 +191,7 @@ const ToggleGroupItem = React.forwardRef<
         className={cx(
           item(),
           // For icon-only buttons, make them square like button icon sizes
+          isIconOnly && size === "xs" && "px-1 min-w-5 w-5",
           isIconOnly && size === "sm" && "px-1.5 min-w-6 w-6",
           isIconOnly && size === "default" && "px-2 min-w-8 w-8",
           isIconOnly && size === "lg" && "px-2.5 min-w-10 w-10",

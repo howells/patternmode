@@ -10,7 +10,7 @@ const separatorVariants = tv({
     // base
     "shrink-0 border-none",
     // background color
-    "bg-zinc-300 dark:bg-zinc-700",
+    "bg-zinc-200 dark:bg-zinc-800",
   ],
   variants: {
     orientation: {
@@ -19,7 +19,7 @@ const separatorVariants = tv({
     },
     variant: {
       default: "bg-zinc-300 dark:bg-zinc-700",
-      subtle: "bg-zinc-200 dark:bg-zinc-800",
+      subtle: "bg-zinc-300 dark:bg-zinc-700",
       strong: "bg-zinc-400 dark:bg-zinc-600",
     },
     size: {

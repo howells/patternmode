@@ -10,9 +10,14 @@
   --text-xl: 1.25rem; /* 20px */
   --text-lg: 1.125rem; /* 18px */
   --text-base: 1rem; /* 16px */
-  --text-sm: 0.875rem; /* 14px */
-  --text-xs: 0.8125rem; /* 13px */
+  --text-sm: 0.8125rem; /* 13px */
+  --text-xs: 0.75rem; /* 12px */
   --text-2xs: 0.6875rem; /* 11px */
+
+  /* Override Tailwind's default easing curves */
+  --ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 @theme {
@@ -34,11 +39,6 @@
   --animate-drawer-slide-left-and-fade: drawerSlideLeftAndFade 150ms
     cubic-bezier(0.16, 1, 0.3, 1);
   --animate-drawer-slide-right-and-fade: drawerSlideRightAndFade 150ms ease-in;
-
-  /* Apple easing curves for consistent animations */
-  --ease-apple-in: cubic-bezier(0.42, 0, 1, 1);
-  --ease-apple-out: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-apple-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 
   @keyframes hide {
     from {

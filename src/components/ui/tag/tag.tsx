@@ -85,7 +85,7 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
     const defaultProps: useRender.ElementProps<"span"> = {
       className: cx(
         // base
-        "inline-flex items-center gap-x-2 rounded-full py-1 text-xs",
+        "inline-flex items-center gap-x-2 rounded-full py-1 text-sm",
         // padding logic
         getPaddingClasses(avatar, dismissible),
         // background color

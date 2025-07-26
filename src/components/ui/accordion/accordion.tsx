@@ -126,7 +126,7 @@ const AccordionContent = React.forwardRef<
   >
     <div className="pb-3 pt-1">
       {typeof children === "string" ? (
-        <Text size="xs" className="text-zinc-700 dark:text-zinc-300">
+        <Text size="sm" className="text-zinc-700 dark:text-zinc-300">
           {children}
         </Text>
       ) : (

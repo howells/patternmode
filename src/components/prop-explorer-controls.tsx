@@ -2,9 +2,11 @@
 
 import { Subheading } from "@/components/ui/subheading";
 import { Text } from "@/components/ui/text/text";
+import { Tooltip } from "@/components/ui/tooltip";
 import { ComponentConfig } from "@/lib/component-config-types";
 import { PropMetadata } from "@/lib/prop-explorer";
 import { cx } from "@/lib/utils";
+import { HelpCircle } from "lucide-react";
 import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
 import { Button } from "./ui/button/button";
@@ -38,10 +40,12 @@ function PropField({ prop, children, className }: PropFieldProps) {
   return (
     <div className="space-y-2">
       <Field className={cx("gap-y-2 flex flex-col", className)}>
-        <div>
+        <div className="flex items-center gap-1">
           <FieldLabel>{prop.name}</FieldLabel>
           {prop.description && (
-            <FieldDescription>{prop.description}</FieldDescription>
+            <Tooltip content={prop.description}>
+              <HelpCircle className="size-3 text-zinc-500 dark:text-zinc-400" />
+            </Tooltip>
           )}
         </div>
         {children}

@@ -170,7 +170,7 @@ function SidebarContent() {
                   }
                 }
               }}
-              size="sm"
+              size="xs"
             >
               <ToggleGroupItem value="grouped" leftIcon={Rows3}>
                 <span className="sr-only">Grouped view</span>
@@ -213,7 +213,6 @@ function SidebarContent() {
                           )}
                           isCollapsed={isCollapsed}
                           leftIcon={IconComponent || undefined}
-                          isNested={true}
                         >
                           <SidebarLabel isCollapsed={isCollapsed}>
                             {component.name}

@@ -15,7 +15,7 @@ export function SizesExample() {
   return (
     <div className="space-y-3">
       <Text size="2xs">Extra extra small text (2xs) - 11px</Text>
-      <Text size="xs">Extra small text (xs) - 13px - default</Text>
+      <Text>Extra small text (xs) - 13px - default</Text>
       <Text size="sm">Small text (sm) - 14px</Text>
       <Text size="base">Base text (base) - 16px</Text>
       <Text size="lg">Large text (lg) - 18px</Text>

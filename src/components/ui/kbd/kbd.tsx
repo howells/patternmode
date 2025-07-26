@@ -71,7 +71,7 @@ const kbdVariants = tv({
     size: {
       xs: "h-4 px-1 text-[9px]",
       sm: "h-5 px-1.5 text-[10px]",
-      base: "h-6 px-2 text-xs",
+      base: "h-6 px-2 text-sm",
       lg: "h-7 px-2.5 text-sm",
     },
   },

@@ -32,33 +32,25 @@ export function NavigationMenuExample() {
               <NavigationMenuLink href="#quick-start">
                 <VStack gap={1}>
                   <Subheading>Quick Start</Subheading>
-                  <Text size="xs">
-                    Install and assemble your first component.
-                  </Text>
+                  <Text>Install and assemble your first component.</Text>
                 </VStack>
               </NavigationMenuLink>
               <NavigationMenuLink href="#accessibility">
                 <VStack gap={1}>
                   <Subheading>Accessibility</Subheading>
-                  <Text size="xs">
-                    Learn how we build accessible components.
-                  </Text>
+                  <Text>Learn how we build accessible components.</Text>
                 </VStack>
               </NavigationMenuLink>
               <NavigationMenuLink href="#releases">
                 <VStack gap={1}>
                   <Subheading>Releases</Subheading>
-                  <Text size="xs">
-                    See what&apos;s new in the latest versions.
-                  </Text>
+                  <Text>See what&apos;s new in the latest versions.</Text>
                 </VStack>
               </NavigationMenuLink>
               <NavigationMenuLink href="#about">
                 <VStack gap={1}>
                   <Subheading>About</Subheading>
-                  <Text size="xs">
-                    Learn more about Base UI and our mission.
-                  </Text>
+                  <Text>Learn more about Base UI and our mission.</Text>
                 </VStack>
               </NavigationMenuLink>
             </Grid>
@@ -72,7 +64,7 @@ export function NavigationMenuExample() {
               <NavigationMenuLink href="#styling">
                 <VStack gap={1}>
                   <Subheading>Styling</Subheading>
-                  <Text size="xs">
+                  <Text>
                     Style components with CSS, Tailwind, or CSS-in-JS.
                   </Text>
                 </VStack>
@@ -80,7 +72,7 @@ export function NavigationMenuExample() {
               <NavigationMenuLink href="#animation">
                 <VStack gap={1}>
                   <Subheading>Animation</Subheading>
-                  <Text size="xs">
+                  <Text>
                     Animate with CSS transitions or JavaScript libraries.
                   </Text>
                 </VStack>
@@ -88,9 +80,7 @@ export function NavigationMenuExample() {
               <NavigationMenuLink href="#composition">
                 <VStack gap={1}>
                   <Subheading>Composition</Subheading>
-                  <Text size="xs">
-                    Compose components with your existing ones.
-                  </Text>
+                  <Text>Compose components with your existing ones.</Text>
                 </VStack>
               </NavigationMenuLink>
             </VStack>

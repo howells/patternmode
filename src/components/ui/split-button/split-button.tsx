@@ -12,8 +12,8 @@ const splitButtonVariants = tv({
   base: [
     // base
     "relative inline-flex items-center shadow-xs outline-hidden",
-    // background transition with Apple easing - only animate colors and shadows, not position
-    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+    // background transition - only animate colors and shadows, not position
+    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-in-out",
     // disabled
     "data-disabled:pointer-events-none data-disabled:shadow-none",
   ],
@@ -82,7 +82,7 @@ const splitButtonVariants = tv({
     },
     size: {
       default: "h-9 text-sm",
-      sm: "h-8 text-xs",
+      sm: "h-8 text-sm",
     },
   },
   defaultVariants: {
@@ -97,8 +97,8 @@ const dropdownTriggerVariants = tv({
   base: [
     // base
     "relative inline-flex items-center justify-center text-center font-medium outline-hidden",
-    // background transition with Apple easing - only animate colors and shadows, not position
-    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-[cubic-bezier(0,0,0.58,1)]",
+    // background transition - only animate colors and shadows, not position
+    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-in-out",
     // disabled
     "disabled:pointer-events-none disabled:shadow-none",
     // focus
