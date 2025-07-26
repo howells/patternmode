@@ -209,7 +209,7 @@ const CollapsibleContent = React.forwardRef<
     <div
       className={cx(
         // base
-        "pb-2 text-sm",
+        "pb-2 text-xs",
         // text color
         "text-zinc-700 dark:text-zinc-300",
         className

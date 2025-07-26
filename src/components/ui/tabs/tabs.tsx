@@ -3,7 +3,7 @@
 
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "@/lib/utils";
 import { Button } from "../button/button";
@@ -35,8 +35,8 @@ const tabsVariants = tv({
     variant: {
       solid: {
         list: [
-          // base - button collection style
-          "inline-flex items-center justify-start bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg",
+          // base - button collection style (sized for default = text-xs)
+          "inline-flex items-center justify-start bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-md",
         ],
         tab: [
           // For solid variant, we'll use Button component instead of these styles
@@ -95,14 +95,14 @@ const tabsVariants = tv({
       variant: "solid",
       size: "sm",
       class: {
-        list: "p-0.5 rounded-md",
+        list: "p-0.5 rounded-md", // Keep compact for sm
       },
     },
     {
       variant: "solid",
       size: "lg",
       class: {
-        list: "p-1.5 rounded-lg",
+        list: "p-1 rounded-lg", // Larger container for lg
       },
     },
     {
@@ -309,6 +309,20 @@ const TabsTrigger = React.forwardRef<
     const variant = React.useContext(TabsListVariantContext);
     const size = React.useContext(TabsListSizeContext);
 
+    // Map tab sizes to button sizes for consistent text sizing
+    const getButtonSize = (tabSize: "default" | "sm" | "lg") => {
+      switch (tabSize) {
+        case "default":
+          return "sm"; // default tabs use text-xs (button sm)
+        case "sm":
+          return "sm"; // sm tabs use text-xs (button sm)
+        case "lg":
+          return "default"; // lg tabs use text-sm (button default)
+        default:
+          return "sm";
+      }
+    };
+
     // For solid variant, use Button component with render prop to get selected state
     if (variant === "solid") {
       return (
@@ -319,7 +333,7 @@ const TabsTrigger = React.forwardRef<
             <Button
               {...tabProps}
               variant={state.selected ? "outline" : "ghost"}
-              size={size}
+              size={getButtonSize(size)}
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               iconStrokeWidth={iconStrokeWidth}

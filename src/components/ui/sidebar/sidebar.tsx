@@ -66,6 +66,7 @@ export function SidebarToggle({
   return (
     <Button
       {...props}
+      data-component="SidebarToggle"
       onClick={onToggle}
       variant="inverse-ghost"
       size="icon"
@@ -112,14 +113,7 @@ export function SidebarBody({
       viewportClassName="[&>*+*]:mt-6"
       {...props}
     >
-      <div
-        className={clsx(
-          "transition-all duration-200",
-          isCollapsed ? "px-2" : "px-4"
-        )}
-      >
-        {children}
-      </div>
+      <div data-component="SidebarContent">{children}</div>
     </ScrollArea>
   );
 }
@@ -164,57 +158,29 @@ export function SidebarGroup({
 }) {
   const id = useId();
 
-  if (level === 1) {
-    // Level 1: Section header with optional actions
-    return (
-      <LayoutGroup id={id}>
-        <div
-          {...props}
-          data-component="SidebarGroup"
-          className={clsx(className, "space-y-3")}
-        >
-          {title && (
-            <div className="flex items-center justify-between">
-              {href ? (
-                <Link href={href} className="block">
-                  <Subheading className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                    {title}
-                  </Subheading>
-                </Link>
-              ) : (
-                <Subheading>{title}</Subheading>
-              )}
-              {actions && !isCollapsed && (
-                <div className="flex items-center">{actions}</div>
-              )}
-            </div>
-          )}
-          <div className="space-y-1">{children}</div>
-        </div>
-      </LayoutGroup>
-    );
-  }
-
-  // Level 2: Collapsible categories
+  // Simplified: All levels render the same way
   return (
     <LayoutGroup id={id}>
-      <div {...props} data-component="SidebarGroup" className={clsx(className)}>
-        <Collapsible defaultOpen={true}>
-          <CollapsibleTrigger className="w-full">
+      <div
+        {...props}
+        data-component="SidebarGroup"
+        className={clsx(className, "space-y-3")}
+      >
+        {title && (
+          <div className="flex items-center justify-between">
             {href ? (
-              <Link href={href} className="flex-1 text-left">
-                {title}
-              </Link>
+              <Subheading>
+                <Link href={href}>{title}</Link>
+              </Subheading>
             ) : (
-              <span className="flex-1">{title}</span>
+              <Subheading>{title}</Subheading>
             )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="space-y-0.5 border-l pl-2 border-zinc-200 dark:border-zinc-700 pl-0">
-              {children}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+            {actions && !isCollapsed && (
+              <div className="flex items-center">{actions}</div>
+            )}
+          </div>
+        )}
+        <div className="space-y-1">{children}</div>
       </div>
     </LayoutGroup>
   );
@@ -233,7 +199,6 @@ export const SidebarItem = forwardRef<
       className?: string;
       strokeWidth?: number;
     }>;
-    isNested?: boolean;
   } & Omit<React.ComponentPropsWithoutRef<"button">, "className">
 >(function SidebarItem(
   {
@@ -243,7 +208,6 @@ export const SidebarItem = forwardRef<
     isCollapsed,
     href,
     leftIcon: LeftIcon,
-    isNested = false,
     ...props
   },
   ref
@@ -262,57 +226,13 @@ export const SidebarItem = forwardRef<
       className={clsx(className, "relative block")}
       data-component="SidebarItem"
     >
-      {current && !isCollapsed && (
-        <motion.span
-          layoutId="current-indicator"
-          className={clsx(
-            "absolute inset-y-1 w-px rounded-full bg-zinc-950 dark:bg-white",
-            {
-              "-left-[9px]": !isNested, // Offset to the left for top-level items
-              "left-0": isNested, // Flush with the border for nested items
-            }
-          )}
-        />
-      )}
       <Button
         render={href ? <Link href={href} /> : undefined}
-        className={clsx(
-          // Base styles
-          "w-full flex items-center gap-3 rounded-md text-left text-xs transition-all duration-200",
-          // Force no shadow
-          "!shadow-none",
-          // Layout
-          {
-            "px-2 py-2 justify-center": isCollapsed,
-            "px-3 py-2 justify-start": !isCollapsed,
-          },
-          // Colors
-          {
-            "text-zinc-700 dark:text-zinc-300": !current,
-            "text-zinc-900 dark:text-zinc-100": current,
-          },
-          // Background
-          {
-            "bg-white dark:bg-zinc-800": current,
-            "bg-zinc-50 dark:bg-zinc-850": isNavigating,
-          },
-          // Interactive states
-          {
-            "hover:bg-zinc-100 dark:hover:bg-zinc-800": !current,
-            "hover:text-zinc-900 dark:hover:text-zinc-100": !current,
-            // Override button hover when current
-            "hover:!bg-white dark:hover:!bg-zinc-800": current,
-            "hover:!text-zinc-900 dark:hover:!text-zinc-100": current,
-          },
-          // Typography
-          {
-            "font-medium": current,
-          }
-        )}
         variant="inverse-ghost"
         shadow={false}
         leftIcon={LeftIcon}
         onClick={handleClick}
+        fullWidth
         ref={ref}
         title={
           isCollapsed && typeof children === "string" ? children : undefined

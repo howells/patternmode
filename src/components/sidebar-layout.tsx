@@ -243,14 +243,6 @@ function SidebarContent() {
                   >
                     <SidebarLabel isCollapsed={isCollapsed}>
                       {component.name}
-                      {!isCollapsed && (
-                        <Badge
-                          variant="neutral"
-                          className="ml-auto text-xs opacity-60"
-                        >
-                          {component.categoryName}
-                        </Badge>
-                      )}
                     </SidebarLabel>
                   </SidebarItem>
                 );

@@ -332,7 +332,7 @@ export function ComponentPreview({
     <Tabs defaultValue="preview">
       <VStack gap={6}>
         <div>
-          <TabsList variant="solid" size="sm">
+          <TabsList variant="solid">
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>

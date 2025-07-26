@@ -28,6 +28,7 @@ import { componentConfig as emptyStateConfig } from "@/components/ui/empty-state
 import { componentConfig as fieldConfig } from "@/components/ui/field/config";
 import { componentConfig as gridConfig } from "@/components/ui/grid/config";
 import { componentConfig as headingElementConfig } from "@/components/ui/heading-element/config";
+import { componentConfig as headingConfig } from "@/components/ui/heading/config";
 import { componentConfig as iconSelectConfig } from "@/components/ui/icon-select/config";
 import { componentConfig as iconConfig } from "@/components/ui/icon/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
@@ -142,12 +143,7 @@ const fieldsetConfig = createPlaceholderConfig(
   "forms"
 );
 const formConfig = createPlaceholderConfig("form", "Form", "FileText", "forms");
-const headingConfig = createPlaceholderConfig(
-  "heading",
-  "Heading",
-  "Heading1",
-  "text"
-);
+// Heading config imported above
 const inspectorConfig = createPlaceholderConfig(
   "inspector",
   "Inspector",
