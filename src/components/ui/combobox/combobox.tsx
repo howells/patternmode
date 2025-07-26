@@ -370,10 +370,15 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     </div>
   );
 
-  const inputProps = getInputProps({
-    placeholder: searchPlaceholder,
-    disabled,
-  });
+  const inputProps = getInputProps(
+    {
+      placeholder: searchPlaceholder,
+      disabled,
+    },
+    {
+      suppressRefError: true,
+    }
+  );
 
   // Map combobox sizes to button sizes
   const buttonSize = size === "base" ? "default" : size;
@@ -416,7 +421,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             size === "lg" && "p-2.5"
           )}
         >
-          <input
+          <Input
             {...inputProps}
             {...(selectOnFocus && {
               onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
@@ -438,16 +443,10 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
               },
             })}
             ref={inputRef}
-            className={cx(
-              "w-full rounded-md border border-zinc-200 bg-white placeholder:text-zinc-500",
-              "dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400",
-              focusInput,
-              // Size-based padding and text size to match Input component
-              size === "sm" && "py-1.5 px-2.5 text-xs",
-              size === "base" && "py-2 px-3 text-sm",
-              size === "lg" && "py-2.5 px-3.5 text-base"
-            )}
+            type="search"
+            size={size}
             autoFocus
+            prefixStyling={false}
           />
         </div>
 
