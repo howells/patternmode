@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge/badge";
 import { Card } from "@/components/ui/card/card";
-import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
+import { Grid, GridCell } from "@/components/ui/grid/grid";
+import { Heading } from "@/components/ui/heading/heading";
+import { HStack, VStack } from "@/components/ui/stack/stack";
+import { Subheading } from "@/components/ui/subheading/subheading";
+import { Text } from "@/components/ui/text/text";
 import { getComponentsByCategory } from "@/lib/component-registry";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,10 +16,40 @@ interface CategoryPageProps {
 }
 
 const categoryInfo = {
-  ui: {
-    title: "UI Components",
+  text: {
+    title: "Text Components",
     description:
-      "Essential user interface components for building modern applications.",
+      "Typography and text formatting components for content display.",
+  },
+  layout: {
+    title: "Layout Components",
+    description:
+      "Structural components for organizing and positioning content.",
+  },
+  navigation: {
+    title: "Navigation Components",
+    description: "Navigation menus, breadcrumbs, and wayfinding components.",
+  },
+  feedback: {
+    title: "Feedback Components",
+    description:
+      "Status indicators, notifications, and user feedback components.",
+  },
+  overlay: {
+    title: "Overlay Components",
+    description: "Modals, dialogs, tooltips, and other overlay elements.",
+  },
+  data: {
+    title: "Data Components",
+    description: "Components for displaying and organizing structured data.",
+  },
+  media: {
+    title: "Media Components",
+    description: "Image, video, and multimedia display components.",
+  },
+  utility: {
+    title: "Utility Components",
+    description: "Helper components and tools for enhanced functionality.",
   },
   inputs: {
     title: "Input Components",
@@ -47,64 +80,67 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const components = getComponentsByCategory(category);
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
+    <VStack padding={6} gap={8} as="main">
       {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
+      <VStack>
+        <HStack align="center">
           <Heading level={1}>{info.title}</Heading>
           <Badge variant="neutral">{components.length} components</Badge>
-        </div>
-        <Text className="text-lg">{info.description}</Text>
-      </div>
+        </HStack>
+        <Text>{info.description}</Text>
+      </VStack>
 
       {/* Component Grid */}
       {components.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Grid
+          columns={{ sm: 1, md: 2, lg: 3 }}
+          gap={6}
+          showColumnGuides={false}
+          showRowGuides={false}
+          minHeight="none"
+        >
           {components.map((component) => (
-            <Link
-              key={component.id}
-              href={`/${category}/${component.id}`}
-              className="group"
-            >
-              <Card className="h-full p-6 hover:shadow-md transition-shadow">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {component.name}
-                    </h3>
-                    {component.badge && (
-                      <Badge variant="neutral" className="text-xs">
-                        {component.badge}
-                      </Badge>
-                    )}
-                  </div>
-                  <Text className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
-                    {component.description}
-                  </Text>
-                  <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-500">
-                    <span>{component.examples.length} examples</span>
-                    {component.api && <span>• API reference</span>}
-                    {component.accessibility && <span>• Accessible</span>}
-                  </div>
-                </div>
-              </Card>
-            </Link>
+            <GridCell key={component.id}>
+              <Link href={`/${category}/${component.id}`}>
+                <Card fillHeight>
+                  <VStack>
+                    <HStack justify="between" align="center">
+                      <Subheading>{component.name}</Subheading>
+                      {component.badge && (
+                        <Badge variant="neutral">{component.badge}</Badge>
+                      )}
+                    </HStack>
+                    <Text>{component.description}</Text>
+                    <Text>
+                      {component.examples.length} examples
+                      {component.api && " • API reference"}
+                      {component.accessibility && " • Accessible"}
+                    </Text>
+                  </VStack>
+                </Card>
+              </Link>
+            </GridCell>
           ))}
-        </div>
+        </Grid>
       ) : (
-        <div className="text-center py-12">
-          <Text className="text-zinc-500 dark:text-zinc-400">
-            No components available in this category yet.
-          </Text>
-        </div>
+        <VStack align="center" padding={12}>
+          <Text>No components available in this category yet.</Text>
+        </VStack>
       )}
-    </div>
+    </VStack>
   );
 }
 
 export async function generateStaticParams() {
   return [
-    { category: "ui" },
+    { category: "text" },
+    { category: "layout" },
+    { category: "navigation" },
+    { category: "feedback" },
+    { category: "overlay" },
+    { category: "data" },
+    { category: "media" },
+    { category: "utility" },
     { category: "inputs" },
     { category: "forms" },
     { category: "charts" },

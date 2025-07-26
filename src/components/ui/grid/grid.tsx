@@ -31,25 +31,23 @@
  *   showRowGuides
  *   minHeight="lg"
  * >
- *   <GridCell solid bordered>Header</GridCell>
+ *   <GridCell>Header</GridCell>
  *   <GridCell colSpan={4} rowSpan={2}>Main Content</GridCell>
- *   <GridCell overlay>Overlay</GridCell>
+ *   <GridCell>Content</GridCell>
  * </Grid>
  *
  * // Auto-generated grid
  * <GridAuto
  *   columns={5}
  *   cellCount={10}
- *   solidCells
- *   borderedCells
  *   renderCell={(index) => `Cell ${index + 1}`}
  * />
  *
  * // Layout grid
  * <Grid columns={12} gap={2} showColumnGuides={false}>
- *   <GridCell colSpan={3} solid>Sidebar</GridCell>
- *   <GridCell colSpan={9} solid>Main Content</GridCell>
- *   <GridCell colSpan={12} solid>Footer</GridCell>
+ *   <GridCell colSpan={3}>Sidebar</GridCell>
+ *   <GridCell colSpan={9}>Main Content</GridCell>
+ *   <GridCell colSpan={12}>Footer</GridCell>
  * </Grid>
  *
  * // Design system grid
@@ -146,34 +144,11 @@ const gridVariants = tv({
   },
 });
 
-// Grid cell variants
+// Grid cell variants - purely for layout positioning
 const gridCellVariants = tv({
-  base: [
-    "relative",
-    "bg-zinc-100 dark:bg-zinc-800",
-    "text-zinc-900 dark:text-zinc-100",
-    "font-medium text-sm",
-    "transition-all duration-200",
-  ],
-  variants: {
-    solid: {
-      true: "bg-white dark:bg-zinc-900 shadow-sm",
-      false: "bg-zinc-50/80 dark:bg-zinc-800/80",
-    },
-    overlay: {
-      true: "z-10 shadow-lg border-2 border-blue-200 dark:border-blue-800",
-      false: "",
-    },
-    bordered: {
-      true: "border border-zinc-200 dark:border-zinc-700",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    solid: false,
-    overlay: false,
-    bordered: false,
-  },
+  base: "relative",
+  variants: {},
+  defaultVariants: {},
 });
 
 // Helper function to generate responsive grid styles
@@ -350,18 +325,12 @@ Grid.displayName = "Grid";
 /**
  * Props for the GridCell component.
  *
- * Configuration for individual grid cell positioning, spanning, and styling.
+ * Configuration for individual grid cell positioning and spanning.
  *
  * @interface GridCellProps
  * @extends React.HTMLAttributes<HTMLDivElement>
  */
 interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Whether the cell should have a solid background that occludes guides */
-  solid?: boolean;
-  /** Whether the cell should overlay other cells with elevated styling */
-  overlay?: boolean;
-  /** Whether the cell should have a visible border */
-  bordered?: boolean;
   /** Number of columns the cell should span */
   colSpan?: number;
   /** Number of rows the cell should span */
@@ -380,9 +349,6 @@ interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
  * Provides flexible grid cell positioning with spanning, styling variants,
  * and responsive behavior. Used within Grid components for layout control.
  *
- * @param solid - Solid background that occludes guides
- * @param overlay - Elevated overlay styling
- * @param bordered - Visible border styling
  * @param colSpan - Number of columns to span
  * @param rowSpan - Number of rows to span
  * @param colStart - Starting column position
@@ -401,25 +367,11 @@ interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * // Positioned cell
  * <GridCell colStart={3} rowStart={2}>Positioned</GridCell>
- *
- * // Styled cell
- * <GridCell solid bordered overlay>Highlighted</GridCell>
  * ```
  */
 const GridCell = React.forwardRef<HTMLDivElement, GridCellProps>(
   (
-    {
-      solid = false,
-      overlay = false,
-      bordered = false,
-      colSpan,
-      rowSpan,
-      colStart,
-      rowStart,
-      className,
-      children,
-      ...props
-    },
+    { colSpan, rowSpan, colStart, rowStart, className, children, ...props },
     ref
   ) => {
     const spanClasses = [
@@ -434,15 +386,7 @@ const GridCell = React.forwardRef<HTMLDivElement, GridCellProps>(
     return (
       <div
         ref={ref}
-        className={cx(
-          gridCellVariants({
-            solid,
-            overlay,
-            bordered,
-          }),
-          spanClasses,
-          className
-        )}
+        className={cx(gridCellVariants(), spanClasses, className)}
         {...props}
       >
         {children}
@@ -465,10 +409,6 @@ GridCell.displayName = "GridCell";
 interface GridAutoProps extends Omit<GridProps, "children"> {
   /** Number of cells to automatically generate */
   cellCount?: number;
-  /** Whether generated cells should have solid backgrounds */
-  solidCells?: boolean;
-  /** Whether generated cells should have borders */
-  borderedCells?: boolean;
   /** Custom renderer function for cell content */
   renderCell?: (index: number) => React.ReactNode;
 }
@@ -480,8 +420,6 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * Useful for design system documentation, prototyping, and testing layouts.
  *
  * @param cellCount - Number of cells to generate
- * @param solidCells - Whether cells should have solid backgrounds
- * @param borderedCells - Whether cells should have borders
  * @param renderCell - Custom function to render cell content
  * @param gridProps - All other Grid component props
  *
@@ -489,14 +427,14 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * @example
  * ```tsx
  * // Auto-numbered cells
- * <GridAuto columns={6} cellCount={12} solidCells borderedCells />
+ * <GridAuto columns={6} cellCount={12} />
  *
  * // Custom cell content
  * <GridAuto
  *   columns={4}
  *   cellCount={8}
  *   renderCell={(index) => (
- *     <div className="p-2">
+ *     <div>
  *       <h3>Item {index + 1}</h3>
  *       <p>Description</p>
  *     </div>
@@ -515,20 +453,11 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * ```
  */
 const GridAuto = React.forwardRef<HTMLDivElement, GridAutoProps>(
-  (
-    {
-      cellCount = 6,
-      solidCells = false,
-      borderedCells = false,
-      renderCell,
-      ...gridProps
-    },
-    ref
-  ) => {
+  ({ cellCount = 6, renderCell, ...gridProps }, ref) => {
     return (
       <Grid ref={ref} {...gridProps}>
         {Array.from({ length: cellCount }, (_, index) => (
-          <GridCell key={index} solid={solidCells} bordered={borderedCells}>
+          <GridCell key={index}>
             {renderCell ? renderCell(index) : index + 1}
           </GridCell>
         ))}

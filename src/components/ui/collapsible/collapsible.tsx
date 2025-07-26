@@ -143,7 +143,7 @@ const CollapsibleTrigger = React.forwardRef<
 
     // Default: full-width trigger (original behavior)
     return (
-      <div className={cx("flex items-center justify-between py-2", padding)}>
+      <div className={cx("flex items-center justify-between", padding)}>
         <div
           className={cx(
             "flex-1 text-left text-sm font-medium transition-colors",

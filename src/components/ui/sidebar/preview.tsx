@@ -4,10 +4,10 @@ import {
   Sidebar,
   SidebarBody,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
-  SidebarSection,
 } from "./sidebar";
 
 export function Example() {
@@ -24,7 +24,7 @@ export function Example() {
         </SidebarHeader>
 
         <SidebarBody>
-          <SidebarSection>
+          <SidebarGroup level={1}>
             <SidebarItem href="#overview" current>
               <SidebarLabel>Overview</SidebarLabel>
             </SidebarItem>
@@ -34,12 +34,9 @@ export function Example() {
             <SidebarItem href="#examples">
               <SidebarLabel>Examples</SidebarLabel>
             </SidebarItem>
-          </SidebarSection>
+          </SidebarGroup>
 
-          <SidebarSection>
-            <div className="px-2 py-1 text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-              Resources
-            </div>
+          <SidebarGroup title="Resources" level={1}>
             <SidebarItem href="#documentation">
               <SidebarLabel>Documentation</SidebarLabel>
             </SidebarItem>
@@ -49,23 +46,20 @@ export function Example() {
             <SidebarItem href="#changelog">
               <SidebarLabel>Changelog</SidebarLabel>
             </SidebarItem>
-          </SidebarSection>
+          </SidebarGroup>
 
-          <SidebarSection>
-            <div className="px-2 py-1 text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-              Tools
-            </div>
+          <SidebarGroup title="Tools" level={1}>
             <SidebarItem href="#playground">
               <SidebarLabel>Playground</SidebarLabel>
             </SidebarItem>
             <SidebarItem href="#inspector">
               <SidebarLabel>Inspector</SidebarLabel>
             </SidebarItem>
-          </SidebarSection>
+          </SidebarGroup>
         </SidebarBody>
 
         <SidebarFooter>
-          <SidebarSection>
+          <SidebarGroup level={1}>
             <SidebarItem href="#account">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs text-white font-medium">
@@ -74,7 +68,7 @@ export function Example() {
                 <SidebarLabel>User Account</SidebarLabel>
               </div>
             </SidebarItem>
-          </SidebarSection>
+          </SidebarGroup>
         </SidebarFooter>
       </Sidebar>
     </div>

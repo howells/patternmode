@@ -2,45 +2,49 @@
 
 "use client";
 
+import { getDynamicIconByName } from "@/components/ui/icon-select/icon-select";
 import { useSidebarView } from "@/hooks/use-sidebar-view";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import {
   COMPONENT_LIST,
   getComponentsByCategory,
 } from "@/lib/component-registry";
+import { cx } from "@/lib/utils";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import { List, Pilcrow, Rows3 } from "lucide-react";
-import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-import React, { createContext, useContext, useState, useMemo } from "react";
-import { getDynamicIconByName } from "@/components/ui/icon-select/icon-select";
-
-// Create a stable icon component cache to prevent re-renders
-const iconComponentCache = new Map<string, React.ComponentType<any> | null>();
-
-function getStableIconComponent(iconName: string | undefined) {
-  if (!iconName) return null;
-  
-  if (!iconComponentCache.has(iconName)) {
-    const IconComponent = getDynamicIconByName(iconName);
-    iconComponentCache.set(iconName, IconComponent);
-  }
-  
-  return iconComponentCache.get(iconName) || null;
-}
+import { useSelectedLayoutSegments } from "next/navigation";
+import React, { createContext, useContext, useState } from "react";
 import { ComponentSearch } from "./component-search";
 import { Badge } from "./ui/badge/badge";
 import {
   Sidebar,
   SidebarBody,
   SidebarDivider,
+  SidebarGroup,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
-  SidebarSection,
 } from "./ui/sidebar";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group/toggle-group";
+
+// Create a stable icon component cache to prevent re-renders
+const iconComponentCache = new Map<
+  string,
+  React.ComponentType<{ className?: string; strokeWidth?: number }> | null
+>();
+
+function getStableIconComponent(iconName: string | undefined) {
+  if (!iconName) return null;
+
+  if (!iconComponentCache.has(iconName)) {
+    const IconComponent = getDynamicIconByName(iconName);
+    iconComponentCache.set(iconName, IconComponent);
+  }
+
+  return iconComponentCache.get(iconName) || null;
+}
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
@@ -62,19 +66,12 @@ function useSidebar() {
 }
 
 function SidebarContent() {
-  const pathname = usePathname();
   const segments = useSelectedLayoutSegments();
-  const { isCollapsed, toggleCollapsed } = useSidebar();
-  const {
-    viewMode,
-    toggleViewMode,
-    isGrouped,
-    isAlphabetical,
-    setGroupedView,
-    setAlphabeticalView,
-  } = useSidebarView();
+  const { isCollapsed } = useSidebar();
+  const { viewMode, isGrouped, setGroupedView, setAlphabeticalView } =
+    useSidebarView();
 
-  // Category display names and order
+  // Category configuration
   const categoryConfig = [
     { key: "text", name: "Text" },
     { key: "layout", name: "Layout" },
@@ -89,7 +86,7 @@ function SidebarContent() {
     { key: "charts", name: "Charts" },
   ] as const;
 
-  // Check if current path matches a component using segments
+  // Check if current path matches a component
   const isCurrentComponent = (category: string, componentId: string) => {
     return (
       segments.length >= 2 &&
@@ -120,52 +117,10 @@ function SidebarContent() {
     return allComponents.sort((a, b) => a.name.localeCompare(b.name));
   };
 
-  // Helper function to render a category section
-  const renderCategorySection = (
-    categoryName: string,
-    categoryPath: string,
-    components: ComponentConfig[],
-    showDivider: boolean = true
-  ) => {
-    if (components.length === 0) return null;
-
-    return (
-      <>
-        <SidebarSection
-          title={categoryName}
-          href={`/${categoryPath}`}
-          defaultOpen={true}
-          isCollapsed={isCollapsed}
-        >
-          {components.map((config) => {
-            const IconComponent = getStableIconComponent(config.icon);
-            return (
-              <SidebarItem
-                key={config.id}
-                href={`/${categoryPath}/${config.id}`}
-                current={isCurrentComponent(categoryPath, config.id)}
-                isCollapsed={isCollapsed}
-                leftIcon={IconComponent}
-              >
-                <SidebarLabel isCollapsed={isCollapsed}>
-                  {config.name}
-                </SidebarLabel>
-              </SidebarItem>
-            );
-          })}
-        </SidebarSection>
-        {showDivider && components.length > 0 && (
-          <SidebarDivider isCollapsed={isCollapsed} />
-        )}
-      </>
-    );
-  };
-
   return (
     <>
       <SidebarHeader isCollapsed={isCollapsed}>
         <div className="relative w-full h-full flex items-center">
-          {/* Logo */}
           <div
             className={clsx(
               "absolute top-4.5",
@@ -179,11 +134,13 @@ function SidebarContent() {
           </div>
         </div>
       </SidebarHeader>
+
       <SidebarBody isCollapsed={isCollapsed}>
-        <SidebarSection
+        {/* Level 1: Getting Started */}
+        <SidebarGroup
           title="Getting Started"
-          defaultOpen={true}
           isCollapsed={isCollapsed}
+          level={1}
         >
           <SidebarItem href="/" isCollapsed={isCollapsed}>
             <SidebarLabel isCollapsed={isCollapsed}>Overview</SidebarLabel>
@@ -191,49 +148,16 @@ function SidebarContent() {
           <SidebarItem href="/installation" isCollapsed={isCollapsed}>
             <SidebarLabel isCollapsed={isCollapsed}>Installation</SidebarLabel>
           </SidebarItem>
-        </SidebarSection>
+        </SidebarGroup>
 
         <SidebarDivider isCollapsed={isCollapsed} />
 
-        {/* View Toggle Button */}
-        {!isCollapsed && (
-          <div className="px-3 py-2">
-            <ToggleGroup
-              value={[viewMode]}
-              onValueChange={(value) => {
-                if (value.length > 0) {
-                  const newMode = value[0] as "grouped" | "alphabetical";
-                  if (newMode === "grouped") {
-                    setGroupedView();
-                  } else {
-                    setAlphabeticalView();
-                  }
-                }
-              }}
-              className="w-full"
-            >
-              <ToggleGroupItem
-                value="grouped"
-                aria-label="Grouped view"
-                className="flex-1"
-              >
-                <Rows3 className="size-4 mr-2" />
-                Grouped
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="alphabetical"
-                aria-label="Alphabetical view"
-                className="flex-1"
-              >
-                <List className="size-4 mr-2" />
-                Alphabetical
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </div>
-        )}
-
-        {isCollapsed && (
-          <div className="px-2 py-2">
+        {/* Level 1: Components with view toggle */}
+        <SidebarGroup
+          title="Components"
+          isCollapsed={isCollapsed}
+          level={1}
+          actions={
             <ToggleGroup
               value={[viewMode]}
               onValueChange={(value) => {
@@ -248,68 +172,92 @@ function SidebarContent() {
               }}
               size="sm"
             >
-              <ToggleGroupItem value="grouped" aria-label="Grouped view">
-                <Rows3 className="size-3" />
+              <ToggleGroupItem value="grouped" leftIcon={Rows3}>
+                <span className="sr-only">Grouped view</span>
               </ToggleGroupItem>
-              <ToggleGroupItem
-                value="alphabetical"
-                aria-label="Alphabetical view"
-              >
-                <List className="size-3" />
+              <ToggleGroupItem value="alphabetical" leftIcon={List}>
+                <span className="sr-only">Alphabetical view</span>
               </ToggleGroupItem>
             </ToggleGroup>
-          </div>
-        )}
+          }
+        >
+          {isGrouped ? (
+            // Grouped view: Level 2 categories with Level 3 items
+            <>
+              {categoryConfig.map((category) => {
+                const components = getComponentsByCategory(
+                  category.key as keyof typeof COMPONENT_LIST
+                ).sort((a, b) => a.name.localeCompare(b.name));
 
-        <SidebarDivider isCollapsed={isCollapsed} />
+                if (components.length === 0) return null;
 
-        {isGrouped ? (
-          // Grouped view (original)
-          categoryConfig.map((category, index) => {
-            const components = getComponentsByCategory(
-              category.key as keyof typeof COMPONENT_LIST
-            ).sort((a, b) => a.name.localeCompare(b.name));
-            const isLastCategory = index === categoryConfig.length - 1;
-            return (
-              <React.Fragment key={category.key}>
-                {renderCategorySection(
-                  category.name,
-                  category.key,
-                  components,
-                  !isLastCategory
-                )}
-              </React.Fragment>
-            );
-          })
-        ) : (
-          // Alphabetical view
-          <SidebarSection
-            title="All Components"
-            defaultOpen={true}
-            isCollapsed={isCollapsed}
-          >
-            {getAllComponents().map((component) => (
-              <SidebarItem
-                key={component.id}
-                href={`/${component.category}/${component.id}`}
-                current={isCurrentComponent(component.category, component.id)}
-                isCollapsed={isCollapsed}
-              >
-                <SidebarLabel isCollapsed={isCollapsed}>
-                  {component.name}
-                  {!isCollapsed && (
-                    <Badge
-                      variant="neutral"
-                      className="ml-auto text-xs opacity-60"
-                    >
-                      {component.categoryName}
-                    </Badge>
-                  )}
-                </SidebarLabel>
-              </SidebarItem>
-            ))}
-          </SidebarSection>
-        )}
+                return (
+                  <SidebarGroup
+                    key={category.key}
+                    title={category.name}
+                    href={`/${category.key}`}
+                    isCollapsed={isCollapsed}
+                    level={2}
+                  >
+                    {components.map((component) => {
+                      const IconComponent = getStableIconComponent(
+                        component.icon
+                      );
+                      return (
+                        <SidebarItem
+                          key={component.id}
+                          href={`/${category.key}/${component.id}`}
+                          current={isCurrentComponent(
+                            category.key,
+                            component.id
+                          )}
+                          isCollapsed={isCollapsed}
+                          leftIcon={IconComponent || undefined}
+                          isNested={true}
+                        >
+                          <SidebarLabel isCollapsed={isCollapsed}>
+                            {component.name}
+                          </SidebarLabel>
+                        </SidebarItem>
+                      );
+                    })}
+                  </SidebarGroup>
+                );
+              })}
+            </>
+          ) : (
+            // Alphabetical view: Flat Level 3 items
+            <>
+              {getAllComponents().map((component) => {
+                const IconComponent = getStableIconComponent(component.icon);
+                return (
+                  <SidebarItem
+                    key={component.id}
+                    href={`/${component.category}/${component.id}`}
+                    current={isCurrentComponent(
+                      component.category,
+                      component.id
+                    )}
+                    isCollapsed={isCollapsed}
+                    leftIcon={IconComponent || undefined}
+                  >
+                    <SidebarLabel isCollapsed={isCollapsed}>
+                      {component.name}
+                      {!isCollapsed && (
+                        <Badge
+                          variant="neutral"
+                          className="ml-auto text-xs opacity-60"
+                        >
+                          {component.categoryName}
+                        </Badge>
+                      )}
+                    </SidebarLabel>
+                  </SidebarItem>
+                );
+              })}
+            </>
+          )}
+        </SidebarGroup>
       </SidebarBody>
     </>
   );
@@ -329,14 +277,13 @@ function MainContent({ children }: { children: React.ReactNode }) {
       }}
       transition={{
         duration: 0.3,
-        ease: [0.32, 0.72, 0, 1], // Custom easing for smoother animation
+        ease: [0.32, 0.72, 0, 1],
       }}
       style={{
         marginLeft: isMobile ? "0" : "var(--sidebar-width)",
       }}
     >
       <div className="flex flex-col min-h-0 flex-1">
-        {/* Header matching sidebar header height */}
         <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-end">
           <ComponentSearch />
         </header>
@@ -366,7 +313,6 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
           ease: [0.32, 0.72, 0, 1],
         }}
       >
-        {/* Sidebar */}
         <div className="hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:bg-zinc-100 lg:dark:border-zinc-800 lg:dark:bg-zinc-900 transition-all duration-200">
           <Sidebar
             isCollapsed={isCollapsed}
@@ -377,7 +323,6 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
           </Sidebar>
         </div>
 
-        {/* Main Content */}
         <MainContent>{children}</MainContent>
       </motion.div>
     </SidebarContext.Provider>

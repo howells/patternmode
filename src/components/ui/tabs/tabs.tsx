@@ -269,67 +269,89 @@ const TabsList = React.forwardRef<
 TabsList.displayName = "TabsList";
 
 /**
+ * Props for the TabsTrigger component.
+ */
+interface TabsTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab> {
+  /** Icon component to display on the left side (for solid variant) */
+  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /** Icon component to display on the right side (for solid variant) */
+  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /** Stroke width for icons (for solid variant) */
+  iconStrokeWidth?: number;
+}
+
+/**
  * Individual tab trigger button for switching between panels.
  *
  * Based on Base UI's Tabs.Tab, providing clickable tab buttons with proper
  * keyboard navigation and accessibility. Automatically inherits styling variant
  * from parent TabsList and supports disabled states. For solid variant, uses
- * actual Button components for perfect consistency.
+ * actual Button components for perfect consistency with icon support.
  *
  * @example
  * ```tsx
  * <TabsTrigger value="settings">Settings</TabsTrigger>
  * <TabsTrigger value="profile" disabled>Profile</TabsTrigger>
+ * <TabsTrigger value="grouped" leftIcon={Rows3}>Grouped</TabsTrigger>
  * ```
  *
  * @see https://base-ui.com/react/components/tabs - Base UI documentation
  */
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof BaseTabs.Tab>,
-  React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
->(({ className, children, ...props }, forwardedRef) => {
-  const variant = React.useContext(TabsListVariantContext);
-  const size = React.useContext(TabsListSizeContext);
+  TabsTriggerProps
+>(
+  (
+    { className, children, leftIcon, rightIcon, iconStrokeWidth, ...props },
+    forwardedRef
+  ) => {
+    const variant = React.useContext(TabsListVariantContext);
+    const size = React.useContext(TabsListSizeContext);
 
-  // For solid variant, use Button component with render prop to get selected state
-  if (variant === "solid") {
+    // For solid variant, use Button component with render prop to get selected state
+    if (variant === "solid") {
+      return (
+        <BaseTabs.Tab
+          ref={forwardedRef}
+          {...props}
+          render={(tabProps, state) => (
+            <Button
+              {...tabProps}
+              variant={state.selected ? "outline" : "ghost"}
+              size={size}
+              leftIcon={leftIcon}
+              rightIcon={rightIcon}
+              iconStrokeWidth={iconStrokeWidth}
+              className={cx(
+                "data-[disabled]:pointer-events-none",
+                "inset-ring-0 shadow-none",
+                state.selected && "hover:bg-white dark:hover:bg-zinc-950",
+                className,
+                {
+                  "opacity-50 hover:opacity-100": !state.selected,
+                }
+              )}
+            >
+              {children}
+            </Button>
+          )}
+        />
+      );
+    }
+
+    // For line variant, use regular styling
     return (
       <BaseTabs.Tab
         ref={forwardedRef}
+        className={cx(tabsVariants().tab({ variant }), className)}
         {...props}
-        render={(tabProps, state) => (
-          <Button
-            {...tabProps}
-            variant={state.selected ? "outline" : "ghost"}
-            size={size}
-            className={cx(
-              "data-[disabled]:pointer-events-none",
-              "inset-ring-0 shadow-none",
-              state.selected && "hover:bg-white dark:hover:bg-zinc-950",
-              className,
-              {
-                "opacity-50 hover:opacity-100": !state.selected,
-              }
-            )}
-          >
-            {children}
-          </Button>
-        )}
-      />
+      >
+        {children}
+      </BaseTabs.Tab>
     );
   }
-
-  // For line variant, use regular styling
-  return (
-    <BaseTabs.Tab
-      ref={forwardedRef}
-      className={cx(tabsVariants().tab({ variant }), className)}
-      {...props}
-    >
-      {children}
-    </BaseTabs.Tab>
-  );
-});
+);
 
 TabsTrigger.displayName = "TabsTrigger";
 

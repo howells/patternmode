@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { LayoutGroup, motion } from "framer-motion";
 import { PanelLeft, PanelLeftDashed } from "lucide-react";
 import Link from "next/link";
-import React, { forwardRef, useId } from "react";
+import React, { forwardRef, useId, useState } from "react";
 import { Button } from "../button";
 import {
   Collapsible,
@@ -15,6 +15,7 @@ import { ScrollArea } from "../scroll-area";
 import { Separator } from "../separator/separator";
 import { Subheading } from "../subheading";
 
+// Root Sidebar Container
 export function Sidebar({
   className,
   children,
@@ -30,12 +31,12 @@ export function Sidebar({
   return (
     <nav
       {...props}
+      data-component="Sidebar"
       className={clsx(className, "flex h-full min-h-0 flex-col relative")}
       style={{
         width: "var(--sidebar-width, 16rem)",
       }}
     >
-      {/* Toggle button - positioned absolutely within sidebar */}
       {showToggle && (
         <div
           className={clsx(
@@ -66,15 +67,16 @@ export function SidebarToggle({
     <Button
       {...props}
       onClick={onToggle}
-      variant="ghost"
+      variant="inverse-ghost"
       size="icon"
       className={clsx(className)}
       aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       leftIcon={isCollapsed ? PanelLeft : PanelLeftDashed}
-    ></Button>
+    />
   );
 }
 
+// Header (Level 0)
 export function SidebarHeader({
   className,
   isCollapsed,
@@ -85,15 +87,16 @@ export function SidebarHeader({
   return (
     <div
       {...props}
+      data-component="SidebarHeader"
       className={clsx(
         className,
-        "h-16 flex flex-col border-b border-zinc-950/5 dark:border-white/5 transition-all duration-200",
-        "[&>[data-slot=section]+[data-slot=section]]:mt-2.5"
+        "h-16 flex flex-col border-b border-zinc-950/5 dark:border-white/5 transition-all duration-200"
       )}
     />
   );
 }
 
+// Scrollable Body
 export function SidebarBody({
   className,
   isCollapsed,
@@ -104,15 +107,24 @@ export function SidebarBody({
 }) {
   return (
     <ScrollArea
+      data-component="SidebarBody"
       className={clsx(className, "flex-1")}
-      viewportClassName="[&>[data-slot=section]+[data-slot=section]]:mt-8"
+      viewportClassName="[&>*+*]:mt-6"
       {...props}
     >
-      {children}
+      <div
+        className={clsx(
+          "transition-all duration-200",
+          isCollapsed ? "px-2" : "px-4"
+        )}
+      >
+        {children}
+      </div>
     </ScrollArea>
   );
 }
 
+// Footer
 export function SidebarFooter({
   className,
   isCollapsed,
@@ -123,92 +135,84 @@ export function SidebarFooter({
   return (
     <div
       {...props}
+      data-component="SidebarFooter"
       className={clsx(
         className,
         "flex flex-col border-t border-zinc-950/5 dark:border-white/5 transition-all duration-200",
-        isCollapsed ? "p-2" : "p-4",
-        "[&>[data-slot=section]+[data-slot=section]]:mt-2.5"
+        isCollapsed ? "p-2" : "p-4"
       )}
     />
   );
 }
 
-export function SidebarContent({
-  className,
-  isCollapsed,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"div"> & {
-  isCollapsed?: boolean;
-}) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        "transition-all duration-200",
-        isCollapsed ? "px-2" : "px-4"
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function SidebarSection({
+// Level 1: Root Groups (Getting Started, Components)
+export function SidebarGroup({
   className,
   title,
   href,
-  defaultOpen = true,
-  isCollapsed,
+  actions,
   children,
+  isCollapsed,
+  level = 1,
   ...props
 }: React.ComponentPropsWithoutRef<"div"> & {
   title?: React.ReactNode;
   href?: string;
-  defaultOpen?: boolean;
+  actions?: React.ReactNode;
   isCollapsed?: boolean;
+  level?: 1 | 2;
 }) {
   const id = useId();
 
-  // If no title provided, render as a simple container
-  if (!title) {
+  if (level === 1) {
+    // Level 1: Section header with optional actions
     return (
       <LayoutGroup id={id}>
         <div
           {...props}
-          data-slot="section"
-          className={clsx(className, "flex flex-col gap-0.5")}
+          data-component="SidebarGroup"
+          className={clsx(className, "space-y-3")}
         >
-          {children}
+          {title && (
+            <div className="flex items-center justify-between">
+              {href ? (
+                <Link href={href} className="block">
+                  <Subheading className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                    {title}
+                  </Subheading>
+                </Link>
+              ) : (
+                <Subheading>{title}</Subheading>
+              )}
+              {actions && !isCollapsed && (
+                <div className="flex items-center">{actions}</div>
+              )}
+            </div>
+          )}
+          <div className="space-y-1">{children}</div>
         </div>
       </LayoutGroup>
     );
   }
 
-  // Render as collapsible section with title
+  // Level 2: Collapsible categories
   return (
     <LayoutGroup id={id}>
-      <div
-        {...props}
-        data-slot="section"
-        className={clsx(className, "flex flex-col gap-0.5")}
-      >
-        <Collapsible defaultOpen={defaultOpen}>
-          <CollapsibleTrigger
-            href={href}
-            className={clsx("transition-all duration-200")}
-            padding={clsx(isCollapsed ? "px-2" : "px-4")}
-          >
-            <SidebarHeading isCollapsed={isCollapsed}>{title}</SidebarHeading>
-          </CollapsibleTrigger>
-          <CollapsibleContent
-            className={clsx(
-              "transition-all duration-200",
-              isCollapsed ? "px-2" : "px-2"
+      <div {...props} data-component="SidebarGroup" className={clsx(className)}>
+        <Collapsible defaultOpen={true}>
+          <CollapsibleTrigger className="w-full">
+            {href ? (
+              <Link href={href} className="flex-1 text-left">
+                {title}
+              </Link>
+            ) : (
+              <span className="flex-1">{title}</span>
             )}
-          >
-            {children}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="space-y-0.5 border-l pl-2 border-zinc-200 dark:border-zinc-700 pl-0">
+              {children}
+            </div>
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -216,6 +220,112 @@ export function SidebarSection({
   );
 }
 
+// Level 3: Individual Items
+export const SidebarItem = forwardRef<
+  HTMLButtonElement,
+  {
+    current?: boolean;
+    className?: string;
+    children: React.ReactNode;
+    isCollapsed?: boolean;
+    href?: string;
+    leftIcon?: React.ComponentType<{
+      className?: string;
+      strokeWidth?: number;
+    }>;
+    isNested?: boolean;
+  } & Omit<React.ComponentPropsWithoutRef<"button">, "className">
+>(function SidebarItem(
+  {
+    current,
+    className,
+    children,
+    isCollapsed,
+    href,
+    leftIcon: LeftIcon,
+    isNested = false,
+    ...props
+  },
+  ref
+) {
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleClick = () => {
+    if (href) {
+      setIsNavigating(true);
+      setTimeout(() => setIsNavigating(false), 150);
+    }
+  };
+
+  return (
+    <span
+      className={clsx(className, "relative block")}
+      data-component="SidebarItem"
+    >
+      {current && !isCollapsed && (
+        <motion.span
+          layoutId="current-indicator"
+          className={clsx(
+            "absolute inset-y-1 w-px rounded-full bg-zinc-950 dark:bg-white",
+            {
+              "-left-[9px]": !isNested, // Offset to the left for top-level items
+              "left-0": isNested, // Flush with the border for nested items
+            }
+          )}
+        />
+      )}
+      <Button
+        render={href ? <Link href={href} /> : undefined}
+        className={clsx(
+          // Base styles
+          "w-full flex items-center gap-3 rounded-md text-left text-sm transition-all duration-200",
+          // Force no shadow
+          "!shadow-none",
+          // Layout
+          {
+            "px-2 py-2 justify-center": isCollapsed,
+            "px-3 py-2 justify-start": !isCollapsed,
+          },
+          // Colors
+          {
+            "text-zinc-700 dark:text-zinc-300": !current,
+            "text-zinc-900 dark:text-zinc-100": current,
+          },
+          // Background
+          {
+            "bg-white dark:bg-zinc-800": current,
+            "bg-zinc-50 dark:bg-zinc-850": isNavigating,
+          },
+          // Interactive states
+          {
+            "hover:bg-zinc-100 dark:hover:bg-zinc-800": !current,
+            "hover:text-zinc-900 dark:hover:text-zinc-100": !current,
+            // Override button hover when current
+            "hover:!bg-white dark:hover:!bg-zinc-800": current,
+            "hover:!text-zinc-900 dark:hover:!text-zinc-100": current,
+          },
+          // Typography
+          {
+            "font-medium": current,
+          }
+        )}
+        variant="inverse-ghost"
+        shadow={false}
+        leftIcon={LeftIcon}
+        onClick={handleClick}
+        ref={ref}
+        title={
+          isCollapsed && typeof children === "string" ? children : undefined
+        }
+        {...props}
+      >
+        {isCollapsed ? null : children}
+      </Button>
+    </span>
+  );
+});
+
+// Utility: Divider
 export function SidebarDivider({
   className,
   isCollapsed,
@@ -224,97 +334,16 @@ export function SidebarDivider({
   isCollapsed?: boolean;
 }) {
   if (isCollapsed) return null;
-
-  return <Separator {...props} className={clsx(className, "")} />;
-}
-
-export function SidebarSpacer({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div
-      aria-hidden="true"
+    <Separator
       {...props}
-      className={clsx(className, "mt-8 flex-1")}
+      data-component="SidebarDivider"
+      className={clsx(className, "my-4")}
     />
   );
 }
 
-export function SidebarHeading({
-  className,
-  isCollapsed,
-  ...props
-}: React.ComponentPropsWithoutRef<"h3"> & {
-  isCollapsed?: boolean;
-}) {
-  if (isCollapsed) return null;
-
-  return <Subheading {...props} className={clsx(className)} />;
-}
-
-export const SidebarItem = forwardRef(function SidebarItem(
-  {
-    current,
-    className,
-    children,
-    isCollapsed,
-    href,
-    ...props
-  }: {
-    current?: boolean;
-    className?: string;
-    children: React.ReactNode;
-    isCollapsed?: boolean;
-    href?: string;
-  } & Omit<React.ComponentPropsWithoutRef<"button">, "className">,
-  ref: React.ForwardedRef<HTMLButtonElement>
-) {
-  return (
-    <span className={clsx(className, "relative")}>
-      {current && !isCollapsed && (
-        <motion.span
-          layoutId="current-indicator"
-          className="absolute inset-y-2 -left-2 w-0.5 rounded-full bg-zinc-950 dark:bg-white"
-        />
-      )}
-      <Button
-        render={href ? <Link href={href} /> : undefined}
-        className={clsx(
-          // Base
-          "w-full flex px-2 items-center gap-3 rounded-md text-left text-base/6 text-zinc-950 sm:text-sm/5 transition-all duration-200",
-          isCollapsed ? "px-1 py-2 justify-center" : "py-2.5 sm:py-2 justify-start",
-          // Leading icon/icon-only
-          "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
-          // Trailing icon (down chevron or similar)
-          "*:last:data-[slot=icon]:ml-auto *:last:data-[slot=icon]:size-5 sm:*:last:data-[slot=icon]:size-4",
-          // Avatar
-          "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 sm:*:data-[slot=avatar]:size-6",
-          // Hover
-          "data-hover:bg-zinc-950/5 data-hover:*:data-[slot=icon]:fill-zinc-950",
-          // Active
-          "data-active:bg-zinc-950/5 data-active:*:data-[slot=icon]:fill-zinc-950",
-          // Current
-          "data-current:bg-zinc-950/10 data-current:text-zinc-950 data-current:*:data-[slot=icon]:fill-zinc-950",
-          // Dark mode
-          "dark:text-white dark:*:data-[slot=icon]:fill-zinc-400",
-          "dark:data-hover:bg-white/5 dark:data-hover:*:data-[slot=icon]:fill-white",
-          "dark:data-active:bg-white/5 dark:data-active:*:data-[slot=icon]:fill-white",
-          "dark:data-current:bg-white/10 dark:data-current:text-white dark:data-current:*:data-[slot=icon]:fill-white",
-          !href && "cursor-default"
-        )}
-        variant="ghost"
-        data-current={current ? "true" : undefined}
-        ref={ref}
-        title={isCollapsed && typeof children === "string" ? children : undefined}
-        {...props}
-      >
-        {children}
-      </Button>
-    </span>
-  );
-});
-
+// Utility: Label (for complex item content)
 export function SidebarLabel({
   className,
   isCollapsed,
@@ -325,6 +354,7 @@ export function SidebarLabel({
   return (
     <span
       {...props}
+      data-component="SidebarLabel"
       className={clsx(
         className,
         "truncate transition-opacity duration-200",

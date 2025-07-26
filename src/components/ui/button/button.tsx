@@ -137,6 +137,8 @@ interface ButtonProps
   kbd?: string | string[];
   /** Platform for keyboard shortcut display */
   kbdPlatform?: "mac" | "pc" | "auto";
+  /** Whether the button should have a shadow */
+  shadow?: boolean;
 }
 
 /**
@@ -189,6 +191,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       textAlign,
       kbd,
       kbdPlatform = "auto",
+      shadow = true,
       ...props
     }: ButtonProps,
     forwardedRef
@@ -598,6 +601,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className: cx(
         buttonVariants({ variant, size, rounded }),
         fullWidth && "w-full max-w-[95vw]",
+        // Apply shadow conditionally
+        !shadow && "shadow-none",
         // Only apply text alignment classes when not using fullWidth center (which has its own layout)
         !(fullWidth && textAlign === "center") &&
           textAlign === "left" &&

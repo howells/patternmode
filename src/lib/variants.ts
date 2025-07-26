@@ -29,6 +29,7 @@ export type ButtonVariant =
   | "destructive"
   | "outline"
   | "ghost"
+  | "inverse-ghost"
   | "link"
   | "minimal";
 
@@ -288,6 +289,21 @@ export const buttonSpecificVariants = {
     "disabled:text-zinc-400",
     "dark:disabled:text-zinc-600",
   ],
+  "inverse-ghost": [
+    // base
+    "shadow-none",
+    // text color
+    "text-zinc-900 dark:text-zinc-50",
+    // hover and active with white background for light backgrounds
+    "bg-transparent hover:bg-white active:bg-white",
+    "dark:hover:bg-zinc-800 dark:active:bg-zinc-800",
+    // current/selected state with white background
+    "data-[current=true]:bg-white",
+    "dark:data-[current=true]:bg-zinc-800",
+    // disabled
+    "disabled:text-zinc-400",
+    "dark:disabled:text-zinc-600",
+  ],
   link: [
     // base
     "shadow-none",
@@ -319,6 +335,7 @@ export const semanticVariants = {
   destructive: globalSemanticVariants.error,
   outline: globalSemanticVariants.neutral,
   ghost: globalSemanticVariants.neutral,
+  "inverse-ghost": globalSemanticVariants.neutral,
   link: globalSemanticVariants.default,
   minimal: globalSemanticVariants.neutral,
 } as const;

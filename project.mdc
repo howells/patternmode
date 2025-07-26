@@ -1,0 +1,73 @@
+# Patternmode Project Guidelines
+
+_The best of the React ecosystem, unified under Base UI primitives with professional Tremor styling._
+
+## Styling Conventions
+
+### Use Object-Based Conditional Classes
+
+When applying conditional styles with `clsx`, prefer object-based syntax over arrays or ternary operators for better readability and maintainability.
+
+**✅ Good - Object-based approach:**
+
+```tsx
+className={clsx(
+  // Base styles
+  "w-full flex items-center gap-3 rounded-md text-left text-sm transition-all duration-200",
+  // Layout
+  {
+    "px-2 py-2 justify-center": isCollapsed,
+    "px-3 py-2 justify-start": !isCollapsed,
+  },
+  // Colors
+  {
+    "text-zinc-700 dark:text-zinc-300": !current,
+    "text-zinc-900 dark:text-zinc-100": current,
+  },
+  // Background
+  {
+    "bg-zinc-100 dark:bg-zinc-800": current,
+    "bg-zinc-50 dark:bg-zinc-850": isNavigating,
+  },
+  // Interactive states
+  "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+  "hover:text-zinc-900 dark:hover:text-zinc-100",
+  // Typography
+  {
+    "font-medium": current,
+  }
+)}
+```
+
+**❌ Avoid - Array-based approach:**
+
+```tsx
+className={clsx(
+  "base-styles",
+  isCollapsed ? "collapsed-styles" : "expanded-styles",
+  current && [
+    "current-bg",
+    "current-text",
+    "current-font"
+  ],
+  isNavigating && "navigating-bg"
+)}
+```
+
+### Benefits:
+
+- **Organized by concern**: Layout, colors, backgrounds, etc.
+- **Self-documenting**: Clear comments explain each group
+- **Easier to maintain**: Find and modify related styles quickly
+- **Better readability**: Consistent structure across components
+
+## Component Structure
+
+### Icon Component
+
+Icon component to display on the left side of navigation items and buttons, following Base UI patterns with Tremor styling.
+description:
+globs:
+alwaysApply: false
+
+---

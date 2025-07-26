@@ -35,6 +35,12 @@ interface CardProps extends useRender.ComponentProps<"div"> {
     | 10
     | 11
     | 12;
+  /**
+   * Whether the card should fill the height of its container.
+   * Useful in grid layouts or flex containers.
+   * @default false
+   */
+  fillHeight?: boolean;
 }
 
 /**
@@ -47,6 +53,7 @@ interface CardProps extends useRender.ComponentProps<"div"> {
  *
  * @param render - Custom element to render (defaults to div)
  * @param padding - Padding scale value (0-12, defaults to 6)
+ * @param fillHeight - Whether card should fill container height (defaults to false)
  * @param className - Additional CSS classes
  *
  * @component
@@ -88,14 +95,29 @@ interface CardProps extends useRender.ComponentProps<"div"> {
  *     <h3>Custom padding areas</h3>
  *   </div>
  * </Card>
+ *
+ * // Card that fills container height (useful in grids)
+ * <Grid columns={3}>
+ *   <GridCell>
+ *     <Card fillHeight>
+ *       <h3>Tall Card</h3>
+ *       <p>This card will stretch to match the height of other grid cells.</p>
+ *     </Card>
+ *   </GridCell>
+ * </Grid>
  * ```
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ render = <div />, padding = 6, className, ...props }, forwardedRef) => {
+  (
+    { render = <div />, padding = 6, fillHeight = false, className, ...props },
+    forwardedRef
+  ) => {
     const defaultProps: useRender.ElementProps<"div"> = {
       className: cx(
         // base
         "relative w-full rounded-lg text-left text-sm shadow-xs inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10",
+        // height
+        fillHeight && "h-full",
         // padding
         padding === 0 && "p-0",
         padding === 0.5 && "p-0.5",

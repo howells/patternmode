@@ -2,12 +2,14 @@
 
 "use client";
 
+import { config } from "@/lib/config";
 import { cx, focusRing } from "@/lib/utils";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { createButtonStyleVariants } from "../button/button";
+import { Icon, getIconSizeForContext } from "../icon";
 
 const buttonStyleVariants = createButtonStyleVariants("destructive");
 
@@ -91,15 +93,15 @@ const toggleGroupVariants = tv({
     size: {
       sm: {
         root: "gap-0.5 p-0.5",
-        item: "size-6 text-xs rounded-sm",
+        item: "h-6 px-2 text-xs rounded-sm min-w-6", // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
       },
       default: {
         root: "gap-px p-0.5",
-        item: "size-8 text-sm rounded-sm",
+        item: "h-8 px-3 text-sm rounded-sm min-w-8", // Match button default: py-2 px-3 text-sm
       },
       lg: {
         root: "gap-1 p-1",
-        item: "size-10 text-base rounded-md",
+        item: "h-10 px-4 text-base rounded-md min-w-10", // Match button lg: py-2.5 px-4 text-base
       },
       // Button-style sizes using shared button sizing
       "button-sm": {
@@ -159,20 +161,96 @@ interface ToggleGroupItemProps
   extends React.ComponentPropsWithoutRef<typeof BaseToggle>,
     VariantProps<typeof toggleGroupVariants> {
   value: string;
+  /** Icon component to display on the left side */
+  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /** Icon component to display on the right side */
+  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /** Stroke width for icons (defaults to global config) */
+  iconStrokeWidth?: number;
 }
 
 const ToggleGroupItem = React.forwardRef<
   React.ElementRef<typeof BaseToggle>,
   ToggleGroupItemProps
->(({ className, variant, size, children, ...props }, ref) => {
-  const { item } = toggleGroupVariants({ variant, size });
+>(
+  (
+    {
+      className,
+      variant,
+      size,
+      children,
+      leftIcon: LeftIcon,
+      rightIcon: RightIcon,
+      iconStrokeWidth = config.getIconStrokeWidth(),
+      ...props
+    },
+    ref
+  ) => {
+    const { item } = toggleGroupVariants({ variant, size });
 
-  return (
-    <BaseToggle ref={ref} className={cx(item(), className)} {...props}>
-      {children}
-    </BaseToggle>
-  );
-});
+    const hasChildren = children != null && children !== "";
+    const hasLeftIcon = LeftIcon != null;
+    const hasRightIcon = RightIcon != null;
+
+    // Determine if this is an icon-only button (no text content)
+    const isIconOnly = !hasChildren && (hasLeftIcon || hasRightIcon);
+
+    // Get appropriate icon size based on the toggle group size
+    const iconSize = getIconSizeForContext(size);
+
+    const renderContent = () => {
+      // If no icons, return children directly
+      if (!hasLeftIcon && !hasRightIcon) {
+        return children;
+      }
+
+      // For icon-only buttons, render just the icon
+      if (isIconOnly && hasLeftIcon && !hasRightIcon) {
+        return (
+          <Icon icon={LeftIcon} size={iconSize} strokeWidth={iconStrokeWidth} />
+        );
+      }
+
+      // For buttons with text and icons
+      return (
+        <span className="flex items-center justify-center gap-2">
+          {hasLeftIcon && (
+            <Icon
+              icon={LeftIcon}
+              size={iconSize}
+              strokeWidth={iconStrokeWidth}
+            />
+          )}
+          {hasChildren && children}
+          {hasRightIcon && (
+            <Icon
+              icon={RightIcon}
+              size={iconSize}
+              strokeWidth={iconStrokeWidth}
+            />
+          )}
+        </span>
+      );
+    };
+
+    return (
+      <BaseToggle
+        ref={ref}
+        className={cx(
+          item(),
+          // For icon-only buttons, make them square like button icon sizes
+          isIconOnly && size === "sm" && "px-1.5 min-w-6 w-6",
+          isIconOnly && size === "default" && "px-2 min-w-8 w-8",
+          isIconOnly && size === "lg" && "px-2.5 min-w-10 w-10",
+          className
+        )}
+        {...props}
+      >
+        {renderContent()}
+      </BaseToggle>
+    );
+  }
+);
 
 ToggleGroupItem.displayName = "ToggleGroupItem";
 

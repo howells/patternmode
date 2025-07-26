@@ -5,10 +5,10 @@ import {
   Sidebar,
   SidebarBody,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
-  SidebarSection,
 } from "./sidebar";
 
 export function BasicSidebar() {
@@ -18,7 +18,7 @@ export function BasicSidebar() {
         <div className="text-lg font-semibold">My App</div>
       </SidebarHeader>
       <SidebarBody>
-        <SidebarSection>
+        <SidebarGroup level={1}>
           <SidebarItem href="#dashboard" current>
             <SidebarLabel>Dashboard</SidebarLabel>
           </SidebarItem>
@@ -28,7 +28,7 @@ export function BasicSidebar() {
           <SidebarItem href="#team">
             <SidebarLabel>Team</SidebarLabel>
           </SidebarItem>
-        </SidebarSection>
+        </SidebarGroup>
       </SidebarBody>
     </Sidebar>
   );
@@ -42,29 +42,29 @@ export function SidebarWithSectionsAndFooter() {
         <div className="text-sm text-zinc-500">Team Alpha</div>
       </SidebarHeader>
       <SidebarBody>
-        <SidebarSection>
+        <SidebarGroup level={1}>
           <SidebarItem href="#home">
             <SidebarLabel>Home</SidebarLabel>
           </SidebarItem>
           <SidebarItem href="#analytics" current>
             <SidebarLabel>Analytics</SidebarLabel>
           </SidebarItem>
-        </SidebarSection>
-        <SidebarSection>
+        </SidebarGroup>
+        <SidebarGroup level={1}>
           <SidebarItem href="#settings">
             <SidebarLabel>Settings</SidebarLabel>
           </SidebarItem>
           <SidebarItem href="#help">
             <SidebarLabel>Help</SidebarLabel>
           </SidebarItem>
-        </SidebarSection>
+        </SidebarGroup>
       </SidebarBody>
       <SidebarFooter>
-        <SidebarSection>
+        <SidebarGroup level={1}>
           <SidebarItem href="#profile">
             <SidebarLabel>John Doe</SidebarLabel>
           </SidebarItem>
-        </SidebarSection>
+        </SidebarGroup>
       </SidebarFooter>
     </Sidebar>
   );
