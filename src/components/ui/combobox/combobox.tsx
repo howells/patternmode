@@ -135,6 +135,10 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
     isOpen: boolean;
     disabled?: boolean;
   }) => React.ReactNode;
+  /** Whether to select all text in the input when the menu opens */
+  selectOnFocus?: boolean;
+  /** Whether to clear the search when an item is selected */
+  clearSearchOnSelect?: boolean;
 }
 
 /**
@@ -162,6 +166,24 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
  *   value={value}
  *   onValueChange={setValue}
  * />
+ *
+ * // Keep search text after selection and select it on reopen
+ * <Combobox
+ *   options={options}
+ *   value={value}
+ *   onValueChange={setValue}
+ *   clearSearchOnSelect={false}
+ *   selectOnFocus={true}
+ * />
+ *
+ * // Clear search on selection, empty input on reopen
+ * <Combobox
+ *   options={options}
+ *   value={value}
+ *   onValueChange={setValue}
+ *   clearSearchOnSelect={true}
+ *   selectOnFocus={false}
+ * />
  * ```
  */
 const Combobox = <T extends ComboboxOption = ComboboxOption>({
@@ -183,18 +205,12 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   getItemLabel = (item: T) => item.label,
   renderItem,
   renderTrigger,
+  selectOnFocus = true,
+  clearSearchOnSelect = true,
 }: ComboboxProps<T>) => {
   const [inputValue, setInputValue] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
-
-  // Debounce search input
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(inputValue);
-    }, searchDebounce);
-
-    return () => clearTimeout(timer);
-  }, [inputValue, searchDebounce]);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Fetch data with React Query (only if fetchData is provided)
   const {
@@ -213,22 +229,41 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     },
     enabled: !!fetchData,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    placeholderData: (previousData) => previousData, // Keep previous data while fetching new data
+    refetchOnWindowFocus: false, // Prevent refetch on window focus
   });
 
   // Use either static options or fetched data
   const allItems: T[] = options || queryData?.data || [];
 
-  // Find selected item first (needed for filtering logic)
+  // Find selected item first (needed for filtering logic and debounce logic)
   const selectedItem = allItems.find((item) => getItemValue(item) === value);
+
+  // Debounce search input
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(inputValue);
+    }, searchDebounce);
+
+    return () => clearTimeout(timer);
+  }, [inputValue, searchDebounce]);
 
   // Filter static options based on search input
   const items: T[] = React.useMemo(() => {
-    if (!options || !inputValue.trim()) {
+    // For async data (fetchData), always return all items from the API
+    // No client-side filtering needed - the API handles filtering
+    if (fetchData) {
+      return allItems;
+    }
+
+    // For static options only, do client-side filtering
+    if (!inputValue.trim()) {
       return allItems;
     }
 
     // If the input value exactly matches the selected item's label,
     // show all items (user just opened the menu)
+    // Only apply this logic for static data
     if (selectedItem && inputValue === getItemLabel(selectedItem)) {
       return allItems;
     }
@@ -237,7 +272,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     return allItems.filter((item) =>
       getItemLabel(item).toLowerCase().includes(inputValue.toLowerCase())
     );
-  }, [allItems, inputValue, options, getItemLabel, selectedItem]);
+  }, [allItems, inputValue, getItemLabel, selectedItem, fetchData]);
 
   const {
     isOpen,
@@ -256,34 +291,50 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
       const { type, changes } = actionAndChanges;
 
       switch (type) {
-        case useCombobox.stateChangeTypes.InputKeyDownEscape:
-        case useCombobox.stateChangeTypes.InputBlur:
         case useCombobox.stateChangeTypes.ItemClick:
           return {
             ...changes,
-            inputValue: "", // Clear search input when closing or selecting
+            inputValue: clearSearchOnSelect ? "" : state.inputValue, // Conditionally clear search input
+            isOpen: false, // Close the menu
           };
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
           // If Enter is pressed and no item is highlighted but there are items,
           // select the first item
-          if (changes.highlightedIndex === -1 && items.length > 0) {
+          if (state.highlightedIndex === -1 && items.length > 0) {
             return {
               ...changes,
               selectedItem: items[0],
-              inputValue: "",
+              inputValue: clearSearchOnSelect ? "" : state.inputValue,
               isOpen: false,
             };
           }
+          // If an item is highlighted, let Downshift handle it normally
+          // but conditionally clear the input after selection
           return {
             ...changes,
-            inputValue: "", // Clear input after selection
+            inputValue: clearSearchOnSelect ? "" : state.inputValue,
+            isOpen: false, // Close the menu
+          };
+        case useCombobox.stateChangeTypes.InputKeyDownEscape:
+          return {
+            ...changes,
+            inputValue: "", // Always clear input when escaping
+            isOpen: false, // Close the menu
           };
         default:
           return changes;
       }
     },
-    onInputValueChange: ({ inputValue: newInputValue }) => {
-      setInputValue(newInputValue || "");
+    onInputValueChange: ({ inputValue: newInputValue, type }) => {
+      // Only update input value if it's from user typing, not from internal state changes
+      if (
+        type === useCombobox.stateChangeTypes.InputChange ||
+        type === useCombobox.stateChangeTypes.InputKeyDownArrowDown ||
+        type === useCombobox.stateChangeTypes.InputKeyDownArrowUp ||
+        !type // Initial call
+      ) {
+        setInputValue(newInputValue || "");
+      }
     },
     onSelectedItemChange: ({ selectedItem: newSelectedItem }) => {
       if (newSelectedItem) {
@@ -294,17 +345,24 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     },
   });
 
+  // Focus the input when the menu opens
+  React.useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
   // Default item renderer
   const defaultRenderItem = (item: T, index: number) => (
     <div
       key={getItemValue(item)}
-      className={cx(
-        comboboxItemVariants({ size }),
-        highlightedIndex === index && "data-[highlighted]:true",
-        selectedItem &&
-          getItemValue(selectedItem) === getItemValue(item) &&
-          "data-[selected]:true"
-      )}
+      className={cx(comboboxItemVariants({ size }))}
+      data-highlighted={highlightedIndex === index ? "true" : undefined}
+      data-selected={
+        selectedItem && getItemValue(selectedItem) === getItemValue(item)
+          ? "true"
+          : undefined
+      }
       {...getItemProps({ item, index })}
     >
       <span className="flex-1 truncate">{getItemLabel(item)}</span>
@@ -397,6 +455,26 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         <div className="border-b border-zinc-200 dark:border-zinc-800 p-2">
           <input
             {...inputProps}
+            {...(selectOnFocus && {
+              onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+                // Call Downshift's onFocus handler first if it exists
+                const originalOnFocus = (inputProps as Record<string, unknown>)
+                  .onFocus as
+                  | ((e: React.FocusEvent<HTMLInputElement>) => void)
+                  | undefined;
+                if (originalOnFocus) {
+                  originalOnFocus(e);
+                }
+
+                // Then handle text selection
+                if (inputRef.current) {
+                  setTimeout(() => {
+                    inputRef.current?.select();
+                  }, 0);
+                }
+              },
+            })}
+            ref={inputRef}
             className={cx(
               "w-full rounded-md border border-zinc-200 bg-white px-3 text-sm placeholder:text-zinc-500",
               "focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500",
