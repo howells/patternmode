@@ -13,7 +13,7 @@ export function Subheading({
       level={level}
       className={clsx(
         className,
-        "m-0 text-sm font-semibold text-current sm:text-xs"
+        "m-0 text-sm font-semibold text-current sm:text-sm"
       )}
       {...props}
     />

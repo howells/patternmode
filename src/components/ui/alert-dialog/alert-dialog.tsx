@@ -1,5 +1,8 @@
 // Alert Dialog Component [v1.0.0]
 
+import { Button } from "@/components/ui/button/button";
+import { Subheading } from "@/components/ui/subheading/subheading";
+import { Text } from "@/components/ui/text/text";
 import { cx } from "@/lib/utils";
 import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
 import * as React from "react";
@@ -220,15 +223,14 @@ AlertDialogFooter.displayName = "AlertDialogFooter";
 const AlertDialogTitle = React.forwardRef<
   React.ElementRef<typeof BaseAlertDialog.Title>,
   React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title>
->(({ className, ...props }, ref) => (
-  <BaseAlertDialog.Title
-    ref={ref}
-    className={cx(
-      "text-lg font-semibold text-zinc-900 dark:text-zinc-50",
-      className
+>(({ className, children, ...props }, ref) => (
+  <BaseAlertDialog.Title ref={ref} className={cx(className)} {...props}>
+    {typeof children === "string" ? (
+      <Subheading level={3}>{children}</Subheading>
+    ) : (
+      children
     )}
-    {...props}
-  />
+  </BaseAlertDialog.Title>
 ));
 AlertDialogTitle.displayName = "AlertDialogTitle";
 
@@ -249,12 +251,10 @@ AlertDialogTitle.displayName = "AlertDialogTitle";
 const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof BaseAlertDialog.Description>,
   React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description>
->(({ className, ...props }, ref) => (
-  <BaseAlertDialog.Description
-    ref={ref}
-    className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
-    {...props}
-  />
+>(({ className, children, ...props }, ref) => (
+  <BaseAlertDialog.Description ref={ref} className={cx(className)} {...props}>
+    {typeof children === "string" ? <Text>{children}</Text> : children}
+  </BaseAlertDialog.Description>
 ));
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
@@ -281,20 +281,12 @@ const AlertDialogAction = React.forwardRef<
 >(({ className, variant = "default", ...props }, ref) => (
   <BaseAlertDialog.Close
     ref={ref}
-    className={cx(
-      "inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-      "disabled:pointer-events-none disabled:opacity-50",
-      variant === "default" && [
-        "bg-zinc-900 text-zinc-50 hover:bg-zinc-900/90",
-        "dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90",
-      ],
-      variant === "destructive" && [
-        "bg-red-500 text-zinc-50 hover:bg-red-500/90",
-        "dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/90",
-      ],
-      className
-    )}
+    render={
+      <Button
+        variant={variant}
+        className={typeof className === "string" ? className : undefined}
+      />
+    }
     {...props}
   />
 ));
@@ -318,15 +310,15 @@ const AlertDialogCancel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <BaseAlertDialog.Close
     ref={ref}
-    className={cx(
-      "mt-2 inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-transparent px-4 py-2 text-sm font-medium transition-colors",
-      "hover:bg-zinc-100 hover:text-zinc-900",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-      "disabled:pointer-events-none disabled:opacity-50",
-      "dark:border-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
-      "sm:mt-0",
-      className
-    )}
+    render={
+      <Button
+        variant="outline"
+        className={cx(
+          "mt-2 sm:mt-0",
+          typeof className === "string" ? className : undefined
+        )}
+      />
+    }
     {...props}
   />
 ));

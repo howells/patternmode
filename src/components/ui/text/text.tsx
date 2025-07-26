@@ -15,7 +15,7 @@ const textVariants = tv({
     },
   },
   defaultVariants: {
-    size: "xs",
+    size: "sm",
   },
 });
 

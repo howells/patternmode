@@ -66,8 +66,51 @@ className={clsx(
 ### Icon Component
 
 Icon component to display on the left side of navigation items and buttons, following Base UI patterns with Tremor styling.
-description:
-globs:
-alwaysApply: false
 
----
+## Base UI Integration Guidelines
+
+### Always Use `render=` Prop, Never `asChild`
+
+When integrating with Base UI primitives, always use the `render=` prop pattern instead of `asChild`. The `asChild` prop is a Radix UI pattern that we don't use in this codebase.
+
+**✅ Correct - Base UI `render=` prop:**
+
+```tsx
+// Base UI primitive renders the component
+<BaseAlertDialog.Close
+  render={<Button variant="destructive" />}
+>
+  Delete
+</BaseAlertDialog.Close>
+
+// Custom wrapper following the same pattern
+<BaseDialog.Trigger
+  render={<CustomButton {...props} />}
+>
+  Open Dialog
+</BaseDialog.Trigger>
+```
+
+**❌ Incorrect - Radix `asChild` pattern:**
+
+```tsx
+// Don't use asChild - this is Radix UI pattern
+<BaseAlertDialog.Close asChild>
+  <Button variant="destructive">Delete</Button>
+</BaseAlertDialog.Close>
+
+// Also incorrect - component rendering primitive
+<Button
+  render={<BaseAlertDialog.Close />}
+  variant="destructive"
+>
+  Delete
+</Button>
+```
+
+### Benefits of `render=` Pattern:
+
+- **Consistent with Base UI**: Follows Base UI's composition patterns
+- **Better TypeScript**: Proper type inference and ref forwarding
+- **Cleaner API**: Single component with render prop vs nested structure
+- **Framework Agnostic**: Base UI's render pattern works across frameworks
