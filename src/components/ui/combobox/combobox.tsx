@@ -2,7 +2,7 @@ import { config } from "@/lib/config";
 import { cx, focusInput, hasErrorInput } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Button } from "../button";
@@ -128,13 +128,7 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
   getItemLabel?: (item: T) => string;
   /** Custom render function for items */
   renderItem?: (item: T, index: number) => React.ReactNode;
-  /** Custom render function for the trigger */
-  renderTrigger?: (props: {
-    value?: T;
-    placeholder?: string;
-    isOpen: boolean;
-    disabled?: boolean;
-  }) => React.ReactNode;
+
   /** Whether to select all text in the input when the menu opens */
   selectOnFocus?: boolean;
   /** Whether to clear the search when an item is selected */
@@ -204,7 +198,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   getItemValue = (item: T) => item.value,
   getItemLabel = (item: T) => item.label,
   renderItem,
-  renderTrigger,
   selectOnFocus = true,
   clearSearchOnSelect = true,
 }: ComboboxProps<T>) => {
@@ -377,38 +370,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     </div>
   );
 
-  // Default trigger renderer
-  const defaultRenderTrigger = ({
-    value: triggerValue,
-    placeholder: triggerPlaceholder,
-    isOpen: triggerIsOpen,
-  }: {
-    value?: T;
-    placeholder?: string;
-    isOpen: boolean;
-    disabled?: boolean;
-  }) => (
-    <div className="flex w-full items-center justify-between">
-      <span
-        className={cx(
-          "flex-1 truncate text-left",
-          !triggerValue && "text-zinc-500 dark:text-zinc-400"
-        )}
-      >
-        {triggerValue ? getItemLabel(triggerValue) : triggerPlaceholder}
-      </span>
-      <Icon
-        icon={ChevronDown}
-        size="sm"
-        strokeWidth={iconStrokeWidth}
-        className={cx(
-          "transition-transform duration-200",
-          triggerIsOpen && "rotate-180"
-        )}
-      />
-    </div>
-  );
-
   const inputProps = getInputProps({
     placeholder: searchPlaceholder,
     disabled,
@@ -424,26 +385,15 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         variant="outline"
         size={buttonSize}
         disabled={disabled}
+        rightIcon={isOpen ? ChevronUp : ChevronDown}
+        fullWidth
         className={cx(
-          "w-full justify-between font-normal",
           hasError && hasErrorInput,
           !selectedItem && "text-zinc-500 dark:text-zinc-400"
         )}
         {...getToggleButtonProps()}
       >
-        {renderTrigger
-          ? renderTrigger({
-              value: selectedItem,
-              placeholder,
-              isOpen,
-              disabled,
-            })
-          : defaultRenderTrigger({
-              value: selectedItem,
-              placeholder,
-              isOpen,
-              disabled,
-            })}
+        {selectedItem ? getItemLabel(selectedItem) : placeholder}
       </Button>
 
       {/* Dropdown Menu */}
