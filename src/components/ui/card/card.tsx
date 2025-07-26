@@ -3,8 +3,57 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
 
 import { cx } from "@/lib/utils";
+
+const cardVariants = tv({
+  base: [
+    // base
+    "relative w-full rounded-lg text-left text-sm",
+  ],
+  variants: {
+    variant: {
+      default: [
+        "shadow-xs inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10",
+        "bg-white dark:bg-[#090E1A]"
+      ],
+      dashed: [
+        "border-2 border-dashed border-zinc-300 dark:border-zinc-600",
+        "hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors",
+        "bg-transparent"
+      ],
+    },
+    padding: {
+      0: "p-0",
+      0.5: "p-0.5",
+      1: "p-1",
+      1.5: "p-1.5",
+      2: "p-2",
+      2.5: "p-2.5",
+      3: "p-3",
+      3.5: "p-3.5",
+      4: "p-4",
+      5: "p-5",
+      6: "p-6",
+      7: "p-7",
+      8: "p-8",
+      9: "p-9",
+      10: "p-10",
+      11: "p-11",
+      12: "p-12",
+    },
+    fillHeight: {
+      true: "h-full",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    padding: 6,
+    fillHeight: false,
+  },
+});
 
 /**
  * Props for the Card component.
@@ -12,36 +61,9 @@ import { cx } from "@/lib/utils";
  * @interface CardProps
  * @extends useRender.ComponentProps<"div">
  */
-interface CardProps extends useRender.ComponentProps<"div"> {
-  /**
-   * Padding for the card (Tailwind scale).
-   * @default 6
-   */
-  padding?:
-    | 0
-    | 0.5
-    | 1
-    | 1.5
-    | 2
-    | 2.5
-    | 3
-    | 3.5
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12;
-  /**
-   * Whether the card should fill the height of its container.
-   * Useful in grid layouts or flex containers.
-   * @default false
-   */
-  fillHeight?: boolean;
-}
+interface CardProps 
+  extends useRender.ComponentProps<"div">, 
+          VariantProps<typeof cardVariants> {}
 
 /**
  * A flexible container component with Tremor-inspired styling.
@@ -109,38 +131,12 @@ interface CardProps extends useRender.ComponentProps<"div"> {
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
-    { render = <div />, padding = 6, fillHeight = false, className, ...props },
+    { render = <div />, variant, padding, fillHeight, className, ...props },
     forwardedRef
   ) => {
     const defaultProps: useRender.ElementProps<"div"> = {
       className: cx(
-        // base
-        "relative w-full rounded-lg text-left text-sm shadow-xs inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10",
-        // height
-        fillHeight && "h-full",
-        // padding
-        padding === 0 && "p-0",
-        padding === 0.5 && "p-0.5",
-        padding === 1 && "p-1",
-        padding === 1.5 && "p-1.5",
-        padding === 2 && "p-2",
-        padding === 2.5 && "p-2.5",
-        padding === 3 && "p-3",
-        padding === 3.5 && "p-3.5",
-        padding === 4 && "p-4",
-        padding === 5 && "p-5",
-        padding === 6 && "p-6",
-        padding === 7 && "p-7",
-        padding === 8 && "p-8",
-        padding === 9 && "p-9",
-        padding === 10 && "p-10",
-        padding === 11 && "p-11",
-        padding === 12 && "p-12",
-        // inset ring border (similar to button)
-        "inset-ring-1 inset-ring-black/10",
-        "dark:inset-ring-white/10",
-        // background color
-        "bg-white dark:bg-[#090E1A]",
+        cardVariants({ variant, padding, fillHeight }),
         className
       ),
     };
@@ -254,5 +250,6 @@ export {
   CardFooter,
   CardHeader,
   CardTitle,
+  cardVariants,
   type CardProps,
 };

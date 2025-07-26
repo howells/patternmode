@@ -20,7 +20,7 @@ const toggleGroupVariants = tv({
     ],
     item: [
       // base
-      "flex size-8 items-center justify-center rounded-sm text-sm font-medium select-none transition-all duration-100 ease-in-out",
+      "flex items-center justify-center rounded-sm text-sm font-medium select-none transition-all duration-100 ease-in-out",
       // colors
       "text-zinc-600 dark:text-zinc-400",
       // hover
@@ -54,19 +54,19 @@ const toggleGroupVariants = tv({
     size: {
       xs: {
         root: "gap-0.5 p-0.5",
-        item: "h-5 px-1.5 text-xs rounded-sm min-w-5", // Extra small size
+        item: "h-5 px-1.5 text-xs rounded-sm", // Extra small size
       },
       sm: {
         root: "gap-0.5 p-0.5",
-        item: "h-6 px-2 text-xs rounded-sm min-w-6", // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
+        item: "h-6 px-2 text-xs rounded-sm", // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
       },
       default: {
         root: "gap-px p-0.5",
-        item: "h-8 px-3 text-sm rounded-sm min-w-8", // Match button default: py-2 px-3 text-sm
+        item: "h-8 px-3 text-sm rounded-sm", // Match button default: py-2 px-3 text-sm
       },
       lg: {
         root: "gap-1 p-1",
-        item: "h-10 px-4 text-base rounded-md min-w-10", // Match button lg: py-2.5 px-4 text-base
+        item: "h-10 px-4 text-base rounded-md", // Match button lg: py-2.5 px-4 text-base
       },
     },
     orientation: {
@@ -144,8 +144,12 @@ const ToggleGroupItem = React.forwardRef<
     const hasLeftIcon = LeftIcon != null;
     const hasRightIcon = RightIcon != null;
 
-    // Determine if this is an icon-only button (no text content)
-    const isIconOnly = !hasChildren && (hasLeftIcon || hasRightIcon);
+    // Check if children contains only screen reader text by checking the rendered string
+    const childrenString = React.isValidElement(children) ? '' : String(children || '').trim();
+    const hasVisibleText = childrenString.length > 0;
+
+    // Determine if this is an icon-only button (no visible text content)
+    const isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
 
     // Get appropriate icon size based on the toggle group size
     const iconSize = getIconSizeForContext(size);
@@ -191,10 +195,10 @@ const ToggleGroupItem = React.forwardRef<
         className={cx(
           item(),
           // For icon-only buttons, make them square like button icon sizes
-          isIconOnly && size === "xs" && "px-1 min-w-5 w-5",
-          isIconOnly && size === "sm" && "px-1.5 min-w-6 w-6",
-          isIconOnly && size === "default" && "px-2 min-w-8 w-8",
-          isIconOnly && size === "lg" && "px-2.5 min-w-10 w-10",
+          isIconOnly && size === "xs" && "min-w-5 w-5",
+          isIconOnly && size === "sm" && "min-w-6 w-6", 
+          isIconOnly && size === "default" && "min-w-8 w-8",
+          isIconOnly && size === "lg" && "min-w-10 w-10",
           className
         )}
         {...props}

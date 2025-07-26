@@ -1,22 +1,23 @@
 "use client";
 
-import { ComponentConfig } from "@/lib/component-configs";
 import { Badge } from "./ui/badge/badge";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 
-interface ComponentHeaderProps {
-  config: ComponentConfig;
+interface PageHeaderProps {
+  title: string;
+  description?: string;
+  badge?: string;
 }
 
-export function ComponentHeader({ config }: ComponentHeaderProps) {
+export function PageHeader({ title, description, badge }: PageHeaderProps) {
   return (
     <div className="space-y-2 px-6 py-6 border-b">
       <div className="flex items-center gap-3">
-        <Heading level={1}>{config.name}</Heading>
-        {config.badge && <Badge variant="neutral">{config.badge}</Badge>}
+        <Heading level={1}>{title}</Heading>
+        {badge && <Badge variant="neutral">{badge}</Badge>}
       </div>
-      <Text>{config.description}</Text>
+      {description && <Text>{description}</Text>}
     </div>
   );
 }

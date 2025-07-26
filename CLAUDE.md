@@ -87,10 +87,13 @@ const variants = tv({
 
 ## TypeScript Standards
 
-- **NEVER use `any` type or `as unknown as` casting**
+- **NEVER use `any` type or type assertions (`as`, `as unknown as`, `!`, etc.)**
+- **Use proper TypeScript types and interfaces instead of forcing type assertions**
+- **Prefer `React.createElement()` for dynamic component rendering with proper typing**
 - Use `VariantProps<typeof variants>` for variant props
 - Extend `useRender.ComponentProps<"element">` for Base UI integration
 - Export component, variants, and prop types
+- Create wrapper components or helper functions when complex typing is needed
 
 ## Icon Handling
 

@@ -21,15 +21,25 @@ import { Text } from "./ui/text/text";
 
 interface ComponentSearchProps {
   placeholder?: string;
+  onSelectComponent?: (component: ComponentConfig) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function ComponentSearch({
   placeholder = "Search...",
+  onSelectComponent,
+  open,
+  onOpenChange,
 }: ComponentSearchProps) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Use controlled state if provided, otherwise use internal state
+  const isOpen = open !== undefined ? open : internalIsOpen;
+  const setIsOpen = onOpenChange || setInternalIsOpen;
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
 
@@ -89,16 +99,20 @@ export function ComponentSearch({
       e.preventDefault();
       const selected = filteredComponents[selectedIndex];
       if (selected) {
-        router.push(`/${selected.category}/${selected.id}`);
-        setIsOpen(false);
+        handleSelect(selected);
       }
     }
   };
 
   const handleSelect = (component: ComponentConfig) => {
-    const url = `/${component.category}/${component.id}`;
-    router.push(url);
-    setIsOpen(false);
+    if (onSelectComponent) {
+      onSelectComponent(component);
+      setIsOpen(false);
+    } else {
+      const url = `/ui/${component.category}/${component.id}`;
+      router.push(url);
+      setIsOpen(false);
+    }
   };
 
   // Auto-focus input when dialog opens
@@ -115,15 +129,18 @@ export function ComponentSearch({
 
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={() => setIsOpen(true)}
-        leftIcon={Search}
-        textAlign="left"
-        kbd={["mod", "K"]}
-      >
-        {placeholder}
-      </Button>
+      {/* Only show trigger button in uncontrolled mode */}
+      {open === undefined && (
+        <Button
+          variant="secondary"
+          onClick={() => setIsOpen(true)}
+          leftIcon={Search}
+          textAlign="left"
+          kbd={["mod", "K"]}
+        >
+          {placeholder}
+        </Button>
+      )}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-2xl">

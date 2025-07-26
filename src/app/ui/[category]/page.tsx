@@ -101,7 +101,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         >
           {components.map((component) => (
             <GridCell key={component.id}>
-              <Link href={`/${category}/${component.id}`}>
+              <Link href={`/ui/${category}/${component.id}`}>
                 <Card fillHeight>
                   <VStack>
                     <HStack justify="between" align="center">

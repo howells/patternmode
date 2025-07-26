@@ -148,6 +148,9 @@ function SidebarContent() {
           <SidebarItem href="/installation" isCollapsed={isCollapsed}>
             <SidebarLabel isCollapsed={isCollapsed}>Installation</SidebarLabel>
           </SidebarItem>
+          <SidebarItem href="/layout" isCollapsed={isCollapsed}>
+            <SidebarLabel isCollapsed={isCollapsed}>Layout Builder</SidebarLabel>
+          </SidebarItem>
         </SidebarGroup>
 
         <SidebarDivider isCollapsed={isCollapsed} />
@@ -195,7 +198,7 @@ function SidebarContent() {
                   <SidebarGroup
                     key={category.key}
                     title={category.name}
-                    href={`/${category.key}`}
+                    href={`/ui/${category.key}`}
                     isCollapsed={isCollapsed}
                     level={2}
                   >
@@ -206,7 +209,7 @@ function SidebarContent() {
                       return (
                         <SidebarItem
                           key={component.id}
-                          href={`/${category.key}/${component.id}`}
+                          href={`/ui/${category.key}/${component.id}`}
                           current={isCurrentComponent(
                             category.key,
                             component.id
@@ -232,7 +235,7 @@ function SidebarContent() {
                 return (
                   <SidebarItem
                     key={component.id}
-                    href={`/${component.category}/${component.id}`}
+                    href={`/ui/${component.category}/${component.id}`}
                     current={isCurrentComponent(
                       component.category,
                       component.id

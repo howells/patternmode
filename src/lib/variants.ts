@@ -28,6 +28,7 @@ export type ButtonVariant =
   | "secondary"
   | "destructive"
   | "outline"
+  | "outline-dashed"
   | "ghost"
   | "inverse-ghost"
   | "link"
@@ -259,6 +260,21 @@ export const buttonSpecificVariants = {
     "disabled:text-zinc-400 disabled:inset-ring-black/10 disabled:shadow-none",
     "dark:disabled:text-zinc-600 dark:disabled:inset-ring-white/10",
   ],
+  "outline-dashed": [
+    // dashed border with normal shadow
+    "border-2 border-dashed border-zinc-300 shadow-xs",
+    "dark:border-zinc-600",
+    // text color
+    "text-zinc-900 dark:text-zinc-50",
+    // background color
+    "bg-white dark:bg-zinc-950",
+    // hover with enhanced border
+    "hover:bg-zinc-100 hover:border-zinc-400 hover:shadow-xs",
+    "dark:hover:bg-zinc-800 dark:hover:border-zinc-500",
+    // disabled
+    "disabled:text-zinc-400 disabled:border-zinc-200 disabled:shadow-none",
+    "dark:disabled:text-zinc-600 dark:disabled:border-zinc-700",
+  ],
   ghost: [
     // base
     "shadow-none",
@@ -316,6 +332,7 @@ export const semanticVariants = {
   secondary: globalSemanticVariants.neutral,
   destructive: globalSemanticVariants.error,
   outline: globalSemanticVariants.neutral,
+  "outline-dashed": globalSemanticVariants.neutral,
   ghost: globalSemanticVariants.neutral,
   "inverse-ghost": globalSemanticVariants.neutral,
   link: globalSemanticVariants.default,
