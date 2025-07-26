@@ -15,6 +15,47 @@ import { ScrollArea } from "../scroll-area";
 import { Separator } from "../separator/separator";
 import { Subheading } from "../subheading";
 
+// Sidebar-specific title component for navigation hierarchy
+function SidebarTitle({
+  level = 1,
+  href,
+  children,
+  className,
+  ...props
+}: {
+  level?: 1 | 2;
+  href?: string;
+  children: React.ReactNode;
+  className?: string;
+} & React.ComponentPropsWithoutRef<"span">) {
+  const baseClasses = clsx(
+    "font-medium transition-colors",
+    level === 1 ? "text-xs" : "text-2xs uppercase tracking-wide",
+    className
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={clsx(
+          baseClasses,
+          "hover:text-zinc-700 dark:hover:text-zinc-300"
+        )}
+        {...props}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={baseClasses} {...props}>
+      {children}
+    </span>
+  );
+}
+
 // Root Sidebar Container
 export function Sidebar({
   className,
@@ -167,14 +208,10 @@ export function SidebarGroup({
         className={clsx(className, "space-y-3")}
       >
         {title && (
-          <div className="flex items-center justify-between">
-            {href ? (
-              <Subheading>
-                <Link href={href}>{title}</Link>
-              </Subheading>
-            ) : (
-              <Subheading>{title}</Subheading>
-            )}
+          <div className="flex items-center justify-between px-4">
+            <SidebarTitle level={level} href={href}>
+              {title}
+            </SidebarTitle>
             {actions && !isCollapsed && (
               <div className="flex items-center">{actions}</div>
             )}
@@ -223,7 +260,7 @@ export const SidebarItem = forwardRef<
 
   return (
     <span
-      className={clsx(className, "relative block")}
+      className={clsx(className, "relative block px-4")}
       data-component="SidebarItem"
     >
       <Button
@@ -233,6 +270,8 @@ export const SidebarItem = forwardRef<
         leftIcon={LeftIcon}
         onClick={handleClick}
         fullWidth
+        size="sm"
+        textAlign="left"
         ref={ref}
         title={
           isCollapsed && typeof children === "string" ? children : undefined
