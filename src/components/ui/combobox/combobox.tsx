@@ -448,11 +448,17 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 
       {/* Dropdown Menu */}
       <div
-        className={cx(comboboxListVariants({ size }), !isOpen && "hidden")}
+        className={cx(
+          // base
+          "absolute z-50 mt-1 w-full rounded-md border bg-white shadow-lg dark:bg-zinc-950",
+          // border
+          "border-zinc-200 dark:border-zinc-800",
+          !isOpen && "hidden"
+        )}
         {...getMenuProps()}
       >
-        {/* Search Input */}
-        <div className="border-b border-zinc-200 dark:border-zinc-800 p-2">
+        {/* Search Input - Fixed at top */}
+        <div className="border-b border-zinc-200 dark:border-zinc-800 p-2 bg-white dark:bg-zinc-950 rounded-t-md">
           <input
             {...inputProps}
             {...(selectOnFocus && {
@@ -488,40 +494,52 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           />
         </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex items-center justify-center py-4">
-            <Loader size="sm" />
-            <span className="ml-2 text-sm text-zinc-500">Loading...</span>
-          </div>
-        )}
+        {/* Scrollable Content Area */}
+        <div
+          className={cx(
+            "max-h-60 overflow-auto rounded-b-md",
+            // scrollbar
+            "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
+            size === "sm" && "text-xs",
+            size === "base" && "text-sm",
+            size === "lg" && "text-base"
+          )}
+        >
+          {/* Loading State */}
+          {isLoading && (
+            <div className="flex items-center justify-center py-4">
+              <Loader size="sm" />
+              <span className="ml-2 text-sm text-zinc-500">Loading...</span>
+            </div>
+          )}
 
-        {/* Error State */}
-        {error && !isLoading && (
-          <div className="flex items-center justify-center py-4 text-red-500">
-            <span className="text-sm">Failed to load options</span>
-          </div>
-        )}
+          {/* Error State */}
+          {error && !isLoading && (
+            <div className="flex items-center justify-center py-4 text-red-500">
+              <span className="text-sm">Failed to load options</span>
+            </div>
+          )}
 
-        {/* Items List */}
-        {!isLoading && !error && items.length > 0 && (
-          <div className="py-1">
-            {items.map((item, index) => (
-              <div key={`${getItemValue(item)}-${index}`}>
-                {renderItem
-                  ? renderItem(item, index)
-                  : defaultRenderItem(item, index)}
-              </div>
-            ))}
-          </div>
-        )}
+          {/* Items List */}
+          {!isLoading && !error && items.length > 0 && (
+            <div className="py-1">
+              {items.map((item, index) => (
+                <div key={`${getItemValue(item)}-${index}`}>
+                  {renderItem
+                    ? renderItem(item, index)
+                    : defaultRenderItem(item, index)}
+                </div>
+              ))}
+            </div>
+          )}
 
-        {/* Empty State */}
-        {!isLoading && !error && items.length === 0 && (
-          <div className="flex items-center justify-center py-4 text-zinc-500">
-            <span className="text-sm">{emptyMessage}</span>
-          </div>
-        )}
+          {/* Empty State */}
+          {!isLoading && !error && items.length === 0 && (
+            <div className="flex items-center justify-center py-4 text-zinc-500">
+              <span className="text-sm">{emptyMessage}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
