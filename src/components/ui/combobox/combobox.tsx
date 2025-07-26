@@ -1,5 +1,5 @@
 import { config } from "@/lib/config";
-import { cx, hasErrorInput } from "@/lib/utils";
+import { cx, focusInput, hasErrorInput } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown } from "lucide-react";
@@ -458,7 +458,14 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         {...getMenuProps()}
       >
         {/* Search Input - Fixed at top */}
-        <div className="border-b border-zinc-200 dark:border-zinc-800 p-2 bg-white dark:bg-zinc-950 rounded-t-md">
+        <div
+          className={cx(
+            "border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
+            size === "sm" && "p-1.5",
+            size === "base" && "p-2",
+            size === "lg" && "p-2.5"
+          )}
+        >
           <input
             {...inputProps}
             {...(selectOnFocus && {
@@ -482,13 +489,13 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             })}
             ref={inputRef}
             className={cx(
-              "w-full rounded-md border border-zinc-200 bg-white px-3 text-sm placeholder:text-zinc-500",
-              "focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500",
+              "w-full rounded-md border border-zinc-200 bg-white placeholder:text-zinc-500",
               "dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400",
-              "dark:focus:border-blue-400 dark:focus:ring-blue-400",
-              size === "sm" && "py-1.5",
-              size === "base" && "py-2",
-              size === "lg" && "py-2.5"
+              focusInput,
+              // Size-based padding and text size to match Input component
+              size === "sm" && "py-1.5 px-2.5 text-xs",
+              size === "base" && "py-2 px-3 text-sm",
+              size === "lg" && "py-2.5 px-3.5 text-base"
             )}
             autoFocus
           />
