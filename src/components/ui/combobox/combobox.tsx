@@ -263,6 +263,21 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             ...changes,
             inputValue: "", // Clear search input when closing or selecting
           };
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          // If Enter is pressed and no item is highlighted but there are items,
+          // select the first item
+          if (changes.highlightedIndex === -1 && items.length > 0) {
+            return {
+              ...changes,
+              selectedItem: items[0],
+              inputValue: "",
+              isOpen: false,
+            };
+          }
+          return {
+            ...changes,
+            inputValue: "", // Clear input after selection
+          };
         default:
           return changes;
       }
