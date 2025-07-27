@@ -126,7 +126,7 @@ export function AnimatedExample() {
 
 // Real-world usage examples
 
-export function DeploymentStatusExample() {
+export function DotExample() {
   return (
     <div className="space-y-4">
       <div className="border rounded-lg p-4 space-y-3">

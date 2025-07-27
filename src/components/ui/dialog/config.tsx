@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithFormExample, ConfirmationExample, ControlledExample } from "./examples";
+import { DialogExample, DefaultExample, WithFormExample, ConfirmationExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "dialog",
@@ -48,8 +48,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic dialog with trigger button and content.",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-form",
       title: "With Form",
@@ -64,7 +63,6 @@ export const componentConfig: ComponentConfig = {
       id: "controlled",
       title: "Controlled",
       description: "Dialog with controlled open state.",
-      code: jsxToString(<ControlledExample />)
-    }
+      code: jsxToString(<ControlledExample />),}
   ]
 };

@@ -1,17 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  BasicExample,
-  CenteredExample,
-  CustomColorsExample,
-  ExtraLargeExample,
-  LargeSizeExample,
-  SemanticVariantsExample,
-  SizeVariantsExample,
-  WithCustomColorExample,
-  WithVariantExample,
-} from "./examples";
+import { IconContainerExample, BasicExample, WithVariantExample, WithCustomColorExample, LargeSizeExample, ExtraLargeExample, SemanticVariantsExample, CustomColorsExample, SizeVariantsExample, CenteredExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "icon-container",

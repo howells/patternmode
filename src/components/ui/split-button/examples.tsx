@@ -9,7 +9,7 @@ import {
   Code as CodeIcon
 } from "lucide-react";
 
-export function Default() {
+export function SplitButtonExample() {
   return (
     <SplitButton
       buttonContent="Save"
@@ -23,7 +23,7 @@ export function Default() {
   );
 }
 
-export function Variants() {
+export function DefaultExample() {
   return (
     <div className="flex gap-2">
       <SplitButton variant="default" buttonContent="Default">
@@ -44,7 +44,7 @@ export function Variants() {
   );
 }
 
-export function WithIcons() {
+export function WithIconsExample() {
   return (
     <SplitButton
       buttonContent="Download"

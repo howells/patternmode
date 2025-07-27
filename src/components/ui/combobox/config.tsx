@@ -1,4 +1,7 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, AsyncExample, IconsExample, CustomRenderingExample, SizesExample, ErrorExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "combobox",
@@ -69,75 +72,37 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic combobox with static options.",
-      code: `<Combobox
-  options={[
-    { id: "1", label: "Apple", value: "apple" },
-    { id: "2", label: "Banana", value: "banana" },
-    { id: "3", label: "Cherry", value: "cherry" },
-  ]}
-  value={value}
-  onValueChange={setValue}
-  placeholder="Choose a fruit..."
-/>`
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "async",
       title: "Async",
       description: "Combobox with async data loading.",
-      code: `<Combobox
-  fetchData={fetchFruits}
-  queryKey={["fruits"]}
-  value={value}
-  onValueChange={setValue}
-  placeholder="Search fruits..."
-/>`
+      code: jsxToString(<AsyncExample />),
     },
     {
       id: "icons",
       title: "Icons API",
       description: "Combobox loading icons from API.",
-      code: `<Combobox
-  fetchData={fetchIcons}
-  queryKey={["icons"]}
-  value={value}
-  onValueChange={setValue}
-  placeholder="Search icons..."
-/>`
+      code: jsxToString(<IconsExample />),
     },
     {
       id: "custom-rendering",
       title: "Custom Rendering",
       description: "Combobox with custom item and trigger rendering.",
-      code: `<Combobox
-  options={fruits}
-  value={value}
-  onValueChange={setValue}
-  renderItem={(item) => (
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-      <span>{item.label}</span>
-    </div>
-  )}
-/>`
+      code: jsxToString(<CustomRenderingExample />),
     },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different sizes of the combobox.",
-      code: `<Combobox size="sm" />
-<Combobox size="base" />
-<Combobox size="lg" />`
+      code: jsxToString(<SizesExample />),
     },
     {
       id: "error",
       title: "Error State",
       description: "Combobox in error state.",
-      code: `<Combobox
-  options={fruits}
-  value={value}
-  onValueChange={setValue}
-  hasError={true}
-/>`
+      code: jsxToString(<ErrorExample />),
     }
   ]
 };

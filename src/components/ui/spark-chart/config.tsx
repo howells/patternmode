@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { SparkChartExample, DefaultExample, AreaExample, BarExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "spark-chart",
@@ -45,9 +47,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Spark Chart",
       description: "A simple line spark chart",
-      code: `<SparkChart
-  data={[
-    { date: "Jan", value: 400 },
+      code: jsxToString(<DefaultExample />),, value: 400 },
     { date: "Feb", value: 300 },
     { date: "Mar", value: 600 },
     { date: "Apr", value: 800 },
@@ -62,9 +62,7 @@ export const componentConfig: ComponentConfig = {
       id: "area",
       title: "Area Spark Chart",
       description: "Spark chart with filled area",
-      code: `<SparkChart
-  data={[
-    { month: "Jan", revenue: 2100 },
+      code: jsxToString(<AreaExample />),, revenue: 2100 },
     { month: "Feb", revenue: 2400 },
     { month: "Mar", revenue: 1800 },
     { month: "Apr", revenue: 2800 },
@@ -80,9 +78,7 @@ export const componentConfig: ComponentConfig = {
       id: "bar",
       title: "Bar Spark Chart",
       description: "Spark chart using bars",
-      code: `<SparkChart
-  data={[
-    { day: "Mon", visits: 120 },
+      code: jsxToString(<BarExample />),, visits: 120 },
     { day: "Tue", visits: 140 },
     { day: "Wed", visits: 100 },
     { day: "Thu", visits: 160 },

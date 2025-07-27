@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { RadioCardGroupExample, DefaultExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio-card-group",
@@ -32,35 +34,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Radio Card Group",
       description: "A group of selectable cards",
-      code: `<RadioCardGroup defaultValue="free">
-  <RadioCard value="free">
-    <h3 className="font-semibold">Free Plan</h3>
-    <p className="text-sm text-zinc-600">Perfect for getting started</p>
-  </RadioCard>
-  <RadioCard value="pro">
-    <h3 className="font-semibold">Pro Plan</h3>
-    <p className="text-sm text-zinc-600">For professional developers</p>
-  </RadioCard>
-  <RadioCard value="enterprise">
-    <h3 className="font-semibold">Enterprise</h3>
-    <p className="text-sm text-zinc-600">For large teams and organizations</p>
-  </RadioCard>
-</RadioCardGroup>`
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "horizontal",
       title: "Horizontal Layout",
       description: "Radio cards arranged horizontally",
-      code: `<RadioCardGroup defaultValue="monthly" orientation="horizontal">
-  <RadioCard value="monthly">
-    <span className="font-medium">Monthly</span>
-    <span className="text-sm text-zinc-600">$9/mo</span>
-  </RadioCard>
-  <RadioCard value="yearly">
-    <span className="font-medium">Yearly</span>
-    <span className="text-sm text-zinc-600">$90/yr</span>
-  </RadioCard>
-</RadioCardGroup>`
-    },
+      code: jsxToString(<HorizontalExample />),},
   ]
 };

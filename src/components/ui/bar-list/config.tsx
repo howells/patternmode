@@ -1,20 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  AnimatedExample,
-  AscendingExample,
-  ComplexDataExample,
-  DefaultExample,
-  InteractiveExample,
-  NoSortingExample,
-  PercentageExample,
-  PerformanceExample,
-  SalesByRegionExample,
-  WebsiteAnalyticsExample,
-  WithFormatterExample,
-  WithLinksExample,
-} from "./examples";
+import { BarListExample, DefaultExample, WithFormatterExample, InteractiveExample, AnimatedExample, WithLinksExample, AscendingExample, PercentageExample, PerformanceExample, SalesByRegionExample, NoSortingExample, ComplexDataExample, WebsiteAnalyticsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "bar-list",

@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { PaginationExample, WithEllipsisExample } from "./examples";
+import { PaginationExample, DefaultExample, WithEllipsisExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "pagination",
@@ -15,7 +15,7 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react",
   },
   importStatement: `import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination/pagination";`,
-  componentId: "PaginationExample",
+  componentId: "DefaultExample",
   props: [
     {
       name: "currentPage",
@@ -57,11 +57,11 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "pagination",
+      id: "default",
       title: "Basic Pagination",
       description:
         "A pagination component for navigating through multiple pages of content.",
-      code: jsxToString(<PaginationExample />),
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "with-ellipsis",

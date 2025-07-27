@@ -1,7 +1,7 @@
 import React from "react";
 import { Tracker } from "./tracker";
 
-export function Basic() {
+export function TrackerExample() {
   return (
     <Tracker data={[
       { color: "bg-emerald-500", tooltip: "Step 1: Completed" },

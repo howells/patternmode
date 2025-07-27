@@ -58,7 +58,7 @@ export function DisabledExample() {
 }
 
 // Additional examples (not referenced in config but good to have)
-export function Default() {
+export function SliderExample() {
   const [value, setValue] = useState([50]);
 
   return (

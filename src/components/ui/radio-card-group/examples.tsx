@@ -9,7 +9,7 @@ import {
 import { Button } from "../button/button";
 import { Rocket, Truck, Zap } from "lucide-react";
 
-export function DefaultRadioCardGroup() {
+export function RadioCardGroupExample() {
   const [value, setValue] = useState("basic");
 
   return (
@@ -59,7 +59,7 @@ export function DefaultRadioCardGroup() {
   );
 }
 
-export function RadioCardGroupWithPricing() {
+export function DefaultExample() {
   const [plan, setPlan] = useState("starter");
 
   return (
@@ -117,7 +117,7 @@ export function RadioCardGroupWithPricing() {
   );
 }
 
-export function RadioCardGroupWithIcons() {
+export function HorizontalExample() {
   const [shipping, setShipping] = useState("standard");
 
   return (

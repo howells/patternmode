@@ -2,7 +2,7 @@ import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, MultipleSeriesExample, StackedExample, PercentExample, VerticalExample, WithLabelsExample  } from "./examples";
+import { BarChartExample, DefaultExample, MultipleSeriesExample, StackedExample, PercentExample, VerticalExample, WithLabelsExample } from "./examples";
 
 // Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {

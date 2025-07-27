@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { SplitButtonExample, DefaultExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "split-button",
@@ -39,53 +41,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Split Button",
       description: "A button with dropdown for additional actions",
-      code: `<SplitButton>
-  <Button>Save</Button>
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="outline" size="icon">
-        <ChevronDown className="h-4 w-4" />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      <DropdownMenuItem>Save as draft</DropdownMenuItem>
-      <DropdownMenuItem>Save and publish</DropdownMenuItem>
-      <DropdownMenuItem>Save and schedule</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</SplitButton>`
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-icons",
       title: "Split Button with Icons",
       description: "Split button with icons in menu items",
-      code: `<SplitButton>
-  <Button>
-    <Send className="mr-2 h-4 w-4" />
-    Send
-  </Button>
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="outline" size="icon">
-        <ChevronDown className="h-4 w-4" />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      <DropdownMenuItem>
-        <Clock className="mr-2 h-4 w-4" />
-        Send later
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        <Users className="mr-2 h-4 w-4" />
-        Send to group
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        <Archive className="mr-2 h-4 w-4" />
-        Send and archive
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</SplitButton>`
-    },
+      code: jsxToString(<WithIconsExample />),},
   ]
 };

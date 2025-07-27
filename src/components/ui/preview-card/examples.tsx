@@ -3,7 +3,7 @@
 import React from "react";
 import { PreviewCard } from "./preview-card";
 
-export function BasicPreviewCard() {
+export function PreviewCardExample() {
   return (
     <PreviewCard>
       <div className="p-4">
@@ -17,7 +17,7 @@ export function BasicPreviewCard() {
   );
 }
 
-export function PreviewCardWithImage() {
+export function DefaultExample() {
   return (
     <PreviewCard>
       <img

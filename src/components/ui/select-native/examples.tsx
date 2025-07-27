@@ -16,7 +16,7 @@ export function DefaultExample() {
   );
 }
 
-export function WithLabelExample() {
+export function SelectNativeExample() {
   const [country, setCountry] = useState("");
 
   return (

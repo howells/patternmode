@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, HorizontalExample } from "./examples";
+import { ScrollAreaExample, DefaultExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "scroll-area",
@@ -23,13 +23,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Scroll Area",
       description: "A scrollable container with custom scrollbar",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "horizontal",
       title: "Horizontal Scroll",
       description: "A horizontally scrollable area",
-      code: jsxToString(<HorizontalExample />)
-    },
+      code: jsxToString(<HorizontalExample />),},
   ]
 };

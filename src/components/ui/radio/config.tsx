@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, CheckedExample, DisabledExample } from "./examples";
+import { RadioExample, DefaultExample, CheckedExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio",
@@ -40,19 +40,16 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Radio",
       description: "A simple radio button",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "checked",
       title: "Checked Radio",
       description: "A radio button in checked state",
-      code: jsxToString(<CheckedExample />)
-    },
+      code: jsxToString(<CheckedExample />),},
     {
       id: "disabled",
       title: "Disabled Radio",
       description: "A radio button in disabled state",
-      code: jsxToString(<DisabledExample />)
-    },
+      code: jsxToString(<DisabledExample />),},
   ]
 };

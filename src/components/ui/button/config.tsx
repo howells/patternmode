@@ -1,19 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  DefaultExample,
-  DestructiveExample,
-  FullWidthExample,
-  GhostExample,
-  KeyboardShortcutsExample,
-  LinkExample,
-  LoadingExample,
-  OutlineExample,
-  SecondaryExample,
-  SizesExample,
-  WithIconsExample
-} from "./examples";
+import { ButtonExample, DefaultExample, SecondaryExample, DestructiveExample, OutlineExample, GhostExample, LinkExample, WithIconsExample, LoadingExample, SizesExample, FullWidthExample, KeyboardShortcutsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "button",

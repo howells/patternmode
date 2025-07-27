@@ -12,7 +12,7 @@ import {
 } from "./popover";
 import { Button } from "../button/button";
 
-export function DefaultPopover() {
+export function PopoverExample() {
   return (
     <Popover>
       <PopoverTrigger render={<Button />}>Open Popover</PopoverTrigger>
@@ -26,7 +26,7 @@ export function DefaultPopover() {
   );
 }
 
-export function PopoverPositions() {
+export function DefaultExample() {
   return (
     <div className="flex gap-4">
       <Popover>
@@ -62,7 +62,7 @@ export function PopoverPositions() {
   );
 }
 
-export function PopoverWithArrow() {
+export function PositionsExample() {
   return (
     <Popover>
       <PopoverTrigger render={<Button />}>With Arrow</PopoverTrigger>
@@ -77,7 +77,7 @@ export function PopoverWithArrow() {
   );
 }
 
-export function PopoverWithClose() {
+export function WithArrowExample() {
   return (
     <Popover>
       <PopoverTrigger render={<Button />}>With Close Button</PopoverTrigger>
@@ -105,7 +105,7 @@ export function PopoverWithClose() {
   );
 }
 
-export function PopoverRichContent() {
+export function WithCloseExample() {
   return (
     <Popover>
       <PopoverTrigger render={<Button />}>User Menu</PopoverTrigger>
@@ -141,7 +141,7 @@ export function PopoverRichContent() {
   );
 }
 
-export function ControlledPopover() {
+export function RichContentExample() {
   const [open, setOpen] = useState(false);
 
   return (

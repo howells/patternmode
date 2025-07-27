@@ -1,4 +1,6 @@
 import React from "react";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { ListExample, DefaultExample, OrderedExample, WithIconsExample, NestedExample } from "./examples";
 import type { ComponentConfig } from "@/lib/component-config-types";
 
 export const componentConfig: ComponentConfig = {
@@ -38,41 +40,17 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic unordered list with default styling.",
-      code: `<List>
-  <ListItem>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-  </ListItem>
-  <ListItem>
-    Assumenda, quia temporibus eveniet a libero incidunt suscipit
-  </ListItem>
-  <ListItem>
-    Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-  </ListItem>
-</List>`
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "ordered",
       title: "Ordered",
       description: "An ordered list using the as prop.",
-      code: `<List as="ol">
-  <ListItem>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-  </ListItem>
-  <ListItem>
-    Assumenda, quia temporibus eveniet a libero incidunt suscipit
-  </ListItem>
-  <ListItem>
-    Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-  </ListItem>
-</List>`
-    },
+      code: jsxToString(<OrderedExample />),,
     {
       id: "with-icons",
       title: "With Icons",
       description: "A list with custom icon indicators.",
-      code: `<List variant="plain" align="center">
-  <ListItem>
-    <ListIndicator icon={CheckCircle} />
+      code: jsxToString(<WithIconsExample />),} />
     Lorem ipsum dolor sit amet, consectetur adipisicing elit
   </ListItem>
   <ListItem>
@@ -89,19 +67,6 @@ export const componentConfig: ComponentConfig = {
       id: "nested",
       title: "Nested",
       description: "A list with nested items.",
-      code: `<List>
-  <ListItem>First order item</ListItem>
-  <ListItem>First order item</ListItem>
-  <ListItem>
-    First order item with list
-    <List className="ml-5 mt-2">
-      <ListItem>Nested item</ListItem>
-      <ListItem>Nested item</ListItem>
-      <ListItem>Nested item</ListItem>
-    </List>
-  </ListItem>
-  <ListItem>First order item</ListItem>
-</List>`
-    }
+      code: jsxToString(<NestedExample />),}
   ]
 };

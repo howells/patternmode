@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultLabelExample, RequiredFieldExample  } from "./examples";
+import { LabelExample, LabelExample, RequiredExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "label",

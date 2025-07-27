@@ -1,12 +1,7 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import React from "react";
-import {
-  BasicExample,
-  ColorInheritanceExample,
-  SemanticElementsExample,
-  SizesExample,
-} from "./examples";
+import { TextExample, BasicExample, SizesExample, SemanticElementsExample, ColorInheritanceExample } from "./examples";
 import { Text } from "./text";
 
 export const componentConfig: ComponentConfig = {

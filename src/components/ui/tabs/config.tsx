@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { LineNoDividerExample, SolidExample, TabsExample } from "./examples";
+import { TabsExample, TabsExample, LineNoDividerExample, SolidExample } from "./examples";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
 export const componentConfig: ComponentConfig = {

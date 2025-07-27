@@ -2,28 +2,7 @@ import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { Calendar } from "./calendar";
-import {
-  CompactExample,
-  ControlledRangeExample,
-  ControlledSingleExample,
-  DefaultExample,
-  DisabledNavigationExample,
-  DropdownCaptionExample,
-  FixedWeeksExample,
-  MultipleMonthsExample,
-  RangeModeExample,
-  RangeWithMultipleMonthsExample,
-  SpecificDefaultDateExample,
-  ThreeMonthsExample,
-  WeekStartsOnExample,
-  WeekStartsSundayExample,
-  WithDisabledDatesExample,
-  WithoutTodayHighlightExample,
-  WithPreselectedExample,
-  WithTodayButtonExample,
-  WithWeekNumbersExample,
-  WithYearNavigationExample,
-} from "./examples";
+import { CalendarExample, DefaultExample, RangeModeExample, MultipleMonthsExample, WithYearNavigationExample, WeekStartsSundayExample, DisabledNavigationExample, WithPreselectedExample, RangeWithMultipleMonthsExample, WithoutTodayHighlightExample, WithTodayButtonExample, FixedWeeksExample, WithWeekNumbersExample, DropdownCaptionExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "calendar",
@@ -186,8 +165,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-preselected",
       title: "With Pre-selected Date",
       description: "Calendar with a pre-selected date.",
-      code: `const [selected, setSelected] = React.useState<Date | undefined>(new Date());
-return <Calendar mode="single" selected={selected} onSelect={setSelected} />;`,
+      code: jsxToString(<WithPreselectedExample />),
     },
     {
       id: "range-with-multiple-months",

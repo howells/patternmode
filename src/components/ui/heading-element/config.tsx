@@ -1,13 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  AccessibilityExample,
-  AllLevelsExample,
-  DefaultExample,
-  SemanticHierarchyExample,
-  StyledExample,
-} from "./examples";
+import { HeadingElementExample, DefaultExample, AllLevelsExample, StyledExample, AccessibilityExample, SemanticHierarchyExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "heading-element",

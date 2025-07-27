@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, VerticalExample, MultipleItemsExample, NoNavigationExample, ImageCarouselExample  } from "./examples";
+import { CarouselExample, DefaultExample, VerticalExample, MultipleItemsExample, NoNavigationExample, ImageCarouselExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "carousel",

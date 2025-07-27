@@ -13,7 +13,7 @@ import {
   ResponsiveDrawerTrigger,
 } from "./responsive-drawer";
 
-export function BasicResponsiveDrawer() {
+export function ResponsiveDrawerExample() {
   return (
     <ResponsiveDrawer>
       <ResponsiveDrawerTrigger>
@@ -39,7 +39,7 @@ export function BasicResponsiveDrawer() {
   );
 }
 
-export function ResponsiveDrawerWithForm() {
+export function DefaultExample() {
   return (
     <ResponsiveDrawer>
       <ResponsiveDrawerTrigger>

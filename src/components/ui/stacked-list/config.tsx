@@ -1,13 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  DefaultExample,
-  EmptyStateExample,
-  InCardExample,
-  InteractiveExample,
-  WithIconsExample,
-} from "./examples";
+import { StackedListExample, DefaultExample, InCardExample, WithIconsExample, InteractiveExample, EmptyStateExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "stacked-list",

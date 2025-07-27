@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Tooltip } from "./tooltip";
 import { Button } from "../button";
 
-export function Default() {
+export function TooltipExample() {
   return (
     <Tooltip content="This is a tooltip">
       <Button>Hover me</Button>
@@ -12,7 +12,7 @@ export function Default() {
   );
 }
 
-export function Positions() {
+export function TooltipExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Top tooltip" side="top">
@@ -31,7 +31,7 @@ export function Positions() {
   );
 }
 
-export function Variants() {
+export function PositionsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Default tooltip" variant="default">
@@ -44,7 +44,7 @@ export function Variants() {
   );
 }
 
-export function Sizes() {
+export function VariantsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Small tooltip" size="sm">
@@ -60,7 +60,7 @@ export function Sizes() {
   );
 }
 
-export function NoArrow() {
+export function SizesExample() {
   return (
     <Tooltip content="Tooltip without arrow" showArrow={false}>
       <Button>No Arrow</Button>
@@ -68,7 +68,7 @@ export function NoArrow() {
   );
 }
 
-export function RichContent() {
+export function NoArrowExample() {
   return (
     <Tooltip
       content={
@@ -85,7 +85,7 @@ export function RichContent() {
   );
 }
 
-export function Controlled() {
+export function RichContentExample() {
   const [open, setOpen] = useState(false);
 
   return (

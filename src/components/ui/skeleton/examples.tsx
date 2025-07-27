@@ -51,7 +51,7 @@ export function ListExample() {
   );
 }
 
-export function TextSkeleton() {
+export function SkeletonExample() {
   return (
     <div className="space-y-2">
       <Skeleton className="h-4 w-full" />

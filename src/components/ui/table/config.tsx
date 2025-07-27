@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample } from "./examples";
+import { TableExample, DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "table",

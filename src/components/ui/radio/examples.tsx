@@ -41,7 +41,7 @@ export function DisabledExample() {
 }
 
 // Additional examples (not referenced in config but good to have)
-export function DefaultRadio() {
+export function RadioExample() {
   return (
     <RadioOption
       value="option1"

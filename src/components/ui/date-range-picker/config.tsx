@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithTimeExample, WithPresetsExample, DisabledExample, ErrorStateExample, ControlledExample  } from "./examples";
+import { DateRangePickerExample, DefaultExample, WithTimeExample, WithPresetsExample, DisabledExample, ErrorStateExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "date-range-picker",
@@ -69,14 +69,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-presets",
       title: "With Presets",
       description: "Date range picker with common range presets.",
-      code: `const WithPresetsExample = () => {
-  const today = new Date();
-  const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-  const presets = [
-    {
-      label: "Today",
+      code: jsxToString(<WithPresetsExample />),,
       dateRange: { from: today, to: today }
     },
     {
@@ -110,14 +103,7 @@ export const componentConfig: ComponentConfig = {
       id: "controlled",
       title: "Controlled",
       description: "Controlled date range picker with external state.",
-      code: `const ControlledExample = () => {
-  const [dateRange, setDateRange] = useState<{from: Date | undefined, to?: Date | undefined} | undefined>();
-
-  return (
-    <div className="space-y-2">
-      <DateRangePicker
-        placeholder="Pick date range"
-        value={dateRange}
+      code: jsxToString(<ControlledExample />),}
         onChange={setDateRange}
       />
       {dateRange?.from && (

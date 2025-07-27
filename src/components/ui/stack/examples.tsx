@@ -51,7 +51,7 @@ export function AlignmentExample() {
 }
 
 // Additional examples that were in the original file
-export function ResponsiveDirectionExample() {
+export function StackExample() {
   return (
     <Stack
       direction={{ sm: "vertical", lg: "horizontal" }}

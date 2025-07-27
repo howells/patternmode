@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultNumberFieldExample, WithConstraintsExample, WithoutSteppersExample, DisabledScrubAreaExample, FullWidthExample, DisabledExample  } from "./examples";
+import { NumberFieldExample, DefaultExample, WithConstraintsExample, WithoutSteppersExample, DisabledScrubAreaExample, FullWidthExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "number-field",

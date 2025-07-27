@@ -109,7 +109,7 @@ export function SidesExample() {
 
 // Additional examples (not referenced in config but good to have)
 
-export function BasicSheet() {
+export function SheetExample() {
   return (
     <Sheet>
       <SheetTrigger>

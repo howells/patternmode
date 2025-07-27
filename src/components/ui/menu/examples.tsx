@@ -19,7 +19,7 @@ import {
 import { Clipboard, Copy, Plus } from "lucide-react";
 import React, { useState } from "react";
 
-export function DefaultMenuExample() {
+export function MenuExample() {
   return (
     <Menu>
       <MenuTrigger render={<Button />}>Open Menu</MenuTrigger>

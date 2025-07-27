@@ -1,17 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  ButtonStyleExample,
-  ControlledExample,
-  DefaultExample,
-  DisabledExample,
-  MultipleSelectionExample,
-  SizesExample,
-  VariantsExample,
-  VerticalExample,
-  WithTextExample,
-} from "./examples";
+import { ToggleGroupExample, DefaultExample, MultipleSelectionExample, WithTextExample, VariantsExample, ButtonStyleExample, SizesExample, VerticalExample, DisabledExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "toggle-group",

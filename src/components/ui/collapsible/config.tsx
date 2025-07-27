@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, DefaultOpenExample, DisabledExample, NestedContentExample, WithIconsExample  } from "./examples";
+import { CollapsibleExample, DefaultExample, DefaultOpenExample, DisabledExample, NestedContentExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "collapsible",

@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { ProgressCircleExample, DefaultExample, SmallExample, LargeExample, WithLabelExample, IndeterminateExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "progress-circle",
@@ -44,31 +46,26 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Progress Circle",
       description: "A circular progress indicator showing completion percentage.",
-      code: `<ProgressCircle value={75} />`
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "small",
       title: "Small Progress Circle",
       description: "A smaller circular progress indicator",
-      code: `<ProgressCircle value={60} size="sm" />`
-    },
+      code: jsxToString(<SmallExample />),},
     {
       id: "large",
       title: "Large Progress Circle",
       description: "A larger circular progress indicator",
-      code: `<ProgressCircle value={90} size="lg" />`
-    },
+      code: jsxToString(<LargeExample />),},
     {
       id: "with-label",
       title: "Progress Circle with Label",
       description: "Circular progress with text label",
-      code: `<ProgressCircle value={45} showLabel />`
-    },
+      code: jsxToString(<WithLabelExample />),},
     {
       id: "indeterminate",
       title: "Indeterminate Progress Circle",
       description: "Circular progress in loading state",
-      code: `<ProgressCircle indeterminate />`
-    },
+      code: jsxToString(<IndeterminateExample />),},
   ]
 };

@@ -1,17 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  DefaultExample,
-  DisabledExample,
-  FixedHeightExample,
-  FormIntegrationExample,
-  PerformanceExample,
-  WithContentExample,
-  WithErrorExample,
-  WithHeightCallbackExample,
-  WithRowConstraintsExample,
-} from "./examples";
+import { TextareaExample, DefaultExample, WithContentExample, RowConstraintsExample, ErrorStateExample, DisabledExample, FixedHeightExample, HeightCallbackExample, FormIntegrationExample, PerformanceExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "textarea",

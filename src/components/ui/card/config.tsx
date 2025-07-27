@@ -1,7 +1,13 @@
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithTitleExample, CompactExample, NoPaddingExample, CustomStylingExample } from "./examples";
+import React from "react";
+import {
+  CompactExample,
+  CustomStylingExample,
+  DefaultExample,
+  NoPaddingExample,
+  WithTitleExample,
+} from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "card",
@@ -10,7 +16,6 @@ export const componentConfig: ComponentConfig = {
     "A flexible container component with subtle styling and shadow for grouping related content.",
   category: "layout" as const,
   icon: "RectangleHorizontal",
-
   importStatement: `import { Card } from "@/components/ui/card";`,
   componentId: "CardExample",
   props: [
@@ -34,46 +39,51 @@ export const componentConfig: ComponentConfig = {
         "9",
         "10",
         "11",
-        "12"
+        "12",
       ],
       defaultValue: "6",
       description:
-        "Padding for the card (Tailwind scale). Use 0 for no padding."
+        "Padding for the card (Tailwind scale). Use 0 for no padding.",
     },
     {
       name: "children",
       type: "textarea",
       defaultValue:
         "This is a card component with some example content. It provides a clean container with subtle styling and shadow.",
-      description: "The content to display inside the card."
-    }
+      description: "The content to display inside the card.",
+    },
   ],
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic card with default styling.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-title",
       title: "With Title",
       description: "Card with a title and content.",
-      code: jsxToString(<WithTitleExample />)},
+      code: jsxToString(<WithTitleExample />),
+    },
     {
       id: "compact",
       title: "Compact",
       description: "Card with reduced padding using the padding prop.",
-      code: jsxToString(<CompactExample />)},
+      code: jsxToString(<CompactExample />),
+    },
     {
       id: "no-padding",
       title: "No Padding",
       description:
         "Card with no internal padding, useful for full-width content.",
-      code: jsxToString(<NoPaddingExample />)},
+      code: jsxToString(<NoPaddingExample />),
+    },
     {
       id: "custom-styling",
       title: "Custom Styling",
       description: "Card with custom background and border.",
-      code: jsxToString(<CustomStylingExample />)}
-  ]
+      code: jsxToString(<CustomStylingExample />),
+    },
+  ],
 };

@@ -1,7 +1,6 @@
-// Configuration data - React import needed for JSX in jsxToString
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
+import React from "react";
 import { DefaultExample, MultipleOpenExample } from "./examples";
 
 // Component configuration - single source of truth
@@ -14,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   icon: "ChevronDown",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   Accordion,
@@ -31,7 +30,7 @@ export const componentConfig: ComponentConfig = {
       type: "boolean",
       description:
         "If true, multiple accordion items can be open at the same time.",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
 
@@ -40,13 +39,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic accordion with default settings.",
-      code: jsxToString(<DefaultExample />)
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "multiple-open",
       title: "Multiple Open",
       description: "Accordion allowing multiple items to be open.",
-      code: jsxToString(<MultipleOpenExample />)
+      code: jsxToString(<MultipleOpenExample />),
     },
-  ]
+  ],
 };

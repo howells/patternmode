@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { RadioGroupExample, DefaultExample, HorizontalExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio-group",
@@ -38,56 +40,16 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Radio Group",
       description: "A simple radio group with labels",
-      code: `<RadioGroup defaultValue="comfortable">
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="default" id="r1" />
-    <label htmlFor="r1">Default</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="comfortable" id="r2" />
-    <label htmlFor="r2">Comfortable</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="compact" id="r3" />
-    <label htmlFor="r3">Compact</label>
-  </div>
-</RadioGroup>`
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "horizontal",
       title: "Horizontal Radio Group",
       description: "Radio buttons arranged horizontally",
-      code: `<RadioGroup defaultValue="option1" orientation="horizontal">
-  <div className="flex gap-4">
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem value="option1" id="option1" />
-      <label htmlFor="option1">Option 1</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem value="option2" id="option2" />
-      <label htmlFor="option2">Option 2</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem value="option3" id="option3" />
-      <label htmlFor="option3">Option 3</label>
-    </div>
-  </div>
-</RadioGroup>`
-    },
+      code: jsxToString(<HorizontalExample />),},
     {
       id: "disabled",
       title: "Disabled Radio Group",
       description: "Radio group in disabled state",
-      code: `<RadioGroup defaultValue="option1" disabled>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="option1" id="d1" />
-    <label htmlFor="d1">Disabled Option 1</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="option2" id="d2" />
-    <label htmlFor="d2">Disabled Option 2</label>
-  </div>
-</RadioGroup>`
-    },
+      code: jsxToString(<DisabledExample />),},
   ]
 };

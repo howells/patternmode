@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithSubmenuExample } from "./examples";
+import { SidebarExample, DefaultExample, WithSubmenuExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "sidebar",
@@ -39,13 +39,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Sidebar",
       description: "A simple sidebar with navigation items",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-submenu",
       title: "Sidebar with Submenu",
       description: "Sidebar with nested menu items",
-      code: jsxToString(<WithSubmenuExample />)
-    },
+      code: jsxToString(<WithSubmenuExample />),},
   ]
 };

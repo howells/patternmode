@@ -1,7 +1,7 @@
 import React from "react";
 import { Inspector } from "./inspector";
 
-export function BasicInspectorExample() {
+export function InspectorExample() {
   return (
     <Inspector>
       <div className="p-4">
@@ -21,7 +21,7 @@ export function BasicInspectorExample() {
   );
 }
 
-export function NestedDataInspectorExample() {
+export function InspectorExample() {
   return (
     <Inspector>
       <div className="p-4 space-y-4">

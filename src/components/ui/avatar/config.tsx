@@ -1,17 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  AvatarGroupExample,
-  DefaultExample,
-  DynamicBackgroundExample,
-  InitialsExample,
-  ProfileHeaderExample,
-  SizeVariantsExample,
-  SquareVariantsExample,
-  UserListExample,
-  WithFallbackExample,
-} from "./examples";
+import { AvatarExample, DefaultExample, SizeVariantsExample, InitialsExample, SquareVariantsExample, DynamicBackgroundExample, WithFallbackExample, UserListExample, AvatarGroupExample, ProfileHeaderExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "avatar",

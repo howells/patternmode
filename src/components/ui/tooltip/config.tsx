@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { Default, Positions, Variants, Sizes, NoArrow, RichContent, Controlled  } from "./examples";
+import { TooltipExample, TooltipExample, PositionsExample, VariantsExample, SizesExample, NoArrowExample, RichContentExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "tooltip",
@@ -91,14 +91,7 @@ export const componentConfig: ComponentConfig = {
       id: "controlled",
       title: "Controlled",
       description: "Tooltip with controlled open state.",
-      code: `const Controlled = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="space-x-4">
-      <Tooltip
-        content="Controlled tooltip"
-        open={open}
+      code: jsxToString(<ControlledExample />),}
         onOpenChange={setOpen}
       >
         <Button>Controlled Tooltip</Button>

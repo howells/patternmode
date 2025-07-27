@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, SuccessExample, ErrorExample, WarningExample, NeutralExample, WithIconExample  } from "./examples";
+import { CalloutExample, DefaultExample, SuccessExample, ErrorExample, WarningExample, NeutralExample, WithIconExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "callout",

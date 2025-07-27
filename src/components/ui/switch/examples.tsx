@@ -96,7 +96,7 @@ export function FormExample() {
 }
 
 // Additional examples (not referenced in config but good to have)
-export function Default() {
+export function SwitchExample() {
   const [checked, setChecked] = useState(false);
 
   return <Switch checked={checked} onCheckedChange={setChecked} />;

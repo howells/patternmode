@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithGroupsExample, SizesExample } from "./examples";
+import { SelectNativeExample, DefaultExample, WithGroupsExample, SizesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "select-native",
@@ -41,19 +41,16 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "A styled native select element",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-groups",
       title: "With Option Groups",
       description: "Native select with grouped options",
-      code: jsxToString(<WithGroupsExample />)
-    },
+      code: jsxToString(<WithGroupsExample />),},
     {
       id: "sizes",
       title: "Different Sizes",
       description: "Native select in different sizes",
-      code: jsxToString(<SizesExample />)
-    },
+      code: jsxToString(<SizesExample />),},
   ]
 };

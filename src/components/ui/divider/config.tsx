@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithTextExample, VerticalExample, SpacingExample  } from "./examples";
+import { DividerExample, DefaultExample, WithTextExample, VerticalExample, SpacingExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "divider",
@@ -38,8 +38,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic horizontal divider.",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-text",
       title: "With Text",

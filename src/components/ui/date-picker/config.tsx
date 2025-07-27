@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithTimeExample, WithPresetsExample, DisabledExample, ErrorStateExample, ControlledExample  } from "./examples";
+import { DatePickerExample, DefaultExample, WithTimeExample, WithPresetsExample, DisabledExample, ErrorStateExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "date-picker",
@@ -66,9 +66,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-presets",
       title: "With Presets",
       description: "Date picker with common date presets.",
-      code: `const WithPresetsExample = () => {
-  const presets = [
-    { label: "Today", date: new Date() },
+      code: jsxToString(<WithPresetsExample />),, date: new Date() },
     { label: "Tomorrow", date: new Date(Date.now() + 24 * 60 * 60 * 1000) },
     { label: "In a week", date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) }
   ];
@@ -94,14 +92,7 @@ export const componentConfig: ComponentConfig = {
       id: "controlled",
       title: "Controlled",
       description: "Controlled date picker with external state.",
-      code: `const ControlledExample = () => {
-  const [date, setDate] = useState<Date | undefined>();
-
-  return (
-    <div className="space-y-2">
-      <DatePicker
-        placeholder="Pick a date"
-        value={date}
+      code: jsxToString(<ControlledExample />),}
         onChange={setDate}
       />
       {date && (

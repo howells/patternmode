@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { LineChart } from "./line-chart";
 
-export function DefaultLineChartExample() {
+export function LineChartExample() {
   const data = [
     { month: "Jan", sales: 2400, revenue: 4000 },
     { month: "Feb", sales: 1398, revenue: 3000 },

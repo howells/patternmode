@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, BiaxialExample, StackedBarsExample, MultipleLinesExample, InteractiveExample, CustomFormattingExample  } from "./examples";
+import { ComboChartExample, DefaultExample, BiaxialExample, StackedBarsExample, MultipleLinesExample, InteractiveExample, CustomFormattingExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "combo-chart",
@@ -75,20 +75,8 @@ export const componentConfig: ComponentConfig = {
       id: "interactive",
       title: "Interactive",
       description: "Combo chart with click interactions and legend filtering.",
-      code: `const [value, setValue] = useState(null);
-  
-return (
-  <ComboChart
-    data={data}
-    index="month"
-    categories={["Desktop", "Mobile"]}
-    colors={["blue", "pink"]}
-    valueFormatter={(number) =>
-      "$" + Intl.NumberFormat("us").format(number).toString()
-    }
-    onValueChange={(v) => setValue(v)}
-  />
-);`},
+      code: jsxToString(<InteractiveExample />),
+    },
     {
       id: "custom-formatting",
       title: "Custom Formatting",

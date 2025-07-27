@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, SidesExample } from "./examples";
+import { SheetExample, DefaultExample, SidesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "sheet",
@@ -39,13 +39,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Sheet",
       description: "A sheet that slides in from the right",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "sides",
       title: "Sheet Sides",
       description: "Sheets from different sides",
-      code: jsxToString(<SidesExample />)
-    },
+      code: jsxToString(<SidesExample />),},
   ]
 };

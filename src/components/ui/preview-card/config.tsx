@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { PreviewCardExample, DefaultExample, WithImageExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "preview-card",
@@ -37,20 +39,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Preview Card",
       description: "A card component that shows a preview or summary of content.",
-      code: `<PreviewCard
-  title="Introduction to React"
-  description="Learn the fundamentals of React including components, state, and props."
-/>`
-    },
+      code: jsxToString(<DefaultExample />),,
     {
       id: "with-image",
       title: "Preview Card with Image",
       description: "Preview card that includes an image",
-      code: `<PreviewCard
-  title="Beautiful Landscape"
-  description="Explore stunning natural landscapes from around the world."
-  image="/api/placeholder/400/200"
-/>`
-    },
+      code: jsxToString(<WithImageExample />),},
   ]
 };

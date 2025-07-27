@@ -1,4 +1,6 @@
 import { type ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { KbdExample, DefaultExample, CombinationExample, SizesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   name: "Kbd",
@@ -14,24 +16,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic keyboard shortcut display",
-      code: `<Kbd>K</Kbd>`,
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "combination",
       title: "Key Combination",
       description: "Multiple keys for complex shortcuts",
-      code: `<Kbd keys={["cmd", "shift", "k"]}>Command palette</Kbd>`,
+      code: jsxToString(<CombinationExample />),, "shift", "k"]}>Command palette</Kbd>`,
     },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different size variants",
-      code: `<div className="flex gap-2">
-  <Kbd size="xs">Esc</Kbd>
-  <Kbd size="sm">Esc</Kbd>
-  <Kbd size="base">Esc</Kbd>
-  <Kbd size="lg">Esc</Kbd>
-</div>`,
+      code: jsxToString(<SizesExample />),,
     },
   ],
   props: [

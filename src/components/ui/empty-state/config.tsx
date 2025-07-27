@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, MinimalExample, WithBothActionsExample, LargeSizeExample  } from "./examples";
+import { EmptyStateExample, DefaultExample, MinimalExample, WithBothActionsExample, LargeSizeExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "empty-state",
@@ -78,10 +78,7 @@ export const componentConfig: ComponentConfig = {
       title: "Default",
       description:
         "Basic empty state with title, description, and primary action.",
-      code: `<EmptyState
-  title="No projects found"
-  description="Get started by creating your first project. It only takes a few minutes to set up."
-  icon={FolderOpen}
+      code: jsxToString(<DefaultExample />),}
   primaryAction={{
     label: "Create Project",
     onClick: () => console.log("Create clicked")

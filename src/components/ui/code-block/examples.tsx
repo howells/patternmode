@@ -94,7 +94,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary';
 }
 
-export function Button({ 
+export function CodeBlockExample({ 
   children, 
   onClick, 
   variant = 'primary' 

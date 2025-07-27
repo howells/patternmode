@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithIconsExample } from "./examples";
+import { MenuBarExample, DefaultExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "menu-bar",
@@ -27,13 +27,11 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Menu Bar",
       description: "A horizontal menu bar containing multiple dropdown menus.",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-icons",
       title: "Menu Bar with Icons",
       description: "Menu bar with icons in menu items",
-      code: jsxToString(<WithIconsExample />)
-    },
+      code: jsxToString(<WithIconsExample />),},
   ]
 };

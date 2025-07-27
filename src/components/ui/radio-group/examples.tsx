@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "./radio-group";
 import { RadioOption } from "../radio/radio";
 import { Button } from "../button/button";
 
-export function DefaultRadioGroup() {
+export function RadioGroupExample() {
   const [value, setValue] = useState("option1");
 
   return (
@@ -17,7 +17,7 @@ export function DefaultRadioGroup() {
   );
 }
 
-export function HorizontalRadioGroup() {
+export function DefaultExample() {
   const [value, setValue] = useState("small");
 
   return (
@@ -29,7 +29,7 @@ export function HorizontalRadioGroup() {
   );
 }
 
-export function RadioGroupWithDescriptions() {
+export function HorizontalExample() {
   const [plan, setPlan] = useState("basic");
 
   return (
@@ -53,7 +53,7 @@ export function RadioGroupWithDescriptions() {
   );
 }
 
-export function RadioGroupSizes() {
+export function DisabledExample() {
   const [value1, setValue1] = useState("option1");
   const [value2, setValue2] = useState("option1");
   const [value3, setValue3] = useState("option1");

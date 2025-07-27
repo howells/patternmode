@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample  } from "./examples";
+import { FieldsetExample, DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "fieldset",
@@ -24,19 +24,6 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic fieldset with legend and form fields.",
-      code: `<Fieldset>
-  <FieldsetLegend>Personal Information</FieldsetLegend>
-  <div className="space-y-4">
-    <Field>
-      <FieldLabel>First Name</FieldLabel>
-      <Input />
-    </Field>
-    <Field>
-      <FieldLabel>Last Name</FieldLabel>
-      <Input />
-    </Field>
-  </div>
-</Fieldset>`
-    },
+      code: jsxToString(<DefaultExample />),},
   ]
 };

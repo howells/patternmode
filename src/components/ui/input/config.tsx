@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { InputExample, SizesExample, TypesExample, StatesExample, SearchExample, PasswordExample, NumberExample, FileExample, PrefixSuffixTextExample, PrefixSuffixStylingExample, PrefixSuffixIconsExample, MixedPrefixSuffixExample  } from "./examples";
+import { InputExample, InputExample, SizesExample, TypesExample, StatesExample, SearchExample, PasswordExample, NumberExample, FileExample, PrefixSuffixTextExample, PrefixSuffixStylingExample, PrefixSuffixIconsExample, MixedPrefixSuffixExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "input",
@@ -149,8 +149,7 @@ export const componentConfig: ComponentConfig = {
       id: "prefix-suffix-styling",
       title: "Styling Options",
       description: "Control styling of prefix and suffix",
-      code: jsxToString(<PrefixSuffixStylingExample />)
-    },
+      code: jsxToString(<PrefixSuffixStylingExample />),},
     {
       id: "prefix-suffix-icons",
       title: "Icon Prefix & Suffix",

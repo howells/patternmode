@@ -1,12 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  DefaultExample,
-  SizesExample,
-  VerticalExample,
-  WithTextExample
-} from "./examples";
+import { SeparatorExample, DefaultExample, WithTextExample, VerticalExample, SizesExample } from "./examples";
 
 // Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {
@@ -84,25 +79,21 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic horizontal separator.",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "with-text",
       title: "With Text Label",
       description: "Separator with centered text label.",
-      code: jsxToString(<WithTextExample />)
-    },
+      code: jsxToString(<WithTextExample />),},
     {
       id: "vertical",
       title: "Vertical",
       description: "Vertical separator for inline content.",
-      code: jsxToString(<VerticalExample />)
-    },
+      code: jsxToString(<VerticalExample />),},
     {
       id: "sizes",
       title: "Sizes & Variants",
       description: "Different sizes and visual variants.",
-      code: jsxToString(<SizesExample />)
-    },
+      code: jsxToString(<SizesExample />),},
   ]
 };

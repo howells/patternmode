@@ -1,7 +1,7 @@
 import React from "react";
 import { SparkBarChart } from "./spark-chart";
 
-export function Default() {
+export function SparkChartExample() {
   const data = [
     { day: 1, value: 10 },
     { day: 2, value: 25 },
@@ -22,7 +22,7 @@ export function Default() {
   );
 }
 
-export function BarVariant() {
+export function DefaultExample() {
   const data = [
     { month: "Jan", sales: 400 },
     { month: "Feb", sales: 300 },
@@ -41,7 +41,7 @@ export function BarVariant() {
   );
 }
 
-export function DifferentColors() {
+export function AreaExample() {
   const data = [
     { x: 1, y: 20 },
     { x: 2, y: 35 },

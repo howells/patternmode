@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultLineChartExample, MultipleLinesExample, WithNullValuesExample, InteractiveExample, CustomFormattingExample, MinimalExample  } from "./examples";
+import { LineChartExample, LineChartExample, MultipleLinesExample, WithNullValuesExample, InteractiveExample, CustomFormattingExample, MinimalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "line-chart",
@@ -115,13 +115,7 @@ export const componentConfig: ComponentConfig = {
       id: "interactive",
       title: "Interactive",
       description: "Line chart with click interactions and legend filtering.",
-      code: `const [value, setValue] = useState(null);
-  
-return (
-  <LineChart
-    data={data}
-    index="month"
-    categories={["Sales", "Profit", "Customers"]}
+      code: jsxToString(<InteractiveExample />),, "Profit", "Customers"]}
     colors={["blue", "emerald", "pink"]}
     valueFormatter={(number) =>
       "$" + Intl.NumberFormat("us").format(number).toString()

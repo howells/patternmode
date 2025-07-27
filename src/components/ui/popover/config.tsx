@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultPopover, PopoverPositions, PopoverWithArrow, PopoverWithClose, PopoverRichContent, ControlledPopover  } from "./examples";
+import { PopoverExample, DefaultExample, PositionsExample, WithArrowExample, WithCloseExample, RichContentExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "popover",
@@ -90,12 +90,7 @@ export const componentConfig: ComponentConfig = {
       id: "controlled",
       title: "Controlled",
       description: "Popover with controlled open state.",
-      code: `const ControlledPopover = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="space-x-4">
-      <Popover open={open} onOpenChange={setOpen}>
+      code: jsxToString(<ControlledExample />),} onOpenChange={setOpen}>
         <PopoverTrigger render={<Button />}>Controlled Popover</PopoverTrigger>
         <PopoverContent>
           <PopoverTitle>Controlled State</PopoverTitle>

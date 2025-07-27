@@ -52,7 +52,7 @@ export function HorizontalExample() {
 }
 
 // Additional examples (not referenced in config but good to have)
-export function VerticalScrollArea() {
+export function ScrollAreaExample() {
   return (
     <ScrollArea className="h-48 w-full">
       <div className="p-4">

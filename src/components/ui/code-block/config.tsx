@@ -1,13 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import {
-  BashExample,
-  CssExample,
-  DefaultExample,
-  JavascriptExample,
-  JsonExample
-} from "./examples";
+import { CodeBlockExample, DefaultExample, JavascriptExample, CssExample, JsonExample, BashExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "code-block",
@@ -56,31 +50,26 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic code block with TypeScript syntax.",
-      code: jsxToString(<DefaultExample />)
-    },
+      code: jsxToString(<DefaultExample />),},
     {
       id: "javascript",
       title: "JavaScript",
       description: "Code block displaying JavaScript code.",
-      code: jsxToString(<JavascriptExample />)
-    },
+      code: jsxToString(<JavascriptExample />),},
     {
       id: "css",
       title: "CSS",
       description: "Code block showing CSS styles.",
-      code: jsxToString(<CssExample />)
-    },
+      code: jsxToString(<CssExample />),},
     {
       id: "json",
       title: "JSON",
       description: "Code block for JSON configuration.",
-      code: jsxToString(<JsonExample />)
-    },
+      code: jsxToString(<JsonExample />),},
     {
       id: "bash",
       title: "Bash",
       description: "Code block for shell commands.",
-      code: jsxToString(<BashExample />)
-    },
+      code: jsxToString(<BashExample />),},
   ]
 };

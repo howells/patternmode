@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "./select";
 
-export function DefaultSelect({
+export function SelectExample({
   size,
   ...props
 }: { size?: "default" | "sm" } & React.ComponentProps<typeof Select>) {

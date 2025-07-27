@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, PieVariantExample, WithLabelExample, CustomColorsExample, InteractiveExample, SmallSizeExample  } from "./examples";
+import { DonutChartExample, DefaultExample, PieVariantExample, WithLabelExample, CustomColorsExample, InteractiveExample, SmallSizeExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "donut-chart",
@@ -37,8 +37,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic donut chart showing data segments.",
-      code: `const data = [
-  { name: "Chrome", value: 61.04 },
+      code: jsxToString(<DefaultExample />),, value: 61.04 },
   { name: "Safari", value: 24.57 },
   { name: "Edge", value: 5.29 },
   { name: "Firefox", value: 5.83 },
@@ -56,8 +55,7 @@ export const componentConfig: ComponentConfig = {
       id: "pie-variant",
       title: "Pie Chart",
       description: "Solid pie chart without hollow center.",
-      code: `const data = [
-  { segment: "Desktop", users: 2400 },
+      code: jsxToString(<PieVariantExample />),, users: 2400 },
   { segment: "Mobile", users: 1800 },
   { segment: "Tablet", users: 600 },
 ];
@@ -75,8 +73,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-label",
       title: "With Center Label",
       description: "Donut chart with total value displayed in center.",
-      code: `const data = [
-  { category: "Revenue", amount: 45000 },
+      code: jsxToString(<WithLabelExample />),, amount: 45000 },
   { category: "Costs", amount: 32000 },
   { category: "Profit", amount: 13000 },
 ];
@@ -93,8 +90,7 @@ export const componentConfig: ComponentConfig = {
       id: "custom-colors",
       title: "Custom Colors",
       description: "Donut chart with custom color scheme.",
-      code: `const data = [
-  { status: "Completed", count: 120 },
+      code: jsxToString(<CustomColorsExample />),, count: 120 },
   { status: "In Progress", count: 45 },
   { status: "Pending", count: 30 },
   { status: "Cancelled", count: 15 },
@@ -112,9 +108,7 @@ export const componentConfig: ComponentConfig = {
       id: "interactive",
       title: "Interactive",
       description: "Clickable donut chart with selection state.",
-      code: `const [selectedSegment, setSelectedSegment] = useState(null);
-const data = [
-  { department: "Engineering", budget: 250000 },
+      code: jsxToString(<InteractiveExample />),, budget: 250000 },
   { department: "Marketing", budget: 150000 },
   { department: "Sales", budget: 180000 },
   { department: "Support", budget: 80000 },
@@ -141,8 +135,7 @@ const data = [
       id: "small-size",
       title: "Small Size",
       description: "Compact donut chart for dashboard widgets.",
-      code: `const data = [
-  { type: "Success", value: 85 },
+      code: jsxToString(<SmallSizeExample />),, value: 85 },
   { type: "Warning", value: 10 },
   { type: "Error", value: 5 },
 ];

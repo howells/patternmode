@@ -1,7 +1,7 @@
 import React from "react";
 import { NumberField } from "./number-field";
 
-export function DefaultNumberFieldExample() {
+export function NumberFieldExample() {
   return <NumberField label="Quantity" placeholder="Enter quantity" />;
 }
 
