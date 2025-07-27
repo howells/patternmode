@@ -184,7 +184,7 @@ const Stack = React.forwardRef<HTMLElement, StackProps>(
   (
     {
       direction = "vertical",
-      gap = 4,
+      gap,
       padding,
       align,
       justify,
@@ -197,8 +197,8 @@ const Stack = React.forwardRef<HTMLElement, StackProps>(
     ref
   ) => {
     // Get base values for the variants system
-    const baseDirection = getBaseValue(direction) || "vertical";
-    const baseGap = getBaseValue(gap) || 4;
+    const baseDirection = getBaseValue(direction) ?? "vertical";
+    const baseGap = getBaseValue(gap) ?? 4;
     const basePadding = getBaseValue(padding);
 
     // Generate responsive classes

@@ -9,8 +9,8 @@ import {
   PaginationPrevious,
 } from "./pagination";
 
-// Basic pagination example - matches config "pagination" id
-export function PaginationExample() {
+// Basic pagination example - matches config "default" id
+export function DefaultExample() {
   return (
     <Pagination>
       <PaginationPrevious href="#prev" />

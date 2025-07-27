@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@/components/ui/card/card";
 import { CodeBlock } from "@/components/ui/code-block/code-block";
 import { getDynamicIconByName } from "@/components/ui/icon-select";
 import { Loader } from "@/components/ui/loader/loader";

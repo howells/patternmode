@@ -1,4 +1,4 @@
-export { listConfig } from "./config";
+export { componentConfig as listConfig } from "./config";
 export { listExamples } from "./examples";
 export { List, ListIndicator, ListItem } from "./list";
 export type {

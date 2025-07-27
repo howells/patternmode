@@ -65,6 +65,7 @@
 "use client";
 
 import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
+import { Icon } from "@/components/ui/icon";
 import { config } from "@/lib/config";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
@@ -439,27 +440,55 @@ export function useIconSelect(initialValue?: string) {
 
 /**
  * Utility function to create a DynamicIcon component by name.
+ * Now uses the error-safe Icon component for better error handling.
  */
 export function getDynamicIconByName(name: string) {
   const DynamicIconWrapper = React.memo(
     ({
       className,
       strokeWidth,
+      fallback,
       ...props
     }: {
       className?: string;
       strokeWidth?: number;
+      fallback?: React.ReactNode;
       [key: string]: unknown;
-    }) => (
-      <SafeDynamicIcon
-        name={toKebabCase(name)} // Convert PascalCase to kebab-case
-        className={className}
-        strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-        {...props}
-      />
-    )
+    }) => {
+      // Create a DynamicIcon component for the given name
+      const DynamicIconComponent = React.useMemo(() => {
+        const IconComponent = ({
+          className: iconClassName,
+          strokeWidth: iconStrokeWidth,
+        }: {
+          className?: string;
+          strokeWidth?: number;
+        }) => (
+          <DynamicIcon
+            name={
+              toKebabCase(name) as Parameters<typeof DynamicIcon>[0]["name"]
+            }
+            className={iconClassName}
+            strokeWidth={iconStrokeWidth}
+          />
+        );
+        IconComponent.displayName = `DynamicIcon_${name}`;
+        return IconComponent;
+      }, [name]);
+
+      // Use the error-safe Icon component
+      return (
+        <Icon
+          icon={DynamicIconComponent}
+          className={className}
+          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+          fallback={fallback}
+          {...props}
+        />
+      );
+    }
   );
-  DynamicIconWrapper.displayName = `DynamicIcon_${name}`;
+  DynamicIconWrapper.displayName = `SafeDynamicIcon_${name}`;
   return DynamicIconWrapper;
 }
 

@@ -149,7 +149,9 @@ function SidebarContent() {
             <SidebarLabel isCollapsed={isCollapsed}>Installation</SidebarLabel>
           </SidebarItem>
           <SidebarItem href="/layout" isCollapsed={isCollapsed}>
-            <SidebarLabel isCollapsed={isCollapsed}>Layout Builder</SidebarLabel>
+            <SidebarLabel isCollapsed={isCollapsed}>
+              Layout Builder
+            </SidebarLabel>
           </SidebarItem>
         </SidebarGroup>
 
@@ -173,7 +175,7 @@ function SidebarContent() {
                   }
                 }
               }}
-              size="xs"
+              size="sm"
             >
               <ToggleGroupItem value="grouped" leftIcon={Rows3}>
                 <span className="sr-only">Grouped view</span>

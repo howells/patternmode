@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { Basic, WithIcon  } from "./examples";
+import { DefaultExample, WithIconExample } from "./examples";
 import { Toggle } from "./toggle";
 
 export const componentConfig: ComponentConfig = {
@@ -52,14 +52,14 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "toggle",
-      title: "Basic Toggle",
+      id: "default",
+      title: "Default",
       description: "A two-state button that can be either on or off.",
-      code: jsxToString(<Basic />)},
+      code: jsxToString(<DefaultExample />)},
     {
       id: "with-icon",
-      title: "Toggle with Icon",
+      title: "With Icon",
       description: "A toggle button with an icon",
-      code: jsxToString(<WithIcon />)}
+      code: jsxToString(<WithIconExample />)}
   ]
 };

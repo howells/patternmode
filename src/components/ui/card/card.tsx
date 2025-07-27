@@ -50,7 +50,7 @@ const cardVariants = tv({
   },
   defaultVariants: {
     variant: "default",
-    padding: 6,
+    padding: 0,
     fillHeight: false,
   },
 });

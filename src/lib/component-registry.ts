@@ -34,11 +34,15 @@ import { componentConfig as iconSelectConfig } from "@/components/ui/icon-select
 import { componentConfig as iconConfig } from "@/components/ui/icon/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
 import { componentConfig as kbdConfig } from "@/components/ui/kbd/config";
+import { componentConfig as labelConfig } from "@/components/ui/label/config";
 import { componentConfig as lineChartConfig } from "@/components/ui/line-chart/config";
 import { componentConfig as listConfig } from "@/components/ui/list/config";
+import { componentConfig as menuConfig } from "@/components/ui/menu/config";
 import { componentConfig as loaderConfig } from "@/components/ui/loader/config";
 import { componentConfig as meterConfig } from "@/components/ui/meter/config";
 import { componentConfig as paginationConfig } from "@/components/ui/pagination/config";
+import { componentConfig as previewCardConfig } from "@/components/ui/preview-card/config";
+import { componentConfig as progressCircleConfig } from "@/components/ui/progress-circle/config";
 import { componentConfig as radioCardGroupConfig } from "@/components/ui/radio-card-group/config";
 import { componentConfig as radioGroupConfig } from "@/components/ui/radio-group/config";
 import { componentConfig as radioConfig } from "@/components/ui/radio/config";
@@ -152,13 +156,6 @@ const inspectorConfig = createPlaceholderConfig(
   "Search",
   "utility"
 );
-const labelConfig = createPlaceholderConfig("label", "Label", "Tag", "text");
-const menuConfig = createPlaceholderConfig(
-  "menu",
-  "Menu",
-  "Menu",
-  "navigation"
-);
 const menuBarConfig = createPlaceholderConfig(
   "menu-bar",
   "Menu Bar",
@@ -189,22 +186,10 @@ const popoverConfig = createPlaceholderConfig(
   "MessageCircle",
   "overlay"
 );
-const previewCardConfig = createPlaceholderConfig(
-  "preview-card",
-  "Preview Card",
-  "Eye",
-  "data"
-);
 const progressConfig = createPlaceholderConfig(
   "progress",
   "Progress",
   "TrendingUp",
-  "feedback"
-);
-const progressCircleConfig = createPlaceholderConfig(
-  "progress-circle",
-  "Progress Circle",
-  "CircleProgress",
   "feedback"
 );
 const responsiveDrawerConfig = createPlaceholderConfig(
@@ -425,7 +410,6 @@ export const COMPONENT_LIST = {
   layout: ["card", "divider", "grid", "preview-card", "separator", "stack"],
   navigation: [
     "breadcrumbs",
-    "command",
     "menu-bar",
     "navbar",
     "navigation-menu",
@@ -448,6 +432,7 @@ export const COMPONENT_LIST = {
   ],
   overlay: [
     "alert-dialog",
+    "command",
     "context-menu",
     "dialog",
     "drawer",

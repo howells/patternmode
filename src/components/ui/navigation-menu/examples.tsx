@@ -7,7 +7,7 @@ import {
   NavigationMenuTrigger,
 } from "./navigation-menu";
 
-export function NavigationMenuExample() {
+export function DefaultExample() {
   return (
     <NavigationMenu>
       <NavigationMenuItem>

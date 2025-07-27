@@ -1,3 +1,5 @@
+"use client";
+
 import { config } from "@/lib/config";
 import { cx } from "@/lib/utils";
 import React from "react";
@@ -28,6 +30,125 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
   strokeWidth?: number;
   /** Additional CSS classes */
   className?: string;
+  /** Fallback content to show if icon fails to render */
+  fallback?: React.ReactNode;
+}
+
+/**
+ * Fallback icon component that shows a question mark in a subtle container
+ */
+function FallbackIcon({
+  className,
+  size,
+}: {
+  className?: string;
+  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+}) {
+  const sizeClasses = iconVariants({ size });
+
+  return (
+    <div
+      className={cx(
+        sizeClasses,
+        "flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400",
+        className
+      )}
+      title="Icon not found"
+    >
+      ?
+    </div>
+  );
+}
+
+/**
+ * Safe wrapper for DynamicIcon components that handles missing icon errors
+ */
+function SafeDynamicIcon({
+  icon: IconComponent,
+  size,
+  strokeWidth,
+  className,
+  fallback,
+}: {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  strokeWidth?: number;
+  className?: string;
+  fallback?: React.ReactNode;
+}) {
+  const [hasError, setHasError] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasError(false);
+  }, [IconComponent]);
+
+  if (hasError) {
+    return fallback ? (
+      <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+    ) : (
+      <FallbackIcon className={className} size={size} />
+    );
+  }
+
+  return (
+    <ErrorBoundary
+      fallback={
+        fallback ? (
+          <div className={cx(iconVariants({ size }), className)}>
+            {fallback}
+          </div>
+        ) : (
+          <FallbackIcon className={className} size={size} />
+        )
+      }
+      onError={() => setHasError(true)}
+    >
+      <IconComponent
+        className={cx(iconVariants({ size }), className)}
+        strokeWidth={strokeWidth}
+      />
+    </ErrorBoundary>
+  );
+}
+
+/**
+ * Simple error boundary component for catching icon rendering errors
+ */
+class ErrorBoundary extends React.Component<
+  {
+    children: React.ReactNode;
+    fallback: React.ReactNode;
+    onError?: () => void;
+  },
+  { hasError: boolean }
+> {
+  constructor(props: {
+    children: React.ReactNode;
+    fallback: React.ReactNode;
+    onError?: () => void;
+  }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("[Icon] Failed to render icon:", error);
+    }
+    this.props.onError?.();
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
 }
 
 /**
@@ -38,6 +159,7 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
  * - Global stroke width configuration
  * - Type-safe icon props
  * - Shrink-0 by default to prevent flex issues
+ * - Graceful error handling with fallback display
  *
  * Note: Spacing should be handled by parent components or layout classes, not by the icon itself.
  *
@@ -51,6 +173,9 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
  *
  * // Custom stroke width
  * <Icon icon={Heart} size="lg" strokeWidth={1.5} />
+ *
+ * // Custom fallback
+ * <Icon icon={InvalidIcon} fallback={<span>⚠️</span>} />
  *
  * // Spacing handled by parent
  * <div className="flex items-center gap-2">
@@ -67,13 +192,44 @@ export function Icon({
   size,
   strokeWidth = config.getIconStrokeWidth(),
   className,
+  fallback,
 }: IconProps) {
-  return (
-    <IconComponent
-      className={cx(iconVariants({ size }), className)}
-      strokeWidth={strokeWidth}
-    />
-  );
+  // Check if this is likely a DynamicIcon component by checking if it has a displayName
+  const isDynamicIcon =
+    IconComponent.displayName?.includes("DynamicIcon") ||
+    IconComponent.name?.includes("DynamicIcon");
+
+  if (isDynamicIcon) {
+    return (
+      <SafeDynamicIcon
+        icon={IconComponent}
+        size={size}
+        strokeWidth={strokeWidth}
+        className={className}
+        fallback={fallback}
+      />
+    );
+  }
+
+  try {
+    return (
+      <IconComponent
+        className={cx(iconVariants({ size }), className)}
+        strokeWidth={strokeWidth}
+      />
+    );
+  } catch (error) {
+    // Handle synchronous errors during icon creation
+    if (process.env.NODE_ENV === "development") {
+      console.warn("[Icon] Failed to render icon:", error);
+    }
+
+    return fallback ? (
+      <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+    ) : (
+      <FallbackIcon className={className} size={size} />
+    );
+  }
 }
 
 Icon.displayName = "Icon";

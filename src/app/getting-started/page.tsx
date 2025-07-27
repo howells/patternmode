@@ -15,7 +15,7 @@ import { Grid, GridCell } from "@/components/ui/grid/grid";
 import { Heading } from "@/components/ui/heading/heading";
 import { IconContainer } from "@/components/ui/icon-container/icon-container";
 import { List, ListIndicator, ListItem } from "@/components/ui/list/list";
-import { Stack } from "@/components/ui/stack/stack";
+import { HStack, Stack, VStack } from "@/components/ui/stack/stack";
 import { Subheading } from "@/components/ui/subheading/subheading";
 import { Code, Text } from "@/components/ui/text/text";
 import {
@@ -66,10 +66,18 @@ export default function GettingStartedPage() {
 
             <GridCell>
               <Card>
-                <CardHeader>
-                  <IconContainer icon={FormInput} size="lg" variant="success" />
-                  <CardTitle>Form Components</CardTitle>
-                  <CardDescription>Complete form toolkit</CardDescription>
+                <CardHeader border>
+                  <HStack>
+                    <IconContainer
+                      icon={FormInput}
+                      size="lg"
+                      variant="success"
+                    />
+                    <VStack gap={0}>
+                      <CardTitle>Form Components</CardTitle>
+                      <CardDescription>Complete form toolkit</CardDescription>
+                    </VStack>
+                  </HStack>
                 </CardHeader>
                 <CardContent>
                   <List>

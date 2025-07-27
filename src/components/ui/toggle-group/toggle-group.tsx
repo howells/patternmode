@@ -6,9 +6,18 @@ import { config } from "@/lib/config";
 import { cx, focusRing } from "@/lib/utils";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Icon, getIconSizeForContext } from "../icon";
+
+// Create context for toggle group size
+const ToggleGroupContext = createContext<{
+  size: VariantProps<typeof toggleGroupVariants>["size"];
+  variant: VariantProps<typeof toggleGroupVariants>["variant"];
+}>({
+  size: "default",
+  variant: "default",
+});
 
 const toggleGroupVariants = tv({
   slots: {
@@ -54,7 +63,7 @@ const toggleGroupVariants = tv({
     size: {
       xs: {
         root: "gap-0.5 p-0.5",
-        item: "h-5 px-1.5 text-xs rounded-sm", // Extra small size
+        item: "h-4 px-1 text-xs rounded-sm", // Extra small size
       },
       sm: {
         root: "gap-0.5 p-0.5",
@@ -101,9 +110,11 @@ const ToggleGroup = React.forwardRef<
   const { root } = toggleGroupVariants({ variant, size, orientation });
 
   return (
-    <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
-      {children}
-    </BaseToggleGroup>
+    <ToggleGroupContext.Provider value={{ size, variant }}>
+      <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
+        {children}
+      </BaseToggleGroup>
+    </ToggleGroupContext.Provider>
   );
 });
 
@@ -138,21 +149,29 @@ const ToggleGroupItem = React.forwardRef<
     },
     ref
   ) => {
-    const { item } = toggleGroupVariants({ variant, size });
+    const context = useContext(ToggleGroupContext);
+    const finalSize = size ?? context.size;
+    const finalVariant = variant ?? context.variant;
+    const { item } = toggleGroupVariants({
+      variant: finalVariant,
+      size: finalSize,
+    });
 
     const hasChildren = children != null && children !== "";
     const hasLeftIcon = LeftIcon != null;
     const hasRightIcon = RightIcon != null;
 
     // Check if children contains only screen reader text by checking the rendered string
-    const childrenString = React.isValidElement(children) ? '' : String(children || '').trim();
+    const childrenString = React.isValidElement(children)
+      ? ""
+      : String(children || "").trim();
     const hasVisibleText = childrenString.length > 0;
 
     // Determine if this is an icon-only button (no visible text content)
     const isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
 
     // Get appropriate icon size based on the toggle group size
-    const iconSize = getIconSizeForContext(size);
+    const iconSize = getIconSizeForContext(finalSize);
 
     const renderContent = () => {
       // If no icons, return children directly
@@ -161,9 +180,19 @@ const ToggleGroupItem = React.forwardRef<
       }
 
       // For icon-only buttons, render just the icon
-      if (isIconOnly && hasLeftIcon && !hasRightIcon) {
+      if (isIconOnly && hasLeftIcon) {
         return (
           <Icon icon={LeftIcon} size={iconSize} strokeWidth={iconStrokeWidth} />
+        );
+      }
+
+      if (isIconOnly && hasRightIcon) {
+        return (
+          <Icon
+            icon={RightIcon}
+            size={iconSize}
+            strokeWidth={iconStrokeWidth}
+          />
         );
       }
 
@@ -195,10 +224,10 @@ const ToggleGroupItem = React.forwardRef<
         className={cx(
           item(),
           // For icon-only buttons, make them square like button icon sizes
-          isIconOnly && size === "xs" && "min-w-5 w-5",
-          isIconOnly && size === "sm" && "min-w-6 w-6", 
-          isIconOnly && size === "default" && "min-w-8 w-8",
-          isIconOnly && size === "lg" && "min-w-10 w-10",
+          isIconOnly && finalSize === "xs" && "min-w-4 w-4",
+          isIconOnly && finalSize === "sm" && "min-w-6 w-6",
+          isIconOnly && finalSize === "default" && "min-w-8 w-8",
+          isIconOnly && finalSize === "lg" && "min-w-10 w-10",
           className
         )}
         {...props}

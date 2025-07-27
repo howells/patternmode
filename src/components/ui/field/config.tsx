@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultExample, WithDescriptionExample, WithErrorExample  } from "./examples";
+import { DefaultExample, WithDescriptionExample, WithErrorExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "field",
@@ -31,10 +31,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic field with label and input.",
-      code: `<Field>
-  <FieldLabel>Email</FieldLabel>
-  <Input type="email" placeholder="Enter your email" />
-</Field>`
+      code: jsxToString(<DefaultExample />)
     },
     {
       id: "with-description",

@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "./table";
 
-export function Basic() {
+export function DefaultExample() {
   return (
     <Table>
       <TableHead>

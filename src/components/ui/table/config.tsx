@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { Basic  } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "table",
@@ -44,9 +44,9 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "table",
-      title: "Basic Table",
+      id: "default",
+      title: "Default",
       description: "A data table component for displaying tabular data with headers and rows.",
-      code: jsxToString(<Basic />)}
+      code: jsxToString(<DefaultExample />)}
   ]
 };

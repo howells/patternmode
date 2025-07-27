@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { SelectNative } from "./select-native";
 
-export function DefaultSelectNative() {
+export function DefaultExample() {
   const [value, setValue] = useState("");
 
   return (
@@ -16,7 +16,7 @@ export function DefaultSelectNative() {
   );
 }
 
-export function SelectNativeWithLabel() {
+export function WithLabelExample() {
   const [country, setCountry] = useState("");
 
   return (
@@ -43,7 +43,7 @@ export function SelectNativeWithLabel() {
   );
 }
 
-export function SelectNativeGroupedOptions() {
+export function WithGroupsExample() {
   const [product, setProduct] = useState("");
 
   return (
@@ -75,7 +75,7 @@ export function SelectNativeGroupedOptions() {
   );
 }
 
-export function SelectNativeErrorState() {
+export function ErrorStateExample() {
   const [value, setValue] = useState("");
   const hasError = !value;
 
@@ -105,7 +105,7 @@ export function SelectNativeErrorState() {
   );
 }
 
-export function DisabledSelectNative() {
+export function DisabledExample() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -133,7 +133,26 @@ export function DisabledSelectNative() {
   );
 }
 
-export function MultipleSelectNative() {
+export function SizesExample() {
+  return (
+    <div className="space-y-4">
+      <SelectNative size="sm">
+        <option>Small select</option>
+        <option>Option 2</option>
+      </SelectNative>
+      <SelectNative size="md">
+        <option>Medium select</option>
+        <option>Option 2</option>
+      </SelectNative>
+      <SelectNative size="lg">
+        <option>Large select</option>
+        <option>Option 2</option>
+      </SelectNative>
+    </div>
+  );
+}
+
+export function MultipleExample() {
   const [selected, setSelected] = useState<string[]>([]);
 
   return (

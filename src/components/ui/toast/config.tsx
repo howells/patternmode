@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { Basic  } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "toast",
@@ -43,9 +43,9 @@ export const componentConfig: ComponentConfig = {
   ],
   examples: [
     {
-      id: "toast",
-      title: "Basic Toast",
+      id: "default",
+      title: "Default",
       description: "A toast notification component for displaying brief messages to users.",
-      code: jsxToString(<Basic />)}
+      code: jsxToString(<DefaultExample />)}
   ]
 };
