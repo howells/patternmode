@@ -69,7 +69,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-presets",
       title: "With Presets",
       description: "Date range picker with common range presets.",
-      code: jsxToString(<WithPresetsExample />),,
+      code: jsxToString(<WithPresetsExample />),
       dateRange: { from: today, to: today }
     },
     {

@@ -95,7 +95,7 @@ function getComponentRegistryEntries(): string[] {
 }
 
 // Helper function to test a single component
-function testComponent(componentId: string) {
+async function testComponent(componentId: string) {
   const componentDir = join(
     process.cwd(),
     "src",
@@ -128,6 +128,17 @@ function testComponent(componentId: string) {
   expect(configContent).toContain("props:");
   expect(configContent).toContain("examples:");
 
+  // Test that config file can be imported without syntax errors
+  try {
+    // Dynamic import to test actual parsing
+    const configModule = await import(`../../../src/components/ui/${componentId}/config`);
+    expect(configModule.componentConfig).toBeDefined();
+    expect(configModule.componentConfig.id).toBe(componentId);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    throw new Error(`Config file ${componentId}/config.tsx has syntax errors: ${errorMessage}`);
+  }
+
   // Extract and validate category from config
   const category = getCategoryFromConfig(configContent);
   expect(category).toMatch(
@@ -146,15 +157,15 @@ function testComponent(componentId: string) {
 }
 
 describe("All UI Components", () => {
-  it("should have proper structure and valid configs", () => {
+  it("should have proper structure and valid configs", async () => {
     const componentIds = getComponentDirectories();
 
     console.log(`Testing ${componentIds.length} components...`);
 
-    componentIds.forEach((componentId) => {
+    for (const componentId of componentIds) {
       console.log(`  Testing ${componentId}...`);
-      testComponent(componentId);
-    });
+      await testComponent(componentId);
+    }
   });
 
   it("should have all components represented in component registry", () => {

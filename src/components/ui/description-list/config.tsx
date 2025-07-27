@@ -43,6 +43,6 @@ export const componentConfig: ComponentConfig = {
       title: "Project Information",
       description:
         "Show project details with status indicators and rich content formatting.",
-      code: jsxToString(<ProjectDetailsExample />),,
+      code: jsxToString(<ProjectDetailsExample />),
   ],
 };

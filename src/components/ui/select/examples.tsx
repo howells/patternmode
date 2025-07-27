@@ -203,5 +203,4 @@ export function FormSelectExample() {
   );
 }
 
-// Main component for the component explorer
-export const SelectExample = DefaultSelect;
+// DefaultSelect is already exported as SelectExample function above

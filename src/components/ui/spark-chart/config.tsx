@@ -78,15 +78,7 @@ export const componentConfig: ComponentConfig = {
       id: "bar",
       title: "Bar Spark Chart",
       description: "Spark chart using bars",
-      code: jsxToString(<BarExample />),, visits: 120 },
-    { day: "Tue", visits: 140 },
-    { day: "Wed", visits: 100 },
-    { day: "Thu", visits: 160 },
-    { day: "Fri", visits: 180 },
-    { day: "Sat", visits: 140 },
-    { day: "Sun", visits: 100 },
-  ]}
-  categories={["visits"]}
+      code: jsxToString(<BarExample />),
   index="day"
   type="bar"
 />`

@@ -39,6 +39,6 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Preview Card",
       description: "A card component that shows a preview or summary of content.",
-      code: jsxToString(<DefaultExample />),,
+      code: jsxToString(<DefaultExample />),
   ]
 };

@@ -66,10 +66,8 @@ export const componentConfig: ComponentConfig = {
       id: "with-presets",
       title: "With Presets",
       description: "Date picker with common date presets.",
-      code: jsxToString(<WithPresetsExample />),, date: new Date() },
-    { label: "Tomorrow", date: new Date(Date.now() + 24 * 60 * 60 * 1000) },
-    { label: "In a week", date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) }
-  ];
+      code: jsxToString(<WithPresetsExample />),
+    }
 
   return (
     <DatePicker
