@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, RangeExample, StepsExample, CustomRangeExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "slider",
@@ -49,52 +51,31 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Slider",
       description: "A simple slider with default settings",
-      code: `<Slider defaultValue={[50]} max={100} step={1} />`
+      code: jsxToString(<DefaultExample />)
     },
     {
       id: "range",
       title: "Range Slider",
       description: "A slider with two handles for selecting a range",
-      code: `<Slider defaultValue={[25, 75]} max={100} step={1} />`
+      code: jsxToString(<RangeExample />)
     },
     {
       id: "steps",
       title: "Slider with Steps",
       description: "A slider with custom step increments",
-      code: `<div className="space-y-4">
-  <div>
-    <label className="text-sm font-medium">Volume: {value}%</label>
-    <Slider 
-      defaultValue={[50]} 
-      max={100} 
-      step={10}
-      onValueChange={setValue}
-    />
-  </div>
-</div>`
+      code: jsxToString(<StepsExample />)
     },
     {
       id: "custom-range",
       title: "Custom Range",
       description: "A slider with custom min and max values",
-      code: `<div className="space-y-4">
-  <div>
-    <label className="text-sm font-medium">Temperature: {value}°C</label>
-    <Slider 
-      defaultValue={[20]} 
-      min={-10} 
-      max={40} 
-      step={1}
-      onValueChange={setValue}
-    />
-  </div>
-</div>`
+      code: jsxToString(<CustomRangeExample />)
     },
     {
       id: "disabled",
       title: "Disabled Slider",
       description: "A slider in disabled state",
-      code: `<Slider defaultValue={[30]} max={100} disabled />`
+      code: jsxToString(<DisabledExample />)
     },
   ]
 };

@@ -3,6 +3,61 @@
 import React, { useState } from "react";
 import { Slider } from "./slider";
 
+// Config example ID: "default" -> export name: DefaultExample
+export function DefaultExample() {
+  return <Slider defaultValue={[50]} max={100} step={1} />;
+}
+
+// Config example ID: "range" -> export name: RangeExample  
+export function RangeExample() {
+  return <Slider defaultValue={[25, 75]} max={100} step={1} />;
+}
+
+// Config example ID: "steps" -> export name: StepsExample
+export function StepsExample() {
+  const [value, setValue] = useState([50]);
+  
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="text-sm font-medium">Volume: {value}%</label>
+        <Slider 
+          defaultValue={[50]} 
+          max={100} 
+          step={10}
+          onValueChange={setValue}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Config example ID: "custom-range" -> export name: CustomRangeExample
+export function CustomRangeExample() {
+  const [value, setValue] = useState([20]);
+  
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="text-sm font-medium">Temperature: {value}°C</label>
+        <Slider 
+          defaultValue={[20]} 
+          min={-10} 
+          max={40} 
+          step={1}
+          onValueChange={setValue}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Config example ID: "disabled" -> export name: DisabledExample
+export function DisabledExample() {
+  return <Slider defaultValue={[30]} max={100} disabled />;
+}
+
+// Additional examples (not referenced in config but good to have)
 export function Default() {
   const [value, setValue] = useState([50]);
 

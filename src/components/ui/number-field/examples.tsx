@@ -1,5 +1,5 @@
 import React from "react";
-import { NumberField } from "@/components/ui/number-field";
+import { NumberField } from "./number-field";
 
 export function DefaultNumberFieldExample() {
   return <NumberField label="Quantity" placeholder="Enter quantity" />;

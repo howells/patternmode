@@ -1,5 +1,5 @@
-import { PageHeader } from "@/components/component-header";
 import { GridBuilder } from "@/components/layout/grid-builder";
+import { PageHeader } from "@/components/page-header";
 
 export default function LayoutPage() {
   return (

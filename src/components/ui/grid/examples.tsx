@@ -1,7 +1,7 @@
-import { Grid, GridAuto, GridCell } from "@/components/ui/grid";
 import React from "react";
+import { Grid, GridAuto, GridCell } from "./grid";
 
-export function BasicGridExample() {
+export function GridExample() {
   return (
     <Grid columns={6} gap={4}>
       <GridCell>1</GridCell>
@@ -14,7 +14,7 @@ export function BasicGridExample() {
   );
 }
 
-export function ResponsiveGridExample() {
+export function ResponsiveExample() {
   return (
     <Grid columns={{ sm: 2, md: 4, lg: 6 }} gap={4}>
       <GridCell>1</GridCell>
@@ -149,7 +149,7 @@ export function CustomLayoutExample() {
   );
 }
 
-export function DashboardLayoutExample() {
+export function DashboardExample() {
   return (
     <Grid columns={12} rows={6} gap={4} className="h-[400px]">
       {/* Top metrics */}

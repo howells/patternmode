@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { Basic  } from "./examples";
+import { ToolbarExample  } from "./examples";
 import {
   Toolbar,
   ToolbarButton,
@@ -39,6 +39,6 @@ export const componentConfig: ComponentConfig = {
       id: "toolbar",
       title: "Basic Toolbar",
       description: "A container for grouping a set of controls or actions.",
-      code: jsxToString(<Basic />)}
+      code: jsxToString(<ToolbarExample />)}
   ]
 };

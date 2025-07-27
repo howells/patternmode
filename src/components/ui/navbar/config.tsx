@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, WithDividerExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "navbar",
@@ -24,37 +26,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Navbar",
       description: "A navigation bar component with branding, sections, and items.",
-      code: `<Navbar>
-  <NavbarSection>
-    <NavbarLabel>Brand</NavbarLabel>
-  </NavbarSection>
-  <NavbarSection>
-    <NavbarItem href="/">Home</NavbarItem>
-    <NavbarItem href="/about">About</NavbarItem>
-    <NavbarItem href="/services">Services</NavbarItem>
-    <NavbarItem href="/contact">Contact</NavbarItem>
-  </NavbarSection>
-</Navbar>`
+      code: jsxToString(<DefaultExample />)
     },
     {
       id: "with-divider",
       title: "Navbar with Divider",
       description: "Navigation bar with sections separated by dividers",
-      code: `<Navbar>
-  <NavbarSection>
-    <NavbarLabel>Brand</NavbarLabel>
-  </NavbarSection>
-  <NavbarDivider />
-  <NavbarSection>
-    <NavbarItem href="/">Home</NavbarItem>
-    <NavbarItem href="/products">Products</NavbarItem>
-  </NavbarSection>
-  <NavbarDivider />
-  <NavbarSection>
-    <NavbarItem href="/account">Account</NavbarItem>
-    <NavbarItem href="/settings">Settings</NavbarItem>
-  </NavbarSection>
-</Navbar>`
+      code: jsxToString(<WithDividerExample />)
     },
   ]
 };

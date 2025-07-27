@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, CheckedExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio",
@@ -37,34 +39,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Radio",
       description: "A simple radio button",
-      code: `<div className="flex items-center space-x-2">
-  <Radio id="option1" name="options" value="option1" />
-  <label htmlFor="option1">Option 1</label>
-</div>`
+      code: jsxToString(<DefaultExample />)
     },
     {
       id: "checked",
       title: "Checked Radio",
       description: "A radio button in checked state",
-      code: `<div className="flex items-center space-x-2">
-  <Radio id="checked" name="options" value="checked" defaultChecked />
-  <label htmlFor="checked">Checked Option</label>
-</div>`
+      code: jsxToString(<CheckedExample />)
     },
     {
       id: "disabled",
       title: "Disabled Radio",
       description: "A radio button in disabled state",
-      code: `<div className="space-y-2">
-  <div className="flex items-center space-x-2">
-    <Radio id="disabled1" name="disabled" value="disabled1" disabled />
-    <label htmlFor="disabled1">Disabled Unchecked</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <Radio id="disabled2" name="disabled" value="disabled2" defaultChecked disabled />
-    <label htmlFor="disabled2">Disabled Checked</label>
-  </div>
-</div>`
+      code: jsxToString(<DisabledExample />)
     },
   ]
 };

@@ -8,6 +8,39 @@ import {
   RadioOption,
 } from "./radio";
 
+// Config example ID: "default" -> export name: DefaultExample
+export function DefaultExample() {
+  return (
+    <div className="flex items-center space-x-2">
+      <RadioOption value="option1" label="Option 1" />
+    </div>
+  );
+}
+
+// Config example ID: "checked" -> export name: CheckedExample  
+export function CheckedExample() {
+  return (
+    <div className="flex items-center space-x-2">
+      <RadioOption value="checked" label="Checked Option" defaultChecked />
+    </div>
+  );
+}
+
+// Config example ID: "disabled" -> export name: DisabledExample
+export function DisabledExample() {
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center space-x-2">
+        <RadioOption value="disabled1" label="Disabled Unchecked" disabled />
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioOption value="disabled2" label="Disabled Checked" defaultChecked disabled />
+      </div>
+    </div>
+  );
+}
+
+// Additional examples (not referenced in config but good to have)
 export function DefaultRadio() {
   return (
     <RadioOption

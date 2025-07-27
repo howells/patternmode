@@ -5,9 +5,9 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+} from "./navigation-menu";
 
-export function BasicNavigationMenuExample() {
+export function NavigationMenuExample() {
   return (
     <NavigationMenu>
       <NavigationMenuItem>

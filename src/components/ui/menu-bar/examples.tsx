@@ -1,15 +1,15 @@
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "../icon";
 import {
   MenuBar,
   MenuBarContent,
   MenuBarItem,
   MenuBarMenu,
   MenuBarTrigger,
-} from "@/components/ui/menu-bar";
+} from "./menu-bar";
 import { Edit, Plus, Trash } from "lucide-react";
 import React from "react";
 
-export function BasicMenuBarExample() {
+export function DefaultExample() {
   return (
     <MenuBar>
       <MenuBarMenu>

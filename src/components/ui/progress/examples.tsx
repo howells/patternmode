@@ -3,7 +3,7 @@
 import React from "react";
 import { Progress } from "./progress";
 
-export function BasicProgress() {
+export function ProgressExample() {
   return (
     <div className="space-y-2">
       <Progress value={25} />

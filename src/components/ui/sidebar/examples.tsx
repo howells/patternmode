@@ -11,7 +11,7 @@ import {
   SidebarLabel,
 } from "./sidebar";
 
-export function BasicSidebar() {
+export function DefaultExample() {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -34,7 +34,7 @@ export function BasicSidebar() {
   );
 }
 
-export function SidebarWithSectionsAndFooter() {
+export function WithSubmenuExample() {
   return (
     <Sidebar>
       <SidebarHeader>

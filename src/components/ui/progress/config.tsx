@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { BasicProgress  } from "./examples";
+import { ProgressExample  } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "progress",
@@ -46,6 +46,6 @@ export const componentConfig: ComponentConfig = {
       id: "progress",
       title: "Basic Progress",
       description: "A progress bar component showing completion status.",
-      code: jsxToString(<BasicProgress />)}
+      code: jsxToString(<ProgressExample />)}
   ]
 };

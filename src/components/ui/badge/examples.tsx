@@ -63,7 +63,7 @@ export const RoundedExample = () => (
 );
 
 // Status dot badges
-export const StatusDotExample = () => (
+export const DotExample = () => (
   <div className="flex flex-wrap gap-2">
     <Badge statusDot variant="success">
       Ready

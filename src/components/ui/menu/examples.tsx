@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
+import { Button } from "../button";
+import { Icon } from "../icon";
 import {
   Menu,
   MenuCheckboxItem,
@@ -15,7 +15,7 @@ import {
   MenuSubmenuContent,
   MenuSubmenuTrigger,
   MenuTrigger,
-} from "@/components/ui/menu";
+} from "./menu";
 import { Clipboard, Copy, Plus } from "lucide-react";
 import React, { useState } from "react";
 

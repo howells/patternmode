@@ -1,11 +1,11 @@
 import React from "react";
-import { Heading } from "@/components/ui/heading";
+import { Heading } from "./heading";
 
-export function DefaultHeadingExample() {
+export function HeadingExample() {
   return <Heading level={1}>Page Title</Heading>;
 }
 
-export function DifferentLevelsExample() {
+export function LevelsExample() {
   return (
     <div className="space-y-4">
       <Heading level={1}>Heading 1</Heading>

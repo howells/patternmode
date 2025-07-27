@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { BasicGridExample, ResponsiveGridExample, SpanningCellsExample, SolidCellsExample, OverlayCellsExample, GuideControlExample, AutoGridExample, CustomLayoutExample, DashboardLayoutExample  } from "./examples";
+import { GridExample, ResponsiveExample, SpanningCellsExample, SolidCellsExample, OverlayCellsExample, GuideControlExample, AutoGridExample, CustomLayoutExample, DashboardExample  } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "grid",
@@ -63,12 +63,12 @@ export const componentConfig: ComponentConfig = {
       id: "grid",
       title: "Basic Grid",
       description: "A sophisticated grid layout component with visual guides, responsive columns/rows, cell overlays, and guide clipping features. Perfect for complex layouts and design systems.",
-      code: jsxToString(<BasicGridExample />)},
+      code: jsxToString(<GridExample />)},
     {
       id: "responsive",
       title: "Responsive Grid",
       description: "Grid that adapts columns at different breakpoints.",
-      code: jsxToString(<ResponsiveGridExample />)},
+      code: jsxToString(<ResponsiveExample />)},
     {
       id: "spanning-cells",
       title: "Spanning Cells",
@@ -103,6 +103,6 @@ export const componentConfig: ComponentConfig = {
       id: "dashboard",
       title: "Dashboard Layout",
       description: "Real-world dashboard layout example.",
-      code: jsxToString(<DashboardLayoutExample />)}
+      code: jsxToString(<DashboardExample />)}
   ]
 };

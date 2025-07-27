@@ -3,22 +3,22 @@
 import React from "react";
 import { ProgressCircle } from "./progress-circle";
 
-export function BasicProgressCircle() {
+export function DefaultExample() {
   return <ProgressCircle value={75} />;
 }
 
-export function SmallProgressCircle() {
+export function SmallExample() {
   return <ProgressCircle value={60} size="sm" />;
 }
 
-export function LargeProgressCircle() {
+export function LargeExample() {
   return <ProgressCircle value={85} size="lg" />;
 }
 
-export function ProgressCircleWithLabel() {
-  return <ProgressCircle value={90} showValue />;
+export function WithLabelExample() {
+  return <ProgressCircle value={90} showLabel />;
 }
 
-export function IndeterminateProgressCircle() {
-  return <ProgressCircle value={null} />;
+export function IndeterminateExample() {
+  return <ProgressCircle indeterminate />;
 }

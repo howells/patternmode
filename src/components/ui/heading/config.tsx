@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultHeadingExample, DifferentLevelsExample  } from "./examples";
+import { HeadingExample, LevelsExample  } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "heading",
@@ -34,11 +34,11 @@ export const componentConfig: ComponentConfig = {
       id: "heading",
       title: "Default",
       description: "A semantic heading component with consistent typography and hierarchy levels.",
-      code: jsxToString(<DefaultHeadingExample />)},
+      code: jsxToString(<HeadingExample />)},
     {
       id: "levels",
       title: "Different Levels",
       description: "Heading component with different hierarchy levels.",
-      code: jsxToString(<DifferentLevelsExample />)}
+      code: jsxToString(<LevelsExample />)}
   ]
 };

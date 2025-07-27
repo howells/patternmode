@@ -1,7 +1,7 @@
 import React from "react";
 import { TabNavigation, TabNavigationLink } from "./tab-navigation";
 
-export function Basic() {
+export function TabNavigationExample() {
   return (
     <TabNavigation>
       <TabNavigationLink href="#home">Home</TabNavigationLink>

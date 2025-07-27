@@ -1,5 +1,5 @@
 import React from "react";
-import { Inspector } from "@/components/ui/inspector";
+import { Inspector } from "./inspector";
 
 export function BasicInspectorExample() {
   return (

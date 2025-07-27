@@ -1,6 +1,6 @@
 import { ComponentExamples } from "@/components/component-examples";
-import { ComponentHeader } from "@/components/component-header";
 import { ComponentPropExplorer } from "@/components/component-prop-explorer";
+import { PageHeader } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { COMPONENT_LIST, getComponentConfig } from "@/lib/component-registry";
 import { createComponentConfig } from "@/lib/config-helpers";
@@ -122,7 +122,11 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div>
       {/* Header */}
-      <ComponentHeader config={config} />
+      <PageHeader
+        title={config.name}
+        description={config.description}
+        badge={config.badge}
+      />
 
       {/* Main Content - Use ComponentPropExplorer */}
       <ComponentPropExplorer

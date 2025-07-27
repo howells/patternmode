@@ -26,7 +26,7 @@ export const CustomRangeExample = () => (
 );
 
 export const NoAnimationExample = () => (
-  <Meter value={40} showAnimation={false} label="Static Progress" />
+  <Meter value={40} animate={false} label="Static Progress" />
 );
 
 export const ValueOnlyExample = () => <Meter value={80} showValue={true} />;

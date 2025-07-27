@@ -1,7 +1,7 @@
 import React from "react";
-import { Input } from "@/components/ui/input/input";
+import { Input } from "./input";
 
-export function DefaultInputExample() {
+export function InputExample() {
   return <Input placeholder="Enter text..." />;
 }
 
@@ -15,7 +15,7 @@ export function SizesExample() {
   );
 }
 
-export function InputTypesExample() {
+export function TypesExample() {
   return (
     <div className="space-y-4">
       <Input type="text" placeholder="Text input" />
@@ -40,15 +40,15 @@ export function StatesExample() {
   );
 }
 
-export function SearchInputExample() {
+export function SearchExample() {
   return <Input type="search" placeholder="Search components..." />;
 }
 
-export function PasswordInputExample() {
+export function PasswordExample() {
   return <Input type="password" placeholder="Enter password" />;
 }
 
-export function NumberInputExample() {
+export function NumberExample() {
   return (
     <div className="space-y-4">
       <Input type="number" placeholder="With stepper" />
@@ -57,7 +57,7 @@ export function NumberInputExample() {
   );
 }
 
-export function FileInputExample() {
+export function FileExample() {
   return <Input type="file" />;
 }
 
@@ -71,7 +71,7 @@ export function PrefixSuffixTextExample() {
   );
 }
 
-export function StylingOptionsExample() {
+export function PrefixSuffixStylingExample() {
   return (
     <div className="space-y-4">
       <Input placeholder="Styled" prefixText="$" suffixText="USD" />

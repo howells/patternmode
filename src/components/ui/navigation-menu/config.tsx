@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { BasicNavigationMenuExample  } from "./examples";
+import { NavigationMenuExample  } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "navigation-menu",
@@ -27,6 +27,6 @@ export const componentConfig: ComponentConfig = {
       id: "navigation-menu",
       title: "Basic Navigation Menu",
       description: "A navigation menu component with dropdown support and smooth animations.",
-      code: jsxToString(<BasicNavigationMenuExample />)}
+      code: jsxToString(<NavigationMenuExample />)}
   ]
 };

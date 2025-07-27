@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, WithLabelExample, VariantsExample, CustomRangeExample, NoAnimationExample, ValueOnlyExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "meter",
@@ -74,47 +76,37 @@ export const componentConfig: ComponentConfig = {
       title: "Default",
       description:
         "A meter component built on Base UI for displaying progress or measurements with customizable styling and value formatting.",
-      code: `<Meter value={50} />`,
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "with-label",
       title: "With Label",
       description: "Meter with a descriptive label.",
-      code: `<Meter value={75} label="Storage Used" />`,
+      code: jsxToString(<WithLabelExample />),
     },
     {
       id: "variants",
       title: "Variants",
       description: "Different color variants for different states.",
-      code: `<div className="w-full space-y-4">
-  <Meter value={65} variant="default" label="Default" />
-  <Meter value={45} variant="neutral" label="Neutral" />
-  <Meter value={85} variant="success" label="Success" />
-  <Meter value={70} variant="info" label="Info" />
-  <Meter value={90} variant="warning" label="Warning" />
-  <Meter value={95} variant="error" label="Error" />
-  <Meter value={80} variant="critical" label="Critical" />
-  <Meter value={75} variant="positive" label="Positive" />
-  <Meter value={60} variant="negative" label="Negative" />
-</div>`,
+      code: jsxToString(<VariantsExample />),
     },
     {
       id: "custom-range",
       title: "Custom Range",
       description: "Meter with custom min and max values.",
-      code: `<Meter value={250} min={0} max={500} label="Score" />`,
+      code: jsxToString(<CustomRangeExample />),
     },
     {
       id: "no-animation",
       title: "Without Animation",
       description: "Meter without animation for static displays.",
-      code: `<Meter value={60} animate={false} />`,
+      code: jsxToString(<NoAnimationExample />),
     },
     {
       id: "value-only",
       title: "Value Only",
       description: "Meter without label, showing only the value.",
-      code: `<Meter value={80} label="" />`,
+      code: jsxToString(<ValueOnlyExample />),
     },
   ],
 };

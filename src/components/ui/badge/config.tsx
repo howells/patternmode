@@ -8,7 +8,7 @@ import {
   DismissExample,
   RoundedExample,
   SizesExample,
-  StatusDotExample,
+  DotExample,
   VariantsExample,
   WithIconsExample,
 } from "./examples";
@@ -201,7 +201,7 @@ export const componentConfig: ComponentConfig = {
       id: "dot",
       title: "Status Dot",
       description: "Badge with a status dot.",
-      code: jsxToString(<StatusDotExample />),
+      code: jsxToString(<DotExample />),
     },
     {
       id: "custom-color",

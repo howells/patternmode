@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { LineChart } from "@/components/ui/line-chart";
+import { LineChart } from "./line-chart";
 
 export function DefaultLineChartExample() {
   const data = [

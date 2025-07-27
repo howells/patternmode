@@ -5,9 +5,9 @@ import {
   NavbarItem,
   NavbarLabel,
   NavbarSection,
-} from "@/components/ui/navbar";
+} from "./navbar";
 
-export function BasicNavbarExample() {
+export function DefaultExample() {
   return (
     <Navbar>
       <NavbarSection>

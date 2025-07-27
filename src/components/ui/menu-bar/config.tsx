@@ -1,4 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
+import { jsxToString } from "@/lib/jsx-to-string";
+import { DefaultExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "menu-bar",
@@ -24,48 +26,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Menu Bar",
       description: "A horizontal menu bar containing multiple dropdown menus.",
-      code: `<MenuBar>
-  <MenuBarMenu>
-    <MenuBarTrigger>File</MenuBarTrigger>
-    <MenuBarContent>
-      <MenuBarItem>New File</MenuBarItem>
-      <MenuBarItem>Open...</MenuBarItem>
-      <MenuBarItem>Save</MenuBarItem>
-    </MenuBarContent>
-  </MenuBarMenu>
-  <MenuBarMenu>
-    <MenuBarTrigger>Edit</MenuBarTrigger>
-    <MenuBarContent>
-      <MenuBarItem>Undo</MenuBarItem>
-      <MenuBarItem>Redo</MenuBarItem>
-      <MenuBarItem>Cut</MenuBarItem>
-    </MenuBarContent>
-  </MenuBarMenu>
-</MenuBar>`
+      code: jsxToString(<DefaultExample />)
     },
     {
       id: "with-icons",
       title: "Menu Bar with Icons",
       description: "Menu bar with icons in menu items",
-      code: `<MenuBar>
-  <MenuBarMenu>
-    <MenuBarTrigger>File</MenuBarTrigger>
-    <MenuBarContent>
-      <MenuBarItem>
-        <FileText className="mr-2 h-4 w-4" />
-        New File
-      </MenuBarItem>
-      <MenuBarItem>
-        <FolderOpen className="mr-2 h-4 w-4" />
-        Open...
-      </MenuBarItem>
-      <MenuBarItem>
-        <Save className="mr-2 h-4 w-4" />
-        Save
-      </MenuBarItem>
-    </MenuBarContent>
-  </MenuBarMenu>
-</MenuBar>`
+      code: jsxToString(<WithIconsExample />)
     },
   ]
 };

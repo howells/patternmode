@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import {
-  Basic,
+  BasicExample,
   ColorInheritanceExample,
   SemanticElementsExample,
   SizesExample,
@@ -48,7 +48,7 @@ export const componentConfig: ComponentConfig = {
       id: "basic",
       title: "Basic",
       description: "Basic text examples",
-      code: jsxToString(<Basic />),
+      code: jsxToString(<BasicExample />),
     },
     {
       id: "sizes",

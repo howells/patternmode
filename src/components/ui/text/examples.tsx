@@ -1,7 +1,7 @@
 import React from "react";
 import { Code, Strong, Text, TextLink } from "./text";
 
-export function Basic() {
+export function BasicExample() {
   return (
     <div className="space-y-2">
       <Text>This is a paragraph of text.</Text>

@@ -29,6 +29,7 @@ import { componentConfig as fieldConfig } from "@/components/ui/field/config";
 import { componentConfig as gridConfig } from "@/components/ui/grid/config";
 import { componentConfig as headingElementConfig } from "@/components/ui/heading-element/config";
 import { componentConfig as headingConfig } from "@/components/ui/heading/config";
+import { componentConfig as iconContainerConfig } from "@/components/ui/icon-container/config";
 import { componentConfig as iconSelectConfig } from "@/components/ui/icon-select/config";
 import { componentConfig as iconConfig } from "@/components/ui/icon/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
@@ -324,6 +325,7 @@ export const componentRegistry: ComponentConfigRegistry = {
   grid: gridConfig,
   "heading-element": headingElementConfig,
   icon: iconConfig,
+  "icon-container": iconContainerConfig,
   "icon-select": iconSelectConfig,
   input: inputConfig,
   kbd: kbdConfig,
@@ -467,11 +469,12 @@ export const COMPONENT_LIST = {
   utility: [
     "copy-button",
     "empty-state",
+    "icon",
+    "icon-container",
     "inspector",
     "scroll-area",
     "touch-target",
     "tracker",
-    "icon",
   ],
   inputs: [
     "button",

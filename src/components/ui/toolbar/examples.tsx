@@ -6,7 +6,7 @@ import {
   ToolbarSeparator,
 } from "./toolbar";
 
-export function Basic() {
+export function ToolbarExample() {
   return (
     <Toolbar>
       <ToolbarGroup>

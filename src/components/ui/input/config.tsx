@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DefaultInputExample, SizesExample, InputTypesExample, StatesExample, SearchInputExample, PasswordInputExample, NumberInputExample, FileInputExample, PrefixSuffixTextExample, PrefixSuffixIconsExample, MixedPrefixSuffixExample  } from "./examples";
+import { InputExample, SizesExample, TypesExample, StatesExample, SearchExample, PasswordExample, NumberExample, FileExample, PrefixSuffixTextExample, PrefixSuffixStylingExample, PrefixSuffixIconsExample, MixedPrefixSuffixExample  } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "input",
@@ -103,7 +103,7 @@ export const componentConfig: ComponentConfig = {
       id: "input",
       title: "Default",
       description: "A versatile input field component with various types, sizes, and states including search and password inputs.",
-      code: jsxToString(<DefaultInputExample />)},
+      code: jsxToString(<InputExample />)},
     {
       id: "sizes",
       title: "Sizes",
@@ -113,7 +113,7 @@ export const componentConfig: ComponentConfig = {
       id: "types",
       title: "Input Types",
       description: "Various input types",
-      code: jsxToString(<InputTypesExample />)},
+      code: jsxToString(<TypesExample />)},
     {
       id: "states",
       title: "States",
@@ -123,22 +123,22 @@ export const componentConfig: ComponentConfig = {
       id: "search",
       title: "Search Input",
       description: "Search input with icon",
-      code: jsxToString(<SearchInputExample />)},
+      code: jsxToString(<SearchExample />)},
     {
       id: "password",
       title: "Password Input",
       description: "Password input with visibility toggle",
-      code: jsxToString(<PasswordInputExample />)},
+      code: jsxToString(<PasswordExample />)},
     {
       id: "number",
       title: "Number Input",
       description: "Number input with and without stepper",
-      code: jsxToString(<NumberInputExample />)},
+      code: jsxToString(<NumberExample />)},
     {
       id: "file",
       title: "File Input",
       description: "File input for uploads",
-      code: jsxToString(<FileInputExample />)},
+      code: jsxToString(<FileExample />)},
     {
       id: "prefix-suffix-text",
       title: "Text Prefix & Suffix",
@@ -148,10 +148,7 @@ export const componentConfig: ComponentConfig = {
       id: "prefix-suffix-styling",
       title: "Styling Options",
       description: "Control styling of prefix and suffix",
-      code: `<div className="space-y-4">
-  <Input placeholder="Styled" prefixText="$" suffixText="USD" />
-  <Input placeholder="Unstyled" prefixText="$" suffixText="USD" prefixStyling={false} suffixStyling={false} />
-</div>`
+      code: jsxToString(<PrefixSuffixStylingExample />)
     },
     {
       id: "prefix-suffix-icons",
