@@ -1,3 +1,4 @@
+import React from "react";
 import { type ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { KbdExample, DefaultExample, CombinationExample, SizesExample } from "./examples";
@@ -22,13 +23,13 @@ export const componentConfig: ComponentConfig = {
       id: "combination",
       title: "Key Combination",
       description: "Multiple keys for complex shortcuts",
-      code: jsxToString(<CombinationExample />),, "shift", "k"]}>Command palette</Kbd>`,
+      code: jsxToString(<CombinationExample />),
     },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different size variants",
-      code: jsxToString(<SizesExample />),,
+      code: jsxToString(<SizesExample />),
     },
   ],
   props: [

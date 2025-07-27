@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { LineChartExample, LineChartExample, MultipleLinesExample, WithNullValuesExample, InteractiveExample, CustomFormattingExample, MinimalExample } from "./examples";
+import { LineChartExample, MultipleLinesExample, WithNullValuesExample, InteractiveExample, CustomFormattingExample, MinimalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "line-chart",
@@ -100,12 +100,14 @@ export const componentConfig: ComponentConfig = {
       id: "line-chart",
       title: "Default",
       description: "A line chart for displaying trends and changes over time with multiple data series support.",
-      code: jsxToString(<DefaultLineChartExample />)},
+      code: jsxToString(<LineChartExample />),
+    },
     {
       id: "multiple-lines",
       title: "Multiple Lines",
       description: "Line chart with multiple data series and custom colors.",
-      code: jsxToString(<MultipleLinesExample />)},
+      code: jsxToString(<MultipleLinesExample />),
+    },
     {
       id: "with-null-values",
       title: "With Null Values",
@@ -115,14 +117,8 @@ export const componentConfig: ComponentConfig = {
       id: "interactive",
       title: "Interactive",
       description: "Line chart with click interactions and legend filtering.",
-      code: jsxToString(<InteractiveExample />),, "Profit", "Customers"]}
-    colors={["blue", "emerald", "pink"]}
-    valueFormatter={(number) =>
-      "$" + Intl.NumberFormat("us").format(number).toString()
-    }
-    onValueChange={(v) => setValue(v)}
-  />
-);`},
+      code: jsxToString(<InteractiveExample />),
+    },
     {
       id: "custom-formatting",
       title: "Custom Formatting",

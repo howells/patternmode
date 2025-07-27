@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { TooltipExample, TooltipExample, PositionsExample, VariantsExample, SizesExample, NoArrowExample, RichContentExample, ControlledExample } from "./examples";
+import { TooltipExample, PositionsExample, VariantsExample, SizesExample, NoArrowExample, RichContentExample, ControlledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "tooltip",

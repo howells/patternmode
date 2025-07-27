@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { LabelExample, LabelExample, RequiredExample } from "./examples";
+import { LabelExample, RequiredExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "label",
@@ -39,11 +39,13 @@ export const componentConfig: ComponentConfig = {
       id: "label",
       title: "Default",
       description: "A label component for form inputs and interactive elements with proper accessibility support.",
-      code: jsxToString(<DefaultLabelExample />)},
+      code: jsxToString(<LabelExample />),
+    },
     {
       id: "required",
       title: "Required Field",
       description: "Label indicating a required field.",
-      code: jsxToString(<RequiredFieldExample />)}
+      code: jsxToString(<RequiredExample />),
+    }
   ]
 };

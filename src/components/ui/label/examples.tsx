@@ -5,7 +5,7 @@ export function LabelExample() {
   return <Label htmlFor="email">Email Address</Label>;
 }
 
-export function LabelExample() {
+export function RequiredExample() {
   return (
     <Label htmlFor="name">
       Full Name <span className="text-red-500">*</span>

@@ -12,7 +12,7 @@ export function TooltipExample() {
   );
 }
 
-export function TooltipExample() {
+// REMOVED DUPLICATE: export function TooltipExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Top tooltip" side="top">

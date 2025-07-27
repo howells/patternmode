@@ -1,6 +1,6 @@
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
+import React from "react";
 import { DefaultExample, DialogModeExample, SizesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
@@ -8,7 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Command",
   description:
     "A command palette and search interface for quick actions and navigation.",
-  category: "utility" as const,
+  category: "overlay" as const,
   icon: "Terminal",
 
   installation: {
@@ -46,7 +46,8 @@ export const componentConfig: ComponentConfig = {
       name: "loop",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to loop through items when using keyboard navigation.",
+      description:
+        "Whether to loop through items when using keyboard navigation.",
     },
   ],
 
@@ -68,6 +69,6 @@ export const componentConfig: ComponentConfig = {
       title: "Sizes",
       description: "Different size variants of the command palette.",
       code: jsxToString(<SizesExample />),
-    }
-  ]
+    },
+  ],
 };

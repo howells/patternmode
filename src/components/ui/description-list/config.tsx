@@ -44,38 +44,5 @@ export const componentConfig: ComponentConfig = {
       description:
         "Show project details with status indicators and rich content formatting.",
       code: jsxToString(<ProjectDetailsExample />),,
-    {
-      id: "system-info",
-      title: "System Information",
-      description:
-        "Display technical system information with monospace formatting for values.",
-      code: jsxToString(<SystemInfoExample />),,
-    },
-    {
-      id: "product-specs",
-      title: "Product Specifications",
-      description:
-        "Showcase product specifications with emphasized pricing and detailed technical information.",
-      code: jsxToString(<ProductSpecsExample />),,
-    {
-      id: "order-details",
-      title: "Order Information",
-      description:
-        "Display order details with status indicators and formatted addresses.",
-      code: jsxToString(<OrderDetailsExample />),,
-    {
-      id: "api-endpoint",
-      title: "API Documentation",
-      description:
-        "Document API endpoints with code formatting and status code information.",
-      code: jsxToString(<ApiEndpointExample />),,
-    },
-    {
-      id: "event-details",
-      title: "Event Information",
-      description:
-        "Display event details with venue information and registration status.",
-      code: jsxToString(<EventDetailsExample />),,
-    },
   ],
 };

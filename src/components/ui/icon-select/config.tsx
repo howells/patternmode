@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { IconSelectExample, IconSelectExample } from "./examples";
+import { IconSelectExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "icon-select",
@@ -47,6 +47,7 @@ export const componentConfig: ComponentConfig = {
       title: "Default",
       description:
         "A tree-shakable icon picker with access to all Lucide React icons via dynamic loading.",
-      code: jsxToString(<DefaultIconSelectExample />)}
+      code: jsxToString(<IconSelectExample />),
+    }
   ]
 };

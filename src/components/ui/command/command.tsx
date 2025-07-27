@@ -3,11 +3,10 @@
 "use client";
 
 import { cx, focusRing } from "@/lib/utils";
-import * as Dialog from "@radix-ui/react-dialog";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Command as CommandPrimitive } from "cmdk";
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { tv, type VariantProps } from "tailwind-variants";
 
 import { Input } from "../input/input";
@@ -76,11 +75,11 @@ const commandVariants = tv({
     ],
     dialog: [
       // base
-      "fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80 transition-opacity duration-200",
     ],
     dialogContent: [
       // base
-      "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+      "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg transition-all duration-200 sm:rounded-lg",
       // background
       "bg-white dark:bg-zinc-950",
       // border
@@ -167,10 +166,100 @@ const Command = React.forwardRef<
 });
 Command.displayName = CommandPrimitive.displayName;
 
+// Custom VisuallyHidden component to replace Radix
+const VisuallyHidden = React.forwardRef<
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement>
+>(({ children, ...props }, ref) => (
+  <span
+    ref={ref}
+    className="absolute left-[-10000px] top-auto w-[1px] h-[1px] overflow-hidden"
+    {...props}
+  >
+    {children}
+  </span>
+));
+VisuallyHidden.displayName = "VisuallyHidden";
+
+// Custom Dialog components to replace Radix
+interface DialogRootProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+}
+
+const DialogRoot: React.FC<DialogRootProps> = ({
+  open = false,
+  onOpenChange,
+  children,
+}) => {
+  const [isOpen, setIsOpen] = React.useState(open);
+
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setIsOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        handleOpenChange(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscape);
+      // Prevent body scroll
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <DialogPortal>
+      <DialogOverlay onClick={() => handleOpenChange(false)} />
+      <DialogContent>{children}</DialogContent>
+    </DialogPortal>
+  );
+};
+
+const DialogPortal: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return createPortal(children, document.body);
+};
+
+const DialogOverlay: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
+  const { dialog } = commandVariants();
+  return <div className={dialog()} onClick={onClick} role="presentation" />;
+};
+
+const DialogContent: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { dialogContent } = commandVariants();
+  return (
+    <div className={dialogContent()} role="dialog" aria-modal="true">
+      {children}
+    </div>
+  );
+};
+
 /**
  * A modal dialog wrapper for the command palette.
  *
- * Based on CMDK's Dialog component, providing a full-screen modal overlay
+ * Custom implementation without Radix dependencies, providing a full-screen modal overlay
  * for command palette interfaces. Features backdrop blur, animations,
  * and proper focus management.
  *
@@ -190,28 +279,17 @@ Command.displayName = CommandPrimitive.displayName;
  *   </CommandList>
  * </CommandDialog>
  * ```
- *
- * @see https://cmdk.paco.me/ - CMDK documentation
  */
-const CommandDialog = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
-  const { dialog, dialogContent } = commandVariants();
+const CommandDialog = ({ children, ...props }: DialogRootProps) => {
   return (
-    <Dialog.Root {...props}>
-      <Dialog.Portal>
-        <Dialog.Overlay className={dialog()} />
-        <Dialog.Content className={dialogContent()}>
-          <VisuallyHidden.Root>
-            <Dialog.Title>Command Menu</Dialog.Title>
-          </VisuallyHidden.Root>
-          <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-zinc-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-            {children}
-          </Command>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <DialogRoot {...props}>
+      <VisuallyHidden>
+        <span>Command Menu</span>
+      </VisuallyHidden>
+      <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-zinc-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        {children}
+      </Command>
+    </DialogRoot>
   );
 };
 

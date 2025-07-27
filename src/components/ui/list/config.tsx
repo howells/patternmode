@@ -45,23 +45,7 @@ export const componentConfig: ComponentConfig = {
       id: "ordered",
       title: "Ordered",
       description: "An ordered list using the as prop.",
-      code: jsxToString(<OrderedExample />),,
-    {
-      id: "with-icons",
-      title: "With Icons",
-      description: "A list with custom icon indicators.",
-      code: jsxToString(<WithIconsExample />),} />
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-  </ListItem>
-  <ListItem>
-    <ListIndicator icon={CheckCircle} />
-    Assumenda, quia temporibus eveniet a libero incidunt suscipit
-  </ListItem>
-  <ListItem>
-    <ListIndicator icon={Circle} />
-    Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-  </ListItem>
-</List>`
+      code: jsxToString(<OrderedExample />),
     },
     {
       id: "nested",

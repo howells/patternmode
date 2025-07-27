@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { ResponsiveDrawerExample, DefaultExample, WithFormExample } from "./examples";
+import { ResponsiveDrawerExample, DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "responsive-drawer",
@@ -35,11 +35,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Responsive Drawer",
       description: "A drawer that adapts to screen size",
-      code: jsxToString(<DefaultExample />),},
-    {
-      id: "with-form",
-      title: "Responsive Drawer with Form",
-      description: "A responsive drawer containing a form",
-      code: jsxToString(<WithFormExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
   ]
 };

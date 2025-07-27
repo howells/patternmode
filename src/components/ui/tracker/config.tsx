@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { TrackerExample, TrackerExample } from "./examples";
+import { TrackerExample } from "./examples";
 import { Tracker } from "./tracker";
 
 export const componentConfig: ComponentConfig = {

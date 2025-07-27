@@ -78,27 +78,25 @@ export const componentConfig: ComponentConfig = {
       title: "Default",
       description:
         "Basic empty state with title, description, and primary action.",
-      code: jsxToString(<DefaultExample />),}
-  primaryAction={{
-    label: "Create Project",
-    onClick: () => console.log("Create clicked")
-  }}
-/>`
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "minimal",
       title: "Minimal",
       description: "Clean empty state with minimal styling.",
-      code: jsxToString(<MinimalExample />)},
+      code: jsxToString(<MinimalExample />),
+    },
     {
       id: "with-both-actions",
       title: "With Both Actions",
       description: "Empty state with both primary and secondary actions.",
-      code: jsxToString(<WithBothActionsExample />)},
+      code: jsxToString(<WithBothActionsExample />),
+    },
     {
       id: "large-size",
       title: "Large Size",
       description: "Larger empty state for prominent placement.",
-      code: jsxToString(<LargeSizeExample />)}
+      code: jsxToString(<LargeSizeExample />),
+    }
   ]
 };

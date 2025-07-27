@@ -1,154 +1,102 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { DonutChartExample, DefaultExample, PieVariantExample, WithLabelExample, CustomColorsExample, InteractiveExample, SmallSizeExample } from "./examples";
+import { DefaultExample, PieVariantExample, WithLabelExample, CustomColorsExample, InteractiveExample, SmallSizeExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "donut-chart",
   name: "Donut Chart",
-  description: "A circular chart that displays data as segments of a donut or pie, perfect for showing proportional data.",
+  description: "A donut chart component for displaying data with a hollow center.",
   category: "charts" as const,
   icon: "PieChart",
 
-  importStatement: `import { DonutChart } from "@/components/ui/donut-chart";`,
-  componentId: "DonutChartExample",
+  installation: {
+    npm: "recharts",
+  },
+  importStatement: `import { DonutChart } from "@/components/ui/donut-chart/donut-chart";`,
+  componentId: "DefaultExample",
+
   props: [
     {
-      name: "variant",
-      type: "select",
-      options: ["donut", "pie"],
-      defaultValue: "donut",
-      description: "The chart variant - donut has a hollow center, pie is solid."
+      name: "data",
+      type: "array",
+      defaultValue: "[]",
+      description: "Array of data objects for the chart.",
     },
     {
-      name: "showLabel",
+      name: "category",
+      type: "string",
+      defaultValue: "name",
+      description: "The key to access the category/name of each data item.",
+    },
+    {
+      name: "value",
+      type: "string", 
+      defaultValue: "value",
+      description: "The key to access the value of each data item.",
+    },
+    {
+      name: "valueFormatter",
+      type: "function",
+      defaultValue: undefined,
+      description: "Function to format the displayed values.",
+    },
+    {
+      name: "showLegend",
       type: "boolean",
-      defaultValue: false,
-      description: "Whether to show the total value label in the center of donut charts."
+      defaultValue: true,
+      description: "Whether to show the legend.",
     },
     {
       name: "showTooltip",
-      type: "boolean",
+      type: "boolean", 
       defaultValue: true,
-      description: "Whether to show tooltips on hover."
+      description: "Whether to show tooltips on hover.",
+    },
+    {
+      name: "colors",
+      type: "array",
+      defaultValue: undefined,
+      description: "Array of colors for the chart segments.",
     },
   ],
+
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic donut chart showing data segments.",
-      code: jsxToString(<DefaultExample />),, value: 61.04 },
-  { name: "Safari", value: 24.57 },
-  { name: "Edge", value: 5.29 },
-  { name: "Firefox", value: 5.83 },
-  { name: "Other", value: 3.27 },
-];
-
-<DonutChart
-  data={data}
-  category="name"
-  value="value"
-  valueFormatter={(value) => \`\${value}%\`}
-/>`
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "pie-variant",
-      title: "Pie Chart",
-      description: "Solid pie chart without hollow center.",
-      code: jsxToString(<PieVariantExample />),, users: 2400 },
-  { segment: "Mobile", users: 1800 },
-  { segment: "Tablet", users: 600 },
-];
-
-<DonutChart
-  data={data}
-  category="segment"
-  value="users"
-  variant="pie"
-  colors={["blue", "emerald", "amber"]}
-  valueFormatter={(value) => \`\${value.toLocaleString()} users\`}
-/>`
+      title: "Pie Variant",
+      description: "Donut chart displayed as a pie chart.",
+      code: jsxToString(<PieVariantExample />),
     },
     {
       id: "with-label",
-      title: "With Center Label",
-      description: "Donut chart with total value displayed in center.",
-      code: jsxToString(<WithLabelExample />),, amount: 45000 },
-  { category: "Costs", amount: 32000 },
-  { category: "Profit", amount: 13000 },
-];
-
-<DonutChart
-  data={data}
-  category="category"
-  value="amount"
-  showLabel
-  valueFormatter={(value) => \`$\${(value / 1000).toFixed(0)}K\`}
-/>`
+      title: "With Label",
+      description: "Donut chart with labels displayed.",
+      code: jsxToString(<WithLabelExample />),
     },
     {
       id: "custom-colors",
       title: "Custom Colors",
-      description: "Donut chart with custom color scheme.",
-      code: jsxToString(<CustomColorsExample />),, count: 120 },
-  { status: "In Progress", count: 45 },
-  { status: "Pending", count: 30 },
-  { status: "Cancelled", count: 15 },
-];
-
-<DonutChart
-  data={data}
-  category="status"
-  value="count"
-  colors={["emerald", "blue", "amber", "red"]}
-  valueFormatter={(value) => \`\${value} tasks\`}
-/>`
+      description: "Donut chart with custom color palette.",
+      code: jsxToString(<CustomColorsExample />),
     },
     {
       id: "interactive",
       title: "Interactive",
-      description: "Clickable donut chart with selection state.",
-      code: jsxToString(<InteractiveExample />),, budget: 250000 },
-  { department: "Marketing", budget: 150000 },
-  { department: "Sales", budget: 180000 },
-  { department: "Support", budget: 80000 },
-];
-
-<div className="space-y-4">
-  <DonutChart
-    data={data}
-    category="department"
-    value="budget"
-    showLabel
-    onValueChange={setSelectedSegment}
-    valueFormatter={(value) => \`$\${(value / 1000).toFixed(0)}K\`}
-  />
-  {selectedSegment && (
-    <div className="text-sm text-zinc-600">
-      Selected: {selectedSegment.categoryClicked} - 
-      $\{(selectedSegment.budget / 1000).toFixed(0)}K
-    </div>
-  )}
-</div>`
+      description: "Interactive donut chart with hover effects.",
+      code: jsxToString(<InteractiveExample />),
     },
     {
       id: "small-size",
       title: "Small Size",
-      description: "Compact donut chart for dashboard widgets.",
-      code: jsxToString(<SmallSizeExample />),, value: 85 },
-  { type: "Warning", value: 10 },
-  { type: "Error", value: 5 },
-];
-
-<DonutChart
-  data={data}
-  category="type"
-  value="value"
-  className="h-24 w-24"
-  showLabel
-  colors={["emerald", "amber", "red"]}
-  valueFormatter={(value) => \`\${value}%\`}
-/>`
-    },
+      description: "Compact donut chart for small spaces.",
+      code: jsxToString(<SmallSizeExample />),
+    }
   ]
 };

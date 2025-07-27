@@ -40,10 +40,5 @@ export const componentConfig: ComponentConfig = {
       title: "Basic Preview Card",
       description: "A card component that shows a preview or summary of content.",
       code: jsxToString(<DefaultExample />),,
-    {
-      id: "with-image",
-      title: "Preview Card with Image",
-      description: "Preview card that includes an image",
-      code: jsxToString(<WithImageExample />),},
   ]
 };
