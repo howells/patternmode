@@ -1,3 +1,4 @@
+import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";

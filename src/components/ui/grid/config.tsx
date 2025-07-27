@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { GridExample, ResponsiveExample, SpanningCellsExample, SolidCellsExample, OverlayCellsExample, GuideControlExample, AutoGridExample, CustomLayoutExample, DashboardExample  } from "./examples";

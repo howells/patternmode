@@ -35,27 +35,21 @@ import Link from "next/link";
 
 export default function GettingStartedPage() {
   return (
-    <div className="p-8">
-      <Stack gap={8}>
-        <PageHeader
-          title="Patternmode"
-          description="A React component library built with TypeScript, Tailwind CSS, and Base UI. Provides accessible, customizable components for modern web applications."
-          badge="Getting Started"
-        />
+    <div>
+      <PageHeader
+        title="Patternmode"
+        description="A React component library built with TypeScript, Tailwind CSS, and Base UI. Provides accessible, customizable components for modern web applications."
+        badge="Getting Started"
+      />
 
+      <Stack gap={8}>
         {/* Component Categories */}
         <div>
-          <Subheading level={2}>Component Categories</Subheading>
           <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap={6}>
             <GridCell>
               <Card>
                 <CardHeader>
-                  <IconContainer
-                    icon={Box}
-                    size="lg"
-                    variant="default"
-                    centered
-                  />
+                  <IconContainer icon={Box} size="lg" variant="default" />
                   <CardTitle>UI Components</CardTitle>
                   <CardDescription>Essential building blocks</CardDescription>
                 </CardHeader>
@@ -73,12 +67,7 @@ export default function GettingStartedPage() {
             <GridCell>
               <Card>
                 <CardHeader>
-                  <IconContainer
-                    icon={FormInput}
-                    size="lg"
-                    variant="success"
-                    centered
-                  />
+                  <IconContainer icon={FormInput} size="lg" variant="success" />
                   <CardTitle>Form Components</CardTitle>
                   <CardDescription>Complete form toolkit</CardDescription>
                 </CardHeader>
@@ -96,12 +85,7 @@ export default function GettingStartedPage() {
             <GridCell>
               <Card>
                 <CardHeader>
-                  <IconContainer
-                    icon={Database}
-                    size="lg"
-                    color="purple"
-                    centered
-                  />
+                  <IconContainer icon={Database} size="lg" color="purple" />
                   <CardTitle>Data Display</CardTitle>
                   <CardDescription>Data visualization tools</CardDescription>
                 </CardHeader>
@@ -123,7 +107,6 @@ export default function GettingStartedPage() {
                     icon={MessageSquare}
                     size="lg"
                     color="orange"
-                    centered
                   />
                   <CardTitle>Feedback</CardTitle>
                   <CardDescription>User communication</CardDescription>

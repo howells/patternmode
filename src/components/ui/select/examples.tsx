@@ -111,23 +111,7 @@ export function SelectWithDefaultValue({
   );
 }
 
-export function SmallSizeExample({
-  size = "sm",
-  ...props
-}: { size?: "default" | "sm" } & React.ComponentProps<typeof Select>) {
-  return (
-    <Select {...props}>
-      <SelectTrigger size={size}>
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-}
+// Removed duplicate SmallSizeExample - kept the simpler version below
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

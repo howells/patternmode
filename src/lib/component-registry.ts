@@ -35,6 +35,7 @@ import { componentConfig as iconConfig } from "@/components/ui/icon/config";
 import { componentConfig as inputConfig } from "@/components/ui/input/config";
 import { componentConfig as kbdConfig } from "@/components/ui/kbd/config";
 import { componentConfig as lineChartConfig } from "@/components/ui/line-chart/config";
+import { componentConfig as listConfig } from "@/components/ui/list/config";
 import { componentConfig as loaderConfig } from "@/components/ui/loader/config";
 import { componentConfig as meterConfig } from "@/components/ui/meter/config";
 import { componentConfig as paginationConfig } from "@/components/ui/pagination/config";
@@ -330,6 +331,7 @@ export const componentRegistry: ComponentConfigRegistry = {
   input: inputConfig,
   kbd: kbdConfig,
   "line-chart": lineChartConfig,
+  list: listConfig,
   loader: loaderConfig,
   meter: meterConfig,
   pagination: paginationConfig,
@@ -417,15 +419,13 @@ export const COMPONENT_LIST = {
     "heading",
     "heading-element",
     "kbd",
-    "label",
     "subheading",
     "text",
   ],
-  layout: ["card", "grid", "separator", "stack"],
+  layout: ["card", "divider", "grid", "preview-card", "separator", "stack"],
   navigation: [
     "breadcrumbs",
     "command",
-    "menu",
     "menu-bar",
     "navbar",
     "navigation-menu",
@@ -442,7 +442,6 @@ export const COMPONENT_LIST = {
     "loader",
     "meter",
     "progress",
-    "progress-circle",
     "skeleton",
     "tag",
     "toast",
@@ -452,6 +451,7 @@ export const COMPONENT_LIST = {
     "context-menu",
     "dialog",
     "drawer",
+    "menu",
     "popover",
     "responsive-drawer",
     "sheet",
@@ -461,7 +461,8 @@ export const COMPONENT_LIST = {
     "accordion",
     "collapsible",
     "description-list",
-    "preview-card",
+    "list",
+    "progress-circle",
     "stacked-list",
     "table",
   ],
@@ -500,7 +501,7 @@ export const COMPONENT_LIST = {
     "toggle",
     "toggle-group",
   ],
-  forms: ["field", "fieldset", "form", "tag-input"],
+  forms: ["field", "fieldset", "form", "label", "tag-input"],
   charts: [
     "area-chart",
     "bar-chart",

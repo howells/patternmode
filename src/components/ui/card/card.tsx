@@ -16,12 +16,12 @@ const cardVariants = tv({
     variant: {
       default: [
         "shadow-xs inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10",
-        "bg-white dark:bg-[#090E1A]"
+        "bg-white dark:bg-[#090E1A]",
       ],
       dashed: [
         "border-2 border-dashed border-zinc-300 dark:border-zinc-600",
         "hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors",
-        "bg-transparent"
+        "bg-transparent",
       ],
     },
     padding: {
@@ -61,9 +61,9 @@ const cardVariants = tv({
  * @interface CardProps
  * @extends useRender.ComponentProps<"div">
  */
-interface CardProps 
-  extends useRender.ComponentProps<"div">, 
-          VariantProps<typeof cardVariants> {}
+interface CardProps
+  extends useRender.ComponentProps<"div">,
+    VariantProps<typeof cardVariants> {}
 
 /**
  * A flexible container component with Tremor-inspired styling.
@@ -135,10 +135,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     forwardedRef
   ) => {
     const defaultProps: useRender.ElementProps<"div"> = {
-      className: cx(
-        cardVariants({ variant, padding, fillHeight }),
-        className
-      ),
+      className: cx(cardVariants({ variant, padding, fillHeight }), className),
     };
 
     const element = useRender({

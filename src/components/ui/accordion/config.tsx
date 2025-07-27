@@ -1,4 +1,5 @@
-// Configuration data - no React imports or JSX
+// Configuration data - React import needed for JSX in jsxToString
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { DefaultExample, MultipleOpenExample } from "./examples";
