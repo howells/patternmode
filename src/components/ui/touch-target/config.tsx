@@ -29,6 +29,7 @@ export const componentConfig: ComponentConfig = {
       id: "touch-target",
       title: "Basic Touch Target",
       description: "A component that ensures touch targets meet accessibility guidelines for minimum size.",
-      code: jsxToString(<Basic />)}
-  ]
+      code: jsxToString(<TouchTargetExample />),
+    },
+  ],
 };

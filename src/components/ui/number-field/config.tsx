@@ -82,31 +82,37 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "A number input field built on Base UI with stepper controls, scrubbing functionality, and full keyboard navigation.",
-      code: jsxToString(<DefaultNumberFieldExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-constraints",
       title: "With Constraints",
       description: "Number field with min, max, and step constraints.",
-      code: jsxToString(<WithConstraintsExample />)},
+      code: jsxToString(<WithConstraintsExample />),
+    },
     {
       id: "without-steppers",
       title: "Without Steppers",
       description: "Clean number input without visible stepper controls.",
-      code: jsxToString(<WithoutSteppersExample />)},
+      code: jsxToString(<WithoutSteppersExample />),
+    },
     {
       id: "disabled-scrub-area",
       title: "Without Scrub Area",
       description: "Number field with regular label (no mouse scrubbing).",
-      code: jsxToString(<DisabledScrubAreaExample />)},
+      code: jsxToString(<DisabledScrubAreaExample />),
+    },
     {
       id: "full-width",
       title: "Full Width",
       description: "Number field that spans the full width of its container.",
-      code: jsxToString(<FullWidthExample />)},
+      code: jsxToString(<FullWidthExample />),
+    },
     {
       id: "disabled",
       title: "Disabled",
       description: "Disabled number field that cannot be interacted with.",
-      code: jsxToString(<DisabledExample />)}
+      code: jsxToString(<DisabledExample />),
+    },
   ]
 };

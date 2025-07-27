@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { DescriptionListExample, DefaultExample, UserProfileExample, ProjectDetailsExample, SystemInfoExample, ProductSpecsExample, OrderDetailsExample, ApiEndpointExample, EventDetailsExample } from "./examples";
@@ -44,5 +45,6 @@ export const componentConfig: ComponentConfig = {
       description:
         "Show project details with status indicators and rich content formatting.",
       code: jsxToString(<ProjectDetailsExample />),
+    },
   ],
 };

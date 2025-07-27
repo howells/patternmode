@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { SplitButtonExample, DefaultExample, WithIconsExample } from "./examples";
@@ -41,11 +42,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Split Button",
       description: "A button with dropdown for additional actions",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-icons",
       title: "Split Button with Icons",
       description: "Split button with icons in menu items",
-      code: jsxToString(<WithIconsExample />),},
+      code: jsxToString(<WithIconsExample />),
+    },
   ]
 };

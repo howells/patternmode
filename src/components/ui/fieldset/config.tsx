@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { FieldsetExample, DefaultExample } from "./examples";
@@ -24,6 +25,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic fieldset with legend and form fields.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
   ]
 };

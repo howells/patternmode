@@ -65,51 +65,37 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Popover component built on Base UI with customizable positioning and rich content support.",
-      code: jsxToString(<DefaultPopover />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "positions",
       title: "Positions",
       description: "Popovers positioned on different sides.",
-      code: jsxToString(<PopoverPositions />)},
+      code: jsxToString(<PositionsExample />),
+    },
     {
       id: "with-arrow",
       title: "With Arrow",
       description: "Popover with pointing arrow.",
-      code: jsxToString(<PopoverWithArrow />)},
+      code: jsxToString(<WithArrowExample />),
+    },
     {
       id: "with-close",
       title: "With Close Button",
       description: "Popover with a close button in the header.",
-      code: jsxToString(<PopoverWithClose />)},
+      code: jsxToString(<WithCloseExample />),
+    },
     {
       id: "rich-content",
       title: "Rich Content",
       description: "Popover with custom content including buttons and form elements.",
-      code: jsxToString(<PopoverRichContent />)},
+      code: jsxToString(<RichContentExample />),
+    },
     {
       id: "controlled",
       title: "Controlled",
       description: "Popover with controlled open state.",
-      code: jsxToString(<ControlledExample />),} onOpenChange={setOpen}>
-        <PopoverTrigger render={<Button />}>Controlled Popover</PopoverTrigger>
-        <PopoverContent>
-          <PopoverTitle>Controlled State</PopoverTitle>
-          <PopoverDescription>
-            This popover's open state is controlled externally.
-          </PopoverDescription>
-          <div className="mt-3">
-            <Button onClick={() => setOpen(false)} size="sm">
-              Close from inside
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
-
-      <Button onClick={() => setOpen(!open)} variant="outline">
-        Toggle: {open ? "Open" : "Closed"}
-      </Button>
-    </div>
-  );
-};`}
+      code: jsxToString(<ControlledExample />),
+    },
   ]
 };

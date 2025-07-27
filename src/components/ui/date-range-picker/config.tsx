@@ -58,62 +58,38 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic date range picker for selecting start and end dates.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-time",
       title: "With Time Picker",
       description:
         "Date range picker with time selection for both start and end dates.",
-      code: jsxToString(<WithTimeExample />)},
+      code: jsxToString(<WithTimeExample />),
+    },
     {
       id: "with-presets",
       title: "With Presets",
       description: "Date range picker with common range presets.",
       code: jsxToString(<WithPresetsExample />),
-      dateRange: { from: today, to: today }
     },
-    {
-      label: "Tomorrow",
-      dateRange: { from: tomorrow, to: tomorrow }
-    },
-    {
-      label: "This Week",
-      dateRange: { from: today, to: nextWeek }
-    }
-  ];
-
-  return (
-    <DateRangePicker
-      placeholder="Select or choose preset"
-      presets={presets}
-    />
-  );
-};`},
     {
       id: "disabled",
       title: "Disabled",
       description: "Disabled date range picker.",
-      code: jsxToString(<DisabledExample />)},
+      code: jsxToString(<DisabledExample />),
+    },
     {
       id: "error-state",
       title: "Error State",
       description: "Date range picker with error styling.",
-      code: jsxToString(<ErrorStateExample />)},
+      code: jsxToString(<ErrorStateExample />),
+    },
     {
       id: "controlled",
       title: "Controlled",
       description: "Controlled date range picker with external state.",
-      code: jsxToString(<ControlledExample />),}
-        onChange={setDateRange}
-      />
-      {dateRange?.from && (
-        <p className="text-sm text-zinc-600">
-          Range: {dateRange.from.toLocaleDateString()}
-          {dateRange.to && \` - \${dateRange.to.toLocaleDateString()}\`}
-        </p>
-      )}
-    </div>
-  );
-};`}
+      code: jsxToString(<ControlledExample />),
+    },
   ]
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { PreviewCardExample, DefaultExample, WithImageExample } from "./examples";
@@ -40,5 +41,6 @@ export const componentConfig: ComponentConfig = {
       title: "Basic Preview Card",
       description: "A card component that shows a preview or summary of content.",
       code: jsxToString(<DefaultExample />),
+    },
   ]
 };

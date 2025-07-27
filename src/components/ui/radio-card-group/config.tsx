@@ -1,3 +1,4 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { RadioCardGroupExample, DefaultExample, HorizontalExample } from "./examples";
@@ -34,11 +35,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Radio Card Group",
       description: "A group of selectable cards",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "horizontal",
       title: "Horizontal Layout",
       description: "Radio cards arranged horizontally",
-      code: jsxToString(<HorizontalExample />),},
+      code: jsxToString(<HorizontalExample />),
+    },
   ]
 };

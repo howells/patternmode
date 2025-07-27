@@ -49,4 +49,4 @@ export function FormExample() {
 }
 
 // Export with the expected naming convention
-export const DefaultExample = ContactFormExample;
+export const DefaultExample = FormExample;

@@ -12,7 +12,7 @@ export function TooltipExample() {
   );
 }
 
-// REMOVED DUPLICATE: export function TooltipExample() {
+export function PositionsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Top tooltip" side="top">
@@ -31,20 +31,23 @@ export function TooltipExample() {
   );
 }
 
-export function PositionsExample() {
+export function VariantsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Default tooltip" variant="default">
         <Button>Default</Button>
       </Tooltip>
-      <Tooltip content="Inverse tooltip" variant="inverse">
-        <Button variant="secondary">Inverse</Button>
+      <Tooltip content="Dark tooltip" variant="dark">
+        <Button variant="secondary">Dark</Button>
+      </Tooltip>
+      <Tooltip content="Light tooltip" variant="light">
+        <Button variant="outline">Light</Button>
       </Tooltip>
     </div>
   );
 }
 
-export function VariantsExample() {
+export function SizesExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Small tooltip" size="sm">
@@ -53,14 +56,11 @@ export function VariantsExample() {
       <Tooltip content="Default size tooltip" size="default">
         <Button>Default</Button>
       </Tooltip>
-      <Tooltip content="Large tooltip with more content" size="lg">
-        <Button size="lg">Large</Button>
-      </Tooltip>
     </div>
   );
 }
 
-export function SizesExample() {
+export function NoArrowExample() {
   return (
     <Tooltip content="Tooltip without arrow" showArrow={false}>
       <Button>No Arrow</Button>
@@ -68,7 +68,7 @@ export function SizesExample() {
   );
 }
 
-export function NoArrowExample() {
+export function RichContentExample() {
   return (
     <Tooltip
       content={
@@ -85,7 +85,7 @@ export function NoArrowExample() {
   );
 }
 
-export function RichContentExample() {
+export function ControlledExample() {
   const [open, setOpen] = useState(false);
 
   return (

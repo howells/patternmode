@@ -40,7 +40,8 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic unordered list with default styling.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "ordered",
       title: "Ordered",
@@ -51,6 +52,7 @@ export const componentConfig: ComponentConfig = {
       id: "nested",
       title: "Nested",
       description: "A list with nested items.",
-      code: jsxToString(<NestedExample />),}
+      code: jsxToString(<NestedExample />),
+    },
   ]
 };

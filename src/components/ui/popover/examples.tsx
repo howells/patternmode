@@ -167,3 +167,30 @@ export function RichContentExample() {
     </div>
   );
 }
+
+export function ControlledExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="space-x-4">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger render={<Button />}>Controlled Popover</PopoverTrigger>
+        <PopoverContent>
+          <PopoverTitle>Controlled State</PopoverTitle>
+          <PopoverDescription>
+            This popover's open state is controlled externally.
+          </PopoverDescription>
+          <div className="mt-3">
+            <Button onClick={() => setOpen(false)} size="sm">
+              Close from inside
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      <Button onClick={() => setOpen(!open)} variant="outline">
+        Toggle: {open ? "Open" : "Closed"}
+      </Button>
+    </div>
+  );
+}

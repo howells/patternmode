@@ -56,50 +56,37 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic date picker for single date selection.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-time",
       title: "With Time Picker",
       description: "Date picker with time selection.",
-      code: jsxToString(<WithTimeExample />)},
+      code: jsxToString(<WithTimeExample />),
+    },
     {
       id: "with-presets",
       title: "With Presets",
       description: "Date picker with common date presets.",
       code: jsxToString(<WithPresetsExample />),
-    }
-
-  return (
-    <DatePicker
-      placeholder="Select or choose preset"
-      presets={presets}
-    />
-  );
-};`},
+    },
     {
       id: "disabled",
       title: "Disabled",
       description: "Disabled date picker.",
-      code: jsxToString(<DisabledExample />)},
+      code: jsxToString(<DisabledExample />),
+    },
     {
       id: "error-state",
       title: "Error State",
       description: "Date picker with error styling.",
-      code: jsxToString(<ErrorStateExample />)},
+      code: jsxToString(<ErrorStateExample />),
+    },
     {
       id: "controlled",
       title: "Controlled",
       description: "Controlled date picker with external state.",
-      code: jsxToString(<ControlledExample />),}
-        onChange={setDate}
-      />
-      {date && (
-        <p className="text-sm text-zinc-600">
-          Selected: {date.toLocaleDateString()}
-        </p>
-      )}
-    </div>
-  );
-};`}
+      code: jsxToString(<ControlledExample />),
+    },
   ]
 };

@@ -37,6 +37,7 @@ import { z } from "zod";`,
       title: "Contact Form",
       description:
         "A complete form with Zod validation, including text inputs and textarea.",
-      code: jsxToString(<ContactFormExample />)}
+      code: jsxToString(<DefaultExample />),
+    },
   ]
 };

@@ -1,6 +1,7 @@
+import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { SparkChartExample, DefaultExample, AreaExample, BarExample } from "./examples";
+import { SparkChartExample, DefaultExample, AreaExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "spark-chart",
@@ -47,41 +48,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Spark Chart",
       description: "A simple line spark chart",
-      code: jsxToString(<DefaultExample />),, value: 400 },
-    { date: "Feb", value: 300 },
-    { date: "Mar", value: 600 },
-    { date: "Apr", value: 800 },
-    { date: "May", value: 500 },
-    { date: "Jun", value: 900 },
-  ]}
-  categories={["value"]}
-  index="date"
-/>`
+      code: jsxToString(<DefaultExample />),
     },
     {
       id: "area",
       title: "Area Spark Chart",
       description: "Spark chart with filled area",
-      code: jsxToString(<AreaExample />),, revenue: 2100 },
-    { month: "Feb", revenue: 2400 },
-    { month: "Mar", revenue: 1800 },
-    { month: "Apr", revenue: 2800 },
-    { month: "May", revenue: 3200 },
-    { month: "Jun", revenue: 2900 },
-  ]}
-  categories={["revenue"]}
-  index="month"
-  type="area"
-/>`
-    },
-    {
-      id: "bar",
-      title: "Bar Spark Chart",
-      description: "Spark chart using bars",
-      code: jsxToString(<BarExample />),
-  index="day"
-  type="bar"
-/>`
+      code: jsxToString(<AreaExample />),
     },
   ]
 };

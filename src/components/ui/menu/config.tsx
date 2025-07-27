@@ -58,7 +58,7 @@ export const componentConfig: ComponentConfig = {
       title: "Default",
       description:
         "Dropdown menu component built on Base UI with support for nested submenus, radio groups, checkboxes, and keyboard navigation.",
-      code: jsxToString(<DefaultMenuExample />),
+      code: jsxToString(<MenuExample />),
     },
     {
       id: "with-icons",

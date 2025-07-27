@@ -29,6 +29,7 @@ export const componentConfig: ComponentConfig = {
       id: "tracker",
       title: "Basic Tracker",
       description: "A visual progress tracker showing steps or stages in a process.",
-      code: jsxToString(<Basic />)}
-  ]
+      code: jsxToString(<TrackerExample />),
+    },
+  ],
 };

@@ -56,3 +56,5 @@ export function FullWidthExample() {
 export function DisabledExample() {
   return <NumberField label="Read Only" defaultValue={42} disabled />;
 }
+
+export const DefaultExample = NumberFieldExample;

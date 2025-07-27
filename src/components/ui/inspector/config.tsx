@@ -34,11 +34,13 @@ export const componentConfig: ComponentConfig = {
       id: "inspector",
       title: "Basic Inspector",
       description: "A component for inspecting and debugging component properties and state.",
-      code: jsxToString(<BasicInspectorExample />)},
+      code: jsxToString(<InspectorExample />),
+    },
     {
       id: "nested",
       title: "Nested Data Inspector",
       description: "Inspector with nested object data",
-      code: jsxToString(<NestedDataInspectorExample />)}
+      code: jsxToString(<NestedExample />),
+    },
   ]
 };

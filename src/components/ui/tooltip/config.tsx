@@ -61,46 +61,43 @@ export const componentConfig: ComponentConfig = {
       id: "tooltip",
       title: "Default",
       description: "Tooltip component built on Base UI with customizable positioning and styling variants.",
-      code: jsxToString(<Default />)},
+      code: jsxToString(<TooltipExample />),
+    },
     {
       id: "positions",
       title: "Positions",
       description: "Tooltips positioned on different sides.",
-      code: jsxToString(<Positions />)},
+      code: jsxToString(<PositionsExample />),
+    },
     {
       id: "variants",
       title: "Variants",
       description: "Different visual variants of tooltips.",
-      code: jsxToString(<Variants />)},
+      code: jsxToString(<VariantsExample />),
+    },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different size variants of tooltips.",
-      code: jsxToString(<Sizes />)},
+      code: jsxToString(<SizesExample />),
+    },
     {
       id: "no-arrow",
       title: "Without Arrow",
       description: "Tooltip without the pointing arrow.",
-      code: jsxToString(<NoArrow />)},
+      code: jsxToString(<NoArrowExample />),
+    },
     {
       id: "rich-content",
       title: "Rich Content",
       description: "Tooltip with rich JSX content.",
-      code: jsxToString(<RichContent />)},
+      code: jsxToString(<RichContentExample />),
+    },
     {
       id: "controlled",
       title: "Controlled",
       description: "Tooltip with controlled open state.",
-      code: jsxToString(<ControlledExample />),}
-        onOpenChange={setOpen}
-      >
-        <Button>Controlled Tooltip</Button>
-      </Tooltip>
-      <Button onClick={() => setOpen(!open)}>
-        Toggle: {open ? 'Open' : 'Closed'}
-      </Button>
-    </div>
-  );
-};`}
-  ]
+      code: jsxToString(<ControlledExample />),
+    },
+  ],
 };
