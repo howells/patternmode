@@ -8,7 +8,6 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-  SidebarLabel,
 } from "./sidebar";
 
 export function DefaultExample() {
@@ -20,14 +19,10 @@ export function DefaultExample() {
       <SidebarBody>
         <SidebarGroup level={1}>
           <SidebarItem href="#dashboard" current>
-            <SidebarLabel>Dashboard</SidebarLabel>
+            Dashboard
           </SidebarItem>
-          <SidebarItem href="#projects">
-            <SidebarLabel>Projects</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="#team">
-            <SidebarLabel>Team</SidebarLabel>
-          </SidebarItem>
+          <SidebarItem href="#projects">Projects</SidebarItem>
+          <SidebarItem href="#team">Team</SidebarItem>
         </SidebarGroup>
       </SidebarBody>
     </Sidebar>
@@ -43,27 +38,19 @@ export function WithSubmenuExample() {
       </SidebarHeader>
       <SidebarBody>
         <SidebarGroup level={1}>
-          <SidebarItem href="#home">
-            <SidebarLabel>Home</SidebarLabel>
-          </SidebarItem>
+          <SidebarItem href="#home">Home</SidebarItem>
           <SidebarItem href="#analytics" current>
-            <SidebarLabel>Analytics</SidebarLabel>
+            Analytics
           </SidebarItem>
         </SidebarGroup>
         <SidebarGroup level={1}>
-          <SidebarItem href="#settings">
-            <SidebarLabel>Settings</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="#help">
-            <SidebarLabel>Help</SidebarLabel>
-          </SidebarItem>
+          <SidebarItem href="#settings">Settings</SidebarItem>
+          <SidebarItem href="#help">Help</SidebarItem>
         </SidebarGroup>
       </SidebarBody>
       <SidebarFooter>
         <SidebarGroup level={1}>
-          <SidebarItem href="#profile">
-            <SidebarLabel>John Doe</SidebarLabel>
-          </SidebarItem>
+          <SidebarItem href="#profile">John Doe</SidebarItem>
         </SidebarGroup>
       </SidebarFooter>
     </Sidebar>

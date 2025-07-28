@@ -25,7 +25,6 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-  SidebarLabel,
 } from "./ui/sidebar";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group/toggle-group";
 
@@ -121,12 +120,7 @@ function SidebarContent() {
     <>
       <SidebarHeader isCollapsed={isCollapsed}>
         <div className="relative w-full h-full flex items-center">
-          <div
-            className={clsx(
-              "absolute top-4.5",
-              isCollapsed ? "left-2" : "left-3"
-            )}
-          >
+          <div className="absolute top-4.5 left-3">
             <Pilcrow
               className="size-7 text-zinc-600 dark:text-zinc-400 scale-x-[-1]"
               strokeWidth={1.5}
@@ -155,6 +149,7 @@ function SidebarContent() {
                 }
               }}
               size="sm"
+              className={isCollapsed ? "opacity-0" : ""}
             >
               <ToggleGroupItem value="grouped" leftIcon={Rows3}>
                 <span className="sr-only">Grouped view</span>
@@ -198,9 +193,7 @@ function SidebarContent() {
                           isCollapsed={isCollapsed}
                           leftIcon={IconComponent || undefined}
                         >
-                          <SidebarLabel isCollapsed={isCollapsed}>
-                            {component.name}
-                          </SidebarLabel>
+                          {component.name}
                         </SidebarItem>
                       );
                     })}
@@ -224,9 +217,7 @@ function SidebarContent() {
                     isCollapsed={isCollapsed}
                     leftIcon={IconComponent || undefined}
                   >
-                    <SidebarLabel isCollapsed={isCollapsed}>
-                      {component.name}
-                    </SidebarLabel>
+                    {component.name}
                   </SidebarItem>
                 );
               })}

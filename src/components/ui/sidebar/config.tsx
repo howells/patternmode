@@ -1,10 +1,11 @@
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
+import React from "react";
 import { DefaultExample, WithSubmenuExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "sidebar",
+  componentId: "sidebar",
   name: "Sidebar",
   description:
     "A versatile sidebar component for navigation and content organization.",
@@ -12,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   icon: "PanelLeft",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   Sidebar,
@@ -21,7 +22,6 @@ export const componentConfig: ComponentConfig = {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-  SidebarLabel,
   SidebarToggle,
   SidebarDivider
 } from "@/components/ui/sidebar/sidebar";`,
@@ -31,11 +31,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Sidebar",
       description: "A simple sidebar with navigation items",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-submenu",
       title: "Sidebar with Submenu",
       description: "Sidebar with nested menu items",
-      code: jsxToString(<WithSubmenuExample />),},
-  ]
+      code: jsxToString(<WithSubmenuExample />),
+    },
+  ],
 };

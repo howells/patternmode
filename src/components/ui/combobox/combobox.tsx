@@ -1,6 +1,6 @@
 import { config } from "@/lib/config";
-import { cx, focusInput, hasErrorInput } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
+import { cx, hasErrorInput } from "@/lib/utils";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
@@ -127,6 +127,8 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
   getItemValue?: (item: T) => string;
   /** Function to get the label from an item */
   getItemLabel?: (item: T) => string;
+  /** Function to get an icon component for an item */
+  getItemIcon?: (item: T) => React.ReactNode;
   /** Custom render function for items */
   renderItem?: (item: T, index: number) => React.ReactNode;
 
@@ -198,6 +200,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   iconStrokeWidth = config.getIconStrokeWidth(),
   getItemValue = (item: T) => item.value,
   getItemLabel = (item: T) => item.label,
+  getItemIcon,
   renderItem,
   selectOnFocus = true,
   clearSearchOnSelect = true,
@@ -206,29 +209,39 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  // Fetch data with React Query (only if fetchData is provided)
+  // Fetch data with React Query infinite query (only if fetchData is provided)
   const {
-    data: queryData,
+    data: infiniteData,
     isLoading,
     error,
-  } = useQuery({
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: [...queryKey, debouncedSearch],
-    queryFn: async ({ signal }) => {
+    queryFn: async ({ pageParam = 0, signal }) => {
       if (!fetchData) return { data: [], hasNextPage: false };
       return fetchData({
         search: debouncedSearch,
-        pageParam: 0,
+        pageParam,
         signal,
       });
     },
     enabled: !!fetchData,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    placeholderData: (previousData) => previousData, // Keep previous data while fetching new data
     refetchOnWindowFocus: false, // Prevent refetch on window focus
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    initialPageParam: 0,
   });
 
-  // Use either static options or fetched data
-  const allItems: T[] = options || queryData?.data || [];
+  // Use either static options or fetched data (flattened from infinite query pages)
+  const allItems: T[] = React.useMemo(() => {
+    if (options) return options;
+    if (!infiniteData?.pages) return [];
+    
+    // Flatten all pages into a single array
+    return infiniteData.pages.flatMap(page => page.data);
+  }, [options, infiniteData?.pages]);
 
   // Find selected item first (needed for filtering logic and debounce logic)
   const selectedItem = allItems.find((item) => getItemValue(item) === value);
@@ -359,7 +372,10 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
       }
       {...getItemProps({ item, index })}
     >
-      <span className="flex-1 truncate">{getItemLabel(item)}</span>
+      <div className="flex items-center gap-2 flex-1">
+        {getItemIcon && getItemIcon(item)}
+        <span className="truncate">{getItemLabel(item)}</span>
+      </div>
       {selectedItem && getItemValue(selectedItem) === getItemValue(item) && (
         <Icon
           icon={Check}
@@ -385,7 +401,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   const buttonSize = size === "base" ? "default" : size;
 
   return (
-    <div className={cx(comboboxVariants({ size }), className)}>
+    <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox">
       {/* Trigger Button */}
       <Button
         variant="outline"
@@ -397,6 +413,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           hasError && hasErrorInput,
           !selectedItem && "text-zinc-500 dark:text-zinc-400"
         )}
+        data-testid="combobox-trigger"
         {...getToggleButtonProps()}
       >
         {selectedItem ? getItemLabel(selectedItem) : placeholder}
@@ -411,6 +428,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           "border-zinc-200 dark:border-zinc-800",
           !isOpen && "hidden"
         )}
+        data-testid="combobox-dropdown"
         {...getMenuProps()}
       >
         {/* Search Input - Fixed at top */}
@@ -448,6 +466,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             size={size}
             autoFocus
             prefixStyling={false}
+            data-testid="combobox-search"
           />
         </div>
 
@@ -459,10 +478,20 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             size === "base" && "text-sm",
             size === "lg" && "text-base"
           )}
+          data-testid="combobox-options"
+          onScroll={(e) => {
+            // Infinite scroll: fetch next page when near bottom
+            const target = e.currentTarget;
+            const scrolledToBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 100;
+            
+            if (scrolledToBottom && hasNextPage && !isFetchingNextPage && fetchData) {
+              fetchNextPage();
+            }
+          }}
         >
           {/* Loading State */}
           {isLoading && (
-            <div className="flex items-center justify-center py-4">
+            <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
               <Loader size="sm" />
               <span className="ml-2 text-sm text-zinc-500">Loading...</span>
             </div>
@@ -470,27 +499,35 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 
           {/* Error State */}
           {error && !isLoading && (
-            <div className="flex items-center justify-center py-4 text-red-500">
+            <div className="flex items-center justify-center py-4 text-red-500" data-testid="combobox-error">
               <span className="text-sm">Failed to load options</span>
             </div>
           )}
 
           {/* Items List */}
           {!isLoading && !error && items.length > 0 && (
-            <div className="py-1">
+            <div className="py-1" data-testid="combobox-items">
               {items.map((item, index) => (
-                <div key={`${getItemValue(item)}-${index}`}>
+                <div key={`${getItemValue(item)}-${index}`} data-testid={`combobox-item-${getItemValue(item)}`}>
                   {renderItem
                     ? renderItem(item, index)
                     : defaultRenderItem(item, index)}
                 </div>
               ))}
+              
+              {/* Loading more items indicator */}
+              {isFetchingNextPage && (
+                <div className="flex items-center justify-center py-2" data-testid="combobox-loading-more">
+                  <Loader size="sm" />
+                  <span className="ml-2 text-xs text-zinc-500">Loading more...</span>
+                </div>
+              )}
             </div>
           )}
 
           {/* Empty State */}
           {!isLoading && !error && items.length === 0 && (
-            <div className="flex items-center justify-center py-4 text-zinc-500">
+            <div className="flex items-center justify-center py-4 text-zinc-500" data-testid="combobox-empty">
               <span className="text-sm">{emptyMessage}</span>
             </div>
           )}

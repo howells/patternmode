@@ -1,5 +1,7 @@
 "use client";
 
+import { clsx } from "clsx";
+import { useState } from "react";
 import {
   Sidebar,
   SidebarBody,
@@ -7,70 +9,91 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-  SidebarLabel,
 } from "./sidebar";
 
 export function Example() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <div className="h-96 w-64 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden bg-white dark:bg-zinc-900">
-      <Sidebar>
-        <SidebarHeader>
+    <div className="h-96 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden bg-white dark:bg-zinc-900 flex">
+      <Sidebar
+        isCollapsed={isCollapsed}
+        onToggle={() => setIsCollapsed(!isCollapsed)}
+        showToggle={true}
+      >
+        <SidebarHeader isCollapsed={isCollapsed}>
           <div className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-            Patternmode
+            {isCollapsed ? "PM" : "Patternmode"}
           </div>
-          <div className="text-sm text-zinc-500 dark:text-zinc-400">
-            Component Library
-          </div>
+          {!isCollapsed && (
+            <div className="text-sm text-zinc-500 dark:text-zinc-400">
+              Component Library
+            </div>
+          )}
         </SidebarHeader>
 
-        <SidebarBody>
-          <SidebarGroup level={1}>
-            <SidebarItem href="#overview" current>
-              <SidebarLabel>Overview</SidebarLabel>
+        <SidebarBody isCollapsed={isCollapsed}>
+          <SidebarGroup level={1} isCollapsed={isCollapsed}>
+            <SidebarItem href="#overview" current isCollapsed={isCollapsed}>
+              Overview
             </SidebarItem>
-            <SidebarItem href="#components">
-              <SidebarLabel>Components</SidebarLabel>
+            <SidebarItem href="#components" isCollapsed={isCollapsed}>
+              Components
             </SidebarItem>
-            <SidebarItem href="#examples">
-              <SidebarLabel>Examples</SidebarLabel>
-            </SidebarItem>
-          </SidebarGroup>
-
-          <SidebarGroup title="Resources" level={1}>
-            <SidebarItem href="#documentation">
-              <SidebarLabel>Documentation</SidebarLabel>
-            </SidebarItem>
-            <SidebarItem href="#themes">
-              <SidebarLabel>Themes</SidebarLabel>
-            </SidebarItem>
-            <SidebarItem href="#changelog">
-              <SidebarLabel>Changelog</SidebarLabel>
+            <SidebarItem href="#examples" isCollapsed={isCollapsed}>
+              Examples
             </SidebarItem>
           </SidebarGroup>
 
-          <SidebarGroup title="Tools" level={1}>
-            <SidebarItem href="#playground">
-              <SidebarLabel>Playground</SidebarLabel>
+          <SidebarGroup title="Resources" level={1} isCollapsed={isCollapsed}>
+            <SidebarItem href="#documentation" isCollapsed={isCollapsed}>
+              Documentation
             </SidebarItem>
-            <SidebarItem href="#inspector">
-              <SidebarLabel>Inspector</SidebarLabel>
+            <SidebarItem href="#themes" isCollapsed={isCollapsed}>
+              Themes
+            </SidebarItem>
+            <SidebarItem href="#changelog" isCollapsed={isCollapsed}>
+              Changelog
+            </SidebarItem>
+          </SidebarGroup>
+
+          <SidebarGroup title="Tools" level={1} isCollapsed={isCollapsed}>
+            <SidebarItem href="#playground" isCollapsed={isCollapsed}>
+              Playground
+            </SidebarItem>
+            <SidebarItem href="#inspector" isCollapsed={isCollapsed}>
+              Inspector
             </SidebarItem>
           </SidebarGroup>
         </SidebarBody>
 
-        <SidebarFooter>
-          <SidebarGroup level={1}>
-            <SidebarItem href="#account">
+        <SidebarFooter isCollapsed={isCollapsed}>
+          <SidebarGroup level={1} isCollapsed={isCollapsed}>
+            <SidebarItem href="#account" isCollapsed={isCollapsed}>
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs text-white font-medium">
                   U
                 </div>
-                <SidebarLabel>User Account</SidebarLabel>
+                <span
+                  className={clsx(
+                    "truncate transition-opacity duration-200",
+                    isCollapsed && "opacity-0 w-0 overflow-hidden"
+                  )}
+                >
+                  User Account
+                </span>
               </div>
             </SidebarItem>
           </SidebarGroup>
         </SidebarFooter>
       </Sidebar>
+
+      {/* Content area to show the layout effect */}
+      <div className="flex-1 p-4 bg-zinc-50 dark:bg-zinc-800">
+        <div className="text-sm text-zinc-600 dark:text-zinc-400">
+          Content area - resize with sidebar
+        </div>
+      </div>
     </div>
   );
 }

@@ -75,9 +75,9 @@ export function Sidebar({
       {showToggle && (
         <div
           className={clsx(
-            "absolute top-0 z-10 group",
+            "absolute z-10 group",
             isCollapsed
-              ? "inset-x-2 h-12 flex items-center justify-center opacity-0 hover:opacity-100 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-md transition-opacity duration-200"
+              ? "inset-x-2 top-0 h-12 flex items-center justify-center opacity-0 hover:opacity-100 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-md transition-opacity duration-200"
               : "right-3.5 top-3"
           )}
         >
@@ -167,8 +167,7 @@ export function SidebarFooter({
       data-component="SidebarFooter"
       className={clsx(
         className,
-        "flex flex-col border-t border-zinc-950/5 dark:border-white/5 transition-all duration-200",
-        isCollapsed ? "p-2" : "p-4"
+        "flex flex-col border-t border-zinc-950/5 dark:border-white/5 transition-all duration-200 p-4"
       )}
     />
   );
@@ -206,8 +205,15 @@ export function SidebarGroup({
             <SidebarTitle level={level} href={href}>
               {title}
             </SidebarTitle>
-            {actions && !isCollapsed && (
-              <div className="flex items-center">{actions}</div>
+            {actions && (
+              <div
+                className={clsx(
+                  "flex items-center",
+                  isCollapsed && "opacity-0"
+                )}
+              >
+                {actions}
+              </div>
             )}
           </div>
         )}
@@ -226,6 +232,10 @@ export const SidebarItem = forwardRef<
     children: React.ReactNode;
     isCollapsed?: boolean;
     href?: string;
+    icon?: React.ComponentType<{
+      className?: string;
+      strokeWidth?: number;
+    }>;
     leftIcon?: React.ComponentType<{
       className?: string;
       strokeWidth?: number;
@@ -238,6 +248,7 @@ export const SidebarItem = forwardRef<
     children,
     isCollapsed,
     href,
+    icon,
     leftIcon: LeftIcon,
     ...props
   },
@@ -252,15 +263,37 @@ export const SidebarItem = forwardRef<
     }
   };
 
+  // Handle collapsed state: if children is a simple string, apply collapsed logic
+  const shouldHideContent = isCollapsed && typeof children === "string";
+  const displayChildren = shouldHideContent ? null : children;
+
+  // If it's a simple string and collapsed, wrap it with collapsed styling
+  const wrappedChildren =
+    isCollapsed && typeof children === "string" ? null : React.isValidElement(
+        children
+      ) ? (
+      children
+    ) : (
+      <span
+        className={clsx(
+          "truncate transition-opacity duration-200",
+          isCollapsed && "opacity-0 w-0 overflow-hidden"
+        )}
+      >
+        {children}
+      </span>
+    );
+
   return (
     <span
-      className={clsx(className, "relative block px-4")}
+      className={clsx(className, "relative block px-2")}
       data-component="SidebarItem"
     >
       <Button
         render={href ? <Link href={href} /> : undefined}
         variant="inverse-ghost"
         shadow={false}
+        icon={icon}
         leftIcon={LeftIcon}
         onClick={handleClick}
         fullWidth
@@ -272,7 +305,7 @@ export const SidebarItem = forwardRef<
         }
         {...props}
       >
-        {isCollapsed ? null : children}
+        {wrappedChildren}
       </Button>
     </span>
   );
@@ -292,27 +325,6 @@ export function SidebarDivider({
       {...props}
       data-component="SidebarDivider"
       className={clsx(className, "")}
-    />
-  );
-}
-
-// Utility: Label (for complex item content)
-export function SidebarLabel({
-  className,
-  isCollapsed,
-  ...props
-}: React.ComponentPropsWithoutRef<"span"> & {
-  isCollapsed?: boolean;
-}) {
-  return (
-    <span
-      {...props}
-      data-component="SidebarLabel"
-      className={clsx(
-        className,
-        "truncate transition-opacity duration-200",
-        isCollapsed && "opacity-0 w-0 overflow-hidden"
-      )}
     />
   );
 }
