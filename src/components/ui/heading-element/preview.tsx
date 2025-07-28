@@ -14,7 +14,7 @@ export const HeadingElementExample = ({
   [key: string]: unknown;
 }) => {
   return (
-    <div className="flex justify-center p-8">
+    <div className="flex justify-center">
       <HeadingElement level={level} className={className} {...props}>
         {children}
       </HeadingElement>

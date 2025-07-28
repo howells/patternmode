@@ -40,7 +40,7 @@ export const CardExample = ({
           | 11
           | 12
       }
-      className={className}
+      className={`max-w-xl ${className || ""}`}
       {...props}
     >
       {children}

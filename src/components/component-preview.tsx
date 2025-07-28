@@ -14,6 +14,76 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
 
+// Component that dynamically calculates grid-aligned positioning
+const GridAlignedContainer: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const componentRef = React.useRef<HTMLDivElement>(null);
+  const [leftPosition, setLeftPosition] = React.useState(96);
+
+  React.useEffect(() => {
+    const calculatePosition = () => {
+      if (containerRef.current && componentRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const componentWidth = componentRef.current.offsetWidth;
+        const gridSize = 24; // 24px grid size
+
+        // Calculate the center position
+        const centerPosition = (containerWidth - componentWidth) / 2;
+
+        // Snap to nearest grid intersection
+        const gridOffset = 24; // First visible grid line
+        const snappedLeft =
+          Math.round((centerPosition - gridOffset) / gridSize) * gridSize +
+          gridOffset;
+
+        setLeftPosition(snappedLeft);
+      }
+    };
+
+    // Initial calculation with a small delay to allow component to render
+    const timeoutId = setTimeout(calculatePosition, 100);
+
+    // Use ResizeObserver to watch for component size changes
+    const resizeObserver = new ResizeObserver(() => {
+      calculatePosition();
+    });
+
+    if (componentRef.current) {
+      resizeObserver.observe(componentRef.current);
+    }
+
+    window.addEventListener("resize", calculatePosition);
+
+    return () => {
+      clearTimeout(timeoutId);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", calculatePosition);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{
+        minHeight: "200px",
+      }}
+    >
+      <div
+        ref={componentRef}
+        className="absolute top-18"
+        style={{
+          left: `${leftPosition}px`,
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
 interface ComponentPreviewProps {
   componentId: string;
   category?: string;
@@ -339,15 +409,12 @@ export function ComponentPreview({
         </div>
 
         <TabsContent value="preview" data-testid="component-preview">
-          <div
-            className="flex justify-center pt-12"
-            data-testid="preview-container"
-          >
-            {renderComponent()}
+          <div data-testid="preview-container">
+            <GridAlignedContainer>{renderComponent()}</GridAlignedContainer>
           </div>
         </TabsContent>
         <TabsContent value="code">
-          <div className="pt-12">
+          <div>
             <CodeBlock language="tsx">
               {generateLiveCode(getComponentName(componentId), componentProps)}
             </CodeBlock>
