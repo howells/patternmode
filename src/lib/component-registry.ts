@@ -39,6 +39,7 @@ import { componentConfig as lineChartConfig } from "@/components/ui/line-chart/c
 import { componentConfig as listConfig } from "@/components/ui/list/config";
 import { componentConfig as menuConfig } from "@/components/ui/menu/config";
 import { componentConfig as loaderConfig } from "@/components/ui/loader/config";
+import { componentConfig as navigationMenuConfig } from "@/components/ui/navigation-menu/config";
 import { componentConfig as meterConfig } from "@/components/ui/meter/config";
 import { componentConfig as paginationConfig } from "@/components/ui/pagination/config";
 import { componentConfig as previewCardConfig } from "@/components/ui/preview-card/config";
@@ -60,6 +61,20 @@ import { componentConfig as tabsConfig } from "@/components/ui/tabs/config";
 import { componentConfig as tagInputConfig } from "@/components/ui/tag-input/config";
 import { componentConfig as tagConfig } from "@/components/ui/tag/config";
 import { componentConfig as textConfig } from "@/components/ui/text/config";
+import { componentConfig as sidebarConfig } from "@/components/ui/sidebar/config";
+import { componentConfig as skeletonConfig } from "@/components/ui/skeleton/config";
+import { componentConfig as toggleConfig } from "@/components/ui/toggle/config";
+import { componentConfig as inspectorConfig } from "@/components/ui/inspector/config";
+import { componentConfig as tableConfig } from "@/components/ui/table/config";
+import { componentConfig as toastConfig } from "@/components/ui/toast/config";
+import { componentConfig as toolbarConfig } from "@/components/ui/toolbar/config";
+import { componentConfig as tabNavigationConfig } from "@/components/ui/tab-navigation/config";
+import { componentConfig as tooltipConfig } from "@/components/ui/tooltip/config";
+import { componentConfig as touchTargetConfig } from "@/components/ui/touch-target/config";
+import { componentConfig as trackerConfig } from "@/components/ui/tracker/config";
+import { componentConfig as progressConfig } from "@/components/ui/progress/config";
+import { componentConfig as responsiveDrawerConfig } from "@/components/ui/responsive-drawer/config";
+import { componentConfig as sheetConfig } from "@/components/ui/sheet/config";
 
 // TODO: Update these components to use new ComponentConfig structure
 import {
@@ -150,12 +165,6 @@ const fieldsetConfig = createPlaceholderConfig(
 );
 const formConfig = createPlaceholderConfig("form", "Form", "FileText", "forms");
 // Heading config imported above
-const inspectorConfig = createPlaceholderConfig(
-  "inspector",
-  "Inspector",
-  "Search",
-  "utility"
-);
 const menuBarConfig = createPlaceholderConfig(
   "menu-bar",
   "Menu Bar",
@@ -166,12 +175,6 @@ const navbarConfig = createPlaceholderConfig(
   "navbar",
   "Navbar",
   "Navigation",
-  "navigation"
-);
-const navigationMenuConfig = createPlaceholderConfig(
-  "navigation-menu",
-  "Navigation Menu",
-  "Navigation2",
   "navigation"
 );
 const numberFieldConfig = createPlaceholderConfig(
@@ -186,65 +189,16 @@ const popoverConfig = createPlaceholderConfig(
   "MessageCircle",
   "overlay"
 );
-const progressConfig = createPlaceholderConfig(
-  "progress",
-  "Progress",
-  "TrendingUp",
-  "feedback"
-);
-const responsiveDrawerConfig = createPlaceholderConfig(
-  "responsive-drawer",
-  "Responsive Drawer",
-  "PanelLeftOpen",
-  "overlay"
-);
-const sheetConfig = createPlaceholderConfig(
-  "sheet",
-  "Sheet",
-  "RectangleHorizontal",
-  "overlay"
-);
-const sidebarConfig = createPlaceholderConfig(
-  "sidebar",
-  "Sidebar",
-  "PanelLeft",
-  "navigation"
-);
-const skeletonConfig = createPlaceholderConfig(
-  "skeleton",
-  "Skeleton",
-  "Loader2",
-  "feedback"
-);
 const subheadingConfig = createPlaceholderConfig(
   "subheading",
   "Subheading",
   "Heading2",
   "text"
 );
-const tabNavigationConfig = createPlaceholderConfig(
-  "tab-navigation",
-  "Tab Navigation",
-  "Tabs",
-  "navigation"
-);
-const tableConfig = createPlaceholderConfig("table", "Table", "Table", "data");
 const textareaConfig = createPlaceholderConfig(
   "textarea",
   "Textarea",
   "AlignLeft",
-  "inputs"
-);
-const toastConfig = createPlaceholderConfig(
-  "toast",
-  "Toast",
-  "Bell",
-  "feedback"
-);
-const toggleConfig = createPlaceholderConfig(
-  "toggle",
-  "Toggle",
-  "ToggleLeft",
   "inputs"
 );
 const toggleGroupConfig = createPlaceholderConfig(
@@ -252,30 +206,6 @@ const toggleGroupConfig = createPlaceholderConfig(
   "Toggle Group",
   "ToggleRight",
   "inputs"
-);
-const toolbarConfig = createPlaceholderConfig(
-  "toolbar",
-  "Toolbar",
-  "Wrench",
-  "navigation"
-);
-const tooltipConfig = createPlaceholderConfig(
-  "tooltip",
-  "Tooltip",
-  "Info",
-  "overlay"
-);
-const touchTargetConfig = createPlaceholderConfig(
-  "touch-target",
-  "Touch Target",
-  "Fingerprint",
-  "utility"
-);
-const trackerConfig = createPlaceholderConfig(
-  "tracker",
-  "Tracker",
-  "Activity",
-  "utility"
 );
 
 // Component registry with components using new config structure

@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { IconContainerExample, BasicExample, WithVariantExample, WithCustomColorExample, LargeSizeExample, ExtraLargeExample, SemanticVariantsExample, CustomColorsExample, SizeVariantsExample, CenteredExample } from "./examples";
+import { BasicExample, WithVariantExample, WithCustomColorExample, LargeSizeExample, ExtraLargeExample, SemanticVariantsExample, CustomColorsExample, SizeVariantsExample, CenteredExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "icon-container",
@@ -15,7 +15,6 @@ export const componentConfig: ComponentConfig = {
     npm: "lucide-react",
   },
   importStatement: `import { IconContainer } from "@/components/ui/icon-container";`,
-  componentId: "IconContainerExample",
   props: [
     {
       name: "icon",

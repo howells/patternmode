@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Progress } from "@/components/ui/progress/progress";`,
-  componentId: "ProgressExample",
   props: [
     {
       name: "value",

@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { TabNavigation, TabNavigationLink } from "@/components/ui/tab-navigation/tab-navigation";`,
-  componentId: "TabNavigationExample",
   props: [
   ],
   examples: [

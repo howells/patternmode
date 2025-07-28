@@ -15,7 +15,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { TouchTarget } from "@/components/ui/touch-target/touch-target";`,
-  componentId: "TouchTargetExample",
   props: [
     {
       name: "children",

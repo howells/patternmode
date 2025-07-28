@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { TableExample, DefaultExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "table",
@@ -21,7 +21,6 @@ export const componentConfig: ComponentConfig = {
   TableHeaderCell,
   TableRow
 } from "@/components/ui/table/table";`,
-  componentId: "TableExample",
   props: [
     {
       name: "bleed",

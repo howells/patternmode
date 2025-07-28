@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "lucide-react",
   },
   importStatement: `import { DismissButton } from "@/components/ui/dismiss-button/dismiss-button";`,
-  componentId: "DismissButtonExample",
   props: [
     {
       name: "size",

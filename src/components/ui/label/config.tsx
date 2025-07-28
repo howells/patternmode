@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Label } from "@/components/ui/label/label";`,
-  componentId: "LabelExample",
   props: [
     {
       name: "children",

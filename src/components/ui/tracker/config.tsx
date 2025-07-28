@@ -15,7 +15,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Tracker } from "@/components/ui/tracker/tracker";`,
-  componentId: "TrackerExample",
   props: [
     {
       name: "data",

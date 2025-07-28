@@ -16,7 +16,7 @@ import {
 export function ResponsiveDrawerExample() {
   return (
     <ResponsiveDrawer>
-      <ResponsiveDrawerTrigger>
+      <ResponsiveDrawerTrigger asChild>
         <button>Open Drawer</button>
       </ResponsiveDrawerTrigger>
       <ResponsiveDrawerContent>
@@ -30,7 +30,7 @@ export function ResponsiveDrawerExample() {
           <p>Drawer content goes here.</p>
         </ResponsiveDrawerBody>
         <ResponsiveDrawerFooter>
-          <ResponsiveDrawerClose>
+          <ResponsiveDrawerClose asChild>
             <button>Cancel</button>
           </ResponsiveDrawerClose>
         </ResponsiveDrawerFooter>
@@ -42,7 +42,7 @@ export function ResponsiveDrawerExample() {
 export function DefaultExample() {
   return (
     <ResponsiveDrawer>
-      <ResponsiveDrawerTrigger>
+      <ResponsiveDrawerTrigger asChild>
         <button>Add Item</button>
       </ResponsiveDrawerTrigger>
       <ResponsiveDrawerContent>
@@ -66,7 +66,7 @@ export function DefaultExample() {
         </ResponsiveDrawerBody>
         <ResponsiveDrawerFooter>
           <button>Save</button>
-          <ResponsiveDrawerClose>
+          <ResponsiveDrawerClose asChild>
             <button>Cancel</button>
           </ResponsiveDrawerClose>
         </ResponsiveDrawerFooter>

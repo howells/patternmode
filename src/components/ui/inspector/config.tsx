@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Inspector } from "@/components/ui/inspector/inspector";`,
-  componentId: "InspectorExample",
   props: [
     {
       name: "data",

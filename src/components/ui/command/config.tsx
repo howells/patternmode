@@ -15,7 +15,6 @@ export const componentConfig: ComponentConfig = {
     npm: "cmdk",
   },
   importStatement: `import { Command, CommandDialog, CommandInput, CommandEmpty, CommandGroup, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command/command";`,
-  componentId: "DefaultExample",
 
   props: [
     {

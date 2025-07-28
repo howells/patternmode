@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { ToastExample, DefaultExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "toast",
@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Toast, Toaster, toast } from "@/components/ui/toast/toast";`,
-  componentId: "ToastExample",
   props: [
     {
       name: "title",

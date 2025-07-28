@@ -199,7 +199,7 @@ export function SidebarGroup({
       <div
         {...props}
         data-component="SidebarGroup"
-        className={clsx(className, "space-y-2 py-2")}
+        className={clsx(className, "space-y-2 py-4")}
       >
         {title && (
           <div className="flex items-center justify-between px-4">

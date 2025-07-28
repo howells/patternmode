@@ -136,27 +136,6 @@ function SidebarContent() {
       </SidebarHeader>
 
       <SidebarBody isCollapsed={isCollapsed}>
-        {/* Level 1: Getting Started */}
-        <SidebarGroup
-          title="Getting Started"
-          isCollapsed={isCollapsed}
-          level={1}
-        >
-          <SidebarItem href="/" isCollapsed={isCollapsed}>
-            <SidebarLabel isCollapsed={isCollapsed}>Overview</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/installation" isCollapsed={isCollapsed}>
-            <SidebarLabel isCollapsed={isCollapsed}>Installation</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/layout" isCollapsed={isCollapsed}>
-            <SidebarLabel isCollapsed={isCollapsed}>
-              Layout Builder
-            </SidebarLabel>
-          </SidebarItem>
-        </SidebarGroup>
-
-        <SidebarDivider isCollapsed={isCollapsed} />
-
         {/* Level 1: Components with view toggle */}
         <SidebarGroup
           title="Components"

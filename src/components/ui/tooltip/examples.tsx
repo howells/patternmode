@@ -7,7 +7,7 @@ import { Button } from "../button";
 export function TooltipExample() {
   return (
     <Tooltip content="This is a tooltip">
-      <Button>Hover me</Button>
+      <span>Hover me</span>
     </Tooltip>
   );
 }
@@ -16,16 +16,16 @@ export function PositionsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Top tooltip" side="top">
-        <Button>Top</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Top</span>
       </Tooltip>
       <Tooltip content="Right tooltip" side="right">
-        <Button>Right</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Right</span>
       </Tooltip>
       <Tooltip content="Bottom tooltip" side="bottom">
-        <Button>Bottom</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Bottom</span>
       </Tooltip>
       <Tooltip content="Left tooltip" side="left">
-        <Button>Left</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Left</span>
       </Tooltip>
     </div>
   );
@@ -35,13 +35,13 @@ export function VariantsExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Default tooltip" variant="default">
-        <Button>Default</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Default</span>
       </Tooltip>
       <Tooltip content="Dark tooltip" variant="dark">
-        <Button variant="secondary">Dark</Button>
+        <span className="px-3 py-2 bg-gray-200 rounded cursor-pointer">Dark</span>
       </Tooltip>
       <Tooltip content="Light tooltip" variant="light">
-        <Button variant="outline">Light</Button>
+        <span className="px-3 py-2 bg-gray-50 border rounded cursor-pointer">Light</span>
       </Tooltip>
     </div>
   );
@@ -51,10 +51,10 @@ export function SizesExample() {
   return (
     <div className="flex gap-4">
       <Tooltip content="Small tooltip" size="sm">
-        <Button size="sm">Small</Button>
+        <span className="px-2 py-1 text-sm bg-gray-100 rounded cursor-pointer">Small</span>
       </Tooltip>
       <Tooltip content="Default size tooltip" size="default">
-        <Button>Default</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Default</span>
       </Tooltip>
     </div>
   );
@@ -63,7 +63,7 @@ export function SizesExample() {
 export function NoArrowExample() {
   return (
     <Tooltip content="Tooltip without arrow" showArrow={false}>
-      <Button>No Arrow</Button>
+      <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">No Arrow</span>
     </Tooltip>
   );
 }
@@ -80,7 +80,7 @@ export function RichContentExample() {
         </div>
       }
     >
-      <Button>Rich Content</Button>
+      <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Rich Content</span>
     </Tooltip>
   );
 }
@@ -95,7 +95,7 @@ export function ControlledExample() {
         open={open}
         onOpenChange={setOpen}
       >
-        <Button>Controlled Tooltip</Button>
+        <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Controlled Tooltip</span>
       </Tooltip>
       <Button onClick={() => setOpen(!open)}>
         Toggle: {open ? 'Open' : 'Closed'}

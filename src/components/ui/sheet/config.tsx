@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { SheetExample, DefaultExample, SidesExample } from "./examples";
+import { DefaultExample, SidesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "sheet",
@@ -15,16 +15,15 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
+  Drawer as Sheet,
+  DrawerClose as SheetClose,
+  DrawerContent as SheetContent,
+  DrawerDescription as SheetDescription,
+  DrawerFooter as SheetFooter,
+  DrawerHeader as SheetHeader,
+  DrawerTitle as SheetTitle,
+  DrawerTrigger as SheetTrigger
 } from "@/components/ui/sheet/sheet";`,
-  componentId: "SheetExample",
   props: [
     {
       name: "side",

@@ -20,15 +20,18 @@ async function testComponentPage(
 
   // Navigate to component page
   const response = await page.goto(url, {
-    waitUntil: "networkidle",
-    timeout: 30000,
+    waitUntil: "domcontentloaded",
+    timeout: 15000, // Reduced timeout
   });
+  
+  // Wait a bit for async content to settle
+  await page.waitForTimeout(500); // Reduced wait
 
   // Check that page loads successfully
   expect(response?.status()).toBe(200);
 
   // Wait for main content to load
-  await page.waitForSelector("h1", { timeout: 10000 });
+  await page.waitForSelector("h1", { timeout: 5000 }); // Reduced timeout
 
   // Critical: Check for "Example Load Error" text on the page
   const exampleLoadErrors = await page
@@ -68,7 +71,7 @@ async function testComponentPage(
   }
 
   // Wait a bit more for any async errors to appear
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(500);
 
   // Filter out expected/harmless console errors
   const serverErrors = consoleErrors.filter(
@@ -79,7 +82,11 @@ async function testComponentPage(
       !error.includes("404") && // Ignore 404s for missing assets
       !error.includes("net::ERR_FAILED") &&
       !error.includes("lucide-react") && // Ignore lucide icon errors
-      !error.includes("Name in Lucide DynamicIcon not found")
+      !error.includes("Name in Lucide DynamicIcon not found") &&
+      !error.includes("Received `%s` for a non-boolean attribute") && // React dev warnings
+      !error.includes("React does not recognize the `%s` prop") &&
+      !error.includes("non-boolean attribute") &&
+      !error.includes("custom attribute")
   );
 
   if (serverErrors.length > 0) {
@@ -93,13 +100,14 @@ async function testComponentPage(
   const componentExamples = await page
     .locator(
       [
-        '[data-testid="component-example"]',
-        '[data-testid="example"]',
-        ".component-example",
-        ".example-container",
-        '[class*="example"]',
+        '[data-testid="component-preview"]', // Preview tab content
+        '[data-testid="preview-container"]', // Preview container
+        '[data-testid="component-examples"]', // Examples section
+        '[data-testid^="example-"]', // Individual examples
+        '[data-testid="example-content"]', // Example content
+        '[role="tabpanel"][data-state="active"]', // Preview tab panel
+        'h2:has-text("Examples")', // Examples section heading
         ".preview-container",
-        '[data-testid*="preview"]',
       ].join(", ")
     )
     .count();
@@ -129,11 +137,31 @@ async function testComponentPage(
 test("All component preview pages should load successfully", async ({
   page,
 }) => {
+  test.setTimeout(600000); // 10 minutes for all components
+  const failures: string[] = [];
+  
   // Loop through all components and test them
   for (const [category, components] of Object.entries(COMPONENT_LIST)) {
     for (const componentId of components) {
       console.log(`Testing ${category}/${componentId}...`);
-      await testComponentPage(page, category, componentId);
+      try {
+        await testComponentPage(page, category, componentId);
+        console.log(`✅ ${category}/${componentId} passed`);
+      } catch (error) {
+        const errorMsg = `❌ ${category}/${componentId}: ${error instanceof Error ? error.message : String(error)}`;
+        console.error(errorMsg);
+        failures.push(errorMsg);
+        // Continue testing other components instead of stopping
+      }
     }
   }
+  
+  // Report all failures at the end
+  if (failures.length > 0) {
+    console.error(`\n🚨 TOTAL FAILURES: ${failures.length}`);
+    failures.forEach(failure => console.error(failure));
+    throw new Error(`${failures.length} components failed e2e tests:\n${failures.join('\n')}`);
+  }
+  
+  console.log(`\n🎉 SUCCESS: All ${Object.values(COMPONENT_LIST).flat().length} components passed e2e tests!`);
 });

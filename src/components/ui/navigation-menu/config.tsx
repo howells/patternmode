@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { NavigationMenuExample, DefaultExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "navigation-menu",
@@ -20,7 +20,6 @@ export const componentConfig: ComponentConfig = {
   NavigationMenuLink,
   NavigationMenuTrigger
 } from "@/components/ui/navigation-menu/navigation-menu";`,
-  componentId: "NavigationMenuExample",
   props: [
   ],
   examples: [

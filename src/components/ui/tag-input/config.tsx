@@ -15,7 +15,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@downshift-js/downshift",
   },
   importStatement: `import { TagInput } from "@/components/ui/tag-input";`,
-  componentId: "TagInputExample",
   props: [
     {
       name: "options",

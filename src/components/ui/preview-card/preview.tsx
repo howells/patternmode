@@ -12,7 +12,7 @@ import {
   PreviewCardTrigger,
 } from "./preview-card";
 
-export function Example() {
+export function PreviewCardExample() {
   return (
     <div className="flex justify-center p-8">
       <PreviewCard>

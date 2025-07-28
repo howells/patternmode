@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { PreviewCardExample, DefaultExample, WithImageExample } from "./examples";
+import { PreviewCardExample, DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "preview-card",

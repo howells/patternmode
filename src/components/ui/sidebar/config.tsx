@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { SidebarExample, DefaultExample, WithSubmenuExample } from "./examples";
+import { DefaultExample, WithSubmenuExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "sidebar",
@@ -16,23 +16,15 @@ export const componentConfig: ComponentConfig = {
   },
   importStatement: `import {
   Sidebar,
-  SidebarContent,
+  SidebarBody,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarProvider,
-  SidebarTrigger
+  SidebarItem,
+  SidebarLabel,
+  SidebarToggle,
+  SidebarDivider
 } from "@/components/ui/sidebar/sidebar";`,
-  componentId: "SidebarExample",
   props: [],
   examples: [
     {

@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Radio } from "@/components/ui/radio/radio";`,
-  componentId: "RadioExample",
   props: [
     {
       name: "checked",

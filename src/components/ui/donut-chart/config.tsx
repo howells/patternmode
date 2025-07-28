@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "recharts",
   },
   importStatement: `import { DonutChart } from "@/components/ui/donut-chart/donut-chart";`,
-  componentId: "DefaultExample",
 
   props: [
     {

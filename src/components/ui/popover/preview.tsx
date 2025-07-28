@@ -34,7 +34,7 @@ export function PopoverExample({
       {/* Basic popover */}
       <div className="flex justify-center">
         <Popover>
-          <PopoverTrigger render={<Button />}>Open Popover</PopoverTrigger>
+          <PopoverTrigger>Open Popover</PopoverTrigger>
           <PopoverContent side={side} align={align} sideOffset={sideOffset}>
             {showArrow && <PopoverArrow />}
             <div className="space-y-2">
@@ -70,9 +70,7 @@ export function PopoverExample({
       {/* Position examples */}
       <div className="flex justify-center gap-4">
         <Popover>
-          <PopoverTrigger render={<Button />}>
-            <Button size="sm">Top</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>Top</PopoverTrigger>
           <PopoverContent side="top">
             <PopoverTitle>Top Position</PopoverTitle>
             <PopoverDescription>
@@ -82,9 +80,7 @@ export function PopoverExample({
         </Popover>
 
         <Popover>
-          <PopoverTrigger render={<Button />}>
-            <Button size="sm">Right</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>Right</PopoverTrigger>
           <PopoverContent side="right">
             <PopoverTitle>Right Position</PopoverTitle>
             <PopoverDescription>
@@ -94,9 +90,7 @@ export function PopoverExample({
         </Popover>
 
         <Popover>
-          <PopoverTrigger render={<Button />}>
-            <Button size="sm">Bottom</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>Bottom</PopoverTrigger>
           <PopoverContent side="bottom">
             <PopoverTitle>Bottom Position</PopoverTitle>
             <PopoverDescription>
@@ -106,9 +100,7 @@ export function PopoverExample({
         </Popover>
 
         <Popover>
-          <PopoverTrigger render={<Button />}>
-            <Button size="sm">Left</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>Left</PopoverTrigger>
           <PopoverContent side="left">
             <PopoverTitle>Left Position</PopoverTitle>
             <PopoverDescription>
@@ -121,9 +113,7 @@ export function PopoverExample({
       {/* Rich content example */}
       <div className="flex justify-center">
         <Popover>
-          <PopoverTrigger render={<Button />}>
-            <Button>User Menu</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>User Menu</PopoverTrigger>
           <PopoverContent className="w-80">
             <div className="space-y-3">
               <div>
@@ -158,9 +148,7 @@ export function PopoverExample({
       {/* Controlled example */}
       <div className="flex justify-center gap-4">
         <Popover open={controlledOpen} onOpenChange={setControlledOpen}>
-          <PopoverTrigger render={<Button />}>
-            <Button>Controlled</Button>
-          </PopoverTrigger>
+          <PopoverTrigger>Controlled</PopoverTrigger>
           <PopoverContent>
             <PopoverTitle>Controlled State</PopoverTitle>
             <PopoverDescription>

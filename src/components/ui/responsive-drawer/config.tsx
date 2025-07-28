@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { ResponsiveDrawerExample, DefaultExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "responsive-drawer",
@@ -16,13 +16,15 @@ export const componentConfig: ComponentConfig = {
   },
   importStatement: `import {
   ResponsiveDrawer,
+  ResponsiveDrawerBody,
+  ResponsiveDrawerClose,
   ResponsiveDrawerContent,
   ResponsiveDrawerDescription,
+  ResponsiveDrawerFooter,
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger
 } from "@/components/ui/responsive-drawer/responsive-drawer";`,
-  componentId: "ResponsiveDrawerExample",
   props: [
     {
       name: "open",

@@ -10,7 +10,7 @@ export function Example({
 }: { 
   variant?: "default" | "outline";
   size?: "default" | "sm" | "lg";
-  [key: string]: any;
+  [key: string]: unknown;
 }) {
   const [isPressed, setIsPressed] = useState(false);
 

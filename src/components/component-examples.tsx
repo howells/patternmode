@@ -40,16 +40,16 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
   }
 
   return (
-    <VStack className="p-6">
+    <VStack className="p-6" data-testid="component-examples">
       <Subheading level={2}>Examples</Subheading>
       {config.examples.map((example, index) => (
-        <Card key={example.id} padding={0}>
+        <Card key={example.id} padding={0} data-testid={`example-${example.id}`}>
           <CardHeader border>
             <Subheading level={3}>{example.title}</Subheading>
             <Text>{example.description}</Text>
           </CardHeader>
 
-          <CardContent>
+          <CardContent data-testid="example-content">
             <ComponentExampleRenderer
               componentId={componentId}
               exampleId={example.id}

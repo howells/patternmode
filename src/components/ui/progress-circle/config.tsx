@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { ProgressCircleExample, DefaultExample, SmallExample, LargeExample, WithLabelExample, IndeterminateExample } from "./examples";
+import { DefaultExample, SmallExample, LargeExample, WithLabelExample, IndeterminateExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "progress-circle",
@@ -14,7 +14,6 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { ProgressCircle } from "@/components/ui/progress-circle/progress-circle";`,
-  componentId: "ProgressCircleExample",
   props: [
     {
       name: "value",

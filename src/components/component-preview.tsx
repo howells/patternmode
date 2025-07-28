@@ -329,22 +329,31 @@ export function ComponentPreview({
 
   return (
     <Tabs defaultValue="preview">
-      <VStack gap={6}>
-        <div>
+      <div className="relative">
+        {/* Floating tabs in top-left */}
+        <div className="absolute top-0 left-0 z-10">
           <TabsList variant="solid">
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="preview">
-          <div className="flex justify-center">{renderComponent()}</div>
+
+        <TabsContent value="preview" data-testid="component-preview">
+          <div
+            className="flex justify-center pt-12"
+            data-testid="preview-container"
+          >
+            {renderComponent()}
+          </div>
         </TabsContent>
         <TabsContent value="code">
-          <CodeBlock language="tsx">
-            {generateLiveCode(getComponentName(componentId), componentProps)}
-          </CodeBlock>
+          <div className="pt-12">
+            <CodeBlock language="tsx">
+              {generateLiveCode(getComponentName(componentId), componentProps)}
+            </CodeBlock>
+          </div>
         </TabsContent>
-      </VStack>
+      </div>
     </Tabs>
   );
 }

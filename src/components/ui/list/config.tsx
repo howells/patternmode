@@ -11,7 +11,6 @@ export const componentConfig: ComponentConfig = {
   icon: "List",
 
   importStatement: `import { List, ListItem, ListIndicator } from "@/components/ui/list";`,
-  componentId: "ListExample",
   props: [
     {
       name: "variant",

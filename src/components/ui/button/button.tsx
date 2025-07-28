@@ -621,6 +621,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       ),
       disabled: disabled || isLoading,
       type: "button",
+      "data-testid": "ui-button",
       children: renderButtonContent(),
     };
 

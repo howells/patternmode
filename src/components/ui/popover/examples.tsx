@@ -15,7 +15,7 @@ import { Button } from "../button/button";
 export function PopoverExample() {
   return (
     <Popover>
-      <PopoverTrigger render={<Button />}>Open Popover</PopoverTrigger>
+      <PopoverTrigger>Open Popover</PopoverTrigger>
       <PopoverContent>
         <PopoverTitle>Popover Title</PopoverTitle>
         <PopoverDescription>
@@ -30,7 +30,7 @@ export function DefaultExample() {
   return (
     <div className="flex gap-4">
       <Popover>
-        <PopoverTrigger render={<Button />}>Top</PopoverTrigger>
+        <PopoverTrigger>Top</PopoverTrigger>
         <PopoverContent side="top">
           <PopoverTitle>Top Popover</PopoverTitle>
           <PopoverDescription>
@@ -40,7 +40,7 @@ export function DefaultExample() {
       </Popover>
 
       <Popover>
-        <PopoverTrigger render={<Button />}>Bottom</PopoverTrigger>
+        <PopoverTrigger>Bottom</PopoverTrigger>
         <PopoverContent side="bottom">
           <PopoverTitle>Bottom Popover</PopoverTitle>
           <PopoverDescription>
@@ -50,7 +50,7 @@ export function DefaultExample() {
       </Popover>
 
       <Popover>
-        <PopoverTrigger render={<Button />}>Right</PopoverTrigger>
+        <PopoverTrigger>Right</PopoverTrigger>
         <PopoverContent side="right">
           <PopoverTitle>Right Popover</PopoverTitle>
           <PopoverDescription>
@@ -65,7 +65,7 @@ export function DefaultExample() {
 export function PositionsExample() {
   return (
     <Popover>
-      <PopoverTrigger render={<Button />}>With Arrow</PopoverTrigger>
+      <PopoverTrigger>With Arrow</PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverTitle>Popover with Arrow</PopoverTitle>
@@ -80,7 +80,7 @@ export function PositionsExample() {
 export function WithArrowExample() {
   return (
     <Popover>
-      <PopoverTrigger render={<Button />}>With Close Button</PopoverTrigger>
+      <PopoverTrigger>With Close Button</PopoverTrigger>
       <PopoverContent>
         <div className="flex items-start justify-between">
           <PopoverTitle>Settings</PopoverTitle>
@@ -108,7 +108,7 @@ export function WithArrowExample() {
 export function WithCloseExample() {
   return (
     <Popover>
-      <PopoverTrigger render={<Button />}>User Menu</PopoverTrigger>
+      <PopoverTrigger>User Menu</PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="space-y-3">
           <div>
@@ -118,22 +118,22 @@ export function WithCloseExample() {
 
           <div className="border-t pt-3">
             <div className="space-y-2">
-              <button className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100">
+              <div className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100 cursor-pointer">
                 Profile Settings
-              </button>
-              <button className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100">
+              </div>
+              <div className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100 cursor-pointer">
                 Billing
-              </button>
-              <button className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100">
+              </div>
+              <div className="flex w-full items-center rounded px-2 py-1.5 text-sm hover:bg-zinc-100 cursor-pointer">
                 Team
-              </button>
+              </div>
             </div>
           </div>
 
           <div className="border-t pt-3">
-            <button className="flex w-full items-center rounded px-2 py-1.5 text-sm text-red-600 hover:bg-red-50">
+            <div className="flex w-full items-center rounded px-2 py-1.5 text-sm text-red-600 hover:bg-red-50 cursor-pointer">
               Sign out
-            </button>
+            </div>
           </div>
         </div>
       </PopoverContent>
@@ -147,16 +147,16 @@ export function RichContentExample() {
   return (
     <div className="space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger render={<Button />}>Controlled Popover</PopoverTrigger>
+        <PopoverTrigger>Controlled Popover</PopoverTrigger>
         <PopoverContent>
           <PopoverTitle>Controlled State</PopoverTitle>
           <PopoverDescription>
             This popover's open state is controlled externally.
           </PopoverDescription>
           <div className="mt-3">
-            <Button onClick={() => setOpen(false)} size="sm">
+            <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm bg-zinc-100 hover:bg-zinc-200 rounded-md">
               Close from inside
-            </Button>
+            </button>
           </div>
         </PopoverContent>
       </Popover>
@@ -174,16 +174,16 @@ export function ControlledExample() {
   return (
     <div className="space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger render={<Button />}>Controlled Popover</PopoverTrigger>
+        <PopoverTrigger>Controlled Popover</PopoverTrigger>
         <PopoverContent>
           <PopoverTitle>Controlled State</PopoverTitle>
           <PopoverDescription>
             This popover's open state is controlled externally.
           </PopoverDescription>
           <div className="mt-3">
-            <Button onClick={() => setOpen(false)} size="sm">
+            <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm bg-zinc-100 hover:bg-zinc-200 rounded-md">
               Close from inside
-            </Button>
+            </button>
           </div>
         </PopoverContent>
       </Popover>
