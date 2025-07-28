@@ -33,11 +33,19 @@ const iconComponentCache = new Map<
 >();
 
 function getStableIconComponent(iconName: string | undefined) {
-  if (!iconName) return null;
+  if (!iconName || typeof iconName !== "string" || iconName.trim() === "") {
+    return null;
+  }
 
   if (!iconComponentCache.has(iconName)) {
-    const IconComponent = getDynamicIconByName(iconName);
-    iconComponentCache.set(iconName, IconComponent);
+    try {
+      const IconComponent = getDynamicIconByName(iconName);
+      iconComponentCache.set(iconName, IconComponent);
+    } catch (error) {
+      // If icon loading fails, cache null to prevent repeated attempts
+      console.warn(`Failed to load icon "${iconName}":`, error);
+      iconComponentCache.set(iconName, null);
+    }
   }
 
   return iconComponentCache.get(iconName) || null;

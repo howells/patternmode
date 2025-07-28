@@ -60,7 +60,7 @@ const Block = ({
 Block.displayName = "Block";
 
 interface TrackerProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: TrackerBlockProps[];
+  data: TrackerBlockProps[] | string;
   defaultBackgroundColor?: string;
   hoverEffect?: boolean;
 }
@@ -76,18 +76,33 @@ const Tracker = React.forwardRef<HTMLDivElement, TrackerProps>(
     },
     forwardedRef
   ) => {
+    // Handle prop transformation - convert string to array if needed
+    let trackerData: TrackerBlockProps[];
+    
+    if (typeof data === 'string') {
+      try {
+        trackerData = JSON.parse(data);
+      } catch {
+        trackerData = [];
+      }
+    } else if (Array.isArray(data)) {
+      trackerData = data;
+    } else {
+      trackerData = [];
+    }
+
     return (
       <div
         ref={forwardedRef}
         className={cx("group flex h-8 w-full items-center", className)}
         {...props}
       >
-        {data.map((props, index) => (
+        {trackerData.map((blockProps, index) => (
           <Block
-            key={props.key ?? index}
+            key={blockProps.key ?? index}
             defaultBackgroundColor={defaultBackgroundColor}
             hoverEffect={hoverEffect}
-            {...props}
+            {...blockProps}
           />
         ))}
       </div>

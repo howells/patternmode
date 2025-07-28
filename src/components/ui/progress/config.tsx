@@ -1,6 +1,6 @@
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
+import React from "react";
 import { ProgressExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
@@ -8,37 +8,38 @@ export const componentConfig: ComponentConfig = {
   name: "Progress",
   description: "A progress bar component showing completion status.",
   category: "feedback" as const,
-  icon: "Progress",
+  icon: "BarChart3",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Progress } from "@/components/ui/progress/progress";`,
+  componentId: "progress",
   props: [
     {
       name: "value",
       type: "number",
       defaultValue: 50,
-      description: "The progress value (0-100)."
+      description: "The progress value (0-100).",
     },
     {
       name: "variant",
       type: "select",
       options: ["default", "success", "warning", "error"],
       defaultValue: "default",
-      description: "The visual style variant."
+      description: "The visual style variant.",
     },
     {
       name: "showAnimation",
       type: "boolean",
       defaultValue: true,
-      description: "Show animation on progress change."
+      description: "Show animation on progress change.",
     },
     {
       name: "showValue",
       type: "boolean",
       defaultValue: false,
-      description: "Show the progress value as text."
+      description: "Show the progress value as text.",
     },
   ],
   examples: [
@@ -46,6 +47,7 @@ export const componentConfig: ComponentConfig = {
       id: "progress",
       title: "Basic Progress",
       description: "A progress bar component showing completion status.",
-      code: jsxToString(<ProgressExample />)}
-  ]
+      code: jsxToString(<ProgressExample />),
+    },
+  ],
 };

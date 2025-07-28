@@ -1,16 +1,14 @@
 /**
  * Grid Components
  *
- * A flexible grid system for creating responsive layouts with visual guides.
- * Provides CSS Grid-based components with support for responsive breakpoints,
- * customizable spacing, and optional visual guides for design alignment.
+ * A flexible grid system for creating responsive layouts.
+ * Provides CSS Grid-based components with support for responsive breakpoints
+ * and customizable spacing.
  *
  * Features:
  * - Responsive grid columns and rows
- * - Visual column and row guides
  * - Grid cell positioning and spanning
  * - Auto-generated numbered cells
- * - Customizable styling variants
  * - TypeScript support for responsive values
  *
  * @example
@@ -23,19 +21,6 @@
  *   <GridCell>Item 4</GridCell>
  * </Grid>
  *
- * // Grid with visual guides
- * <Grid
- *   columns={6}
- *   rows={4}
- *   showColumnGuides
- *   showRowGuides
- *   minHeight="lg"
- * >
- *   <GridCell>Header</GridCell>
- *   <GridCell colSpan={4} rowSpan={2}>Main Content</GridCell>
- *   <GridCell>Content</GridCell>
- * </Grid>
- *
  * // Auto-generated grid
  * <GridAuto
  *   columns={5}
@@ -44,24 +29,10 @@
  * />
  *
  * // Layout grid
- * <Grid columns={12} gap={2} showColumnGuides={false}>
+ * <Grid columns={12} gap={2}>
  *   <GridCell colSpan={3}>Sidebar</GridCell>
  *   <GridCell colSpan={9}>Main Content</GridCell>
  *   <GridCell colSpan={12}>Footer</GridCell>
- * </Grid>
- *
- * // Design system grid
- * <Grid
- *   columns={8}
- *   rows={6}
- *   gap={3}
- *   showColumnGuides
- *   showRowGuides
- *   className="bg-zinc-50"
- * >
- *   <GridCell colStart={2} colSpan={2} rowStart={2}>Component A</GridCell>
- *   <GridCell colStart={5} colSpan={3} rowStart={1} rowSpan={3}>Component B</GridCell>
- *   <GridCell colStart={1} colSpan={4} rowStart={4}>Component C</GridCell>
  * </Grid>
  * ```
  */
@@ -93,23 +64,10 @@ type ResponsiveValue<T> =
       "2xl"?: T;
     };
 
-// Grid variants
+// Grid variants - simplified without guides
 const gridVariants = tv({
-  base: [
-    "relative w-full h-full",
-    // Grid background pattern
-    "bg-[linear-gradient(to_right,_rgb(226_232_240)_1px,_transparent_1px),linear-gradient(to_bottom,_rgb(226_232_240)_1px,_transparent_1px)]",
-    "dark:bg-[linear-gradient(to_right,_rgb(51_65_85)_1px,_transparent_1px),linear-gradient(to_bottom,_rgb(51_65_85)_1px,_transparent_1px)]",
-  ],
+  base: "relative w-full",
   variants: {
-    showColumnGuides: {
-      true: "",
-      false: "bg-none",
-    },
-    showRowGuides: {
-      true: "",
-      false: "[background-image:none]",
-    },
     minHeight: {
       none: "",
       sm: "min-h-[100px]",
@@ -118,29 +76,8 @@ const gridVariants = tv({
       xl: "min-h-[400px]",
     },
   },
-  compoundVariants: [
-    {
-      showColumnGuides: false,
-      showRowGuides: false,
-      class: "bg-none [background-image:none]",
-    },
-    {
-      showColumnGuides: false,
-      showRowGuides: true,
-      class:
-        "bg-[linear-gradient(to_bottom,_rgb(226_232_240)_1px,_transparent_1px)] dark:bg-[linear-gradient(to_bottom,_rgb(51_65_85)_1px,_transparent_1px)]",
-    },
-    {
-      showColumnGuides: true,
-      showRowGuides: false,
-      class:
-        "bg-[linear-gradient(to_right,_rgb(226_232_240)_1px,_transparent_1px)] dark:bg-[linear-gradient(to_right,_rgb(51_65_85)_1px,_transparent_1px)]",
-    },
-  ],
   defaultVariants: {
-    showColumnGuides: true,
-    showRowGuides: true,
-    minHeight: "md",
+    minHeight: "none",
   },
 });
 
@@ -173,12 +110,10 @@ const generateResponsiveGridStyles = (
           const prefix =
             breakpoints[breakpoint as keyof typeof breakpoints] || "";
           styles.push(`${prefix}grid-cols-${value}`);
-          styles.push(`${prefix}[background-size:${100 / value}%_20px]`);
         }
       });
     } else {
       styles.push(`grid-cols-${columns}`);
-      styles.push(`[background-size:${100 / columns}%_20px]`);
     }
   }
 
@@ -200,28 +135,10 @@ const generateResponsiveGridStyles = (
   return styles.join(" ");
 };
 
-// Helper function to get base value for variants
-const getBaseValue = <T,>(
-  value: ResponsiveValue<T> | undefined
-): T | undefined => {
-  if (!value) return undefined;
-  if (typeof value === "object" && value !== null) {
-    const responsiveObj = value as {
-      sm?: T;
-      md?: T;
-      lg?: T;
-      xl?: T;
-      "2xl"?: T;
-    };
-    return responsiveObj.sm || responsiveObj.md || responsiveObj.lg;
-  }
-  return value as T;
-};
-
 /**
  * Props for the Grid component.
  *
- * Configuration for responsive grid layouts with visual guides and spacing.
+ * Configuration for responsive grid layouts with spacing.
  *
  * @interface GridProps
  * @extends React.HTMLAttributes<HTMLDivElement>
@@ -233,10 +150,6 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   rows?: ResponsiveValue<number>;
   /** Gap between grid items (Tailwind spacing scale) */
   gap?: number;
-  /** Whether to show visual column guide lines */
-  showColumnGuides?: boolean;
-  /** Whether to show visual row guide lines */
-  showRowGuides?: boolean;
   /** Grid content including GridCell components */
   children?: React.ReactNode;
   /** Minimum height constraint for the grid */
@@ -246,14 +159,12 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Root grid component for creating responsive CSS Grid layouts.
  *
- * Provides a flexible grid system with optional visual guides for design alignment.
- * Supports responsive column and row configurations with customizable spacing.
+ * Provides a flexible grid system with responsive column and row configurations
+ * and customizable spacing.
  *
  * @param columns - Number of columns (responsive)
  * @param rows - Number of rows (responsive)
  * @param gap - Gap between grid items
- * @param showColumnGuides - Show visual column guides
- * @param showRowGuides - Show visual row guides
  * @param minHeight - Minimum height constraint
  * @param className - Additional CSS classes
  * @param children - Grid content
@@ -268,14 +179,8 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
  *   <GridCell>Item 3</GridCell>
  * </Grid>
  *
- * // Design system grid with guides
- * <Grid
- *   columns={12}
- *   rows={8}
- *   showColumnGuides
- *   showRowGuides
- *   minHeight="lg"
- * >
+ * // Layout grid
+ * <Grid columns={12} rows={8} minHeight="lg">
  *   <GridCell colSpan={3}>Sidebar</GridCell>
  *   <GridCell colSpan={9}>Main</GridCell>
  * </Grid>
@@ -287,11 +192,9 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       columns = 6,
       rows,
       gap = 4,
-      showColumnGuides = true,
-      showRowGuides = true,
       className,
       children,
-      minHeight = "md",
+      minHeight = "none",
       ...props
     },
     ref
@@ -304,11 +207,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
         className={cx(
           "grid",
           `gap-${gap}`,
-          gridVariants({
-            showColumnGuides,
-            showRowGuides,
-            minHeight,
-          }),
+          gridVariants({ minHeight }),
           responsiveGridStyles,
           className
         )}
@@ -445,8 +344,6 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * <GridAuto
  *   columns={8}
  *   cellCount={24}
- *   showColumnGuides
- *   showRowGuides
  *   gap={2}
  *   renderCell={(index) => `${index + 1}`}
  * />

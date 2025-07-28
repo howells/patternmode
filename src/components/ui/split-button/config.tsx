@@ -1,17 +1,21 @@
-import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { SplitButtonExample, DefaultExample, WithIconsExample } from "./examples";
+import React from "react";
+import {
+  DefaultExample,
+  SplitButtonExample,
+  WithIconsExample,
+} from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "split-button",
   name: "Split Button",
   description: "A button with a dropdown menu for secondary actions.",
   category: "inputs" as const,
-  icon: "Split",
+  icon: "SeparatorVertical",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { SplitButton } from "@/components/ui/split-button/split-button";`,
   componentId: "SplitButtonExample",
@@ -21,20 +25,20 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       description: "Button variant",
       options: ["default", "outline", "ghost", "destructive"],
-      defaultValue: "default"
+      defaultValue: "default",
     },
     {
       name: "size",
       type: "select",
       description: "Button size",
       options: ["sm", "md", "lg"],
-      defaultValue: "md"
+      defaultValue: "md",
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the button is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
   examples: [
@@ -50,5 +54,5 @@ export const componentConfig: ComponentConfig = {
       description: "Split button with icons in menu items",
       code: jsxToString(<WithIconsExample />),
     },
-  ]
+  ],
 };

@@ -218,17 +218,30 @@ export function SidebarGroup({
 
     const groupButton = (
       <span className="relative block px-2">
-        <Button
-          render={href ? <Link href={href} /> : undefined}
-          variant="inverse-ghost"
-          shadow={false}
-          icon={GroupIcon}
-          fullWidth={false}
-          size="icon-sm"
-          textAlign="center"
-        >
-          {/* Content hidden when collapsed, icon shown via icon prop */}
-        </Button>
+        {href ? (
+          <Link
+            href={href}
+            className={cx(
+              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
+              "h-8 w-8 rounded-md",
+              "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
+              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+              "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300"
+            )}
+          >
+            <GroupIcon className="size-4" strokeWidth={1.5} />
+          </Link>
+        ) : (
+          <div
+            className={cx(
+              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium",
+              "h-8 w-8 rounded-md",
+              "text-zinc-700 dark:text-zinc-300"
+            )}
+          >
+            <GroupIcon className="size-4" strokeWidth={1.5} />
+          </div>
+        )}
       </span>
     );
 
@@ -314,16 +327,20 @@ export const SidebarItem = forwardRef<
     icon,
     leftIcon: LeftIcon,
     tooltipDelay = 0,
+    onClick,
     ...props
   },
   ref
 ) {
   const [isNavigating, setIsNavigating] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     if (href) {
       setIsNavigating(true);
       setTimeout(() => setIsNavigating(false), 150);
+    }
+    if (onClick) {
+      onClick(e as React.MouseEvent<HTMLButtonElement>);
     }
   };
 
@@ -348,6 +365,79 @@ export const SidebarItem = forwardRef<
       </span>
     );
 
+  // For collapsed state with tooltip, create a simple element to avoid nested buttons
+  if (isCollapsed && typeof children === "string") {
+    // Safely render icon with proper error handling
+    const renderIcon = (
+      IconComponent:
+        | React.ComponentType<{ className?: string; strokeWidth?: number }>
+        | null
+        | undefined
+    ) => {
+      if (!IconComponent || typeof IconComponent !== "function") {
+        return null;
+      }
+
+      try {
+        return React.createElement(IconComponent, {
+          className: "size-4",
+          strokeWidth: 1.5,
+        });
+      } catch (error) {
+        // Silently catch any icon rendering errors
+        console.warn("Icon rendering failed:", error);
+        return null;
+      }
+    };
+
+    const collapsedElement = href ? (
+      <Link
+        href={href}
+        onClick={handleClick}
+        className={cx(
+          "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
+          "h-8 w-8 rounded-md",
+          "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
+          "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+          "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300"
+        )}
+      >
+        {renderIcon(icon || LeftIcon)}
+      </Link>
+    ) : (
+      <button
+        onClick={handleClick}
+        className={cx(
+          "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
+          "h-8 w-8 rounded-md",
+          "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
+          "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+          "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300"
+        )}
+        {...props}
+      >
+        {renderIcon(icon || LeftIcon)}
+      </button>
+    );
+
+    return (
+      <span
+        className={cx(className, "relative block px-2")}
+        data-component="SidebarItem"
+      >
+        <Tooltip
+          content={children}
+          side="right"
+          sideOffset={8}
+          delayDuration={tooltipDelay}
+        >
+          {collapsedElement}
+        </Tooltip>
+      </span>
+    );
+  }
+
+  // For expanded state or non-string children, use Button component
   const buttonElement = (
     <Button
       render={href ? <Link href={href} /> : undefined}
@@ -372,18 +462,7 @@ export const SidebarItem = forwardRef<
       className={cx(className, "relative block px-2")}
       data-component="SidebarItem"
     >
-      {isCollapsed && typeof children === "string" ? (
-        <Tooltip
-          content={children}
-          side="right"
-          sideOffset={8}
-          delayDuration={tooltipDelay}
-        >
-          {buttonElement}
-        </Tooltip>
-      ) : (
-        buttonElement
-      )}
+      {buttonElement}
     </span>
   );
 });

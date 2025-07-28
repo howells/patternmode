@@ -1,15 +1,15 @@
 "use client";
 
-import { 
-  Drawer as Sheet,
-  DrawerTrigger as SheetTrigger,
-  DrawerContent as SheetContent,
-  DrawerHeader as SheetHeader,
-  DrawerTitle as SheetTitle,
-  DrawerDescription as SheetDescription,
-  DrawerBody as SheetBody,
-  DrawerFooter as SheetFooter,
-  DrawerClose as SheetClose
+import {
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "./sheet";
 
 export function Example() {
@@ -35,16 +35,20 @@ export function Example() {
               </h3>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Application Name</label>
-                  <input 
-                    type="text" 
+                  <label className="block text-sm font-medium mb-1">
+                    Application Name
+                  </label>
+                  <input
+                    type="text"
                     className="w-full px-3 py-2 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
                     defaultValue="My App"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Description</label>
-                  <textarea 
+                  <label className="block text-sm font-medium mb-1">
+                    Description
+                  </label>
+                  <textarea
                     className="w-full px-3 py-2 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
                     rows={3}
                     defaultValue="A modern application built with React and TypeScript."
@@ -52,7 +56,7 @@ export function Example() {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-3">
                 Preferences

@@ -3,10 +3,12 @@
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
+import { Callout } from "@/components/ui/callout/callout";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card/card";
@@ -29,9 +31,6 @@ import {
   LucideIcon,
   MessageSquare,
   Package,
-  Palette,
-  Shield,
-  Zap,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -182,34 +181,34 @@ export default function Home() {
         </div>
 
         {/* Installation Section */}
-        <div>
+        <div className="p-6">
           <Heading level={2}>Installation</Heading>
 
           {/* Prerequisites */}
           <Card>
-            <CardHeader>
+            <CardHeader border={true}>
               <CardTitle>Prerequisites</CardTitle>
               <CardDescription>
                 Make sure you have the following installed before proceeding:
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <List variant="plain" align="center">
+              <List align="center">
                 <ListItem>
                   <ListIndicator icon={CheckCircle} />
                   Node.js 18.0.0 or higher
                 </ListItem>
                 <ListItem>
                   <ListIndicator icon={CheckCircle} />
-                  pnpm, npm, or yarn package manager
+                  pnpm package manager (recommended)
                 </ListItem>
                 <ListItem>
-                  <ListIndicator icon={CheckCircle} />A React project (Next.js,
-                  Vite, Create React App, etc.)
+                  <ListIndicator icon={CheckCircle} />A React 19+ project
+                  (Next.js, Vite, Create React App, etc.)
                 </ListItem>
                 <ListItem>
                   <ListIndicator icon={CheckCircle} />
-                  Tailwind CSS (recommended for styling)
+                  Tailwind CSS v4+ for styling
                 </ListItem>
               </List>
             </CardContent>
@@ -222,32 +221,28 @@ export default function Home() {
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 1</Badge>
-                  <CardTitle>Install Patternmode UI</CardTitle>
+                  <CardTitle>Clone or Copy Components</CardTitle>
                 </div>
                 <CardDescription>
-                  Install the main component library using your preferred
-                  package manager.
+                  This is a component library template. Copy the components you
+                  need into your project.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack gap={4}>
                   <div>
-                    <Text>Using pnpm (recommended):</Text>
+                    <Text>Clone the repository:</Text>
                     <CodeBlock language="bash">
-                      {`pnpm add @patternmode/react`}
+                      {`git clone https://github.com/your-org/patternmode.git
+cd patternmode`}
                     </CodeBlock>
                   </div>
                   <div>
-                    <Text>Using npm:</Text>
-                    <CodeBlock language="bash">
-                      {`npm install @patternmode/react`}
-                    </CodeBlock>
-                  </div>
-                  <div>
-                    <Text>Using yarn:</Text>
-                    <CodeBlock language="bash">
-                      {`yarn add @patternmode/react`}
-                    </CodeBlock>
+                    <Text>
+                      Or copy individual components from the{" "}
+                      <Code>src/components/ui/</Code> directory into your
+                      project.
+                    </Text>
                   </div>
                 </Stack>
               </CardContent>
@@ -258,36 +253,38 @@ export default function Home() {
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 2</Badge>
-                  <CardTitle>Install Peer Dependencies</CardTitle>
+                  <CardTitle>Install Required Dependencies</CardTitle>
                 </div>
                 <CardDescription>
-                  Install the required peer dependencies that Patternmode UI
-                  depends on.
+                  Install the peer dependencies that the components require to
+                  function.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack gap={4}>
-                  <Text>
-                    Patternmode UI requires several peer dependencies to
-                    function properly. Install them using your package manager:
-                  </Text>
+                  <Text>Install the required peer dependencies:</Text>
                   <CodeBlock language="bash">
-                    {`# Install peer dependencies
-pnpm add react react-dom @base-ui-components/react lucide-react recharts zod framer-motion`}
+                    {`# Core React dependencies (v19+)
+pnpm add react@^19.0.0 react-dom@^19.0.0
+
+# UI and component dependencies
+pnpm add @base-ui-components/react@^1.0.0 lucide-react@^0.525.0
+
+# Data visualization and charts
+pnpm add recharts@^3.1.0
+
+# Animation and validation
+pnpm add framer-motion@^12.23.0 zod@^4.0.0`}
                   </CodeBlock>
-                  <div>
-                    <div>
-                      <Package />
-                      <div>
-                        <Text>Why Peer Dependencies?</Text>
-                        <Text size="sm">
-                          Using peer dependencies prevents version conflicts and
-                          reduces bundle size by allowing your app to use its
-                          own versions of these packages.
-                        </Text>
-                      </div>
-                    </div>
-                  </div>
+                  <Callout
+                    title="Why These Dependencies?"
+                    variant="default"
+                    icon={Package}
+                  >
+                    These are peer dependencies that prevent version conflicts
+                    and allow your app to control the versions of these core
+                    packages.
+                  </Callout>
                 </Stack>
               </CardContent>
             </Card>
@@ -297,45 +294,49 @@ pnpm add react react-dom @base-ui-components/react lucide-react recharts zod fra
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 3</Badge>
-                  <CardTitle>
-                    Set Up Tailwind CSS (Optional but Recommended)
-                  </CardTitle>
+                  <CardTitle>Set Up Tailwind CSS v4</CardTitle>
                 </div>
                 <CardDescription>
-                  Configure Tailwind CSS for optimal styling and theming
-                  support.
+                  Configure Tailwind CSS v4 for styling support (required for
+                  components to work properly).
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack gap={4}>
                   <Text>
-                    While Patternmode UI works without Tailwind CSS, we highly
-                    recommend using it for the best experience and full theming
-                    capabilities.
+                    The components require Tailwind CSS v4 for styling. Install
+                    and configure it:
                   </Text>
                   <CodeBlock language="bash">
-                    {`# Install Tailwind CSS
-pnpm add -D tailwindcss postcss autoprefixer
+                    {`# Install Tailwind CSS v4
+pnpm add -D @tailwindcss/postcss tailwindcss
 
-# Initialize Tailwind CSS
-npx tailwindcss init -p`}
+# Add to your CSS file (e.g., globals.css)
+echo "@import 'tailwindcss';" > src/app/globals.css`}
                   </CodeBlock>
                   <Text>
-                    Then add the following to your{" "}
-                    <Code>tailwind.config.js</Code>:
+                    Update your <Code>postcss.config.js</Code>:
                   </Text>
                   <CodeBlock language="javascript">
-                    {`/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@patternmode/react/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
+                    {`module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
   },
-  plugins: [],
 }`}
+                  </CodeBlock>
+                  <Text>
+                    Add component paths to your <Code>tailwind.config.ts</Code>:
+                  </Text>
+                  <CodeBlock language="typescript">
+                    {`import type { Config } from 'tailwindcss'
+
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    // Add paths to copied components
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+} satisfies Config`}
                   </CodeBlock>
                 </Stack>
               </CardContent>
@@ -349,17 +350,19 @@ module.exports = {
                   <CardTitle>Import and Use Components</CardTitle>
                 </div>
                 <CardDescription>
-                  Start using Patternmode UI components in your React
-                  application.
+                  Start using the components in your React application.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack gap={4}>
                   <Text>
-                    You can now import and use any component from the library:
+                    Import components from your local components directory:
                   </Text>
                   <CodeBlock language="tsx">
-                    {`import { Button, Card, Heading } from '@patternmode/react';
+                    {`// Import from your copied components
+import { Button } from '@/components/ui/button/button';
+import { Card, CardContent } from '@/components/ui/card/card';
+import { Heading } from '@/components/ui/heading/heading';
 
 function App() {
   return (
@@ -367,7 +370,7 @@ function App() {
       <Heading level={1}>Welcome to My App</Heading>
       <Card>
         <CardContent className="p-6">
-          <p>This is a card component from Patternmode UI!</p>
+          <p>This is a card component from Patternmode!</p>
           <Button>Click me</Button>
         </CardContent>
       </Card>
@@ -375,6 +378,15 @@ function App() {
   );
 }`}
                   </CodeBlock>
+                  <Callout
+                    variant="warning"
+                    title="Don't Forget Dependencies"
+                    icon={ExternalLink}
+                  >
+                    Make sure to also copy the required utility files like{" "}
+                    <Code>@/lib/utils</Code>, <Code>@/lib/variants</Code>, and
+                    any hooks the components depend on.
+                  </Callout>
                 </Stack>
               </CardContent>
             </Card>
@@ -382,21 +394,18 @@ function App() {
         </div>
 
         {/* Next Steps */}
-        <Card>
-          <CardContent>
-            <Heading level={2}>What&apos;s Next?</Heading>
-            <Text size="lg">
-              Now that you have Patternmode UI installed, explore the components
-              and start building!
-            </Text>
-            <Stack direction="horizontal" gap={4}>
-              <Button render={<Link href="/ui" />}>
-                Browse Components
-                <ExternalLink />
-              </Button>
-            </Stack>
-          </CardContent>
-        </Card>
+        <div className="p-6">
+          <Subheading level={2}>What&apos;s Next?</Subheading>
+          <Text>
+            Now that you have the components set up, explore the available
+            components and start building!
+          </Text>
+          <HStack gap={4} className="mt-4">
+            <Button render={<Link href="/ui" />} rightIcon={ExternalLink}>
+              Browse Components
+            </Button>
+          </HStack>
+        </div>
       </Stack>
     </div>
   );

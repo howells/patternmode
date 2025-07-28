@@ -1,7 +1,7 @@
 /**
- * Sheet Components (Desktop Drawer)
+ * Sheet Components (Desktop Side Panel)
  *
- * A desktop-optimized drawer/sheet implementation built on Base UI Dialog.
+ * A desktop-optimized sheet implementation built on Base UI Dialog.
  * Provides side panel overlays that slide in from the right side of the screen,
  * perfect for detailed forms, settings panels, and navigation menus on desktop.
  *
@@ -22,68 +22,68 @@
  * @example
  * ```tsx
  * // Basic sheet
- * <Drawer>
- *   <DrawerTrigger>
+ * <Sheet>
+ *   <SheetTrigger>
  *     <button>Open Settings</button>
- *   </DrawerTrigger>
- *   <DrawerContent>
- *     <DrawerHeader>
- *       <DrawerTitle>Settings</DrawerTitle>
- *       <DrawerDescription>Manage your account settings</DrawerDescription>
- *     </DrawerHeader>
- *     <DrawerBody>
+ *   </SheetTrigger>
+ *   <SheetContent>
+ *     <SheetHeader>
+ *       <SheetTitle>Settings</SheetTitle>
+ *       <SheetDescription>Manage your account settings</SheetDescription>
+ *     </SheetHeader>
+ *     <SheetBody>
  *       <div className="space-y-4">
  *         <div>Setting 1</div>
  *         <div>Setting 2</div>
  *       </div>
- *     </DrawerBody>
- *     <DrawerFooter>
- *       <DrawerClose>
+ *     </SheetBody>
+ *     <SheetFooter>
+ *       <SheetClose>
  *         <button>Cancel</button>
- *       </DrawerClose>
+ *       </SheetClose>
  *       <button>Save Changes</button>
- *     </DrawerFooter>
- *   </DrawerContent>
- * </Drawer>
+ *     </SheetFooter>
+ *   </SheetContent>
+ * </Sheet>
  *
  * // Controlled sheet
  * const [open, setOpen] = useState(false);
  *
- * <Drawer open={open} onOpenChange={setOpen}>
- *   <DrawerTrigger>
+ * <Sheet open={open} onOpenChange={setOpen}>
+ *   <SheetTrigger>
  *     <button>Open Form</button>
- *   </DrawerTrigger>
- *   <DrawerContent>
- *     <DrawerHeader>
- *       <DrawerTitle>User Profile</DrawerTitle>
- *       <DrawerDescription>Update your profile information</DrawerDescription>
- *     </DrawerHeader>
- *     <DrawerBody>
+ *   </SheetTrigger>
+ *   <SheetContent>
+ *     <SheetHeader>
+ *       <SheetTitle>User Profile</SheetTitle>
+ *       <SheetDescription>Update your profile information</SheetDescription>
+ *     </SheetHeader>
+ *     <SheetBody>
  *       <form className="space-y-4">
  *         <input type="text" placeholder="Name" />
  *         <input type="email" placeholder="Email" />
  *         <textarea placeholder="Bio"></textarea>
  *       </form>
- *     </DrawerBody>
- *     <DrawerFooter>
- *       <DrawerClose>
+ *     </SheetBody>
+ *     <SheetFooter>
+ *       <SheetClose>
  *         <button>Cancel</button>
- *       </DrawerClose>
+ *       </SheetClose>
  *       <button onClick={() => handleSave()}>Save</button>
- *     </DrawerFooter>
- *   </DrawerContent>
- * </Drawer>
+ *     </SheetFooter>
+ *   </SheetContent>
+ * </Sheet>
  *
  * // Navigation sheet
- * <Drawer>
- *   <DrawerTrigger>
+ * <Sheet>
+ *   <SheetTrigger>
  *     <button>Menu</button>
- *   </DrawerTrigger>
- *   <DrawerContent>
- *     <DrawerHeader>
- *       <DrawerTitle>Navigation</DrawerTitle>
- *     </DrawerHeader>
- *     <DrawerBody>
+ *   </SheetTrigger>
+ *   <SheetContent>
+ *     <SheetHeader>
+ *       <SheetTitle>Navigation</SheetTitle>
+ *     </SheetHeader>
+ *     <SheetBody>
  *       <nav className="space-y-2">
  *         <a href="/dashboard" className="block p-2 hover:bg-zinc-100">
  *           Dashboard
@@ -95,22 +95,21 @@
  *           Settings
  *         </a>
  *       </nav>
- *     </DrawerBody>
- *   </DrawerContent>
- * </Drawer>
+ *     </SheetBody>
+ *   </SheetContent>
+ * </Sheet>
  * ```
  */
 
 import { Dialog } from "@base-ui-components/react/dialog";
-import { X } from "lucide-react";
 import * as React from "react";
 
 import { cx, focusRing } from "@/lib/utils";
 
-import { Button } from "../button/button";
+import { DismissButton } from "../dismiss-button/dismiss-button";
 
 /**
- * Root sheet/drawer component for desktop side panels.
+ * Root sheet component for desktop side panels.
  *
  * Container component that manages the sheet's open state and provides
  * context for all child components. Built on Base UI Dialog.Root for
@@ -122,22 +121,22 @@ import { Button } from "../button/button";
  * @example
  * ```tsx
  * // Uncontrolled sheet
- * <Drawer>
- *   <DrawerTrigger>Open</DrawerTrigger>
- *   <DrawerContent>Content</DrawerContent>
- * </Drawer>
+ * <Sheet>
+ *   <SheetTrigger>Open</SheetTrigger>
+ *   <SheetContent>Content</SheetContent>
+ * </Sheet>
  *
  * // Controlled sheet
- * <Drawer open={isOpen} onOpenChange={setIsOpen}>
- *   <DrawerTrigger>Toggle</DrawerTrigger>
- *   <DrawerContent>Content</DrawerContent>
- * </Drawer>
+ * <Sheet open={isOpen} onOpenChange={setIsOpen}>
+ *   <SheetTrigger>Toggle</SheetTrigger>
+ *   <SheetContent>Content</SheetContent>
+ * </Sheet>
  * ```
  */
-const Drawer = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
+const Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
   return <Dialog.Root {...props} />;
 };
-Drawer.displayName = "Drawer";
+Sheet.displayName = "Sheet";
 
 /**
  * Sheet trigger component that opens the sheet when activated.
@@ -151,24 +150,24 @@ Drawer.displayName = "Drawer";
  * @component
  * @example
  * ```tsx
- * <DrawerTrigger>
+ * <SheetTrigger>
  *   <button className="px-4 py-2 bg-blue-500 text-white rounded">
  *     Open Panel
  *   </button>
- * </DrawerTrigger>
+ * </SheetTrigger>
  *
- * <DrawerTrigger asChild>
- *   <div className="cursor-pointer">Custom trigger</div>
- * </DrawerTrigger>
+ * <SheetTrigger render={<Button />}>
+ *   Custom trigger
+ * </SheetTrigger>
  * ```
  */
-const DrawerTrigger = React.forwardRef<
+const SheetTrigger = React.forwardRef<
   React.ElementRef<typeof Dialog.Trigger>,
   React.ComponentPropsWithoutRef<typeof Dialog.Trigger>
 >(({ className, ...props }, ref) => {
   return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
 });
-DrawerTrigger.displayName = "Drawer.Trigger";
+SheetTrigger.displayName = "Sheet.Trigger";
 
 /**
  * Sheet close component for dismissing the sheet.
@@ -182,40 +181,40 @@ DrawerTrigger.displayName = "Drawer.Trigger";
  * @component
  * @example
  * ```tsx
- * <DrawerClose>
+ * <SheetClose>
  *   <button className="px-3 py-1 border rounded">Cancel</button>
- * </DrawerClose>
+ * </SheetClose>
  *
- * <DrawerClose asChild>
- *   <button className="custom-close-button">Done</button>
- * </DrawerClose>
+ * <SheetClose render={<Button />}>
+ *   Done
+ * </SheetClose>
  * ```
  */
-const DrawerClose = React.forwardRef<
+const SheetClose = React.forwardRef<
   React.ElementRef<typeof Dialog.Close>,
   React.ComponentPropsWithoutRef<typeof Dialog.Close>
 >(({ className, ...props }, ref) => {
   return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
 });
-DrawerClose.displayName = "Drawer.Close";
+SheetClose.displayName = "Sheet.Close";
 
 /**
  * Portal component for rendering sheet content outside normal DOM flow.
  *
  * Ensures sheet content is rendered at the document root to avoid z-index
- * conflicts and enable proper layering. Used internally by DrawerContent.
+ * conflicts and enable proper layering. Used internally by SheetContent.
  *
  * @component
  * @example
  * ```tsx
- * // Used internally by DrawerContent
- * <DrawerPortal>
- *   <DrawerOverlay />
+ * // Used internally by SheetContent
+ * <SheetPortal>
+ *   <SheetOverlay />
  *   <Dialog.Popup>Sheet content</Dialog.Popup>
- * </DrawerPortal>
+ * </SheetPortal>
  * ```
  */
-const DrawerPortal = Dialog.Portal;
+const SheetPortal = Dialog.Portal;
 
 /**
  * Overlay/backdrop component that appears behind the sheet.
@@ -230,14 +229,14 @@ const DrawerPortal = Dialog.Portal;
  * @component
  * @example
  * ```tsx
- * // Used internally by DrawerContent
- * <DrawerOverlay />
+ * // Used internally by SheetContent
+ * <SheetOverlay />
  *
  * // Custom overlay styling
- * <DrawerOverlay className="bg-blue-500/20" />
+ * <SheetOverlay className="bg-blue-500/20" />
  * ```
  */
-const DrawerOverlay = React.forwardRef<
+const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof Dialog.Backdrop>,
   React.ComponentPropsWithoutRef<typeof Dialog.Backdrop>
 >(({ className, ...props }, forwardedRef) => {
@@ -262,7 +261,7 @@ const DrawerOverlay = React.forwardRef<
   );
 });
 
-DrawerOverlay.displayName = "DrawerOverlay";
+SheetOverlay.displayName = "SheetOverlay";
 
 /**
  * Main sheet content container with positioning and animations.
@@ -277,28 +276,28 @@ DrawerOverlay.displayName = "DrawerOverlay";
  * @component
  * @example
  * ```tsx
- * <DrawerContent>
- *   <DrawerHeader>
- *     <DrawerTitle>Sheet Title</DrawerTitle>
- *   </DrawerHeader>
- *   <DrawerBody>
+ * <SheetContent>
+ *   <SheetHeader>
+ *     <SheetTitle>Sheet Title</SheetTitle>
+ *   </SheetHeader>
+ *   <SheetBody>
  *     Sheet content here
- *   </DrawerBody>
- * </DrawerContent>
+ *   </SheetBody>
+ * </SheetContent>
  *
  * // Custom width
- * <DrawerContent className="sm:max-w-xl">
+ * <SheetContent className="sm:max-w-xl">
  *   Wider sheet content
- * </DrawerContent>
+ * </SheetContent>
  * ```
  */
-const DrawerContent = React.forwardRef<
+const SheetContent = React.forwardRef<
   React.ElementRef<typeof Dialog.Popup>,
   React.ComponentPropsWithoutRef<typeof Dialog.Popup>
 >(({ className, ...props }, forwardedRef) => {
   return (
-    <DrawerPortal>
-      <DrawerOverlay />
+    <SheetPortal>
+      <SheetOverlay />
       <Dialog.Popup
         ref={forwardedRef}
         className={cx(
@@ -309,17 +308,17 @@ const DrawerContent = React.forwardRef<
           // background color
           "bg-white dark:bg-[#090E1A]",
           // transition
-          "data-[closed]:animate-drawer-slide-right-and-fade data-[open]:animate-drawer-slide-left-and-fade",
+          "data-[closed]:animate-sheet-slide-right-and-fade data-[open]:animate-sheet-slide-left-and-fade",
           focusRing,
           className
         )}
         {...props}
       />
-    </DrawerPortal>
+    </SheetPortal>
   );
 });
 
-DrawerContent.displayName = "DrawerContent";
+SheetContent.displayName = "SheetContent";
 
 /**
  * Sheet header component with title, description, and close button.
@@ -335,18 +334,18 @@ DrawerContent.displayName = "DrawerContent";
  * @component
  * @example
  * ```tsx
- * <DrawerHeader>
- *   <DrawerTitle>User Settings</DrawerTitle>
- *   <DrawerDescription>Manage your account preferences</DrawerDescription>
- * </DrawerHeader>
+ * <SheetHeader>
+ *   <SheetTitle>User Settings</SheetTitle>
+ *   <SheetDescription>Manage your account preferences</SheetDescription>
+ * </SheetHeader>
  *
- * <DrawerHeader className="text-center">
- *   <DrawerTitle>Confirmation</DrawerTitle>
- *   <DrawerDescription>This action cannot be undone</DrawerDescription>
- * </DrawerHeader>
+ * <SheetHeader className="text-center">
+ *   <SheetTitle>Confirmation</SheetTitle>
+ *   <SheetDescription>This action cannot be undone</SheetDescription>
+ * </SheetHeader>
  * ```
  */
-const DrawerHeader = React.forwardRef<
+const SheetHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<"div">
 >(({ children, className, ...props }, ref) => {
@@ -361,19 +360,18 @@ const DrawerHeader = React.forwardRef<
       </div>
       <Dialog.Close
         render={
-          <Button
-            variant="ghost"
-            className="aspect-square p-1 hover:bg-zinc-100 dark:hover:bg-zinc-400/10"
+          <DismissButton
+            size="lg"
+            aria-label="Close sheet"
+            className="mt-1 shrink-0"
           />
         }
-      >
-        <X className="size-6" aria-hidden="true" />
-      </Dialog.Close>
+      />
     </div>
   );
 });
 
-DrawerHeader.displayName = "Drawer.Header";
+SheetHeader.displayName = "Sheet.Header";
 
 /**
  * Sheet title component for the main heading.
@@ -387,14 +385,14 @@ DrawerHeader.displayName = "Drawer.Header";
  * @component
  * @example
  * ```tsx
- * <DrawerTitle>Account Settings</DrawerTitle>
+ * <SheetTitle>Account Settings</SheetTitle>
  *
- * <DrawerTitle className="text-lg text-blue-600">
+ * <SheetTitle className="text-lg text-blue-600">
  *   Custom Styled Title
- * </DrawerTitle>
+ * </SheetTitle>
  * ```
  */
-const DrawerTitle = React.forwardRef<
+const SheetTitle = React.forwardRef<
   React.ElementRef<typeof Dialog.Title>,
   React.ComponentPropsWithoutRef<typeof Dialog.Title>
 >(({ className, ...props }, forwardedRef) => (
@@ -411,7 +409,7 @@ const DrawerTitle = React.forwardRef<
   />
 ));
 
-DrawerTitle.displayName = "DrawerTitle";
+SheetTitle.displayName = "SheetTitle";
 
 /**
  * Sheet body component for the main scrollable content area.
@@ -425,28 +423,28 @@ DrawerTitle.displayName = "DrawerTitle";
  * @component
  * @example
  * ```tsx
- * <DrawerBody>
+ * <SheetBody>
  *   <form className="space-y-4">
  *     <input type="text" placeholder="Name" />
  *     <input type="email" placeholder="Email" />
  *   </form>
- * </DrawerBody>
+ * </SheetBody>
  *
- * <DrawerBody className="p-0">
+ * <SheetBody className="p-0">
  *   <nav className="space-y-1">
  *     <a href="/dashboard">Dashboard</a>
  *     <a href="/settings">Settings</a>
  *   </nav>
- * </DrawerBody>
+ * </SheetBody>
  * ```
  */
-const DrawerBody = React.forwardRef<
+const SheetBody = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<"div">
 >(({ className, ...props }, ref) => {
   return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
 });
-DrawerBody.displayName = "Drawer.Body";
+SheetBody.displayName = "Sheet.Body";
 
 /**
  * Sheet description component for explanatory text.
@@ -460,16 +458,16 @@ DrawerBody.displayName = "Drawer.Body";
  * @component
  * @example
  * ```tsx
- * <DrawerDescription>
+ * <SheetDescription>
  *   Update your profile information and account settings
- * </DrawerDescription>
+ * </SheetDescription>
  *
- * <DrawerDescription className="text-red-500">
+ * <SheetDescription className="text-red-500">
  *   Warning: This action cannot be undone
- * </DrawerDescription>
+ * </SheetDescription>
  * ```
  */
-const DrawerDescription = React.forwardRef<
+const SheetDescription = React.forwardRef<
   React.ElementRef<typeof Dialog.Description>,
   React.ComponentPropsWithoutRef<typeof Dialog.Description>
 >(({ className, ...props }, forwardedRef) => {
@@ -482,7 +480,7 @@ const DrawerDescription = React.forwardRef<
   );
 });
 
-DrawerDescription.displayName = "DrawerDescription";
+SheetDescription.displayName = "SheetDescription";
 
 /**
  * Sheet footer component for action buttons and controls.
@@ -497,21 +495,21 @@ DrawerDescription.displayName = "DrawerDescription";
  * @component
  * @example
  * ```tsx
- * <DrawerFooter>
- *   <DrawerClose>
+ * <SheetFooter>
+ *   <SheetClose>
  *     <button className="px-4 py-2 border rounded">Cancel</button>
- *   </DrawerClose>
+ *   </SheetClose>
  *   <button className="px-4 py-2 bg-blue-500 text-white rounded">
  *     Save Changes
  *   </button>
- * </DrawerFooter>
+ * </SheetFooter>
  *
- * <DrawerFooter className="justify-center">
+ * <SheetFooter className="justify-center">
  *   <button>Single Action</button>
- * </DrawerFooter>
+ * </SheetFooter>
  * ```
  */
-const DrawerFooter = ({
+const SheetFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -526,16 +524,16 @@ const DrawerFooter = ({
   );
 };
 
-DrawerFooter.displayName = "DrawerFooter";
+SheetFooter.displayName = "SheetFooter";
 
 export {
-  Drawer,
-  DrawerBody,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 };

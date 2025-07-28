@@ -15,9 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Use `mcp_Playwright_browser_take_screenshot` for visual verification
 - Playwright provides reliable, consistent browser automation for testing component pages
 
-## Component Architecture - Three-File Structure
+## Component Architecture - Four-File Structure
 
-Every component in `src/components/ui/` follows a strict three-file architecture:
+Every component in `src/components/ui/` follows a strict four-file architecture:
 
 ### File Structure
 
@@ -25,7 +25,8 @@ Every component in `src/components/ui/` follows a strict three-file architecture
 src/components/ui/[component]/
 ├── [component].tsx    # Pure component implementation
 ├── config.tsx         # Component configuration
-└── example.tsx        # Preview component
+├── examples.tsx       # Multiple example components
+└── preview.tsx        # Preview component for prop explorer
 ```
 
 ### 1. `[component].tsx` - Pure Component
@@ -43,12 +44,20 @@ src/components/ui/[component]/
 - Includes code examples and documentation
 - Pure TypeScript - no React imports
 
-### 3. `example.tsx` - Preview Component
+### 3. `examples.tsx` - Example Components
+
+- Contains multiple named example components
+- Shows different use cases and variations
+- Used in documentation and example galleries
+- Export individual example functions
+
+### 4. `preview.tsx` - Preview Component
 
 - Handles prop transformations (e.g., string to icon components)
-- Provides interactive preview functionality
+- Provides interactive preview functionality for prop explorer
 - Bridges prop explorer system with pure component
 - Handle icon props here, not in pure components
+- Single component that accepts all props from config
 
 ## Component Registration
 

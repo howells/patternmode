@@ -95,15 +95,15 @@ import {
 
 // Desktop sheet (Base UI Dialog)
 import {
-  Drawer as Sheet,
-  DrawerBody as SheetBody,
-  DrawerClose as SheetClose,
-  DrawerContent as SheetContent,
-  DrawerDescription as SheetDescription,
-  DrawerFooter as SheetFooter,
-  DrawerHeader as SheetHeader,
-  DrawerTitle as SheetTitle,
-  DrawerTrigger as SheetTrigger,
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "../sheet/sheet";
 
 /**
