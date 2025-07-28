@@ -43,7 +43,7 @@
  * ```
  */
 
-import clsx from "clsx";
+import { cx } from "@/lib/utils";
 import { HeadingElement, type HeadingElementProps } from "../heading-element";
 
 /**
@@ -86,7 +86,7 @@ export function Heading({ className, level = 1, ...props }: HeadingProps) {
   return (
     <HeadingElement
       level={level}
-      className={clsx(
+      className={cx(
         className,
         "m-0 text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white"
       )}

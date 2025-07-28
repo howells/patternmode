@@ -473,7 +473,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         {/* Scrollable Content Area */}
         <ScrollArea
           className={cx(
-            "max-h-60 rounded-b-md",
+            "max-h-96 rounded-b-md",
             size === "sm" && "text-xs",
             size === "base" && "text-sm",
             size === "lg" && "text-base"

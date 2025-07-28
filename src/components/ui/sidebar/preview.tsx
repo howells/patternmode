@@ -1,6 +1,6 @@
 "use client";
 
-import { clsx } from "clsx";
+import { cx } from "@/lib/utils";
 import { useState } from "react";
 import {
   Sidebar,
@@ -75,7 +75,7 @@ export function Example() {
                   U
                 </div>
                 <span
-                  className={clsx(
+                  className={cx(
                     "truncate transition-opacity duration-200",
                     isCollapsed && "opacity-0 w-0 overflow-hidden"
                   )}

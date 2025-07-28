@@ -8,7 +8,7 @@
  * Features:
  * - Complete collection of 3,644+ Lucide React icons
  * - Tree-shakable: Only used icons included in bundle
- * - Infinite scrolling: No performance issues with large datasets
+ * - Infinite scrolling: Loads 30 icons initially, then automatically loads more as you scroll
  * - API-based loading: Efficient server-side pagination and search
  * - Official Lucide DynamicIcon implementation
  * - Searchable dropdown with icon previews
@@ -17,6 +17,7 @@
  * - Utility functions for icon retrieval
  * - Built on InfiniteCombobox for optimal UX
  * - Zero upfront bundle cost
+ * - Smooth infinite scroll: Triggers loading when scrolling near bottom of list
  *
  * @example
  * ```tsx
@@ -107,7 +108,7 @@ async function fetchIcons({
   search?: string;
   signal?: AbortSignal;
 }) {
-  const limit = 50;
+  const limit = 30;
 
   const params = new URLSearchParams({
     page: pageParam.toString(),

@@ -1,10 +1,10 @@
 /**
  * Navbar Components
- * 
+ *
  * A flexible navigation bar component system for building application headers,
  * toolbars, and navigation areas. Features animated current indicators, flexible
  * layout options, and responsive design.
- * 
+ *
  * Features:
  * - Flexible horizontal layout system
  * - Animated current page indicators using Framer Motion
@@ -14,7 +14,7 @@
  * - Responsive design with mobile optimizations
  * - Dark mode support
  * - Truncated labels for overflow handling
- * 
+ *
  * @example
  * ```tsx
  * // Basic navigation bar
@@ -31,7 +31,7 @@
  *     </NavbarItem>
  *   </NavbarSection>
  * </Navbar>
- * 
+ *
  * // Complex navbar with sections and dividers
  * <Navbar>
  *   <NavbarSection>
@@ -44,18 +44,18 @@
  *       <NavbarLabel>Projects</NavbarLabel>
  *     </NavbarItem>
  *   </NavbarSection>
- *   
+ *
  *   <NavbarDivider />
- *   
+ *
  *   <NavbarSection>
  *     <NavbarItem href="/settings">
  *       <SettingsIcon />
  *       <NavbarLabel>Settings</NavbarLabel>
  *     </NavbarItem>
  *   </NavbarSection>
- *   
+ *
  *   <NavbarSpacer />
- *   
+ *
  *   <NavbarSection>
  *     <NavbarItem href="/profile">
  *       <Avatar src={user.avatar} />
@@ -63,7 +63,7 @@
  *     </NavbarItem>
  *   </NavbarSection>
  * </Navbar>
- * 
+ *
  * // Toolbar style navbar
  * <Navbar className="bg-white border-b">
  *   <NavbarSection>
@@ -74,9 +74,9 @@
  *       <RedoIcon />
  *     </NavbarItem>
  *   </NavbarSection>
- *   
+ *
  *   <NavbarDivider />
- *   
+ *
  *   <NavbarSection>
  *     <NavbarItem onClick={() => cut()}>
  *       <ScissorsIcon />
@@ -94,7 +94,7 @@
 
 "use client";
 
-import clsx from "clsx";
+import { cx } from "@/lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import React, { forwardRef, useId } from "react";
@@ -102,7 +102,7 @@ import { Button } from "../button";
 
 /**
  * Root navbar component for horizontal navigation layouts.
- * 
+ *
  * Creates a flexible horizontal container for navigation items, sections,
  * and other navbar components. Provides consistent spacing and alignment.
  *
@@ -127,14 +127,14 @@ export function Navbar({
   return (
     <nav
       {...props}
-      className={clsx(className, "flex flex-1 items-center gap-4 py-2.5")}
+      className={cx(className, "flex flex-1 items-center gap-4 py-2.5")}
     />
   );
 }
 
 /**
  * Navbar divider component for visual separation.
- * 
+ *
  * Creates a vertical line separator between navbar sections for visual
  * grouping and organization. Automatically adapts to light and dark themes.
  *
@@ -164,14 +164,14 @@ export function NavbarDivider({
     <div
       aria-hidden="true"
       {...props}
-      className={clsx(className, "h-6 w-px bg-zinc-950/10 dark:bg-white/10")}
+      className={cx(className, "h-6 w-px bg-zinc-950/10 dark:bg-white/10")}
     />
   );
 }
 
 /**
  * Navbar section component for grouping related items.
- * 
+ *
  * Groups related navbar items together with consistent spacing and
  * shared animation context using Framer Motion LayoutGroup. Each section
  * has its own animation scope for current indicators.
@@ -187,7 +187,7 @@ export function NavbarDivider({
  *     <NavbarItem href="/dashboard" current>Dashboard</NavbarItem>
  *     <NavbarItem href="/projects">Projects</NavbarItem>
  *   </NavbarSection>
- *   
+ *
  *   <NavbarSection>
  *     <NavbarItem href="/settings">Settings</NavbarItem>
  *     <NavbarItem href="/help">Help</NavbarItem>
@@ -203,14 +203,14 @@ export function NavbarSection({
 
   return (
     <LayoutGroup id={id}>
-      <div {...props} className={clsx(className, "flex items-center gap-3")} />
+      <div {...props} className={cx(className, "flex items-center gap-3")} />
     </LayoutGroup>
   );
 }
 
 /**
  * Navbar spacer component for flexible spacing.
- * 
+ *
  * Creates flexible space between navbar sections, pushing subsequent
  * sections to the right. Useful for creating left/right layouts.
  *
@@ -225,9 +225,9 @@ export function NavbarSection({
  *     <NavbarItem>Logo</NavbarItem>
  *     <NavbarItem>Home</NavbarItem>
  *   </NavbarSection>
- *   
+ *
  *   <NavbarSpacer />
- *   
+ *
  *   <NavbarSection>
  *     <NavbarItem>Profile</NavbarItem>
  *     <NavbarItem>Settings</NavbarItem>
@@ -243,14 +243,14 @@ export function NavbarSpacer({
     <div
       aria-hidden="true"
       {...props}
-      className={clsx(className, "-ml-4 flex-1")}
+      className={cx(className, "-ml-4 flex-1")}
     />
   );
 }
 
 /**
  * Navbar item component for navigation links and buttons.
- * 
+ *
  * Interactive navigation item that can function as a link (with href)
  * or button (with onClick). Features animated current page indicators,
  * icon support, and responsive design.
@@ -269,18 +269,18 @@ export function NavbarSpacer({
  *   <DashboardIcon />
  *   <NavbarLabel>Dashboard</NavbarLabel>
  * </NavbarItem>
- * 
+ *
  * // Button navigation item
  * <NavbarItem onClick={() => handleAction()}>
  *   <ActionIcon />
  *   <NavbarLabel>Action</NavbarLabel>
  * </NavbarItem>
- * 
+ *
  * // Simple text item
  * <NavbarItem href="/about">
  *   About
  * </NavbarItem>
- * 
+ *
  * // With avatar
  * <NavbarItem href="/profile">
  *   <Avatar src={user.avatar} />
@@ -308,7 +308,7 @@ export const NavbarItem = forwardRef(function NavbarItem(
   } & React.ComponentPropsWithoutRef<"button">,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  const classes = clsx(
+  const classes = cx(
     // Base - let the minimal variant handle background and colors
     "relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium sm:text-sm/5",
     // Leading icon/icon-only
@@ -320,7 +320,7 @@ export const NavbarItem = forwardRef(function NavbarItem(
   );
 
   return (
-    <span className={clsx(className, "relative")}>
+    <span className={cx(className, "relative")}>
       {current && (
         <motion.span
           layoutId="current-indicator"
@@ -343,7 +343,7 @@ export const NavbarItem = forwardRef(function NavbarItem(
 
 /**
  * Navbar label component for text content within navbar items.
- * 
+ *
  * Renders text labels with automatic truncation for overflow handling.
  * Typically used within NavbarItem components for displaying navigation text.
  *
@@ -357,12 +357,12 @@ export const NavbarItem = forwardRef(function NavbarItem(
  *   <DashboardIcon />
  *   <NavbarLabel>Dashboard Overview</NavbarLabel>
  * </NavbarItem>
- * 
+ *
  * <NavbarItem>
  *   <UserIcon />
  *   <NavbarLabel>{user.fullName}</NavbarLabel>
  * </NavbarItem>
- * 
+ *
  * // Long text gets truncated
  * <NavbarItem>
  *   <NavbarLabel>Very Long Navigation Item Name</NavbarLabel>
@@ -373,5 +373,5 @@ export function NavbarLabel({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"span">) {
-  return <span {...props} className={clsx(className, "truncate")} />;
+  return <span {...props} className={cx(className, "truncate")} />;
 }

@@ -1,13 +1,14 @@
 "use client";
 
-import clsx from "clsx";
-import { LayoutGroup, motion } from "framer-motion";
-import { PanelLeft, PanelLeftDashed } from "lucide-react";
+import { cx } from "@/lib/utils";
+import { LayoutGroup } from "framer-motion";
+import { Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import Link from "next/link";
 import React, { forwardRef, useId, useState } from "react";
 import { Button } from "../button";
 import { ScrollArea } from "../scroll-area";
 import { Separator } from "../separator/separator";
+import { Tooltip } from "../tooltip/tooltip";
 
 // Sidebar-specific title component for navigation hierarchy
 function SidebarTitle({
@@ -22,7 +23,7 @@ function SidebarTitle({
   children: React.ReactNode;
   className?: string;
 } & React.ComponentPropsWithoutRef<"span">) {
-  const baseClasses = clsx(
+  const baseClasses = cx(
     "font-medium transition-colors",
     level === 1 ? "text-xs" : "text-2xs uppercase tracking-wide",
     className
@@ -32,7 +33,7 @@ function SidebarTitle({
     return (
       <Link
         href={href}
-        className={clsx(
+        className={cx(
           baseClasses,
           "hover:text-zinc-700 dark:hover:text-zinc-300"
         )}
@@ -67,19 +68,17 @@ export function Sidebar({
     <nav
       {...props}
       data-component="Sidebar"
-      className={clsx(className, "flex h-full min-h-0 flex-col relative")}
+      className={cx(className, "flex h-full min-h-0 flex-col relative")}
       style={{
         width: "var(--sidebar-width, 16rem)",
       }}
     >
       {showToggle && (
         <div
-          className={clsx(
-            "absolute z-10 group",
-            isCollapsed
-              ? "inset-x-2 top-0 h-12 flex items-center justify-center opacity-0 hover:opacity-100 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-md transition-opacity duration-200"
-              : "right-3.5 top-3"
-          )}
+          className={cx("absolute top-4 z-10", {
+            "right-2": isCollapsed,
+            "right-4": !isCollapsed,
+          })}
         >
           <SidebarToggle isCollapsed={isCollapsed} onToggle={onToggle} />
         </div>
@@ -104,8 +103,9 @@ export function SidebarToggle({
       data-component="SidebarToggle"
       onClick={onToggle}
       variant="inverse-ghost"
-      size="icon"
-      className={clsx(className)}
+      size="icon-sm"
+      shadow={false}
+      className={cx(className)}
       aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       leftIcon={isCollapsed ? PanelLeft : PanelLeftDashed}
     />
@@ -124,7 +124,7 @@ export function SidebarHeader({
     <div
       {...props}
       data-component="SidebarHeader"
-      className={clsx(
+      className={cx(
         className,
         "h-16 flex flex-col border-b border-zinc-950/5 dark:border-white/5 transition-all duration-200"
       )}
@@ -144,8 +144,19 @@ export function SidebarBody({
   return (
     <ScrollArea
       data-component="SidebarBody"
-      className={clsx(className, "flex-1")}
+      className={cx(className, "flex-1")}
       viewportClassName="[&>*+*]:mt-6"
+      scrollbarClassName={cx(
+        // Default scrollbar width
+        "w-2.5",
+        // Thinner scrollbar when collapsed
+        isCollapsed && "w-1.5"
+      )}
+      thumbClassName={cx(
+        // Default thumb styling is handled by ScrollArea
+        // Make thumb thinner when collapsed to match scrollbar
+        isCollapsed && "bg-zinc-400 dark:bg-zinc-500"
+      )}
       {...props}
     >
       <div data-component="SidebarContent">{children}</div>
@@ -165,7 +176,7 @@ export function SidebarFooter({
     <div
       {...props}
       data-component="SidebarFooter"
-      className={clsx(
+      className={cx(
         className,
         "flex flex-col border-t border-zinc-950/5 dark:border-white/5 transition-all duration-200 p-4"
       )}
@@ -182,6 +193,8 @@ export function SidebarGroup({
   children,
   isCollapsed,
   level = 1,
+  groupIcon,
+  tooltipDelay = 0,
   ...props
 }: React.ComponentPropsWithoutRef<"div"> & {
   title?: React.ReactNode;
@@ -189,16 +202,68 @@ export function SidebarGroup({
   actions?: React.ReactNode;
   isCollapsed?: boolean;
   level?: 1 | 2;
+  groupIcon?: React.ComponentType<{
+    className?: string;
+    strokeWidth?: number;
+  }>;
+  tooltipDelay?: number;
 }) {
   const id = useId();
 
-  // Simplified: All levels render the same way
+  // When collapsed, show group as an icon item with tooltip
+  if (isCollapsed && title) {
+    // Use different icons based on level: Circle for level 1, Dot for level 2
+    const DefaultIcon = level === 1 ? Circle : CircleSmall;
+    const GroupIcon = groupIcon || DefaultIcon;
+
+    const groupButton = (
+      <span className="relative block px-2">
+        <Button
+          render={href ? <Link href={href} /> : undefined}
+          variant="inverse-ghost"
+          shadow={false}
+          icon={GroupIcon}
+          fullWidth={false}
+          size="icon-sm"
+          textAlign="center"
+        >
+          {/* Content hidden when collapsed, icon shown via icon prop */}
+        </Button>
+      </span>
+    );
+
+    return (
+      <LayoutGroup id={id}>
+        <div
+          {...props}
+          data-component="SidebarGroup"
+          className={cx(className, "py-1")}
+        >
+          {typeof title === "string" ? (
+            <Tooltip
+              content={title}
+              side="right"
+              sideOffset={8}
+              delayDuration={tooltipDelay}
+            >
+              {groupButton}
+            </Tooltip>
+          ) : (
+            groupButton
+          )}
+          <div className="space-y-1">{children}</div>
+        </div>
+      </LayoutGroup>
+    );
+  }
+
+  // Normal expanded state
   return (
     <LayoutGroup id={id}>
       <div
         {...props}
         data-component="SidebarGroup"
-        className={clsx(className, "space-y-2 py-4")}
+        className={cx(className, "space-y-2 py-4")}
       >
         {title && (
           <div className="flex items-center justify-between px-4">
@@ -207,10 +272,7 @@ export function SidebarGroup({
             </SidebarTitle>
             {actions && (
               <div
-                className={clsx(
-                  "flex items-center",
-                  isCollapsed && "opacity-0"
-                )}
+                className={cx("flex items-center", isCollapsed && "opacity-0")}
               >
                 {actions}
               </div>
@@ -240,6 +302,7 @@ export const SidebarItem = forwardRef<
       className?: string;
       strokeWidth?: number;
     }>;
+    tooltipDelay?: number;
   } & Omit<React.ComponentPropsWithoutRef<"button">, "className">
 >(function SidebarItem(
   {
@@ -250,6 +313,7 @@ export const SidebarItem = forwardRef<
     href,
     icon,
     leftIcon: LeftIcon,
+    tooltipDelay = 0,
     ...props
   },
   ref
@@ -275,7 +339,7 @@ export const SidebarItem = forwardRef<
       children
     ) : (
       <span
-        className={clsx(
+        className={cx(
           "truncate transition-opacity duration-200",
           isCollapsed && "opacity-0 w-0 overflow-hidden"
         )}
@@ -284,29 +348,42 @@ export const SidebarItem = forwardRef<
       </span>
     );
 
+  const buttonElement = (
+    <Button
+      render={href ? <Link href={href} /> : undefined}
+      variant="inverse-ghost"
+      shadow={false}
+      icon={icon}
+      leftIcon={LeftIcon}
+      onClick={handleClick}
+      fullWidth={!isCollapsed}
+      size={isCollapsed ? "icon-sm" : "sm"}
+      textAlign={isCollapsed ? "center" : "left"}
+      ref={ref}
+      title={isCollapsed && typeof children === "string" ? children : undefined}
+      {...props}
+    >
+      {wrappedChildren}
+    </Button>
+  );
+
   return (
     <span
-      className={clsx(className, "relative block px-2")}
+      className={cx(className, "relative block px-2")}
       data-component="SidebarItem"
     >
-      <Button
-        render={href ? <Link href={href} /> : undefined}
-        variant="inverse-ghost"
-        shadow={false}
-        icon={icon}
-        leftIcon={LeftIcon}
-        onClick={handleClick}
-        fullWidth
-        size="sm"
-        textAlign="left"
-        ref={ref}
-        title={
-          isCollapsed && typeof children === "string" ? children : undefined
-        }
-        {...props}
-      >
-        {wrappedChildren}
-      </Button>
+      {isCollapsed && typeof children === "string" ? (
+        <Tooltip
+          content={children}
+          side="right"
+          sideOffset={8}
+          delayDuration={tooltipDelay}
+        >
+          {buttonElement}
+        </Tooltip>
+      ) : (
+        buttonElement
+      )}
     </span>
   );
 });
@@ -324,7 +401,7 @@ export function SidebarDivider({
     <Separator
       {...props}
       data-component="SidebarDivider"
-      className={clsx(className, "")}
+      className={cx(className, "")}
     />
   );
 }

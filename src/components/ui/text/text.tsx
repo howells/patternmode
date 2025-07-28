@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cx } from "@/lib/utils";
 import Link from "next/link";
 import { tv, type VariantProps } from "tailwind-variants";
 
@@ -28,7 +28,7 @@ export function Text({ className, size, ...props }: TextProps) {
     <p
       data-slot="text"
       {...props}
-      className={clsx(textVariants({ size }), className)}
+      className={cx(textVariants({ size }), className)}
     />
   );
 }
@@ -40,7 +40,7 @@ export function TextLink({
   return (
     <Link
       {...props}
-      className={clsx(
+      className={cx(
         className,
         "text-current underline decoration-current/50 data-hover:decoration-current"
       )}
@@ -53,10 +53,7 @@ export function Strong({
   ...props
 }: React.ComponentPropsWithoutRef<"strong">) {
   return (
-    <strong
-      {...props}
-      className={clsx(className, "font-medium text-current")}
-    />
+    <strong {...props} className={cx(className, "font-medium text-current")} />
   );
 }
 
@@ -67,7 +64,7 @@ export function Code({
   return (
     <code
       {...props}
-      className={clsx(
+      className={cx(
         className,
         "rounded-sm border border-current/10 bg-current/5 px-0.5 text-sm font-medium text-current sm:text-[0.8125rem]"
       )}

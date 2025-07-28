@@ -11,17 +11,15 @@ import {
 } from "@/lib/component-registry";
 import { cx } from "@/lib/utils";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import { List, Pilcrow, Rows3 } from "lucide-react";
+import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 import { ComponentSearch } from "./component-search";
-import { Badge } from "./ui/badge/badge";
 import {
   Sidebar,
   SidebarBody,
-  SidebarDivider,
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
@@ -120,12 +118,18 @@ function SidebarContent() {
     <>
       <SidebarHeader isCollapsed={isCollapsed}>
         <div className="relative w-full h-full flex items-center">
-          <div className="absolute top-4.5 left-3">
+          <Link
+            href="/"
+            className={cx("absolute top-4.5 left-3", {
+              "opacity-100": !isCollapsed,
+              "opacity-0": isCollapsed,
+            })}
+          >
             <Pilcrow
               className="size-7 text-zinc-600 dark:text-zinc-400 scale-x-[-1]"
               strokeWidth={1.5}
             />
-          </div>
+          </Link>
         </div>
       </SidebarHeader>
 

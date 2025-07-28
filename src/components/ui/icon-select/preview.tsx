@@ -25,13 +25,15 @@ export const IconSelectExample = ({
   }, [onValueChange]);
 
   return (
-    <IconSelect
-      placeholder={placeholder}
-      value={localValue}
-      onValueChange={handleValueChange}
-      iconStrokeWidth={iconStrokeWidth}
-      {...props}
-    />
+    <div className="w-64">
+      <IconSelect
+        placeholder={placeholder}
+        value={localValue}
+        onValueChange={handleValueChange}
+        iconStrokeWidth={iconStrokeWidth}
+        {...props}
+      />
+    </div>
   );
 };
 
