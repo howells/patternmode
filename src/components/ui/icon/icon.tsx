@@ -242,6 +242,8 @@ export function useIconSize(
 ): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
   switch (componentSize) {
     case "xs":
+    case "icon-xs":
+      return "xs";
     case "sm":
     case "icon-sm":
     case "button-sm":
@@ -268,6 +270,8 @@ export function getIconSizeForContext(
 ): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
   switch (componentSize) {
     case "xs":
+    case "icon-xs":
+      return "xs";
     case "sm":
     case "icon-sm":
     case "button-sm":

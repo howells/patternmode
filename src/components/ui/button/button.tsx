@@ -33,11 +33,13 @@ const buttonVariants = tv({
       false: "rounded-md",
     },
     size: {
-      default: "py-2 px-3 text-sm has-[>svg]:px-2.5",
+      xs: "py-1 px-2 text-xs has-[>svg]:px-1.5",
       sm: "py-1.5 px-2.5 text-sm has-[>svg]:px-2",
+      default: "py-2 px-3 text-sm has-[>svg]:px-2.5",
       lg: "py-2.5 px-4 text-base has-[>svg]:px-3",
-      icon: "p-2.5",
+      "icon-xs": "p-1.5",
       "icon-sm": "p-2",
+      icon: "p-2.5",
       "icon-lg": "p-3",
     },
   },
@@ -123,6 +125,8 @@ interface ButtonProps
   isLoading?: boolean;
   /** Text to display when loading (defaults to children) */
   loadingText?: string;
+  /** Icon component (proxy for leftIcon, useful for single-icon buttons) */
+  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /** Icon component to display on the left side */
   leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /** Icon component to display on the right side */
@@ -183,6 +187,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       size,
       rounded,
+      icon,
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
       iconStrokeWidth = config.getIconStrokeWidth(),
@@ -198,22 +203,26 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const hasChildren = children != null && children !== "";
     const isIconOnly =
-      size === "icon" || size === "icon-sm" || size === "icon-lg";
-    const hasLeftIcon = LeftIcon != null || (isIconOnly && LeftIcon == null);
+      size === "icon-xs" || size === "icon-sm" || size === "icon" || size === "icon-lg";
+    // Prioritize icon prop over leftIcon prop
+    const effectiveLeftIconProp = icon || LeftIcon;
+    const hasLeftIcon = effectiveLeftIconProp != null || (isIconOnly && effectiveLeftIconProp == null);
     const effectiveLeftIcon =
-      LeftIcon || (isIconOnly && LeftIcon == null ? MoreHorizontal : null);
+      effectiveLeftIconProp || (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : null);
     const hasRightIcon =
       RightIcon != null &&
-      size !== "icon" &&
+      size !== "icon-xs" &&
       size !== "icon-sm" &&
+      size !== "icon" &&
       size !== "icon-lg";
     const shouldShowChildren =
       hasChildren &&
-      size !== "icon" &&
+      size !== "icon-xs" &&
       size !== "icon-sm" &&
+      size !== "icon" &&
       size !== "icon-lg";
     const isIconButton =
-      size === "icon" || size === "icon-sm" || size === "icon-lg";
+      size === "icon-xs" || size === "icon-sm" || size === "icon" || size === "icon-lg";
 
     // Check if children is a complex element (custom layout)
     const hasCustomLayout = React.isValidElement(children);
@@ -235,7 +244,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Helper to get icon container size for loader positioning
     const getIconContainerSize = () => {
       const sizeStr = size as string;
-      return sizeStr === "sm" || sizeStr === "icon-sm"
+      return sizeStr === "xs" || sizeStr === "icon-xs"
+        ? "size-3"
+        : sizeStr === "sm" || sizeStr === "icon-sm"
         ? "size-3.5"
         : sizeStr === "lg" || sizeStr === "icon-lg"
         ? "size-4"
@@ -273,12 +284,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // For icon-only buttons with leftIcon, render the icon directly without loading states
       if (
         isIconButton &&
-        LeftIcon != null &&
+        effectiveLeftIconProp != null &&
         !hasRightIcon &&
         !isLoading &&
         !kbd
       ) {
-        return renderButtonIcon(LeftIcon, size, iconStrokeWidth);
+        return renderButtonIcon(effectiveLeftIconProp, size, iconStrokeWidth);
       }
 
       // For icon buttons, wrap any text children in sr-only span
@@ -290,7 +301,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const layoutClassName = cx(
         "flex items-center w-full transition-all duration-150 ease-in-out",
         // For icon-only buttons, center everything
-        size === "icon" || size === "icon-sm"
+        size === "icon-xs" || size === "icon-sm" || size === "icon"
           ? "justify-center"
           : // Full width with centered text and left elements uses space-between
           fullWidth && textAlign === "center" && (hasLeftIcon || isLoading)
@@ -365,7 +376,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   >
                     <Loader
                       size={
-                        size === "sm" || size === "icon-sm"
+                        size === "xs" || size === "icon-xs"
+                          ? "xs"
+                          : size === "sm" || size === "icon-sm"
                           ? "xs"
                           : size === "lg" || size === "icon-lg"
                           ? "base"
@@ -451,7 +464,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   >
                     <Loader
                       size={
-                        size === "sm" || size === "icon-sm"
+                        size === "xs" || size === "icon-xs"
+                          ? "xs"
+                          : size === "sm" || size === "icon-sm"
                           ? "xs"
                           : size === "lg" || size === "icon-lg"
                           ? "base"
@@ -510,7 +525,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     )}
                   >
                     <Loader
-                      size={size === "sm" ? "xs" : "sm"}
+                      size={
+                        size === "xs" || size === "icon-xs"
+                          ? "xs" 
+                          : size === "sm" || size === "icon-sm"
+                          ? "xs"
+                          : "sm"
+                      }
                       aria-label={loadingText || "Loading"}
                     />
                   </div>
@@ -554,7 +575,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <span className="flex items-center relative transition-all duration-150 ease-in-out">
               <div
                 className={`relative ${
-                  size === "sm" || size === "icon-sm"
+                  size === "xs" || size === "icon-xs"
+                    ? "size-3"
+                    : size === "sm" || size === "icon-sm"
                     ? "size-3.5"
                     : size === "lg" || size === "icon-lg"
                     ? "size-4"

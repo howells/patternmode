@@ -33,15 +33,36 @@ export const WithIconsExample = () => (
   </Button>
 );
 
+// Icon prop (useful for single-icon buttons)
+export const IconPropExample = () => (
+  <div className="flex items-center gap-2">
+    <Button icon={Plus}>Add Item</Button>
+    <Button size="icon" icon={Plus} />
+    <Button size="icon-sm" icon={Plus} />
+    <Button size="icon-xs" icon={Plus} />
+  </div>
+);
+
 // Loading state
 export const LoadingExample = () => <Button isLoading>Loading...</Button>;
 
 // Different sizes
 export const SizesExample = () => (
   <div className="flex items-center gap-2">
+    <Button size="xs">Extra Small</Button>
     <Button size="sm">Small</Button>
     <Button size="default">Default</Button>
+    <Button size="lg">Large</Button>
+    <Button size="icon-xs">
+      <Plus />
+    </Button>
+    <Button size="icon-sm">
+      <Plus />
+    </Button>
     <Button size="icon">
+      <Plus />
+    </Button>
+    <Button size="icon-lg">
       <Plus />
     </Button>
   </div>

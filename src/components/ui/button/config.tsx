@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { ButtonExample, DefaultExample, SecondaryExample, DestructiveExample, OutlineExample, GhostExample, LinkExample, WithIconsExample, LoadingExample, SizesExample, FullWidthExample, KeyboardShortcutsExample } from "./examples";
+import { ButtonExample, DefaultExample, SecondaryExample, DestructiveExample, OutlineExample, GhostExample, LinkExample, WithIconsExample, IconPropExample, LoadingExample, SizesExample, FullWidthExample, KeyboardShortcutsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "button",
@@ -34,7 +34,7 @@ export const componentConfig: ComponentConfig = {
     {
       name: "size",
       type: "select",
-      options: ["default", "sm", "icon", "icon-sm"],
+      options: ["xs", "sm", "default", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
       defaultValue: "default",
       description: "The size of the button."
     },
@@ -75,6 +75,11 @@ export const componentConfig: ComponentConfig = {
       options: ["left", "center", "right"],
       defaultValue: "center",
       description: "Text alignment within the button."
+    },
+    {
+      name: "icon",
+      type: "icon",
+      description: "Icon component (proxy for leftIcon, useful for single-icon buttons)."
     },
     {
       name: "leftIcon",
@@ -135,6 +140,11 @@ export const componentConfig: ComponentConfig = {
       title: "With Icons",
       description: "Button with left and right icons.",
       code: jsxToString(<WithIconsExample />)},
+    {
+      id: "icon-prop",
+      title: "Icon Prop",
+      description: "Using the icon prop for single-icon buttons.",
+      code: jsxToString(<IconPropExample />)},
     {
       id: "loading",
       title: "Loading State",
