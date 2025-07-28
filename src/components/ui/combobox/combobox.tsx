@@ -208,6 +208,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   const [inputValue, setInputValue] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   // Fetch data with React Query infinite query (only if fetchData is provided)
   const {
@@ -359,6 +360,28 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     }
   }, [isOpen]);
 
+  // Attach scroll event listener for infinite scroll
+  React.useEffect(() => {
+    if (!fetchData || !isOpen) return;
+
+    const scrollElement = scrollRef.current?.querySelector('.h-full.w-full.rounded-\\[inherit\\]') as HTMLElement;
+    
+    if (!scrollElement) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+      const scrolledToBottom = scrollHeight - scrollTop <= clientHeight + 100;
+      
+      if (scrolledToBottom && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    };
+
+    scrollElement.addEventListener('scroll', handleScroll);
+    
+    return () => scrollElement.removeEventListener('scroll', handleScroll);
+  }, [fetchData, hasNextPage, isFetchingNextPage, fetchNextPage, isOpen]);
+
   // Default item renderer
   const defaultRenderItem = (item: T, index: number) => (
     <div
@@ -416,7 +439,14 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         data-testid="combobox-trigger"
         {...getToggleButtonProps()}
       >
-        {selectedItem ? getItemLabel(selectedItem) : placeholder}
+        {selectedItem ? (
+          <div className="flex items-center gap-2 min-w-0">
+            {getItemIcon && getItemIcon(selectedItem)}
+            <span className="truncate">{getItemLabel(selectedItem)}</span>
+          </div>
+        ) : (
+          placeholder
+        )}
       </Button>
 
       {/* Dropdown Menu */}
@@ -471,24 +501,17 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         </div>
 
         {/* Scrollable Content Area */}
-        <ScrollArea
-          className={cx(
-            "max-h-96 rounded-b-md",
-            size === "sm" && "text-xs",
-            size === "base" && "text-sm",
-            size === "lg" && "text-base"
-          )}
-          data-testid="combobox-options"
-          onScroll={(e) => {
-            // Infinite scroll: fetch next page when near bottom
-            const target = e.currentTarget;
-            const scrolledToBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 100;
-            
-            if (scrolledToBottom && hasNextPage && !isFetchingNextPage && fetchData) {
-              fetchNextPage();
-            }
-          }}
-        >
+        <div className="relative" ref={scrollRef}>
+          <ScrollArea
+            className={cx(
+              "h-32 rounded-b-md overflow-hidden",
+              size === "sm" && "text-xs",
+              size === "base" && "text-sm",
+              size === "lg" && "text-base"
+            )}
+            data-testid="combobox-options"
+            viewportClassName="scroll-smooth"
+          >
           {/* Loading State */}
           {isLoading && (
             <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
@@ -532,6 +555,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
             </div>
           )}
         </ScrollArea>
+        </div>
       </div>
     </div>
   );

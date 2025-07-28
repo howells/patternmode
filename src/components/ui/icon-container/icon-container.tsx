@@ -9,7 +9,7 @@ import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const iconContainerVariants = tv({
-  base: "rounded-lg flex items-center justify-center",
+  base: "rounded-lg flex items-center justify-center shrink-0",
   variants: {
     size: {
       sm: "w-8 h-8",

@@ -9,7 +9,7 @@
  * 3. Consistent variant mappings for different component types
  */
 
-import { type ClassValue } from "clsx";
+import { type ClassValue } from "cx";
 
 // Global semantic variant types (used by all components)
 export type GlobalSemanticVariant =

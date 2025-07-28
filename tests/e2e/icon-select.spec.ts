@@ -56,9 +56,12 @@ test.describe('IconSelect Component', () => {
     const optionsContainer = page.getByTestId('preview-container').getByTestId('combobox-options');
     const initialIconCount = await page.getByTestId('preview-container').locator('[data-testid^="combobox-item-"]').count();
     
-    // Scroll to bottom to trigger infinite scroll
+    // Scroll to bottom to trigger infinite scroll - find the actual scrollable viewport
     await optionsContainer.evaluate(el => {
-      el.scrollTop = el.scrollHeight;
+      const scrollableViewport = el.querySelector('.h-full.w-full.rounded-\\[inherit\\]') as HTMLElement;
+      if (scrollableViewport) {
+        scrollableViewport.scrollTop = scrollableViewport.scrollHeight;
+      }
     });
     
     // Wait for loading more indicator (might be brief)

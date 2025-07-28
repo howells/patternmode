@@ -128,7 +128,7 @@ const generateResponsiveClasses = (
 const getBaseValue = <T,>(
   value: ResponsiveValue<T> | undefined
 ): T | undefined => {
-  if (!value) return undefined;
+  if (value === undefined || value === null) return undefined;
   if (typeof value === "object" && value !== null) {
     // Return the smallest breakpoint value or undefined
     const responsiveObj = value as {

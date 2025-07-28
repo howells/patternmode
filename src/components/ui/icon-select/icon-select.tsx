@@ -8,7 +8,7 @@
  * Features:
  * - Complete collection of 3,644+ Lucide React icons
  * - Tree-shakable: Only used icons included in bundle
- * - Infinite scrolling: Loads 30 icons initially, then automatically loads more as you scroll
+ * - Infinite scrolling: Loads 50 icons initially, then automatically loads more as you scroll
  * - API-based loading: Efficient server-side pagination and search
  * - Official Lucide DynamicIcon implementation
  * - Searchable dropdown with icon previews
@@ -108,7 +108,7 @@ async function fetchIcons({
   search?: string;
   signal?: AbortSignal;
 }) {
-  const limit = 30;
+  const limit = 50;
 
   const params = new URLSearchParams({
     page: pageParam.toString(),
@@ -155,7 +155,7 @@ function toKebabCase(str: string): string {
 }
 
 /**
- * Safe DynamicIcon wrapper that renders Lucide icons without validation to avoid infinite loops
+ * Safe DynamicIcon wrapper that renders Lucide icons with comprehensive validation to prevent console errors
  */
 const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
   name,
@@ -180,12 +180,27 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
     [className, fallback]
   );
 
-  // Basic validation - must be a non-empty string
-  if (!name || typeof name !== "string" || name.trim() === "") {
+  // Comprehensive validation before attempting to render
+  const isValidIcon = React.useMemo(() => {
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      return false;
+    }
+
+    // Check if the icon name follows the expected kebab-case pattern
+    if (!/^[a-z][a-z0-9-]*$/.test(name)) {
+      return false;
+    }
+
+    // These icons are actually valid in Lucide React, so we don't filter them out
+
+    return true;
+  }, [name]);
+
+  if (!isValidIcon) {
     return fallbackElement;
   }
 
-  // Try to render the DynamicIcon - if it fails, show fallback
+  // Render with try-catch for additional safety
   try {
     return (
       <div
@@ -200,10 +215,11 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
       </div>
     );
   } catch (error) {
-    // If DynamicIcon fails to render, show fallback
+    // Silently catch DynamicIcon errors and show fallback
     return fallbackElement;
   }
 });
+
 
 
 /**

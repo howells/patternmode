@@ -18,6 +18,7 @@ import { List, ListIndicator, ListItem } from "@/components/ui/list/list";
 import { HStack, Stack, VStack } from "@/components/ui/stack/stack";
 import { Subheading } from "@/components/ui/subheading/subheading";
 import { Code, Text } from "@/components/ui/text/text";
+import { GlobalSemanticVariant, TailwindColor } from "@/lib/variants";
 import {
   Box,
   CheckCircle,
@@ -25,6 +26,7 @@ import {
   Database,
   ExternalLink,
   FormInput,
+  LucideIcon,
   MessageSquare,
   Package,
   Palette,
@@ -33,102 +35,149 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+interface CategoryCardProps {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  items: string[];
+  variant?: GlobalSemanticVariant;
+  color?: GlobalSemanticVariant | TailwindColor;
+  headerBorder?: boolean;
+  useHorizontalLayout?: boolean;
+}
+
+function CategoryCard({
+  icon: Icon,
+  title,
+  description,
+  items,
+  variant = "default",
+  color,
+  headerBorder = false,
+  useHorizontalLayout = false,
+}: CategoryCardProps) {
+  if (useHorizontalLayout) {
+    return (
+      <Card>
+        <CardHeader border={headerBorder}>
+          <HStack align="center">
+            <IconContainer
+              icon={Icon}
+              size="lg"
+              variant={variant}
+              color={color}
+            />
+            <VStack gap={1}>
+              <CardTitle>{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
+            </VStack>
+          </HStack>
+        </CardHeader>
+        <CardContent>
+          <List>
+            {items.map((item, index) => (
+              <ListItem key={index}>{item}</ListItem>
+            ))}
+          </List>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <IconContainer icon={Icon} size="lg" variant={variant} color={color} />
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <List>
+          {items.map((item, index) => (
+            <ListItem key={index}>{item}</ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
+  );
+}
+
+const componentCategories = [
+  {
+    icon: Box,
+    title: "UI Components",
+    description: "Essential building blocks",
+    items: [
+      "Buttons & Cards",
+      "Navigation & Layout",
+      "Modals & Drawers",
+      "Icons & Badges",
+    ],
+    variant: "default" as const,
+    headerBorder: true,
+    useHorizontalLayout: true,
+  },
+  {
+    icon: FormInput,
+    title: "Form Components",
+    description: "Complete form toolkit",
+    items: [
+      "Inputs & Textareas",
+      "Selects & Comboboxes",
+      "Checkboxes & Radios",
+      "Date Pickers",
+    ],
+    variant: "success" as const,
+    headerBorder: true,
+    useHorizontalLayout: true,
+  },
+  {
+    icon: Database,
+    title: "Data Display",
+    description: "Data visualization tools",
+    items: [
+      "Tables & Lists",
+      "Charts & Graphs",
+      "Progress Indicators",
+      "Empty States",
+    ],
+    color: "purple" as const,
+    headerBorder: true,
+    useHorizontalLayout: true,
+  },
+  {
+    icon: MessageSquare,
+    title: "Feedback",
+    description: "User communication",
+    items: [
+      "Toast Notifications",
+      "Alert Dialogs",
+      "Tooltips & Popovers",
+      "Callouts",
+    ],
+    color: "orange" as const,
+    headerBorder: true,
+    useHorizontalLayout: true,
+  },
+];
+
 export default function Home() {
   return (
     <div>
       <PageHeader
         title="Patternmode"
         description="A React component library built with TypeScript, Tailwind CSS, and Base UI. Provides accessible, customizable components for modern web applications."
-        badge="Getting Started"
       />
 
       <Stack gap={8}>
         {/* Component Categories */}
-        <div>
+        <div className="p-6">
           <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap={6}>
-            <GridCell>
-              <Card>
-                <CardHeader>
-                  <IconContainer icon={Box} size="lg" variant="default" />
-                  <CardTitle>UI Components</CardTitle>
-                  <CardDescription>Essential building blocks</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <List>
-                    <ListItem>Buttons & Cards</ListItem>
-                    <ListItem>Navigation & Layout</ListItem>
-                    <ListItem>Modals & Drawers</ListItem>
-                    <ListItem>Icons & Badges</ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-            </GridCell>
-
-            <GridCell>
-              <Card>
-                <CardHeader border>
-                  <HStack>
-                    <IconContainer
-                      icon={FormInput}
-                      size="lg"
-                      variant="success"
-                    />
-                    <VStack gap={0}>
-                      <CardTitle>Form Components</CardTitle>
-                      <CardDescription>Complete form toolkit</CardDescription>
-                    </VStack>
-                  </HStack>
-                </CardHeader>
-                <CardContent>
-                  <List>
-                    <ListItem>Inputs & Textareas</ListItem>
-                    <ListItem>Selects & Comboboxes</ListItem>
-                    <ListItem>Checkboxes & Radios</ListItem>
-                    <ListItem>Date Pickers</ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-            </GridCell>
-
-            <GridCell>
-              <Card>
-                <CardHeader>
-                  <IconContainer icon={Database} size="lg" color="purple" />
-                  <CardTitle>Data Display</CardTitle>
-                  <CardDescription>Data visualization tools</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <List>
-                    <ListItem>Tables & Lists</ListItem>
-                    <ListItem>Charts & Graphs</ListItem>
-                    <ListItem>Progress Indicators</ListItem>
-                    <ListItem>Empty States</ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-            </GridCell>
-
-            <GridCell>
-              <Card>
-                <CardHeader>
-                  <IconContainer
-                    icon={MessageSquare}
-                    size="lg"
-                    color="orange"
-                  />
-                  <CardTitle>Feedback</CardTitle>
-                  <CardDescription>User communication</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <List>
-                    <ListItem>Toast Notifications</ListItem>
-                    <ListItem>Alert Dialogs</ListItem>
-                    <ListItem>Tooltips & Popovers</ListItem>
-                    <ListItem>Callouts</ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-            </GridCell>
+            {componentCategories.map((category, index) => (
+              <GridCell key={index}>
+                <CategoryCard {...category} />
+              </GridCell>
+            ))}
           </Grid>
         </div>
 
