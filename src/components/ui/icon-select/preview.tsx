@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { IconSelect } from "./icon-select";
+import { IconSelect } from "@patternmode/ui";
 
 // Example component for preview system
 export const IconSelectExample = ({

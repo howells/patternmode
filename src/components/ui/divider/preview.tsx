@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Divider } from "./divider";
+import { Divider } from "@patternmode/ui";
 
 // Example component for preview system
 export const DividerExample = ({

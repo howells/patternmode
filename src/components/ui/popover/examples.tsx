@@ -9,7 +9,7 @@ import {
   PopoverDescription,
   PopoverTitle,
   PopoverTrigger,
-} from "./popover";
+} from "@patternmode/ui";
 import { Button } from "../button/button";
 
 export function PopoverExample() {

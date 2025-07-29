@@ -1,5 +1,5 @@
 import React from "react";
-import { AreaChart } from "./area-chart";
+import { AreaChart } from "@patternmode/ui";
 
 // Sample data for examples
 const chartData = [

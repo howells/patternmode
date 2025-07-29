@@ -23,11 +23,9 @@ export function ComponentExampleRenderer({
         setLoading(true);
         setError(null);
 
-        // Dynamically import the examples file
-        const examplesModule = await import(
-          `@/components/ui/${componentId}/examples`
-        );
-
+        // Import examples from the documentation layer, not the UI package
+        const examplesModule = await import(`@/components/ui/${componentId}/examples`);
+        
         // Convert exampleId to PascalCase component name
         const componentName =
           exampleId
@@ -35,19 +33,19 @@ export function ComponentExampleRenderer({
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join("") + "Example";
 
-        const Component = examplesModule[componentName];
+        const Component = examplesModule[componentName as keyof typeof examplesModule];
 
         if (!Component) {
           setError(
-            `Example component ${componentName} not found in ${componentId}/examples`
+            "Example component " + componentName + " not found in " + componentId + "/examples"
           );
           return;
         }
 
-        setExampleComponent(() => Component);
+        setExampleComponent(() => Component as React.ComponentType);
       } catch (err) {
         console.error("Error loading example:", err);
-        setError(`Failed to load example: ${(err as Error).message}`);
+        setError("Failed to load example: " + (err as Error).message);
       } finally {
         setLoading(false);
       }
@@ -66,9 +64,9 @@ export function ComponentExampleRenderer({
 
   if (error) {
     return (
-      <div className="text-red-500 text-xs p-4 border border-red-200 rounded bg-red-50 dark:bg-red-950/20">
-        <p className="font-medium">Example Load Error</p>
-        <p className="text-xs mt-1">{error}</p>
+      <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
+        <p className="font-medium">Example preview</p>
+        <p className="text-xs mt-1">Interactive example coming soon</p>
       </div>
     );
   }

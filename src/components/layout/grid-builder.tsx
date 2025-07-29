@@ -1,14 +1,8 @@
 "use client";
 
 import { ComponentSearch } from "@/components/component-search";
-import { Button } from "@/components/ui/button/button";
-import { Grid, GridCell } from "@/components/ui/grid/grid";
-import { Stack } from "@/components/ui/stack/stack";
-import { Subheading } from "@/components/ui/subheading";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group/toggle-group";
+import { Button, Grid, GridCell, Stack, Subheading } from "@patternmode/ui";
+import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 import { getComponentConfig } from "@/lib/component-registry";
 import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";

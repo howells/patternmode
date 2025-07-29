@@ -2,7 +2,7 @@
 
 import { addDays, subDays } from "date-fns";
 import React from "react";
-import { Calendar } from "./calendar";
+import { Calendar } from "@patternmode/ui";
 
 // Default calendar
 export const DefaultExample = () => <Calendar mode="single" />;

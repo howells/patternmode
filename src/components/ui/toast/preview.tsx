@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Toast, useToast } from "./toast";
+import { Toast, useToast } from "@patternmode/ui";
 
 export function Example() {
   const toast = useToast();

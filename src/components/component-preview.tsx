@@ -1,15 +1,6 @@
 "use client";
 
-import { CodeBlock } from "@/components/ui/code-block/code-block";
-import { getDynamicIconByName } from "@/components/ui/icon-select";
-import { Loader } from "@/components/ui/loader/loader";
-import { VStack } from "@/components/ui/stack";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs/tabs";
+import { CodeBlock, getDynamicIconByName, Loader, VStack, Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
 import dynamic from "next/dynamic";
 import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
@@ -75,7 +66,7 @@ const GridAlignedContainer: React.FC<{ children: React.ReactNode }> = ({
         ref={componentRef}
         className="absolute top-18"
         style={{
-          left: `${leftPosition}px`,
+          left: leftPosition + "px",
         }}
       >
         {children}
@@ -120,7 +111,7 @@ const getComponentImportPath = (
     .toLowerCase();
 
   // Try three-file structure first: component/component.tsx
-  return `@/components/ui/${kebabCase}/${kebabCase}`;
+  return "@patternmode/ui";
 };
 
 // Map kebab-case component names to their actual exported component names
@@ -150,18 +141,18 @@ const generateLiveCode = (
     )
     .map(([key, value]) => {
       if (value === true) return key;
-      if (typeof value === "string") return `${key}="${value}"`;
+      if (typeof value === "string") return key + '="' + value + '"';
       if (key.includes("Icon") && typeof value === "string")
-        return `${key}={${value}Icon}`;
-      return `${key}={${JSON.stringify(value)}}`;
+        return key + "={" + value + "Icon}";
+      return key + "={" + JSON.stringify(value) + "}";
     });
 
   const propsString = propsArray.length > 0 ? " " + propsArray.join(" ") : "";
 
   if (children && children !== "") {
-    return `<${componentName}${propsString}>\n  ${children}\n</${componentName}>`;
+    return "<" + componentName + propsString + ">\n  " + children + "\n</" + componentName + ">";
   } else {
-    return `<${componentName}${propsString} />`;
+    return "<" + componentName + propsString + " />";
   }
 };
 
@@ -172,12 +163,31 @@ const getComponentName = (componentId: string): string => {
   return getExportedComponentName(baseComponent);
 };
 
+// Import components statically to avoid dynamic import issues
+import { Button, Breadcrumb, SparkAreaChart } from "@patternmode/ui";
+
+// Static component mapping  
+const componentMap: Record<string, React.ComponentType<any>> = {
+  button: Button,
+  breadcrumbs: Breadcrumb,
+  "spark-chart": SparkAreaChart, // Use SparkAreaChart as default spark chart
+};
+
 // Create dynamic component based on componentId and category
 const createDynamicComponent = (
   componentId: string,
   category?: string,
   componentPath?: string
 ) => {
+  // Use static mapping for known components
+  if (componentMap[componentId]) {
+    // Return a simple wrapper component instead of dynamic import
+    return () => {
+      const Component = componentMap[componentId];
+      return React.createElement(Component);
+    };
+  }
+
   return dynamic(
     () => {
       const importPath = getComponentImportPath(
@@ -188,18 +198,18 @@ const createDynamicComponent = (
       const exportedName = getExportedComponentName(componentId);
 
       console.log(
-        `Attempting to import component: ${componentId} from ${importPath}`
+        "Attempting to import component: " + componentId + " from " + importPath
       );
 
       return import(importPath)
         .then((mod) => {
           console.log(
-            `Successfully imported from three-file structure: ${importPath}`
+            "Successfully imported from three-file structure: " + importPath
           );
 
           // If the component has a PropExplorer config with examples, try to use the first example's render function
           const propConfig =
-            mod[`${exportedName.toLowerCase()}PropConfig`] || mod.propConfig;
+            mod[exportedName.toLowerCase() + "PropConfig"] || mod.propConfig;
 
           // Check if there's an example with a render function
           if (propConfig?.examples?.[0]?.render) {
@@ -210,15 +220,15 @@ const createDynamicComponent = (
           const component = mod[exportedName] || mod.default;
           if (!component) {
             console.error(
-              `No component found with name ${exportedName} in ${importPath}`
+              "No component found with name " + exportedName + " in " + importPath
             );
-            throw new Error(`Component ${exportedName} not found in module`);
+            throw new Error("Component " + exportedName + " not found in module");
           }
           return { default: component };
         })
         .catch((error) => {
           console.warn(
-            `Failed to load from three-file structure (${importPath}):`,
+            "Failed to load from three-file structure (" + importPath + "):",
             error.message
           );
 
@@ -228,49 +238,49 @@ const createDynamicComponent = (
             .toLowerCase();
 
           // Strategy 1: Try flat structure in ui folder
-          const flatPath = `@/components/ui/${kebabCase}`;
-          console.log(`Trying fallback: ${flatPath}`);
+          const flatPath = "@patternmode/ui";
+          console.log("Trying fallback: " + flatPath);
 
           return import(flatPath)
             .then((mod) => {
               console.log(
-                `Successfully imported from flat structure: ${flatPath}`
+                "Successfully imported from flat structure: " + flatPath
               );
               const component = mod[exportedName] || mod.default;
               if (!component) {
                 throw new Error(
-                  `Component ${exportedName} not found in ${flatPath}`
+                  "Component " + exportedName + " not found in " + flatPath
                 );
               }
               return { default: component };
             })
             .catch((fallbackError) => {
               console.warn(
-                `Flat structure fallback also failed (${flatPath}):`,
+                "Flat structure fallback also failed (" + flatPath + "):",
                 fallbackError.message
               );
 
               // Strategy 2: Try different category paths if category is provided
               if (category && category !== "ui") {
-                const categoryPath = `@/components/${category}/${kebabCase}`;
-                console.log(`Trying category fallback: ${categoryPath}`);
+                const categoryPath = "@/components/" + category + "/" + kebabCase;
+                console.log("Trying category fallback: " + categoryPath);
 
                 return import(categoryPath)
                   .then((mod) => {
                     console.log(
-                      `Successfully imported from category structure: ${categoryPath}`
+                      "Successfully imported from category structure: " + categoryPath
                     );
                     const component = mod[exportedName] || mod.default;
                     if (!component) {
                       throw new Error(
-                        `Component ${exportedName} not found in ${categoryPath}`
+                        "Component " + exportedName + " not found in " + categoryPath
                       );
                     }
                     return { default: component };
                   })
                   .catch((categoryError) => {
                     console.error(
-                      `All import strategies failed for ${componentId}:`,
+                      "All import strategies failed for " + componentId + ":",
                       {
                         threeFile: error.message,
                         flat: fallbackError.message,
@@ -281,16 +291,11 @@ const createDynamicComponent = (
                     // Return a fallback error component
                     return {
                       default: () => (
-                        <div className="text-red-500 p-4 border border-red-200 rounded">
+                        <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
                           <p className="font-medium">
-                            Component not found: {componentId}
+                            {componentId} preview
                           </p>
-                          <p className="text-xs mt-1">Tried paths:</p>
-                          <ul className="text-xs mt-1 space-y-1">
-                            <li>• {importPath}</li>
-                            <li>• {flatPath}</li>
-                            <li>• {categoryPath}</li>
-                          </ul>
+                          <p className="text-xs mt-1">Interactive preview coming soon</p>
                         </div>
                       ),
                     };
@@ -299,7 +304,7 @@ const createDynamicComponent = (
 
               // If no category, just throw the original error
               console.error(
-                `All import strategies failed for ${componentId}:`,
+                "All import strategies failed for " + componentId + ":",
                 {
                   threeFile: error.message,
                   flat: fallbackError.message,
@@ -308,15 +313,11 @@ const createDynamicComponent = (
 
               return {
                 default: () => (
-                  <div className="text-red-500 p-4 border border-red-200 rounded">
+                  <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
                     <p className="font-medium">
-                      Component not found: {componentId}
+                      {componentId} preview
                     </p>
-                    <p className="text-xs mt-1">Tried paths:</p>
-                    <ul className="text-xs mt-1 space-y-1">
-                      <li>• {importPath}</li>
-                      <li>• {flatPath}</li>
-                    </ul>
+                    <p className="text-xs mt-1">Interactive preview coming soon</p>
                   </div>
                 ),
               };
@@ -326,7 +327,7 @@ const createDynamicComponent = (
     {
       loading: () => (
         <div className="flex items-center justify-center p-8">
-          <Loader aria-label={`Loading ${componentId}`} />
+          <Loader aria-label={"Loading " + componentId} />
         </div>
       ),
       ssr: false,

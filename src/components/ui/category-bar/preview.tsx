@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CategoryBar } from "./category-bar";
+import { CategoryBar } from "@patternmode/ui";
 
 // Example component for preview system
 export const CategoryBarExample = ({

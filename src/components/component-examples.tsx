@@ -1,20 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card/card";
-import { CodeBlock } from "@/components/ui/code-block/code-block";
-import { Divider } from "@/components/ui/divider/divider";
-import { VStack } from "@/components/ui/stack";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs/tabs";
+import { Card, CardContent, CardHeader, CodeBlock, Divider, VStack, Tabs, TabsContent, TabsList, TabsTrigger, Subheading, Text } from "@patternmode/ui";
 import { getComponentConfig } from "@/lib/component-registry";
 import React from "react";
 import { ComponentExampleRenderer } from "./component-example-renderer";
-import { Subheading } from "./ui/subheading/subheading";
-import { Text } from "./ui/text";
 
 interface ComponentExamplesProps {
   componentId: string;

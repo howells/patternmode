@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Combobox, type ComboboxOption } from "./combobox";
+import { Combobox, type ComboboxOption } from "@patternmode/ui";
 
 // Sample data
 interface FruitOption extends ComboboxOption {

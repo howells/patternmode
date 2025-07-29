@@ -5,7 +5,7 @@ import {
   DescriptionDetails,
   DescriptionList,
   DescriptionTerm,
-} from "./description-list";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const DescriptionListExample = ({

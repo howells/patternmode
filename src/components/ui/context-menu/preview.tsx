@@ -1,6 +1,6 @@
 "use client";
 
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "./context-menu";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@patternmode/ui";
 
 interface ContextMenuExampleProps {
   disabled?: boolean;

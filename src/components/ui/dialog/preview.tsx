@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog";
+} from "@patternmode/ui";
 
 interface DialogExampleProps {
   size?: "sm" | "md" | "lg" | "xl";

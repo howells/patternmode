@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-} from "./table";
+} from "@patternmode/ui";
 
 export function Example() {
   const data = [

@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@patternmode/ui";
 
 // Example component for preview system
 export const DrawerExample = ({

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DonutChart } from "./donut-chart";
+import { DonutChart } from "@patternmode/ui";
 
 interface DonutChartExampleProps {
   variant?: "donut" | "pie";

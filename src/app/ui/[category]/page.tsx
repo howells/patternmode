@@ -1,10 +1,4 @@
-import { Badge } from "@/components/ui/badge/badge";
-import { Card } from "@/components/ui/card/card";
-import { Grid, GridCell } from "@/components/ui/grid/grid";
-import { Heading } from "@/components/ui/heading/heading";
-import { HStack, VStack } from "@/components/ui/stack/stack";
-import { Subheading } from "@/components/ui/subheading/subheading";
-import { Text } from "@/components/ui/text/text";
+import { Badge, Card, Grid, GridCell, Heading, HStack, VStack, Subheading, Text } from "@patternmode/ui";
 import { getComponentsByCategory } from "@/lib/component-registry";
 import Link from "next/link";
 import { notFound } from "next/navigation";

@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, Stack, VStack } from "./stack";
+import { HStack, Stack, VStack } from "@patternmode/ui";
 
 // Default example - matches config "default" id
 export function DefaultExample() {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./collapsible";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@patternmode/ui";
 import { ChevronDown, ChevronRight, Info, Settings, HelpCircle } from "lucide-react";
 
 // Default collapsible

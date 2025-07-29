@@ -1,5 +1,5 @@
 import React from "react";
-import { Callout } from "./callout";
+import { Callout } from "@patternmode/ui";
 import { AlertTriangle, Info, CheckCircle, AlertCircle } from "lucide-react";
 
 // Default callout

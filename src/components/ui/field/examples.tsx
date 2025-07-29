@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, FieldLabel, FieldDescription, FieldError } from "./field";
+import { Field, FieldLabel, FieldDescription, FieldError } from "@patternmode/ui";
 import { Input } from "../input/input";
 
 // Default field

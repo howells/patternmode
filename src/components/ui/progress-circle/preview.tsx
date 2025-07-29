@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressCircle } from "./progress-circle";
+import { ProgressCircle } from "@patternmode/ui";
 
 export function Example({ 
   value = 65,

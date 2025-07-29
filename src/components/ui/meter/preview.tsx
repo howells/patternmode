@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Meter } from "./meter";
+import { Meter } from "@patternmode/ui";
 
 // Example component for preview system
 export const MeterExample = ({

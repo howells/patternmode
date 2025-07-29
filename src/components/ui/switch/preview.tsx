@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Switch } from "./switch";
+import { Switch } from "@patternmode/ui";
 
 interface SwitchExampleProps {
   size?: "default" | "small";

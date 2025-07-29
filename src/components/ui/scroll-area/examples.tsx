@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ScrollArea } from "./scroll-area";
+import { ScrollArea } from "@patternmode/ui";
 import { Separator } from "../separator";
 
 // Config example ID: "default" -> export name: DefaultExample

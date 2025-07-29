@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./button";
+import { Button } from "@patternmode/ui";
 
 // Example component for preview system
 export const ButtonExample = ({

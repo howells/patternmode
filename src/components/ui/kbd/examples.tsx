@@ -1,4 +1,4 @@
-import { Kbd } from "./kbd";
+import { Kbd } from "@patternmode/ui";
 
 // Default example - basic keyboard shortcut
 export const DefaultExample = () => <Kbd>K</Kbd>;

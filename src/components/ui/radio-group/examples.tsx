@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { RadioGroup, RadioGroupItem } from "./radio-group";
+import { RadioGroup, RadioGroupItem } from "@patternmode/ui";
 import { RadioOption } from "../radio/radio";
 import { Button } from "../button/button";
 

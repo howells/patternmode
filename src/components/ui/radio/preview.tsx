@@ -8,7 +8,7 @@ import {
   RadioCard, 
   RadioCardOption, 
   RadioIndicator 
-} from "./radio";
+} from "@patternmode/ui";
 
 interface RadioExampleProps {
   size?: "sm" | "md" | "lg";

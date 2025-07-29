@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-} from "./table";
+} from "@patternmode/ui";
 
 export function DefaultExample() {
   return (

@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "dismiss-button",
   name: "Dismiss Button",
   description: "A reusable dismiss/remove button with consistent styling.",
-  category: "inputs" as const,
+  category: "utility" as const,
   icon: "X",
 
   installation: {

@@ -5,7 +5,7 @@ import {
   NavbarItem,
   NavbarLabel,
   NavbarSection,
-} from "./navbar";
+} from "@patternmode/ui";
 
 export function DefaultExample() {
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { ToggleExample, DefaultExample, WithIconExample } from "./examples";
-import { Toggle } from "./toggle";
 
 export const componentConfig: ComponentConfig = {
   id: "toggle",

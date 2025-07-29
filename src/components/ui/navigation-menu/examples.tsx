@@ -5,7 +5,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from "./navigation-menu";
+} from "@patternmode/ui";
 
 export function DefaultExample() {
   return (

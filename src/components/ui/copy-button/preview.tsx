@@ -1,5 +1,5 @@
 import React from "react";
-import { CopyButton } from "./copy-button";
+import { CopyButton } from "@patternmode/ui";
 
 // Example component for preview system
 export const CopyButtonExample = ({

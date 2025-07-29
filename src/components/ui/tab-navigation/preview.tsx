@@ -1,6 +1,6 @@
 "use client";
 
-import { TabNavigation, TabNavigationLink } from "./tab-navigation";
+import { TabNavigation, TabNavigationLink } from "@patternmode/ui";
 
 export function Example() {
   return (

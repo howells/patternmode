@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "progress-circle",
   name: "Progress Circle",
   description: "A circular progress indicator showing completion percentage.",
-  category: "data" as const,
+  category: "feedback" as const,
   icon: "Loader",
 
   installation: {

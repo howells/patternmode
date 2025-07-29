@@ -8,7 +8,7 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-} from "./sidebar";
+} from "@patternmode/ui";
 
 export function DefaultExample() {
   return (

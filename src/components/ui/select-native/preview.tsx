@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SelectNative } from "./select-native";
+import { SelectNative } from "@patternmode/ui";
 
 interface SelectNativeExampleProps {
   hasError?: boolean;

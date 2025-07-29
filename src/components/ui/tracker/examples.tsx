@@ -1,5 +1,5 @@
 import React from "react";
-import { Tracker } from "./tracker";
+import { Tracker } from "@patternmode/ui";
 
 export const TrackerExample = () => (
   <Tracker data={[

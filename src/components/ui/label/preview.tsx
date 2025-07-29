@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "./label";
+import { Label } from "@patternmode/ui";
 
 // Example component for preview system
 export const LabelExample = ({

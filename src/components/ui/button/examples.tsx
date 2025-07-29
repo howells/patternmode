@@ -2,7 +2,7 @@
 
 import { ArrowRight, Loader2, Plus } from "lucide-react";
 import React from "react";
-import { Button } from "./button";
+import { Button } from "@patternmode/ui";
 
 // Default button
 export const DefaultExample = () => <Button>Click me</Button>;

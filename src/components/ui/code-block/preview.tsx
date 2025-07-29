@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CodeBlock } from "./code-block";
+import { CodeBlock } from "@patternmode/ui";
 
 // Example component for preview system
 export const CodeBlockExample = ({

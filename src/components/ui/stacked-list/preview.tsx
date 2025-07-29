@@ -4,7 +4,7 @@ import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import { Avatar } from "../avatar/avatar";
 import { Button } from "../button/button";
-import { StackedList } from "./stacked-list";
+import { StackedList } from "@patternmode/ui";
 
 // Example component for preview system
 export const StackedListExample = ({

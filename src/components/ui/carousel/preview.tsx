@@ -8,7 +8,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./carousel";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const CarouselExample = ({

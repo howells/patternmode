@@ -5,7 +5,7 @@ import { Grid, GridCell } from "../grid/grid";
 import { Stack } from "../stack/stack";
 import { Subheading } from "../subheading";
 import { Text } from "../text/text";
-import { ScrollArea } from "./scroll-area";
+import { ScrollArea } from "@patternmode/ui";
 
 interface ScrollAreaExampleProps {
   orientation?: "vertical" | "horizontal" | "both";

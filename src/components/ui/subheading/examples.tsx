@@ -1,5 +1,5 @@
 import React from "react";
-import { Subheading } from "./subheading";
+import { Subheading } from "@patternmode/ui";
 
 export function DefaultExample() {
   return <Subheading>Getting Started</Subheading>;

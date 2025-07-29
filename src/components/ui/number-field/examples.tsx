@@ -1,5 +1,5 @@
 import React from "react";
-import { NumberField } from "./number-field";
+import { NumberField } from "@patternmode/ui";
 
 export function NumberFieldExample() {
   return <NumberField label="Quantity" placeholder="Enter quantity" />;

@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { Icon, useIconSize } from "../icon";
-import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 export function DefaultExample() {
   const [alignment, setAlignment] = React.useState<string[]>(["left"]);

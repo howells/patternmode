@@ -4,7 +4,7 @@ import { Code, MapPin, Palette, Star, User } from "lucide-react";
 import React from "react";
 import { Icon } from "../icon";
 import { Tag } from "../tag";
-import { TagInput, TagOption, useTagInput } from "./tag-input";
+import { TagInput, TagOption, useTagInput } from "@patternmode/ui";
 
 // Sample data for examples
 const technologies: TagOption[] = [

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ProgressCircle } from "./progress-circle";
+import { ProgressCircle } from "@patternmode/ui";
 
 export function DefaultExample() {
   return <ProgressCircle value={75} />;

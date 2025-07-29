@@ -6,7 +6,7 @@ import React from "react";
 import { ComponentPreview } from "./component-preview";
 import { PropExplorerProvider } from "./prop-explorer-context";
 import { PropExplorerContent } from "./prop-explorer-controls";
-import { Inspector, InspectorBody } from "./ui/inspector";
+import { Inspector, InspectorBody } from "@patternmode/ui";
 
 interface ComponentPropExplorerProps {
   config: ComponentConfig;

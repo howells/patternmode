@@ -1,6 +1,6 @@
 import React from "react";
 import { Download, Heart, Search, Settings, Star, User } from "lucide-react";
-import { Icon } from "./icon";
+import { Icon } from "@patternmode/ui";
 
 export function DefaultExample() {
   return <Icon icon={Search} />;

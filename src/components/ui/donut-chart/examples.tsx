@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { DonutChart } from "./donut-chart";
+import { DonutChart } from "@patternmode/ui";
 
 // Default donut chart
 export const DefaultExample = () => {

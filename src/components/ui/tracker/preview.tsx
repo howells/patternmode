@@ -1,5 +1,5 @@
 import React from "react";
-import { Tracker, type TrackerBlockProps } from "./tracker";
+import { Tracker, type TrackerBlockProps } from "@patternmode/ui";
 
 // Preview component for prop explorer system
 export const TrackerExample = ({

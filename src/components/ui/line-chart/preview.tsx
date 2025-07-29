@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LineChart } from "./line-chart";
+import { LineChart } from "@patternmode/ui";
 
 interface LineChartExampleProps {
   showXAxis?: boolean;

@@ -8,7 +8,7 @@ import {
   Star,
   Zap,
 } from "lucide-react";
-import { IconContainer } from "./icon-container";
+import { IconContainer } from "@patternmode/ui";
 
 // Individual example components for config
 export const BasicExample = () => <IconContainer icon={Box} />;

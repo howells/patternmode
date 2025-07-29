@@ -8,7 +8,7 @@ import {
   NavbarLabel,
   NavbarSection,
   NavbarSpacer,
-} from "./navbar";
+} from "@patternmode/ui";
 
 export function NavbarExample() {
   const [currentItem, setCurrentItem] = useState("Dashboard");

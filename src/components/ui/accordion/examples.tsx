@@ -1,12 +1,11 @@
-import { Badge } from "@/components/ui/badge/badge";
-import { Text } from "@/components/ui/text/text";
+import { Badge, Text } from "@patternmode/ui";
 import React from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion";
+} from "@patternmode/ui";
 
 // Default accordion
 export const DefaultExample = () => (

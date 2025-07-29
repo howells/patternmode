@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "./badge";
+import { Badge } from "@patternmode/ui";
 
 // Example component for preview system
 export const BadgeExample = ({

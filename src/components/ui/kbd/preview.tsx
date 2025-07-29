@@ -1,4 +1,4 @@
-import { Kbd } from "./kbd";
+import { Kbd } from "@patternmode/ui";
 
 export const KbdExample = ({
   keys,

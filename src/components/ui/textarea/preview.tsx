@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Textarea } from "./textarea";
+import { Textarea } from "@patternmode/ui";
 
 interface TextareaExampleProps {
   hasError?: boolean;

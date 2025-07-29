@@ -6,7 +6,7 @@ import {
   MenuItem,
   MenuSeparator,
   MenuTrigger,
-} from "./menu";
+} from "@patternmode/ui";
 
 interface MenuExampleProps {
   sideOffset?: number;

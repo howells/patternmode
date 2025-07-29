@@ -1,7 +1,7 @@
 "use client";
 
 import { cx } from "@/lib/utils";
-import { Separator } from "./separator";
+import { Separator } from "@patternmode/ui";
 
 export function Example() {
   return (

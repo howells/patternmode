@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PreviewCard } from "./preview-card";
+import { PreviewCard } from "@patternmode/ui";
 
 export function PreviewCardExample() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { BarList } from "./bar-list";
+import { BarList } from "@patternmode/ui";
 
 // Sample data for different preview scenarios
 const defaultData = [

@@ -1,4 +1,4 @@
-import { ComponentConfig, ComponentExample } from "./component-configs";
+import { ComponentConfig, ComponentExample } from "./component-config-types";
 
 /**
  * Helper to create component examples with consistent structure

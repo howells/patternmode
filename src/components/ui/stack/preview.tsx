@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Stack } from "./stack";
+import { Stack } from "@patternmode/ui";
 
 // Example component for preview system
 export const StackExample = ({

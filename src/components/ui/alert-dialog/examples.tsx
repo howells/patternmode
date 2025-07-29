@@ -8,7 +8,7 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog";
+} from "@patternmode/ui";
 
 // Default alert dialog
 export const DefaultExample = () => (

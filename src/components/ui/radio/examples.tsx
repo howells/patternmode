@@ -6,7 +6,7 @@ import {
   RadioItem,
   RadioLabel,
   RadioOption,
-} from "./radio";
+} from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

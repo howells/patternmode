@@ -1,5 +1,5 @@
 import React from "react";
-import { Toggle } from "./toggle";
+import { Toggle } from "@patternmode/ui";
 import { Bold } from "lucide-react";
 
 export function DefaultExample() {

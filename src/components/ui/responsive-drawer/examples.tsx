@@ -11,7 +11,7 @@ import {
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
-} from "./responsive-drawer";
+} from "@patternmode/ui";
 
 export function ResponsiveDrawerExample() {
   return (

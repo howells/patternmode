@@ -1,10 +1,9 @@
 "use client";
 
 import { PropExplorerProvider } from "@/components/prop-explorer-context";
-import { Button } from "@/components/ui/button/button";
-import { Card } from "@/components/ui/card/card";
-import { getDynamicIconByName } from "@/components/ui/icon-select";
-import { Icon } from "@/components/ui/icon/icon";
+import { Button, Card } from "@patternmode/ui";
+import { getDynamicIconByName } from "@patternmode/ui";
+import { Icon } from "@patternmode/ui";
 import { getComponentConfig } from "@/lib/component-registry";
 import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -46,54 +45,11 @@ export function EditableCell({
     const config = getComponentConfig(cellData.componentId);
     if (!config) return null;
 
-    return dynamic(
-      () => {
-        // Convert PascalCase to kebab-case: AlertDialog -> alert-dialog
-        const kebabCase = cellData.componentId
-          .replace(/([a-z])([A-Z])/g, "$1-$2")
-          .toLowerCase();
-
-        // Try to import the actual component (not the preview)
-        const importPath = `@/components/ui/${kebabCase}/${kebabCase}`;
-
-        return import(importPath)
-          .then((mod) => {
-            // Convert kebab-case to PascalCase for the exported component name
-            const exportedName = cellData.componentId
-              .split('-')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join('');
-            const component = mod[exportedName] || mod.default;
-
-            if (!component) {
-              throw new Error(`Component ${exportedName} not found in module`);
-            }
-            return { default: component };
-          })
-          .catch((error) => {
-            console.error(
-              `Failed to load component ${cellData.componentId}:`,
-              error
-            );
-            return {
-              default: () => (
-                <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded text-sm">
-                  <div className="text-red-700 dark:text-red-400">
-                    Error loading {cellData.componentId}
-                  </div>
-                </div>
-              ),
-            };
-          });
-      },
-      {
-        loading: () => (
-          <div className="p-2 text-sm text-zinc-500">
-            Loading {cellData.componentId}...
-          </div>
-        ),
-        ssr: false,
-      }
+    // Simple placeholder component to fix broken dynamic imports
+    return () => (
+      <div className="p-4 border border-amber-200 rounded bg-amber-50 text-amber-600 text-sm">
+        Dynamic component loading temporarily disabled: {cellData.componentId}
+      </div>
     );
   }, [cellData]);
 

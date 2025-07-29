@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider } from "./divider";
+import { Divider } from "@patternmode/ui";
 
 // Default divider
 export const DefaultExample = () => (

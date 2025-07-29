@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Loader } from "./loader";
+import { Loader } from "@patternmode/ui";
 
 // Example component for preview system
 export const LoaderExample = ({

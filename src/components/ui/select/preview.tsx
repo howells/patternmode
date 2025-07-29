@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "@patternmode/ui";
 
 interface SelectExampleProps {
   placeholder?: string;

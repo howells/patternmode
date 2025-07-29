@@ -6,7 +6,7 @@ import { Avatar } from "../avatar/avatar";
 import { Badge } from "../badge/badge";
 import { Button } from "../button/button";
 import { Card } from "../card/card";
-import { StackedList } from "./stacked-list";
+import { StackedList } from "@patternmode/ui";
 
 // Default example - matches config "default" id
 export function DefaultExample() {

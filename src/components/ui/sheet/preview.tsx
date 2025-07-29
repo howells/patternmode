@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet";
+} from "@patternmode/ui";
 
 export function Example() {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Progress } from "./progress";
+import { Progress } from "@patternmode/ui";
 
 export function Example({
   value = 65,

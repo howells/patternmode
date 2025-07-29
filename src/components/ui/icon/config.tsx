@@ -8,7 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Icon",
   description:
     "Centralized icon component that provides consistent sizing and styling across all UI components. Built for Lucide React icons with automatic sizing based on context.",
-  category: "utility" as const,
+  category: "media" as const,
   icon: "Star",
 
   installation: {

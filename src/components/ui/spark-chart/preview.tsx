@@ -1,6 +1,6 @@
 "use client";
 
-import { SparkAreaChart, SparkBarChart, SparkLineChart } from "./spark-chart";
+import { SparkAreaChart, SparkBarChart, SparkLineChart } from "@patternmode/ui";
 
 interface SparkChartExampleProps {
   type?: "line" | "bar";

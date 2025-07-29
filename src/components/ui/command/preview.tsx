@@ -8,7 +8,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "./command";
+} from "@patternmode/ui";
 
 interface CommandExampleProps {
   size?: "sm" | "default" | "lg";

@@ -2,7 +2,7 @@
 
 import { Trash2 } from "lucide-react";
 import React from "react";
-import { DismissButton } from "./dismiss-button";
+import { DismissButton } from "@patternmode/ui";
 
 // Basic dismiss button
 export const DefaultExample = () => (

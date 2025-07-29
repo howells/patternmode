@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Tooltip } from "./tooltip";
+import { Tooltip } from "@patternmode/ui";
 
 interface TooltipExampleProps {
   content?: string;

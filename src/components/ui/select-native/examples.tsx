@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { SelectNative } from "./select-native";
+import { SelectNative } from "@patternmode/ui";
 
 export function DefaultExample() {
   const [value, setValue] = useState("");

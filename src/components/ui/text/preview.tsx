@@ -1,6 +1,6 @@
 "use client";
 
-import { Text } from "./text";
+import { Text } from "@patternmode/ui";
 
 export function Example() {
   return (

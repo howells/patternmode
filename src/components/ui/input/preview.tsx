@@ -1,6 +1,6 @@
 import { cx } from "@/lib/utils";
 import React from "react";
-import { Input } from "./input";
+import { Input } from "@patternmode/ui";
 
 export const InputExample = ({
   size = "base",

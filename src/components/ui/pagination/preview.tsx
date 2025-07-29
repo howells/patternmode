@@ -7,7 +7,7 @@ import {
   PaginationNext,
   PaginationPage,
   PaginationPrevious,
-} from "./pagination";
+} from "@patternmode/ui";
 
 export function PaginationExample({
   currentPage = 3,

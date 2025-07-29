@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "./breadcrumbs";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const BreadcrumbsExample = ({

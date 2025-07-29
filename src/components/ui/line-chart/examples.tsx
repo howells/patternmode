@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { LineChart } from "./line-chart";
+import { LineChart } from "@patternmode/ui";
 
 export function LineChartExample() {
   const data = [

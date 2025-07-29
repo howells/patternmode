@@ -1,4 +1,4 @@
-import { Subheading } from "./subheading";
+import { Subheading } from "@patternmode/ui";
 
 export function SubheadingExample() {
   return (

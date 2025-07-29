@@ -5,7 +5,7 @@ import {
   RadioCardGroup,
   RadioCardIndicator,
   RadioCardItem,
-} from "./radio-card-group";
+} from "@patternmode/ui";
 import { Button } from "../button/button";
 import { Rocket, Truck, Zap } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { SparkBarChart } from "./spark-chart";
+import { SparkBarChart } from "@patternmode/ui";
 
 export function SparkChartExample() {
   const data = [

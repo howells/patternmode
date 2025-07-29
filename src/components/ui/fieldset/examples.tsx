@@ -1,5 +1,5 @@
 import React from "react";
-import { Fieldset, FieldsetLegend } from "./fieldset";
+import { Fieldset, FieldsetLegend } from "@patternmode/ui";
 import { Field, FieldLabel } from "../field/field";
 import { Input } from "../input/input";
 

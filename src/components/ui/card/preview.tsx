@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card } from "./card";
+import { Card } from "@patternmode/ui";
 
 // Example component for preview system
 export const CardExample = ({

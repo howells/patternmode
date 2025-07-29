@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Separator } from "./separator";
+import { Separator } from "@patternmode/ui";
 
 // Default separator
 export function DefaultExample() {

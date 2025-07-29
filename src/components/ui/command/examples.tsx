@@ -11,7 +11,7 @@ import {
   CommandSeparator,
   CommandShortcut,
   CommandDialog
-} from "./command";
+} from "@patternmode/ui";
 import { Button } from "../button/button";
 import { File, Folder, Save, Search, Command as CommandIcon } from "lucide-react";
 

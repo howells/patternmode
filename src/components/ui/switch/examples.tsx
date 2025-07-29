@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Switch } from "./switch";
+import { Switch } from "@patternmode/ui";
 import { Button } from "../button";
 
 // Config example ID: "default" -> export name: DefaultExample

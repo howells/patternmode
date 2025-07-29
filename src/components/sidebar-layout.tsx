@@ -2,7 +2,7 @@
 
 "use client";
 
-import { getDynamicIconByName } from "@/components/ui/icon-select/icon-select";
+import { getDynamicIconByName } from "@patternmode/ui";
 import { useSidebarView } from "@/hooks/use-sidebar-view";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import {
@@ -23,8 +23,8 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-} from "./ui/sidebar";
-import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group/toggle-group";
+} from "@patternmode/ui";
+import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 // Create a stable icon component cache to prevent re-renders
 const iconComponentCache = new Map<

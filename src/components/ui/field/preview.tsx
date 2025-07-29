@@ -6,7 +6,7 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from "./field";
+} from "@patternmode/ui";
 
 export function FieldExample({
   invalid = false,

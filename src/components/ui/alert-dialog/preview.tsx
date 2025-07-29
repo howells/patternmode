@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const AlertDialogExample = ({

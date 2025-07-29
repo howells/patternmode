@@ -10,7 +10,7 @@ import {
   PreviewCardHeader,
   PreviewCardTitle,
   PreviewCardTrigger,
-} from "./preview-card";
+} from "@patternmode/ui";
 
 export function PreviewCardExample() {
   return (

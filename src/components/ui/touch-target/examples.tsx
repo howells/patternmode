@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchTarget } from "./touch-target";
+import { TouchTarget } from "@patternmode/ui";
 
 export function TouchTargetExample() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { DismissButton } from "./dismiss-button";
+import { DismissButton } from "@patternmode/ui";
 
 // Example component for preview system
 export const DismissButtonExample = ({

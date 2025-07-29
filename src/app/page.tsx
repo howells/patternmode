@@ -1,25 +1,31 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
-import { Badge } from "@/components/ui/badge/badge";
-import { Button } from "@/components/ui/button/button";
-import { Callout } from "@/components/ui/callout/callout";
 import {
+  Badge,
+  Button,
+  Callout,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card/card";
-import { CodeBlock } from "@/components/ui/code-block/code-block";
-import { Grid, GridCell } from "@/components/ui/grid/grid";
-import { Heading } from "@/components/ui/heading/heading";
-import { IconContainer } from "@/components/ui/icon-container/icon-container";
-import { List, ListIndicator, ListItem } from "@/components/ui/list/list";
-import { HStack, Stack, VStack } from "@/components/ui/stack/stack";
-import { Subheading } from "@/components/ui/subheading/subheading";
-import { Code, Text } from "@/components/ui/text/text";
+  CodeBlock,
+  Grid,
+  GridCell,
+  Heading,
+  IconContainer,
+  List,
+  ListIndicator,
+  ListItem,
+  HStack,
+  Stack,
+  VStack,
+  Subheading,
+  Code,
+  Text,
+} from "@patternmode/ui";
 import { GlobalSemanticVariant, TailwindColor } from "@/lib/variants";
 import {
   Box,
@@ -360,9 +366,9 @@ export default {
                   </Text>
                   <CodeBlock language="tsx">
                     {`// Import from your copied components
-import { Button } from '@/components/ui/button/button';
-import { Card, CardContent } from '@/components/ui/card/card';
-import { Heading } from '@/components/ui/heading/heading';
+import { Button } from '@patternmode/ui
+import { Card, CardContent } from '@patternmode/ui
+import { Heading } from '@patternmode/ui
 
 function App() {
   return (

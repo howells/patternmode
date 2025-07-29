@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "inspector",
   name: "Inspector",
   description: "A component for inspecting and debugging component properties and state.",
-  category: "utility" as const,
+  category: "media" as const,
   icon: "Search",
 
   installation: {

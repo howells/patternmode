@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { DatePicker } from "./date-picker";
+import { DatePicker } from "@patternmode/ui";
 
 // Example component for preview system
 export const DatePickerExample = ({

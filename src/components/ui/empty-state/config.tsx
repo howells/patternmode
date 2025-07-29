@@ -8,7 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Empty State",
   description:
     "A component to display when there's no content to show, with optional actions to guide users.",
-  category: "utility" as const,
+  category: "media" as const,
   icon: "Inbox",
 
   importStatement: `import { EmptyState } from "@/components/ui/empty-state/empty-state";`,

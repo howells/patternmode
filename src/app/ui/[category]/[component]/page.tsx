@@ -1,8 +1,8 @@
 import { ComponentExamples } from "@/components/component-examples";
 import { ComponentPropExplorer } from "@/components/component-prop-explorer";
 import { PageHeader } from "@/components/page-header";
-import { Separator } from "@/components/ui/separator";
-import { COMPONENT_LIST, getComponentConfig } from "@/lib/component-registry";
+import { Separator } from "@patternmode/ui";
+import { componentRegistry, getComponentConfig, COMPONENT_LIST } from "@/lib/component-registry";
 import { createComponentConfig } from "@/lib/config-helpers";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -13,6 +13,8 @@ interface ComponentPageProps {
     component: string;
   }>;
 }
+
+type PageProps = ComponentPageProps;
 
 // Function to dynamically load component config
 async function loadComponentConfig(componentId: string, category: string) {
@@ -25,8 +27,8 @@ async function loadComponentConfig(componentId: string, category: string) {
 
   // If no config exists, try to load from component file
   try {
-    // All components are in the ui directory regardless of category
-    const componentModule = await import(`@/components/ui/${componentId}`);
+    // All components are in the web app regardless of category
+    const componentModule = await import(`@patternmode/ui`);
 
     // Check if component exports a config
     if (componentModule.componentConfig) {
@@ -34,7 +36,7 @@ async function loadComponentConfig(componentId: string, category: string) {
     }
 
     // Check if component exports a prop explorer config
-    const propConfigKey = `${componentId.replace(/-/g, "")}PropConfig`;
+    const propConfigKey = componentId.replace(/-/g, "") + "PropConfig";
 
     if (componentModule[propConfigKey]) {
       // Create a basic component config with prop explorer
@@ -49,7 +51,7 @@ async function loadComponentConfig(componentId: string, category: string) {
       return createComponentConfig(
         componentId,
         name,
-        componentModule[propConfigKey].description || `${name} component`,
+        componentModule[propConfigKey].description || (name + " component"),
         category as "ui" | "inputs" | "forms" | "charts",
         {
           propExplorer: componentModule[propConfigKey],
@@ -64,14 +66,14 @@ async function loadComponentConfig(componentId: string, category: string) {
                   See Props section for interactive examples
                 </div>
               ),
-              code: `// See Props section for examples`,
+              code: "// See Props section for examples",
             },
           ],
         }
       );
     }
   } catch (error) {
-    console.warn(`Could not load component: ${componentId}`, error);
+    console.warn("Could not load component: " + componentId, error);
   }
 
   // Create placeholder config if component exists in our list
@@ -85,7 +87,7 @@ async function loadComponentConfig(componentId: string, category: string) {
     return createComponentConfig(
       componentId,
       name,
-      `${name} component - documentation coming soon.`,
+      name + " component - documentation coming soon.",
       category as "ui" | "inputs" | "forms" | "charts",
       {
         examples: [
@@ -98,7 +100,7 @@ async function loadComponentConfig(componentId: string, category: string) {
                 Preview coming soon
               </div>
             ),
-            code: `// ${name} example coming soon`,
+            code: "// " + name + " example coming soon",
           },
         ],
       }
@@ -148,6 +150,16 @@ export async function generateStaticParams() {
   const paths: { category: string; component: string }[] = [];
 
   // Generate paths for all components in each category
+  const COMPONENT_LIST: Record<string, string[]> = {};
+  Object.keys(componentRegistry).forEach(componentId => {
+    const config = componentRegistry[componentId];
+    const category = config.category || 'ui';
+    if (!COMPONENT_LIST[category]) {
+      COMPONENT_LIST[category] = [];
+    }
+    COMPONENT_LIST[category].push(componentId);
+  });
+
   Object.entries(COMPONENT_LIST).forEach(([category, components]) => {
     components.forEach((component) => {
       paths.push({ category, component });
@@ -156,3 +168,4 @@ export async function generateStaticParams() {
 
   return paths;
 }
+

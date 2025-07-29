@@ -2,7 +2,7 @@
 
 import { Button } from "../button/button";
 import { Field, FieldControl, FieldLabel } from "../field/field";
-import { Fieldset, FieldsetLegend } from "./fieldset";
+import { Fieldset, FieldsetLegend } from "@patternmode/ui";
 
 export function FieldsetExample({
   disabled = false,

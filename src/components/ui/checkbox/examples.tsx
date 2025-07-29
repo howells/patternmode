@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "./checkbox";
+import { Checkbox } from "@patternmode/ui";
 
 // Default checkbox
 export const DefaultExample = () => <Checkbox />;

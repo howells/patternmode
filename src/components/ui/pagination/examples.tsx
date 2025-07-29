@@ -7,7 +7,7 @@ import {
   PaginationNext,
   PaginationPage,
   PaginationPrevious,
-} from "./pagination";
+} from "@patternmode/ui";
 
 // Basic pagination example - matches config "default" id
 export function DefaultExample() {

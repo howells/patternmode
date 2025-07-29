@@ -6,6 +6,62 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **ALWAYS use pnpm for package management** - Never use npm or yarn.
 
+## JIT TypeScript Execution (CRITICAL)
+
+**MANDATORY: This project uses JIT (Just-In-Time) TypeScript execution ONLY**
+
+- **NEVER create, import, or reference .js files anywhere in the turborepo**
+- **ALL code must be TypeScript (.ts/.tsx) and executed directly without compilation**
+- **Use tsx, ts-node, or similar tools for direct TypeScript execution**
+- **Package builds use tsup for distribution, but development is pure TypeScript**
+- **No .js files should exist in src/, components/, lib/, or any development directories**
+- **All imports must be TypeScript-to-TypeScript without .js extensions**
+- **Build tools (tsup, turbo) handle compilation for distribution only**
+- **NEVER import from dist/ or any .js/.cjs files anywhere in the codebase**
+- **All workspace packages must export TypeScript source files directly**
+- **Package.json main/module/exports must point to .ts files, not .js files**
+
+This ensures zero JavaScript pollution in the development environment.
+
+## Tailwind CSS 4 (CRITICAL)
+
+**MANDATORY: This project uses Tailwind CSS 4 with new syntax**
+
+- **Use `@import "tailwindcss";` NOT `@tailwind base/components/utilities;`**
+- **Tailwind 4 uses `@theme` blocks for custom theme configuration**
+- **Use `@custom-variant` for custom variant definitions**
+- **PostCSS config uses `"@tailwindcss/postcss"` plugin**
+- **Content paths are defined in `tailwind.config.ts`**
+- **NEVER revert to Tailwind 3 syntax (`@tailwind` directives)**
+- **Global styles are in `src/app/globals.css` with Tailwind 4 syntax**
+
+Example correct Tailwind 4 globals.css:
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #3b82f6;
+}
+```
+
+## Development Server
+
+**NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
+
+- **NEVER run `pnpm dev`, `npm dev`, or any server start commands**
+- **The dev server never works reliably when started by Claude**
+- **Always ask the user to start/restart the server when needed**
+- **If server needs to be restarted, explicitly ask the user to do it**
+
+## Dynamic Imports (CRITICAL)
+
+**NEVER use direct dynamic imports like `await import("@patternmode/ui")`**
+
+- **Dynamic imports cause parsing errors and break the server**
+- **Use Next.js `dynamic()` function for component loading instead**
+- **Example: `const Component = dynamic(() => import("@patternmode/ui"), { ssr: false })`**
+- **Static imports are preferred whenever possible**
+
 ## Browser Testing
 
 **ALWAYS use direct Playwright browser automation for testing web pages** - Never use other browser tools or MCPs like Browserbase when Playwright is available.
@@ -15,9 +71,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Use `mcp_Playwright_browser_take_screenshot` for visual verification
 - Playwright provides reliable, consistent browser automation for testing component pages
 
-## Component Architecture - Four-File Structure
+## Component Architecture - Three-File Structure
 
-Every component in `src/components/ui/` follows a strict four-file architecture:
+Every component in `src/components/ui/` follows a strict three-file architecture:
 
 ### File Structure
 
@@ -25,8 +81,7 @@ Every component in `src/components/ui/` follows a strict four-file architecture:
 src/components/ui/[component]/
 ├── [component].tsx    # Pure component implementation
 ├── config.tsx         # Component configuration
-├── examples.tsx       # Multiple example components
-└── preview.tsx        # Preview component for prop explorer
+└── example.tsx        # Preview component
 ```
 
 ### 1. `[component].tsx` - Pure Component
@@ -35,7 +90,9 @@ src/components/ui/[component]/
 - Uses tailwind-variants for type-safe variants
 - Exports component, variants, and TypeScript types
 - Uses Base UI primitives with `useRender` hook
+- **ALWAYS use Base UI's `render` prop approach instead of `asChild`**
 - Example: `<Button render={<a href="/link" />}>Link Button</Button>`
+- **NEVER use `asChild` prop - use `render` prop for component composition**
 
 ### 2. `config.tsx` - Configuration
 
@@ -44,20 +101,12 @@ src/components/ui/[component]/
 - Includes code examples and documentation
 - Pure TypeScript - no React imports
 
-### 3. `examples.tsx` - Example Components
-
-- Contains multiple named example components
-- Shows different use cases and variations
-- Used in documentation and example galleries
-- Export individual example functions
-
-### 4. `preview.tsx` - Preview Component
+### 3. `example.tsx` - Preview Component
 
 - Handles prop transformations (e.g., string to icon components)
-- Provides interactive preview functionality for prop explorer
+- Provides interactive preview functionality
 - Bridges prop explorer system with pure component
 - Handle icon props here, not in pure components
-- Single component that accepts all props from config
 
 ## Component Registration
 

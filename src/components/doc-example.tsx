@@ -4,8 +4,8 @@
 
 import { cx } from "@/lib/utils";
 import React, { useState } from "react";
-import { Button } from "./ui/button/button";
-import { CodeBlock } from "./ui/code-block";
+import { Button } from "@patternmode/ui";
+import { CodeBlock } from "@patternmode/ui";
 
 interface DocExampleProps {
   title?: string;

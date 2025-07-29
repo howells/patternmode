@@ -2,7 +2,7 @@
 
 import type { BadgeVariant, TailwindColor } from "@/lib/variants";
 import React from "react";
-import { Dot } from "./dot";
+import { Dot } from "@patternmode/ui";
 
 // Example component for preview system
 export const DotExample = ({

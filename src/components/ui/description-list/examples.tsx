@@ -3,7 +3,7 @@ import {
   DescriptionDetails,
   DescriptionList,
   DescriptionTerm,
-} from "./description-list";
+} from "@patternmode/ui";
 
 // Default description list
 export const DefaultExample = () => (

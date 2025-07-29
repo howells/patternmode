@@ -10,7 +10,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose
-} from "./dialog";
+} from "@patternmode/ui";
 import { Button } from "../button/button";
 import { Input } from "../input/input";
 

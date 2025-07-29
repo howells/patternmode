@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Slider } from "./slider";
+import { Slider } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

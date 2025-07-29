@@ -1,5 +1,5 @@
 import React from "react";
-import { Combobox } from "./combobox";
+import { Combobox } from "@patternmode/ui";
 
 // Sample data for preview
 const fruits = [

@@ -2,7 +2,7 @@
 
 import { PropExplorerContent } from "@/components/prop-explorer-controls";
 import { PropExplorerProvider, usePropExplorer } from "@/components/prop-explorer-context";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
 import { getComponentConfig } from "@/lib/component-registry";
 import React from "react";
 

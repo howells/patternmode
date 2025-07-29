@@ -1,5 +1,5 @@
 import React from "react";
-import { HeadingElement } from "./heading-element";
+import { HeadingElement } from "@patternmode/ui";
 
 export function DefaultExample() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { getDynamicIconByName } from "../icon-select";
-import { EmptyState } from "./empty-state";
+import { EmptyState } from "@patternmode/ui";
 
 export const EmptyStateExample = ({
   title = "No data found",

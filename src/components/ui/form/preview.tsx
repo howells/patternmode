@@ -9,7 +9,7 @@ import {
   FormError,
   FormField,
   FormLabel,
-} from "./form";
+} from "@patternmode/ui";
 
 // Define validation schema
 const formSchema = z.object({

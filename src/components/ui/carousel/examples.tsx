@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@patternmode/ui";
 import { Card } from "../card/card";
 
 // Default carousel

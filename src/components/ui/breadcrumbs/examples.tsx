@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis
-} from "./breadcrumbs";
+} from "@patternmode/ui";
 import { ChevronRight, Home } from "lucide-react";
 
 // Default breadcrumbs

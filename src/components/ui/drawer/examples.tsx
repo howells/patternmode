@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@patternmode/ui";
 
 // Default drawer
 export const DefaultExample = () => (

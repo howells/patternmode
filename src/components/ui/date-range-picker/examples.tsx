@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { DateRangePicker } from "./date-range-picker";
+import { DateRangePicker } from "@patternmode/ui";
 
 // Default date range picker
 export const DefaultExample = () => (

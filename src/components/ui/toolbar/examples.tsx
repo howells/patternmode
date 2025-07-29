@@ -4,7 +4,7 @@ import {
   ToolbarButton,
   ToolbarGroup,
   ToolbarSeparator,
-} from "./toolbar";
+} from "@patternmode/ui";
 
 export function ToolbarExample() {
   return (

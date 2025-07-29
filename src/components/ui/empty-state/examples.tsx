@@ -1,5 +1,5 @@
 import React from "react";
-import { EmptyState } from "./empty-state";
+import { EmptyState } from "@patternmode/ui";
 import { FolderOpen, Inbox, Database, BarChart3 } from "lucide-react";
 
 // Default empty state

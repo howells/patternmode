@@ -10,7 +10,7 @@ import {
   ResponsiveDrawerBody,
   ResponsiveDrawerFooter,
   ResponsiveDrawerClose
-} from "./responsive-drawer";
+} from "@patternmode/ui";
 
 export function Example() {
   return (

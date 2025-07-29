@@ -4,20 +4,21 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "turbo build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:run": "vitest run",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "test:ui": "turbo test:ui",
+    "test:run": "turbo test:run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:generate": "tsx scripts/generate-tests.ts",
-    "test:all": "pnpm test:run && pnpm test:e2e",
-    "check-types": "tsc --noEmit"
+    "test:all": "turbo test:run && pnpm test:e2e",
+    "check-types": "turbo check-types",
+    "clean": "turbo clean"
   },
   "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0",
+    "@base-ui-components/react": "^1.0.0-beta.1",
     "framer-motion": "^12.23.0",
     "lucide-react": "^0.525.0",
     "react": "^19.0.0",
@@ -26,6 +27,7 @@
     "zod": "^4.0.0"
   },
   "dependencies": {
+    "@patternmode/ui": "workspace:*",
     "@headlessui/react": "^2.2.5",
     "@internationalized/date": "^3.8.2",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -72,5 +74,8 @@
     "typescript": "^5",
     "vitest": "^3.2.4"
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@10.0.0",
+  "workspaces": [
+    "packages/*"
+  ]
 }

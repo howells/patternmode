@@ -2,7 +2,7 @@
 
 import { Code, MapPin, Palette, Star, User } from "lucide-react";
 import React from "react";
-import { Tag } from "./tag";
+import { Tag } from "@patternmode/ui";
 
 // Basic tags example
 export const DefaultExample = () => {

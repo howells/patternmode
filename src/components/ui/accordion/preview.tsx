@@ -4,7 +4,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const AccordionExample = ({

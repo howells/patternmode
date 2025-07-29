@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { RadioOption } from "../radio";
-import { RadioGroup } from "./radio-group";
+import { RadioGroup } from "@patternmode/ui";
 
 interface RadioGroupExampleProps {
   orientation?: "vertical" | "horizontal";

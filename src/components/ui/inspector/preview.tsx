@@ -7,7 +7,7 @@ import {
   InspectorGroup,
   InspectorHeader,
   InspectorSection,
-} from "./inspector";
+} from "@patternmode/ui";
 
 export function Example() {
   return (

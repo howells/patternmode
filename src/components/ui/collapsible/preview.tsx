@@ -5,7 +5,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./collapsible";
+} from "@patternmode/ui";
 
 // Example component for preview system
 export const CollapsibleExample = ({

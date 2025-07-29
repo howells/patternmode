@@ -1,5 +1,5 @@
 import React from "react";
-import { SplitButton } from "./split-button";
+import { SplitButton } from "@patternmode/ui";
 import { MenuItem, MenuSeparator, MenuLabel } from "../menu";
 import { 
   Download as DownloadIcon, 

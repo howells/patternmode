@@ -6,7 +6,7 @@ import {
   AvatarFallback,
   AvatarImage,
   AvatarWithFallback,
-} from "./avatar";
+} from "@patternmode/ui";
 
 // Basic avatar examples
 export const DefaultExample = () => {

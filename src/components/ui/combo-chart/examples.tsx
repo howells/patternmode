@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ComboChart } from "./combo-chart";
+import { ComboChart } from "@patternmode/ui";
 
 // Default combo chart
 export const DefaultExample = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Toggle } from "./toggle";
+import { Toggle } from "@patternmode/ui";
 import { useState } from "react";
 
 export function Example({ 

@@ -1,7 +1,4 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/forms";
-
-@custom-variant dark (&:where(.dark, .dark *));
+@import "@patternmode/ui/styles/globals.css";
 
 @theme {
   --font-sans: InterVariable, sans-serif;

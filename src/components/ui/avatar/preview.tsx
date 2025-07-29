@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Avatar } from "./avatar";
+import { Avatar } from "@patternmode/ui";
 
 interface AvatarExampleProps {
   size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";

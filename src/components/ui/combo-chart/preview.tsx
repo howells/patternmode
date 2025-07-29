@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ComboChart } from "./combo-chart";
+import { ComboChart } from "@patternmode/ui";
 
 interface ComboChartExampleProps {
   showXAxis?: boolean;

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Tooltip } from "./tooltip";
+import { Tooltip } from "@patternmode/ui";
 import { Button } from "../button";
 
 export function TooltipExample() {

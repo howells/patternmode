@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Calendar } from "./calendar";
+import { Calendar } from "@patternmode/ui";
 
 // Example component for preview system
 export const CalendarExample = ({

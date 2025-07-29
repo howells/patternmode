@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import React from "react";
-import { Badge } from "./badge";
+import { Badge } from "@patternmode/ui";
 
 // Default badge
 export const DefaultExample = () => <Badge>Badge</Badge>;

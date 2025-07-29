@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "./heading";
+import { Heading } from "@patternmode/ui";
 
 // Example component for preview system
 export const HeadingExample = ({

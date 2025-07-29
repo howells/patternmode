@@ -7,17 +7,16 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Badge } from "./ui/badge/badge";
-import { Button } from "./ui/button/button";
+import { Badge, Button } from "@patternmode/ui";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog/dialog";
-import { Input } from "./ui/input/input";
-import { Subheading } from "./ui/subheading/subheading";
-import { Text } from "./ui/text/text";
+} from "@patternmode/ui";
+import { Input } from "@patternmode/ui";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 
 interface ComponentSearchProps {
   placeholder?: string;

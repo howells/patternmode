@@ -1,5 +1,5 @@
 import React from "react";
-import { Inspector } from "./inspector";
+import { Inspector } from "@patternmode/ui";
 
 export function InspectorExample() {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample (already correct)
 export function DefaultExample() {

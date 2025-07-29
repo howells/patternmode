@@ -8,7 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Icon Container",
   description:
     "A component for displaying icons within colored, rounded containers. Supports semantic variants and custom Tailwind colors with automatic theming.",
-  category: "utility" as const,
+  category: "media" as const,
   icon: "Square",
 
   installation: {

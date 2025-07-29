@@ -10,7 +10,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "@patternmode/ui";
 
 export function SelectExample({
   size,

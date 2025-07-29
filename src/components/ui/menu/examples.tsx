@@ -15,7 +15,7 @@ import {
   MenuSubmenuContent,
   MenuSubmenuTrigger,
   MenuTrigger,
-} from "./menu";
+} from "@patternmode/ui";
 import { Clipboard, Copy, Plus } from "lucide-react";
 import React, { useState } from "react";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { CategoryBar } from "./category-bar";
+import { CategoryBar } from "@patternmode/ui";
 
 // Default category bar
 export const DefaultExample = () => (

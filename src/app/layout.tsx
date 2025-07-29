@@ -1,5 +1,6 @@
 import { SidebarLayout } from "@/components/sidebar-layout";
 import { ReactQueryProvider } from "@/lib/react-query";
+import { ToastProvider } from "@patternmode/ui";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -25,9 +26,11 @@ export default function RootLayout({
       </head>
       <body>
         <ReactQueryProvider>
-          <div className="isolate">
-            <SidebarLayout>{children}</SidebarLayout>
-          </div>
+          <ToastProvider>
+            <div className="isolate">
+              <SidebarLayout>{children}</SidebarLayout>
+            </div>
+          </ToastProvider>
         </ReactQueryProvider>
       </body>
     </html>

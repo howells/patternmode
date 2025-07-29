@@ -1,8 +1,8 @@
 "use client";
 
 import { ComponentConfig } from "@/lib/component-configs";
-import { Subheading } from "./ui/subheading/subheading";
-import { Text } from "./ui/text";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 
 interface ComponentSectionsProps {
   sections: ComponentConfig["sections"];

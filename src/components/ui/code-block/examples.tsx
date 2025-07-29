@@ -1,5 +1,5 @@
 import React from "react";
-import { CodeBlock } from "./code-block";
+import { CodeBlock } from "@patternmode/ui";
 
 // Default code block
 export const DefaultExample = () => (

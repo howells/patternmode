@@ -13,7 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from "./navigation-menu";
+} from "@patternmode/ui";
 
 export function NavigationMenuExample() {
   return (

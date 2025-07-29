@@ -2,7 +2,7 @@
 
 import { Info } from "lucide-react";
 import React from "react";
-import { Callout } from "./callout";
+import { Callout } from "@patternmode/ui";
 
 // Example component for preview system
 export const CalloutExample = ({

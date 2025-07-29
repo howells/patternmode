@@ -7,7 +7,7 @@ import {
   RadioCardGroup,
   RadioCardIndicator,
   RadioCardItem,
-} from "./radio-card-group";
+} from "@patternmode/ui";
 
 interface RadioCardGroupExampleProps {
   orientation?: "vertical" | "horizontal";

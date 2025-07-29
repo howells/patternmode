@@ -1,29 +1,29 @@
 "use client";
 
-import { Subheading } from "@/components/ui/subheading";
-import { Text } from "@/components/ui/text/text";
-import { Tooltip } from "@/components/ui/tooltip";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
+import { Tooltip } from "@patternmode/ui";
 import { ComponentConfig } from "@/lib/component-config-types";
 import { PropMetadata } from "@/lib/prop-explorer";
 import { cx } from "@/lib/utils";
 import { HelpCircle } from "lucide-react";
 import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
-import { Button } from "./ui/button/button";
-import { DatePicker } from "./ui/date-picker";
-import { Field, FieldControl, FieldDescription, FieldLabel } from "./ui/field";
-import { IconSelect } from "./ui/icon-select";
-import { Input } from "./ui/input";
-import { NumberField } from "./ui/number-field";
+import { Button } from "@patternmode/ui";
+import { DatePicker } from "@patternmode/ui";
+import { Field, FieldControl, FieldDescription, FieldLabel } from "@patternmode/ui";
+import { IconSelect } from "@patternmode/ui";
+import { Input } from "@patternmode/ui";
+import { NumberField } from "@patternmode/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Switch } from "./ui/switch";
-import { Textarea } from "./ui/textarea";
+} from "@patternmode/ui";
+import { Switch } from "@patternmode/ui";
+import { Textarea } from "@patternmode/ui";
 
 interface PropExplorerContentProps {
   config?: ComponentConfig;

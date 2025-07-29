@@ -1,5 +1,5 @@
 import React from "react";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "./context-menu";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@patternmode/ui";
 
 // Default context menu
 export const DefaultExample = () => (

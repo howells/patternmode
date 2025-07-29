@@ -1,4 +1,4 @@
-import { COMPONENT_LIST } from "@/lib/component-registry";
+import { COMPONENT_LIST } from "../../src/lib/component-registry";
 import { expect, Page, test } from "@playwright/test";
 
 // Helper function to test a single component page

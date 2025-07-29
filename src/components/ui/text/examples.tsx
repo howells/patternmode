@@ -1,6 +1,6 @@
 import React from "react";
 import { VStack } from "../stack";
-import { Code, Strong, Text, TextLink } from "./text";
+import { Code, Strong, Text, TextLink } from "@patternmode/ui";
 
 export function BasicExample() {
   return (

@@ -22,7 +22,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet";
+} from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

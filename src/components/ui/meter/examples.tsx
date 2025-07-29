@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Meter } from "./index";
+import { Meter } from "@patternmode/ui";
 
 export const DefaultExample = () => <Meter value={65} />;
 

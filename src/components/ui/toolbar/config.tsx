@@ -2,12 +2,6 @@ import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import { ToolbarExample } from "./examples";
-import {
-  Toolbar,
-  ToolbarButton,
-  ToolbarGroup,
-  ToolbarSeparator
-} from "./toolbar";
 
 export const componentConfig: ComponentConfig = {
   id: "toolbar",

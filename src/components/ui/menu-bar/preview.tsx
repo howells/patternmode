@@ -10,7 +10,7 @@ import {
   MenuBarSubmenuContent,
   MenuBarSubmenuTrigger,
   MenuBarTrigger,
-} from "./menu-bar";
+} from "@patternmode/ui";
 
 export function MenuBarExample() {
   return (

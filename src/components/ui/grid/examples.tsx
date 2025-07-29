@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, GridAuto, GridCell } from "./grid";
+import { Grid, GridAuto, GridCell } from "@patternmode/ui";
 
 export function GridExample() {
   return (

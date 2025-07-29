@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Grid, GridAuto, GridCell } from "./grid";
+import { Grid, GridAuto, GridCell } from "@patternmode/ui";
 
 interface GridExampleProps {
   columns?: number;

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckboxGroup, CheckboxGroupItem } from "./checkbox-group";
+import { CheckboxGroup, CheckboxGroupItem } from "@patternmode/ui";
 
 // Example component for preview system
 export const CheckboxGroupExample = ({

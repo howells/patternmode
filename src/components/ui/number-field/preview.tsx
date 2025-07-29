@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NumberField } from "./number-field";
+import { NumberField } from "@patternmode/ui";
 
 // Example component for preview system
 export const NumberFieldExample = ({

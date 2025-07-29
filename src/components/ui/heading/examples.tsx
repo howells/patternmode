@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "./heading";
+import { Heading } from "@patternmode/ui";
 
 export function HeadingExample() {
   return <Heading level={1}>Page Title</Heading>;

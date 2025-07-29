@@ -5,7 +5,7 @@ import {
   MenuBarItem,
   MenuBarMenu,
   MenuBarTrigger,
-} from "./menu-bar";
+} from "@patternmode/ui";
 import { Edit, Plus, Trash } from "lucide-react";
 import React from "react";
 

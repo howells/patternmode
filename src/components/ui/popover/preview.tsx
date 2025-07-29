@@ -10,7 +10,7 @@ import {
   PopoverDescription,
   PopoverTitle,
   PopoverTrigger,
-} from "./popover";
+} from "@patternmode/ui";
 
 interface PopoverExampleProps {
   side?: "top" | "right" | "bottom" | "left";
