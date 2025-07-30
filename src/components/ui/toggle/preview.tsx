@@ -3,7 +3,7 @@
 import { Toggle } from "@patternmode/ui";
 import { useState } from "react";
 
-export function Example({ 
+export function ToggleExample({ 
   variant = "default",
   size = "default",
   ...props 

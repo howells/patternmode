@@ -30,6 +30,10 @@ export function TextareaExample({
       : ""
   );
 
+  // Filter out invalid props that might come from the prop explorer
+  const { onHeightChange, ...validProps } = props;
+  const heightChangeCallback = typeof onHeightChange === 'function' ? onHeightChange : undefined;
+
   return (
     <Textarea
       placeholder={placeholder}
@@ -40,7 +44,8 @@ export function TextareaExample({
       autoResize={autoResize}
       minRows={minRows}
       maxRows={maxRows}
-      {...props}
+      onHeightChange={heightChangeCallback}
+      {...validProps}
     />
   );
 }

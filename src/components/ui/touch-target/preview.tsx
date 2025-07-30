@@ -2,7 +2,7 @@
 
 import { TouchTarget } from "@patternmode/ui";
 
-export function Example() {
+export function TouchTargetExample() {
   return (
     <div className="space-y-4">
       <div>

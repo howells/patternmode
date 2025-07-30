@@ -7,7 +7,7 @@ import {
   ToolbarSeparator,
 } from "@patternmode/ui";
 
-export function Example() {
+export function ToolbarExample() {
   return (
     <Toolbar>
       <ToolbarButton>New File</ToolbarButton>

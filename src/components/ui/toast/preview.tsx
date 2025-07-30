@@ -3,7 +3,7 @@
 import { Button } from "@patternmode/ui";
 import { Toast, useToast } from "@patternmode/ui";
 
-export function Example() {
+export function ToastExample() {
   const toast = useToast();
 
   return (

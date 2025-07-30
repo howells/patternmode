@@ -25,9 +25,8 @@ export const componentConfig: ComponentConfig = {
     },
     {
       name: "onClick",
-      type: "function",
+      type: "function", 
       description: "Callback when the dismiss button is clicked",
-      defaultValue: "() => {}",
     },
   ],
   examples: [

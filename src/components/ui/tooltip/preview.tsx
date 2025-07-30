@@ -41,46 +41,46 @@ export function TooltipExample({
           delayDuration={delayDuration}
           sideOffset={sideOffset}
         >
-          <Button>Hover for tooltip</Button>
+          <span className="inline-flex">Hover for tooltip</span>
         </Tooltip>
       </div>
 
       {/* Position examples */}
       <div className="flex justify-center gap-4">
         <Tooltip content="Top tooltip" side="top">
-          <Button size="sm">Top</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Top</span>
         </Tooltip>
         <Tooltip content="Right tooltip" side="right">
-          <Button size="sm">Right</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Right</span>
         </Tooltip>
         <Tooltip content="Bottom tooltip" side="bottom">
-          <Button size="sm">Bottom</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Bottom</span>
         </Tooltip>
         <Tooltip content="Left tooltip" side="left">
-          <Button size="sm">Left</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Left</span>
         </Tooltip>
       </div>
 
       {/* Variant examples */}
       <div className="flex justify-center gap-4">
         <Tooltip content="Default variant" variant="default">
-          <Button>Default</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Default</span>
         </Tooltip>
         <Tooltip content="Inverse variant" variant="inverse">
-          <Button variant="secondary">Inverse</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-200 dark:bg-zinc-700 rounded cursor-pointer">Inverse</span>
         </Tooltip>
       </div>
 
       {/* Size examples */}
       <div className="flex justify-center items-end gap-4">
         <Tooltip content="Small" size="sm">
-          <Button size="sm">Small</Button>
+          <span className="inline-flex px-2 py-1 text-xs bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Small</span>
         </Tooltip>
         <Tooltip content="Default size" size="default">
-          <Button>Default</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Default</span>
         </Tooltip>
         <Tooltip content="Large tooltip with more content" size="lg">
-          <Button size="default">Large</Button>
+          <span className="inline-flex px-4 py-2 text-base bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Large</span>
         </Tooltip>
       </div>
 
@@ -96,7 +96,7 @@ export function TooltipExample({
             </div>
           }
         >
-          <Button>Rich Content</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Rich Content</span>
         </Tooltip>
       </div>
 
@@ -107,15 +107,14 @@ export function TooltipExample({
           open={controlledOpen}
           onOpenChange={setControlledOpen}
         >
-          <Button>Controlled</Button>
+          <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Controlled</span>
         </Tooltip>
-        <Button
+        <button
           onClick={() => setControlledOpen(!controlledOpen)}
-          variant="outline"
-          size="sm"
+          className="px-3 py-1.5 text-sm border border-zinc-300 dark:border-zinc-600 rounded hover:bg-zinc-50 dark:hover:bg-zinc-800"
         >
           Toggle: {controlledOpen ? "Open" : "Closed"}
-        </Button>
+        </button>
       </div>
     </div>
   );
