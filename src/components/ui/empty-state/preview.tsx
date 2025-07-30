@@ -1,5 +1,5 @@
 import React from "react";
-import { getDynamicIconByName } from "../icon-select";
+import { getDynamicIconByName } from "@patternmode/ui";
 import { EmptyState } from "@patternmode/ui";
 
 export const EmptyStateExample = ({

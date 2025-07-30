@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Switch } from "@patternmode/ui";
-import { Button } from "../button";
+import { Button } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {
@@ -49,16 +49,16 @@ export function SizesExample() {
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
-        <Switch id="small" size="sm" />
+        <Switch id="small" size="small" />
         <label htmlFor="small">Small switch</label>
       </div>
       <div className="flex items-center space-x-2">
-        <Switch id="medium" size="md" />
-        <label htmlFor="medium">Medium switch</label>
+        <Switch id="medium" size="default" />
+        <label htmlFor="medium">Default switch</label>
       </div>
       <div className="flex items-center space-x-2">
-        <Switch id="large" size="lg" />
-        <label htmlFor="large">Large switch</label>
+        <Switch id="large" size="default" />
+        <label htmlFor="large">Default switch</label>
       </div>
     </div>
   );

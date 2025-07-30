@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "@/components/ui/label";
+import { Label } from "@patternmode/ui";
 
 export function LabelExample() {
   return <Label htmlFor="email">Email Address</Label>;

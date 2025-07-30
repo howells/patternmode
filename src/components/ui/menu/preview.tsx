@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@patternmode/ui";
 import { FileText, Plus, Save } from "lucide-react";
 import {
   Menu,

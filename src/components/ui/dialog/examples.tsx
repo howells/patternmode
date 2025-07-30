@@ -11,8 +11,8 @@ import {
   DialogFooter,
   DialogClose
 } from "@patternmode/ui";
-import { Button } from "../button/button";
-import { Input } from "../input/input";
+import { Button } from "@patternmode/ui";
+import { Input } from "@patternmode/ui";
 
 // Default dialog
 export const DefaultExample = () => (

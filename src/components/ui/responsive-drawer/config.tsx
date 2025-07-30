@@ -9,6 +9,7 @@ export const componentConfig: ComponentConfig = {
   description:
     "A drawer component that adapts to different screen sizes, showing as a sheet on mobile and a dialog on desktop.",
   category: "overlay" as const,
+  componentId: "responsive-drawer",
   icon: "PanelLeft",
 
   installation: {
@@ -24,7 +25,7 @@ export const componentConfig: ComponentConfig = {
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger
-} from "@/components/ui/responsive-drawer/responsive-drawer";`,
+} from "@patternmode/ui";`,
   props: [
     {
       name: "open",

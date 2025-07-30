@@ -35,16 +35,17 @@ export const GridExample = ({
       columns={columns}
       rows={rows}
       gap={gap}
-      showColumnGuides={showColumnGuides}
-      showRowGuides={showRowGuides}
       minHeight={minHeight}
     >
       {Array.from({ length: cellCount }, (_, index) => (
         <GridCell
           key={index}
-          bordered={cellBordered}
-          solid={cellSolid}
-          overlay={cellOverlay}
+          className={`p-4 rounded text-center ${
+            cellSolid ? 'bg-blue-100 border border-blue-300' : 
+            cellOverlay ? 'bg-purple-100 border border-purple-300 shadow-md' :
+            cellBordered ? 'border border-gray-300' : 
+            'bg-gray-50 border border-gray-200'
+          }`}
         >
           {index + 1}
         </GridCell>

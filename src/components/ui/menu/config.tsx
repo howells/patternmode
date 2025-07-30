@@ -29,7 +29,7 @@ export const componentConfig: ComponentConfig = {
   MenuSubContent,
   MenuSubTrigger,
   MenuTrigger
-} from "@/components/ui/menu/menu";`,
+} from "@patternmode/ui";`,
   componentId: "MenuExample",
   props: [
     {

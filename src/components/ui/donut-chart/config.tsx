@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Donut Chart",
   description: "A donut chart component for displaying data with a hollow center.",
   category: "charts" as const,
+  componentId: "donut-chart",
   icon: "PieChart",
 
   installation: {
     npm: "recharts",
   },
-  importStatement: `import { DonutChart } from "@/components/ui/donut-chart/donut-chart";`,
+  importStatement: `import { DonutChart } from "@patternmode/ui";`,
 
   props: [
     {

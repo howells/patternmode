@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Meter } from "@/components/ui/meter/meter";`,
+  importStatement: `import { Meter } from "@patternmode/ui";`,
   componentId: "MeterExample",
   props: [
     {

@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
-import { Button } from "../button";
-import { Checkbox } from "../checkbox/checkbox";
+import { Button } from "@patternmode/ui";
+import { Checkbox } from "@patternmode/ui";
 import {
   DescriptionDetails,
   DescriptionList,
   DescriptionTerm,
-} from "../description-list/description-list";
-import { Dot } from "../dot/dot";
-import { Fieldset, FieldsetLegend } from "../fieldset/fieldset";
-import { Form, FormControl, FormField } from "../form/form";
-import { Subheading } from "../subheading/subheading";
-import { Text } from "../text/text";
+} from "@patternmode/ui";
+import { Dot } from "@patternmode/ui";
+import { Fieldset, FieldsetLegend } from "@patternmode/ui";
+import { Form, FormControl, FormField } from "@patternmode/ui";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 import {
   Sheet,
   SheetClose,

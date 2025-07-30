@@ -24,7 +24,7 @@ export const componentConfig: ComponentConfig = {
   SidebarItem,
   SidebarToggle,
   SidebarDivider
-} from "@/components/ui/sidebar/sidebar";`,
+} from "@patternmode/ui";`,
   props: [],
   examples: [
     {

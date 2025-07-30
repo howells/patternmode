@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../button/button";
+import { Button } from "@patternmode/ui";
 import {
   AlertDialog,
   AlertDialogAction,

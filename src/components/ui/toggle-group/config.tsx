@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group/toggle-group";`,
+  importStatement: `import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";`,
   componentId: "ToggleGroupExample",
   props: [
     {

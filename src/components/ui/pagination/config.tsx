@@ -9,12 +9,13 @@ export const componentConfig: ComponentConfig = {
   description:
     "A pagination component for navigating through multiple pages of content.",
   category: "navigation" as const,
+  componentId: "pagination",
   icon: "MoreHorizontal",
 
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination/pagination";`,
+  importStatement: `import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@patternmode/ui";`,
   props: [
     {
       name: "currentPage",

@@ -24,7 +24,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Grid, GridCell, GridAuto } from "@/components/ui/grid/grid";`,
+  importStatement: `import { Grid, GridCell, GridAuto } from "@patternmode/ui";`,
   componentId: "GridExample",
   props: [
     {

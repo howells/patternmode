@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Table",
   description: "A data table component for displaying tabular data with headers and rows.",
   category: "data" as const,
+  componentId: "table",
   icon: "Table",
 
   installation: {
@@ -20,7 +21,7 @@ export const componentConfig: ComponentConfig = {
   TableHead,
   TableHeaderCell,
   TableRow
-} from "@/components/ui/table/table";`,
+} from "@patternmode/ui";`,
   props: [
     {
       name: "bleed",

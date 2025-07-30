@@ -1,10 +1,10 @@
 "use client";
 
-import { Card } from "../card/card";
-import { Grid, GridCell } from "../grid/grid";
-import { Stack } from "../stack/stack";
-import { Subheading } from "../subheading";
-import { Text } from "../text/text";
+import { Card } from "@patternmode/ui";
+import { Grid, GridCell } from "@patternmode/ui";
+import { Stack } from "@patternmode/ui";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 import { ScrollArea } from "@patternmode/ui";
 
 interface ScrollAreaExampleProps {
@@ -55,8 +55,6 @@ export function ScrollAreaExample({
           <Grid
             columns={6}
             gap={3}
-            showColumnGuides={false}
-            showRowGuides={false}
           >
             {Array.from({ length: 36 }).map((_, i) => (
               <GridCell key={i}>

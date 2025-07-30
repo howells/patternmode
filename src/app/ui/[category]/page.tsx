@@ -89,8 +89,6 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         <Grid
           columns={{ sm: 1, md: 2, lg: 3 }}
           gap={6}
-          showColumnGuides={false}
-          showRowGuides={false}
           minHeight="none"
         >
           {components.map((component) => (

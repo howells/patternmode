@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Stack } from "@/components/ui/stack/stack";`,
+  importStatement: `import { Stack } from "@patternmode/ui";`,
   componentId: "StackExample",
   props: [
     {

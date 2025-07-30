@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Slider } from "@/components/ui/slider/slider";`,
+  importStatement: `import { Slider } from "@patternmode/ui";`,
   componentId: "SliderExample",
   props: [
     {

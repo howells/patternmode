@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Input } from "@/components/ui/input/input";`,
+  importStatement: `import { Input } from "@patternmode/ui";`,
   componentId: "InputExample",
   props: [
     {

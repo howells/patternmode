@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Button } from "@/components/ui/button/button";`,
+  importStatement: `import { Button } from "@patternmode/ui";`,
   componentId: "ButtonExample",
   props: [
     {

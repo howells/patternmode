@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs/tabs";`,
+  importStatement: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";`,
   componentId: "TabsExample",
   props: [
     {

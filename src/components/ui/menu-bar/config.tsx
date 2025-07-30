@@ -19,7 +19,7 @@ export const componentConfig: ComponentConfig = {
   MenuBarItem,
   MenuBarMenu,
   MenuBarTrigger
-} from "@/components/ui/menu-bar/menu-bar";`,
+} from "@patternmode/ui";`,
   componentId: "MenuBarExample",
   props: [],
   examples: [

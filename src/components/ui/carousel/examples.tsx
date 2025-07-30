@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@patternmode/ui";
-import { Card } from "../card/card";
+import { Card } from "@patternmode/ui";
 
 // Default carousel
 export const DefaultExample = () => (

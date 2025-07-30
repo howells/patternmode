@@ -18,7 +18,7 @@ export const componentConfig: ComponentConfig = {
   ToolbarButton,
   ToolbarGroup,
   ToolbarSeparator
-} from "@/components/ui/toolbar/toolbar";`,
+} from "@patternmode/ui";`,
   componentId: "ToolbarExample",
   props: [
     {

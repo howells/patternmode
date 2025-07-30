@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@patternmode/ui";
 import { useState } from "react";
 import {
   Popover,

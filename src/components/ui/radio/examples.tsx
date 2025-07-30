@@ -21,7 +21,7 @@ export function DefaultExample() {
 export function CheckedExample() {
   return (
     <div className="flex items-center space-x-2">
-      <RadioOption value="checked" label="Checked Option" defaultChecked />
+      <RadioOption value="checked" label="Checked Option" />
     </div>
   );
 }
@@ -34,7 +34,7 @@ export function DisabledExample() {
         <RadioOption value="disabled1" label="Disabled Unchecked" disabled />
       </div>
       <div className="flex items-center space-x-2">
-        <RadioOption value="disabled2" label="Disabled Checked" defaultChecked disabled />
+        <RadioOption value="disabled2" label="Disabled Checked" disabled />
       </div>
     </div>
   );

@@ -136,15 +136,15 @@ export function DisabledExample() {
 export function SizesExample() {
   return (
     <div className="space-y-4">
-      <SelectNative size="sm">
+      <SelectNative>
         <option>Small select</option>
         <option>Option 2</option>
       </SelectNative>
-      <SelectNative size="md">
+      <SelectNative>
         <option>Medium select</option>
         <option>Option 2</option>
       </SelectNative>
-      <SelectNative size="lg">
+      <SelectNative>
         <option>Large select</option>
         <option>Option 2</option>
       </SelectNative>

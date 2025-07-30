@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { ScrollArea } from "@/components/ui/scroll-area/scroll-area";`,
+  importStatement: `import { ScrollArea } from "@patternmode/ui";`,
   componentId: "ScrollAreaExample",
   props: [
   ],

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useToast } from "@patternmode/ui";
-import { Button } from "../button/button";
+import { Button } from "@patternmode/ui";
 
 export function DefaultExample() {
   const toast = useToast();

@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Tracker } from "@/components/ui/tracker/tracker";`,
+  importStatement: `import { Tracker } from "@patternmode/ui";`,
   componentId: "TrackerExample",
   props: [
     {

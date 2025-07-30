@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Inspector",
   description: "A component for inspecting and debugging component properties and state.",
   category: "media" as const,
+  componentId: "inspector",
   icon: "Search",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Inspector } from "@/components/ui/inspector/inspector";`,
+  importStatement: `import { Inspector } from "@patternmode/ui";`,
   props: [
     {
       name: "data",

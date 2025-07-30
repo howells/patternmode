@@ -1,7 +1,7 @@
 import React from "react";
 import { z } from "zod";
-import { Button } from "../button/button";
-import { Textarea } from "../textarea/textarea";
+import { Button } from "@patternmode/ui";
+import { Textarea } from "@patternmode/ui";
 import {
   Form,
   FormControl,

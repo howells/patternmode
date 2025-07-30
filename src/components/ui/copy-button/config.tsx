@@ -16,7 +16,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "lucide-react"
   },
-  importStatement: `import { CopyButton } from "@/components/ui/copy-button/copy-button";`,
+  importStatement: `import { CopyButton } from "@patternmode/ui";`,
   componentId: "CopyButtonExample",
 
   // Props that users can experiment with

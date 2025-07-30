@@ -63,7 +63,7 @@ export const CalendarExample = ({
   // Default case
   return (
     <div className="w-fit">
-      <Calendar {...calendarProps} />
+      <Calendar {...calendarProps} mode="single" />
     </div>
   );
 };

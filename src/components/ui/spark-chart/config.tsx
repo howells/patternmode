@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
     npm: "recharts",
     dependencies: ["recharts"]
   },
-  importStatement: `import { SparkChart } from "@/components/ui/spark-chart/spark-chart";`,
+  importStatement: `import { SparkChart } from "@patternmode/ui";`,
   componentId: "SparkChartExample",
   props: [
     {

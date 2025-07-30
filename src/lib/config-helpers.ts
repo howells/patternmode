@@ -7,17 +7,13 @@ export function createExample(
   id: string,
   title: string,
   description: string,
-  code: string,
-  preview: React.ReactNode,
-  wrapper?: React.ComponentType<{ children: React.ReactNode }>
+  code: string
 ): ComponentExample {
   return {
     id,
     title,
     description,
     code,
-    preview,
-    wrapper,
   };
 }
 
@@ -66,17 +62,15 @@ export function createComponentConfig(
     name,
     description,
     category,
-    badge: options.badge || category.toUpperCase(),
+    badge: options.badge,
+    icon: options.icon,
     importStatement:
       options.importStatement ||
       `import { ${name} } from "@/components/${category}/${id}";`,
+    componentId: options.componentId || name,
+    props: options.props || [],
     examples: options.examples || [],
     installation: options.installation,
-    api: options.api,
-    propExplorer: options.propExplorer,
-    componentId: options.componentId,
-    accessibility: options.accessibility,
-    sections: options.sections,
   };
 }
 
@@ -102,7 +96,7 @@ export function validateConfig(config: ComponentConfig): string[] {
     if (!example.description)
       errors.push(`Example ${index}: Missing description`);
     if (!example.code) errors.push(`Example ${index}: Missing code`);
-    if (!example.preview) errors.push(`Example ${index}: Missing preview`);
+    if (!example.code) errors.push(`Example ${index}: Missing code`);
   });
 
   return errors;

@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
-import { TagInputExample, DefaultExample, WithInitialValuesExample, WithMaxTagsExample, WithTagCreationExample, CustomTagRenderingExample, DisabledExample, WithHookExample, ComplexExample, BlogPostTagsExample } from "./examples";
+import { DefaultExample, WithInitialValuesExample, WithMaxTagsExample, WithTagCreationExample, CustomTagRenderingExample, DisabledExample, WithHookExample, ComplexExample, BlogPostTagsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "tag-input",
@@ -9,6 +9,7 @@ export const componentConfig: ComponentConfig = {
   description:
     "A multi-select input component for selecting and creating tags with inline display, built with Downshift for accessibility.",
   category: "forms" as const,
+  componentId: "tag-input",
   icon: "Tags",
 
   installation: {

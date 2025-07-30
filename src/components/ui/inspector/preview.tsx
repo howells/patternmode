@@ -1,6 +1,6 @@
 "use client";
 
-import { Subheading } from "../subheading/subheading";
+import { Subheading } from "@patternmode/ui";
 import {
   Inspector,
   InspectorBody,

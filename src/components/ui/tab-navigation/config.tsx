@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Tab Navigation",
   description: "A navigation component for switching between different views or sections.",
   category: "navigation" as const,
+  componentId: "tab-navigation",
   icon: "Tabs",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { TabNavigation, TabNavigationLink } from "@/components/ui/tab-navigation/tab-navigation";`,
+  importStatement: `import { TabNavigation, TabNavigationLink } from "@patternmode/ui";`,
   props: [
   ],
   examples: [

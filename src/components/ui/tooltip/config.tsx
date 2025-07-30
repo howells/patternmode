@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip/tooltip";`,
+  importStatement: `import { Tooltip, TooltipContent, TooltipTrigger } from "@patternmode/ui";`,
   componentId: "TooltipExample",
   props: [
     {

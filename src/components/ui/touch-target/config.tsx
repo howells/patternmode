@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { TouchTarget } from "@/components/ui/touch-target/touch-target";`,
+  importStatement: `import { TouchTarget } from "@patternmode/ui";`,
   componentId: "TouchTargetExample",
   props: [
     {

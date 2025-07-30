@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "@/lib/component-config-types";
 import { jsxToString } from "@/lib/jsx-to-string";
 import React from "react";
-import { TextExample, BasicExample, SizesExample, SemanticElementsExample, ColorInheritanceExample } from "./examples";
+import { BasicExample, SizesExample, SemanticElementsExample, ColorInheritanceExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "text",
@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Text, Strong, Code, TextLink } from "@/components/ui/text/text";`,
+  importStatement: `import { Text, Strong, Code, TextLink } from "@patternmode/ui";`,
   componentId: "TextExample",
   props: [
     {

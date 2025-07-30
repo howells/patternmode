@@ -1,7 +1,7 @@
 import React from "react";
 import { Fieldset, FieldsetLegend } from "@patternmode/ui";
-import { Field, FieldLabel } from "../field/field";
-import { Input } from "../input/input";
+import { Field, FieldLabel } from "@patternmode/ui";
+import { Input } from "@patternmode/ui";
 
 // Default fieldset
 export const DefaultExample = () => (

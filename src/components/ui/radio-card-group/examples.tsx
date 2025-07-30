@@ -6,7 +6,7 @@ import {
   RadioCardIndicator,
   RadioCardItem,
 } from "@patternmode/ui";
-import { Button } from "../button/button";
+import { Button } from "@patternmode/ui";
 import { Rocket, Truck, Zap } from "lucide-react";
 
 export function RadioCardGroupExample() {
@@ -183,7 +183,6 @@ export function HorizontalRadioCardGroup() {
     <RadioCardGroup
       value={size}
       onValueChange={(value) => setSize(value as string)}
-      orientation="horizontal"
       className="grid-cols-3"
     >
       <RadioCardItem value="small">

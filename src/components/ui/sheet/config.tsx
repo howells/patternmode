@@ -23,7 +23,7 @@ export const componentConfig: ComponentConfig = {
   DrawerHeader as SheetHeader,
   DrawerTitle as SheetTitle,
   DrawerTrigger as SheetTrigger
-} from "@/components/ui/sheet/sheet";`,
+} from "@patternmode/ui";`,
   componentId: "sheet",
   props: [
     {

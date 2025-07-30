@@ -2,8 +2,8 @@
 
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
-import { Avatar } from "../avatar/avatar";
-import { Button } from "../button/button";
+import { Avatar } from "@patternmode/ui";
+import { Button } from "@patternmode/ui";
 import { StackedList } from "@patternmode/ui";
 
 // Example component for preview system

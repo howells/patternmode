@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Progress Circle",
   description: "A circular progress indicator showing completion percentage.",
   category: "feedback" as const,
+  componentId: "progress-circle",
   icon: "Loader",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { ProgressCircle } from "@/components/ui/progress-circle/progress-circle";`,
+  importStatement: `import { ProgressCircle } from "@patternmode/ui";`,
   props: [
     {
       name: "value",

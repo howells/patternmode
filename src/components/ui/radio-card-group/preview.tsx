@@ -26,8 +26,6 @@ export function RadioCardGroupExample({
     <RadioCardGroup
       value={selectedValue}
       onValueChange={(value) => setSelectedValue(value as string)}
-      orientation={orientation}
-      size={size}
       disabled={disabled}
     >
       <RadioCardItem value="basic">

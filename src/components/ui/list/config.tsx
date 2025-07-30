@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "List",
   description: "A flexible list component supporting ordered/unordered lists with custom indicators and styling.",
   category: "data" as const,
+  componentId: "list",
   icon: "List",
 
   importStatement: `import { List, ListItem, ListIndicator } from "@/components/ui/list";`,

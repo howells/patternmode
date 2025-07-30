@@ -25,56 +25,8 @@ async function loadComponentConfig(componentId: string, category: string) {
     return config;
   }
 
-  // If no config exists, try to load from component file
-  try {
-    // All components are in the web app regardless of category
-    const componentModule = await import(`@patternmode/ui`);
-
-    // Check if component exports a config
-    if (componentModule.componentConfig) {
-      return componentModule.componentConfig;
-    }
-
-    // Check if component exports a prop explorer config
-    const propConfigKey = componentId.replace(/-/g, "") + "PropConfig";
-
-    if (componentModule[propConfigKey]) {
-      // Create a basic component config with prop explorer
-      const name = componentId
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-
-      // Component name for the prop explorer
-      const componentName = name.replace(/\s/g, ""); // "Badge"
-
-      return createComponentConfig(
-        componentId,
-        name,
-        componentModule[propConfigKey].description || (name + " component"),
-        category as "ui" | "inputs" | "forms" | "charts",
-        {
-          propExplorer: componentModule[propConfigKey],
-          componentId: componentName,
-          examples: componentModule[propConfigKey].examples || [
-            {
-              id: "basic",
-              title: "Basic Usage",
-              description: "Basic component usage",
-              preview: (
-                <div className="p-4 text-center text-zinc-500">
-                  See Props section for interactive examples
-                </div>
-              ),
-              code: "// See Props section for examples",
-            },
-          ],
-        }
-      );
-    }
-  } catch (error) {
-    console.warn("Could not load component: " + componentId, error);
-  }
+  // Component configs are only in the web app, not the UI package
+  // Skip trying to load from @patternmode/ui as it only exports components
 
   // Create placeholder config if component exists in our list
   const componentList = COMPONENT_LIST[category as keyof typeof COMPONENT_LIST];
@@ -95,11 +47,6 @@ async function loadComponentConfig(componentId: string, category: string) {
             id: "placeholder",
             title: "Coming Soon",
             description: "Documentation for this component is being prepared.",
-            preview: (
-              <div className="p-4 text-center text-zinc-500">
-                Preview coming soon
-              </div>
-            ),
             code: "// " + name + " example coming soon",
           },
         ],

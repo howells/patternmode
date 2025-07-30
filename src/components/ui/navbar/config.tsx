@@ -19,7 +19,7 @@ export const componentConfig: ComponentConfig = {
   NavbarItem,
   NavbarLabel,
   NavbarSection
-} from "@/components/ui/navbar/navbar";`,
+} from "@patternmode/ui";`,
   componentId: "NavbarExample",
   props: [],
   examples: [

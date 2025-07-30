@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ScrollArea } from "@patternmode/ui";
-import { Separator } from "../separator";
+import { Separator } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

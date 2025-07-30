@@ -25,7 +25,7 @@ export function StepsExample() {
           defaultValue={[50]} 
           max={100} 
           step={10}
-          onValueChange={setValue}
+          onValueChange={(value) => setValue(Array.isArray(value) ? value : [value])}
         />
       </div>
     </div>
@@ -45,7 +45,7 @@ export function CustomRangeExample() {
           min={-10} 
           max={40} 
           step={1}
-          onValueChange={setValue}
+          onValueChange={(value) => setValue(Array.isArray(value) ? value : [value])}
         />
       </div>
     </div>

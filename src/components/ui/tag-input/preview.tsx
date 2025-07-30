@@ -2,7 +2,7 @@
 
 import { Code, MapPin, User } from "lucide-react";
 import React from "react";
-import { Tag } from "../tag";
+import { Tag } from "@patternmode/ui";
 import { TagInput, TagOption, useTagInput } from "@patternmode/ui";
 
 // Sample data for preview

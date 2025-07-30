@@ -1,8 +1,8 @@
 "use client";
 
-import type { BadgeVariant, TailwindColor } from "@/lib/variants";
+import type { TailwindColor } from "@/lib/variants";
 import React from "react";
-import { Dot } from "@patternmode/ui";
+import { Dot, type DotVariant } from "@patternmode/ui";
 
 // Example component for preview system
 export const DotExample = ({
@@ -17,7 +17,7 @@ export const DotExample = ({
   showWithoutLabels = false,
   ...props
 }: {
-  variant?: BadgeVariant;
+  variant?: DotVariant;
   color?: TailwindColor;
   label?: string;
   animated?: boolean;

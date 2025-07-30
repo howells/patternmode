@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   category: "media" as const,
   icon: "Inbox",
 
-  importStatement: `import { EmptyState } from "@/components/ui/empty-state/empty-state";`,
+  importStatement: `import { EmptyState } from "@patternmode/ui";`,
   componentId: "EmptyStateExample",
   props: [
     {

@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group/radio-group";`,
+  importStatement: `import { RadioGroup, RadioGroupItem } from "@patternmode/ui";`,
   componentId: "RadioGroupExample",
   props: [
     {

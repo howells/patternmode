@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Toast",
   description: "A toast notification component for displaying brief messages to users.",
   category: "feedback" as const,
+  componentId: "toast",
   icon: "Bell",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Toast, Toaster, toast } from "@/components/ui/toast/toast";`,
+  importStatement: `import { Toast, Toaster, toast } from "@patternmode/ui";`,
   props: [
     {
       name: "title",

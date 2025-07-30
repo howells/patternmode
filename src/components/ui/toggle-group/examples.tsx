@@ -22,7 +22,7 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-import { Icon, useIconSize } from "../icon";
+import { Icon, useIconSize } from "@patternmode/ui";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 export function DefaultExample() {
@@ -299,8 +299,8 @@ export function ButtonStyleExample() {
           Button Default Style
         </h4>
         <ToggleGroup
-          variant="button-default"
-          size="button-default"
+          variant="default"
+          size="default"
           value={view}
           onValueChange={setView}
         >
@@ -330,8 +330,8 @@ export function ButtonStyleExample() {
           Button Secondary Style
         </h4>
         <ToggleGroup
-          variant="button-secondary"
-          size="button-default"
+          variant="default"
+          size="default"
           value={view}
           onValueChange={setView}
         >
@@ -346,8 +346,8 @@ export function ButtonStyleExample() {
           Button Outline Style
         </h4>
         <ToggleGroup
-          variant="button-outline"
-          size="button-default"
+          variant="outline"
+          size="default"
           value={formatting}
           onValueChange={setFormatting}
         >
@@ -377,8 +377,8 @@ export function ButtonStyleExample() {
           Button Ghost Style
         </h4>
         <ToggleGroup
-          variant="button-ghost"
-          size="button-sm"
+          variant="ghost"
+          size="sm"
           value={view}
           onValueChange={setView}
         >
@@ -402,8 +402,8 @@ export function ButtonStyleExample() {
           Button Destructive Style
         </h4>
         <ToggleGroup
-          variant="button-destructive"
-          size="button-lg"
+          variant="default"
+          size="lg"
           value={view}
           onValueChange={setView}
         >

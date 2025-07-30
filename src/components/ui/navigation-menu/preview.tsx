@@ -1,9 +1,9 @@
 "use client";
 
-import { Grid } from "../grid";
-import { VStack } from "../stack";
-import { Subheading } from "../subheading";
-import { Text } from "../text";
+import { Grid } from "@patternmode/ui";
+import { VStack } from "@patternmode/ui";
+import { Subheading } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,8 +25,6 @@ export function NavigationMenuExample() {
             <Grid
               columns={2}
               gap={3}
-              showColumnGuides={false}
-              showRowGuides={false}
               minHeight="none"
             >
               <NavigationMenuLink href="#quick-start">

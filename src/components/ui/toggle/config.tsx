@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Toggle } from "@/components/ui/toggle/toggle";`,
+  importStatement: `import { Toggle } from "@patternmode/ui";`,
   componentId: "ToggleExample",
   props: [
     {

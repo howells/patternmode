@@ -9,7 +9,7 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-import { Icon, useIconSize } from "../icon";
+import { Icon, useIconSize } from "@patternmode/ui";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 export function ToggleGroupExample({
@@ -23,13 +23,8 @@ export function ToggleGroupExample({
   variant?:
     | "default"
     | "outline"
-    | "ghost"
-    | "button-default"
-    | "button-secondary"
-    | "button-outline"
-    | "button-ghost"
-    | "button-destructive";
-  size?: "sm" | "default" | "lg" | "button-sm" | "button-default" | "button-lg";
+    | "ghost";
+  size?: "xs" | "sm" | "default" | "lg";
   orientation?: "horizontal" | "vertical";
   disabled?: boolean;
   showMultiple?: boolean;

@@ -16,9 +16,9 @@ export function LargeExample() {
 }
 
 export function WithLabelExample() {
-  return <ProgressCircle value={90} showLabel />;
+  return <ProgressCircle value={90} showValue />;
 }
 
 export function IndeterminateExample() {
-  return <ProgressCircle indeterminate />;
+  return <ProgressCircle value={null} label="Loading..." />;
 }

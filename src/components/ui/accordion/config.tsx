@@ -20,7 +20,7 @@ export const componentConfig: ComponentConfig = {
   AccordionContent,
   AccordionItem,
   AccordionTrigger
-} from "@/components/ui/accordion/accordion";`,
+} from "@patternmode/ui";`,
   componentId: "AccordionExample",
 
   // Props that users can experiment with

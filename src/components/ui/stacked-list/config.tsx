@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { StackedList } from "@/components/ui/stacked-list/stacked-list";`,
+  importStatement: `import { StackedList } from "@patternmode/ui";`,
   componentId: "StackedListExample",
   props: [
     {

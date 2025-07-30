@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card } from "../card/card";
+import { Card } from "@patternmode/ui";
 import {
   Carousel,
   CarouselContent,

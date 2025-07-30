@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Heading } from "@/components/ui/heading/heading";`,
+  importStatement: `import { Heading } from "@patternmode/ui";`,
   componentId: "HeadingExample",
   props: [
     {

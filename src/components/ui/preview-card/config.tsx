@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { PreviewCard } from "@/components/ui/preview-card/preview-card";`,
+  importStatement: `import { PreviewCard } from "@patternmode/ui";`,
   componentId: "PreviewCardExample",
   props: [
     {

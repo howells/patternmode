@@ -1,6 +1,6 @@
 import React from "react";
 import { SplitButton } from "@patternmode/ui";
-import { MenuItem, MenuSeparator, MenuLabel } from "../menu";
+import { MenuItem, MenuSeparator, MenuLabel } from "@patternmode/ui";
 import { 
   Download as DownloadIcon, 
   ChevronDown as ChevronDownIcon,

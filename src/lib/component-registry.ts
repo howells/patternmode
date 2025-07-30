@@ -102,6 +102,7 @@ const createBasicConfig = (id: string, name: string, category: "ui" | "inputs" |
   category,
   componentId: name,
   importStatement: `import { ${name} } from "@patternmode/ui";`,
+  props: [],
   examples: [{
     id: "basic",
     title: "Basic Usage",

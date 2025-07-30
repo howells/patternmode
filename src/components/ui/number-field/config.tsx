@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { NumberField } from "@/components/ui/number-field/number-field";`,
+  importStatement: `import { NumberField } from "@patternmode/ui";`,
   componentId: "NumberFieldExample",
   props: [
     {

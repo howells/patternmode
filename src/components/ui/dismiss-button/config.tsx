@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Dismiss Button",
   description: "A reusable dismiss/remove button with consistent styling.",
   category: "utility" as const,
+  componentId: "dismiss-button",
   icon: "X",
 
   installation: {
     npm: "lucide-react",
   },
-  importStatement: `import { DismissButton } from "@/components/ui/dismiss-button/dismiss-button";`,
+  importStatement: `import { DismissButton } from "@patternmode/ui";`,
   props: [
     {
       name: "size",

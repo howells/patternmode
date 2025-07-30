@@ -21,7 +21,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Separator } from "@/components/ui/separator/separator";`,
+  importStatement: `import { Separator } from "@patternmode/ui";`,
   componentId: "SeparatorExample",
 
   // Props that users can experiment with

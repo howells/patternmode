@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   AlertDialogDescription,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "@/components/ui/alert-dialog/alert-dialog";`,
+} from "@patternmode/ui";`,
   componentId: "AlertDialogExample",
 
   // Props that users can experiment with

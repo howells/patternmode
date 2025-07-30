@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Keyboard",
 
   componentId: "KbdExample",
-  importStatement: 'import { Kbd } from "@/components/ui/kbd/kbd";',
+  importStatement: 'import { Kbd } from "@patternmode/ui";',
   examples: [
     {
       id: "default",

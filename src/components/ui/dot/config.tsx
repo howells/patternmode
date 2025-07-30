@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Dot } from "@/components/ui/dot/dot";`,
+  importStatement: `import { Dot } from "@patternmode/ui";`,
   componentId: "DotExample",
   props: [
     {

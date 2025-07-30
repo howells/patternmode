@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from "@/components/ui/select/select";`,
+} from "@patternmode/ui";`,
   componentId: "SelectExample",
   props: [
     {

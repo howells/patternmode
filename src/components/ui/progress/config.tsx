@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Progress } from "@/components/ui/progress/progress";`,
+  importStatement: `import { Progress } from "@patternmode/ui";`,
   componentId: "progress",
   props: [
     {

@@ -2,10 +2,10 @@
 
 import { Calendar, FileText, UserPlus } from "lucide-react";
 import React from "react";
-import { Avatar } from "../avatar/avatar";
-import { Badge } from "../badge/badge";
-import { Button } from "../button/button";
-import { Card } from "../card/card";
+import { Avatar } from "@patternmode/ui";
+import { Badge } from "@patternmode/ui";
+import { Button } from "@patternmode/ui";
+import { Card } from "@patternmode/ui";
 import { StackedList } from "@patternmode/ui";
 
 // Default example - matches config "default" id

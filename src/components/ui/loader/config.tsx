@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { Loader } from "@/components/ui/loader/loader";`,
+  importStatement: `import { Loader } from "@patternmode/ui";`,
   componentId: "LoaderExample",
   props: [
     {

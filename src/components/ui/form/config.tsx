@@ -18,9 +18,9 @@ export const componentConfig: ComponentConfig = {
   FormLabel,
   FormDescription,
   FormError
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+} from "@patternmode/ui";
+import { Textarea } from "@patternmode/ui";
+import { Button } from "@patternmode/ui";
 import { z } from "zod";`,
   componentId: "FormExample",
   props: [

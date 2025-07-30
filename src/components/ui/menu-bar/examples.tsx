@@ -1,4 +1,4 @@
-import { Icon } from "../icon";
+import { Icon } from "@patternmode/ui";
 import {
   MenuBar,
   MenuBarContent,

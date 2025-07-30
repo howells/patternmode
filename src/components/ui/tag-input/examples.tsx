@@ -2,8 +2,8 @@
 
 import { Code, MapPin, Palette, Star, User } from "lucide-react";
 import React from "react";
-import { Icon } from "../icon";
-import { Tag } from "../tag";
+import { Icon } from "@patternmode/ui";
+import { Tag } from "@patternmode/ui";
 import { TagInput, TagOption, useTagInput } from "@patternmode/ui";
 
 // Sample data for examples

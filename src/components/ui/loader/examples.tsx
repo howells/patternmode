@@ -1,4 +1,4 @@
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@patternmode/ui";
 import React from "react";
 
 export function DefaultExample() {

@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Navigation Menu",
   description: "A navigation menu component with dropdown support and smooth animations.",
   category: "navigation" as const,
+  componentId: "navigation-menu",
   icon: "Navigation2",
 
   installation: {
@@ -19,7 +20,7 @@ export const componentConfig: ComponentConfig = {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger
-} from "@/components/ui/navigation-menu/navigation-menu";`,
+} from "@patternmode/ui";`,
   props: [
   ],
   examples: [

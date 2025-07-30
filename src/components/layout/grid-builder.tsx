@@ -202,8 +202,6 @@ export function GridBuilder() {
         <Grid
           columns={gridState.columns}
           gap={gridState.gap}
-          showColumnGuides={gridState.showColumnGuides}
-          showRowGuides={gridState.showRowGuides}
           minHeight={gridState.minHeight}
         >
           {cells}

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "../button";
-import { Icon } from "../icon";
+import { Button } from "@patternmode/ui";
+import { Icon } from "@patternmode/ui";
 import {
   Menu,
   MenuCheckboxItem,

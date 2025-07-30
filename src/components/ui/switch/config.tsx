@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Switch } from "@/components/ui/switch/switch";`,
+  importStatement: `import { Switch } from "@patternmode/ui";`,
   componentId: "SwitchExample",
   props: [
     {

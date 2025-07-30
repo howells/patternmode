@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { HeadingElement } from "@/components/ui/heading-element/heading-element";`,
+  importStatement: `import { HeadingElement } from "@patternmode/ui";`,
   componentId: "HeadingElementExample",
   props: [
     {

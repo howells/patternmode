@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "recharts"
   },
-  importStatement: `import { LineChart } from "@/components/ui/line-chart/line-chart";`,
+  importStatement: `import { LineChart } from "@patternmode/ui";`,
   componentId: "LineChartExample",
   props: [
     {

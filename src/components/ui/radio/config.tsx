@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Radio",
   description: "A radio button component for selecting a single option from a set.",
   category: "inputs" as const,
+  componentId: "radio",
   icon: "Circle",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Radio } from "@/components/ui/radio/radio";`,
+  importStatement: `import { Radio } from "@patternmode/ui";`,
   props: [
     {
       name: "checked",

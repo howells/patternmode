@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Skeleton",
   description: "Use to show a placeholder while content is loading.",
   category: "feedback" as const,
+  componentId: "skeleton",
   icon: "Loader",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Skeleton } from "@/components/ui/skeleton/skeleton";`,
+  importStatement: `import { Skeleton } from "@patternmode/ui";`,
   props: [
   ],
   examples: [

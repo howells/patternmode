@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Tooltip } from "@patternmode/ui";
-import { Button } from "../button";
+import { Button } from "@patternmode/ui";
 
 export function TooltipExample() {
   return (
@@ -37,11 +37,11 @@ export function VariantsExample() {
       <Tooltip content="Default tooltip" variant="default">
         <span className="px-3 py-2 bg-gray-100 rounded cursor-pointer">Default</span>
       </Tooltip>
-      <Tooltip content="Dark tooltip" variant="dark">
-        <span className="px-3 py-2 bg-gray-200 rounded cursor-pointer">Dark</span>
+      <Tooltip content="Default tooltip" variant="default">
+        <span className="px-3 py-2 bg-gray-200 rounded cursor-pointer">Default</span>
       </Tooltip>
-      <Tooltip content="Light tooltip" variant="light">
-        <span className="px-3 py-2 bg-gray-50 border rounded cursor-pointer">Light</span>
+      <Tooltip content="Inverse tooltip" variant="inverse">
+        <span className="px-3 py-2 bg-gray-50 border rounded cursor-pointer">Inverse</span>
       </Tooltip>
     </div>
   );

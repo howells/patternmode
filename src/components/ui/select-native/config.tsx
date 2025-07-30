@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { SelectNative } from "@/components/ui/select-native/select-native";`,
+  importStatement: `import { SelectNative } from "@patternmode/ui";`,
   componentId: "SelectNativeExample",
   props: [
     {

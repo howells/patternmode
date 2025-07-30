@@ -2,7 +2,7 @@
 
 import { Download, Save } from "lucide-react";
 import React from "react";
-import { MenuGroup, MenuItem, MenuLabel, MenuSeparator } from "../menu";
+import { MenuGroup, MenuItem, MenuLabel, MenuSeparator } from "@patternmode/ui";
 import { SplitButton } from "@patternmode/ui";
 
 // Example component for preview system

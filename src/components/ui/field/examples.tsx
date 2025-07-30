@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, FieldLabel, FieldDescription, FieldError } from "@patternmode/ui";
-import { Input } from "../input/input";
+import { Input } from "@patternmode/ui";
 
 // Default field
 export const DefaultExample = () => (

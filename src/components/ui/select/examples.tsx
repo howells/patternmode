@@ -118,7 +118,7 @@ export function DefaultExample() {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="apple">Apple</SelectItem>
@@ -135,7 +135,7 @@ export function WithGroupsExample() {
   return (
     <Select>
       <SelectTrigger className="w-[280px]">
-        <SelectValue placeholder="Select a timezone" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -161,7 +161,7 @@ export function SmallSizeExample() {
   return (
     <Select>
       <SelectTrigger size="sm" className="w-[150px]">
-        <SelectValue placeholder="Small select" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="option1">Option 1</SelectItem>
@@ -181,7 +181,7 @@ export function FormSelectExample() {
         <input
           id="email"
           type="email"
-          placeholder="Enter your email"
+         
           className="w-full rounded-md border border-zinc-300 px-3 py-2"
         />
       </div>
@@ -189,7 +189,7 @@ export function FormSelectExample() {
         <label className="text-sm font-medium">Country</label>
         <Select>
           <SelectTrigger>
-            <SelectValue placeholder="Select your country" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="us">United States</SelectItem>

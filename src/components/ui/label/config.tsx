@@ -8,12 +8,13 @@ export const componentConfig: ComponentConfig = {
   name: "Label",
   description: "A label component for form inputs and interactive elements with proper accessibility support.",
   category: "forms" as const,
+  componentId: "label",
   icon: "Tag",
 
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Label } from "@/components/ui/label/label";`,
+  importStatement: `import { Label } from "@patternmode/ui";`,
   props: [
     {
       name: "children",

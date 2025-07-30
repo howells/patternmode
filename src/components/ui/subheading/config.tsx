@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Subheading } from "@/components/ui/subheading/subheading";`,
+  importStatement: `import { Subheading } from "@patternmode/ui";`,
   componentId: "SubheadingExample",
   props: [
     {

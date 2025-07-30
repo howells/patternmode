@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react"
   },
-  importStatement: `import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover/popover";`,
+  importStatement: `import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";`,
   componentId: "PopoverExample",
   props: [
     {

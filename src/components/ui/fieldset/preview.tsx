@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "../button/button";
-import { Field, FieldControl, FieldLabel } from "../field/field";
+import { Button } from "@patternmode/ui";
+import { Field, FieldControl, FieldLabel } from "@patternmode/ui";
 import { Fieldset, FieldsetLegend } from "@patternmode/ui";
 
 export function FieldsetExample({

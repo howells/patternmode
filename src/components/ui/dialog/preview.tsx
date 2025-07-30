@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button/button";
-import { FormControl, FormField } from "@/components/ui/form";
+import { Button } from "@patternmode/ui";
+import { FormControl, FormField } from "@patternmode/ui";
 import { X } from "lucide-react";
 import { useState } from "react";
 import {

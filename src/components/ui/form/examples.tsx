@@ -6,9 +6,9 @@ import {
   FormLabel,
   FormDescription,
   FormError,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+  Textarea,
+} from "@patternmode/ui";
+import { Button } from "@patternmode/ui";
 import { z } from "zod";
 
 export function FormExample() {

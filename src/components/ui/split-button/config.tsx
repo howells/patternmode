@@ -17,7 +17,7 @@ export const componentConfig: ComponentConfig = {
   installation: {
     npm: "@base-ui-components/react",
   },
-  importStatement: `import { SplitButton } from "@/components/ui/split-button/split-button";`,
+  importStatement: `import { SplitButton } from "@patternmode/ui";`,
   componentId: "SplitButtonExample",
   props: [
     {
