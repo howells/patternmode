@@ -31,7 +31,8 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic field with label and input.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-description",
       title: "With Description",

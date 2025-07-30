@@ -59,7 +59,7 @@ const GridAlignedContainer: React.FC<{ children: React.ReactNode }> = ({
       ref={containerRef}
       className="relative"
       style={{
-        minHeight: "200px",
+        minHeight: "400px",
       }}
     >
       <div

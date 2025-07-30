@@ -14,6 +14,7 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Toggle } from "@/components/ui/toggle/toggle";`,
+  componentId: "ToggleExample",
   props: [
     {
       name: "children",

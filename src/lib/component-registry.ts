@@ -22,7 +22,6 @@ import { componentConfig as codeBlockConfig } from "@/components/ui/code-block/c
 import { componentConfig as collapsibleConfig } from "@/components/ui/collapsible/config";
 import { componentConfig as comboChartConfig } from "@/components/ui/combo-chart/config";
 import { componentConfig as comboboxConfig } from "@/components/ui/combobox/config";
-import { componentConfig as commandConfig } from "@/components/ui/command/config";
 import { componentConfig as contextMenuConfig } from "@/components/ui/context-menu/config";
 import { componentConfig as copyButtonConfig } from "@/components/ui/copy-button/config";
 import { componentConfig as datePickerConfig } from "@/components/ui/date-picker/config";
@@ -133,7 +132,6 @@ export const componentRegistry: ComponentConfigRegistry = {
   collapsible: collapsibleConfig,
   "combo-chart": comboChartConfig,
   combobox: comboboxConfig,
-  command: commandConfig,
   "context-menu": contextMenuConfig,
   "copy-button": copyButtonConfig,
   "date-picker": datePickerConfig,
@@ -250,7 +248,6 @@ export const COMPONENT_LIST = {
   ],
   overlay: [
     "alert-dialog",
-    "command",
     "context-menu",
     "dialog",
     "drawer",

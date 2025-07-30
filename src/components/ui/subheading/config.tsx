@@ -36,16 +36,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Subheading",
       description: "A simple subheading component",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "levels",
       title: "Different Levels",
       description: "Subheadings at different hierarchy levels",
-      code: jsxToString(<LevelsExample />),},
+      code: jsxToString(<LevelsExample />),
+    },
     {
       id: "with-content",
       title: "Subheading with Content",
       description: "Subheading used to organize content sections",
-      code: jsxToString(<WithContentExample />),},
+      code: jsxToString(<WithContentExample />),
+    },
   ]
 };

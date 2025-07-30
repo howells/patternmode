@@ -347,3 +347,6 @@ export const ProfileHeaderExample = () => {
     </div>
   );
 };
+
+// Default export for prop explorer
+export const AvatarExample = DefaultExample;

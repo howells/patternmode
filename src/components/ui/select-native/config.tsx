@@ -41,16 +41,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "A styled native select element",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-groups",
       title: "With Option Groups",
       description: "Native select with grouped options",
-      code: jsxToString(<WithGroupsExample />),},
+      code: jsxToString(<WithGroupsExample />),
+    },
     {
       id: "sizes",
       title: "Different Sizes",
       description: "Native select in different sizes",
-      code: jsxToString(<SizesExample />),},
+      code: jsxToString(<SizesExample />),
+    },
   ]
 };

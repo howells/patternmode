@@ -149,7 +149,8 @@ export const componentConfig: ComponentConfig = {
       id: "prefix-suffix-styling",
       title: "Styling Options",
       description: "Control styling of prefix and suffix",
-      code: jsxToString(<PrefixSuffixStylingExample />),},
+      code: jsxToString(<PrefixSuffixStylingExample />),
+    },
     {
       id: "prefix-suffix-icons",
       title: "Icon Prefix & Suffix",

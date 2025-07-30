@@ -176,3 +176,6 @@ export const TwoLevelsExample = () => (
     </BreadcrumbList>
   </Breadcrumb>
 );
+
+// Default export for prop explorer
+export const BreadcrumbsExample = DefaultExample;

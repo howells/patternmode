@@ -216,3 +216,6 @@ export const WebsiteAnalyticsExample = () => (
     />
   </div>
 );
+
+// Default export for prop explorer
+export const BarListExample = DefaultExample;

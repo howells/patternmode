@@ -156,3 +156,6 @@ export const DropdownCaptionExample = () => (
     endMonth={new Date(2030, 11)}
   />
 );
+
+// Default export for prop explorer
+export const CalendarExample = DefaultExample;

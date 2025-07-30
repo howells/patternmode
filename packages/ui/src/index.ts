@@ -53,7 +53,6 @@ export * from "./components/toast/toast";
 
 // Overlay Components
 export * from "./components/alert-dialog/alert-dialog";
-export * from "./components/command/command";
 export * from "./components/context-menu/context-menu";
 export * from "./components/dialog/dialog";
 export * from "./components/drawer/drawer";

@@ -14,6 +14,7 @@ export const componentConfig: ComponentConfig = {
     npm: "@base-ui-components/react"
   },
   importStatement: `import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip/tooltip";`,
+  componentId: "TooltipExample",
   props: [
     {
       name: "content",

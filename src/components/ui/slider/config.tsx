@@ -52,26 +52,31 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Slider",
       description: "A simple slider with default settings",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "range",
       title: "Range Slider",
       description: "A slider with two handles for selecting a range",
-      code: jsxToString(<RangeExample />),},
+      code: jsxToString(<RangeExample />),
+    },
     {
       id: "steps",
       title: "Slider with Steps",
       description: "A slider with custom step increments",
-      code: jsxToString(<StepsExample />),},
+      code: jsxToString(<StepsExample />),
+    },
     {
       id: "custom-range",
       title: "Custom Range",
       description: "A slider with custom min and max values",
-      code: jsxToString(<CustomRangeExample />),},
+      code: jsxToString(<CustomRangeExample />),
+    },
     {
       id: "disabled",
       title: "Disabled Slider",
       description: "A slider in disabled state",
-      code: jsxToString(<DisabledExample />),},
+      code: jsxToString(<DisabledExample />),
+    },
   ]
 };

@@ -27,11 +27,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Navbar",
       description: "A navigation bar component with branding, sections, and items.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-divider",
       title: "Navbar with Divider",
       description: "Navigation bar with sections separated by dividers",
-      code: jsxToString(<WithDividerExample />),},
+      code: jsxToString(<WithDividerExample />),
+    },
   ]
 };

@@ -17,3 +17,6 @@ export function WithIconExample() {
     </Toggle>
   );
 }
+
+// Default export for prop explorer
+export const ToggleExample = DefaultExample;

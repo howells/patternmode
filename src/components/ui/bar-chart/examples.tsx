@@ -150,3 +150,6 @@ export const NegativeValuesExample = () => {
     />
   );
 };
+
+// Default export for prop explorer
+export const BarChartExample = DefaultExample;

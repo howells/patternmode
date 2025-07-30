@@ -42,26 +42,31 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Switch",
       description: "A simple toggle switch",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "checked",
       title: "Checked by Default",
       description: "Switch that starts in the on position",
-      code: jsxToString(<CheckedExample />),},
+      code: jsxToString(<CheckedExample />),
+    },
     {
       id: "disabled",
       title: "Disabled States",
       description: "Switches in disabled state",
-      code: jsxToString(<DisabledExample />),},
+      code: jsxToString(<DisabledExample />),
+    },
     {
       id: "sizes",
       title: "Different Sizes",
       description: "Switches in various sizes",
-      code: jsxToString(<SizesExample />),},
+      code: jsxToString(<SizesExample />),
+    },
     {
       id: "form",
       title: "In a Form",
       description: "Switch used within a form context",
-      code: jsxToString(<FormExample />),},
+      code: jsxToString(<FormExample />),
+    },
   ]
 };

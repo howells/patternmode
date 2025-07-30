@@ -21,16 +21,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Skeleton",
       description: "A simple skeleton loader",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "card",
       title: "Card Skeleton",
       description: "Skeleton for a card component",
-      code: jsxToString(<CardExample />),},
+      code: jsxToString(<CardExample />),
+    },
     {
       id: "list",
       title: "List Skeleton",
       description: "Skeleton for a list of items",
-      code: jsxToString(<ListExample />),},
+      code: jsxToString(<ListExample />),
+    },
   ]
 };

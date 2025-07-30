@@ -38,7 +38,8 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic horizontal divider.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-text",
       title: "With Text",

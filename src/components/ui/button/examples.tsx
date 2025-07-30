@@ -141,3 +141,6 @@ export const KeyboardShortcutsExample = () => (
     </Button>
   </div>
 );
+
+// Default export for prop explorer
+export const ButtonExample = DefaultExample;

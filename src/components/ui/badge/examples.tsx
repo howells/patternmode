@@ -251,3 +251,6 @@ export const BorderlessVariantsExample = () => (
     </Badge>
   </div>
 );
+
+// Default export for prop explorer
+export const BadgeExample = DefaultExample;

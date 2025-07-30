@@ -48,7 +48,8 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic dialog with trigger button and content.",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-form",
       title: "With Form",

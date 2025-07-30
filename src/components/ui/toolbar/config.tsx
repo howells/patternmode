@@ -19,6 +19,7 @@ export const componentConfig: ComponentConfig = {
   ToolbarGroup,
   ToolbarSeparator
 } from "@/components/ui/toolbar/toolbar";`,
+  componentId: "ToolbarExample",
   props: [
     {
       name: "orientation",

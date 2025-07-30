@@ -23,11 +23,13 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Basic Scroll Area",
       description: "A scrollable container with custom scrollbar",
-      code: jsxToString(<DefaultExample />),},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "horizontal",
       title: "Horizontal Scroll",
       description: "A horizontally scrollable area",
-      code: jsxToString(<HorizontalExample />),},
+      code: jsxToString(<HorizontalExample />),
+    },
   ]
 };
