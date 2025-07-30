@@ -189,4 +189,4 @@ export const CustomFormattingExample = () => {
       legendPosition="center"
     />
   );
-};
+};export const ComboChartExample = DefaultExample;

@@ -414,3 +414,5 @@ export function ButtonStyleExample() {
     </div>
   );
 }
+
+export const ToggleGroupExample = DefaultExample;

@@ -61,3 +61,4 @@ export function WithIconsExample() {
     </MenuBar>
   );
 }
+export const MenuBarExample = DefaultExample;

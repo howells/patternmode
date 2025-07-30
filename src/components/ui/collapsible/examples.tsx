@@ -224,4 +224,4 @@ export const NestedExample = () => (
       </div>
     </CollapsibleContent>
   </Collapsible>
-);
+);export const CollapsibleExample = DefaultExample;

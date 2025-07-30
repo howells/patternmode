@@ -139,4 +139,4 @@ export const ControlledExample = () => {
       </DialogContent>
     </Dialog>
   );
-};
+};export const DialogExample = DefaultExample;

@@ -47,4 +47,4 @@ export function WithDividerExample() {
       </NavbarSection>
     </Navbar>
   );
-}
+}export const NavbarExample = DefaultExample;

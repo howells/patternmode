@@ -207,3 +207,4 @@ export const EventDetailsExample = () => (
     <DescriptionDetails>$299 (Early Bird: $199)</DescriptionDetails>
   </DescriptionList>
 );
+export const DescriptionListExample = DefaultExample;

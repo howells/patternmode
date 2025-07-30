@@ -18,4 +18,4 @@ export const DefaultExample = () => (
       </Field>
     </div>
   </Fieldset>
-);
+);export const FieldsetExample = DefaultExample;

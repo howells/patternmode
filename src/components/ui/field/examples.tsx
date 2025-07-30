@@ -26,4 +26,4 @@ export const WithErrorExample = () => (
     <Input type="password" placeholder="Enter password" />
     <FieldError>Password must be at least 8 characters</FieldError>
   </Field>
-);
+);export const FieldExample = DefaultExample;

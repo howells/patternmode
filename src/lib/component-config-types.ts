@@ -79,7 +79,7 @@ export interface ComponentConfig {
   id: string;
   name: string;
   description: string;
-  category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts";
+  category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts" | "ui";
   icon?: string;
   badge?: string;
 

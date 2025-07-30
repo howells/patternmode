@@ -78,4 +78,4 @@ export function LayoutExample() {
       </div>
     </div>
   );
-}
+}export const IconExample = DefaultExample;

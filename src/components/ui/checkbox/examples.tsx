@@ -172,4 +172,4 @@ export const CustomStyleExample = () => (
   <Checkbox 
     className="data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
   />
-);
+);export const CheckboxExample = DefaultExample;

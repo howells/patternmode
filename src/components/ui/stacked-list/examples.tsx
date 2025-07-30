@@ -150,3 +150,4 @@ export function EmptyStateExample() {
     </StackedList>
   );
 }
+export const StackedListExample = DefaultExample;

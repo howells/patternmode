@@ -253,4 +253,4 @@ export const ResponsiveExample = () => (
     <CarouselPrevious />
     <CarouselNext />
   </Carousel>
-);
+);export const CarouselExample = DefaultExample;

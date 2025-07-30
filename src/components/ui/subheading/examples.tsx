@@ -33,4 +33,4 @@ export function WithContentExample() {
       </ul>
     </div>
   );
-}
+}export const SubheadingExample = DefaultExample;

@@ -120,3 +120,4 @@ export function SemanticHierarchyExample() {
     </div>
   );
 }
+export const HeadingElementExample = DefaultExample;

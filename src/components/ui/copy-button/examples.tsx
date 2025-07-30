@@ -22,4 +22,4 @@ export const LongTextExample = () => (
     copyLabel="Copy Text"
     copiedLabel="Text Copied!"
   />
-);
+);export const CopyButtonExample = DefaultExample;

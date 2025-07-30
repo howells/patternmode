@@ -30,3 +30,4 @@ export const NoAnimationExample = () => (
 );
 
 export const ValueOnlyExample = () => <Meter value={80} showValue={true} />;
+export const MeterExample = DefaultExample;

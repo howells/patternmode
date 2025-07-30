@@ -42,4 +42,4 @@ export const WithIconExample = () => (
   <Callout title="Alert" variant="warning" icon={AlertTriangle}>
     This callout includes an icon for better visual communication.
   </Callout>
-);
+);export const CalloutExample = DefaultExample;

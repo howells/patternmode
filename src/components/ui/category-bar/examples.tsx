@@ -137,4 +137,4 @@ export const BinaryExample = () => (
 // Equal distribution
 export const EqualDistributionExample = () => (
   <CategoryBar values={[25, 25, 25, 25]} colors={["blue", "emerald", "violet", "amber"]} />
-);
+);export const CategoryBarExample = DefaultExample;

@@ -33,4 +33,4 @@ export const WithShortcutsExample = () => (
       </ContextMenuItem>
     </ContextMenuContent>
   </ContextMenu>
-);
+);export const ContextMenuExample = DefaultExample;

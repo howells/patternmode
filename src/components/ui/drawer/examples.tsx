@@ -14,4 +14,4 @@ export const DefaultExample = () => (
       </div>
     </DrawerContent>
   </Drawer>
-);
+);export const DrawerExample = DefaultExample;

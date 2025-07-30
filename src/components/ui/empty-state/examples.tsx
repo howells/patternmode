@@ -54,4 +54,4 @@ export const LargeSizeExample = () => (
       onClick: () => console.log("Get started clicked")
     }}
   />
-);
+);export const EmptyStateExample = DefaultExample;

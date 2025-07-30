@@ -87,3 +87,4 @@ export const InteractiveExample = () => {
     </div>
   );
 };
+export const DismissButtonExample = DefaultExample;

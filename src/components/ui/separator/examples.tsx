@@ -63,3 +63,4 @@ export function SizesExample() {
     </div>
   );
 }
+export const SeparatorExample = DefaultExample;

@@ -31,4 +31,4 @@ export const SpacingExample = () => (
     <Divider spacing="lg">Large spacing</Divider>
     <div>Content</div>
   </div>
-);
+);export const DividerExample = DefaultExample;

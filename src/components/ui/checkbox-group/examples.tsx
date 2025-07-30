@@ -183,4 +183,4 @@ export const CustomStyleExample = () => (
       Green option
     </CheckboxGroupItem>
   </CheckboxGroup>
-);
+);export const CheckboxGroupExample = DefaultExample;

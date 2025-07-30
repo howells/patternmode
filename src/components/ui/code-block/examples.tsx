@@ -253,4 +253,4 @@ export const DarkThemeExample = () => (
   return <div>Dark theme code block</div>;
 };`}
   </CodeBlock>
-);
+);export const CodeBlockExample = DefaultExample;

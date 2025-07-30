@@ -66,4 +66,4 @@ export const ControlledExample = () => {
       )}
     </div>
   );
-};
+};export const DatePickerExample = DefaultExample;
