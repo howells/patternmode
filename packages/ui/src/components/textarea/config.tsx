@@ -105,13 +105,13 @@ export const componentConfig: ComponentConfig = {
       code: jsxToString(<WithContentExample />),
     },
     {
-      id: "row-constraints",
+      id: "with-row-constraints",
       title: "With Row Constraints",
       description: "Textarea with minimum and maximum row limits",
       code: jsxToString(<WithRowConstraintsExample />),
     },
     {
-      id: "error-state",
+      id: "with-error",
       title: "Error State",
       description: "Textarea with error styling and validation",
       code: jsxToString(<WithErrorExample />),
@@ -129,7 +129,7 @@ export const componentConfig: ComponentConfig = {
       code: jsxToString(<FixedHeightExample />),
     },
     {
-      id: "height-callback",
+      id: "with-height-callback",
       title: "Height Change Tracking",
       description: "Textarea with callback to track height changes",
       code: jsxToString(<WithHeightCallbackExample />),

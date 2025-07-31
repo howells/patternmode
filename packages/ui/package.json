@@ -20,6 +20,16 @@
       "import": "./src/index.ts",
       "require": "./src/index.ts"
     },
+    "./components/*/examples": {
+      "types": "./src/components/*/examples.tsx",
+      "import": "./src/components/*/examples.tsx",
+      "require": "./src/components/*/examples.tsx"
+    },
+    "./components/*/preview": {
+      "types": "./src/components/*/preview.tsx",
+      "import": "./src/components/*/preview.tsx",
+      "require": "./src/components/*/preview.tsx"
+    },
     "./styles/globals.css": "./src/styles/globals.css",
     "./package.json": "./package.json"
   },

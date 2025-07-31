@@ -150,16 +150,8 @@ interface TextareaProps
 const Textarea = (
     { ref: forwardedRef, className, hasError, autoResize = true, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
     ) => {
-    // Only pass through valid props, filtering out invalid ones
-    const validProps = Object.keys(props).reduce((acc, key) => {
-      const value = props[key as keyof typeof props];
-      // Skip invalid function props
-      if (key === 'onChange' && typeof value !== 'function') {
-        return acc;
-      }
-      acc[key as keyof typeof acc] = value;
-      return acc;
-    }, {} as typeof props);
+        // Just use props directly - let React handle invalid props
+    const cleanProps = props;
     const baseClassName = cx(
     // base
       "flex w-full rounded-md border px-3 py-2 shadow-xs outline-hidden transition-colors sm:text-sm",
@@ -190,7 +182,7 @@ const Textarea = (
           ref={forwardedRef}
           className={baseClassName}
           style={style}
-          {...(validProps as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+          {...(cleanProps as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
         />
       );
     }
@@ -204,7 +196,7 @@ const Textarea = (
         onHeightChange={onHeightChange}
         cacheMeasurements={cacheMeasurements}
         style={style ? { height: style.height as number } : undefined}
-        {...validProps}
+        {...cleanProps}
       />
     );
   };

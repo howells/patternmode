@@ -375,6 +375,12 @@ interface FormFieldProps {
    * Form control element (input, select, textarea, etc.).
    */
   children: React.ReactNode;
+  /**
+   * Layout orientation for the field.
+   * - 'vertical': Label above control (default)
+   * - 'horizontal': Control and label side by side (for checkboxes)
+   */
+  orientation?: 'vertical' | 'horizontal';
 }
 
 /**
@@ -393,6 +399,7 @@ interface FormFieldProps {
  * @component
  * @example
  * ```tsx
+ * // Vertical layout (default)
  * <FormField
  *   name="email"
  *   label="Email Address"
@@ -401,9 +408,43 @@ interface FormFieldProps {
  * >
  *   <FormControl type="email" placeholder="your@email.com" />
  * </FormField>
+ *
+ * // Horizontal layout (for checkboxes)
+ * <FormField
+ *   name="newsletter"
+ *   label="Subscribe to newsletter"
+ *   description="Receive updates about new features"
+ *   orientation="horizontal"
+ * >
+ *   <Checkbox />
+ * </FormField>
  * ```
  */
-const FormField = ({ ref, name, label, description, required, className, children }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const FormField = ({ ref, name, label, description, required, className, children, orientation = 'vertical' }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    if (orientation === 'horizontal') {
+      return (
+        <BaseField.Root name={name} className={className}>
+          <FormItem ref={ref}>
+            <div className="flex items-start gap-3">
+              <div className="mt-1">
+                {children}
+              </div>
+              <div className="space-y-1">
+                {label && (
+                  <FormLabel className="cursor-pointer">
+                    {label}
+                    {required && <span className="text-red-500 ml-1">*</span>}
+                  </FormLabel>
+                )}
+                {description && <FormDescription>{description}</FormDescription>}
+              </div>
+            </div>
+            <FormError />
+          </FormItem>
+        </BaseField.Root>
+      );
+    }
+
     return (
       <BaseField.Root name={name} className={className}>
         <FormItem ref={ref}>
@@ -423,11 +464,11 @@ const FormField = ({ ref, name, label, description, required, className, childre
 FormField.displayName = "FormField";
 
 export {
-    Form,
-    FormControl,
-    FormDescription,
-    FormError,
-    FormField,
-    FormItem,
-    FormLabel
+  Form,
+  FormControl,
+  FormDescription,
+  FormError,
+  FormField,
+  FormItem,
+  FormLabel
 };
