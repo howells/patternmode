@@ -1,5 +1,5 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
 import React from "react";
+import type { ComponentConfig } from "../../lib/component-config-types";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { DefaultExample, DisabledExample, FixedHeightExample, FormIntegrationExample, PerformanceExample, WithContentExample, WithErrorExample, WithHeightCallbackExample, WithRowConstraintsExample } from "./examples";
 
@@ -57,7 +57,7 @@ export const componentConfig: ComponentConfig = {
       name: "minRows",
       type: "number",
       description: "Minimum number of rows to display",
-      defaultValue: 2,
+      defaultValue: 3,
     },
     {
       name: "maxRows",
