@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import React from "react";
 
 export function TabsExample() {
@@ -233,5 +234,79 @@ export function SolidSizesExample() {
         </Tabs>
       </div>
     </div>
+  );
+}
+
+export function LineIndicatorTestExample() {
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-zinc-600">Test that the line indicator animates properly:</p>
+      <Tabs defaultValue="tab1">
+        <TabsList variant="line">
+          <TabsTrigger value="tab1">Short</TabsTrigger>
+          <TabsTrigger value="tab2">Medium Length</TabsTrigger>
+          <TabsTrigger value="tab3">Very Long Tab Name</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">
+          <p>The indicator should be under "Short"</p>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <p>The indicator should be under "Medium Length"</p>
+        </TabsContent>
+        <TabsContent value="tab3">
+          <p>The indicator should be under "Very Long Tab Name"</p>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
+
+export function LineWithIconsExample() {
+  return (
+    <Tabs defaultValue="overview">
+      <TabsList variant="line">
+        <TabsTrigger value="overview" leftIcon={FileText}>Overview</TabsTrigger>
+        <TabsTrigger value="analytics" leftIcon={BarChart3}>Analytics</TabsTrigger>
+        <TabsTrigger value="users" leftIcon={Users}>Users</TabsTrigger>
+        <TabsTrigger value="settings" leftIcon={Settings}>Settings</TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <p>Overview content with icons in line variant</p>
+      </TabsContent>
+      <TabsContent value="analytics">
+        <p>Analytics content</p>
+      </TabsContent>
+      <TabsContent value="users">
+        <p>Users content</p>
+      </TabsContent>
+      <TabsContent value="settings">
+        <p>Settings content</p>
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+export function SolidWithIconsExample() {
+  return (
+    <Tabs defaultValue="overview">
+      <TabsList variant="solid">
+        <TabsTrigger value="overview" leftIcon={FileText}>Overview</TabsTrigger>
+        <TabsTrigger value="analytics" leftIcon={BarChart3}>Analytics</TabsTrigger>
+        <TabsTrigger value="users" leftIcon={Users}>Users</TabsTrigger>
+        <TabsTrigger value="settings" leftIcon={Settings}>Settings</TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <p>Overview content with icons in solid variant</p>
+      </TabsContent>
+      <TabsContent value="analytics">
+        <p>Analytics content</p>
+      </TabsContent>
+      <TabsContent value="users">
+        <p>Users content</p>
+      </TabsContent>
+      <TabsContent value="settings">
+        <p>Settings content</p>
+      </TabsContent>
+    </Tabs>
   );
 }

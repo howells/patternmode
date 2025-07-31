@@ -56,7 +56,7 @@ const tabsVariants = tv({
         ],
         tab: [
           // base
-          "relative inline-flex items-center justify-center border-0 font-medium whitespace-nowrap transition-all",
+          "relative inline-flex items-center justify-center border-0 font-medium whitespace-nowrap",
           // text color
           "text-zinc-600 dark:text-zinc-400",
           // hover
@@ -323,9 +323,9 @@ TabsList.displayName = "TabsList";
  *
  * @property {string} value - A unique value that associates the trigger with a content panel.
  * @property {boolean} [disabled] - When true, prevents the user from interacting with the tab.
- * @property {React.ComponentType<{ className?: string; strokeWidth?: number }>} [leftIcon] - Icon component to display on the left side (only applies to solid variant).
- * @property {React.ComponentType<{ className?: string; strokeWidth?: number }>} [rightIcon] - Icon component to display on the right side (only applies to solid variant).
- * @property {number} [iconStrokeWidth] - Stroke width for icons (only applies to solid variant).
+ * @property {React.ComponentType<{ className?: string; strokeWidth?: number }>} [leftIcon] - Icon component to display on the left side.
+ * @property {React.ComponentType<{ className?: string; strokeWidth?: number }>} [rightIcon] - Icon component to display on the right side.
+ * @property {number} [iconStrokeWidth] - Stroke width for icons.
  * @property {React.ReactNode} [children] - The content to display in the tab trigger.
  * @property {string} [className] - Additional CSS classes to apply to the trigger element.
  * @property {React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null>} [ref] - Ref to the trigger element.
@@ -333,15 +333,15 @@ TabsList.displayName = "TabsList";
 interface TabsTriggerProps
   extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab> {
   /**
-   * Icon component to display on the left side (for solid variant).
+   * Icon component to display on the left side.
    */
   leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /**
-   * Icon component to display on the right side (for solid variant).
+   * Icon component to display on the right side.
    */
   rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /**
-   * Stroke width for icons (for solid variant).
+   * Stroke width for icons.
    */
   iconStrokeWidth?: number;
 }
@@ -351,17 +351,17 @@ interface TabsTriggerProps
  *
  * Based on Base UI's Tabs.Tab, providing clickable tab buttons with proper
  * keyboard navigation and accessibility. Automatically inherits styling variant
- * from parent TabsList and supports disabled states. For solid variant, uses
- * actual Button components for perfect consistency with icon support.
+ * from parent TabsList and supports disabled states. Uses Button components
+ * for both variants to ensure consistent icon support and sizing.
  *
  * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
  * @see {@link https://base-ui.com/react/components/tabs} Base UI Tabs documentation
  *
  * @param {string} value - A unique value that associates the trigger with a content panel.
  * @param {boolean} [disabled] - When true, prevents the user from interacting with the tab.
- * @param {React.ComponentType<{ className?: string; strokeWidth?: number }>} [leftIcon] - Icon component to display on the left side (only applies to solid variant).
- * @param {React.ComponentType<{ className?: string; strokeWidth?: number }>} [rightIcon] - Icon component to display on the right side (only applies to solid variant).
- * @param {number} [iconStrokeWidth] - Stroke width for icons (only applies to solid variant).
+ * @param {React.ComponentType<{ className?: string; strokeWidth?: number }>} [leftIcon] - Icon component to display on the left side.
+ * @param {React.ComponentType<{ className?: string; strokeWidth?: number }>} [rightIcon] - Icon component to display on the right side.
+ * @param {number} [iconStrokeWidth] - Stroke width for icons.
  * @param {React.ReactNode} [children] - The content to display in the tab trigger.
  * @param {string} [className] - Additional CSS classes to apply to the trigger element.
  * @param {React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null>} [ref] - Ref to the trigger element.
@@ -397,37 +397,65 @@ const TabsTrigger = (
               <Button
                 {...buttonProps}
                 variant={state.selected ? "outline" : "ghost"}
-              size={getButtonSize(size)}
-              leftIcon={leftIcon}
-              rightIcon={rightIcon}
-              iconStrokeWidth={iconStrokeWidth}
-              className={cx(
-                "data-[disabled]:pointer-events-none",
-                "inset-ring-0 shadow-none",
-                state.selected && "hover:bg-white dark:hover:bg-zinc-950",
-                className,
-                {
-                  "opacity-50 hover:opacity-100": !state.selected,
-                },
-              )}
-            >
-              {children}
-            </Button>
+                size={getButtonSize(size)}
+                leftIcon={leftIcon}
+                rightIcon={rightIcon}
+                iconStrokeWidth={iconStrokeWidth}
+                shadow={false}
+                className={cx(
+                  "data-[disabled]:pointer-events-none",
+                  "inset-ring-0 shadow-none",
+                  state.selected && "hover:bg-white dark:hover:bg-zinc-950",
+                  !state.selected && "opacity-50 hover:opacity-100",
+                  className,
+                )}
+              >
+                {children}
+              </Button>
             );
           }}
         />
       );
     }
 
-    // For line variant, use regular styling
+    // For line variant, use Tab element with Button as child to preserve indicator functionality
     return (
       <BaseTabs.Tab
         ref={forwardedRef}
-        className={cx(tabsVariants().tab({ variant, size }), className)}
+        className={cx(
+          // Base tab styles for line variant - ensure proper sizing for indicator
+          "relative inline-flex items-center justify-center",
+          // Apply the size-specific height to the tab container for indicator positioning
+          size === "xs" && "h-8",
+          size === "sm" && "h-10",
+          size === "default" && "h-12",
+          size === "lg" && "h-14",
+          className,
+        )}
         {...props}
-      >
-        {children}
-      </BaseTabs.Tab>
+        render={(tabProps, state) => {
+          // Extract ref and other props - need to handle ref forwarding to button element
+          const { ref: tabRef, className: tabClassName, ...buttonProps } = tabProps;
+          return (
+            <Button
+              {...buttonProps}
+              variant="minimal"
+              size={getButtonSize(size)}
+              leftIcon={leftIcon}
+              rightIcon={rightIcon}
+              iconStrokeWidth={iconStrokeWidth}
+              shadow={false}
+              render={<button ref={tabRef} />} // Forward Base UI's ref to the button element
+              disabled={state.disabled}
+              className={cx(
+                tabClassName,
+              )}
+            >
+              {children}
+            </Button>
+          );
+        }}
+      />
     );
   };
 

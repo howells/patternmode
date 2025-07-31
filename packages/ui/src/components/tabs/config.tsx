@@ -2,7 +2,7 @@ import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { buttonSizeOptions } from "../button/button";
-import { LineNoDividerExample, SolidExample, TabsExample } from "./examples";
+import { LineIndicatorTestExample, LineNoDividerExample, LineWithIconsExample, SolidExample, SolidWithIconsExample, TabsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "tabs",
@@ -39,6 +39,12 @@ export const componentConfig: ComponentConfig = {
       description: "Hide the bottom divider line (line variant only).",
     },
     {
+      name: "showIcons",
+      type: "boolean",
+      defaultValue: false,
+      description: "Show icons in tab triggers (works for both variants).",
+    },
+    {
       name: "defaultValue",
       type: "string",
       defaultValue: "tab1",
@@ -60,11 +66,29 @@ export const componentConfig: ComponentConfig = {
       code: jsxToString(<LineNoDividerExample />),
     },
     {
+      id: "line-indicator-test",
+      title: "Line Indicator Test",
+      description: "Test example to verify the line indicator animates properly with different tab widths",
+      code: jsxToString(<LineIndicatorTestExample />),
+    },
+    {
+      id: "line-with-icons",
+      title: "Line Style with Icons",
+      description: "Line variant tabs with left icons using Button component",
+      code: jsxToString(<LineWithIconsExample />),
+    },
+    {
       id: "solid",
       title: "Solid Variant",
       description:
         "Traditional tabs with solid background and rounded indicator",
       code: jsxToString(<SolidExample />),
+    },
+    {
+      id: "solid-with-icons",
+      title: "Solid Variant with Icons",
+      description: "Solid variant tabs with left icons using Button component",
+      code: jsxToString(<SolidWithIconsExample />),
     },
   ],
 };
