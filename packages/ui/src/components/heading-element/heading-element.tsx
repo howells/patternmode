@@ -1,5 +1,5 @@
 /**
- * Heading Element Component
+ * Heading Element Component.
  *
  * A semantic heading element component that dynamically renders the appropriate
  * HTML heading tag (h1-h6) based on the level prop. Provides the foundation
@@ -10,7 +10,7 @@
  * - Type-safe heading levels
  * - Semantic HTML for accessibility
  * - Flexible styling with className
- * - Full HTML heading element props support
+ * - Full HTML heading element props support.
  *
  * @example
  * ```tsx
@@ -45,9 +45,13 @@ import { cx } from "../../lib/utils";
  * Combines heading-specific props with all standard HTML heading attributes.
  */
 export type HeadingElementProps = {
-  /** Heading level determining which HTML element to render (h1-h6) */
+  /**
+   * Heading level determining which HTML element to render (h1-h6).
+   */
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 } & React.ComponentPropsWithoutRef<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
 
@@ -58,9 +62,9 @@ export type HeadingElementProps = {
  * type safety and semantic HTML structure. Forms the foundation for styled
  * heading components.
  *
- * @param level - Heading level (1-6) determining HTML element
- * @param className - Additional CSS classes
- * @param props - Additional HTML heading element props
+ * @param level - Heading level (1-6) determining HTML element.
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML heading element props.
  *
  * @component
  * @example
@@ -77,7 +81,7 @@ export type HeadingElementProps = {
  * ```
  */
 /**
- * Heading Element
+ * Heading Element.
  *
  * @component
  * @id heading-element
@@ -88,7 +92,10 @@ export function HeadingElement({
   className,
   ...props
 }: HeadingElementProps) {
-  const Element: `h${typeof level}` = `h${level}`;
+  const /**
+         *
+         */
+    Element: `h${typeof level}` = `h${level}`;
 
   return <Element {...props} className={cx(className)} />;
 }

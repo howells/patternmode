@@ -39,15 +39,16 @@ export function PaginationExample({
             current={i === currentPage}
           >
             {i}
-          </PaginationPage>
+          </PaginationPage>,
         );
       }
-    } else {
+    }
+    else {
       // Show condensed pagination with gaps
       pages.push(
-        <PaginationPage key={1} href="#page-1" current={1 === currentPage}>
+        <PaginationPage key={1} href="#page-1" current={currentPage === 1}>
           1
-        </PaginationPage>
+        </PaginationPage>,
       );
 
       if (currentPage > 3) {
@@ -66,7 +67,7 @@ export function PaginationExample({
             current={i === currentPage}
           >
             {i}
-          </PaginationPage>
+          </PaginationPage>,
         );
       }
 
@@ -81,7 +82,7 @@ export function PaginationExample({
           current={totalPages === currentPage}
         >
           {totalPages}
-        </PaginationPage>
+        </PaginationPage>,
       );
     }
 

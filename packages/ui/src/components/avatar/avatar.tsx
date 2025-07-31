@@ -1,11 +1,12 @@
 // Avatar Component [v1.0.0]
 
-import { getColorFromName } from "../../lib/colors";
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
 import Image from "next/image";
 import * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { getColorFromName } from "../../lib/colors";
+import { cx } from "../../lib/utils";
 
 const avatarVariants = tv({
   base: [
@@ -16,11 +17,11 @@ const avatarVariants = tv({
   ],
   variants: {
     size: {
-      xs: "size-6", // 24px - for compact UI, tags
-      sm: "size-8", // 32px - for small contexts, lists
-      base: "size-10", // 40px - default size, most common
-      lg: "size-12", // 48px - for headers, prominent display
-      xl: "size-16", // 64px - for profile pages, large display
+      "xs": "size-6", // 24px - for compact UI, tags
+      "sm": "size-8", // 32px - for small contexts, lists
+      "base": "size-10", // 40px - default size, most common
+      "lg": "size-12", // 48px - for headers, prominent display
+      "xl": "size-16", // 64px - for profile pages, large display
       "2xl": "size-20", // 80px - for hero sections, main profiles
       "3xl": "size-24", // 96px - for very large display contexts
     },
@@ -45,25 +46,35 @@ const avatarVariants = tv({
  * ```
  */
 interface AvatarProps extends VariantProps<typeof avatarVariants> {
-  /** Image source URL for the avatar */
+  /**
+   * Image source URL for the avatar.
+   */
   src?: string | null;
-  /** Initials to display when no image is provided */
+  /**
+   * Initials to display when no image is provided.
+   */
   initials?: string;
-  /** Alt text for accessibility */
+  /**
+   * Alt text for accessibility.
+   */
   alt?: string;
-  /** Whether to use a dynamic background color based on initials/alt text */
+  /**
+   * Whether to use a dynamic background color based on initials/alt text.
+   */
   dynamicBackground?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
 // Size mapping for Next.js Image component dimensions
 const imageSizeMap = {
-  xs: { width: 24, height: 24, sizes: "24px" },
-  sm: { width: 32, height: 32, sizes: "32px" },
-  base: { width: 40, height: 40, sizes: "40px" },
-  lg: { width: 48, height: 48, sizes: "48px" },
-  xl: { width: 64, height: 64, sizes: "64px" },
+  "xs": { width: 24, height: 24, sizes: "24px" },
+  "sm": { width: 32, height: 32, sizes: "32px" },
+  "base": { width: 40, height: 40, sizes: "40px" },
+  "lg": { width: 48, height: 48, sizes: "48px" },
+  "xl": { width: 64, height: 64, sizes: "64px" },
   "2xl": { width: 80, height: 80, sizes: "80px" },
   "3xl": { width: 96, height: 96, sizes: "96px" },
 } as const;
@@ -106,24 +117,13 @@ const imageSizeMap = {
  * @name Avatar
  * @component
  */
-const Avatar = React.forwardRef<
-  HTMLSpanElement,
-  AvatarProps & React.ComponentPropsWithoutRef<"span">
->(
-  (
-    {
-      src = null,
-      size = "base",
-      square = false,
-      initials,
-      alt = "",
-      dynamicBackground = false,
-      className,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  Avatar = (
+    { ref, src = null, size = "base", square = false, initials, alt = "", dynamicBackground = false, className, ...props }: AvatarProps & React.ComponentPropsWithoutRef<"span"> & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
-    // Generate background color from initials or alt text when dynamicBackground is true
+  // Generate background color from initials or alt text when dynamicBackground is true
     const backgroundColor = dynamicBackground
       ? getColorFromName(initials || alt || "default")
       : undefined;
@@ -170,8 +170,7 @@ const Avatar = React.forwardRef<
         )}
       </span>
     );
-  }
-);
+  };
 Avatar.displayName = "Avatar";
 
 /**
@@ -192,20 +191,20 @@ Avatar.displayName = "Avatar";
  *
  * @see https://base-ui.com/react/components/avatar - Base UI documentation
  */
-const AvatarWithFallback = React.forwardRef<
-  React.ElementRef<typeof BaseAvatar.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseAvatar.Root>
->(({ className, ...props }, ref) => (
-  <BaseAvatar.Root
-    ref={ref}
-    className={cx(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      "outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
-      className
-    )}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  AvatarWithFallback = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAvatar.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseAvatar.Root> | null> }) => (
+    <BaseAvatar.Root
+      ref={ref}
+      className={cx(
+        "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+        "outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+        className,
+      )}
+      {...props}
+    />
+  );
 AvatarWithFallback.displayName = "AvatarWithFallback";
 
 /**
@@ -220,16 +219,16 @@ AvatarWithFallback.displayName = "AvatarWithFallback";
  * <AvatarImage src="/profile.jpg" alt="John Doe" />
  * ```
  */
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof BaseAvatar.Image>,
-  React.ComponentPropsWithoutRef<typeof BaseAvatar.Image>
->(({ className, ...props }, ref) => (
-  <BaseAvatar.Image
-    ref={ref}
-    className={cx("aspect-square h-full w-full object-cover", className)}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  AvatarImage = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAvatar.Image> & { ref?: React.RefObject<React.ElementRef<typeof BaseAvatar.Image> | null> }) => (
+    <BaseAvatar.Image
+      ref={ref}
+      className={cx("aspect-square h-full w-full object-cover", className)}
+      {...props}
+    />
+  );
 AvatarImage.displayName = "AvatarImage";
 
 /**
@@ -247,27 +246,27 @@ AvatarImage.displayName = "AvatarImage";
  * </AvatarFallback>
  * ```
  */
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof BaseAvatar.Fallback>,
-  React.ComponentPropsWithoutRef<typeof BaseAvatar.Fallback>
->(({ className, ...props }, ref) => (
-  <BaseAvatar.Fallback
-    ref={ref}
-    className={cx(
-      "flex h-full w-full items-center justify-center rounded-full bg-zinc-100 text-sm font-medium text-zinc-900",
-      "dark:bg-zinc-800 dark:text-zinc-50",
-      className
-    )}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  AvatarFallback = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAvatar.Fallback> & { ref?: React.RefObject<React.ElementRef<typeof BaseAvatar.Fallback> | null> }) => (
+    <BaseAvatar.Fallback
+      ref={ref}
+      className={cx(
+        "flex h-full w-full items-center justify-center rounded-full bg-zinc-100 text-sm font-medium text-zinc-900",
+        "dark:bg-zinc-800 dark:text-zinc-50",
+        className,
+      )}
+      {...props}
+    />
+  );
 AvatarFallback.displayName = "AvatarFallback";
 
 export {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  type AvatarProps,
   avatarVariants,
   AvatarWithFallback,
-  type AvatarProps,
 };

@@ -1,7 +1,7 @@
-import { type ComponentConfig } from "@/lib/component-config-types";
+import type { ComponentConfig } from "@/lib/component-config-types";
 import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CombinationExample, DefaultExample, KbdExample, SizesExample } from "./examples";
+import { CombinationExample, DefaultExample, SizesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   name: "Kbd",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Keyboard",
 
   componentId: "KbdExample",
-  importStatement: 'import { Kbd } from "@patternmode/ui";',
+  importStatement: "import { Kbd } from \"@patternmode/ui\";",
   examples: [
     {
       id: "default",
@@ -37,28 +37,28 @@ export const componentConfig: ComponentConfig = {
       name: "keys",
       type: "string[]",
       description: "Array of keys to display for complex combinations",
-      required: false
+      required: false,
     },
     {
       name: "platform",
-      type: '"mac" | "pc" | "auto"',
+      type: "\"mac\" | \"pc\" | \"auto\"",
       description: "Platform for modifier key display",
       required: false,
-      defaultValue: "auto"
+      defaultValue: "auto",
     },
     {
       name: "size",
-      type: '"xs" | "sm" | "base" | "lg"',
+      type: "\"xs\" | \"sm\" | \"base\" | \"lg\"",
       description: "Size variant of the keyboard shortcut",
       required: false,
       defaultValue: "sm",
-      options: ["xs", "sm", "base", "lg"]
+      options: ["xs", "sm", "base", "lg"],
     },
     {
       name: "children",
       type: "React.ReactNode",
       description: "Key text to display for simple shortcuts",
-      required: false
+      required: false,
     },
-  ]
+  ],
 };

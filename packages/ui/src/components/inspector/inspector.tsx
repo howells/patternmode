@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Inspector Components
+ * Inspector Components.
  *
  * A side panel component system for displaying detailed information, properties,
  * or controls related to selected content. Similar to sidebar components but
@@ -18,7 +18,7 @@
  * - Responsive border and background styling
  * - Dark mode support
  * - Flexible content organization
- * - Floating toggle button with customizable positioning
+ * - Floating toggle button with customizable positioning.
  *
  * @example
  * ```tsx
@@ -110,10 +110,10 @@
  * ```
  */
 
-import { config } from "../../lib/config";
-import { cx } from "../../lib/utils";
 import { Settings, X } from "lucide-react";
 import React from "react";
+import { config } from "../../lib/config";
+import { cx } from "../../lib/utils";
 import { ScrollArea } from "../scroll-area/scroll-area";
 
 /**
@@ -122,11 +122,11 @@ import { ScrollArea } from "../scroll-area/scroll-area";
  * Creates a toggleable side panel that slides in from the right with proper borders
  * and background styling. Can be used as a static panel or as a toggleable overlay.
  *
- * @param className - Additional CSS classes
- * @param isOpen - Whether the inspector is open (for toggleable mode)
- * @param onToggle - Callback to toggle the inspector state
- * @param asOverlay - Whether to render as an overlay that slides over content
- * @param props - Additional HTML aside element props
+ * @param className - Additional CSS classes.
+ * @param isOpen - Whether the inspector is open (for toggleable mode).
+ * @param onToggle - Callback to toggle the inspector state.
+ * @param asOverlay - Whether to render as an overlay that slides over content.
+ * @param props - Additional HTML aside element props.
  *
  * @component
  * @example
@@ -149,7 +149,7 @@ import { ScrollArea } from "../scroll-area/scroll-area";
  * ```
  */
 /**
- * Inspector
+ * Inspector.
  *
  * @component
  * @id inspector
@@ -176,7 +176,7 @@ export function Inspector({
           // Border and background
           "border-l border-zinc-200 bg-zinc-50/50",
           "dark:border-zinc-800 dark:bg-zinc-900/50",
-          className
+          className,
         )}
         {...props}
       />
@@ -210,7 +210,7 @@ export function Inspector({
             // On larger screens, show as static sidebar
             "lg:relative lg:translate-x-0 lg:shadow-none",
           ],
-          className
+          className,
         )}
         {...props}
       />
@@ -225,8 +225,8 @@ export function Inspector({
  * Typically contains titles, close buttons, or other header controls
  * with proper spacing and border separation.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -264,7 +264,7 @@ export function InspectorHeader({
         "flex flex-shrink-0 items-center justify-between px-6 py-6",
         // Border
         "border-b border-zinc-200 dark:border-zinc-800",
-        className
+        className,
       )}
       {...props}
     />
@@ -280,8 +280,8 @@ export function InspectorHeader({
  * content exceeds the available space. Includes a gradient indicator at the
  * bottom to show when there's more content to scroll.
  *
- * @param className - Additional CSS classes for the content wrapper
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes for the content wrapper.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -313,12 +313,12 @@ export function InspectorBody({
   // Check if content is scrollable and not at bottom
   const checkScrollable = React.useCallback(() => {
     // Find the viewport element by class selector (fallback if ref not available)
-    const viewport =
-      viewportRef.current ||
-      (typeof document !== "undefined" 
-        ? (document.querySelector(".scroll-viewport") as HTMLDivElement)
-        : null);
-    if (!viewport) return;
+    const viewport
+      = viewportRef.current
+        || (typeof document !== "undefined"
+          ? (document.querySelector(".scroll-viewport") as HTMLDivElement)
+          : null);
+    if (!viewport) { return; }
 
     const { scrollTop, scrollHeight, clientHeight } = viewport;
     const isScrollable = scrollHeight > clientHeight;
@@ -329,12 +329,12 @@ export function InspectorBody({
 
   // Manual scroll event handling since we need to target a specific element
   React.useEffect(() => {
-    if (typeof document === "undefined") return;
-    
+    if (typeof document === "undefined") { return; }
+
     const viewport = document.querySelector(
-      ".scroll-viewport"
+      ".scroll-viewport",
     ) as HTMLDivElement;
-    if (!viewport) return;
+    if (!viewport) { return; }
 
     viewport.addEventListener("scroll", checkScrollable);
     return () => viewport.removeEventListener("scroll", checkScrollable);
@@ -348,9 +348,9 @@ export function InspectorBody({
     if (typeof document === "undefined") {
       return () => clearTimeout(timer);
     }
-    
+
     const viewport = document.querySelector(
-      ".scroll-viewport"
+      ".scroll-viewport",
     ) as HTMLDivElement;
     if (viewport) {
       const resizeObserver = new ResizeObserver(checkScrollable);
@@ -372,7 +372,7 @@ export function InspectorBody({
           className={cx(
             // Content padding and spacing
             "px-6 py-6",
-            className
+            className,
           )}
           {...props}
         />
@@ -410,8 +410,8 @@ export function InspectorBody({
  * Typically contains multiple inspector groups or related form controls
  * with semantic organization.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -452,7 +452,7 @@ export function InspectorSection({
       className={cx(
         // Base layout
         "space-y-6",
-        className
+        className,
       )}
       {...props}
     />
@@ -466,8 +466,8 @@ export function InspectorSection({
  * Used within inspector sections to create logical groupings of controls
  * with consistent vertical rhythm.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -515,7 +515,7 @@ export function InspectorGroup({
       className={cx(
         // Base layout for form groups
         "space-y-2",
-        className
+        className,
       )}
       {...props}
     />
@@ -528,10 +528,10 @@ export function InspectorGroup({
  * Provides a floating action button that can be positioned anywhere to trigger
  * the inspector panel. Shows different icons based on the inspector state.
  *
- * @param isOpen - Whether the inspector is currently open
- * @param onToggle - Callback to toggle the inspector state
- * @param className - Additional CSS classes
- * @param position - Positioning classes (defaults to fixed bottom-right)
+ * @param isOpen - Whether the inspector is currently open.
+ * @param onToggle - Callback to toggle the inspector state.
+ * @param className - Additional CSS classes.
+ * @param position - Positioning classes (defaults to fixed bottom-right).
  *
  * @component
  * @example
@@ -588,22 +588,24 @@ export function InspectorToggle({
         position,
         // Z-index to appear above content
         "z-30",
-        className
+        className,
       )}
       aria-label={isOpen ? "Close inspector" : "Open inspector"}
       {...props}
     >
-      {isOpen ? (
-        <X
-          className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
-          strokeWidth={config.getIconStrokeWidth()}
-        />
-      ) : (
-        <Settings
-          className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
-          strokeWidth={config.getIconStrokeWidth()}
-        />
-      )}
+      {isOpen
+        ? (
+            <X
+              className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
+              strokeWidth={config.getIconStrokeWidth()}
+            />
+          )
+        : (
+            <Settings
+              className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
+              strokeWidth={config.getIconStrokeWidth()}
+            />
+          )}
     </button>
   );
 }

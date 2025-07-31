@@ -13,7 +13,7 @@ export function Example() {
           <Skeleton className="h-3 w-24" />
         </div>
       </div>
-      
+
       {/* Content skeleton */}
       <div className="space-y-3">
         <Skeleton className="h-48 w-full rounded-lg" />
@@ -24,7 +24,7 @@ export function Example() {
           <Skeleton className="h-4 w-2/3" />
         </div>
       </div>
-      
+
       {/* Action buttons skeleton */}
       <div className="flex gap-2 pt-2">
         <Skeleton className="h-9 w-20 rounded-md" />

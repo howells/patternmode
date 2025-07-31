@@ -1,17 +1,18 @@
 "use client";
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 // Responsive breakpoint type
-type ResponsiveValue<T> =
-  | T
-  | {
-      sm?: T;
-      md?: T;
-      lg?: T;
-      xl?: T;
+type ResponsiveValue<T>
+  = | T
+    | {
+      "sm"?: T;
+      "md"?: T;
+      "lg"?: T;
+      "xl"?: T;
       "2xl"?: T;
     };
 
@@ -87,36 +88,39 @@ type StackDirection = "vertical" | "horizontal";
 // Helper function to generate responsive classes
 const generateResponsiveClasses = (
   property: "direction" | "gap" | "padding",
-  value: ResponsiveValue<StackDirection | StackGap | StackPadding> | undefined
+  value: ResponsiveValue<StackDirection | StackGap | StackPadding> | undefined,
 ): string => {
-  if (!value) return "";
+  if (!value) { return ""; }
 
   // If it's a simple value (not an object), return empty string to use variants
-  if (typeof value !== "object") return "";
+  if (typeof value !== "object") { return ""; }
 
   const classes: string[] = [];
   const breakpoints = {
-    sm: "sm:",
-    md: "md:",
-    lg: "lg:",
-    xl: "xl:",
+    "sm": "sm:",
+    "md": "md:",
+    "lg": "lg:",
+    "xl": "xl:",
     "2xl": "2xl:",
   };
 
   Object.entries(value).forEach(([breakpoint, val]) => {
-    if (val === undefined) return;
+    if (val === undefined) { return; }
 
     const prefix = breakpoints[breakpoint as keyof typeof breakpoints] || "";
 
     if (property === "direction") {
       if (val === "vertical") {
         classes.push(`${prefix}flex-col`);
-      } else if (val === "horizontal") {
+      }
+      else if (val === "horizontal") {
         classes.push(`${prefix}flex-row`);
       }
-    } else if (property === "gap") {
+    }
+    else if (property === "gap") {
       classes.push(`${prefix}gap-${val}`);
-    } else if (property === "padding") {
+    }
+    else if (property === "padding") {
       classes.push(`${prefix}p-${val}`);
     }
   });
@@ -126,16 +130,16 @@ const generateResponsiveClasses = (
 
 // Helper function to get the base value (non-responsive)
 const getBaseValue = <T,>(
-  value: ResponsiveValue<T> | undefined
+  value: ResponsiveValue<T> | undefined,
 ): T | undefined => {
-  if (value === undefined || value === null) return undefined;
+  if (value === undefined || value === null) { return undefined; }
   if (typeof value === "object" && value !== null) {
     // Return the smallest breakpoint value or undefined
     const responsiveObj = value as {
-      sm?: T;
-      md?: T;
-      lg?: T;
-      xl?: T;
+      "sm"?: T;
+      "md"?: T;
+      "lg"?: T;
+      "xl"?: T;
       "2xl"?: T;
     };
     return responsiveObj.sm;
@@ -145,45 +149,45 @@ const getBaseValue = <T,>(
 
 interface StackProps
   extends React.HTMLAttributes<HTMLElement>,
-    Omit<VariantProps<typeof stackVariants>, "gap" | "padding" | "direction"> {
+  Omit<VariantProps<typeof stackVariants>, "gap" | "padding" | "direction"> {
   /**
-   * The direction of the stack - can be responsive
- * @example
- * ```tsx
- * <Stack gap="4">
- *  *   <div>Item 1</div>
- *  *   <div>Item 2</div>
- *  *   <div>Item 3</div>
- *  * </Stack>
- * ```
+   * The direction of the stack - can be responsive.
+   * @example
+   * ```tsx
+   * <Stack gap="4">
+   *  <div>Item 1</div>
+   *  <div>Item 2</div>
+   *  <div>Item 3</div>
+   *  </Stack>
+   * ```
    */
   direction?: ResponsiveValue<StackDirection>;
   /**
-   * Gap between items (4px grid scale) - can be responsive
+   * Gap between items (4px grid scale) - can be responsive.
    */
   gap?: ResponsiveValue<StackGap>;
   /**
-   * Padding around the stack (4px grid scale) - can be responsive
+   * Padding around the stack (4px grid scale) - can be responsive.
    */
   padding?: ResponsiveValue<StackPadding>;
   /**
-   * How to align items along the cross axis
+   * How to align items along the cross axis.
    */
   align?: "start" | "center" | "end" | "stretch" | "baseline";
   /**
-   * How to distribute items along the main axis
+   * How to distribute items along the main axis.
    */
   justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
   /**
-   * Whether items should wrap to new lines
+   * Whether items should wrap to new lines.
    */
   wrap?: boolean;
   /**
-   * The HTML element to render
+   * The HTML element to render.
    */
   as?: React.ElementType;
   /**
-   * Stack content
+   * Stack content.
    */
   children: React.ReactNode;
 }
@@ -191,29 +195,19 @@ interface StackProps
 /**
  * A layout component that arranges its children vertically or horizontally with consistent spacing.
  *
- * Stack
+ * Stack.
  *
  * @component
  * @id stack
  * @name Stack
  */
-const Stack = React.forwardRef<HTMLElement, StackProps>(
-  (
-    {
-      direction = "vertical",
-      gap,
-      padding,
-      align,
-      justify,
-      wrap = false,
-      as: Component = "div",
-      className,
-      children,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  Stack = (
+    { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },
   ) => {
-    // Get base values for the variants system
+  // Get base values for the variants system
     const baseDirection = getBaseValue(direction) ?? "vertical";
     const baseGap = getBaseValue(gap) ?? 4;
     const basePadding = getBaseValue(padding);
@@ -221,12 +215,12 @@ const Stack = React.forwardRef<HTMLElement, StackProps>(
     // Generate responsive classes
     const responsiveDirectionClasses = generateResponsiveClasses(
       "direction",
-      direction
+      direction,
     );
     const responsiveGapClasses = generateResponsiveClasses("gap", gap);
     const responsivePaddingClasses = generateResponsiveClasses(
       "padding",
-      padding
+      padding,
     );
 
     return (
@@ -244,34 +238,35 @@ const Stack = React.forwardRef<HTMLElement, StackProps>(
           responsiveDirectionClasses,
           responsiveGapClasses,
           responsivePaddingClasses,
-          className
+          className,
         )}
         {...props}
       >
         {children}
       </Component>
     );
-  }
-);
+  };
 
 Stack.displayName = "Stack";
 
 // Helper components for common patterns
-const VStack = React.forwardRef<HTMLElement, Omit<StackProps, "direction">>(
-  ({ ...props }, ref) => <Stack ref={ref} direction="vertical" {...props} />
-);
+const /**
+       *
+       */
+  VStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="vertical" {...props} />;
 VStack.displayName = "VStack";
 
-const HStack = React.forwardRef<HTMLElement, Omit<StackProps, "direction">>(
-  ({ ...props }, ref) => <Stack ref={ref} direction="horizontal" {...props} />
-);
+const /**
+       *
+       */
+  HStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="horizontal" {...props} />;
 HStack.displayName = "HStack";
 
 export {
   HStack,
+  type ResponsiveValue,
   Stack,
+  type StackProps,
   stackVariants,
   VStack,
-  type ResponsiveValue,
-  type StackProps,
 };

@@ -1,19 +1,8 @@
 "use client";
 
-import { Button } from "@patternmode/ui";
-import { FormControl, FormField } from "@patternmode/ui";
+import { Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, FormControl, FormField } from "@patternmode/ui";
 import { X } from "lucide-react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@patternmode/ui";
 
 interface DialogExampleProps {
   size?: "sm" | "md" | "lg" | "xl";
@@ -54,14 +43,14 @@ export function DialogExample({
               </div>
               {showCloseButton && (
                 <DialogClose
-                  render={
+                  render={(
                     <Button
                       variant="ghost"
                       size="icon-sm"
                       className="shrink-0"
                       leftIcon={X}
                     />
-                  }
+                  )}
                 >
                   Close dialog
                 </DialogClose>

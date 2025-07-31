@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CheckedExample, DefaultExample, DisabledExample, RadioExample } from "./examples";
+import { CheckedExample, DefaultExample, DisabledExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Circle",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Radio } from "@patternmode/ui";`,
   props: [
@@ -20,19 +20,19 @@ export const componentConfig: ComponentConfig = {
       name: "checked",
       type: "boolean",
       description: "Whether the radio is checked",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the radio is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "value",
       type: "string",
       description: "The value of the radio button",
-      defaultValue: "option1"
+      defaultValue: "option1",
     },
   ],
   examples: [
@@ -54,5 +54,5 @@ export const componentConfig: ComponentConfig = {
       description: "A radio button in disabled state",
       code: jsxToString(<DisabledExample />),
     },
-  ]
+  ],
 };

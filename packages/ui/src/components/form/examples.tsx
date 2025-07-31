@@ -1,14 +1,11 @@
-import React from "react";
 import {
+  Button,
   Form,
-  FormField,
   FormControl,
-  FormLabel,
-  FormDescription,
-  FormError,
+  FormField,
   Textarea,
 } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
+import React from "react";
 import { z } from "zod";
 
 export function FormExample() {
@@ -49,4 +46,7 @@ export function FormExample() {
 }
 
 // Export with the expected naming convention
-export const DefaultExample = FormExample;
+export const /**
+              *
+              */
+  DefaultExample = FormExample;

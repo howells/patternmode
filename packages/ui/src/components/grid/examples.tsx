@@ -1,5 +1,5 @@
-import React from "react";
 import { Grid, GridAuto, GridCell } from "@patternmode/ui";
+import React from "react";
 
 export function GridExample() {
   return (
@@ -121,11 +121,11 @@ export function GuideControlExample() {
 
 export function AutoGridExample() {
   return (
-    <GridAuto 
-      columns={5} 
-      cellCount={10} 
-      gap={4} 
-      renderCell={(index) => (
+    <GridAuto
+      columns={5}
+      cellCount={10}
+      gap={4}
+      renderCell={index => (
         <div className="bg-blue-100 border border-blue-300 p-4 rounded text-center">
           {index + 1}
         </div>
@@ -174,7 +174,7 @@ export function DashboardExample() {
     <Grid columns={12} rows={6} gap={4} className="h-[400px]">
       {/* Top metrics */}
       <GridCell
-        
+
         colSpan={3}
         className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800"
       >
@@ -184,7 +184,7 @@ export function DashboardExample() {
         </div>
       </GridCell>
       <GridCell
-        
+
         colSpan={3}
         className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900 dark:to-green-800"
       >
@@ -194,7 +194,7 @@ export function DashboardExample() {
         </div>
       </GridCell>
       <GridCell
-        
+
         colSpan={3}
         className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800"
       >
@@ -204,7 +204,7 @@ export function DashboardExample() {
         </div>
       </GridCell>
       <GridCell
-        
+
         colSpan={3}
         className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800"
       >
@@ -225,7 +225,7 @@ export function DashboardExample() {
 
       {/* Side widgets */}
       <GridCell
-        
+
         colSpan={4}
         rowSpan={2}
         className="bg-zinc-50 dark:bg-zinc-800"

@@ -1,10 +1,10 @@
 // Collapsible Component [v1.0.0] - Tremor Style
 
-import { cx, focusRing } from "../../lib/utils";
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
-import { ChevronDown, ChevronUp, LucideIcon } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
+import { cx, focusRing } from "../../lib/utils";
 import { Button } from "../button/button";
 
 /**
@@ -20,25 +20,38 @@ import { Button } from "../button/button";
  * <CollapsibleTrigger>Content</CollapsibleTrigger>
  * ```
  */
-const Collapsible = BaseCollapsible.Root;
+const /**
+       *
+       */
+  Collapsible = BaseCollapsible.Root;
 
 /**
  * Props for the CollapsibleTrigger component.
  *
  * @interface CollapsibleTriggerProps
- * @extends React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger>
  */
 interface CollapsibleTriggerProps
   extends React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger> {
-  /** Icon to show when collapsible is closed */
+  /**
+   * Icon to show when collapsible is closed.
+   */
   closedIcon?: React.ComponentType<{ className?: string }>;
-  /** Icon to show when collapsible is open */
+  /**
+   * Icon to show when collapsible is open.
+   */
   openIcon?: React.ComponentType<{ className?: string }>;
-  /** If true, renders as just the toggle button without full-width trigger */
+  /**
+   * If true, renders as just the toggle button without full-width trigger.
+   */
   asToggleButton?: boolean;
-  /** Custom href for when the heading should be a link */
+  /**
+   * Custom href for when the heading should be a link.
+   */
   href?: string;
-  /** Custom padding classes to apply to the container */
+  /**
+   * Custom padding classes to apply to the container.
+   */
   padding?: string;
 }
 
@@ -49,10 +62,10 @@ interface CollapsibleTriggerProps
  * that toggles the visibility of the collapsible content. Features animated
  * icon transitions and proper hover/focus states.
  *
- * @param closedIcon - Icon component to show when closed (defaults to ChevronsUpDown)
- * @param openIcon - Icon component to show when open (defaults to ChevronsDownUp)
- * @param asToggleButton - If true, renders as just the toggle button
- * @param href - If provided, makes the heading portion a link
+ * @param closedIcon - Icon component to show when closed (defaults to ChevronsUpDown).
+ * @param openIcon - Icon component to show when open (defaults to ChevronsDownUp).
+ * @param asToggleButton - If true, renders as just the toggle button.
+ * @param href - If provided, makes the heading portion a link.
  *
  *
  * @id collapsible
@@ -85,24 +98,13 @@ interface CollapsibleTriggerProps
  * @name Collapsible
  * @component
  */
-const CollapsibleTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseCollapsible.Trigger>,
-  CollapsibleTriggerProps
->(
-  (
-    {
-      className,
-      children,
-      closedIcon: ClosedIcon = ChevronDown,
-      openIcon: OpenIcon = ChevronUp,
-      asToggleButton = false,
-      href,
-      padding,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  CollapsibleTrigger = (
+    { ref, className, children, closedIcon: ClosedIcon = ChevronDown, openIcon: OpenIcon = ChevronUp, asToggleButton = false, href, padding, ...props }: CollapsibleTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Trigger> | null> },
   ) => {
-    // If asToggleButton is true, render just the icon button
+  // If asToggleButton is true, render just the icon button
     if (asToggleButton) {
       return (
         <BaseCollapsible.Trigger
@@ -133,7 +135,7 @@ const CollapsibleTrigger = React.forwardRef<
               "flex-1 text-left text-sm font-medium transition-colors",
               "text-zinc-900 dark:text-zinc-50",
               "hover:text-zinc-700 dark:hover:text-zinc-300",
-              focusRing
+              focusRing,
             )}
           >
             {children}
@@ -163,7 +165,7 @@ const CollapsibleTrigger = React.forwardRef<
             "flex-1 text-left text-sm font-medium transition-colors",
             "text-zinc-900 dark:text-zinc-50",
             "hover:text-zinc-700 dark:hover:text-zinc-300",
-            className
+            className,
           )}
         >
           {children}
@@ -183,8 +185,7 @@ const CollapsibleTrigger = React.forwardRef<
         />
       </div>
     );
-  }
-);
+  };
 CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 /**
@@ -207,32 +208,32 @@ CollapsibleTrigger.displayName = "CollapsibleTrigger";
  *
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
  */
-const CollapsibleContent = React.forwardRef<
-  React.ElementRef<typeof BaseCollapsible.Panel>,
-  React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel>
->(({ className, children, ...props }, ref) => (
-  <BaseCollapsible.Panel
-    ref={ref}
-    className={cx(
-      "overflow-hidden transition-all duration-200 ease-out",
-      "data-[starting-style]:h-0 data-[ending-style]:h-0",
-      "h-[var(--collapsible-panel-height)]"
-    )}
-    {...props}
-  >
-    <div
+const /**
+       *
+       */
+  CollapsibleContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Panel> | null> }) => (
+    <BaseCollapsible.Panel
+      ref={ref}
       className={cx(
-        // base
-        "pb-2 text-xs",
-        // text color
-        "text-zinc-700 dark:text-zinc-300",
-        className
+        "overflow-hidden transition-all duration-200 ease-out",
+        "data-[starting-style]:h-0 data-[ending-style]:h-0",
+        "h-[var(--collapsible-panel-height)]",
       )}
+      {...props}
     >
-      {children}
-    </div>
-  </BaseCollapsible.Panel>
-));
+      <div
+        className={cx(
+        // base
+          "pb-2 text-xs",
+          // text color
+          "text-zinc-700 dark:text-zinc-300",
+          className,
+        )}
+      >
+        {children}
+      </div>
+    </BaseCollapsible.Panel>
+  );
 CollapsibleContent.displayName = "CollapsibleContent";
 
 /**
@@ -241,7 +242,7 @@ CollapsibleContent.displayName = "CollapsibleContent";
  * Provides a basic right-pointing chevron that can be used as an alternative
  * to the default Lucide icons for simpler visual designs.
  *
- * @param props - Standard SVG props
+ * @param props - Standard SVG props.
  *
  * @example
  * ```tsx

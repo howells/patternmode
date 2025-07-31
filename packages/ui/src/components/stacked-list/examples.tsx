@@ -1,12 +1,8 @@
 "use client";
 
+import { Avatar, Badge, Button, Card, StackedList } from "@patternmode/ui";
 import { Calendar, FileText, UserPlus } from "lucide-react";
 import React from "react";
-import { Avatar } from "@patternmode/ui";
-import { Badge } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
-import { Card } from "@patternmode/ui";
-import { StackedList } from "@patternmode/ui";
 
 // Default example - matches config "default" id
 export function DefaultExample() {
@@ -15,29 +11,29 @@ export function DefaultExample() {
       <StackedList.Header
         title="Team Members"
         description="Manage your team and their permissions."
-        actions={
+        actions={(
           <Button size="sm" variant="outline">
             Add Member
           </Button>
-        }
+        )}
       />
       <StackedList.Item
         left={<Avatar initials="JD" alt="John Doe" />}
-        right={
+        right={(
           <Button size="sm" variant="outline">
             Edit
           </Button>
-        }
+        )}
       >
         <StackedList.Content title="John Doe" description="Software Engineer" />
       </StackedList.Item>
       <StackedList.Item
         left={<Avatar initials="JS" alt="Jane Smith" />}
-        right={
+        right={(
           <Button size="sm" variant="outline">
             Edit
           </Button>
-        }
+        )}
       >
         <StackedList.Content title="Jane Smith" description="Product Manager" />
       </StackedList.Item>
@@ -150,4 +146,7 @@ export function EmptyStateExample() {
     </StackedList>
   );
 }
-export const StackedListExample = DefaultExample;
+export const /**
+              *
+              */
+  StackedListExample = DefaultExample;

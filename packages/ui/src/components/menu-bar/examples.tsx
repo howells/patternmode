@@ -1,11 +1,4 @@
-import { Icon } from "@patternmode/ui";
-import {
-  MenuBar,
-  MenuBarContent,
-  MenuBarItem,
-  MenuBarMenu,
-  MenuBarTrigger,
-} from "@patternmode/ui";
+import { Icon, MenuBar, MenuBarContent, MenuBarItem, MenuBarMenu, MenuBarTrigger } from "@patternmode/ui";
 import { Edit, Plus, Trash } from "lucide-react";
 import React from "react";
 
@@ -61,4 +54,7 @@ export function WithIconsExample() {
     </MenuBar>
   );
 }
-export const MenuBarExample = DefaultExample;
+export const /**
+              *
+              */
+  MenuBarExample = DefaultExample;

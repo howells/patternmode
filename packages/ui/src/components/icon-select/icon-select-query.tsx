@@ -1,5 +1,5 @@
 /**
- * Icon Select Component with React Query
+ * Icon Select Component with React Query.
  *
  * A high-performance, tree-shakable searchable icon picker component that provides access to ALL 3,644+ Lucide React icons
  * using React Query for optimal data management. Features automatic caching, background refetching, and infinite scrolling
@@ -18,7 +18,7 @@
  * - Type-safe icon selection
  * - Custom hook for state management
  * - Utility functions for icon retrieval
- * - Zero upfront bundle cost
+ * - Zero upfront bundle cost.
  *
  * @example
  * ```tsx
@@ -55,10 +55,11 @@
 
 "use client";
 
-import { Combobox, type ComboboxOption } from "../combobox/combobox";
-import { config } from "../../lib/config";
+import type { ComboboxOption } from "../combobox/combobox";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
+import { config } from "../../lib/config";
+import { Combobox } from "../combobox/combobox";
 
 // Icon data structure that extends ComboboxOption
 interface IconOption extends ComboboxOption {
@@ -70,17 +71,29 @@ interface IconOption extends ComboboxOption {
  * Props for the IconSelectQuery component.
  */
 export interface IconSelectQueryProps {
-  /** Currently selected icon name */
+  /**
+   * Currently selected icon name.
+   */
   value?: string;
-  /** Callback when icon selection changes */
+  /**
+   * Callback when icon selection changes.
+   */
   onValueChange?: (value: string) => void;
-  /** Placeholder text when no icon is selected */
+  /**
+   * Placeholder text when no icon is selected.
+   */
   placeholder?: string;
-  /** Whether the select is disabled */
+  /**
+   * Whether the select is disabled.
+   */
   disabled?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Stroke width for icons (defaults to 1) */
+  /**
+   * Stroke width for icons (defaults to 1).
+   */
   iconStrokeWidth?: number;
 }
 
@@ -118,7 +131,7 @@ async function fetchIconsForQuery({
       label: icon.pascal,
       kebab: icon.kebab,
       pascal: icon.pascal,
-    })
+    }),
   );
 
   return {
@@ -148,7 +161,7 @@ export function IconSelectQuery({
       queryKey={["icons"]}
       fetchData={fetchIconsForQuery}
       value={value}
-      onValueChange={(newValue) => onValueChange?.(newValue || "")}
+      onValueChange={newValue => onValueChange?.(newValue || "")}
       placeholder={placeholder}
       searchPlaceholder="Search icons..."
       emptyMessage="No icons found."
@@ -156,29 +169,35 @@ export function IconSelectQuery({
       className={className}
       searchDebounce={300}
       iconStrokeWidth={iconStrokeWidth}
-      getItemValue={(item) => item.pascal}
-      getItemLabel={(item) => item.pascal}
+      getItemValue={item => item.pascal}
+      getItemLabel={item => item.pascal}
       renderItem={(
         iconOption: IconOption,
-        index: number
+        index: number,
       ) => {
-        const IconPreview = React.memo(() => (
-          <DynamicIcon
-            name={iconOption.kebab as never}
-            className="size-4 shrink-0"
-            strokeWidth={iconStrokeWidth}
-          />
-        ));
+        const /**
+               *
+               */
+          IconPreview = React.memo(() => (
+            <DynamicIcon
+              name={iconOption.kebab as never}
+              className="size-4 shrink-0"
+              strokeWidth={iconStrokeWidth}
+            />
+          ));
         IconPreview.displayName = `IconPreview_${iconOption.pascal}`;
 
         const isSelected = value === iconOption.pascal;
-        const CheckIcon = React.memo(() => (
-          <DynamicIcon
-            name="check"
-            className="ml-2 h-4 w-4 shrink-0"
-            strokeWidth={iconStrokeWidth}
-          />
-        ));
+        const /**
+               *
+               */
+          CheckIcon = React.memo(() => (
+            <DynamicIcon
+              name="check"
+              className="ml-2 h-4 w-4 shrink-0"
+              strokeWidth={iconStrokeWidth}
+            />
+          ));
         CheckIcon.displayName = "CheckIcon";
 
         return (
@@ -202,28 +221,34 @@ export function useIconSelectQuery(initialValue?: string) {
   const [value, setValue] = React.useState(initialValue || "");
 
   // Create a memoized DynamicIcon component for the selected icon
-  const DynamicIconComponent = React.useMemo(() => {
-    if (!value) return null;
+  const /**
+         *
+         */
+    DynamicIconComponent = React.useMemo(() => {
+      if (!value) { return null; }
 
-    const IconComponent = ({
-      className,
-      strokeWidth,
-      ...props
-    }: {
-      className?: string;
-      strokeWidth?: number;
-      [key: string]: unknown;
-    }) => (
-      <DynamicIcon
-        name={value.toLowerCase() as any}
-        className={className}
-        strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-        {...props}
-      />
-    );
-    IconComponent.displayName = `SelectedIcon_${value}`;
-    return IconComponent;
-  }, [value]);
+      const /**
+             *
+             */
+        IconComponent = ({
+          className,
+          strokeWidth,
+          ...props
+        }: {
+          className?: string;
+          strokeWidth?: number;
+          [key: string]: unknown;
+        }) => (
+          <DynamicIcon
+            name={value.toLowerCase() as any}
+            className={className}
+            strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+            {...props}
+          />
+        );
+      IconComponent.displayName = `SelectedIcon_${value}`;
+      return IconComponent;
+    }, [value]);
 
   return {
     value,
@@ -236,22 +261,25 @@ export function useIconSelectQuery(initialValue?: string) {
  * Utility function to create a DynamicIcon component by name with React Query compatibility.
  */
 export function getDynamicIconByNameQuery(name: string) {
-  const DynamicIconWrapper = ({
-    className,
-    strokeWidth,
-    ...props
-  }: {
-    className?: string;
-    strokeWidth?: number;
-    [key: string]: unknown;
-  }) => (
-    <DynamicIcon
-      name={name.toLowerCase() as any}
-      className={className}
-      strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-      {...props}
-    />
-  );
+  const /**
+         *
+         */
+    DynamicIconWrapper = ({
+      className,
+      strokeWidth,
+      ...props
+    }: {
+      className?: string;
+      strokeWidth?: number;
+      [key: string]: unknown;
+    }) => (
+      <DynamicIcon
+        name={name.toLowerCase() as any}
+        className={className}
+        strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+        {...props}
+      />
+    );
   DynamicIconWrapper.displayName = `DynamicIcon_${name}`;
   return DynamicIconWrapper;
 }
@@ -262,9 +290,9 @@ export function getDynamicIconByNameQuery(name: string) {
  */
 export function isValidLucideIconQuery(name: string): boolean {
   return (
-    typeof name === "string" &&
-    name.length > 0 &&
-    /^[A-Za-z][A-Za-z0-9]*$/.test(name)
+    typeof name === "string"
+    && name.length > 0
+    && /^[A-Z][A-Z0-9]*$/i.test(name)
   );
 }
 

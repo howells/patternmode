@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { ControlledExample, NoArrowExample, PositionsExample, RichContentExample, SizesExample, TooltipExample, VariantsExample } from "./examples";
 
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Info",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Tooltip, TooltipContent, TooltipTrigger } from "@patternmode/ui";`,
   componentId: "TooltipExample",
@@ -20,41 +20,41 @@ export const componentConfig: ComponentConfig = {
       name: "content",
       type: "string",
       defaultValue: "Tooltip content",
-      description: "The tooltip content."
+      description: "The tooltip content.",
     },
     {
       name: "side",
       type: "select",
       options: ["top", "right", "bottom", "left"],
       defaultValue: "top",
-      description: "The preferred side of the trigger to place the tooltip."
+      description: "The preferred side of the trigger to place the tooltip.",
     },
     {
       name: "variant",
       type: "select",
       options: ["default", "dark", "light"],
       defaultValue: "default",
-      description: "The visual style variant."
+      description: "The visual style variant.",
     },
     {
       name: "size",
       type: "select",
       options: ["sm", "default"],
       defaultValue: "default",
-      description: "The size of the tooltip."
+      description: "The size of the tooltip.",
     },
     {
       name: "showArrow",
       type: "boolean",
       defaultValue: true,
-      description: "Show the tooltip arrow."
+      description: "Show the tooltip arrow.",
     },
     {
       name: "delayDuration",
       type: "number",
       defaultValue: 500,
-      description: "The delay in milliseconds before showing the tooltip."
-    }
+      description: "The delay in milliseconds before showing the tooltip.",
+    },
   ],
   examples: [
     {

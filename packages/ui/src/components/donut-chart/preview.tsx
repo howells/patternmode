@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { DonutChart } from "@patternmode/ui";
+import { useState } from "react";
 
 interface DonutChartExampleProps {
   variant?: "donut" | "pie";
@@ -68,7 +68,7 @@ export function DonutChartExample({
           variant={variant}
           showLabel={showLabel}
           showTooltip={showTooltip}
-          valueFormatter={(value) => `${value}%`}
+          valueFormatter={value => `${value}%`}
         />
       </div>
 
@@ -83,7 +83,7 @@ export function DonutChartExample({
           showLabel={showLabel}
           showTooltip={showTooltip}
           colors={["blue", "emerald", "amber"]}
-          valueFormatter={(value) => `${value.toLocaleString()} users`}
+          valueFormatter={value => `${value.toLocaleString()} users`}
         />
       </div>
 
@@ -97,7 +97,7 @@ export function DonutChartExample({
           variant={variant}
           showLabel={showLabel}
           showTooltip={showTooltip}
-          valueFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+          valueFormatter={value => `$${(value / 1000).toFixed(0)}K`}
         />
       </div>
 
@@ -112,7 +112,7 @@ export function DonutChartExample({
           showLabel={showLabel}
           showTooltip={showTooltip}
           colors={["emerald", "blue", "amber", "pink"]}
-          valueFormatter={(value) => `${value} tasks`}
+          valueFormatter={value => `${value} tasks`}
         />
       </div>
 
@@ -128,12 +128,19 @@ export function DonutChartExample({
             showLabel={showLabel}
             showTooltip={showTooltip}
             onValueChange={setSelectedSegment}
-            valueFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+            valueFormatter={value => `$${(value / 1000).toFixed(0)}K`}
           />
           {selectedSegment && (
             <div className="text-sm text-zinc-600 p-2 bg-zinc-50 dark:bg-zinc-900 rounded">
-              <div>Department: {selectedSegment.categoryClicked}</div>
-              <div>Budget: ${(selectedSegment.budget / 1000).toFixed(0)}K</div>
+              <div>
+                Department:
+                {selectedSegment.categoryClicked}
+              </div>
+              <div>
+                Budget: $
+                {(selectedSegment.budget / 1000).toFixed(0)}
+                K
+              </div>
             </div>
           )}
         </div>
@@ -152,7 +159,7 @@ export function DonutChartExample({
             showTooltip={showTooltip}
             className="h-24 w-24"
             colors={["emerald", "amber", "pink"]}
-            valueFormatter={(value) => `${value}%`}
+            valueFormatter={value => `${value}%`}
           />
           <div className="text-sm text-zinc-600">
             <div className="flex items-center gap-2">
@@ -185,7 +192,7 @@ export function DonutChartExample({
               showTooltip={showTooltip}
               className="h-16 w-16"
               colors={["emerald", "amber", "pink"]}
-              valueFormatter={(value) => `${value}%`}
+              valueFormatter={value => `${value}%`}
             />
             <p className="text-xs text-zinc-500 mt-1">Small</p>
           </div>
@@ -199,7 +206,7 @@ export function DonutChartExample({
               showTooltip={showTooltip}
               className="h-32 w-32"
               colors={["emerald", "amber", "pink"]}
-              valueFormatter={(value) => `${value}%`}
+              valueFormatter={value => `${value}%`}
             />
             <p className="text-xs text-zinc-500 mt-1">Medium</p>
           </div>
@@ -213,7 +220,7 @@ export function DonutChartExample({
               showTooltip={showTooltip}
               className="h-48 w-48"
               colors={["emerald", "amber", "pink"]}
-              valueFormatter={(value) => `${value}%`}
+              valueFormatter={value => `${value}%`}
             />
             <p className="text-xs text-zinc-500 mt-1">Large</p>
           </div>

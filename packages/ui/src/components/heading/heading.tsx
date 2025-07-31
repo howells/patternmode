@@ -1,5 +1,5 @@
 /**
- * Heading Component
+ * Heading Component.
  *
  * A styled heading component for displaying primary headings with consistent
  * typography and responsive sizing. Built on the semantic HeadingElement
@@ -10,7 +10,7 @@
  * - Responsive typography scaling
  * - Dark mode support
  * - Consistent styling across all heading levels
- * - Accessible heading hierarchy
+ * - Accessible heading hierarchy.
  *
  * @example
  * ```tsx
@@ -43,8 +43,9 @@
  * ```
  */
 
+import type { HeadingElementProps } from "../heading-element/heading-element";
 import { cx } from "../../lib/utils";
-import { HeadingElement, type HeadingElementProps } from "../heading-element/heading-element";
+import { HeadingElement } from "../heading-element/heading-element";
 
 /**
  * Props for the Heading component.
@@ -60,9 +61,9 @@ export type HeadingProps = HeadingElementProps;
  * Automatically renders the appropriate semantic HTML element (h1-h6) based
  * on the level prop.
  *
- * @param className - Additional CSS classes
- * @param level - Heading level (1-6) determining HTML element and hierarchy
- * @param props - Additional HTML heading element props
+ * @param className - Additional CSS classes.
+ * @param level - Heading level (1-6) determining HTML element and hierarchy.
+ * @param props - Additional HTML heading element props.
  *
  * @component
  * @example
@@ -85,7 +86,7 @@ export type HeadingProps = HeadingElementProps;
 /**
  * A semantic heading component with consistent typography and hierarchy levels.
  *
- * Heading
+ * Heading.
  *
  * @component
  * @id heading
@@ -97,7 +98,7 @@ export function Heading({ className, level = 1, ...props }: HeadingProps) {
       level={level}
       className={cx(
         className,
-        "m-0 text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white"
+        "m-0 text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white",
       )}
       {...props}
     />

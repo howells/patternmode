@@ -1,8 +1,9 @@
 // Tremor Switch [v1.0.0] - Base UI
 
+import type { VariantProps } from "tailwind-variants";
 import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
 
@@ -65,8 +66,8 @@ const switchVariants = tv({
  * Props for the Switch component.
  *
  * @interface SwitchProps
- * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>, "children">
- * @extends VariantProps<typeof switchVariants>
+ * @augments Omit<React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>, "children">
+ * @augments VariantProps<typeof switchVariants>
  * @example
  * ```tsx
  * <Switch>Enable notifications</Switch>
@@ -77,14 +78,16 @@ interface SwitchProps
       React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>,
       "children"
     >,
-    VariantProps<typeof switchVariants> {
-  /** Optional label text displayed next to the switch */
+  VariantProps<typeof switchVariants> {
+  /**
+   * Optional label text displayed next to the switch.
+   */
   label?: string;
 }
 
 /**
  * A toggle switch component built on Base UI's Switch primitive.
- * 
+ *
  * Based on Base UI's Switch (https://base-ui.com/react/components/switch),
  * providing accessible on/off controls with smooth animations and focus management.
  * Features multiple sizes and optional label support with Tremor-inspired styling.
@@ -97,17 +100,17 @@ interface SwitchProps
  * ```tsx
  * // Basic switch
  * <Switch />
- * 
+ *
  * // Controlled switch
  * <Switch checked={enabled} onCheckedChange={setEnabled} />
- * 
+ *
  * // With label
  * <Switch label="Enable notifications" />
- * 
+ *
  * // Different sizes
  * <Switch size="small" />
  * <Switch size="default" />
- * 
+ *
  * // Form integration
  * <Switch name="newsletter" defaultChecked />
  * ```
@@ -121,44 +124,50 @@ interface SwitchProps
  * @name Switch
  * @component
  */
-const Switch = React.forwardRef<
-  React.ElementRef<typeof BaseSwitch.Root>,
-  SwitchProps
->(({ className, size, label, ...props }: SwitchProps, forwardedRef) => {
-  const { root, thumb } = switchVariants({ size });
+const /**
+       *
+       */
+  Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null> }) => {
+    const { root, thumb } = switchVariants({ size });
 
-  if (label) {
+    if (label) {
+      return (
+        <div className="flex items-center space-x-2">
+          <BaseSwitch.Root
+            ref={forwardedRef}
+            className={cx(root(), className)}
+            {...props}
+          >
+            <BaseSwitch.Thumb className={cx(thumb())} />
+          </BaseSwitch.Root>
+          <span className="text-sm text-zinc-900 dark:text-zinc-100">
+            {label}
+          </span>
+        </div>
+      );
+    }
+
     return (
-      <div className="flex items-center space-x-2">
-        <BaseSwitch.Root
-          ref={forwardedRef}
-          className={cx(root(), className)}
-          {...props}
-        >
-          <BaseSwitch.Thumb className={cx(thumb())} />
-        </BaseSwitch.Root>
-        <span className="text-sm text-zinc-900 dark:text-zinc-100">
-          {label}
-        </span>
-      </div>
+      <BaseSwitch.Root
+        ref={forwardedRef}
+        className={cx(root(), className)}
+        {...props}
+      >
+        <BaseSwitch.Thumb className={cx(thumb())} />
+      </BaseSwitch.Root>
     );
-  }
-
-  return (
-    <BaseSwitch.Root
-      ref={forwardedRef}
-      className={cx(root(), className)}
-      {...props}
-    >
-      <BaseSwitch.Thumb className={cx(thumb())} />
-    </BaseSwitch.Root>
-  );
-});
+  };
 
 Switch.displayName = "Switch";
 
 // Export individual components for advanced usage
-const SwitchRoot = BaseSwitch.Root;
-const SwitchThumb = BaseSwitch.Thumb;
+const /**
+       *
+       */
+  SwitchRoot = BaseSwitch.Root;
+const /**
+       *
+       */
+  SwitchThumb = BaseSwitch.Thumb;
 
 export { Switch, SwitchRoot, SwitchThumb, switchVariants };

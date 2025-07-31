@@ -1,15 +1,15 @@
 "use client";
 
-import { 
+import {
   ResponsiveDrawer,
-  ResponsiveDrawerTrigger,
+  ResponsiveDrawerBody,
+  ResponsiveDrawerClose,
   ResponsiveDrawerContent,
+  ResponsiveDrawerDescription,
+  ResponsiveDrawerFooter,
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
-  ResponsiveDrawerDescription,
-  ResponsiveDrawerBody,
-  ResponsiveDrawerFooter,
-  ResponsiveDrawerClose
+  ResponsiveDrawerTrigger,
 } from "@patternmode/ui";
 
 export function Example() {

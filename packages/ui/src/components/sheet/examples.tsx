@@ -1,28 +1,7 @@
 "use client";
 
+import { Button, Checkbox, DescriptionDetails, DescriptionList, DescriptionTerm, Dot, Fieldset, FieldsetLegend, Form, FormControl, FormField, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, Subheading, Text } from "@patternmode/ui";
 import React from "react";
-import { Button } from "@patternmode/ui";
-import { Checkbox } from "@patternmode/ui";
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionTerm,
-} from "@patternmode/ui";
-import { Dot } from "@patternmode/ui";
-import { Fieldset, FieldsetLegend } from "@patternmode/ui";
-import { Form, FormControl, FormField } from "@patternmode/ui";
-import { Subheading } from "@patternmode/ui";
-import { Text } from "@patternmode/ui";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {

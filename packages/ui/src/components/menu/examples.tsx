@@ -1,21 +1,6 @@
 "use client";
 
-import { Button } from "@patternmode/ui";
-import { Icon } from "@patternmode/ui";
-import {
-  Menu,
-  MenuCheckboxItem,
-  MenuContent,
-  MenuItem,
-  MenuLabel,
-  MenuRadioGroup,
-  MenuRadioItem,
-  MenuSeparator,
-  MenuSubmenu,
-  MenuSubmenuContent,
-  MenuSubmenuTrigger,
-  MenuTrigger,
-} from "@patternmode/ui";
+import { Button, Icon, Menu, MenuCheckboxItem, MenuContent, MenuItem, MenuLabel, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuSubmenu, MenuSubmenuContent, MenuSubmenuTrigger, MenuTrigger } from "@patternmode/ui";
 import { Clipboard, Copy, Plus } from "lucide-react";
 import React, { useState } from "react";
 

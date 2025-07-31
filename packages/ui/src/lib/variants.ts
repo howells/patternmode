@@ -9,30 +9,30 @@
  * 3. Consistent variant mappings for different component types
  */
 
-import { type ClassValue } from "clsx";
+import type { ClassValue } from "clsx";
 
 // Global semantic variant types (used by all components)
-export type GlobalSemanticVariant =
-  | "default"
-  | "neutral"
-  | "success"
-  | "info"
-  | "warning"
-  | "error"
-  | "critical"
-  | "positive"
-  | "negative";
+export type GlobalSemanticVariant
+  = | "default"
+    | "neutral"
+    | "success"
+    | "info"
+    | "warning"
+    | "error"
+    | "critical"
+    | "positive"
+    | "negative";
 
 // Button-specific variants
-export type ButtonVariant =
-  | "secondary"
-  | "destructive"
-  | "outline"
-  | "outline-dashed"
-  | "ghost"
-  | "inverse-ghost"
-  | "link"
-  | "minimal";
+export type ButtonVariant
+  = | "secondary"
+    | "destructive"
+    | "outline"
+    | "outline-dashed"
+    | "ghost"
+    | "inverse-ghost"
+    | "link"
+    | "minimal";
 
 // Remove component-specific types - components should define their own
 
@@ -40,43 +40,43 @@ export type ButtonVariant =
 export type SemanticVariant = GlobalSemanticVariant | ButtonVariant;
 
 // Tailwind color names - comprehensive list
-export type TailwindColor =
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "stone"
-  | "red"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "teal"
-  | "cyan"
-  | "sky"
-  | "blue"
-  | "indigo"
-  | "violet"
-  | "purple"
-  | "fuchsia"
-  | "pink"
-  | "rose";
+export type TailwindColor
+  = | "slate"
+    | "gray"
+    | "zinc"
+    | "neutral"
+    | "stone"
+    | "red"
+    | "orange"
+    | "amber"
+    | "yellow"
+    | "lime"
+    | "green"
+    | "emerald"
+    | "teal"
+    | "cyan"
+    | "sky"
+    | "blue"
+    | "indigo"
+    | "violet"
+    | "purple"
+    | "fuchsia"
+    | "pink"
+    | "rose";
 
 // Tailwind color shades
-export type TailwindShade =
-  | 50
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900
-  | 950;
+export type TailwindShade
+  = | 50
+    | 100
+    | 200
+    | 300
+    | 400
+    | 500
+    | 600
+    | 700
+    | 800
+    | 900
+    | 950;
 
 /**
  * Global semantic variant color mappings
@@ -216,7 +216,7 @@ export const globalSemanticVariants = {
  * These are complex interactive styles specific to buttons
  */
 export const buttonSpecificVariants = {
-  secondary: [
+  "secondary": [
     // clean secondary without border, just shadow
     "shadow-xs",
     // text color
@@ -230,7 +230,7 @@ export const buttonSpecificVariants = {
     "disabled:bg-zinc-50 disabled:text-zinc-400 disabled:shadow-none",
     "dark:disabled:bg-zinc-900 dark:disabled:text-zinc-600",
   ],
-  destructive: [
+  "destructive": [
     // inset border with normal shadow using proper Tailwind classes
     "inset-ring-1 inset-ring-white/20 shadow-xs",
     "dark:inset-ring-white/10",
@@ -245,7 +245,7 @@ export const buttonSpecificVariants = {
     "disabled:bg-red-300 disabled:text-white disabled:inset-ring-white/15 disabled:shadow-none",
     "dark:disabled:bg-red-950 dark:disabled:text-red-400 dark:disabled:inset-ring-white/5",
   ],
-  outline: [
+  "outline": [
     // inset border with normal shadow using proper Tailwind classes
     "inset-ring-1 inset-ring-black/15 shadow-xs",
     "dark:inset-ring-white/15",
@@ -275,7 +275,7 @@ export const buttonSpecificVariants = {
     "disabled:text-zinc-400 disabled:border-zinc-200 disabled:shadow-none",
     "dark:disabled:text-zinc-600 dark:disabled:border-zinc-700",
   ],
-  ghost: [
+  "ghost": [
     // base
     "shadow-none",
     // text color
@@ -302,7 +302,7 @@ export const buttonSpecificVariants = {
     "disabled:text-zinc-400",
     "dark:disabled:text-zinc-600",
   ],
-  link: [
+  "link": [
     // base
     "shadow-none",
     // text color
@@ -313,7 +313,7 @@ export const buttonSpecificVariants = {
     "disabled:text-zinc-400",
     "dark:disabled:text-zinc-600",
   ],
-  minimal: [
+  "minimal": [
     // base - completely transparent, no shadows
     "shadow-none bg-transparent",
     // text color
@@ -329,14 +329,14 @@ export const buttonSpecificVariants = {
 export const semanticVariants = {
   ...globalSemanticVariants,
   // Button variants get simple neutral styling for non-button components
-  secondary: globalSemanticVariants.neutral,
-  destructive: globalSemanticVariants.error,
-  outline: globalSemanticVariants.neutral,
+  "secondary": globalSemanticVariants.neutral,
+  "destructive": globalSemanticVariants.error,
+  "outline": globalSemanticVariants.neutral,
   "outline-dashed": globalSemanticVariants.neutral,
-  ghost: globalSemanticVariants.neutral,
+  "ghost": globalSemanticVariants.neutral,
   "inverse-ghost": globalSemanticVariants.neutral,
-  link: globalSemanticVariants.default,
-  minimal: globalSemanticVariants.neutral,
+  "link": globalSemanticVariants.default,
+  "minimal": globalSemanticVariants.neutral,
 } as const;
 
 /**
@@ -402,7 +402,7 @@ export function generateColorClasses(options: ColorClassOptions): {
  */
 export function getVariantClasses(
   variant: SemanticVariant | TailwindColor,
-  options?: Omit<ColorClassOptions, "color">
+  options?: Omit<ColorClassOptions, "color">,
 ): ClassValue[] {
   const colors = generateColorClasses({ color: variant, ...options });
 
@@ -465,7 +465,7 @@ export const componentVariants = {
 export function createCustomVariant(
   color: TailwindColor,
   shade?: TailwindShade,
-  options?: Omit<ColorClassOptions, "color" | "shade">
+  options?: Omit<ColorClassOptions, "color" | "shade">,
 ): ClassValue[] {
   return getVariantClasses(color, { shade, ...options });
 }
@@ -482,7 +482,7 @@ export type ExtendedVariant<T extends Record<string, unknown>> = T & {
  * This is the recommended approach for components that need color variants
  */
 export function getColorClasses(
-  variant: GlobalSemanticVariant | TailwindColor
+  variant: GlobalSemanticVariant | TailwindColor,
 ) {
   // Semantic variant to color mapping
   const semanticColorMap: Record<GlobalSemanticVariant, TailwindColor> = {
@@ -498,8 +498,8 @@ export function getColorClasses(
   };
 
   // Get the actual Tailwind color to use
-  const actualColor =
-    variant in semanticColorMap
+  const actualColor
+    = variant in semanticColorMap
       ? semanticColorMap[variant as GlobalSemanticVariant]
       : (variant as TailwindColor);
 

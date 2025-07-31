@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CustomRangeExample, DefaultExample, MeterExample, NoAnimationExample, ValueOnlyExample, VariantsExample, WithLabelExample } from "./examples";
+import { CustomRangeExample, DefaultExample, NoAnimationExample, ValueOnlyExample, VariantsExample, WithLabelExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "meter",

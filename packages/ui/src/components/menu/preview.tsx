@@ -1,12 +1,5 @@
-import { Button } from "@patternmode/ui";
+import { Button, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger } from "@patternmode/ui";
 import { FileText, Plus, Save } from "lucide-react";
-import {
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuSeparator,
-  MenuTrigger,
-} from "@patternmode/ui";
 
 interface MenuExampleProps {
   sideOffset?: number;

@@ -1,5 +1,5 @@
 /**
- * Preview Card Components
+ * Preview Card Components.
  *
  * A comprehensive preview card system for displaying rich content previews
  * with hover interactions. Built on Base UI PreviewCard for creating
@@ -14,10 +14,10 @@
  * - Arrow indicators with automatic positioning
  * - Structured content layout with image, header, body, footer
  * - Dark mode compatible styling
- * - Link-like trigger styling
+ * - Link-like trigger styling.
  *
  * Built on Base UI PreviewCard documentation:
- * https://base-ui.com/react/components/preview-card
+ * https://base-ui.com/react/components/preview-card.
  *
  * @example
  * ```tsx
@@ -102,9 +102,9 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import { PreviewCard as BasePreviewCard } from "@base-ui-components/react/preview-card";
 import React from "react";
+import { cx } from "../../lib/utils";
 
 /**
  * Root preview card component.
@@ -121,7 +121,10 @@ import React from "react";
  * </PreviewCard>
  * ```
  */
-const PreviewCard = BasePreviewCard.Root;
+const /**
+       *
+       */
+  PreviewCard = BasePreviewCard.Root;
 
 /**
  * Preview card trigger component that shows preview on hover.
@@ -129,8 +132,8 @@ const PreviewCard = BasePreviewCard.Root;
  * Interactive element that reveals preview content on hover or focus.
  * Features link-like styling with smooth transitions and accessibility support.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Trigger props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Trigger props.
  *
  *
  * @id preview-card
@@ -152,31 +155,31 @@ const PreviewCard = BasePreviewCard.Root;
  * @name Preview Card
  * @component
  */
-const PreviewCardTrigger = React.forwardRef<
-  React.ElementRef<typeof BasePreviewCard.Trigger>,
-  React.ComponentPropsWithoutRef<typeof BasePreviewCard.Trigger>
->(({ className, ...props }, ref) => (
-  <BasePreviewCard.Trigger
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Trigger> | null> }) => (
+    <BasePreviewCard.Trigger
+      ref={ref}
+      className={cx(
       // base
-      "inline-flex items-center gap-1 text-blue-600 dark:text-blue-400",
-      // decoration
-      "no-underline decoration-blue-600/60 dark:decoration-blue-400/60 decoration-1 underline-offset-2",
-      // focus
-      "outline-none focus-visible:rounded-sm focus-visible:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2",
-      // hover
-      "hover:underline hover:decoration-blue-600 dark:hover:decoration-blue-400",
-      // states
-      "data-[popup-open]:underline data-[popup-open]:decoration-blue-600 dark:data-[popup-open]:decoration-blue-400",
-      "data-[popup-open]:focus-visible:no-underline",
-      // transitions
-      "transition-all duration-200 ease-out",
-      className
-    )}
-    {...props}
-  />
-));
+        "inline-flex items-center gap-1 text-blue-600 dark:text-blue-400",
+        // decoration
+        "no-underline decoration-blue-600/60 dark:decoration-blue-400/60 decoration-1 underline-offset-2",
+        // focus
+        "outline-none focus-visible:rounded-sm focus-visible:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2",
+        // hover
+        "hover:underline hover:decoration-blue-600 dark:hover:decoration-blue-400",
+        // states
+        "data-[popup-open]:underline data-[popup-open]:decoration-blue-600 dark:data-[popup-open]:decoration-blue-400",
+        "data-[popup-open]:focus-visible:no-underline",
+        // transitions
+        "transition-all duration-200 ease-out",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Portal component for rendering preview card content outside normal DOM flow.
@@ -192,7 +195,10 @@ const PreviewCardTrigger = React.forwardRef<
  * </PreviewCardPortal>
  * ```
  */
-const PreviewCardPortal = BasePreviewCard.Portal;
+const /**
+       *
+       */
+  PreviewCardPortal = BasePreviewCard.Portal;
 
 /**
  * Positioner component for smart preview card placement.
@@ -200,9 +206,9 @@ const PreviewCardPortal = BasePreviewCard.Portal;
  * Handles automatic positioning relative to trigger with collision detection
  * and boundary awareness. Used internally by PreviewCardContent.
  *
- * @param sideOffset - Distance from trigger element
- * @param collisionPadding - Padding for collision detection
- * @param props - Additional Base UI Positioner props
+ * @param sideOffset - Distance from trigger element.
+ * @param collisionPadding - Padding for collision detection.
+ * @param props - Additional Base UI Positioner props.
  *
  * @component
  * @example
@@ -212,17 +218,17 @@ const PreviewCardPortal = BasePreviewCard.Portal;
  * </PreviewCardPositioner>
  * ```
  */
-const PreviewCardPositioner = React.forwardRef<
-  React.ElementRef<typeof BasePreviewCard.Positioner>,
-  React.ComponentPropsWithoutRef<typeof BasePreviewCard.Positioner>
->(({ sideOffset = 8, collisionPadding = 5, ...props }, ref) => (
-  <BasePreviewCard.Positioner
-    ref={ref}
-    sideOffset={sideOffset}
-    collisionPadding={collisionPadding}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  PreviewCardPositioner = ({ ref, sideOffset = 8, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Positioner> | null> }) => (
+    <BasePreviewCard.Positioner
+      ref={ref}
+      sideOffset={sideOffset}
+      collisionPadding={collisionPadding}
+      {...props}
+    />
+  );
 
 /**
  * Main preview card content container with automatic positioning.
@@ -231,12 +237,12 @@ const PreviewCardPositioner = React.forwardRef<
  * portal rendering, and smooth animations. Includes collision detection
  * and responsive behavior.
  *
- * @param sideOffset - Distance from trigger element
- * @param side - Preferred placement side (top, right, bottom, left)
- * @param align - Alignment relative to trigger (start, center, end)
- * @param collisionPadding - Padding for collision detection
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Popup props
+ * @param sideOffset - Distance from trigger element.
+ * @param side - Preferred placement side (top, right, bottom, left).
+ * @param align - Alignment relative to trigger (start, center, end).
+ * @param collisionPadding - Padding for collision detection.
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Popup props.
  *
  * @component
  * @example
@@ -252,29 +258,28 @@ const PreviewCardPositioner = React.forwardRef<
  * </PreviewCardContent>
  * ```
  */
-const PreviewCardContent = React.forwardRef<
-  React.ElementRef<typeof BasePreviewCard.Popup>,
-  React.ComponentPropsWithoutRef<typeof BasePreviewCard.Popup> & {
-    /** Distance from trigger element */
-    sideOffset?: number;
-    /** Preferred placement side */
-    side?: "top" | "right" | "bottom" | "left";
-    /** Alignment relative to trigger */
-    align?: "start" | "center" | "end";
-    /** Padding for collision detection */
-    collisionPadding?: number;
-  }
->(
-  (
-    {
-      className,
-      sideOffset = 8,
-      side = "bottom",
-      align = "center",
-      collisionPadding = 5,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  PreviewCardContent = (
+    { ref, className, sideOffset = 8, side = "bottom", align = "center", collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Popup> & {
+    /**
+     * Distance from trigger element.
+     */
+      sideOffset?: number;
+      /**
+       * Preferred placement side.
+       */
+      side?: "top" | "right" | "bottom" | "left";
+      /**
+       * Alignment relative to trigger.
+       */
+      align?: "start" | "center" | "end";
+      /**
+       * Padding for collision detection.
+       */
+      collisionPadding?: number;
+    } & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Popup> | null> },
   ) => {
     return (
       <PreviewCardPortal>
@@ -287,7 +292,7 @@ const PreviewCardContent = React.forwardRef<
           <BasePreviewCard.Popup
             ref={ref}
             className={cx(
-              // base
+            // base
               "z-50 w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg border shadow-lg",
               // border color
               "border-zinc-200 dark:border-zinc-800",
@@ -297,15 +302,14 @@ const PreviewCardContent = React.forwardRef<
               "transition-[transform,scale,opacity] duration-200 ease-out",
               "data-[starting-style]:scale-90 data-[starting-style]:opacity-0",
               "data-[ending-style]:scale-90 data-[ending-style]:opacity-0",
-              className
+              className,
             )}
             {...props}
           />
         </PreviewCardPositioner>
       </PreviewCardPortal>
     );
-  }
-);
+  };
 
 /**
  * Arrow component pointing from preview card to trigger.
@@ -313,8 +317,8 @@ const PreviewCardContent = React.forwardRef<
  * Visual indicator that connects the preview content to its trigger.
  * Automatically rotates and positions based on the card's placement.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Arrow props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Arrow props.
  *
  * @component
  * @example
@@ -327,39 +331,39 @@ const PreviewCardContent = React.forwardRef<
  * </PreviewCardContent>
  * ```
  */
-const PreviewCardArrow = React.forwardRef<
-  React.ElementRef<typeof BasePreviewCard.Arrow>,
-  React.ComponentPropsWithoutRef<typeof BasePreviewCard.Arrow>
->(({ className, ...props }, ref) => (
-  <BasePreviewCard.Arrow
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Arrow> | null> }) => (
+    <BasePreviewCard.Arrow
+      ref={ref}
+      className={cx(
       // base
-      "flex transition-all duration-200 ease-out",
-      // positioning based on side
-      "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90",
-      "data-[side=right]:left-[-13px] data-[side=right]:-rotate-90",
-      "data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
-      className
-    )}
-    {...props}
-  >
-    <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
-      <path
-        d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
-        className="fill-white dark:fill-zinc-950"
-      />
-      <path
-        d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
-        className="fill-zinc-200 dark:fill-zinc-700"
-      />
-      <path
-        d="M10.3333 3.34539L5.47654 7.71648C4.55842 8.54279 3.36693 9 2.13172 9H0V8H2.13172C3.11989 8 4.07308 7.63423 4.80758 6.97318L9.66437 2.60207C10.0447 2.25979 10.622 2.2598 11.0023 2.60207L15.8591 6.97318C16.5936 7.63423 17.5468 8 18.5349 8H20V9H18.5349C17.2998 9 16.1083 8.54278 15.1901 7.71648L10.3333 3.34539Z"
-        className="fill-zinc-300 dark:fill-zinc-600"
-      />
-    </svg>
-  </BasePreviewCard.Arrow>
-));
+        "flex transition-all duration-200 ease-out",
+        // positioning based on side
+        "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90",
+        "data-[side=right]:left-[-13px] data-[side=right]:-rotate-90",
+        "data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
+        className,
+      )}
+      {...props}
+    >
+      <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+        <path
+          d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
+          className="fill-white dark:fill-zinc-950"
+        />
+        <path
+          d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
+          className="fill-zinc-200 dark:fill-zinc-700"
+        />
+        <path
+          d="M10.3333 3.34539L5.47654 7.71648C4.55842 8.54279 3.36693 9 2.13172 9H0V8H2.13172C3.11989 8 4.07308 7.63423 4.80758 6.97318L9.66437 2.60207C10.0447 2.25979 10.622 2.2598 11.0023 2.60207L15.8591 6.97318C16.5936 7.63423 17.5468 8 18.5349 8H20V9H18.5349C17.2998 9 16.1083 8.54278 15.1901 7.71648L10.3333 3.34539Z"
+          className="fill-zinc-300 dark:fill-zinc-600"
+        />
+      </svg>
+    </BasePreviewCard.Arrow>
+  );
 
 /**
  * Image component for preview card headers.
@@ -367,8 +371,8 @@ const PreviewCardArrow = React.forwardRef<
  * Displays preview images with consistent aspect ratio and styling.
  * Automatically rounds top corners to match card design.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML img props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML img props.
  *
  * @component
  * @example
@@ -385,22 +389,22 @@ const PreviewCardArrow = React.forwardRef<
  * />
  * ```
  */
-const PreviewCardImage = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentPropsWithoutRef<"img">
->(({ className, ...props }, ref) => (
-  <img
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardImage = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"img"> & { ref?: React.RefObject<HTMLImageElement | null> }) => (
+    <img
+      ref={ref}
+      className={cx(
       // base
-      "block w-full rounded-t-md object-cover",
-      // aspect ratio
-      "aspect-video",
-      className
-    )}
-    {...props}
-  />
-));
+        "block w-full rounded-t-md object-cover",
+        // aspect ratio
+        "aspect-video",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Header section for preview card title and description.
@@ -408,8 +412,8 @@ const PreviewCardImage = React.forwardRef<
  * Container for preview card title, description, and other header content
  * with consistent padding and spacing.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML div props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML div props.
  *
  * @component
  * @example
@@ -420,20 +424,20 @@ const PreviewCardImage = React.forwardRef<
  * </PreviewCardHeader>
  * ```
  */
-const PreviewCardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div
+      ref={ref}
+      className={cx(
       // base
-      "flex flex-col space-y-1.5 p-4 pb-2",
-      className
-    )}
-    {...props}
-  />
-));
+        "flex flex-col space-y-1.5 p-4 pb-2",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Title heading component for preview cards.
@@ -441,8 +445,8 @@ const PreviewCardHeader = React.forwardRef<
  * Semantic heading that provides the main title for preview content
  * with prominent typography and proper hierarchy.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML h3 props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML h3 props.
  *
  * @component
  * @example
@@ -454,22 +458,22 @@ const PreviewCardHeader = React.forwardRef<
  * </PreviewCardTitle>
  * ```
  */
-const PreviewCardTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.ComponentPropsWithoutRef<"h3">
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"h3"> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
+    <h3
+      ref={ref}
+      className={cx(
       // base
-      "text-lg font-semibold leading-6 tracking-tight",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      className
-    )}
-    {...props}
-  />
-));
+        "text-lg font-semibold leading-6 tracking-tight",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Description component for preview card content.
@@ -477,8 +481,8 @@ const PreviewCardTitle = React.forwardRef<
  * Provides additional context and information with muted styling
  * that complements the title hierarchy.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML p props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML p props.
  *
  * @component
  * @example
@@ -492,22 +496,22 @@ const PreviewCardTitle = React.forwardRef<
  * </PreviewCardDescription>
  * ```
  */
-const PreviewCardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.ComponentPropsWithoutRef<"p">
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"p"> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
+    <p
+      ref={ref}
+      className={cx(
       // base
-      "text-sm leading-6 text-pretty",
-      // text color
-      "text-zinc-600 dark:text-zinc-400",
-      className
-    )}
-    {...props}
-  />
-));
+        "text-sm leading-6 text-pretty",
+        // text color
+        "text-zinc-600 dark:text-zinc-400",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Body section for preview card main content.
@@ -515,8 +519,8 @@ const PreviewCardDescription = React.forwardRef<
  * Container for the main content area between header and footer
  * with consistent padding and spacing.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML div props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML div props.
  *
  * @component
  * @example
@@ -527,20 +531,20 @@ const PreviewCardDescription = React.forwardRef<
  * </PreviewCardBody>
  * ```
  */
-const PreviewCardBody = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div
+      ref={ref}
+      className={cx(
       // base
-      "px-4 pb-4 pt-0",
-      className
-    )}
-    {...props}
-  />
-));
+        "px-4 pb-4 pt-0",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 /**
  * Footer section for preview card actions and metadata.
@@ -548,8 +552,8 @@ const PreviewCardBody = React.forwardRef<
  * Bottom section typically containing actions, timestamps, or metadata
  * with subtle background and border separation.
  *
- * @param className - Additional CSS classes
- * @param props - Standard HTML div props
+ * @param className - Additional CSS classes.
+ * @param props - Standard HTML div props.
  *
  * @component
  * @example
@@ -560,24 +564,24 @@ const PreviewCardBody = React.forwardRef<
  * </PreviewCardFooter>
  * ```
  */
-const PreviewCardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PreviewCardFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div
+      ref={ref}
+      className={cx(
       // base
-      "flex items-center justify-between px-4 py-3",
-      // border
-      "border-t border-zinc-200 dark:border-zinc-800",
-      // background
-      "bg-zinc-50 dark:bg-zinc-900/50",
-      className
-    )}
-    {...props}
-  />
-));
+        "flex items-center justify-between px-4 py-3",
+        // border
+        "border-t border-zinc-200 dark:border-zinc-800",
+        // background
+        "bg-zinc-50 dark:bg-zinc-900/50",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 export {
   PreviewCard,

@@ -2,17 +2,18 @@
 
 "use client";
 
-import { config } from "../../lib/config";
-import { cx, focusRing } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import React, { createContext, useContext } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Icon, getIconSizeForContext } from "../icon/icon";
+import React, { createContext, use } from "react";
+import { tv } from "tailwind-variants";
+import { config } from "../../lib/config";
+import { cx, focusRing } from "../../lib/utils";
+import { getIconSizeForContext, Icon } from "../icon/icon";
 
 // Create context for toggle group size
 /**
- * Toggle Group
+ * Toggle Group.
  *
  * @id toggle-group
  * @name Toggle Group
@@ -21,13 +22,16 @@ import { Icon, getIconSizeForContext } from "../icon/icon";
  * <ToggleGroup>Content</ToggleGroup>
  * ```
  */
-const ToggleGroupContext = createContext<{
-  size: VariantProps<typeof toggleGroupVariants>["size"];
-  variant: VariantProps<typeof toggleGroupVariants>["variant"];
-}>({
-  size: "default",
-  variant: "default",
-});
+const /**
+       *
+       */
+  ToggleGroupContext = createContext<{
+    size: VariantProps<typeof toggleGroupVariants>["size"];
+    variant: VariantProps<typeof toggleGroupVariants>["variant"];
+  }>({
+    size: "default",
+    variant: "default",
+  });
 
 const toggleGroupVariants = tv({
   slots: {
@@ -109,7 +113,7 @@ interface ToggleGroupProps
       React.ComponentPropsWithoutRef<typeof BaseToggleGroup>,
       "children"
     >,
-    VariantProps<typeof toggleGroupVariants> {
+  VariantProps<typeof toggleGroupVariants> {
   children: React.ReactNode;
 }
 
@@ -120,53 +124,48 @@ interface ToggleGroupProps
  * @name Toggle Group
  * @component
  */
-const ToggleGroup = React.forwardRef<
-  React.ElementRef<typeof BaseToggleGroup>,
-  ToggleGroupProps
->(({ className, variant, size, orientation, children, ...props }, ref) => {
-  const { root } = toggleGroupVariants({ variant, size, orientation });
+const /**
+       *
+       */
+  ToggleGroup = ({ ref, className, variant, size, orientation, children, ...props }: ToggleGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggleGroup> | null> }) => {
+    const { root } = toggleGroupVariants({ variant, size, orientation });
 
-  return (
-    <ToggleGroupContext.Provider value={{ size, variant }}>
-      <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
-        {children}
-      </BaseToggleGroup>
-    </ToggleGroupContext.Provider>
-  );
-});
+    return (
+      <ToggleGroupContext value={{ size, variant }}>
+        <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
+          {children}
+        </BaseToggleGroup>
+      </ToggleGroupContext>
+    );
+  };
 
 ToggleGroup.displayName = "ToggleGroup";
 
 interface ToggleGroupItemProps
   extends React.ComponentPropsWithoutRef<typeof BaseToggle>,
-    VariantProps<typeof toggleGroupVariants> {
+  VariantProps<typeof toggleGroupVariants> {
   value: string;
-  /** Icon component to display on the left side */
+  /**
+   * Icon component to display on the left side.
+   */
   leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Icon component to display on the right side */
+  /**
+   * Icon component to display on the right side.
+   */
   rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Stroke width for icons (defaults to global config) */
+  /**
+   * Stroke width for icons (defaults to global config).
+   */
   iconStrokeWidth?: number;
 }
 
-const ToggleGroupItem = React.forwardRef<
-  React.ElementRef<typeof BaseToggle>,
-  ToggleGroupItemProps
->(
-  (
-    {
-      className,
-      variant,
-      size,
-      children,
-      leftIcon: LeftIcon,
-      rightIcon: RightIcon,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  ToggleGroupItem = (
+    { ref, className, variant, size, children, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), ...props }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
   ) => {
-    const context = useContext(ToggleGroupContext);
+    const context = use(ToggleGroupContext);
     const finalSize = size ?? context.size;
     const finalVariant = variant ?? context.variant;
     const { item } = toggleGroupVariants({
@@ -191,7 +190,7 @@ const ToggleGroupItem = React.forwardRef<
     const iconSize = getIconSizeForContext(finalSize);
 
     const renderContent = () => {
-      // If no icons, return children directly
+    // If no icons, return children directly
       if (!hasLeftIcon && !hasRightIcon) {
         return children;
       }
@@ -245,15 +244,14 @@ const ToggleGroupItem = React.forwardRef<
           isIconOnly && finalSize === "sm" && "min-w-6 w-6",
           isIconOnly && finalSize === "default" && "min-w-8 w-8",
           isIconOnly && finalSize === "lg" && "min-w-10 w-10",
-          className
+          className,
         )}
         {...props}
       >
         {renderContent()}
       </BaseToggle>
     );
-  }
-);
+  };
 
 ToggleGroupItem.displayName = "ToggleGroupItem";
 

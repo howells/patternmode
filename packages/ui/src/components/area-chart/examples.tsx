@@ -1,5 +1,5 @@
-import React from "react";
 import { AreaChart } from "@patternmode/ui";
+import React from "react";
 
 // Sample data for examples
 const chartData = [
@@ -12,115 +12,145 @@ const chartData = [
 ];
 
 // Default area chart
-export const DefaultExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["sales", "profit"]}
-  />
-);
-
-// Stacked area chart
-export const StackedExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["desktop", "mobile", "tablet"]}
-    type="stacked"
-  />
-);
-
-// Percentage area chart
-export const PercentExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["category1", "category2", "category3"]}
-    type="percent"
-  />
-);
-
-// Solid fill area chart
-export const SolidFillExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["revenue", "expenses"]}
-    fill="solid"
-  />
-);
-
-// Area chart with axis labels
-export const WithLabelsExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["value"]}
-    xAxisLabel="Time Period"
-    yAxisLabel="Amount ($)"
-  />
-);
-
-// Area chart with custom colors
-export const CustomColorsExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["sales", "profit"]}
-    colors={["blue", "emerald"]}
-  />
-);
-
-// Area chart without legend
-export const NoLegendExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["sales", "profit"]}
-    showLegend={false}
-  />
-);
-
-// Area chart with value formatter
-export const FormattedValuesExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["revenue", "expenses"]}
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Minimal area chart
-export const MinimalExample = () => (
-  <AreaChart
-    data={chartData}
-    index="date"
-    categories={["sales"]}
-    showXAxis={false}
-    showYAxis={false}
-    showGridLines={false}
-    showLegend={false}
-  />
-);
-
-// Area chart with connected nulls
-export const ConnectedNullsExample = () => {
-  const dataWithNulls = [
-    { date: "Jan", value: 4000 },
-    { date: "Feb", value: 3000 },
-    { date: "Mar", value: null },
-    { date: "Apr", value: 2780 },
-    { date: "May", value: 1890 },
-    { date: "Jun", value: 2390 },
-  ];
-
-  return (
+export const /**
+              *
+              */
+  DefaultExample = () => (
     <AreaChart
-      data={dataWithNulls}
+      data={chartData}
       index="date"
-      categories={["value"]}
-      connectNulls={true}
+      categories={["sales", "profit"]}
     />
   );
-};
+
+// Stacked area chart
+export const /**
+              *
+              */
+  StackedExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["desktop", "mobile", "tablet"]}
+      type="stacked"
+    />
+  );
+
+// Percentage area chart
+export const /**
+              *
+              */
+  PercentExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["category1", "category2", "category3"]}
+      type="percent"
+    />
+  );
+
+// Solid fill area chart
+export const /**
+              *
+              */
+  SolidFillExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["revenue", "expenses"]}
+      fill="solid"
+    />
+  );
+
+// Area chart with axis labels
+export const /**
+              *
+              */
+  WithLabelsExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["value"]}
+      xAxisLabel="Time Period"
+      yAxisLabel="Amount ($)"
+    />
+  );
+
+// Area chart with custom colors
+export const /**
+              *
+              */
+  CustomColorsExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["sales", "profit"]}
+      colors={["blue", "emerald"]}
+    />
+  );
+
+// Area chart without legend
+export const /**
+              *
+              */
+  NoLegendExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["sales", "profit"]}
+      showLegend={false}
+    />
+  );
+
+// Area chart with value formatter
+export const /**
+              *
+              */
+  FormattedValuesExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["revenue", "expenses"]}
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Minimal area chart
+export const /**
+              *
+              */
+  MinimalExample = () => (
+    <AreaChart
+      data={chartData}
+      index="date"
+      categories={["sales"]}
+      showXAxis={false}
+      showYAxis={false}
+      showGridLines={false}
+      showLegend={false}
+    />
+  );
+
+// Area chart with connected nulls
+export const /**
+              *
+              */
+  ConnectedNullsExample = () => {
+    const dataWithNulls = [
+      { date: "Jan", value: 4000 },
+      { date: "Feb", value: 3000 },
+      { date: "Mar", value: null },
+      { date: "Apr", value: 2780 },
+      { date: "May", value: 1890 },
+      { date: "Jun", value: 2390 },
+    ];
+
+    return (
+      <AreaChart
+        data={dataWithNulls}
+        index="date"
+        categories={["value"]}
+        connectNulls={true}
+      />
+    );
+  };

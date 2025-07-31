@@ -1,5 +1,5 @@
-import React from "react";
 import { Dot } from "@patternmode/ui";
+import React from "react";
 
 // Basic example - matches config "basic" id
 export function BasicExample() {

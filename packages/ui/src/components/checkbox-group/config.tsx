@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CheckboxGroupExample, DefaultExample, DisabledExample, MixedStatesExample, WithDefaultExample } from "./examples";
+import { DefaultExample, DisabledExample, MixedStatesExample, WithDefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "checkbox-group",
@@ -16,40 +16,44 @@ export const componentConfig: ComponentConfig = {
     {
       name: "label",
       type: "string",
-      description: "The label text for the checkbox group."
+      description: "The label text for the checkbox group.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether all checkboxes in the group are disabled."
+      description: "Whether all checkboxes in the group are disabled.",
     },
     {
       name: "defaultValue",
       type: "string",
-      description: "Default selected values (comma-separated)."
-    }
+      description: "Default selected values (comma-separated).",
+    },
   ],
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic checkbox group with multiple options.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "with-default",
       title: "With Default Selection",
       description: "Checkbox group with pre-selected options.",
-      code: jsxToString(<WithDefaultExample />)},
+      code: jsxToString(<WithDefaultExample />),
+    },
     {
       id: "disabled",
       title: "Disabled",
       description: "Disabled checkbox group.",
-      code: jsxToString(<DisabledExample />)},
+      code: jsxToString(<DisabledExample />),
+    },
     {
       id: "mixed-states",
       title: "Mixed States",
       description: "Checkbox group with individually disabled items.",
-      code: jsxToString(<MixedStatesExample />)}
-  ]
+      code: jsxToString(<MixedStatesExample />),
+    },
+  ],
 };

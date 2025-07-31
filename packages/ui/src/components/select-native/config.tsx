@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, SelectNativeExample, SizesExample, WithGroupsExample } from "./examples";
+import { DefaultExample, SizesExample, WithGroupsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "select-native",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "ChevronDown",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { SelectNative } from "@patternmode/ui";`,
   componentId: "SelectNativeExample",
@@ -20,20 +20,20 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "string",
       description: "Selected value",
-      defaultValue: ""
+      defaultValue: "",
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the select is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "size",
       type: "select",
       description: "Size of the select",
       options: ["sm", "md", "lg"],
-      defaultValue: "md"
+      defaultValue: "md",
     },
   ],
   examples: [
@@ -55,5 +55,5 @@ export const componentConfig: ComponentConfig = {
       description: "Native select in different sizes",
       code: jsxToString(<SizesExample />),
     },
-  ]
+  ],
 };

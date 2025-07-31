@@ -1,7 +1,5 @@
 "use client";
 
-import { cx } from "@/lib/utils";
-import { useState } from "react";
 import {
   Sidebar,
   SidebarBody,
@@ -10,6 +8,8 @@ import {
   SidebarHeader,
   SidebarItem,
 } from "@patternmode/ui";
+import { useState } from "react";
+import { cx } from "@/lib/utils";
 
 export function Example() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,7 +77,7 @@ export function Example() {
                 <span
                   className={cx(
                     "truncate transition-opacity duration-200",
-                    isCollapsed && "opacity-0 w-0 overflow-hidden"
+                    isCollapsed && "opacity-0 w-0 overflow-hidden",
                   )}
                 >
                   User Account

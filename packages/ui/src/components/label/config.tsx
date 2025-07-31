@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { LabelExample, RequiredExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Tag",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Label } from "@patternmode/ui";`,
   props: [
@@ -20,19 +20,19 @@ export const componentConfig: ComponentConfig = {
       name: "children",
       type: "string",
       defaultValue: "Label text",
-      description: "The label content."
+      description: "The label content.",
     },
     {
       name: "required",
       type: "boolean",
       defaultValue: false,
-      description: "Show required indicator."
+      description: "Show required indicator.",
     },
     {
       name: "htmlFor",
       type: "string",
-      description: "Associates the label with a form control."
-    }
+      description: "Associates the label with a form control.",
+    },
   ],
   examples: [
     {
@@ -46,6 +46,6 @@ export const componentConfig: ComponentConfig = {
       title: "Required Field",
       description: "Label indicating a required field.",
       code: jsxToString(<RequiredExample />),
-    }
-  ]
+    },
+  ],
 };

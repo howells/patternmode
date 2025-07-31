@@ -1,12 +1,11 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import {
-    DefaultExample,
-    SeparatorExample,
-    SizesExample,
-    VerticalExample,
-    WithTextExample,
+  DefaultExample,
+  SizesExample,
+  VerticalExample,
+  WithTextExample,
 } from "./examples";
 
 // Component configuration - single source of truth

@@ -1,6 +1,5 @@
+import { Code, Strong, Text, TextLink, VStack } from "@patternmode/ui";
 import React from "react";
-import { VStack } from "@patternmode/ui";
-import { Code, Strong, Text, TextLink } from "@patternmode/ui";
 
 export function BasicExample() {
   return (
@@ -29,17 +28,38 @@ export function SemanticElementsExample() {
   return (
     <VStack>
       <Text>
-        This is regular text with <Strong>strong emphasis</Strong> and{" "}
-        <Code>inline code</Code> elements.
+        This is regular text with
+        {" "}
+        <Strong>strong emphasis</Strong>
+        {" "}
+        and
+        {" "}
+        <Code>inline code</Code>
+        {" "}
+        elements.
       </Text>
       <Text>
-        You can also use <TextLink href="#">text links</TextLink> within
+        You can also use
+        {" "}
+        <TextLink href="#">text links</TextLink>
+        {" "}
+        within
         paragraphs for navigation and references.
       </Text>
       <Text>
-        Mix and match: <Strong>Bold text</Strong> with{" "}
-        <Code>code snippets</Code> and{" "}
-        <TextLink href="#">clickable links</TextLink> all in one paragraph.
+        Mix and match:
+        {" "}
+        <Strong>Bold text</Strong>
+        {" "}
+        with
+        {" "}
+        <Code>code snippets</Code>
+        {" "}
+        and
+        {" "}
+        <TextLink href="#">clickable links</TextLink>
+        {" "}
+        all in one paragraph.
       </Text>
     </VStack>
   );

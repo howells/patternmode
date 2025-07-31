@@ -1,5 +1,5 @@
 /**
- * Loader Component
+ * Loader Component.
  *
  * A spinning loader component for indicating loading states and async operations.
  * Built with Lucide React's Loader2 icon and tailwind-variants for consistent
@@ -11,7 +11,7 @@
  * - Accessible with screen reader support
  * - Inherits text color from parent context
  * - Consistent styling with tailwind-variants
- * - Centered alignment with flexbox
+ * - Centered alignment with flexbox.
  *
  * @example
  * ```tsx
@@ -51,9 +51,10 @@
  * ```
  */
 
+import type { VariantProps } from "tailwind-variants";
 import { Loader2 } from "lucide-react";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
 
@@ -72,15 +73,25 @@ const loaderVariants = tv({
   ],
   variants: {
     size: {
-      /** Extra small - 12px (0.75rem) */
+      /**
+       * Extra small - 12px (0.75rem).
+       */
       xs: "size-3",
-      /** Small - 16px (1rem) */
+      /**
+       * Small - 16px (1rem).
+       */
       sm: "size-4",
-      /** Base/default - 16px (1rem) */
+      /**
+       * Base/default - 16px (1rem).
+       */
       base: "size-4",
-      /** Large - 24px (1.5rem) */
+      /**
+       * Large - 24px (1.5rem).
+       */
       lg: "size-6",
-      /** Extra large - 32px (2rem) */
+      /**
+       * Extra large - 32px (2rem).
+       */
       xl: "size-8",
     },
   },
@@ -95,13 +106,15 @@ const loaderVariants = tv({
  * Extends HTML div props with size variants and accessibility support.
  *
  * @interface LoaderProps
- * @extends React.ComponentPropsWithoutRef<"div">
- * @extends VariantProps<typeof loaderVariants>
+ * @augments React.ComponentPropsWithoutRef<"div">
+ * @augments VariantProps<typeof loaderVariants>
  */
 interface LoaderProps
   extends React.ComponentPropsWithoutRef<"div">,
-    VariantProps<typeof loaderVariants> {
-  /** Accessible label for screen readers describing the loading state */
+  VariantProps<typeof loaderVariants> {
+  /**
+   * Accessible label for screen readers describing the loading state.
+   */
   "aria-label"?: string;
 }
 
@@ -112,10 +125,10 @@ interface LoaderProps
  * operation is in progress. Provides visual feedback to users during
  * async operations with accessible screen reader support.
  *
- * @param size - Size variant for the loader (xs, sm, base, lg, xl)
- * @param className - Additional CSS classes
- * @param aria-label - Accessible description for screen readers
- * @param props - Additional HTML div props
+ * @param size - Size variant for the loader (xs, sm, base, lg, xl).
+ * @param className - Additional CSS classes.
+ * @param aria-label - Accessible description for screen readers.
+ * @param props - Additional HTML div props.
  *
  *
  * @id loader
@@ -146,8 +159,10 @@ interface LoaderProps
  * @name Loader
  * @component
  */
-const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
-  ({ size, className, "aria-label": ariaLabel, ...props }, forwardedRef) => {
+const /**
+       *
+       */
+  Loader = ({ ref: forwardedRef, size, className, "aria-label": ariaLabel, ...props }: LoaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <div
         ref={forwardedRef}
@@ -158,9 +173,8 @@ const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
         {ariaLabel && <span className="sr-only">{ariaLabel}</span>}
       </div>
     );
-  }
-);
+  };
 
 Loader.displayName = "Loader";
 
-export { Loader, loaderVariants, type LoaderProps };
+export { Loader, type LoaderProps, loaderVariants };

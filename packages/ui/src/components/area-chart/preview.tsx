@@ -1,5 +1,5 @@
-import React from "react";
 import { AreaChart } from "@patternmode/ui";
+import React from "react";
 
 // Sample data for the area chart
 const sampleData = [
@@ -18,63 +18,66 @@ const sampleData = [
 ];
 
 // Example component for preview system
-export const AreaChartExample = ({
-  type = "default",
-  fill = "gradient",
-  showXAxis = true,
-  showYAxis = true,
-  showGridLines = true,
-  showTooltip = true,
-  showLegend = true,
-  legendPosition = "right",
-  connectNulls = false,
-  allowDecimals = true,
-  autoMinValue = false,
-  enableLegendSlider = false,
-  startEndOnly = false,
-  xAxisLabel,
-  yAxisLabel,
-  ...props
-}: {
-  type?: "default" | "stacked" | "percent";
-  fill?: "gradient" | "solid" | "none";
-  showXAxis?: boolean;
-  showYAxis?: boolean;
-  showGridLines?: boolean;
-  showTooltip?: boolean;
-  showLegend?: boolean;
-  legendPosition?: "left" | "center" | "right";
-  connectNulls?: boolean;
-  allowDecimals?: boolean;
-  autoMinValue?: boolean;
-  enableLegendSlider?: boolean;
-  startEndOnly?: boolean;
-  xAxisLabel?: string;
-  yAxisLabel?: string;
-  [key: string]: unknown;
-}) => {
-  return (
-    <AreaChart
-      data={sampleData}
-      index="date"
-      categories={["desktop", "mobile", "tablet"]}
-      type={type}
-      fill={fill}
-      showXAxis={showXAxis}
-      showYAxis={showYAxis}
-      showGridLines={showGridLines}
-      showTooltip={showTooltip}
-      showLegend={showLegend}
-      legendPosition={legendPosition}
-      connectNulls={connectNulls}
-      allowDecimals={allowDecimals}
-      autoMinValue={autoMinValue}
-      enableLegendSlider={enableLegendSlider}
-      startEndOnly={startEndOnly}
-      xAxisLabel={xAxisLabel}
-      yAxisLabel={yAxisLabel}
-      valueFormatter={(value) => `${value}k`}
-      {...props}
-    />
-  );
-};
+export const /**
+              *
+              */
+  AreaChartExample = ({
+    type = "default",
+    fill = "gradient",
+    showXAxis = true,
+    showYAxis = true,
+    showGridLines = true,
+    showTooltip = true,
+    showLegend = true,
+    legendPosition = "right",
+    connectNulls = false,
+    allowDecimals = true,
+    autoMinValue = false,
+    enableLegendSlider = false,
+    startEndOnly = false,
+    xAxisLabel,
+    yAxisLabel,
+    ...props
+  }: {
+    type?: "default" | "stacked" | "percent";
+    fill?: "gradient" | "solid" | "none";
+    showXAxis?: boolean;
+    showYAxis?: boolean;
+    showGridLines?: boolean;
+    showTooltip?: boolean;
+    showLegend?: boolean;
+    legendPosition?: "left" | "center" | "right";
+    connectNulls?: boolean;
+    allowDecimals?: boolean;
+    autoMinValue?: boolean;
+    enableLegendSlider?: boolean;
+    startEndOnly?: boolean;
+    xAxisLabel?: string;
+    yAxisLabel?: string;
+    [key: string]: unknown;
+  }) => {
+    return (
+      <AreaChart
+        data={sampleData}
+        index="date"
+        categories={["desktop", "mobile", "tablet"]}
+        type={type}
+        fill={fill}
+        showXAxis={showXAxis}
+        showYAxis={showYAxis}
+        showGridLines={showGridLines}
+        showTooltip={showTooltip}
+        showLegend={showLegend}
+        legendPosition={legendPosition}
+        connectNulls={connectNulls}
+        allowDecimals={allowDecimals}
+        autoMinValue={autoMinValue}
+        enableLegendSlider={enableLegendSlider}
+        startEndOnly={startEndOnly}
+        xAxisLabel={xAxisLabel}
+        yAxisLabel={yAxisLabel}
+        valueFormatter={value => `${value}k`}
+        {...props}
+      />
+    );
+  };

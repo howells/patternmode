@@ -114,3 +114,39 @@ When integrating with Base UI primitives, always use the `render=` prop pattern 
 - **Better TypeScript**: Proper type inference and ref forwarding
 - **Cleaner API**: Single component with render prop vs nested structure
 - **Framework Agnostic**: Base UI's render pattern works across frameworks
+
+## Code Organization Preferences
+
+### No Barrel Files (index.js/index.ts)
+
+Avoid using barrel files (index.js/index.ts files that re-export other modules). Use direct imports instead for better clarity and maintainability.
+
+**✅ Preferred - Direct imports:**
+
+```tsx
+// Clear, explicit imports showing exactly where each item comes from
+import { jsdocComponentConfig } from "./rules/jsdoc-component-rules.mjs";
+import { reactComponentPatternConfig } from "./rules/react-component-patterns.mjs";
+import { turboConfig } from "./rules/turbo-rules.mjs";
+import { typescriptConfig } from "./rules/typescript-rules.mjs";
+```
+
+**❌ Avoid - Barrel file imports:**
+
+```tsx
+// Obscures the actual source of imports
+import {
+  jsdocComponentConfig,
+  reactComponentPatternConfig,
+  turboConfig,
+  typescriptConfig,
+} from "./rules/index.mjs";
+```
+
+### Benefits of Direct Imports:
+
+- **Explicit dependencies**: Clear understanding of where each import comes from
+- **Better IDE support**: Easier navigation to source files
+- **Reduced indirection**: No intermediate files to maintain
+- **Tree-shaking friendly**: Bundlers can optimize better with direct imports
+- **Simpler refactoring**: Moving files doesn't require updating barrel exports

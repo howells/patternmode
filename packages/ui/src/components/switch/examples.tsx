@@ -1,8 +1,7 @@
 "use client";
 
+import { Button, Switch } from "@patternmode/ui";
 import React, { useState } from "react";
-import { Switch } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {
@@ -167,7 +166,9 @@ export function Controlled() {
           onCheckedChange={setIsEnabled}
         />
         <span className="text-sm">
-          Status: {isEnabled ? "Enabled" : "Disabled"}
+          Status:
+          {" "}
+          {isEnabled ? "Enabled" : "Disabled"}
         </span>
       </div>
 

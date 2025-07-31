@@ -1,30 +1,39 @@
-import React from "react";
 import { CodeBlock } from "@patternmode/ui";
+import React from "react";
 
 // Default code block
-export const DefaultExample = () => (
-  <CodeBlock>
-{`const greeting = "Hello, World!";
+export const /**
+              *
+              */
+  DefaultExample = () => (
+    <CodeBlock>
+      {`const greeting = "Hello, World!";
 console.log(greeting);`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // JavaScript code
-export const JavascriptExample = () => (
-  <CodeBlock language="javascript">
-{`function calculateSum(a, b) {
+export const /**
+              *
+              */
+  JavascriptExample = () => (
+    <CodeBlock language="javascript">
+      {`function calculateSum(a, b) {
   return a + b;
 }
 
 const result = calculateSum(5, 3);
 console.log(result);`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // CSS code
-export const CssExample = () => (
-  <CodeBlock language="css">
-{`.button {
+export const /**
+              *
+              */
+  CssExample = () => (
+    <CodeBlock language="css">
+      {`.button {
   background-color: #3b82f6;
   color: white;
   padding: 0.5rem 1rem;
@@ -36,13 +45,16 @@ export const CssExample = () => (
 .button:hover {
   background-color: #2563eb;
 }`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // JSON configuration
-export const JsonExample = () => (
-  <CodeBlock language="json">
-{`{
+export const /**
+              *
+              */
+  JsonExample = () => (
+    <CodeBlock language="json">
+      {`{
   "name": "my-project",
   "version": "1.0.0",
   "dependencies": {
@@ -50,24 +62,30 @@ export const JsonExample = () => (
     "typescript": "^4.9.0"
   }
 }`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // Bash commands
-export const BashExample = () => (
-  <CodeBlock language="bash">
-{`npm install
+export const /**
+              *
+              */
+  BashExample = () => (
+    <CodeBlock language="bash">
+      {`npm install
 npm run dev
 
 # Start the development server
 npm start`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // TypeScript with types
-export const TypescriptExample = () => (
-  <CodeBlock language="typescript">
-{`interface User {
+export const /**
+              *
+              */
+  TypescriptExample = () => (
+    <CodeBlock language="typescript">
+      {`interface User {
   id: number;
   name: string;
   email: string;
@@ -80,13 +98,16 @@ function getUserById(id: number): User | undefined {
 
 const user = getUserById(123);
 console.log(user?.name);`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // React component
-export const ReactComponentExample = () => (
-  <CodeBlock language="tsx">
-{`import React, { useState } from 'react';
+export const /**
+              *
+              */
+  ReactComponentExample = () => (
+    <CodeBlock language="tsx">
+      {`import React, { useState } from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -115,13 +136,16 @@ export function CodeBlockExample({
     </button>
   );
 }`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // Python code
-export const PythonExample = () => (
-  <CodeBlock language="python">
-{`def fibonacci(n):
+export const /**
+              *
+              */
+  PythonExample = () => (
+    <CodeBlock language="python">
+      {`def fibonacci(n):
     """Generate Fibonacci sequence up to n terms."""
     if n <= 0:
         return []
@@ -137,13 +161,16 @@ export const PythonExample = () => (
 # Generate first 10 Fibonacci numbers
 result = fibonacci(10)
 print(f"Fibonacci sequence: {result}")`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // HTML markup
-export const HtmlExample = () => (
-  <CodeBlock language="html">
-{`<!DOCTYPE html>
+export const /**
+              *
+              */
+  HtmlExample = () => (
+    <CodeBlock language="html">
+      {`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -166,13 +193,16 @@ export const HtmlExample = () => (
     </main>
 </body>
 </html>`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // Long code with scrolling
-export const LongCodeExample = () => (
-  <CodeBlock language="typescript">
-{`// A comprehensive example showing various TypeScript features
+export const /**
+              *
+              */
+  LongCodeExample = () => (
+    <CodeBlock language="typescript">
+      {`// A comprehensive example showing various TypeScript features
 import { EventEmitter } from 'events';
 
 // Enums
@@ -235,22 +265,31 @@ userRepo.add({
 
 const activeUsers = userRepo.findAll(user => user.status === Status.Active);
 console.log('Active users:', activeUsers);`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
 // Different themes
-export const LightThemeExample = () => (
-  <CodeBlock language="tsx" theme="light">
-{`const Component = () => {
+export const /**
+              *
+              */
+  LightThemeExample = () => (
+    <CodeBlock language="tsx" theme="light">
+      {`const Component = () => {
   return <div>Light theme code block</div>;
 };`}
-  </CodeBlock>
-);
+    </CodeBlock>
+  );
 
-export const DarkThemeExample = () => (
-  <CodeBlock language="tsx" theme="dark">
-{`const Component = () => {
+export const /**
+              *
+              */
+  DarkThemeExample = () => (
+    <CodeBlock language="tsx" theme="dark">
+      {`const Component = () => {
   return <div>Dark theme code block</div>;
 };`}
-  </CodeBlock>
-);export const CodeBlockExample = DefaultExample;
+    </CodeBlock>
+  ); export const /**
+                   *
+                   */
+  CodeBlockExample = DefaultExample;

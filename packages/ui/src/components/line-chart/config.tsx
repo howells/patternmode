@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { CustomFormattingExample, InteractiveExample, LineChartExample, MinimalExample, MultipleLinesExample, WithNullValuesExample } from "./examples";
 
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "TrendingUp",
 
   installation: {
-    npm: "recharts"
+    npm: "recharts",
   },
   importStatement: `import { LineChart } from "@patternmode/ui";`,
   componentId: "LineChartExample",
@@ -20,80 +20,80 @@ export const componentConfig: ComponentConfig = {
       name: "data",
       type: "string",
       defaultValue: "[]",
-      description: "Chart data array."
+      description: "Chart data array.",
     },
     {
       name: "categories",
       type: "string",
       defaultValue: "[]",
-      description: "Data series categories to display."
+      description: "Data series categories to display.",
     },
     {
       name: "index",
       type: "string",
       defaultValue: "name",
-      description: "Property name for x-axis values."
+      description: "Property name for x-axis values.",
     },
     {
       name: "colors",
       type: "string",
       defaultValue: "[]",
-      description: "Custom colors for data series."
+      description: "Custom colors for data series.",
     },
     {
       name: "valueFormatter",
       type: "function",
-      description: "Function to format values."
+      description: "Function to format values.",
     },
     {
       name: "showXAxis",
       type: "boolean",
       defaultValue: true,
-      description: "Show the x-axis."
+      description: "Show the x-axis.",
     },
     {
       name: "showYAxis",
       type: "boolean",
       defaultValue: true,
-      description: "Show the y-axis."
+      description: "Show the y-axis.",
     },
     {
       name: "showGridLines",
       type: "boolean",
       defaultValue: true,
-      description: "Show grid lines."
+      description: "Show grid lines.",
     },
     {
       name: "showLegend",
       type: "boolean",
       defaultValue: true,
-      description: "Show the legend."
+      description: "Show the legend.",
     },
     {
       name: "showTooltip",
       type: "boolean",
       defaultValue: true,
-      description: "Show tooltips on hover."
+      description: "Show tooltips on hover.",
     },
     {
       name: "curveType",
       type: "select",
       options: ["linear", "monotone", "step"],
       defaultValue: "linear",
-      description: "Line curve type."
+      description: "Line curve type.",
     },
     {
       name: "connectNulls",
       type: "boolean",
       defaultValue: false,
-      description: "Connect lines across null data points."
+      description: "Connect lines across null data points.",
     },
     {
       name: "enableLegendSlider",
       type: "boolean",
       defaultValue: false,
-      description: "Enable horizontal scroll for legend items."
-    }
+      description: "Enable horizontal scroll for legend items.",
+    },
   ],
   examples: [
     {
@@ -112,7 +112,8 @@ export const componentConfig: ComponentConfig = {
       id: "with-null-values",
       title: "With Null Values",
       description: "Line chart handling missing data points.",
-      code: jsxToString(<WithNullValuesExample />)},
+      code: jsxToString(<WithNullValuesExample />),
+    },
     {
       id: "interactive",
       title: "Interactive",
@@ -123,11 +124,13 @@ export const componentConfig: ComponentConfig = {
       id: "custom-formatting",
       title: "Custom Formatting",
       description: "Line chart with custom value formatters and axis labels.",
-      code: jsxToString(<CustomFormattingExample />)},
+      code: jsxToString(<CustomFormattingExample />),
+    },
     {
       id: "minimal",
       title: "Minimal",
       description: "Clean line chart without axes or legend.",
-      code: jsxToString(<MinimalExample />)}
-  ]
+      code: jsxToString(<MinimalExample />),
+    },
+  ],
 };

@@ -1,8 +1,7 @@
 "use client";
 
+import { Button, useToast } from "@patternmode/ui";
 import React from "react";
-import { useToast } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
 
 export function DefaultExample() {
   const toast = useToast();

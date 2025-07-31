@@ -53,7 +53,7 @@ export function Example() {
         </TableRow>
       </TableHeaderCell>
       <TableBody>
-        {data.map((user) => (
+        {data.map(user => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.id}</TableCell>
             <TableCell>{user.name}</TableCell>

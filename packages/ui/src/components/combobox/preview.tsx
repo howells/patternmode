@@ -1,5 +1,5 @@
-import React from "react";
 import { Combobox } from "@patternmode/ui";
+import React from "react";
 
 // Sample data for preview
 const fruits = [
@@ -13,45 +13,48 @@ const fruits = [
 ];
 
 // Example component for preview system
-export const ComboboxExample = ({
-  size = "base",
-  placeholder = "Select an option...",
-  searchPlaceholder = "Search...",
-  emptyMessage = "No results found.",
-  disabled = false,
-  hasError = false,
-  searchDebounce = 300,
-  clearSearchOnSelect = true,
-  ...props
-}: {
-  size?: "sm" | "base" | "lg";
-  placeholder?: string;
-  searchPlaceholder?: string;
-  emptyMessage?: string;
-  disabled?: boolean;
-  hasError?: boolean;
-  searchDebounce?: number;
-  clearSearchOnSelect?: boolean;
-  [key: string]: unknown;
-}) => {
-  const [value, setValue] = React.useState<string>();
+export const /**
+              *
+              */
+  ComboboxExample = ({
+    size = "base",
+    placeholder = "Select an option...",
+    searchPlaceholder = "Search...",
+    emptyMessage = "No results found.",
+    disabled = false,
+    hasError = false,
+    searchDebounce = 300,
+    clearSearchOnSelect = true,
+    ...props
+  }: {
+    size?: "sm" | "base" | "lg";
+    placeholder?: string;
+    searchPlaceholder?: string;
+    emptyMessage?: string;
+    disabled?: boolean;
+    hasError?: boolean;
+    searchDebounce?: number;
+    clearSearchOnSelect?: boolean;
+    [key: string]: unknown;
+  }) => {
+    const [value, setValue] = React.useState<string>();
 
-  return (
-    <div className="w-64">
-      <Combobox
-        options={fruits}
-        value={value}
-        onValueChange={setValue}
-        size={size}
-        placeholder={placeholder}
-        searchPlaceholder={searchPlaceholder}
-        emptyMessage={emptyMessage}
-        disabled={disabled}
-        hasError={hasError}
-        searchDebounce={searchDebounce}
-        clearSearchOnSelect={clearSearchOnSelect}
-        {...props}
-      />
-    </div>
-  );
-};
+    return (
+      <div className="w-64">
+        <Combobox
+          options={fruits}
+          value={value}
+          onValueChange={setValue}
+          size={size}
+          placeholder={placeholder}
+          searchPlaceholder={searchPlaceholder}
+          emptyMessage={emptyMessage}
+          disabled={disabled}
+          hasError={hasError}
+          searchDebounce={searchDebounce}
+          clearSearchOnSelect={clearSearchOnSelect}
+          {...props}
+        />
+      </div>
+    );
+  };

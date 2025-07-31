@@ -1,6 +1,6 @@
-import React from "react";
-import { Download, Heart, Search, Settings, Star, User } from "lucide-react";
 import { Icon } from "@patternmode/ui";
+import { Download, Heart, Search, Settings, Star, User } from "lucide-react";
+import React from "react";
 
 export function DefaultExample() {
   return <Icon icon={Search} />;
@@ -78,4 +78,7 @@ export function LayoutExample() {
       </div>
     </div>
   );
-}export const IconExample = DefaultExample;
+} export const /**
+                *
+                */
+  IconExample = DefaultExample;

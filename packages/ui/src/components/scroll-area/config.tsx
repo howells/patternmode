@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, HorizontalExample, ScrollAreaExample } from "./examples";
+import { DefaultExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "scroll-area",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "ScrollText",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { ScrollArea } from "@patternmode/ui";`,
   componentId: "ScrollAreaExample",
@@ -31,5 +31,5 @@ export const componentConfig: ComponentConfig = {
       description: "A horizontally scrollable area",
       code: jsxToString(<HorizontalExample />),
     },
-  ]
+  ],
 };

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
 import { SelectNative } from "@patternmode/ui";
+import React, { useState } from "react";
 
 export function DefaultExample() {
   const [value, setValue] = useState("");
 
   return (
-    <SelectNative value={value} onChange={(e) => setValue(e.target.value)}>
+    <SelectNative value={value} onChange={e => setValue(e.target.value)}>
       <option value="">Choose an option</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
@@ -30,7 +30,7 @@ export function SelectNativeExample() {
       <SelectNative
         id="country"
         value={country}
-        onChange={(e) => setCountry(e.target.value)}
+        onChange={e => setCountry(e.target.value)}
       >
         <option value="">Select a country</option>
         <option value="us">United States</option>
@@ -57,7 +57,7 @@ export function WithGroupsExample() {
       <SelectNative
         id="product"
         value={product}
-        onChange={(e) => setProduct(e.target.value)}
+        onChange={e => setProduct(e.target.value)}
       >
         <option value="">Choose a product</option>
         <optgroup label="Software">
@@ -90,7 +90,7 @@ export function ErrorStateExample() {
       <SelectNative
         id="required-select"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
         hasError={hasError}
       >
         <option value="">Please select an option</option>
@@ -171,7 +171,7 @@ export function MultipleExample() {
         onChange={(e) => {
           const values = Array.from(
             e.target.selectedOptions,
-            (option) => option.value
+            option => option.value,
           );
           setSelected(values);
         }}
@@ -185,7 +185,9 @@ export function MultipleExample() {
         <option value="go">Go</option>
       </SelectNative>
       <p className="text-sm text-zinc-600">
-        Selected: {selected.length > 0 ? selected.join(", ") : "None"}
+        Selected:
+        {" "}
+        {selected.length > 0 ? selected.join(", ") : "None"}
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CheckedExample, DefaultExample, DisabledExample, FormExample, SizesExample, SwitchExample } from "./examples";
+import { CheckedExample, DefaultExample, DisabledExample, FormExample, SizesExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "switch",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "ToggleLeft",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Switch } from "@patternmode/ui";`,
   componentId: "SwitchExample",
@@ -21,20 +21,20 @@ export const componentConfig: ComponentConfig = {
       name: "checked",
       type: "boolean",
       description: "Whether the switch is checked",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the switch is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "size",
       type: "select",
       description: "Size of the switch",
       options: ["sm", "md", "lg"],
-      defaultValue: "md"
+      defaultValue: "md",
     },
   ],
   examples: [
@@ -68,5 +68,5 @@ export const componentConfig: ComponentConfig = {
       description: "Switch used within a form context",
       code: jsxToString(<FormExample />),
     },
-  ]
+  ],
 };

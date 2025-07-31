@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
 import { Slider } from "@patternmode/ui";
+import React, { useState } from "react";
 
 interface SliderExampleProps {
   showValue?: boolean;
@@ -31,7 +31,8 @@ export function SliderExample({
     if (typeof defaultValue === "string") {
       try {
         return JSON.parse(defaultValue);
-      } catch {
+      }
+      catch {
         return [50];
       }
     }
@@ -41,8 +42,8 @@ export function SliderExample({
   const [internalValue, setInternalValue] = useState(parsedDefaultValue);
 
   // Use controlled value if provided, otherwise use internal state
-  const currentValue =
-    controlledValue !== undefined ? controlledValue : internalValue;
+  const currentValue
+    = controlledValue !== undefined ? controlledValue : internalValue;
 
   // Always allow the slider to be moved - update internal state for demo purposes
   const handleChange = (value: number | readonly number[]) => {

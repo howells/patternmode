@@ -1,8 +1,6 @@
 "use client";
 
-import { Button } from "@patternmode/ui";
-import { Field, FieldControl, FieldLabel } from "@patternmode/ui";
-import { Fieldset, FieldsetLegend } from "@patternmode/ui";
+import { Button, Field, FieldControl, FieldLabel, Fieldset, FieldsetLegend } from "@patternmode/ui";
 
 export function FieldsetExample({
   disabled = false,

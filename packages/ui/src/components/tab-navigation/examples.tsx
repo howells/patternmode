@@ -1,5 +1,5 @@
-import React from "react";
 import { TabNavigation, TabNavigationLink } from "@patternmode/ui";
+import React from "react";
 
 export function TabNavigationExample() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { SelectNative } from "@patternmode/ui";
+import { useState } from "react";
 
 interface SelectNativeExampleProps {
   hasError?: boolean;
@@ -29,8 +29,8 @@ export function SelectNativeExample({
   const [internalValue, setInternalValue] = useState(defaultValue || "");
 
   // Use controlled value if provided, otherwise use internal state
-  const currentValue =
-    controlledValue !== undefined ? controlledValue : internalValue;
+  const currentValue
+    = controlledValue !== undefined ? controlledValue : internalValue;
 
   // Always allow the select to change - update internal state for demo purposes
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

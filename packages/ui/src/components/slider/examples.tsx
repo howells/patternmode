@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
 import { Slider } from "@patternmode/ui";
+import React, { useState } from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {
   return <Slider defaultValue={[50]} max={100} step={1} />;
 }
 
-// Config example ID: "range" -> export name: RangeExample  
+// Config example ID: "range" -> export name: RangeExample
 export function RangeExample() {
   return <Slider defaultValue={[25, 75]} max={100} step={1} />;
 }
@@ -16,16 +16,20 @@ export function RangeExample() {
 // Config example ID: "steps" -> export name: StepsExample
 export function StepsExample() {
   const [value, setValue] = useState([50]);
-  
+
   return (
     <div className="space-y-4">
       <div>
-        <label className="text-sm font-medium">Volume: {value}%</label>
-        <Slider 
-          defaultValue={[50]} 
-          max={100} 
+        <label className="text-sm font-medium">
+          Volume:
+          {value}
+          %
+        </label>
+        <Slider
+          defaultValue={[50]}
+          max={100}
           step={10}
-          onValueChange={(value) => setValue(Array.isArray(value) ? value : [value])}
+          onValueChange={value => setValue(Array.isArray(value) ? value : [value])}
         />
       </div>
     </div>
@@ -35,17 +39,21 @@ export function StepsExample() {
 // Config example ID: "custom-range" -> export name: CustomRangeExample
 export function CustomRangeExample() {
   const [value, setValue] = useState([20]);
-  
+
   return (
     <div className="space-y-4">
       <div>
-        <label className="text-sm font-medium">Temperature: {value}°C</label>
-        <Slider 
-          defaultValue={[20]} 
-          min={-10} 
-          max={40} 
+        <label className="text-sm font-medium">
+          Temperature:
+          {value}
+          °C
+        </label>
+        <Slider
+          defaultValue={[20]}
+          min={-10}
+          max={40}
           step={1}
-          onValueChange={(value) => setValue(Array.isArray(value) ? value : [value])}
+          onValueChange={value => setValue(Array.isArray(value) ? value : [value])}
         />
       </div>
     </div>
@@ -64,7 +72,7 @@ export function SliderExample() {
   return (
     <Slider
       value={value}
-      onValueChange={(value) => setValue(value as number[])}
+      onValueChange={value => setValue(value as number[])}
       min={0}
       max={100}
       step={1}
@@ -78,7 +86,7 @@ export function WithValue() {
   return (
     <Slider
       value={value}
-      onValueChange={(value) => setValue(value as number[])}
+      onValueChange={value => setValue(value as number[])}
       min={0}
       max={100}
       step={1}
@@ -93,7 +101,7 @@ export function RangeSlider() {
   return (
     <Slider
       value={range}
-      onValueChange={(value) => setRange(value as number[])}
+      onValueChange={value => setRange(value as number[])}
       min={0}
       max={100}
       step={1}
@@ -108,12 +116,12 @@ export function CustomStep() {
   return (
     <Slider
       value={value}
-      onValueChange={(value) => setValue(value as number[])}
+      onValueChange={value => setValue(value as number[])}
       min={0}
       max={100}
       step={5}
       showValue
-      valueFormatter={(val) => `$${val}`}
+      valueFormatter={val => `$${val}`}
     />
   );
 }
@@ -125,7 +133,7 @@ export function Vertical() {
     <div className="h-64 flex items-center">
       <Slider
         value={value}
-        onValueChange={(value) => setValue(value as number[])}
+        onValueChange={value => setValue(value as number[])}
         min={0}
         max={100}
         step={1}

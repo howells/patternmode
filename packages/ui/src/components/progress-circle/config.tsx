@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { DefaultExample, IndeterminateExample, LargeExample, SmallExample, WithLabelExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Loader",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { ProgressCircle } from "@patternmode/ui";`,
   props: [
@@ -20,26 +20,26 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "number",
       description: "The progress value (0-100)",
-      defaultValue: 50
+      defaultValue: 50,
     },
     {
       name: "size",
       type: "select",
       description: "Size of the progress circle",
       options: ["sm", "md", "lg"],
-      defaultValue: "md"
+      defaultValue: "md",
     },
     {
       name: "showLabel",
       type: "boolean",
       description: "Whether to show the percentage label",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "indeterminate",
       type: "boolean",
       description: "Whether the progress is indeterminate",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
   examples: [
@@ -73,5 +73,5 @@ export const componentConfig: ComponentConfig = {
       description: "Circular progress in loading state",
       code: jsxToString(<IndeterminateExample />),
     },
-  ]
+  ],
 };

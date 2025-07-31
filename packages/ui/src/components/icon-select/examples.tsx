@@ -1,6 +1,6 @@
-import React from "react";
 import { IconSelect } from "@patternmode/ui";
+import React from "react";
 
 export function IconSelectExample() {
-  return <IconSelect onValueChange={(icon) => console.log(icon)} />;
+  return <IconSelect onValueChange={icon => console.log(icon)} />;
 }

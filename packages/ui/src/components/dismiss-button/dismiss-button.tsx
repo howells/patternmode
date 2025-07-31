@@ -5,38 +5,37 @@ import React from "react";
 
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
-import { Icon } from "../icon/icon";
 
 interface DismissButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
-   * Callback when the dismiss button is clicked
- * @example
- * ```tsx
- * <DismissButton>Content</DismissButton>
- * ```
+   * Callback when the dismiss button is clicked.
+   * @example
+   * ```tsx
+   * <DismissButton>Content</DismissButton>
+   * ```
    */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
-   * Custom icon component for the dismiss button
+   * Custom icon component for the dismiss button.
    * @default X icon from lucide-react
    */
-  icon?: React.ComponentType<{
+  "icon"?: React.ComponentType<{
     className?: string;
     strokeWidth?: number;
   }>;
   /**
-   * Icon stroke width
+   * Icon stroke width.
    * @default config.getIconStrokeWidth()
    */
-  iconStrokeWidth?: number;
+  "iconStrokeWidth"?: number;
   /**
-   * Size of the dismiss button
+   * Size of the dismiss button.
    * @default "base"
    */
-  size?: "sm" | "base" | "lg";
+  "size"?: "sm" | "base" | "lg";
   /**
-   * Accessible label for the button
+   * Accessible label for the button.
    * @default "Remove"
    */
   "aria-label"?: string;
@@ -79,20 +78,13 @@ interface DismissButtonProps
  * @name Dismiss Button
  * @component
  */
-const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
-  (
-    {
-      onClick,
-      icon: IconComponent = X,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      size = "base",
-      className,
-      "aria-label": ariaLabel = "Remove",
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  DismissButton = (
+    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove", ...props }: DismissButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
-    // Size-based icon sizing
+  // Size-based icon sizing
     const iconSizeMap = {
       sm: "xs" as const,
       base: "xs" as const,
@@ -108,7 +100,7 @@ const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
         type="button"
         onClick={onClick}
         className={cx(
-          // Base button styling
+        // Base button styling
           "flex items-center justify-center rounded-full transition-colors",
           // Size-based dimensions
           size === "sm" && "size-4",
@@ -120,7 +112,7 @@ const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
           "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
           // Focus states
           "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className
+          className,
         )}
         aria-label={ariaLabel}
         {...props}
@@ -132,8 +124,7 @@ const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
         />
       </button>
     );
-  }
-);
+  };
 
 DismissButton.displayName = "DismissButton";
 

@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, FormExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "form",
@@ -28,7 +28,7 @@ import { z } from "zod";`,
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the form is disabled."
+      description: "Whether the form is disabled.",
     },
   ],
   examples: [
@@ -39,5 +39,5 @@ import { z } from "zod";`,
         "A complete form with Zod validation, including text inputs and textarea.",
       code: jsxToString(<DefaultExample />),
     },
-  ]
+  ],
 };

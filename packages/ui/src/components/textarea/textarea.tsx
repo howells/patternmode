@@ -9,7 +9,7 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
  * Props for the Textarea component.
  *
  * @interface TextareaProps
- * @extends React.TextareaHTMLAttributes<HTMLTextAreaElement>
+ * @augments React.TextareaHTMLAttributes<HTMLTextAreaElement>
  * @example
  * ```tsx
  * <Textarea placeholder="Enter your message..." />
@@ -20,19 +20,33 @@ interface TextareaProps
     React.ComponentPropsWithoutRef<typeof TextareaAutosize>,
     "style"
   > {
-  /** Whether to display error styling */
+  /**
+   * Whether to display error styling.
+   */
   hasError?: boolean;
-  /** Whether to enable auto-resizing (default: true) */
+  /**
+   * Whether to enable auto-resizing (default: true).
+   */
   autoResize?: boolean;
-  /** Minimum number of rows to display */
+  /**
+   * Minimum number of rows to display.
+   */
   minRows?: number;
-  /** Maximum number of rows before scrolling */
+  /**
+   * Maximum number of rows before scrolling.
+   */
   maxRows?: number;
-  /** Callback when textarea height changes */
+  /**
+   * Callback when textarea height changes.
+   */
   onHeightChange?: (height: number, meta: { rowHeight: number }) => void;
-  /** Cache measurements for better performance */
+  /**
+   * Cache measurements for better performance.
+   */
   cacheMeasurements?: boolean;
-  /** Standard CSS style object */
+  /**
+   * Standard CSS style object.
+   */
   style?: React.CSSProperties;
 }
 
@@ -89,23 +103,14 @@ interface TextareaProps
  * @name Textarea
  * @component
  */
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    {
-      className,
-      hasError,
-      autoResize = true,
-      minRows = 2,
-      maxRows,
-      onHeightChange,
-      cacheMeasurements = false,
-      style,
-      ...props
-    }: TextareaProps,
-    forwardedRef
+const /**
+       *
+       */
+  Textarea = (
+    { ref: forwardedRef, className, hasError, autoResize = true, minRows = 2, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
   ) => {
     const baseClassName = cx(
-      // base
+    // base
       "flex min-h-[4rem] w-full rounded-md border px-3 py-1.5 shadow-xs outline-hidden transition-colors sm:text-sm",
       // text color
       "text-zinc-900 dark:text-zinc-50",
@@ -124,11 +129,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       hasError ? hasErrorInput : "",
       // invalid (optional)
       // "dark:aria-invalid:ring-red-400/20 aria-invalid:ring-2 aria-invalid:ring-red-200 aria-invalid:border-red-500 invalid:ring-2 invalid:ring-red-200 invalid:border-red-500"
-      className
+      className,
     );
 
     if (!autoResize) {
-      // Fallback to regular textarea when auto-resize is disabled
+    // Fallback to regular textarea when auto-resize is disabled
       return (
         <textarea
           ref={forwardedRef}
@@ -151,8 +156,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {...props}
       />
     );
-  }
-);
+  };
 
 Textarea.displayName = "Textarea";
 

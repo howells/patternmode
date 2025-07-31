@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Keyboard Shortcut Display Component
+ * Keyboard Shortcut Display Component.
  *
  * A component for displaying keyboard shortcuts in a consistent, styled format.
  * Commonly used in buttons, menus, and tooltips to show available keyboard
@@ -12,7 +12,7 @@
  * - Support for modifier keys (⌘, ⌃, ⌥, ⇧)
  * - Automatic platform detection (Mac vs PC)
  * - Flexible key combinations
- * - Accessible markup with proper semantics
+ * - Accessible markup with proper semantics.
  *
  * @example
  * ```tsx
@@ -42,9 +42,10 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 const kbdVariants = tv({
   base: [
@@ -88,12 +89,18 @@ const kbdVariants = tv({
  */
 interface KbdProps
   extends React.ComponentPropsWithoutRef<"kbd">,
-    VariantProps<typeof kbdVariants> {
-  /** Array of keys to display (for complex combinations) */
+  VariantProps<typeof kbdVariants> {
+  /**
+   * Array of keys to display (for complex combinations).
+   */
   keys?: string[];
-  /** Whether to show platform-specific shortcuts */
+  /**
+   * Whether to show platform-specific shortcuts.
+   */
   platform?: "mac" | "pc" | "auto";
-  /** Visual variant - use 'onDarkButton' or 'onLightButton' when inside buttons */
+  /**
+   * Visual variant - use 'onDarkButton' or 'onLightButton' when inside buttons.
+   */
   variant?: "default" | "onDarkButton" | "onLightButton";
 }
 
@@ -105,22 +112,23 @@ interface KbdProps
  * key combinations.
  *
  * @component
- * @param className - Additional CSS classes
- * @param children - Key text to display (for simple shortcuts)
- * @param keys - Array of keys for complex combinations
- * @param platform - Platform for modifier key display
- * @param size - Size variant
- * @param props - Additional kbd element props
+ * @param className - Additional CSS classes.
+ * @param children - Key text to display (for simple shortcuts).
+ * @param keys - Array of keys for complex combinations.
+ * @param platform - Platform for modifier key display.
+ * @param size - Size variant.
+ * @param props - Additional kbd element props.
  *
  * @id kbd
  * @name Kbd
  */
-const Kbd = React.forwardRef<HTMLElement, KbdProps>(
-  (
-    { className, children, keys, platform = "auto", size, variant, ...props },
-    ref
+const /**
+       *
+       */
+  Kbd = (
+    { ref, className, children, keys, platform = "auto", size, variant, ...props }: KbdProps & { ref?: React.RefObject<HTMLElement | null> },
   ) => {
-    // Use state to handle platform detection after hydration to avoid SSR mismatch
+  // Use state to handle platform detection after hydration to avoid SSR mismatch
     const [isMac, setIsMac] = React.useState(false);
     const [isHydrated, setIsHydrated] = React.useState(false);
 
@@ -129,10 +137,12 @@ const Kbd = React.forwardRef<HTMLElement, KbdProps>(
 
       if (platform === "mac") {
         setIsMac(true);
-      } else if (platform === "pc") {
+      }
+      else if (platform === "pc") {
         setIsMac(false);
-      } else if (platform === "auto") {
-        // Only detect platform after hydration to avoid SSR mismatch
+      }
+      else if (platform === "auto") {
+      // Only detect platform after hydration to avoid SSR mismatch
         setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.userAgent));
       }
     }, [platform]);
@@ -189,9 +199,8 @@ const Kbd = React.forwardRef<HTMLElement, KbdProps>(
         {children}
       </kbd>
     );
-  }
-);
+  };
 
 Kbd.displayName = "Kbd";
 
-export { Kbd, kbdVariants, type KbdProps };
+export { Kbd, type KbdProps, kbdVariants };

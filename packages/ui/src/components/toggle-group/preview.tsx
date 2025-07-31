@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon, ToggleGroup, ToggleGroupItem, useIconSize } from "@patternmode/ui";
 import {
   AlignCenter,
   AlignLeft,
@@ -9,8 +10,6 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-import { Icon, useIconSize } from "@patternmode/ui";
-import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 export function ToggleGroupExample({
   variant = "default",
@@ -93,10 +92,15 @@ export function ToggleGroupExample({
 
       {/* Show current selections */}
       <div className="text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
-        <p>Alignment: {alignment.length > 0 ? alignment.join(", ") : "None"}</p>
+        <p>
+          Alignment:
+          {alignment.length > 0 ? alignment.join(", ") : "None"}
+        </p>
         {showMultiple && (
           <p>
-            Formatting: {formatting.length > 0 ? formatting.join(", ") : "None"}
+            Formatting:
+            {" "}
+            {formatting.length > 0 ? formatting.join(", ") : "None"}
           </p>
         )}
       </div>

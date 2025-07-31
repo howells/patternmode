@@ -1,13 +1,16 @@
 "use client";
 
-import { SparkAreaChart, SparkBarChart, SparkLineChart } from "@patternmode/ui";
+import { SparkBarChart, SparkLineChart } from "@patternmode/ui";
 
 interface SparkChartExampleProps {
   type?: "line" | "bar";
 }
 
 export function SparkChartExample({ type = "line" }: SparkChartExampleProps) {
-  const SparkChart = type === "bar" ? SparkBarChart : SparkLineChart;
+  const /**
+         *
+         */
+    SparkChart = type === "bar" ? SparkBarChart : SparkLineChart;
 
   const weeklyData = [
     { day: 1, value: 10 },

@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { TouchTargetExample } from "./examples";
 
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Hand",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { TouchTarget } from "@patternmode/ui";`,
   componentId: "TouchTargetExample",
@@ -20,7 +20,7 @@ export const componentConfig: ComponentConfig = {
       name: "children",
       type: "string",
       defaultValue: "Interactive element",
-      description: "The content to wrap with touch target."
+      description: "The content to wrap with touch target.",
     },
   ],
   examples: [

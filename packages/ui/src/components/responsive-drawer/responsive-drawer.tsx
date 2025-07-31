@@ -1,5 +1,5 @@
 /**
- * Responsive Drawer Components
+ * Responsive Drawer Components.
  *
  * An adaptive drawer system that automatically switches between mobile drawer
  * (bottom sheet) and desktop sheet (side panel) based on screen size. Provides
@@ -109,11 +109,17 @@ import {
  * Configuration for the adaptive drawer container.
  */
 interface ResponsiveDrawerProps {
-  /** Drawer content including trigger and content components */
+  /**
+   * Drawer content including trigger and content components.
+   */
   children: React.ReactNode;
-  /** Whether the drawer is open (controlled mode) */
+  /**
+   * Whether the drawer is open (controlled mode).
+   */
   open?: boolean;
-  /** Callback when drawer open state changes */
+  /**
+   * Callback when drawer open state changes.
+   */
   onOpenChange?: (open: boolean) => void;
 }
 
@@ -123,9 +129,13 @@ interface ResponsiveDrawerProps {
  * Configuration for the element that opens the drawer.
  */
 interface ResponsiveDrawerTriggerProps {
-  /** Trigger element content */
+  /**
+   * Trigger element content.
+   */
   children?: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
   /**
    * Render prop for custom trigger element. When provided, the trigger
@@ -140,9 +150,13 @@ interface ResponsiveDrawerTriggerProps {
  * Configuration for the main drawer content container.
  */
 interface ResponsiveDrawerContentProps {
-  /** Content elements including header, body, and footer */
+  /**
+   * Content elements including header, body, and footer.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -152,9 +166,13 @@ interface ResponsiveDrawerContentProps {
  * Configuration for the drawer header section.
  */
 interface ResponsiveDrawerHeaderProps {
-  /** Header content including title and description */
+  /**
+   * Header content including title and description.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -164,9 +182,13 @@ interface ResponsiveDrawerHeaderProps {
  * Configuration for the drawer title text.
  */
 interface ResponsiveDrawerTitleProps {
-  /** Title text content */
+  /**
+   * Title text content.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -176,9 +198,13 @@ interface ResponsiveDrawerTitleProps {
  * Configuration for the drawer description text.
  */
 interface ResponsiveDrawerDescriptionProps {
-  /** Description text content */
+  /**
+   * Description text content.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -188,9 +214,13 @@ interface ResponsiveDrawerDescriptionProps {
  * Configuration for the main scrollable content area.
  */
 interface ResponsiveDrawerBodyProps {
-  /** Main content elements */
+  /**
+   * Main content elements.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -200,9 +230,13 @@ interface ResponsiveDrawerBodyProps {
  * Configuration for the drawer footer section.
  */
 interface ResponsiveDrawerFooterProps {
-  /** Footer content including action buttons */
+  /**
+   * Footer content including action buttons.
+   */
   children: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
 }
 
@@ -212,9 +246,13 @@ interface ResponsiveDrawerFooterProps {
  * Configuration for elements that close the drawer.
  */
 interface ResponsiveDrawerCloseProps {
-  /** Close trigger element content */
+  /**
+   * Close trigger element content.
+   */
   children?: React.ReactNode;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
   /**
    * Render prop for custom close trigger element. When provided, the close
@@ -230,9 +268,9 @@ interface ResponsiveDrawerCloseProps {
  * based on the current viewport size. Provides consistent API while optimizing
  * UX for each platform.
  *
- * @param children - Drawer content including trigger and content
- * @param open - Whether drawer is open (controlled mode)
- * @param onOpenChange - Callback for open state changes
+ * @param children - Drawer content including trigger and content.
+ * @param open - Whether drawer is open (controlled mode).
+ * @param onOpenChange - Callback for open state changes.
  *
  * @component
  * @example
@@ -254,18 +292,21 @@ interface ResponsiveDrawerCloseProps {
  * </ResponsiveDrawer>
  * ```
  */
-const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <Drawer {...props}>{children}</Drawer>;
-  }
+    if (isMobile) {
+      return <Drawer {...props}>{children}</Drawer>;
+    }
 
-  return <Sheet {...props}>{children}</Sheet>;
-};
+    return <Sheet {...props}>{children}</Sheet>;
+  };
 
 /**
  * Responsive drawer trigger component.
@@ -273,9 +314,9 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
  * Renders the appropriate trigger element based on screen size.
  * On mobile uses drawer trigger, on desktop uses sheet trigger.
  *
- * @param children - Trigger element content (button, link, etc.)
- * @param className - Additional CSS classes
- * @param render - Render prop for custom trigger element
+ * @param children - Trigger element content (button, link, etc.).
+ * @param className - Additional CSS classes.
+ * @param render - Render prop for custom trigger element.
  *
  * @component
  * @example
@@ -287,27 +328,30 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
  * </ResponsiveDrawerTrigger>
  * ```
  */
-const ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
-  children,
-  render,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
+    children,
+    render,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
+    if (isMobile) {
     // Vaul uses asChild pattern, so we need to convert render prop to asChild
-    if (render) {
-      return <DrawerTrigger asChild {...props}>{render}</DrawerTrigger>;
+      if (render) {
+        return <DrawerTrigger asChild {...props}>{render}</DrawerTrigger>;
+      }
+      return <DrawerTrigger {...props}>{children}</DrawerTrigger>;
     }
-    return <DrawerTrigger {...props}>{children}</DrawerTrigger>;
-  }
 
-  // Desktop uses Base UI which supports render prop natively
-  if (render) {
-    return <SheetTrigger render={render} {...props}>{children}</SheetTrigger>;
-  }
-  return <SheetTrigger {...props}>{children}</SheetTrigger>;
-};
+    // Desktop uses Base UI which supports render prop natively
+    if (render) {
+      return <SheetTrigger render={render} {...props}>{children}</SheetTrigger>;
+    }
+    return <SheetTrigger {...props}>{children}</SheetTrigger>;
+  };
 
 /**
  * Responsive drawer content container component.
@@ -315,8 +359,8 @@ const ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
  * Renders the main content area with appropriate styling for each platform.
  * Mobile version slides up from bottom, desktop version slides in from side.
  *
- * @param children - Content elements including header, body, footer
- * @param className - Additional CSS classes
+ * @param children - Content elements including header, body, footer.
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -331,18 +375,21 @@ const ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
  * </ResponsiveDrawerContent>
  * ```
  */
-const ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <DrawerContent {...props}>{children}</DrawerContent>;
-  }
+    if (isMobile) {
+      return <DrawerContent {...props}>{children}</DrawerContent>;
+    }
 
-  return <SheetContent {...props}>{children}</SheetContent>;
-};
+    return <SheetContent {...props}>{children}</SheetContent>;
+  };
 
 /**
  * Responsive drawer header component.
@@ -350,8 +397,8 @@ const ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
  * Renders the header section with title and description.
  * Provides consistent styling across mobile and desktop implementations.
  *
- * @param children - Header content (title, description, close button)
- * @param className - Additional CSS classes
+ * @param children - Header content (title, description, close button).
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -364,18 +411,21 @@ const ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
  * </ResponsiveDrawerHeader>
  * ```
  */
-const ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <DrawerHeader {...props}>{children}</DrawerHeader>;
-  }
+    if (isMobile) {
+      return <DrawerHeader {...props}>{children}</DrawerHeader>;
+    }
 
-  return <SheetHeader {...props}>{children}</SheetHeader>;
-};
+    return <SheetHeader {...props}>{children}</SheetHeader>;
+  };
 
 /**
  * Responsive drawer title component.
@@ -383,8 +433,8 @@ const ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
  * Renders the title text with appropriate typography and accessibility attributes.
  * Essential for screen reader support and semantic structure.
  *
- * @param children - Title text content
- * @param className - Additional CSS classes
+ * @param children - Title text content.
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -398,18 +448,21 @@ const ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
  * </ResponsiveDrawerTitle>
  * ```
  */
-const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <DrawerTitle {...props}>{children}</DrawerTitle>;
-  }
+    if (isMobile) {
+      return <DrawerTitle {...props}>{children}</DrawerTitle>;
+    }
 
-  return <SheetTitle {...props}>{children}</SheetTitle>;
-};
+    return <SheetTitle {...props}>{children}</SheetTitle>;
+  };
 
 /**
  * Responsive drawer description component.
@@ -417,8 +470,8 @@ const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
  * Renders descriptive text below the title with proper accessibility attributes.
  * Provides additional context about the drawer's purpose or content.
  *
- * @param children - Description text content
- * @param className - Additional CSS classes
+ * @param children - Description text content.
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -432,7 +485,10 @@ const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
  * </ResponsiveDrawerDescription>
  * ```
  */
-const ResponsiveDrawerDescription: React.FC<
+const /**
+       *
+       */
+  ResponsiveDrawerDescription: React.FC<
   ResponsiveDrawerDescriptionProps
 > = ({ children, ...props }) => {
   const isMobile = useIsMobile();
@@ -450,8 +506,8 @@ const ResponsiveDrawerDescription: React.FC<
  * Renders the main scrollable content area of the drawer.
  * On mobile uses a padded div, on desktop uses the sheet body component.
  *
- * @param children - Main content elements
- * @param className - Additional CSS classes
+ * @param children - Main content elements.
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -472,23 +528,26 @@ const ResponsiveDrawerDescription: React.FC<
  * </ResponsiveDrawerBody>
  * ```
  */
-const ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
+    if (isMobile) {
     // Mobile drawer doesn't have a specific body component, just use a div
-    return (
-      <div className="px-4" {...props}>
-        {children}
-      </div>
-    );
-  }
+      return (
+        <div className="px-4" {...props}>
+          {children}
+        </div>
+      );
+    }
 
-  return <SheetBody {...props}>{children}</SheetBody>;
-};
+    return <SheetBody {...props}>{children}</SheetBody>;
+  };
 
 /**
  * Responsive drawer footer component.
@@ -496,8 +555,8 @@ const ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
  * Renders the footer section typically containing action buttons.
  * Provides consistent spacing and layout across implementations.
  *
- * @param children - Footer content (buttons, links, etc.)
- * @param className - Additional CSS classes
+ * @param children - Footer content (buttons, links, etc.).
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -516,18 +575,21 @@ const ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
  * </ResponsiveDrawerFooter>
  * ```
  */
-const ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
+    children,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <DrawerFooter {...props}>{children}</DrawerFooter>;
-  }
+    if (isMobile) {
+      return <DrawerFooter {...props}>{children}</DrawerFooter>;
+    }
 
-  return <SheetFooter {...props}>{children}</SheetFooter>;
-};
+    return <SheetFooter {...props}>{children}</SheetFooter>;
+  };
 
 /**
  * Responsive drawer close component.
@@ -535,9 +597,9 @@ const ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
  * Renders elements that close the drawer when activated.
  * Automatically handles the appropriate close mechanism for each platform.
  *
- * @param children - Close trigger element (button, icon, etc.)
- * @param className - Additional CSS classes
- * @param render - Render prop for custom close trigger element
+ * @param children - Close trigger element (button, icon, etc.).
+ * @param className - Additional CSS classes.
+ * @param render - Render prop for custom close trigger element.
  *
  * @component
  * @example
@@ -547,27 +609,30 @@ const ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
  * <ResponsiveDrawerClose render={<button className="p-2 rounded-full hover:bg-zinc-100"><X className="w-4 h-4" /></button>} />
  * ```
  */
-const ResponsiveDrawerClose: React.FC<ResponsiveDrawerCloseProps> = ({
-  children,
-  render,
-  ...props
-}) => {
-  const isMobile = useIsMobile();
+const /**
+       *
+       */
+  ResponsiveDrawerClose: React.FC<ResponsiveDrawerCloseProps> = ({
+    children,
+    render,
+    ...props
+  }) => {
+    const isMobile = useIsMobile();
 
-  if (isMobile) {
+    if (isMobile) {
     // Vaul uses asChild pattern, so we need to convert render prop to asChild
-    if (render) {
-      return <DrawerClose asChild {...props}>{render}</DrawerClose>;
+      if (render) {
+        return <DrawerClose asChild {...props}>{render}</DrawerClose>;
+      }
+      return <DrawerClose {...props}>{children}</DrawerClose>;
     }
-    return <DrawerClose {...props}>{children}</DrawerClose>;
-  }
 
-  // Desktop uses Base UI which supports render prop natively
-  if (render) {
-    return <SheetClose render={render} {...props}>{children}</SheetClose>;
-  }
-  return <SheetClose {...props}>{children}</SheetClose>;
-};
+    // Desktop uses Base UI which supports render prop natively
+    if (render) {
+      return <SheetClose render={render} {...props}>{children}</SheetClose>;
+    }
+    return <SheetClose {...props}>{children}</SheetClose>;
+  };
 
 export {
   ResponsiveDrawer,
@@ -578,5 +643,5 @@ export {
   ResponsiveDrawerFooter,
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
-  ResponsiveDrawerTrigger
+  ResponsiveDrawerTrigger,
 };

@@ -1,10 +1,11 @@
+import type { HeadingElementProps } from "../heading-element/heading-element";
 import { cx } from "../../lib/utils";
-import { HeadingElement, type HeadingElementProps } from "../heading-element/heading-element";
+import { HeadingElement } from "../heading-element/heading-element";
 
 export type SubheadingProps = HeadingElementProps;
 
 /**
- * Subheading
+ * Subheading.
  *
  * @component
  * @id subheading
@@ -24,7 +25,7 @@ export function Subheading({
       level={level}
       className={cx(
         className,
-        "m-0 text-sm font-semibold text-current sm:text-sm"
+        "m-0 text-sm font-semibold text-current sm:text-sm",
       )}
       {...props}
     />

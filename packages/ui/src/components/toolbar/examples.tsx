@@ -1,10 +1,10 @@
-import React from "react";
 import {
   Toolbar,
   ToolbarButton,
   ToolbarGroup,
   ToolbarSeparator,
 } from "@patternmode/ui";
+import React from "react";
 
 export function ToolbarExample() {
   return (

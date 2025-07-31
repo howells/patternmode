@@ -1,5 +1,5 @@
 /**
- * Popover Components
+ * Popover Components.
  *
  * A comprehensive popover system built on Base UI Popover for creating
  * contextual overlays, tooltips, and dropdown content. Features smart
@@ -14,10 +14,10 @@
  * - Focus management and keyboard navigation
  * - Backdrop support for modal-like behavior
  * - Dark mode compatible styling
- * - Customizable positioning and alignment
+ * - Customizable positioning and alignment.
  *
  * Built on Base UI Popover documentation:
- * https://base-ui.com/react/components/popover
+ * https://base-ui.com/react/components/popover.
  *
  * @example
  * ```tsx
@@ -87,9 +87,9 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import { Popover as BasePopover } from "@base-ui-components/react/popover";
 import React from "react";
+import { cx } from "../../lib/utils";
 
 /**
  * An accessible popup anchored to a button, built on Base UI's Popover primitive.
@@ -113,7 +113,10 @@ import React from "react";
  *
  * @see https://base-ui.com/react/components/popover - Base UI documentation
  */
-const Popover = BasePopover.Root;
+const /**
+       *
+       */
+  Popover = BasePopover.Root;
 
 /**
  * Trigger element that opens the popover when activated.
@@ -133,8 +136,8 @@ const Popover = BasePopover.Root;
  * proper focus states and accessibility attributes. Can be styled
  * as any type of interactive element.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Trigger props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Trigger props.
  *
  *
  * @id popover
@@ -160,24 +163,24 @@ const Popover = BasePopover.Root;
  * @name Popover
  * @component
  */
-const PopoverTrigger = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Trigger>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Trigger>
->(({ className, ...props }, ref) => (
-  <BasePopover.Trigger
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Trigger> | null> }) => (
+    <BasePopover.Trigger
+      ref={ref}
+      className={cx(
       // base
-      "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors",
-      // focus
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-      // disabled
-      "disabled:pointer-events-none disabled:opacity-50",
-      className
-    )}
-    {...props}
-  />
-));
+        "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors",
+        // focus
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        // disabled
+        "disabled:pointer-events-none disabled:opacity-50",
+        className,
+      )}
+      {...props}
+    />
+  );
 PopoverTrigger.displayName = "PopoverTrigger";
 
 /**
@@ -194,7 +197,10 @@ PopoverTrigger.displayName = "PopoverTrigger";
  * </PopoverPortal>
  * ```
  */
-const PopoverPortal = BasePopover.Portal;
+const /**
+       *
+       */
+  PopoverPortal = BasePopover.Portal;
 
 /**
  * Optional backdrop that appears behind the popover.
@@ -214,8 +220,8 @@ const PopoverPortal = BasePopover.Portal;
  * Can be configured to close the popover when clicked and includes
  * smooth fade animations.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Backdrop props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Backdrop props.
  *
  * @component
  * @example
@@ -228,25 +234,25 @@ const PopoverPortal = BasePopover.Portal;
  * <PopoverBackdrop className="bg-red-500/20" />
  * ```
  */
-const PopoverBackdrop = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Backdrop>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Backdrop>
->(({ className, ...props }, ref) => (
-  <BasePopover.Backdrop
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Backdrop> | null> }) => (
+    <BasePopover.Backdrop
+      ref={ref}
+      className={cx(
       // base
-      "fixed inset-0 z-40",
-      // background
-      "bg-black/20 dark:bg-black/40",
-      // animations
-      "data-[starting-style]:animate-in data-[ending-style]:animate-out",
-      "data-[starting-style]:fade-in data-[ending-style]:fade-out",
-      className
-    )}
-    {...props}
-  />
-));
+        "fixed inset-0 z-40",
+        // background
+        "bg-black/20 dark:bg-black/40",
+        // animations
+        "data-[starting-style]:animate-in data-[ending-style]:animate-out",
+        "data-[starting-style]:fade-in data-[ending-style]:fade-out",
+        className,
+      )}
+      {...props}
+    />
+  );
 PopoverBackdrop.displayName = "PopoverBackdrop";
 
 /**
@@ -256,9 +262,9 @@ PopoverBackdrop.displayName = "PopoverBackdrop";
  * collision avoidance. Typically used internally by PopoverContent but
  * can be used directly for custom positioning logic.
  *
- * @param sideOffset - Distance from the trigger element
- * @param collisionPadding - Padding for collision detection
- * @param props - Additional Base UI Positioner props
+ * @param sideOffset - Distance from the trigger element.
+ * @param collisionPadding - Padding for collision detection.
+ * @param props - Additional Base UI Positioner props.
  *
  * @component
  * @example
@@ -268,17 +274,17 @@ PopoverBackdrop.displayName = "PopoverBackdrop";
  * </PopoverPositioner>
  * ```
  */
-const PopoverPositioner = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Positioner>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Positioner>
->(({ sideOffset = 10, collisionPadding = 5, ...props }, ref) => (
-  <BasePopover.Positioner
-    ref={ref}
-    sideOffset={sideOffset}
-    collisionPadding={collisionPadding}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  PopoverPositioner = ({ ref, sideOffset = 10, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Positioner> | null> }) => (
+    <BasePopover.Positioner
+      ref={ref}
+      sideOffset={sideOffset}
+      collisionPadding={collisionPadding}
+      {...props}
+    />
+  );
 PopoverPositioner.displayName = "PopoverPositioner";
 
 /**
@@ -288,12 +294,12 @@ PopoverPositioner.displayName = "PopoverPositioner";
  * collision detection, smooth animations, and portal rendering.
  * Features comprehensive styling and wheel event handling.
  *
- * @param sideOffset - Distance from the trigger element
- * @param side - Preferred placement side (top, right, bottom, left)
- * @param align - Alignment relative to trigger (start, center, end)
- * @param collisionPadding - Padding for collision detection
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Popup props
+ * @param sideOffset - Distance from the trigger element.
+ * @param side - Preferred placement side (top, right, bottom, left).
+ * @param align - Alignment relative to trigger (start, center, end).
+ * @param collisionPadding - Padding for collision detection.
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Popup props.
  *
  * @component
  * @example
@@ -315,29 +321,28 @@ PopoverPositioner.displayName = "PopoverPositioner";
  * </PopoverContent>
  * ```
  */
-const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Popup>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
-    /** Distance from the trigger element */
-    sideOffset?: number;
-    /** Preferred placement side */
-    side?: "top" | "right" | "bottom" | "left";
-    /** Alignment relative to the trigger */
-    align?: "start" | "center" | "end";
-    /** Padding for collision detection */
-    collisionPadding?: number;
-  }
->(
-  (
-    {
-      className,
-      sideOffset = 10,
-      side = "bottom",
-      align = "center",
-      collisionPadding = 5,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  PopoverContent = (
+    { ref, className, sideOffset = 10, side = "bottom", align = "center", collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
+    /**
+     * Distance from the trigger element.
+     */
+      sideOffset?: number;
+      /**
+       * Preferred placement side.
+       */
+      side?: "top" | "right" | "bottom" | "left";
+      /**
+       * Alignment relative to the trigger.
+       */
+      align?: "start" | "center" | "end";
+      /**
+       * Padding for collision detection.
+       */
+      collisionPadding?: number;
+    } & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Popup> | null> },
   ) => {
     return (
       <PopoverPortal>
@@ -350,7 +355,7 @@ const PopoverContent = React.forwardRef<
           <BasePopover.Popup
             ref={ref}
             className={cx(
-              // base
+            // base
               "z-50 min-w-60 max-w-sm overflow-hidden rounded-md border p-2.5 text-sm shadow-xl shadow-black/[2.5%]",
               // border color
               "border-zinc-200 dark:border-zinc-800",
@@ -366,18 +371,19 @@ const PopoverContent = React.forwardRef<
               "data-[side=left]:data-[starting-style]:slide-in-from-right-2 data-[side=left]:data-[ending-style]:slide-out-to-right-2",
               "data-[side=right]:data-[starting-style]:slide-in-from-left-2 data-[side=right]:data-[ending-style]:slide-out-to-left-2",
               "data-[side=top]:data-[starting-style]:slide-in-from-bottom-2 data-[side=top]:data-[ending-style]:slide-out-to-bottom-2",
-              className
+              className,
             )}
             onWheel={(event) => {
               event.stopPropagation();
               const isScrollingDown = event.deltaY > 0;
               if (isScrollingDown) {
                 event.currentTarget.dispatchEvent(
-                  new KeyboardEvent("keydown", { key: "ArrowDown" })
+                  new KeyboardEvent("keydown", { key: "ArrowDown" }),
                 );
-              } else {
+              }
+              else {
                 event.currentTarget.dispatchEvent(
-                  new KeyboardEvent("keydown", { key: "ArrowUp" })
+                  new KeyboardEvent("keydown", { key: "ArrowUp" }),
                 );
               }
             }}
@@ -386,8 +392,7 @@ const PopoverContent = React.forwardRef<
         </PopoverPositioner>
       </PopoverPortal>
     );
-  }
-);
+  };
 PopoverContent.displayName = "PopoverContent";
 
 /**
@@ -405,39 +410,39 @@ PopoverContent.displayName = "PopoverContent";
  * </PopoverContent>
  * ```
  */
-const PopoverArrow = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Arrow>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Arrow>
->(({ className, ...props }, ref) => (
-  <BasePopover.Arrow
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Arrow> | null> }) => (
+    <BasePopover.Arrow
+      ref={ref}
+      className={cx(
       // base
-      "flex transition-all duration-200 ease-out",
-      // positioning based on side
-      "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90",
-      "data-[side=right]:left-[-13px] data-[side=right]:-rotate-90",
-      "data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
-      className
-    )}
-    {...props}
-  >
-    <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
-      <path
-        d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
-        className="fill-white dark:fill-zinc-950"
-      />
-      <path
-        d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
-        className="fill-zinc-200 dark:fill-none"
-      />
-      <path
-        d="M10.3333 3.34539L5.47654 7.71648C4.55842 8.54279 3.36693 9 2.13172 9H0V8H2.13172C3.11989 8 4.07308 7.63423 4.80758 6.97318L9.66437 2.60207C10.0447 2.25979 10.622 2.2598 11.0023 2.60207L15.8591 6.97318C16.5936 7.63423 17.5468 8 18.5349 8H20V9H18.5349C17.2998 9 16.1083 8.54278 15.1901 7.71648L10.3333 3.34539Z"
-        className="dark:fill-zinc-300"
-      />
-    </svg>
-  </BasePopover.Arrow>
-));
+        "flex transition-all duration-200 ease-out",
+        // positioning based on side
+        "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90",
+        "data-[side=right]:left-[-13px] data-[side=right]:-rotate-90",
+        "data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
+        className,
+      )}
+      {...props}
+    >
+      <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+        <path
+          d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
+          className="fill-white dark:fill-zinc-950"
+        />
+        <path
+          d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
+          className="fill-zinc-200 dark:fill-none"
+        />
+        <path
+          d="M10.3333 3.34539L5.47654 7.71648C4.55842 8.54279 3.36693 9 2.13172 9H0V8H2.13172C3.11989 8 4.07308 7.63423 4.80758 6.97318L9.66437 2.60207C10.0447 2.25979 10.622 2.2598 11.0023 2.60207L15.8591 6.97318C16.5936 7.63423 17.5468 8 18.5349 8H20V9H18.5349C17.2998 9 16.1083 8.54278 15.1901 7.71648L10.3333 3.34539Z"
+          className="dark:fill-zinc-300"
+        />
+      </svg>
+    </BasePopover.Arrow>
+  );
 PopoverArrow.displayName = "PopoverArrow";
 
 /**
@@ -457,8 +462,8 @@ PopoverArrow.displayName = "PopoverArrow";
  * Semantic heading that establishes content hierarchy within the popover.
  * Features prominent typography and proper spacing for visual organization.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Title props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Title props.
  *
  * @component
  * @example
@@ -470,24 +475,24 @@ PopoverArrow.displayName = "PopoverArrow";
  * </PopoverTitle>
  * ```
  */
-const PopoverTitle = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Title>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Title>
->(({ className, ...props }, ref) => (
-  <BasePopover.Title
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Title> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Title> | null> }) => (
+    <BasePopover.Title
+      ref={ref}
+      className={cx(
       // base
-      "text-lg font-semibold leading-6",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // spacing
-      "mb-2",
-      className
-    )}
-    {...props}
-  />
-));
+        "text-lg font-semibold leading-6",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // spacing
+        "mb-2",
+        className,
+      )}
+      {...props}
+    />
+  );
 PopoverTitle.displayName = "PopoverTitle";
 
 /**
@@ -509,8 +514,8 @@ PopoverTitle.displayName = "PopoverTitle";
  * Provides additional context and information with muted styling
  * that creates proper visual hierarchy with the title.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Description props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Description props.
  *
  * @component
  * @example
@@ -524,22 +529,22 @@ PopoverTitle.displayName = "PopoverTitle";
  * </PopoverDescription>
  * ```
  */
-const PopoverDescription = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Description>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Description>
->(({ className, ...props }, ref) => (
-  <BasePopover.Description
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Description> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Description> | null> }) => (
+    <BasePopover.Description
+      ref={ref}
+      className={cx(
       // base
-      "text-sm leading-6",
-      // text color
-      "text-zinc-600 dark:text-zinc-400",
-      className
-    )}
-    {...props}
-  />
-));
+        "text-sm leading-6",
+        // text color
+        "text-zinc-600 dark:text-zinc-400",
+        className,
+      )}
+      {...props}
+    />
+  );
 PopoverDescription.displayName = "PopoverDescription";
 
 /**
@@ -561,8 +566,8 @@ PopoverDescription.displayName = "PopoverDescription";
  * Interactive element that closes the popover and returns focus
  * to the trigger. Features subtle styling and hover effects.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Close props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Close props.
  *
  * @component
  * @example
@@ -578,36 +583,39 @@ PopoverDescription.displayName = "PopoverDescription";
  * </PopoverClose>
  * ```
  */
-const PopoverClose = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Close>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Close>
->(({ className, ...props }, ref) => (
-  <BasePopover.Close
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  PopoverClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Close> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Close> | null> }) => (
+    <BasePopover.Close
+      ref={ref}
+      className={cx(
       // base
-      "inline-flex h-6 w-6 items-center justify-center rounded-sm text-sm font-medium transition-colors",
-      // text color
-      "text-zinc-500 dark:text-zinc-400",
-      // hover
-      "hover:text-zinc-900 dark:hover:text-zinc-50",
-      // focus
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-      // disabled
-      "disabled:pointer-events-none disabled:opacity-50",
-      className
-    )}
-    {...props}
-  />
-));
+        "inline-flex h-6 w-6 items-center justify-center rounded-sm text-sm font-medium transition-colors",
+        // text color
+        "text-zinc-500 dark:text-zinc-400",
+        // hover
+        "hover:text-zinc-900 dark:hover:text-zinc-50",
+        // focus
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        // disabled
+        "disabled:pointer-events-none disabled:opacity-50",
+        className,
+      )}
+      {...props}
+    />
+  );
 PopoverClose.displayName = "PopoverClose";
 
 /**
  * Legacy alias for PopoverTrigger (backward compatibility).
  *
- * @deprecated Use PopoverTrigger instead
+ * @deprecated Use PopoverTrigger instead.
  */
-const PopoverAnchor = PopoverTrigger;
+const /**
+       *
+       */
+  PopoverAnchor = PopoverTrigger;
 
 export {
   Popover,

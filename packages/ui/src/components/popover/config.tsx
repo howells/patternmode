@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { ControlledExample, DefaultExample, PopoverExample, PositionsExample, RichContentExample, WithArrowExample, WithCloseExample } from "./examples";
+import { ControlledExample, DefaultExample, PositionsExample, RichContentExample, WithArrowExample, WithCloseExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "popover",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "MessageCircle",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";`,
   componentId: "PopoverExample",
@@ -20,45 +20,45 @@ export const componentConfig: ComponentConfig = {
       name: "open",
       type: "boolean",
       defaultValue: false,
-      description: "Controlled open state of the popover."
+      description: "Controlled open state of the popover.",
     },
     {
       name: "defaultOpen",
       type: "boolean",
       defaultValue: false,
-      description: "Default open state when uncontrolled."
+      description: "Default open state when uncontrolled.",
     },
     {
       name: "onOpenChange",
       type: "function",
       defaultValue: undefined,
-      description: "Event handler called when the open state changes."
+      description: "Event handler called when the open state changes.",
     },
     {
       name: "placement",
       type: "select",
       options: ["top", "right", "bottom", "left", "top-start", "top-end", "right-start", "right-end", "bottom-start", "bottom-end", "left-start", "left-end"],
       defaultValue: "bottom",
-      description: "The placement of the popover relative to its trigger."
+      description: "The placement of the popover relative to its trigger.",
     },
     {
       name: "offset",
       type: "number",
       defaultValue: 8,
-      description: "The distance between the popover and its trigger."
+      description: "The distance between the popover and its trigger.",
     },
     {
       name: "arrow",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to show an arrow pointing to the trigger."
+      description: "Whether to show an arrow pointing to the trigger.",
     },
     {
       name: "sideOffset",
       type: "number",
       defaultValue: 0,
-      description: "The distance from the side when using side placements."
-    }
+      description: "The distance from the side when using side placements.",
+    },
   ],
   examples: [
     {
@@ -97,5 +97,5 @@ export const componentConfig: ComponentConfig = {
       description: "Popover with controlled open state.",
       code: jsxToString(<ControlledExample />),
     },
-  ]
+  ],
 };

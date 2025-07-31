@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import {
   RadioCardGroup,
   RadioCardIndicator,
   RadioCardItem,
 } from "@patternmode/ui";
+import { useState } from "react";
 
 interface RadioCardGroupExampleProps {
   orientation?: "vertical" | "horizontal";
@@ -25,7 +25,7 @@ export function RadioCardGroupExample({
   return (
     <RadioCardGroup
       value={selectedValue}
-      onValueChange={(value) => setSelectedValue(value as string)}
+      onValueChange={value => setSelectedValue(value as string)}
       disabled={disabled}
     >
       <RadioCardItem value="basic">

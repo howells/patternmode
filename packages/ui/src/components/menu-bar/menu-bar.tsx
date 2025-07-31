@@ -1,10 +1,10 @@
 /**
- * Menu Bar Components
- * 
+ * Menu Bar Components.
+ *
  * A horizontal menu bar component system built on Base UI Menubar for creating
  * application menu bars with dropdown menus. Provides desktop application-style
  * menu navigation with keyboard support and proper accessibility.
- * 
+ *
  * Features:
  * - Base UI Menubar integration for full accessibility
  * - Horizontal menu bar layout with dropdown menus
@@ -13,11 +13,11 @@
  * - Nested submenu support
  * - Consistent styling with design system
  * - Dark mode support
- * - Disabled state handling
- * 
+ * - Disabled state handling.
+ *
  * Built on Base UI Menubar documentation:
- * https://base-ui.com/react/components/menubar
- * 
+ * https://base-ui.com/react/components/menubar.
+ *
  * @example
  * ```tsx
  * // Basic menu bar
@@ -32,7 +32,7 @@
  *       <MenuBarItem>Save As...</MenuBarItem>
  *     </MenuBarContent>
  *   </MenuBarMenu>
- *   
+ *
  *   <MenuBarMenu>
  *     <MenuBarTrigger>Edit</MenuBarTrigger>
  *     <MenuBarContent>
@@ -45,7 +45,7 @@
  *     </MenuBarContent>
  *   </MenuBarMenu>
  * </MenuBar>
- * 
+ *
  * // With submenus
  * <MenuBar>
  *   <MenuBarMenu>
@@ -65,7 +65,7 @@
  *     </MenuBarContent>
  *   </MenuBarMenu>
  * </MenuBar>
- * 
+ *
  * // Application menu bar
  * <MenuBar className="mb-4">
  *   <MenuBarMenu>
@@ -80,7 +80,7 @@
  *       <MenuBarItem onSelect={() => exit()}>Exit</MenuBarItem>
  *     </MenuBarContent>
  *   </MenuBarMenu>
- *   
+ *
  *   <MenuBarMenu>
  *     <MenuBarTrigger>Tools</MenuBarTrigger>
  *     <MenuBarContent>
@@ -90,7 +90,7 @@
  *       <MenuBarItem onSelect={() => runCommand()}>Command Palette</MenuBarItem>
  *     </MenuBarContent>
  *   </MenuBarMenu>
- *   
+ *
  *   <MenuBarMenu>
  *     <MenuBarTrigger>Help</MenuBarTrigger>
  *     <MenuBarContent>
@@ -104,9 +104,9 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import { Menubar as BaseMenubar } from "@base-ui-components/react/menubar";
 import React from "react";
+import { cx } from "../../lib/utils";
 import {
   Menu,
   MenuContent,
@@ -120,13 +120,13 @@ import {
 
 /**
  * Root menu bar component for horizontal menu navigation.
- * 
+ *
  * Creates a horizontal container for menu bar items with proper styling
  * and accessibility. Built on Base UI Menubar for full keyboard navigation
  * and screen reader support.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Menubar props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Menubar props.
  *
  *
  * @id menu-bar
@@ -152,29 +152,29 @@ import {
  * @name Menu Bar
  * @component
  */
-const MenuBar = React.forwardRef<
-  React.ElementRef<typeof BaseMenubar>,
-  React.ComponentPropsWithoutRef<typeof BaseMenubar>
->(({ className, ...props }, ref) => (
-  <BaseMenubar
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  MenuBar = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenubar> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenubar> | null> }) => (
+    <BaseMenubar
+      ref={ref}
+      className={cx(
       // base
-      "flex rounded-md border p-0.5",
-      // background color
-      "bg-zinc-50 dark:bg-zinc-900",
-      // border color
-      "border-zinc-200 dark:border-zinc-800",
-      className
-    )}
-    {...props}
-  />
-));
+        "flex rounded-md border p-0.5",
+        // background color
+        "bg-zinc-50 dark:bg-zinc-900",
+        // border color
+        "border-zinc-200 dark:border-zinc-800",
+        className,
+      )}
+      {...props}
+    />
+  );
 MenuBar.displayName = "MenuBar";
 
 /**
  * Menu bar menu component for individual menu sections.
- * 
+ *
  * Represents a single menu section within the menu bar.
  * Uses the Menu component as the base implementation.
  *
@@ -190,16 +190,19 @@ MenuBar.displayName = "MenuBar";
  * </MenuBarMenu>
  * ```
  */
-const MenuBarMenu: typeof Menu = Menu;
+const /**
+       *
+       */
+  MenuBarMenu: typeof Menu = Menu;
 
 /**
  * Menu bar trigger component for menu section buttons.
- * 
+ *
  * Renders clickable menu section headers with proper styling and states.
  * Handles hover, focus, and active states with smooth transitions.
  *
- * @param className - Additional CSS classes
- * @param props - Additional MenuTrigger props
+ * @param className - Additional CSS classes.
+ * @param props - Additional MenuTrigger props.
  *
  * @component
  * @example
@@ -209,12 +212,12 @@ const MenuBarMenu: typeof Menu = Menu;
  * <MenuBarTrigger className="font-bold">Important</MenuBarTrigger>
  * ```
  */
-const MenuBarTrigger: React.ForwardRefExoticComponent<
+const /**
+       *
+       */
+  MenuBarTrigger: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof MenuTrigger> & React.RefAttributes<React.ElementRef<typeof MenuTrigger>>
-> = React.forwardRef<
-  React.ElementRef<typeof MenuTrigger>,
-  React.ComponentPropsWithoutRef<typeof MenuTrigger>
->(({ className, ...props }, ref) => (
+> = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof MenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof MenuTrigger> | null> }) => (
   <MenuTrigger
     ref={ref}
     className={cx(
@@ -230,22 +233,22 @@ const MenuBarTrigger: React.ForwardRefExoticComponent<
       "data-[popup-open]:bg-zinc-100 dark:data-[popup-open]:bg-zinc-800",
       // disabled
       "data-disabled:opacity-50 data-disabled:pointer-events-none",
-      className
+      className,
     )}
     {...props}
   />
-));
+);
 MenuBarTrigger.displayName = "MenuBarTrigger";
 
 /**
  * Menu bar content component for dropdown menu content.
- * 
+ *
  * Renders the dropdown menu content with proper positioning and styling.
  * Uses MenuContent as the base with menu bar specific offset settings.
  *
- * @param className - Additional CSS classes
- * @param sideOffset - Distance from trigger (default: 6)
- * @param props - Additional MenuContent props
+ * @param className - Additional CSS classes.
+ * @param sideOffset - Distance from trigger (default: 6).
+ * @param props - Additional MenuContent props.
  *
  * @component
  * @example
@@ -256,30 +259,30 @@ MenuBarTrigger.displayName = "MenuBarTrigger";
  *   <MenuBarSeparator />
  *   <MenuBarItem>Menu Item 3</MenuBarItem>
  * </MenuBarContent>
- * 
+ *
  * <MenuBarContent sideOffset={12}>
  *   <MenuBarItem>Item with more spacing</MenuBarItem>
  * </MenuBarContent>
  * ```
  */
-const MenuBarContent: React.ForwardRefExoticComponent<
+const /**
+       *
+       */
+  MenuBarContent: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof MenuContent> & React.RefAttributes<React.ElementRef<typeof MenuContent>>
-> = React.forwardRef<
-  React.ElementRef<typeof MenuContent>,
-  React.ComponentPropsWithoutRef<typeof MenuContent>
->(({ className, sideOffset = 6, ...props }, ref) => (
+> = ({ ref, className, sideOffset = 6, ...props }: React.ComponentPropsWithoutRef<typeof MenuContent> & { ref?: React.RefObject<React.ElementRef<typeof MenuContent> | null> }) => (
   <MenuContent
     ref={ref}
     className={className}
     sideOffset={sideOffset}
     {...props}
   />
-));
+);
 MenuBarContent.displayName = "MenuBarContent";
 
 /**
  * Menu bar item component for individual menu options.
- * 
+ *
  * Represents clickable menu items within menu bar dropdowns.
  * Uses MenuItem as the base implementation.
  *
@@ -290,11 +293,14 @@ MenuBarContent.displayName = "MenuBarContent";
  * <MenuBarItem disabled>Disabled Item</MenuBarItem>
  * ```
  */
-const MenuBarItem: typeof MenuItem = MenuItem;
+const /**
+       *
+       */
+  MenuBarItem: typeof MenuItem = MenuItem;
 
 /**
  * Menu bar separator component for visual grouping.
- * 
+ *
  * Creates visual separation between menu item groups.
  * Uses MenuSeparator as the base implementation.
  *
@@ -307,11 +313,14 @@ const MenuBarItem: typeof MenuItem = MenuItem;
  * <MenuBarItem>Item 3</MenuBarItem>
  * ```
  */
-const MenuBarSeparator = MenuSeparator;
+const /**
+       *
+       */
+  MenuBarSeparator = MenuSeparator;
 
 /**
  * Menu bar submenu component for nested menus.
- * 
+ *
  * Enables creation of nested menu structures within menu bars.
  * Uses MenuSubmenu as the base implementation.
  *
@@ -327,11 +336,14 @@ const MenuBarSeparator = MenuSeparator;
  * </MenuBarSubmenu>
  * ```
  */
-const MenuBarSubmenu: typeof MenuSubmenu = MenuSubmenu;
+const /**
+       *
+       */
+  MenuBarSubmenu: typeof MenuSubmenu = MenuSubmenu;
 
 /**
  * Menu bar submenu trigger for nested menu headers.
- * 
+ *
  * Renders triggers for nested submenu sections.
  * Uses MenuSubmenuTrigger as the base implementation.
  *
@@ -341,11 +353,14 @@ const MenuBarSubmenu: typeof MenuSubmenu = MenuSubmenu;
  * <MenuBarSubmenuTrigger>Advanced Tools</MenuBarSubmenuTrigger>
  * ```
  */
-const MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
+const /**
+       *
+       */
+  MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
 
 /**
  * Menu bar submenu content for nested menu items.
- * 
+ *
  * Renders content for nested submenu sections.
  * Uses MenuSubmenuContent as the base implementation.
  *
@@ -358,7 +373,10 @@ const MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
  * </MenuBarSubmenuContent>
  * ```
  */
-const MenuBarSubmenuContent: typeof MenuSubmenuContent = MenuSubmenuContent;
+const /**
+       *
+       */
+  MenuBarSubmenuContent: typeof MenuSubmenuContent = MenuSubmenuContent;
 
 export {
   MenuBar,

@@ -1,17 +1,18 @@
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import Link from "next/link";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 const textVariants = tv({
   base: "m-0 text-current leading-relaxed",
   variants: {
     size: {
       "2xs": "text-2xs",
-      xs: "text-xs",
-      sm: "text-sm",
-      base: "text-base",
-      lg: "text-lg",
-      xl: "text-xl",
+      "xs": "text-xs",
+      "sm": "text-sm",
+      "base": "text-base",
+      "lg": "text-lg",
+      "xl": "text-xl",
     },
   },
   defaultVariants: {
@@ -21,12 +22,12 @@ const textVariants = tv({
 
 interface TextProps
   extends React.ComponentPropsWithoutRef<"p">,
-    VariantProps<typeof textVariants> {}
+  VariantProps<typeof textVariants> {}
 
 /**
  * A flexible text component with typography variants and semantic elements that inherits color from its parent.
  *
- * Text
+ * Text.
  *
  * @component
  * @id text
@@ -55,7 +56,7 @@ export function TextLink({
       {...props}
       className={cx(
         className,
-        "text-current underline decoration-current/50 data-hover:decoration-current"
+        "text-current underline decoration-current/50 data-hover:decoration-current",
       )}
     />
   );
@@ -79,7 +80,7 @@ export function Code({
       {...props}
       className={cx(
         className,
-        "rounded-sm border border-current/10 bg-current/5 px-0.5 text-sm font-medium text-current sm:text-[0.8125rem]"
+        "rounded-sm border border-current/10 bg-current/5 px-0.5 text-sm font-medium text-current sm:text-[0.8125rem]",
       )}
     />
   );

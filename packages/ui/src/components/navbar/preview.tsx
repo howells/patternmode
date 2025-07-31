@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Navbar,
   NavbarDivider,
@@ -9,6 +8,7 @@ import {
   NavbarSection,
   NavbarSpacer,
 } from "@patternmode/ui";
+import { useState } from "react";
 
 export function NavbarExample() {
   const [currentItem, setCurrentItem] = useState("Dashboard");

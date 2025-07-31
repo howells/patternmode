@@ -1,6 +1,6 @@
-import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import {
   DefaultExample,
@@ -190,15 +190,15 @@ export const componentConfig: ComponentConfig = {
         },
         {
           name: "type",
-          type: '"default" | "stacked" | "percent"',
+          type: "\"default\" | \"stacked\" | \"percent\"",
           description: "The type of area chart to display.",
-          default: '"default"',
+          default: "\"default\"",
         },
         {
           name: "fill",
-          type: '"gradient" | "solid" | "none"',
+          type: "\"gradient\" | \"solid\" | \"none\"",
           description: "The fill style for the areas.",
-          default: '"gradient"',
+          default: "\"gradient\"",
         },
         {
           name: "showXAxis",
@@ -232,9 +232,9 @@ export const componentConfig: ComponentConfig = {
         },
         {
           name: "legendPosition",
-          type: '"left" | "center" | "right"',
+          type: "\"left\" | \"center\" | \"right\"",
           description: "Position of the legend.",
-          default: '"right"',
+          default: "\"right\"",
         },
         {
           name: "connectNulls",

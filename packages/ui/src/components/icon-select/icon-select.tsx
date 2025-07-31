@@ -1,5 +1,5 @@
 /**
- * Icon Select Component
+ * Icon Select Component.
  *
  * A high-performance, tree-shakable searchable icon picker component that provides access to ALL 3,644+ Lucide React icons
  * using infinite scrolling and API-based data loading. Icons are loaded dynamically on-demand with pagination,
@@ -17,7 +17,7 @@
  * - Utility functions for icon retrieval
  * - Built on InfiniteCombobox for optimal UX
  * - Zero upfront bundle cost
- * - Smooth infinite scroll: Triggers loading when scrolling near bottom of list
+ * - Smooth infinite scroll: Triggers loading when scrolling near bottom of list.
  *
  * @example
  * ```tsx
@@ -65,10 +65,11 @@
 
 "use client";
 
-import { Combobox, type ComboboxOption } from "../combobox/combobox";
-import { config } from "../../lib/config";
+import type { ComboboxOption } from "../combobox/combobox";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
+import { config } from "../../lib/config";
+import { Combobox } from "../combobox/combobox";
 
 // Icon data structure that extends ComboboxOption
 interface IconOption extends ComboboxOption {
@@ -80,17 +81,29 @@ interface IconOption extends ComboboxOption {
  * Props for the IconSelect component.
  */
 export interface IconSelectProps {
-  /** Currently selected icon name */
+  /**
+   * Currently selected icon name.
+   */
   value?: string;
-  /** Callback when icon selection changes */
+  /**
+   * Callback when icon selection changes.
+   */
   onValueChange?: (value: string) => void;
-  /** Placeholder text when no icon is selected */
+  /**
+   * Placeholder text when no icon is selected.
+   */
   placeholder?: string;
-  /** Whether the select is disabled */
+  /**
+   * Whether the select is disabled.
+   */
   disabled?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Stroke width for icons (defaults to 1) */
+  /**
+   * Stroke width for icons (defaults to 1).
+   */
   iconStrokeWidth?: number;
 }
 
@@ -132,7 +145,7 @@ async function fetchIcons({
       label: icon.pascal,
       kebab: icon.kebab,
       pascal: icon.pascal,
-    })
+    }),
   );
 
   return {
@@ -144,86 +157,88 @@ async function fetchIcons({
 
 /**
  * Convert PascalCase icon name to kebab-case for DynamicIcon.
- * Handles both letters and numbers properly (e.g., FileJson2 -> file-json-2)
+ * Handles both letters and numbers properly (e.g., FileJson2 -> file-json-2).
  */
 function toKebabCase(str: string): string {
   return str
     .replace(/([A-Z])/g, "-$1") // Add dash before capital letters
-    .replace(/([a-z])([0-9])/g, "$1-$2") // Add dash before numbers
+    .replace(/([a-z])(\d)/g, "$1-$2") // Add dash before numbers
     .toLowerCase()
     .replace(/^-/, ""); // Remove leading dash
 }
 
 /**
- * Safe DynamicIcon wrapper that renders Lucide icons with comprehensive validation to prevent console errors
+ * Safe DynamicIcon wrapper that renders Lucide icons with comprehensive validation to prevent console errors.
  *
  * @id icon-select
  * @name Icon Select
  */
-const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
-  name,
-  className,
-  strokeWidth,
-  fallback,
-}: {
-  name: string;
-  className?: string;
-  strokeWidth?: number;
-  fallback?: React.ReactNode;
-}) {
-  const fallbackElement = React.useMemo(
-    () =>
-      fallback || (
-        <div
-          className={`${className} flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400 shrink-0`}
-        >
-          ?
-        </div>
-      ),
-    [className, fallback]
-  );
-
-  // Comprehensive validation before attempting to render
-  const isValidIcon = React.useMemo(() => {
-    if (!name || typeof name !== "string" || name.trim() === "") {
-      return false;
-    }
-
-    // Check if the icon name follows the expected kebab-case pattern
-    if (!/^[a-z][a-z0-9-]*$/.test(name)) {
-      return false;
-    }
-
-    // These icons are actually valid in Lucide React, so we don't filter them out
-
-    return true;
-  }, [name]);
-
-  if (!isValidIcon) {
-    return fallbackElement;
-  }
-
-  // Render with try-catch for additional safety
-  try {
-    return (
-      <div
-        key={name}
-        className={`${className} shrink-0 flex items-center justify-center`}
-      >
-        <DynamicIcon
-          name={name as Parameters<typeof DynamicIcon>[0]["name"]}
-          className="w-full h-full"
-          strokeWidth={strokeWidth}
-        />
-      </div>
+const /**
+       *
+       */
+  SafeDynamicIcon = React.memo(({
+    name,
+    className,
+    strokeWidth,
+    fallback,
+  }: {
+    name: string;
+    className?: string;
+    strokeWidth?: number;
+    fallback?: React.ReactNode;
+  }) => {
+    const fallbackElement = React.useMemo(
+      () =>
+        fallback || (
+          <div
+            className={`${className} flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400 shrink-0`}
+          >
+            ?
+          </div>
+        ),
+      [className, fallback],
     );
-  } catch (error) {
+
+    // Comprehensive validation before attempting to render
+    const isValidIcon = React.useMemo(() => {
+      if (!name || typeof name !== "string" || name.trim() === "") {
+        return false;
+      }
+
+      // Check if the icon name follows the expected kebab-case pattern
+      if (!/^[a-z][a-z0-9-]*$/.test(name)) {
+        return false;
+      }
+
+      // These icons are actually valid in Lucide React, so we don't filter them out
+
+      return true;
+    }, [name]);
+
+    if (!isValidIcon) {
+      return fallbackElement;
+    }
+
+    // Render with try-catch for additional safety
+    try {
+      return (
+        <div
+          key={name}
+          className={`${className} shrink-0 flex items-center justify-center`}
+        >
+          <DynamicIcon
+            name={name as Parameters<typeof DynamicIcon>[0]["name"]}
+            className="w-full h-full"
+            strokeWidth={strokeWidth}
+          />
+        </div>
+      );
+    }
+    catch (error) {
     // Silently catch DynamicIcon errors and show fallback
-    return fallbackElement;
-  }
-});
-
-
+      return fallbackElement;
+    }
+  });
 
 /**
  * High-performance icon selection component with infinite scrolling.
@@ -251,14 +266,14 @@ export function IconSelect({
         strokeWidth={iconStrokeWidth}
       />
     ),
-    [iconStrokeWidth]
+    [iconStrokeWidth],
   );
 
   const handleValueChange = React.useCallback(
     (newValue: string | undefined) => {
       onValueChange?.(newValue || "");
     },
-    [onValueChange]
+    [onValueChange],
   );
 
   return (
@@ -275,8 +290,8 @@ export function IconSelect({
         className={className}
         searchDebounce={300} // 300ms search debounce
         iconStrokeWidth={iconStrokeWidth}
-        getItemValue={(item) => item.pascal}
-        getItemLabel={(item) => item.pascal}
+        getItemValue={item => item.pascal}
+        getItemLabel={item => item.pascal}
         getItemIcon={getItemIcon}
       />
     </div>
@@ -290,30 +305,36 @@ export function useIconSelect(initialValue?: string) {
   const [value, setValue] = React.useState(initialValue || "");
 
   // Create a memoized DynamicIcon component for the selected icon
-  const DynamicIconComponent = React.useMemo(() => {
-    if (!value) return null;
+  const /**
+         *
+         */
+    DynamicIconComponent = React.useMemo(() => {
+      if (!value) { return null; }
 
-    const IconComponent = React.memo(
-      ({
-        className,
-        strokeWidth,
-        ...props
-      }: {
-        className?: string;
-        strokeWidth?: number;
-        [key: string]: unknown;
-      }) => (
-        <SafeDynamicIcon
-          name={toKebabCase(value)} // Convert PascalCase to kebab-case
-          className={className}
-          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-          {...props}
-        />
-      )
-    );
-    IconComponent.displayName = `SelectedIcon_${value}`;
-    return IconComponent;
-  }, [value]);
+      const /**
+             *
+             */
+        IconComponent = React.memo(
+          ({
+            className,
+            strokeWidth,
+            ...props
+          }: {
+            className?: string;
+            strokeWidth?: number;
+            [key: string]: unknown;
+          }) => (
+            <SafeDynamicIcon
+              name={toKebabCase(value)} // Convert PascalCase to kebab-case
+              className={className}
+              strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+              {...props}
+            />
+          ),
+        );
+      IconComponent.displayName = `SelectedIcon_${value}`;
+      return IconComponent;
+    }, [value]);
 
   return {
     value,
@@ -327,31 +348,34 @@ export function useIconSelect(initialValue?: string) {
  * Uses pre-validation to prevent console warnings for invalid icons.
  */
 export function getDynamicIconByName(name: string) {
-  const DynamicIconWrapper = React.memo(
-    ({
-      className,
-      strokeWidth,
-      fallback,
-      ...props
-    }: {
-      className?: string;
-      strokeWidth?: number;
-      fallback?: React.ReactNode;
-      [key: string]: unknown;
-    }) => {
-      const kebabName = toKebabCase(name);
-      
-      return (
-        <SafeDynamicIcon
-          name={kebabName}
-          className={className}
-          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-          fallback={fallback}
-          {...props}
-        />
-      );
-    }
-  );
+  const /**
+         *
+         */
+    DynamicIconWrapper = React.memo(
+      ({
+        className,
+        strokeWidth,
+        fallback,
+        ...props
+      }: {
+        className?: string;
+        strokeWidth?: number;
+        fallback?: React.ReactNode;
+        [key: string]: unknown;
+      }) => {
+        const kebabName = toKebabCase(name);
+
+        return (
+          <SafeDynamicIcon
+            name={kebabName}
+            className={className}
+            strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+            fallback={fallback}
+            {...props}
+          />
+        );
+      },
+    );
   DynamicIconWrapper.displayName = `SafeDynamicIcon_${name}`;
   return DynamicIconWrapper;
 }
@@ -361,9 +385,9 @@ export function getDynamicIconByName(name: string) {
  */
 export function isValidLucideIcon(name: string): boolean {
   return (
-    typeof name === "string" &&
-    name.length > 0 &&
-    /^[A-Za-z][A-Za-z0-9]*$/.test(name)
+    typeof name === "string"
+    && name.length > 0
+    && /^[A-Z][A-Z0-9]*$/i.test(name)
   );
 }
 

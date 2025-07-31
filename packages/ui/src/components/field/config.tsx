@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, FieldExample, WithDescriptionExample, WithErrorExample } from "./examples";
+import { DefaultExample, WithDescriptionExample, WithErrorExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "field",
@@ -17,14 +17,14 @@ export const componentConfig: ComponentConfig = {
       name: "invalid",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the field has validation errors."
+      description: "Whether the field has validation errors.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the field is disabled."
-    }
+      description: "Whether the field is disabled.",
+    },
   ],
   examples: [
     {
@@ -37,11 +37,13 @@ export const componentConfig: ComponentConfig = {
       id: "with-description",
       title: "With Description",
       description: "Field with helpful description text.",
-      code: jsxToString(<WithDescriptionExample />)},
+      code: jsxToString(<WithDescriptionExample />),
+    },
     {
       id: "with-error",
       title: "With Error",
       description: "Field showing validation error state.",
-      code: jsxToString(<WithErrorExample />)}
-  ]
+      code: jsxToString(<WithErrorExample />),
+    },
+  ],
 };

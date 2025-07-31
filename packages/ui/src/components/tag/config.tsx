@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { ColoredExample, ComplexExample, DefaultExample, DismissibleExample, WithAvatarsExample, WithCountsExample, WithLabelsExample } from "./examples";
 

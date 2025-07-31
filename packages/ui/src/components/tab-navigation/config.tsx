@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { TabNavigationExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Tabs",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { TabNavigation, TabNavigationLink } from "@patternmode/ui";`,
   props: [
@@ -22,6 +22,7 @@ export const componentConfig: ComponentConfig = {
       id: "tab-navigation",
       title: "Basic Tab Navigation",
       description: "A navigation component for switching between different views or sections.",
-      code: jsxToString(<TabNavigationExample />)}
-  ]
+      code: jsxToString(<TabNavigationExample />),
+    },
+  ],
 };

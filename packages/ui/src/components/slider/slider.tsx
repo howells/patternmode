@@ -2,10 +2,11 @@
 
 "use client";
 
-import { cx, focusRing } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { Slider as BaseSlider } from "@base-ui-components/react/slider";
 import * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx, focusRing } from "../../lib/utils";
 
 const sliderVariants = tv({
   slots: {
@@ -67,8 +68,8 @@ const sliderVariants = tv({
  * Props for the Slider component.
  *
  * @interface SliderProps
- * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseSlider.Root>, "children">
- * @extends VariantProps<typeof sliderVariants>
+ * @augments Omit<React.ComponentPropsWithoutRef<typeof BaseSlider.Root>, "children">
+ * @augments VariantProps<typeof sliderVariants>
  * @example
  * ```tsx
  * <Slider defaultValue={50} />
@@ -79,12 +80,18 @@ interface SliderProps
       React.ComponentPropsWithoutRef<typeof BaseSlider.Root>,
       "children"
     >,
-    VariantProps<typeof sliderVariants> {
-  /** Aria label for the slider thumb */
+  VariantProps<typeof sliderVariants> {
+  /**
+   * Aria label for the slider thumb.
+   */
   ariaLabelThumb?: string;
-  /** Whether to show the current value */
+  /**
+   * Whether to show the current value.
+   */
   showValue?: boolean;
-  /** Function to format the displayed value */
+  /**
+   * Function to format the displayed value.
+   */
   valueFormatter?: (value: number) => string;
 }
 
@@ -95,16 +102,16 @@ interface SliderProps
  * providing accessible range input controls with keyboard navigation and
  * customizable appearance. Supports single values, ranges, and custom formatting.
  *
- * @param value - Current slider value(s)
- * @param defaultValue - Default slider value(s)
- * @param min - Minimum allowed value
- * @param max - Maximum allowed value
- * @param step - Step increment for value changes
- * @param orientation - Slider orientation (horizontal or vertical)
- * @param disabled - Whether the slider is disabled
- * @param ariaLabelThumb - Accessibility label for the thumb
- * @param showValue - Whether to display the current value
- * @param valueFormatter - Function to format displayed values
+ * @param value - Current slider value(s).
+ * @param defaultValue - Default slider value(s).
+ * @param min - Minimum allowed value.
+ * @param max - Maximum allowed value.
+ * @param step - Step increment for value changes.
+ * @param orientation - Slider orientation (horizontal or vertical).
+ * @param disabled - Whether the slider is disabled.
+ * @param ariaLabelThumb - Accessibility label for the thumb.
+ * @param showValue - Whether to display the current value.
+ * @param valueFormatter - Function to format displayed values.
  *
  *
  * @id slider
@@ -167,19 +174,11 @@ interface SliderProps
  * @name Slider
  * @component
  */
-const Slider = React.forwardRef<
-  React.ElementRef<typeof BaseSlider.Root>,
-  SliderProps
->(
-  (
-    {
-      className,
-      ariaLabelThumb,
-      showValue = false,
-      valueFormatter = (value) => value.toString(),
-      ...props
-    },
-    forwardedRef
+const /**
+       *
+       */
+  Slider = (
+    { ref: forwardedRef, className, ariaLabelThumb, showValue = false, valueFormatter = value => value.toString(), ...props }: SliderProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null> },
   ) => {
     const {
       root,
@@ -210,8 +209,7 @@ const Slider = React.forwardRef<
                     key={index}
                     className={thumb()}
                     getAriaLabel={() =>
-                      ariaLabelThumb || `Slider thumb ${index + 1}`
-                    }
+                      ariaLabelThumb || `Slider thumb ${index + 1}`}
                   />
                 ))}
               </BaseSlider.Track>
@@ -220,18 +218,19 @@ const Slider = React.forwardRef<
               <div className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
                 <BaseSlider.Value>
                   {(formattedValues, values) =>
-                    values.length === 1 ? (
-                      <div className="text-center">
-                        <span>{valueFormatter(values[0])}</span>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center gap-1">
-                        {values.map((val, index) => (
-                          <span key={index}>{valueFormatter(val)}</span>
-                        ))}
-                      </div>
-                    )
-                  }
+                    values.length === 1
+                      ? (
+                          <div className="text-center">
+                            <span>{valueFormatter(values[0])}</span>
+                          </div>
+                        )
+                      : (
+                          <div className="flex flex-col items-center gap-1">
+                            {values.map((val, index) => (
+                              <span key={index}>{valueFormatter(val)}</span>
+                            ))}
+                          </div>
+                        )}
                 </BaseSlider.Value>
               </div>
             )}
@@ -255,8 +254,7 @@ const Slider = React.forwardRef<
                   key={index}
                   className={thumb()}
                   getAriaLabel={() =>
-                    ariaLabelThumb || `Slider thumb ${index + 1}`
-                  }
+                    ariaLabelThumb || `Slider thumb ${index + 1}`}
                 />
               ))}
             </BaseSlider.Track>
@@ -265,36 +263,54 @@ const Slider = React.forwardRef<
             <div className="ml-2 text-xs text-zinc-500 dark:text-zinc-400">
               <BaseSlider.Value>
                 {(formattedValues, values) =>
-                  values.length === 1 ? (
-                    <div className="w-full text-center">
-                      <span>{valueFormatter(values[0])}</span>
-                    </div>
-                  ) : (
-                    <div className="flex justify-between w-full">
-                      {values.map((val, index) => (
-                        <span key={index}>{valueFormatter(val)}</span>
-                      ))}
-                    </div>
-                  )
-                }
+                  values.length === 1
+                    ? (
+                        <div className="w-full text-center">
+                          <span>{valueFormatter(values[0])}</span>
+                        </div>
+                      )
+                    : (
+                        <div className="flex justify-between w-full">
+                          {values.map((val, index) => (
+                            <span key={index}>{valueFormatter(val)}</span>
+                          ))}
+                        </div>
+                      )}
               </BaseSlider.Value>
             </div>
           )}
         </BaseSlider.Root>
       </div>
     );
-  }
-);
+  };
 
 Slider.displayName = "Slider";
 
 // Export individual components for advanced usage
-const SliderRoot = BaseSlider.Root;
-const SliderValue = BaseSlider.Value;
-const SliderControl = BaseSlider.Control;
-const SliderTrack = BaseSlider.Track;
-const SliderIndicator = BaseSlider.Indicator;
-const SliderThumb = BaseSlider.Thumb;
+const /**
+       *
+       */
+  SliderRoot = BaseSlider.Root;
+const /**
+       *
+       */
+  SliderValue = BaseSlider.Value;
+const /**
+       *
+       */
+  SliderControl = BaseSlider.Control;
+const /**
+       *
+       */
+  SliderTrack = BaseSlider.Track;
+const /**
+       *
+       */
+  SliderIndicator = BaseSlider.Indicator;
+const /**
+       *
+       */
+  SliderThumb = BaseSlider.Thumb;
 
 export {
   Slider,

@@ -1,5 +1,5 @@
-import React from "react";
 import { HeadingElement } from "@patternmode/ui";
+import React from "react";
 
 export function DefaultExample() {
   return (
@@ -120,4 +120,7 @@ export function SemanticHierarchyExample() {
     </div>
   );
 }
-export const HeadingElementExample = DefaultExample;
+export const /**
+              *
+              */
+  HeadingElementExample = DefaultExample;

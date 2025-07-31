@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { AlignmentExample, CustomSpacingExample, DefaultExample, HorizontalExample, StackExample } from "./examples";
+import { AlignmentExample, CustomSpacingExample, DefaultExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "stack",

@@ -1,7 +1,7 @@
 "use client";
 
+import { Grid, GridCell } from "@patternmode/ui";
 import React from "react";
-import { Grid, GridAuto, GridCell } from "@patternmode/ui";
 
 interface GridExampleProps {
   columns?: number;
@@ -16,40 +16,46 @@ interface GridExampleProps {
 }
 
 // Example component for preview system
-export const GridExample = ({
-  columns = 3,
-  rows = 3,
-  gap = 4,
-  showColumnGuides = true,
-  showRowGuides = true,
-  minHeight = "md",
-  cellBordered = true,
-  cellSolid = false,
-  cellOverlay = false,
-}: GridExampleProps) => {
+export const /**
+              *
+              */
+  GridExample = ({
+    columns = 3,
+    rows = 3,
+    gap = 4,
+    showColumnGuides = true,
+    showRowGuides = true,
+    minHeight = "md",
+    cellBordered = true,
+    cellSolid = false,
+    cellOverlay = false,
+  }: GridExampleProps) => {
   // Generate a reasonable number of cells based on columns and rows
-  const cellCount = Math.min(columns * rows, 24);
+    const cellCount = Math.min(columns * rows, 24);
 
-  return (
-    <Grid
-      columns={columns}
-      rows={rows}
-      gap={gap}
-      minHeight={minHeight}
-    >
-      {Array.from({ length: cellCount }, (_, index) => (
-        <GridCell
-          key={index}
-          className={`p-4 rounded text-center ${
-            cellSolid ? 'bg-blue-100 border border-blue-300' : 
-            cellOverlay ? 'bg-purple-100 border border-purple-300 shadow-md' :
-            cellBordered ? 'border border-gray-300' : 
-            'bg-gray-50 border border-gray-200'
-          }`}
-        >
-          {index + 1}
-        </GridCell>
-      ))}
-    </Grid>
-  );
-};
+    return (
+      <Grid
+        columns={columns}
+        rows={rows}
+        gap={gap}
+        minHeight={minHeight}
+      >
+        {Array.from({ length: cellCount }, (_, index) => (
+          <GridCell
+            key={index}
+            className={`p-4 rounded text-center ${
+              cellSolid
+                ? "bg-blue-100 border border-blue-300"
+                : cellOverlay
+                  ? "bg-purple-100 border border-purple-300 shadow-md"
+                  : cellBordered
+                    ? "border border-gray-300"
+                    : "bg-gray-50 border border-gray-200"
+            }`}
+          >
+            {index + 1}
+          </GridCell>
+        ))}
+      </Grid>
+    );
+  };

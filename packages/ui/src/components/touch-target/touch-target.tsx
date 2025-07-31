@@ -1,5 +1,5 @@
 /**
- * Expand the hit area to at least 44×44px on touch devices
+ * Expand the hit area to at least 44×44px on touch devices.
  *
  * @component
  * @id touch-target

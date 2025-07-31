@@ -1,5 +1,5 @@
 /**
- * Navbar Components
+ * Navbar Components.
  *
  * A flexible navigation bar component system for building application headers,
  * toolbars, and navigation areas. Features animated current indicators, flexible
@@ -13,7 +13,7 @@
  * - Icon and avatar support
  * - Responsive design with mobile optimizations
  * - Dark mode support
- * - Truncated labels for overflow handling
+ * - Truncated labels for overflow handling.
  *
  * @example
  * ```tsx
@@ -94,10 +94,10 @@
 
 "use client";
 
-import { cx } from "../../lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
-import React, { forwardRef, useId } from "react";
+import React, { useId } from "react";
+import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 
 /**
@@ -108,8 +108,8 @@ import { Button } from "../button/button";
  *
  * @id navbar
  * @name Navbar
- * @param className - Additional CSS classes
- * @param props - Additional HTML nav element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML nav element props.
  *
  * @component
  * @example
@@ -147,8 +147,8 @@ export function Navbar({
  * Creates a vertical line separator between navbar sections for visual
  * grouping and organization. Automatically adapts to light and dark themes.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -185,8 +185,8 @@ export function NavbarDivider({
  * shared animation context using Framer Motion LayoutGroup. Each section
  * has its own animation scope for current indicators.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -223,8 +223,8 @@ export function NavbarSection({
  * Creates flexible space between navbar sections, pushing subsequent
  * sections to the right. Useful for creating left/right layouts.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div element props.
  *
  * @component
  * @example
@@ -264,11 +264,11 @@ export function NavbarSpacer({
  * or button (with onClick). Features animated current page indicators,
  * icon support, and responsive design.
  *
- * @param current - Whether this item represents the current page
- * @param className - Additional CSS classes
- * @param children - Content including icons, labels, and other elements
- * @param href - Optional URL for link behavior (uses Next.js Link)
- * @param props - Additional button element props
+ * @param current - Whether this item represents the current page.
+ * @param className - Additional CSS classes.
+ * @param children - Content including icons, labels, and other elements.
+ * @param href - Optional URL for link behavior (uses Next.js Link).
+ * @param props - Additional button element props.
  *
  *
  * @id navbar
@@ -301,57 +301,44 @@ export function NavbarSpacer({
  * </NavbarItem>
  * ```
  */
-export const NavbarItem = forwardRef(function NavbarItem(
-  {
-    current,
-    className,
-    children,
-    href,
-    ...props
-  }: {
-    /** Whether this item represents the current page/section */
-    current?: boolean;
-    /** Additional CSS classes */
-    className?: string;
-    /** Item content including icons, labels, and other elements */
-    children: React.ReactNode;
-    /** Optional URL for link behavior */
-    href?: string;
-  } & React.ComponentPropsWithoutRef<"button">,
-  ref: React.ForwardedRef<HTMLButtonElement>
-) {
-  const classes = cx(
+export const /**
+              *
+              */
+  NavbarItem = function NavbarItem(
+    { ref, current, className, children, href, ...props },
+  ) {
+    const classes = cx(
     // Base - let the minimal variant handle background and colors
-    "relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium sm:text-sm/5",
-    // Leading icon/icon-only
-    "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
-    // Trailing icon (down chevron or similar)
-    "*:not-nth-2:last:data-[slot=icon]:ml-auto *:not-nth-2:last:data-[slot=icon]:size-5 sm:*:not-nth-2:last:data-[slot=icon]:size-4",
-    // Avatar
-    "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 *:data-[slot=avatar]:[--avatar-radius:var(--radius-md)] sm:*:data-[slot=avatar]:size-6"
-  );
+      "relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium sm:text-sm/5",
+      // Leading icon/icon-only
+      "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
+      // Trailing icon (down chevron or similar)
+      "*:not-nth-2:last:data-[slot=icon]:ml-auto *:not-nth-2:last:data-[slot=icon]:size-5 sm:*:not-nth-2:last:data-[slot=icon]:size-4",
+      // Avatar
+      "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 *:data-[slot=avatar]:[--avatar-radius:var(--radius-md)] sm:*:data-[slot=avatar]:size-6",
+    );
 
-  return (
-    <span className={cx(className, "relative")}>
-      {current && (
-        <motion.span
-          layoutId="current-indicator"
-          className="absolute inset-x-2 -bottom-2.5 h-0.5 rounded-full bg-zinc-950 dark:bg-white"
-        />
-      )}
-      <Button
-        ref={ref}
-        variant="minimal"
-        className={classes}
-        data-current={current ? "true" : undefined}
-        render={href ? <Link href={href} /> : undefined}
-        {...props}
-      >
-        {children}
-      </Button>
-    </span>
-  );
-});
+    return (
+      <span className={cx(className, "relative")}>
+        {current && (
+          <motion.span
+            layoutId="current-indicator"
+            className="absolute inset-x-2 -bottom-2.5 h-0.5 rounded-full bg-zinc-950 dark:bg-white"
+          />
+        )}
+        <Button
+          ref={ref}
+          variant="minimal"
+          className={classes}
+          data-current={current ? "true" : undefined}
+          render={href ? <Link href={href} /> : undefined}
+          {...props}
+        >
+          {children}
+        </Button>
+      </span>
+    );
+  };
 
 /**
  * Navbar label component for text content within navbar items.
@@ -359,8 +346,8 @@ export const NavbarItem = forwardRef(function NavbarItem(
  * Renders text labels with automatic truncation for overflow handling.
  * Typically used within NavbarItem components for displaying navigation text.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML span element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML span element props.
  *
  * @component
  * @example

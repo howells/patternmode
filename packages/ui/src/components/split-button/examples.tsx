@@ -1,19 +1,18 @@
-import React from "react";
-import { SplitButton } from "@patternmode/ui";
-import { MenuItem, MenuSeparator, MenuLabel } from "@patternmode/ui";
-import { 
-  Download as DownloadIcon, 
+import { MenuItem, MenuLabel, MenuSeparator, SplitButton } from "@patternmode/ui";
+import {
   ChevronDown as ChevronDownIcon,
+  Code as CodeIcon,
+  Download as DownloadIcon,
   File as FileIcon,
   Image as ImageIcon,
-  Code as CodeIcon
 } from "lucide-react";
+import React from "react";
 
 export function SplitButtonExample() {
   return (
     <SplitButton
       buttonContent="Save"
-      onButtonClick={() => console.log('Save clicked')}
+      onButtonClick={() => console.log("Save clicked")}
     >
       <MenuItem>Save as Draft</MenuItem>
       <MenuItem>Save as Template</MenuItem>
@@ -112,7 +111,7 @@ export function ComplexMenu() {
   return (
     <SplitButton
       buttonContent="Publish"
-      onButtonClick={() => console.log('Publish clicked')}
+      onButtonClick={() => console.log("Publish clicked")}
     >
       <MenuLabel>Publish Options</MenuLabel>
       <MenuItem>Publish Now</MenuItem>

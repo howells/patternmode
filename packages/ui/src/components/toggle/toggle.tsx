@@ -2,9 +2,10 @@
 
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
 
@@ -53,12 +54,12 @@ const toggleVariants = tv({
 
 interface ToggleProps
   extends React.ComponentPropsWithoutRef<typeof BaseToggle>,
-    VariantProps<typeof toggleVariants> {}
+  VariantProps<typeof toggleVariants> {}
 
 /**
  * A two-state button that can be either on or off.
  *
- * Toggle
+ * Toggle.
  *
  * @component
  * @id toggle
@@ -68,21 +69,24 @@ interface ToggleProps
  * <Toggle>Content</Toggle>
  * ```
  */
-const Toggle = React.forwardRef<
-  React.ElementRef<typeof BaseToggle>,
-  ToggleProps
->(({ className, variant, size, ...props }, ref) => (
-  <BaseToggle
-    ref={ref}
-    className={cx(toggleVariants({ variant, size }), className)}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  Toggle = ({ ref, className, variant, size, ...props }: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => (
+    <BaseToggle
+      ref={ref}
+      className={cx(toggleVariants({ variant, size }), className)}
+      {...props}
+    />
+  );
 
 Toggle.displayName = "Toggle";
 
 // Export individual components for advanced usage
-const ToggleRoot = BaseToggle;
+const /**
+       *
+       */
+  ToggleRoot = BaseToggle;
 
 export { Toggle, ToggleRoot, toggleVariants };
 

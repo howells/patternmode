@@ -31,13 +31,19 @@ export function PreviewCardExample() {
           <PreviewCardBody>
             <div className="flex gap-4 text-sm text-zinc-600 dark:text-zinc-400">
               <div>
-                <span className="font-medium text-zinc-900 dark:text-zinc-100">50+</span> Components
+                <span className="font-medium text-zinc-900 dark:text-zinc-100">50+</span>
+                {" "}
+                Components
               </div>
               <div>
-                <span className="font-medium text-zinc-900 dark:text-zinc-100">TypeScript</span> Support
+                <span className="font-medium text-zinc-900 dark:text-zinc-100">TypeScript</span>
+                {" "}
+                Support
               </div>
               <div>
-                <span className="font-medium text-zinc-900 dark:text-zinc-100">100%</span> Accessible
+                <span className="font-medium text-zinc-900 dark:text-zinc-100">100%</span>
+                {" "}
+                Accessible
               </div>
             </div>
           </PreviewCardBody>

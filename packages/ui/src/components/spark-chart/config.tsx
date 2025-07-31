@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { AreaExample, DefaultExample, SparkChartExample } from "./examples";
+import { AreaExample, DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "spark-chart",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
 
   installation: {
     npm: "recharts",
-    dependencies: ["recharts"]
+    dependencies: ["recharts"],
   },
   importStatement: `import { SparkChart } from "@patternmode/ui";`,
   componentId: "SparkChartExample",
@@ -21,26 +21,26 @@ export const componentConfig: ComponentConfig = {
       name: "data",
       type: "array",
       description: "Array of data points",
-      defaultValue: []
+      defaultValue: [],
     },
     {
       name: "categories",
       type: "array",
       description: "Array of category names",
-      defaultValue: ["value"]
+      defaultValue: ["value"],
     },
     {
       name: "index",
       type: "string",
       description: "Key to use for x-axis values",
-      defaultValue: "date"
+      defaultValue: "date",
     },
     {
       name: "type",
       type: "select",
       description: "Type of spark chart",
       options: ["line", "area", "bar"],
-      defaultValue: "line"
+      defaultValue: "line",
     },
   ],
   examples: [
@@ -56,5 +56,5 @@ export const componentConfig: ComponentConfig = {
       description: "Spark chart with filled area",
       code: jsxToString(<AreaExample />),
     },
-  ]
+  ],
 };

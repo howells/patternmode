@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Navbar,
   NavbarDivider,
@@ -6,6 +5,7 @@ import {
   NavbarLabel,
   NavbarSection,
 } from "@patternmode/ui";
+import React from "react";
 
 export function DefaultExample() {
   return (
@@ -47,4 +47,7 @@ export function WithDividerExample() {
       </NavbarSection>
     </Navbar>
   );
-}export const NavbarExample = DefaultExample;
+} export const /**
+                *
+                */
+  NavbarExample = DefaultExample;

@@ -1,5 +1,5 @@
-import React from "react";
 import { NumberField } from "@patternmode/ui";
+import React from "react";
 
 export function NumberFieldExample() {
   return <NumberField label="Quantity" placeholder="Enter quantity" />;
@@ -57,4 +57,7 @@ export function DisabledExample() {
   return <NumberField label="Read Only" defaultValue={42} disabled />;
 }
 
-export const DefaultExample = NumberFieldExample;
+export const /**
+              *
+              */
+  DefaultExample = NumberFieldExample;

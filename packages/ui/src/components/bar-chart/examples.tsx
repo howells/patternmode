@@ -1,5 +1,5 @@
-import React from "react";
 import { BarChart } from "@patternmode/ui";
+import React from "react";
 
 // Sample data for examples
 const chartData = [
@@ -12,144 +12,183 @@ const chartData = [
 ];
 
 // Default bar chart
-export const DefaultExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales"]}
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Multiple series bar chart
-export const MultipleSeriesExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales", "profit"]}
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Stacked bar chart
-export const StackedExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["desktop", "mobile", "tablet"]}
-    type="stacked"
-  />
-);
-
-// Percentage bar chart
-export const PercentExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["category1", "category2", "category3"]}
-    type="percent"
-  />
-);
-
-// Vertical bar chart
-export const VerticalExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales"]}
-    layout="vertical"
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Bar chart with axis labels
-export const WithLabelsExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["revenue"]}
-    xAxisLabel="Time Period"
-    yAxisLabel="Revenue ($)"
-  />
-);
-
-// Bar chart with custom colors
-export const CustomColorsExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales", "profit"]}
-    colors={["blue", "emerald"]}
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Minimal bar chart
-export const MinimalExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales"]}
-    showXAxis={false}
-    showYAxis={false}
-    showGridLines={false}
-    showLegend={false}
-  />
-);
-
-// Bar chart without legend
-export const NoLegendExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales", "profit"]}
-    showLegend={false}
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Bar chart with custom gap
-export const CustomGapExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["sales"]}
-    barCategoryGap="20%"
-    valueFormatter={(value) => `$${value.toLocaleString()}`}
-  />
-);
-
-// Vertical stacked bar chart
-export const VerticalStackedExample = () => (
-  <BarChart
-    data={chartData}
-    index="month"
-    categories={["desktop", "mobile", "tablet"]}
-    type="stacked"
-    layout="vertical"
-  />
-);
-
-// Bar chart with negative values
-export const NegativeValuesExample = () => {
-  const dataWithNegatives = [
-    { month: "Jan", profit: 1200, loss: -800 },
-    { month: "Feb", profit: 1800, loss: -600 },
-    { month: "Mar", profit: 1400, loss: -1200 },
-    { month: "Apr", profit: 2200, loss: -400 },
-    { month: "May", profit: 1600, loss: -900 },
-    { month: "Jun", profit: 2000, loss: -700 },
-  ];
-
-  return (
+export const /**
+              *
+              */
+  DefaultExample = () => (
     <BarChart
-      data={dataWithNegatives}
+      data={chartData}
       index="month"
-      categories={["profit", "loss"]}
-      valueFormatter={(value) => `$${value.toLocaleString()}`}
+      categories={["sales"]}
+      valueFormatter={value => `$${value.toLocaleString()}`}
     />
   );
-};
+
+// Multiple series bar chart
+export const /**
+              *
+              */
+  MultipleSeriesExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales", "profit"]}
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Stacked bar chart
+export const /**
+              *
+              */
+  StackedExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["desktop", "mobile", "tablet"]}
+      type="stacked"
+    />
+  );
+
+// Percentage bar chart
+export const /**
+              *
+              */
+  PercentExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["category1", "category2", "category3"]}
+      type="percent"
+    />
+  );
+
+// Vertical bar chart
+export const /**
+              *
+              */
+  VerticalExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales"]}
+      layout="vertical"
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Bar chart with axis labels
+export const /**
+              *
+              */
+  WithLabelsExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["revenue"]}
+      xAxisLabel="Time Period"
+      yAxisLabel="Revenue ($)"
+    />
+  );
+
+// Bar chart with custom colors
+export const /**
+              *
+              */
+  CustomColorsExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales", "profit"]}
+      colors={["blue", "emerald"]}
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Minimal bar chart
+export const /**
+              *
+              */
+  MinimalExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales"]}
+      showXAxis={false}
+      showYAxis={false}
+      showGridLines={false}
+      showLegend={false}
+    />
+  );
+
+// Bar chart without legend
+export const /**
+              *
+              */
+  NoLegendExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales", "profit"]}
+      showLegend={false}
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Bar chart with custom gap
+export const /**
+              *
+              */
+  CustomGapExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["sales"]}
+      barCategoryGap="20%"
+      valueFormatter={value => `$${value.toLocaleString()}`}
+    />
+  );
+
+// Vertical stacked bar chart
+export const /**
+              *
+              */
+  VerticalStackedExample = () => (
+    <BarChart
+      data={chartData}
+      index="month"
+      categories={["desktop", "mobile", "tablet"]}
+      type="stacked"
+      layout="vertical"
+    />
+  );
+
+// Bar chart with negative values
+export const /**
+              *
+              */
+  NegativeValuesExample = () => {
+    const dataWithNegatives = [
+      { month: "Jan", profit: 1200, loss: -800 },
+      { month: "Feb", profit: 1800, loss: -600 },
+      { month: "Mar", profit: 1400, loss: -1200 },
+      { month: "Apr", profit: 2200, loss: -400 },
+      { month: "May", profit: 1600, loss: -900 },
+      { month: "Jun", profit: 2000, loss: -700 },
+    ];
+
+    return (
+      <BarChart
+        data={dataWithNegatives}
+        index="month"
+        categories={["profit", "loss"]}
+        valueFormatter={value => `$${value.toLocaleString()}`}
+      />
+    );
+  };
 
 // Default export for prop explorer
-export const BarChartExample = DefaultExample;
+export const /**
+              *
+              */
+  BarChartExample = DefaultExample;

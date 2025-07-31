@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
 import {
   RadioCardOption,
   RadioItem,
   RadioLabel,
   RadioOption,
 } from "@patternmode/ui";
+import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {
@@ -17,7 +17,7 @@ export function DefaultExample() {
   );
 }
 
-// Config example ID: "checked" -> export name: CheckedExample  
+// Config example ID: "checked" -> export name: CheckedExample
 export function CheckedExample() {
   return (
     <div className="flex items-center space-x-2">

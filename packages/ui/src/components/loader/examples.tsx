@@ -25,4 +25,7 @@ export function WithTextExample() {
     </div>
   );
 }
-export const LoaderExample = DefaultExample;
+export const /**
+              *
+              */
+  LoaderExample = DefaultExample;

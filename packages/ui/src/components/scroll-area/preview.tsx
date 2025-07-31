@@ -1,11 +1,6 @@
 "use client";
 
-import { Card } from "@patternmode/ui";
-import { Grid, GridCell } from "@patternmode/ui";
-import { Stack } from "@patternmode/ui";
-import { Subheading } from "@patternmode/ui";
-import { Text } from "@patternmode/ui";
-import { ScrollArea } from "@patternmode/ui";
+import { Card, Grid, GridCell, ScrollArea, Stack, Subheading, Text } from "@patternmode/ui";
 
 interface ScrollAreaExampleProps {
   orientation?: "vertical" | "horizontal" | "both";
@@ -40,7 +35,10 @@ export function ScrollAreaExample({
           {Array.from({ length: 12 }).map((_, i) => (
             <Card key={i} padding={3} className="w-44 flex-none">
               <Stack gap={1}>
-                <Subheading level={3}>Item {i + 1}</Subheading>
+                <Subheading level={3}>
+                  Item
+                  {i + 1}
+                </Subheading>
                 <Text>Horizontal content.</Text>
               </Stack>
             </Card>
@@ -60,7 +58,10 @@ export function ScrollAreaExample({
               <GridCell key={i}>
                 <Card padding={2} className="w-full h-full">
                   <Stack gap={1}>
-                    <Subheading level={3}>Item {i + 1}</Subheading>
+                    <Subheading level={3}>
+                      Item
+                      {i + 1}
+                    </Subheading>
                     <Text>
                       Content that overflows both horizontally and vertically.
                     </Text>
@@ -79,7 +80,10 @@ export function ScrollAreaExample({
         {Array.from({ length: 20 }).map((_, i) => (
           <Card key={i} padding={3}>
             <Stack gap={1}>
-              <Subheading level={3}>Item {i + 1}</Subheading>
+              <Subheading level={3}>
+                Item
+                {i + 1}
+              </Subheading>
               <Text>Scrollable content item with description text.</Text>
             </Stack>
           </Card>

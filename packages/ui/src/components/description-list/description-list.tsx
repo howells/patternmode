@@ -1,5 +1,5 @@
 /**
- * Description List Components
+ * Description List Components.
  *
  * Components for creating structured description lists using semantic HTML.
  * Provides organized display of term-definition pairs with responsive layouts
@@ -10,7 +10,7 @@
  * - Semantic HTML structure (dl, dt, dd)
  * - Dark mode support
  * - Accessible design
- * - Consistent typography and spacing
+ * - Consistent typography and spacing.
  *
  * @example
  * ```tsx
@@ -59,8 +59,8 @@ import { cx } from "../../lib/utils";
  * responsive grid layout. Terms and details are arranged in a two-column
  * layout on larger screens and stacked on mobile devices.
  *
- * @param className - Additional CSS classes
- * @param props - Standard dl element props
+ * @param className - Additional CSS classes.
+ * @param props - Standard dl element props.
  *
  * @component
  * @example
@@ -72,7 +72,7 @@ import { cx } from "../../lib/utils";
  * ```
  */
 /**
- * Description List
+ * Description List.
  *
  * @component
  * @id description-list
@@ -87,7 +87,7 @@ export function DescriptionList({
       {...props}
       className={cx(
         className,
-        "grid grid-cols-1 text-base/6 sm:grid-cols-[min(50%,--spacing(80))_auto] sm:text-sm/6"
+        "grid grid-cols-1 text-base/6 sm:grid-cols-[min(50%,--spacing(80))_auto] sm:text-sm/6",
       )}
     />
   );
@@ -100,8 +100,8 @@ export function DescriptionList({
  * Provides consistent styling with subtle text color and proper spacing.
  * Includes border separators between items.
  *
- * @param className - Additional CSS classes
- * @param props - Standard dt element props
+ * @param className - Additional CSS classes.
+ * @param props - Standard dt element props.
  *
  * @component
  * @example
@@ -120,7 +120,7 @@ export function DescriptionTerm({
       {...props}
       className={cx(
         className,
-        "col-start-1 border-t border-zinc-950/5 pt-3 text-zinc-500 first:border-none sm:border-t sm:border-zinc-950/5 sm:py-3 dark:border-white/5 dark:text-zinc-400 sm:dark:border-white/5"
+        "col-start-1 border-t border-zinc-950/5 pt-3 text-zinc-500 first:border-none sm:border-t sm:border-zinc-950/5 sm:py-3 dark:border-white/5 dark:text-zinc-400 sm:dark:border-white/5",
       )}
     />
   );
@@ -133,8 +133,8 @@ export function DescriptionTerm({
  * the HTML `dd` element. Provides emphasized text styling and proper spacing
  * to create clear term-definition relationships.
  *
- * @param className - Additional CSS classes
- * @param props - Standard dd element props
+ * @param className - Additional CSS classes.
+ * @param props - Standard dd element props.
  *
  * @component
  * @example
@@ -159,7 +159,7 @@ export function DescriptionDetails({
       {...props}
       className={cx(
         className,
-        "pt-1 pb-3 text-zinc-950 sm:border-t sm:border-zinc-950/5 sm:py-3 sm:nth-2:border-none dark:text-white dark:sm:border-white/5"
+        "pt-1 pb-3 text-zinc-950 sm:border-t sm:border-zinc-950/5 sm:py-3 sm:nth-2:border-none dark:text-white dark:sm:border-white/5",
       )}
     />
   );

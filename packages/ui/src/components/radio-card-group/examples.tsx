@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
 import {
+  Button,
   RadioCardGroup,
   RadioCardIndicator,
   RadioCardItem,
 } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
 import { Rocket, Truck, Zap } from "lucide-react";
+import React, { useState } from "react";
 
 export function RadioCardGroupExample() {
   const [value, setValue] = useState("basic");
 
   return (
-    <RadioCardGroup value={value} onValueChange={(value) => setValue(value as string)}>
+    <RadioCardGroup value={value} onValueChange={value => setValue(value as string)}>
       <RadioCardItem value="basic">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -63,7 +63,7 @@ export function DefaultExample() {
   const [plan, setPlan] = useState("starter");
 
   return (
-    <RadioCardGroup value={plan} onValueChange={(value) => setPlan(value as string)}>
+    <RadioCardGroup value={plan} onValueChange={value => setPlan(value as string)}>
       <RadioCardItem value="starter">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -72,7 +72,8 @@ export function DefaultExample() {
                 Starter
               </div>
               <div className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
-                $9<span className="text-sm font-normal text-zinc-500">/mo</span>
+                $9
+                <span className="text-sm font-normal text-zinc-500">/mo</span>
               </div>
             </div>
             <div className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">
@@ -121,7 +122,7 @@ export function HorizontalExample() {
   const [shipping, setShipping] = useState("standard");
 
   return (
-    <RadioCardGroup value={shipping} onValueChange={(value) => setShipping(value as string)}>
+    <RadioCardGroup value={shipping} onValueChange={value => setShipping(value as string)}>
       <RadioCardItem value="standard">
         <div className="flex items-start justify-between">
           <div className="flex flex-1 items-start space-x-3">
@@ -182,7 +183,7 @@ export function HorizontalRadioCardGroup() {
   return (
     <RadioCardGroup
       value={size}
-      onValueChange={(value) => setSize(value as string)}
+      onValueChange={value => setSize(value as string)}
       className="grid-cols-3"
     >
       <RadioCardItem value="small">
@@ -228,7 +229,7 @@ export function DisabledRadioCardGroup() {
   const [value, setValue] = useState("available1");
 
   return (
-    <RadioCardGroup value={value} onValueChange={(value) => setValue(value as string)}>
+    <RadioCardGroup value={value} onValueChange={value => setValue(value as string)}>
       <RadioCardItem value="available1">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -280,10 +281,12 @@ export function ControlledRadioCardGroup() {
   return (
     <div className="space-y-4">
       <div className="text-sm">
-        <strong>Selected:</strong> {selectedValue}
+        <strong>Selected:</strong>
+        {" "}
+        {selectedValue}
       </div>
 
-      <RadioCardGroup value={selectedValue} onValueChange={(value) => setSelectedValue(value as string)}>
+      <RadioCardGroup value={selectedValue} onValueChange={value => setSelectedValue(value as string)}>
         <RadioCardItem value="option1">
           <div className="flex items-start justify-between">
             <div className="flex-1">

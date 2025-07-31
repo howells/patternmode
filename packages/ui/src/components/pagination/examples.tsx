@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Pagination,
   PaginationList,
@@ -8,6 +7,7 @@ import {
   PaginationPage,
   PaginationPrevious,
 } from "@patternmode/ui";
+import React from "react";
 
 // Basic pagination example - matches config "default" id
 export function DefaultExample() {

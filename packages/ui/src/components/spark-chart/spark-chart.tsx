@@ -3,7 +3,10 @@
 
 "use client";
 
+import type { AxisDomain } from "recharts/types/util/types";
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import React from "react";
+
 import {
   Area,
   Bar,
@@ -15,18 +18,16 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { AxisDomain } from "recharts/types/util/types";
-
 import {
   AvailableChartColors,
+
   constructCategoryColors,
   getColorClassName,
   getYAxisDomain,
-  type AvailableChartColorsKeys,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
-//#region SparkAreaChart
+// #region SparkAreaChart
 
 interface SparkAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>[];
@@ -42,7 +43,7 @@ interface SparkAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Spark Chart
+ * Spark Chart.
  *
  * @component
  * @id spark-chart
@@ -52,8 +53,10 @@ interface SparkAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
  * <SparkChart data={data} />
  * ```
  */
-const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
-  (props, forwardedRef) => {
+const /**
+       *
+       */
+  SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],
@@ -115,8 +118,8 @@ const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
 
             {categories.map((category) => {
               const categoryId = `${areaId}-${category.replace(
-                /[^a-zA-Z0-9]/g,
-                ""
+                /[^a-z0-9]/gi,
+                "",
               )}`;
               return (
                 <React.Fragment key={category}>
@@ -126,10 +129,10 @@ const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
                       className={cx(
                         getColorClassName(
                           categoryColors.get(
-                            category
+                            category,
                           ) as AvailableChartColorsKeys,
-                          "text"
-                        )
+                          "text",
+                        ),
                       )}
                       id={categoryId}
                       x1="0"
@@ -144,10 +147,10 @@ const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
                     className={cx(
                       getColorClassName(
                         categoryColors.get(
-                          category
+                          category,
                         ) as AvailableChartColorsKeys,
-                        "stroke"
-                      )
+                        "stroke",
+                      ),
                     )}
                     dot={false}
                     strokeOpacity={1}
@@ -170,12 +173,11 @@ const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
         </ResponsiveContainer>
       </div>
     );
-  }
-);
+  };
 
 SparkAreaChart.displayName = "SparkAreaChart";
 
-//#region SparkLineChart
+// #region SparkLineChart
 
 interface SparkLineChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>[];
@@ -188,8 +190,10 @@ interface SparkLineChartProps extends React.HTMLAttributes<HTMLDivElement> {
   connectNulls?: boolean;
 }
 
-const SparkLineChart = React.forwardRef<HTMLDivElement, SparkLineChartProps>(
-  (props, forwardedRef) => {
+const /**
+       *
+       */
+  SparkLineChart = ({ ref: forwardedRef, ...props }: SparkLineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],
@@ -225,13 +229,13 @@ const SparkLineChart = React.forwardRef<HTMLDivElement, SparkLineChartProps>(
           >
             <XAxis hide dataKey={index} />
             <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
-            {categories.map((category) => (
+            {categories.map(category => (
               <Line
                 className={cx(
                   getColorClassName(
                     categoryColors.get(category) as AvailableChartColorsKeys,
-                    "stroke"
-                  )
+                    "stroke",
+                  ),
                 )}
                 dot={false}
                 strokeOpacity={1}
@@ -251,12 +255,11 @@ const SparkLineChart = React.forwardRef<HTMLDivElement, SparkLineChartProps>(
         </ResponsiveContainer>
       </div>
     );
-  }
-);
+  };
 
 SparkLineChart.displayName = "SparkLineChart";
 
-//#region SparkBarChart
+// #region SparkBarChart
 
 interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>[];
@@ -270,8 +273,10 @@ interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: "default" | "stacked" | "percent";
 }
 
-const SparkBarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
-  (props, forwardedRef) => {
+const /**
+       *
+       */
+  SparkBarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],
@@ -313,13 +318,13 @@ const SparkBarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
             <XAxis hide dataKey={index} />
             <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
 
-            {categories.map((category) => (
+            {categories.map(category => (
               <Bar
                 className={cx(
                   getColorClassName(
                     categoryColors.get(category) as AvailableChartColorsKeys,
-                    "fill"
-                  )
+                    "fill",
+                  ),
                 )}
                 key={category}
                 name={category}
@@ -334,8 +339,7 @@ const SparkBarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
         </ResponsiveContainer>
       </div>
     );
-  }
-);
+  };
 
 SparkBarChart.displayName = "SparkBarChart";
 

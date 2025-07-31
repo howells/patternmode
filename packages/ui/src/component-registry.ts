@@ -1,8 +1,5 @@
 // Import local types and create registry from configs
-import {
-  type ComponentConfig,
-  type ComponentConfigRegistry,
-} from "./lib/component-config-types";
+import type { ComponentConfig, ComponentConfigRegistry } from "./lib/component-config-types";
 
 // Import all component configs from the web app
 import { componentConfig as accordionConfig } from "./components/accordion/config";
@@ -102,7 +99,7 @@ const createBasicConfig = (
   id: string,
   name: string,
   category: "ui" | "inputs" | "forms" | "charts",
-  description: string
+  description: string,
 ): ComponentConfig => ({
   id,
   name,
@@ -123,97 +120,97 @@ const createBasicConfig = (
 
 // Component registry with all component configs
 export const componentRegistry: ComponentConfigRegistry = {
-  accordion: accordionConfig,
+  "accordion": accordionConfig,
   "alert-dialog": alertDialogConfig,
   "area-chart": areaChartConfig,
-  avatar: avatarConfig,
-  badge: badgeConfig,
+  "avatar": avatarConfig,
+  "badge": badgeConfig,
   "bar-chart": barChartConfig,
   "bar-list": barListConfig,
-  breadcrumbs: breadcrumbsConfig,
-  button: buttonConfig,
-  calendar: calendarConfig,
-  callout: calloutConfig,
-  card: cardConfig,
-  carousel: carouselConfig,
+  "breadcrumbs": breadcrumbsConfig,
+  "button": buttonConfig,
+  "calendar": calendarConfig,
+  "callout": calloutConfig,
+  "card": cardConfig,
+  "carousel": carouselConfig,
   "category-bar": categoryBarConfig,
-  checkbox: checkboxConfig,
+  "checkbox": checkboxConfig,
   "checkbox-group": checkboxGroupConfig,
   "code-block": codeBlockConfig,
-  collapsible: collapsibleConfig,
+  "collapsible": collapsibleConfig,
   "combo-chart": comboChartConfig,
-  combobox: comboboxConfig,
+  "combobox": comboboxConfig,
   "context-menu": contextMenuConfig,
   "copy-button": copyButtonConfig,
   "date-picker": datePickerConfig,
   "date-range-picker": dateRangePickerConfig,
   "description-list": descriptionListConfig,
-  dialog: dialogConfig,
+  "dialog": dialogConfig,
   "dismiss-button": dismissButtonConfig,
-  divider: dividerConfig,
+  "divider": dividerConfig,
   "donut-chart": donutChartConfig,
-  dot: dotConfig,
-  drawer: drawerConfig,
+  "dot": dotConfig,
+  "drawer": drawerConfig,
   "empty-state": emptyStateConfig,
-  field: fieldConfig,
-  fieldset: fieldsetConfig,
-  form: formConfig,
-  grid: gridConfig,
-  heading: headingConfig,
+  "field": fieldConfig,
+  "fieldset": fieldsetConfig,
+  "form": formConfig,
+  "grid": gridConfig,
+  "heading": headingConfig,
   "heading-element": headingElementConfig,
-  icon: iconConfig,
+  "icon": iconConfig,
   "icon-container": iconContainerConfig,
   "icon-select": iconSelectConfig,
-  input: inputConfig,
-  inspector: inspectorConfig,
-  kbd: kbdConfig,
-  label: labelConfig,
+  "input": inputConfig,
+  "inspector": inspectorConfig,
+  "kbd": kbdConfig,
+  "label": labelConfig,
   "line-chart": lineChartConfig,
-  list: listConfig,
-  loader: loaderConfig,
-  menu: menuConfig,
+  "list": listConfig,
+  "loader": loaderConfig,
+  "menu": menuConfig,
   "menu-bar": menuBarConfig,
-  meter: meterConfig,
-  navbar: navbarConfig,
+  "meter": meterConfig,
+  "navbar": navbarConfig,
   "navigation-menu": navigationMenuConfig,
   "number-field": numberFieldConfig,
-  pagination: paginationConfig,
-  popover: popoverConfig,
+  "pagination": paginationConfig,
+  "popover": popoverConfig,
   "preview-card": previewCardConfig,
-  progress: progressConfig,
+  "progress": progressConfig,
   "progress-circle": progressCircleConfig,
-  radio: radioConfig,
+  "radio": radioConfig,
   "radio-card-group": radioCardGroupConfig,
   "radio-group": radioGroupConfig,
   "responsive-drawer": responsiveDrawerConfig,
   "scroll-area": scrollAreaConfig,
-  select: selectConfig,
+  "select": selectConfig,
   "select-native": selectNativeConfig,
-  separator: separatorConfig,
-  sheet: sheetConfig,
-  sidebar: sidebarConfig,
-  skeleton: skeletonConfig,
-  slider: sliderConfig,
+  "separator": separatorConfig,
+  "sheet": sheetConfig,
+  "sidebar": sidebarConfig,
+  "skeleton": skeletonConfig,
+  "slider": sliderConfig,
   "spark-chart": sparkChartConfig,
   "split-button": splitButtonConfig,
-  stack: stackConfig,
+  "stack": stackConfig,
   "stacked-list": stackedListConfig,
-  subheading: subheadingConfig,
-  switch: switchConfig,
-  table: tableConfig,
+  "subheading": subheadingConfig,
+  "switch": switchConfig,
+  "table": tableConfig,
   "tab-navigation": tabNavigationConfig,
-  tabs: tabsConfig,
-  tag: tagConfig,
+  "tabs": tabsConfig,
+  "tag": tagConfig,
   "tag-input": tagInputConfig,
-  text: textConfig,
-  textarea: textareaConfig,
-  toast: toastConfig,
-  toggle: toggleConfig,
+  "text": textConfig,
+  "textarea": textareaConfig,
+  "toast": toastConfig,
+  "toggle": toggleConfig,
   "toggle-group": toggleGroupConfig,
-  toolbar: toolbarConfig,
-  tooltip: tooltipConfig,
+  "toolbar": toolbarConfig,
+  "tooltip": tooltipConfig,
   "touch-target": touchTargetConfig,
-  tracker: trackerConfig,
+  "tracker": trackerConfig,
 };
 
 // Component list organized by categories - ALL components from UI package
@@ -316,24 +313,24 @@ export const COMPONENT_LIST = {
 };
 
 // Type for component IDs
-export type ComponentId =
-  | (typeof COMPONENT_LIST.text)[number]
-  | (typeof COMPONENT_LIST.layout)[number]
-  | (typeof COMPONENT_LIST.navigation)[number]
-  | (typeof COMPONENT_LIST.feedback)[number]
-  | (typeof COMPONENT_LIST.overlay)[number]
-  | (typeof COMPONENT_LIST.data)[number]
-  | (typeof COMPONENT_LIST.media)[number]
-  | (typeof COMPONENT_LIST.utility)[number]
-  | (typeof COMPONENT_LIST.inputs)[number]
-  | (typeof COMPONENT_LIST.forms)[number]
-  | (typeof COMPONENT_LIST.charts)[number];
+export type ComponentId
+  = | (typeof COMPONENT_LIST.text)[number]
+    | (typeof COMPONENT_LIST.layout)[number]
+    | (typeof COMPONENT_LIST.navigation)[number]
+    | (typeof COMPONENT_LIST.feedback)[number]
+    | (typeof COMPONENT_LIST.overlay)[number]
+    | (typeof COMPONENT_LIST.data)[number]
+    | (typeof COMPONENT_LIST.media)[number]
+    | (typeof COMPONENT_LIST.utility)[number]
+    | (typeof COMPONENT_LIST.inputs)[number]
+    | (typeof COMPONENT_LIST.forms)[number]
+    | (typeof COMPONENT_LIST.charts)[number];
 
 // Web app specific functions for the prop explorer system
 export function getComponentsByCategory(category: string) {
-  const componentIds =
-    COMPONENT_LIST[category as keyof typeof COMPONENT_LIST] || [];
-  return componentIds.map((id) => componentRegistry[id]).filter(Boolean);
+  const componentIds
+    = COMPONENT_LIST[category as keyof typeof COMPONENT_LIST] || [];
+  return componentIds.map(id => componentRegistry[id]).filter(Boolean);
 }
 
 export function getComponentConfig(componentId: string) {

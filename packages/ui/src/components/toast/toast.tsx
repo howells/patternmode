@@ -2,10 +2,10 @@
 
 "use client";
 
-import { cx } from "../../lib/utils";
 import React from "react";
 import { toast as sonnerToast, Toaster } from "sonner";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 // Toast variants for consistent styling
 const toastVariants = tv({
@@ -153,8 +153,8 @@ class ToastManager {
   }
 
   promise<T>(promise: Promise<T>, options: ToastPromiseOptions<T>): Promise<T> {
-    const loadingOptions =
-      typeof options.loading === "string"
+    const loadingOptions
+      = typeof options.loading === "string"
         ? { title: options.loading }
         : options.loading;
 
@@ -163,15 +163,15 @@ class ToastManager {
     return promise
       .then((data) => {
         this.close(id);
-        const successOptions =
-          typeof options.success === "function"
+        const successOptions
+          = typeof options.success === "function"
             ? options.success(data)
             : typeof options.success === "string"
-            ? { title: options.success }
-            : options.success;
+              ? { title: options.success }
+              : options.success;
 
-        const finalOptions =
-          typeof successOptions === "string"
+        const finalOptions
+          = typeof successOptions === "string"
             ? { title: successOptions }
             : successOptions;
 
@@ -180,15 +180,15 @@ class ToastManager {
       })
       .catch((error) => {
         this.close(id);
-        const errorOptions =
-          typeof options.error === "function"
+        const errorOptions
+          = typeof options.error === "function"
             ? options.error(error)
             : typeof options.error === "string"
-            ? { title: options.error }
-            : options.error;
+              ? { title: options.error }
+              : options.error;
 
-        const finalOptions =
-          typeof errorOptions === "string"
+        const finalOptions
+          = typeof errorOptions === "string"
             ? { title: errorOptions }
             : errorOptions;
 
@@ -207,13 +207,16 @@ const globalToastManager = new ToastManager();
 
 // Context for toast manager
 /**
- * Toast
+ * Toast.
  *
  * @id toast
  * @name Toast
  */
-const ToastManagerContext =
-  React.createContext<ToastManager>(globalToastManager);
+const /**
+       *
+       */
+  ToastManagerContext
+  = React.createContext<ToastManager>(globalToastManager);
 
 // Provider component that mimics Base UI's Toast.Provider
 interface ToastProviderProps {
@@ -233,37 +236,40 @@ interface ToastProviderProps {
   closeButton?: boolean;
 }
 
-const ToastProvider: React.FC<ToastProviderProps> = ({
-  children,
-  limit = 3,
-  timeout = 5000,
-  toastManager = globalToastManager,
-  position = "top-right",
-  expand = false,
-  richColors = true,
-  closeButton = true,
-}) => {
-  return (
-    <ToastManagerContext.Provider value={toastManager}>
-      {children}
-      <Toaster
-        position={position}
-        toastOptions={{
-          duration: timeout,
-          className: cx(toastVariants()),
-        }}
-        visibleToasts={limit}
-        expand={expand}
-        richColors={richColors}
-        closeButton={closeButton}
-      />
-    </ToastManagerContext.Provider>
-  );
-};
+const /**
+       *
+       */
+  ToastProvider: React.FC<ToastProviderProps> = ({
+    children,
+    limit = 3,
+    timeout = 5000,
+    toastManager = globalToastManager,
+    position = "top-right",
+    expand = false,
+    richColors = true,
+    closeButton = true,
+  }) => {
+    return (
+      <ToastManagerContext value={toastManager}>
+        {children}
+        <Toaster
+          position={position}
+          toastOptions={{
+            duration: timeout,
+            className: cx(toastVariants()),
+          }}
+          visibleToasts={limit}
+          expand={expand}
+          richColors={richColors}
+          closeButton={closeButton}
+        />
+      </ToastManagerContext>
+    );
+  };
 
 // Hook to access toast manager (mimics Base UI's useToastManager)
 const useToastManager = () => {
-  const manager = React.useContext(ToastManagerContext);
+  const manager = React.use(ToastManagerContext);
   return {
     add: manager.add.bind(manager),
     update: manager.update.bind(manager),
@@ -295,10 +301,13 @@ const useToast = () => {
 };
 
 // Base UI-style component exports (for API compatibility)
-const Toast = {
-  Provider: ToastProvider,
-  useToastManager,
-};
+const /**
+       *
+       */
+  Toast = {
+    Provider: ToastProvider,
+    useToastManager,
+  };
 
 // Additional exports for convenience
 export {

@@ -5,10 +5,8 @@
 
 @theme {
   --font-sans: InterVariable, sans-serif;
-  --font-sans--font-feature-settings: "cv11", "liga", "calt", "dlig", "ss03",
-    "cv03", "cv04", "cv01", "cv10";
-  --font-mono: "SFMono-Regular", "SF Mono", Monaco, Inconsolata, "Roboto Mono",
-    "Source Code Pro", monospace;
+  --font-sans--font-feature-settings: "cv11", "liga", "calt", "dlig", "ss03", "cv03", "cv04", "cv01", "cv10";
+  --font-mono: "SFMono-Regular", "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", monospace;
   --text-xl: 1.25rem; /* 20px */
   --text-lg: 1.125rem; /* 18px */
   --text-base: 1rem; /* 16px */
@@ -32,10 +30,8 @@
   --animate-accordion-close: accordionClose 150ms var(--ease-in);
   --animate-dialog-overlay-show: dialogOverlayShow 150ms var(--ease-out);
   --animate-dialog-content-show: dialogContentShow 150ms var(--ease-out);
-  --animate-sheet-slide-left-and-fade: sheetSlideLeftAndFade 150ms
-    var(--ease-out);
-  --animate-sheet-slide-right-and-fade: sheetSlideRightAndFade 150ms
-    var(--ease-in);
+  --animate-sheet-slide-left-and-fade: sheetSlideLeftAndFade 150ms var(--ease-out);
+  --animate-sheet-slide-right-and-fade: sheetSlideRightAndFade 150ms var(--ease-in);
 
   @keyframes hide {
     from {

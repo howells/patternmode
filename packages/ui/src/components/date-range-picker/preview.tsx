@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { DateRangePicker } from "@patternmode/ui";
+import { useState } from "react";
 
 interface DateRangePickerExampleProps {
   placeholder?: string;
@@ -20,7 +20,7 @@ export function DateRangePickerExample({
   enableYearNavigation = false,
   align = "center",
 }: DateRangePickerExampleProps) {
-  const [dateRange, setDateRange] = useState<{from: Date | undefined, to?: Date | undefined} | undefined>();
+  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to?: Date | undefined } | undefined>();
 
   const presets = [
     {
@@ -29,16 +29,16 @@ export function DateRangePickerExample({
     },
     {
       label: "Last 7 Days",
-      dateRange: { 
-        from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 
-        to: new Date() 
+      dateRange: {
+        from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        to: new Date(),
       },
     },
     {
       label: "Last 30 Days",
-      dateRange: { 
-        from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 
-        to: new Date() 
+      dateRange: {
+        from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        to: new Date(),
       },
     },
   ];

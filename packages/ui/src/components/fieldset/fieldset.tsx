@@ -1,7 +1,7 @@
 // Fieldset Component [v1.0.0] - Tremor Style
 
 /**
- * Fieldset Components
+ * Fieldset Components.
  *
  * Components for grouping related form fields with semantic HTML structure.
  * Built on Base UI Fieldset (https://base-ui.com/react/components/fieldset)
@@ -12,7 +12,7 @@
  * - Accessible form field grouping
  * - Styled legend with border separator
  * - Disabled state support
- * - Flexible layout and spacing
+ * - Flexible layout and spacing.
  *
  * @example
  * ```tsx
@@ -80,9 +80,9 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import { Fieldset as BaseFieldset } from "@base-ui-components/react/fieldset";
 import * as React from "react";
+import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/subheading";
 
 /**
@@ -92,7 +92,7 @@ import { Subheading } from "../subheading/subheading";
  * provides semantic HTML fieldset structure for accessible form organization.
  * Groups related form controls with proper semantic meaning.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  *
  *
  * @id fieldset
@@ -120,22 +120,22 @@ import { Subheading } from "../subheading/subheading";
  * @name Fieldset
  * @component
  */
-const Fieldset = React.forwardRef<
-  React.ElementRef<typeof BaseFieldset.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseFieldset.Root>
->(({ className, ...props }, ref) => (
-  <BaseFieldset.Root
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  Fieldset = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Root> | null> }) => (
+    <BaseFieldset.Root
+      ref={ref}
+      className={cx(
       // base
-      "flex flex-col gap-4 border-0 p-0",
-      // spacing
-      "m-0",
-      className
-    )}
-    {...props}
-  />
-));
+        "flex flex-col gap-4 border-0 p-0",
+        // spacing
+        "m-0",
+        className,
+      )}
+      {...props}
+    />
+  );
 Fieldset.displayName = "Fieldset";
 
 /**
@@ -144,7 +144,7 @@ Fieldset.displayName = "Fieldset";
  * Provides an accessible label for the fieldset group using semantic HTML.
  * Styled as a section heading with border separator and disabled state support.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  *
  * @component
  * @example
@@ -154,29 +154,29 @@ Fieldset.displayName = "Fieldset";
  * <FieldsetLegend>Shipping Address</FieldsetLegend>
  * ```
  */
-const FieldsetLegend = React.forwardRef<
-  React.ElementRef<typeof BaseFieldset.Legend>,
-  React.ComponentPropsWithoutRef<typeof BaseFieldset.Legend>
->(({ className, ...props }, ref) => (
-  <BaseFieldset.Legend
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  FieldsetLegend = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Legend> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Legend> | null> }) => (
+    <BaseFieldset.Legend
+      ref={ref}
+      className={cx(
       // base
-      "text-lg font-medium leading-6",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // border
-      "border-b border-zinc-200 dark:border-zinc-800",
-      // spacing
-      "pb-3",
-      // disabled
-      "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-      className
-    )}
-    render={(legendProps) => <Subheading {...legendProps} />}
-    {...props}
-  />
-));
+        "text-lg font-medium leading-6",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // border
+        "border-b border-zinc-200 dark:border-zinc-800",
+        // spacing
+        "pb-3",
+        // disabled
+        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+        className,
+      )}
+      render={legendProps => <Subheading {...legendProps} />}
+      {...props}
+    />
+  );
 FieldsetLegend.displayName = "FieldsetLegend";
 
 export { Fieldset, FieldsetLegend };

@@ -1,9 +1,9 @@
 "use client";
 
-import { Code, MapPin, User } from "lucide-react";
+import type { TagOption } from "@patternmode/ui";
+import { Tag, TagInput } from "@patternmode/ui";
+import { Code, User } from "lucide-react";
 import React from "react";
-import { Tag } from "@patternmode/ui";
-import { TagInput, TagOption, useTagInput } from "@patternmode/ui";
 
 // Sample data for preview
 const technologies: TagOption[] = [
@@ -68,7 +68,7 @@ export function TagInputExample({
             avatar={{
               initials: option.label
                 .split(" ")
-                .map((n) => n[0])
+                .map(n => n[0])
                 .join(""),
             }}
             dismissible
@@ -89,7 +89,7 @@ export function TagInputExample({
         placeholder="Add skills (or create new ones)..."
         allowCreate
         maxTags={3}
-        validateNewTag={(value) => value.length >= 2}
+        validateNewTag={value => value.length >= 2}
         {...props}
       />
     );

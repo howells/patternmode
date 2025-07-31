@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { ToolbarExample } from "./examples";
 
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Wrench",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   Toolbar,
@@ -26,7 +26,7 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       options: ["horizontal", "vertical"],
       defaultValue: "horizontal",
-      description: "The orientation of the toolbar."
+      description: "The orientation of the toolbar.",
     },
   ],
   examples: [
@@ -34,6 +34,7 @@ export const componentConfig: ComponentConfig = {
       id: "toolbar",
       title: "Basic Toolbar",
       description: "A container for grouping a set of controls or actions.",
-      code: jsxToString(<ToolbarExample />)}
-  ]
+      code: jsxToString(<ToolbarExample />),
+    },
+  ],
 };

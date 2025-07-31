@@ -7,44 +7,52 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
 import oneLight from "react-syntax-highlighter/dist/esm/styles/prism/one-light";
 
-import { CopyButton } from "../copy-button/copy-button";
 import { cx } from "../../lib/utils";
+import { CopyButton } from "../copy-button/copy-button";
 
 /**
  * Props for the CodeBlock component.
- * 
+ *
  * Configuration for syntax-highlighted code display with theming options.
- * 
+ *
  * @interface CodeBlockProps
  * @example
  * ```tsx
  * <CodeBlock language="javascript">
- *  *   console.log('Hello, world!');
- *  * </CodeBlock>
+ *  console.log('Hello, world!');
+ *  </CodeBlock>
  * ```
  */
 interface CodeBlockProps {
-  /** Code content to syntax highlight */
+  /**
+   * Code content to syntax highlight.
+   */
   children: string;
-  /** Programming language for syntax highlighting (defaults to "tsx") */
+  /**
+   * Programming language for syntax highlighting (defaults to "tsx").
+   */
   language?: string;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Color theme for syntax highlighting */
+  /**
+   * Color theme for syntax highlighting.
+   */
   theme?: "light" | "dark" | "auto";
 }
 
 /**
  * A syntax-highlighted code block component.
- * 
+ *
  * Built on react-syntax-highlighter with Prism.js (https://prismjs.com/),
  * providing syntax highlighting for 297+ programming languages. Features
  * automatic theme switching, copy functionality, and professional styling.
  *
- * @param children - Code content to display
- * @param language - Programming language for syntax highlighting
- * @param theme - Color theme (light, dark, or auto-detect)
- * @param className - Additional CSS classes
+ * @param children - Code content to display.
+ * @param language - Programming language for syntax highlighting.
+ * @param theme - Color theme (light, dark, or auto-detect).
+ * @param className - Additional CSS classes.
  *
  *
  * @id code-block
@@ -89,7 +97,7 @@ interface CodeBlockProps {
  *     padding: 12px 24px;
  *     transition: all 0.2s ease;
  *   }
- *   
+ *
  *   .button:hover {
  *     transform: translateY(-2px);
  *     box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
@@ -125,12 +133,14 @@ interface CodeBlockProps {
  * @name Code Block
  * @component
  */
-export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
-  ({ children, language = "tsx", className, theme = "auto" }, ref) => {
-    // Determine theme
+export const /**
+              *
+              */
+  CodeBlock = ({ ref, children, language = "tsx", className, theme = "auto" }: CodeBlockProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  // Determine theme
     const isDark = React.useMemo(() => {
-      if (theme === "light") return false;
-      if (theme === "dark") return true;
+      if (theme === "light") { return false; }
+      if (theme === "dark") { return true; }
       // Auto detection based on system preference or CSS
       if (typeof window !== "undefined") {
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -147,7 +157,7 @@ export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     });
 
     React.useEffect(() => {
-      if (typeof window === "undefined") return;
+      if (typeof window === "undefined") { return; }
 
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const handleChange = (e: MediaQueryListEvent) =>
@@ -165,7 +175,7 @@ export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
         ref={ref}
         className={cx(
           "relative rounded-lg border border-zinc-200 dark:border-zinc-800 w-full overflow-hidden",
-          className
+          className,
         )}
       >
         <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-900">
@@ -199,8 +209,7 @@ export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
         </SyntaxHighlighter>
       </div>
     );
-  }
-);
+  };
 
 CodeBlock.displayName = "CodeBlock";
 

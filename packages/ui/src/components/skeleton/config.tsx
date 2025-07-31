@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { CardExample, DefaultExample, ListExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Loader",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Skeleton } from "@patternmode/ui";`,
   props: [
@@ -36,5 +36,5 @@ export const componentConfig: ComponentConfig = {
       description: "Skeleton for a list of items",
       code: jsxToString(<ListExample />),
     },
-  ]
+  ],
 };

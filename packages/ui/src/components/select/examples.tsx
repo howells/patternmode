@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Select,
   SelectContent,
@@ -11,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@patternmode/ui";
+import React from "react";
 
 export function SelectExample({
   size,
@@ -181,7 +181,7 @@ export function FormSelectExample() {
         <input
           id="email"
           type="email"
-         
+
           className="w-full rounded-md border border-zinc-300 px-3 py-2"
         />
       </div>

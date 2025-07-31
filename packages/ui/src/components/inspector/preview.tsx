@@ -1,13 +1,6 @@
 "use client";
 
-import { Subheading } from "@patternmode/ui";
-import {
-  Inspector,
-  InspectorBody,
-  InspectorGroup,
-  InspectorHeader,
-  InspectorSection,
-} from "@patternmode/ui";
+import { Inspector, InspectorBody, InspectorGroup, InspectorHeader, InspectorSection, Subheading } from "@patternmode/ui";
 
 export function Example() {
   return (

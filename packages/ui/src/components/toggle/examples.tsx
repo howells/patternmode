@@ -1,6 +1,6 @@
-import React from "react";
 import { Toggle } from "@patternmode/ui";
 import { Bold } from "lucide-react";
+import React from "react";
 
 export function DefaultExample() {
   return (
@@ -19,4 +19,7 @@ export function WithIconExample() {
 }
 
 // Default export for prop explorer
-export const ToggleExample = DefaultExample;
+export const /**
+              *
+              */
+  ToggleExample = DefaultExample;

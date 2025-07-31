@@ -1,4 +1,4 @@
-import React from "react";
+import { IconContainer } from "@patternmode/ui";
 import {
   Box,
   CheckCircle,
@@ -8,63 +8,90 @@ import {
   Star,
   Zap,
 } from "lucide-react";
-import { IconContainer } from "@patternmode/ui";
+import React from "react";
 
 // Individual example components for config
-export const BasicExample = () => <IconContainer icon={Box} />;
+export const /**
+              *
+              */
+  BasicExample = () => <IconContainer icon={Box} />;
 
-export const WithVariantExample = () => (
-  <IconContainer icon={CheckCircle} variant="success" />
-);
-
-export const WithCustomColorExample = () => (
-  <IconContainer icon={Star} color="purple" />
-);
-
-export const LargeSizeExample = () => (
-  <IconContainer icon={Star} size="lg" variant="warning" />
-);
-
-export const ExtraLargeExample = () => (
-  <IconContainer icon={Zap} size="xl" color="orange" iconSize="xl" />
-);
-
-export const SemanticVariantsExample = () => (
-  <div className="flex gap-4">
-    <IconContainer icon={Box} variant="default" />
+export const /**
+              *
+              */
+  WithVariantExample = () => (
     <IconContainer icon={CheckCircle} variant="success" />
-    <IconContainer icon={Database} variant="info" />
-    <IconContainer icon={MessageSquare} variant="warning" />
-    <IconContainer icon={Palette} variant="error" />
-    <IconContainer icon={Star} variant="critical" />
-  </div>
-);
+  );
 
-export const CustomColorsExample = () => (
-  <div className="flex gap-4">
-    <IconContainer icon={Box} color="blue" />
-    <IconContainer icon={CheckCircle} color="emerald" />
-    <IconContainer icon={Database} color="purple" />
-    <IconContainer icon={MessageSquare} color="orange" />
-    <IconContainer icon={Palette} color="red" />
-    <IconContainer icon={Star} color="indigo" />
-  </div>
-);
+export const /**
+              *
+              */
+  WithCustomColorExample = () => (
+    <IconContainer icon={Star} color="purple" />
+  );
 
-export const SizeVariantsExample = () => (
-  <div className="flex items-center gap-4">
-    <IconContainer icon={Box} size="sm" variant="info" />
-    <IconContainer icon={Box} size="base" variant="info" />
-    <IconContainer icon={Box} size="lg" variant="info" />
-    <IconContainer icon={Box} size="xl" variant="info" />
-  </div>
-);
+export const /**
+              *
+              */
+  LargeSizeExample = () => (
+    <IconContainer icon={Star} size="lg" variant="warning" />
+  );
 
-export const CenteredExample = () => (
-  <div className="w-full">
-    <IconContainer icon={Star} size="lg" variant="warning" centered />
-  </div>
-);
+export const /**
+              *
+              */
+  ExtraLargeExample = () => (
+    <IconContainer icon={Zap} size="xl" color="orange" iconSize="xl" />
+  );
+
+export const /**
+              *
+              */
+  SemanticVariantsExample = () => (
+    <div className="flex gap-4">
+      <IconContainer icon={Box} variant="default" />
+      <IconContainer icon={CheckCircle} variant="success" />
+      <IconContainer icon={Database} variant="info" />
+      <IconContainer icon={MessageSquare} variant="warning" />
+      <IconContainer icon={Palette} variant="error" />
+      <IconContainer icon={Star} variant="critical" />
+    </div>
+  );
+
+export const /**
+              *
+              */
+  CustomColorsExample = () => (
+    <div className="flex gap-4">
+      <IconContainer icon={Box} color="blue" />
+      <IconContainer icon={CheckCircle} color="emerald" />
+      <IconContainer icon={Database} color="purple" />
+      <IconContainer icon={MessageSquare} color="orange" />
+      <IconContainer icon={Palette} color="red" />
+      <IconContainer icon={Star} color="indigo" />
+    </div>
+  );
+
+export const /**
+              *
+              */
+  SizeVariantsExample = () => (
+    <div className="flex items-center gap-4">
+      <IconContainer icon={Box} size="sm" variant="info" />
+      <IconContainer icon={Box} size="base" variant="info" />
+      <IconContainer icon={Box} size="lg" variant="info" />
+      <IconContainer icon={Box} size="xl" variant="info" />
+    </div>
+  );
+
+export const /**
+              *
+              */
+  CenteredExample = () => (
+    <div className="w-full">
+      <IconContainer icon={Star} size="lg" variant="warning" centered />
+    </div>
+  );
 
 // Legacy exports for backward compatibility
 export const iconContainerExamples = {

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { Textarea } from "@patternmode/ui";
+import React from "react";
 
 interface TextareaExampleProps {
   hasError?: boolean;
@@ -27,18 +27,18 @@ export function TextareaExample({
   const [value, setValue] = React.useState(
     showWithContent
       ? "This textarea demonstrates auto-resize functionality.\n\nTry adding more lines to see it expand automatically."
-      : ""
+      : "",
   );
 
   // Filter out invalid props that might come from the prop explorer
   const { onHeightChange, ...validProps } = props;
-  const heightChangeCallback = typeof onHeightChange === 'function' ? onHeightChange : undefined;
+  const heightChangeCallback = typeof onHeightChange === "function" ? onHeightChange : undefined;
 
   return (
     <Textarea
       placeholder={placeholder}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={e => setValue(e.target.value)}
       hasError={hasError}
       disabled={disabled}
       autoResize={autoResize}

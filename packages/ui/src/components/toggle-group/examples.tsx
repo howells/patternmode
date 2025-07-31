@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 import {
   AlignCenter,
   AlignJustify,
@@ -22,8 +23,6 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-import { Icon, useIconSize } from "@patternmode/ui";
-import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 
 export function DefaultExample() {
   const [alignment, setAlignment] = React.useState<string[]>(["left"]);
@@ -270,7 +269,9 @@ export function ControlledExample() {
     <div className="space-y-4">
       <div>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
-          Selected: {value.length > 0 ? value.join(", ") : "None"}
+          Selected:
+          {" "}
+          {value.length > 0 ? value.join(", ") : "None"}
         </p>
         <ToggleGroup value={value} onValueChange={setValue}>
           <ToggleGroupItem value="option1">Option 1</ToggleGroupItem>
@@ -415,4 +416,7 @@ export function ButtonStyleExample() {
   );
 }
 
-export const ToggleGroupExample = DefaultExample;
+export const /**
+              *
+              */
+  ToggleGroupExample = DefaultExample;

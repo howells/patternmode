@@ -1,8 +1,8 @@
-import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { BadgeExample, BorderedExample, CustomColorExample, DefaultExample, DismissExample, DotExample, RoundedExample, SizesExample, VariantsExample, WithIconsExample } from "./examples";
+import { BorderedExample, CustomColorExample, DefaultExample, DismissExample, DotExample, RoundedExample, SizesExample, VariantsExample, WithIconsExample } from "./examples";
 
 // Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {

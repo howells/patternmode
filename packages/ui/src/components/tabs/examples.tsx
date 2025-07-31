@@ -1,5 +1,5 @@
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+import React from "react";
 
 export function TabsExample() {
   return (

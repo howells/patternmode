@@ -80,20 +80,22 @@ function deepMerge<T extends object>(target: T, source: DeepPartial<T>): T {
     const targetValue = result[key];
 
     if (
-      sourceValue &&
-      typeof sourceValue === "object" &&
-      !Array.isArray(sourceValue)
+      sourceValue
+      && typeof sourceValue === "object"
+      && !Array.isArray(sourceValue)
     ) {
       if (
-        targetValue &&
-        typeof targetValue === "object" &&
-        !Array.isArray(targetValue)
+        targetValue
+        && typeof targetValue === "object"
+        && !Array.isArray(targetValue)
       ) {
         result[key] = deepMerge(targetValue, sourceValue) as T[typeof key];
-      } else {
+      }
+      else {
         result[key] = sourceValue as T[typeof key];
       }
-    } else {
+    }
+    else {
       result[key] = sourceValue as T[typeof key];
     }
   }
@@ -157,7 +159,7 @@ export const config = {
 
     // Global component stroke width
     properties.push(
-      `${cssPrefix}-component-icon-stroke: ${currentConfig.components.iconStrokeWidth};`
+      `${cssPrefix}-component-icon-stroke: ${currentConfig.components.iconStrokeWidth};`,
     );
 
     return properties.join(" ");

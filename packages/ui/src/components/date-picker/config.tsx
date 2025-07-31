@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { ControlledExample, DatePickerExample, DefaultExample, DisabledExample, ErrorStateExample, WithPresetsExample, WithTimeExample } from "./examples";
+import { ControlledExample, DefaultExample, DisabledExample, ErrorStateExample, WithPresetsExample, WithTimeExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "date-picker",
@@ -17,39 +17,39 @@ export const componentConfig: ComponentConfig = {
       name: "placeholder",
       type: "string",
       defaultValue: "Select date",
-      description: "Placeholder text for the date picker."
+      description: "Placeholder text for the date picker.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the date picker is disabled."
+      description: "Whether the date picker is disabled.",
     },
     {
       name: "hasError",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the date picker has an error state."
+      description: "Whether the date picker has an error state.",
     },
     {
       name: "showTimePicker",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to show time selection controls."
+      description: "Whether to show time selection controls.",
     },
     {
       name: "enableYearNavigation",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to enable year navigation in the calendar."
+      description: "Whether to enable year navigation in the calendar.",
     },
     {
       name: "align",
       type: "select",
       options: ["start", "center", "end"],
       defaultValue: "center",
-      description: "Alignment of the popover relative to the trigger."
-    }
+      description: "Alignment of the popover relative to the trigger.",
+    },
   ],
   examples: [
     {
@@ -88,5 +88,5 @@ export const componentConfig: ComponentConfig = {
       description: "Controlled date picker with external state.",
       code: jsxToString(<ControlledExample />),
     },
-  ]
+  ],
 };

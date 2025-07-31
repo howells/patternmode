@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { LineChart } from "@patternmode/ui";
+import { useState } from "react";
 
 interface LineChartExampleProps {
   showXAxis?: boolean;
@@ -82,7 +82,7 @@ export function LineChartExample({
           index="month"
           categories={["sales", "revenue"]}
           colors={["blue", "emerald"]}
-          valueFormatter={(value) => `$${value}`}
+          valueFormatter={value => `$${value}`}
           showXAxis={showXAxis}
           showYAxis={showYAxis}
           showLegend={showLegend}
@@ -100,7 +100,7 @@ export function LineChartExample({
           index="day"
           categories={["users", "sessions", "pageviews"]}
           colors={["blue", "emerald", "amber"]}
-          valueFormatter={(value) => `${value}`}
+          valueFormatter={value => `${value}`}
           yAxisWidth={60}
           showXAxis={showXAxis}
           showYAxis={showYAxis}
@@ -120,7 +120,7 @@ export function LineChartExample({
           categories={["profit", "loss"]}
           colors={["emerald", "pink"]}
           connectNulls={connectNulls}
-          valueFormatter={(value) => `$${value}`}
+          valueFormatter={value => `$${value}`}
           showXAxis={showXAxis}
           showYAxis={showYAxis}
           showLegend={showLegend}
@@ -138,8 +138,8 @@ export function LineChartExample({
             index="month"
             categories={["mobile", "desktop", "tablet"]}
             colors={["blue", "emerald", "amber"]}
-            valueFormatter={(value) => `${value} visits`}
-            onValueChange={(value) => setActiveCategory(value)}
+            valueFormatter={value => `${value} visits`}
+            onValueChange={value => setActiveCategory(value)}
             showXAxis={showXAxis}
             showYAxis={showYAxis}
             showLegend={showLegend}
@@ -149,9 +149,20 @@ export function LineChartExample({
           />
           {activeCategory && (
             <div className="text-sm text-zinc-600 p-2 bg-zinc-50 dark:bg-zinc-900 rounded">
-              <div>Event Type: {activeCategory.eventType}</div>
-              <div>Category: {activeCategory.categoryClicked}</div>
-              {activeCategory.month && <div>Month: {activeCategory.month}</div>}
+              <div>
+                Event Type:
+                {activeCategory.eventType}
+              </div>
+              <div>
+                Category:
+                {activeCategory.categoryClicked}
+              </div>
+              {activeCategory.month && (
+                <div>
+                  Month:
+                  {activeCategory.month}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -165,7 +176,7 @@ export function LineChartExample({
           index="week"
           categories={["temperature", "humidity"]}
           colors={["pink", "blue"]}
-          valueFormatter={(value) => `${value.toFixed(1)}`}
+          valueFormatter={value => `${value.toFixed(1)}`}
           xAxisLabel="Time Period"
           yAxisLabel="Measurements"
           showXAxis={showXAxis}
@@ -209,7 +220,7 @@ export function LineChartExample({
           index="period"
           categories={["actual", "target", "forecast"]}
           colors={["blue", "emerald", "amber"]}
-          valueFormatter={(value) => `${value}%`}
+          valueFormatter={value => `${value}%`}
           showXAxis={showXAxis}
           showYAxis={showYAxis}
           showLegend={showLegend}

@@ -5,73 +5,94 @@ import { cx, focusRing } from "../../lib/utils";
 
 /**
  * Data item for bar list visualization.
- * 
+ *
  * Represents a single bar with required name/value and optional metadata.
  * Can be extended with additional properties via generic type parameter.
- * 
- * @template T - Additional properties to include in bar data
+ *
+ * @template T - Additional properties to include in bar data.
  * @example
  * ```tsx
  * <BarList data={data} />
  * ```
  */
 type Bar<T> = T & {
-  /** Unique identifier for the bar (defaults to name if not provided) */
+  /**
+   * Unique identifier for the bar (defaults to name if not provided).
+   */
   key?: string;
-  /** Optional URL to make the bar name clickable */
+  /**
+   * Optional URL to make the bar name clickable.
+   */
   href?: string;
-  /** Numeric value for bar length calculation */
+  /**
+   * Numeric value for bar length calculation.
+   */
   value: number;
-  /** Display name for the bar */
+  /**
+   * Display name for the bar.
+   */
   name: string;
 };
 
 /**
  * Props for the BarList component.
- * 
+ *
  * Configuration for horizontal bar list visualization with optional
  * interactivity, sorting, and formatting options.
- * 
- * @template T - Additional properties in bar data items
+ *
+ * @template T - Additional properties in bar data items.
  * @interface BarListProps
- * @extends React.HTMLAttributes<HTMLDivElement>
+ * @augments React.HTMLAttributes<HTMLDivElement>
  */
 interface BarListProps<T = unknown>
   extends React.HTMLAttributes<HTMLDivElement> {
-  /** Array of data items to visualize as bars */
+  /**
+   * Array of data items to visualize as bars.
+   */
   data: Bar<T>[];
-  /** Function to format displayed values */
+  /**
+   * Function to format displayed values.
+   */
   valueFormatter?: (value: number) => string;
-  /** Whether to animate bar width transitions */
+  /**
+   * Whether to animate bar width transitions.
+   */
   showAnimation?: boolean;
-  /** Callback when a bar is clicked (makes bars interactive) */
+  /**
+   * Callback when a bar is clicked (makes bars interactive).
+   */
   onValueChange?: (payload: Bar<T>) => void;
-  /** How to sort the bars by value */
+  /**
+   * How to sort the bars by value.
+   */
   sortOrder?: "ascending" | "descending" | "none";
 }
 
 /**
  * Internal implementation of the bar list component.
- * 
+ *
  * Renders a horizontal bar chart with proportional bar lengths, optional sorting,
  * click interactions, and value formatting. Bars are colored and can include
  * clickable links.
  *
- * @template T - Additional properties in bar data
+ * @template T - Additional properties in bar data.
  */
 function BarListInner<T>(
   {
     data = [],
-    valueFormatter = (value) => value.toString(),
+    valueFormatter = value => value.toString(),
     showAnimation = false,
     onValueChange,
     sortOrder = "descending",
     className,
     ...props
   }: BarListProps<T>,
-  forwardedRef: React.ForwardedRef<HTMLDivElement>
+  forwardedRef: React.ForwardedRef<HTMLDivElement>,
 ) {
-  const Component = onValueChange ? "button" : "div";
+  const /**
+         *
+         */
+    Component = onValueChange ? "button" : "div";
   const sortedData = React.useMemo(() => {
     if (sortOrder === "none") {
       return data;
@@ -82,9 +103,9 @@ function BarListInner<T>(
   }, [data, sortOrder]);
 
   const widths = React.useMemo(() => {
-    const maxValue = Math.max(...sortedData.map((item) => item.value), 0);
-    return sortedData.map((item) =>
-      item.value === 0 ? 0 : Math.max((item.value / maxValue) * 100, 2)
+    const maxValue = Math.max(...sortedData.map(item => item.value), 0);
+    return sortedData.map(item =>
+      item.value === 0 ? 0 : Math.max((item.value / maxValue) * 100, 2),
     );
   }, [sortedData]);
 
@@ -115,7 +136,7 @@ function BarListInner<T>(
                     // hover
                     "hover:bg-zinc-50 dark:hover:bg-zinc-900",
                   ]
-                : ""
+                : "",
             )}
           >
             <div
@@ -132,7 +153,7 @@ function BarListInner<T>(
                 {
                   "mb-0": index === sortedData.length - 1,
                   "duration-800": showAnimation,
-                }
+                },
               )}
               style={{ width: `${widths[index]}%` }}
             >
@@ -148,11 +169,11 @@ function BarListInner<T>(
                       // hover
                       "hover:underline hover:underline-offset-2",
                       // focus
-                      focusRing
+                      focusRing,
                     )}
                     target="_blank"
                     rel="noreferrer"
-                    onClick={(event) => event.stopPropagation()}
+                    onClick={event => event.stopPropagation()}
                   >
                     {item.name}
                   </a>
@@ -162,7 +183,7 @@ function BarListInner<T>(
                       // base
                       "truncate whitespace-nowrap text-sm",
                       // text color
-                      "text-zinc-900 dark:text-zinc-50"
+                      "text-zinc-900 dark:text-zinc-50",
                     )}
                   >
                     {item.name}
@@ -180,7 +201,7 @@ function BarListInner<T>(
             className={cx(
               "flex items-center justify-end",
               rowHeight,
-              index === sortedData.length - 1 ? "mb-0" : "mb-1.5"
+              index === sortedData.length - 1 ? "mb-0" : "mb-1.5",
             )}
           >
             <p
@@ -188,7 +209,7 @@ function BarListInner<T>(
                 // base
                 "truncate whitespace-nowrap text-sm leading-none",
                 // text color
-                "text-zinc-900 dark:text-zinc-50"
+                "text-zinc-900 dark:text-zinc-50",
               )}
             >
               {valueFormatter(item.value)}
@@ -204,18 +225,18 @@ BarListInner.displayName = "BarList";
 
 /**
  * A horizontal bar list component for displaying ranked data.
- * 
+ *
  * Creates a simple horizontal bar chart where bar lengths are proportional
  * to their values. Supports sorting, click interactions, custom formatting,
  * and optional animations. Ideal for showing rankings, comparisons, or
  * progress indicators.
  *
- * @template T - Additional properties to include in bar data
- * @param data - Array of bar data items
- * @param valueFormatter - Function to format displayed values
- * @param showAnimation - Whether to animate bar width changes
- * @param onValueChange - Callback for bar clicks (enables interactivity)
- * @param sortOrder - How to sort bars (ascending, descending, or none)
+ * @template T - Additional properties to include in bar data.
+ * @param data - Array of bar data items.
+ * @param valueFormatter - Function to format displayed values.
+ * @param showAnimation - Whether to animate bar width changes.
+ * @param onValueChange - Callback for bar clicks (enables interactivity).
+ * @param sortOrder - How to sort bars (ascending, descending, or none).
  *
  *
  * @id bar-list
@@ -253,15 +274,15 @@ BarListInner.displayName = "BarList";
  * // With clickable links
  * <BarList
  *   data={[
- *     { 
- *       name: "Documentation", 
- *       value: 45, 
- *       href: "/docs" 
+ *     {
+ *       name: "Documentation",
+ *       value: 45,
+ *       href: "/docs"
  *     },
- *     { 
- *       name: "API Reference", 
- *       value: 32, 
- *       href: "/api" 
+ *     {
+ *       name: "API Reference",
+ *       value: 32,
+ *       href: "/api"
  *     }
  *   ]}
  *   valueFormatter={(value) => `${value}%`}
@@ -270,17 +291,17 @@ BarListInner.displayName = "BarList";
  * // Extended with custom data
  * <BarList<{ category: string; trend: 'up' | 'down' }>
  *   data={[
- *     { 
- *       name: "Sales", 
- *       value: 150, 
- *       category: "revenue", 
- *       trend: "up" 
+ *     {
+ *       name: "Sales",
+ *       value: 150,
+ *       category: "revenue",
+ *       trend: "up"
  *     },
- *     { 
- *       name: "Marketing", 
- *       value: 75, 
- *       category: "expense", 
- *       trend: "down" 
+ *     {
+ *       name: "Marketing",
+ *       value: 75,
+ *       category: "expense",
+ *       trend: "down"
  *     }
  *   ]}
  *   onValueChange={(bar) => {
@@ -296,8 +317,11 @@ BarListInner.displayName = "BarList";
  * @name BarList
  * @component
  */
-const BarList = React.forwardRef(BarListInner) as <T>(
-  p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }
-) => ReturnType<typeof BarListInner>;
+const /**
+       *
+       */
+  BarList = React.forwardRef(BarListInner) as <T>(
+    p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }
+  ) => ReturnType<typeof BarListInner>;
 
-export { BarList, type BarListProps, type Bar };
+export { type Bar, BarList, type BarListProps };

@@ -1,7 +1,7 @@
 // Configuration Types for Patternmode Components
 // These types ensure consistency across all component configurations
 
-import { PropMetadata } from "./prop-explorer";
+import type { PropMetadata } from "./prop-explorer";
 
 /**
  * Component example configuration - code examples only
@@ -118,12 +118,12 @@ export type ComponentConfigRegistry = Record<string, ComponentConfig>;
  */
 export function isComponentConfig(config: unknown): config is ComponentConfig {
   return (
-    config !== null &&
-    typeof config === "object" &&
-    "id" in config &&
-    "name" in config &&
-    "componentId" in config &&
-    "props" in config
+    config !== null
+    && typeof config === "object"
+    && "id" in config
+    && "name" in config
+    && "componentId" in config
+    && "props" in config
   );
 }
 
@@ -133,13 +133,12 @@ export function isComponentConfig(config: unknown): config is ComponentConfig {
 export function validateComponentConfig(config: ComponentConfig): string[] {
   const errors: string[] = [];
 
-  if (!config.id) errors.push("Missing required field: id");
-  if (!config.name) errors.push("Missing required field: name");
-  if (!config.description) errors.push("Missing required field: description");
-  if (!config.componentId) errors.push("Missing required field: componentId");
-  if (!config.importStatement)
-    errors.push("Missing required field: importStatement");
-  if (!config.props) errors.push("Missing required field: props");
+  if (!config.id) { errors.push("Missing required field: id"); }
+  if (!config.name) { errors.push("Missing required field: name"); }
+  if (!config.description) { errors.push("Missing required field: description"); }
+  if (!config.componentId) { errors.push("Missing required field: componentId"); }
+  if (!config.importStatement) { errors.push("Missing required field: importStatement"); }
+  if (!config.props) { errors.push("Missing required field: props"); }
   if (!config.examples || config.examples.length === 0) {
     errors.push("Missing required field: examples (at least one required)");
   }

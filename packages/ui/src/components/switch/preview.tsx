@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Switch } from "@patternmode/ui";
+import { useState } from "react";
 
 interface SwitchExampleProps {
   size?: "default" | "small";
@@ -21,8 +21,8 @@ export function SwitchExample({
   const [internalChecked, setInternalChecked] = useState(false);
 
   // Use controlled value if provided, otherwise use internal state
-  const isChecked =
-    controlledChecked !== undefined ? controlledChecked : internalChecked;
+  const isChecked
+    = controlledChecked !== undefined ? controlledChecked : internalChecked;
 
   // Always allow the switch to be toggled - update internal state for demo purposes
   const handleChange = (checked: boolean) => {

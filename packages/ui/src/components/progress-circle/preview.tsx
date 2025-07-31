@@ -2,15 +2,15 @@
 
 import { ProgressCircle } from "@patternmode/ui";
 
-export function Example({ 
+export function Example({
   value = 65,
   variant = "default",
   size = "md",
   showAnimation = true,
   showValue = true,
   label,
-  ...props 
-}: { 
+  ...props
+}: {
   value?: number | null;
   variant?: "default" | "neutral" | "warning" | "error" | "success";
   size?: "xs" | "sm" | "md" | "lg" | "xl";

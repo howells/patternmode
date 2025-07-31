@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
 import { LineChart } from "@patternmode/ui";
+import React, { useState } from "react";
 
 export function LineChartExample() {
   const data = [
@@ -19,7 +19,7 @@ export function LineChartExample() {
       index="month"
       categories={["sales", "revenue"]}
       colors={["blue", "emerald"]}
-      valueFormatter={(value) => `$${value}`}
+      valueFormatter={value => `$${value}`}
     />
   );
 }
@@ -41,7 +41,7 @@ export function MultipleLinesExample() {
       index="day"
       categories={["users", "sessions", "pageviews"]}
       colors={["blue", "emerald", "amber"]}
-      valueFormatter={(value) => `${value}`}
+      valueFormatter={value => `${value}`}
       yAxisWidth={60}
     />
   );
@@ -62,7 +62,7 @@ export function WithNullValuesExample() {
       categories={["profit", "loss"]}
       colors={["emerald", "pink"]}
       connectNulls={false}
-      valueFormatter={(value) => `$${value}`}
+      valueFormatter={value => `$${value}`}
     />
   );
 }
@@ -85,12 +85,17 @@ export function InteractiveExample() {
         index="month"
         categories={["mobile", "desktop", "tablet"]}
         colors={["blue", "emerald", "amber"]}
-        valueFormatter={(value) => `${value} visits`}
-        onValueChange={(value) => setActiveCategory(value)}
+        valueFormatter={value => `${value} visits`}
+        onValueChange={value => setActiveCategory(value)}
       />
       {activeCategory && (
         <div className="text-sm text-zinc-600">
-          Selected: {activeCategory.categoryClicked} -{" "}
+          Selected:
+          {" "}
+          {activeCategory.categoryClicked}
+          {" "}
+          -
+          {" "}
           {activeCategory.eventType}
         </div>
       )}
@@ -112,7 +117,7 @@ export function CustomFormattingExample() {
       index="week"
       categories={["temperature", "humidity"]}
       colors={["pink", "blue"]}
-      valueFormatter={(value) => `${value.toFixed(1)}`}
+      valueFormatter={value => `${value.toFixed(1)}`}
       xAxisLabel="Time Period"
       yAxisLabel="Measurements"
     />

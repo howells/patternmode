@@ -1,5 +1,5 @@
 /**
- * Pagination Components
+ * Pagination Components.
  *
  * A comprehensive pagination system for navigating through large datasets.
  * Built with Next.js Link integration for client-side routing and proper
@@ -13,7 +13,7 @@
  * - Gap indicators for truncated page ranges
  * - Responsive design with mobile optimizations
  * - Keyboard navigation support
- * - Dark mode compatible styling
+ * - Dark mode compatible styling.
  *
  * @example
  * ```tsx
@@ -102,10 +102,10 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
+import type React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import type React from "react";
+import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 
 /**
@@ -114,9 +114,9 @@ import { Button } from "../button/button";
  * Creates the main navigation container with proper ARIA labeling
  * and centered layout for pagination controls.
  *
- * @param aria-label - Accessible label for screen readers
- * @param className - Additional CSS classes
- * @param props - Additional HTML nav element props
+ * @param aria-label - Accessible label for screen readers.
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML nav element props.
  *
  * @component
  * @example
@@ -131,7 +131,7 @@ import { Button } from "../button/button";
  * ```
  */
 /**
- * Pagination
+ * Pagination.
  *
  * @component
  * @id pagination
@@ -157,10 +157,10 @@ export function Pagination({
  * Button for navigating to the previous page with automatic disabled
  * state when on first page or no href provided.
  *
- * @param href - URL for the previous page (undefined disables button)
- * @param className - Additional CSS classes
- * @param children - Button text content (default: "Previous")
- * @param disabled - Whether the button should be disabled
+ * @param href - URL for the previous page (undefined disables button).
+ * @param className - Additional CSS classes.
+ * @param children - Button text content (default: "Previous").
+ * @param disabled - Whether the button should be disabled.
  *
  * @component
  * @example
@@ -181,11 +181,17 @@ export function PaginationPrevious({
   children = "Previous",
   disabled = false,
 }: React.PropsWithChildren<{
-  /** URL for the previous page */
+  /**
+   * URL for the previous page.
+   */
   href?: string;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Whether the button should be disabled */
+  /**
+   * Whether the button should be disabled.
+   */
   disabled?: boolean;
 }>) {
   if (disabled || !href) {
@@ -220,10 +226,10 @@ export function PaginationPrevious({
  * Button for navigating to the next page with automatic disabled
  * state when on last page or no href provided.
  *
- * @param href - URL for the next page (undefined disables button)
- * @param className - Additional CSS classes
- * @param children - Button text content (default: "Next")
- * @param disabled - Whether the button should be disabled
+ * @param href - URL for the next page (undefined disables button).
+ * @param className - Additional CSS classes.
+ * @param children - Button text content (default: "Next").
+ * @param disabled - Whether the button should be disabled.
  *
  * @component
  * @example
@@ -244,11 +250,17 @@ export function PaginationNext({
   children = "Next",
   disabled = false,
 }: React.PropsWithChildren<{
-  /** URL for the next page */
+  /**
+   * URL for the next page.
+   */
   href?: string;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Whether the button should be disabled */
+  /**
+   * Whether the button should be disabled.
+   */
   disabled?: boolean;
 }>) {
   if (disabled || !href) {
@@ -283,8 +295,8 @@ export function PaginationNext({
  * Semantic list container for organizing page number buttons
  * with consistent spacing and alignment.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML ul element props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML ul element props.
  *
  * @component
  * @example
@@ -311,10 +323,10 @@ export function PaginationList({
  * Clickable page number with distinct styling for current page.
  * Automatically handles ARIA attributes for accessibility.
  *
- * @param href - URL for this page
- * @param className - Additional CSS classes
- * @param current - Whether this is the current active page
- * @param children - Page number or content
+ * @param href - URL for this page.
+ * @param className - Additional CSS classes.
+ * @param current - Whether this is the current active page.
+ * @param children - Page number or content.
  *
  * @component
  * @example
@@ -337,11 +349,17 @@ export function PaginationPage({
   current = false,
   children,
 }: React.PropsWithChildren<{
-  /** URL for this page */
+  /**
+   * URL for this page.
+   */
   href: string;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Whether this is the current active page */
+  /**
+   * Whether this is the current active page.
+   */
   current?: boolean;
 }>) {
   if (current) {
@@ -378,9 +396,9 @@ export function PaginationPage({
  * Visual indicator showing that pages have been omitted from display.
  * Typically shows ellipsis or dots to indicate missing pages.
  *
- * @param className - Additional CSS classes
- * @param children - Gap content (default: MoreHorizontal icon)
- * @param props - Additional HTML span element props
+ * @param className - Additional CSS classes.
+ * @param children - Gap content (default: MoreHorizontal icon).
+ * @param props - Additional HTML span element props.
  *
  * @component
  * @example
@@ -417,7 +435,7 @@ export function PaginationGap({
       {...props}
       className={cx(
         "flex h-9 w-9 items-center justify-center text-zinc-500 dark:text-zinc-400",
-        className
+        className,
       )}
     >
       {children}

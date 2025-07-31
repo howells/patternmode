@@ -41,12 +41,12 @@ export function ComboChartExample({
       barSeries={{
         categories: ["sales"],
         colors: ["blue"],
-        valueFormatter: (value) => `$${value}`,
+        valueFormatter: value => `$${value}`,
       }}
       lineSeries={{
         categories: ["visitors"],
         colors: ["emerald"],
-        valueFormatter: (value) => `${value}`,
+        valueFormatter: value => `${value}`,
       }}
     />
   );

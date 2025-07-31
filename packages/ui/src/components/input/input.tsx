@@ -2,10 +2,11 @@
 
 // Tremor Input [v2.0.0] - Base UI
 
+import type { VariantProps } from "tailwind-variants";
 import { Input as BaseInput } from "@base-ui-components/react/input";
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { config } from "../../lib/config";
 import { cx, focusInput, focusRing, hasErrorInput } from "../../lib/utils";
@@ -79,8 +80,8 @@ const inputStyles = tv({
  * Props for the Input component.
  *
  * @interface InputProps
- * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseInput>, "size" | "prefix">
- * @extends VariantProps<typeof inputStyles>
+ * @augments Omit<React.ComponentPropsWithoutRef<typeof BaseInput>, "size" | "prefix">
+ * @augments VariantProps<typeof inputStyles>
  * @example
  * ```tsx
  * <Input placeholder="Enter text..." />
@@ -91,38 +92,64 @@ interface InputProps
       React.ComponentPropsWithoutRef<typeof BaseInput>,
       "size" | "prefix"
     >,
-    VariantProps<typeof inputStyles> {
-  /** Additional CSS classes for the input element */
+  VariantProps<typeof inputStyles> {
+  /**
+   * Additional CSS classes for the input element.
+   */
   inputClassName?: string;
-  /** Input type (text, email, password, etc.) */
+  /**
+   * Input type (text, email, password, etc.).
+   */
   type?: string;
-  /** Custom prefix content */
+  /**
+   * Custom prefix content.
+   */
   prefix?: React.ReactNode;
-  /** Custom suffix content */
+  /**
+   * Custom suffix content.
+   */
   suffix?: React.ReactNode;
-  /** Prefix text content */
+  /**
+   * Prefix text content.
+   */
   prefixText?: string;
-  /** Prefix icon component */
+  /**
+   * Prefix icon component.
+   */
   prefixIcon?: React.ComponentType<{
     className?: string;
     strokeWidth?: number;
   }>;
-  /** Suffix text content */
+  /**
+   * Suffix text content.
+   */
   suffixText?: string;
-  /** Suffix icon component */
+  /**
+   * Suffix icon component.
+   */
   suffixIcon?: React.ComponentType<{
     className?: string;
     strokeWidth?: number;
   }>;
-  /** Whether to apply prefix styling */
+  /**
+   * Whether to apply prefix styling.
+   */
   prefixStyling?: boolean;
-  /** Whether to apply suffix styling */
+  /**
+   * Whether to apply suffix styling.
+   */
   suffixStyling?: boolean;
-  /** Stroke width for icons (defaults to 1) */
+  /**
+   * Stroke width for icons (defaults to 1).
+   */
   iconStrokeWidth?: number;
-  /** Minimal variant for command palettes - removes border, shadow, focus ring */
+  /**
+   * Minimal variant for command palettes - removes border, shadow, focus ring.
+   */
   minimal?: boolean;
-  /** Remove all styling and return bare input element */
+  /**
+   * Remove all styling and return bare input element.
+   */
   unstyled?: boolean;
 }
 
@@ -178,29 +205,11 @@ interface InputProps
  * @name Input
  * @component
  */
-const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
-  (
-    {
-      className,
-      inputClassName,
-      hasError,
-      enableStepper = true,
-      size = "base",
-      type,
-      prefix,
-      suffix,
-      prefixText,
-      prefixIcon: PrefixIcon,
-      suffixText,
-      suffixIcon: SuffixIcon,
-      prefixStyling = true,
-      suffixStyling = true,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      minimal,
-      unstyled,
-      ...props
-    }: InputProps,
-    forwardedRef
+const /**
+       *
+       */
+  Input = (
+    { ref: forwardedRef, className, inputClassName, hasError, enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = config.getIconStrokeWidth(), minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
   ) => {
     const [typeState, setTypeState] = React.useState(type);
 
@@ -215,7 +224,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
     };
     const iconClassName = cx(
       "shrink-0 text-zinc-500 dark:text-zinc-400",
-      iconSize
+      iconSize,
     );
 
     // Gap size based on input size
@@ -227,101 +236,115 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
     const gapClassName = cx(gapSize);
 
     // Resolve prefix - can be explicit prefix prop, or combination of prefixText/prefixIcon
-    const resolvedPrefix =
-      prefix || (prefixText && PrefixIcon) ? (
-        <div className={cx("flex items-center", gapClassName)}>
-          {PrefixIcon && (
-            <PrefixIcon
-              className={iconClassName}
-              strokeWidth={iconStrokeWidth}
-            />
-          )}
-          {prefixText && <span>{prefixText}</span>}
-        </div>
-      ) : PrefixIcon ? (
-        <PrefixIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
-      ) : (
-        prefixText || undefined
-      );
+    const resolvedPrefix
+      = prefix || (prefixText && PrefixIcon)
+        ? (
+            <div className={cx("flex items-center", gapClassName)}>
+              {PrefixIcon && (
+                <PrefixIcon
+                  className={iconClassName}
+                  strokeWidth={iconStrokeWidth}
+                />
+              )}
+              {prefixText && <span>{prefixText}</span>}
+            </div>
+          )
+        : PrefixIcon
+          ? (
+              <PrefixIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
+            )
+          : (
+              prefixText || undefined
+            );
 
     // Resolve suffix - can be explicit suffix prop, or combination of suffixText/suffixIcon
-    const resolvedSuffix =
-      suffix || (suffixText && SuffixIcon) ? (
-        <div className={cx("flex items-center", gapClassName)}>
-          {suffixText && <span>{suffixText}</span>}
-          {SuffixIcon && (
-            <SuffixIcon
-              className={iconClassName}
-              strokeWidth={iconStrokeWidth}
-            />
-          )}
-        </div>
-      ) : SuffixIcon ? (
-        <SuffixIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
-      ) : (
-        suffixText || undefined
-      );
+    const resolvedSuffix
+      = suffix || (suffixText && SuffixIcon)
+        ? (
+            <div className={cx("flex items-center", gapClassName)}>
+              {suffixText && <span>{suffixText}</span>}
+              {SuffixIcon && (
+                <SuffixIcon
+                  className={iconClassName}
+                  strokeWidth={iconStrokeWidth}
+                />
+              )}
+            </div>
+          )
+        : SuffixIcon
+          ? (
+              <SuffixIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
+            )
+          : (
+              suffixText || undefined
+            );
 
     // Auto-add search icon as prefix when type="search" (unless custom prefix provided)
-    const effectivePrefix =
-      isSearch && !resolvedPrefix ? (
-        <Search className={iconClassName} />
-      ) : (
-        resolvedPrefix
-      );
+    const effectivePrefix
+      = isSearch && !resolvedPrefix
+        ? (
+            <Search className={iconClassName} />
+          )
+        : (
+            resolvedPrefix
+          );
 
     // Auto-add password toggle as suffix when type="password" (unless custom suffix provided)
-    const effectiveSuffix =
-      isPassword && !resolvedSuffix ? (
-        <button
-          aria-label="Change password visibility"
-          className={cx(
-            "h-fit w-fit rounded-xs outline-hidden transition-all",
-            "text-zinc-500 dark:text-zinc-400",
-            "hover:text-zinc-600 dark:hover:text-zinc-300",
-            focusRing
-          )}
-          type="button"
-          onClick={() => {
-            setTypeState(typeState === "password" ? "text" : "password");
-          }}
-        >
-          <span className="sr-only">
-            {typeState === "password" ? "Show password" : "Hide password"}
-          </span>
-          {typeState === "password" ? (
-            <Eye
-              className={cx("shrink-0", {
-                "size-3.5": size === "sm",
-                "size-4": size === "base",
-                "size-5": size === "lg",
-              })}
-              aria-hidden="true"
-            />
-          ) : (
-            <EyeOff
-              className={cx("shrink-0", {
-                "size-3.5": size === "sm",
-                "size-4": size === "base",
-                "size-5": size === "lg",
-              })}
-              aria-hidden="true"
-            />
-          )}
-        </button>
-      ) : (
-        resolvedSuffix
-      );
+    const effectiveSuffix
+      = isPassword && !resolvedSuffix
+        ? (
+            <button
+              aria-label="Change password visibility"
+              className={cx(
+                "h-fit w-fit rounded-xs outline-hidden transition-all",
+                "text-zinc-500 dark:text-zinc-400",
+                "hover:text-zinc-600 dark:hover:text-zinc-300",
+                focusRing,
+              )}
+              type="button"
+              onClick={() => {
+                setTypeState(typeState === "password" ? "text" : "password");
+              }}
+            >
+              <span className="sr-only">
+                {typeState === "password" ? "Show password" : "Hide password"}
+              </span>
+              {typeState === "password"
+                ? (
+                    <Eye
+                      className={cx("shrink-0", {
+                        "size-3.5": size === "sm",
+                        "size-4": size === "base",
+                        "size-5": size === "lg",
+                      })}
+                      aria-hidden="true"
+                    />
+                  )
+                : (
+                    <EyeOff
+                      className={cx("shrink-0", {
+                        "size-3.5": size === "sm",
+                        "size-4": size === "base",
+                        "size-5": size === "lg",
+                      })}
+                      aria-hidden="true"
+                    />
+                  )}
+            </button>
+          )
+        : (
+            resolvedSuffix
+          );
 
     // Determine if we have custom prefix/suffix or built-in ones
-    const hasCustomPrefix =
-      effectivePrefix !== undefined &&
-      effectivePrefix !== null &&
-      effectivePrefix !== "";
-    const hasCustomSuffix =
-      effectiveSuffix !== undefined &&
-      effectiveSuffix !== null &&
-      effectiveSuffix !== "";
+    const hasCustomPrefix
+      = effectivePrefix !== undefined
+        && effectivePrefix !== null
+        && effectivePrefix !== "";
+    const hasCustomSuffix
+      = effectiveSuffix !== undefined
+        && effectiveSuffix !== null
+        && effectiveSuffix !== "";
     const hasBuiltInPrefix = false; // Now handled via effectivePrefix
     const hasBuiltInSuffix = false; // Now handled via effectiveSuffix
 
@@ -338,26 +361,26 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
       ? size === "sm"
         ? "pl-1.5"
         : size === "base"
-        ? "pl-2"
-        : "pl-2.5"
+          ? "pl-2"
+          : "pl-2.5"
       : size === "sm"
-      ? "pl-2.5"
-      : size === "base"
-      ? "pl-3"
-      : "pl-3.5";
+        ? "pl-2.5"
+        : size === "base"
+          ? "pl-3"
+          : "pl-3.5";
 
     // Calculate right padding
     const rightPadding = hasUnstyledSuffix
       ? size === "sm"
         ? "pr-1.5"
         : size === "base"
-        ? "pr-2"
-        : "pr-2.5"
+          ? "pr-2"
+          : "pr-2.5"
       : size === "sm"
-      ? "pr-2.5"
-      : size === "base"
-      ? "pr-3"
-      : "pr-3.5";
+        ? "pr-2.5"
+        : size === "base"
+          ? "pr-3"
+          : "pr-3.5";
 
     const paddingClasses = cx(leftPadding, rightPadding);
 
@@ -368,7 +391,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
           ref={forwardedRef}
           type={isPassword ? typeState : type}
           className={cx(
-            // Basic input styling
+          // Basic input styling
             "flex w-full bg-transparent text-sm outline-none transition-colors",
             // text color
             "text-zinc-900 dark:text-zinc-50",
@@ -378,7 +401,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
             "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-500",
             // remove all borders, shadows, and focus rings
             "border-0 shadow-none focus:outline-none focus:ring-0",
-            inputClassName
+            inputClassName,
           )}
           {...props}
         />
@@ -396,9 +419,9 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
           // Focus-within for container focus
           "focus-within:ring-2 focus-within:ring-blue-200 dark:focus-within:ring-blue-700/30 focus-within:border-blue-500 dark:focus-within:border-blue-700",
           // Minimal variant overrides
-          minimal &&
-            "!border-0 !shadow-none !rounded-none !bg-transparent focus-within:!ring-0 focus-within:!border-0",
-          className
+          minimal
+          && "!border-0 !shadow-none !rounded-none !bg-transparent focus-within:!ring-0 focus-within:!border-0",
+          className,
         )}
       >
         {/* Custom Prefix */}
@@ -427,7 +450,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
                     "pl-2": size === "sm",
                     "pl-2.5": size === "base",
                     "pl-3": size === "lg",
-                  }
+                  },
             )}
           >
             {effectivePrefix}
@@ -438,7 +461,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
           ref={forwardedRef}
           type={isPassword ? typeState : type}
           className={cx(
-            // Remove all border/background styles - container handles this
+          // Remove all border/background styles - container handles this
             "flex-1 bg-transparent border-0 outline-none shadow-none ring-0 focus:ring-0 focus:border-0 order-2",
             // Size-based padding and text
             {
@@ -454,7 +477,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
             "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-500",
             // File input styles
             "file:-my-2 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem] file:cursor-pointer file:rounded-l-[5px] file:rounded-r-none file:border-0 file:outline-hidden focus:outline-hidden data-disabled:pointer-events-none file:data-disabled:pointer-events-none file:border-solid file:border-zinc-200 file:bg-zinc-50 file:text-zinc-500 file:hover:bg-zinc-100 dark:file:border-zinc-800 dark:file:bg-zinc-950 dark:file:hover:bg-zinc-900/20 dark:file:data-disabled:border-zinc-700 file:[border-inline-end-width:1px] file:data-disabled:bg-zinc-100 file:data-disabled:text-zinc-500 dark:file:data-disabled:bg-zinc-800",
-            inputClassName
+            inputClassName,
           )}
           {...props}
         />
@@ -485,7 +508,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
                     "pl-0.5 pr-2": size === "sm",
                     "pl-1 pr-2.5": size === "base",
                     "pl-1 pr-3": size === "lg",
-                  }
+                  },
             )}
           >
             {effectiveSuffix}
@@ -493,8 +516,7 @@ const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
         )}
       </div>
     );
-  }
-);
+  };
 
 Input.displayName = "Input";
 

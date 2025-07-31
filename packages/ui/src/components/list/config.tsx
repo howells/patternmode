@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, ListExample, NestedExample, OrderedExample, WithIconsExample } from "./examples";
+import { DefaultExample, NestedExample, OrderedExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "list",
@@ -18,22 +18,22 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       options: ["marker", "plain"],
       defaultValue: "marker",
-      description: "The list style variant."
+      description: "The list style variant.",
     },
     {
       name: "as",
       type: "select",
       options: ["ul", "ol"],
       defaultValue: "ul",
-      description: "The underlying HTML element to render."
+      description: "The underlying HTML element to render.",
     },
     {
       name: "align",
       type: "select",
       options: ["start", "center", "end"],
       defaultValue: "start",
-      description: "Alignment of list items."
-    }
+      description: "Alignment of list items.",
+    },
   ],
   examples: [
     {
@@ -54,5 +54,5 @@ export const componentConfig: ComponentConfig = {
       description: "A list with nested items.",
       code: jsxToString(<NestedExample />),
     },
-  ]
+  ],
 };

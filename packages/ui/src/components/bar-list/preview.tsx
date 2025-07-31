@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { BarList } from "@patternmode/ui";
+import React from "react";
 
 // Sample data for different preview scenarios
 const defaultData = [
@@ -43,7 +43,7 @@ export function BarListExample({
     (item: { name: string; value: number; key?: string; href?: string }) => {
       console.log("Clicked bar:", item.name, item.value);
     },
-    []
+    [],
   );
 
   // Choose data and formatter based on props
@@ -80,7 +80,7 @@ export default function Example() {
             <p className="text-xs text-zinc-500 mb-3">With value formatter</p>
             <BarList
               data={salesData}
-              valueFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+              valueFormatter={value => `$${(value / 1000).toFixed(0)}K`}
             />
           </div>
 
@@ -88,7 +88,7 @@ export default function Example() {
             <p className="text-xs text-zinc-500 mb-3">Percentage values</p>
             <BarList
               data={percentageData}
-              valueFormatter={(value) => `${value}%`}
+              valueFormatter={value => `${value}%`}
             />
           </div>
 
@@ -103,7 +103,7 @@ export default function Example() {
             </p>
             <BarList
               data={defaultData}
-              onValueChange={(item) => console.log("Clicked:", item.name)}
+              onValueChange={item => console.log("Clicked:", item.name)}
             />
           </div>
         </div>

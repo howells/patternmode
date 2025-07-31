@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { InspectorExample, NestedExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Search",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Inspector } from "@patternmode/ui";`,
   props: [
@@ -20,14 +20,14 @@ export const componentConfig: ComponentConfig = {
       name: "data",
       type: "string",
       defaultValue: "{}",
-      description: "The data object to inspect."
+      description: "The data object to inspect.",
     },
     {
       name: "expanded",
       type: "boolean",
       defaultValue: true,
-      description: "Whether the inspector is expanded by default."
-    }
+      description: "Whether the inspector is expanded by default.",
+    },
   ],
   examples: [
     {
@@ -42,5 +42,5 @@ export const componentConfig: ComponentConfig = {
       description: "Inspector with nested object data",
       code: jsxToString(<NestedExample />),
     },
-  ]
+  ],
 };

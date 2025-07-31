@@ -1,41 +1,44 @@
 "use client";
 
-import React from "react";
 import { IconSelect } from "@patternmode/ui";
+import React from "react";
 
 // Example component for preview system
-export const IconSelectExample = ({
-  placeholder = "Select an icon...",
-  value,
-  onValueChange,
-  iconStrokeWidth,
-  ...props
-}: {
-  placeholder?: string;
-  value?: string;
-  onValueChange?: (value: string) => void;
-  iconStrokeWidth?: number;
-  [key: string]: unknown;
-}) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
+export const /**
+              *
+              */
+  IconSelectExample = ({
+    placeholder = "Select an icon...",
+    value,
+    onValueChange,
+    iconStrokeWidth,
+    ...props
+  }: {
+    placeholder?: string;
+    value?: string;
+    onValueChange?: (value: string) => void;
+    iconStrokeWidth?: number;
+    [key: string]: unknown;
+  }) => {
+    const [localValue, setLocalValue] = React.useState(value || "");
 
-  const handleValueChange = React.useCallback((newValue: string) => {
-    setLocalValue(newValue);
-    onValueChange?.(newValue);
-  }, [onValueChange]);
+    const handleValueChange = React.useCallback((newValue: string) => {
+      setLocalValue(newValue);
+      onValueChange?.(newValue);
+    }, [onValueChange]);
 
-  return (
-    <div className="w-64">
-      <IconSelect
-        placeholder={placeholder}
-        value={localValue}
-        onValueChange={handleValueChange}
-        iconStrokeWidth={iconStrokeWidth}
-        {...props}
-      />
-    </div>
-  );
-};
+    return (
+      <div className="w-64">
+        <IconSelect
+          placeholder={placeholder}
+          value={localValue}
+          onValueChange={handleValueChange}
+          iconStrokeWidth={iconStrokeWidth}
+          {...props}
+        />
+      </div>
+    );
+  };
 
 // Default export for the preview system
 export function Example() {
@@ -54,7 +57,9 @@ export function Example() {
 
       {value && (
         <div className="text-sm text-zinc-600">
-          <strong>Selected:</strong> {value}
+          <strong>Selected:</strong>
+          {" "}
+          {value}
         </div>
       )}
     </div>

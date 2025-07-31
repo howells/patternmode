@@ -1,15 +1,6 @@
+import { Button, Form, FormControl, FormField, Textarea } from "@patternmode/ui";
 import React from "react";
 import { z } from "zod";
-import { Button } from "@patternmode/ui";
-import { Textarea } from "@patternmode/ui";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormError,
-  FormField,
-  FormLabel,
-} from "@patternmode/ui";
 
 // Define validation schema
 const formSchema = z.object({
@@ -22,7 +13,7 @@ export default function FormExample() {
   const handleSubmit = async (data: Record<string, unknown>) => {
     console.log("Form submitted with data:", data);
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 500));
     alert("Form submitted successfully!");
   };
 

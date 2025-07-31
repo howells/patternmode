@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -7,6 +6,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@patternmode/ui";
+import React from "react";
 
 export function DefaultExample() {
   return (

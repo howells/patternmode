@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, DisabledExample, DisabledScrubAreaExample, FullWidthExample, NumberFieldExample, WithConstraintsExample, WithoutSteppersExample } from "./examples";
+import { DefaultExample, DisabledExample, DisabledScrubAreaExample, FullWidthExample, WithConstraintsExample, WithoutSteppersExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "number-field",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Hash",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { NumberField } from "@patternmode/ui";`,
   componentId: "NumberFieldExample",
@@ -20,62 +20,62 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "number",
       defaultValue: 0,
-      description: "The current value of the number field."
+      description: "The current value of the number field.",
     },
     {
       name: "defaultValue",
       type: "number",
       defaultValue: 0,
-      description: "The default value of the number field."
+      description: "The default value of the number field.",
     },
     {
       name: "min",
       type: "number",
       defaultValue: undefined,
-      description: "The minimum allowed value."
+      description: "The minimum allowed value.",
     },
     {
       name: "max",
       type: "number",
       defaultValue: undefined,
-      description: "The maximum allowed value."
+      description: "The maximum allowed value.",
     },
     {
       name: "step",
       type: "number",
       defaultValue: 1,
-      description: "The step increment when using arrow keys or steppers."
+      description: "The step increment when using arrow keys or steppers.",
     },
     {
       name: "largeStep",
       type: "number",
       defaultValue: 10,
-      description: "The large step increment when holding shift."
+      description: "The large step increment when holding shift.",
     },
     {
       name: "showSteppers",
       type: "boolean",
       defaultValue: true,
-      description: "Whether to show the stepper buttons."
+      description: "Whether to show the stepper buttons.",
     },
     {
       name: "allowScrub",
       type: "boolean",
       defaultValue: true,
-      description: "Whether to enable mouse scrubbing on the label."
+      description: "Whether to enable mouse scrubbing on the label.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the number field is disabled."
+      description: "Whether the number field is disabled.",
     },
     {
       name: "fullWidth",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the number field spans full width."
-    }
+      description: "Whether the number field spans full width.",
+    },
   ],
   examples: [
     {
@@ -114,5 +114,5 @@ export const componentConfig: ComponentConfig = {
       description: "Disabled number field that cannot be interacted with.",
       code: jsxToString(<DisabledExample />),
     },
-  ]
+  ],
 };

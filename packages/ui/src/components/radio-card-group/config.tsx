@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, HorizontalExample, RadioCardGroupExample } from "./examples";
+import { DefaultExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio-card-group",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Circle",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { RadioCardGroup, RadioCard } from "@patternmode/ui";`,
   componentId: "RadioCardGroupExample",
@@ -20,14 +20,14 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "string",
       description: "Selected value",
-      defaultValue: "option1"
+      defaultValue: "option1",
     },
     {
       name: "orientation",
       type: "select",
       description: "Layout orientation",
       options: ["horizontal", "vertical"],
-      defaultValue: "vertical"
+      defaultValue: "vertical",
     },
   ],
   examples: [
@@ -43,5 +43,5 @@ export const componentConfig: ComponentConfig = {
       description: "Radio cards arranged horizontally",
       code: jsxToString(<HorizontalExample />),
     },
-  ]
+  ],
 };

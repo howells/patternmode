@@ -1,8 +1,8 @@
-import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CopyButtonExample, CustomLabelsExample, DefaultExample, LongTextExample } from "./examples";
+import { CustomLabelsExample, DefaultExample, LongTextExample } from "./examples";
 
 // Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {
@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Copy",
 
   installation: {
-    npm: "lucide-react"
+    npm: "lucide-react",
   },
   importStatement: `import { CopyButton } from "@patternmode/ui";`,
   componentId: "CopyButtonExample",
@@ -25,26 +25,26 @@ export const componentConfig: ComponentConfig = {
       name: "text",
       type: "string",
       description: "The text to copy to clipboard.",
-      defaultValue: "Hello, World!"
+      defaultValue: "Hello, World!",
     },
     {
       name: "copyLabel",
       type: "string",
       description: "Label shown before copying.",
-      defaultValue: "Copy"
+      defaultValue: "Copy",
     },
     {
       name: "copiedLabel",
       type: "string",
       description: "Label shown after copying.",
-      defaultValue: "Copied"
+      defaultValue: "Copied",
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the button is disabled.",
-      defaultValue: false
-    }
+      defaultValue: false,
+    },
   ],
 
   examples: [
@@ -52,16 +52,19 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic copy button with default styling.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "custom-labels",
       title: "Custom Labels",
       description: "Copy button with custom labels.",
-      code: jsxToString(<CustomLabelsExample />)},
+      code: jsxToString(<CustomLabelsExample />),
+    },
     {
       id: "long-text",
       title: "Long Text",
       description: "Copy button with longer text content.",
-      code: jsxToString(<LongTextExample />)}
-  ]
+      code: jsxToString(<LongTextExample />),
+    },
+  ],
 };

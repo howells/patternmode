@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { CustomColorsExample, DefaultExample, InteractiveExample, PieVariantExample, SmallSizeExample, WithLabelExample } from "./examples";
 
@@ -97,6 +97,6 @@ export const componentConfig: ComponentConfig = {
       title: "Small Size",
       description: "Compact donut chart for small spaces.",
       code: jsxToString(<SmallSizeExample />),
-    }
-  ]
+    },
+  ],
 };

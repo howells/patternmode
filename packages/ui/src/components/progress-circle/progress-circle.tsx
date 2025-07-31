@@ -1,5 +1,5 @@
 /**
- * Progress Circle Component
+ * Progress Circle Component.
  *
  * A circular progress indicator for displaying completion status, loading states,
  * and quantitative data visualization. Features customizable styling, animations,
@@ -14,7 +14,7 @@
  * - Label and value display options
  * - Full accessibility support with ARIA attributes
  * - Custom content support
- * - Value formatting functions
+ * - Value formatting functions.
  *
  * @example
  * ```tsx
@@ -64,9 +64,10 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 import {
   clampValue,
   defaultValueFormatter,
@@ -75,7 +76,6 @@ import {
   progressLabelVariants,
   progressValueVariants,
   sharedProgressVariants,
-  type ProgressVariant,
 } from "../progress-utils";
 
 /**
@@ -86,69 +86,107 @@ import {
  */
 const progressCircleVariants = tv({
   slots: {
-    /** Root container with relative positioning */
+    /**
+     * Root container with relative positioning.
+     */
     root: "relative",
-    /** SVG element rotated to start progress from top */
+    /**
+     * SVG element rotated to start progress from top.
+     */
     svg: "-rotate-90 transform",
-    /** Background track circle */
+    /**
+     * Background track circle.
+     */
     track: "transition-colors ease-linear",
-    /** Progress indicator circle */
+    /**
+     * Progress indicator circle.
+     */
     indicator: "transition-colors ease-linear",
-    /** Content overlay area */
+    /**
+     * Content overlay area.
+     */
     content: "absolute inset-0 flex items-center justify-center",
-    /** Label text styling */
+    /**
+     * Label text styling.
+     */
     label: progressLabelVariants.base,
-    /** Value text styling */
+    /**
+     * Value text styling.
+     */
     value: progressValueVariants.base,
   },
   variants: {
     variant: {
-      /** Default blue color scheme */
+      /**
+       * Default blue color scheme.
+       */
       default: {
         track: `stroke-${sharedProgressVariants.default.lightBg} dark:stroke-${sharedProgressVariants.default.darkBg}`,
         indicator: `stroke-${sharedProgressVariants.default.light} dark:stroke-${sharedProgressVariants.default.dark}`,
       },
-      /** Neutral gray color scheme */
+      /**
+       * Neutral gray color scheme.
+       */
       neutral: {
         track: `stroke-${sharedProgressVariants.neutral.lightBg} dark:stroke-${sharedProgressVariants.neutral.darkBg}`,
         indicator: `stroke-${sharedProgressVariants.neutral.light} dark:stroke-${sharedProgressVariants.neutral.dark}`,
       },
-      /** Warning yellow/orange color scheme */
+      /**
+       * Warning yellow/orange color scheme.
+       */
       warning: {
         track: `stroke-${sharedProgressVariants.warning.lightBg} dark:stroke-${sharedProgressVariants.warning.darkBg}`,
         indicator: `stroke-${sharedProgressVariants.warning.light} dark:stroke-${sharedProgressVariants.warning.dark}`,
       },
-      /** Error red color scheme */
+      /**
+       * Error red color scheme.
+       */
       error: {
         track: `stroke-${sharedProgressVariants.error.lightBg} dark:stroke-${sharedProgressVariants.error.darkBg}`,
         indicator: `stroke-${sharedProgressVariants.error.light} dark:stroke-${sharedProgressVariants.error.dark}`,
       },
-      /** Success green color scheme */
+      /**
+       * Success green color scheme.
+       */
       success: {
         track: `stroke-${sharedProgressVariants.success.lightBg} dark:stroke-${sharedProgressVariants.success.darkBg}`,
         indicator: `stroke-${sharedProgressVariants.success.light} dark:stroke-${sharedProgressVariants.success.dark}`,
       },
     },
     showAnimation: {
-      /** Smooth progress animation enabled */
+      /**
+       * Smooth progress animation enabled.
+       */
       true: {
         indicator: progressAnimationClasses.enabled,
       },
-      /** No animation, instant progress updates */
+      /**
+       * No animation, instant progress updates.
+       */
       false: {
         indicator: progressAnimationClasses.disabled,
       },
     },
     size: {
-      /** Extra small - 32px (2rem) */
+      /**
+       * Extra small - 32px (2rem).
+       */
       xs: { root: "w-8 h-8" },
-      /** Small - 48px (3rem) */
+      /**
+       * Small - 48px (3rem).
+       */
       sm: { root: "w-12 h-12" },
-      /** Medium - 64px (4rem) */
+      /**
+       * Medium - 64px (4rem).
+       */
       md: { root: "w-16 h-16" },
-      /** Large - 80px (5rem) */
+      /**
+       * Large - 80px (5rem).
+       */
       lg: { root: "w-20 h-20" },
-      /** Extra large - 96px (6rem) */
+      /**
+       * Extra large - 96px (6rem).
+       */
       xl: { root: "w-24 h-24" },
     },
   },
@@ -166,31 +204,51 @@ const progressCircleVariants = tv({
  * and accessibility options.
  *
  * @interface ProgressCircleProps
- * @extends Omit<React.HTMLAttributes<HTMLDivElement>, "value">
- * @extends VariantProps<typeof progressCircleVariants>
+ * @augments Omit<React.HTMLAttributes<HTMLDivElement>, "value">
+ * @augments VariantProps<typeof progressCircleVariants>
  */
 interface ProgressCircleProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "value">,
-    VariantProps<typeof progressCircleVariants> {
-  /** Current progress value (0 to max), null for indeterminate state */
-  value?: number | null;
-  /** Maximum value for progress calculation */
-  max?: number;
-  /** Circle radius in pixels (overrides size variants) */
-  radius?: number;
-  /** Stroke width of the progress circle */
-  strokeWidth?: number;
-  /** Custom content to display in the center */
-  children?: React.ReactNode;
-  /** Label text to display */
-  label?: string;
-  /** Whether to show the current value */
-  showValue?: boolean;
-  /** Function to format the displayed value */
-  valueFormatter?: (value: number | null, max: number) => string;
-  /** Accessible label for screen readers */
+  VariantProps<typeof progressCircleVariants> {
+  /**
+   * Current progress value (0 to max), null for indeterminate state.
+   */
+  "value"?: number | null;
+  /**
+   * Maximum value for progress calculation.
+   */
+  "max"?: number;
+  /**
+   * Circle radius in pixels (overrides size variants).
+   */
+  "radius"?: number;
+  /**
+   * Stroke width of the progress circle.
+   */
+  "strokeWidth"?: number;
+  /**
+   * Custom content to display in the center.
+   */
+  "children"?: React.ReactNode;
+  /**
+   * Label text to display.
+   */
+  "label"?: string;
+  /**
+   * Whether to show the current value.
+   */
+  "showValue"?: boolean;
+  /**
+   * Function to format the displayed value.
+   */
+  "valueFormatter"?: (value: number | null, max: number) => string;
+  /**
+   * Accessible label for screen readers.
+   */
   "aria-label"?: string;
-  /** ID of element describing the progress */
+  /**
+   * ID of element describing the progress.
+   */
   "aria-describedby"?: string;
 }
 
@@ -200,16 +258,16 @@ interface ProgressCircleProps
  * Displays progress as a circular arc with customizable styling, animations,
  * and content. Perfect for dashboards, loading states, and data visualization.
  *
- * @param value - Current progress value (0 to max)
- * @param max - Maximum value for progress calculation
- * @param radius - Circle radius in pixels
- * @param strokeWidth - Stroke width of the circle
- * @param showAnimation - Whether to animate progress changes
- * @param variant - Color scheme variant
- * @param size - Size variant (xs, sm, md, lg, xl)
- * @param label - Optional label text
- * @param showValue - Whether to display the current value
- * @param valueFormatter - Function to format displayed values
+ * @param value - Current progress value (0 to max).
+ * @param max - Maximum value for progress calculation.
+ * @param radius - Circle radius in pixels.
+ * @param strokeWidth - Stroke width of the circle.
+ * @param showAnimation - Whether to animate progress changes.
+ * @param variant - Color scheme variant.
+ * @param size - Size variant (xs, sm, md, lg, xl).
+ * @param label - Optional label text.
+ * @param showValue - Whether to display the current value.
+ * @param valueFormatter - Function to format displayed values.
  * @param children - Custom content for the center area
  *
  *
@@ -249,26 +307,11 @@ interface ProgressCircleProps
  * @name Progress Circle
  * @component
  */
-const ProgressCircle = React.forwardRef<HTMLDivElement, ProgressCircleProps>(
-  (
-    {
-      value = 0,
-      max = 100,
-      radius = 32,
-      strokeWidth = 6,
-      showAnimation = true,
-      variant = "default",
-      size,
-      className,
-      children,
-      label,
-      showValue = false,
-      valueFormatter,
-      "aria-label": ariaLabel,
-      "aria-describedby": ariaDescribedBy,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  ProgressCircle = (
+    { ref, value = 0, max = 100, radius = 32, strokeWidth = 6, showAnimation = true, variant = "default", size, className, children, label, showValue = false, valueFormatter, "aria-label": ariaLabel, "aria-describedby": ariaDescribedBy, ...props }: ProgressCircleProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const safeValue = value !== null ? clampValue(value, 0, max) : null;
     const normalizedRadius = radius - strokeWidth / 2;
@@ -364,9 +407,8 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, ProgressCircleProps>(
         </div>
       </div>
     );
-  }
-);
+  };
 
 ProgressCircle.displayName = "ProgressCircle";
 
-export { ProgressCircle, progressCircleVariants, type ProgressCircleProps };
+export { ProgressCircle, type ProgressCircleProps, progressCircleVariants };

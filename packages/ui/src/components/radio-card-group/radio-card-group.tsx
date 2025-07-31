@@ -1,11 +1,11 @@
 // Tremor Radio Card Group [v1.0.0] - Base UI
 
-import { cx, focusInput, focusRing } from "../../lib/utils";
-import React from "react";
-
 // Use Base UI components directly to avoid cross-component dependencies
 import { Radio } from "@base-ui-components/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
+
+import React from "react";
+import { cx, focusInput, focusRing } from "../../lib/utils";
 
 /**
  * A radio group component with card-style presentation.
@@ -14,11 +14,11 @@ import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-gr
  * Provides the same functionality as RadioGroup but with enhanced visual
  * presentation using card layouts for better prominence and selection clarity.
  *
- * @param orientation - Layout direction (vertical or horizontal)
- * @param size - Spacing size between items
- * @param value - Currently selected value
- * @param onValueChange - Callback when selection changes
- * @param disabled - Whether the entire group is disabled
+ * @param orientation - Layout direction (vertical or horizontal).
+ * @param size - Spacing size between items.
+ * @param value - Currently selected value.
+ * @param onValueChange - Callback when selection changes.
+ * @param disabled - Whether the entire group is disabled.
  *
  *
  * @id radio-card-group
@@ -69,12 +69,12 @@ import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-gr
  * @name Radio Card Group
  * @component
  */
-const RadioCardGroup = React.forwardRef<
-  React.ElementRef<typeof BaseRadioGroup>,
-  React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
->(({ className, ...props }, ref) => (
-  <BaseRadioGroup ref={ref} className={cx("grid gap-2", className)} {...props} />
-));
+const /**
+       *
+       */
+  RadioCardGroup = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
+    <BaseRadioGroup ref={ref} className={cx("grid gap-2", className)} {...props} />
+  );
 RadioCardGroup.displayName = "RadioCardGroup";
 
 /**
@@ -84,9 +84,9 @@ RadioCardGroup.displayName = "RadioCardGroup";
  * padding, borders, shadows, and visual states. Provides a prominent,
  * clickable area for radio selections with clear visual feedback.
  *
- * @param value - The value this radio represents
- * @param disabled - Whether this option is disabled
- * @param children - Content to display inside the card
+ * @param value - The value this radio represents.
+ * @param disabled - Whether this option is disabled.
+ * @param children - Content to display inside the card.
  *
  * @example
  * ```tsx
@@ -120,34 +120,34 @@ RadioCardGroup.displayName = "RadioCardGroup";
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
-const RadioCardItem = React.forwardRef<
-  React.ElementRef<typeof Radio.Root>,
-  React.ComponentPropsWithoutRef<typeof Radio.Root>
->(({ className, children, ...props }, ref) => (
-  <Radio.Root
-    ref={ref}
-    className={cx(
+const /**
+       *
+       */
+  RadioCardItem = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Root> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Root> | null> }) => (
+    <Radio.Root
+      ref={ref}
+      className={cx(
       // base
-      "group relative w-full rounded-md border p-4 text-left shadow-xs transition cursor-pointer focus:outline-hidden",
-      // background color
-      "bg-white dark:bg-zinc-950",
-      // border color
-      "border-zinc-200 dark:border-zinc-800",
-      // checked
-      "data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
-      // disabled
-      "data-[disabled]:border-zinc-100 dark:data-[disabled]:border-zinc-800",
-      "data-[disabled]:bg-zinc-50 data-[disabled]:shadow-none dark:data-[disabled]:bg-zinc-900",
-      "data-[disabled]:cursor-not-allowed",
-      // focus
-      focusInput,
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </Radio.Root>
-));
+        "group relative w-full rounded-md border p-4 text-left shadow-xs transition cursor-pointer focus:outline-hidden",
+        // background color
+        "bg-white dark:bg-zinc-950",
+        // border color
+        "border-zinc-200 dark:border-zinc-800",
+        // checked
+        "data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
+        // disabled
+        "data-[disabled]:border-zinc-100 dark:data-[disabled]:border-zinc-800",
+        "data-[disabled]:bg-zinc-50 data-[disabled]:shadow-none dark:data-[disabled]:bg-zinc-900",
+        "data-[disabled]:cursor-not-allowed",
+        // focus
+        focusInput,
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </Radio.Root>
+  );
 RadioCardItem.displayName = "RadioCardItem";
 
 /**
@@ -176,42 +176,42 @@ RadioCardItem.displayName = "RadioCardItem";
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
-const RadioCardIndicator = React.forwardRef<
-  React.ElementRef<typeof Radio.Indicator>,
-  React.ComponentPropsWithoutRef<typeof Radio.Indicator>
->(({ className, ...props }, ref) => (
-  <Radio.Indicator
-    ref={ref}
-    className={cx(
-      // base
-      "relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-full border shadow-xs outline-hidden",
-      // border color
-      "border-zinc-200 dark:border-zinc-800",
-      // background color
-      "bg-white dark:bg-zinc-950",
-      // checked
-      "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
-      // disabled
-      "group-data-[disabled]:border-zinc-200 group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
-      "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
-      // focus
-      focusRing,
-      className
-    )}
-    {...props}
-  >
-    <div
+const /**
+       *
+       */
+  RadioCardIndicator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Indicator> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Indicator> | null> }) => (
+    <Radio.Indicator
+      ref={ref}
       className={cx(
-        // base
-        "size-1.5 shrink-0 rounded-full opacity-0",
-        // indicator - shows when checked
-        "bg-white group-data-[checked]:opacity-100",
+      // base
+        "relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-full border shadow-xs outline-hidden",
+        // border color
+        "border-zinc-200 dark:border-zinc-800",
+        // background color
+        "bg-white dark:bg-zinc-950",
+        // checked
+        "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
         // disabled
-        "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500"
+        "group-data-[disabled]:border-zinc-200 group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
+        "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
+        // focus
+        focusRing,
+        className,
       )}
-    />
-  </Radio.Indicator>
-));
+      {...props}
+    >
+      <div
+        className={cx(
+        // base
+          "size-1.5 shrink-0 rounded-full opacity-0",
+          // indicator - shows when checked
+          "bg-white group-data-[checked]:opacity-100",
+          // disabled
+          "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500",
+        )}
+      />
+    </Radio.Indicator>
+  );
 RadioCardIndicator.displayName = "RadioCardIndicator";
 
 export { RadioCardGroup, RadioCardIndicator, RadioCardItem };

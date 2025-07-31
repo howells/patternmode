@@ -1,5 +1,5 @@
-import React from "react";
 import { Input } from "@patternmode/ui";
+import React from "react";
 
 export function InputExample() {
   return <Input placeholder="Enter text..." />;

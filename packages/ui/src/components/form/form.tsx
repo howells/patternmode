@@ -3,7 +3,7 @@
 // Form Component [v1.0.0] - Base UI + Zod Integration
 
 /**
- * Form Components
+ * Form Components.
  *
  * A modern form system that integrates Base UI Form components with Zod validation
  * for type-safe, accessible forms. Provides comprehensive form building blocks
@@ -15,7 +15,7 @@
  * - Automatic error handling and display
  * - Type-safe form data
  * - HTML5 validation fallback
- * - Consistent styling and theming
+ * - Consistent styling and theming.
  *
  * @example
  * ```tsx
@@ -98,11 +98,11 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
+import type { z } from "zod";
 import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
 import * as React from "react";
-import { z } from "zod";
+import { cx } from "../../lib/utils";
 
 /**
  * Props for the Form component.
@@ -111,14 +111,20 @@ import { z } from "zod";
  * Integrates Base UI Form with optional Zod validation.
  *
  * @interface FormProps
- * @extends React.ComponentPropsWithoutRef<typeof BaseForm>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseForm>
  */
 interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
-  /** Optional Zod schema for form validation */
+  /**
+   * Optional Zod schema for form validation.
+   */
   schema?: z.ZodSchema;
-  /** Callback for successful form submission with validated data */
+  /**
+   * Callback for successful form submission with validated data.
+   */
   onValidSubmit?: (data: Record<string, unknown>) => void | Promise<void>;
-  /** Form content including fields and submit buttons */
+  /**
+   * Form content including fields and submit buttons.
+   */
   children: React.ReactNode;
 }
 
@@ -129,10 +135,10 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * Handles form submission, validation, and error management automatically.
  * Falls back to HTML5 validation when no schema is provided.
  *
- * @param schema - Optional Zod schema for validation
- * @param onValidSubmit - Callback for successful submission
- * @param children - Form content including fields
- * @param className - Additional CSS classes
+ * @param schema - Optional Zod schema for validation.
+ * @param onValidSubmit - Callback for successful submission.
+ * @param children - Form content including fields.
+ * @param className - Additional CSS classes.
  *
  *
  * @id form
@@ -166,8 +172,10 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * @name Form
  * @component
  */
-const Form = React.forwardRef<React.ElementRef<typeof BaseForm>, FormProps>(
-  ({ schema, onValidSubmit, children, className, onSubmit, ...props }, ref) => {
+const /**
+       *
+       */
+  Form = ({ ref, schema, onValidSubmit, children, className, onSubmit, ...props }: FormProps & { ref?: React.RefObject<React.ElementRef<typeof BaseForm> | null> }) => {
     const [errors, setErrors] = React.useState({});
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -189,8 +197,9 @@ const Form = React.forwardRef<React.ElementRef<typeof BaseForm>, FormProps>(
         if (onValidSubmit) {
           await onValidSubmit(result.data as Record<string, unknown>);
         }
-      } else {
-        // No schema validation, just call onValidSubmit
+      }
+      else {
+      // No schema validation, just call onValidSubmit
         if (onValidSubmit) {
           await onValidSubmit(data as Record<string, unknown>);
         }
@@ -209,8 +218,7 @@ const Form = React.forwardRef<React.ElementRef<typeof BaseForm>, FormProps>(
         {children}
       </BaseForm>
     );
-  }
-);
+  };
 Form.displayName = "Form";
 
 /**
@@ -219,14 +227,14 @@ Form.displayName = "Form";
  * Provides consistent spacing and layout for form field groups.
  * Used internally by FormField but can be used standalone for custom layouts.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  */
-const FormItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  return <div ref={ref} className={cx("space-y-2", className)} {...props} />;
-});
+const /**
+       *
+       */
+  FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    return <div ref={ref} className={cx("space-y-2", className)} {...props} />;
+  };
 FormItem.displayName = "FormItem";
 
 /**
@@ -235,28 +243,28 @@ FormItem.displayName = "FormItem";
  * Accessible label that associates with form controls using Base UI Field.
  * Includes disabled state support and proper typography.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  */
-const FormLabel = React.forwardRef<
-  React.ElementRef<typeof BaseField.Label>,
-  React.ComponentPropsWithoutRef<typeof BaseField.Label>
->(({ className, ...props }, ref) => {
-  return (
-    <BaseField.Label
-      ref={ref}
-      className={cx(
+const /**
+       *
+       */
+  FormLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => {
+    return (
+      <BaseField.Label
+        ref={ref}
+        className={cx(
         // base
-        "block text-sm font-medium leading-6",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        // disabled
-        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+          "block text-sm font-medium leading-6",
+          // text color
+          "text-zinc-900 dark:text-zinc-50",
+          // disabled
+          "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+          className,
+        )}
+        {...props}
+      />
+    );
+  };
 FormLabel.displayName = "FormLabel";
 
 /**
@@ -265,38 +273,38 @@ FormLabel.displayName = "FormLabel";
  * Styled wrapper for form inputs with focus, disabled, and error states.
  * Integrates with Base UI Field for proper accessibility and validation.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  */
-const FormControl = React.forwardRef<
-  React.ElementRef<typeof BaseField.Control>,
-  React.ComponentPropsWithoutRef<typeof BaseField.Control>
->(({ className, ...props }, ref) => {
-  return (
-    <BaseField.Control
-      ref={ref}
-      className={cx(
+const /**
+       *
+       */
+  FormControl = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => {
+    return (
+      <BaseField.Control
+        ref={ref}
+        className={cx(
         // base
-        "block w-full rounded-md border px-3 py-2 text-sm transition-colors",
-        // border
-        "border-zinc-200 dark:border-zinc-600",
-        // background
-        "bg-white dark:bg-zinc-800",
-        // text
-        "text-zinc-900 dark:text-zinc-50",
-        // placeholder
-        "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
-        // focus
-        "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
-        // disabled
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        // invalid
-        "data-invalid:border-red-500 data-invalid:focus:border-red-500 data-invalid:focus:ring-red-500/20",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+          "block w-full rounded-md border px-3 py-2 text-sm transition-colors",
+          // border
+          "border-zinc-200 dark:border-zinc-600",
+          // background
+          "bg-white dark:bg-zinc-800",
+          // text
+          "text-zinc-900 dark:text-zinc-50",
+          // placeholder
+          "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
+          // focus
+          "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
+          // disabled
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          // invalid
+          "data-invalid:border-red-500 data-invalid:focus:border-red-500 data-invalid:focus:ring-red-500/20",
+          className,
+        )}
+        {...props}
+      />
+    );
+  };
 FormControl.displayName = "FormControl";
 
 /**
@@ -305,26 +313,26 @@ FormControl.displayName = "FormControl";
  * Provides additional context and instructions for form fields.
  * Properly associated with controls for screen reader accessibility.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  */
-const FormDescription = React.forwardRef<
-  React.ElementRef<typeof BaseField.Description>,
-  React.ComponentPropsWithoutRef<typeof BaseField.Description>
->(({ className, ...props }, ref) => {
-  return (
-    <BaseField.Description
-      ref={ref}
-      className={cx(
+const /**
+       *
+       */
+  FormDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => {
+    return (
+      <BaseField.Description
+        ref={ref}
+        className={cx(
         // base
-        "text-sm leading-6",
-        // text color
-        "text-zinc-600 dark:text-zinc-400",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+          "text-sm leading-6",
+          // text color
+          "text-zinc-600 dark:text-zinc-400",
+          className,
+        )}
+        {...props}
+      />
+    );
+  };
 FormDescription.displayName = "FormDescription";
 
 /**
@@ -333,26 +341,26 @@ FormDescription.displayName = "FormDescription";
  * Displays validation errors with proper styling and accessibility.
  * Automatically shows errors from Zod validation or HTML5 constraints.
  *
- * @param className - Additional CSS classes
+ * @param className - Additional CSS classes.
  */
-const FormError = React.forwardRef<
-  React.ElementRef<typeof BaseField.Error>,
-  React.ComponentPropsWithoutRef<typeof BaseField.Error>
->(({ className, ...props }, ref) => {
-  return (
-    <BaseField.Error
-      ref={ref}
-      className={cx(
+const /**
+       *
+       */
+  FormError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => {
+    return (
+      <BaseField.Error
+        ref={ref}
+        className={cx(
         // base
-        "text-sm leading-6",
-        // text color
-        "text-red-600 dark:text-red-400",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+          "text-sm leading-6",
+          // text color
+          "text-red-600 dark:text-red-400",
+          className,
+        )}
+        {...props}
+      />
+    );
+  };
 FormError.displayName = "FormError";
 
 /**
@@ -361,17 +369,29 @@ FormError.displayName = "FormError";
  * Configuration for complete form fields with all associated elements.
  */
 interface FormFieldProps {
-  /** Field name for form data and validation */
+  /**
+   * Field name for form data and validation.
+   */
   name: string;
-  /** Optional label text */
+  /**
+   * Optional label text.
+   */
   label?: string;
-  /** Optional description/help text */
+  /**
+   * Optional description/help text.
+   */
   description?: string;
-  /** Whether field is required (adds visual indicator) */
+  /**
+   * Whether field is required (adds visual indicator).
+   */
   required?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Form control element (input, select, textarea, etc.) */
+  /**
+   * Form control element (input, select, textarea, etc.).
+   */
   children: React.ReactNode;
 }
 
@@ -381,12 +401,12 @@ interface FormFieldProps {
  * Combines all form field components into a single, easy-to-use component.
  * Automatically handles accessibility associations and validation display.
  *
- * @param name - Field name for form data
- * @param label - Optional label text
- * @param description - Optional help text
- * @param required - Whether field is required
- * @param className - Additional CSS classes
- * @param children - Form control element
+ * @param name - Field name for form data.
+ * @param label - Optional label text.
+ * @param description - Optional help text.
+ * @param required - Whether field is required.
+ * @param className - Additional CSS classes.
+ * @param children - Form control element.
  *
  * @component
  * @example
@@ -401,8 +421,10 @@ interface FormFieldProps {
  * </FormField>
  * ```
  */
-const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ name, label, description, required, className, children }, ref) => {
+const /**
+       *
+       */
+  FormField = ({ ref, name, label, description, required, className, children }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <BaseField.Root name={name} className={className}>
         <FormItem ref={ref}>
@@ -418,10 +440,8 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         </FormItem>
       </BaseField.Root>
     );
-  }
-);
+  };
 FormField.displayName = "FormField";
-
 
 export {
   Form,

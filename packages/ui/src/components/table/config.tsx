@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { DefaultExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Table",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   Table,
@@ -27,19 +27,19 @@ export const componentConfig: ComponentConfig = {
       name: "bleed",
       type: "boolean",
       defaultValue: false,
-      description: "Remove padding from table cells."
+      description: "Remove padding from table cells.",
     },
     {
       name: "dense",
       type: "boolean",
       defaultValue: false,
-      description: "Use a more compact table layout."
+      description: "Use a more compact table layout.",
     },
     {
       name: "striped",
       type: "boolean",
       defaultValue: false,
-      description: "Add alternating row colors."
+      description: "Add alternating row colors.",
     },
   ],
   examples: [
@@ -47,6 +47,7 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "A data table component for displaying tabular data with headers and rows.",
-      code: jsxToString(<DefaultExample />)}
-  ]
+      code: jsxToString(<DefaultExample />),
+    },
+  ],
 };

@@ -1,13 +1,14 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
+import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import React from "react";
+import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import {
   getColorClasses,
-  type GlobalSemanticVariant,
-  type TailwindColor,
+
 } from "../../lib/variants";
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
 
 // Dot-specific variant type (semantic + all Tailwind colors)
 export type DotVariant = GlobalSemanticVariant | TailwindColor;
@@ -49,25 +50,25 @@ const dotIndicatorVariants = tv({
 
 interface DotProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    Omit<VariantProps<typeof dotVariants>, "variant"> {
+  Omit<VariantProps<typeof dotVariants>, "variant"> {
   /**
-   * The semantic variant to display
- * @example
- * ```tsx
- * <Dot color="green" />
- * ```
+   * The semantic variant to display.
+   * @example
+   * ```tsx
+   * <Dot color="green" />
+   * ```
    */
   variant?: DotVariant;
   /**
-   * Optional label to display next to the dot
+   * Optional label to display next to the dot.
    */
   label?: string;
   /**
-   * Whether to show animation for active statuses
+   * Whether to show animation for active statuses.
    */
   animated?: boolean;
   /**
-   * Size of the dot
+   * Size of the dot.
    */
   size?: "sm" | "default" | "lg";
 }
@@ -77,23 +78,17 @@ interface DotProps
 /**
  * A small dot indicator to show status or state.
  *
- * Dot
+ * Dot.
  *
  * @component
  * @id dot
  * @name Dot
  */
-const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
-  (
-    {
-      variant = "default",
-      label,
-      animated = false,
-      size = "default",
-      className,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  Dot = (
+    { ref, variant = "default", label, animated = false, size = "default", className, ...props }: DotProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const colorClasses = getColorClasses(variant);
 
@@ -108,16 +103,15 @@ const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
             dotIndicatorVariants({ size, animated }),
             colorClasses.bgSolid,
             // Add dynamic before: color for animation
-            animated && `before:bg-${colorClasses.color}-500`
+            animated && `before:bg-${colorClasses.color}-500`,
           )}
           aria-hidden="true"
         />
         {label && <span>{label}</span>}
       </span>
     );
-  }
-);
+  };
 
 Dot.displayName = "Dot";
 
-export { Dot, dotIndicatorVariants, dotVariants, type DotProps };
+export { Dot, dotIndicatorVariants, type DotProps, dotVariants };

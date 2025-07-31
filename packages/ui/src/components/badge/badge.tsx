@@ -1,18 +1,20 @@
 // Tremor Badge [v1.0.0]
 
+import type { VariantProps } from "tailwind-variants";
+import type { ComponentWithIconsProps } from "../../lib/utils";
+import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { X } from "lucide-react";
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
 
+import React from "react";
+import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
-import { cx, iconUtils, type ComponentWithIconsProps } from "../../lib/utils";
+import { cx, iconUtils } from "../../lib/utils";
 import {
-  getVariantClasses,
   getColorClasses,
-  type GlobalSemanticVariant,
-  type TailwindColor,
+  getVariantClasses,
+
 } from "../../lib/variants";
 
 // Badge-specific variant type (semantic + all Tailwind colors)
@@ -83,7 +85,7 @@ const badgeVariantsDefinition = {
 // Update badge variants to handle dismiss button padding like Tag does
 const badgeVariants = tv({
   base: cx(
-    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md font-medium"
+    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md font-medium",
   ),
   ...badgeVariantsDefinition,
   compoundVariants: [
@@ -166,7 +168,7 @@ const dotIndicatorVariants = tv({
 /**
  * A label used to show a status or category.
  *
- * Badge
+ * Badge.
  *
  * @component
  * @id badge
@@ -176,32 +178,23 @@ const dotIndicatorVariants = tv({
  * <Badge>New</Badge>
  * ```
  */
-const InlineDismissButton = React.forwardRef<
-  HTMLButtonElement,
-  {
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    icon?: React.ComponentType<{
-      className?: string;
-      strokeWidth?: number;
-    }>;
-    iconStrokeWidth?: number;
-    size?: "sm" | "base" | "lg";
-    className?: string;
-    "aria-label"?: string;
-  }
->(
-  (
-    {
-      onClick,
-      icon: IconComponent = X,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      size = "base",
-      className,
-      "aria-label": ariaLabel = "Remove",
-    },
-    ref
+const /**
+       *
+       */
+  InlineDismissButton = (
+    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+      "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+      "icon"?: React.ComponentType<{
+        className?: string;
+        strokeWidth?: number;
+      }>;
+      "iconStrokeWidth"?: number;
+      "size"?: "sm" | "base" | "lg";
+      "className"?: string;
+      "aria-label"?: string;
+    } & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
-    // Size-based icon sizing
+  // Size-based icon sizing
     const iconSizeMap = {
       sm: "xs" as const,
       base: "xs" as const,
@@ -217,7 +210,7 @@ const InlineDismissButton = React.forwardRef<
         type="button"
         onClick={onClick}
         className={cx(
-          // Base button styling
+        // Base button styling
           "flex items-center justify-center rounded-full transition-colors",
           // Size-based dimensions
           size === "sm" && "size-4",
@@ -229,7 +222,7 @@ const InlineDismissButton = React.forwardRef<
           "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
           // Focus states
           "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className
+          className,
         )}
         aria-label={ariaLabel}
       >
@@ -240,19 +233,18 @@ const InlineDismissButton = React.forwardRef<
         />
       </button>
     );
-  }
-);
+  };
 
 /**
  * Badge component props.
- * @extends useRender.ComponentProps<"span">
- * @extends VariantProps<typeof badgeVariants>
- * @extends ComponentWithIconsProps
+ * @augments useRender.ComponentProps<"span">
+ * @augments VariantProps<typeof badgeVariants>
+ * @augments ComponentWithIconsProps
  */
 interface BadgeProps
   extends useRender.ComponentProps<"span">,
-    VariantProps<typeof badgeVariants>,
-    ComponentWithIconsProps {
+  VariantProps<typeof badgeVariants>,
+  ComponentWithIconsProps {
   /**
    * Whether to show a border around the badge.
    * @default false
@@ -350,27 +342,11 @@ interface BadgeProps
  * </Badge>
  * ```
  */
-const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  (
-    {
-      render = <span />,
-      variant,
-      size = "base",
-      bordered,
-      rounded,
-      leftIcon: LeftIcon,
-      rightIcon: RightIcon,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      children,
-      dismissible = false,
-      onDismiss,
-      dismissIcon: DismissIcon = X,
-      statusDot,
-      statusAnimated = false,
-      className,
-      ...otherProps
-    }: BadgeProps,
-    forwardedRef
+const /**
+       *
+       */
+  Badge = (
+    { ref: forwardedRef, render = <span />, variant, size = "base", bordered, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const hasChildren = children != null && children !== "";
     const hasLeftIcon = LeftIcon != null;
@@ -392,8 +368,8 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       const hasStatusDot = Boolean(statusDot);
 
       // Status dot size mapping - one size smaller than badge for better balance
-      const statusDotSize =
-        size === "sm" ? "sm" : size === "base" ? "sm" : "default";
+      const statusDotSize
+        = size === "sm" ? "sm" : size === "base" ? "sm" : "default";
 
       // Use statusAnimated prop directly since statusDot is just boolean
       const shouldAnimate = statusAnimated;
@@ -406,7 +382,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
                 dotIndicatorVariants({ size: statusDotSize, animated: shouldAnimate }),
                 getColorClasses(effectiveVariant || "default").bgSolid,
                 // Add dynamic before: color for animation
-                shouldAnimate && `before:bg-${getColorClasses(effectiveVariant || "default").color}-500`
+                shouldAnimate && `before:bg-${getColorClasses(effectiveVariant || "default").color}-500`,
               )}
               aria-hidden="true"
             />
@@ -428,10 +404,10 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
               iconStrokeWidth={iconStrokeWidth}
               size={size}
               className={cx(
-                // Negative margin to pull closer like Tag does
+              // Negative margin to pull closer like Tag does
                 size === "sm" && "-ml-1",
                 size === "base" && "-ml-1",
-                size === "lg" && "-ml-1.5"
+                size === "lg" && "-ml-1.5",
               )}
             />
           )}
@@ -442,7 +418,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     const defaultProps: useRender.ElementProps<"span"> = {
       className: cx(
         badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
-        className
+        className,
       ),
       children: renderBadgeContent(),
     };
@@ -454,9 +430,8 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     });
 
     return element;
-  }
-);
+  };
 
 Badge.displayName = "Badge";
 
-export { Badge, badgeVariants, type BadgeProps };
+export { Badge, type BadgeProps, badgeVariants };

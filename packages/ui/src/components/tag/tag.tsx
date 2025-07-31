@@ -7,11 +7,10 @@ import React from "react";
 
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
-import { Icon } from "../icon/icon";
-import { Avatar, type AvatarProps } from "../avatar/avatar";
+import { Avatar } from "../avatar/avatar";
 
 /**
- * Get padding classes based on avatar and dismissible state
+ * Get padding classes based on avatar and dismissible state.
  * @example
  * ```tsx
  * <InlineTagDismissButton>Content</InlineTagDismissButton>
@@ -19,12 +18,13 @@ import { Avatar, type AvatarProps } from "../avatar/avatar";
  */
 function getPaddingClasses(
   avatar: TagProps["avatar"],
-  dismissible: boolean
+  dismissible: boolean,
 ): string {
   if (avatar) {
     // With avatar: less left padding since avatar provides visual weight
     return dismissible ? "pl-1 pr-1" : "pl-1 pr-3";
-  } else {
+  }
+  else {
     // No avatar: standard padding
     return dismissible ? "pl-2.5 pr-1" : "px-3";
   }
@@ -34,38 +34,29 @@ function getPaddingClasses(
 /**
  * A label or keyword used to categorize or describe content with optional dismiss functionality.
  *
- * Tag
+ * Tag.
  *
  * @component
  * @id tag
  * @name Tag
  */
-const InlineTagDismissButton = React.forwardRef<
-  HTMLButtonElement,
-  {
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    icon?: React.ComponentType<{
-      className?: string;
-      strokeWidth?: number;
-    }>;
-    iconStrokeWidth?: number;
-    size?: "sm" | "base" | "lg";
-    className?: string;
-    "aria-label"?: string;
-  }
->(
-  (
-    {
-      onClick,
-      icon: IconComponent = X,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      size = "base",
-      className,
-      "aria-label": ariaLabel = "Remove",
-    },
-    ref
+const /**
+       *
+       */
+  InlineTagDismissButton = (
+    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+      "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+      "icon"?: React.ComponentType<{
+        className?: string;
+        strokeWidth?: number;
+      }>;
+      "iconStrokeWidth"?: number;
+      "size"?: "sm" | "base" | "lg";
+      "className"?: string;
+      "aria-label"?: string;
+    } & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
-    // Size-based icon sizing
+  // Size-based icon sizing
     const iconSizeMap = {
       sm: "xs" as const,
       base: "xs" as const,
@@ -81,7 +72,7 @@ const InlineTagDismissButton = React.forwardRef<
         type="button"
         onClick={onClick}
         className={cx(
-          // Base button styling
+        // Base button styling
           "flex items-center justify-center rounded-full transition-colors",
           // Size-based dimensions
           size === "sm" && "size-4",
@@ -93,7 +84,7 @@ const InlineTagDismissButton = React.forwardRef<
           "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
           // Focus states
           "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className
+          className,
         )}
         aria-label={ariaLabel}
       >
@@ -104,36 +95,35 @@ const InlineTagDismissButton = React.forwardRef<
         />
       </button>
     );
-  }
-);
+  };
 
 interface TagProps extends useRender.ComponentProps<"span"> {
   /**
-   * The label text (e.g., "Department", "Location")
+   * The label text (e.g., "Department", "Location").
    */
   label?: string;
   /**
-   * The value text (e.g., "Sales", "Zurich")
+   * The value text (e.g., "Sales", "Zurich").
    */
   value: string;
   /**
-   * Optional count or secondary text to display after the value
+   * Optional count or secondary text to display after the value.
    */
   count?: string | number;
   /**
-   * Custom CSS classes for the count element
+   * Custom CSS classes for the count element.
    */
   countClassName?: string;
   /**
-   * Whether the tag can be dismissed
+   * Whether the tag can be dismissed.
    */
   dismissible?: boolean;
   /**
-   * Callback when the dismiss button is clicked
+   * Callback when the dismiss button is clicked.
    */
   onDismiss?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
-   * Avatar configuration for user tags
+   * Avatar configuration for user tags.
    */
   avatar?: {
     src?: string;
@@ -141,31 +131,20 @@ interface TagProps extends useRender.ComponentProps<"span"> {
     initials?: string;
   };
   /**
-   * Aria label for the dismiss button
+   * Aria label for the dismiss button.
    */
   dismissAriaLabel?: string;
 }
 
-const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
-  (
-    {
-      render = <span />,
-      label,
-      value,
-      count,
-      countClassName,
-      dismissible = false,
-      onDismiss,
-      avatar,
-      className,
-      dismissAriaLabel = "Remove",
-      ...props
-    },
-    forwardedRef
+const /**
+       *
+       */
+  Tag = (
+    { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const defaultProps: useRender.ElementProps<"span"> = {
       className: cx(
-        // base
+      // base
         "inline-flex items-center gap-x-2 rounded-full py-1 text-sm",
         // padding logic
         getPaddingClasses(avatar, dismissible),
@@ -175,7 +154,7 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
         "text-zinc-700 dark:text-zinc-300",
         // border
         "ring-1 ring-inset ring-zinc-200 dark:ring-zinc-800",
-        className
+        className,
       ),
       children: (
         <>
@@ -200,9 +179,9 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
             {count !== undefined && count !== "" && (
               <span
                 className={cx(
-                  // default knocked-back styling
+                // default knocked-back styling
                   "ml-1.5 text-xs font-normal text-zinc-500 dark:text-zinc-400",
-                  countClassName
+                  countClassName,
                 )}
               >
                 {count}
@@ -214,8 +193,8 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
               onClick={onDismiss}
               size="base"
               className={cx(
-                // base - adjust margin based on whether there's a count
-                count !== undefined && count !== "" ? "-ml-1.5" : "-ml-1"
+              // base - adjust margin based on whether there's a count
+                count !== undefined && count !== "" ? "-ml-1.5" : "-ml-1",
               )}
               aria-label={dismissAriaLabel}
             />
@@ -231,8 +210,7 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
     });
 
     return element;
-  }
-);
+  };
 
 Tag.displayName = "Tag";
 

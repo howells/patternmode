@@ -1,4 +1,3 @@
-import React from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -6,6 +5,7 @@ import {
   NavigationMenuLink,
   NavigationMenuTrigger,
 } from "@patternmode/ui";
+import React from "react";
 
 export function DefaultExample() {
   return (

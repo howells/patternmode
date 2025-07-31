@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, EmptyStateExample, LargeSizeExample, MinimalExample, WithBothActionsExample } from "./examples";
+import { DefaultExample, LargeSizeExample, MinimalExample, WithBothActionsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "empty-state",
@@ -18,59 +18,59 @@ export const componentConfig: ComponentConfig = {
       name: "title",
       type: "string",
       defaultValue: "No data found",
-      description: "The main heading/title of the empty state."
+      description: "The main heading/title of the empty state.",
     },
     {
       name: "description",
       type: "textarea",
       defaultValue:
         "There's nothing here yet. Try creating something new to get started.",
-      description: "Optional description text below the title."
+      description: "Optional description text below the title.",
     },
     {
       name: "icon",
       type: "icon",
       defaultValue: "FileX",
-      description: "Optional icon to display above the title."
+      description: "Optional icon to display above the title.",
     },
     {
       name: "variant",
       type: "select",
       defaultValue: "default",
       options: ["default", "minimal"],
-      description: "Visual variant of the empty state."
+      description: "Visual variant of the empty state.",
     },
     {
       name: "size",
       type: "select",
       defaultValue: "default",
       options: ["sm", "default", "lg"],
-      description: "Size variant affecting spacing and text sizes."
+      description: "Size variant affecting spacing and text sizes.",
     },
     {
       name: "showPrimaryAction",
       type: "boolean",
       defaultValue: true,
-      description: "Whether to show the primary action button."
+      description: "Whether to show the primary action button.",
     },
     {
       name: "primaryActionLabel",
       type: "string",
       defaultValue: "Create New",
-      description: "Label for the primary action button."
+      description: "Label for the primary action button.",
     },
     {
       name: "showSecondaryAction",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to show the secondary action."
+      description: "Whether to show the secondary action.",
     },
     {
       name: "secondaryActionLabel",
       type: "string",
       defaultValue: "Learn more",
-      description: "Label for the secondary action."
-    }
+      description: "Label for the secondary action.",
+    },
   ],
   examples: [
     {
@@ -97,6 +97,6 @@ export const componentConfig: ComponentConfig = {
       title: "Large Size",
       description: "Larger empty state for prominent placement.",
       code: jsxToString(<LargeSizeExample />),
-    }
-  ]
+    },
+  ],
 };

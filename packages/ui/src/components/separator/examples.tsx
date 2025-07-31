@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { Separator } from "@patternmode/ui";
+import React from "react";
 
 // Default separator
 export function DefaultExample() {
@@ -63,4 +63,7 @@ export function SizesExample() {
     </div>
   );
 }
-export const SeparatorExample = DefaultExample;
+export const /**
+              *
+              */
+  SeparatorExample = DefaultExample;

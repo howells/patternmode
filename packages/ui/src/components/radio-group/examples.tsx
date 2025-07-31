@@ -1,15 +1,13 @@
 "use client";
 
+import { Button, RadioGroup, RadioGroupItem, RadioOption } from "@patternmode/ui";
 import React, { useState } from "react";
-import { RadioGroup, RadioGroupItem } from "@patternmode/ui";
-import { RadioOption } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
 
 export function RadioGroupExample() {
   const [value, setValue] = useState("option1");
 
   return (
-    <RadioGroup value={value} onValueChange={(value) => setValue(value as string)}>
+    <RadioGroup value={value} onValueChange={value => setValue(value as string)}>
       <RadioOption value="option1" label="Option 1" />
       <RadioOption value="option2" label="Option 2" />
       <RadioOption value="option3" label="Option 3" />
@@ -21,7 +19,7 @@ export function DefaultExample() {
   const [value, setValue] = useState("small");
 
   return (
-    <RadioGroup value={value} onValueChange={(value) => setValue(value as string)} orientation="horizontal">
+    <RadioGroup value={value} onValueChange={value => setValue(value as string)} orientation="horizontal">
       <RadioOption value="small" label="Small" />
       <RadioOption value="medium" label="Medium" />
       <RadioOption value="large" label="Large" />
@@ -33,7 +31,7 @@ export function HorizontalExample() {
   const [plan, setPlan] = useState("basic");
 
   return (
-    <RadioGroup value={plan} onValueChange={(value) => setPlan(value as string)}>
+    <RadioGroup value={plan} onValueChange={value => setPlan(value as string)}>
       <RadioOption
         value="basic"
         label="Basic Plan"
@@ -62,7 +60,7 @@ export function DisabledExample() {
     <div className="space-y-6">
       <div>
         <h4 className="mb-2 text-sm font-medium">Small</h4>
-        <RadioGroup value={value1} onValueChange={(value) => setValue1(value as string)} size="sm">
+        <RadioGroup value={value1} onValueChange={value => setValue1(value as string)} size="sm">
           <RadioOption value="option1" label="Option 1" size="sm" />
           <RadioOption value="option2" label="Option 2" size="sm" />
         </RadioGroup>
@@ -70,7 +68,7 @@ export function DisabledExample() {
 
       <div>
         <h4 className="mb-2 text-sm font-medium">Medium</h4>
-        <RadioGroup value={value2} onValueChange={(value) => setValue2(value as string)} size="md">
+        <RadioGroup value={value2} onValueChange={value => setValue2(value as string)} size="md">
           <RadioOption value="option1" label="Option 1" size="md" />
           <RadioOption value="option2" label="Option 2" size="md" />
         </RadioGroup>
@@ -78,7 +76,7 @@ export function DisabledExample() {
 
       <div>
         <h4 className="mb-2 text-sm font-medium">Large</h4>
-        <RadioGroup value={value3} onValueChange={(value) => setValue3(value as string)} size="lg">
+        <RadioGroup value={value3} onValueChange={value => setValue3(value as string)} size="lg">
           <RadioOption value="option1" label="Option 1" size="lg" />
           <RadioOption value="option2" label="Option 2" size="lg" />
         </RadioGroup>
@@ -91,7 +89,7 @@ export function DisabledRadioGroup() {
   const [value, setValue] = useState("available1");
 
   return (
-    <RadioGroup value={value} onValueChange={(value) => setValue(value as string)}>
+    <RadioGroup value={value} onValueChange={value => setValue(value as string)}>
       <RadioOption value="available1" label="Available Option 1" />
       <RadioOption value="available2" label="Available Option 2" />
       <RadioOption
@@ -111,10 +109,12 @@ export function ControlledRadioGroup() {
   return (
     <div className="space-y-4">
       <div className="text-sm">
-        <strong>Selected:</strong> {selectedValue}
+        <strong>Selected:</strong>
+        {" "}
+        {selectedValue}
       </div>
 
-      <RadioGroup value={selectedValue} onValueChange={(value) => setSelectedValue(value as string)}>
+      <RadioGroup value={selectedValue} onValueChange={value => setSelectedValue(value as string)}>
         <RadioOption value="option1" label="Option 1" />
         <RadioOption value="option2" label="Option 2" />
         <RadioOption value="option3" label="Option 3" />
@@ -144,7 +144,7 @@ export function RadioGroupCustomStructure() {
   const [value, setValue] = useState("custom1");
 
   return (
-    <RadioGroup value={value} onValueChange={(value) => setValue(value as string)}>
+    <RadioGroup value={value} onValueChange={value => setValue(value as string)}>
       <div className="flex items-center space-x-2">
         <RadioGroupItem value="custom1" />
         <div className="flex flex-col">

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Sidebar,
   SidebarBody,
@@ -9,6 +8,7 @@ import {
   SidebarHeader,
   SidebarItem,
 } from "@patternmode/ui";
+import React from "react";
 
 export function DefaultExample() {
   return (

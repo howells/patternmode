@@ -1,9 +1,10 @@
 // Separator Component [v1.0.0] - Base UI Implementation
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { Separator as BaseSeparator } from "@base-ui-components/react/separator";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 const separatorVariants = tv({
   base: [
@@ -97,8 +98,8 @@ const separatorContainerVariants = tv({
  * Props for the Separator component.
  *
  * @interface SeparatorProps
- * @extends React.ComponentPropsWithoutRef<typeof BaseSeparator>
- * @extends VariantProps<typeof separatorVariants>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseSeparator>
+ * @augments VariantProps<typeof separatorVariants>
  * @example
  * ```tsx
  * <Separator />
@@ -106,10 +107,14 @@ const separatorContainerVariants = tv({
  */
 interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof BaseSeparator>,
-    VariantProps<typeof separatorVariants> {
-  /** Optional text content to display in the center of the separator */
+  VariantProps<typeof separatorVariants> {
+  /**
+   * Optional text content to display in the center of the separator.
+   */
   children?: React.ReactNode;
-  /** Spacing around the separator when used with text labels */
+  /**
+   * Spacing around the separator when used with text labels.
+   */
   spacing?: "none" | "sm" | "md" | "lg";
 }
 
@@ -121,11 +126,11 @@ interface SeparatorProps
  * Features horizontal and vertical orientations with multiple styling variants and sizes.
  * Now supports optional text labels positioned in the center of the separator.
  *
- * @param orientation - Direction of the separator (horizontal or vertical)
- * @param variant - Visual style variant (default, subtle, strong)
- * @param size - Thickness/size of the separator (sm, md, lg)
- * @param children - Optional text content to display in the center
- * @param spacing - Vertical spacing around the separator (when used with text)
+ * @param orientation - Direction of the separator (horizontal or vertical).
+ * @param variant - Visual style variant (default, subtle, strong).
+ * @param size - Thickness/size of the separator (sm, md, lg).
+ * @param children - Optional text content to display in the center.
+ * @param spacing - Vertical spacing around the separator (when used with text).
  *
  *
  * @id separator
@@ -194,35 +199,25 @@ interface SeparatorProps
  * @see https://base-ui.com/react/components/separator - Base UI documentation
  */
 /**
- * A visual separator component with optional text labels, built on Base UI
+ * A visual separator component with optional text labels, built on Base UI.
  *
  * @id separator
  * @name Separator
  * @component
  */
-const Separator = React.forwardRef<
-  React.ElementRef<typeof BaseSeparator>,
-  SeparatorProps
->(
-  (
-    {
-      className,
-      orientation = "horizontal",
-      variant,
-      size,
-      children,
-      spacing,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  Separator = (
+    { ref, className, orientation = "horizontal", variant, size, children, spacing, ...props }: SeparatorProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSeparator> | null> },
   ) => {
-    // If children are provided, render as a container with text label
+  // If children are provided, render as a container with text label
     if (children) {
       return (
         <div
           className={cx(
             separatorContainerVariants({ orientation, spacing }),
-            className
+            className,
           )}
         >
           <BaseSeparator
@@ -247,14 +242,13 @@ const Separator = React.forwardRef<
         orientation={orientation}
         className={cx(
           separatorVariants({ orientation, variant, size }),
-          className
+          className,
         )}
         {...props}
       />
     );
-  }
-);
+  };
 
 Separator.displayName = "Separator";
 
-export { Separator, separatorVariants, type SeparatorProps };
+export { Separator, type SeparatorProps, separatorVariants };

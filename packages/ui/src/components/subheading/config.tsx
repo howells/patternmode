@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, LevelsExample, SubheadingExample, WithContentExample } from "./examples";
+import { DefaultExample, LevelsExample, WithContentExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "subheading",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Heading2",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Subheading } from "@patternmode/ui";`,
   componentId: "SubheadingExample",
@@ -22,13 +22,13 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       description: "Heading level",
       options: ["1", "2", "3", "4", "5", "6"],
-      defaultValue: "3"
+      defaultValue: "3",
     },
     {
       name: "children",
       type: "string",
       description: "Subheading text",
-      defaultValue: "Section Title"
+      defaultValue: "Section Title",
     },
   ],
   examples: [
@@ -50,5 +50,5 @@ export const componentConfig: ComponentConfig = {
       description: "Subheading used to organize content sections",
       code: jsxToString(<WithContentExample />),
     },
-  ]
+  ],
 };

@@ -2,10 +2,11 @@
 
 "use client";
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 const tooltipVariants = tv({
   slots: {
@@ -59,8 +60,8 @@ const tooltipVariants = tv({
  * Props for the Tooltip component.
  *
  * @interface TooltipProps
- * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>, "children">
- * @extends VariantProps<typeof tooltipVariants>
+ * @augments Omit<React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>, "children">
+ * @augments VariantProps<typeof tooltipVariants>
  * @example
  * ```tsx
  * <Tooltip>Content</Tooltip>
@@ -71,26 +72,46 @@ interface TooltipProps
       React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>,
       "children"
     >,
-    VariantProps<typeof tooltipVariants> {
-  /** The element that triggers the tooltip */
+  VariantProps<typeof tooltipVariants> {
+  /**
+   * The element that triggers the tooltip.
+   */
   children: React.ReactElement;
-  /** Content to display in the tooltip */
+  /**
+   * Content to display in the tooltip.
+   */
   content: React.ReactNode;
-  /** Preferred side for tooltip placement */
+  /**
+   * Preferred side for tooltip placement.
+   */
   side?: "top" | "bottom" | "left" | "right";
-  /** Distance from the trigger element */
+  /**
+   * Distance from the trigger element.
+   */
   sideOffset?: number;
-  /** Alignment relative to the trigger */
+  /**
+   * Alignment relative to the trigger.
+   */
   align?: "start" | "center" | "end";
-  /** Offset for alignment positioning */
+  /**
+   * Offset for alignment positioning.
+   */
   alignOffset?: number;
-  /** Whether to show the pointing arrow */
+  /**
+   * Whether to show the pointing arrow.
+   */
   showArrow?: boolean;
-  /** Delay before showing tooltip in milliseconds */
+  /**
+   * Delay before showing tooltip in milliseconds.
+   */
   delayDuration?: number;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Click handler for the trigger element */
+  /**
+   * Click handler for the trigger element.
+   */
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
@@ -147,35 +168,16 @@ interface TooltipProps
  * @name Tooltip
  * @component
  */
-const Tooltip = React.forwardRef<
-  React.ElementRef<typeof BaseTooltip.Popup>,
-  TooltipProps
->(
-  (
-    {
-      children,
-      className,
-      content,
-      delayDuration = 150,
-      defaultOpen,
-      open,
-      onClick,
-      onOpenChange,
-      showArrow = true,
-      side = "top",
-      sideOffset = 10,
-      align = "center",
-      alignOffset = 0,
-      variant,
-      size,
-      ...props
-    },
-    forwardedRef
+const /**
+       *
+       */
+  Tooltip = (
+    { ref: forwardedRef, children, className, content, delayDuration = 150, defaultOpen, open, onClick, onOpenChange, showArrow = true, side = "top", sideOffset = 10, align = "center", alignOffset = 0, variant, size, ...props }: TooltipProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null> },
   ) => {
     const { popup, arrow } = tooltipVariants({ variant, size });
 
     return (
-      <BaseTooltip.Provider>
+      <BaseTooltip>
         <BaseTooltip.Root
           open={open}
           defaultOpen={defaultOpen}
@@ -206,10 +208,9 @@ const Tooltip = React.forwardRef<
             </BaseTooltip.Positioner>
           </BaseTooltip.Portal>
         </BaseTooltip.Root>
-      </BaseTooltip.Provider>
+      </BaseTooltip>
     );
-  }
-);
+  };
 
 Tooltip.displayName = "Tooltip";
 
@@ -234,13 +235,34 @@ function ArrowSvg(props: React.ComponentProps<"svg">) {
 }
 
 // Additional exports for more flexibility
-const TooltipProvider = BaseTooltip.Provider;
-const TooltipRoot = BaseTooltip.Root;
-const TooltipTrigger = BaseTooltip.Trigger;
-const TooltipPortal = BaseTooltip.Portal;
-const TooltipPositioner = BaseTooltip.Positioner;
-const TooltipPopup = BaseTooltip.Popup;
-const TooltipArrow = BaseTooltip.Arrow;
+const /**
+       *
+       */
+  TooltipProvider = BaseTooltip.Provider;
+const /**
+       *
+       */
+  TooltipRoot = BaseTooltip.Root;
+const /**
+       *
+       */
+  TooltipTrigger = BaseTooltip.Trigger;
+const /**
+       *
+       */
+  TooltipPortal = BaseTooltip.Portal;
+const /**
+       *
+       */
+  TooltipPositioner = BaseTooltip.Positioner;
+const /**
+       *
+       */
+  TooltipPopup = BaseTooltip.Popup;
+const /**
+       *
+       */
+  TooltipArrow = BaseTooltip.Arrow;
 
 export {
   Tooltip,
@@ -248,8 +270,8 @@ export {
   TooltipPopup,
   TooltipPortal,
   TooltipPositioner,
+  type TooltipProps,
   TooltipProvider,
   TooltipRoot,
   TooltipTrigger,
-  type TooltipProps,
 };

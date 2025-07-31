@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CheckboxExample, CheckedExample, DefaultExample, DisabledExample, IndeterminateExample, WithLabelExample } from "./examples";
+import { CheckedExample, DefaultExample, DisabledExample, IndeterminateExample, WithLabelExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "checkbox",
@@ -18,50 +18,55 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       options: ["true", "false", "indeterminate"],
       defaultValue: false,
-      description: "The checked state of the checkbox. Can be true, false, or 'indeterminate'."
+      description: "The checked state of the checkbox. Can be true, false, or 'indeterminate'.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the checkbox is disabled."
+      description: "Whether the checkbox is disabled.",
     },
     {
       name: "name",
       type: "string",
-      description: "The name attribute of the checkbox input."
+      description: "The name attribute of the checkbox input.",
     },
     {
       name: "value",
       type: "string",
-      description: "The value attribute of the checkbox input."
-    }
+      description: "The value attribute of the checkbox input.",
+    },
   ],
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic checkbox with default styling.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "checked",
       title: "Checked",
       description: "Checkbox in checked state.",
-      code: jsxToString(<CheckedExample />)},
+      code: jsxToString(<CheckedExample />),
+    },
     {
       id: "indeterminate",
       title: "Indeterminate",
       description: "Checkbox in indeterminate state.",
-      code: jsxToString(<IndeterminateExample />)},
+      code: jsxToString(<IndeterminateExample />),
+    },
     {
       id: "disabled",
       title: "Disabled",
       description: "Disabled checkbox in various states.",
-      code: jsxToString(<DisabledExample />)},
+      code: jsxToString(<DisabledExample />),
+    },
     {
       id: "with-label",
       title: "With Label",
       description: "Checkbox with associated label.",
-      code: jsxToString(<WithLabelExample />)}
-  ]
+      code: jsxToString(<WithLabelExample />),
+    },
+  ],
 };

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Sheet Components (Desktop Side Panel)
+ * Sheet Components (Desktop Side Panel).
  *
  * A desktop-optimized sheet implementation built on Base UI Dialog.
  * Provides side panel overlays that slide in from the right side of the screen,
@@ -16,10 +16,10 @@
  * - Automatic close button in header
  * - Flexible layout with header, body, and footer sections
  * - Dark mode support
- * - Responsive sizing and positioning
+ * - Responsive sizing and positioning.
  *
  * Built on Base UI Dialog documentation:
- * https://base-ui.com/react/components/dialog
+ * https://base-ui.com/react/components/dialog.
  *
  * @example
  * ```tsx
@@ -104,48 +104,39 @@
  */
 
 import { Dialog } from "@base-ui-components/react/dialog";
-import * as React from "react";
-
-import { cx, focusRing, iconUtils } from "../../lib/utils";
-import { config } from "../../lib/config";
 import { X } from "lucide-react";
+
+import * as React from "react";
+import { config } from "../../lib/config";
+import { cx, focusRing, iconUtils } from "../../lib/utils";
 
 // Inline DismissButton functionality for Sheet
 /**
  * Extends the Dialog component to display content that complements the main content of the screen.
  *
- * Sheet
+ * Sheet.
  *
  * @component
  * @id sheet
  * @name Sheet
  */
-const InlineSheetDismissButton = React.forwardRef<
-  HTMLButtonElement,
-  {
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    icon?: React.ComponentType<{
-      className?: string;
-      strokeWidth?: number;
-    }>;
-    iconStrokeWidth?: number;
-    size?: "sm" | "base" | "lg";
-    className?: string;
-    "aria-label"?: string;
-  }
->(
-  (
-    {
-      onClick,
-      icon: IconComponent = X,
-      iconStrokeWidth = config.getIconStrokeWidth(),
-      size = "base",
-      className,
-      "aria-label": ariaLabel = "Remove",
-    },
-    ref
+const /**
+       *
+       */
+  InlineSheetDismissButton = (
+    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+      "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+      "icon"?: React.ComponentType<{
+        className?: string;
+        strokeWidth?: number;
+      }>;
+      "iconStrokeWidth"?: number;
+      "size"?: "sm" | "base" | "lg";
+      "className"?: string;
+      "aria-label"?: string;
+    } & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
-    // Size-based icon sizing
+  // Size-based icon sizing
     const iconSizeMap = {
       sm: "xs" as const,
       base: "xs" as const,
@@ -161,7 +152,7 @@ const InlineSheetDismissButton = React.forwardRef<
         type="button"
         onClick={onClick}
         className={cx(
-          // Base button styling
+        // Base button styling
           "flex items-center justify-center rounded-full transition-colors",
           // Size-based dimensions
           size === "sm" && "size-4",
@@ -173,7 +164,7 @@ const InlineSheetDismissButton = React.forwardRef<
           "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
           // Focus states
           "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className
+          className,
         )}
         aria-label={ariaLabel}
       >
@@ -184,8 +175,7 @@ const InlineSheetDismissButton = React.forwardRef<
         />
       </button>
     );
-  }
-);
+  };
 
 /**
  * Root sheet component for desktop side panels.
@@ -194,7 +184,7 @@ const InlineSheetDismissButton = React.forwardRef<
  * context for all child components. Built on Base UI Dialog.Root for
  * full accessibility support.
  *
- * @param props - All Base UI Dialog.Root props (open, onOpenChange, etc.)
+ * @param props - All Base UI Dialog.Root props (open, onOpenChange, etc.).
  *
  * @component
  * @example
@@ -212,9 +202,12 @@ const InlineSheetDismissButton = React.forwardRef<
  * </Sheet>
  * ```
  */
-const Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
-  return <Dialog.Root {...props} />;
-};
+const /**
+       *
+       */
+  Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
+    return <Dialog.Root {...props} />;
+  };
 Sheet.displayName = "Sheet";
 
 /**
@@ -223,8 +216,8 @@ Sheet.displayName = "Sheet";
  * Interactive element that opens the sheet panel. Can be any clickable
  * element like a button, link, or custom component with proper event handling.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Trigger props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Trigger props.
  *
  * @component
  * @example
@@ -240,12 +233,12 @@ Sheet.displayName = "Sheet";
  * </SheetTrigger>
  * ```
  */
-const SheetTrigger = React.forwardRef<
-  React.ElementRef<typeof Dialog.Trigger>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Trigger>
->(({ className, ...props }, ref) => {
-  return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
-});
+const /**
+       *
+       */
+  SheetTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Trigger> | null> }) => {
+    return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
+  };
 SheetTrigger.displayName = "Sheet.Trigger";
 
 /**
@@ -254,8 +247,8 @@ SheetTrigger.displayName = "Sheet.Trigger";
  * Interactive element that closes the sheet when activated. Automatically
  * handles focus return to the trigger element upon closure.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Close props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Close props.
  *
  * @component
  * @example
@@ -269,12 +262,12 @@ SheetTrigger.displayName = "Sheet.Trigger";
  * </SheetClose>
  * ```
  */
-const SheetClose = React.forwardRef<
-  React.ElementRef<typeof Dialog.Close>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Close>
->(({ className, ...props }, ref) => {
-  return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
-});
+const /**
+       *
+       */
+  SheetClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Close> | null> }) => {
+    return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
+  };
 SheetClose.displayName = "Sheet.Close";
 
 /**
@@ -293,7 +286,10 @@ SheetClose.displayName = "Sheet.Close";
  * </SheetPortal>
  * ```
  */
-const SheetPortal = Dialog.Portal;
+const /**
+       *
+       */
+  SheetPortal = Dialog.Portal;
 
 /**
  * Overlay/backdrop component that appears behind the sheet.
@@ -302,8 +298,8 @@ const SheetPortal = Dialog.Portal;
  * is open. Provides visual focus and can close the sheet when clicked.
  * Features smooth fade animations.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Backdrop props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Backdrop props.
  *
  * @component
  * @example
@@ -315,30 +311,30 @@ const SheetPortal = Dialog.Portal;
  * <SheetOverlay className="bg-blue-500/20" />
  * ```
  */
-const SheetOverlay = React.forwardRef<
-  React.ElementRef<typeof Dialog.Backdrop>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Backdrop>
->(({ className, ...props }, forwardedRef) => {
-  return (
-    <Dialog.Backdrop
-      ref={forwardedRef}
-      className={cx(
+const /**
+       *
+       */
+  SheetOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Backdrop> | null> }) => {
+    return (
+      <Dialog.Backdrop
+        ref={forwardedRef}
+        className={cx(
         // base
-        "fixed inset-0 z-50 overflow-y-auto",
-        // background color
-        "bg-black/30",
-        // transition
-        "data-[closed]:animate-hide data-[open]:animate-dialog-overlay-show",
-        className
-      )}
-      {...props}
-      style={{
-        animationDuration: "400ms",
-        animationFillMode: "backwards",
-      }}
-    />
-  );
-});
+          "fixed inset-0 z-50 overflow-y-auto",
+          // background color
+          "bg-black/30",
+          // transition
+          "data-[closed]:animate-hide data-[open]:animate-dialog-overlay-show",
+          className,
+        )}
+        {...props}
+        style={{
+          animationDuration: "400ms",
+          animationFillMode: "backwards",
+        }}
+      />
+    );
+  };
 
 SheetOverlay.displayName = "SheetOverlay";
 
@@ -349,8 +345,8 @@ SheetOverlay.displayName = "SheetOverlay";
  * of the screen. Includes backdrop overlay, smooth animations, responsive
  * sizing, and proper focus management.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Popup props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Popup props.
  *
  * @component
  * @example
@@ -370,32 +366,32 @@ SheetOverlay.displayName = "SheetOverlay";
  * </SheetContent>
  * ```
  */
-const SheetContent = React.forwardRef<
-  React.ElementRef<typeof Dialog.Popup>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Popup>
->(({ className, ...props }, forwardedRef) => {
-  return (
-    <SheetPortal>
-      <SheetOverlay />
-      <Dialog.Popup
-        ref={forwardedRef}
-        className={cx(
+const /**
+       *
+       */
+  SheetContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Popup> | null> }) => {
+    return (
+      <SheetPortal>
+        <SheetOverlay />
+        <Dialog.Popup
+          ref={forwardedRef}
+          className={cx(
           // base
-          "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
-          // border color
-          "border-zinc-200 dark:border-zinc-900",
-          // background color
-          "bg-white dark:bg-[#090E1A]",
-          // transition
-          "data-[closed]:animate-sheet-slide-right-and-fade data-[open]:animate-sheet-slide-left-and-fade",
-          focusRing,
-          className
-        )}
-        {...props}
-      />
-    </SheetPortal>
-  );
-});
+            "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
+            // border color
+            "border-zinc-200 dark:border-zinc-900",
+            // background color
+            "bg-white dark:bg-[#090E1A]",
+            // transition
+            "data-[closed]:animate-sheet-slide-right-and-fade data-[open]:animate-sheet-slide-left-and-fade",
+            focusRing,
+            className,
+          )}
+          {...props}
+        />
+      </SheetPortal>
+    );
+  };
 
 SheetContent.displayName = "SheetContent";
 
@@ -406,9 +402,9 @@ SheetContent.displayName = "SheetContent";
  * along with an automatic close button. Features bottom border separation
  * and responsive layout.
  *
- * @param children - Header content (title, description, other elements)
- * @param className - Additional CSS classes for content area
- * @param props - Additional HTML div props
+ * @param children - Header content (title, description, other elements).
+ * @param className - Additional CSS classes for content area.
+ * @param props - Additional HTML div props.
  *
  * @component
  * @example
@@ -424,31 +420,31 @@ SheetContent.displayName = "SheetContent";
  * </SheetHeader>
  * ```
  */
-const SheetHeader = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ children, className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className="flex items-start justify-between gap-x-4 border-b border-zinc-200 pb-4 dark:border-zinc-900"
-      {...props}
-    >
-      <div className={cx("mt-1 flex flex-col gap-y-1", className)}>
-        {children}
+const /**
+       *
+       */
+  SheetHeader = ({ ref, children, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    return (
+      <div
+        ref={ref}
+        className="flex items-start justify-between gap-x-4 border-b border-zinc-200 pb-4 dark:border-zinc-900"
+        {...props}
+      >
+        <div className={cx("mt-1 flex flex-col gap-y-1", className)}>
+          {children}
+        </div>
+        <Dialog.Close
+          render={(
+            <InlineSheetDismissButton
+              size="lg"
+              aria-label="Close sheet"
+              className="mt-1 shrink-0"
+            />
+          )}
+        />
       </div>
-      <Dialog.Close
-        render={
-          <InlineSheetDismissButton
-            size="lg"
-            aria-label="Close sheet"
-            className="mt-1 shrink-0"
-          />
-        }
-      />
-    </div>
-  );
-});
+    );
+  };
 
 SheetHeader.displayName = "Sheet.Header";
 
@@ -458,8 +454,8 @@ SheetHeader.displayName = "Sheet.Header";
  * Semantic heading element that provides the primary title for the sheet
  * content. Essential for accessibility and screen reader support.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Title props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Title props.
  *
  * @component
  * @example
@@ -471,22 +467,22 @@ SheetHeader.displayName = "Sheet.Header";
  * </SheetTitle>
  * ```
  */
-const SheetTitle = React.forwardRef<
-  React.ElementRef<typeof Dialog.Title>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Title>
->(({ className, ...props }, forwardedRef) => (
-  <Dialog.Title
-    ref={forwardedRef}
-    className={cx(
+const /**
+       *
+       */
+  SheetTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Title> | null> }) => (
+    <Dialog.Title
+      ref={forwardedRef}
+      className={cx(
       // base
-      "text-base font-semibold",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      className
-    )}
-    {...props}
-  />
-));
+        "text-base font-semibold",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        className,
+      )}
+      {...props}
+    />
+  );
 
 SheetTitle.displayName = "SheetTitle";
 
@@ -496,8 +492,8 @@ SheetTitle.displayName = "SheetTitle";
  * Flexible container that holds the primary sheet content with automatic
  * vertical scrolling when content exceeds the available space.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div props.
  *
  * @component
  * @example
@@ -517,12 +513,12 @@ SheetTitle.displayName = "SheetTitle";
  * </SheetBody>
  * ```
  */
-const SheetBody = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => {
-  return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
-});
+const /**
+       *
+       */
+  SheetBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
+  };
 SheetBody.displayName = "Sheet.Body";
 
 /**
@@ -531,8 +527,8 @@ SheetBody.displayName = "Sheet.Body";
  * Provides additional context and information about the sheet's purpose
  * or content. Features muted styling to create visual hierarchy with the title.
  *
- * @param className - Additional CSS classes
- * @param props - Additional Base UI Description props
+ * @param className - Additional CSS classes.
+ * @param props - Additional Base UI Description props.
  *
  * @component
  * @example
@@ -546,18 +542,18 @@ SheetBody.displayName = "Sheet.Body";
  * </SheetDescription>
  * ```
  */
-const SheetDescription = React.forwardRef<
-  React.ElementRef<typeof Dialog.Description>,
-  React.ComponentPropsWithoutRef<typeof Dialog.Description>
->(({ className, ...props }, forwardedRef) => {
-  return (
-    <Dialog.Description
-      ref={forwardedRef}
-      className={cx("text-zinc-500 dark:text-zinc-500", className)}
-      {...props}
-    />
-  );
-});
+const /**
+       *
+       */
+  SheetDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Description> | null> }) => {
+    return (
+      <Dialog.Description
+        ref={forwardedRef}
+        className={cx("text-zinc-500 dark:text-zinc-500", className)}
+        {...props}
+      />
+    );
+  };
 
 SheetDescription.displayName = "SheetDescription";
 
@@ -568,8 +564,8 @@ SheetDescription.displayName = "SheetDescription";
  * Features top border separation and responsive layout that stacks on mobile
  * and displays horizontally on desktop.
  *
- * @param className - Additional CSS classes
- * @param props - Additional HTML div props
+ * @param className - Additional CSS classes.
+ * @param props - Additional HTML div props.
  *
  * @component
  * @example
@@ -588,20 +584,23 @@ SheetDescription.displayName = "SheetDescription";
  * </SheetFooter>
  * ```
  */
-const SheetFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <div
-      className={cx(
-        "flex flex-col-reverse border-t border-zinc-200 pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
-        className
-      )}
-      {...props}
-    />
-  );
-};
+const /**
+       *
+       */
+  SheetFooter = ({
+    className,
+    ...props
+  }: React.HTMLAttributes<HTMLDivElement>) => {
+    return (
+      <div
+        className={cx(
+          "flex flex-col-reverse border-t border-zinc-200 pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
+          className,
+        )}
+        {...props}
+      />
+    );
+  };
 
 SheetFooter.displayName = "SheetFooter";
 

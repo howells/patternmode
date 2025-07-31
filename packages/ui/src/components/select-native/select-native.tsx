@@ -1,7 +1,8 @@
 // Tremor SelectNative [v1.0.0]
 
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
@@ -40,7 +41,9 @@ const selectNativeStyles = tv({
     // "dark:aria-invalid:ring-red-400/20 aria-invalid:ring-2 aria-invalid:ring-red-200 aria-invalid:border-red-500 invalid:ring-2 invalid:ring-red-200 invalid:border-red-500"
   ],
   variants: {
-    /** Whether to show error styling */
+    /**
+     * Whether to show error styling.
+     */
     hasError: {
       true: hasErrorInput,
     },
@@ -54,12 +57,12 @@ const selectNativeStyles = tv({
  * for consistent appearance across the design system.
  *
  * @interface SelectNativeProps
- * @extends React.InputHTMLAttributes<HTMLSelectElement>
- * @extends VariantProps<typeof selectNativeStyles>
+ * @augments React.InputHTMLAttributes<HTMLSelectElement>
+ * @augments VariantProps<typeof selectNativeStyles>
  */
 interface SelectNativeProps
   extends React.InputHTMLAttributes<HTMLSelectElement>,
-    VariantProps<typeof selectNativeStyles> {}
+  VariantProps<typeof selectNativeStyles> {}
 
 /**
  * A styled native HTML select component.
@@ -69,11 +72,11 @@ interface SelectNativeProps
  * platform-native behavior, mobile optimization, or simpler dropdown needs
  * without custom rendering.
  *
- * @param hasError - Whether to show error styling
- * @param disabled - Whether the select is disabled
- * @param value - Currently selected value
- * @param onChange - Callback when selection changes
- * @param children - Option elements to render
+ * @param hasError - Whether to show error styling.
+ * @param disabled - Whether the select is disabled.
+ * @param value - Currently selected value.
+ * @param onChange - Callback when selection changes.
+ * @param children - Option elements to render.
  *
  *
  * @id select-native
@@ -134,8 +137,10 @@ interface SelectNativeProps
  * @name Select Native
  * @component
  */
-const SelectNative = React.forwardRef<HTMLSelectElement, SelectNativeProps>(
-  ({ className, hasError, ...props }: SelectNativeProps, forwardedRef) => {
+const /**
+       *
+       */
+  SelectNative = ({ ref: forwardedRef, className, hasError, ...props }: SelectNativeProps & { ref?: React.RefObject<HTMLSelectElement | null> }) => {
     return (
       <select
         ref={forwardedRef}
@@ -144,9 +149,8 @@ const SelectNative = React.forwardRef<HTMLSelectElement, SelectNativeProps>(
         {...props}
       />
     );
-  }
-);
+  };
 
 SelectNative.displayName = "SelectNative";
 
-export { SelectNative, selectNativeStyles, type SelectNativeProps };
+export { SelectNative, type SelectNativeProps, selectNativeStyles };

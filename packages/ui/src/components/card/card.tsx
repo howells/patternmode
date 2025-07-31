@@ -1,9 +1,10 @@
 // Card Component [v1.0.0] - Pure Implementation
 
+import type { VariantProps } from "tailwind-variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
 
@@ -59,22 +60,22 @@ const cardVariants = tv({
  * Props for the Card component.
  *
  * @interface CardProps
- * @extends useRender.ComponentProps<"div">
+ * @augments useRender.ComponentProps<"div">
  * @example
  * ```tsx
  * <Card>
- *  *   <CardHeader>
- *  *     <CardTitle>Card Title</CardTitle>
- *  *   </CardHeader>
- *  *   <CardContent>
- *  *     Card content goes here.
- *  *   </CardContent>
- *  * </Card>
+ *  <CardHeader>
+ *  <CardTitle>Card Title</CardTitle>
+ *  </CardHeader>
+ *  <CardContent>
+ *  Card content goes here.
+ *  </CardContent>
+ *  </Card>
  * ```
  */
 interface CardProps
   extends useRender.ComponentProps<"div">,
-    VariantProps<typeof cardVariants> {}
+  VariantProps<typeof cardVariants> {}
 
 /**
  * A flexible container component with Tremor-inspired styling.
@@ -84,10 +85,10 @@ interface CardProps
  * and dark mode support. Perfect for grouping related content and creating
  * structured layouts.
  *
- * @param render - Custom element to render (defaults to div)
- * @param padding - Padding scale value (0-12, defaults to 6)
- * @param fillHeight - Whether card should fill container height (defaults to false)
- * @param className - Additional CSS classes
+ * @param render - Custom element to render (defaults to div).
+ * @param padding - Padding scale value (0-12, defaults to 6).
+ * @param fillHeight - Whether card should fill container height (defaults to false).
+ * @param className - Additional CSS classes.
  *
  *
  * @id card
@@ -150,10 +151,11 @@ interface CardProps
  * @name Card
  * @component
  */
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  (
-    { render = <div />, variant, padding, fillHeight, className, ...props },
-    forwardedRef
+const /**
+       *
+       */
+  Card = (
+    { ref: forwardedRef, render = <div />, variant, padding, fillHeight, className, ...props }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const defaultProps: useRender.ElementProps<"div"> = {
       className: cx(cardVariants({ variant, padding, fillHeight }), className),
@@ -166,98 +168,97 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     });
 
     return element;
-  }
-);
+  };
 
 Card.displayName = "Card";
 
 /**
  * Card header component for titles, descriptions and actions.
  */
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { border?: boolean }
->(({ className, border = false, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cx(
-      "flex flex-col space-y-1.5 p-6",
-      border && "border-b border-zinc-200 dark:border-zinc-800",
-      className
-    )}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  CardHeader = ({ ref, className, border = false, ...props }: React.HTMLAttributes<HTMLDivElement> & { border?: boolean } & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div
+      ref={ref}
+      className={cx(
+        "flex flex-col space-y-1.5 p-6",
+        border && "border-b border-zinc-200 dark:border-zinc-800",
+        className,
+      )}
+      {...props}
+    />
+  );
 CardHeader.displayName = "CardHeader";
 
 /**
  * Card title component with consistent typography.
  */
-const CardTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cx(
-      "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
-      className
-    )}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  CardTitle = ({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadingElement> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
+    <h3
+      ref={ref}
+      className={cx(
+        "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
+        className,
+      )}
+      {...props}
+    />
+  );
 CardTitle.displayName = "CardTitle";
 
 /**
  * Card description component with muted text styling.
  */
-const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  CardDescription = ({ ref, className, ...props }: React.HTMLAttributes<HTMLParagraphElement> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
+    <p
+      ref={ref}
+      className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
+      {...props}
+    />
+  );
 CardDescription.displayName = "CardDescription";
 
 /**
  * Card action component for buttons or interactive elements in the header.
  */
-const CardAction = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx("flex items-center", className)} {...props} />
-));
+const /**
+       *
+       */
+  CardAction = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div ref={ref} className={cx("flex items-center", className)} {...props} />
+  );
 CardAction.displayName = "CardAction";
 
 /**
  * Card content component for main content area.
  */
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx("p-6", className)} {...props} />
-));
+const /**
+       *
+       */
+  CardContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div ref={ref} className={cx("p-6", className)} {...props} />
+  );
 CardContent.displayName = "CardContent";
 
 /**
  * Card footer component for actions or additional content.
  */
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cx("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  CardFooter = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+    <div
+      ref={ref}
+      className={cx("flex items-center p-6 pt-0", className)}
+      {...props}
+    />
+  );
 CardFooter.displayName = "CardFooter";
 
 export {
@@ -267,7 +268,7 @@ export {
   CardDescription,
   CardFooter,
   CardHeader,
+  type CardProps,
   CardTitle,
   cardVariants,
-  type CardProps,
 };

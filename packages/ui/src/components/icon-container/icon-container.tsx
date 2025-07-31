@@ -1,12 +1,13 @@
-import { Icon } from "../icon/icon";
+import type { VariantProps } from "tailwind-variants";
+import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import React from "react";
+import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import {
   getColorClasses,
-  type GlobalSemanticVariant,
-  type TailwindColor,
+
 } from "../../lib/variants";
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { Icon } from "../icon/icon";
 
 const iconContainerVariants = tv({
   base: "rounded-lg flex items-center justify-center shrink-0",
@@ -37,22 +38,34 @@ const iconContainerVariants = tv({
 
 export interface IconContainerProps
   extends VariantProps<typeof iconContainerVariants> {
-  /** The Lucide icon component to render */
+  /**
+   * The Lucide icon component to render.
+   */
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Icon size */
+  /**
+   * Icon size.
+   */
   iconSize?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
-  /** Whether to center the container */
+  /**
+   * Whether to center the container.
+   */
   centered?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Additional CSS classes for the icon */
+  /**
+   * Additional CSS classes for the icon.
+   */
   iconClassName?: string;
-  /** Custom color variant (overrides variant prop) */
+  /**
+   * Custom color variant (overrides variant prop).
+   */
   color?: GlobalSemanticVariant | TailwindColor;
 }
 
 /**
- * IconContainer component for displaying icons in colored containers
+ * IconContainer component for displaying icons in colored containers.
  *
  * @example
  * ```tsx
@@ -78,7 +91,7 @@ export interface IconContainerProps
  * ```
  */
 /**
- * Icon Container
+ * Icon Container.
  *
  * @component
  * @id icon-container
@@ -104,7 +117,7 @@ export function IconContainer({
         iconContainerVariants({ size, variant }),
         colorClasses && colorClasses.bgMuted,
         centered && "mx-auto",
-        className
+        className,
       )}
       {...props}
     >

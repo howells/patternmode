@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { BashExample, CodeBlockExample, CssExample, DefaultExample, JavascriptExample, JsonExample } from "./examples";
+import { BashExample, CssExample, DefaultExample, JavascriptExample, JsonExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "code-block",
@@ -18,7 +18,7 @@ export const componentConfig: ComponentConfig = {
       type: "textarea",
       defaultValue: `const greeting = "Hello, World!";\nconsole.log(greeting);`,
       description: "The code content to display.",
-      required: true
+      required: true,
     },
     {
       name: "language",
@@ -35,14 +35,14 @@ export const componentConfig: ComponentConfig = {
         "python",
       ],
       defaultValue: "tsx",
-      description: "The programming language for the code block header."
+      description: "The programming language for the code block header.",
     },
     {
       name: "theme",
       type: "select",
       options: ["auto", "light", "dark"],
       defaultValue: "auto",
-      description: "The color theme for syntax highlighting."
+      description: "The color theme for syntax highlighting.",
     },
   ],
   examples: [
@@ -76,5 +76,5 @@ export const componentConfig: ComponentConfig = {
       description: "Code block for shell commands.",
       code: jsxToString(<BashExample />),
     },
-  ]
+  ],
 };

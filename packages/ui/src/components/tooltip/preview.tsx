@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@patternmode/ui";
-import { useState } from "react";
 import { Tooltip } from "@patternmode/ui";
+import { useState } from "react";
 
 interface TooltipExampleProps {
   content?: string;
@@ -87,14 +86,14 @@ export function TooltipExample({
       {/* Rich content example */}
       <div className="flex justify-center">
         <Tooltip
-          content={
+          content={(
             <div className="space-y-1">
               <div className="font-semibold">Rich Content</div>
               <div className="text-xs opacity-90">
                 This tooltip contains multiple elements and formatting
               </div>
             </div>
-          }
+          )}
         >
           <span className="inline-flex px-3 py-1.5 text-sm bg-zinc-100 dark:bg-zinc-800 rounded cursor-pointer">Rich Content</span>
         </Tooltip>
@@ -113,7 +112,9 @@ export function TooltipExample({
           onClick={() => setControlledOpen(!controlledOpen)}
           className="px-3 py-1.5 text-sm border border-zinc-300 dark:border-zinc-600 rounded hover:bg-zinc-50 dark:hover:bg-zinc-800"
         >
-          Toggle: {controlledOpen ? "Open" : "Closed"}
+          Toggle:
+          {" "}
+          {controlledOpen ? "Open" : "Closed"}
         </button>
       </div>
     </div>

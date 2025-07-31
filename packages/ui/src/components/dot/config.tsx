@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { AnimatedExample, BasicExample, ColorVariantsExample, DotExample, SemanticVariantsExample, SizesExample, WithLabelsExample, WithoutLabelsExample } from "./examples";
+import { AnimatedExample, BasicExample, ColorVariantsExample, SemanticVariantsExample, SizesExample, WithLabelsExample, WithoutLabelsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "dot",

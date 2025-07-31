@@ -1,13 +1,18 @@
 // Tremor RadioGroup [v1.0.0] - Base UI
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
+
+// Legacy components for backward compatibility with existing radio-group.tsx usage
+// These use the new Radio components from radio.tsx
+import { RadioItem } from "../radio/radio";
 
 /**
  * Style variants for radio group layouts.
- * 
+ *
  * Defines styling options for radio group containers including
  * orientation and spacing between radio items.
  * @example
@@ -21,12 +26,16 @@ const radioGroupVariants = tv({
     "grid gap-2",
   ],
   variants: {
-    /** Layout orientation of radio items */
+    /**
+     * Layout orientation of radio items.
+     */
     orientation: {
       vertical: "grid-cols-1",
       horizontal: "grid-flow-col auto-cols-max gap-4",
     },
-    /** Spacing size between radio items */
+    /**
+     * Spacing size between radio items.
+     */
     size: {
       sm: "gap-1.5",
       md: "gap-2",
@@ -41,16 +50,16 @@ const radioGroupVariants = tv({
 
 /**
  * A radio group component for managing radio button selections.
- * 
+ *
  * Based on Base UI's RadioGroup (https://base-ui.com/react/components/radio),
  * providing accessible group management for radio buttons with keyboard navigation
  * and focus management. Ensures only one radio can be selected at a time.
  *
- * @param orientation - Layout direction (vertical or horizontal)
- * @param size - Spacing size between items
- * @param value - Currently selected value
- * @param onValueChange - Callback when selection changes
- * @param disabled - Whether the entire group is disabled
+ * @param orientation - Layout direction (vertical or horizontal).
+ * @param size - Spacing size between items.
+ * @param value - Currently selected value.
+ * @param onValueChange - Callback when selection changes.
+ * @param disabled - Whether the entire group is disabled.
  *
  *
  * @id radio-group
@@ -66,9 +75,9 @@ const radioGroupVariants = tv({
  * </RadioGroup>
  *
  * // Horizontal layout
- * <RadioGroup 
- *   orientation="horizontal" 
- *   value={plan} 
+ * <RadioGroup
+ *   orientation="horizontal"
+ *   value={plan}
  *   onValueChange={setPlan}
  * >
  *   <RadioGroupItem value="free">Free</RadioGroupItem>
@@ -98,41 +107,37 @@ const radioGroupVariants = tv({
  * @name Radio Group
  * @component
  */
-const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof BaseRadioGroup>,
-  React.ComponentPropsWithoutRef<typeof BaseRadioGroup> &
-    VariantProps<typeof radioGroupVariants>
->(({ className, orientation, size, ...props }, ref) => (
-  <BaseRadioGroup
-    ref={ref}
-    className={cx(radioGroupVariants({ orientation, size }), className)}
-    {...props}
-  />
-));
+const /**
+       *
+       */
+  RadioGroup = ({ ref, className, orientation, size, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
+    & VariantProps<typeof radioGroupVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
+    <BaseRadioGroup
+      ref={ref}
+      className={cx(radioGroupVariants({ orientation, size }), className)}
+      {...props}
+    />
+  );
 RadioGroup.displayName = "RadioGroup";
-
-// Legacy components for backward compatibility with existing radio-group.tsx usage
-// These use the new Radio components from radio.tsx
-import { RadioItem } from "../radio/radio";
 
 /**
  * Legacy radio group item component.
- * 
+ *
  * Provides backward compatibility by wrapping the RadioItem component
  * from the radio module. For new code, use RadioItem directly from
  * the radio module instead.
  *
- * @deprecated Use RadioItem from "../radio" directly
+ * @deprecated Use RadioItem from "../radio" directly.
  * @see RadioItem in radio.tsx for full documentation
  */
-const RadioGroupItem: React.ForwardRefExoticComponent<
+const /**
+       *
+       */
+  RadioGroupItem: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof RadioItem> & React.RefAttributes<React.ElementRef<typeof RadioItem>>
-> = React.forwardRef<
-  React.ElementRef<typeof RadioItem>,
-  React.ComponentPropsWithoutRef<typeof RadioItem>
->(({ className, ...props }, ref) => (
+> = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof RadioItem> & { ref?: React.RefObject<React.ElementRef<typeof RadioItem> | null> }) => (
   <RadioItem ref={ref} className={className} {...props} />
-));
+);
 RadioGroupItem.displayName = "RadioGroupItem";
 
 export { RadioGroup, RadioGroupItem, radioGroupVariants };

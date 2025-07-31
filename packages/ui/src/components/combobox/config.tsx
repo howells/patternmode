@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { AsyncExample, CustomRenderingExample, DefaultExample, ErrorExample, IconsExample, SizesExample } from "./examples";
 
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "ChevronDown",
 
   installation: {
-    npm: "downshift @tanstack/react-query"
+    npm: "downshift @tanstack/react-query",
   },
   importStatement: `import { Combobox } from "@/components/ui/combobox";`,
   componentId: "ComboboxExample",
@@ -22,50 +22,50 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       options: ["sm", "base", "lg"],
       defaultValue: "base",
-      description: "The size of the combobox."
+      description: "The size of the combobox.",
     },
     {
       name: "placeholder",
       type: "text",
       defaultValue: "Select an option...",
-      description: "Placeholder text shown when no value is selected."
+      description: "Placeholder text shown when no value is selected.",
     },
     {
       name: "searchPlaceholder",
       type: "text",
       defaultValue: "Search...",
-      description: "Placeholder text for the search input."
+      description: "Placeholder text for the search input.",
     },
     {
       name: "emptyMessage",
       type: "text",
       defaultValue: "No results found.",
-      description: "Message shown when no items match the search."
+      description: "Message shown when no items match the search.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the combobox is disabled."
+      description: "Whether the combobox is disabled.",
     },
     {
       name: "hasError",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to show error styling."
+      description: "Whether to show error styling.",
     },
     {
       name: "searchDebounce",
       type: "number",
       defaultValue: 300,
-      description: "Debounce delay for search in milliseconds."
+      description: "Debounce delay for search in milliseconds.",
     },
     {
       name: "clearSearchOnSelect",
       type: "boolean",
       defaultValue: true,
-      description: "Whether to clear search input when item is selected."
-    }
+      description: "Whether to clear search input when item is selected.",
+    },
   ],
   examples: [
     {
@@ -103,6 +103,6 @@ export const componentConfig: ComponentConfig = {
       title: "Error State",
       description: "Combobox in error state.",
       code: jsxToString(<ErrorExample />),
-    }
-  ]
+    },
+  ],
 };

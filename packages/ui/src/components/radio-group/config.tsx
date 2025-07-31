@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, DisabledExample, HorizontalExample, RadioGroupExample } from "./examples";
+import { DefaultExample, DisabledExample, HorizontalExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "radio-group",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Circle",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { RadioGroup, RadioGroupItem } from "@patternmode/ui";`,
   componentId: "RadioGroupExample",
@@ -20,20 +20,20 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "string",
       description: "Selected value",
-      defaultValue: "option1"
+      defaultValue: "option1",
     },
     {
       name: "orientation",
       type: "select",
       description: "Layout orientation",
       options: ["horizontal", "vertical"],
-      defaultValue: "vertical"
+      defaultValue: "vertical",
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the radio group is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
   examples: [
@@ -55,5 +55,5 @@ export const componentConfig: ComponentConfig = {
       description: "Radio group in disabled state",
       code: jsxToString(<DisabledExample />),
     },
-  ]
+  ],
 };

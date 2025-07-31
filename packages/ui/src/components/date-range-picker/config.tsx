@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { ControlledExample, DateRangePickerExample, DefaultExample, DisabledExample, ErrorStateExample, WithPresetsExample, WithTimeExample } from "./examples";
+import { ControlledExample, DefaultExample, DisabledExample, ErrorStateExample, WithPresetsExample, WithTimeExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "date-range-picker",
@@ -18,40 +18,40 @@ export const componentConfig: ComponentConfig = {
       name: "placeholder",
       type: "string",
       defaultValue: "Select date range",
-      description: "Placeholder text for the date range picker."
+      description: "Placeholder text for the date range picker.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the date range picker is disabled."
+      description: "Whether the date range picker is disabled.",
     },
     {
       name: "hasError",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the date range picker has an error state."
+      description: "Whether the date range picker has an error state.",
     },
     {
       name: "showTimePicker",
       type: "boolean",
       defaultValue: false,
       description:
-        "Whether to show time selection controls for start and end dates."
+        "Whether to show time selection controls for start and end dates.",
     },
     {
       name: "enableYearNavigation",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to enable year navigation in the calendar."
+      description: "Whether to enable year navigation in the calendar.",
     },
     {
       name: "align",
       type: "select",
       options: ["start", "center", "end"],
       defaultValue: "center",
-      description: "Alignment of the popover relative to the trigger."
-    }
+      description: "Alignment of the popover relative to the trigger.",
+    },
   ],
   examples: [
     {
@@ -91,5 +91,5 @@ export const componentConfig: ComponentConfig = {
       description: "Controlled date range picker with external state.",
       code: jsxToString(<ControlledExample />),
     },
-  ]
+  ],
 };

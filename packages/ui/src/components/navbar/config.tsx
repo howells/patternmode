@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, NavbarExample, WithDividerExample } from "./examples";
+import { DefaultExample, WithDividerExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "navbar",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Navigation",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   Navbar,
@@ -35,5 +35,5 @@ export const componentConfig: ComponentConfig = {
       description: "Navigation bar with sections separated by dividers",
       code: jsxToString(<WithDividerExample />),
     },
-  ]
+  ],
 };

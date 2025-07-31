@@ -1,7 +1,8 @@
-import { Icon } from "../icon/icon";
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
+import { Icon } from "../icon/icon";
 
 const listVariants = tv({
   base: "list-none space-y-1",
@@ -56,41 +57,65 @@ const indicatorVariants = tv({
 });
 
 export interface ListProps extends VariantProps<typeof listVariants> {
-  /** The underlying element to render (ul, ol, etc.) */
+  /**
+   * The underlying element to render (ul, ol, etc.).
+   */
   as?: React.ElementType;
-  /** Whether to remove the component's style */
+  /**
+   * Whether to remove the component's style.
+   */
   unstyled?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** The list items */
+  /**
+   * The list items.
+   */
   children: React.ReactNode;
 }
 
 export interface ListItemProps extends VariantProps<typeof listItemVariants> {
-  /** Whether to remove the component's style */
+  /**
+   * Whether to remove the component's style.
+   */
   unstyled?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** The list item content */
+  /**
+   * The list item content.
+   */
   children: React.ReactNode;
 }
 
 export interface ListIndicatorProps
   extends VariantProps<typeof indicatorVariants> {
-  /** The icon component to render */
+  /**
+   * The icon component to render.
+   */
   icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Icon size */
+  /**
+   * Icon size.
+   */
   size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
-  /** Whether to remove the component's style */
+  /**
+   * Whether to remove the component's style.
+   */
   unstyled?: boolean;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** The indicator content */
+  /**
+   * The indicator content.
+   */
   children?: React.ReactNode;
 }
 
 /**
- * List component for displaying ordered and unordered lists
+ * List component for displaying ordered and unordered lists.
  *
  * @example
  * ```tsx
@@ -122,7 +147,7 @@ export interface ListIndicatorProps
 /**
  * A flexible list component supporting ordered/unordered lists with custom indicators and styling.
  *
- * List
+ * List.
  *
  * @component
  * @id list
@@ -148,7 +173,7 @@ export function List({
 }
 
 /**
- * List item component
+ * List item component.
  */
 export function ListItem({
   variant,
@@ -162,7 +187,7 @@ export function ListItem({
     <li
       className={cx(
         !unstyled && listItemVariants({ variant, align }),
-        className
+        className,
       )}
       {...props}
     >
@@ -172,7 +197,7 @@ export function ListItem({
 }
 
 /**
- * List indicator component for custom markers or icons
+ * List indicator component for custom markers or icons.
  */
 export function ListIndicator({
   icon: IconComponent,

@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, FieldsetExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "fieldset",
@@ -17,7 +17,7 @@ export const componentConfig: ComponentConfig = {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Whether the fieldset is disabled."
+      description: "Whether the fieldset is disabled.",
     },
   ],
   examples: [
@@ -27,5 +27,5 @@ export const componentConfig: ComponentConfig = {
       description: "Basic fieldset with legend and form fields.",
       code: jsxToString(<DefaultExample />),
     },
-  ]
+  ],
 };

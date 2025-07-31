@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, PreviewCardExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "preview-card",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "Eye",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { PreviewCard } from "@patternmode/ui";`,
   componentId: "PreviewCardExample",
@@ -20,19 +20,19 @@ export const componentConfig: ComponentConfig = {
       name: "title",
       type: "string",
       description: "The title of the preview card",
-      defaultValue: "Card Title"
+      defaultValue: "Card Title",
     },
     {
       name: "description",
       type: "string",
       description: "The description text",
-      defaultValue: "This is a preview card description."
+      defaultValue: "This is a preview card description.",
     },
     {
       name: "image",
       type: "string",
       description: "Image URL for the preview",
-      defaultValue: ""
+      defaultValue: "",
     },
   ],
   examples: [
@@ -42,5 +42,5 @@ export const componentConfig: ComponentConfig = {
       description: "A card component that shows a preview or summary of content.",
       code: jsxToString(<DefaultExample />),
     },
-  ]
+  ],
 };

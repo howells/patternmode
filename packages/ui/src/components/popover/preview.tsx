@@ -1,16 +1,7 @@
 "use client";
 
-import { Button } from "@patternmode/ui";
+import { Button, Popover, PopoverArrow, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger } from "@patternmode/ui";
 import { useState } from "react";
-import {
-  Popover,
-  PopoverArrow,
-  PopoverClose,
-  PopoverContent,
-  PopoverDescription,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@patternmode/ui";
 
 interface PopoverExampleProps {
   side?: "top" | "right" | "bottom" | "left";
@@ -167,7 +158,9 @@ export function PopoverExample({
           variant="outline"
           size="sm"
         >
-          Toggle: {controlledOpen ? "Open" : "Closed"}
+          Toggle:
+          {" "}
+          {controlledOpen ? "Open" : "Closed"}
         </Button>
       </div>
     </div>

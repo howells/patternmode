@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CustomRangeExample, DefaultExample, DisabledExample, RangeExample, SliderExample, StepsExample } from "./examples";
+import { CustomRangeExample, DefaultExample, DisabledExample, RangeExample, StepsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "slider",
@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   icon: "SlidersHorizontal",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Slider } from "@patternmode/ui";`,
   componentId: "SliderExample",
@@ -20,31 +20,31 @@ export const componentConfig: ComponentConfig = {
       name: "value",
       type: "number",
       description: "The controlled value of the slider",
-      defaultValue: 50
+      defaultValue: 50,
     },
     {
       name: "min",
       type: "number",
       description: "The minimum value",
-      defaultValue: 0
+      defaultValue: 0,
     },
     {
       name: "max",
       type: "number",
       description: "The maximum value",
-      defaultValue: 100
+      defaultValue: 100,
     },
     {
       name: "step",
       type: "number",
       description: "The step value",
-      defaultValue: 1
+      defaultValue: 1,
     },
     {
       name: "disabled",
       type: "boolean",
       description: "Whether the slider is disabled",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
   examples: [
@@ -78,5 +78,5 @@ export const componentConfig: ComponentConfig = {
       description: "A slider in disabled state",
       code: jsxToString(<DisabledExample />),
     },
-  ]
+  ],
 };

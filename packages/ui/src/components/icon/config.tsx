@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CustomStrokeExample, DefaultExample, IconExample, LayoutExample, SizesExample, WithTextExample } from "./examples";
+import { CustomStrokeExample, DefaultExample, LayoutExample, SizesExample, WithTextExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "icon",

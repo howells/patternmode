@@ -131,10 +131,16 @@ const tabsVariants = tv({
 
 type TabsListVariant = "solid" | "line";
 
-const TabsListVariantContext = React.createContext<TabsListVariant>("line");
-const TabsListSizeContext = React.createContext<"default" | "sm" | "lg">(
-  "default"
-);
+const /**
+       *
+       */
+  TabsListVariantContext = React.createContext<TabsListVariant>("line");
+const /**
+       *
+       */
+  TabsListSizeContext = React.createContext<"default" | "sm" | "lg">(
+    "default",
+  );
 
 /**
  * Root tabs component built on Base UI's Tabs primitive.
@@ -168,19 +174,19 @@ const TabsListSizeContext = React.createContext<"default" | "sm" | "lg">(
  * @name Tabs
  * @component
  */
-const Tabs = React.forwardRef<
-  React.ElementRef<typeof BaseTabs.Root>,
-  Omit<React.ComponentPropsWithoutRef<typeof BaseTabs.Root>, "orientation">
->(({ className, ...props }, forwardedRef) => {
-  const { root } = tabsVariants();
-  return (
-    <BaseTabs.Root
-      ref={forwardedRef}
-      className={cx(root(), className)}
-      {...props}
-    />
-  );
-});
+const /**
+       *
+       */
+  Tabs = ({ ref: forwardedRef, className, ...props }: Omit<React.ComponentPropsWithoutRef<typeof BaseTabs.Root>, "orientation"> & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Root> | null> }) => {
+    const { root } = tabsVariants();
+    return (
+      <BaseTabs.Root
+        ref={forwardedRef}
+        className={cx(root(), className)}
+        {...props}
+      />
+    );
+  };
 
 Tabs.displayName = "Tabs";
 
@@ -188,17 +194,25 @@ Tabs.displayName = "Tabs";
  * Props for the TabsList component.
  *
  * @interface TabsListProps
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.List>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.List>
  */
 interface TabsListProps
   extends React.ComponentPropsWithoutRef<typeof BaseTabs.List> {
-  /** Style variant for the tabs list */
+  /**
+   * Style variant for the tabs list.
+   */
   variant?: TabsListVariant;
-  /** Hide the bottom divider line */
+  /**
+   * Hide the bottom divider line.
+   */
   hideDivider?: boolean;
-  /** Hide the active tab border/indicator */
+  /**
+   * Hide the active tab border/indicator.
+   */
   hideBorder?: boolean;
-  /** Size for solid variant buttons */
+  /**
+   * Size for solid variant buttons.
+   */
   size?: "default" | "sm" | "lg";
 }
 
@@ -209,10 +223,10 @@ interface TabsListProps
  * with animated indicator that follows the active tab. Supports multiple variants
  * including Geist-style tabs with bottom divider and indicator.
  *
- * @param variant - Style variant (solid, geist, or line)
- * @param hideDivider - Hide the bottom divider line (Geist variant only)
- * @param hideBorder - Hide the active tab indicator
- * @param size - Size for solid variant buttons (default, sm, lg)
+ * @param variant - Style variant (solid, geist, or line).
+ * @param hideDivider - Hide the bottom divider line (Geist variant only).
+ * @param hideBorder - Hide the active tab indicator.
+ * @param size - Size for solid variant buttons (default, sm, lg).
  *
  * @example
  * ```tsx
@@ -229,21 +243,11 @@ interface TabsListProps
  *
  * @see https://base-ui.com/react/components/tabs - Base UI documentation
  */
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof BaseTabs.List>,
-  TabsListProps
->(
-  (
-    {
-      className,
-      variant = "line",
-      hideDivider = false,
-      hideBorder = false,
-      size = "default",
-      children,
-      ...props
-    },
-    forwardedRef
+const /**
+       *
+       */
+  TabsList = (
+    { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "default", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
   ) => {
     const { list } = tabsVariants({ variant, size, hideDivider, hideBorder });
 
@@ -253,8 +257,8 @@ const TabsList = React.forwardRef<
         className={cx(list(), className)}
         {...props}
       >
-        <TabsListVariantContext.Provider value={variant}>
-          <TabsListSizeContext.Provider value={size}>
+        <TabsListVariantContext value={variant}>
+          <TabsListSizeContext value={size}>
             {children}
             {variant === "line" && (
               <BaseTabs.Indicator
@@ -265,16 +269,15 @@ const TabsList = React.forwardRef<
                     size,
                     hideDivider,
                     hideBorder,
-                  }).indicator()
+                  }).indicator(),
                 )}
               />
             )}
-          </TabsListSizeContext.Provider>
-        </TabsListVariantContext.Provider>
+          </TabsListSizeContext>
+        </TabsListVariantContext>
       </BaseTabs.List>
     );
-  }
-);
+  };
 
 TabsList.displayName = "TabsList";
 
@@ -283,11 +286,17 @@ TabsList.displayName = "TabsList";
  */
 interface TabsTriggerProps
   extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab> {
-  /** Icon component to display on the left side (for solid variant) */
+  /**
+   * Icon component to display on the left side (for solid variant).
+   */
   leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Icon component to display on the right side (for solid variant) */
+  /**
+   * Icon component to display on the right side (for solid variant).
+   */
   rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Stroke width for icons (for solid variant) */
+  /**
+   * Stroke width for icons (for solid variant).
+   */
   iconStrokeWidth?: number;
 }
 
@@ -308,16 +317,14 @@ interface TabsTriggerProps
  *
  * @see https://base-ui.com/react/components/tabs - Base UI documentation
  */
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseTabs.Tab>,
-  TabsTriggerProps
->(
-  (
-    { className, children, leftIcon, rightIcon, iconStrokeWidth, ...props },
-    forwardedRef
+const /**
+       *
+       */
+  TabsTrigger = (
+    { ref: forwardedRef, className, children, leftIcon, rightIcon, iconStrokeWidth, ...props }: TabsTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null> },
   ) => {
-    const variant = React.useContext(TabsListVariantContext);
-    const size = React.useContext(TabsListSizeContext);
+    const variant = React.use(TabsListVariantContext);
+    const size = React.use(TabsListSizeContext);
 
     // Map tab sizes to button sizes for consistent text sizing
     const getButtonSize = (tabSize: "default" | "sm" | "lg") => {
@@ -354,7 +361,7 @@ const TabsTrigger = React.forwardRef<
                 className,
                 {
                   "opacity-50 hover:opacity-100": !state.selected,
-                }
+                },
               )}
             >
               {children}
@@ -374,8 +381,7 @@ const TabsTrigger = React.forwardRef<
         {children}
       </BaseTabs.Tab>
     );
-  }
-);
+  };
 
 TabsTrigger.displayName = "TabsTrigger";
 
@@ -396,29 +402,44 @@ TabsTrigger.displayName = "TabsTrigger";
  *
  * @see https://base-ui.com/react/components/tabs - Base UI documentation
  */
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof BaseTabs.Panel>,
-  React.ComponentPropsWithoutRef<typeof BaseTabs.Panel>
->(({ className, ...props }, forwardedRef) => {
-  const { panel } = tabsVariants();
+const /**
+       *
+       */
+  TabsContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseTabs.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Panel> | null> }) => {
+    const { panel } = tabsVariants();
 
-  return (
-    <BaseTabs.Panel
-      ref={forwardedRef}
-      className={cx(panel(), className)}
-      {...props}
-    />
-  );
-});
+    return (
+      <BaseTabs.Panel
+        ref={forwardedRef}
+        className={cx(panel(), className)}
+        {...props}
+      />
+    );
+  };
 
 TabsContent.displayName = "TabsContent";
 
 // Export individual components for advanced usage
-const TabsRoot = BaseTabs.Root;
-const TabsTabsList = BaseTabs.List;
-const TabsTab = BaseTabs.Tab;
-const TabsIndicator = BaseTabs.Indicator;
-const TabsPanel = BaseTabs.Panel;
+const /**
+       *
+       */
+  TabsRoot = BaseTabs.Root;
+const /**
+       *
+       */
+  TabsTabsList = BaseTabs.List;
+const /**
+       *
+       */
+  TabsTab = BaseTabs.Tab;
+const /**
+       *
+       */
+  TabsIndicator = BaseTabs.Indicator;
+const /**
+       *
+       */
+  TabsPanel = BaseTabs.Panel;
 
 export {
   Tabs,

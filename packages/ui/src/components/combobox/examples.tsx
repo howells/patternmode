@@ -1,7 +1,8 @@
 "use client";
 
+import type { ComboboxOption } from "@patternmode/ui";
+import { Combobox } from "@patternmode/ui";
 import React from "react";
-import { Combobox, type ComboboxOption } from "@patternmode/ui";
 
 // Sample data
 interface FruitOption extends ComboboxOption {
@@ -22,11 +23,11 @@ const fruits: FruitOption[] = [
 // Mock async function to simulate data fetching
 async function fetchFruits({ search }: { search?: string }) {
   // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise(resolve => setTimeout(resolve, 500));
 
   const filtered = search
-    ? fruits.filter((fruit) =>
-        fruit.label.toLowerCase().includes(search.toLowerCase())
+    ? fruits.filter(fruit =>
+        fruit.label.toLowerCase().includes(search.toLowerCase()),
       )
     : fruits;
 
@@ -119,7 +120,7 @@ export function CustomRenderingExample() {
         value={value}
         onValueChange={setValue}
         placeholder="Choose a fruit..."
-        renderItem={(item) => (
+        renderItem={item => (
           <div className="flex items-center gap-2 py-2 px-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
             <div
               className="w-3 h-3 rounded-full"

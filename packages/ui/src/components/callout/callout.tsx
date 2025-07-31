@@ -1,8 +1,9 @@
 // Callout Component [v1.0.0] - Pure Implementation
 
-import { cx } from "../../lib/utils";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/subheading";
 import { Text } from "../text/text";
 
@@ -14,44 +15,56 @@ import { Text } from "../text/text";
  * @example
  * ```tsx
  * <Callout>
- *  *   Important information goes here.
- *  * </Callout>
+ *  Important information goes here.
+ *  </Callout>
  * ```
  */
 const calloutVariants = tv({
   base: "flex flex-col overflow-hidden rounded-md p-4 text-sm",
   variants: {
-    /** Visual style variant */
+    /**
+     * Visual style variant.
+     */
     variant: {
-      /** Default informational style (blue) */
+      /**
+       * Default informational style (blue).
+       */
       default: [
         // text color
         "text-blue-900 dark:text-blue-400",
         // background color
         "bg-blue-50 dark:bg-blue-950/70",
       ],
-      /** Success state style (green) */
+      /**
+       * Success state style (green).
+       */
       success: [
         // text color
         "text-emerald-900 dark:text-emerald-500",
         // background color
         "bg-emerald-50 dark:bg-emerald-950/70",
       ],
-      /** Error state style (red) */
+      /**
+       * Error state style (red).
+       */
       error: [
         // text color
         "text-red-900 dark:text-red-500",
         // background color
         "bg-red-50 dark:bg-red-950/70",
       ],
-      /** Warning state style (yellow) */
+      /**
+       * Warning state style (yellow).
+       */
       warning: [
         // text color
         "text-yellow-900 dark:text-yellow-500",
         // background color
         "bg-yellow-50 dark:bg-yellow-950/70",
       ],
-      /** Neutral informational style (gray) */
+      /**
+       * Neutral informational style (gray).
+       */
       neutral: [
         // text color
         "text-zinc-900 dark:text-zinc-400",
@@ -72,15 +85,19 @@ const calloutVariants = tv({
  * icon, and variant styling.
  *
  * @interface CalloutProps
- * @extends React.ComponentPropsWithoutRef<"div">
- * @extends VariantProps<typeof calloutVariants>
+ * @augments React.ComponentPropsWithoutRef<"div">
+ * @augments VariantProps<typeof calloutVariants>
  */
 interface CalloutProps
   extends React.ComponentPropsWithoutRef<"div">,
-    VariantProps<typeof calloutVariants> {
-  /** Optional title text for the callout */
+  VariantProps<typeof calloutVariants> {
+  /**
+   * Optional title text for the callout.
+   */
   title?: string;
-  /** Optional icon component to display */
+  /**
+   * Optional icon component to display.
+   */
   icon?: React.ComponentType<{ className?: string }>;
 }
 
@@ -91,10 +108,10 @@ interface CalloutProps
  * with optional titles, icons, and semantic color variants. Perfect for alerts,
  * tips, notices, and status communications.
  *
- * @param variant - Visual style variant (default, success, error, warning, neutral)
- * @param title - Optional title text
- * @param icon - Optional icon component
- * @param children - Main content of the callout
+ * @param variant - Visual style variant (default, success, error, warning, neutral).
+ * @param title - Optional title text.
+ * @param icon - Optional icon component.
+ * @param children - Main content of the callout.
  *
  *
  * @id callout
@@ -144,10 +161,11 @@ interface CalloutProps
  * @name Callout
  * @component
  */
-const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
-  (
-    { title, icon: Icon, className, variant, children, ...props }: CalloutProps,
-    forwardedRef
+const /**
+       *
+       */
+  Callout = (
+    { ref: forwardedRef, title, icon: Icon, className, variant, children, ...props }: CalloutProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     return (
       <div
@@ -170,9 +188,8 @@ const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
         </div>
       </div>
     );
-  }
-);
+  };
 
 Callout.displayName = "Callout";
 
-export { Callout, calloutVariants, type CalloutProps };
+export { Callout, type CalloutProps, calloutVariants };

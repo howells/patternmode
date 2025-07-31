@@ -1,20 +1,19 @@
 "use client";
 
+import { ScrollArea, Separator } from "@patternmode/ui";
 import React from "react";
-import { ScrollArea } from "@patternmode/ui";
-import { Separator } from "@patternmode/ui";
 
 // Config example ID: "default" -> export name: DefaultExample
 export function DefaultExample() {
   const tags = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`
+    (_, i, a) => `v1.2.0-beta.${a.length - i}`,
   );
 
   return (
     <ScrollArea className="h-72 w-48 rounded-md border">
       <div className="p-4">
         <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
-        {tags.map((tag) => (
+        {tags.map(tag => (
           <React.Fragment key={tag}>
             <div className="text-sm">{tag}</div>
             <Separator className="my-2" />
@@ -34,7 +33,7 @@ export function HorizontalExample() {
           <figure key={i} className="shrink-0">
             <div className="overflow-hidden rounded-md">
               <img
-                src={`/api/placeholder/300/400`}
+                src="/api/placeholder/300/400"
                 alt={`Photo ${i + 1}`}
                 className="aspect-[3/4] h-fit w-fit object-cover"
                 width={300}
@@ -42,7 +41,9 @@ export function HorizontalExample() {
               />
             </div>
             <figcaption className="pt-2 text-xs text-zinc-600">
-              Photo {i + 1}
+              Photo
+              {" "}
+              {i + 1}
             </figcaption>
           </figure>
         ))}

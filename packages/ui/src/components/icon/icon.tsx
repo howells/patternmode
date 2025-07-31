@@ -1,19 +1,20 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
+import React from "react";
+import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
 
 const iconVariants = tv({
   base: "shrink-0",
   variants: {
     size: {
-      xs: "size-3", // 12px - for very small contexts
-      sm: "size-3.5", // 14px - for small buttons, compact UI
-      base: "size-4", // 16px - default size for most UI
-      lg: "size-5", // 20px - for larger contexts
-      xl: "size-6", // 24px - for headers, prominent UI
+      "xs": "size-3", // 12px - for very small contexts
+      "sm": "size-3.5", // 14px - for small buttons, compact UI
+      "base": "size-4", // 16px - default size for most UI
+      "lg": "size-5", // 20px - for larger contexts
+      "xl": "size-6", // 24px - for headers, prominent UI
       "2xl": "size-8", // 32px - for large display contexts
       "3xl": "size-12", // 48px - for hero sections, empty states
     },
@@ -24,18 +25,26 @@ const iconVariants = tv({
 });
 
 export interface IconProps extends VariantProps<typeof iconVariants> {
-  /** The Lucide icon component to render */
+  /**
+   * The Lucide icon component to render.
+   */
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  /** Stroke width for the icon (defaults to global config) */
+  /**
+   * Stroke width for the icon (defaults to global config).
+   */
   strokeWidth?: number;
-  /** Additional CSS classes */
+  /**
+   * Additional CSS classes.
+   */
   className?: string;
-  /** Fallback content to show if icon fails to render */
+  /**
+   * Fallback content to show if icon fails to render.
+   */
   fallback?: React.ReactNode;
 }
 
 /**
- * Fallback icon component that shows a question mark in a subtle container
+ * Fallback icon component that shows a question mark in a subtle container.
  *
  * @component
  * @id icon
@@ -59,7 +68,7 @@ function FallbackIcon({
       className={cx(
         sizeClasses,
         "flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400",
-        className
+        className,
       )}
       title="Icon not found"
     >
@@ -69,7 +78,7 @@ function FallbackIcon({
 }
 
 /**
- * Safe wrapper for DynamicIcon components that handles missing icon errors
+ * Safe wrapper for DynamicIcon components that handles missing icon errors.
  */
 function SafeDynamicIcon({
   icon: IconComponent,
@@ -91,23 +100,27 @@ function SafeDynamicIcon({
   }, [IconComponent]);
 
   if (hasError) {
-    return fallback ? (
-      <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
-    ) : (
-      <FallbackIcon className={className} size={size} />
-    );
+    return fallback
+      ? (
+          <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+        )
+      : (
+          <FallbackIcon className={className} size={size} />
+        );
   }
 
   return (
     <ErrorBoundary
       fallback={
-        fallback ? (
-          <div className={cx(iconVariants({ size }), className)}>
-            {fallback}
-          </div>
-        ) : (
-          <FallbackIcon className={className} size={size} />
-        )
+        fallback
+          ? (
+              <div className={cx(iconVariants({ size }), className)}>
+                {fallback}
+              </div>
+            )
+          : (
+              <FallbackIcon className={className} size={size} />
+            )
       }
       onError={() => setHasError(true)}
     >
@@ -120,7 +133,7 @@ function SafeDynamicIcon({
 }
 
 /**
- * Simple error boundary component for catching icon rendering errors
+ * Simple error boundary component for catching icon rendering errors.
  */
 class ErrorBoundary extends React.Component<
   {
@@ -167,7 +180,7 @@ class ErrorBoundary extends React.Component<
  * - Global stroke width configuration
  * - Type-safe icon props
  * - Shrink-0 by default to prevent flex issues
- * - Graceful error handling with fallback display
+ * - Graceful error handling with fallback display.
  *
  * Note: Spacing should be handled by parent components or layout classes, not by the icon itself.
  *
@@ -203,9 +216,9 @@ export function Icon({
   fallback,
 }: IconProps) {
   // Check if this is likely a DynamicIcon component by checking if it has a displayName
-  const isDynamicIcon =
-    IconComponent.displayName?.includes("DynamicIcon") ||
-    IconComponent.name?.includes("DynamicIcon");
+  const isDynamicIcon
+    = IconComponent.displayName?.includes("DynamicIcon")
+      || IconComponent.name?.includes("DynamicIcon");
 
   if (isDynamicIcon) {
     return (
@@ -226,27 +239,30 @@ export function Icon({
         strokeWidth={strokeWidth}
       />
     );
-  } catch (error) {
+  }
+  catch (error) {
     // Handle synchronous errors during icon creation
     if (process.env.NODE_ENV === "development") {
       console.warn("[Icon] Failed to render icon:", error);
     }
 
-    return fallback ? (
-      <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
-    ) : (
-      <FallbackIcon className={className} size={size} />
-    );
+    return fallback
+      ? (
+          <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+        )
+      : (
+          <FallbackIcon className={className} size={size} />
+        );
   }
 }
 
 Icon.displayName = "Icon";
 
 /**
- * Hook to get appropriate icon size based on component size
+ * Hook to get appropriate icon size based on component size.
  */
 export function useIconSize(
-  componentSize?: string
+  componentSize?: string,
 ): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
   switch (componentSize) {
     case "xs":
@@ -271,10 +287,10 @@ export function useIconSize(
 }
 
 /**
- * Utility to get icon size for a given context (non-hook version)
+ * Utility to get icon size for a given context (non-hook version).
  */
 export function getIconSizeForContext(
-  componentSize?: string
+  componentSize?: string,
 ): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
   switch (componentSize) {
     case "xs":
@@ -299,14 +315,14 @@ export function getIconSizeForContext(
 }
 
 /**
- * Utility to create icon with automatic sizing based on context
+ * Utility to create icon with automatic sizing based on context.
  */
 export function createIconWithSize(
   IconComponent: React.ComponentType<{
     className?: string;
     strokeWidth?: number;
   }>,
-  contextSize?: string
+  contextSize?: string,
 ) {
   const iconSize = getIconSizeForContext(contextSize);
 

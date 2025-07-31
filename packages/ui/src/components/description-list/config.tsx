@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { ApiEndpointExample, DefaultExample, DescriptionListExample, EventDetailsExample, OrderDetailsExample, ProductSpecsExample, ProjectDetailsExample, SystemInfoExample, UserProfileExample } from "./examples";
+import { DefaultExample, ProjectDetailsExample, UserProfileExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "description-list",

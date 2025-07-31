@@ -1,5 +1,5 @@
-import React from "react";
 import { Skeleton } from "@patternmode/ui";
+import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample (already correct)
 export function DefaultExample() {
@@ -38,7 +38,7 @@ export function CardExample() {
 export function ListExample() {
   return (
     <div className="space-y-4">
-      {[...Array(3)].map((_, i) => (
+      {[...Array.from({ length: 3 })].map((_, i) => (
         <div key={i} className="flex items-center space-x-4">
           <Skeleton className="h-12 w-12 rounded-md" />
           <div className="flex-1 space-y-2">

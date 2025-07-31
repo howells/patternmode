@@ -1,6 +1,6 @@
-import React from "react";
-import { CheckCircle, Circle, Star } from "lucide-react";
 import { List, ListIndicator, ListItem } from "@patternmode/ui";
+import { CheckCircle, Circle } from "lucide-react";
+import React from "react";
 
 export function ListExample() {
   return (

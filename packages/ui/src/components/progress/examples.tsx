@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { Progress } from "@patternmode/ui";
+import React from "react";
 
 export function ProgressExample() {
   return (

@@ -1,19 +1,6 @@
 "use client";
 
-import { Grid } from "@patternmode/ui";
-import { VStack } from "@patternmode/ui";
-import { Subheading } from "@patternmode/ui";
-import { Text } from "@patternmode/ui";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuItemLink,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@patternmode/ui";
+import { Grid, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuItemLink, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuViewport, Subheading, Text, VStack } from "@patternmode/ui";
 
 export function NavigationMenuExample() {
   return (

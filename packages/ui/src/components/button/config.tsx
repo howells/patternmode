@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { ButtonExample, DefaultExample, DestructiveExample, FullWidthExample, GhostExample, IconPropExample, KeyboardShortcutsExample, LinkExample, LoadingExample, OutlineExample, SecondaryExample, SizesExample, WithIconsExample } from "./examples";
+import { DefaultExample, DestructiveExample, FullWidthExample, GhostExample, IconPropExample, KeyboardShortcutsExample, LinkExample, LoadingExample, OutlineExample, SecondaryExample, SizesExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "button",
@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   icon: "MousePointer",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import { Button } from "@patternmode/ui";`,
   componentId: "ButtonExample",
@@ -26,145 +26,157 @@ export const componentConfig: ComponentConfig = {
         "destructive",
         "outline",
         "ghost",
-        "link"
+        "link",
       ],
       defaultValue: "default",
-      description: "The visual style variant of the button."
+      description: "The visual style variant of the button.",
     },
     {
       name: "size",
       type: "select",
       options: ["xs", "sm", "default", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
       defaultValue: "default",
-      description: "The size of the button."
+      description: "The size of the button.",
     },
     {
       name: "rounded",
       type: "boolean",
       defaultValue: false,
       description:
-        "Makes the button fully rounded (circular for icon buttons)."
+        "Makes the button fully rounded (circular for icon buttons).",
     },
     {
       name: "children",
       type: "string",
       defaultValue: "Button",
-      description: "The content to display inside the button."
+      description: "The content to display inside the button.",
     },
     {
       name: "isLoading",
       type: "boolean",
       defaultValue: false,
-      description: "Shows loading spinner and disables the button."
+      description: "Shows loading spinner and disables the button.",
     },
     {
       name: "disabled",
       type: "boolean",
       defaultValue: false,
-      description: "Disables the button interaction."
+      description: "Disables the button interaction.",
     },
     {
       name: "fullWidth",
       type: "boolean",
       defaultValue: false,
-      description: "Makes the button take the full width of its container."
+      description: "Makes the button take the full width of its container.",
     },
     {
       name: "textAlign",
       type: "select",
       options: ["left", "center", "right"],
       defaultValue: "center",
-      description: "Text alignment within the button."
+      description: "Text alignment within the button.",
     },
     {
       name: "icon",
       type: "icon",
-      description: "Icon component (proxy for leftIcon, useful for single-icon buttons)."
+      description: "Icon component (proxy for leftIcon, useful for single-icon buttons).",
     },
     {
       name: "leftIcon",
       type: "icon",
-      description: "Icon to display on the left side."
+      description: "Icon to display on the left side.",
     },
     {
       name: "rightIcon",
       type: "icon",
-      description: "Icon to display on the right side."
+      description: "Icon to display on the right side.",
     },
     {
       name: "loadingText",
       type: "string",
-      description: "Text to show when loading (optional)."
+      description: "Text to show when loading (optional).",
     },
     {
       name: "kbd",
       type: "string",
       description:
         "Keyboard shortcut to display and trigger the button action (e.g., 'mod+K', 'Enter').",
-      defaultValue: ""
-    }
+      defaultValue: "",
+    },
   ],
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic button with default styling.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "secondary",
       title: "Secondary",
       description: "Button with secondary styling.",
-      code: jsxToString(<SecondaryExample />)},
+      code: jsxToString(<SecondaryExample />),
+    },
     {
       id: "destructive",
       title: "Destructive",
       description: "Button for destructive actions.",
-      code: jsxToString(<DestructiveExample />)},
+      code: jsxToString(<DestructiveExample />),
+    },
     {
       id: "outline",
       title: "Outline",
       description: "Button with outline styling.",
-      code: jsxToString(<OutlineExample />)},
+      code: jsxToString(<OutlineExample />),
+    },
     {
       id: "ghost",
       title: "Ghost",
       description: "Button with ghost styling.",
-      code: jsxToString(<GhostExample />)},
+      code: jsxToString(<GhostExample />),
+    },
     {
       id: "link",
       title: "Link",
       description: "Button styled as a link.",
-      code: jsxToString(<LinkExample />)},
+      code: jsxToString(<LinkExample />),
+    },
     {
       id: "with-icons",
       title: "With Icons",
       description: "Button with left and right icons.",
-      code: jsxToString(<WithIconsExample />)},
+      code: jsxToString(<WithIconsExample />),
+    },
     {
       id: "icon-prop",
       title: "Icon Prop",
       description: "Using the icon prop for single-icon buttons.",
-      code: jsxToString(<IconPropExample />)},
+      code: jsxToString(<IconPropExample />),
+    },
     {
       id: "loading",
       title: "Loading State",
       description: "Button in loading state.",
-      code: jsxToString(<LoadingExample />)},
+      code: jsxToString(<LoadingExample />),
+    },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different button sizes.",
-      code: jsxToString(<SizesExample />)},
+      code: jsxToString(<SizesExample />),
+    },
     {
       id: "full-width",
       title: "Full Width",
       description: "Button that spans the full width.",
-      code: jsxToString(<FullWidthExample />)},
+      code: jsxToString(<FullWidthExample />),
+    },
     {
       id: "keyboard-shortcuts",
       title: "Keyboard Shortcuts",
       description:
         "Buttons with keyboard shortcuts that display and trigger actions.",
-      code: jsxToString(<KeyboardShortcutsExample />)}
-  ]
+      code: jsxToString(<KeyboardShortcutsExample />),
+    },
+  ],
 };

@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, DrawerExample } from "./examples";
+import { DefaultExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "drawer",
@@ -18,14 +18,15 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       options: ["left", "right", "top", "bottom"],
       defaultValue: "right",
-      description: "Direction from which the drawer slides in."
-    }
+      description: "Direction from which the drawer slides in.",
+    },
   ],
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic drawer sliding from the right.",
-      code: jsxToString(<DefaultExample />)}
-  ]
+      code: jsxToString(<DefaultExample />),
+    },
+  ],
 };

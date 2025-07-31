@@ -21,7 +21,7 @@ type Children = React.ReactNode;
  */
 export function jsxToString(
   element: React.ReactElement,
-  options: FormatOptions = {}
+  options: FormatOptions = {},
 ): string {
   const { indent = 0, indentChar = "  " } = options;
   const indentStr = indentChar.repeat(indent);
@@ -54,7 +54,8 @@ export function jsxToString(
 
   if (isMultiLine) {
     return `${indentStr}<${componentName}${propsString}>\n${childrenString}\n${indentStr}</${componentName}>`;
-  } else {
+  }
+  else {
     return `${indentStr}<${componentName}${propsString}>${childrenString.trim()}</${componentName}>`;
   }
 }
@@ -89,57 +90,65 @@ function getComponentName(type: ComponentType): string {
  * Format props to string
  */
 function formatProps(props: Props): string {
-  if (!props) return "";
+  if (!props) { return ""; }
 
   const propsArray: string[] = [];
 
   Object.entries(props).forEach(([key, value]) => {
     // Skip children and key
-    if (key === "children" || key === "key") return;
+    if (key === "children" || key === "key") { return; }
 
     // Skip undefined values
-    if (value === undefined) return;
+    if (value === undefined) { return; }
 
     // Handle different value types
     if (value === true) {
       propsArray.push(key);
-    } else if (value === false) {
+    }
+    else if (value === false) {
       // Skip false boolean props
-      return;
-    } else if (value === null) {
+
+    }
+    else if (value === null) {
       propsArray.push(`${key}={null}`);
-    } else if (typeof value === "string") {
+    }
+    else if (typeof value === "string") {
       // Use quotes for strings
       propsArray.push(`${key}="${escapeString(value)}"`);
-    } else if (typeof value === "number") {
+    }
+    else if (typeof value === "number") {
       propsArray.push(`${key}={${value}}`);
-    } else if (typeof value === "function") {
+    }
+    else if (typeof value === "function") {
       // Handle function props (like icons)
       const funcName = getFunctionName(value);
       propsArray.push(`${key}={${funcName}}`);
-    } else if (React.isValidElement(value)) {
+    }
+    else if (React.isValidElement(value)) {
       // Handle React elements as props
       const elementStr = jsxToString(value, { indent: 0 });
       propsArray.push(`${key}={${elementStr}}`);
-    } else if (Array.isArray(value)) {
+    }
+    else if (Array.isArray(value)) {
       // Format arrays
       const arrayStr = formatArray(value);
       propsArray.push(`${key}={${arrayStr}}`);
-    } else if (typeof value === "object" && value !== null && !Array.isArray(value) && !React.isValidElement(value)) {
+    }
+    else if (typeof value === "object" && value !== null && !Array.isArray(value) && !React.isValidElement(value)) {
       // Format objects
       const objStr = formatObject(value as Record<string, unknown>);
       propsArray.push(`${key}={${objStr}}`);
     }
   });
 
-  return propsArray.length > 0 ? " " + propsArray.join(" ") : "";
+  return propsArray.length > 0 ? ` ${propsArray.join(" ")}` : "";
 }
 
 /**
  * Format children to string
  */
 function formatChildren(children: Children, options: FormatOptions): string {
-  if (!children) return "";
+  if (!children) { return ""; }
 
   const { indent = 0, indentChar = "  " } = options;
 
@@ -156,7 +165,7 @@ function formatChildren(children: Children, options: FormatOptions): string {
 
   // Handle multiple children
   return children
-    .filter((child) => child !== null && child !== undefined)
+    .filter(child => child !== null && child !== undefined)
     .map((child) => {
       if (typeof child === "string" || typeof child === "number") {
         return indentChar.repeat(indent) + child;
@@ -182,7 +191,7 @@ function getFunctionName(func: IconComponent): string {
   }
 
   // Try displayName
-  if ('displayName' in func && func.displayName) {
+  if ("displayName" in func && func.displayName) {
     return func.displayName;
   }
 
@@ -194,7 +203,7 @@ function getFunctionName(func: IconComponent): string {
  * Escape string for JSX
  */
 function escapeString(str: string): string {
-  return str.replace(/"/g, '\\"').replace(/\n/g, "\\n");
+  return str.replace(/"/g, "\\\"").replace(/\n/g, "\\n");
 }
 
 /**
@@ -202,12 +211,12 @@ function escapeString(str: string): string {
  */
 function formatArray(arr: unknown[]): string {
   const items = arr.map((item) => {
-    if (typeof item === "string") return `"${escapeString(item)}"`;
-    if (typeof item === "number") return String(item);
-    if (typeof item === "boolean") return String(item);
-    if (item === null) return "null";
-    if (item === undefined) return "undefined";
-    if (React.isValidElement(item)) return jsxToString(item, { indent: 0 });
+    if (typeof item === "string") { return `"${escapeString(item)}"`; }
+    if (typeof item === "number") { return String(item); }
+    if (typeof item === "boolean") { return String(item); }
+    if (item === null) { return "null"; }
+    if (item === undefined) { return "undefined"; }
+    if (React.isValidElement(item)) { return jsxToString(item, { indent: 0 }); }
     return JSON.stringify(item);
   });
 

@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { CalendarExample, DefaultExample, DisabledNavigationExample, DropdownCaptionExample, FixedWeeksExample, MultipleMonthsExample, RangeModeExample, RangeWithMultipleMonthsExample, WeekStartsSundayExample, WithoutTodayHighlightExample, WithPreselectedExample, WithTodayButtonExample, WithWeekNumbersExample, WithYearNavigationExample } from "./examples";
+import { DefaultExample, DisabledNavigationExample, DropdownCaptionExample, FixedWeeksExample, MultipleMonthsExample, RangeModeExample, RangeWithMultipleMonthsExample, WeekStartsSundayExample, WithoutTodayHighlightExample, WithPreselectedExample, WithTodayButtonExample, WithWeekNumbersExample, WithYearNavigationExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "calendar",

@@ -1,5 +1,5 @@
 /**
- * Empty State Component
+ * Empty State Component.
  *
  * A component for displaying empty states when there's no content to show.
  * Provides a structured layout with optional icon, title, description, and
@@ -11,7 +11,7 @@
  * - Optional icon display
  * - Primary and secondary action buttons
  * - Link and button action support
- * - Responsive design
+ * - Responsive design.
  *
  * @example
  * ```tsx
@@ -73,8 +73,8 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import React from "react";
+import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 import { Heading } from "../heading/heading";
 import { Subheading } from "../subheading/subheading";
@@ -87,38 +87,66 @@ import { Text } from "../text/text";
  * and visual appearance options.
  *
  * @interface EmptyStateProps
- * @extends React.HTMLAttributes<HTMLDivElement>
+ * @augments React.HTMLAttributes<HTMLDivElement>
  */
 interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** The main heading/title of the empty state */
+  /**
+   * The main heading/title of the empty state.
+   */
   title: string;
-  /** Optional description text below the title */
+  /**
+   * Optional description text below the title.
+   */
   description?: string;
-  /** Optional icon component to display above the title */
+  /**
+   * Optional icon component to display above the title.
+   */
   icon?: React.ComponentType<{ className?: string }>;
-  /** Primary action button configuration */
+  /**
+   * Primary action button configuration.
+   */
   primaryAction?: {
-    /** Button label text */
+    /**
+     * Button label text.
+     */
     label: string;
-    /** Click handler for button action */
+    /**
+     * Click handler for button action.
+     */
     onClick?: () => void;
-    /** URL for link action (alternative to onClick) */
+    /**
+     * URL for link action (alternative to onClick).
+     */
     href?: string;
-    /** Whether the button is disabled */
+    /**
+     * Whether the button is disabled.
+     */
     disabled?: boolean;
   };
-  /** Secondary action button configuration */
+  /**
+   * Secondary action button configuration.
+   */
   secondaryAction?: {
-    /** Button label text */
+    /**
+     * Button label text.
+     */
     label: string;
-    /** Click handler for button action */
+    /**
+     * Click handler for button action.
+     */
     onClick?: () => void;
-    /** URL for link action (alternative to onClick) */
+    /**
+     * URL for link action (alternative to onClick).
+     */
     href?: string;
   };
-  /** Visual variant of the empty state */
+  /**
+   * Visual variant of the empty state.
+   */
   variant?: "default" | "minimal";
-  /** Size variant affecting spacing and icon size */
+  /**
+   * Size variant affecting spacing and icon size.
+   */
   size?: "sm" | "default" | "lg";
 }
 
@@ -129,14 +157,14 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
  * action buttons to guide users toward taking action. Supports multiple
  * size and visual variants for different contexts.
  *
- * @param title - The main heading/title of the empty state
- * @param description - Optional description text below the title
- * @param icon - Optional icon component to display above the title
- * @param primaryAction - Primary action button configuration
- * @param secondaryAction - Secondary action button configuration
- * @param variant - Visual variant (default shows background for icon, minimal is text-only)
- * @param size - Size variant affecting spacing and icon size
- * @param className - Additional CSS classes
+ * @param title - The main heading/title of the empty state.
+ * @param description - Optional description text below the title.
+ * @param icon - Optional icon component to display above the title.
+ * @param primaryAction - Primary action button configuration.
+ * @param secondaryAction - Secondary action button configuration.
+ * @param variant - Visual variant (default shows background for icon, minimal is text-only).
+ * @param size - Size variant affecting spacing and icon size.
+ * @param className - Additional CSS classes.
  *
  *
  * @id empty-state
@@ -217,32 +245,23 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
  * ```
  */
 /**
- * A component to display when there
+ * A component to display when there.
  *
  * @id empty-state
  * @name Empty State
  * @component
  */
-const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
-  (
-    {
-      title,
-      description,
-      icon: Icon,
-      primaryAction,
-      secondaryAction,
-      variant = "default",
-      size = "default",
-      className,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  EmptyState = (
+    { ref, title, description, icon: Icon, primaryAction, secondaryAction, variant = "default", size = "default", className, ...props }: EmptyStateProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     return (
       <div
         ref={ref}
         className={cx(
-          // Base styles
+        // Base styles
           "flex flex-col items-center justify-center text-center",
           // Spacing based on size
           size === "sm" && "gap-3 py-8 px-4",
@@ -250,7 +269,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
           size === "lg" && "gap-6 py-16 px-12",
           // Max width
           "max-w-md mx-auto",
-          className
+          className,
         )}
         {...props}
       >
@@ -260,20 +279,20 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
             className={cx(
               "flex items-center justify-center rounded-full",
               // Background styling based on variant
-              variant === "default" &&
-                "bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400",
+              variant === "default"
+              && "bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400",
               variant === "minimal" && "text-zinc-500 dark:text-zinc-500",
               // Size
               size === "sm" && "size-12",
               size === "default" && "size-16",
-              size === "lg" && "size-20"
+              size === "lg" && "size-20",
             )}
           >
             <Icon
               className={cx(
                 size === "sm" && "size-5",
                 size === "default" && "size-6",
-                size === "lg" && "size-8"
+                size === "lg" && "size-8",
               )}
             />
           </div>
@@ -281,11 +300,13 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
 
         {/* Title */}
         <div className="space-y-2">
-          {size === "lg" ? (
-            <Heading level={2}>{title}</Heading>
-          ) : (
-            <Subheading>{title}</Subheading>
-          )}
+          {size === "lg"
+            ? (
+                <Heading level={2}>{title}</Heading>
+              )
+            : (
+                <Subheading>{title}</Subheading>
+              )}
 
           {/* Description */}
           {description && <Text>{description}</Text>}
@@ -300,7 +321,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
               size === "default" && "gap-3 mt-4",
               size === "lg" && "gap-4 mt-6",
               // Stack on mobile, inline on larger screens if both actions exist
-              primaryAction && secondaryAction && "sm:flex-row sm:gap-3"
+              primaryAction && secondaryAction && "sm:flex-row sm:gap-3",
             )}
           >
             {/* Primary Action */}
@@ -311,9 +332,11 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
                 disabled={primaryAction.disabled}
                 onClick={primaryAction.onClick}
                 render={
-                  primaryAction.href ? (
-                    <a href={primaryAction.href} />
-                  ) : undefined
+                  primaryAction.href
+                    ? (
+                        <a href={primaryAction.href} />
+                      )
+                    : undefined
                 }
               >
                 {primaryAction.label}
@@ -327,9 +350,11 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
                 size={size === "sm" ? "sm" : "default"}
                 onClick={secondaryAction.onClick}
                 render={
-                  secondaryAction.href ? (
-                    <a href={secondaryAction.href} />
-                  ) : undefined
+                  secondaryAction.href
+                    ? (
+                        <a href={secondaryAction.href} />
+                      )
+                    : undefined
                 }
               >
                 {secondaryAction.label}
@@ -339,8 +364,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
         )}
       </div>
     );
-  }
-);
+  };
 
 EmptyState.displayName = "EmptyState";
 

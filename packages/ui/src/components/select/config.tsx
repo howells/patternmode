@@ -1,7 +1,7 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, FormSelectExample, SelectExample, SmallSizeExample, WithGroupsExample } from "./examples";
+import { DefaultExample, FormSelectExample, SmallSizeExample, WithGroupsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "select",

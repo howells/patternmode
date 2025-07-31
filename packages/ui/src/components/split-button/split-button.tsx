@@ -1,10 +1,10 @@
 "use client";
 
-import { cx, focusRing } from "../../lib/utils";
 import { ChevronDown } from "lucide-react";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Button, type ButtonProps } from "../button/button";
+import { tv } from "tailwind-variants";
+import { cx, focusRing } from "../../lib/utils";
+import { Button } from "../button/button";
 import { Menu, MenuContent, MenuTrigger } from "../menu/menu";
 
 // Split button variants using the same base as button but with modifications for the split layout
@@ -163,37 +163,37 @@ const dropdownTriggerVariants = tv({
   },
 });
 
-type SplitButtonVariant =
-  | "default"
-  | "secondary"
-  | "destructive"
-  | "outline"
-  | "ghost";
+type SplitButtonVariant
+  = | "default"
+    | "secondary"
+    | "destructive"
+    | "outline"
+    | "ghost";
 type SplitButtonSize = "default" | "sm";
 
 interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * Visual variant of the split button
- * @example
- * ```tsx
- * <SplitButton>Content</SplitButton>
- * ```
+   * Visual variant of the split button.
+   * @example
+   * ```tsx
+   * <SplitButton>Content</SplitButton>
+   * ```
    */
   variant?: SplitButtonVariant;
   /**
-   * Size of the split button
+   * Size of the split button.
    */
   size?: SplitButtonSize;
   /**
-   * Whether the split button has rounded corners
+   * Whether the split button has rounded corners.
    */
   rounded?: boolean;
   /**
-   * Menu content - can be any valid menu content
+   * Menu content - can be any valid menu content.
    */
   children: React.ReactNode;
   /**
-   * Props to pass to the MenuContent component
+   * Props to pass to the MenuContent component.
    */
   menuProps?: React.ComponentPropsWithoutRef<typeof MenuContent> & {
     sideOffset?: number;
@@ -201,61 +201,47 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
     align?: "start" | "center" | "end";
   };
   /**
-   * Callback when the main button is clicked
+   * Callback when the main button is clicked.
    */
   onButtonClick?: () => void;
   /**
-   * The main button content
+   * The main button content.
    */
   buttonContent: React.ReactNode;
   /**
-   * Whether the split button is disabled
+   * Whether the split button is disabled.
    */
   disabled?: boolean;
   /**
-   * Whether the main button is in loading state
+   * Whether the main button is in loading state.
    */
   isLoading?: boolean;
   /**
-   * Loading text for the main button
+   * Loading text for the main button.
    */
   loadingText?: string;
   /**
-   * Left icon for the main button
+   * Left icon for the main button.
    */
   leftIcon?: React.ComponentType<{ className?: string }>;
   /**
-   * Custom dropdown icon (defaults to ChevronDown)
+   * Custom dropdown icon (defaults to ChevronDown).
    */
   dropdownIcon?: React.ComponentType<{ className?: string }>;
 }
 
 /**
- * Split Button
+ * Split Button.
  *
  * @component
  * @id split-button
  * @name Split Button
  */
-const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
-  (
-    {
-      variant = "default",
-      size = "default",
-      rounded = false,
-      buttonContent,
-      children,
-      onButtonClick,
-      disabled = false,
-      isLoading = false,
-      loadingText,
-      leftIcon,
-      dropdownIcon: DropdownIcon = ChevronDown,
-      menuProps = {},
-      className,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  SplitButton = (
+    { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
 
@@ -265,7 +251,7 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
         className={cx(
           splitButtonVariants({ variant, size, rounded }),
           disabled && "data-disabled",
-          className
+          className,
         )}
         {...props}
       >
@@ -280,7 +266,7 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
           leftIcon={leftIcon}
           onClick={onButtonClick}
           className={cx(
-            // Remove default button styling that conflicts with split layout
+          // Remove default button styling that conflicts with split layout
             "shadow-none inset-ring-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent",
             // Add split-specific styling
             "flex-1 justify-start",
@@ -318,7 +304,7 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
               "hover:bg-zinc-100 dark:hover:bg-zinc-800",
               "disabled:text-zinc-400 disabled:bg-transparent",
               "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
-            ]
+            ],
           )}
         >
           {buttonContent}
@@ -332,25 +318,25 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
             variant === "secondary" && ["bg-zinc-300 dark:bg-zinc-600"],
             variant === "destructive" && ["bg-white/20 dark:bg-white/10"],
             variant === "outline" && ["bg-zinc-300 dark:bg-zinc-600"],
-            variant === "ghost" && ["bg-zinc-300 dark:bg-zinc-600"]
+            variant === "ghost" && ["bg-zinc-300 dark:bg-zinc-600"],
           )}
         />
 
         {/* Dropdown Menu */}
         <Menu>
           <MenuTrigger
-            render={
+            render={(
               <button
                 type="button"
                 disabled={disabled}
                 className={cx(
                   dropdownTriggerVariants({ variant, size }),
                   rounded ? "rounded-r-full" : "rounded-r-md",
-                  "rounded-l-none"
+                  "rounded-l-none",
                 )}
                 aria-label="Open menu"
               />
-            }
+            )}
           >
             <DropdownIcon className={iconSize} />
           </MenuTrigger>
@@ -365,9 +351,8 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
         </Menu>
       </div>
     );
-  }
-);
+  };
 
 SplitButton.displayName = "SplitButton";
 
-export { SplitButton, splitButtonVariants, type SplitButtonProps };
+export { SplitButton, type SplitButtonProps, splitButtonVariants };

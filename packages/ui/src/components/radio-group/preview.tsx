@@ -1,8 +1,7 @@
 "use client";
 
+import { RadioGroup, RadioOption } from "@patternmode/ui";
 import { useState } from "react";
-import { RadioOption } from "@patternmode/ui";
-import { RadioGroup } from "@patternmode/ui";
 
 interface RadioGroupExampleProps {
   orientation?: "vertical" | "horizontal";
@@ -28,10 +27,10 @@ export function RadioGroupExample({
   const [internalValue, setInternalValue] = useState(defaultValue || "option2");
 
   // Use controlled value if provided, otherwise use internal state
-  const currentValue =
-    controlledValue !== undefined ? controlledValue : internalValue;
-  const handleChange =
-    controlledValue !== undefined
+  const currentValue
+    = controlledValue !== undefined ? controlledValue : internalValue;
+  const handleChange
+    = controlledValue !== undefined
       ? () => {} // No-op for controlled mode
       : (value: unknown) => setInternalValue(value as string);
 

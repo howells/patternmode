@@ -1,8 +1,7 @@
 "use client";
 
-import { Code, MapPin, User } from "lucide-react";
-import React from "react";
 import { Tag } from "@patternmode/ui";
+import React from "react";
 
 // Tag examples
 export function TagExample({

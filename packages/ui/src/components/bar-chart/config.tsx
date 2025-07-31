@@ -1,8 +1,8 @@
-import React from "react";
 // Configuration data - no React imports or JSX
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
-import { BarChartExample, DefaultExample, MultipleSeriesExample, PercentExample, StackedExample, VerticalExample, WithLabelsExample } from "./examples";
+import { DefaultExample, MultipleSeriesExample, PercentExample, StackedExample, VerticalExample, WithLabelsExample } from "./examples";
 
 // Component configuration - single source of truth
 export const componentConfig: ComponentConfig = {
@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   icon: "BarChart3",
 
   installation: {
-    npm: "recharts"
+    npm: "recharts",
   },
   importStatement: `import { BarChart } from "@/components/ui/bar-chart";`,
   componentId: "BarChartExample",
@@ -26,91 +26,91 @@ export const componentConfig: ComponentConfig = {
       type: "select",
       description: "The type of bar chart to display.",
       defaultValue: "default",
-      options: ["default", "stacked", "percent"]
+      options: ["default", "stacked", "percent"],
     },
     {
       name: "layout",
       type: "select",
       description: "The orientation of the bars.",
       defaultValue: "horizontal",
-      options: ["horizontal", "vertical"]
+      options: ["horizontal", "vertical"],
     },
     {
       name: "showXAxis",
       type: "boolean",
       description: "Whether to show the X axis.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "showYAxis",
       type: "boolean",
       description: "Whether to show the Y axis.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "showGridLines",
       type: "boolean",
       description: "Whether to show grid lines.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "showTooltip",
       type: "boolean",
       description: "Whether to show tooltips on hover.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "showLegend",
       type: "boolean",
       description: "Whether to show the legend.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "legendPosition",
       type: "select",
       description: "Position of the legend.",
       defaultValue: "right",
-      options: ["left", "center", "right"]
+      options: ["left", "center", "right"],
     },
     {
       name: "allowDecimals",
       type: "boolean",
       description: "Whether to allow decimal values on axes.",
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: "autoMinValue",
       type: "boolean",
       description: "Whether to automatically calculate minimum Y value.",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "enableLegendSlider",
       type: "boolean",
       description: "Enable scrollable legend for many categories.",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "startEndOnly",
       type: "boolean",
       description: "Show only start and end ticks on axes.",
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: "xAxisLabel",
       type: "string",
-      description: "Label for the X axis."
+      description: "Label for the X axis.",
     },
     {
       name: "yAxisLabel",
       type: "string",
-      description: "Label for the Y axis."
+      description: "Label for the Y axis.",
     },
     {
       name: "barCategoryGap",
       type: "string",
-      description: "Gap between bar categories (e.g., '10%', '20')."
-    }
+      description: "Gap between bar categories (e.g., '10%', '20').",
+    },
   ],
 
   examples: [
@@ -118,32 +118,38 @@ export const componentConfig: ComponentConfig = {
       id: "default",
       title: "Default",
       description: "Basic bar chart with sample data.",
-      code: jsxToString(<DefaultExample />)},
+      code: jsxToString(<DefaultExample />),
+    },
     {
       id: "multiple-series",
       title: "Multiple Series",
       description: "Bar chart with multiple data series.",
-      code: jsxToString(<MultipleSeriesExample />)},
+      code: jsxToString(<MultipleSeriesExample />),
+    },
     {
       id: "stacked",
       title: "Stacked Bars",
       description: "Bar chart with stacked data series.",
-      code: jsxToString(<StackedExample />)},
+      code: jsxToString(<StackedExample />),
+    },
     {
       id: "percent",
       title: "Percentage Chart",
       description: "Bar chart showing percentage distribution.",
-      code: jsxToString(<PercentExample />)},
+      code: jsxToString(<PercentExample />),
+    },
     {
       id: "vertical",
       title: "Vertical Layout",
       description: "Bar chart with vertical orientation.",
-      code: jsxToString(<VerticalExample />)},
+      code: jsxToString(<VerticalExample />),
+    },
     {
       id: "with-labels",
       title: "With Axis Labels",
       description: "Bar chart with custom axis labels.",
-      code: jsxToString(<WithLabelsExample />)}
+      code: jsxToString(<WithLabelsExample />),
+    },
   ],
 
   api: [
@@ -156,134 +162,134 @@ export const componentConfig: ComponentConfig = {
           name: "data",
           type: "Record<string, any>[]",
           description: "Array of data objects to display in the chart.",
-          required: true
+          required: true,
         },
         {
           name: "index",
           type: "string",
           description: "Key in data objects to use as the category axis value.",
-          required: true
+          required: true,
         },
         {
           name: "categories",
           type: "string[]",
           description: "Array of keys in data objects to use as data series.",
-          required: true
+          required: true,
         },
         {
           name: "colors",
           type: "AvailableChartColorsKeys[]",
-          description: "Array of color keys for styling the bars."
+          description: "Array of color keys for styling the bars.",
         },
         {
           name: "valueFormatter",
           type: "(value: number) => string",
           description: "Function to format values in tooltips and axes.",
-          default: "(value) => value.toString()"
+          default: "(value) => value.toString()",
         },
         {
           name: "type",
-          type: '"default" | "stacked" | "percent"',
+          type: "\"default\" | \"stacked\" | \"percent\"",
           description: "The type of bar chart to display.",
-          default: '"default"'
+          default: "\"default\"",
         },
         {
           name: "layout",
-          type: '"horizontal" | "vertical"',
+          type: "\"horizontal\" | \"vertical\"",
           description: "The orientation of the bars.",
-          default: '"horizontal"'
+          default: "\"horizontal\"",
         },
         {
           name: "showXAxis",
           type: "boolean",
           description: "Whether to show the X axis.",
-          default: "true"
+          default: "true",
         },
         {
           name: "showYAxis",
           type: "boolean",
           description: "Whether to show the Y axis.",
-          default: "true"
+          default: "true",
         },
         {
           name: "showGridLines",
           type: "boolean",
           description: "Whether to show grid lines.",
-          default: "true"
+          default: "true",
         },
         {
           name: "showTooltip",
           type: "boolean",
           description: "Whether to show tooltips on hover.",
-          default: "true"
+          default: "true",
         },
         {
           name: "showLegend",
           type: "boolean",
           description: "Whether to show the legend.",
-          default: "true"
+          default: "true",
         },
         {
           name: "legendPosition",
-          type: '"left" | "center" | "right"',
+          type: "\"left\" | \"center\" | \"right\"",
           description: "Position of the legend.",
-          default: '"right"'
+          default: "\"right\"",
         },
         {
           name: "allowDecimals",
           type: "boolean",
           description: "Whether to allow decimal values on axes.",
-          default: "true"
+          default: "true",
         },
         {
           name: "autoMinValue",
           type: "boolean",
           description: "Whether to automatically calculate minimum Y value.",
-          default: "false"
+          default: "false",
         },
         {
           name: "enableLegendSlider",
           type: "boolean",
           description: "Enable scrollable legend for many categories.",
-          default: "false"
+          default: "false",
         },
         {
           name: "startEndOnly",
           type: "boolean",
           description: "Show only start and end ticks on axes.",
-          default: "false"
+          default: "false",
         },
         {
           name: "xAxisLabel",
           type: "string",
-          description: "Label for the X axis."
+          description: "Label for the X axis.",
         },
         {
           name: "yAxisLabel",
           type: "string",
-          description: "Label for the Y axis."
+          description: "Label for the Y axis.",
         },
         {
           name: "barCategoryGap",
           type: "string | number",
-          description: "Gap between bar categories."
+          description: "Gap between bar categories.",
         },
         {
           name: "onValueChange",
           type: "(value: BarChartEventProps) => void",
-          description: "Callback fired when chart interaction occurs."
+          description: "Callback fired when chart interaction occurs.",
         },
         {
           name: "tooltipCallback",
           type: "(tooltipCallbackContent: TooltipProps) => void",
-          description: "Callback fired when tooltip state changes."
+          description: "Callback fired when tooltip state changes.",
         },
         {
           name: "customTooltip",
           type: "React.ComponentType<TooltipProps>",
-          description: "Custom tooltip component to render."
-        }
-      ]
-    }
-  ]
+          description: "Custom tooltip component to render.",
+        },
+      ],
+    },
+  ],
 };

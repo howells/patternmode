@@ -1,8 +1,8 @@
 "use client";
 
+import { Icon } from "@patternmode/ui";
 import { Search } from "lucide-react";
 import React from "react";
-import { Icon } from "@patternmode/ui";
 
 export function IconExample({
   size = "base",

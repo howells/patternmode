@@ -1,5 +1,5 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
+import React from "react";
 import { jsxToString } from "../../lib/jsx-to-string";
 import { DefaultExample } from "./examples";
 
@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   icon: "PanelLeft",
 
   installation: {
-    npm: "@base-ui-components/react"
+    npm: "@base-ui-components/react",
   },
   importStatement: `import {
   ResponsiveDrawer,
@@ -31,7 +31,7 @@ export const componentConfig: ComponentConfig = {
       name: "open",
       type: "boolean",
       description: "Whether the drawer is open",
-      defaultValue: false
+      defaultValue: false,
     },
   ],
   examples: [
@@ -41,5 +41,5 @@ export const componentConfig: ComponentConfig = {
       description: "A drawer that adapts to screen size",
       code: jsxToString(<DefaultExample />),
     },
-  ]
+  ],
 };

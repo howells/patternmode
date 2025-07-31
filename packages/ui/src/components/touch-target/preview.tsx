@@ -11,7 +11,7 @@ export function TouchTargetExample() {
           Small Button
         </button>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">With TouchTarget</h3>
         <TouchTarget>
@@ -20,7 +20,7 @@ export function TouchTargetExample() {
           </button>
         </TouchTarget>
       </div>
-      
+
       <p className="text-sm text-zinc-600 dark:text-zinc-400">
         TouchTarget ensures the button has a minimum touch area of 44px × 44px for better accessibility.
       </p>

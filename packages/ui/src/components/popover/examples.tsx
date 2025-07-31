@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
 import {
+  Button,
   Popover,
   PopoverArrow,
   PopoverClose,
@@ -10,7 +10,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@patternmode/ui";
-import { Button } from "@patternmode/ui";
+import React, { useState } from "react";
 
 export function PopoverExample() {
   return (
@@ -162,7 +162,9 @@ export function RichContentExample() {
       </Popover>
 
       <Button onClick={() => setOpen(!open)} variant="outline">
-        Toggle: {open ? "Open" : "Closed"}
+        Toggle:
+        {" "}
+        {open ? "Open" : "Closed"}
       </Button>
     </div>
   );
@@ -189,7 +191,9 @@ export function ControlledExample() {
       </Popover>
 
       <Button onClick={() => setOpen(!open)} variant="outline">
-        Toggle: {open ? "Open" : "Closed"}
+        Toggle:
+        {" "}
+        {open ? "Open" : "Closed"}
       </Button>
     </div>
   );

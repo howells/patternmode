@@ -1,10 +1,11 @@
 // Meter Component [v1.0.0] - Base UI Implementation
 
-import { cx } from "../../lib/utils";
-import { type GlobalSemanticVariant } from "../../lib/variants";
+import type { VariantProps } from "tailwind-variants";
+import type { GlobalSemanticVariant } from "../../lib/variants";
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
 import * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "../../lib/utils";
 
 // Meter-specific color mappings that work well for progress indicators
 const meterColorMap = {
@@ -63,8 +64,8 @@ const meterVariants = tv({
  * Props for the Meter component.
  *
  * @interface MeterProps
- * @extends React.ComponentPropsWithoutRef<typeof BaseMeter.Root>
- * @extends VariantProps<typeof meterVariants>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseMeter.Root>
+ * @augments VariantProps<typeof meterVariants>
  * @example
  * ```tsx
  * <Meter value={75} />
@@ -72,22 +73,38 @@ const meterVariants = tv({
  */
 interface MeterProps
   extends React.ComponentPropsWithoutRef<typeof BaseMeter.Root>,
-    VariantProps<typeof meterVariants> {
-  /** Current numeric value to display */
+  VariantProps<typeof meterVariants> {
+  /**
+   * Current numeric value to display.
+   */
   value: number;
-  /** Minimum value (defaults to 0) */
+  /**
+   * Minimum value (defaults to 0).
+   */
   min?: number;
-  /** Maximum value (defaults to 100) */
+  /**
+   * Maximum value (defaults to 100).
+   */
   max?: number;
-  /** Whether to show animation on value changes */
+  /**
+   * Whether to show animation on value changes.
+   */
   showAnimation?: boolean;
-  /** Whether to display the current value */
+  /**
+   * Whether to display the current value.
+   */
   showValue?: boolean;
-  /** Optional label text */
+  /**
+   * Optional label text.
+   */
   label?: string;
-  /** Custom function to format the displayed value */
+  /**
+   * Custom function to format the displayed value.
+   */
   formatValue?: (value: number, min: number, max: number) => string;
-  /** Color variant using the global semantic variant system */
+  /**
+   * Color variant using the global semantic variant system.
+   */
   variant?: GlobalSemanticVariant;
 }
 
@@ -99,14 +116,14 @@ interface MeterProps
  * Features optional labels, value display, animations, and multiple color variants
  * perfect for showing progress, usage levels, or status indicators.
  *
- * @param value - Current numeric value to display
- * @param min - Minimum value (defaults to 0)
- * @param max - Maximum value (defaults to 100)
- * @param variant - Color variant (default, neutral, warning, error, success)
- * @param showAnimation - Whether to show smooth transitions
- * @param showValue - Whether to display the formatted value
- * @param label - Optional descriptive label
- * @param formatValue - Custom value formatting function
+ * @param value - Current numeric value to display.
+ * @param min - Minimum value (defaults to 0).
+ * @param max - Maximum value (defaults to 100).
+ * @param variant - Color variant (default, neutral, warning, error, success).
+ * @param showAnimation - Whether to show smooth transitions.
+ * @param showValue - Whether to display the formatted value.
+ * @param label - Optional descriptive label.
+ * @param formatValue - Custom value formatting function.
  *
  *
  * @id meter
@@ -161,31 +178,18 @@ interface MeterProps
  * @name Meter
  * @component
  */
-const Meter = React.forwardRef<
-  React.ElementRef<typeof BaseMeter.Root>,
-  MeterProps
->(
-  (
-    {
-      value,
-      min = 0,
-      max = 100,
-      showAnimation = true,
-      showValue = true,
-      label,
-      formatValue,
-      variant,
-      className,
-      ...props
-    },
-    ref
+const /**
+       *
+       */
+  Meter = (
+    { ref, value, min = 0, max = 100, showAnimation = true, showValue = true, label, formatValue, variant, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
   ) => {
     const { track, indicator } = meterVariants({ variant });
 
     const defaultFormatValue = (
       val: number,
       minVal: number,
-      maxVal: number
+      maxVal: number,
     ) => {
       const percentage = Math.round(((val - minVal) / (maxVal - minVal)) * 100);
       return `${percentage}%`;
@@ -210,10 +214,10 @@ const Meter = React.forwardRef<
               {label && (
                 <BaseMeter.Label
                   className={cx(
-                    // base
+                  // base
                     "text-sm font-medium leading-6",
                     // text color
-                    "text-zinc-900 dark:text-zinc-50"
+                    "text-zinc-900 dark:text-zinc-50",
                   )}
                 >
                   {label}
@@ -222,13 +226,13 @@ const Meter = React.forwardRef<
               {showValue && (
                 <BaseMeter.Value
                   className={cx(
-                    // base
+                  // base
                     "text-sm font-medium leading-6 tabular-nums",
                     // text color
-                    "text-zinc-900 dark:text-zinc-50"
+                    "text-zinc-900 dark:text-zinc-50",
                   )}
                 >
-                  {(formattedValue) => formattedValue}
+                  {formattedValue => formattedValue}
                 </BaseMeter.Value>
               )}
             </div>
@@ -236,31 +240,30 @@ const Meter = React.forwardRef<
 
           <BaseMeter.Track
             className={cx(
-              // base
+            // base
               "relative h-1.5 w-full overflow-hidden rounded-full",
               // background
               track(),
               // border
-              "shadow-[inset_0_0_0_1px] shadow-zinc-200/50 dark:shadow-zinc-800/50"
+              "shadow-[inset_0_0_0_1px] shadow-zinc-200/50 dark:shadow-zinc-800/50",
             )}
           >
             <BaseMeter.Indicator
               className={cx(
-                // base
+              // base
                 "h-full rounded-full",
                 // background
                 indicator(),
                 // animation
-                showAnimation && "transition-all duration-500 ease-out"
+                showAnimation && "transition-all duration-500 ease-out",
               )}
             />
           </BaseMeter.Track>
         </div>
       </BaseMeter.Root>
     );
-  }
-);
+  };
 
 Meter.displayName = "Meter";
 
-export { Meter, meterVariants, type MeterProps };
+export { Meter, type MeterProps, meterVariants };

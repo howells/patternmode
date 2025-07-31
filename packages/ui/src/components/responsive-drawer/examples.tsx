@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   ResponsiveDrawer,
   ResponsiveDrawerBody,
@@ -12,6 +11,7 @@ import {
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
 } from "@patternmode/ui";
+import React from "react";
 
 export function ResponsiveDrawerExample() {
   return (
