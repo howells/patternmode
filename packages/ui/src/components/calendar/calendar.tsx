@@ -8,7 +8,6 @@ import {
   format,
   getMonth,
   getYear,
-  isSameMonth,
   setMonth,
   setYear,
 } from "date-fns";
@@ -24,7 +23,6 @@ import {
   DayPicker,
   useDayPicker,
   type DayPickerProps,
-  type DayProps,
   type Matcher,
 } from "react-day-picker";
 

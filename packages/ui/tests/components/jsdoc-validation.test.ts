@@ -75,14 +75,9 @@ function validateComponentJSDoc(componentDir: string) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Look for various component definition patterns
+    // Look for the standard React.forwardRef pattern only
     const patterns = [
       /^(?:export\s+)?const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*React\.forwardRef/,
-      /^(?:export\s+)?const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*forwardRef/,
-      /^(?:export\s+)?function\s+([A-Z][a-zA-Z0-9]*)\s*[\(]/,
-      /^(?:export\s+)?const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*<[^>]+>\s*\(/,  // Generic components like const Combobox = <T>({
-      /^(?:export\s+)?const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*\(/,
-      /^(?:export\s+)?const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*[A-Z][a-zA-Z0-9]*\.[A-Z][a-zA-Z0-9]*;?\s*$/,  // Component aliases like const ContextMenu = BaseContextMenu.Root;
     ];
 
     for (const pattern of patterns) {
