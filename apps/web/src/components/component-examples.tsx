@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CodeBlock, Divider, VStack, Tabs, TabsContent, TabsList, TabsTrigger, Subheading, Text } from "@patternmode/ui";
-import { getComponentConfig } from "@/lib/component-registry";
+import { Card, CardContent, CardHeader, CodeBlock, Divider, Subheading, Tabs, TabsContent, TabsList, TabsTrigger, Text, VStack } from "@patternmode/ui";
 import React from "react";
+import { getComponentConfig } from "../../../../packages/ui/src/component-registry";
 import { ComponentExampleRenderer } from "./component-example-renderer";
 
 interface ComponentExamplesProps {

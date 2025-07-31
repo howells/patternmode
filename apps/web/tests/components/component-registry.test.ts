@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { COMPONENT_LIST } from '../../src/lib/component-registry';
+import { COMPONENT_LIST } from '../../../../packages/ui/src/component-registry';
 
 describe('Component Registry', () => {
   it('should have component categories defined', () => {

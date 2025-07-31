@@ -1,11 +1,10 @@
 "use client";
 
-import { ComponentSearch } from "@/components/component-search";
-import { Button, Grid, GridCell, Stack, Subheading } from "@patternmode/ui";
-import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
-import { getComponentConfig } from "@/lib/component-registry";
+import { Button, Grid, GridCell, Stack, Subheading, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";
+import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
+import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";
 
 interface CellData {

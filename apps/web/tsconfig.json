@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "../../packages/ui/src/component-registry.ts", "../../packages/ui/src/lib/component-config-types.ts", "../../packages/ui/src/lib/jsx-to-string.ts"  ],
   "exclude": [
     "node_modules"
   ]

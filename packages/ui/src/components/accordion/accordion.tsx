@@ -1,12 +1,12 @@
 // Tremor Accordion [v1.0.0] - Base UI
 
-import { Subheading } from "../subheading/subheading";
-import { Text } from "../text/text";
-import { config } from "../../lib/config";
-import { cx } from "../../lib/utils";
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
 import { Plus } from "lucide-react";
 import React from "react";
+import { config } from "../../lib/config";
+import { cx } from "../../lib/utils";
+import { Subheading } from "../subheading/subheading";
+import { Text } from "../text/text";
 
 /**
  * A set of collapsible panels with headings built on Base UI's Accordion primitive.

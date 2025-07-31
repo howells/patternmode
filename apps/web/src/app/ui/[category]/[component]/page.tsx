@@ -1,11 +1,11 @@
-import { ComponentExamples } from "@/components/component-examples";
-import { ComponentPropExplorer } from "@/components/component-prop-explorer";
-import { PageHeader } from "@/components/page-header";
 import { Separator } from "@patternmode/ui";
-import { componentRegistry, getComponentConfig, COMPONENT_LIST } from "@/lib/component-registry";
-import { createComponentConfig } from "@/lib/config-helpers";
+import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/component-registry";
 import { notFound } from "next/navigation";
 import React from "react";
+import { ComponentExamples } from "../../../../components/component-examples";
+import { ComponentPropExplorer } from "../../../../components/component-prop-explorer";
+import { PageHeader } from "../../../../components/page-header";
+import { createComponentConfig } from "../../../../lib/config-helpers";
 
 interface ComponentPageProps {
   params: Promise<{
@@ -115,4 +115,3 @@ export async function generateStaticParams() {
 
   return paths;
 }
-

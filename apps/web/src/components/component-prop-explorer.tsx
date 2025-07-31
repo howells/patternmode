@@ -1,12 +1,12 @@
 "use client";
 
-import { ComponentConfig } from "@/lib/component-config-types";
-import { PropMetadata } from "@/lib/prop-explorer";
+import { Inspector, InspectorBody } from "@patternmode/ui";
 import React from "react";
+import { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
+import { PropMetadata } from "../lib/prop-explorer";
 import { ComponentPreview } from "./component-preview";
 import { PropExplorerProvider } from "./prop-explorer-context";
 import { PropExplorerContent } from "./prop-explorer-controls";
-import { Inspector, InspectorBody } from "@patternmode/ui";
 
 interface ComponentPropExplorerProps {
   config: ComponentConfig;

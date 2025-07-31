@@ -1,13 +1,11 @@
 "use client";
 
-import { PropExplorerProvider } from "@/components/prop-explorer-context";
-import { Button, Card } from "@patternmode/ui";
-import { getDynamicIconByName } from "@patternmode/ui";
-import { Icon } from "@patternmode/ui";
-import { getComponentConfig } from "@/lib/component-registry";
+import { Button, Card, getDynamicIconByName, Icon } from "@patternmode/ui";
 import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
+import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
+import { PropExplorerProvider } from "../prop-explorer-context";
 import { PropsEditorPopover } from "./props-editor-popover";
 
 interface CellData {

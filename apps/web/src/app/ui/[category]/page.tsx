@@ -1,5 +1,5 @@
-import { Badge, Card, Grid, GridCell, Heading, HStack, VStack, Subheading, Text } from "@patternmode/ui";
-import { getComponentsByCategory } from "@/lib/component-registry";
+import { Badge, Card, Grid, GridCell, Heading, HStack, Subheading, Text, VStack } from "@patternmode/ui";
+import { getComponentsByCategory } from "@patternmode/ui/lib/component-registry";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

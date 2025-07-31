@@ -1,6 +1,6 @@
 "use client";
 
-import { CodeBlock, getDynamicIconByName, Loader, VStack, Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+import { CodeBlock, getDynamicIconByName, Loader, Tabs, TabsContent, TabsList, TabsTrigger, VStack } from "@patternmode/ui";
 import dynamic from "next/dynamic";
 import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
@@ -102,7 +102,7 @@ const getComponentImportPath = (
       .toLowerCase();
 
     // All examples are in component/preview.tsx
-    return `@/components/ui/${kebabCase}/preview`;
+    return `@patternmode/ui/components/${kebabCase}/preview`;
   }
 
   // Convert componentId to kebab-case for directory structure
@@ -164,9 +164,9 @@ const getComponentName = (componentId: string): string => {
 };
 
 // Import components statically to avoid dynamic import issues
-import { Button, Breadcrumb, SparkAreaChart } from "@patternmode/ui";
+import { Breadcrumb, Button, SparkAreaChart } from "@patternmode/ui";
 
-// Static component mapping  
+// Static component mapping
 const componentMap: Record<string, React.ComponentType<any>> = {
   button: Button,
   breadcrumbs: Breadcrumb,

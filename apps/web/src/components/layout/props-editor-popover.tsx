@@ -1,10 +1,10 @@
 "use client";
 
-import { PropExplorerContent } from "@/components/prop-explorer-controls";
-import { PropExplorerProvider, usePropExplorer } from "@/components/prop-explorer-context";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
-import { getComponentConfig } from "@/lib/component-registry";
 import React from "react";
+import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
+import { PropExplorerProvider, usePropExplorer } from "../prop-explorer-context";
+import { PropExplorerContent } from "../prop-explorer-controls";
 
 interface CellData {
   componentId: string;
@@ -47,9 +47,9 @@ export function PropsEditorPopover({
       <PopoverTrigger>
         {trigger}
       </PopoverTrigger>
-      <PopoverContent 
-        className="w-80" 
-        side="left" 
+      <PopoverContent
+        className="w-80"
+        side="left"
         align="start"
         sideOffset={8}
       >
@@ -60,8 +60,8 @@ export function PropsEditorPopover({
               Configure the component properties
             </p>
           </div>
-          
-          <PropExplorerProvider 
+
+          <PropExplorerProvider
             defaultProps={cellData.props}
             key={cellData.componentId}
           >
@@ -75,20 +75,20 @@ export function PropsEditorPopover({
 }
 
 // Helper component to watch for prop changes and update parent
-function PropsUpdater({ 
-  onUpdate 
-}: { 
-  onUpdate: (props: Record<string, unknown>) => void 
+function PropsUpdater({
+  onUpdate
+}: {
+  onUpdate: (props: Record<string, unknown>) => void
 }) {
   const { props } = usePropExplorer();
-  
+
   // Use useEffect to detect prop changes and update parent
   React.useEffect(() => {
     onUpdate(props);
   }, [props, onUpdate]);
-  
+
   return null;
 }
 
 // Re-export the hook for convenience
-export { usePropExplorer } from "@/components/prop-explorer-context";
+export { usePropExplorer } from "../prop-explorer-context";

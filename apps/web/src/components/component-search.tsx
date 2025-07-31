@@ -1,22 +1,18 @@
 "use client";
 
-import { type ComponentConfig } from "@/lib/component-config-types";
-import { getComponentsByCategory } from "@/lib/component-registry";
+import {
+  Badge, Button, Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle, Input, Subheading, Text
+} from "@patternmode/ui";
 import { useDebounce } from "@uidotdev/usehooks";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Badge, Button } from "@patternmode/ui";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@patternmode/ui";
-import { Input } from "@patternmode/ui";
-import { Subheading } from "@patternmode/ui";
-import { Text } from "@patternmode/ui";
+import { getComponentsByCategory } from "../../../../packages/ui/src/component-registry";
+import { type ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
 
 interface ComponentSearchProps {
   placeholder?: string;

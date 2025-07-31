@@ -2,29 +2,27 @@
 
 "use client";
 
-import { getDynamicIconByName } from "@patternmode/ui";
-import { useSidebarView } from "@/hooks/use-sidebar-view";
-import type { ComponentConfig } from "@/lib/component-config-types";
 import {
-  COMPONENT_LIST,
-  getComponentsByCategory,
-} from "@/lib/component-registry";
-import { cx } from "@/lib/utils";
+  getDynamicIconByName, Sidebar,
+  SidebarBody,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarItem, ToggleGroup, ToggleGroupItem
+} from "@patternmode/ui";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { motion } from "framer-motion";
 import { List, Pilcrow, Rows3 } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
-import { ComponentSearch } from "./component-search";
 import {
-  Sidebar,
-  SidebarBody,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarItem,
-} from "@patternmode/ui";
-import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
+  COMPONENT_LIST,
+  getComponentsByCategory,
+} from "../../../../packages/ui/src/component-registry";
+import type { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
+import { useSidebarView } from "../hooks/use-sidebar-view";
+import { cx } from "../lib/utils";
+import { ComponentSearch } from "./component-search";
 
 // Create a stable icon component cache to prevent re-renders
 const iconComponentCache = new Map<

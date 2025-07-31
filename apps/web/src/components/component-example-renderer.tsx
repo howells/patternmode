@@ -23,9 +23,9 @@ export function ComponentExampleRenderer({
         setLoading(true);
         setError(null);
 
-        // Import examples from the documentation layer, not the UI package
-        const examplesModule = await import(`@/components/ui/${componentId}/examples`);
-        
+        // Import examples from the UI package
+        const examplesModule = await import(`@patternmode/ui/components/${componentId}/examples`);
+
         // Convert exampleId to PascalCase component name
         const componentName =
           exampleId
