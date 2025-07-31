@@ -1,5 +1,8 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
+import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
+
 import {
   Badge,
   Button,
@@ -25,6 +28,7 @@ import {
   Text,
   VStack,
 } from "@patternmode/ui";
+
 import {
   Box,
   CheckCircle,
@@ -32,13 +36,12 @@ import {
   Database,
   ExternalLink,
   FormInput,
-  LucideIcon,
   MessageSquare,
   Package,
 } from "lucide-react";
+
 import Link from "next/link";
 import { PageHeader } from "../components/page-header";
-import { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
 
 interface CategoryCardProps {
   icon: LucideIcon;
@@ -276,11 +279,17 @@ pnpm add react@^19.0.0 react-dom@^19.0.0
 # UI and component dependencies
 pnpm add @base-ui-components/react@^1.0.0 lucide-react@^0.525.0
 
+# Data fetching and state management
+pnpm add @tanstack/react-query@^5.0.0
+
 # Data visualization and charts
 pnpm add recharts@^3.1.0
 
 # Animation and validation
-pnpm add framer-motion@^12.23.0 zod@^4.0.0`}
+pnpm add framer-motion@^12.23.0 zod@^4.0.0
+
+# Optional: Next.js for automatic image optimization
+pnpm add next@^14.0.0`}
                   </CodeBlock>
                   <Callout
                     title="Why These Dependencies?"
@@ -390,7 +399,7 @@ function App() {
                     icon={ExternalLink}
                   >
                     Make sure to also copy the required utility files like{" "}
-                    <Code>@/lib/utils</Code>, <Code>@/lib/variants</Code>, and
+                    <Code>@/lib/utils</Code>,<Code>@/lib/variants</Code>, and
                     any hooks the components depend on.
                   </Callout>
                 </Stack>

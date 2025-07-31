@@ -2,9 +2,9 @@
 
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
@@ -72,7 +72,7 @@ interface TooltipProps
       React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>,
       "children"
     >,
-  VariantProps<typeof tooltipVariants> {
+    VariantProps<typeof tooltipVariants> {
   /**
    * The element that triggers the tooltip.
    */
@@ -169,46 +169,60 @@ interface TooltipProps
  * @component
  */
 const /**
-       *
-       */
-  Tooltip = (
-    { ref: forwardedRef, children, className, content, delayDuration = 150, defaultOpen, open, onClick, onOpenChange, showArrow = true, side = "top", sideOffset = 10, align = "center", alignOffset = 0, variant, size, ...props }: TooltipProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null> },
-  ) => {
+   *
+   */
+  Tooltip = ({
+    ref: forwardedRef,
+    children,
+    className,
+    content,
+    delayDuration = 150,
+    defaultOpen,
+    open,
+    onClick,
+    onOpenChange,
+    showArrow = true,
+    side = "top",
+    sideOffset = 10,
+    align = "center",
+    alignOffset = 0,
+    variant,
+    size,
+    ...props
+  }: TooltipProps & {
+    ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null>;
+  }) => {
     const { popup, arrow } = tooltipVariants({ variant, size });
 
     return (
-      <BaseTooltip>
-        <BaseTooltip.Root
-          open={open}
-          defaultOpen={defaultOpen}
-          onOpenChange={onOpenChange}
-          {...props}
-        >
-          <BaseTooltip.Trigger onClick={onClick}>
-            {children}
-          </BaseTooltip.Trigger>
-          <BaseTooltip.Portal>
-            <BaseTooltip.Positioner
-              side={side}
-              sideOffset={sideOffset}
-              align={align}
-              alignOffset={alignOffset}
+      <BaseTooltip.Root
+        open={open}
+        defaultOpen={defaultOpen}
+        onOpenChange={onOpenChange}
+        {...props}
+      >
+        <BaseTooltip.Trigger onClick={onClick}>{children}</BaseTooltip.Trigger>
+        <BaseTooltip.Portal>
+          <BaseTooltip.Positioner
+            side={side}
+            sideOffset={sideOffset}
+            align={align}
+            alignOffset={alignOffset}
+          >
+            <BaseTooltip.Popup
+              ref={forwardedRef}
+              className={cx(popup(), className)}
             >
-              <BaseTooltip.Popup
-                ref={forwardedRef}
-                className={cx(popup(), className)}
-              >
-                {content}
-                {showArrow && (
-                  <BaseTooltip.Arrow className={arrow()}>
-                    <ArrowSvg />
-                  </BaseTooltip.Arrow>
-                )}
-              </BaseTooltip.Popup>
-            </BaseTooltip.Positioner>
-          </BaseTooltip.Portal>
-        </BaseTooltip.Root>
-      </BaseTooltip>
+              {content}
+              {showArrow && (
+                <BaseTooltip.Arrow className={arrow()}>
+                  <ArrowSvg />
+                </BaseTooltip.Arrow>
+              )}
+            </BaseTooltip.Popup>
+          </BaseTooltip.Positioner>
+        </BaseTooltip.Portal>
+      </BaseTooltip.Root>
     );
   };
 
@@ -236,32 +250,32 @@ function ArrowSvg(props: React.ComponentProps<"svg">) {
 
 // Additional exports for more flexibility
 const /**
-       *
-       */
+   *
+   */
   TooltipProvider = BaseTooltip.Provider;
 const /**
-       *
-       */
+   *
+   */
   TooltipRoot = BaseTooltip.Root;
 const /**
-       *
-       */
+   *
+   */
   TooltipTrigger = BaseTooltip.Trigger;
 const /**
-       *
-       */
+   *
+   */
   TooltipPortal = BaseTooltip.Portal;
 const /**
-       *
-       */
+   *
+   */
   TooltipPositioner = BaseTooltip.Positioner;
 const /**
-       *
-       */
+   *
+   */
   TooltipPopup = BaseTooltip.Popup;
 const /**
-       *
-       */
+   *
+   */
   TooltipArrow = BaseTooltip.Arrow;
 
 export {
@@ -270,8 +284,8 @@ export {
   TooltipPopup,
   TooltipPortal,
   TooltipPositioner,
-  type TooltipProps,
   TooltipProvider,
   TooltipRoot,
   TooltipTrigger,
+  type TooltipProps,
 };

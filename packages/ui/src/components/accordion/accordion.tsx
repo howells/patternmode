@@ -15,7 +15,6 @@ import { Text } from "../text/text";
  * providing accessible collapsible content with keyboard navigation and focus management.
  * Features Tremor-inspired styling with proper contrast and spacing.
  *
- *
  * @id accordion
  * @name Accordion
  * @component
@@ -35,24 +34,21 @@ import { Text } from "../text/text";
  *
  * @see https://base-ui.com/react/components/accordion - Base UI documentation
  */
-/**
- * A vertically stacked set of interactive headings that each control a panel of content.
- *
- * @id accordion
- * @name Accordion
- * @component
- */
-const /**
-       *
-       */
-  Accordion = ({ ref: forwardedRef, className, orientation = "vertical", ...props }: React.ComponentPropsWithoutRef<typeof BaseAccordion.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Root> | null> }) => (
-    <BaseAccordion.Root
-      className={cx("flex w-96 max-w-[calc(100vw-8rem)] flex-col", className)}
-      orientation={orientation}
-      ref={forwardedRef}
-      {...props}
-    />
-  );
+const Accordion = ({
+  ref,
+  className,
+  orientation = "vertical",
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAccordion.Root> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Root> | null>;
+}) => (
+  <BaseAccordion.Root
+    className={cx("flex w-96 max-w-[calc(100vw-8rem)] flex-col", className)}
+    orientation={orientation}
+    ref={ref}
+    {...props}
+  />
+);
 
 Accordion.displayName = "Accordion";
 
@@ -70,46 +66,48 @@ Accordion.displayName = "Accordion";
  * </AccordionTrigger>
  * ```
  */
-const /**
-       *
-       */
-  AccordionTrigger = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAccordion.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Trigger> | null> }) => (
-    <BaseAccordion.Header className="flex">
-      <BaseAccordion.Trigger
-        className={cx(
+const AccordionTrigger = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAccordion.Trigger> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Trigger> | null>;
+}) => (
+  <BaseAccordion.Header className="flex">
+    <BaseAccordion.Trigger
+      className={cx(
         // base
-          "group flex flex-1 cursor-pointer items-center justify-between py-3 text-left font-medium",
-          // text color
-          "text-zinc-900 dark:text-zinc-50",
-          // disabled
-          "data-[disabled]:cursor-default data-[disabled]:text-zinc-400 dark:data-[disabled]:text-zinc-600",
-          // focus
-          "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-hidden focus-visible:ring-inset",
-          className,
-        )}
-        {...props}
-        ref={forwardedRef}
-      >
-        {typeof children === "string"
-          ? (
-              <Subheading level={3}>{children}</Subheading>
-            )
-          : (
-              children
-            )}
-        <Plus
-          className={cx(
+        "group flex flex-1 cursor-pointer items-center justify-between py-3 text-left font-medium",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // disabled
+        "data-[disabled]:cursor-default data-[disabled]:text-zinc-400 dark:data-[disabled]:text-zinc-600",
+        // focus
+        "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-hidden focus-visible:ring-inset",
+        className
+      )}
+      {...props}
+      ref={ref}
+    >
+      {typeof children === "string" ? (
+        <Subheading level={3}>{children}</Subheading>
+      ) : (
+        children
+      )}
+      <Plus
+        className={cx(
           // base
-            "size-5 shrink-0 transition-transform duration-150 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[panel-open]:rotate-45",
-            // text color
-            "text-zinc-600 dark:text-zinc-400",
-          )}
-          strokeWidth={config.getIconStrokeWidth()}
-          aria-hidden="true"
-        />
-      </BaseAccordion.Trigger>
-    </BaseAccordion.Header>
-  );
+          "size-5 shrink-0 transition-transform duration-150 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[panel-open]:rotate-45",
+          // text color
+          "text-zinc-600 dark:text-zinc-400"
+        )}
+        strokeWidth={config.getIconStrokeWidth()}
+        aria-hidden="true"
+      />
+    </BaseAccordion.Trigger>
+  </BaseAccordion.Header>
+);
 
 AccordionTrigger.displayName = "AccordionTrigger";
 
@@ -127,28 +125,30 @@ AccordionTrigger.displayName = "AccordionTrigger";
  * </AccordionContent>
  * ```
  */
-const /**
-       *
-       */
-  AccordionContent = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAccordion.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Panel> | null> }) => (
-    <BaseAccordion.Panel
-      className={cx("overflow-hidden", className)}
-      ref={forwardedRef}
-      {...props}
-    >
-      <div className="pb-3 pt-1">
-        {typeof children === "string"
-          ? (
-              <Text size="sm" className="text-zinc-700 dark:text-zinc-300">
-                {children}
-              </Text>
-            )
-          : (
-              children
-            )}
-      </div>
-    </BaseAccordion.Panel>
-  );
+const AccordionContent = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAccordion.Panel> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Panel> | null>;
+}) => (
+  <BaseAccordion.Panel
+    className={cx("overflow-hidden", className)}
+    ref={ref}
+    {...props}
+  >
+    <div className="pb-3 pt-1">
+      {typeof children === "string" ? (
+        <Text size="sm" className="text-zinc-700 dark:text-zinc-300">
+          {children}
+        </Text>
+      ) : (
+        children
+      )}
+    </div>
+  </BaseAccordion.Panel>
+);
 
 AccordionContent.displayName = "AccordionContent";
 
@@ -167,23 +167,26 @@ AccordionContent.displayName = "AccordionContent";
  * </AccordionItem>
  * ```
  */
-const /**
-       *
-       */
-  AccordionItem = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAccordion.Item> & { ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Item> | null> }) => (
-    <BaseAccordion.Item
-      ref={forwardedRef}
-      className={cx(
+const AccordionItem = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAccordion.Item> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseAccordion.Item> | null>;
+}) => (
+  <BaseAccordion.Item
+    ref={ref}
+    className={cx(
       // base
-        "overflow-hidden border-b first:mt-0",
-        // border color
-        "border-zinc-200 dark:border-zinc-800",
-        className,
-      )}
-      tremor-id="tremor-raw"
-      {...props}
-    />
-  );
+      "overflow-hidden border-b first:mt-0",
+      // border color
+      "border-zinc-200 dark:border-zinc-800",
+      className
+    )}
+    tremor-id="tremor-raw"
+    {...props}
+  />
+);
 
 AccordionItem.displayName = "AccordionItem";
 

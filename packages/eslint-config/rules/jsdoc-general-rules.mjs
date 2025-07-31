@@ -9,7 +9,7 @@
  * General JSDoc rules for exported functions, classes, and types
  */
 export const jsdocGeneralRules = {
-  // General JSDoc rules for exported functions, classes, and types
+  // General JSDoc rules for exported functions, classes, and types - but don't auto-fix to prevent empty blocks
   "jsdoc/require-jsdoc": [
     "warn",
     {
@@ -29,11 +29,13 @@ export const jsdocGeneralRules = {
         "ExportDefaultDeclaration[declaration.type='FunctionDeclaration']",
         "ExportDefaultDeclaration[declaration.type='ClassDeclaration']",
       ],
+      // Disable auto-fix to prevent empty JSDoc blocks
+      fixable: "never",
     },
   ],
 
-  // Require brief descriptions (not all parameters/returns)
-  "jsdoc/require-description": "warn",
+  // Require brief descriptions (not all parameters/returns) - but don't auto-fix
+  "jsdoc/require-description": ["warn", { fixable: false }],
 
   // Ensure JSDoc comments are valid when present
   "jsdoc/check-alignment": "error",
@@ -44,6 +46,10 @@ export const jsdocGeneralRules = {
       definedTags: ["id", "name", "component"], // Allow custom tags
     },
   ],
+
+  // Prevent empty JSDoc blocks
+  "jsdoc/no-blank-blocks": "error",
+  "jsdoc/empty-tags": "error",
 };
 
 /**

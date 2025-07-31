@@ -9,27 +9,30 @@
  * JSDoc rules specifically for React components
  */
 export const jsdocComponentRules = {
-  // Require JSDoc for React component const declarations
-  "jsdoc/require-jsdoc": [
-    "error",
-    {
-      require: {
-        FunctionDeclaration: false,
-        FunctionExpression: false,
-        ArrowFunctionExpression: false,
-        ClassDeclaration: false,
-        ClassExpression: false,
-        MethodDefinition: false,
-      },
-      contexts: [
-        // Target const declarations that look like React components (starting with capital letter)
-        "VariableDeclaration > VariableDeclarator[id.name=/^[A-Z]/]",
-      ],
-    },
-  ],
+  // TEMPORARILY DISABLED: This rule keeps adding empty JSDoc blocks
+  // "jsdoc/require-jsdoc": [
+  //   "error",
+  //   {
+  //     require: {
+  //       FunctionDeclaration: false,
+  //       FunctionExpression: false,
+  //       ArrowFunctionExpression: false,
+  //       ClassDeclaration: false,
+  //       ClassExpression: false,
+  //       MethodDefinition: false,
+  //     },
+  //     contexts: [
+  //       // Target const declarations that look like React components (starting with capital letter)
+  //       // But only if they don't already use React.forwardRef (which indicates proper component structure)
+  //       "VariableDeclaration > VariableDeclarator[id.name=/^[A-Z]/]:not([init.callee.object.name='React'][init.callee.property.name='forwardRef'])",
+  //     ],
+  //     // Disable auto-fix to prevent empty JSDoc blocks
+  //     fixable: "never",
+  //   },
+  // ],
 
-  // Require description for components
-  "jsdoc/require-description": "error",
+  // Require description for components - but only check, don't auto-fix
+  "jsdoc/require-description": ["error", { fixable: false }],
 
   // Require specific tags for components
   "jsdoc/require-param": "off", // Don't require @param for every prop
@@ -72,6 +75,9 @@ export const jsdocComponentRules = {
 
   // Prevent duplicate JSDoc blocks (this will catch multiple /** */ blocks before same declaration)
   "jsdoc/no-bad-blocks": "error",
+
+  // Additional rule to prevent empty JSDoc comments
+  "jsdoc/empty-tags": "error",
 };
 
 /**

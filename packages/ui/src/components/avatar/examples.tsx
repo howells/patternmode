@@ -8,10 +8,13 @@ import {
 } from "@patternmode/ui";
 import React from "react";
 
+// For Next.js applications - this would be imported from 'next/image'
+// const Image = dynamic(() => import('next/image'), { ssr: false });
+
 // Basic avatar examples
 export const /**
-              *
-              */
+   *
+   */
   DefaultExample = () => {
     return (
       <div className="flex items-center gap-4">
@@ -27,8 +30,8 @@ export const /**
 
 // Size variants
 export const /**
-              *
-              */
+   *
+   */
   SizeVariantsExample = () => {
     return (
       <div className="flex items-end gap-4">
@@ -94,8 +97,8 @@ export const /**
 
 // Initials with different sizes
 export const /**
-              *
-              */
+   *
+   */
   InitialsExample = () => {
     return (
       <div className="flex items-end gap-4">
@@ -112,8 +115,8 @@ export const /**
 
 // Square variants
 export const /**
-              *
-              */
+   *
+   */
   SquareVariantsExample = () => {
     return (
       <div className="flex items-end gap-4">
@@ -149,8 +152,8 @@ export const /**
 
 // Dynamic background colors
 export const /**
-              *
-              */
+   *
+   */
   DynamicBackgroundExample = () => {
     const users = [
       { initials: "AB", name: "Alice Brown" },
@@ -165,7 +168,7 @@ export const /**
 
     return (
       <div className="flex flex-wrap gap-4">
-        {users.map(user => (
+        {users.map((user) => (
           <div key={user.initials} className="text-center space-y-2">
             <Avatar
               initials={user.initials}
@@ -182,8 +185,8 @@ export const /**
 
 // With fallback using Base UI
 export const /**
-              *
-              */
+   *
+   */
   WithFallbackExample = () => {
     return (
       <div className="flex items-center gap-4">
@@ -209,8 +212,8 @@ export const /**
 
 // User list example
 export const /**
-              *
-              */
+   *
+   */
   UserListExample = () => {
     const users = [
       {
@@ -218,7 +221,7 @@ export const /**
         name: "John Doe",
         email: "john@example.com",
         avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
         initials: "JD",
       },
       {
@@ -226,7 +229,7 @@ export const /**
         name: "Jane Smith",
         email: "jane@example.com",
         avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+          "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
         initials: "JS",
       },
       {
@@ -247,7 +250,7 @@ export const /**
 
     return (
       <div className="space-y-3">
-        {users.map(user => (
+        {users.map((user) => (
           <div
             key={user.id}
             className="flex items-center gap-3 p-3 rounded-lg border border-zinc-200 dark:border-zinc-800"
@@ -272,26 +275,26 @@ export const /**
 
 // Avatar group/stack
 export const /**
-              *
-              */
+   *
+   */
   AvatarGroupExample = () => {
     const users = [
       {
         name: "John Doe",
         avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
         initials: "JD",
       },
       {
         name: "Jane Smith",
         avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face",
+          "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face",
         initials: "JS",
       },
       {
         name: "Mike Johnson",
         avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
         initials: "MJ",
       },
       {
@@ -350,8 +353,8 @@ export const /**
 
 // Profile header example
 export const /**
-              *
-              */
+   *
+   */
   ProfileHeaderExample = () => {
     return (
       <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-lg">
@@ -375,8 +378,47 @@ export const /**
     );
   };
 
+// Automatic Next.js Image optimization example
+export const /**
+   *
+   */
+  OptimizationExample = () => {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-4">
+          <Avatar
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
+            alt="Optimized Avatar"
+            size="lg"
+          />
+          <div>
+            <h3 className="font-medium">Automatic Optimization</h3>
+            <p className="text-sm text-zinc-500">
+              Uses Next.js Image when available, falls back to img
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Avatar
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
+            alt="Standard Avatar"
+            size="lg"
+            optimized={false}
+          />
+          <div>
+            <h3 className="font-medium">Standard Image</h3>
+            <p className="text-sm text-zinc-500">
+              Force standard img element with optimized={`{false}`}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
 // Default export for prop explorer
 export const /**
-              *
-              */
+   *
+   */
   AvatarExample = DefaultExample;
