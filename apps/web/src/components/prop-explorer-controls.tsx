@@ -82,7 +82,43 @@ function IconSelectControl({
 export function PropExplorerContent({ config }: PropExplorerContentProps) {
   const { props, updateProp, resetProps } = usePropExplorer();
 
-  if (!config || !config.props) {
+  // Try to load extracted props from JSDoc if available
+  const [extractedProps, setExtractedProps] = React.useState<PropMetadata[]>([]);
+
+    React.useEffect(() => {
+    async function loadExtractedProps() {
+      if (!config?.componentId) return;
+
+      // Map componentId to actual component directory name
+      const componentIdToDirectory: Record<string, string> = {
+        'TextareaExample': 'textarea',
+        'ButtonExample': 'button',
+        // Add more mappings as needed
+      };
+
+      const componentDir = componentIdToDirectory[config.componentId] ||
+                          config.componentId.replace('Example', '').toLowerCase();
+
+      try {
+        // Dynamically import the generated props.ts file
+        const propsModule = await import(`@patternmode/ui/src/components/${componentDir}/props`);
+        if (propsModule.extractedProps) {
+          console.log(`✅ Loaded ${propsModule.extractedProps.length} extracted props for ${componentDir}`);
+          setExtractedProps(propsModule.extractedProps);
+        }
+      } catch (error) {
+        // If props.ts doesn't exist, fall back to config props
+        console.log(`No extracted props found for ${componentDir}, using config props`);
+      }
+    }
+
+    loadExtractedProps();
+  }, [config?.componentId]);
+
+  // Use extracted props if available, otherwise fall back to config props
+  const availableProps = extractedProps.length > 0 ? extractedProps : (config?.props || []);
+
+  if (!config || availableProps.length === 0) {
     return (
       <div className="space-y-6">
         <Text>No configurable properties available for this component.</Text>
@@ -91,12 +127,12 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
   }
 
   // Check if component supports icons
-  const supportsIcons = config.props.some(
+  const supportsIcons = availableProps.some(
     (prop: PropMetadata) => prop.name === "icon" || prop.name.endsWith("Icon")
   );
 
   // Check if component supports children
-  const supportsChildren = config.props.some(
+  const supportsChildren = availableProps.some(
     (prop: PropMetadata) => prop.name === "children"
   );
 
@@ -113,7 +149,7 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
       {/* Content */}
       <div className="flex flex-col space-y-4">
         {/* Props */}
-        {config.props
+        {availableProps
           .filter((prop: PropMetadata) => {
             // Hide className and callback props (starting with 'on')
             return prop.name !== 'className' && !prop.name.startsWith('on');

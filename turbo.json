@@ -40,6 +40,11 @@
     },
     "clean": {
       "cache": false
+    },
+    "generate-registry": {
+      "cache": false,
+      "inputs": ["src/components/**/*.tsx", "!src/components/**/config.tsx", "!src/components/**/examples.tsx"],
+      "outputs": ["src/component-registry.ts"]
     }
   }
 }

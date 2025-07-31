@@ -38,6 +38,7 @@
     "knip": "^5.62.0",
     "playwright": "^1.54.1",
     "prettier": "^3.2.5",
+    "react-docgen-typescript": "^2.2.2",
     "turbo": "^2.5.5",
     "typescript": "^5"
   },

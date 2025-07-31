@@ -1,7 +1,17 @@
 // Configuration Types for Patternmode Components
 // These types ensure consistency across all component configurations
 
-import type { PropMetadata } from "./prop-explorer";
+/**
+ * Prop metadata interface for component documentation
+ */
+export interface PropMetadata {
+  name: string;
+  type: string;
+  description?: string;
+  defaultValue?: string;
+  required?: boolean;
+  options?: string[];
+}
 
 /**
  * Example metadata interface - each example must export this along with the component

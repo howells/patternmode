@@ -7,7 +7,7 @@ import TextareaAutosize, {
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
 /**
- * Props for the Textarea component.
+ * Props for the Textarea component
  *
  * Extends react-textarea-autosize props when `autoResize={true}` (default),
  * falls back to native textarea props when `autoResize={false}`.
