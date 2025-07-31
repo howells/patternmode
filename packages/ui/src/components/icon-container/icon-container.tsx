@@ -80,6 +80,7 @@ export interface IconContainerProps
 /**
  * Icon Container
  *
+ * @component
  * @id icon-container
  * @name Icon Container
  */

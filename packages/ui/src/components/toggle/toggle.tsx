@@ -56,10 +56,17 @@ interface ToggleProps
     VariantProps<typeof toggleVariants> {}
 
 /**
+ * A two-state button that can be either on or off.
+ *
  * Toggle
  *
+ * @component
  * @id toggle
  * @name Toggle
+ * @example
+ * ```tsx
+ * <Toggle>Content</Toggle>
+ * ```
  */
 const Toggle = React.forwardRef<
   React.ElementRef<typeof BaseToggle>,

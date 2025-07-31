@@ -56,6 +56,9 @@ function validateComponentJSDoc(componentDir: string) {
       hasJSDoc: false,
       hasIdTag: false,
       hasNameTag: false,
+      hasComponentTag: false,
+      hasExampleTag: false,
+      hasDescription: false,
       componentName: null,
       issues: [`Main component file ${componentDir}/${componentDir}.tsx not found`]
     };
@@ -107,6 +110,9 @@ function validateComponentJSDoc(componentDir: string) {
       hasJSDoc: false,
       hasIdTag: false,
       hasNameTag: false,
+      hasComponentTag: false,
+      hasExampleTag: false,
+      hasDescription: false,
       componentName: null,
       issues: ['No main component definition found']
     };
@@ -144,6 +150,9 @@ function validateComponentJSDoc(componentDir: string) {
       hasJSDoc: false,
       hasIdTag: false,
       hasNameTag: false,
+      hasComponentTag: false,
+      hasExampleTag: false,
+      hasDescription: false,
       componentName,
       issues
     };
@@ -153,8 +162,15 @@ function validateComponentJSDoc(componentDir: string) {
   const jsdocLines = lines.slice(jsdocStart, jsdocEnd + 1);
   const jsdocContent = jsdocLines.join('\n');
 
+  // Check for essential JSDoc tags
   const hasIdTag = /@id\s+[\w-]+/.test(jsdocContent);
   const hasNameTag = /@name\s+.+/.test(jsdocContent);
+  const hasComponentTag = /@component/.test(jsdocContent);
+  const hasExampleTag = /@example/.test(jsdocContent);
+
+  // Check for description (non-tag content before first @tag)
+  const descriptionMatch = jsdocContent.match(/\/\*\*\s*\n\s*\*\s*(.+?)(?:\s*\*\s*@|\s*\*\/)/s);
+  const hasDescription = descriptionMatch && descriptionMatch[1].trim().length > 10; // At least 10 chars
 
   if (!hasIdTag) {
     issues.push(`JSDoc missing @id tag for component ${componentName}`);
@@ -162,6 +178,18 @@ function validateComponentJSDoc(componentDir: string) {
 
   if (!hasNameTag) {
     issues.push(`JSDoc missing @name tag for component ${componentName}`);
+  }
+
+  if (!hasComponentTag) {
+    issues.push(`JSDoc missing @component tag for component ${componentName}`);
+  }
+
+  if (!hasExampleTag) {
+    issues.push(`JSDoc missing @example tag for component ${componentName}`);
+  }
+
+  if (!hasDescription) {
+    issues.push(`JSDoc missing meaningful description for component ${componentName}`);
   }
 
   // Validate @id and @name values match config if available
@@ -184,6 +212,9 @@ function validateComponentJSDoc(componentDir: string) {
     hasJSDoc,
     hasIdTag,
     hasNameTag,
+    hasComponentTag,
+    hasExampleTag,
+    hasDescription,
     componentName,
     issues
   };
@@ -230,6 +261,18 @@ describe("Component JSDoc Validation", () => {
           expect(validation.hasNameTag).toBe(true);
         });
 
+        it("should have @component tag in JSDoc", () => {
+          expect(validation.hasComponentTag).toBe(true);
+        });
+
+        it("should have @example tag in JSDoc", () => {
+          expect(validation.hasExampleTag).toBe(true);
+        });
+
+        it("should have meaningful description in JSDoc", () => {
+          expect(validation.hasDescription).toBe(true);
+        });
+
         it("should have no validation issues", () => {
           if (validation.issues.length > 0) {
             console.error(`${componentDir} validation issues:`, validation.issues);
@@ -254,6 +297,9 @@ describe("Component JSDoc Validation", () => {
         hasJSDoc: validations.filter(v => v.validation.hasJSDoc).length,
         hasIdTag: validations.filter(v => v.validation.hasIdTag).length,
         hasNameTag: validations.filter(v => v.validation.hasNameTag).length,
+        hasComponentTag: validations.filter(v => v.validation.hasComponentTag).length,
+        hasExampleTag: validations.filter(v => v.validation.hasExampleTag).length,
+        hasDescription: validations.filter(v => v.validation.hasDescription).length,
         fullyValid: validations.filter(v => v.validation.issues.length === 0).length,
       };
 
@@ -262,9 +308,13 @@ describe("Component JSDoc Validation", () => {
       console.log(`Components with files: ${stats.hasFile} (${Math.round(stats.hasFile/stats.total*100)}%)`);
       console.log(`Components found: ${stats.hasComponent} (${Math.round(stats.hasComponent/stats.total*100)}%)`);
       console.log(`Components with JSDoc: ${stats.hasJSDoc} (${Math.round(stats.hasJSDoc/stats.total*100)}%)`);
-      console.log(`Components with @id tag: ${stats.hasIdTag} (${Math.round(stats.hasIdTag/stats.total*100)}%)`);
-      console.log(`Components with @name tag: ${stats.hasNameTag} (${Math.round(stats.hasNameTag/stats.total*100)}%)`);
-      console.log(`Fully valid components: ${stats.fullyValid} (${Math.round(stats.fullyValid/stats.total*100)}%)`);
+      console.log(`\n📋 Essential JSDoc Tags Coverage:`);
+      console.log(`  @id tag: ${stats.hasIdTag} (${Math.round(stats.hasIdTag/stats.total*100)}%)`);
+      console.log(`  @name tag: ${stats.hasNameTag} (${Math.round(stats.hasNameTag/stats.total*100)}%)`);
+      console.log(`  @component tag: ${stats.hasComponentTag} (${Math.round(stats.hasComponentTag/stats.total*100)}%)`);
+      console.log(`  @example tag: ${stats.hasExampleTag} (${Math.round(stats.hasExampleTag/stats.total*100)}%)`);
+      console.log(`  Description: ${stats.hasDescription} (${Math.round(stats.hasDescription/stats.total*100)}%)`);
+      console.log(`\n✅ Fully compliant components: ${stats.fullyValid} (${Math.round(stats.fullyValid/stats.total*100)}%)`);
 
       // List components with issues
       const componentsWithIssues = validations.filter(v => v.validation.issues.length > 0);

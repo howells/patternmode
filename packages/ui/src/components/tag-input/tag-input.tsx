@@ -11,6 +11,10 @@ import { Tag } from "../tag/tag";
 
 /**
  * Tag option interface for TagInput
+ * @example
+ * ```tsx
+ * <TagInput>Content</TagInput>
+ * ```
  */
 export interface TagOption {
   /** Unique identifier for the tag */
@@ -158,6 +162,7 @@ const defaultCreateNewTag = (value: string): TagOption => {
 /**
  * Tag Input
  *
+ * @component
  * @id tag-input
  * @name Tag Input
  */

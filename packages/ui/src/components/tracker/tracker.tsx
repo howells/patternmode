@@ -20,10 +20,17 @@ interface TrackerBlockProps {
 }
 
 /**
+ * A visual progress tracker showing steps or stages in a process.
+ *
  * Tracker
  *
+ * @component
  * @id tracker
  * @name Tracker
+ * @example
+ * ```tsx
+ * <Tracker data={data} />
+ * ```
  */
 const Block = ({
   color,

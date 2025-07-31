@@ -9,6 +9,10 @@ import { Text } from "../text/text";
 interface StackedListProps extends React.HTMLAttributes<HTMLUListElement> {
   /**
    * Whether to show dividers between items
+ * @example
+ * ```tsx
+ * <StackedListRoot>Content</StackedListRoot>
+ * ```
    */
   showDividers?: boolean;
   /**
@@ -24,6 +28,7 @@ interface StackedListProps extends React.HTMLAttributes<HTMLUListElement> {
 /**
  * Stacked List
  *
+ * @component
  * @id stacked-list
  * @name Stacked List
  */

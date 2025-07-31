@@ -15,6 +15,10 @@ import { cx } from "../../lib/utils";
  * Embla Carousel API instance type.
  * 
  * Provides programmatic control over carousel behavior.
+ * @example
+ * ```tsx
+ * <Carousel>Content</Carousel>
+ * ```
  */
 type CarouselApi = UseEmblaCarouselType[1];
 
@@ -192,6 +196,13 @@ function useCarousel() {
  * ```
  *
  * @see https://www.embla-carousel.com/ - Embla Carousel documentation
+ */
+/**
+ * A responsive carousel component built on Embla Carousel with navigation controls and keyboard support.
+ *
+ * @id carousel
+ * @name Carousel
+ * @component
  */
 const Carousel = React.forwardRef<
   HTMLDivElement,

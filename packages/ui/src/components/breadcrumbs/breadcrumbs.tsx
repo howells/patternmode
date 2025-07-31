@@ -10,6 +10,14 @@ import { tv } from "tailwind-variants";
  * 
  * Defines consistent styling for all breadcrumb elements including
  * navigation structure, links, separators, and truncation indicators.
+ * @example
+ * ```tsx
+ * <Breadcrumbs>
+ *  *   <BreadcrumbItem href="/">Home</BreadcrumbItem>
+ *  *   <BreadcrumbItem href="/products">Products</BreadcrumbItem>
+ *  *   <BreadcrumbItem>Current Page</BreadcrumbItem>
+ *  * </Breadcrumbs>
+ * ```
  */
 const breadcrumbVariants = tv({
   slots: {
@@ -87,6 +95,13 @@ const breadcrumbVariants = tv({
  *   </BreadcrumbList>
  * </Breadcrumb>
  * ```
+ */
+/**
+ * A navigation component that shows the current page
+ *
+ * @id breadcrumbs
+ * @name Breadcrumbs
+ * @component
  */
 const Breadcrumb = React.forwardRef<HTMLElement, React.ComponentProps<"nav">>(
   ({ className, ...props }, ref) => {

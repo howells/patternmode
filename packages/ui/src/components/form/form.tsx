@@ -159,6 +159,13 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * </Form>
  * ```
  */
+/**
+ * A modern form component that integrates Base UI Form with Zod validation for type-safe, accessible forms.
+ *
+ * @id form
+ * @name Form
+ * @component
+ */
 const Form = React.forwardRef<React.ElementRef<typeof BaseForm>, FormProps>(
   ({ schema, onValidSubmit, children, className, onSubmit, ...props }, ref) => {
     const [errors, setErrors] = React.useState({});

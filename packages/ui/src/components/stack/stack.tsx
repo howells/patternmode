@@ -148,6 +148,14 @@ interface StackProps
     Omit<VariantProps<typeof stackVariants>, "gap" | "padding" | "direction"> {
   /**
    * The direction of the stack - can be responsive
+ * @example
+ * ```tsx
+ * <Stack gap="4">
+ *  *   <div>Item 1</div>
+ *  *   <div>Item 2</div>
+ *  *   <div>Item 3</div>
+ *  * </Stack>
+ * ```
    */
   direction?: ResponsiveValue<StackDirection>;
   /**
@@ -181,8 +189,11 @@ interface StackProps
 }
 
 /**
+ * A layout component that arranges its children vertically or horizontally with consistent spacing.
+ *
  * Stack
  *
+ * @component
  * @id stack
  * @name Stack
  */

@@ -67,6 +67,10 @@ const switchVariants = tv({
  * @interface SwitchProps
  * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>, "children">
  * @extends VariantProps<typeof switchVariants>
+ * @example
+ * ```tsx
+ * <Switch>Enable notifications</Switch>
+ * ```
  */
 interface SwitchProps
   extends Omit<
@@ -109,6 +113,13 @@ interface SwitchProps
  * ```
  *
  * @see https://base-ui.com/react/components/switch - Base UI documentation
+ */
+/**
+ * A control that allows the user to toggle between checked and not checked.
+ *
+ * @id switch
+ * @name Switch
+ * @component
  */
 const Switch = React.forwardRef<
   React.ElementRef<typeof BaseSwitch.Root>,

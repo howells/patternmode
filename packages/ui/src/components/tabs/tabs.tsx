@@ -161,6 +161,13 @@ const TabsListSizeContext = React.createContext<"default" | "sm" | "lg">(
  *
  * @see https://base-ui.com/react/components/tabs - Base UI documentation
  */
+/**
+ * A set of layered sections of content—known as tab panels—that are displayed one at a time. Features Geist-style design with clean line indicators.
+ *
+ * @id tabs
+ * @name Tabs
+ * @component
+ */
 const Tabs = React.forwardRef<
   React.ElementRef<typeof BaseTabs.Root>,
   Omit<React.ComponentPropsWithoutRef<typeof BaseTabs.Root>, "orientation">

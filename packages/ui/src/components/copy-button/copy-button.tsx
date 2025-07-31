@@ -133,6 +133,13 @@ interface CopyButtonProps
  * />
  * ```
  */
+/**
+ * A button component that copies text to the clipboard with customizable labels and icons.
+ *
+ * @id copy-button
+ * @name Copy Button
+ * @component
+ */
 export const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
   (
     {

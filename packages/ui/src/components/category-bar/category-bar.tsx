@@ -23,6 +23,10 @@ import { Tooltip } from "../tooltip/tooltip";
  * @param values - Array of category values
  * @param colors - Array of color themes for categories
  * @returns CSS color class name
+ * @example
+ * ```tsx
+ * <CategoryBar values={values} />
+ * ```
  */
 const getMarkerBgColor = (
   marker: number | undefined,
@@ -94,6 +98,7 @@ const formatNumber = (num: number): string => {
  * Intelligently displays labels at category boundaries with logic to prevent
  * overcrowding. Shows values at 0, significant boundaries, and the maximum value.
  *
+ * @component
  * @param values - Array of category values to label
  *
  * @id category-bar

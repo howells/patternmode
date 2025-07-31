@@ -39,6 +39,10 @@ const avatarVariants = tv({
  * Props for the Avatar component.
  *
  * @interface AvatarProps
+ * @example
+ * ```tsx
+ * <Avatar src="/avatar.jpg" alt="User" />
+ * ```
  */
 interface AvatarProps extends VariantProps<typeof avatarVariants> {
   /** Image source URL for the avatar */
@@ -94,6 +98,13 @@ const imageSizeMap = {
  * // Dynamic background color
  * <Avatar initials="AB" dynamicBackground size="lg" />
  * ```
+ */
+/**
+ * User profile picture display component with size variants, initials fallback, and dynamic background colors.
+ *
+ * @id avatar
+ * @name Avatar
+ * @component
  */
 const Avatar = React.forwardRef<
   HTMLSpanElement,

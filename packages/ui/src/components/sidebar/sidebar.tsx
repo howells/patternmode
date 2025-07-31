@@ -12,10 +12,17 @@ import { Tooltip } from "../tooltip/tooltip";
 
 // Sidebar-specific title component for navigation hierarchy
 /**
+ * A versatile sidebar component for navigation and content organization.
+ *
  * Sidebar
  *
+ * @component
  * @id sidebar
  * @name Sidebar
+ * @example
+ * ```tsx
+ * <SidebarTitle>Content</SidebarTitle>
+ * ```
  */
 function SidebarTitle({
   level = 1,

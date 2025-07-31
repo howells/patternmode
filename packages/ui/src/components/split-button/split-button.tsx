@@ -174,6 +174,10 @@ type SplitButtonSize = "default" | "sm";
 interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Visual variant of the split button
+ * @example
+ * ```tsx
+ * <SplitButton>Content</SplitButton>
+ * ```
    */
   variant?: SplitButtonVariant;
   /**
@@ -229,6 +233,7 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Split Button
  *
+ * @component
  * @id split-button
  * @name Split Button
  */

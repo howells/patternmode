@@ -151,6 +151,7 @@ import { ScrollArea } from "../scroll-area/scroll-area";
 /**
  * Inspector
  *
+ * @component
  * @id inspector
  * @name Inspector
  */

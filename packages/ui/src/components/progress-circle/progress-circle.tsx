@@ -242,6 +242,13 @@ interface ProgressCircleProps
  * </ProgressCircle>
  * ```
  */
+/**
+ * A circular progress indicator showing completion percentage.
+ *
+ * @id progress-circle
+ * @name Progress Circle
+ * @component
+ */
 const ProgressCircle = React.forwardRef<HTMLDivElement, ProgressCircleProps>(
   (
     {

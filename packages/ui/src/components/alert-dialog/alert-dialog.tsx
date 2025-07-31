@@ -45,6 +45,7 @@ const AlertDialog = BaseAlertDialog.Root;
  * Can be used with existing Button components or render as default styled button.
  *
  *
+ * @component
  * @id alert-dialog
  * @name Alert Dialog
  * @example

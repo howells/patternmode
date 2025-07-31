@@ -41,8 +41,13 @@ import {
 /**
  * Custom dropdown caption component using our Button and Select components
  *
+ * @component
  * @id calendar
  * @name Calendar
+ * @example
+ * ```tsx
+ * <DropdownCaption>Content</DropdownCaption>
+ * ```
  */
 const DropdownCaption = ({
   calendarMonth,

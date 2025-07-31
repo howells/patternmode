@@ -51,6 +51,7 @@ import type React from "react";
 /**
  * Skeleton
  *
+ * @component
  * @id skeleton
  * @name Skeleton
  */

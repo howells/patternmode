@@ -10,6 +10,10 @@ import { Checkbox } from "../checkbox/checkbox";
  *
  * @interface CheckboxGroupProps
  * @extends React.ComponentPropsWithoutRef<typeof BaseCheckboxGroup>
+ * @example
+ * ```tsx
+ * <CheckboxGroup>Content</CheckboxGroup>
+ * ```
  */
 interface CheckboxGroupProps
   extends React.ComponentPropsWithoutRef<typeof BaseCheckboxGroup> {
@@ -79,6 +83,13 @@ interface CheckboxGroupProps
  * ```
  *
  * @see https://base-ui.com/react/components/checkbox-group - Base UI documentation
+ */
+/**
+ * A checkbox group component built on Base UI for managing multiple checkbox selections with accessible labeling.
+ *
+ * @id checkbox-group
+ * @name Checkbox Group
+ * @component
  */
 const CheckboxGroup = React.forwardRef<
   React.ElementRef<typeof BaseCheckboxGroup>,

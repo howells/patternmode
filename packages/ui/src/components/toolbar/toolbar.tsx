@@ -129,10 +129,17 @@ interface ToolbarProps
     VariantProps<typeof toolbarVariants> {}
 
 /**
+ * A container for grouping a set of controls or actions.
+ *
  * Toolbar
  *
+ * @component
  * @id toolbar
  * @name Toolbar
+ * @example
+ * ```tsx
+ * <Toolbar>Content</Toolbar>
+ * ```
  */
 const Toolbar = React.forwardRef<
   React.ElementRef<typeof BaseToolbar.Root>,

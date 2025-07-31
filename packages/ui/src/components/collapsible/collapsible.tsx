@@ -15,6 +15,10 @@ import { Button } from "../button/button";
  * Perfect for FAQ sections, navigation menus, and content organization.
  *
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
+ * @example
+ * ```tsx
+ * <CollapsibleTrigger>Content</CollapsibleTrigger>
+ * ```
  */
 const Collapsible = BaseCollapsible.Root;
 
@@ -73,6 +77,13 @@ interface CollapsibleTriggerProps
  * ```
  *
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
+ */
+/**
+ * A collapsible component built on Base UI for expandable content sections with smooth animations.
+ *
+ * @id collapsible
+ * @name Collapsible
+ * @component
  */
 const CollapsibleTrigger = React.forwardRef<
   React.ElementRef<typeof BaseCollapsible.Trigger>,

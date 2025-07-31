@@ -53,6 +53,10 @@ const buttonVariants = tv({
 /**
  * Creates button-style variants for other components that want to look like buttons
  * but maintain their own semantic behavior (like toggles, tabs, etc.)
+ * @example
+ * ```tsx
+ * <Button>Click me</Button>
+ * ```
  */
 export const createButtonStyleVariants = (
   pressedVariant: keyof typeof componentVariants.button = "destructive"
@@ -178,6 +182,13 @@ interface ButtonProps
  * // As different elements
  * <Button render={<Link href="/page" />}>Navigation</Button>
  * ```
+ */
+/**
+ * A clickable button component with multiple variants and states.
+ *
+ * @id button
+ * @name Button
+ * @component
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (

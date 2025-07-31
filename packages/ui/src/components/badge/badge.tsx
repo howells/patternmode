@@ -164,10 +164,17 @@ const dotIndicatorVariants = tv({
 
 // Inline DismissButton functionality for Badge
 /**
+ * A label used to show a status or category.
+ *
  * Badge
  *
+ * @component
  * @id badge
  * @name Badge
+ * @example
+ * ```tsx
+ * <Badge>New</Badge>
+ * ```
  */
 const InlineDismissButton = React.forwardRef<
   HTMLButtonElement,

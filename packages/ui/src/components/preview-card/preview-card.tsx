@@ -145,6 +145,13 @@ const PreviewCard = BasePreviewCard.Root;
  * </PreviewCardTrigger>
  * ```
  */
+/**
+ * A card component that shows a preview or summary of content.
+ *
+ * @id preview-card
+ * @name Preview Card
+ * @component
+ */
 const PreviewCardTrigger = React.forwardRef<
   React.ElementRef<typeof BasePreviewCard.Trigger>,
   React.ComponentPropsWithoutRef<typeof BasePreviewCard.Trigger>

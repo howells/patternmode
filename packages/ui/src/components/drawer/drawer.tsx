@@ -155,6 +155,7 @@ const DrawerClose = DrawerPrimitive.Close;
  * Clicking the overlay closes the drawer. Provides visual separation
  * between drawer and underlying content.
  *
+ * @component
  * @param className - Additional CSS classes
  *
  * @id drawer

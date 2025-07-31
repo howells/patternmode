@@ -69,6 +69,10 @@ const sliderVariants = tv({
  * @interface SliderProps
  * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseSlider.Root>, "children">
  * @extends VariantProps<typeof sliderVariants>
+ * @example
+ * ```tsx
+ * <Slider defaultValue={50} />
+ * ```
  */
 interface SliderProps
   extends Omit<
@@ -155,6 +159,13 @@ interface SliderProps
  * ```
  *
  * @see https://base-ui.com/react/components/slider - Base UI documentation
+ */
+/**
+ * An input where the user selects a value from within a given range.
+ *
+ * @id slider
+ * @name Slider
+ * @component
  */
 const Slider = React.forwardRef<
   React.ElementRef<typeof BaseSlider.Root>,

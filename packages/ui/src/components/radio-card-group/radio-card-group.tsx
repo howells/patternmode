@@ -62,6 +62,13 @@ import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-gr
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
+/**
+ * A group of selectable cards that behave like radio buttons.
+ *
+ * @id radio-card-group
+ * @name Radio Card Group
+ * @component
+ */
 const RadioCardGroup = React.forwardRef<
   React.ElementRef<typeof BaseRadioGroup>,
   React.ComponentPropsWithoutRef<typeof BaseRadioGroup>

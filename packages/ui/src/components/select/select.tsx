@@ -75,6 +75,7 @@ const selectTriggerVariants = tv({
  * Supports error states for form validation feedback.
  * Features hover and focus states with proper accessibility.
  *
+ * @component
  * @param hasError - Whether to show error styling
  *
  *

@@ -83,8 +83,11 @@ export type HeadingProps = HeadingElementProps;
  * ```
  */
 /**
+ * A semantic heading component with consistent typography and hierarchy levels.
+ *
  * Heading
  *
+ * @component
  * @id heading
  * @name Heading
  */

@@ -146,6 +146,10 @@ const radioCardVariants = tv({
  * for managing multiple radio options.
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
+ * @example
+ * ```tsx
+ * <Radio name="option" value="1">Option 1</Radio>
+ * ```
  */
 const Radio = BaseRadio.Root;
 Radio.displayName = "Radio";
@@ -157,6 +161,7 @@ Radio.displayName = "Radio";
  * (dot) that appears when the radio is selected. Typically used within RadioItem
  * or custom radio implementations.
  *
+ * @component
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  *
  * @id radio

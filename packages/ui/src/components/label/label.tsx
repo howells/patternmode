@@ -104,6 +104,13 @@ interface LabelProps
  * </Label>
  * ```
  */
+/**
+ * A label component for form inputs and interactive elements with proper accessibility support.
+ *
+ * @id label
+ * @name Label
+ * @component
+ */
 const Label = React.forwardRef<
   React.ElementRef<typeof Field.Label>,
   LabelProps

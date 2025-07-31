@@ -65,6 +65,10 @@ const meterVariants = tv({
  * @interface MeterProps
  * @extends React.ComponentPropsWithoutRef<typeof BaseMeter.Root>
  * @extends VariantProps<typeof meterVariants>
+ * @example
+ * ```tsx
+ * <Meter value={75} />
+ * ```
  */
 interface MeterProps
   extends React.ComponentPropsWithoutRef<typeof BaseMeter.Root>,
@@ -149,6 +153,13 @@ interface MeterProps
  * ```
  *
  * @see https://base-ui.com/react/components/meter - Base UI documentation
+ */
+/**
+ * A meter component built on Base UI for displaying progress or measurements with customizable styling and value formatting.
+ *
+ * @id meter
+ * @name Meter
+ * @component
  */
 const Meter = React.forwardRef<
   React.ElementRef<typeof BaseMeter.Root>,

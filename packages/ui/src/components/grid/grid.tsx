@@ -189,6 +189,13 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
  * </Grid>
  * ```
  */
+/**
+ * A sophisticated grid layout component with visual guides, responsive columns/rows, cell overlays, and guide clipping features. Perfect for complex layouts and design systems.
+ *
+ * @id grid
+ * @name Grid
+ * @component
+ */
 const Grid = React.forwardRef<HTMLDivElement, GridProps>(
   (
     {

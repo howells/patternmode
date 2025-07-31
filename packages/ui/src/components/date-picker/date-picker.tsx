@@ -51,8 +51,13 @@ type TimeSegmentProps = {
 /**
  * Date Picker
  *
+ * @component
  * @id date-picker
  * @name Date Picker
+ * @example
+ * ```tsx
+ * <TimeSegment>Content</TimeSegment>
+ * ```
  */
 const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
   const ref = React.useRef<HTMLDivElement>(null);

@@ -11,6 +11,12 @@ import { Text } from "../text/text";
  *
  * Defines color schemes for different types of callouts including
  * informational, success, error, warning, and neutral variants.
+ * @example
+ * ```tsx
+ * <Callout>
+ *  *   Important information goes here.
+ *  * </Callout>
+ * ```
  */
 const calloutVariants = tv({
   base: "flex flex-col overflow-hidden rounded-md p-4 text-sm",
@@ -130,6 +136,13 @@ interface CalloutProps
  *   Check out our new feature documentation for more details.
  * </Callout>
  * ```
+ */
+/**
+ * An alert component that displays important information with optional icon and variant styling.
+ *
+ * @id callout
+ * @name Callout
+ * @component
  */
 const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
   (

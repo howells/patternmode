@@ -139,6 +139,13 @@ interface LoaderProps
  * </button>
  * ```
  */
+/**
+ * A spinning loader indicator with configurable size.
+ *
+ * @id loader
+ * @name Loader
+ * @component
+ */
 const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
   ({ size, className, "aria-label": ariaLabel, ...props }, forwardedRef) => {
     return (

@@ -89,6 +89,7 @@ const Field = BaseField.Root;
  * and proper form semantics. Includes disabled state styling and consistent
  * typography.
  *
+ * @component
  * @param className - Additional CSS classes
  *
  * @id field

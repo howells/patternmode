@@ -113,6 +113,13 @@ import { Subheading } from "../subheading/subheading";
  * </Fieldset>
  * ```
  */
+/**
+ * A fieldset component that groups related form controls with an optional legend.
+ *
+ * @id fieldset
+ * @name Fieldset
+ * @component
+ */
 const Fieldset = React.forwardRef<
   React.ElementRef<typeof BaseFieldset.Root>,
   React.ComponentPropsWithoutRef<typeof BaseFieldset.Root>

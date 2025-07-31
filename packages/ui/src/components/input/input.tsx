@@ -81,6 +81,10 @@ const inputStyles = tv({
  * @interface InputProps
  * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseInput>, "size" | "prefix">
  * @extends VariantProps<typeof inputStyles>
+ * @example
+ * ```tsx
+ * <Input placeholder="Enter text..." />
+ * ```
  */
 interface InputProps
   extends Omit<
@@ -166,6 +170,13 @@ interface InputProps
  * // Number input without steppers
  * <Input type="number" enableStepper={false} />
  * ```
+ */
+/**
+ * A versatile input field component with various types, sizes, and states including search and password inputs.
+ *
+ * @id input
+ * @name Input
+ * @component
  */
 const Input = React.forwardRef<React.ElementRef<typeof BaseInput>, InputProps>(
   (

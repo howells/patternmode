@@ -133,6 +133,7 @@ import { Button } from "../button/button";
 /**
  * Pagination
  *
+ * @component
  * @id pagination
  * @name Pagination
  */

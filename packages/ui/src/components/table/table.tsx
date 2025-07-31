@@ -34,6 +34,13 @@ import { cx } from "../../lib/utils";
  * </TableRoot>
  * ```
  */
+/**
+ * A data table component for displaying tabular data with headers and rows.
+ *
+ * @id table
+ * @name Table
+ * @component
+ */
 const TableRoot = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

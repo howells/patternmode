@@ -35,6 +35,10 @@ import { cx } from "../../lib/utils";
  * 
  * Used to determine if bar chart elements should be highlighted
  * by comparing active state with current data.
+ * @example
+ * ```tsx
+ * <BarChart data={data} />
+ * ```
  */
 function deepEqual<T>(obj1: T, obj2: T): boolean {
   if (obj1 === obj2) return true;
@@ -129,6 +133,7 @@ interface LegendItemProps {
  * Similar to area chart legend but uses square indicators instead of
  * circular dots to match bar chart aesthetics.
  *
+ * @component
  * @id bar-chart
  * @name Bar Chart
  */

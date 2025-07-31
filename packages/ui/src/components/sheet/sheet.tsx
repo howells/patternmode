@@ -112,8 +112,11 @@ import { X } from "lucide-react";
 
 // Inline DismissButton functionality for Sheet
 /**
+ * Extends the Dialog component to display content that complements the main content of the screen.
+ *
  * Sheet
  *
+ * @component
  * @id sheet
  * @name Sheet
  */

@@ -164,6 +164,7 @@ Progress.displayName = "Progress";
  * for the progress indicator. Features variant-based styling with different
  * colors and optional animation support.
  *
+ * @component
  * @param variant - Color variant for the track background
  * @param showAnimation - Whether to show animation on progress changes
  *

@@ -216,6 +216,13 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
  * />
  * ```
  */
+/**
+ * A component to display when there
+ *
+ * @id empty-state
+ * @name Empty State
+ * @component
+ */
 const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
   (
     {

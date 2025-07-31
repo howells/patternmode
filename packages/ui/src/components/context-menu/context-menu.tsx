@@ -1,4 +1,3 @@
-// Tremor Context Menu [v1.0.0] - Base UI
 
 /**
  * Context Menu Components
@@ -111,10 +110,10 @@
  * ```
  */
 
-import { cx } from "../../lib/utils";
 import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import * as React from "react";
+import { cx } from "../../lib/utils";
 import { Icon as IconComponent } from "../icon/icon";
 
 /**
@@ -599,5 +598,5 @@ export {
   ContextMenuSubmenu,
   ContextMenuSubmenuContent,
   ContextMenuSubmenuTrigger,
-  ContextMenuTrigger,
+  ContextMenuTrigger
 };

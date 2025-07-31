@@ -59,6 +59,7 @@ const DialogPortal = BaseDialog.Portal;
  * Features smooth fade-in/fade-out transitions matching Base UI patterns.
  *
  *
+ * @component
  * @id dialog
  * @name Dialog
  * @example

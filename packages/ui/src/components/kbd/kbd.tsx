@@ -104,6 +104,7 @@ interface KbdProps
  * styling for light and dark modes. Supports simple keys and complex
  * key combinations.
  *
+ * @component
  * @param className - Additional CSS classes
  * @param children - Key text to display (for simple shortcuts)
  * @param keys - Array of keys for complex combinations

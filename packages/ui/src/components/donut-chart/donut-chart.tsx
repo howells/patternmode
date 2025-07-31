@@ -203,6 +203,7 @@ interface ChartTooltipProps {
  * Displays category and value information for hovered chart segments
  * with proper formatting and color coding.
  *
+ * @component
  * @param active - Whether tooltip should be visible
  * @param payload - Array of data items to display
  * @param valueFormatter - Function to format values

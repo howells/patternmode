@@ -153,6 +153,13 @@ const Popover = BasePopover.Root;
  * </PopoverTrigger>
  * ```
  */
+/**
+ * Popover component built on Base UI with customizable positioning and rich content support.
+ *
+ * @id popover
+ * @name Popover
+ * @component
+ */
 const PopoverTrigger = React.forwardRef<
   React.ElementRef<typeof BasePopover.Trigger>,
   React.ComponentPropsWithoutRef<typeof BasePopover.Trigger>

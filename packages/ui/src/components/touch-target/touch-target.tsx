@@ -1,8 +1,13 @@
 /**
  * Expand the hit area to at least 44×44px on touch devices
  *
+ * @component
  * @id touch-target
  * @name Touch Target
+ * @example
+ * ```tsx
+ * <TouchTarget>Content</TouchTarget>
+ * ```
  */
 export function TouchTarget({ children }: { children: React.ReactNode }) {
   return (

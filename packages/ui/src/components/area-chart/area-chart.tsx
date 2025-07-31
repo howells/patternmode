@@ -37,6 +37,10 @@ import { cx } from "../../lib/utils";
  * Props for individual legend items.
  * 
  * @interface LegendItemProps
+ * @example
+ * ```tsx
+ * <AreaChart data={data} />
+ * ```
  */
 interface LegendItemProps {
   /** Display name for the legend item */
@@ -55,6 +59,7 @@ interface LegendItemProps {
  * Renders a clickable legend item with a colored indicator dot and text label.
  * Supports hover states and visual feedback for active/inactive states.
  *
+ * @component
  * @id area-chart
  * @name Area Chart
  */

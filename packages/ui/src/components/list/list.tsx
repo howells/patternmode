@@ -120,8 +120,11 @@ export interface ListIndicatorProps
  * ```
  */
 /**
+ * A flexible list component supporting ordered/unordered lists with custom indicators and styling.
+ *
  * List
  *
+ * @component
  * @id list
  * @name List
  */

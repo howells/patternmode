@@ -10,6 +10,10 @@ import { cx, focusRing } from "../../lib/utils";
  *
  * @interface CheckboxProps
  * @extends React.ComponentPropsWithoutRef<typeof BaseCheckbox.Root>
+ * @example
+ * ```tsx
+ * <Checkbox>Accept terms</Checkbox>
+ * ```
  */
 interface CheckboxProps
   extends Omit<React.ComponentPropsWithoutRef<typeof BaseCheckbox.Root>, "checked"> {
@@ -47,6 +51,13 @@ interface CheckboxProps
  * ```
  *
  * @see https://base-ui.com/react/components/checkbox - Base UI documentation
+ */
+/**
+ * A checkbox input built on Base UI with indeterminate state support and accessible interactions.
+ *
+ * @id checkbox
+ * @name Checkbox
+ * @component
  */
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof BaseCheckbox.Root>,

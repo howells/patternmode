@@ -10,6 +10,10 @@ import { tv, type VariantProps } from "tailwind-variants";
  * 
  * Defines styling options for radio group containers including
  * orientation and spacing between radio items.
+ * @example
+ * ```tsx
+ * <RadioGroup>Content</RadioGroup>
+ * ```
  */
 const radioGroupVariants = tv({
   base: [
@@ -86,6 +90,13 @@ const radioGroupVariants = tv({
  * ```
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
+ */
+/**
+ * A set of radio buttons where only one option can be selected at a time.
+ *
+ * @id radio-group
+ * @name Radio Group
+ * @component
  */
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof BaseRadioGroup>,

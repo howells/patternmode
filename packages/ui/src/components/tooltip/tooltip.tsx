@@ -61,6 +61,10 @@ const tooltipVariants = tv({
  * @interface TooltipProps
  * @extends Omit<React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>, "children">
  * @extends VariantProps<typeof tooltipVariants>
+ * @example
+ * ```tsx
+ * <Tooltip>Content</Tooltip>
+ * ```
  */
 interface TooltipProps
   extends Omit<
@@ -135,6 +139,13 @@ interface TooltipProps
  * ```
  *
  * @see https://base-ui.com/react/components/tooltip - Base UI documentation
+ */
+/**
+ * Tooltip component built on Base UI with customizable positioning and styling variants.
+ *
+ * @id tooltip
+ * @name Tooltip
+ * @component
  */
 const Tooltip = React.forwardRef<
   React.ElementRef<typeof BaseTooltip.Popup>,

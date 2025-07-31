@@ -35,6 +35,13 @@ import { Text } from "../text/text";
  *
  * @see https://base-ui.com/react/components/accordion - Base UI documentation
  */
+/**
+ * A vertically stacked set of interactive headings that each control a panel of content.
+ *
+ * @id accordion
+ * @name Accordion
+ * @component
+ */
 const Accordion = React.forwardRef<
   React.ElementRef<typeof BaseAccordion.Root>,
   React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>

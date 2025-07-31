@@ -74,6 +74,7 @@ import { cx } from "../../lib/utils";
 /**
  * Description List
  *
+ * @component
  * @id description-list
  * @name Description List
  */

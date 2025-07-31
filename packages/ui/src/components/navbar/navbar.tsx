@@ -106,6 +106,8 @@ import { Button } from "../button/button";
  * Creates a flexible horizontal container for navigation items, sections,
  * and other navbar components. Provides consistent spacing and alignment.
  *
+ * @id navbar
+ * @name Navbar
  * @param className - Additional CSS classes
  * @param props - Additional HTML nav element props
  *
@@ -119,6 +121,13 @@ import { Button } from "../button/button";
  *   </NavbarSection>
  * </Navbar>
  * ```
+ */
+/**
+ * A navigation bar component with branding, sections, and items.
+ *
+ * @id navbar
+ * @name Navbar
+ * @component
  */
 export function Navbar({
   className,

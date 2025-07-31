@@ -10,6 +10,10 @@ import { cx, focusRing } from "../../lib/utils";
  * Can be extended with additional properties via generic type parameter.
  * 
  * @template T - Additional properties to include in bar data
+ * @example
+ * ```tsx
+ * <BarList data={data} />
+ * ```
  */
 type Bar<T> = T & {
   /** Unique identifier for the bar (defaults to name if not provided) */
@@ -284,6 +288,13 @@ BarListInner.displayName = "BarList";
  *   }}
  * />
  * ```
+ */
+/**
+ * A horizontal bar chart component for displaying comparative data with optional interactivity.
+ *
+ * @id bar-list
+ * @name BarList
+ * @component
  */
 const BarList = React.forwardRef(BarListInner) as <T>(
   p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }

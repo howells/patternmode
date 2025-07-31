@@ -10,6 +10,10 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
  *
  * @interface TextareaProps
  * @extends React.TextareaHTMLAttributes<HTMLTextAreaElement>
+ * @example
+ * ```tsx
+ * <Textarea placeholder="Enter your message..." />
+ * ```
  */
 interface TextareaProps
   extends Omit<
@@ -77,6 +81,13 @@ interface TextareaProps
  *   onHeightChange={(height) => console.log('New height:', height)}
  * />
  * ```
+ */
+/**
+ * Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.
+ *
+ * @id textarea
+ * @name Textarea
+ * @component
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (

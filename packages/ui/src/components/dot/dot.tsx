@@ -52,6 +52,10 @@ interface DotProps
     Omit<VariantProps<typeof dotVariants>, "variant"> {
   /**
    * The semantic variant to display
+ * @example
+ * ```tsx
+ * <Dot color="green" />
+ * ```
    */
   variant?: DotVariant;
   /**
@@ -71,8 +75,11 @@ interface DotProps
 // Use the central getColorClasses utility
 
 /**
+ * A small dot indicator to show status or state.
+ *
  * Dot
  *
+ * @component
  * @id dot
  * @name Dot
  */

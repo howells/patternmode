@@ -16,6 +16,12 @@ import { cx } from "../../lib/utils";
  * Configuration for syntax-highlighted code display with theming options.
  * 
  * @interface CodeBlockProps
+ * @example
+ * ```tsx
+ * <CodeBlock language="javascript">
+ *  *   console.log('Hello, world!');
+ *  * </CodeBlock>
+ * ```
  */
 interface CodeBlockProps {
   /** Code content to syntax highlight */
@@ -111,6 +117,13 @@ interface CodeBlockProps {
  * ```
  *
  * @see https://prismjs.com/ - Prism.js syntax highlighting documentation
+ */
+/**
+ * A code block component with syntax highlighting, language display, and copy functionality.
+ *
+ * @id code-block
+ * @name Code Block
+ * @component
  */
 export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
   ({ children, language = "tsx", className, theme = "auto" }, ref) => {

@@ -199,6 +199,13 @@ interface DividerProps
  * </nav>
  * ```
  */
+/**
+ * A divider component that visually separates content with optional text label.
+ *
+ * @id divider
+ * @name Divider
+ * @component
+ */
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   (
     { className, children, orientation = "horizontal", spacing, ...props },

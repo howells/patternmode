@@ -41,6 +41,10 @@ import { cx } from "../../lib/utils";
  * @param obj1 - First object to compare
  * @param obj2 - Second object to compare
  * @returns True if objects are deeply equal, false otherwise
+ * @example
+ * ```tsx
+ * <ComboChart data={data} />
+ * ```
  */
 function deepEqual<T>(obj1: T, obj2: T): boolean {
   if (obj1 === obj2) return true;
@@ -134,6 +138,7 @@ interface LegendItemProps {
  * Renders clickable legend items with color indicators and category labels.
  * Supports hover effects and selection states for filtering chart data.
  *
+ * @component
  * @param name - Category name for the legend item
  * @param color - Color theme for the visual indicator
  * @param onClick - Click handler for legend interactions

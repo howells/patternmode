@@ -12,6 +12,10 @@ import { Avatar, type AvatarProps } from "../avatar/avatar";
 
 /**
  * Get padding classes based on avatar and dismissible state
+ * @example
+ * ```tsx
+ * <InlineTagDismissButton>Content</InlineTagDismissButton>
+ * ```
  */
 function getPaddingClasses(
   avatar: TagProps["avatar"],
@@ -28,8 +32,11 @@ function getPaddingClasses(
 
 // Inline DismissButton functionality for Tag
 /**
+ * A label or keyword used to categorize or describe content with optional dismiss functionality.
+ *
  * Tag
  *
+ * @component
  * @id tag
  * @name Tag
  */

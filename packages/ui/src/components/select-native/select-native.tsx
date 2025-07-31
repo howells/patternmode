@@ -11,6 +11,10 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
  * Provides consistent styling for native select dropdowns with
  * Tremor design system colors, hover states, focus rings,
  * and error handling.
+ * @example
+ * ```tsx
+ * <SelectNative>Content</SelectNative>
+ * ```
  */
 const selectNativeStyles = tv({
   base: [
@@ -122,6 +126,13 @@ interface SelectNativeProps
  *
  * @note Use this component when you need native select behavior.
  *       For custom-styled selects with search, use the Select component instead.
+ */
+/**
+ * A native HTML select element with custom styling.
+ *
+ * @id select-native
+ * @name Select Native
+ * @component
  */
 const SelectNative = React.forwardRef<HTMLSelectElement, SelectNativeProps>(
   ({ className, hasError, ...props }: SelectNativeProps, forwardedRef) => {

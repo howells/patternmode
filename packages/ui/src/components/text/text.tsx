@@ -24,10 +24,17 @@ interface TextProps
     VariantProps<typeof textVariants> {}
 
 /**
+ * A flexible text component with typography variants and semantic elements that inherits color from its parent.
+ *
  * Text
  *
+ * @component
  * @id text
  * @name Text
+ * @example
+ * ```tsx
+ * <Text>Sample text content</Text>
+ * ```
  */
 export function Text({ className, size, ...props }: TextProps) {
   return (

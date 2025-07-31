@@ -8,8 +8,13 @@ import { cx, focusRing } from "../../lib/utils";
 /**
  * Tab Navigation
  *
+ * @component
  * @id tab-navigation
  * @name Tab Navigation
+ * @example
+ * ```tsx
+ * <TabNavigation>Content</TabNavigation>
+ * ```
  */
 const TabNavigation = React.forwardRef<
   React.ElementRef<typeof NavigationMenu.Root>,

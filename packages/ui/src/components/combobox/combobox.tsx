@@ -1,12 +1,12 @@
 "use client";
 
-import { config } from "../../lib/config";
-import { cx, hasErrorInput } from "../../lib/utils";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { config } from "../../lib/config";
+import { cx, hasErrorInput } from "../../lib/utils";
 import { Button } from "../button/button";
 import { Icon } from "../icon/icon";
 import { Input } from "../input/input";
@@ -146,6 +146,9 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
  * Supports both static options and dynamic data fetching with search,
  * pagination, and caching via React Query.
  *
+ * @id combobox
+ * @name Combobox
+ * @component
  * @example
  * ```tsx
  * // Static options
@@ -184,12 +187,6 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
  *   selectOnFocus={false}
  * />
  * ```
- */
-/**
- * Combobox
- *
- * @id combobox
- * @name Combobox
  */
 const Combobox = <T extends ComboboxOption = ComboboxOption>({
   options,
@@ -247,7 +244,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   const allItems: T[] = React.useMemo(() => {
     if (options) return options;
     if (!infiniteData?.pages) return [];
-    
+
     // Flatten all pages into a single array
     return infiniteData.pages.flatMap(page => page.data);
   }, [options, infiniteData?.pages]);
@@ -373,20 +370,20 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     if (!fetchData || !isOpen) return;
 
     const scrollElement = scrollRef.current?.querySelector('.h-full.w-full.rounded-\\[inherit\\]') as HTMLElement;
-    
+
     if (!scrollElement) return;
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = scrollElement;
       const scrolledToBottom = scrollHeight - scrollTop <= clientHeight + 100;
-      
+
       if (scrolledToBottom && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
     };
 
     scrollElement.addEventListener('scroll', handleScroll);
-    
+
     return () => scrollElement.removeEventListener('scroll', handleScroll);
   }, [fetchData, hasNextPage, isFetchingNextPage, fetchNextPage, isOpen]);
 
@@ -545,7 +542,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
                     : defaultRenderItem(item, index)}
                 </div>
               ))}
-              
+
               {/* Loading more items indicator */}
               {isFetchingNextPage && (
                 <div className="flex items-center justify-center py-2" data-testid="combobox-loading-more">

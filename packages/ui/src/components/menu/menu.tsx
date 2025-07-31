@@ -10,10 +10,17 @@ import { cx } from "../../lib/utils";
 import { Icon as IconComponent } from "../icon/icon";
 
 /**
+ * Dropdown menu component built on Base UI with support for nested submenus, radio groups, checkboxes, and keyboard navigation.
+ *
  * Menu
  *
+ * @component
  * @id menu
  * @name Menu
+ * @example
+ * ```tsx
+ * <MenuSubmenuTrigger>Content</MenuSubmenuTrigger>
+ * ```
  */
 const Menu = BaseMenu.Root;
 

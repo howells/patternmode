@@ -60,6 +60,17 @@ const cardVariants = tv({
  *
  * @interface CardProps
  * @extends useRender.ComponentProps<"div">
+ * @example
+ * ```tsx
+ * <Card>
+ *  *   <CardHeader>
+ *  *     <CardTitle>Card Title</CardTitle>
+ *  *   </CardHeader>
+ *  *   <CardContent>
+ *  *     Card content goes here.
+ *  *   </CardContent>
+ *  * </Card>
+ * ```
  */
 interface CardProps
   extends useRender.ComponentProps<"div">,
@@ -131,6 +142,13 @@ interface CardProps
  *   </GridCell>
  * </Grid>
  * ```
+ */
+/**
+ * A flexible container component with subtle styling and shadow for grouping related content.
+ *
+ * @id card
+ * @name Card
+ * @component
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (

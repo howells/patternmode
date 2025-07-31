@@ -147,6 +147,13 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
  * </ScrollArea>
  * ```
  */
+/**
+ * Augments native scroll functionality for custom, cross-browser styling.
+ *
+ * @id scroll-area
+ * @name Scroll Area
+ * @component
+ */
 const ScrollArea = React.forwardRef<HTMLDivElement, ScrollAreaProps>(
   (
     {

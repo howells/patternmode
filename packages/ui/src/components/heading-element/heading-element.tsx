@@ -79,6 +79,7 @@ export type HeadingElementProps = {
 /**
  * Heading Element
  *
+ * @component
  * @id heading-element
  * @name Heading Element
  */

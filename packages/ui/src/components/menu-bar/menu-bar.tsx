@@ -145,6 +145,13 @@ import {
  * </MenuBar>
  * ```
  */
+/**
+ * A horizontal menu bar containing multiple dropdown menus.
+ *
+ * @id menu-bar
+ * @name Menu Bar
+ * @component
+ */
 const MenuBar = React.forwardRef<
   React.ElementRef<typeof BaseMenubar>,
   React.ComponentPropsWithoutRef<typeof BaseMenubar>

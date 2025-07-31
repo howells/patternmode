@@ -99,6 +99,10 @@ const separatorContainerVariants = tv({
  * @interface SeparatorProps
  * @extends React.ComponentPropsWithoutRef<typeof BaseSeparator>
  * @extends VariantProps<typeof separatorVariants>
+ * @example
+ * ```tsx
+ * <Separator />
+ * ```
  */
 interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof BaseSeparator>,
@@ -188,6 +192,13 @@ interface SeparatorProps
  * ```
  *
  * @see https://base-ui.com/react/components/separator - Base UI documentation
+ */
+/**
+ * A visual separator component with optional text labels, built on Base UI
+ *
+ * @id separator
+ * @name Separator
+ * @component
  */
 const Separator = React.forwardRef<
   React.ElementRef<typeof BaseSeparator>,

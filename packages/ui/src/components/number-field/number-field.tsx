@@ -10,6 +10,10 @@ import * as React from "react";
  *
  * @interface NumberFieldProps
  * @extends React.ComponentPropsWithoutRef<typeof BaseNumberField.Root>
+ * @example
+ * ```tsx
+ * <NumberField>Content</NumberField>
+ * ```
  */
 interface NumberFieldProps
   extends React.ComponentPropsWithoutRef<typeof BaseNumberField.Root> {
@@ -101,6 +105,13 @@ interface NumberFieldProps
  * ```
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
+ */
+/**
+ * A number input field built on Base UI with stepper controls, scrubbing functionality, and full keyboard navigation.
+ *
+ * @id number-field
+ * @name Number Field
+ * @component
  */
 const NumberField = React.forwardRef<
   React.ElementRef<typeof BaseNumberField.Root>,

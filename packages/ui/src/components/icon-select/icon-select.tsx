@@ -230,6 +230,9 @@ const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
  *
  * Uses an API route to serve paginated icon data with both kebab-case and PascalCase names,
  * ensuring only valid Lucide icons are served and preventing console errors.
+ * @id icon-select
+ * @name Icon Select
+ * @component
  */
 export function IconSelect({
   value,

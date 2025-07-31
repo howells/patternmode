@@ -16,6 +16,10 @@ import { Icon, getIconSizeForContext } from "../icon/icon";
  *
  * @id toggle-group
  * @name Toggle Group
+ * @example
+ * ```tsx
+ * <ToggleGroup>Content</ToggleGroup>
+ * ```
  */
 const ToggleGroupContext = createContext<{
   size: VariantProps<typeof toggleGroupVariants>["size"];
@@ -109,6 +113,13 @@ interface ToggleGroupProps
   children: React.ReactNode;
 }
 
+/**
+ * A group of toggle buttons where one or more can be selected, with support for different variants, sizes, and orientations.
+ *
+ * @id toggle-group
+ * @name Toggle Group
+ * @component
+ */
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof BaseToggleGroup>,
   ToggleGroupProps

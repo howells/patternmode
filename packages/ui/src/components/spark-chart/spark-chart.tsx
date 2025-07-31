@@ -44,8 +44,13 @@ interface SparkAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Spark Chart
  *
+ * @component
  * @id spark-chart
  * @name Spark Chart
+ * @example
+ * ```tsx
+ * <SparkChart data={data} />
+ * ```
  */
 const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
   (props, forwardedRef) => {

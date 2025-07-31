@@ -11,6 +11,10 @@ interface DismissButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Callback when the dismiss button is clicked
+ * @example
+ * ```tsx
+ * <DismissButton>Content</DismissButton>
+ * ```
    */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
@@ -67,6 +71,13 @@ interface DismissButtonProps
  *   aria-label="Remove item"
  * />
  * ```
+ */
+/**
+ * A reusable dismiss/remove button with consistent styling.
+ *
+ * @id dismiss-button
+ * @name Dismiss Button
+ * @component
  */
 const DismissButton = React.forwardRef<HTMLButtonElement, DismissButtonProps>(
   (

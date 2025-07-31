@@ -6,8 +6,13 @@ export type SubheadingProps = HeadingElementProps;
 /**
  * Subheading
  *
+ * @component
  * @id subheading
  * @name Subheading
+ * @example
+ * ```tsx
+ * <Subheading>Section subtitle</Subheading>
+ * ```
  */
 export function Subheading({
   className,
