@@ -1,5 +1,8 @@
 import React from "react";
-import TextareaAutosize from "react-textarea-autosize";
+import TextareaAutosize, {
+  type TextareaAutosizeProps,
+  type TextareaHeightChangeMeta
+} from "react-textarea-autosize";
 
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
@@ -9,64 +12,131 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
  * Extends react-textarea-autosize props when `autoResize={true}` (default),
  * falls back to native textarea props when `autoResize={false}`.
  *
+ * **Inherited Props:**
+ * - All standard HTML textarea attributes (`placeholder`, `value`, `onChange`, `name`, `id`, `required`, `disabled`, etc.)
+ * - All react-textarea-autosize props when `autoResize={true}`
+ *
  * @interface TextareaProps
  * @augments React.ComponentPropsWithoutRef<typeof TextareaAutosize>
  * @see {@link https://github.com/Andarist/react-textarea-autosize#props} react-textarea-autosize props
  * @example
  * ```tsx
+ * // Basic usage
+ * <Textarea placeholder="Enter your message..." />
+ *
+ * // With constraints
  * <Textarea placeholder="Enter your message..." minRows={2} maxRows={6} />
+ *
+ * // Form integration
+ * <Textarea
+ *   name="description"
+ *   required
+ *   hasError={!!errors.description}
+ *   placeholder="Describe your request"
+ * />
  * ```
  */
-interface TextareaProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof TextareaAutosize>,
-    "style"
-  > {
+interface TextareaProps extends Omit<TextareaAutosizeProps, "style"> {
   /**
    * Whether to display error styling for form validation.
+   * Adds red border and error state styling to indicate validation errors.
    *
    * @default false
+   * @example
+   * ```tsx
+   * <Textarea hasError={!!fieldError} placeholder="Required field" />
+   * ```
    */
   hasError?: boolean;
+
   /**
    * Whether to enable auto-resizing behavior using react-textarea-autosize.
-   * When `true`, uses TextareaAutosize component. When `false`, uses native textarea.
+   *
+   * - When `true` (default): Uses TextareaAutosize component with intelligent height adjustment
+   * - When `false`: Uses native HTML textarea with fixed height
    *
    * @default true
+   * @example
+   * ```tsx
+   * // Auto-resizing (default)
+   * <Textarea placeholder="Grows with content" />
+   *
+   * // Fixed height
+   * <Textarea autoResize={false} rows={5} placeholder="Fixed height" />
+   * ```
    */
   autoResize?: boolean;
+
   /**
    * Minimum number of rows to display (react-textarea-autosize prop).
-   * The textarea will never be smaller than this height.
+   * The textarea will never be smaller than this height, even when empty.
+   * Only applies when `autoResize={true}`.
    *
    * @default 3
+   * @minimum 1
+   * @example
+   * ```tsx
+   * <Textarea minRows={2} placeholder="At least 2 rows tall" />
+   * ```
    */
   minRows?: number;
+
   /**
    * Maximum number of rows before scrolling (react-textarea-autosize prop).
    * When content exceeds this height, the textarea will scroll instead of expanding.
+   * Only applies when `autoResize={true}`.
    *
    * @default undefined (no maximum)
+   * @minimum 1
+   * @example
+   * ```tsx
+   * <Textarea maxRows={8} placeholder="Max 8 rows, then scroll" />
+   * ```
    */
   maxRows?: number;
-  /**
+
+    /**
    * Callback when textarea height changes (react-textarea-autosize prop).
    * Useful for adjusting parent container layouts or tracking resize events.
+   * Only applies when `autoResize={true}`.
    *
    * @param height - New height in pixels
    * @param meta - Additional metadata including rowHeight
+   * @example
+   * ```tsx
+   * <Textarea
+   *   onHeightChange={(height, meta) => {
+   *     console.log('New height:', height, 'Row height:', meta.rowHeight);
+   *     // Adjust parent container if needed
+   *   }}
+   * />
+   * ```
    */
-  onHeightChange?: (height: number, meta: { rowHeight: number }) => void;
+  onHeightChange?: (height: number, meta: TextareaHeightChangeMeta) => void;
+
   /**
    * Cache measurements for better performance (react-textarea-autosize prop).
    * Enable this for textareas that resize frequently to avoid recalculating dimensions.
+   * Only applies when `autoResize={true}`.
    *
    * @default false
+   * @example
+   * ```tsx
+   * <Textarea cacheMeasurements={true} placeholder="Optimized for frequent resizing" />
+   * ```
    */
   cacheMeasurements?: boolean;
+
   /**
    * Standard CSS style object.
-   * Note: When using react-textarea-autosize, height styles are managed internally.
+   *
+   * **Note:** When using react-textarea-autosize (`autoResize={true}`),
+   * height-related styles are managed internally and may be overridden.
+   *
+   * @example
+   * ```tsx
+   * <Textarea style={{ fontFamily: 'monospace', fontSize: '14px' }} />
+   * ```
    */
   style?: React.CSSProperties;
 }

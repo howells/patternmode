@@ -41,7 +41,10 @@
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "validate-props": "node scripts/validate-prop-docs.js",
+    "generate-textarea-config": "npx tsx scripts/generate-textarea-config.ts",
+    "validate-examples": "npx tsx scripts/validate-examples.ts"
   },
   "peerDependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",

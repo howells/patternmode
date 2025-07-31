@@ -1,7 +1,4 @@
-import React from "react";
 import type { ComponentConfig } from "../../lib/component-config-types";
-import { jsxToString } from "../../lib/jsx-to-string";
-import { DefaultExample, DisabledExample, FixedHeightExample, FormIntegrationExample, PerformanceExample, WithContentExample, WithErrorExample, WithHeightCallbackExample, WithRowConstraintsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "textarea",
@@ -17,6 +14,7 @@ export const componentConfig: ComponentConfig = {
   importStatement: `import { Textarea } from "@/components/ui/textarea";`,
   componentId: "TextareaExample",
   props: [
+    // Core textarea props
     {
       name: "placeholder",
       type: "string",
@@ -36,9 +34,27 @@ export const componentConfig: ComponentConfig = {
       defaultValue: "",
     },
     {
-      name: "hasError",
+      name: "name",
+      type: "string",
+      description: "Name attribute for form submission",
+      defaultValue: "",
+    },
+    {
+      name: "id",
+      type: "string",
+      description: "Unique identifier for the textarea",
+      defaultValue: "",
+    },
+    {
+      name: "required",
       type: "boolean",
-      description: "Whether to display error styling",
+      description: "Whether the textarea is required for form validation",
+      defaultValue: false,
+    },
+    {
+      name: "readOnly",
+      type: "boolean",
+      description: "Whether the textarea is read-only",
       defaultValue: false,
     },
     {
@@ -47,104 +63,85 @@ export const componentConfig: ComponentConfig = {
       description: "Whether the textarea is disabled",
       defaultValue: false,
     },
+
+    // Custom Textarea props
+    {
+      name: "hasError",
+      type: "boolean",
+      description: "Whether to display error styling for form validation",
+      defaultValue: false,
+    },
     {
       name: "autoResize",
       type: "boolean",
-      description: "Whether to enable auto-resizing functionality",
+      description: "Whether to enable auto-resizing behavior using react-textarea-autosize. When true, uses TextareaAutosize component. When false, uses native textarea.",
       defaultValue: true,
     },
+
+    // react-textarea-autosize props
     {
       name: "minRows",
       type: "number",
-      description: "Minimum number of rows to display",
+      description: "Minimum number of rows to display. The textarea will never be smaller than this height.",
       defaultValue: 3,
+      min: 1,
     },
     {
       name: "maxRows",
       type: "number",
-      description: "Maximum number of rows before scrolling",
-      defaultValue: "",
+      description: "Maximum number of rows before scrolling. When content exceeds this height, the textarea will scroll instead of expanding.",
+      defaultValue: undefined,
+      min: 1,
     },
     {
       name: "onHeightChange",
       type: "(height: number, meta: { rowHeight: number }) => void",
-      description: "Callback fired when textarea height changes",
+      description: "Callback when textarea height changes. Useful for adjusting parent container layouts or tracking resize events.",
       defaultValue: "",
     },
     {
       name: "cacheMeasurements",
       type: "boolean",
-      description: "Cache measurements for better performance",
+      description: "Cache measurements for better performance. Enable this for textareas that resize frequently to avoid recalculating dimensions.",
       defaultValue: false,
     },
+
+    // Standard HTML textarea props (when autoResize=false)
+    {
+      name: "rows",
+      type: "number",
+      description: "Number of visible text lines (only used when autoResize=false)",
+      defaultValue: undefined,
+      min: 1,
+    },
+    {
+      name: "cols",
+      type: "number",
+      description: "Visible width of the text control (only used when autoResize=false)",
+      defaultValue: undefined,
+      min: 1,
+    },
+
+    // Styling props
     {
       name: "className",
       type: "string",
-      description: "Additional CSS classes",
+      description: "Additional CSS classes to apply to the textarea",
       defaultValue: "",
     },
     {
+      name: "style",
+      type: "React.CSSProperties",
+      description: "Standard CSS style object. Note: When using react-textarea-autosize, height styles are managed internally.",
+      defaultValue: undefined,
+    },
+
+    // Preview-only props (not part of actual component)
+    {
       name: "showWithContent",
       type: "boolean",
-      description: "Show textarea with initial content in preview",
+      description: "Show textarea with initial content in preview (preview-only prop)",
       defaultValue: false,
-    },
-  ],
-  examples: [
-    {
-      id: "default",
-      title: "Auto-Resizing Textarea",
-      description:
-        "Basic textarea that automatically adjusts height based on content",
-      code: jsxToString(<DefaultExample />),
-    },
-    {
-      id: "with-content",
-      title: "With Initial Content",
-      description: "Textarea with pre-filled content demonstrating auto-resize",
-      code: jsxToString(<WithContentExample />),
-    },
-    {
-      id: "with-row-constraints",
-      title: "With Row Constraints",
-      description: "Textarea with minimum and maximum row limits",
-      code: jsxToString(<WithRowConstraintsExample />),
-    },
-    {
-      id: "with-error",
-      title: "Error State",
-      description: "Textarea with error styling and validation",
-      code: jsxToString(<WithErrorExample />),
-    },
-    {
-      id: "disabled",
-      title: "Disabled State",
-      description: "Non-interactive textarea with disabled styling",
-      code: jsxToString(<DisabledExample />),
-    },
-    {
-      id: "fixed-height",
-      title: "Fixed Height",
-      description: "Textarea with auto-resize disabled for fixed height",
-      code: jsxToString(<FixedHeightExample />),
-    },
-    {
-      id: "with-height-callback",
-      title: "Height Change Tracking",
-      description: "Textarea with callback to track height changes",
-      code: jsxToString(<WithHeightCallbackExample />),
-    },
-    {
-      id: "form-integration",
-      title: "Form Integration",
-      description: "Complete form example with multiple textareas",
-      code: jsxToString(<FormIntegrationExample />),
-    },
-    {
-      id: "performance",
-      title: "Performance Optimization",
-      description: "Textarea with measurement caching for better performance",
-      code: jsxToString(<PerformanceExample />),
     },
   ],
 };

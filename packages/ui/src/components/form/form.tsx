@@ -227,7 +227,7 @@ Form.displayName = "Form";
  * @param className - Additional CSS classes.
  */
 const FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return <div ref={ref} className={cx("space-y-2", className)} {...props} />;
+    return <div ref={ref} className={cx("space-y-3", className)} {...props} />;
   };
 FormItem.displayName = "FormItem";
 
