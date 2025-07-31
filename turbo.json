@@ -2,11 +2,8 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "typecheck"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
     },
     "dev": {
       "persistent": true,
@@ -14,6 +11,32 @@
     },
     "lint": {
       "dependsOn": ["^lint"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "**/*.ts", "**/*.tsx", "tsconfig.json", "package.json"]
+    },
+    "test": {
+      "dependsOn": ["^test", "typecheck"],
+      "inputs": ["src/**", "tests/**", "**/*.test.*", "**/*.spec.*", "vitest.config.*", "package.json"]
+    },
+    "test:ui": {
+      "dependsOn": ["^test:ui"],
+      "cache": false,
+      "persistent": true
+    },
+    "test:run": {
+      "dependsOn": ["^test:run", "typecheck"],
+      "inputs": ["src/**", "tests/**", "**/*.test.*", "**/*.spec.*", "vitest.config.*", "package.json"]
+    },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "inputs": ["src/**", "tests/**", "**/*.spec.*", "playwright.config.*", "package.json"]
+    },
+    "test:generate": {
+      "dependsOn": ["^test:generate"],
+      "cache": false
     },
     "clean": {
       "cache": false

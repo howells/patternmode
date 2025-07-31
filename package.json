@@ -2,78 +2,45 @@
   "name": "patternmode",
   "version": "0.1.0",
   "private": true,
+  "description": "A comprehensive UI component library and design system",
+  "author": "Daniel Howells",
+  "license": "MIT",
+  "packageManager": "pnpm@10.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "turbo build",
-    "start": "next start",
+    "dev": "turbo dev",
     "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
     "test": "turbo test",
     "test:ui": "turbo test:ui",
     "test:run": "turbo test:run",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:generate": "tsx scripts/generate-tests.ts",
-    "test:all": "turbo test:run && pnpm test:e2e",
-    "check-types": "turbo check-types",
-    "clean": "turbo clean"
-  },
-  "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.1",
-    "framer-motion": "^12.23.0",
-    "lucide-react": "^0.525.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "recharts": "^3.1.0",
-    "zod": "^4.0.0"
-  },
-  "dependencies": {
-    "@internationalized/date": "^3.8.2",
-    "@patternmode/ui": "workspace:*",
-    "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-visually-hidden": "^1.2.3",
-    "@react-aria/datepicker": "^3.15.0",
-    "@react-stately/datepicker": "^3.15.0",
-    "@tanstack/react-query": "^5.83.0",
-    "@tanstack/react-query-devtools": "^5.83.0",
-    "@types/react-syntax-highlighter": "15.5.13",
-    "@uidotdev/usehooks": "^2.4.1",
-    "clsx": "^2.1.1",
-    "date-fns": "4.1.0",
-    "downshift": "^9.0.10",
-    "embla-carousel-autoplay": "^8.6.0",
-    "embla-carousel-react": "^8.6.0",
-    "motion": "^12.23.12",
-    "next": "15.4.5",
-    "react-day-picker": "9.8.1",
-    "react-syntax-highlighter": "15.6.1",
-    "react-textarea-autosize": "^8.5.9",
-    "sonner": "^2.0.6",
-    "tailwind-merge": "^3.3.1",
-    "tailwind-variants": "^2.0.1",
-    "vaul": "^1.1.2"
+    "test:e2e": "turbo test:e2e",
+    "test:generate": "turbo test:generate",
+    "test:all": "turbo test:run && turbo test:e2e",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.54.1",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.1.0",
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
-    "@vitest/ui": "^3.2.4",
     "eslint": "^9.32.0",
-    "eslint-config-next": "15.4.5",
-    "jsdom": "^26.1.0",
     "knip": "^5.62.0",
     "playwright": "^1.54.1",
-    "tailwindcss": "^4.1.11",
-    "tsx": "^4.20.3",
+    "prettier": "^3.2.5",
     "turbo": "^2.5.5",
-    "typescript": "^5",
-    "vitest": "^3.2.4"
+    "typescript": "^5"
   },
-  "packageManager": "pnpm@10.0.0",
-  "workspaces": [
-    "packages/*"
-  ]
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
 }
