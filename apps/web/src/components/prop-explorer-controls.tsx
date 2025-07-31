@@ -113,7 +113,12 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
       {/* Content */}
       <div className="flex flex-col space-y-4">
         {/* Props */}
-        {config.props.map((prop: PropMetadata) => {
+        {config.props
+          .filter((prop: PropMetadata) => {
+            // Hide className and callback props (starting with 'on')
+            return prop.name !== 'className' && !prop.name.startsWith('on');
+          })
+          .map((prop: PropMetadata) => {
           const currentValue = props[prop.name];
 
           // Handle different prop types
@@ -216,7 +221,7 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
               <PropField key={prop.name} prop={prop}>
                 <FieldControl
                   render={(controlProps) => {
-                    const { children, ...inputProps } = controlProps;
+                    const { children, ref, ...inputProps } = controlProps;
                     return (
                       <Textarea
                         {...inputProps}
@@ -236,7 +241,7 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
             <PropField key={prop.name} prop={prop}>
               <FieldControl
                 render={(controlProps) => {
-                  const { children, ...inputProps } = controlProps;
+                  const { children, ref, ...inputProps } = controlProps;
                   return (
                     <Input
                       {...inputProps}

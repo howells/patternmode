@@ -19,8 +19,8 @@ export function TextareaExample({
   disabled = false,
   autoResize = true,
   minRows = 3,
-  maxRows = 6,
-  placeholder = "Start typing to see auto-resize in action...",
+  maxRows,
+  placeholder = "Start typing and watch the textarea grow automatically...",
   showWithContent = false,
   ...props
 }: TextareaExampleProps) {
@@ -30,24 +30,30 @@ export function TextareaExample({
       : "",
   );
 
-    // Filter out invalid props that might come from the prop explorer
-  const { onHeightChange, onChange, ...validProps } = props;
-  const heightChangeCallback = typeof onHeightChange === "function"
-    ? onHeightChange as (height: number, meta: { rowHeight: number }) => void
-    : undefined;
+  // Only pass through safe props - be very selective
+  const safeProps: Record<string, unknown> = {};
+
+  // Only allow specific safe props through
+  const allowedProps = ['className', 'id', 'name', 'required', 'readOnly'];
+  allowedProps.forEach(prop => {
+    if (props[prop] !== undefined) {
+      safeProps[prop] = props[prop];
+    }
+  });
 
   return (
-    <Textarea
-      placeholder={placeholder}
-      value={value}
-      onChange={e => setValue(e.target.value)}
-      hasError={hasError}
-      disabled={disabled}
-      autoResize={autoResize}
-      minRows={minRows}
-      maxRows={maxRows}
-      onHeightChange={heightChangeCallback}
-      {...validProps}
-    />
+    <div className="w-full max-w-lg">
+      <Textarea
+        placeholder={placeholder || "Start typing and watch the textarea grow automatically..."}
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        hasError={hasError}
+        disabled={disabled}
+        autoResize={autoResize}
+        minRows={minRows}
+        maxRows={maxRows}
+        {...safeProps}
+      />
+    </div>
   );
 }

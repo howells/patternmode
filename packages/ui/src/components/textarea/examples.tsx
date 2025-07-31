@@ -8,7 +8,7 @@ export const DefaultExample = () => {
     const [value, setValue] = React.useState("");
 
     return (
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-lg">
         <Textarea
           placeholder="Start typing and watch the textarea grow automatically..."
           value={value}
@@ -25,7 +25,7 @@ export const WithContentExample = () => {
     );
 
     return (
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-lg">
         <Textarea
           placeholder="Enter your message..."
           value={value}
@@ -40,7 +40,7 @@ export const WithRowConstraintsExample = () => {
     const [value, setValue] = React.useState("");
 
     return (
-      <div className="w-full max-w-3xl space-y-4">
+      <div className="w-full max-w-lg space-y-4">
         <div className="space-y-2">
           <label className="text-sm font-medium">Message (2-6 rows)</label>
           <Textarea
@@ -65,7 +65,7 @@ export const WithErrorExample = () => {
     const hasError = touched && value.length < 10;
 
     return (
-      <div className="w-full max-w-3xl space-y-2">
+      <div className="w-full max-w-lg space-y-2">
         <label className="text-sm font-medium">
           Description (min 10 characters)
         </label>
@@ -92,7 +92,7 @@ export const WithErrorExample = () => {
 // Disabled state
 export const DisabledExample = () => {
     return (
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-lg">
         <Textarea
           placeholder="This textarea is disabled"
           value="This content cannot be edited"
@@ -108,7 +108,7 @@ export const FixedHeightExample = () => {
     const [value, setValue] = React.useState("");
 
     return (
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-lg">
         <Textarea
           placeholder="This textarea has a fixed height and will scroll when content overflows..."
           value={value}
@@ -127,7 +127,7 @@ export const WithHeightCallbackExample = () => {
     const [rowHeight, setRowHeight] = React.useState<number | null>(null);
 
     return (
-      <div className="w-full max-w-3xl space-y-4">
+      <div className="w-full max-w-lg space-y-4">
         <div className="space-y-2">
           <Textarea
             placeholder="Type content to see height changes tracked below..."
@@ -175,7 +175,7 @@ export const FormIntegrationExample = () => {
           console.log("Form submitted:", data);
           alert("Form submitted! Check console for data.");
         }}
-        className="w-full max-w-3xl"
+        className="w-full max-w-lg"
       >
         <FormField name="title" label="Title" required>
           <FormControl
@@ -232,7 +232,7 @@ export const PerformanceExample = () => {
     const [cacheEnabled, setCacheEnabled] = React.useState(false);
 
     return (
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-lg">
         <Fieldset>
           <FieldsetLegend>Performance Settings</FieldsetLegend>
 

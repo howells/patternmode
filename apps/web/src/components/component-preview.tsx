@@ -6,8 +6,12 @@ import React from "react";
 import { usePropExplorer } from "./prop-explorer-context";
 
 // Component that dynamically calculates grid-aligned positioning
-const GridAlignedContainer: React.FC<{ children: React.ReactNode }> = ({
+const GridAlignedContainer: React.FC<{
+  children: React.ReactNode;
+  isResponsive?: boolean;
+}> = ({
   children,
+  isResponsive = false,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const componentRef = React.useRef<HTMLDivElement>(null);
@@ -53,6 +57,26 @@ const GridAlignedContainer: React.FC<{ children: React.ReactNode }> = ({
       window.removeEventListener("resize", calculatePosition);
     };
   }, []);
+
+  if (isResponsive) {
+    // For responsive components, provide full width and center them
+    return (
+      <div
+        ref={containerRef}
+        className="relative flex justify-center"
+        style={{
+          minHeight: "400px",
+          paddingTop: "72px", // equivalent to top-18
+          paddingLeft: "24px",
+          paddingRight: "24px",
+        }}
+      >
+        <div ref={componentRef} className="w-full flex justify-center">
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -411,7 +435,9 @@ export function ComponentPreview({
 
         <TabsContent value="preview" data-testid="component-preview">
           <div data-testid="preview-container">
-            <GridAlignedContainer>{renderComponent()}</GridAlignedContainer>
+            <GridAlignedContainer isResponsive={componentId.toLowerCase().includes('textarea')}>
+              {renderComponent()}
+            </GridAlignedContainer>
           </div>
         </TabsContent>
         <TabsContent value="code">

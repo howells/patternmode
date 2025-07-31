@@ -191,8 +191,8 @@ const Textarea = (
       <TextareaAutosize
         ref={forwardedRef}
         className={baseClassName}
-        minRows={minRows}
-        maxRows={maxRows}
+        minRows={Math.max(minRows, 1)}
+        maxRows={maxRows && maxRows > 0 ? maxRows : undefined}
         onHeightChange={onHeightChange}
         cacheMeasurements={cacheMeasurements}
         style={style ? { height: style.height as number } : undefined}
