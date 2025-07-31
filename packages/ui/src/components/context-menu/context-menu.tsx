@@ -1,4 +1,10 @@
 
+import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
+import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
+import * as React from "react";
+import { cx } from "../../lib/utils";
+import { Icon as IconComponent } from "../icon/icon";
+
 /**
  * Context Menu Components
  *
@@ -14,6 +20,9 @@
  * - Accessible design with proper ARIA attributes
  * - Smooth animations and positioning
  *
+ * @id context-menu
+ * @name Context Menu
+ * @component
  * @example
  * ```tsx
  * // Basic context menu
@@ -109,20 +118,6 @@
  * </ContextMenu>
  * ```
  */
-
-import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
-import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
-import * as React from "react";
-import { cx } from "../../lib/utils";
-import { Icon as IconComponent } from "../icon/icon";
-
-/**
- * Root context menu component.
- *
- * Based on Base UI Context Menu (https://base-ui.com/react/components/context-menu),
- * creates the context menu context that appears on right-click or long press.
- * Provides accessible, unstyled foundation for context menus.
- */
 const ContextMenu = BaseContextMenu.Root;
 
 /**
@@ -165,9 +160,6 @@ const ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
  *
  * @param className - Additional CSS classes
  * @param children - Content of the submenu trigger
- *
- * @id context-menu
- * @name Context Menu
  */
 const ContextMenuSubmenuTrigger = React.forwardRef<
   React.ElementRef<typeof BaseContextMenu.SubmenuTrigger>,
@@ -194,6 +186,8 @@ const ContextMenuSubmenuTrigger = React.forwardRef<
     <IconComponent icon={ChevronRight} className="ml-auto" aria-hidden="true" />
   </BaseContextMenu.SubmenuTrigger>
 ));
+
+ContextMenuSubmenuTrigger.displayName = "ContextMenuSubmenuTrigger";
 
 /**
  * Context menu submenu content component.
@@ -236,6 +230,8 @@ const ContextMenuSubmenuContent = React.forwardRef<
     </BaseContextMenu.Positioner>
   </BaseContextMenu.Portal>
 ));
+
+ContextMenuSubmenuContent.displayName = "ContextMenuSubmenuContent";
 
 /**
  * Main context menu content component.
@@ -304,6 +300,8 @@ const ContextMenuContent = React.forwardRef<
   )
 );
 
+ContextMenuContent.displayName = "ContextMenuContent";
+
 /**
  * Context menu item component.
  *
@@ -359,6 +357,8 @@ const ContextMenuItem = React.forwardRef<
     )}
   </BaseContextMenu.Item>
 ));
+
+ContextMenuItem.displayName = "ContextMenuItem";
 
 /**
  * Context menu checkbox item component.
@@ -435,6 +435,8 @@ const ContextMenuCheckboxItem = React.forwardRef<
   )
 );
 
+ContextMenuCheckboxItem.displayName = "ContextMenuCheckboxItem";
+
 /**
  * Context menu radio item component.
  *
@@ -509,6 +511,8 @@ const ContextMenuRadioItem = React.forwardRef<
     )}
   </BaseContextMenu.RadioItem>
 ));
+
+ContextMenuRadioItem.displayName = "ContextMenuRadioItem";
 
 /**
  * Context menu label component.
