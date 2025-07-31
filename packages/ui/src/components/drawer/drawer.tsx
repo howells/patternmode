@@ -122,10 +122,7 @@ import { cx } from "../../lib/utils";
  * Based on Vaul Drawer (https://vaul.emilkowal.ski/), creates the drawer context
  * and manages the overall drawer state. Provides foundation for all drawer functionality.
  */
-const /**
-       *
-       */
-  Drawer = DrawerPrimitive.Root;
+const Drawer = DrawerPrimitive.Root;
 
 /**
  * Drawer trigger component.
@@ -133,10 +130,7 @@ const /**
  * Button or element that opens the drawer when clicked or activated.
  * Should be used with asChild prop to wrap existing buttons.
  */
-const /**
-       *
-       */
-  DrawerTrigger = DrawerPrimitive.Trigger;
+const DrawerTrigger = DrawerPrimitive.Trigger;
 
 /**
  * Drawer portal component.
@@ -144,10 +138,7 @@ const /**
  * Moves drawer content to a different DOM location for proper layering
  * and z-index management. Usually handled automatically by DrawerContent.
  */
-const /**
-       *
-       */
-  DrawerPortal = DrawerPrimitive.Portal;
+const DrawerPortal = DrawerPrimitive.Portal;
 
 /**
  * Drawer close component.
@@ -155,10 +146,7 @@ const /**
  * Button or element that closes the drawer when clicked or activated.
  * Can be used anywhere within drawer content to provide close functionality.
  */
-const /**
-       *
-       */
-  DrawerClose = DrawerPrimitive.Close;
+const DrawerClose = DrawerPrimitive.Close;
 
 /**
  * Drawer overlay component.
@@ -173,10 +161,7 @@ const /**
  * @id drawer
  * @name Drawer
  */
-const /**
-       *
-       */
-  DrawerOverlay = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
+const DrawerOverlay = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
     <DrawerPrimitive.Overlay
       ref={ref}
       className={cx(
@@ -201,10 +186,7 @@ DrawerOverlay.displayName = "DrawerOverlay";
  * @param className - Additional CSS classes.
  * @param children - Drawer content elements.
  */
-const /**
-       *
-       */
-  DrawerContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Content> | null> }) => (
+const DrawerContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Content> | null> }) => (
     <DrawerPortal>
       <DrawerOverlay />
       <DrawerPrimitive.Content
@@ -246,10 +228,7 @@ DrawerContent.displayName = "DrawerContent";
  * </DrawerHeader>
  * ```
  */
-const /**
-       *
-       */
-  DrawerHeader = ({
+const DrawerHeader = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -283,10 +262,7 @@ DrawerHeader.displayName = "DrawerHeader";
  * </DrawerFooter>
  * ```
  */
-const /**
-       *
-       */
-  DrawerFooter = ({
+const DrawerFooter = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -316,10 +292,7 @@ DrawerFooter.displayName = "DrawerFooter";
  * <DrawerTitle>Confirm Action</DrawerTitle>
  * ```
  */
-const /**
-       *
-       */
-  DrawerTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Title> | null> }) => (
+const DrawerTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Title> | null> }) => (
     <DrawerPrimitive.Title
       ref={ref}
       className={cx(
@@ -353,10 +326,7 @@ DrawerTitle.displayName = "DrawerTitle";
  * </DrawerDescription>
  * ```
  */
-const /**
-       *
-       */
-  DrawerDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Description> | null> }) => (
+const DrawerDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Description> | null> }) => (
     <DrawerPrimitive.Description
       ref={ref}
       className={cx(
@@ -372,14 +342,14 @@ const /**
 DrawerDescription.displayName = "DrawerDescription";
 
 export {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerPortal,
-  DrawerTitle,
-  DrawerTrigger,
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerPortal,
+    DrawerTitle,
+    DrawerTrigger
 };

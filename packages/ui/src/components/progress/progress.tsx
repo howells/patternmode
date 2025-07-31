@@ -67,17 +67,17 @@
  * ```
  */
 
-import type { VariantProps } from "tailwind-variants";
 import { Progress as BaseProgress } from "@base-ui-components/react/progress";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import {
-  defaultValueFormatter,
-  progressAnimationClasses,
-  progressLabelVariants,
-  progressValueVariants,
-  sharedProgressVariants,
+    defaultValueFormatter,
+    progressAnimationClasses,
+    progressLabelVariants,
+    progressValueVariants,
+    sharedProgressVariants,
 } from "../progress-utils";
 
 /**
@@ -178,10 +178,7 @@ const progressVariants = tv({
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
  */
-const /**
-       *
-       */
-  Progress = BaseProgress.Root;
+const Progress = BaseProgress.Root;
 Progress.displayName = "Progress";
 
 /**
@@ -200,10 +197,7 @@ Progress.displayName = "Progress";
  * @id progress
  * @name Progress
  */
-const /**
-       *
-       */
-  ProgressTrack = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Track>
+const ProgressTrack = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Track>
     & VariantProps<typeof progressVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Track> | null> }) => {
     const { track } = progressVariants({ variant, showAnimation });
     return (
@@ -228,10 +222,7 @@ ProgressTrack.displayName = "ProgressTrack";
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
  */
-const /**
-       *
-       */
-  ProgressIndicator = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Indicator>
+const ProgressIndicator = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Indicator>
     & VariantProps<typeof progressVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Indicator> | null> }) => {
     const { indicator } = progressVariants({ variant, showAnimation });
     return (
@@ -259,10 +250,7 @@ ProgressIndicator.displayName = "ProgressIndicator";
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
  */
-const /**
-       *
-       */
-  ProgressLabel = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Label>
+const ProgressLabel = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Label>
     & VariantProps<typeof progressVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Label> | null> }) => {
     const { label } = progressVariants({ variant, showAnimation });
     return (
@@ -290,10 +278,7 @@ ProgressLabel.displayName = "ProgressLabel";
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
  */
-const /**
-       *
-       */
-  ProgressValue = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Value>
+const ProgressValue = ({ ref, className, variant, showAnimation, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Value>
     & VariantProps<typeof progressVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Value> | null> }) => {
     const { value } = progressVariants({ variant, showAnimation });
     return (
@@ -378,10 +363,7 @@ interface ProgressBarProps
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
  */
-const /**
-       *
-       */
-  ProgressBar = (
+const ProgressBar = (
     { ref, value = 0, max = 100, label, showValue = false, valueFormatter, showAnimation = true, variant = "default", className, ...props }: ProgressBarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null> },
   ) => {
     const { root } = progressVariants({ variant, showAnimation });
@@ -414,12 +396,10 @@ const /**
 ProgressBar.displayName = "ProgressBar";
 
 export {
-  Progress,
-  ProgressBar,
-  type ProgressBarProps,
-  ProgressIndicator,
-  ProgressLabel,
-  ProgressTrack,
-  ProgressValue, // Composite component for backward compatibility
-  progressVariants,
+    Progress,
+    ProgressBar, ProgressIndicator,
+    ProgressLabel,
+    ProgressTrack,
+    ProgressValue, // Composite component for backward compatibility
+    progressVariants, type ProgressBarProps
 };

@@ -3,29 +3,29 @@
 
 "use client";
 
-import type { AxisDomain } from "recharts/types/util/types";
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
+import type { AxisDomain } from "recharts/types/util/types";
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 
 import {
-  Bar,
-  CartesianGrid,
-  Label,
-  BarChart as RechartsBarChart,
-  Legend as RechartsLegend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+    Bar,
+    CartesianGrid,
+    Label,
+    BarChart as RechartsBarChart,
+    Legend as RechartsLegend,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from "recharts";
 import { useOnWindowResize } from "../../hooks/use-on-window-resize";
 import {
-  AvailableChartColors,
+    AvailableChartColors,
 
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
+    constructCategoryColors,
+    getColorClassName,
+    getYAxisDomain,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -147,10 +147,7 @@ interface LegendItemProps {
  * @id bar-chart
  * @name Bar Chart
  */
-const /**
-       *
-       */
-  LegendItem = ({
+const LegendItem = ({
     name,
     color,
     onClick,
@@ -216,10 +213,7 @@ interface ScrollButtonProps {
   disabled?: boolean;
 }
 
-const /**
-       *
-       */
-  ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
+const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
     const /**
            *
            */
@@ -288,10 +282,7 @@ interface HasScrollProps {
   right: boolean;
 }
 
-const /**
-       *
-       */
-  Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
+const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
     const {
       categories,
       colors = AvailableChartColors,
@@ -466,10 +457,7 @@ Legend.displayName = "Legend";
  * @param legendPosition - Horizontal alignment (left, center, right).
  * @param yAxisWidth - Y-axis width for alignment calculations.
  */
-const /**
-       *
-       */
-  ChartLegend = (
+const ChartLegend = (
     { payload }: any,
     categoryColors: Map<string, AvailableChartColorsKeys>,
     setLegendHeight: React.Dispatch<React.SetStateAction<number>>,
@@ -589,10 +577,7 @@ interface ChartTooltipProps {
  * Displays formatted bar values with square color indicators matching
  * the bar chart visual style and consistent formatting.
  */
-const /**
-       *
-       */
-  ChartTooltip = ({
+const ChartTooltip = ({
     active,
     payload,
     label,
@@ -908,10 +893,7 @@ interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * @see https://recharts.org/en-US/api/BarChart - Recharts documentation
  */
-const /**
-       *
-       */
-  BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],

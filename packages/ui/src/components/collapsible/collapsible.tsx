@@ -20,10 +20,7 @@ import { Button } from "../button/button";
  * <CollapsibleTrigger>Content</CollapsibleTrigger>
  * ```
  */
-const /**
-       *
-       */
-  Collapsible = BaseCollapsible.Root;
+const Collapsible = BaseCollapsible.Root;
 
 /**
  * Props for the CollapsibleTrigger component.
@@ -98,10 +95,7 @@ interface CollapsibleTriggerProps
  * @name Collapsible
  * @component
  */
-const /**
-       *
-       */
-  CollapsibleTrigger = (
+const CollapsibleTrigger = (
     { ref, className, children, closedIcon: ClosedIcon = ChevronDown, openIcon: OpenIcon = ChevronUp, asToggleButton = false, href, padding, ...props }: CollapsibleTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Trigger> | null> },
   ) => {
   // If asToggleButton is true, render just the icon button
@@ -208,10 +202,7 @@ CollapsibleTrigger.displayName = "CollapsibleTrigger";
  *
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
  */
-const /**
-       *
-       */
-  CollapsibleContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Panel> | null> }) => (
+const CollapsibleContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Panel> | null> }) => (
     <BaseCollapsible.Panel
       ref={ref}
       className={cx(

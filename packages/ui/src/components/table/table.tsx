@@ -41,10 +41,7 @@ import { cx } from "../../lib/utils";
  * @name Table
  * @component
  */
-const /**
-       *
-       */
-  TableRoot = ({ ref: forwardedRef, className, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const TableRoot = ({ ref: forwardedRef, className, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={forwardedRef}
     // Activate if table is used in a float environment
@@ -89,10 +86,7 @@ TableRoot.displayName = "TableRoot";
  * </Table>
  * ```
  */
-const /**
-       *
-       */
-  Table = ({ ref: forwardedRef, className, ...props }: React.TableHTMLAttributes<HTMLTableElement> & { ref?: React.RefObject<HTMLTableElement | null> }) => (
+const Table = ({ ref: forwardedRef, className, ...props }: React.TableHTMLAttributes<HTMLTableElement> & { ref?: React.RefObject<HTMLTableElement | null> }) => (
     <table
       ref={forwardedRef}
       tremor-id="tremor-raw"
@@ -125,10 +119,7 @@ Table.displayName = "Table";
  * </TableHead>
  * ```
  */
-const /**
-       *
-       */
-  TableHead = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => (
+const TableHead = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => (
     <thead ref={forwardedRef} className={cx(className)} {...props} />
   );
 
@@ -148,10 +139,7 @@ TableHead.displayName = "TableHead";
  * <TableHeaderCell className="text-right">Actions</TableHeaderCell>
  * ```
  */
-const /**
-       *
-       */
-  TableHeaderCell = ({ ref: forwardedRef, className, ...props }: React.ThHTMLAttributes<HTMLTableCellElement> & { ref?: React.RefObject<HTMLTableCellElement | null> }) => (
+const TableHeaderCell = ({ ref: forwardedRef, className, ...props }: React.ThHTMLAttributes<HTMLTableCellElement> & { ref?: React.RefObject<HTMLTableCellElement | null> }) => (
     <th
       ref={forwardedRef}
       className={cx(
@@ -190,10 +178,7 @@ TableHeaderCell.displayName = "TableHeaderCell";
  * </TableBody>
  * ```
  */
-const /**
-       *
-       */
-  TableBody = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => (
+const TableBody = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => (
     <tbody
       ref={forwardedRef}
       className={cx(
@@ -232,10 +217,7 @@ TableBody.displayName = "TableBody";
  * </TableRow>
  * ```
  */
-const /**
-       *
-       */
-  TableRow = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableRowElement> & { ref?: React.RefObject<HTMLTableRowElement | null> }) => (
+const TableRow = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableRowElement> & { ref?: React.RefObject<HTMLTableRowElement | null> }) => (
     <tr
       ref={forwardedRef}
       className={cx(
@@ -266,10 +248,7 @@ TableRow.displayName = "TableRow";
  * </TableCell>
  * ```
  */
-const /**
-       *
-       */
-  TableCell = ({ ref: forwardedRef, className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement> & { ref?: React.RefObject<HTMLTableCellElement | null> }) => (
+const TableCell = ({ ref: forwardedRef, className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement> & { ref?: React.RefObject<HTMLTableCellElement | null> }) => (
     <td
       ref={forwardedRef}
       className={cx(
@@ -303,10 +282,7 @@ TableCell.displayName = "TableCell";
  * </TableFoot>
  * ```
  */
-const /**
-       *
-       */
-  TableFoot = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => {
+const TableFoot = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement> & { ref?: React.RefObject<HTMLTableSectionElement | null> }) => {
     return (
       <tfoot
         ref={forwardedRef}
@@ -348,10 +324,7 @@ TableFoot.displayName = "TableFoot";
  * </Table>
  * ```
  */
-const /**
-       *
-       */
-  TableCaption = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableCaptionElement> & { ref?: React.RefObject<HTMLTableCaptionElement | null> }) => (
+const TableCaption = ({ ref: forwardedRef, className, ...props }: React.HTMLAttributes<HTMLTableCaptionElement> & { ref?: React.RefObject<HTMLTableCaptionElement | null> }) => (
     <caption
       ref={forwardedRef}
       className={cx(
@@ -368,13 +341,13 @@ const /**
 TableCaption.displayName = "TableCaption";
 
 export {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFoot,
-  TableHead,
-  TableHeaderCell,
-  TableRoot,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFoot,
+    TableHead,
+    TableHeaderCell,
+    TableRoot,
+    TableRow
 };

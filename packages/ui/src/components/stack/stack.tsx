@@ -1,7 +1,7 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
@@ -201,10 +201,7 @@ interface StackProps
  * @id stack
  * @name Stack
  */
-const /**
-       *
-       */
-  Stack = (
+const Stack = (
     { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },
   ) => {
   // Get base values for the variants system
@@ -250,23 +247,13 @@ const /**
 Stack.displayName = "Stack";
 
 // Helper components for common patterns
-const /**
-       *
-       */
-  VStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="vertical" {...props} />;
+const VStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="vertical" {...props} />;
 VStack.displayName = "VStack";
 
-const /**
-       *
-       */
-  HStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="horizontal" {...props} />;
+const HStack = ({ ref, ...props }: Omit<StackProps, "direction"> & { ref?: React.RefObject<HTMLElement | null> }) => <Stack ref={ref} direction="horizontal" {...props} />;
 HStack.displayName = "HStack";
 
 export {
-  HStack,
-  type ResponsiveValue,
-  Stack,
-  type StackProps,
-  stackVariants,
-  VStack,
+    HStack, Stack, stackVariants,
+    VStack, type ResponsiveValue, type StackProps
 };

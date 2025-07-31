@@ -1,5 +1,15 @@
-import { Badge, Card, Grid, GridCell, Heading, HStack, Subheading, Text, VStack } from "@patternmode/ui";
-import { getComponentsByCategory } from "@patternmode/ui/lib/component-registry";
+import {
+  Badge,
+  Card,
+  getComponentsByCategory,
+  Grid,
+  GridCell,
+  Heading,
+  HStack,
+  Subheading,
+  Text,
+  VStack,
+} from "@patternmode/ui";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -86,11 +96,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
       {/* Component Grid */}
       {components.length > 0 ? (
-        <Grid
-          columns={{ sm: 1, md: 2, lg: 3 }}
-          gap={6}
-          minHeight="none"
-        >
+        <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap={6} minHeight="none">
           {components.map((component) => (
             <GridCell key={component.id}>
               <Link href={`/ui/${category}/${component.id}`}>

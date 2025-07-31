@@ -1,6 +1,7 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
 import React from "react";
+import type { ComponentConfig } from "../../lib/component-config-types";
 import { jsxToString } from "../../lib/jsx-to-string";
+import { buttonSizeOptions } from "../button/button";
 import { LineNoDividerExample, SolidExample, TabsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
@@ -27,9 +28,9 @@ export const componentConfig: ComponentConfig = {
     {
       name: "size",
       type: "select",
-      options: ["default", "sm", "lg"],
+      options: buttonSizeOptions,
       defaultValue: "default",
-      description: "The size of the tabs (affects solid variant only).",
+      description: "The size of the tabs (inherits from Button component sizes).",
     },
     {
       name: "hideDivider",

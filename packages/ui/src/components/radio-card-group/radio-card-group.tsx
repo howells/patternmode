@@ -69,10 +69,7 @@ import { cx, focusInput, focusRing } from "../../lib/utils";
  * @name Radio Card Group
  * @component
  */
-const /**
-       *
-       */
-  RadioCardGroup = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
+const RadioCardGroup = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
     <BaseRadioGroup ref={ref} className={cx("grid gap-2", className)} {...props} />
   );
 RadioCardGroup.displayName = "RadioCardGroup";
@@ -120,10 +117,7 @@ RadioCardGroup.displayName = "RadioCardGroup";
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
-const /**
-       *
-       */
-  RadioCardItem = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Root> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Root> | null> }) => (
+const RadioCardItem = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Root> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Root> | null> }) => (
     <Radio.Root
       ref={ref}
       className={cx(
@@ -176,10 +170,7 @@ RadioCardItem.displayName = "RadioCardItem";
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
-const /**
-       *
-       */
-  RadioCardIndicator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Indicator> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Indicator> | null> }) => (
+const RadioCardIndicator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Radio.Indicator> & { ref?: React.RefObject<React.ElementRef<typeof Radio.Indicator> | null> }) => (
     <Radio.Indicator
       ref={ref}
       className={cx(

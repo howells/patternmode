@@ -80,27 +80,27 @@ import { useIsMobile } from "../../hooks/use-mobile";
 
 // Mobile drawer (Vaul)
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from "../drawer/drawer";
 
 // Desktop sheet (Base UI Dialog)
 import {
-  Sheet,
-  SheetBody,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetBody,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
 } from "../sheet/sheet";
 
 /**
@@ -292,10 +292,7 @@ interface ResponsiveDrawerCloseProps {
  * </ResponsiveDrawer>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
+const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
     children,
     ...props
   }) => {
@@ -328,10 +325,7 @@ const /**
  * </ResponsiveDrawerTrigger>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
+const ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
     children,
     render,
     ...props
@@ -375,10 +369,7 @@ const /**
  * </ResponsiveDrawerContent>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
+const ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
     children,
     ...props
   }) => {
@@ -411,10 +402,7 @@ const /**
  * </ResponsiveDrawerHeader>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
+const ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
     children,
     ...props
   }) => {
@@ -448,10 +436,7 @@ const /**
  * </ResponsiveDrawerTitle>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
+const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
     children,
     ...props
   }) => {
@@ -485,10 +470,7 @@ const /**
  * </ResponsiveDrawerDescription>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerDescription: React.FC<
+const ResponsiveDrawerDescription: React.FC<
   ResponsiveDrawerDescriptionProps
 > = ({ children, ...props }) => {
   const isMobile = useIsMobile();
@@ -528,10 +510,7 @@ const /**
  * </ResponsiveDrawerBody>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
+const ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
     children,
     ...props
   }) => {
@@ -575,10 +554,7 @@ const /**
  * </ResponsiveDrawerFooter>
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
+const ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
     children,
     ...props
   }) => {
@@ -609,10 +585,7 @@ const /**
  * <ResponsiveDrawerClose render={<button className="p-2 rounded-full hover:bg-zinc-100"><X className="w-4 h-4" /></button>} />
  * ```
  */
-const /**
-       *
-       */
-  ResponsiveDrawerClose: React.FC<ResponsiveDrawerCloseProps> = ({
+const ResponsiveDrawerClose: React.FC<ResponsiveDrawerCloseProps> = ({
     children,
     render,
     ...props
@@ -635,13 +608,13 @@ const /**
   };
 
 export {
-  ResponsiveDrawer,
-  ResponsiveDrawerBody,
-  ResponsiveDrawerClose,
-  ResponsiveDrawerContent,
-  ResponsiveDrawerDescription,
-  ResponsiveDrawerFooter,
-  ResponsiveDrawerHeader,
-  ResponsiveDrawerTitle,
-  ResponsiveDrawerTrigger,
+    ResponsiveDrawer,
+    ResponsiveDrawerBody,
+    ResponsiveDrawerClose,
+    ResponsiveDrawerContent,
+    ResponsiveDrawerDescription,
+    ResponsiveDrawerFooter,
+    ResponsiveDrawerHeader,
+    ResponsiveDrawerTitle,
+    ResponsiveDrawerTrigger
 };

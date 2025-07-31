@@ -22,35 +22,17 @@ import { Icon as IconComponent } from "../icon/icon";
  * <MenuSubmenuTrigger>Content</MenuSubmenuTrigger>
  * ```
  */
-const /**
-       *
-       */
-  Menu = BaseMenu.Root;
+const Menu = BaseMenu.Root;
 
-const /**
-       *
-       */
-  MenuTrigger = BaseMenu.Trigger;
+const MenuTrigger = BaseMenu.Trigger;
 
-const /**
-       *
-       */
-  MenuGroup = BaseMenu.Group;
+const MenuGroup = BaseMenu.Group;
 
-const /**
-       *
-       */
-  MenuSubmenu = BaseMenu.SubmenuRoot;
+const MenuSubmenu = BaseMenu.SubmenuRoot;
 
-const /**
-       *
-       */
-  MenuRadioGroup = BaseMenu.RadioGroup;
+const MenuRadioGroup = BaseMenu.RadioGroup;
 
-const /**
-       *
-       */
-  MenuSubmenuTrigger = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.SubmenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.SubmenuTrigger> | null> }) => (
+const MenuSubmenuTrigger = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.SubmenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.SubmenuTrigger> | null> }) => (
     <BaseMenu.SubmenuTrigger
       ref={forwardedRef}
       className={cx(
@@ -74,10 +56,7 @@ const /**
   );
 MenuSubmenuTrigger.displayName = "MenuSubmenuTrigger";
 
-const /**
-       *
-       */
-  MenuSubmenuContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.Popup> | null> }) => (
+const MenuSubmenuContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.Popup> | null> }) => (
     <BaseMenu.Portal>
       <BaseMenu.Positioner sideOffset={8} collisionPadding={8}>
         <BaseMenu.Popup
@@ -109,10 +88,7 @@ const /**
   );
 MenuSubmenuContent.displayName = "MenuSubmenuContent";
 
-const /**
-       *
-       */
-  MenuContent = (
+const MenuContent = (
     { ref: forwardedRef, className, sideOffset = 8, collisionPadding = 8, align = "center", ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
       sideOffset?: number;
       collisionPadding?: number;
@@ -154,10 +130,7 @@ const /**
   );
 MenuContent.displayName = "MenuContent";
 
-const /**
-       *
-       */
-  MenuItem = (
+const MenuItem = (
     { ref: forwardedRef, className, shortcut, hint, icon: Icon, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Item> & {
       shortcut?: string;
       hint?: string;
@@ -215,10 +188,7 @@ const /**
   );
 MenuItem.displayName = "MenuItem";
 
-const /**
-       *
-       */
-  MenuCheckboxItem = (
+const MenuCheckboxItem = (
     { ref: forwardedRef, className, hint, shortcut, children, checked, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.CheckboxItem> & {
       shortcut?: string;
       hint?: string;
@@ -274,10 +244,7 @@ const /**
   );
 MenuCheckboxItem.displayName = "MenuCheckboxItem";
 
-const /**
-       *
-       */
-  MenuRadioItem = ({ ref: forwardedRef, className, hint, shortcut, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.RadioItem> & {
+const MenuRadioItem = ({ ref: forwardedRef, className, hint, shortcut, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.RadioItem> & {
     shortcut?: string;
     hint?: string;
   } & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.RadioItem> | null> }) => (
@@ -337,10 +304,7 @@ const /**
   );
 MenuRadioItem.displayName = "MenuRadioItem";
 
-const /**
-       *
-       */
-  MenuLabel = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.GroupLabel> | null> }) => (
+const MenuLabel = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.GroupLabel> | null> }) => (
     <BaseMenu.GroupLabel
       ref={forwardedRef}
       className={cx(
@@ -355,10 +319,7 @@ const /**
   );
 MenuLabel.displayName = "MenuLabel";
 
-const /**
-       *
-       */
-  MenuSeparator = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.Separator> | null> }) => (
+const MenuSeparator = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenu.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenu.Separator> | null> }) => (
     <BaseMenu.Separator
       ref={forwardedRef}
       className={cx(
@@ -371,17 +332,17 @@ const /**
 MenuSeparator.displayName = "MenuSeparator";
 
 export {
-  Menu,
-  MenuCheckboxItem,
-  MenuContent,
-  MenuGroup,
-  MenuItem,
-  MenuLabel,
-  MenuRadioGroup,
-  MenuRadioItem,
-  MenuSeparator,
-  MenuSubmenu,
-  MenuSubmenuContent,
-  MenuSubmenuTrigger,
-  MenuTrigger,
+    Menu,
+    MenuCheckboxItem,
+    MenuContent,
+    MenuGroup,
+    MenuItem,
+    MenuLabel,
+    MenuRadioGroup,
+    MenuRadioItem,
+    MenuSeparator,
+    MenuSubmenu,
+    MenuSubmenuContent,
+    MenuSubmenuTrigger,
+    MenuTrigger
 };

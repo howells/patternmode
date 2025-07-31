@@ -113,10 +113,7 @@ interface LabelProps
  * @name Label
  * @component
  */
-const /**
-       *
-       */
-  Label = ({ ref: forwardedRef, className, disabled, ...props }: LabelProps & { ref?: React.RefObject<React.ElementRef<typeof Field.Label> | null> }) => (
+const Label = ({ ref: forwardedRef, className, disabled, ...props }: LabelProps & { ref?: React.RefObject<React.ElementRef<typeof Field.Label> | null> }) => (
     <Field.Label
       ref={forwardedRef}
       className={cx(

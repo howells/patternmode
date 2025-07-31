@@ -1,20 +1,19 @@
 // Tremor Badge [v1.0.0]
 
-import type { VariantProps } from "tailwind-variants";
-import type { ComponentWithIconsProps } from "../../lib/utils";
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { X } from "lucide-react";
+import type { VariantProps } from "tailwind-variants";
+import type { ComponentWithIconsProps } from "../../lib/utils";
+import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 
 import React from "react";
 import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
 import {
-  getColorClasses,
-  getVariantClasses,
-
+    getColorClasses,
+    getVariantClasses,
 } from "../../lib/variants";
 
 // Badge-specific variant type (semantic + all Tailwind colors)
@@ -178,10 +177,7 @@ const dotIndicatorVariants = tv({
  * <Badge>New</Badge>
  * ```
  */
-const /**
-       *
-       */
-  InlineDismissButton = (
+const InlineDismissButton = (
     { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
       "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
       "icon"?: React.ComponentType<{
@@ -342,10 +338,7 @@ interface BadgeProps
  * </Badge>
  * ```
  */
-const /**
-       *
-       */
-  Badge = (
+const Badge = (
     { ref: forwardedRef, render = <span />, variant, size = "base", bordered, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const hasChildren = children != null && children !== "";
@@ -434,4 +427,4 @@ const /**
 
 Badge.displayName = "Badge";
 
-export { Badge, type BadgeProps, badgeVariants };
+export { Badge, badgeVariants, type BadgeProps };

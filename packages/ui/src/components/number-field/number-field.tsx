@@ -127,10 +127,7 @@ interface NumberFieldProps
  * @name Number Field
  * @component
  */
-const /**
-       *
-       */
-  NumberField = (
+const NumberField = (
     { ref, label, placeholder, showScrubArea = true, showSteppers = true, fullWidth = false, className, inputClassName, id, ...props }: NumberFieldProps & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Root> | null> },
   ) => {
     const generatedId = React.useId();
@@ -195,10 +192,7 @@ NumberField.displayName = "NumberField";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldLabel = ({ ref, className, children, showScrubArea = true, ...props }: React.LabelHTMLAttributes<HTMLLabelElement> & {
+const NumberFieldLabel = ({ ref, className, children, showScrubArea = true, ...props }: React.LabelHTMLAttributes<HTMLLabelElement> & {
   /**
    * Whether to show the interactive scrub area.
    */
@@ -250,10 +244,7 @@ NumberFieldLabel.displayName = "NumberFieldLabel";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldScrubCursor = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.ScrubAreaCursor> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.ScrubAreaCursor> | null> }) => (
+const NumberFieldScrubCursor = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.ScrubAreaCursor> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.ScrubAreaCursor> | null> }) => (
     <BaseNumberField.ScrubAreaCursor
       ref={ref}
       className={cx("drop-shadow-[0_1px_1px_#0008] filter", className)}
@@ -273,10 +264,7 @@ NumberFieldScrubCursor.displayName = "NumberFieldScrubCursor";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldGroup = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Group> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Group> | null> }) => (
+const NumberFieldGroup = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Group> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Group> | null> }) => (
     <BaseNumberField.Group
       ref={ref}
       className={cx("flex", className)}
@@ -294,10 +282,7 @@ NumberFieldGroup.displayName = "NumberFieldGroup";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldInput = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Input> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Input> | null> }) => (
+const NumberFieldInput = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Input> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Input> | null> }) => (
     <BaseNumberField.Input
       ref={ref}
       className={cx(
@@ -335,10 +320,7 @@ NumberFieldInput.displayName = "NumberFieldInput";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldIncrement = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Increment> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Increment> | null> }) => (
+const NumberFieldIncrement = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Increment> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Increment> | null> }) => (
     <BaseNumberField.Increment
       ref={ref}
       className={cx(
@@ -374,10 +356,7 @@ NumberFieldIncrement.displayName = "NumberFieldIncrement";
  *
  * @see https://base-ui.com/react/components/number-field - Base UI documentation
  */
-const /**
-       *
-       */
-  NumberFieldDecrement = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Decrement> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Decrement> | null> }) => (
+const NumberFieldDecrement = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNumberField.Decrement> & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Decrement> | null> }) => (
     <BaseNumberField.Decrement
       ref={ref}
       className={cx(
@@ -427,12 +406,10 @@ function CursorGrowIcon(props: React.ComponentProps<"svg">) {
 }
 
 export {
-  NumberField,
-  NumberFieldDecrement,
-  NumberFieldGroup,
-  NumberFieldIncrement,
-  NumberFieldInput,
-  NumberFieldLabel,
-  type NumberFieldProps,
-  NumberFieldScrubCursor,
+    NumberField,
+    NumberFieldDecrement,
+    NumberFieldGroup,
+    NumberFieldIncrement,
+    NumberFieldInput,
+    NumberFieldLabel, NumberFieldScrubCursor, type NumberFieldProps
 };

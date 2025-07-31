@@ -164,10 +164,7 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
  * @name Scroll Area
  * @component
  */
-const /**
-       *
-       */
-  ScrollArea = (
+const ScrollArea = (
     { ref, className, children, orientation = "vertical", scrollbarClassName, thumbClassName, viewportClassName, ...props }: ScrollAreaProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => (
     <BaseScrollArea.Root
@@ -254,10 +251,7 @@ ScrollArea.displayName = "ScrollArea";
  * />
  * ```
  */
-const /**
-       *
-       */
-  ScrollBar = ({ ref, className, orientation = "vertical", ...props }: React.ComponentPropsWithoutRef<typeof BaseScrollArea.Scrollbar> & { ref?: React.RefObject<React.ElementRef<typeof BaseScrollArea.Scrollbar> | null> }) => (
+const ScrollBar = ({ ref, className, orientation = "vertical", ...props }: React.ComponentPropsWithoutRef<typeof BaseScrollArea.Scrollbar> & { ref?: React.RefObject<React.ElementRef<typeof BaseScrollArea.Scrollbar> | null> }) => (
     <BaseScrollArea.Scrollbar
       ref={ref}
       orientation={orientation}

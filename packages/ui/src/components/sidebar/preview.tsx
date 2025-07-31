@@ -9,7 +9,7 @@ import {
   SidebarItem,
 } from "@patternmode/ui";
 import { useState } from "react";
-import { cx } from "@/lib/utils";
+import { cx } from "../../lib/utils";
 
 export function Example() {
   const [isCollapsed, setIsCollapsed] = useState(false);

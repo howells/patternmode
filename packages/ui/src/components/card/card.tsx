@@ -1,9 +1,9 @@
 // Card Component [v1.0.0] - Pure Implementation
 
-import type { VariantProps } from "tailwind-variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -151,10 +151,7 @@ interface CardProps
  * @name Card
  * @component
  */
-const /**
-       *
-       */
-  Card = (
+const Card = (
     { ref: forwardedRef, render = <div />, variant, padding, fillHeight, className, ...props }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const defaultProps: useRender.ElementProps<"div"> = {
@@ -175,10 +172,7 @@ Card.displayName = "Card";
 /**
  * Card header component for titles, descriptions and actions.
  */
-const /**
-       *
-       */
-  CardHeader = ({ ref, className, border = false, ...props }: React.HTMLAttributes<HTMLDivElement> & { border?: boolean } & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const CardHeader = ({ ref, className, border = false, ...props }: React.HTMLAttributes<HTMLDivElement> & { border?: boolean } & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -194,10 +188,7 @@ CardHeader.displayName = "CardHeader";
 /**
  * Card title component with consistent typography.
  */
-const /**
-       *
-       */
-  CardTitle = ({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadingElement> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
+const CardTitle = ({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadingElement> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
     <h3
       ref={ref}
       className={cx(
@@ -212,10 +203,7 @@ CardTitle.displayName = "CardTitle";
 /**
  * Card description component with muted text styling.
  */
-const /**
-       *
-       */
-  CardDescription = ({ ref, className, ...props }: React.HTMLAttributes<HTMLParagraphElement> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
+const CardDescription = ({ ref, className, ...props }: React.HTMLAttributes<HTMLParagraphElement> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
     <p
       ref={ref}
       className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
@@ -227,10 +215,7 @@ CardDescription.displayName = "CardDescription";
 /**
  * Card action component for buttons or interactive elements in the header.
  */
-const /**
-       *
-       */
-  CardAction = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const CardAction = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div ref={ref} className={cx("flex items-center", className)} {...props} />
   );
 CardAction.displayName = "CardAction";
@@ -238,10 +223,7 @@ CardAction.displayName = "CardAction";
 /**
  * Card content component for main content area.
  */
-const /**
-       *
-       */
-  CardContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const CardContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div ref={ref} className={cx("p-6", className)} {...props} />
   );
 CardContent.displayName = "CardContent";
@@ -249,10 +231,7 @@ CardContent.displayName = "CardContent";
 /**
  * Card footer component for actions or additional content.
  */
-const /**
-       *
-       */
-  CardFooter = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const CardFooter = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx("flex items-center p-6 pt-0", className)}
@@ -262,13 +241,11 @@ const /**
 CardFooter.displayName = "CardFooter";
 
 export {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  type CardProps,
-  CardTitle,
-  cardVariants,
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader, CardTitle,
+    cardVariants, type CardProps
 };

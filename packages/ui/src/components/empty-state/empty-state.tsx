@@ -251,10 +251,7 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
  * @name Empty State
  * @component
  */
-const /**
-       *
-       */
-  EmptyState = (
+const EmptyState = (
     { ref, title, description, icon: Icon, primaryAction, secondaryAction, variant = "default", size = "default", className, ...props }: EmptyStateProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     return (

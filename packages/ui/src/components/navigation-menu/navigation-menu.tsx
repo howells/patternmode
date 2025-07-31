@@ -44,10 +44,7 @@ import { cx } from "../../lib/utils";
  * The container for the entire navigation menu structure.
  * Built on Base UI NavigationMenu.Root for full accessibility.
  */
-const /**
-       *
-       */
-  NavigationMenu = BaseNavigationMenu.Root;
+const NavigationMenu = BaseNavigationMenu.Root;
 
 /**
  * Navigation menu list component for menu item containers.
@@ -66,10 +63,7 @@ const /**
  * </NavigationMenuList>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuList = BaseNavigationMenu.List;
+const NavigationMenuList = BaseNavigationMenu.List;
 
 /**
  * Navigation menu item component for individual menu sections.
@@ -88,10 +82,7 @@ const /**
  * </NavigationMenuItem>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuItem = BaseNavigationMenu.Item;
+const NavigationMenuItem = BaseNavigationMenu.Item;
 
 /**
  * Navigation menu trigger component for dropdown buttons.
@@ -113,10 +104,7 @@ const /**
  * <NavigationMenuTrigger className="font-bold">Featured</NavigationMenuTrigger>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuTrigger = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Trigger> | null> }) => (
+const NavigationMenuTrigger = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Trigger> | null> }) => (
     <BaseNavigationMenu.Trigger
       ref={ref}
       className={cx(
@@ -169,10 +157,7 @@ NavigationMenuTrigger.displayName = "NavigationMenuTrigger";
  * </NavigationMenuContent>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuContent = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Content> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Content> | null> }) => (
+const NavigationMenuContent = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Content> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Content> | null> }) => (
     <BaseNavigationMenu.Content
       ref={ref}
       className={cx(
@@ -214,10 +199,7 @@ NavigationMenuContent.displayName = "NavigationMenuContent";
  * </NavigationMenuLink>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuLink = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Link> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Link> | null> }) => (
+const NavigationMenuLink = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Link> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Link> | null> }) => (
     <BaseNavigationMenu.Link
       ref={ref}
       className={cx(
@@ -261,10 +243,7 @@ NavigationMenuLink.displayName = "NavigationMenuLink";
  * </NavigationMenuItem>
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuItemLink = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Link> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Link> | null> }) => (
+const NavigationMenuItemLink = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Link> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Link> | null> }) => (
     <BaseNavigationMenu.Link
       ref={ref}
       className={cx(
@@ -310,10 +289,7 @@ NavigationMenuItemLink.displayName = "NavigationMenuItemLink";
  * <NavigationMenuViewport className="border-2 border-blue-200" />
  * ```
  */
-const /**
-       *
-       */
-  NavigationMenuViewport = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Viewport> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Viewport> | null> }) => (
+const NavigationMenuViewport = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Viewport> & { ref?: React.RefObject<React.ElementRef<typeof BaseNavigationMenu.Viewport> | null> }) => (
     <BaseNavigationMenu.Portal>
       <BaseNavigationMenu.Positioner
         sideOffset={10}
@@ -392,12 +368,12 @@ const /**
 NavigationMenuViewport.displayName = "NavigationMenuViewport";
 
 export {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuItemLink,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuItemLink,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    NavigationMenuViewport
 };

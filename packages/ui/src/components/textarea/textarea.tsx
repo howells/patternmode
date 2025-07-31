@@ -103,10 +103,7 @@ interface TextareaProps
  * @name Textarea
  * @component
  */
-const /**
-       *
-       */
-  Textarea = (
+const Textarea = (
     { ref: forwardedRef, className, hasError, autoResize = true, minRows = 2, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
   ) => {
     const baseClassName = cx(

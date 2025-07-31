@@ -3,13 +3,13 @@
 "use client";
 
 import type {
-  AvailableChartColorsKeys,
+    AvailableChartColorsKeys,
 } from "../../lib/chartUtils";
 
 import React from "react";
 import {
-  AvailableChartColors,
-  getColorClassName,
+    AvailableChartColors,
+    getColorClassName,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -106,10 +106,7 @@ const formatNumber = (num: number): string => {
  * @id category-bar
  * @name CategoryBar
  */
-const /**
-       *
-       */
-  BarLabels = ({ values }: { values: number[] }) => {
+const BarLabels = ({ values }: { values: number[] }) => {
     const sumValues = React.useMemo(() => sumNumericArray(values), [values]);
     let prefixSum = 0;
     let sumConsecutiveHiddenLabels = 0;
@@ -271,10 +268,7 @@ interface CategoryBarProps extends React.HTMLAttributes<HTMLDivElement> {
  * />
  * ```
  */
-const /**
-       *
-       */
-  CategoryBar = (
+const CategoryBar = (
     { ref: forwardedRef, values = [], colors = AvailableChartColors, marker, showLabels = true, className, ...props }: CategoryBarProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const markerBgColor = React.useMemo(

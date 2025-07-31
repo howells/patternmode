@@ -3,32 +3,32 @@
 
 "use client";
 
-import type { AxisDomain } from "recharts/types/util/types";
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
+import type { AxisDomain } from "recharts/types/util/types";
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 
 import {
-  Area,
-  CartesianGrid,
-  Dot,
-  Label,
-  Line,
-  AreaChart as RechartsAreaChart,
-  Legend as RechartsLegend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+    Area,
+    CartesianGrid,
+    Dot,
+    Label,
+    Line,
+    AreaChart as RechartsAreaChart,
+    Legend as RechartsLegend,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from "recharts";
 import { useOnWindowResize } from "../../hooks/use-on-window-resize";
 import {
-  AvailableChartColors,
+    AvailableChartColors,
 
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
-  hasOnlyOneValueForKey,
+    constructCategoryColors,
+    getColorClassName,
+    getYAxisDomain,
+    hasOnlyOneValueForKey,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -72,10 +72,7 @@ interface LegendItemProps {
  * @id area-chart
  * @name Area Chart
  */
-const /**
-       *
-       */
-  LegendItem = ({
+const LegendItem = ({
     name,
     color,
     onClick,
@@ -147,10 +144,7 @@ interface ScrollButtonProps {
  * Provides continuous scrolling when held down and proper disabled states.
  * Used for horizontal legend navigation when content overflows.
  */
-const /**
-       *
-       */
-  ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
+const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
     const /**
            *
            */
@@ -257,10 +251,7 @@ interface HasScrollProps {
  * Displays category labels with color indicators. Supports keyboard navigation
  * and horizontal scrolling when legend content overflows the container.
  */
-const /**
-       *
-       */
-  Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
+const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
     const {
       categories,
       colors = AvailableChartColors,
@@ -435,10 +426,7 @@ Legend.displayName = "Legend";
  * @param legendPosition - Horizontal alignment.
  * @param yAxisWidth - Width of Y axis for alignment.
  */
-const /**
-       *
-       */
-  ChartLegend = (
+const ChartLegend = (
     { payload }: any,
     categoryColors: Map<string, AvailableChartColorsKeys>,
     setLegendHeight: React.Dispatch<React.SetStateAction<number>>,
@@ -556,10 +544,7 @@ interface ChartTooltipProps {
  * Displays formatted data values with color-coded indicators and labels.
  * Provides consistent styling and layout for chart data on hover.
  */
-const /**
-       *
-       */
-  ChartTooltip = ({
+const ChartTooltip = ({
     active,
     payload,
     label,
@@ -884,10 +869,7 @@ interface AreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * @see https://recharts.org/en-US/api/AreaChart - Recharts documentation
  */
-const /**
-       *
-       */
-  AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],

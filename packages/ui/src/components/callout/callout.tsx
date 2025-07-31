@@ -1,7 +1,7 @@
 // Callout Component [v1.0.0] - Pure Implementation
 
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/subheading";
@@ -161,10 +161,7 @@ interface CalloutProps
  * @name Callout
  * @component
  */
-const /**
-       *
-       */
-  Callout = (
+const Callout = (
     { ref: forwardedRef, title, icon: Icon, className, variant, children, ...props }: CalloutProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     return (
@@ -192,4 +189,4 @@ const /**
 
 Callout.displayName = "Callout";
 
-export { Callout, type CalloutProps, calloutVariants };
+export { Callout, calloutVariants, type CalloutProps };

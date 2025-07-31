@@ -1,8 +1,8 @@
-import type { VariantProps } from "tailwind-variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
@@ -205,10 +205,7 @@ interface ButtonProps
  * <Button render={<Link href="/page" />}>Navigation</Button>
  * ```
  */
-const /**
-       *
-       */
-  Button = ({
+const Button = ({
     ref: forwardedRef,
     render = <button />,
     isLoading = false,
@@ -681,4 +678,24 @@ const /**
 
 Button.displayName = "Button";
 
-export { Button, type ButtonProps, buttonVariants };
+/**
+ * Button size options that can be reused in other components.
+ */
+export type ButtonSize = "xs" | "sm" | "default" | "lg";
+
+/**
+ * Array of all button size options for use in configs and other places.
+ */
+export const buttonSizeOptions: ButtonSize[] = ["xs", "sm", "default", "lg"];
+
+/**
+ * Icon button size options that can be reused in other components.
+ */
+export type IconButtonSize = "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+
+/**
+ * Array of all icon button size options for use in configs and other places.
+ */
+export const iconButtonSizeOptions: IconButtonSize[] = ["icon-xs", "icon-sm", "icon", "icon-lg"];
+
+export { Button, buttonVariants, type ButtonProps };

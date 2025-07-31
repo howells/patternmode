@@ -71,31 +71,31 @@
 
 "use client";
 
-import type { AxisDomain } from "recharts/types/util/types";
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
+import type { AxisDomain } from "recharts/types/util/types";
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 
 import {
-  CartesianGrid,
-  Dot,
-  Label,
-  Line,
-  Legend as RechartsLegend,
-  LineChart as RechartsLineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+    CartesianGrid,
+    Dot,
+    Label,
+    Line,
+    Legend as RechartsLegend,
+    LineChart as RechartsLineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from "recharts";
 import { useOnWindowResize } from "../../hooks/use-on-window-resize";
 import {
-  AvailableChartColors,
+    AvailableChartColors,
 
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
-  hasOnlyOneValueForKey,
+    constructCategoryColors,
+    getColorClassName,
+    getYAxisDomain,
+    hasOnlyOneValueForKey,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -135,10 +135,7 @@ interface LegendItemProps {
  * @id line-chart
  * @name Line Chart
  */
-const /**
-       *
-       */
-  LegendItem = ({
+const LegendItem = ({
     name,
     color,
     onClick,
@@ -210,10 +207,7 @@ interface ScrollButtonProps {
  * Provides left/right navigation for legends that exceed container width.
  * Supports continuous scrolling with mouse hold and keyboard interaction.
  */
-const /**
-       *
-       */
-  ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
+const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
     const /**
            *
            */
@@ -332,10 +326,7 @@ interface HasScrollProps {
  * />
  * ```
  */
-const /**
-       *
-       */
-  Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
+const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
     const {
       categories,
       colors = AvailableChartColors,
@@ -510,10 +501,7 @@ Legend.displayName = "Legend";
  * @param legendPosition - Legend alignment position.
  * @param yAxisWidth - Y-axis width for positioning.
  */
-const /**
-       *
-       */
-  ChartLegend = (
+const ChartLegend = (
     { payload }: any,
     categoryColors: Map<string, AvailableChartColorsKeys>,
     setLegendHeight: React.Dispatch<React.SetStateAction<number>>,
@@ -645,10 +633,7 @@ interface ChartTooltipProps {
  * />
  * ```
  */
-const /**
-       *
-       */
-  ChartTooltip = ({
+const ChartTooltip = ({
     active,
     payload,
     label,
@@ -931,10 +916,7 @@ interface LineChartProps extends React.HTMLAttributes<HTMLDivElement> {
  * />
  * ```
  */
-const /**
-       *
-       */
-  LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],

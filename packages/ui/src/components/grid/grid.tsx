@@ -218,10 +218,7 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
  * @name Grid
  * @component
  */
-const /**
-       *
-       */
-  Grid = (
+const Grid = (
     { ref, columns = 6, rows, gap = 4, className, children, minHeight = "none", ...props }: GridProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const responsiveGridStyles = generateResponsiveGridStyles(columns, rows);
@@ -302,10 +299,7 @@ interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
  * <GridCell colStart={3} rowStart={2}>Positioned</GridCell>
  * ```
  */
-const /**
-       *
-       */
-  GridCell = (
+const GridCell = (
     { ref, colSpan, rowSpan, colStart, rowStart, className, children, ...props }: GridCellProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const spanClasses = [
@@ -387,10 +381,7 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * />
  * ```
  */
-const /**
-       *
-       */
-  GridAuto = ({ ref, cellCount = 6, renderCell, ...gridProps }: GridAutoProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const GridAuto = ({ ref, cellCount = 6, renderCell, ...gridProps }: GridAutoProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <Grid ref={ref} {...gridProps}>
         {Array.from({ length: cellCount }, (_, index) => (
@@ -405,12 +396,7 @@ const /**
 GridAuto.displayName = "GridAuto";
 
 export {
-  Grid,
-  GridAuto,
-  GridCell,
-  type GridCellProps,
-  gridCellVariants,
-  type GridProps,
-  gridVariants,
-  type ResponsiveValue,
+    Grid,
+    GridAuto,
+    GridCell, gridCellVariants, gridVariants, type GridCellProps, type GridProps, type ResponsiveValue
 };

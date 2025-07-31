@@ -168,10 +168,7 @@ interface TooltipProps
  * @name Tooltip
  * @component
  */
-const /**
-   *
-   */
-  Tooltip = ({
+const Tooltip = ({
     ref: forwardedRef,
     children,
     className,
@@ -249,43 +246,22 @@ function ArrowSvg(props: React.ComponentProps<"svg">) {
 }
 
 // Additional exports for more flexibility
-const /**
-   *
-   */
-  TooltipProvider = BaseTooltip.Provider;
-const /**
-   *
-   */
-  TooltipRoot = BaseTooltip.Root;
-const /**
-   *
-   */
-  TooltipTrigger = BaseTooltip.Trigger;
-const /**
-   *
-   */
-  TooltipPortal = BaseTooltip.Portal;
-const /**
-   *
-   */
-  TooltipPositioner = BaseTooltip.Positioner;
-const /**
-   *
-   */
-  TooltipPopup = BaseTooltip.Popup;
-const /**
-   *
-   */
-  TooltipArrow = BaseTooltip.Arrow;
+const TooltipProvider = BaseTooltip.Provider;
+const TooltipRoot = BaseTooltip.Root;
+const TooltipTrigger = BaseTooltip.Trigger;
+const TooltipPortal = BaseTooltip.Portal;
+const TooltipPositioner = BaseTooltip.Positioner;
+const TooltipPopup = BaseTooltip.Popup;
+const TooltipArrow = BaseTooltip.Arrow;
 
 export {
-  Tooltip,
-  TooltipArrow,
-  TooltipPopup,
-  TooltipPortal,
-  TooltipPositioner,
-  TooltipProvider,
-  TooltipRoot,
-  TooltipTrigger,
-  type TooltipProps,
+    Tooltip,
+    TooltipArrow,
+    TooltipPopup,
+    TooltipPortal,
+    TooltipPositioner,
+    TooltipProvider,
+    TooltipRoot,
+    TooltipTrigger,
+    type TooltipProps
 };

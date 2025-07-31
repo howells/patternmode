@@ -2,10 +2,10 @@
 
 // Tremor Input [v2.0.0] - Base UI
 
-import type { VariantProps } from "tailwind-variants";
 import { Input as BaseInput } from "@base-ui-components/react/input";
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { config } from "../../lib/config";
@@ -205,10 +205,7 @@ interface InputProps
  * @name Input
  * @component
  */
-const /**
-       *
-       */
-  Input = (
+const Input = (
     { ref: forwardedRef, className, inputClassName, hasError, enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = config.getIconStrokeWidth(), minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
   ) => {
     const [typeState, setTypeState] = React.useState(type);

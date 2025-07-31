@@ -237,10 +237,7 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
  * @id split-button
  * @name Split Button
  */
-const /**
-       *
-       */
-  SplitButton = (
+const SplitButton = (
     { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
@@ -355,4 +352,4 @@ const /**
 
 SplitButton.displayName = "SplitButton";
 
-export { SplitButton, type SplitButtonProps, splitButtonVariants };
+export { SplitButton, splitButtonVariants, type SplitButtonProps };

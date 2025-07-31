@@ -6,7 +6,8 @@
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.organizeImports": "never",
+    "source.sortImports": "never"
   },
 
   // Silent the stylistic rules in you IDE, but still auto fix them
@@ -80,6 +81,9 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.suggest.autoImports": true,
   "typescript.suggest.paths": true,
+  "typescript.preferences.organizeImportsIgnoreCase": "auto",
+  "typescript.preferences.organizeImportsCollation": "unicode",
+  "typescript.preferences.organizeImportsNumericCollation": true,
   "typescript.suggest.completeFunctionCalls": true,
   "typescript.referencesCodeLens.enabled": true,
   "typescript.implementationsCodeLens.enabled": true,

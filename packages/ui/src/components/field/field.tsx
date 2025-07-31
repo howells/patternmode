@@ -80,10 +80,7 @@ import { Text } from "../text/text";
  * provides the foundation for accessible form fields with label association,
  * validation states, and proper ARIA attributes.
  */
-const /**
-       *
-       */
-  Field = BaseField.Root;
+const Field = BaseField.Root;
 
 /**
  * Field label component.
@@ -98,10 +95,7 @@ const /**
  * @id field
  * @name Field
  */
-const /**
-       *
-       */
-  FieldLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => (
+const FieldLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => (
     <BaseField.Label
       ref={ref}
       className={cx(
@@ -128,10 +122,7 @@ FieldLabel.displayName = "FieldLabel";
  * @param className - Additional CSS classes.
  * @param render - Custom render function for different control types.
  */
-const /**
-       *
-       */
-  FieldControl = ({ ref, className, render, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => (
+const FieldControl = ({ ref, className, render, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => (
     <BaseField.Control
       ref={ref}
       className={className}
@@ -149,10 +140,7 @@ FieldControl.displayName = "FieldControl";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FieldDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => (
+const FieldDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => (
     <BaseField.Description
       ref={ref}
       render={descriptionProps => (
@@ -181,10 +169,7 @@ FieldDescription.displayName = "FieldDescription";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FieldError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => (
+const FieldError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => (
     <BaseField.Error
       ref={ref}
       className={cx(
@@ -207,16 +192,13 @@ FieldError.displayName = "FieldError";
  * Provides validation state information for custom validation logic
  * and programmatic access to field validity status.
  */
-const /**
-       *
-       */
-  FieldValidity = BaseField.Validity;
+const FieldValidity = BaseField.Validity;
 
 export {
-  Field,
-  FieldControl,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  FieldValidity,
+    Field,
+    FieldControl,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldValidity
 };

@@ -117,10 +117,7 @@ import { Icon as IconComponent } from "../icon/icon";
  * </ContextMenu>
  * ```
  */
-const /**
-       *
-       */
-  ContextMenu = ({ ref: _forwardedRef, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Root> | null> }) => (
+const ContextMenu = ({ ref: _forwardedRef, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Root> | null> }) => (
     <BaseContextMenu.Root {...props} />
   );
 
@@ -132,10 +129,7 @@ ContextMenu.displayName = "ContextMenu";
  * Defines the area that will open the context menu when right-clicked or long-pressed.
  * Wraps content that should respond to context menu interactions.
  */
-const /**
-       *
-       */
-  ContextMenuTrigger = BaseContextMenu.Trigger;
+const ContextMenuTrigger = BaseContextMenu.Trigger;
 
 /**
  * Context menu group component.
@@ -143,10 +137,7 @@ const /**
  * Groups related menu items together for better organization and accessibility.
  * Used to create logical sections within the menu.
  */
-const /**
-       *
-       */
-  ContextMenuGroup = BaseContextMenu.Group;
+const ContextMenuGroup = BaseContextMenu.Group;
 
 /**
  * Context menu submenu root component.
@@ -154,10 +145,7 @@ const /**
  * Creates nested submenu functionality within context menus.
  * Provides context for submenu triggers and content.
  */
-const /**
-       *
-       */
-  ContextMenuSubmenu = BaseContextMenu.SubmenuRoot;
+const ContextMenuSubmenu = BaseContextMenu.SubmenuRoot;
 
 /**
  * Context menu radio group component.
@@ -165,10 +153,7 @@ const /**
  * Groups radio items together for mutually exclusive selection.
  * Only one radio item can be selected within a group.
  */
-const /**
-       *
-       */
-  ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
+const ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
 
 /**
  * Context menu submenu trigger component.
@@ -179,10 +164,7 @@ const /**
  * @param className - Additional CSS classes.
  * @param children - Content of the submenu trigger.
  */
-const /**
-       *
-       */
-  ContextMenuSubmenuTrigger = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.SubmenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.SubmenuTrigger> | null> }) => (
+const ContextMenuSubmenuTrigger = ({ ref: forwardedRef, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.SubmenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.SubmenuTrigger> | null> }) => (
     <BaseContextMenu.SubmenuTrigger
       ref={forwardedRef}
       className={cx(
@@ -215,10 +197,7 @@ ContextMenuSubmenuTrigger.displayName = "ContextMenuSubmenuTrigger";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  ContextMenuSubmenuContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Popup> | null> }) => (
+const ContextMenuSubmenuContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Popup> | null> }) => (
     <BaseContextMenu.Portal>
       <BaseContextMenu.Positioner sideOffset={8} collisionPadding={8}>
         <BaseContextMenu.Popup
@@ -262,10 +241,7 @@ ContextMenuSubmenuContent.displayName = "ContextMenuSubmenuContent";
  * @param collisionPadding - Padding for collision detection (default: 8).
  * @param align - Menu alignment relative to trigger.
  */
-const /**
-       *
-       */
-  ContextMenuContent = (
+const ContextMenuContent = (
     { ref: forwardedRef, className, sideOffset = 8, collisionPadding = 8, align = "center", ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Popup> & {
     /**
      * Distance from trigger element.
@@ -328,10 +304,7 @@ ContextMenuContent.displayName = "ContextMenuContent";
  * @param hint - Hint text to display on the right side.
  * @param children - Content of the menu item.
  */
-const /**
-       *
-       */
-  ContextMenuItem = ({ ref: forwardedRef, className, shortcut, hint, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Item> & {
+const ContextMenuItem = ({ ref: forwardedRef, className, shortcut, hint, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Item> & {
   /**
    * Keyboard shortcut text to display.
    */
@@ -391,10 +364,7 @@ ContextMenuItem.displayName = "ContextMenuItem";
  * @param checked - Whether the checkbox is checked.
  * @param children - Content of the checkbox item.
  */
-const /**
-       *
-       */
-  ContextMenuCheckboxItem = (
+const ContextMenuCheckboxItem = (
     { ref: forwardedRef, className, hint, shortcut, children, checked, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.CheckboxItem> & {
     /**
      * Keyboard shortcut text to display.
@@ -468,10 +438,7 @@ ContextMenuCheckboxItem.displayName = "ContextMenuCheckboxItem";
  * @param shortcut - Keyboard shortcut text to display.
  * @param children - Content of the radio item.
  */
-const /**
-       *
-       */
-  ContextMenuRadioItem = ({ ref: forwardedRef, className, hint, shortcut, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioItem> & {
+const ContextMenuRadioItem = ({ ref: forwardedRef, className, hint, shortcut, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioItem> & {
   /**
    * Keyboard shortcut text to display.
    */
@@ -546,10 +513,7 @@ ContextMenuRadioItem.displayName = "ContextMenuRadioItem";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  ContextMenuLabel = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.GroupLabel> | null> }) => (
+const ContextMenuLabel = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.GroupLabel> | null> }) => (
     <BaseContextMenu.GroupLabel
       ref={forwardedRef}
       className={cx(
@@ -573,10 +537,7 @@ ContextMenuLabel.displayName = "ContextMenuLabel";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  ContextMenuSeparator = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Separator> | null> }) => (
+const ContextMenuSeparator = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Separator> | null> }) => (
     <BaseContextMenu.Separator
       ref={forwardedRef}
       className={cx(
@@ -598,10 +559,7 @@ ContextMenuSeparator.displayName = "ContextMenuSeparator";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  ContextMenuIconWrapper = ({
+const ContextMenuIconWrapper = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLSpanElement>) => {
@@ -620,18 +578,18 @@ const /**
   };
 
 export {
-  ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuGroup,
-  ContextMenuIconWrapper,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuSubmenu,
-  ContextMenuSubmenuContent,
-  ContextMenuSubmenuTrigger,
-  ContextMenuTrigger,
+    ContextMenu,
+    ContextMenuCheckboxItem,
+    ContextMenuContent,
+    ContextMenuGroup,
+    ContextMenuIconWrapper,
+    ContextMenuItem,
+    ContextMenuLabel,
+    ContextMenuRadioGroup,
+    ContextMenuRadioItem,
+    ContextMenuSeparator,
+    ContextMenuSubmenu,
+    ContextMenuSubmenuContent,
+    ContextMenuSubmenuTrigger,
+    ContextMenuTrigger
 };

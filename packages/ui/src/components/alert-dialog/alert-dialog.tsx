@@ -36,10 +36,7 @@ import { Text } from "../text/text";
  *
  * @see https://base-ui.com/react/components/alert-dialog - Base UI documentation
  */
-const /**
-       *
-       */
-  AlertDialog = BaseAlertDialog.Root;
+const AlertDialog = BaseAlertDialog.Root;
 
 /**
  * Trigger button that opens the alert dialog.
@@ -62,10 +59,7 @@ const /**
  * </AlertDialogTrigger>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogTrigger = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Trigger> | null> }) => (
+const AlertDialogTrigger = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Trigger> | null> }) => (
     <BaseAlertDialog.Trigger
       ref={ref}
       className={cx(
@@ -85,10 +79,7 @@ const /**
   );
 AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
-const /**
-       *
-       */
-  AlertDialogPortal = BaseAlertDialog.Portal;
+const AlertDialogPortal = BaseAlertDialog.Portal;
 
 /**
  * Semi-transparent backdrop that appears behind the alert dialog.
@@ -101,10 +92,7 @@ const /**
  * <AlertDialogBackdrop />
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Backdrop> | null> }) => (
+const AlertDialogBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Backdrop> | null> }) => (
     <BaseAlertDialog.Backdrop
       ref={ref}
       className={cx(
@@ -139,10 +127,7 @@ AlertDialogBackdrop.displayName = "AlertDialogBackdrop";
  * </AlertDialogContent>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogContent = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Popup> | null> }) => (
+const AlertDialogContent = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Popup> | null> }) => (
     <AlertDialogPortal>
       <AlertDialogBackdrop />
       <BaseAlertDialog.Popup
@@ -174,10 +159,7 @@ AlertDialogContent.displayName = "AlertDialogContent";
  * </AlertDialogHeader>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const AlertDialogHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -204,10 +186,7 @@ AlertDialogHeader.displayName = "AlertDialogHeader";
  * </AlertDialogFooter>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const AlertDialogFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -230,18 +209,14 @@ AlertDialogFooter.displayName = "AlertDialogFooter";
  * <AlertDialogTitle>Delete Account</AlertDialogTitle>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogTitle = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Title> | null> }) => (
-    <BaseAlertDialog.Title ref={ref} className={cx(className)} {...props}>
-      {typeof children === "string"
-        ? (
-            <Subheading level={3}>{children}</Subheading>
-          )
-        : (
-            children
-          )}
+const AlertDialogTitle = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Title> | null> }) => (
+    <BaseAlertDialog.Title
+      ref={ref}
+      className={cx(className)}
+      render={typeof children === "string" ? <Subheading level={3} /> : undefined}
+      {...props}
+    >
+      {children}
     </BaseAlertDialog.Title>
   );
 AlertDialogTitle.displayName = "AlertDialogTitle";
@@ -260,12 +235,14 @@ AlertDialogTitle.displayName = "AlertDialogTitle";
  * </AlertDialogDescription>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogDescription = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Description> | null> }) => (
-    <BaseAlertDialog.Description ref={ref} className={cx(className)} {...props}>
-      {typeof children === "string" ? <Text>{children}</Text> : children}
+const AlertDialogDescription = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Description> | null> }) => (
+    <BaseAlertDialog.Description
+      ref={ref}
+      className={cx(className)}
+      render={typeof children === "string" ? <Text /> : undefined}
+      {...props}
+    >
+      {children}
     </BaseAlertDialog.Description>
   );
 AlertDialogDescription.displayName = "AlertDialogDescription";
@@ -285,10 +262,7 @@ AlertDialogDescription.displayName = "AlertDialogDescription";
  * <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogAction = ({ ref, className, variant = "default", ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & {
+const AlertDialogAction = ({ ref, className, variant = "default", ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & {
     variant?: "default" | "destructive";
   } & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
     <BaseAlertDialog.Close
@@ -316,10 +290,7 @@ AlertDialogAction.displayName = "AlertDialogAction";
  * <AlertDialogCancel>Cancel</AlertDialogCancel>
  * ```
  */
-const /**
-       *
-       */
-  AlertDialogCancel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
+const AlertDialogCancel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
     <BaseAlertDialog.Close
       ref={ref}
       render={(
@@ -347,5 +318,5 @@ export {
   AlertDialogHeader,
   AlertDialogPortal,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTrigger
 };

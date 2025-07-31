@@ -64,18 +64,18 @@
  * ```
  */
 
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import {
-  clampValue,
-  defaultValueFormatter,
-  getProgressPercentage,
-  progressAnimationClasses,
-  progressLabelVariants,
-  progressValueVariants,
-  sharedProgressVariants,
+    clampValue,
+    defaultValueFormatter,
+    getProgressPercentage,
+    progressAnimationClasses,
+    progressLabelVariants,
+    progressValueVariants,
+    sharedProgressVariants,
 } from "../progress-utils";
 
 /**
@@ -307,10 +307,7 @@ interface ProgressCircleProps
  * @name Progress Circle
  * @component
  */
-const /**
-       *
-       */
-  ProgressCircle = (
+const ProgressCircle = (
     { ref, value = 0, max = 100, radius = 32, strokeWidth = 6, showAnimation = true, variant = "default", size, className, children, label, showValue = false, valueFormatter, "aria-label": ariaLabel, "aria-describedby": ariaDescribedBy, ...props }: ProgressCircleProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const safeValue = value !== null ? clampValue(value, 0, max) : null;
@@ -411,4 +408,4 @@ const /**
 
 ProgressCircle.displayName = "ProgressCircle";
 
-export { ProgressCircle, type ProgressCircleProps, progressCircleVariants };
+export { ProgressCircle, progressCircleVariants, type ProgressCircleProps };

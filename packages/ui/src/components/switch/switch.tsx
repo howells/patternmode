@@ -1,8 +1,8 @@
 // Tremor Switch [v1.0.0] - Base UI
 
-import type { VariantProps } from "tailwind-variants";
 import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
@@ -124,10 +124,7 @@ interface SwitchProps
  * @name Switch
  * @component
  */
-const /**
-       *
-       */
-  Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null> }) => {
+const Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null> }) => {
     const { root, thumb } = switchVariants({ size });
 
     if (label) {
@@ -161,13 +158,7 @@ const /**
 Switch.displayName = "Switch";
 
 // Export individual components for advanced usage
-const /**
-       *
-       */
-  SwitchRoot = BaseSwitch.Root;
-const /**
-       *
-       */
-  SwitchThumb = BaseSwitch.Thumb;
+const SwitchRoot = BaseSwitch.Root;
+const SwitchThumb = BaseSwitch.Thumb;
 
 export { Switch, SwitchRoot, SwitchThumb, switchVariants };

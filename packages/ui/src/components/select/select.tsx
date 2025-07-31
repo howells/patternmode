@@ -1,7 +1,7 @@
-import type { VariantProps } from "tailwind-variants";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import * as React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
@@ -30,23 +30,14 @@ import { Icon } from "../icon/icon";
  *
  * @see https://base-ui.com/react/components/select - Base UI documentation
  */
-const /**
-       *
-       */
-  Select = BaseSelect.Root;
-const /**
-       *
-       */
-  SelectGroup = BaseSelect.Group;
+const Select = BaseSelect.Root;
+const SelectGroup = BaseSelect.Group;
 
 /**
  * Displays the selected value or placeholder text in the trigger.
  * Shows the current selection and placeholder when no value is selected.
  */
-const /**
-       *
-       */
-  SelectValue = BaseSelect.Value;
+const SelectValue = BaseSelect.Value;
 
 const selectTriggerVariants = tv({
   base: [
@@ -98,10 +89,7 @@ const selectTriggerVariants = tv({
  * </SelectTrigger>
  * ```
  */
-const /**
-       *
-       */
-  SelectTrigger = ({ ref, className, hasError, size, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>
+const SelectTrigger = ({ ref, className, hasError, size, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>
     & VariantProps<typeof selectTriggerVariants> & {
     /**
      * Whether to display error styling.
@@ -145,10 +133,7 @@ SelectTrigger.displayName = "SelectTrigger";
  * Automatically shows/hides based on scroll position in long option lists.
  * Provides visual indication and click handler for scrolling upward.
  */
-const /**
-       *
-       */
-  SelectScrollUpButton = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollUpArrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollUpArrow> | null> }) => (
+const SelectScrollUpButton = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollUpArrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollUpArrow> | null> }) => (
     <BaseSelect.ScrollUpArrow
       ref={ref}
       className={cx(
@@ -168,10 +153,7 @@ SelectScrollUpButton.displayName = "SelectScrollUpButton";
  * Automatically shows/hides based on scroll position in long option lists.
  * Provides visual indication and click handler for scrolling downward.
  */
-const /**
-       *
-       */
-  SelectScrollDownButton = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollDownArrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollDownArrow> | null> }) => (
+const SelectScrollDownButton = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollDownArrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollDownArrow> | null> }) => (
     <BaseSelect.ScrollDownArrow
       ref={ref}
       className={cx(
@@ -196,10 +178,7 @@ SelectScrollDownButton.displayName = "SelectScrollDownButton";
  * Provides subtle background overlay and can close the dropdown when clicked.
  * Less prominent than modal backdrops, suitable for dropdown interactions.
  */
-const /**
-       *
-       */
-  SelectBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Backdrop> | null> }) => (
+const SelectBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Backdrop> | null> }) => (
     <BaseSelect.Backdrop
       ref={ref}
       className={cx(
@@ -217,10 +196,7 @@ const /**
   );
 SelectBackdrop.displayName = "SelectBackdrop";
 
-const /**
-       *
-       */
-  SelectPortal = BaseSelect.Portal;
+const SelectPortal = BaseSelect.Portal;
 
 /**
  * Positioner component that handles dropdown placement and collision detection.
@@ -228,10 +204,7 @@ const /**
  * Automatically positions the dropdown relative to the trigger with collision avoidance.
  * Typically used internally by SelectContent.
  */
-const /**
-       *
-       */
-  SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Positioner> | null> }) => (
+const SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Positioner> | null> }) => (
     <BaseSelect.Positioner
       ref={ref}
       sideOffset={sideOffset}
@@ -261,10 +234,7 @@ SelectPositioner.displayName = "SelectPositioner";
  * </SelectContent>
  * ```
  */
-const /**
-       *
-       */
-  SelectContent = (
+const SelectContent = (
     { ref, className, children, sideOffset = 8, collisionPadding = 10, side = "bottom", align = "start", ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Popup> & {
     /**
      * Distance from the trigger element.
@@ -342,10 +312,7 @@ SelectContent.displayName = "SelectContent";
  * </SelectGroup>
  * ```
  */
-const /**
-       *
-       */
-  SelectGroupLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.GroupLabel> | null> }) => (
+const SelectGroupLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.GroupLabel> | null> }) => (
     <BaseSelect.GroupLabel
       ref={ref}
       className={cx(
@@ -373,10 +340,7 @@ SelectGroupLabel.displayName = "SelectGroupLabel";
  * <SelectItem value="option2" disabled>Option 2 (disabled)</SelectItem>
  * ```
  */
-const /**
-       *
-       */
-  SelectItem = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Item> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Item> | null> }) => {
+const SelectItem = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Item> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Item> | null> }) => {
     return (
       <BaseSelect.Item
         ref={ref}
@@ -411,10 +375,7 @@ const /**
   };
 SelectItem.displayName = "SelectItem";
 
-const /**
-       *
-       */
-  SelectSeparator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Separator> | null> }) => (
+const SelectSeparator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Separator> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Separator> | null> }) => (
     <BaseSelect.Separator
       ref={ref}
       className={cx(
@@ -429,10 +390,7 @@ const /**
   );
 SelectSeparator.displayName = "SelectSeparator";
 
-const /**
-       *
-       */
-  SelectArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Arrow> | null> }) => (
+const SelectArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Arrow> | null> }) => (
     <BaseSelect.Arrow
       ref={ref}
       className={cx(
@@ -465,17 +423,17 @@ const /**
 SelectArrow.displayName = "SelectArrow";
 
 export {
-  Select,
-  SelectArrow,
-  SelectBackdrop,
-  SelectContent,
-  SelectGroup,
-  SelectGroupLabel,
-  SelectItem,
-  SelectPortal,
-  SelectPositioner,
-  SelectSeparator,
-  SelectTrigger,
-  selectTriggerVariants,
-  SelectValue,
+    Select,
+    SelectArrow,
+    SelectBackdrop,
+    SelectContent,
+    SelectGroup,
+    SelectGroupLabel,
+    SelectItem,
+    SelectPortal,
+    SelectPositioner,
+    SelectSeparator,
+    SelectTrigger,
+    selectTriggerVariants,
+    SelectValue
 };

@@ -2,10 +2,10 @@
 
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React, { createContext, use } from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
@@ -22,10 +22,7 @@ import { getIconSizeForContext, Icon } from "../icon/icon";
  * <ToggleGroup>Content</ToggleGroup>
  * ```
  */
-const /**
-       *
-       */
-  ToggleGroupContext = createContext<{
+const ToggleGroupContext = createContext<{
     size: VariantProps<typeof toggleGroupVariants>["size"];
     variant: VariantProps<typeof toggleGroupVariants>["variant"];
   }>({
@@ -124,10 +121,7 @@ interface ToggleGroupProps
  * @name Toggle Group
  * @component
  */
-const /**
-       *
-       */
-  ToggleGroup = ({ ref, className, variant, size, orientation, children, ...props }: ToggleGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggleGroup> | null> }) => {
+const ToggleGroup = ({ ref, className, variant, size, orientation, children, ...props }: ToggleGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggleGroup> | null> }) => {
     const { root } = toggleGroupVariants({ variant, size, orientation });
 
     return (
@@ -159,10 +153,7 @@ interface ToggleGroupItemProps
   iconStrokeWidth?: number;
 }
 
-const /**
-       *
-       */
-  ToggleGroupItem = (
+const ToggleGroupItem = (
     { ref, className, variant, size, children, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), ...props }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
   ) => {
     const context = use(ToggleGroupContext);
@@ -258,4 +249,4 @@ ToggleGroupItem.displayName = "ToggleGroupItem";
 // Export the components
 export { ToggleGroup, ToggleGroupItem, toggleGroupVariants };
 
-export type { ToggleGroupItemProps, ToggleGroupProps };
+    export type { ToggleGroupItemProps, ToggleGroupProps };

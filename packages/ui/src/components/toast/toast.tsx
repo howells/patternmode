@@ -212,10 +212,7 @@ const globalToastManager = new ToastManager();
  * @id toast
  * @name Toast
  */
-const /**
-       *
-       */
-  ToastManagerContext
+const ToastManagerContext
   = React.createContext<ToastManager>(globalToastManager);
 
 // Provider component that mimics Base UI's Toast.Provider
@@ -236,10 +233,7 @@ interface ToastProviderProps {
   closeButton?: boolean;
 }
 
-const /**
-       *
-       */
-  ToastProvider: React.FC<ToastProviderProps> = ({
+const ToastProvider: React.FC<ToastProviderProps> = ({
     children,
     limit = 3,
     timeout = 5000,
@@ -301,28 +295,25 @@ const useToast = () => {
 };
 
 // Base UI-style component exports (for API compatibility)
-const /**
-       *
-       */
-  Toast = {
+const Toast = {
     Provider: ToastProvider,
     useToastManager,
   };
 
 // Additional exports for convenience
 export {
-  Toast,
-  ToastManager,
-  ToastProvider,
-  toastVariants,
-  useToast,
-  useToastManager,
+    Toast,
+    ToastManager,
+    ToastProvider,
+    toastVariants,
+    useToast,
+    useToastManager
 };
 
-export type {
-  BaseToastOptions,
-  StoredToast,
-  ToastData,
-  ToastPromiseOptions,
-  ToastType,
-};
+    export type {
+        BaseToastOptions,
+        StoredToast,
+        ToastData,
+        ToastPromiseOptions,
+        ToastType
+    };

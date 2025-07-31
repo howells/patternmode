@@ -74,21 +74,21 @@
 
 "use client";
 
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import React from "react";
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 
 import {
-  Pie,
-  PieChart as ReChartsDonutChart,
-  ResponsiveContainer,
-  Sector,
-  Tooltip,
+    Pie,
+    PieChart as ReChartsDonutChart,
+    ResponsiveContainer,
+    Sector,
+    Tooltip,
 } from "recharts";
 import {
-  AvailableChartColors,
+    AvailableChartColors,
 
-  constructCategoryColors,
-  getColorClassName,
+    constructCategoryColors,
+    getColorClassName,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -224,10 +224,7 @@ interface ChartTooltipProps {
  * @id donut-chart
  * @name Donut Chart
  */
-const /**
-       *
-       */
-  ChartTooltip = ({
+const ChartTooltip = ({
     active,
     payload,
     valueFormatter,
@@ -491,10 +488,7 @@ interface DonutChartProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * @see https://recharts.org/ - Recharts charting library documentation
  */
-const /**
-       *
-       */
-  DonutChart = (
+const DonutChart = (
     { ref: forwardedRef, data = [], value, category, colors = AvailableChartColors, variant = "donut", valueFormatter = (value: number) => value.toString(), label, showLabel = false, showTooltip = true, onValueChange, tooltipCallback, customTooltip, className, ...other }: DonutChartProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const /**

@@ -2,33 +2,30 @@
 
 "use client";
 
-import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
-import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
-import type { Locale } from "date-fns";
-import type { VariantProps } from "tailwind-variants";
-import type { Matcher } from "../calendar/calendar";
 import { Time } from "@internationalized/date";
+import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import {
-
-  useDateSegment,
-  useTimeField,
+    useDateSegment,
+    useTimeField,
 } from "@react-aria/datepicker";
+import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import {
-
-  useTimeFieldState,
+    useTimeFieldState,
 } from "@react-stately/datepicker";
+import type { Locale } from "date-fns";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Calendar, Minus } from "lucide-react";
 import * as React from "react";
+import type { VariantProps } from "tailwind-variants";
+import type { Matcher } from "../calendar/calendar";
 
 import { tv } from "tailwind-variants";
 
 import { cx, focusInput, focusRing, hasErrorInput } from "../../lib/utils";
 import { Button } from "../button/button";
 import {
-  Calendar as CalendarPrimitive,
-
+    Calendar as CalendarPrimitive,
 } from "../calendar/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover/popover";
 
@@ -62,10 +59,7 @@ interface TimeSegmentProps {
  * <TimeSegment>Content</TimeSegment>
  * ```
  */
-const /**
-       *
-       */
-  TimeSegment = ({ segment, state }: TimeSegmentProps) => {
+const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
     const ref = React.useRef<HTMLDivElement>(null);
     const { segmentProps } = useDateSegment(segment, state, ref);
 
@@ -126,10 +120,7 @@ type TimeInputProps = Omit<
  * @param isDisabled - Whether the time input is disabled.
  * @param isRequired - Whether the time input is required.
  */
-const /**
-       *
-       */
-  TimeInput = ({ ref, hourCycle, ...props }: TimeInputProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const TimeInput = ({ ref, hourCycle, ...props }: TimeInputProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const innerRef = React.useRef<HTMLDivElement>(null);
 
     React.useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
@@ -230,10 +221,7 @@ interface TriggerProps
  * @param hasError - Whether to display error styling.
  * @param children - Selected date text to display.
  */
-const /**
-       *
-       */
-  Trigger = (
+const Trigger = (
     { ref: forwardedRef, className, children, placeholder, hasError, ...props }: TriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
     return (
@@ -261,10 +249,7 @@ Trigger.displayName = "DatePicker.Trigger";
 // #region Popover
 // ============================================================================
 
-const /**
-       *
-       */
-  CalendarPopover = ({ ref: forwardedRef, align, className, children, ...props }: React.ComponentProps<typeof PopoverContent> & { ref?: React.RefObject<React.ElementRef<typeof PopoverContent> | null> }) => {
+const CalendarPopover = ({ ref: forwardedRef, align, className, children, ...props }: React.ComponentProps<typeof PopoverContent> & { ref?: React.RefObject<React.ElementRef<typeof PopoverContent> | null> }) => {
     return (
       <PopoverContent
         ref={forwardedRef}
@@ -350,10 +335,7 @@ interface PresetContainerProps<TPreset extends Preset, TValue> {
   currentValue?: TValue;
 }
 
-const /**
-       *
-       */
-  PresetContainer = <TPreset extends Preset, TValue>({
+const PresetContainer = <TPreset extends Preset, TValue>({
   // Available preset configurations
     presets,
     // Event handler when a preset is selected
@@ -660,10 +642,7 @@ interface SingleProps extends Omit<PickerProps, "translations"> {
  * @param placeholder - Input placeholder text.
  * @param translations - Custom text translations.
  */
-const /**
-       *
-       */
-  SingleDatePicker = ({
+const SingleDatePicker = ({
     defaultValue,
     value,
     onChange,
@@ -925,10 +904,7 @@ interface RangeProps extends PickerProps {
  * @param placeholder - Input placeholder text.
  * @param translations - Custom text translations.
  */
-const /**
-       *
-       */
-  RangeDatePicker = ({
+const RangeDatePicker = ({
     defaultValue,
     value,
     onChange,
@@ -1492,10 +1468,7 @@ type SingleDatePickerProps = {
  * />
  * ```
  */
-const /**
-       *
-       */
-  DatePicker = ({ presets, ...props }: SingleDatePickerProps) => {
+const DatePicker = ({ presets, ...props }: SingleDatePickerProps) => {
     if (presets) {
       validatePresets(presets, props);
     }
@@ -1595,10 +1568,7 @@ type RangeDatePickerProps = {
  * />
  * ```
  */
-const /**
-       *
-       */
-  DateRangePicker = ({ presets, ...props }: RangeDatePickerProps) => {
+const DateRangePicker = ({ presets, ...props }: RangeDatePickerProps) => {
     if (presets) {
       validatePresets(presets, props);
     }
@@ -1609,9 +1579,6 @@ const /**
 DateRangePicker.displayName = "DateRangePicker";
 
 export {
-  DatePicker,
-  type DatePreset,
-  type DateRange,
-  DateRangePicker,
-  type DateRangePreset,
+    DatePicker, DateRangePicker, type DatePreset,
+    type DateRange, type DateRangePreset
 };

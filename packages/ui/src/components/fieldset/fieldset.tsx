@@ -120,10 +120,7 @@ import { Subheading } from "../subheading/subheading";
  * @name Fieldset
  * @component
  */
-const /**
-       *
-       */
-  Fieldset = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Root> | null> }) => (
+const Fieldset = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Root> | null> }) => (
     <BaseFieldset.Root
       ref={ref}
       className={cx(
@@ -154,10 +151,7 @@ Fieldset.displayName = "Fieldset";
  * <FieldsetLegend>Shipping Address</FieldsetLegend>
  * ```
  */
-const /**
-       *
-       */
-  FieldsetLegend = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Legend> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Legend> | null> }) => (
+const FieldsetLegend = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Legend> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Legend> | null> }) => (
     <BaseFieldset.Legend
       ref={ref}
       className={cx(

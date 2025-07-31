@@ -42,8 +42,8 @@
  * ```
  */
 
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
@@ -122,10 +122,7 @@ interface KbdProps
  * @id kbd
  * @name Kbd
  */
-const /**
-       *
-       */
-  Kbd = (
+const Kbd = (
     { ref, className, children, keys, platform = "auto", size, variant, ...props }: KbdProps & { ref?: React.RefObject<HTMLElement | null> },
   ) => {
   // Use state to handle platform detection after hydration to avoid SSR mismatch
@@ -203,4 +200,4 @@ const /**
 
 Kbd.displayName = "Kbd";
 
-export { Kbd, type KbdProps, kbdVariants };
+export { Kbd, kbdVariants, type KbdProps };

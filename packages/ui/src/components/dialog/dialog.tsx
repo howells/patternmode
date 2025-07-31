@@ -33,36 +33,24 @@ import { Text } from "../text/text";
  *
  * @see https://base-ui.com/react/components/dialog - Base UI documentation
  */
-const /**
-       *
-       */
-  Dialog = BaseDialog.Root;
+const Dialog = BaseDialog.Root;
 Dialog.displayName = "Dialog";
 
 /**
  * Trigger element that opens the dialog when activated.
  * Inherits all accessibility features from Base UI including ARIA attributes.
  */
-const /**
-       *
-       */
-  DialogTrigger = BaseDialog.Trigger;
+const DialogTrigger = BaseDialog.Trigger;
 DialogTrigger.displayName = "DialogTrigger";
 
 /**
  * Close button that dismisses the dialog when activated.
  * Can be placed anywhere within the dialog content.
  */
-const /**
-       *
-       */
-  DialogClose = BaseDialog.Close;
+const DialogClose = BaseDialog.Close;
 DialogClose.displayName = "DialogClose";
 
-const /**
-       *
-       */
-  DialogPortal = BaseDialog.Portal;
+const DialogPortal = BaseDialog.Portal;
 
 /**
  * Semi-transparent backdrop that appears behind the dialog.
@@ -79,10 +67,7 @@ const /**
  * <DialogOverlay />
  * ```
  */
-const /**
-       *
-       */
-  DialogOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Backdrop> | null> }) => {
+const DialogOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Backdrop> | null> }) => {
     return (
       <BaseDialog.Backdrop
         ref={forwardedRef}
@@ -120,10 +105,7 @@ DialogOverlay.displayName = "DialogOverlay";
  * </DialogContent>
  * ```
  */
-const /**
-       *
-       */
-  DialogContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Popup> | null> }) => {
+const DialogContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Popup> | null> }) => {
     return (
       <DialogPortal>
         <DialogOverlay />
@@ -165,10 +147,7 @@ DialogContent.displayName = "DialogContent";
  * </DialogHeader>
  * ```
  */
-const /**
-       *
-       */
-  DialogHeader = ({
+const DialogHeader = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -187,10 +166,7 @@ DialogHeader.displayName = "DialogHeader";
  * <DialogTitle>Delete Account</DialogTitle>
  * ```
  */
-const /**
-       *
-       */
-  DialogTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Title> | null> }) => (
+const DialogTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Title> | null> }) => (
     <BaseDialog.Title
       ref={forwardedRef}
       render={(
@@ -220,10 +196,7 @@ DialogTitle.displayName = "DialogTitle";
  * </DialogDescription>
  * ```
  */
-const /**
-       *
-       */
-  DialogDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Description> | null> }) => {
+const DialogDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Description> | null> }) => {
     return (
       <BaseDialog.Description
         ref={forwardedRef}
@@ -249,10 +222,7 @@ DialogDescription.displayName = "DialogDescription";
  * </DialogFooter>
  * ```
  */
-const /**
-       *
-       */
-  DialogFooter = ({
+const DialogFooter = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -269,12 +239,12 @@ const /**
 DialogFooter.displayName = "DialogFooter";
 
 export {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
 };

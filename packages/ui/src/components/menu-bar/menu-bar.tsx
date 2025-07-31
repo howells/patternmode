@@ -108,14 +108,14 @@ import { Menubar as BaseMenubar } from "@base-ui-components/react/menubar";
 import React from "react";
 import { cx } from "../../lib/utils";
 import {
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuSeparator,
-  MenuSubmenu,
-  MenuSubmenuContent,
-  MenuSubmenuTrigger,
-  MenuTrigger,
+    Menu,
+    MenuContent,
+    MenuItem,
+    MenuSeparator,
+    MenuSubmenu,
+    MenuSubmenuContent,
+    MenuSubmenuTrigger,
+    MenuTrigger,
 } from "../menu/menu";
 
 /**
@@ -152,10 +152,7 @@ import {
  * @name Menu Bar
  * @component
  */
-const /**
-       *
-       */
-  MenuBar = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenubar> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenubar> | null> }) => (
+const MenuBar = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenubar> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenubar> | null> }) => (
     <BaseMenubar
       ref={ref}
       className={cx(
@@ -190,10 +187,7 @@ MenuBar.displayName = "MenuBar";
  * </MenuBarMenu>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarMenu: typeof Menu = Menu;
+const MenuBarMenu: typeof Menu = Menu;
 
 /**
  * Menu bar trigger component for menu section buttons.
@@ -212,10 +206,7 @@ const /**
  * <MenuBarTrigger className="font-bold">Important</MenuBarTrigger>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarTrigger: React.ForwardRefExoticComponent<
+const MenuBarTrigger: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof MenuTrigger> & React.RefAttributes<React.ElementRef<typeof MenuTrigger>>
 > = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof MenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof MenuTrigger> | null> }) => (
   <MenuTrigger
@@ -265,10 +256,7 @@ MenuBarTrigger.displayName = "MenuBarTrigger";
  * </MenuBarContent>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarContent: React.ForwardRefExoticComponent<
+const MenuBarContent: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof MenuContent> & React.RefAttributes<React.ElementRef<typeof MenuContent>>
 > = ({ ref, className, sideOffset = 6, ...props }: React.ComponentPropsWithoutRef<typeof MenuContent> & { ref?: React.RefObject<React.ElementRef<typeof MenuContent> | null> }) => (
   <MenuContent
@@ -293,10 +281,7 @@ MenuBarContent.displayName = "MenuBarContent";
  * <MenuBarItem disabled>Disabled Item</MenuBarItem>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarItem: typeof MenuItem = MenuItem;
+const MenuBarItem: typeof MenuItem = MenuItem;
 
 /**
  * Menu bar separator component for visual grouping.
@@ -313,10 +298,7 @@ const /**
  * <MenuBarItem>Item 3</MenuBarItem>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarSeparator = MenuSeparator;
+const MenuBarSeparator = MenuSeparator;
 
 /**
  * Menu bar submenu component for nested menus.
@@ -336,10 +318,7 @@ const /**
  * </MenuBarSubmenu>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarSubmenu: typeof MenuSubmenu = MenuSubmenu;
+const MenuBarSubmenu: typeof MenuSubmenu = MenuSubmenu;
 
 /**
  * Menu bar submenu trigger for nested menu headers.
@@ -353,10 +332,7 @@ const /**
  * <MenuBarSubmenuTrigger>Advanced Tools</MenuBarSubmenuTrigger>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
+const MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
 
 /**
  * Menu bar submenu content for nested menu items.
@@ -373,19 +349,16 @@ const /**
  * </MenuBarSubmenuContent>
  * ```
  */
-const /**
-       *
-       */
-  MenuBarSubmenuContent: typeof MenuSubmenuContent = MenuSubmenuContent;
+const MenuBarSubmenuContent: typeof MenuSubmenuContent = MenuSubmenuContent;
 
 export {
-  MenuBar,
-  MenuBarContent,
-  MenuBarItem,
-  MenuBarMenu,
-  MenuBarSeparator,
-  MenuBarSubmenu,
-  MenuBarSubmenuContent,
-  MenuBarSubmenuTrigger,
-  MenuBarTrigger,
+    MenuBar,
+    MenuBarContent,
+    MenuBarItem,
+    MenuBarMenu,
+    MenuBarSeparator,
+    MenuBarSubmenu,
+    MenuBarSubmenuContent,
+    MenuBarSubmenuTrigger,
+    MenuBarTrigger
 };

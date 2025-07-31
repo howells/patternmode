@@ -1,9 +1,10 @@
 "use client";
 
+import type { ComponentConfig } from "@patternmode/ui";
+import type { PropMetadata } from "../lib/prop-explorer";
+
 import { Inspector, InspectorBody } from "@patternmode/ui";
 import React from "react";
-import { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
-import { PropMetadata } from "../lib/prop-explorer";
 import { ComponentPreview } from "./component-preview";
 import { PropExplorerProvider } from "./prop-explorer-context";
 import { PropExplorerContent } from "./prop-explorer-controls";
@@ -23,7 +24,9 @@ export function ComponentPropExplorer({
 }: ComponentPropExplorerProps) {
   // Extract default values from props if available
   const getDefaultProps = () => {
-    if (!config.props) return {};
+    if (!config.props) {
+      return {};
+    }
 
     const defaultProps: Record<string, unknown> = {};
 

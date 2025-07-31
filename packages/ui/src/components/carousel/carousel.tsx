@@ -104,10 +104,7 @@ type CarouselContextProps = {
  *
  * Provides carousel API and navigation state to child components.
  */
-const /**
-       *
-       */
-  CarouselContext = React.createContext<CarouselContextProps | null>(null);
+const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
 /**
  * Hook to access carousel context and API.
@@ -226,10 +223,7 @@ function useCarousel() {
  * @name Carousel
  * @component
  */
-const /**
-       *
-       */
-  Carousel = (
+const Carousel = (
     { ref, orientation = "horizontal", opts, setApi, plugins, className, children, ...props }: React.HTMLAttributes<HTMLDivElement> & CarouselProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     const [carouselRef, api] = useEmblaCarousel(
@@ -339,10 +333,7 @@ Carousel.displayName = "Carousel";
  * </CarouselContent>
  * ```
  */
-const /**
-       *
-       */
-  CarouselContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CarouselContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const { carouselRef, orientation } = useCarousel();
 
     return (
@@ -382,10 +373,7 @@ CarouselContent.displayName = "CarouselContent";
  * </CarouselItem>
  * ```
  */
-const /**
-       *
-       */
-  CarouselItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CarouselItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const { orientation } = useCarousel();
 
     return (
@@ -425,10 +413,7 @@ CarouselItem.displayName = "CarouselItem";
  * />
  * ```
  */
-const /**
-       *
-       */
-  CarouselPrevious = ({ ref, className, variant = "secondary", size = "icon", ...props }: React.ComponentProps<typeof Button> & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+const CarouselPrevious = ({ ref, className, variant = "secondary", size = "icon", ...props }: React.ComponentProps<typeof Button> & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
     return (
@@ -476,10 +461,7 @@ CarouselPrevious.displayName = "CarouselPrevious";
  * />
  * ```
  */
-const /**
-       *
-       */
-  CarouselNext = ({ ref, className, variant = "secondary", size = "icon", ...props }: React.ComponentProps<typeof Button> & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+const CarouselNext = ({ ref, className, variant = "secondary", size = "icon", ...props }: React.ComponentProps<typeof Button> & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();
 
     return (
@@ -507,11 +489,9 @@ const /**
 CarouselNext.displayName = "CarouselNext";
 
 export {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  useCarousel,
+    Carousel, CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+    useCarousel, type CarouselApi
 };

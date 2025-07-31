@@ -2,10 +2,7 @@ import { Button } from "@patternmode/ui";
 import React from "react";
 
 // Example component for preview system
-export const /**
-              *
-              */
-  ButtonExample = ({
+export const ButtonExample = ({
     variant = "default",
     size = "default",
     isLoading = false,

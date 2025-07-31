@@ -117,10 +117,7 @@ const breadcrumbVariants = tv({
  * @name Breadcrumbs
  * @component
  */
-const /**
-       *
-       */
-  Breadcrumb = ({ ref, className, ...props }: React.ComponentProps<"nav"> & { ref?: React.RefObject<HTMLElement | null> }) => {
+const Breadcrumb = ({ ref, className, ...props }: React.ComponentProps<"nav"> & { ref?: React.RefObject<HTMLElement | null> }) => {
     const { root } = breadcrumbVariants();
     return (
       <nav
@@ -156,10 +153,7 @@ Breadcrumb.displayName = "Breadcrumb";
  * </BreadcrumbList>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbList = ({ ref, className, ...props }: React.ComponentProps<"ol"> & { ref?: React.RefObject<HTMLOListElement | null> }) => {
+const BreadcrumbList = ({ ref, className, ...props }: React.ComponentProps<"ol"> & { ref?: React.RefObject<HTMLOListElement | null> }) => {
     const { list } = breadcrumbVariants();
     return <ol ref={ref} className={cx(list(), className)} {...props} />;
   };
@@ -182,10 +176,7 @@ BreadcrumbList.displayName = "BreadcrumbList";
  * </BreadcrumbItem>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbItem = ({ ref, className, ...props }: React.ComponentProps<"li"> & { ref?: React.RefObject<HTMLLIElement | null> }) => {
+const BreadcrumbItem = ({ ref, className, ...props }: React.ComponentProps<"li"> & { ref?: React.RefObject<HTMLLIElement | null> }) => {
     const { item } = breadcrumbVariants();
     return <li ref={ref} className={cx(item(), className)} {...props} />;
   };
@@ -215,10 +206,7 @@ BreadcrumbItem.displayName = "BreadcrumbItem";
  * </BreadcrumbLink>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbLink: React.ForwardRefExoticComponent<
+const BreadcrumbLink: React.ForwardRefExoticComponent<
   useRender.ComponentProps<"a"> & React.RefAttributes<HTMLAnchorElement>
 > = ({ ref, className, render = <a />, ...props }: useRender.ComponentProps<"a"> & { ref?: React.RefObject<HTMLAnchorElement | null> }) => {
   const { link } = breadcrumbVariants();
@@ -264,10 +252,7 @@ BreadcrumbLink.displayName = "BreadcrumbLink";
  * </Breadcrumb>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbPage = ({ ref, className, ...props }: React.ComponentProps<"span"> & { ref?: React.RefObject<HTMLSpanElement | null> }) => {
+const BreadcrumbPage = ({ ref, className, ...props }: React.ComponentProps<"span"> & { ref?: React.RefObject<HTMLSpanElement | null> }) => {
     const { page } = breadcrumbVariants();
     return (
       <span
@@ -306,10 +291,7 @@ BreadcrumbPage.displayName = "BreadcrumbPage";
  * </BreadcrumbSeparator>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbSeparator = ({ ref, children, className, ...props }: React.ComponentProps<"li"> & { ref?: React.RefObject<HTMLLIElement | null> }) => {
+const BreadcrumbSeparator = ({ ref, children, className, ...props }: React.ComponentProps<"li"> & { ref?: React.RefObject<HTMLLIElement | null> }) => {
     const { separator } = breadcrumbVariants();
     return (
       <li
@@ -354,10 +336,7 @@ BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
  * </BreadcrumbList>
  * ```
  */
-const /**
-       *
-       */
-  BreadcrumbEllipsis = ({ ref, className, ...props }: React.ComponentProps<"span"> & { ref?: React.RefObject<HTMLSpanElement | null> }) => {
+const BreadcrumbEllipsis = ({ ref, className, ...props }: React.ComponentProps<"span"> & { ref?: React.RefObject<HTMLSpanElement | null> }) => {
     const { ellipsis } = breadcrumbVariants();
     return (
       <span
@@ -381,5 +360,5 @@ export {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
+  BreadcrumbSeparator
 };

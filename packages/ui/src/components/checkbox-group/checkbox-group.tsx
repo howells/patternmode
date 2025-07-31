@@ -99,10 +99,7 @@ interface CheckboxGroupProps
  * @name Checkbox Group
  * @component
  */
-const /**
-       *
-       */
-  CheckboxGroup = ({ ref, className, label, labelId, children, ...props }: CheckboxGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCheckboxGroup> | null> }) => (
+const CheckboxGroup = ({ ref, className, label, labelId, children, ...props }: CheckboxGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCheckboxGroup> | null> }) => (
     <BaseCheckboxGroup
       ref={ref}
       aria-labelledby={labelId}
@@ -177,10 +174,7 @@ interface CheckboxGroupItemProps {
  * </CheckboxGroupItem>
  * ```
  */
-const /**
-       *
-       */
-  CheckboxGroupItem = ({ ref, value, name, children, disabled, className, ...props }: CheckboxGroupItemProps & { ref?: React.RefObject<HTMLLabelElement | null> }) => (
+const CheckboxGroupItem = ({ ref, value, name, children, disabled, className, ...props }: CheckboxGroupItemProps & { ref?: React.RefObject<HTMLLabelElement | null> }) => (
     <label
       ref={ref}
       className={cx(
@@ -202,8 +196,8 @@ const /**
 CheckboxGroupItem.displayName = "CheckboxGroupItem";
 
 export {
-  CheckboxGroup,
-  CheckboxGroupItem,
-  type CheckboxGroupItemProps,
-  type CheckboxGroupProps,
+    CheckboxGroup,
+    CheckboxGroupItem,
+    type CheckboxGroupItemProps,
+    type CheckboxGroupProps
 };

@@ -65,10 +65,10 @@
 
 "use client";
 
-import type { ComboboxOption } from "../combobox/combobox";
 import { DynamicIcon } from "lucide-react/dynamic";
 import React from "react";
 import { config } from "../../lib/config";
+import type { ComboboxOption } from "../combobox/combobox";
 import { Combobox } from "../combobox/combobox";
 
 // Icon data structure that extends ComboboxOption
@@ -173,10 +173,7 @@ function toKebabCase(str: string): string {
  * @id icon-select
  * @name Icon Select
  */
-const /**
-       *
-       */
-  SafeDynamicIcon = React.memo(({
+const SafeDynamicIcon = React.memo(({
     name,
     className,
     strokeWidth,

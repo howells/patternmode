@@ -61,10 +61,7 @@ interface CheckboxProps
  * @name Checkbox
  * @component
  */
-const /**
-       *
-       */
-  Checkbox = ({ ref: forwardedRef, className, checked, ...props }: CheckboxProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCheckbox.Root> | null> }) => {
+const Checkbox = ({ ref: forwardedRef, className, checked, ...props }: CheckboxProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCheckbox.Root> | null> }) => {
   // Convert indeterminate to Base UI's format
     const baseUIProps = {
       ...props,

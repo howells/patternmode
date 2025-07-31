@@ -113,10 +113,7 @@ import { cx } from "../../lib/utils";
  *
  * @see https://base-ui.com/react/components/popover - Base UI documentation
  */
-const /**
-       *
-       */
-  Popover = BasePopover.Root;
+const Popover = BasePopover.Root;
 
 /**
  * Trigger element that opens the popover when activated.
@@ -163,10 +160,7 @@ const /**
  * @name Popover
  * @component
  */
-const /**
-       *
-       */
-  PopoverTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Trigger> | null> }) => (
+const PopoverTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Trigger> | null> }) => (
     <BasePopover.Trigger
       ref={ref}
       className={cx(
@@ -197,10 +191,7 @@ PopoverTrigger.displayName = "PopoverTrigger";
  * </PopoverPortal>
  * ```
  */
-const /**
-       *
-       */
-  PopoverPortal = BasePopover.Portal;
+const PopoverPortal = BasePopover.Portal;
 
 /**
  * Optional backdrop that appears behind the popover.
@@ -234,10 +225,7 @@ const /**
  * <PopoverBackdrop className="bg-red-500/20" />
  * ```
  */
-const /**
-       *
-       */
-  PopoverBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Backdrop> | null> }) => (
+const PopoverBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Backdrop> | null> }) => (
     <BasePopover.Backdrop
       ref={ref}
       className={cx(
@@ -274,10 +262,7 @@ PopoverBackdrop.displayName = "PopoverBackdrop";
  * </PopoverPositioner>
  * ```
  */
-const /**
-       *
-       */
-  PopoverPositioner = ({ ref, sideOffset = 10, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Positioner> | null> }) => (
+const PopoverPositioner = ({ ref, sideOffset = 10, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Positioner> | null> }) => (
     <BasePopover.Positioner
       ref={ref}
       sideOffset={sideOffset}
@@ -321,10 +306,7 @@ PopoverPositioner.displayName = "PopoverPositioner";
  * </PopoverContent>
  * ```
  */
-const /**
-       *
-       */
-  PopoverContent = (
+const PopoverContent = (
     { ref, className, sideOffset = 10, side = "bottom", align = "center", collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
     /**
      * Distance from the trigger element.
@@ -410,10 +392,7 @@ PopoverContent.displayName = "PopoverContent";
  * </PopoverContent>
  * ```
  */
-const /**
-       *
-       */
-  PopoverArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Arrow> | null> }) => (
+const PopoverArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Arrow> | null> }) => (
     <BasePopover.Arrow
       ref={ref}
       className={cx(
@@ -475,10 +454,7 @@ PopoverArrow.displayName = "PopoverArrow";
  * </PopoverTitle>
  * ```
  */
-const /**
-       *
-       */
-  PopoverTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Title> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Title> | null> }) => (
+const PopoverTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Title> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Title> | null> }) => (
     <BasePopover.Title
       ref={ref}
       className={cx(
@@ -529,10 +505,7 @@ PopoverTitle.displayName = "PopoverTitle";
  * </PopoverDescription>
  * ```
  */
-const /**
-       *
-       */
-  PopoverDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Description> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Description> | null> }) => (
+const PopoverDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Description> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Description> | null> }) => (
     <BasePopover.Description
       ref={ref}
       className={cx(
@@ -583,10 +556,7 @@ PopoverDescription.displayName = "PopoverDescription";
  * </PopoverClose>
  * ```
  */
-const /**
-       *
-       */
-  PopoverClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Close> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Close> | null> }) => (
+const PopoverClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePopover.Close> & { ref?: React.RefObject<React.ElementRef<typeof BasePopover.Close> | null> }) => (
     <BasePopover.Close
       ref={ref}
       className={cx(
@@ -612,21 +582,18 @@ PopoverClose.displayName = "PopoverClose";
  *
  * @deprecated Use PopoverTrigger instead.
  */
-const /**
-       *
-       */
-  PopoverAnchor = PopoverTrigger;
+const PopoverAnchor = PopoverTrigger;
 
 export {
-  Popover,
-  PopoverAnchor,
-  PopoverArrow,
-  PopoverBackdrop,
-  PopoverClose,
-  PopoverContent,
-  PopoverDescription,
-  PopoverPortal,
-  PopoverPositioner,
-  PopoverTitle,
-  PopoverTrigger,
+    Popover,
+    PopoverAnchor,
+    PopoverArrow,
+    PopoverBackdrop,
+    PopoverClose,
+    PopoverContent,
+    PopoverDescription,
+    PopoverPortal,
+    PopoverPositioner,
+    PopoverTitle,
+    PopoverTrigger
 };

@@ -1,10 +1,10 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
@@ -227,10 +227,7 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
  * />
  * ```
  */
-const /**
-       *
-       */
-  Combobox = <T extends ComboboxOption = ComboboxOption>({
+const Combobox = <T extends ComboboxOption = ComboboxOption>({
     options,
     fetchData,
     queryKey = ["combobox"],

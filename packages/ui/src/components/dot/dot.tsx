@@ -1,13 +1,12 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
+import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 import {
-  getColorClasses,
-
+    getColorClasses,
 } from "../../lib/variants";
 
 // Dot-specific variant type (semantic + all Tailwind colors)
@@ -84,10 +83,7 @@ interface DotProps
  * @id dot
  * @name Dot
  */
-const /**
-       *
-       */
-  Dot = (
+const Dot = (
     { ref, variant = "default", label, animated = false, size = "default", className, ...props }: DotProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const colorClasses = getColorClasses(variant);
@@ -114,4 +110,4 @@ const /**
 
 Dot.displayName = "Dot";
 
-export { Dot, dotIndicatorVariants, type DotProps, dotVariants };
+export { Dot, dotIndicatorVariants, dotVariants, type DotProps };

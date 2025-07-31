@@ -98,10 +98,10 @@
  * ```
  */
 
-import type { z } from "zod";
 import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
 import * as React from "react";
+import type { z } from "zod";
 import { cx } from "../../lib/utils";
 
 /**
@@ -172,10 +172,7 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * @name Form
  * @component
  */
-const /**
-       *
-       */
-  Form = ({ ref, schema, onValidSubmit, children, className, onSubmit, ...props }: FormProps & { ref?: React.RefObject<React.ElementRef<typeof BaseForm> | null> }) => {
+const Form = ({ ref, schema, onValidSubmit, children, className, onSubmit, ...props }: FormProps & { ref?: React.RefObject<React.ElementRef<typeof BaseForm> | null> }) => {
     const [errors, setErrors] = React.useState({});
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -229,10 +226,7 @@ Form.displayName = "Form";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return <div ref={ref} className={cx("space-y-2", className)} {...props} />;
   };
 FormItem.displayName = "FormItem";
@@ -245,10 +239,7 @@ FormItem.displayName = "FormItem";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FormLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => {
+const FormLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => {
     return (
       <BaseField.Label
         ref={ref}
@@ -275,10 +266,7 @@ FormLabel.displayName = "FormLabel";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FormControl = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => {
+const FormControl = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => {
     return (
       <BaseField.Control
         ref={ref}
@@ -315,10 +303,7 @@ FormControl.displayName = "FormControl";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FormDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => {
+const FormDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => {
     return (
       <BaseField.Description
         ref={ref}
@@ -343,10 +328,7 @@ FormDescription.displayName = "FormDescription";
  *
  * @param className - Additional CSS classes.
  */
-const /**
-       *
-       */
-  FormError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => {
+const FormError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => {
     return (
       <BaseField.Error
         ref={ref}
@@ -421,10 +403,7 @@ interface FormFieldProps {
  * </FormField>
  * ```
  */
-const /**
-       *
-       */
-  FormField = ({ ref, name, label, description, required, className, children }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const FormField = ({ ref, name, label, description, required, className, children }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <BaseField.Root name={name} className={className}>
         <FormItem ref={ref}>
@@ -444,11 +423,11 @@ const /**
 FormField.displayName = "FormField";
 
 export {
-  Form,
-  FormControl,
-  FormDescription,
-  FormError,
-  FormField,
-  FormItem,
-  FormLabel,
+    Form,
+    FormControl,
+    FormDescription,
+    FormError,
+    FormField,
+    FormItem,
+    FormLabel
 };

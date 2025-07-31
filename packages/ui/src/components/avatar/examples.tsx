@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  AvatarWithFallback,
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    AvatarWithFallback,
 } from "@patternmode/ui";
 import React from "react";
 
@@ -12,10 +12,7 @@ import React from "react";
 // const Image = dynamic(() => import('next/image'), { ssr: false });
 
 // Basic avatar examples
-export const /**
-   *
-   */
-  DefaultExample = () => {
+export const DefaultExample = () => {
     return (
       <div className="flex items-center gap-4">
         <Avatar
@@ -29,10 +26,7 @@ export const /**
   };
 
 // Size variants
-export const /**
-   *
-   */
-  SizeVariantsExample = () => {
+export const SizeVariantsExample = () => {
     return (
       <div className="flex items-end gap-4">
         <div className="text-center space-y-2">
@@ -96,10 +90,7 @@ export const /**
   };
 
 // Initials with different sizes
-export const /**
-   *
-   */
-  InitialsExample = () => {
+export const InitialsExample = () => {
     return (
       <div className="flex items-end gap-4">
         <Avatar initials="AB" alt="Alice Brown" size="xs" />
@@ -114,10 +105,7 @@ export const /**
   };
 
 // Square variants
-export const /**
-   *
-   */
-  SquareVariantsExample = () => {
+export const SquareVariantsExample = () => {
     return (
       <div className="flex items-end gap-4">
         <Avatar
@@ -151,10 +139,7 @@ export const /**
   };
 
 // Dynamic background colors
-export const /**
-   *
-   */
-  DynamicBackgroundExample = () => {
+export const DynamicBackgroundExample = () => {
     const users = [
       { initials: "AB", name: "Alice Brown" },
       { initials: "CD", name: "Charlie Davis" },
@@ -184,10 +169,7 @@ export const /**
   };
 
 // With fallback using Base UI
-export const /**
-   *
-   */
-  WithFallbackExample = () => {
+export const WithFallbackExample = () => {
     return (
       <div className="flex items-center gap-4">
         <AvatarWithFallback className="size-12">
@@ -211,10 +193,7 @@ export const /**
   };
 
 // User list example
-export const /**
-   *
-   */
-  UserListExample = () => {
+export const UserListExample = () => {
     const users = [
       {
         id: 1,
@@ -274,10 +253,7 @@ export const /**
   };
 
 // Avatar group/stack
-export const /**
-   *
-   */
-  AvatarGroupExample = () => {
+export const AvatarGroupExample = () => {
     const users = [
       {
         name: "John Doe",
@@ -352,10 +328,7 @@ export const /**
   };
 
 // Profile header example
-export const /**
-   *
-   */
-  ProfileHeaderExample = () => {
+export const ProfileHeaderExample = () => {
     return (
       <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-lg">
         <Avatar
@@ -379,10 +352,7 @@ export const /**
   };
 
 // Automatic Next.js Image optimization example
-export const /**
-   *
-   */
-  OptimizationExample = () => {
+export const OptimizationExample = () => {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-4">
@@ -418,7 +388,4 @@ export const /**
   };
 
 // Default export for prop explorer
-export const /**
-   *
-   */
-  AvatarExample = DefaultExample;
+export const AvatarExample = DefaultExample;

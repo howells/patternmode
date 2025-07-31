@@ -5,15 +5,7 @@ import { tv } from "tailwind-variants";
 import { getColorFromName } from "../../lib/colors";
 import { cx } from "../../lib/utils";
 
-// Type for Next.js Image component
-type NextImageComponent = React.ComponentType<{
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  className?: string;
-  [key: string]: unknown;
-}>;
+
 
 const avatarVariants = tv({
   base: [
@@ -89,11 +81,6 @@ interface AvatarProps extends VariantProps<typeof avatarVariants> {
    * Additional props to pass to the Image component.
    */
   imageProps?: Record<string, unknown>;
-  /**
-   * Whether to automatically use Next.js Image when available.
-   * Defaults to true. Set to false to always use standard img.
-   */
-  optimized?: boolean;
 }
 
 // Size mapping for image dimensions
@@ -112,7 +99,7 @@ const imageSizeMap = {
  *
  * Displays user profile pictures with automatic fallback to initials when no image is provided.
  * Supports both circular and square variants with proper layering using CSS Grid.
- * Automatically uses Next.js Image optimization when available, with fallback to standard img element.
+ * Uses standard HTML img element by default, with option to provide custom Image component.
  *
  * @id avatar
  * @name Avatar
@@ -136,13 +123,7 @@ const imageSizeMap = {
  * // Dynamic background color
  * <Avatar initials="AB" dynamicBackground size="lg" />
  *
- * // Automatic Next.js Image optimization (when Next.js is available)
- * <Avatar src="/profile.jpg" alt="John Doe" />
- *
- * // Disable optimization (always use standard img)
- * <Avatar src="/profile.jpg" alt="John Doe" optimized={false} />
- *
- * // Custom Image component with additional props
+ * // With custom Image component (e.g., Next.js Image)
  * import Image from 'next/image';
  * <Avatar
  *   src="/profile.jpg"
@@ -160,100 +141,80 @@ const imageSizeMap = {
  * @component
  */
 const Avatar = ({
-  ref,
-  src = null,
-  size = "base",
-  square = false,
-  initials,
-  alt = "",
-  dynamicBackground = false,
-  className,
-  ImageComponent,
-  imageProps = {},
-  optimized = true,
-  ...props
-}: AvatarProps &
-  React.ComponentPropsWithoutRef<"span"> & {
-    ref?: React.RefObject<HTMLSpanElement | null>;
-  }) => {
-  // Lazy load Next.js Image when needed
-  const [NextImage, setNextImage] = React.useState<NextImageComponent | null>(
-    null
-  );
+    ref,
+    src = null,
+    size = "base",
+    square = false,
+    initials,
+    alt = "",
+    dynamicBackground = false,
+    className,
+    ImageComponent,
+    imageProps = {},
+    ...props
+  }: AvatarProps &
+    React.ComponentPropsWithoutRef<"span"> & {
+      ref?: React.RefObject<HTMLSpanElement | null>;
+    }) => {
+    // Generate background color from initials or alt text when dynamicBackground is true
+    const backgroundColor = dynamicBackground
+      ? getColorFromName(initials || alt || "default")
+      : undefined;
 
-  React.useEffect(() => {
-    if (optimized && !ImageComponent && !NextImage) {
-      // Dynamic import with type assertion for optional peer dependency
-      // @ts-expect-error - next/image is an optional peer dependency
-      import("next/image")
-        .then((mod) => {
-          const ImageComponent = mod.default as NextImageComponent;
-          setNextImage(() => ImageComponent);
-        })
-        .catch(() => {
-          // Next.js not available, will use standard img
-        });
-    }
-  }, [optimized, ImageComponent, NextImage]);
+    // Get image dimensions for the current size
+    const imageSize = imageSizeMap[size || "base"];
 
-  // Generate background color from initials or alt text when dynamicBackground is true
-  const backgroundColor = dynamicBackground
-    ? getColorFromName(initials || alt || "default")
-    : undefined;
+    // Use custom ImageComponent if provided, otherwise default to img
+    const ImageEl = ImageComponent || "img";
 
-  // Get image dimensions for the current size
-  const imageSize = imageSizeMap[size || "base"];
-
-  // Determine which Image component to use
-  const ImageEl = ImageComponent || (optimized && NextImage) || "img";
-
-  return (
-    <span
-      ref={ref}
-      {...props}
-      className={cx(avatarVariants({ size, square }), className)}
-      style={backgroundColor ? { backgroundColor } : undefined}
-    >
-      {initials && (
-        <svg
-          className="size-full fill-current p-[5%] text-[36px] font-medium uppercase select-none"
-          viewBox="0 0 100 100"
-          aria-hidden={alt ? undefined : "true"}
-        >
-          {alt && <title>{alt}</title>}
-          <text
-            x="50%"
-            y="50%"
-            alignmentBaseline="middle"
-            dominantBaseline="middle"
-            textAnchor="middle"
-            dy=".125em"
-            fill={dynamicBackground ? "white" : "currentColor"}
+    return (
+      <span
+        ref={ref}
+        {...props}
+        className={cx(avatarVariants({ size, square }), className)}
+        style={backgroundColor ? { backgroundColor } : undefined}
+      >
+        {initials && (
+          <svg
+            className="size-full fill-current p-[5%] text-[36px] font-medium uppercase select-none"
+            viewBox="0 0 100 100"
+            aria-hidden={alt ? undefined : "true"}
           >
-            {initials?.slice(0, 2)}
-          </text>
-        </svg>
-      )}
-      {src && (
+            {alt && <title>{alt}</title>}
+            <text
+              x="50%"
+              y="50%"
+              alignmentBaseline="middle"
+              dominantBaseline="middle"
+              textAnchor="middle"
+              dy=".125em"
+              fill={dynamicBackground ? "white" : "currentColor"}
+            >
+              {initials?.slice(0, 2)}
+            </text>
+          </svg>
+        )}
+        {src && (
         <ImageEl
-          className="size-full object-cover"
-          src={src}
-          alt={alt}
-          width={imageSize.width}
-          height={imageSize.height}
+            className="size-full object-cover"
+            src={src}
+            alt={alt}
+            width={imageSize.width}
+            height={imageSize.height}
           {...imageProps}
-        />
-      )}
-    </span>
-  );
-};
+          />
+        )}
+      </span>
+    );
+  };
 Avatar.displayName = "Avatar";
 
 /**
- * Avatar root container built on Base UI's Avatar primitive for automatic fallback behavior.
+ * @inheritDoc @base-ui-components/react/avatar.Root
  *
- * Based on Base UI's Avatar (https://base-ui.com/react/components/avatar),
- * providing automatic image loading states and fallback management.
+ * Avatar root container with automatic fallback behavior and Tremor styling.
+ *
+ * Extended with consistent design tokens and proper visual hierarchy.
  * Use this when you need built-in loading state handling.
  *
  * @component
@@ -267,10 +228,7 @@ Avatar.displayName = "Avatar";
  *
  * @see https://base-ui.com/react/components/avatar - Base UI documentation
  */
-const /**
-   *
-   */
-  AvatarWithFallback = ({
+const AvatarWithFallback = ({
     ref,
     className,
     ...props
@@ -281,7 +239,7 @@ const /**
       ref={ref}
       className={cx(
         "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-        "outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+        "outline -outline-offset-1 outline-black/10 dark:outline-white/10",
         className
       )}
       {...props}
@@ -290,10 +248,11 @@ const /**
 AvatarWithFallback.displayName = "AvatarWithFallback";
 
 /**
- * Avatar image component with automatic loading state handling.
+ * @inheritDoc @base-ui-components/react/avatar.Image
  *
- * Renders the avatar image with built-in loading state management.
- * Automatically shows the fallback when image fails to load or is unavailable.
+ * Avatar image component with Tremor styling and consistent aspect ratios.
+ *
+ * Extended with proper object-fit and responsive behavior.
  * Use within AvatarWithFallback for complete fallback behavior.
  *
  * @example
@@ -301,10 +260,7 @@ AvatarWithFallback.displayName = "AvatarWithFallback";
  * <AvatarImage src="/profile.jpg" alt="John Doe" />
  * ```
  */
-const /**
-   *
-   */
-  AvatarImage = ({
+const AvatarImage = ({
     ref,
     className,
     ...props
@@ -320,11 +276,12 @@ const /**
 AvatarImage.displayName = "AvatarImage";
 
 /**
- * Fallback content displayed when avatar image fails to load or is unavailable.
+ * @inheritDoc @base-ui-components/react/avatar.Fallback
  *
- * Automatically appears when the avatar image cannot be displayed.
+ * Fallback content with Tremor design tokens and proper contrast ratios.
+ *
+ * Extended with consistent background colors and typography for both light and dark themes.
  * Typically contains user initials or a placeholder icon.
- * Features background color and proper text styling for readability.
  *
  * @example
  * ```tsx
@@ -334,10 +291,7 @@ AvatarImage.displayName = "AvatarImage";
  * </AvatarFallback>
  * ```
  */
-const /**
-   *
-   */
-  AvatarFallback = ({
+const AvatarFallback = ({
     ref,
     className,
     ...props
@@ -362,5 +316,5 @@ export {
   AvatarImage,
   avatarVariants,
   AvatarWithFallback,
-  type AvatarProps,
+  type AvatarProps
 };

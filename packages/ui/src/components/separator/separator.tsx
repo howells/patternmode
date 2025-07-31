@@ -1,8 +1,8 @@
 // Separator Component [v1.0.0] - Base UI Implementation
 
-import type { VariantProps } from "tailwind-variants";
 import { Separator as BaseSeparator } from "@base-ui-components/react/separator";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
@@ -205,10 +205,7 @@ interface SeparatorProps
  * @name Separator
  * @component
  */
-const /**
-       *
-       */
-  Separator = (
+const Separator = (
     { ref, className, orientation = "horizontal", variant, size, children, spacing, ...props }: SeparatorProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSeparator> | null> },
   ) => {
   // If children are provided, render as a container with text label
@@ -251,4 +248,4 @@ const /**
 
 Separator.displayName = "Separator";
 
-export { Separator, type SeparatorProps, separatorVariants };
+export { Separator, separatorVariants, type SeparatorProps };

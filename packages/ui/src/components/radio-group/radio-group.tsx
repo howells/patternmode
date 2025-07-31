@@ -1,8 +1,7 @@
-// Tremor RadioGroup [v1.0.0] - Base UI
 
-import type { VariantProps } from "tailwind-variants";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
@@ -107,10 +106,7 @@ const radioGroupVariants = tv({
  * @name Radio Group
  * @component
  */
-const /**
-       *
-       */
-  RadioGroup = ({ ref, className, orientation, size, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
+const RadioGroup = ({ ref, className, orientation, size, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
     & VariantProps<typeof radioGroupVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
     <BaseRadioGroup
       ref={ref}
@@ -130,12 +126,7 @@ RadioGroup.displayName = "RadioGroup";
  * @deprecated Use RadioItem from "../radio" directly.
  * @see RadioItem in radio.tsx for full documentation
  */
-const /**
-       *
-       */
-  RadioGroupItem: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof RadioItem> & React.RefAttributes<React.ElementRef<typeof RadioItem>>
-> = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof RadioItem> & { ref?: React.RefObject<React.ElementRef<typeof RadioItem> | null> }) => (
+const RadioGroupItem = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof RadioItem> & { ref?: React.RefObject<React.ElementRef<typeof RadioItem> | null> }) => (
   <RadioItem ref={ref} className={className} {...props} />
 );
 RadioGroupItem.displayName = "RadioGroupItem";

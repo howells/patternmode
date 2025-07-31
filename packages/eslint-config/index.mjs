@@ -53,7 +53,19 @@ export const nextjs = () =>
     nextjs: true,
     formatters: true,
     lessOpinionated: true,
-  });
+  })
+    .append({
+      name: "nextjs-plugins",
+      plugins: {
+        turbo: turboPlugin,
+        jsdoc: jsdocPlugin,
+      },
+    })
+    .append(turboConfig)
+    .append(typescriptConfig)
+    .append(nodeEnvironmentConfig)
+    .append(importSortingConfig)
+    .append(jsdocGeneralConfig);
 
 export const react = () =>
   antfu({

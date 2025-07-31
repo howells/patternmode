@@ -78,10 +78,7 @@ interface DismissButtonProps
  * @name Dismiss Button
  * @component
  */
-const /**
-       *
-       */
-  DismissButton = (
+const DismissButton = (
     { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove", ...props }: DismissButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
   ) => {
   // Size-based icon sizing

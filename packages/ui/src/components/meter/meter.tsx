@@ -1,11 +1,11 @@
 // Meter Component [v1.0.0] - Base UI Implementation
 
-import type { VariantProps } from "tailwind-variants";
-import type { GlobalSemanticVariant } from "../../lib/variants";
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
 import * as React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
+import type { GlobalSemanticVariant } from "../../lib/variants";
 
 // Meter-specific color mappings that work well for progress indicators
 const meterColorMap = {
@@ -178,10 +178,7 @@ interface MeterProps
  * @name Meter
  * @component
  */
-const /**
-       *
-       */
-  Meter = (
+const Meter = (
     { ref, value, min = 0, max = 100, showAnimation = true, showValue = true, label, formatValue, variant, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
   ) => {
     const { track, indicator } = meterVariants({ variant });
@@ -266,4 +263,4 @@ const /**
 
 Meter.displayName = "Meter";
 
-export { Meter, type MeterProps, meterVariants };
+export { Meter, meterVariants, type MeterProps };

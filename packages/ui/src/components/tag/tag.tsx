@@ -40,10 +40,7 @@ function getPaddingClasses(
  * @id tag
  * @name Tag
  */
-const /**
-       *
-       */
-  InlineTagDismissButton = (
+const InlineTagDismissButton = (
     { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
       "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
       "icon"?: React.ComponentType<{
@@ -136,10 +133,7 @@ interface TagProps extends useRender.ComponentProps<"span"> {
   dismissAriaLabel?: string;
 }
 
-const /**
-       *
-       */
-  Tag = (
+const Tag = (
     { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps & { ref?: React.RefObject<HTMLSpanElement | null> },
   ) => {
     const defaultProps: useRender.ElementProps<"span"> = {

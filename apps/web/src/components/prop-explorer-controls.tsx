@@ -1,16 +1,29 @@
 "use client";
 
+import type { ComponentConfig } from "@patternmode/ui";
 import {
-  Button, DatePicker, Field, FieldControl, FieldDescription, FieldLabel, IconSelect, Input, NumberField, Select,
+  Button,
+  DatePicker,
+  Field,
+  FieldControl,
+  FieldLabel,
+  IconSelect,
+  Input,
+  NumberField,
+  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue, Subheading, Switch, Text, Textarea, Tooltip
+  SelectValue,
+  Subheading,
+  Switch,
+  Text,
+  Textarea,
+  Tooltip,
 } from "@patternmode/ui";
 import { HelpCircle } from "lucide-react";
 import React from "react";
-import { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
-import { PropMetadata } from "../lib/prop-explorer";
+import type { PropMetadata } from "../lib/prop-explorer";
 import { cx } from "../lib/utils";
 import { usePropExplorer } from "./prop-explorer-context";
 
@@ -45,7 +58,9 @@ function PropField({ prop, children, className }: PropFieldProps) {
 
 // Helper function to get string options from a prop
 function getStringOptions(prop: PropMetadata): string[] {
-  if (!prop.options) return [];
+  if (!prop.options) {
+    return [];
+  }
   if (typeof prop.options[0] === "string") {
     return prop.options as string[];
   }

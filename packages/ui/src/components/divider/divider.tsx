@@ -56,8 +56,8 @@
  * ```
  */
 
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -231,10 +231,7 @@ interface DividerProps
  * @name Divider
  * @component
  */
-const /**
-       *
-       */
-  Divider = (
+const Divider = (
     { ref: forwardedRef, className, children, orientation = "horizontal", spacing, ...props }: DividerProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => (
     <div
@@ -258,4 +255,4 @@ const /**
 
 Divider.displayName = "Divider";
 
-export { Divider, type DividerProps, dividerVariants };
+export { Divider, dividerVariants, type DividerProps };

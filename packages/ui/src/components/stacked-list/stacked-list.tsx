@@ -32,10 +32,7 @@ interface StackedListProps extends React.HTMLAttributes<HTMLUListElement> {
  * @id stacked-list
  * @name Stacked List
  */
-const /**
-       *
-       */
-  StackedListRoot = (
+const StackedListRoot = (
     { ref, showDividers = true, gap = 0, padding = 4, className, children, ...props }: StackedListProps & { ref?: React.RefObject<HTMLUListElement | null> },
   ) => {
     return (
@@ -100,10 +97,7 @@ interface StackedListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   isLast?: boolean;
 }
 
-const /**
-       *
-       */
-  StackedListItem = (
+const StackedListItem = (
     { ref, left, right, as: Component = "li", href, active = false, padding = 4, isFirst = false, isLast = false, className, children, ...props }: StackedListItemProps & { ref?: React.RefObject<HTMLLIElement | null> },
   ) => {
     const isInteractive = !!(href || props.onClick || Component === "button");
@@ -185,10 +179,7 @@ interface StackedListContentProps
   fill?: boolean;
 }
 
-const /**
-       *
-       */
-  StackedListContent = ({ ref, title, description, fill = true, className, ...props }: StackedListContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const StackedListContent = ({ ref, title, description, fill = true, className, ...props }: StackedListContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <div
         ref={ref}
@@ -231,10 +222,7 @@ interface StackedListHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
 }
 
-const /**
-       *
-       */
-  StackedListHeader = ({ ref, title, description, actions, className, ...props }: StackedListHeaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const StackedListHeader = ({ ref, title, description, actions, className, ...props }: StackedListHeaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <Grid
         ref={ref}
@@ -289,10 +277,7 @@ interface StackedListEmptyProps extends React.HTMLAttributes<HTMLDivElement> {
   action?: React.ReactNode;
 }
 
-const /**
-       *
-       */
-  StackedListEmpty = (
+const StackedListEmpty = (
     { ref, title = "No items", description = "There are no items to display.", icon, action, className, ...props }: StackedListEmptyProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
     return (
@@ -321,10 +306,7 @@ const /**
 StackedListEmpty.displayName = "StackedListEmpty";
 
 // Compound component setup (like Entity.List, Entity.Content)
-const /**
-       *
-       */
-  StackedList = Object.assign(StackedListRoot, {
+const StackedList = Object.assign(StackedListRoot, {
     Item: StackedListItem,
     Content: StackedListContent,
     Header: StackedListHeader,
@@ -332,14 +314,7 @@ const /**
   });
 
 export {
-  StackedList,
-  StackedListContent,
-  type StackedListContentProps,
-  StackedListEmpty,
-  type StackedListEmptyProps,
-  StackedListHeader,
-  type StackedListHeaderProps,
-  StackedListItem,
-  type StackedListItemProps,
-  type StackedListProps,
+    StackedList,
+    StackedListContent, StackedListEmpty, StackedListHeader, StackedListItem, type StackedListContentProps, type StackedListEmptyProps, type StackedListHeaderProps, type StackedListItemProps,
+    type StackedListProps
 };

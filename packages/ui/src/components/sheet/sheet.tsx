@@ -120,10 +120,7 @@ import { cx, focusRing, iconUtils } from "../../lib/utils";
  * @id sheet
  * @name Sheet
  */
-const /**
-       *
-       */
-  InlineSheetDismissButton = (
+const InlineSheetDismissButton = (
     { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
       "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
       "icon"?: React.ComponentType<{
@@ -202,10 +199,7 @@ const /**
  * </Sheet>
  * ```
  */
-const /**
-       *
-       */
-  Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
+const Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
     return <Dialog.Root {...props} />;
   };
 Sheet.displayName = "Sheet";
@@ -233,10 +227,7 @@ Sheet.displayName = "Sheet";
  * </SheetTrigger>
  * ```
  */
-const /**
-       *
-       */
-  SheetTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Trigger> | null> }) => {
+const SheetTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Trigger> | null> }) => {
     return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
   };
 SheetTrigger.displayName = "Sheet.Trigger";
@@ -262,10 +253,7 @@ SheetTrigger.displayName = "Sheet.Trigger";
  * </SheetClose>
  * ```
  */
-const /**
-       *
-       */
-  SheetClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Close> | null> }) => {
+const SheetClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Close> | null> }) => {
     return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
   };
 SheetClose.displayName = "Sheet.Close";
@@ -286,10 +274,7 @@ SheetClose.displayName = "Sheet.Close";
  * </SheetPortal>
  * ```
  */
-const /**
-       *
-       */
-  SheetPortal = Dialog.Portal;
+const SheetPortal = Dialog.Portal;
 
 /**
  * Overlay/backdrop component that appears behind the sheet.
@@ -311,10 +296,7 @@ const /**
  * <SheetOverlay className="bg-blue-500/20" />
  * ```
  */
-const /**
-       *
-       */
-  SheetOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Backdrop> | null> }) => {
+const SheetOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Backdrop> | null> }) => {
     return (
       <Dialog.Backdrop
         ref={forwardedRef}
@@ -366,10 +348,7 @@ SheetOverlay.displayName = "SheetOverlay";
  * </SheetContent>
  * ```
  */
-const /**
-       *
-       */
-  SheetContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Popup> | null> }) => {
+const SheetContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Popup> | null> }) => {
     return (
       <SheetPortal>
         <SheetOverlay />
@@ -420,10 +399,7 @@ SheetContent.displayName = "SheetContent";
  * </SheetHeader>
  * ```
  */
-const /**
-       *
-       */
-  SheetHeader = ({ ref, children, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SheetHeader = ({ ref, children, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <div
         ref={ref}
@@ -467,10 +443,7 @@ SheetHeader.displayName = "Sheet.Header";
  * </SheetTitle>
  * ```
  */
-const /**
-       *
-       */
-  SheetTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Title> | null> }) => (
+const SheetTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Title> | null> }) => (
     <Dialog.Title
       ref={forwardedRef}
       className={cx(
@@ -513,10 +486,7 @@ SheetTitle.displayName = "SheetTitle";
  * </SheetBody>
  * ```
  */
-const /**
-       *
-       */
-  SheetBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SheetBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
   };
 SheetBody.displayName = "Sheet.Body";
@@ -542,10 +512,7 @@ SheetBody.displayName = "Sheet.Body";
  * </SheetDescription>
  * ```
  */
-const /**
-       *
-       */
-  SheetDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Description> | null> }) => {
+const SheetDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Description> | null> }) => {
     return (
       <Dialog.Description
         ref={forwardedRef}
@@ -584,10 +551,7 @@ SheetDescription.displayName = "SheetDescription";
  * </SheetFooter>
  * ```
  */
-const /**
-       *
-       */
-  SheetFooter = ({
+const SheetFooter = ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -605,13 +569,13 @@ const /**
 SheetFooter.displayName = "SheetFooter";
 
 export {
-  Sheet,
-  SheetBody,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetBody,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger
 };

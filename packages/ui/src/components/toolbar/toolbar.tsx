@@ -2,9 +2,9 @@
 
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import { Toolbar as BaseToolbar } from "@base-ui-components/react/toolbar";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx, focusRing } from "../../lib/utils";
 
@@ -142,10 +142,7 @@ interface ToolbarProps
  * <Toolbar>Content</Toolbar>
  * ```
  */
-const /**
-       *
-       */
-  Toolbar = ({ ref, className, variant, size, orientation, ...props }: ToolbarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Root> | null> }) => {
+const Toolbar = ({ ref, className, variant, size, orientation, ...props }: ToolbarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Root> | null> }) => {
     const { root } = toolbarVariants({ variant, size, orientation });
 
     return (
@@ -164,10 +161,7 @@ interface ToolbarButtonProps
   extends React.ComponentPropsWithoutRef<typeof BaseToolbar.Button>,
   VariantProps<typeof toolbarVariants> {}
 
-const /**
-       *
-       */
-  ToolbarButton = ({ ref, className, variant, size, ...props }: ToolbarButtonProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Button> | null> }) => {
+const ToolbarButton = ({ ref, className, variant, size, ...props }: ToolbarButtonProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Button> | null> }) => {
     const { button } = toolbarVariants({ variant, size });
 
     return (
@@ -185,10 +179,7 @@ interface ToolbarLinkProps
   extends React.ComponentPropsWithoutRef<typeof BaseToolbar.Link>,
   VariantProps<typeof toolbarVariants> {}
 
-const /**
-       *
-       */
-  ToolbarLink = ({ ref, className, variant, size, ...props }: ToolbarLinkProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Link> | null> }) => {
+const ToolbarLink = ({ ref, className, variant, size, ...props }: ToolbarLinkProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Link> | null> }) => {
     const { link } = toolbarVariants({ variant, size });
 
     return (
@@ -205,10 +196,7 @@ interface ToolbarInputProps
     >,
   VariantProps<typeof toolbarVariants> {}
 
-const /**
-       *
-       */
-  ToolbarInput = ({ ref, className, variant, size, ...props }: ToolbarInputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Input> | null> }) => {
+const ToolbarInput = ({ ref, className, variant, size, ...props }: ToolbarInputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Input> | null> }) => {
     const { input } = toolbarVariants({ variant, size });
 
     return (
@@ -226,10 +214,7 @@ interface ToolbarGroupProps
   extends React.ComponentPropsWithoutRef<typeof BaseToolbar.Group>,
   VariantProps<typeof toolbarVariants> {}
 
-const /**
-       *
-       */
-  ToolbarGroup = ({ ref, className, variant, size, ...props }: ToolbarGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Group> | null> }) => {
+const ToolbarGroup = ({ ref, className, variant, size, ...props }: ToolbarGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Group> | null> }) => {
     const { group } = toolbarVariants({ variant, size });
 
     return (
@@ -247,10 +232,7 @@ interface ToolbarSeparatorProps
   extends React.ComponentPropsWithoutRef<typeof BaseToolbar.Separator>,
   VariantProps<typeof toolbarVariants> {}
 
-const /**
-       *
-       */
-  ToolbarSeparator = ({ ref, className, variant, size, orientation, ...props }: ToolbarSeparatorProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Separator> | null> }) => {
+const ToolbarSeparator = ({ ref, className, variant, size, orientation, ...props }: ToolbarSeparatorProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToolbar.Separator> | null> }) => {
     const { separator } = toolbarVariants({ variant, size, orientation });
 
     return (
@@ -266,27 +248,24 @@ const /**
 ToolbarSeparator.displayName = "ToolbarSeparator";
 
 // Export individual components for advanced usage
-const /**
-       *
-       */
-  ToolbarRoot = BaseToolbar.Root;
+const ToolbarRoot = BaseToolbar.Root;
 
 export {
-  Toolbar,
-  ToolbarButton,
-  ToolbarGroup,
-  ToolbarInput,
-  ToolbarLink,
-  ToolbarRoot,
-  ToolbarSeparator,
-  toolbarVariants,
+    Toolbar,
+    ToolbarButton,
+    ToolbarGroup,
+    ToolbarInput,
+    ToolbarLink,
+    ToolbarRoot,
+    ToolbarSeparator,
+    toolbarVariants
 };
 
-export type {
-  ToolbarButtonProps,
-  ToolbarGroupProps,
-  ToolbarInputProps,
-  ToolbarLinkProps,
-  ToolbarProps,
-  ToolbarSeparatorProps,
-};
+    export type {
+        ToolbarButtonProps,
+        ToolbarGroupProps,
+        ToolbarInputProps,
+        ToolbarLinkProps,
+        ToolbarProps,
+        ToolbarSeparatorProps
+    };

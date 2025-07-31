@@ -16,10 +16,7 @@ import { cx, focusRing } from "../../lib/utils";
  * <TabNavigation>Content</TabNavigation>
  * ```
  */
-const /**
-       *
-       */
-  TabNavigation = ({ ref: forwardedRef, className, children, ...props }: Omit<
+const TabNavigation = ({ ref: forwardedRef, className, children, ...props }: Omit<
     React.ComponentPropsWithoutRef<typeof NavigationMenu.Root>,
     "orientation" | "defaultValue"
   > & { ref?: React.RefObject<React.ElementRef<typeof NavigationMenu.Root> | null> }) => (
@@ -40,10 +37,7 @@ const /**
 
 TabNavigation.displayName = "TabNavigation";
 
-const /**
-       *
-       */
-  TabNavigationLink = ({ ref: forwardedRef, disabled, className, children, ...props }: React.ComponentPropsWithoutRef<typeof NavigationMenu.Link> & {
+const TabNavigationLink = ({ ref: forwardedRef, disabled, className, children, ...props }: React.ComponentPropsWithoutRef<typeof NavigationMenu.Link> & {
     disabled?: boolean;
   } & { ref?: React.RefObject<React.ElementRef<typeof NavigationMenu.Link> | null> }) => (
     <NavigationMenu.Item className="flex" aria-disabled={disabled}>

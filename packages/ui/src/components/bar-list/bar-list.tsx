@@ -317,11 +317,8 @@ BarListInner.displayName = "BarList";
  * @name BarList
  * @component
  */
-const /**
-       *
-       */
-  BarList = React.forwardRef(BarListInner) as <T>(
+const BarList = React.forwardRef(BarListInner) as <T>(
     p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }
   ) => ReturnType<typeof BarListInner>;
 
-export { type Bar, BarList, type BarListProps };
+export { BarList, type Bar, type BarListProps };

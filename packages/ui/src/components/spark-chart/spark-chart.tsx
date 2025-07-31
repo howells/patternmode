@@ -3,27 +3,27 @@
 
 "use client";
 
+import React from "react";
 import type { AxisDomain } from "recharts/types/util/types";
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
-import React from "react";
 
 import {
-  Area,
-  Bar,
-  Line,
-  AreaChart as RechartsAreaChart,
-  BarChart as RechartsBarChart,
-  LineChart as RechartsLineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
+    Area,
+    Bar,
+    Line,
+    AreaChart as RechartsAreaChart,
+    BarChart as RechartsBarChart,
+    LineChart as RechartsLineChart,
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
 } from "recharts";
 import {
-  AvailableChartColors,
+    AvailableChartColors,
 
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
+    constructCategoryColors,
+    getColorClassName,
+    getYAxisDomain,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -53,10 +53,7 @@ interface SparkAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
  * <SparkChart data={data} />
  * ```
  */
-const /**
-       *
-       */
-  SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],
@@ -190,10 +187,7 @@ interface SparkLineChartProps extends React.HTMLAttributes<HTMLDivElement> {
   connectNulls?: boolean;
 }
 
-const /**
-       *
-       */
-  SparkLineChart = ({ ref: forwardedRef, ...props }: SparkLineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SparkLineChart = ({ ref: forwardedRef, ...props }: SparkLineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],
@@ -273,10 +267,7 @@ interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: "default" | "stacked" | "percent";
 }
 
-const /**
-       *
-       */
-  SparkBarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SparkBarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const {
       data = [],
       categories = [],

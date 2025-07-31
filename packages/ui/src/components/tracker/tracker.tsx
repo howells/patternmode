@@ -6,9 +6,9 @@ import React from "react";
 
 import { cx } from "../../lib/utils";
 import {
-  PreviewCard,
-  PreviewCardContent,
-  PreviewCardTrigger,
+    PreviewCard,
+    PreviewCardContent,
+    PreviewCardTrigger,
 } from "../preview-card/preview-card";
 
 interface TrackerBlockProps {
@@ -32,10 +32,7 @@ interface TrackerBlockProps {
  * <Tracker data={data} />
  * ```
  */
-const /**
-       *
-       */
-  Block = ({
+const Block = ({
     color,
     tooltip,
     defaultBackgroundColor,
@@ -83,10 +80,7 @@ interface TrackerProps extends React.HTMLAttributes<HTMLDivElement> {
   hoverEffect?: boolean;
 }
 
-const /**
-       *
-       */
-  Tracker = (
+const Tracker = (
     { ref: forwardedRef, data = [], defaultBackgroundColor = "bg-zinc-400 dark:bg-zinc-400", className, hoverEffect, ...props }: TrackerProps & { ref?: React.RefObject<HTMLDivElement | null> },
   ) => {
   // Handle prop transformation - convert string to array if needed

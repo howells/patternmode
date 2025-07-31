@@ -51,9 +51,9 @@
  * ```
  */
 
-import type { VariantProps } from "tailwind-variants";
 import { Loader2 } from "lucide-react";
 import React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -159,10 +159,7 @@ interface LoaderProps
  * @name Loader
  * @component
  */
-const /**
-       *
-       */
-  Loader = ({ ref: forwardedRef, size, className, "aria-label": ariaLabel, ...props }: LoaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const Loader = ({ ref: forwardedRef, size, className, "aria-label": ariaLabel, ...props }: LoaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     return (
       <div
         ref={forwardedRef}
@@ -177,4 +174,4 @@ const /**
 
 Loader.displayName = "Loader";
 
-export { Loader, type LoaderProps, loaderVariants };
+export { Loader, loaderVariants, type LoaderProps };

@@ -121,10 +121,7 @@ import { cx } from "../../lib/utils";
  * </PreviewCard>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCard = BasePreviewCard.Root;
+const PreviewCard = BasePreviewCard.Root;
 
 /**
  * Preview card trigger component that shows preview on hover.
@@ -155,10 +152,7 @@ const /**
  * @name Preview Card
  * @component
  */
-const /**
-       *
-       */
-  PreviewCardTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Trigger> | null> }) => (
+const PreviewCardTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Trigger> | null> }) => (
     <BasePreviewCard.Trigger
       ref={ref}
       className={cx(
@@ -195,10 +189,7 @@ const /**
  * </PreviewCardPortal>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardPortal = BasePreviewCard.Portal;
+const PreviewCardPortal = BasePreviewCard.Portal;
 
 /**
  * Positioner component for smart preview card placement.
@@ -218,10 +209,7 @@ const /**
  * </PreviewCardPositioner>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardPositioner = ({ ref, sideOffset = 8, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Positioner> | null> }) => (
+const PreviewCardPositioner = ({ ref, sideOffset = 8, collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Positioner> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Positioner> | null> }) => (
     <BasePreviewCard.Positioner
       ref={ref}
       sideOffset={sideOffset}
@@ -258,10 +246,7 @@ const /**
  * </PreviewCardContent>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardContent = (
+const PreviewCardContent = (
     { ref, className, sideOffset = 8, side = "bottom", align = "center", collisionPadding = 5, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Popup> & {
     /**
      * Distance from trigger element.
@@ -331,10 +316,7 @@ const /**
  * </PreviewCardContent>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Arrow> | null> }) => (
+const PreviewCardArrow = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BasePreviewCard.Arrow> & { ref?: React.RefObject<React.ElementRef<typeof BasePreviewCard.Arrow> | null> }) => (
     <BasePreviewCard.Arrow
       ref={ref}
       className={cx(
@@ -389,10 +371,7 @@ const /**
  * />
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardImage = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"img"> & { ref?: React.RefObject<HTMLImageElement | null> }) => (
+const PreviewCardImage = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"img"> & { ref?: React.RefObject<HTMLImageElement | null> }) => (
     <img
       ref={ref}
       className={cx(
@@ -424,10 +403,7 @@ const /**
  * </PreviewCardHeader>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const PreviewCardHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -458,10 +434,7 @@ const /**
  * </PreviewCardTitle>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"h3"> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
+const PreviewCardTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"h3"> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
     <h3
       ref={ref}
       className={cx(
@@ -496,10 +469,7 @@ const /**
  * </PreviewCardDescription>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"p"> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
+const PreviewCardDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"p"> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
     <p
       ref={ref}
       className={cx(
@@ -531,10 +501,7 @@ const /**
  * </PreviewCardBody>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const PreviewCardBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -564,10 +531,7 @@ const /**
  * </PreviewCardFooter>
  * ```
  */
-const /**
-       *
-       */
-  PreviewCardFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const PreviewCardFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
     <div
       ref={ref}
       className={cx(
@@ -584,16 +548,16 @@ const /**
   );
 
 export {
-  PreviewCard,
-  PreviewCardArrow,
-  PreviewCardBody,
-  PreviewCardContent,
-  PreviewCardDescription,
-  PreviewCardFooter,
-  PreviewCardHeader,
-  PreviewCardImage,
-  PreviewCardPortal,
-  PreviewCardPositioner,
-  PreviewCardTitle,
-  PreviewCardTrigger,
+    PreviewCard,
+    PreviewCardArrow,
+    PreviewCardBody,
+    PreviewCardContent,
+    PreviewCardDescription,
+    PreviewCardFooter,
+    PreviewCardHeader,
+    PreviewCardImage,
+    PreviewCardPortal,
+    PreviewCardPositioner,
+    PreviewCardTitle,
+    PreviewCardTrigger
 };

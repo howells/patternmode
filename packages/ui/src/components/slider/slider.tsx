@@ -2,9 +2,9 @@
 
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import { Slider as BaseSlider } from "@base-ui-components/react/slider";
 import * as React from "react";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { cx, focusRing } from "../../lib/utils";
 
@@ -174,10 +174,7 @@ interface SliderProps
  * @name Slider
  * @component
  */
-const /**
-       *
-       */
-  Slider = (
+const Slider = (
     { ref: forwardedRef, className, ariaLabelThumb, showValue = false, valueFormatter = value => value.toString(), ...props }: SliderProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null> },
   ) => {
     const {
@@ -287,38 +284,20 @@ const /**
 Slider.displayName = "Slider";
 
 // Export individual components for advanced usage
-const /**
-       *
-       */
-  SliderRoot = BaseSlider.Root;
-const /**
-       *
-       */
-  SliderValue = BaseSlider.Value;
-const /**
-       *
-       */
-  SliderControl = BaseSlider.Control;
-const /**
-       *
-       */
-  SliderTrack = BaseSlider.Track;
-const /**
-       *
-       */
-  SliderIndicator = BaseSlider.Indicator;
-const /**
-       *
-       */
-  SliderThumb = BaseSlider.Thumb;
+const SliderRoot = BaseSlider.Root;
+const SliderValue = BaseSlider.Value;
+const SliderControl = BaseSlider.Control;
+const SliderTrack = BaseSlider.Track;
+const SliderIndicator = BaseSlider.Indicator;
+const SliderThumb = BaseSlider.Thumb;
 
 export {
-  Slider,
-  SliderControl,
-  SliderIndicator,
-  SliderRoot,
-  SliderThumb,
-  SliderTrack,
-  SliderValue,
-  sliderVariants,
+    Slider,
+    SliderControl,
+    SliderIndicator,
+    SliderRoot,
+    SliderThumb,
+    SliderTrack,
+    SliderValue,
+    sliderVariants
 };

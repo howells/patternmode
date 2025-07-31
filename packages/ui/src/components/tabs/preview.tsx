@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+import type { ButtonSize } from "../button/button";
 
 export function TabsExample({
   defaultValue = "overview",
@@ -11,7 +12,7 @@ export function TabsExample({
 }: {
   defaultValue?: string;
   variant?: "solid" | "line";
-  size?: "default" | "sm" | "lg";
+  size?: ButtonSize;
   hideDivider?: boolean;
 } & React.ComponentProps<typeof Tabs>) {
   return (
@@ -23,13 +24,13 @@ export function TabsExample({
         <TabsTrigger value="notifications">Notifications</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="overview" className="mt-6"></TabsContent>
+      <TabsContent value="overview"></TabsContent>
 
-      <TabsContent value="analytics" className="mt-6"></TabsContent>
+      <TabsContent value="analytics"></TabsContent>
 
-      <TabsContent value="reports" className="mt-6"></TabsContent>
+      <TabsContent value="reports" ></TabsContent>
 
-      <TabsContent value="notifications" className="mt-6"></TabsContent>
+      <TabsContent value="notifications"></TabsContent>
     </Tabs>
   );
 }

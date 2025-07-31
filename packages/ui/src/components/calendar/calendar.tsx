@@ -1,39 +1,39 @@
 "use client";
 
 import type { Locale } from "date-fns";
-import type { DayPickerProps, Matcher } from "react-day-picker";
 import {
-  addYears,
-  eachMonthOfInterval,
-  eachYearOfInterval,
-  format,
-  getMonth,
-  getYear,
-  setMonth,
-  setYear,
+    addYears,
+    eachMonthOfInterval,
+    eachYearOfInterval,
+    format,
+    getMonth,
+    getYear,
+    setMonth,
+    setYear,
 } from "date-fns";
 import {
-  Calendar as CalendarIcon,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
+    Calendar as CalendarIcon,
+    ChevronLeft,
+    ChevronRight,
+    ChevronsLeft,
+    ChevronsRight,
 } from "lucide-react";
 import * as React from "react";
+import type { DayPickerProps, Matcher } from "react-day-picker";
 import {
-  DayPicker,
+    DayPicker,
 
-  useDayPicker,
+    useDayPicker,
 } from "react-day-picker";
 
 import { cx, focusRing } from "../../lib/utils";
 import { Button } from "../button/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "../select/select";
 
 /**
@@ -47,10 +47,7 @@ import {
  * <DropdownCaption>Content</DropdownCaption>
  * ```
  */
-const /**
-       *
-       */
-  DropdownCaption = ({
+const DropdownCaption = ({
     calendarMonth,
     displayIndex,
     startMonth,
@@ -355,10 +352,7 @@ type CalendarProps = DayPickerProps & {
  *
  * @see https://daypicker.dev/ - React Day Picker documentation
  */
-const /**
-       *
-       */
-  Calendar = ({
+const Calendar = ({
     weekStartsOn = 1,
     numberOfMonths = 1,
     enableYearNavigation = false,
