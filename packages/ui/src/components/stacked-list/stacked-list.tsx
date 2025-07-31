@@ -21,6 +21,12 @@ interface StackedListProps extends React.HTMLAttributes<HTMLUListElement> {
   padding?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
 }
 
+/**
+ * Stacked List
+ *
+ * @id stacked-list
+ * @name Stacked List
+ */
 const StackedListRoot = React.forwardRef<HTMLUListElement, StackedListProps>(
   (
     {

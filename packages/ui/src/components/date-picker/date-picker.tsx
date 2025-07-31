@@ -48,6 +48,12 @@ type TimeSegmentProps = {
   state: DateFieldState;
 };
 
+/**
+ * Date Picker
+ *
+ * @id date-picker
+ * @name Date Picker
+ */
 const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const { segmentProps } = useDateSegment(segment, state, ref);

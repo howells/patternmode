@@ -226,6 +226,12 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   dropdownIcon?: React.ComponentType<{ className?: string }>;
 }
 
+/**
+ * Split Button
+ *
+ * @id split-button
+ * @name Split Button
+ */
 const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
   (
     {

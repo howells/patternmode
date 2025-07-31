@@ -71,6 +71,12 @@ import { cx } from "../../lib/utils";
  * </DescriptionList>
  * ```
  */
+/**
+ * Description List
+ *
+ * @id description-list
+ * @name Description List
+ */
 export function DescriptionList({
   className,
   ...props

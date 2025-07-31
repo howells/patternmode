@@ -11,7 +11,7 @@ export const componentConfig: ComponentConfig = {
   category: "inputs" as const,
   icon: "CalendarRange",
 
-  importStatement: `import { DateRangePicker } from "@/components/ui/date-range-picker";`,
+  importStatement: `import { DateRangePicker } from "@/components/ui/date-picker";`,
   componentId: "DateRangePickerExample",
   props: [
     {

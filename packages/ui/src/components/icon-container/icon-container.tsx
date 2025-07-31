@@ -77,6 +77,12 @@ export interface IconContainerProps
  * />
  * ```
  */
+/**
+ * Icon Container
+ *
+ * @id icon-container
+ * @name Icon Container
+ */
 export function IconContainer({
   icon,
   size,

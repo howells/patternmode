@@ -5,6 +5,9 @@
  * (bottom sheet) and desktop sheet (side panel) based on screen size. Provides
  * consistent API across different device types while optimizing UX for each.
  *
+ * @id responsive-drawer
+ * @name Responsive Drawer
+ *
  * Features:
  * - Automatic mobile/desktop detection
  * - Mobile: Bottom drawer using Vaul library
@@ -124,7 +127,7 @@ interface ResponsiveDrawerTriggerProps {
   children?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
-  /** 
+  /**
    * Render prop for custom trigger element. When provided, the trigger
    * functionality is merged with the rendered element.
    */
@@ -213,7 +216,7 @@ interface ResponsiveDrawerCloseProps {
   children?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
-  /** 
+  /**
    * Render prop for custom close trigger element. When provided, the close
    * functionality is merged with the rendered element.
    */
@@ -575,5 +578,5 @@ export {
   ResponsiveDrawerFooter,
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
-  ResponsiveDrawerTrigger,
+  ResponsiveDrawerTrigger
 };

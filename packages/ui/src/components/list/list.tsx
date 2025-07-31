@@ -119,6 +119,12 @@ export interface ListIndicatorProps
  * </List>
  * ```
  */
+/**
+ * List
+ *
+ * @id list
+ * @name List
+ */
 export function List({
   as: Component = "ul",
   variant,

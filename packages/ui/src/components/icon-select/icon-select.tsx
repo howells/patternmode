@@ -156,6 +156,9 @@ function toKebabCase(str: string): string {
 
 /**
  * Safe DynamicIcon wrapper that renders Lucide icons with comprehensive validation to prevent console errors
+ *
+ * @id icon-select
+ * @name Icon Select
  */
 const SafeDynamicIcon = React.memo(function SafeDynamicIcon({
   name,

@@ -55,6 +55,12 @@ interface ToggleProps
   extends React.ComponentPropsWithoutRef<typeof BaseToggle>,
     VariantProps<typeof toggleVariants> {}
 
+/**
+ * Toggle
+ *
+ * @id toggle
+ * @name Toggle
+ */
 const Toggle = React.forwardRef<
   React.ElementRef<typeof BaseToggle>,
   ToggleProps

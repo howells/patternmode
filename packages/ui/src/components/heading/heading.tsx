@@ -82,6 +82,12 @@ export type HeadingProps = HeadingElementProps;
  * </Heading>
  * ```
  */
+/**
+ * Heading
+ *
+ * @id heading
+ * @name Heading
+ */
 export function Heading({ className, level = 1, ...props }: HeadingProps) {
   return (
     <HeadingElement

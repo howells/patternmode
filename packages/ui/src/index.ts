@@ -92,7 +92,6 @@ export * from "./components/checkbox/checkbox";
 export * from "./components/checkbox-group/checkbox-group";
 export * from "./components/combobox/combobox";
 export * from "./components/date-picker/date-picker";
-export * from "./components/date-range-picker/date-range-picker";
 export * from "./components/icon-select/icon-select";
 export * from "./components/input/input";
 export * from "./components/number-field/number-field";

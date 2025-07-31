@@ -36,6 +36,9 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
 
 /**
  * Fallback icon component that shows a question mark in a subtle container
+ *
+ * @id icon
+ * @name Icon
  */
 function FallbackIcon({
   className,

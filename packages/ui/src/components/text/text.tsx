@@ -23,6 +23,12 @@ interface TextProps
   extends React.ComponentPropsWithoutRef<"p">,
     VariantProps<typeof textVariants> {}
 
+/**
+ * Text
+ *
+ * @id text
+ * @name Text
+ */
 export function Text({ className, size, ...props }: TextProps) {
   return (
     <p

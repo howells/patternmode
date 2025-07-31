@@ -111,6 +111,12 @@ import { config } from "../../lib/config";
 import { X } from "lucide-react";
 
 // Inline DismissButton functionality for Sheet
+/**
+ * Sheet
+ *
+ * @id sheet
+ * @name Sheet
+ */
 const InlineSheetDismissButton = React.forwardRef<
   HTMLButtonElement,
   {

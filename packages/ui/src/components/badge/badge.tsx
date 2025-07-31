@@ -163,6 +163,12 @@ const dotIndicatorVariants = tv({
 });
 
 // Inline DismissButton functionality for Badge
+/**
+ * Badge
+ *
+ * @id badge
+ * @name Badge
+ */
 const InlineDismissButton = React.forwardRef<
   HTMLButtonElement,
   {

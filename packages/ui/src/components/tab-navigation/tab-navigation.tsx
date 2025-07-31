@@ -5,6 +5,12 @@ import React from "react";
 
 import { cx, focusRing } from "../../lib/utils";
 
+/**
+ * Tab Navigation
+ *
+ * @id tab-navigation
+ * @name Tab Navigation
+ */
 const TabNavigation = React.forwardRef<
   React.ElementRef<typeof NavigationMenu.Root>,
   Omit<

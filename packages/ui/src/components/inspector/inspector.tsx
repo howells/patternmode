@@ -148,6 +148,12 @@ import { ScrollArea } from "../scroll-area/scroll-area";
  * </Inspector>
  * ```
  */
+/**
+ * Inspector
+ *
+ * @id inspector
+ * @name Inspector
+ */
 export function Inspector({
   className,
   isOpen,

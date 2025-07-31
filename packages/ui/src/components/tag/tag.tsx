@@ -27,6 +27,12 @@ function getPaddingClasses(
 }
 
 // Inline DismissButton functionality for Tag
+/**
+ * Tag
+ *
+ * @id tag
+ * @name Tag
+ */
 const InlineTagDismissButton = React.forwardRef<
   HTMLButtonElement,
   {

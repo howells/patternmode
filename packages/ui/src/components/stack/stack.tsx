@@ -180,6 +180,12 @@ interface StackProps
   children: React.ReactNode;
 }
 
+/**
+ * Stack
+ *
+ * @id stack
+ * @name Stack
+ */
 const Stack = React.forwardRef<HTMLElement, StackProps>(
   (
     {

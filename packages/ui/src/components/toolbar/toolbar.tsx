@@ -128,6 +128,12 @@ interface ToolbarProps
   extends React.ComponentPropsWithoutRef<typeof BaseToolbar.Root>,
     VariantProps<typeof toolbarVariants> {}
 
+/**
+ * Toolbar
+ *
+ * @id toolbar
+ * @name Toolbar
+ */
 const Toolbar = React.forwardRef<
   React.ElementRef<typeof BaseToolbar.Root>,
   ToolbarProps

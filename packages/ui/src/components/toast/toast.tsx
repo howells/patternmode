@@ -206,6 +206,12 @@ class ToastManager {
 const globalToastManager = new ToastManager();
 
 // Context for toast manager
+/**
+ * Toast
+ *
+ * @id toast
+ * @name Toast
+ */
 const ToastManagerContext =
   React.createContext<ToastManager>(globalToastManager);
 

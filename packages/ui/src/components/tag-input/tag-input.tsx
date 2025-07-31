@@ -155,6 +155,12 @@ const defaultCreateNewTag = (value: string): TagOption => {
  * />
  * ```
  */
+/**
+ * Tag Input
+ *
+ * @id tag-input
+ * @name Tag Input
+ */
 export function TagInput({
   options,
   value = [],

@@ -1,4 +1,3 @@
-// Tremor Progress Utilities [v1.0.0]
 
 import { tv } from "tailwind-variants";
 

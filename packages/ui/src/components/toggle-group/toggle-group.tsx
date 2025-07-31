@@ -11,6 +11,12 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Icon, getIconSizeForContext } from "../icon/icon";
 
 // Create context for toggle group size
+/**
+ * Toggle Group
+ *
+ * @id toggle-group
+ * @name Toggle Group
+ */
 const ToggleGroupContext = createContext<{
   size: VariantProps<typeof toggleGroupVariants>["size"];
   variant: VariantProps<typeof toggleGroupVariants>["variant"];

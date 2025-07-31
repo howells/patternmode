@@ -185,6 +185,12 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
  * />
  * ```
  */
+/**
+ * Combobox
+ *
+ * @id combobox
+ * @name Combobox
+ */
 const Combobox = <T extends ComboboxOption = ComboboxOption>({
   options,
   fetchData,

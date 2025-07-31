@@ -19,6 +19,12 @@ interface TrackerBlockProps {
   defaultBackgroundColor?: string;
 }
 
+/**
+ * Tracker
+ *
+ * @id tracker
+ * @name Tracker
+ */
 const Block = ({
   color,
   tooltip,

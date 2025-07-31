@@ -11,6 +11,12 @@ import { Separator } from "../separator/separator";
 import { Tooltip } from "../tooltip/tooltip";
 
 // Sidebar-specific title component for navigation hierarchy
+/**
+ * Sidebar
+ *
+ * @id sidebar
+ * @name Sidebar
+ */
 function SidebarTitle({
   level = 1,
   href,

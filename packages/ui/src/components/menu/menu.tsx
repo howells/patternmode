@@ -9,6 +9,12 @@ import * as React from "react";
 import { cx } from "../../lib/utils";
 import { Icon as IconComponent } from "../icon/icon";
 
+/**
+ * Menu
+ *
+ * @id menu
+ * @name Menu
+ */
 const Menu = BaseMenu.Root;
 
 const MenuTrigger = BaseMenu.Trigger;

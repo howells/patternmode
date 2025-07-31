@@ -48,6 +48,12 @@ import type React from "react";
  * </div>
  * ```
  */
+/**
+ * Skeleton
+ *
+ * @id skeleton
+ * @name Skeleton
+ */
 function Skeleton({
   className,
   ...props

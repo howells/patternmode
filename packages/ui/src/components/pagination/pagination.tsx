@@ -130,6 +130,12 @@ import { Button } from "../button/button";
  * </Pagination>
  * ```
  */
+/**
+ * Pagination
+ *
+ * @id pagination
+ * @name Pagination
+ */
 export function Pagination({
   "aria-label": ariaLabel = "Page navigation",
   className,

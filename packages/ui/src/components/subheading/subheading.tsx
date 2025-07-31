@@ -3,6 +3,12 @@ import { HeadingElement, type HeadingElementProps } from "../heading-element/hea
 
 export type SubheadingProps = HeadingElementProps;
 
+/**
+ * Subheading
+ *
+ * @id subheading
+ * @name Subheading
+ */
 export function Subheading({
   className,
   level = 2,

@@ -70,6 +70,12 @@ interface DotProps
 
 // Use the central getColorClasses utility
 
+/**
+ * Dot
+ *
+ * @id dot
+ * @name Dot
+ */
 const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
   (
     {
