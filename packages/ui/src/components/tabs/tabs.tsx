@@ -49,25 +49,13 @@ const tabsVariants = tv({
       },
       line: {
         list: [
-          // base - Geist/line style with bottom border
+          // base
           "relative flex items-center justify-start",
           // bottom border (divider)
           "border-b border-zinc-200 dark:border-zinc-800",
         ],
         tab: [
-          // base
-          "relative inline-flex items-center justify-center border-0 font-medium whitespace-nowrap",
-          // text color
-          "text-zinc-600 dark:text-zinc-400",
-          // hover
-          "hover:text-zinc-900 dark:hover:text-zinc-200",
-          // selected
-          "data-[selected]:text-zinc-900 dark:data-[selected]:text-zinc-50",
-          // disabled
-          "data-[disabled]:pointer-events-none data-[disabled]:text-zinc-400 data-[disabled]:opacity-50 dark:data-[disabled]:text-zinc-600",
-          // focus styles
-          "outline-none select-none",
-          "focus-visible:text-zinc-900 dark:focus-visible:text-zinc-50",
+
         ],
         indicator: [
           // line indicator - bottom line that sits on the divider
@@ -79,19 +67,19 @@ const tabsVariants = tv({
     size: {
       xs: {
         list: "gap-x-2", // very tight spacing for line variant
-        tab: "h-8 text-xs", // very small height and text size for line variant only
+        tab: "", // very small height and text size for line variant only
       },
       sm: {
         list: "gap-x-3", // tighter spacing for line variant
-        tab: "h-10 text-xs", // smaller height and text size for line variant only
+        tab: "", // smaller height and text size for line variant only
       },
       default: {
         list: "gap-x-4", // spacing for line variant
-        tab: "h-12 text-sm", // height and text size for line variant only
+        tab: "", // height and text size for line variant only
       },
       lg: {
         list: "gap-x-6", // wider spacing for line variant
-        tab: "h-14 text-base", // larger height and text size for line variant only
+        tab: "", // larger height and text size for line variant only
       },
     },
     hideDivider: {
@@ -396,17 +384,17 @@ const TabsTrigger = (
             return (
               <Button
                 {...buttonProps}
-                variant={state.selected ? "outline" : "ghost"}
+                variant={state.selected ? "minimal" : "ghost"}
                 size={getButtonSize(size)}
                 leftIcon={leftIcon}
                 rightIcon={rightIcon}
                 iconStrokeWidth={iconStrokeWidth}
                 shadow={false}
+                disabled={state.disabled}
                 className={cx(
-                  "data-[disabled]:pointer-events-none",
-                  "inset-ring-0 shadow-none",
-                  state.selected && "hover:bg-white dark:hover:bg-zinc-950",
-                  !state.selected && "opacity-50 hover:opacity-100",
+                  {
+                    "bg-white dark:bg-zinc-900": state.selected,
+                  },
                   className,
                 )}
               >
@@ -423,13 +411,6 @@ const TabsTrigger = (
       <BaseTabs.Tab
         ref={forwardedRef}
         className={cx(
-          // Base tab styles for line variant - ensure proper sizing for indicator
-          "relative inline-flex items-center justify-center",
-          // Apply the size-specific height to the tab container for indicator positioning
-          size === "xs" && "h-8",
-          size === "sm" && "h-10",
-          size === "default" && "h-12",
-          size === "lg" && "h-14",
           className,
         )}
         {...props}

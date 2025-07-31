@@ -1,6 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
 import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import React from "react";
+import { cx } from "../../lib/utils";
+import { Text } from "../text/text";
+
+const TabTextContent = ({ children }: { children: React.ReactNode }) => {
+  return (
+      <Text  className={cx("py-4")}>{children}</Text>
+  );
+};
 
 export function TabsExample() {
   return (
@@ -11,13 +19,13 @@ export function TabsExample() {
         <TabsTrigger value="tab3">Reports</TabsTrigger>
       </TabsList>
       <TabsContent value="tab1">
-        <p>Overview content goes here</p>
+        <TabTextContent>Overview content goes here</TabTextContent>
       </TabsContent>
       <TabsContent value="tab2">
-        <p>Analytics content goes here</p>
+        <TabTextContent>Analytics content goes here</TabTextContent>
       </TabsContent>
       <TabsContent value="tab3">
-        <p>Reports content goes here</p>
+        <TabTextContent>Reports content goes here</TabTextContent>
       </TabsContent>
     </Tabs>
   );
@@ -32,13 +40,13 @@ export function LineNoDividerExample() {
         <TabsTrigger value="tab3">Reports</TabsTrigger>
       </TabsList>
       <TabsContent value="tab1">
-        <p>Overview content goes here</p>
+        <TabTextContent>Overview content goes here</TabTextContent>
       </TabsContent>
       <TabsContent value="tab2">
-        <p>Analytics content goes here</p>
+        <TabTextContent>Analytics content goes here</TabTextContent>
       </TabsContent>
       <TabsContent value="tab3">
-        <p>Reports content goes here</p>
+        <TabTextContent>Reports content goes here</TabTextContent>
       </TabsContent>
     </Tabs>
   );
@@ -53,13 +61,13 @@ export function SolidExample() {
         <TabsTrigger value="tab3">Tab 3</TabsTrigger>
       </TabsList>
       <TabsContent value="tab1">
-        <p>Content for Tab 1</p>
+        <TabTextContent>Content for Tab 1</TabTextContent>
       </TabsContent>
       <TabsContent value="tab2">
-        <p>Content for Tab 2</p>
+        <TabTextContent>Content for Tab 2</TabTextContent>
       </TabsContent>
       <TabsContent value="tab3">
-        <p>Content for Tab 3</p>
+        <TabTextContent>Content for Tab 3</TabTextContent>
       </TabsContent>
     </Tabs>
   );
@@ -77,13 +85,13 @@ export function LineSizesExample() {
             <TabsTrigger value="tab3">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Extra small tabs content</p>
+            <TabTextContent>Extra small tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Analytics content</p>
+            <TabTextContent>Analytics content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Reports content</p>
+            <TabTextContent>Reports content</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -97,13 +105,13 @@ export function LineSizesExample() {
             <TabsTrigger value="tab3">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Small tabs content</p>
+            <TabTextContent>Small tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Analytics content</p>
+            <TabTextContent>Analytics content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Reports content</p>
+            <TabTextContent>Reports content</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -117,13 +125,13 @@ export function LineSizesExample() {
             <TabsTrigger value="tab3">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Default tabs content</p>
+            <TabTextContent>Default tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Analytics content</p>
+            <TabTextContent>Analytics content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Reports content</p>
+            <TabTextContent>Reports content</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -137,13 +145,13 @@ export function LineSizesExample() {
             <TabsTrigger value="tab3">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Large tabs content</p>
+            <TabTextContent>Large tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Analytics content</p>
+            <TabTextContent>Analytics content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Reports content</p>
+            <TabTextContent>Reports content</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -163,13 +171,13 @@ export function SolidSizesExample() {
             <TabsTrigger value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Extra small solid tabs content</p>
+            <TabTextContent>Extra small solid tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Content for Tab 2</p>
+            <TabTextContent>Content for Tab 2</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Content for Tab 3</p>
+            <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -183,13 +191,13 @@ export function SolidSizesExample() {
             <TabsTrigger value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Small solid tabs content</p>
+            <TabTextContent>Small solid tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Content for Tab 2</p>
+            <TabTextContent>Content for Tab 2</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Content for Tab 3</p>
+            <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -203,13 +211,13 @@ export function SolidSizesExample() {
             <TabsTrigger value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Default solid tabs content</p>
+            <TabTextContent>Default solid tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Content for Tab 2</p>
+            <TabTextContent>Content for Tab 2</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Content for Tab 3</p>
+            <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -223,13 +231,13 @@ export function SolidSizesExample() {
             <TabsTrigger value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p>Large solid tabs content</p>
+            <TabTextContent>Large solid tabs content</TabTextContent>
           </TabsContent>
           <TabsContent value="tab2">
-            <p>Content for Tab 2</p>
+            <TabTextContent>Content for Tab 2</TabTextContent>
           </TabsContent>
           <TabsContent value="tab3">
-            <p>Content for Tab 3</p>
+            <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
       </div>
@@ -239,8 +247,6 @@ export function SolidSizesExample() {
 
 export function LineIndicatorTestExample() {
   return (
-    <div className="space-y-4">
-      <p className="text-sm text-zinc-600">Test that the line indicator animates properly:</p>
       <Tabs defaultValue="tab1">
         <TabsList variant="line">
           <TabsTrigger value="tab1">Short</TabsTrigger>
@@ -248,16 +254,15 @@ export function LineIndicatorTestExample() {
           <TabsTrigger value="tab3">Very Long Tab Name</TabsTrigger>
         </TabsList>
         <TabsContent value="tab1">
-          <p>The indicator should be under "Short"</p>
+          <TabTextContent>The indicator should be under "Short"</TabTextContent>
         </TabsContent>
         <TabsContent value="tab2">
-          <p>The indicator should be under "Medium Length"</p>
+          <TabTextContent>The indicator should be under "Medium Length"</TabTextContent>
         </TabsContent>
         <TabsContent value="tab3">
-          <p>The indicator should be under "Very Long Tab Name"</p>
+          <TabTextContent>The indicator should be under "Very Long Tab Name"</TabTextContent>
         </TabsContent>
       </Tabs>
-    </div>
   );
 }
 
@@ -271,16 +276,16 @@ export function LineWithIconsExample() {
         <TabsTrigger value="settings" leftIcon={Settings}>Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
-        <p>Overview content with icons in line variant</p>
+        <TabTextContent>Overview content with icons in line variant</TabTextContent>
       </TabsContent>
       <TabsContent value="analytics">
-        <p>Analytics content</p>
+        <TabTextContent>Analytics content</TabTextContent>
       </TabsContent>
       <TabsContent value="users">
-        <p>Users content</p>
+        <TabTextContent>Users content</TabTextContent>
       </TabsContent>
       <TabsContent value="settings">
-        <p>Settings content</p>
+        <TabTextContent>Settings content</TabTextContent>
       </TabsContent>
     </Tabs>
   );
@@ -296,16 +301,16 @@ export function SolidWithIconsExample() {
         <TabsTrigger value="settings" leftIcon={Settings}>Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
-        <p>Overview content with icons in solid variant</p>
+        <TabTextContent>Overview content with icons in solid variant</TabTextContent>
       </TabsContent>
       <TabsContent value="analytics">
-        <p>Analytics content</p>
+        <TabTextContent>Analytics content</TabTextContent>
       </TabsContent>
       <TabsContent value="users">
-        <p>Users content</p>
+        <TabTextContent>Users content</TabTextContent>
       </TabsContent>
       <TabsContent value="settings">
-        <p>Settings content</p>
+        <TabTextContent>Settings content</TabTextContent>
       </TabsContent>
     </Tabs>
   );
