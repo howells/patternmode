@@ -118,7 +118,11 @@ import { Icon as IconComponent } from "../icon/icon";
  * </ContextMenu>
  * ```
  */
-const ContextMenu = BaseContextMenu.Root;
+const ContextMenu = React.forwardRef<React.ElementRef<typeof BaseContextMenu.Root>, React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root>>((props, _forwardedRef) => (
+  <BaseContextMenu.Root {...props} />
+));
+
+ContextMenu.displayName = "ContextMenu";
 
 /**
  * Context menu trigger component.
@@ -539,6 +543,8 @@ const ContextMenuLabel = React.forwardRef<
   />
 ));
 
+ContextMenuLabel.displayName = "ContextMenuLabel";
+
 /**
  * Context menu separator component.
  *
@@ -561,6 +567,8 @@ const ContextMenuSeparator = React.forwardRef<
     {...props}
   />
 ));
+
+ContextMenuSeparator.displayName = "ContextMenuSeparator";
 
 /**
  * Context menu icon wrapper component.
