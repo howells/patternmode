@@ -104,6 +104,9 @@ interface MeterProps
  * @param label - Optional descriptive label
  * @param formatValue - Custom value formatting function
  *
+ *
+ * @id meter
+ * @name Meter
  * @component
  * @example
  * ```tsx

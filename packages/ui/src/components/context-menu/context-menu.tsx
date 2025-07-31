@@ -166,6 +166,9 @@ const ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
  *
  * @param className - Additional CSS classes
  * @param children - Content of the submenu trigger
+ *
+ * @id context-menu
+ * @name Context Menu
  */
 const ContextMenuSubmenuTrigger = React.forwardRef<
   React.ElementRef<typeof BaseContextMenu.SubmenuTrigger>,

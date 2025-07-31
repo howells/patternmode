@@ -169,6 +169,9 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param className - Additional CSS classes
  * @param children - Grid content
  *
+ *
+ * @id grid
+ * @name Grid
  * @component
  * @example
  * ```tsx

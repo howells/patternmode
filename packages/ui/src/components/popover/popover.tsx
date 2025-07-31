@@ -136,6 +136,9 @@ const Popover = BasePopover.Root;
  * @param className - Additional CSS classes
  * @param props - Additional Base UI Trigger props
  *
+ *
+ * @id popover
+ * @name Popover
  * @component
  * @example
  * ```tsx

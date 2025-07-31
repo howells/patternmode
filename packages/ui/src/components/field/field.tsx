@@ -90,6 +90,9 @@ const Field = BaseField.Root;
  * typography.
  *
  * @param className - Additional CSS classes
+ *
+ * @id field
+ * @name Field
  */
 const FieldLabel = React.forwardRef<
   React.ElementRef<typeof BaseField.Label>,

@@ -134,6 +134,9 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * @param children - Form content including fields
  * @param className - Additional CSS classes
  *
+ *
+ * @id form
+ * @name Form
  * @component
  * @example
  * ```tsx

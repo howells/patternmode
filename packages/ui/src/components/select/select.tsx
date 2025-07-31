@@ -77,6 +77,9 @@ const selectTriggerVariants = tv({
  *
  * @param hasError - Whether to show error styling
  *
+ *
+ * @id select
+ * @name Select
  * @example
  * ```tsx
  * <SelectTrigger hasError={!!errors.field}>

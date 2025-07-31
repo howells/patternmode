@@ -152,6 +152,9 @@ interface ButtonProps
  * sizes, and states. Supports icons, loading states, and full-width layouts with
  * sophisticated animation and focus management.
  *
+ *
+ * @id button
+ * @name Button
  * @component
  * @example
  * ```tsx

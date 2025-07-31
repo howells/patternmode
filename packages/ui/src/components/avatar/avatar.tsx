@@ -71,6 +71,9 @@ const imageSizeMap = {
  * Supports both circular and square variants with proper layering using CSS Grid.
  * Uses Next.js Image component for optimized loading with size-appropriate dimensions.
  *
+ *
+ * @id avatar
+ * @name Avatar
  * @component
  * @example
  * ```tsx

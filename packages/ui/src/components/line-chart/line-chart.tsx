@@ -121,6 +121,9 @@ interface LegendItemProps {
  * 
  * Displays a colored dot and label for chart categories with optional
  * click interaction and active state styling.
+ *
+ * @id line-chart
+ * @name Line Chart
  */
 const LegendItem = ({
   name,

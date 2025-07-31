@@ -154,6 +154,9 @@ interface DividerProps
  * @param orientation - Divider orientation (horizontal or vertical)
  * @param spacing - Vertical spacing around the divider
  *
+ *
+ * @id divider
+ * @name Divider
  * @component
  * @example
  * ```tsx

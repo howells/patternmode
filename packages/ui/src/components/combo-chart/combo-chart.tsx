@@ -139,6 +139,9 @@ interface LegendItemProps {
  * @param onClick - Click handler for legend interactions
  * @param activeLegend - Currently active legend category
  * @param chartType - Chart type for styling the indicator
+ *
+ * @id combo-chart
+ * @name Combo Chart
  */
 const LegendItem = ({
   name,

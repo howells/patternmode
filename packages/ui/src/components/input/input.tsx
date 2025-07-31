@@ -129,6 +129,9 @@ interface InputProps
  * options including prefix/suffix content, icons, validation states, and multiple sizes.
  * Features comprehensive styling for different input types including file, search, and number inputs.
  *
+ *
+ * @id input
+ * @name Input
  * @component
  * @example
  * ```tsx

@@ -78,6 +78,9 @@ interface CardProps
  * @param fillHeight - Whether card should fill container height (defaults to false)
  * @param className - Additional CSS classes
  *
+ *
+ * @id card
+ * @name Card
  * @component
  * @example
  * ```tsx

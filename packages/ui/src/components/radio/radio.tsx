@@ -158,6 +158,9 @@ Radio.displayName = "Radio";
  * or custom radio implementations.
  *
  * @see https://base-ui.com/react/components/radio - Base UI documentation
+ *
+ * @id radio
+ * @name Radio
  */
 const RadioIndicator = React.forwardRef<
   React.ElementRef<typeof BaseRadio.Indicator>,

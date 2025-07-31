@@ -15,6 +15,9 @@ import { Text } from "../text/text";
  * providing accessible collapsible content with keyboard navigation and focus management.
  * Features Tremor-inspired styling with proper contrast and spacing.
  *
+ *
+ * @id accordion
+ * @name Accordion
  * @component
  * @example
  * ```tsx

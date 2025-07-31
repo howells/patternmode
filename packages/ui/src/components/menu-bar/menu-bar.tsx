@@ -128,6 +128,9 @@ import {
  * @param className - Additional CSS classes
  * @param props - Additional Base UI Menubar props
  *
+ *
+ * @id menu-bar
+ * @name Menu Bar
  * @component
  * @example
  * ```tsx

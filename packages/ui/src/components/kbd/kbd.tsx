@@ -110,6 +110,9 @@ interface KbdProps
  * @param platform - Platform for modifier key display
  * @param size - Size variant
  * @param props - Additional kbd element props
+ *
+ * @id kbd
+ * @name Kbd
  */
 const Kbd = React.forwardRef<HTMLElement, KbdProps>(
   (

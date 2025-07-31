@@ -54,6 +54,9 @@ interface LegendItemProps {
  * 
  * Renders a clickable legend item with a colored indicator dot and text label.
  * Supports hover states and visual feedback for active/inactive states.
+ *
+ * @id area-chart
+ * @name Area Chart
  */
 const LegendItem = ({
   name,

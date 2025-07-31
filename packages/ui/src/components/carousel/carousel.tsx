@@ -133,6 +133,9 @@ function useCarousel() {
  * @param setApi - Callback to access carousel API instance
  * @param children - Carousel content (typically CarouselContent)
  *
+ *
+ * @id carousel
+ * @name Carousel
  * @component
  * @example
  * ```tsx

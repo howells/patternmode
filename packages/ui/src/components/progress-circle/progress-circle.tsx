@@ -212,6 +212,9 @@ interface ProgressCircleProps
  * @param valueFormatter - Function to format displayed values
  * @param children - Custom content for the center area
  *
+ *
+ * @id progress-circle
+ * @name Progress Circle
  * @component
  * @example
  * ```tsx

@@ -213,6 +213,9 @@ BarListInner.displayName = "BarList";
  * @param onValueChange - Callback for bar clicks (enables interactivity)
  * @param sortOrder - How to sort bars (ascending, descending, or none)
  *
+ *
+ * @id bar-list
+ * @name BarList
  * @component
  * @example
  * ```tsx

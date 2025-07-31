@@ -206,6 +206,9 @@ interface ChartTooltipProps {
  * @param active - Whether tooltip should be visible
  * @param payload - Array of data items to display
  * @param valueFormatter - Function to format values
+ *
+ * @id donut-chart
+ * @name Donut Chart
  */
 const ChartTooltip = ({
   active,

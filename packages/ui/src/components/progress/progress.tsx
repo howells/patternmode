@@ -168,6 +168,9 @@ Progress.displayName = "Progress";
  * @param showAnimation - Whether to show animation on progress changes
  *
  * @see https://base-ui.com/react/components/progress - Base UI documentation
+ *
+ * @id progress
+ * @name Progress
  */
 const ProgressTrack = React.forwardRef<
   React.ElementRef<typeof BaseProgress.Track>,

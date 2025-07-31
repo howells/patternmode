@@ -95,6 +95,9 @@ const formatNumber = (num: number): string => {
  * overcrowding. Shows values at 0, significant boundaries, and the maximum value.
  *
  * @param values - Array of category values to label
+ *
+ * @id category-bar
+ * @name CategoryBar
  */
 const BarLabels = ({ values }: { values: number[] }) => {
   const sumValues = React.useMemo(() => sumNumericArray(values), [values]);

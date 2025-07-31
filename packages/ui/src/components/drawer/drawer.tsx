@@ -156,6 +156,9 @@ const DrawerClose = DrawerPrimitive.Close;
  * between drawer and underlying content.
  *
  * @param className - Additional CSS classes
+ *
+ * @id drawer
+ * @name Drawer
  */
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,

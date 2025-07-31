@@ -44,6 +44,9 @@ interface DismissButtonProps
  * Used by Badge, Tag, and other components that need removable functionality.
  * Provides consistent hover, focus, and accessibility states.
  *
+ *
+ * @id dismiss-button
+ * @name Dismiss Button
  * @component
  * @example
  * ```tsx

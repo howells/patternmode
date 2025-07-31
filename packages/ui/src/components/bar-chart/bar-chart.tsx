@@ -128,6 +128,9 @@ interface LegendItemProps {
  * 
  * Similar to area chart legend but uses square indicators instead of
  * circular dots to match bar chart aesthetics.
+ *
+ * @id bar-chart
+ * @name Bar Chart
  */
 const LegendItem = ({
   name,

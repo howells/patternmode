@@ -69,6 +69,9 @@ const breadcrumbVariants = tv({
  * Provides semantic navigation structure with proper ARIA labeling.
  * Acts as the container for the entire breadcrumb trail.
  *
+ *
+ * @id breadcrumbs
+ * @name Breadcrumbs
  * @component
  * @example
  * ```tsx

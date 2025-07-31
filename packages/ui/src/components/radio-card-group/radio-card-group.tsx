@@ -20,6 +20,9 @@ import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-gr
  * @param onValueChange - Callback when selection changes
  * @param disabled - Whether the entire group is disabled
  *
+ *
+ * @id radio-card-group
+ * @name Radio Card Group
  * @component
  * @example
  * ```tsx

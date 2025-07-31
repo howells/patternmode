@@ -102,6 +102,9 @@ interface SliderProps
  * @param showValue - Whether to display the current value
  * @param valueFormatter - Function to format displayed values
  *
+ *
+ * @id slider
+ * @name Slider
  * @component
  * @example
  * ```tsx

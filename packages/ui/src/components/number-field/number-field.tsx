@@ -49,6 +49,9 @@ interface NumberFieldProps
  * @param fullWidth - Whether field should take full width
  * @param disabled - Whether the field is disabled
  *
+ *
+ * @id number-field
+ * @name Number Field
  * @component
  * @example
  * ```tsx

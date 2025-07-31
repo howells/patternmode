@@ -97,6 +97,9 @@ interface TooltipProps
  * providing accessible hover/focus-triggered information popups with smart positioning,
  * customizable delays, and smooth animations. Perfect for providing contextual help.
  *
+ *
+ * @id tooltip
+ * @name Tooltip
  * @component
  * @example
  * ```tsx

@@ -92,6 +92,9 @@ interface CopyButtonProps
  * @param copiedIcon - Icon component for the copied state
  * @param className - Additional CSS classes
  *
+ *
+ * @id copy-button
+ * @name Copy Button
  * @component
  * @example
  * ```tsx

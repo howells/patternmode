@@ -50,6 +50,9 @@ interface CollapsibleTriggerProps
  * @param asToggleButton - If true, renders as just the toggle button
  * @param href - If provided, makes the heading portion a link
  *
+ *
+ * @id collapsible
+ * @name Collapsible
  * @example
  * ```tsx
  * // Traditional full-width trigger

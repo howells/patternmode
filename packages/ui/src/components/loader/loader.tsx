@@ -117,6 +117,9 @@ interface LoaderProps
  * @param aria-label - Accessible description for screen readers
  * @param props - Additional HTML div props
  *
+ *
+ * @id loader
+ * @name Loader
  * @component
  * @example
  * ```tsx

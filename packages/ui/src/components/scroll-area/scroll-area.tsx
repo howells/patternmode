@@ -114,6 +114,9 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
  * @param thumbClassName - Custom classes for scrollbar thumb
  * @param viewportClassName - Custom classes for the viewport
  *
+ *
+ * @id scroll-area
+ * @name Scroll Area
  * @component
  * @example
  * ```tsx

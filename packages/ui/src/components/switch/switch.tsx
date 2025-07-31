@@ -85,6 +85,9 @@ interface SwitchProps
  * providing accessible on/off controls with smooth animations and focus management.
  * Features multiple sizes and optional label support with Tremor-inspired styling.
  *
+ *
+ * @id switch
+ * @name Switch
  * @component
  * @example
  * ```tsx

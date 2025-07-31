@@ -40,6 +40,9 @@ interface CodeBlockProps {
  * @param theme - Color theme (light, dark, or auto-detect)
  * @param className - Additional CSS classes
  *
+ *
+ * @id code-block
+ * @name Code Block
  * @component
  * @example
  * ```tsx

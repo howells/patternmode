@@ -132,6 +132,9 @@ const PreviewCard = BasePreviewCard.Root;
  * @param className - Additional CSS classes
  * @param props - Additional Base UI Trigger props
  *
+ *
+ * @id preview-card
+ * @name Preview Card
  * @component
  * @example
  * ```tsx

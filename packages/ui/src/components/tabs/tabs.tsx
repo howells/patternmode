@@ -143,6 +143,9 @@ const TabsListSizeContext = React.createContext<"default" | "sm" | "lg">(
  * providing accessible tabbed interfaces for toggling between related panels
  * on the same page. Features keyboard navigation and proper focus management.
  *
+ *
+ * @id tabs
+ * @name Tabs
  * @component
  * @example
  * ```tsx

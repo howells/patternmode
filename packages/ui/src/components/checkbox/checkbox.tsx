@@ -24,6 +24,9 @@ interface CheckboxProps
  * providing accessible checkbox functionality with support for checked, unchecked,
  * and indeterminate states. Features Tremor-inspired styling and smooth transitions.
  *
+ *
+ * @id checkbox
+ * @name Checkbox
  * @component
  * @example
  * ```tsx

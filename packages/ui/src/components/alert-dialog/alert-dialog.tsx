@@ -44,6 +44,9 @@ const AlertDialog = BaseAlertDialog.Root;
  * Supports Base UI's render prop pattern to avoid nested button issues.
  * Can be used with existing Button components or render as default styled button.
  *
+ *
+ * @id alert-dialog
+ * @name Alert Dialog
  * @example
  * ```tsx
  * // Default styled trigger

@@ -84,6 +84,9 @@ interface LabelProps
  * @param disabled - Whether the label should appear disabled
  * @param props - Additional Base UI Field.Label props
  *
+ *
+ * @id label
+ * @name Label
  * @component
  * @example
  * ```tsx

@@ -71,6 +71,9 @@ interface SelectNativeProps
  * @param onChange - Callback when selection changes
  * @param children - Option elements to render
  *
+ *
+ * @id select-native
+ * @name Select Native
  * @component
  * @example
  * ```tsx

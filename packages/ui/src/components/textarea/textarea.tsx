@@ -40,6 +40,9 @@ interface TextareaProps
  * with configurable min/max rows and consistent styling that matches the Input component.
  * Features error states for form validation, proper focus management, and dark mode support.
  *
+ *
+ * @id textarea
+ * @name Textarea
  * @component
  * @example
  * ```tsx

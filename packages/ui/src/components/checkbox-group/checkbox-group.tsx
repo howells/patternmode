@@ -37,6 +37,9 @@ interface CheckboxGroupProps
  * @param onValueChange - Handler called when selection changes
  * @param disabled - Whether the entire group is disabled
  *
+ *
+ * @id checkbox-group
+ * @name Checkbox Group
  * @component
  * @example
  * ```tsx

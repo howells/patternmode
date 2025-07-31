@@ -94,6 +94,9 @@ import { Subheading } from "../subheading/subheading";
  *
  * @param className - Additional CSS classes
  *
+ *
+ * @id fieldset
+ * @name Fieldset
  * @component
  * @example
  * ```tsx

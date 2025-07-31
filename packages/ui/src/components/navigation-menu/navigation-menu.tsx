@@ -94,6 +94,9 @@ const NavigationMenuItem = BaseNavigationMenu.Item;
  * @param children - Trigger content (typically text)
  * @param props - Additional Base UI Trigger props
  *
+ *
+ * @id navigation-menu
+ * @name Navigation Menu
  * @component
  * @example
  * ```tsx

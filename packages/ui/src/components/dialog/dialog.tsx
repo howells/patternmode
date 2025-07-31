@@ -58,6 +58,9 @@ const DialogPortal = BaseDialog.Portal;
  * Provides visual separation and can be configured to close the dialog when clicked.
  * Features smooth fade-in/fade-out transitions matching Base UI patterns.
  *
+ *
+ * @id dialog
+ * @name Dialog
  * @example
  * ```tsx
  * <DialogOverlay />

@@ -11,6 +11,9 @@ import { cx } from "../../lib/utils";
  * screens while maintaining proper table layout. Essential for tables with
  * many columns or wide content that may overflow container bounds.
  *
+ *
+ * @id table
+ * @name Table
  * @example
  * ```tsx
  * <TableRoot>

@@ -123,6 +123,9 @@ interface SeparatorProps
  * @param children - Optional text content to display in the center
  * @param spacing - Vertical spacing around the separator (when used with text)
  *
+ *
+ * @id separator
+ * @name Separator
  * @component
  * @example
  * ```tsx

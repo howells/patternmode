@@ -48,6 +48,9 @@ const radioGroupVariants = tv({
  * @param onValueChange - Callback when selection changes
  * @param disabled - Whether the entire group is disabled
  *
+ *
+ * @id radio-group
+ * @name Radio Group
  * @component
  * @example
  * ```tsx

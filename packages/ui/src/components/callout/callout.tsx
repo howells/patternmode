@@ -90,6 +90,9 @@ interface CalloutProps
  * @param icon - Optional icon component
  * @param children - Main content of the callout
  *
+ *
+ * @id callout
+ * @name Callout
  * @component
  * @example
  * ```tsx

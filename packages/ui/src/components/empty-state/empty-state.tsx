@@ -138,6 +138,9 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param size - Size variant affecting spacing and icon size
  * @param className - Additional CSS classes
  *
+ *
+ * @id empty-state
+ * @name Empty State
  * @component
  * @example
  * ```tsx

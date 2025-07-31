@@ -261,6 +261,9 @@ export function NavbarSpacer({
  * @param href - Optional URL for link behavior (uses Next.js Link)
  * @param props - Additional button element props
  *
+ *
+ * @id navbar
+ * @name Navbar
  * @component
  * @example
  * ```tsx
