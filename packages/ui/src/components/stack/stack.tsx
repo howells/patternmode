@@ -380,6 +380,16 @@ const Stack = (
   // Normalize gap value to string for tailwind variants
   const baseGap = normalizeGapValue(baseGapValue);
 
+  // Debug logging for negative gaps
+  if (typeof baseGapValue === "number" && baseGapValue < 0) {
+    console.warn("Stack Debug:", {
+      direction: baseDirection,
+      gap: baseGap,
+      baseGapValue,
+      originalGap: gap,
+    });
+  }
+
   // Generate responsive classes
   const responsiveDirectionClasses = generateResponsiveClasses(
     "direction",
@@ -391,18 +401,25 @@ const Stack = (
     padding,
   );
 
+  const generatedClasses = stackVariants({
+    direction: baseDirection as "vertical" | "horizontal",
+    gap: baseGap as "4" | "0" | "1" | "2" | "3" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "-6" | "-5" | "-4" | "-3" | "-2" | "-1",
+    padding: basePadding as StackPadding,
+    align,
+    justify,
+    wrap,
+  });
+
+  // Debug logging for negative gaps
+  if (typeof baseGapValue === "number" && baseGapValue < 0) {
+    console.warn("Generated classes:", generatedClasses);
+  }
+
   return (
     <Component
       ref={ref}
       className={cx(
-        stackVariants({
-          direction: baseDirection as "vertical" | "horizontal",
-          gap: baseGap as "4" | "0" | "1" | "2" | "3" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "-6" | "-5" | "-4" | "-3" | "-2" | "-1",
-          padding: basePadding as StackPadding,
-          align,
-          justify,
-          wrap,
-        }),
+        generatedClasses,
         responsiveDirectionClasses,
         responsiveGapClasses,
         responsivePaddingClasses,

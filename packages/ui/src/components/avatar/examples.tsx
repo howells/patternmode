@@ -295,7 +295,7 @@ export const AvatarGroupExample = () => {
     <VStack gap={6}>
       <VStack gap={4}>
         <Subheading level={4}>Team Members (Small)</Subheading>
-        <HStack gap={-2}>
+        <HStack gap={-2} className="debug-stack">
           {users.map((user, index) => (
             <Avatar
               // eslint-disable-next-line react/no-array-index-key
@@ -319,7 +319,7 @@ export const AvatarGroupExample = () => {
         <Subheading level={4}>
           Project Contributors (Large)
         </Subheading>
-        <HStack gap={-3}>
+        <HStack gap={-3} className="debug-stack">
           {users.map((user, index) => (
             <Avatar
               // eslint-disable-next-line react/no-array-index-key
@@ -335,7 +335,6 @@ export const AvatarGroupExample = () => {
             text="+5"
             alt="5 more contributors"
             size="lg"
-
           />
         </HStack>
       </VStack>

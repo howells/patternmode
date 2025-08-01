@@ -30,7 +30,7 @@ export function HorizontalExample() {
 // Custom spacing example - matches config "custom-spacing" id
 export function CustomSpacingExample() {
   return (
-    <div className="space-y-8">
+    <VStack>
       <Stack gap={1}>
         <div className="rounded bg-blue-100 p-2">Small Spacing (gap-1)</div>
         <div className="rounded bg-blue-100 p-2">Small Spacing (gap-1)</div>
@@ -39,7 +39,7 @@ export function CustomSpacingExample() {
         <div className="rounded bg-green-100 p-2">Large Spacing (gap-8)</div>
         <div className="rounded bg-green-100 p-2">Large Spacing (gap-8)</div>
       </Stack>
-    </div>
+    </VStack>
   );
 }
 
