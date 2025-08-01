@@ -149,7 +149,7 @@ export const WithTagCreationExample = () => {
         onValueChange={setSelectedTags}
         placeholder="Add skills (or create new ones)..."
         allowCreate
-        validateNewTag={value => value.length >= 2 && value.length <= 30}
+        onValidate={value => value.length >= 2 && value.length <= 30}
       />
       <p className="text-sm text-zinc-600">
         Type to search existing skills or create new ones
@@ -288,8 +288,8 @@ export const ComplexExample = () => {
           selectedPlaceholder="Add more locations..."
           allowCreate
           maxTags={4}
-          validateNewTag={value => value.length >= 2}
-          createNewTag={value => ({
+          onValidate={value => value.length >= 2}
+          onCreate={value => ({
             value: value.toLowerCase().replace(/\s+/g, "-"),
             label: value,
             leftIcon: MapPin,
@@ -341,7 +341,7 @@ export const BlogPostTagsExample = () => {
           selectedPlaceholder="Add more tags..."
           allowCreate
           maxTags={6}
-          validateNewTag={value => value.length >= 2 && value.length <= 20}
+          onValidate={value => value.length >= 2 && value.length <= 20}
         />
         <p className="text-xs text-zinc-500">
           Choose relevant tags or create new ones to categorize your post

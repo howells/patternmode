@@ -5,7 +5,8 @@ import { Check } from "lucide-react";
 import * as React from "react";
 
 import { config } from "../../lib/config";
-import { cx } from "../../lib/utils";
+import { cx, focusRing } from "../../lib/utils";
+import { Button } from "../button/button";
 import { Icon } from "../icon/icon";
 import { Tag } from "../tag/tag";
 
@@ -122,11 +123,16 @@ export type TagInputProps = {
   /**
    * Function to validate new tag creation.
    */
-  validateNewTag?: (value: string) => boolean;
+  onValidate?: (value: string) => boolean;
   /**
    * Function to create new tag option from input.
    */
-  createNewTag?: (value: string) => TagOption;
+  onCreate?: (value: string) => TagOption;
+  /**
+   * Whether tags should wrap to new lines or scroll horizontally.
+   * @default true
+   */
+  wrap?: boolean;
 };
 
 /**
@@ -136,8 +142,12 @@ const defaultFilterOptions = (
   options: TagOption[],
   inputValue: string,
 ): TagOption[] => {
-  if (!Array.isArray(options)) { return []; }
-  if (!inputValue) { return options; }
+  if (!Array.isArray(options)) {
+    return [];
+  }
+  if (!inputValue) {
+    return options;
+  }
 
   const lowercaseInput = inputValue.toLowerCase();
   return options.filter(option =>
@@ -162,6 +172,16 @@ const defaultCreateNewTag = (value: string): TagOption => {
     label: trimmed,
   };
 };
+
+/**
+ * Default empty array for value prop.
+ */
+const defaultValue: string[] = [];
+
+/**
+ * Default icon stroke width.
+ */
+const defaultIconStrokeWidth = config.getIconStrokeWidth();
 
 /**
  * A sophisticated multi-select tag input component with search, filtering, and tag creation capabilities.
@@ -251,27 +271,39 @@ const defaultCreateNewTag = (value: string): TagOption => {
  * ```
  */
 /**
- * Multi-select tag input component with search, filtering, and dynamic tag creation capabilities for form inputs.
- *
- * @component
- * @id tag-input
- * @name Tag Input
- * @category inputs
- * @icon Tags
- */
-/**
- * Input component for creating and managing multiple tags or labels.
+ * Multi-select tag input component with search, filtering, and dynamic tag creation capabilities.
  *
  * @id tag-input
  * @name TagInput
- * @icon Tag
+ * @icon Tags
  * @category inputs
  * @component
  * @param props - Component properties.
+ * @param props.options - Array of available tag options.
+ * @param props.value - Currently selected tag values.
+ * @param props.onValueChange - Callback when selection changes.
+ * @param props.placeholder - Placeholder text for the input.
+ * @param props.selectedPlaceholder - Placeholder text when tags are selected.
+ * @param props.emptyMessage - Message shown when no options match search.
+ * @param props.disabled - Whether the input is disabled.
+ * @param props.maxTags - Maximum number of tags that can be selected.
+ * @param props.allowCreate - Whether to allow creating new tags not in options.
+ * @param props.className - Additional CSS classes for container.
+ * @param props.inputClassName - Additional CSS classes for input.
+ * @param props.dropdownClassName - Additional CSS classes for dropdown.
+ * @param props.tagClassName - Additional CSS classes for individual tags.
+ * @param props.maxHeight - Maximum height for dropdown.
+ * @param props.iconStrokeWidth - Stroke width for icons.
+ * @param props.renderItem - Custom render function for dropdown items.
+ * @param props.renderTag - Custom render function for selected tags.
+ * @param props.filterOptions - Custom filter function for options.
+ * @param props.onValidate - Function to validate new tag creation.
+ * @param props.onCreate - Function to create new tag option from input.
+ * @param props.wrap - Whether tags should wrap to new lines or scroll horizontally.
  */
-export function TagInput({
+const TagInput = ({
   options,
-  value = [],
+  value = defaultValue,
   onValueChange,
   placeholder = "Add tags...",
   selectedPlaceholder = "Add more tags...",
@@ -284,19 +316,20 @@ export function TagInput({
   dropdownClassName,
   tagClassName,
   maxHeight = 200,
-  iconStrokeWidth = config.getIconStrokeWidth(),
+  iconStrokeWidth = defaultIconStrokeWidth,
   renderItem,
   renderTag,
   filterOptions = defaultFilterOptions,
-  validateNewTag = defaultValidateNewTag,
-  createNewTag = defaultCreateNewTag,
-}: TagInputProps) {
+  onValidate = defaultValidateNewTag,
+  onCreate = defaultCreateNewTag,
+  wrap = true,
+}: TagInputProps) => {
   const [inputValue, setInputValue] = React.useState("");
-  const [isCreatingNew, setIsCreatingNew] = React.useState(false);
+
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Ensure value is always an array to prevent runtime errors
-  const safeValue = Array.isArray(value) ? value : [];
+  const safeValue = React.useMemo(() => Array.isArray(value) ? value : [], [value]);
 
   // Get selected options for display
   const selectedOptions = React.useMemo(() => {
@@ -310,14 +343,15 @@ export function TagInput({
   const availableOptions = React.useMemo(() => {
     // Ensure options is always an array
     const safeOptions = Array.isArray(options) ? options : [];
-    const filteredResult = filterOptions(safeOptions, inputValue);
+    const safeFilterOptions = typeof filterOptions === "function" ? filterOptions : defaultFilterOptions;
+    const filteredResult = safeFilterOptions(safeOptions, inputValue);
     const filtered = Array.isArray(filteredResult) ? filteredResult : [];
     const finalFiltered = filtered.filter(
       option => !safeValue.includes(option.value) && !option.disabled,
     );
 
     // Add "create new" option if allowed and input is valid
-    if (allowCreate && inputValue.trim() && validateNewTag(inputValue)) {
+    if (allowCreate && inputValue.trim() && onValidate(inputValue)) {
       const exactMatch = safeOptions.find(
         opt => opt.label.toLowerCase() === inputValue.trim().toLowerCase(),
       );
@@ -329,7 +363,7 @@ export function TagInput({
         )
       ) {
         const newTagOption: TagOption = {
-          ...createNewTag(inputValue),
+          ...onCreate(inputValue),
           data: { isNew: true },
         };
         finalFiltered.unshift(newTagOption);
@@ -342,42 +376,21 @@ export function TagInput({
     safeValue,
     inputValue,
     allowCreate,
-    validateNewTag,
-    createNewTag,
+    onValidate,
+    onCreate,
     filterOptions,
   ]);
-
-  // Update isCreatingNew state based on available options
-  React.useEffect(() => {
-    if (allowCreate && inputValue.trim() && validateNewTag(inputValue)) {
-      const safeOptions = Array.isArray(options) ? options : [];
-      const exactMatch = safeOptions.find(
-        opt => opt.label.toLowerCase() === inputValue.trim().toLowerCase(),
-      );
-
-      const hasNewTag
-        = !exactMatch
-          && !safeValue.includes(
-            inputValue.trim().toLowerCase().replace(/\s+/g, "-"),
-          );
-
-      setIsCreatingNew(hasNewTag);
-    }
-    else {
-      setIsCreatingNew(false);
-    }
-  }, [allowCreate, inputValue, validateNewTag, options, safeValue]);
 
   // Downshift setup
   const {
     isOpen,
-    getToggleButtonProps,
+    getToggleButtonProps: _getToggleButtonProps,
     getLabelProps,
     getMenuProps,
     getInputProps,
     highlightedIndex,
     getItemProps,
-    selectItem,
+    selectItem: _selectItem,
     reset,
   } = useCombobox({
     items: availableOptions,
@@ -490,8 +503,9 @@ export function TagInput({
       <div
         className={cx(
           "min-h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950",
-          "flex flex-wrap items-center gap-1 p-2",
-          "focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent",
+          "flex items-center gap-1 p-2",
+          wrap ? "flex-wrap" : "overflow-x-auto",
+          focusRing,
           disabled
           && "opacity-50 cursor-not-allowed bg-zinc-50 dark:bg-zinc-900",
         )}
@@ -502,7 +516,15 @@ export function TagInput({
         }}
       >
         {/* Selected tags */}
-        {selectedOptions.map(renderSelectedTag)}
+        {wrap
+          ? (
+              selectedOptions.map(renderSelectedTag)
+            )
+          : (
+              <div className="flex items-center gap-1 flex-shrink-0">
+                {selectedOptions.map(renderSelectedTag)}
+              </div>
+            )}
 
         {/* Input field */}
         {!isMaxReached && (
@@ -569,6 +591,7 @@ export function TagInput({
                           option.data?.isNew === true
                           && "border-t border-zinc-200 dark:border-zinc-800",
                           option.disabled && "opacity-50 cursor-not-allowed",
+                          focusRing,
                         )}
                       >
                         {renderDropdownItem(option, index)}
@@ -588,7 +611,11 @@ export function TagInput({
       </div>
     </div>
   );
-}
+};
+
+TagInput.displayName = "TagInput";
+
+export { TagInput };
 
 /**
  * Hook for managing tag input state.
