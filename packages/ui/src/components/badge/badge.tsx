@@ -200,10 +200,10 @@ const InlineDismissButton = (
         size === "sm" && "size-4",
         size === "base" && "size-5",
         size === "lg" && "size-6",
-        // Color styling (subtle, context-aware)
-        "text-zinc-500 dark:text-zinc-400",
+        // Color styling (inherit from badge)
+        "text-current opacity-70",
         // Hover states
-        "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
+        "hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10",
         // Focus states
         "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
         className,
@@ -272,7 +272,7 @@ type BadgeProps = {
  * @id badge
  * @name Badge
  * @icon Tag
- * @category ui
+ * @category utility
  * @component
  * @param props - Component properties.
  * @param props.variant - Visual style variant of the badge.
@@ -303,7 +303,7 @@ const Badge = (
   const renderBadgeContent = () => {
     const hasLeftIcon = LeftIcon && !statusDot; // Dot overrides left icon
     const hasRightIcon = RightIcon && !statusDot; // Dot overrides right icon
-    const hasDismissButton = Boolean(onDismiss);
+    const hasDismissButton = Boolean(_dismissible || onDismiss);
     const hasStatusDot = Boolean(statusDot);
 
     // Status dot size mapping - one size smaller than badge for better balance

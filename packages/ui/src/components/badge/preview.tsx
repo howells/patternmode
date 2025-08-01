@@ -3,10 +3,6 @@
 import { Badge } from "@patternmode/ui";
 import React from "react";
 
-type BadgeExampleProps = {
-  [key: string]: unknown;
-};
-
 // Example component for preview system
 export function BadgeExample({
   variant = "default",
@@ -17,7 +13,7 @@ export function BadgeExample({
   leftIcon,
   rightIcon,
   children = "Badge",
-  onDismiss: showDismiss,
+  dismissible,
   dismissIcon,
   ...props
 }: {
@@ -29,13 +25,13 @@ export function BadgeExample({
   leftIcon?: React.ComponentType<{ className?: string }>;
   rightIcon?: React.ComponentType<{ className?: string }>;
   children?: string;
-  onDismiss?: boolean;
+  dismissible?: boolean;
   dismissIcon?: React.ComponentType<{ className?: string }>;
   [key: string]: unknown;
 }) {
   // Convert boolean to actual dismiss handler for preview
-  const handleDismiss = showDismiss
-    ? () => console.log("Badge dismissed")
+  const handleDismiss = dismissible
+    ? () => console.warn("Badge dismissed")
     : undefined;
 
   return (
@@ -47,8 +43,9 @@ export function BadgeExample({
       statusAnimated={statusAnimated}
       leftIcon={leftIcon}
       rightIcon={rightIcon}
+      dismissible={dismissible}
       onDismiss={handleDismiss}
-      dismissIcon={dismissIcon}
+      {...(dismissIcon && { dismissIcon })}
       {...props}
     >
       {children}
