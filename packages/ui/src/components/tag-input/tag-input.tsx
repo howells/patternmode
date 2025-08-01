@@ -3,8 +3,8 @@
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
-import { config } from "../../lib/config";
 
+import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
 import { Icon } from "../icon/icon";
 import { Tag } from "../tag/tag";
@@ -16,7 +16,7 @@ import { Tag } from "../tag/tag";
  * <TagInput>Content</TagInput>
  * ```
  */
-export interface TagOption {
+export type TagOption = {
   /**
    * Unique identifier for the tag.
    */
@@ -37,12 +37,12 @@ export interface TagOption {
    * Additional data for the tag.
    */
   data?: Record<string, unknown>;
-}
+};
 
 /**
  * Props for the TagInput component.
  */
-export interface TagInputProps {
+export type TagInputProps = {
   /**
    * Array of available tag options.
    */
@@ -127,7 +127,7 @@ export interface TagInputProps {
    * Function to create new tag option from input.
    */
   createNewTag?: (value: string) => TagOption;
-}
+};
 
 /**
  * Default filter function for tag options.
@@ -164,15 +164,34 @@ const defaultCreateNewTag = (value: string): TagOption => {
 };
 
 /**
- * A tag input component for selecting multiple tags with inline display.
+ * A sophisticated multi-select tag input component with search, filtering, and tag creation capabilities.
  *
- * Built with Downshift for accessibility and keyboard navigation, using the
- * existing Tag component for consistent styling. Supports both selection from
- * predefined options and creation of new tags.
+ * Built on Downshift for robust accessibility and keyboard navigation, this component provides
+ * an intuitive interface for selecting multiple items from a searchable dropdown while displaying
+ * selected items as dismissible tags. Supports both selection from predefined options and
+ * dynamic creation of new tags with validation.
  *
+ * **Key Features:**
+ * - **Multi-select**: Select multiple tags with visual confirmation and easy removal
+ * - **Search & Filter**: Real-time filtering of options as you type
+ * - **Tag Creation**: Optionally allow users to create new tags on-the-fly
+ * - **Keyboard Navigation**: Full keyboard accessibility with arrow keys, enter, and backspace
+ * - **Validation**: Custom validation for new tag creation
+ * - **Customization**: Flexible rendering options for both tags and dropdown items
+ * - **Limits**: Configurable maximum number of selected tags
+ * - **Form Integration**: Works seamlessly with form libraries and validation systems.
+ *
+ * **Accessibility:**
+ * - Screen reader announcements for tag selection/removal
+ * - Keyboard navigation through dropdown options
+ * - ARIA labels and descriptions for better accessibility
+ * - Focus management and visual focus indicators.
+ *
+ * @category inputs
+ * @icon Tags
  * @example
  * ```tsx
- * // Basic tag input
+ * // Basic tag input with predefined options
  * <TagInput
  *   options={[
  *     { value: "react", label: "React" },
@@ -184,20 +203,24 @@ const defaultCreateNewTag = (value: string): TagOption => {
  *   placeholder="Add technologies..."
  * />
  *
- * // With tag creation and limits
+ * // With tag creation, limits, and validation
  * <TagInput
  *   options={skillOptions}
  *   value={skills}
  *   onValueChange={setSkills}
  *   placeholder="Add skills..."
- *   allowCreate
+ *   allowCreate={true}
  *   maxTags={5}
- *   validateNewTag={(value) => value.length >= 2}
+ *   validateNewTag={(value) => value.length >= 2 && value.length <= 20}
+ *   emptyMessage="No skills found. Type to create a new one."
  * />
  *
- * // Custom rendering
+ * // Custom rendering with avatars
  * <TagInput
  *   options={userOptions}
+ *   value={assignedUsers}
+ *   onValueChange={setAssignedUsers}
+ *   placeholder="Assign users..."
  *   renderTag={(option, onRemove) => (
  *     <Tag
  *       value={option.label}
@@ -206,15 +229,45 @@ const defaultCreateNewTag = (value: string): TagOption => {
  *       onDismiss={onRemove}
  *     />
  *   )}
+ *   renderItem={(option, isHighlighted, isSelected) => (
+ *     <div className={`flex items-center gap-2 ${isHighlighted ? 'bg-blue-50' : ''}`}>
+ *       <Avatar initials={option.label.split(' ').map(n => n[0]).join('')} size="sm" />
+ *       <span>{option.label}</span>
+ *       {isSelected && <Check className="ml-auto" />}
+ *     </div>
+ *   )}
+ * />
+ *
+ * // Form integration with error handling
+ * <TagInput
+ *   options={categoryOptions}
+ *   value={formData.categories}
+ *   onValueChange={(values) => setFormData(prev => ({ ...prev, categories: values }))}
+ *   placeholder="Select categories..."
+ *   disabled={isSubmitting}
+ *   maxTags={3}
+ *   className={errors.categories ? "border-red-500" : ""}
  * />
  * ```
  */
 /**
- * Tag Input.
+ * Multi-select tag input component with search, filtering, and dynamic tag creation capabilities for form inputs.
  *
  * @component
  * @id tag-input
  * @name Tag Input
+ * @category inputs
+ * @icon Tags
+ */
+/**
+ * Input component for creating and managing multiple tags or labels.
+ *
+ * @id tag-input
+ * @name TagInput
+ * @icon Tag
+ * @category inputs
+ * @component
+ * @param props - Component properties.
  */
 export function TagInput({
   options,

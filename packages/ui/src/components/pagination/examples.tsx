@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Pagination,
   PaginationList,
@@ -7,6 +8,7 @@ import {
   PaginationPage,
   PaginationPrevious,
 } from "@patternmode/ui";
+
 import React from "react";
 
 // Basic pagination example - matches config "default" id
@@ -44,3 +46,22 @@ export function WithEllipsisExample() {
     </Pagination>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithEllipsisExample",
+    title: "With Ellipsis",
+    description: "With Ellipsis example",
+    component: WithEllipsisExample,
+  },
+];

@@ -56,21 +56,23 @@
 "use client";
 
 import type { ComboboxOption } from "../combobox/combobox";
-import { DynamicIcon } from "lucide-react/dynamic";
+
 import React from "react";
+
 import { config } from "../../lib/config";
+import { DynamicIcon } from "../../lib/dynamic-icon";
 import { Combobox } from "../combobox/combobox";
 
 // Icon data structure that extends ComboboxOption
-interface IconOption extends ComboboxOption {
+type IconOption = {
   kebab: string;
   pascal: string;
-}
+} & ComboboxOption;
 
 /**
  * Props for the IconSelectQuery component.
  */
-export interface IconSelectQueryProps {
+export type IconSelectQueryProps = {
   /**
    * Currently selected icon name.
    */
@@ -95,7 +97,7 @@ export interface IconSelectQueryProps {
    * Stroke width for icons (defaults to 1).
    */
   iconStrokeWidth?: number;
-}
+};
 
 /**
  * Fetch icons from the API route with React Query context.

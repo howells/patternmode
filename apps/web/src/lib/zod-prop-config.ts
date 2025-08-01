@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod/v4";
-import {
+
+import type {
   PropExplorerConfig,
   PropMetadata,
   VariantPropMetadata,
@@ -13,7 +14,7 @@ export function generatePropConfigFromZod(
   componentName: string,
   displayName: string,
   description: string,
-  schema: any // Zod v4 object type
+  schema: any, // Zod v4 object type
 ): PropExplorerConfig {
   const variants: VariantPropMetadata[] = [];
   const props: PropMetadata[] = [];
@@ -29,8 +30,8 @@ export function generatePropConfigFromZod(
 
     // Check if this is an enum (should be a variant)
     if (
-      isZodEnum(zodSchema) ||
-      (isZodDefault(zodSchema) && isZodEnum(zodSchema.def.innerType))
+      isZodEnum(zodSchema)
+      || (isZodDefault(zodSchema) && isZodEnum(zodSchema.def.innerType))
     ) {
       const enumSchema = isZodDefault(zodSchema)
         ? zodSchema.def.innerType
@@ -52,7 +53,8 @@ export function generatePropConfigFromZod(
         })),
         defaultOption: defaultValue,
       });
-    } else {
+    }
+    else {
       // Regular prop
       const typeString = getZodTypeString(zodSchema);
 
@@ -126,7 +128,7 @@ function getZodDescription(schema: any): string | undefined {
  * Convert Zod v4 type to TypeScript type string
  */
 function getZodTypeString(schema: any): string {
-  if (!schema?.def?.type) return "unknown";
+  if (!schema?.def?.type) { return "unknown"; }
 
   switch (schema.def.type) {
     case "string":
@@ -160,7 +162,7 @@ function getZodTypeString(schema: any): string {
 export function createEnumVariant(
   values: readonly string[],
   defaultValue: string,
-  description?: string
+  description?: string,
 ) {
   const enumSchema = z.enum(values as [string, ...string[]]);
   const withDefault = enumSchema.default(defaultValue);

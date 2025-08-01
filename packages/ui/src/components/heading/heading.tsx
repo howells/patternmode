@@ -12,6 +12,8 @@
  * - Consistent styling across all heading levels
  * - Accessible heading hierarchy.
  *
+ * @category typography
+ * @icon Heading
  * @example
  * ```tsx
  * // Primary page heading
@@ -44,6 +46,7 @@
  */
 
 import type { HeadingElementProps } from "../heading-element/heading-element";
+
 import { cx } from "../../lib/utils";
 import { HeadingElement } from "../heading-element/heading-element";
 
@@ -64,33 +67,19 @@ export type HeadingProps = HeadingElementProps;
  * @param className - Additional CSS classes.
  * @param level - Heading level (1-6) determining HTML element and hierarchy.
  * @param props - Additional HTML heading element props.
- *
- * @component
- * @example
- * ```tsx
- * // Primary page heading
- * <Heading level={1}>Welcome to Patternmode</Heading>
- *
- * // Section heading
- * <Heading level={2}>Getting Started</Heading>
- *
- * // Subsection heading
- * <Heading level={3}>Installation</Heading>
- *
- * // Custom styling
- * <Heading level={2} className="text-center mb-8">
- *   Centered Heading
- * </Heading>
- * ```
  */
 /**
- * A semantic heading component with consistent typography and hierarchy levels.
+ * Heading component with hierarchical levels and consistent typography styling.
  *
- * Heading.
- *
- * @component
  * @id heading
  * @name Heading
+ * @icon Type
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.level - Heading level (1-6) determining HTML element and semantic hierarchy.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - The heading text content.
  */
 export function Heading({ className, level = 1, ...props }: HeadingProps) {
   return (

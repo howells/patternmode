@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Inspector } from "@patternmode/ui";
+
 import React from "react";
 
 export function InspectorExample() {
@@ -55,3 +59,22 @@ export function NestedExample() {
     </Inspector>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "InspectorExample",
+    title: "Inspector",
+    description: "Inspector example",
+    component: InspectorExample,
+  },
+  {
+    id: "NestedExample",
+    title: "Nested",
+    description: "Nested example",
+    component: NestedExample,
+  },
+];

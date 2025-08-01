@@ -1,6 +1,11 @@
-import { Toggle } from "@patternmode/ui";
-import { Bold } from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { iconRegistry, Toggle } from "@patternmode/ui";
+
 import React from "react";
+// Pre-imported icons from registry
+const { Bold } = iconRegistry;
 
 export function DefaultExample() {
   return (
@@ -19,7 +24,29 @@ export function WithIconExample() {
 }
 
 // Default export for prop explorer
-export const /**
-              *
-              */
-  ToggleExample = DefaultExample;
+export const ToggleExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "ToggleExample",
+    title: "Toggle",
+    description: "Toggle example",
+    component: ToggleExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithIconExample",
+    title: "With Icon",
+    description: "With Icon example",
+    component: WithIconExample,
+  },
+];

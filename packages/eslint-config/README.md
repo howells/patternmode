@@ -13,33 +13,41 @@ Shared ESLint configuration for the PatternMode monorepo, built on top of [@antf
 ## Configurations
 
 ### Base Configuration
+
 For general TypeScript projects:
+
 ```js
-import { base } from '@patternmode/eslint-config';
+import { base } from "@patternmode/eslint-config";
 
 export default base();
 ```
 
 ### Next.js Configuration
+
 For Next.js applications (includes React + Next.js specific rules):
+
 ```js
-import { nextjs } from '@patternmode/eslint-config';
+import { nextjs } from "@patternmode/eslint-config";
 
 export default nextjs();
 ```
 
 ### UI Configuration
+
 For React component libraries with enhanced JSDoc and component pattern enforcement:
+
 ```js
-import { ui } from '@patternmode/eslint-config';
+import { ui } from "@patternmode/eslint-config";
 
 export default ui();
 ```
 
 ### React Configuration
+
 For React libraries and components:
+
 ```js
-import { react } from '@patternmode/eslint-config';
+import { react } from "@patternmode/eslint-config";
 
 export default react();
 ```
@@ -55,31 +63,34 @@ pnpm add -D @patternmode/eslint-config
 ## Usage in Workspaces
 
 ### Root (Turborepo)
+
 ```typescript
 // eslint.config.ts
-import { base } from '@patternmode/eslint-config';
+import { base } from "@patternmode/eslint-config";
 
 export default [
   ...base(),
   {
-    name: 'turbo/rules',
-    extends: ['turbo'],
+    name: "turbo/rules",
+    extends: ["turbo"],
   },
 ];
 ```
 
 ### Web App (Next.js)
+
 ```javascript
 // eslint.config.js
-import { nextjs } from '@patternmode/eslint-config';
+import { nextjs } from "@patternmode/eslint-config";
 
 export default nextjs();
 ```
 
 ### UI Package (React)
+
 ```javascript
 // eslint.config.js
-import { ui } from '@patternmode/eslint-config';
+import { ui } from "@patternmode/eslint-config";
 
 export default ui();
 ```
@@ -98,11 +109,13 @@ export default ui();
 ## Commands
 
 Run linting across all workspaces:
+
 ```bash
 pnpm lint
 ```
 
 Auto-fix issues:
+
 ```bash
 pnpm lint -- --fix
 ```
@@ -112,16 +125,19 @@ pnpm lint -- --fix
 Rules are organized into focused modules in the `rules/` directory. Each rule file follows the **"more than 1 line = separate file"** principle for better maintainability:
 
 ### Rule Extraction Principle
+
 - ✅ **Single-line rules**: Stay in main config (e.g., `"no-console": "off"`)
 - ✅ **Multi-line rules**: Extracted to dedicated files (e.g., complex configurations)
 - ✅ **Logical grouping**: Related rules grouped by concern (TypeScript, JSDoc, etc.)
 - ✅ **Clear naming**: File names clearly indicate their purpose
 
 ### Component-Specific Rules (UI Package)
+
 - **`react-component-patterns.mjs`**: Enforces React.forwardRef pattern standardization
 - **`jsdoc-component-rules.mjs`**: Comprehensive JSDoc validation for React components
 
 ### General Rules (All Packages)
+
 - **`turbo-rules.mjs`**: Turborepo environment variable validation and monorepo rules
 - **`typescript-rules.mjs`**: TypeScript-specific linting and type preferences
 - **`node-environment-rules.mjs`**: Node.js, console logging, and environment rules
@@ -129,17 +145,22 @@ Rules are organized into focused modules in the `rules/` directory. Each rule fi
 - **`jsdoc-general-rules.mjs`**: General JSDoc requirements for exported functions/classes
 
 ### Direct Imports
+
 All rule configurations are imported directly from their respective files (no barrel files).
 
 ### Custom Rules
 
 #### React Component Pattern Enforcement
+
 The UI configuration enforces consistent React component patterns:
+
 - ✅ **Required**: `const Component = React.forwardRef<RefType, PropsType>((props, ref) => { ... });`
 - ❌ **Blocked**: Arrow functions, function declarations, component aliases, standalone forwardRef
 
 #### JSDoc Requirements
+
 Components must include:
+
 - **Description**: Meaningful component description
 - **Required tags**: `@id`, `@name`, `@component`, `@example`
 - **Optional tags**: `@see`, `@since`, `@deprecated`, `@version`
@@ -147,6 +168,7 @@ Components must include:
 ## Configuration Philosophy
 
 This configuration follows Anthony Fu's philosophy of:
+
 - **Less opinionated**: Reasonable defaults that don't get in your way
 - **Auto-formatting**: Let tools handle formatting, focus on logic
 - **Modern standards**: ESM, flat config, latest best practices

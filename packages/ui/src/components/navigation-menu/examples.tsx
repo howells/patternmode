@@ -1,3 +1,6 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -5,6 +8,7 @@ import {
   NavigationMenuLink,
   NavigationMenuTrigger,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -28,3 +32,16 @@ export function DefaultExample() {
     </NavigationMenu>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+];

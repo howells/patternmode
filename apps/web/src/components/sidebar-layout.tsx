@@ -2,24 +2,36 @@
 
 "use client";
 
-import {
-  getDynamicIconByName, Sidebar,
-  SidebarBody,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarItem, ToggleGroup, ToggleGroupItem
-} from "@patternmode/ui";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { motion } from "framer-motion";
 import { List, Pilcrow, Rows3 } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
+
 import {
+  getDynamicIconByName,
+  Sidebar,
+  SidebarBody,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarItem,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@patternmode/ui";
+
+import type {
   COMPONENT_LIST,
-  getComponentsByCategory,
-} from "../../../../packages/ui/src/component-registry";
+} from "@patternmode/ui/component-registry";
 import type { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
+
+import {
+  CATEGORY_CONFIG,
+  getAllComponents,
+  getComponentsByCategory,
+  getTotalComponentsCount,
+} from "@patternmode/ui/component-registry";
+import type { CategoryKey } from "@patternmode/ui/component-registry";
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
@@ -39,7 +51,8 @@ function getStableIconComponent(iconName: string | undefined) {
     try {
       const IconComponent = getDynamicIconByName(iconName);
       iconComponentCache.set(iconName, IconComponent);
-    } catch (error) {
+    }
+    catch (error) {
       // If icon loading fails, cache null to prevent repeated attempts
       console.warn(`Failed to load icon "${iconName}":`, error);
       iconComponentCache.set(iconName, null);
@@ -49,14 +62,14 @@ function getStableIconComponent(iconName: string | undefined) {
   return iconComponentCache.get(iconName) || null;
 }
 
-interface SidebarLayoutProps {
+type SidebarLayoutProps = {
   children: React.ReactNode;
-}
+};
 
-interface SidebarContextType {
+type SidebarContextType = {
   isCollapsed: boolean;
   toggleCollapsed: () => void;
-}
+};
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
@@ -71,54 +84,21 @@ function useSidebar() {
 function SidebarContent() {
   const segments = useSelectedLayoutSegments();
   const { isCollapsed } = useSidebar();
-  const { viewMode, isGrouped, setGroupedView, setAlphabeticalView } =
-    useSidebarView();
-
-  // Category configuration
-  const categoryConfig = [
-    { key: "text", name: "Text" },
-    { key: "layout", name: "Layout" },
-    { key: "navigation", name: "Navigation" },
-    { key: "feedback", name: "Feedback" },
-    { key: "overlay", name: "Overlay" },
-    { key: "data", name: "Data" },
-    { key: "media", name: "Media" },
-    { key: "utility", name: "Utility" },
-    { key: "inputs", name: "Inputs" },
-    { key: "forms", name: "Forms" },
-    { key: "charts", name: "Charts" },
-  ] as const;
+  const { viewMode, isGrouped, setGroupedView, setAlphabeticalView }
+    = useSidebarView();
 
   // Check if current path matches a component
   const isCurrentComponent = (category: string, componentId: string) => {
     return (
-      segments.length >= 2 &&
-      segments[0] === category &&
-      segments[1] === componentId
+      segments.length >= 2
+      && segments[0] === category
+      && segments[1] === componentId
     );
   };
 
-  // Get all components for alphabetical view
-  const getAllComponents = () => {
-    const allComponents: Array<
-      ComponentConfig & { category: string; categoryName: string }
-    > = [];
-
-    categoryConfig.forEach((category) => {
-      const components = getComponentsByCategory(
-        category.key as keyof typeof COMPONENT_LIST
-      );
-      components.forEach((component) => {
-        allComponents.push({
-          ...component,
-          category: category.key,
-          categoryName: category.name,
-        });
-      });
-    });
-
-    return allComponents.sort((a, b) => a.name.localeCompare(b.name));
-  };
+  // Get data from shared registry
+  const allComponents = getAllComponents();
+  const totalComponentsCount = getTotalComponentsCount();
 
   return (
     <>
@@ -142,10 +122,10 @@ function SidebarContent() {
       <SidebarBody isCollapsed={isCollapsed}>
         {/* Level 1: Components with view toggle */}
         <SidebarGroup
-          title="Components"
+          title={`Components (${totalComponentsCount})`}
           isCollapsed={isCollapsed}
           level={1}
-          actions={
+          actions={(
             <ToggleGroup
               value={[viewMode]}
               onValueChange={(value) => {
@@ -153,7 +133,8 @@ function SidebarContent() {
                   const newMode = value[0] as "grouped" | "alphabetical";
                   if (newMode === "grouped") {
                     setGroupedView();
-                  } else {
+                  }
+                  else {
                     setAlphabeticalView();
                   }
                 }
@@ -168,29 +149,29 @@ function SidebarContent() {
                 <span className="sr-only">Alphabetical view</span>
               </ToggleGroupItem>
             </ToggleGroup>
-          }
+          )}
         >
           {isGrouped ? (
             // Grouped view: Level 2 categories with Level 3 items
             <>
-              {categoryConfig.map((category) => {
+              {CATEGORY_CONFIG.map((category) => {
                 const components = getComponentsByCategory(
-                  category.key as keyof typeof COMPONENT_LIST
+                  category.key,
                 ).sort((a, b) => a.name.localeCompare(b.name));
 
-                if (components.length === 0) return null;
+                if (components.length === 0) { return null; }
 
                 return (
                   <SidebarGroup
                     key={category.key}
-                    title={category.name}
+                    title={`${category.name} (${components.length})`}
                     href={`/ui/${category.key}`}
                     isCollapsed={isCollapsed}
                     level={2}
                   >
                     {components.map((component) => {
                       const IconComponent = getStableIconComponent(
-                        component.icon
+                        component.icon,
                       );
                       return (
                         <SidebarItem
@@ -198,7 +179,7 @@ function SidebarContent() {
                           href={`/ui/${category.key}/${component.id}`}
                           current={isCurrentComponent(
                             category.key,
-                            component.id
+                            component.id,
                           )}
                           isCollapsed={isCollapsed}
                           leftIcon={IconComponent || undefined}
@@ -214,7 +195,7 @@ function SidebarContent() {
           ) : (
             // Alphabetical view: Flat Level 3 items
             <>
-              {getAllComponents().map((component) => {
+              {allComponents.map((component) => {
                 const IconComponent = getStableIconComponent(component.icon);
                 return (
                   <SidebarItem
@@ -222,7 +203,7 @@ function SidebarContent() {
                     href={`/ui/${component.category}/${component.id}`}
                     current={isCurrentComponent(
                       component.category,
-                      component.id
+                      component.id,
                     )}
                     isCollapsed={isCollapsed}
                     leftIcon={IconComponent || undefined}

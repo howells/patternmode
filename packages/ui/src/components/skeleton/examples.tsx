@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Skeleton } from "@patternmode/ui";
+
 import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample (already correct)
@@ -89,3 +93,34 @@ export function AvatarSkeleton() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "CardExample",
+    title: "Card",
+    description: "Card example",
+    component: CardExample,
+  },
+  {
+    id: "ListExample",
+    title: "List",
+    description: "List example",
+    component: ListExample,
+  },
+  {
+    id: "SkeletonExample",
+    title: "Skeleton",
+    description: "Skeleton example",
+    component: SkeletonExample,
+  },
+];

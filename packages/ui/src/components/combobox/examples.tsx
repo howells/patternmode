@@ -1,13 +1,16 @@
 "use client";
 
 import type { ComboboxOption } from "@patternmode/ui";
+import type { ComponentExample } from "../../lib/component-config-types";
+
 import { Combobox } from "@patternmode/ui";
+
 import React from "react";
 
 // Sample data
-interface FruitOption extends ComboboxOption {
+type FruitOption = {
   color: string;
-}
+} & ComboboxOption;
 
 const fruits: FruitOption[] = [
   { id: "1", label: "Apple", value: "apple", color: "red" },
@@ -192,3 +195,46 @@ export function ErrorExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "AsyncExample",
+    title: "Async",
+    description: "Async example",
+    component: AsyncExample,
+  },
+  {
+    id: "IconsExample",
+    title: "Icons",
+    description: "Icons example",
+    component: IconsExample,
+  },
+  {
+    id: "CustomRenderingExample",
+    title: "Custom Rendering",
+    description: "Custom Rendering example",
+    component: CustomRenderingExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "ErrorExample",
+    title: "Error",
+    description: "Error example",
+    component: ErrorExample,
+  },
+];

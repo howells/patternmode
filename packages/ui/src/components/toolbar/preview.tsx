@@ -1,40 +1,12 @@
 "use client";
 
-import {
-  Toolbar,
-  ToolbarButton,
-  ToolbarGroup,
-  ToolbarSeparator,
-} from "@patternmode/ui";
+import type { ToolbarProps } from "./toolbar";
+import { Toolbar } from "@patternmode/ui";
 
-export function ToolbarExample() {
-  return (
-    <Toolbar>
-      <ToolbarButton>New File</ToolbarButton>
-      <ToolbarButton>Open</ToolbarButton>
-      <ToolbarButton>Save</ToolbarButton>
+import React from "react";
 
-      <ToolbarSeparator />
+type ToolbarExampleProps = ToolbarProps;
 
-      <ToolbarButton>Cut</ToolbarButton>
-      <ToolbarButton>Copy</ToolbarButton>
-      <ToolbarButton>Paste</ToolbarButton>
-
-      <ToolbarSeparator />
-
-      <ToolbarGroup>
-        <ToolbarButton value="left">Left</ToolbarButton>
-        <ToolbarButton value="center">Center</ToolbarButton>
-        <ToolbarButton value="right">Right</ToolbarButton>
-      </ToolbarGroup>
-
-      <ToolbarSeparator />
-
-      <ToolbarGroup>
-        <ToolbarButton value="bold">B</ToolbarButton>
-        <ToolbarButton value="italic">I</ToolbarButton>
-        <ToolbarButton value="underline">U</ToolbarButton>
-      </ToolbarGroup>
-    </Toolbar>
-  );
+export function ToolbarExample(props: ToolbarProps) {
+  return <Toolbar {...props} />;
 }

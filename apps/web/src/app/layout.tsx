@@ -1,5 +1,7 @@
-import { ToastProvider } from "@patternmode/ui";
 import type { Metadata } from "next";
+
+import { ToastProvider } from "@patternmode/ui";
+
 import { SidebarLayout } from "../components/sidebar-layout";
 import { ReactQueryProvider } from "../lib/react-query";
 import "./globals.css";
@@ -17,7 +19,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`antialiased bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950`}
+      className="antialiased bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
       suppressHydrationWarning
     >
       <head>

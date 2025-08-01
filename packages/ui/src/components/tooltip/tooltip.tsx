@@ -2,10 +2,12 @@
 
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
+
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 
 const tooltipVariants = tv({
@@ -67,12 +69,7 @@ const tooltipVariants = tv({
  * <Tooltip>Content</Tooltip>
  * ```
  */
-interface TooltipProps
-  extends Omit<
-      React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>,
-      "children"
-    >,
-    VariantProps<typeof tooltipVariants> {
+type TooltipProps = {
   /**
    * The element that triggers the tooltip.
    */
@@ -113,19 +110,24 @@ interface TooltipProps
    * Click handler for the trigger element.
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
-}
+} & Omit<
+      React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>,
+      "children"
+    > & VariantProps<typeof tooltipVariants>;
 
 /**
  * A tooltip component built on Base UI's Tooltip primitive.
  *
  * Based on Base UI's Tooltip (https://base-ui.com/react/components/tooltip),
  * providing accessible hover/focus-triggered information popups with smart positioning,
- * customizable delays, and smooth animations. Perfect for providing contextual help.
+ * customizable delays, and smooth animations. Perfect for providing contextual help,
+ * explanations, and additional information without cluttering the interface.
  *
- *
+ * @component
+ * @category ui
+ * @icon HelpCircle
  * @id tooltip
  * @name Tooltip
- * @component
  * @example
  * ```tsx
  * // Basic tooltip
@@ -162,66 +164,69 @@ interface TooltipProps
  * @see https://base-ui.com/react/components/tooltip - Base UI documentation
  */
 /**
- * Tooltip component built on Base UI with customizable positioning and styling variants.
+ * Contextual information popup displayed on hover or focus interactions.
  *
  * @id tooltip
  * @name Tooltip
+ * @icon MessageSquare
+ * @category ui
  * @component
+ * @param props - Component properties.
  */
 const Tooltip = ({
-    ref: forwardedRef,
-    children,
-    className,
-    content,
-    delayDuration = 150,
-    defaultOpen,
-    open,
-    onClick,
-    onOpenChange,
-    showArrow = true,
-    side = "top",
-    sideOffset = 10,
-    align = "center",
-    alignOffset = 0,
-    variant,
-    size,
-    ...props
-  }: TooltipProps & {
-    ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null>;
-  }) => {
-    const { popup, arrow } = tooltipVariants({ variant, size });
+  ref: forwardedRef,
+  children,
+  className,
+  content,
+  delayDuration = 150,
+  defaultOpen,
+  open,
+  onClick,
+  onOpenChange,
+  showArrow = true,
+  side = "top",
+  sideOffset = 10,
+  align = "center",
+  alignOffset = 0,
+  variant,
+  size,
+  ...props
+}: TooltipProps & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null>;
+}) => {
+  const { popup, arrow } = tooltipVariants({ variant, size });
 
-    return (
-      <BaseTooltip.Root
-        open={open}
-        defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
-        {...props}
-      >
-        <BaseTooltip.Trigger onClick={onClick}>{children}</BaseTooltip.Trigger>
-        <BaseTooltip.Portal>
-          <BaseTooltip.Positioner
-            side={side}
-            sideOffset={sideOffset}
-            align={align}
-            alignOffset={alignOffset}
+  return (
+    <BaseTooltip.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      {...props}
+    >
+      <BaseTooltip.Trigger onClick={onClick}>{children}</BaseTooltip.Trigger>
+      <BaseTooltip.Portal>
+        <BaseTooltip.Positioner
+          side={side}
+          sideOffset={sideOffset}
+          align={align}
+          alignOffset={alignOffset}
+        >
+          <BaseTooltip.Popup
+            ref={forwardedRef}
+            className={cx(popup(), className)}
           >
-            <BaseTooltip.Popup
-              ref={forwardedRef}
-              className={cx(popup(), className)}
-            >
-              {content}
-              {showArrow && (
-                <BaseTooltip.Arrow className={arrow()}>
-                  <ArrowSvg />
-                </BaseTooltip.Arrow>
-              )}
-            </BaseTooltip.Popup>
-          </BaseTooltip.Positioner>
-        </BaseTooltip.Portal>
-      </BaseTooltip.Root>
-    );
-  };
+            {content}
+            {showArrow && (
+              <BaseTooltip.Arrow className={arrow()}>
+                <ArrowSvg />
+              </BaseTooltip.Arrow>
+            )}
+          </BaseTooltip.Popup>
+        </BaseTooltip.Positioner>
+      </BaseTooltip.Portal>
+    </BaseTooltip.Root>
+  );
+};
 
 Tooltip.displayName = "Tooltip";
 
@@ -255,13 +260,13 @@ const TooltipPopup = BaseTooltip.Popup;
 const TooltipArrow = BaseTooltip.Arrow;
 
 export {
-    Tooltip,
-    TooltipArrow,
-    TooltipPopup,
-    TooltipPortal,
-    TooltipPositioner,
-    TooltipProvider,
-    TooltipRoot,
-    TooltipTrigger,
-    type TooltipProps
+  Tooltip,
+  TooltipArrow,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  type TooltipProps,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
 };

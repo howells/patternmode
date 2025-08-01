@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Input } from "@patternmode/ui";
+
 import React from "react";
 
 export function InputExample() {
@@ -97,3 +101,82 @@ export function MixedPrefixSuffixExample() {
   // where the user can set prefixText and suffixIcon
   return <Input placeholder="Enter your email" />;
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "InputExample",
+    title: "Input",
+    description: "Input example",
+    component: InputExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "TypesExample",
+    title: "Types",
+    description: "Types example",
+    component: TypesExample,
+  },
+  {
+    id: "StatesExample",
+    title: "States",
+    description: "States example",
+    component: StatesExample,
+  },
+  {
+    id: "SearchExample",
+    title: "Search",
+    description: "Search example",
+    component: SearchExample,
+  },
+  {
+    id: "PasswordExample",
+    title: "Password",
+    description: "Password example",
+    component: PasswordExample,
+  },
+  {
+    id: "NumberExample",
+    title: "Number",
+    description: "Number example",
+    component: NumberExample,
+  },
+  {
+    id: "FileExample",
+    title: "File",
+    description: "File example",
+    component: FileExample,
+  },
+  {
+    id: "PrefixSuffixTextExample",
+    title: "Prefix Suffix Text",
+    description: "Prefix Suffix Text example",
+    component: PrefixSuffixTextExample,
+  },
+  {
+    id: "PrefixSuffixStylingExample",
+    title: "Prefix Suffix Styling",
+    description: "Prefix Suffix Styling example",
+    component: PrefixSuffixStylingExample,
+  },
+  {
+    id: "PrefixSuffixIconsExample",
+    title: "Prefix Suffix Icons",
+    description: "Prefix Suffix Icons example",
+    component: PrefixSuffixIconsExample,
+  },
+  {
+    id: "MixedPrefixSuffixExample",
+    title: "Mixed Prefix Suffix",
+    description: "Mixed Prefix Suffix example",
+    component: MixedPrefixSuffixExample,
+  },
+];

@@ -1,8 +1,11 @@
 "use client";
 
-import { Avatar, Badge, Button, Card, StackedList } from "@patternmode/ui";
-import { Calendar, FileText, UserPlus } from "lucide-react";
+import type { ComponentExample } from "../../lib/component-config-types";
+import { Avatar, Badge, Button, Card, iconRegistry, StackedList } from "@patternmode/ui";
+
 import React from "react";
+// Pre-imported icons from registry
+const { Calendar, FileText, UserPlus } = iconRegistry;
 
 // Default example - matches config "default" id
 export function DefaultExample() {
@@ -116,7 +119,7 @@ export function InteractiveExample() {
       </StackedList.Item>
       <StackedList.Item
         as="button"
-        onClick={() => alert("Clicked David Miller")}
+        onClick={() => {}}
         left={<Avatar initials="DM" alt="David Miller" />}
         right={<Badge variant="warning">Away</Badge>}
       >
@@ -146,7 +149,47 @@ export function EmptyStateExample() {
     </StackedList>
   );
 }
-export const /**
-              *
-              */
-  StackedListExample = DefaultExample;
+export const StackedListExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "StackedListExample",
+    title: "Stacked List",
+    description: "Stacked List example",
+    component: StackedListExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "InCardExample",
+    title: "In Card",
+    description: "In Card example",
+    component: InCardExample,
+  },
+  {
+    id: "WithIconsExample",
+    title: "With Icons",
+    description: "Example with icon integration",
+    component: WithIconsExample,
+  },
+  {
+    id: "InteractiveExample",
+    title: "Interactive",
+    description: "Interactive example",
+    component: InteractiveExample,
+  },
+  {
+    id: "EmptyStateExample",
+    title: "Empty State",
+    description: "Empty State example",
+    component: EmptyStateExample,
+  },
+];

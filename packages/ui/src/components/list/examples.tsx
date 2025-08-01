@@ -1,6 +1,11 @@
-import { List, ListIndicator, ListItem } from "@patternmode/ui";
-import { CheckCircle, Circle } from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { iconRegistry, List, ListIndicator, ListItem } from "@patternmode/ui";
+
 import React from "react";
+// Pre-imported icons from registry
+const { CheckCircle, Circle } = iconRegistry;
 
 export function ListExample() {
   return (
@@ -86,3 +91,40 @@ export function NestedExample() {
     </List>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "ListExample",
+    title: "List",
+    description: "List example",
+    component: ListExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "OrderedExample",
+    title: "Ordered",
+    description: "Ordered example",
+    component: OrderedExample,
+  },
+  {
+    id: "WithIconsExample",
+    title: "With Icons",
+    description: "Example with icon integration",
+    component: WithIconsExample,
+  },
+  {
+    id: "NestedExample",
+    title: "Nested",
+    description: "Nested example",
+    component: NestedExample,
+  },
+];

@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { HStack, Stack, VStack } from "@patternmode/ui";
+
 import React from "react";
 
 // Default example - matches config "default" id
@@ -158,3 +162,70 @@ export function ComplexResponsiveExample() {
     </Stack>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "HorizontalExample",
+    title: "Horizontal",
+    description: "Horizontal example",
+    component: HorizontalExample,
+  },
+  {
+    id: "CustomSpacingExample",
+    title: "Custom Spacing",
+    description: "Custom Spacing example",
+    component: CustomSpacingExample,
+  },
+  {
+    id: "AlignmentExample",
+    title: "Alignment",
+    description: "Alignment example",
+    component: AlignmentExample,
+  },
+  {
+    id: "StackExample",
+    title: "Stack",
+    description: "Stack example",
+    component: StackExample,
+  },
+  {
+    id: "ResponsiveGapExample",
+    title: "Responsive Gap",
+    description: "Responsive Gap example",
+    component: ResponsiveGapExample,
+  },
+  {
+    id: "HelperComponentsExample",
+    title: "Helper Components",
+    description: "Helper Components example",
+    component: HelperComponentsExample,
+  },
+  {
+    id: "WithPaddingExample",
+    title: "With Padding",
+    description: "With Padding example",
+    component: WithPaddingExample,
+  },
+  {
+    id: "WrappingExample",
+    title: "Wrapping",
+    description: "Wrapping example",
+    component: WrappingExample,
+  },
+  {
+    id: "ComplexResponsiveExample",
+    title: "Complex Responsive",
+    description: "Complex Responsive example",
+    component: ComplexResponsiveExample,
+  },
+];

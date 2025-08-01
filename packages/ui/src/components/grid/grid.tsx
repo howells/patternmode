@@ -11,6 +11,8 @@
  * - Auto-generated numbered cells
  * - TypeScript support for responsive values.
  *
+ * @category layout
+ * @icon LayoutGrid
  * @example
  * ```tsx
  * // Basic responsive grid
@@ -41,6 +43,7 @@
 
 import React from "react";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 
 /**
@@ -155,7 +158,7 @@ const generateResponsiveGridStyles = (
  * @interface GridProps
  * @augments React.HTMLAttributes<HTMLDivElement>
  */
-interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
+type GridProps = {
   /**
    * Number of columns - can be responsive object or single number.
    */
@@ -176,7 +179,7 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
    * Minimum height constraint for the grid.
    */
   minHeight?: "none" | "sm" | "md" | "lg" | "xl";
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Root grid component for creating responsive CSS Grid layouts.
@@ -190,55 +193,44 @@ interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param minHeight - Minimum height constraint.
  * @param className - Additional CSS classes.
  * @param children - Grid content.
- *
- *
- * @id grid
- * @name Grid
- * @component
- * @example
- * ```tsx
- * // Responsive grid
- * <Grid columns={{ sm: 2, md: 4, lg: 6 }} gap={4}>
- *   <GridCell>Item 1</GridCell>
- *   <GridCell colSpan={2}>Wide Item</GridCell>
- *   <GridCell>Item 3</GridCell>
- * </Grid>
- *
- * // Layout grid
- * <Grid columns={12} rows={8} minHeight="lg">
- *   <GridCell colSpan={3}>Sidebar</GridCell>
- *   <GridCell colSpan={9}>Main</GridCell>
- * </Grid>
- * ```
  */
 /**
- * A sophisticated grid layout component with visual guides, responsive columns/rows, cell overlays, and guide clipping features. Perfect for complex layouts and design systems.
+ * Layout grid component with responsive columns and flexible item placement.
  *
  * @id grid
  * @name Grid
+ * @icon Grid3x3
+ * @category utility
  * @component
+ * @param props - Component properties.
+ * @param props.columns - Number of columns (can be responsive object or single number).
+ * @param props.rows - Number of rows (can be responsive object or single number).
+ * @param props.gap - Gap between grid items (Tailwind spacing scale).
+ * @param props.minHeight - Minimum height constraint for the grid (none, sm, md, lg, xl).
+ * @param props.children - Grid content including GridCell components.
+ * @param props.className - Additional CSS classes.
  */
 const Grid = (
-    { ref, columns = 6, rows, gap = 4, className, children, minHeight = "none", ...props }: GridProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    const responsiveGridStyles = generateResponsiveGridStyles(columns, rows);
+  { ref, columns = 6, rows, gap = 4, className, children, minHeight = "none", ...props }: GridProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  const responsiveGridStyles = generateResponsiveGridStyles(columns, rows);
 
-    return (
-      <div
-        ref={ref}
-        className={cx(
-          "grid",
-          `gap-${gap}`,
-          gridVariants({ minHeight }),
-          responsiveGridStyles,
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  };
+  return (
+    <div
+      ref={ref}
+      className={cx(
+        "grid",
+        `gap-${gap}`,
+        gridVariants({ minHeight }),
+        responsiveGridStyles,
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
 Grid.displayName = "Grid";
 
@@ -250,7 +242,7 @@ Grid.displayName = "Grid";
  * @interface GridCellProps
  * @augments React.HTMLAttributes<HTMLDivElement>
  */
-interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
+type GridCellProps = {
   /**
    * Number of columns the cell should span.
    */
@@ -271,7 +263,7 @@ interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
    * Cell content.
    */
   children?: React.ReactNode;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Grid cell component for positioning content within a grid.
@@ -300,27 +292,27 @@ interface GridCellProps extends React.HTMLAttributes<HTMLDivElement> {
  * ```
  */
 const GridCell = (
-    { ref, colSpan, rowSpan, colStart, rowStart, className, children, ...props }: GridCellProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    const spanClasses = [
-      colSpan && `col-span-${colSpan}`,
-      rowSpan && `row-span-${rowSpan}`,
-      colStart && `col-start-${colStart}`,
-      rowStart && `row-start-${rowStart}`,
-    ]
-      .filter(Boolean)
-      .join(" ");
+  { ref, colSpan, rowSpan, colStart, rowStart, className, children, ...props }: GridCellProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  const spanClasses = [
+    colSpan && `col-span-${colSpan}`,
+    rowSpan && `row-span-${rowSpan}`,
+    colStart && `col-start-${colStart}`,
+    rowStart && `row-start-${rowStart}`,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-    return (
-      <div
-        ref={ref}
-        className={cx(gridCellVariants(), spanClasses, className)}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  };
+  return (
+    <div
+      ref={ref}
+      className={cx(gridCellVariants(), spanClasses, className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
 GridCell.displayName = "GridCell";
 
@@ -333,7 +325,7 @@ GridCell.displayName = "GridCell";
  * @interface GridAutoProps
  * @augments Omit<GridProps, "children">
  */
-interface GridAutoProps extends Omit<GridProps, "children"> {
+type GridAutoProps = {
   /**
    * Number of cells to automatically generate.
    */
@@ -342,7 +334,7 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
    * Custom renderer function for cell content.
    */
   renderCell?: (index: number) => React.ReactNode;
-}
+} & Omit<GridProps, "children">;
 
 /**
  * Auto-generating grid component for rapid prototyping.
@@ -382,21 +374,26 @@ interface GridAutoProps extends Omit<GridProps, "children"> {
  * ```
  */
 const GridAuto = ({ ref, cellCount = 6, renderCell, ...gridProps }: GridAutoProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return (
-      <Grid ref={ref} {...gridProps}>
-        {Array.from({ length: cellCount }, (_, index) => (
-          <GridCell key={index}>
-            {renderCell ? renderCell(index) : index + 1}
-          </GridCell>
-        ))}
-      </Grid>
-    );
-  };
+  return (
+    <Grid ref={ref} {...gridProps}>
+      {Array.from({ length: cellCount }, (_, index) => (
+        <GridCell key={index}>
+          {renderCell ? renderCell(index) : index + 1}
+        </GridCell>
+      ))}
+    </Grid>
+  );
+};
 
 GridAuto.displayName = "GridAuto";
 
 export {
-    Grid,
-    GridAuto,
-    GridCell, gridCellVariants, gridVariants, type GridCellProps, type GridProps, type ResponsiveValue
+  Grid,
+  GridAuto,
+  GridCell,
+  type GridCellProps,
+  gridCellVariants,
+  type GridProps,
+  gridVariants,
+  type ResponsiveValue,
 };

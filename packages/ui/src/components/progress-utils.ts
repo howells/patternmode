@@ -45,7 +45,9 @@ export const getProgressPercentage = (
   value: number | null,
   max: number,
 ): number => {
-  if (value === null) { return 0; }
+  if (value === null) {
+    return 0;
+  }
   return (clampValue(value, 0, max) / max) * 100;
 };
 
@@ -53,7 +55,9 @@ export const defaultValueFormatter = (
   value: number | null,
   max: number,
 ): string => {
-  if (value === null) { return "—"; }
+  if (value === null) {
+    return "—";
+  }
   return `${Math.round(getProgressPercentage(value, max))}%`;
 };
 

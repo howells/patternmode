@@ -9,8 +9,13 @@
  * Import sorting and organization rules
  */
 export const importSortingRules = {
-  // Import sorting and organization
-  "perfectionist/sort-imports": "error",
+  // Import sorting and organization (re-enabled with root dependencies)
+  "perfectionist/sort-imports": [
+    "error",
+    {
+      tsconfigRootDir: ".",
+    },
+  ],
   "perfectionist/sort-exports": "off",
 };
 

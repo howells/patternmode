@@ -1,12 +1,18 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
-import { BarChart3, FileText, Settings, Users } from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { iconRegistry, Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+
 import React from "react";
+
 import { cx } from "../../lib/utils";
 import { Text } from "../text/text";
+// Pre-imported icons from registry
+const { BarChart3, FileText, Settings, Users } = iconRegistry;
 
 const TabTextContent = ({ children }: { children: React.ReactNode }) => {
   return (
-      <Text  className={cx("py-4")}>{children}</Text>
+    <Text className={cx("py-4")}>{children}</Text>
   );
 };
 
@@ -247,22 +253,22 @@ export function SolidSizesExample() {
 
 export function LineIndicatorTestExample() {
   return (
-      <Tabs defaultValue="tab1">
-        <TabsList variant="line">
-          <TabsTrigger value="tab1">Short</TabsTrigger>
-          <TabsTrigger value="tab2">Medium Length</TabsTrigger>
-          <TabsTrigger value="tab3">Very Long Tab Name</TabsTrigger>
-        </TabsList>
-        <TabsContent value="tab1">
-          <TabTextContent>The indicator should be under "Short"</TabTextContent>
-        </TabsContent>
-        <TabsContent value="tab2">
-          <TabTextContent>The indicator should be under "Medium Length"</TabTextContent>
-        </TabsContent>
-        <TabsContent value="tab3">
-          <TabTextContent>The indicator should be under "Very Long Tab Name"</TabTextContent>
-        </TabsContent>
-      </Tabs>
+    <Tabs defaultValue="tab1">
+      <TabsList variant="line">
+        <TabsTrigger value="tab1">Short</TabsTrigger>
+        <TabsTrigger value="tab2">Medium Length</TabsTrigger>
+        <TabsTrigger value="tab3">Very Long Tab Name</TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab1">
+        <TabTextContent>The indicator should be under "Short"</TabTextContent>
+      </TabsContent>
+      <TabsContent value="tab2">
+        <TabTextContent>The indicator should be under "Medium Length"</TabTextContent>
+      </TabsContent>
+      <TabsContent value="tab3">
+        <TabTextContent>The indicator should be under "Very Long Tab Name"</TabTextContent>
+      </TabsContent>
+    </Tabs>
   );
 }
 
@@ -315,3 +321,58 @@ export function SolidWithIconsExample() {
     </Tabs>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "TabsExample",
+    title: "Tabs",
+    description: "Tabs example",
+    component: TabsExample,
+  },
+  {
+    id: "LineNoDividerExample",
+    title: "Line No Divider",
+    description: "Line No Divider example",
+    component: LineNoDividerExample,
+  },
+  {
+    id: "SolidExample",
+    title: "Solid",
+    description: "Solid example",
+    component: SolidExample,
+  },
+  {
+    id: "LineSizesExample",
+    title: "Line Sizes",
+    description: "Line Sizes example",
+    component: LineSizesExample,
+  },
+  {
+    id: "SolidSizesExample",
+    title: "Solid Sizes",
+    description: "Solid Sizes example",
+    component: SolidSizesExample,
+  },
+  {
+    id: "LineIndicatorTestExample",
+    title: "Line Indicator Test",
+    description: "Line Indicator Test example",
+    component: LineIndicatorTestExample,
+  },
+  {
+    id: "LineWithIconsExample",
+    title: "Line With Icons",
+    description: "Line With Icons example",
+    component: LineWithIconsExample,
+  },
+  {
+    id: "SolidWithIconsExample",
+    title: "Solid With Icons",
+    description: "Solid With Icons example",
+    component: SolidWithIconsExample,
+  },
+];

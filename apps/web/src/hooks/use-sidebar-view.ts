@@ -22,7 +22,8 @@ export function useSidebarView() {
       if (stored && (stored === "grouped" || stored === "alphabetical")) {
         setViewMode(stored as SidebarViewMode);
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.warn("Failed to read from localStorage:", error);
     }
     setIsHydrated(true);
@@ -33,15 +34,16 @@ export function useSidebarView() {
     if (isHydrated) {
       try {
         localStorage.setItem(STORAGE_KEY, viewMode);
-      } catch (error) {
+      }
+      catch (error) {
         console.warn("Failed to write to localStorage:", error);
       }
     }
   }, [viewMode, isHydrated]);
 
   const toggleViewMode = () => {
-    setViewMode((current) =>
-      current === "grouped" ? "alphabetical" : "grouped"
+    setViewMode(current =>
+      current === "grouped" ? "alphabetical" : "grouped",
     );
   };
 
@@ -52,9 +54,9 @@ export function useSidebarView() {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
-        (event.metaKey || event.ctrlKey) &&
-        event.shiftKey &&
-        event.key === "V"
+        (event.metaKey || event.ctrlKey)
+        && event.shiftKey
+        && event.key === "V"
       ) {
         event.preventDefault();
         toggleViewMode();

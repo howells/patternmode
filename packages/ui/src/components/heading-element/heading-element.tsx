@@ -12,6 +12,8 @@
  * - Flexible styling with className
  * - Full HTML heading element props support.
  *
+ * @category typography
+ * @icon Heading1
  * @example
  * ```tsx
  * // Basic heading elements
@@ -65,37 +67,23 @@ export type HeadingElementProps = {
  * @param level - Heading level (1-6) determining HTML element.
  * @param className - Additional CSS classes.
  * @param props - Additional HTML heading element props.
- *
- * @component
- * @example
- * ```tsx
- * // Semantic heading hierarchy
- * <HeadingElement level={1}>Main Title</HeadingElement>
- * <HeadingElement level={2}>Section Title</HeadingElement>
- * <HeadingElement level={3}>Subsection Title</HeadingElement>
- *
- * // With styling
- * <HeadingElement level={2} className="text-2xl font-semibold">
- *   Styled Section
- * </HeadingElement>
- * ```
  */
 /**
- * Heading Element.
+ * Semantic heading element component with proper HTML heading structure.
  *
- * @component
  * @id heading-element
- * @name Heading Element
+ * @name HeadingElement
+ * @icon Type
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 export function HeadingElement({
   level = 1,
   className,
   ...props
 }: HeadingElementProps) {
-  const /**
-         *
-         */
-    Element: `h${typeof level}` = `h${level}`;
+  const Element: `h${typeof level}` = `h${level}`;
 
   return <Element {...props} className={cx(className)} />;
 }

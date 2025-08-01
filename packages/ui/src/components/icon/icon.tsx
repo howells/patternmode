@@ -1,8 +1,83 @@
 "use client";
 
+/**
+ * Icon Components.
+ *
+ * Centralized icon system providing consistent sizing, styling, and error handling
+ * for Lucide React icons across all UI components. Features graceful fallbacks,
+ * dynamic icon loading support, and flexible sizing options.
+ *
+ * Features:
+ * - Consistent sizing system (xs, sm, base, lg, xl, 2xl, 3xl)
+ * - Global stroke width configuration
+ * - Type-safe icon props with Lucide React integration
+ * - Graceful error handling with fallback display
+ * - Dynamic icon loading support with error boundaries
+ * - Utility hooks for context-aware sizing
+ * - Shrink-0 by default to prevent flex layout issues.
+ *
+ * @category utility
+ * @icon Smile
+ * @example
+ * ```tsx
+ * // Basic icon usage
+ * <Icon icon={Search} />
+ * <Icon icon={Plus} size="lg" />
+ * <Icon icon={Heart} strokeWidth={1.5} />
+ *
+ * // Context-aware sizing
+ * <Button size="sm">
+ *   <Icon icon={Plus} size={useIconSize("sm")} />
+ *   Add Item
+ * </Button>
+ *
+ * // With custom fallback icon
+ * <Icon
+ *   icon={UnknownIcon}
+ *   fallbackIcon={AlertTriangle}
+ * />
+ *
+ * // In layouts with proper spacing
+ * <HStack gap={2} align="center">
+ *   <Icon icon={User} />
+ *   <Text>Profile Settings</Text>
+ * </HStack>
+ *
+ * // Different sizes for different contexts
+ * <VStack gap={4}>
+ *   <Icon icon={Home} size="xs" />     // 12px - compact UI
+ *   <Icon icon={Search} size="sm" />   // 14px - small buttons
+ *   <Icon icon={Plus} size="base" />   // 16px - default
+ *   <Icon icon={Star} size="lg" />     // 20px - larger contexts
+ *   <Icon icon={Heart} size="xl" />    // 24px - headers
+ *   <Icon icon={Trophy} size="2xl" />  // 32px - display
+ *   <Icon icon={Award} size="3xl" />   // 48px - hero sections
+ * </VStack>
+ *
+ * // Auto-sized icons for components
+ * const PlusIcon = createIconWithSize(Plus, "button-lg");
+ * <Button size="lg">
+ *   <PlusIcon />
+ *   Large Button
+ * </Button>
+ *
+ * // Navigation with icons
+ * <StackedList>
+ *   <StackedList.Item left={<Icon icon={Dashboard} />}>
+ *     <StackedList.Content title="Dashboard" />
+ *   </StackedList.Item>
+ *   <StackedList.Item left={<Icon icon={Settings} />}>
+ *     <StackedList.Content title="Settings" />
+ *   </StackedList.Item>
+ * </StackedList>
+ * ```
+ */
+
 import type { VariantProps } from "tailwind-variants";
+
 import React from "react";
 import { tv } from "tailwind-variants";
+
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
 
@@ -24,7 +99,7 @@ const iconVariants = tv({
   },
 });
 
-export interface IconProps extends VariantProps<typeof iconVariants> {
+export type IconProps = {
   /**
    * The Lucide icon component to render.
    */
@@ -38,21 +113,20 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
    */
   className?: string;
   /**
-   * Fallback content to show if icon fails to render.
+   * Fallback icon to show if main icon fails to render.
    */
-  fallback?: React.ReactNode;
-}
+  fallbackIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+} & VariantProps<typeof iconVariants>;
 
 /**
- * Fallback icon component that shows a question mark in a subtle container.
+ * Icon display component with consistent sizing and styling for visual elements.
  *
- * @component
  * @id icon
  * @name Icon
- * @example
- * ```tsx
- * <Icon name="heart" />
- * ```
+ * @icon Star
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 function FallbackIcon({
   className,
@@ -85,13 +159,13 @@ function SafeDynamicIcon({
   size,
   strokeWidth,
   className,
-  fallback,
+  fallbackIcon,
 }: {
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
   strokeWidth?: number;
   className?: string;
-  fallback?: React.ReactNode;
+  fallbackIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 }) {
   const [hasError, setHasError] = React.useState(false);
 
@@ -100,9 +174,13 @@ function SafeDynamicIcon({
   }, [IconComponent]);
 
   if (hasError) {
-    return fallback
+    const FallbackIconComponent = fallbackIcon;
+    return FallbackIconComponent
       ? (
-          <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+          <FallbackIconComponent
+            className={cx(iconVariants({ size }), className)}
+            strokeWidth={strokeWidth}
+          />
         )
       : (
           <FallbackIcon className={className} size={size} />
@@ -112,12 +190,16 @@ function SafeDynamicIcon({
   return (
     <ErrorBoundary
       fallback={
-        fallback
-          ? (
-              <div className={cx(iconVariants({ size }), className)}>
-                {fallback}
-              </div>
-            )
+        fallbackIcon
+          ? (() => {
+              const FallbackIconComponent = fallbackIcon;
+              return (
+                <FallbackIconComponent
+                  className={cx(iconVariants({ size }), className)}
+                  strokeWidth={strokeWidth}
+                />
+              );
+            })()
           : (
               <FallbackIcon className={className} size={size} />
             )
@@ -195,8 +277,8 @@ class ErrorBoundary extends React.Component<
  * // Custom stroke width
  * <Icon icon={Heart} size="lg" strokeWidth={1.5} />
  *
- * // Custom fallback
- * <Icon icon={InvalidIcon} fallback={<span>⚠️</span>} />
+ * // Custom fallback icon
+ * <Icon icon={InvalidIcon} fallbackIcon={AlertTriangle} />
  *
  * // Spacing handled by parent
  * <div className="flex items-center gap-2">
@@ -208,13 +290,43 @@ class ErrorBoundary extends React.Component<
  * <Icon icon={Search} className="mr-2" />
  * ```
  */
+/**
+ * Icon display component with consistent sizing and styling for visual elements.
+ *
+ * @id icon
+ * @name Icon
+ * @icon Star
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.icon - The Lucide icon component to render.
+ * @param props.size - Icon size variant (xs, sm, base, lg, xl, 2xl, 3xl).
+ * @param props.strokeWidth - Stroke width for the icon (defaults to global config).
+ * @param props.className - Additional CSS classes.
+ * @param props.fallbackIcon - Fallback icon to show if main icon fails to render.
+ */
 export function Icon({
   icon: IconComponent,
   size,
   strokeWidth = config.getIconStrokeWidth(),
   className,
-  fallback,
+  fallbackIcon,
 }: IconProps) {
+  // Handle case where IconComponent is undefined
+  if (!IconComponent) {
+    const FallbackIconComponent = fallbackIcon;
+    return FallbackIconComponent
+      ? (
+          <FallbackIconComponent
+            className={cx(iconVariants({ size }), className)}
+            strokeWidth={strokeWidth}
+          />
+        )
+      : (
+          <FallbackIcon className={className} size={size} />
+        );
+  }
+
   // Check if this is likely a DynamicIcon component by checking if it has a displayName
   const isDynamicIcon
     = IconComponent.displayName?.includes("DynamicIcon")
@@ -227,7 +339,7 @@ export function Icon({
         size={size}
         strokeWidth={strokeWidth}
         className={className}
-        fallback={fallback}
+        fallbackIcon={fallbackIcon}
       />
     );
   }
@@ -246,9 +358,13 @@ export function Icon({
       console.warn("[Icon] Failed to render icon:", error);
     }
 
-    return fallback
+    const FallbackIconComponent = fallbackIcon;
+    return FallbackIconComponent
       ? (
-          <div className={cx(iconVariants({ size }), className)}>{fallback}</div>
+          <FallbackIconComponent
+            className={cx(iconVariants({ size }), className)}
+            strokeWidth={strokeWidth}
+          />
         )
       : (
           <FallbackIcon className={className} size={size} />

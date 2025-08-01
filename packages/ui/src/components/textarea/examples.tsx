@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Checkbox, DescriptionDetails, DescriptionList, DescriptionTerm, Fieldset, FieldsetLegend, Form, FormControl, FormField, Textarea } from "@patternmode/ui";
-import React from "react";
 import type { ComponentExample } from "../../lib/component-config-types";
+import { Button, Checkbox, DescriptionDetails, DescriptionList, DescriptionTerm, Fieldset, Form, FormControl, FormField, Textarea } from "@patternmode/ui";
+import React from "react";
 
 // Basic auto-resizing textarea
 export const DefaultExample = () => {
@@ -19,13 +19,7 @@ export const DefaultExample = () => {
   );
 };
 
-// Add metadata directly to the component
-DefaultExample.meta = {
-  title: "Auto-Resizing Textarea",
-  description: "Basic textarea that automatically adjusts height based on content"
-};
-
-// With initial content
+// Textarea with initial content
 export const WithContentExample = () => {
   const [value, setValue] = React.useState(
     "This textarea starts with some content.\n\nTry adding more lines to see it expand automatically.\n\nThe height adjusts based on the content length.",
@@ -40,11 +34,6 @@ export const WithContentExample = () => {
       />
     </div>
   );
-};
-
-WithContentExample.meta = {
-  title: "With Initial Content",
-  description: "Textarea with pre-filled content demonstrating auto-resize"
 };
 
 // With min and max rows
@@ -72,11 +61,6 @@ export const WithRowConstraintsExample = () => {
   );
 };
 
-WithRowConstraintsExample.meta = {
-  title: "With Row Constraints",
-  description: "Textarea with minimum and maximum row limits"
-};
-
 // Error state
 export const WithErrorExample = () => {
   const [value, setValue] = React.useState("");
@@ -89,10 +73,9 @@ export const WithErrorExample = () => {
         <FormField
           name="description"
           label="Description (min 10 characters)"
-          description={hasError ?
-            `Please enter at least 10 characters (${value.length}/10)` :
-            "Enter at least 10 characters"
-          }
+          description={hasError
+            ? `Please enter at least 10 characters (${value.length}/10)`
+            : "Enter at least 10 characters"}
           required
         >
           <Textarea
@@ -110,11 +93,6 @@ export const WithErrorExample = () => {
   );
 };
 
-WithErrorExample.meta = {
-  title: "Error State",
-  description: "Textarea with error styling and validation"
-};
-
 // Disabled state
 export const DisabledExample = () => {
   return (
@@ -127,11 +105,6 @@ export const DisabledExample = () => {
       />
     </div>
   );
-};
-
-DisabledExample.meta = {
-  title: "Disabled State",
-  description: "Non-interactive textarea with disabled styling"
 };
 
 // Fixed height (no auto-resize)
@@ -151,11 +124,6 @@ export const FixedHeightExample = () => {
   );
 };
 
-FixedHeightExample.meta = {
-  title: "Fixed Height",
-  description: "Textarea with auto-resize disabled for fixed height"
-};
-
 // With height change callback
 export const WithHeightCallbackExample = () => {
   const [value, setValue] = React.useState("");
@@ -164,25 +132,30 @@ export const WithHeightCallbackExample = () => {
 
   return (
     <div className="w-full max-w-lg">
-        <Textarea
-          placeholder="Type content to see height changes tracked below..."
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          onHeightChange={(newHeight, meta) => {
-            setHeight(newHeight);
-            setRowHeight(meta.rowHeight);
-          }}
-          minRows={2}
-          maxRows={10}
-        />
-
+      <Textarea
+        placeholder="Type content to see height changes tracked below..."
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onHeightChange={(newHeight, meta) => {
+          setHeight(newHeight);
+          setRowHeight(meta.rowHeight);
+        }}
+        minRows={2}
+        maxRows={10}
+      />
 
       {height && (
         <DescriptionList>
           <DescriptionTerm>Current height</DescriptionTerm>
-          <DescriptionDetails>{height}px</DescriptionDetails>
+          <DescriptionDetails>
+            {height}
+            px
+          </DescriptionDetails>
           <DescriptionTerm>Row height</DescriptionTerm>
-          <DescriptionDetails>{rowHeight}px</DescriptionDetails>
+          <DescriptionDetails>
+            {rowHeight}
+            px
+          </DescriptionDetails>
           <DescriptionTerm>Approximate rows</DescriptionTerm>
           <DescriptionDetails>
             {rowHeight ? Math.round(height / rowHeight) : "N/A"}
@@ -191,11 +164,6 @@ export const WithHeightCallbackExample = () => {
       )}
     </div>
   );
-};
-
-WithHeightCallbackExample.meta = {
-  title: "Height Change Tracking",
-  description: "Textarea with callback to track height changes"
 };
 
 // Form integration example
@@ -208,9 +176,8 @@ export const FormIntegrationExample = () => {
 
   return (
     <Form
-      onValidSubmit={(data) => {
-        console.log("Form submitted:", data);
-        alert("Form submitted! Check console for data.");
+      onValidSubmit={(_data) => {
+        // Form submission handled - data contains form values
       }}
       className="w-full max-w-lg"
     >
@@ -263,11 +230,6 @@ export const FormIntegrationExample = () => {
   );
 };
 
-FormIntegrationExample.meta = {
-  title: "Form Integration",
-  description: "Complete form example with multiple textareas"
-};
-
 // Performance example with caching
 export const PerformanceExample = () => {
   const [value, setValue] = React.useState("");
@@ -285,7 +247,7 @@ export const PerformanceExample = () => {
         >
           <Checkbox
             checked={cacheEnabled}
-            onCheckedChange={(checked) => setCacheEnabled(checked === true)}
+            onCheckedChange={checked => setCacheEnabled(checked === true)}
           />
         </FormField>
 
@@ -310,46 +272,63 @@ export const PerformanceExample = () => {
   );
 };
 
-PerformanceExample.meta = {
-  title: "Performance Optimization",
-  description: "Textarea with measurement caching for better performance"
-};
-
-/**
- * Automatically discover and create examples registry from exports
- * This finds all exported components that have a .meta property
- */
-function createExamplesRegistry(): ComponentExample[] {
-  const examples: ComponentExample[] = [];
-
-  // Get all exports that are functions with meta property
-  const moduleExports = {
-    DefaultExample,
-    WithContentExample,
-    WithRowConstraintsExample,
-    WithErrorExample,
-    DisabledExample,
-    FixedHeightExample,
-    WithHeightCallbackExample,
-    FormIntegrationExample,
-    PerformanceExample
-  };
-
-  Object.entries(moduleExports).forEach(([exportName, exportValue]) => {
-    if (typeof exportValue === 'function' && exportValue.meta) {
-      examples.push({
-        id: exportName, // Use the export name as the ID
-        ...exportValue.meta,
-        component: exportValue
-      });
-    }
-  });
-
-  return examples;
-}
-
 /**
  * Registry of all examples with their metadata
- * This is automatically generated from the exports above
+ * Inline metadata approach - no separate .meta objects needed.
  */
-export const TEXTAREA_EXAMPLES: ComponentExample[] = createExamplesRegistry();
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Auto-Resizing Textarea",
+    description: "Basic textarea that automatically adjusts height based on content",
+    component: DefaultExample,
+  },
+  {
+    id: "WithContentExample",
+    title: "With Initial Content",
+    description: "Textarea with pre-filled content demonstrating auto-resize",
+    component: WithContentExample,
+  },
+  {
+    id: "WithRowConstraintsExample",
+    title: "With Row Constraints",
+    description: "Textarea with minimum and maximum row limits",
+    component: WithRowConstraintsExample,
+  },
+  {
+    id: "WithErrorExample",
+    title: "Error State",
+    description: "Textarea with error styling and validation",
+    component: WithErrorExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled State",
+    description: "Non-interactive textarea with disabled styling",
+    component: DisabledExample,
+  },
+  {
+    id: "FixedHeightExample",
+    title: "Fixed Height",
+    description: "Textarea with auto-resize disabled for fixed height",
+    component: FixedHeightExample,
+  },
+  {
+    id: "WithHeightCallbackExample",
+    title: "Height Change Tracking",
+    description: "Textarea with callback to track height changes",
+    component: WithHeightCallbackExample,
+  },
+  {
+    id: "FormIntegrationExample",
+    title: "Form Integration",
+    description: "Complete form example with multiple textareas",
+    component: FormIntegrationExample,
+  },
+  {
+    id: "PerformanceExample",
+    title: "Performance Optimization",
+    description: "Textarea with measurement caching for better performance",
+    component: PerformanceExample,
+  },
+];

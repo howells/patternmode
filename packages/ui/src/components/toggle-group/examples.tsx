@@ -1,7 +1,12 @@
 "use client";
 
-import { Icon, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
-import {
+import type { ComponentExample } from "../../lib/component-config-types";
+import { Icon, iconRegistry, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
+
+import React from "react";
+
+// Pre-imported icons from registry
+const {
   AlignCenter,
   AlignJustify,
   AlignLeft,
@@ -21,8 +26,7 @@ import {
   Strikethrough,
   Sun,
   Underline,
-} from "lucide-react";
-import React from "react";
+} = iconRegistry;
 
 export function DefaultExample() {
   const [alignment, setAlignment] = React.useState<string[]>(["left"]);
@@ -416,7 +420,71 @@ export function ButtonStyleExample() {
   );
 }
 
-export const /**
-              *
-              */
-  ToggleGroupExample = DefaultExample;
+export const ToggleGroupExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "ToggleGroupExample",
+    title: "Toggle Group",
+    description: "Toggle Group example",
+    component: ToggleGroupExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "MultipleSelectionExample",
+    title: "Multiple Selection",
+    description: "Multiple Selection example",
+    component: MultipleSelectionExample,
+  },
+  {
+    id: "WithTextExample",
+    title: "With Text",
+    description: "With Text example",
+    component: WithTextExample,
+  },
+  {
+    id: "VariantsExample",
+    title: "Variants",
+    description: "Variants example",
+    component: VariantsExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "VerticalExample",
+    title: "Vertical",
+    description: "Vertical example",
+    component: VerticalExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+  {
+    id: "ControlledExample",
+    title: "Controlled",
+    description: "Controlled example",
+    component: ControlledExample,
+  },
+  {
+    id: "ButtonStyleExample",
+    title: "Button Style",
+    description: "Button Style example",
+    component: ButtonStyleExample,
+  },
+];

@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Button, RadioGroup, RadioGroupItem, RadioOption } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 export function RadioGroupExample() {
@@ -165,3 +167,34 @@ export function RadioGroupCustomStructure() {
     </RadioGroup>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "RadioGroupExample",
+    title: "Radio Group",
+    description: "Radio Group example",
+    component: RadioGroupExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "HorizontalExample",
+    title: "Horizontal",
+    description: "Horizontal example",
+    component: HorizontalExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+];

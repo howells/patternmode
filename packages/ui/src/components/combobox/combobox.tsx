@@ -1,28 +1,30 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
+
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
+
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
 import { Button } from "../button/button";
 import { Icon } from "../icon/icon";
 import { Input } from "../input/input";
 import { Loader } from "../loader/loader";
-import { ScrollArea } from "../scroll-area/scroll-area";
 
 /**
  * Base interface for combobox options.
  */
-export interface ComboboxOption {
+export type ComboboxOption = {
   id: string;
   label: string;
   value: string;
   [key: string]: unknown;
-}
+};
 
 /**
  * Function signature for fetching data with search and pagination.
@@ -98,8 +100,7 @@ const comboboxItemVariants = tv({
 /**
  * Props for the Combobox component.
  */
-interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
-  extends VariantProps<typeof comboboxVariants> {
+type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   /**
    * Static options array (alternative to fetchData).
    */
@@ -177,436 +178,682 @@ interface ComboboxProps<T extends ComboboxOption = ComboboxOption>
    * Whether to clear the search when an item is selected.
    */
   clearSearchOnSelect?: boolean;
+} & VariantProps<typeof comboboxVariants>;
+
+/**
+ * Virtualized item list component for handling large datasets efficiently.
+ */
+function VirtualizedItemList<T extends ComboboxOption>({
+  items,
+  parentRef,
+  getItemValue,
+  getItemLabel,
+  getItemIcon,
+  getItemProps,
+  renderItem,
+  defaultRenderItem,
+  highlightedIndex,
+  selectedItem,
+  size,
+  iconStrokeWidth,
+  isFetchingNextPage,
+  hasNextPage,
+  fetchNextPage,
+}: {
+  items: T[];
+  parentRef: React.RefObject<HTMLDivElement>;
+  getItemValue: (item: T) => string;
+  getItemLabel: (item: T) => string;
+  getItemIcon?: (item: T) => React.ReactNode;
+  getItemProps: (options: { item: T; index: number }) => any;
+  renderItem?: (item: T, index: number) => React.ReactNode;
+  defaultRenderItem: (item: T, index: number) => React.ReactNode;
+  highlightedIndex: number;
+  selectedItem: T | null;
+  size: "sm" | "base" | "lg";
+  iconStrokeWidth: number;
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean | undefined;
+  fetchNextPage: () => void;
+}) {
+  // Calculate item height based on size
+  const itemHeight = React.useMemo(() => {
+    switch (size) {
+      case "sm": return 32; // py-1.5 px-2.5 with text-xs
+      case "lg": return 48; // py-2.5 px-4 with text-base
+      default: return 40; // py-2 px-3 with text-sm
+    }
+  }, [size]);
+
+  const virtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => itemHeight,
+    overscan: 5,
+  });
+
+  // Handle infinite scroll
+  React.useEffect(() => {
+    const virtualItems = virtualizer.getVirtualItems();
+    if (
+      virtualItems.length > 0
+      && virtualItems[virtualItems.length - 1].index >= items.length - 1 - 5 // Load more when 5 items from end
+      && hasNextPage
+      && !isFetchingNextPage
+    ) {
+      fetchNextPage();
+    }
+  }, [virtualizer.getVirtualItems(), items.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  return (
+    <div
+      style={{
+        height: `${virtualizer.getTotalSize()}px`,
+        position: "relative",
+      }}
+      data-testid="combobox-items"
+    >
+      {virtualizer.getVirtualItems().map((virtualItem) => {
+        const item = items[virtualItem.index];
+        const itemProps = getItemProps({ item, index: virtualItem.index });
+
+        return (
+          <div
+            key={virtualItem.key}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: `${virtualItem.size}px`,
+              transform: `translateY(${virtualItem.start}px)`,
+            }}
+            data-testid={`combobox-item-${getItemValue(item)}`}
+          >
+            <div
+              className={cx(comboboxItemVariants({ size }))}
+              data-highlighted={highlightedIndex === virtualItem.index ? "true" : undefined}
+              data-selected={
+                selectedItem && getItemValue(selectedItem) === getItemValue(item)
+                  ? "true"
+                  : undefined
+              }
+              {...itemProps}
+            >
+              {renderItem
+                ? (
+                    renderItem(item, virtualItem.index)
+                  )
+                : (
+                    <>
+                      <div className="flex items-center gap-2 flex-1">
+                        {getItemIcon && getItemIcon(item)}
+                        <span className="truncate">{getItemLabel(item)}</span>
+                      </div>
+                      {selectedItem && getItemValue(selectedItem) === getItemValue(item) && (
+                        <Icon
+                          icon={Check}
+                          size="sm"
+                          strokeWidth={iconStrokeWidth}
+                          className="text-current"
+                        />
+                      )}
+                    </>
+                  )}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Loading more items indicator */}
+      {isFetchingNextPage && (
+        <div
+          className="flex items-center justify-center py-2"
+          data-testid="combobox-loading-more"
+          style={{
+            position: "absolute",
+            top: `${virtualizer.getTotalSize()}px`,
+            left: 0,
+            width: "100%",
+          }}
+        >
+          <Loader size="sm" />
+          <span className="ml-2 text-xs text-zinc-500">Loading more...</span>
+        </div>
+      )}
+    </div>
+  );
 }
 
 /**
- * A flexible combobox component built with Downshift and React Query.
+ * A highly flexible combobox component with search functionality, dynamic data fetching, and infinite scroll support.
  *
- * Supports both static options and dynamic data fetching with search,
- * pagination, and caching via React Query.
+ * Built on Downshift for robust accessibility and React Query for efficient data management, this component
+ * provides an autocomplete-style interface for selecting from large datasets. Supports both static options
+ * and dynamic server-side filtering with pagination, making it ideal for handling thousands of options
+ * with optimal performance.
+ *
+ * @inheritdoc
+ * @inheritdoc
+ *
+ * **Key Features:**
+ * - **Dual Data Sources**: Static options array or dynamic fetching with React Query
+ * - **Search & Filter**: Real-time search with debouncing and server-side filtering
+ * - **Infinite Scroll**: Automatic pagination and loading for large datasets
+ * - **Performance Optimized**: Caching, stale time management, and efficient re-renders
+ * - **Keyboard Navigation**: Full arrow key navigation and selection support
+ * - **Customizable Rendering**: Custom item renderers and icon support
+ * - **Accessibility**: ARIA-compliant with screen reader support and focus management
+ * - **Loading States**: Built-in loading, error, and empty state handling
+ *
+ * **Advanced Capabilities:**
+ * - **React Query Integration**: Automatic caching, background refetching, and error handling
+ * - **Search Behavior Control**: Configurable search clearing and text selection on focus
+ * - **Custom Data Shaping**: Flexible item value/label extraction functions
+ * - **Icon Integration**: Per-item icon support with automatic sizing
+ * - **Debounced Search**: Configurable search debouncing to reduce API calls
+ * - **Infinite Loading**: Seamless loading of additional pages on scroll
+ *
+ * **Common Use Cases:**
+ * - User selection with thousands of options (users, companies, locations)
+ * - Product search and selection in e-commerce applications
+ * - Tag selection with server-side search and filtering
+ * - Resource pickers with real-time search (files, images, documents)
+ * - Multi-tenant application resource selection
+ * - API endpoint or service selection interfaces
+ * - Location and address autocomplete functionality
+ *
+ * **Accessibility:**
+ * - Full ARIA combobox implementation with proper roles and states
+ * - Keyboard navigation with arrow keys, enter, and escape
+ * - Screen reader announcements for results and loading states
+ * - Focus management and visual focus indicators
+ * - Proper labeling and descriptions for assistive technology
+ *
+ * @category inputs
+ * @icon Search
+ * @example
+ * ```tsx
+ * // Static options with search filtering
+ * <Combobox
+ *   options={[
+ *     { id: "1", label: "React", value: "react" },
+ *     { id: "2", label: "Vue", value: "vue" },
+ *     { id: "3", label: "Angular", value: "angular" }
+ *   ]}
+ *   value={selectedFramework}
+ *   onValueChange={setSelectedFramework}
+ *   placeholder="Select a framework..."
+ *   searchPlaceholder="Search frameworks..."
+ * />
+ *
+ * // Dynamic data fetching with React Query
+ * <Combobox
+ *   fetchData={async ({ search, pageParam }) => {
+ *     const response = await fetch(
+ *       `/api/users?search=${search}&page=${pageParam}&limit=20`
+ *     );
+ *     const { users, hasMore, nextPage } = await response.json();
+ *     return {
+ *       data: users.map(user => ({
+ *         id: user.id,
+ *         label: `${user.name} (${user.email})`,
+ *         value: user.id,
+ *         avatar: user.avatar
+ *       })),
+ *       hasNextPage: hasMore,
+ *       nextCursor: nextPage
+ *     };
+ *   }}
+ *   queryKey={["users"]}
+ *   value={selectedUser}
+ *   onValueChange={setSelectedUser}
+ *   placeholder="Select a user..."
+ *   emptyMessage="No users found"
+ * />
+ *
+ * // Custom item rendering with icons
+ * <Combobox
+ *   options={statusOptions}
+ *   value={status}
+ *   onValueChange={setStatus}
+ *   getItemIcon={(item) => <StatusIcon status={item.value} />}
+ *   renderItem={(item, index) => (
+ *     <div className="flex items-center gap-3 p-2">
+ *       <StatusIcon status={item.value} />
+ *       <div>
+ *         <div className="font-medium">{item.label}</div>
+ *         <div className="text-sm text-gray-500">{item.description}</div>
+ *       </div>
+ *     </div>
+ *   )}
+ * />
+ *
+ * // Advanced configuration with custom behavior
+ * <Combobox
+ *   fetchData={searchProducts}
+ *   queryKey={["products", categoryId]}
+ *   value={selectedProduct}
+ *   onValueChange={setSelectedProduct}
+ *   searchDebounce={500}
+ *   clearSearchOnSelect={false}
+ *   selectOnFocus={true}
+ *   size="lg"
+ *   hasError={!!productError}
+ *   disabled={isLoading}
+ *   getItemValue={(item) => item.sku}
+ *   getItemLabel={(item) => `${item.name} - ${item.price}`}
+ *   emptyMessage="No products match your search"
+ * />
+ *
+ * // Form integration with validation
+ * <div className="space-y-2">
+ *   <label className="text-sm font-medium">Assigned To</label>
+ *   <Combobox
+ *     fetchData={fetchUsers}
+ *     queryKey={["users", teamId]}
+ *     value={formData.assignedTo}
+ *     onValueChange={(value) => 
+ *       setFormData(prev => ({ ...prev, assignedTo: value }))
+ *     }
+ *     placeholder="Select team member..."
+ *     hasError={!!errors.assignedTo}
+ *     disabled={isSubmitting}
+ *   />
+ *   {errors.assignedTo && (
+ *     <p className="text-sm text-red-600">{errors.assignedTo}</p>
+ *   )}
+ * </div>
+ * ```
+ */
+/**
+ * Searchable dropdown component combining input and select functionality.
  *
  * @id combobox
  * @name Combobox
+ * @icon Search
+ * @category inputs
  * @component
- * @example
- * ```tsx
- * // Static options
- * <Combobox
- *   options={[{id: "1", label: "Option 1", value: "1"}]}
- *   value={value}
- *   onValueChange={setValue}
- * />
- *
- * // Dynamic data with React Query
- * <Combobox
- *   fetchData={async ({search}) => ({
- *     data: await searchItems(search),
- *     hasNextPage: false
- *   })}
- *   queryKey={["items"]}
- *   value={value}
- *   onValueChange={setValue}
- * />
- *
- * // Keep search text after selection and select it on reopen
- * <Combobox
- *   options={options}
- *   value={value}
- *   onValueChange={setValue}
- *   clearSearchOnSelect={false}
- *   selectOnFocus={true}
- * />
- *
- * // Clear search on selection, empty input on reopen
- * <Combobox
- *   options={options}
- *   value={value}
- *   onValueChange={setValue}
- *   clearSearchOnSelect={true}
- *   selectOnFocus={false}
- * />
- * ```
+ * @param props - Component properties.
+ * @param props.options - Static options array (alternative to fetchData).
+ * @param props.fetchData - Function to fetch data dynamically with React Query.
+ * @param props.queryKey - React Query key for caching.
+ * @param props.value - Current selected value.
+ * @param props.onValueChange - Callback when selection changes.
+ * @param props.placeholder - Placeholder text for the input.
+ * @param props.searchPlaceholder - Placeholder text for search input.
+ * @param props.emptyMessage - Message to show when no items found.
+ * @param props.disabled - Whether the combobox is disabled.
+ * @param props.hasError - Whether to show error state.
+ * @param props.className - Additional CSS classes.
+ * @param props.size - Size variant of the combobox.
+ * @param props.searchDebounce - Search debounce delay in ms.
+ * @param props.iconStrokeWidth - Stroke width for icons.
+ * @param props.getItemValue - Function to get the value from an item.
+ * @param props.getItemLabel - Function to get the label from an item.
+ * @param props.getItemIcon - Function to get an icon component for an item.
+ * @param props.renderItem - Custom render function for items.
+ * @param props.selectOnFocus - Whether to select all text in the input when the menu opens.
+ * @param props.clearSearchOnSelect - Whether to clear the search when an item is selected.
  */
 const Combobox = <T extends ComboboxOption = ComboboxOption>({
-    options,
-    fetchData,
-    queryKey = ["combobox"],
-    value,
-    onValueChange,
-    placeholder = "Select an option...",
-    searchPlaceholder = "Search...",
-    emptyMessage = "No results found.",
-    disabled = false,
-    hasError = false,
-    className,
-    size = "base",
-    searchDebounce = 300,
-    iconStrokeWidth = config.getIconStrokeWidth(),
-    getItemValue = (item: T) => item.value,
-    getItemLabel = (item: T) => item.label,
-    getItemIcon,
-    renderItem,
-    selectOnFocus = true,
-    clearSearchOnSelect = true,
-  }: ComboboxProps<T>) => {
-    const [inputValue, setInputValue] = React.useState("");
-    const [debouncedSearch, setDebouncedSearch] = React.useState("");
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    const scrollRef = React.useRef<HTMLDivElement>(null);
+  options,
+  fetchData,
+  queryKey = ["combobox"],
+  value,
+  onValueChange,
+  placeholder = "Select an option...",
+  searchPlaceholder = "Search...",
+  emptyMessage = "No results found.",
+  disabled = false,
+  hasError = false,
+  className,
+  size = "base",
+  searchDebounce = 300,
+  iconStrokeWidth = config.getIconStrokeWidth(),
+  getItemValue = (item: T) => item.value,
+  getItemLabel = (item: T) => item.label,
+  getItemIcon,
+  renderItem,
+  selectOnFocus = true,
+  clearSearchOnSelect = true,
+}: ComboboxProps<T>) => {
+  const [inputValue, setInputValue] = React.useState("");
+  const [debouncedSearch, setDebouncedSearch] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
-    // Fetch data with React Query infinite query (only if fetchData is provided)
-    const {
-      data: infiniteData,
-      isLoading,
-      error,
-      fetchNextPage,
-      isFetchingNextPage,
-      hasNextPage,
-    } = useInfiniteQuery({
-      queryKey: [...queryKey, debouncedSearch],
-      queryFn: async ({ pageParam = 0, signal }) => {
-        if (!fetchData) { return { data: [], hasNextPage: false }; }
-        return fetchData({
-          search: debouncedSearch,
-          pageParam,
-          signal,
-        });
-      },
-      enabled: !!fetchData,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      refetchOnWindowFocus: false, // Prevent refetch on window focus
-      getNextPageParam: lastPage => lastPage.nextCursor,
-      initialPageParam: 0,
-    });
+  // Fetch data with React Query infinite query (only if fetchData is provided)
+  const {
+    data: infiniteData,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: [...queryKey, debouncedSearch],
+    queryFn: async ({ pageParam = 0, signal }) => {
+      if (!fetchData) { return { data: [], hasNextPage: false }; }
+      return fetchData({
+        search: debouncedSearch,
+        pageParam,
+        signal,
+      });
+    },
+    enabled: !!fetchData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false, // Prevent refetch on window focus
+    getNextPageParam: lastPage => lastPage.nextCursor,
+    initialPageParam: 0,
+  });
 
-    // Use either static options or fetched data (flattened from infinite query pages)
-    const allItems: T[] = React.useMemo(() => {
-      if (options) { return options; }
-      if (!infiniteData?.pages) { return []; }
+  // Use either static options or fetched data (flattened from infinite query pages)
+  const allItems: T[] = React.useMemo(() => {
+    if (options) { return options; }
+    if (!infiniteData?.pages) { return []; }
 
-      // Flatten all pages into a single array
-      return infiniteData.pages.flatMap(page => page.data);
-    }, [options, infiniteData?.pages]);
+    // Flatten all pages into a single array
+    return infiniteData.pages.flatMap(page => page.data);
+  }, [options, infiniteData?.pages]);
 
-    // Find selected item first (needed for filtering logic and debounce logic)
-    const selectedItem = allItems.find(item => getItemValue(item) === value);
+  // Find selected item first (needed for filtering logic and debounce logic)
+  const selectedItem = allItems.find(item => getItemValue(item) === value);
 
-    // Debounce search input
-    React.useEffect(() => {
-      const timer = setTimeout(() => {
-        setDebouncedSearch(inputValue);
-      }, searchDebounce);
+  // Debounce search input
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(inputValue);
+    }, searchDebounce);
 
-      return () => clearTimeout(timer);
-    }, [inputValue, searchDebounce]);
+    return () => clearTimeout(timer);
+  }, [inputValue, searchDebounce]);
 
-    // Filter static options based on search input
-    const items: T[] = React.useMemo(() => {
+  // Filter static options based on search input
+  const items: T[] = React.useMemo(() => {
     // For async data (fetchData), always return all items from the API
     // No client-side filtering needed - the API handles filtering
-      if (fetchData) {
-        return allItems;
-      }
+    if (fetchData) {
+      return allItems;
+    }
 
-      // For static options only, do client-side filtering
-      if (!inputValue.trim()) {
-        return allItems;
-      }
+    // For static options only, do client-side filtering
+    if (!inputValue.trim()) {
+      return allItems;
+    }
 
-      // If the input value exactly matches the selected item's label,
-      // show all items (user just opened the menu)
-      // Only apply this logic for static data
-      if (selectedItem && inputValue === getItemLabel(selectedItem)) {
-        return allItems;
-      }
+    // If the input value exactly matches the selected item's label,
+    // show all items (user just opened the menu)
+    // Only apply this logic for static data
+    if (selectedItem && inputValue === getItemLabel(selectedItem)) {
+      return allItems;
+    }
 
-      // Filter static options by label
-      return allItems.filter(item =>
-        getItemLabel(item).toLowerCase().includes(inputValue.toLowerCase()),
-      );
-    }, [allItems, inputValue, getItemLabel, selectedItem, fetchData]);
+    // Filter static options by label
+    return allItems.filter(item =>
+      getItemLabel(item).toLowerCase().includes(inputValue.toLowerCase()),
+    );
+  }, [allItems, inputValue, getItemLabel, selectedItem, fetchData]);
 
-    const {
-      isOpen,
-      getToggleButtonProps,
-      getMenuProps,
-      getInputProps,
-      getItemProps,
-      highlightedIndex,
-      openMenu,
-    } = useCombobox<T>({
-      items,
-      itemToString: () => "", // Always return empty to prevent auto-filling input
-      selectedItem: selectedItem || null,
-      inputValue,
-      stateReducer: (state, actionAndChanges) => {
-        const { type, changes } = actionAndChanges;
+  const {
+    isOpen,
+    getToggleButtonProps,
+    getMenuProps,
+    getInputProps,
+    getItemProps,
+    highlightedIndex,
+    openMenu,
+  } = useCombobox<T>({
+    items,
+    itemToString: () => "", // Always return empty to prevent auto-filling input
+    selectedItem: selectedItem || null,
+    inputValue,
+    stateReducer: (state, actionAndChanges) => {
+      const { type, changes } = actionAndChanges;
 
-        switch (type) {
-          case useCombobox.stateChangeTypes.ItemClick:
-            return {
-              ...changes,
-              inputValue: clearSearchOnSelect ? "" : state.inputValue, // Conditionally clear search input
-              isOpen: false, // Close the menu
-            };
-          case useCombobox.stateChangeTypes.InputKeyDownEnter:
+      switch (type) {
+        case useCombobox.stateChangeTypes.ItemClick:
+          return {
+            ...changes,
+            inputValue: clearSearchOnSelect ? "" : state.inputValue, // Conditionally clear search input
+            isOpen: false, // Close the menu
+          };
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
           // If Enter is pressed and no item is highlighted but there are items,
           // select the first item
-            if (state.highlightedIndex === -1 && items.length > 0) {
-              return {
-                ...changes,
-                selectedItem: items[0],
-                inputValue: clearSearchOnSelect ? "" : state.inputValue,
-                isOpen: false,
-              };
-            }
-            // If an item is highlighted, let Downshift handle it normally
-            // but conditionally clear the input after selection
+          if (state.highlightedIndex === -1 && items.length > 0) {
             return {
               ...changes,
+              selectedItem: items[0],
               inputValue: clearSearchOnSelect ? "" : state.inputValue,
-              isOpen: false, // Close the menu
+              isOpen: false,
             };
-          case useCombobox.stateChangeTypes.InputKeyDownEscape:
-            return {
-              ...changes,
-              inputValue: "", // Always clear input when escaping
-              isOpen: false, // Close the menu
-            };
-          default:
-            return changes;
-        }
-      },
-      onInputValueChange: ({ inputValue: newInputValue, type }) => {
-      // Only update input value if it's from user typing, not from internal state changes
-        if (
-          type === useCombobox.stateChangeTypes.InputChange
-          || type === useCombobox.stateChangeTypes.InputKeyDownArrowDown
-          || type === useCombobox.stateChangeTypes.InputKeyDownArrowUp
-          || !type // Initial call
-        ) {
-          setInputValue(newInputValue || "");
-        }
-      },
-      onSelectedItemChange: ({ selectedItem: newSelectedItem }) => {
-        if (newSelectedItem) {
-          onValueChange?.(getItemValue(newSelectedItem));
-        }
-        else {
-          onValueChange?.(undefined);
-        }
-      },
-    });
-
-    // Focus the input when the menu opens
-    React.useEffect(() => {
-      if (isOpen && inputRef.current) {
-        inputRef.current.focus();
+          }
+          // If an item is highlighted, let Downshift handle it normally
+          // but conditionally clear the input after selection
+          return {
+            ...changes,
+            inputValue: clearSearchOnSelect ? "" : state.inputValue,
+            isOpen: false, // Close the menu
+          };
+        case useCombobox.stateChangeTypes.InputKeyDownEscape:
+          return {
+            ...changes,
+            inputValue: "", // Always clear input when escaping
+            isOpen: false, // Close the menu
+          };
+        default:
+          return changes;
       }
-    }, [isOpen]);
+    },
+    onInputValueChange: ({ inputValue: newInputValue, type }) => {
+      // Only update input value if it's from user typing, not from internal state changes
+      if (
+        type === useCombobox.stateChangeTypes.InputChange
+        || type === useCombobox.stateChangeTypes.InputKeyDownArrowDown
+        || type === useCombobox.stateChangeTypes.InputKeyDownArrowUp
+        || !type // Initial call
+      ) {
+        setInputValue(newInputValue || "");
+      }
+    },
+    onSelectedItemChange: ({ selectedItem: newSelectedItem }) => {
+      if (newSelectedItem) {
+        onValueChange?.(getItemValue(newSelectedItem));
+      }
+      else {
+        onValueChange?.(undefined);
+      }
+    },
+  });
 
-    // Attach scroll event listener for infinite scroll
-    React.useEffect(() => {
-      if (!fetchData || !isOpen) { return; }
+  // Focus the input when the menu opens
+  React.useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
 
-      const scrollElement = scrollRef.current?.querySelector(".h-full.w-full.rounded-\\[inherit\\]") as HTMLElement;
+  // Virtual scrolling handles infinite scroll automatically via the VirtualizedItemList component
 
-      if (!scrollElement) { return; }
-
-      const handleScroll = () => {
-        const { scrollTop, scrollHeight, clientHeight } = scrollElement;
-        const scrolledToBottom = scrollHeight - scrollTop <= clientHeight + 100;
-
-        if (scrolledToBottom && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      };
-
-      scrollElement.addEventListener("scroll", handleScroll);
-
-      return () => scrollElement.removeEventListener("scroll", handleScroll);
-    }, [fetchData, hasNextPage, isFetchingNextPage, fetchNextPage, isOpen]);
-
-    // Default item renderer
-    const defaultRenderItem = (item: T, index: number) => (
-      <div
-        key={getItemValue(item)}
-        className={cx(comboboxItemVariants({ size }))}
-        data-highlighted={highlightedIndex === index ? "true" : undefined}
-        data-selected={
-          selectedItem && getItemValue(selectedItem) === getItemValue(item)
-            ? "true"
-            : undefined
-        }
-        {...getItemProps({ item, index })}
-      >
-        <div className="flex items-center gap-2 flex-1">
-          {getItemIcon && getItemIcon(item)}
-          <span className="truncate">{getItemLabel(item)}</span>
-        </div>
-        {selectedItem && getItemValue(selectedItem) === getItemValue(item) && (
-          <Icon
-            icon={Check}
-            size="sm"
-            strokeWidth={iconStrokeWidth}
-            className="text-current"
-          />
-        )}
+  // Default item renderer
+  const defaultRenderItem = (item: T, index: number) => (
+    <div
+      key={getItemValue(item)}
+      className={cx(comboboxItemVariants({ size }))}
+      data-highlighted={highlightedIndex === index ? "true" : undefined}
+      data-selected={
+        selectedItem && getItemValue(selectedItem) === getItemValue(item)
+          ? "true"
+          : undefined
+      }
+      {...getItemProps({ item, index })}
+    >
+      <div className="flex items-center gap-2 flex-1">
+        {getItemIcon && getItemIcon(item)}
+        <span className="truncate">{getItemLabel(item)}</span>
       </div>
-    );
+      {selectedItem && getItemValue(selectedItem) === getItemValue(item) && (
+        <Icon
+          icon={Check}
+          size="sm"
+          strokeWidth={iconStrokeWidth}
+          className="text-current"
+        />
+      )}
+    </div>
+  );
 
-    const inputProps = getInputProps(
-      {
-        placeholder: searchPlaceholder,
-        disabled,
-      },
-      {
-        suppressRefError: true,
-      },
-    );
+  const inputProps = getInputProps(
+    {
+      placeholder: searchPlaceholder,
+      disabled,
+    },
+    {
+      suppressRefError: true,
+    },
+  );
 
-    // Map combobox sizes to button sizes
-    const buttonSize = size === "base" ? "default" : size;
+  // Map combobox sizes to button sizes
+  const buttonSize = size === "base" ? "default" : size;
 
-    return (
-      <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox">
-        {/* Trigger Button */}
-        <Button
-          variant="outline"
-          size={buttonSize}
-          disabled={disabled}
-          rightIcon={isOpen ? ChevronUp : ChevronDown}
-          fullWidth
-          className={cx(
-            hasError && hasErrorInput,
-            !selectedItem && "text-zinc-500 dark:text-zinc-400",
-          )}
-          data-testid="combobox-trigger"
-          {...getToggleButtonProps()}
-        >
-          {selectedItem
-            ? (
-                <div className="flex items-center gap-2 min-w-0">
-                  {getItemIcon && getItemIcon(selectedItem)}
-                  <span className="truncate">{getItemLabel(selectedItem)}</span>
-                </div>
-              )
-            : (
-                placeholder
-              )}
-        </Button>
+  return (
+    <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox">
+      {/* Trigger Button */}
+      <Button
+        variant="outline"
+        size={buttonSize}
+        disabled={disabled}
+        rightIcon={isOpen ? ChevronUp : ChevronDown}
+        fullWidth
+        className={cx(
+          hasError && hasErrorInput,
+          !selectedItem && "text-zinc-500 dark:text-zinc-400",
+        )}
+        data-testid="combobox-trigger"
+        {...getToggleButtonProps()}
+      >
+        {selectedItem
+          ? (
+              <div className="flex items-center gap-2 min-w-0">
+                {getItemIcon && getItemIcon(selectedItem)}
+                <span className="truncate">{getItemLabel(selectedItem)}</span>
+              </div>
+            )
+          : (
+              placeholder
+            )}
+      </Button>
 
-        {/* Dropdown Menu */}
+      {/* Dropdown Menu */}
+      <div
+        className={cx(
+          // base
+          "absolute z-50 mt-1 w-full rounded-md border bg-white shadow-lg dark:bg-zinc-950",
+          // border
+          "border-zinc-200 dark:border-zinc-800",
+          !isOpen && "hidden",
+        )}
+        data-testid="combobox-dropdown"
+        {...getMenuProps()}
+      >
+        {/* Search Input - Fixed at top */}
         <div
           className={cx(
-          // base
-            "absolute z-50 mt-1 w-full rounded-md border bg-white shadow-lg dark:bg-zinc-950",
-            // border
-            "border-zinc-200 dark:border-zinc-800",
-            !isOpen && "hidden",
+            "border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
+            size === "sm" && "p-1.5",
+            size === "base" && "p-2",
+            size === "lg" && "p-2.5",
           )}
-          data-testid="combobox-dropdown"
-          {...getMenuProps()}
         >
-          {/* Search Input - Fixed at top */}
-          <div
-            className={cx(
-              "border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
-              size === "sm" && "p-1.5",
-              size === "base" && "p-2",
-              size === "lg" && "p-2.5",
-            )}
-          >
-            <Input
-              {...inputProps}
-              {...(selectOnFocus && {
-                onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+          <Input
+            {...inputProps}
+            {...(selectOnFocus && {
+              onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
                 // Call Downshift's onFocus handler first if it exists
-                  const originalOnFocus = (inputProps as Record<string, unknown>)
-                    .onFocus as
+                const originalOnFocus = (inputProps as Record<string, unknown>)
+                  .onFocus as
                   | ((e: React.FocusEvent<HTMLInputElement>) => void)
                   | undefined;
-                  if (originalOnFocus) {
-                    originalOnFocus(e);
-                  }
+                if (originalOnFocus) {
+                  originalOnFocus(e);
+                }
 
-                  // Then handle text selection
-                  if (inputRef.current) {
-                    setTimeout(() => {
-                      inputRef.current?.select();
-                    }, 0);
-                  }
-                },
-              })}
-              ref={inputRef}
-              type="search"
+                // Then handle text selection
+                if (inputRef.current) {
+                  setTimeout(() => {
+                    inputRef.current?.select();
+                  }, 0);
+                }
+              },
+            })}
+            ref={inputRef}
+            type="search"
+            size={size}
+            autoFocus
+            prefixStyling={false}
+            data-testid="combobox-search"
+          />
+        </div>
+
+        {/* Virtual Scrollable Content Area */}
+        <div
+          className={cx(
+            "h-60 overflow-auto rounded-b-md",
+            size === "sm" && "text-xs",
+            size === "base" && "text-sm",
+            size === "lg" && "text-base",
+          )}
+          ref={scrollRef}
+          data-testid="combobox-options"
+        >
+          {/* Loading State */}
+          {isLoading && (
+            <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
+              <Loader size="sm" />
+              <span className="ml-2 text-sm text-zinc-500">Loading...</span>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && !isLoading && (
+            <div className="flex items-center justify-center py-4 text-red-500" data-testid="combobox-error">
+              <span className="text-sm">Failed to load options</span>
+            </div>
+          )}
+
+          {/* Virtual Items List */}
+          {!isLoading && !error && items.length > 0 && (
+            <VirtualizedItemList
+              items={items}
+              parentRef={scrollRef}
+              getItemValue={getItemValue}
+              getItemLabel={getItemLabel}
+              getItemIcon={getItemIcon}
+              getItemProps={getItemProps}
+              renderItem={renderItem}
+              defaultRenderItem={defaultRenderItem}
+              highlightedIndex={highlightedIndex}
+              selectedItem={selectedItem}
               size={size}
-              autoFocus
-              prefixStyling={false}
-              data-testid="combobox-search"
+              iconStrokeWidth={iconStrokeWidth}
+              isFetchingNextPage={isFetchingNextPage}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
             />
-          </div>
+          )}
 
-          {/* Scrollable Content Area */}
-          <div className="relative" ref={scrollRef}>
-            <ScrollArea
-              className={cx(
-                "h-32 rounded-b-md overflow-hidden",
-                size === "sm" && "text-xs",
-                size === "base" && "text-sm",
-                size === "lg" && "text-base",
-              )}
-              data-testid="combobox-options"
-              viewportClassName="scroll-smooth"
-            >
-              {/* Loading State */}
-              {isLoading && (
-                <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
-                  <Loader size="sm" />
-                  <span className="ml-2 text-sm text-zinc-500">Loading...</span>
-                </div>
-              )}
-
-              {/* Error State */}
-              {error && !isLoading && (
-                <div className="flex items-center justify-center py-4 text-red-500" data-testid="combobox-error">
-                  <span className="text-sm">Failed to load options</span>
-                </div>
-              )}
-
-              {/* Items List */}
-              {!isLoading && !error && items.length > 0 && (
-                <div className="py-1" data-testid="combobox-items">
-                  {items.map((item, index) => (
-                    <div key={`${getItemValue(item)}-${index}`} data-testid={`combobox-item-${getItemValue(item)}`}>
-                      {renderItem
-                        ? renderItem(item, index)
-                        : defaultRenderItem(item, index)}
-                    </div>
-                  ))}
-
-                  {/* Loading more items indicator */}
-                  {isFetchingNextPage && (
-                    <div className="flex items-center justify-center py-2" data-testid="combobox-loading-more">
-                      <Loader size="sm" />
-                      <span className="ml-2 text-xs text-zinc-500">Loading more...</span>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Empty State */}
-              {!isLoading && !error && items.length === 0 && (
-                <div className="flex items-center justify-center py-4 text-zinc-500" data-testid="combobox-empty">
-                  <span className="text-sm">{emptyMessage}</span>
-                </div>
-              )}
-            </ScrollArea>
-          </div>
+          {/* Empty State */}
+          {!isLoading && !error && items.length === 0 && (
+            <div className="flex items-center justify-center py-4 text-zinc-500" data-testid="combobox-empty">
+              <span className="text-sm">{emptyMessage}</span>
+            </div>
+          )}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 Combobox.displayName = "Combobox";
 

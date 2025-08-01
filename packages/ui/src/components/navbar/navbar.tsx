@@ -97,6 +97,7 @@
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import React, { useId } from "react";
+
 import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 
@@ -108,10 +109,12 @@ import { Button } from "../button/button";
  *
  * @id navbar
  * @name Navbar
+ * @icon Navigation
+ * @category navigation
+ * @component
  * @param className - Additional CSS classes.
  * @param props - Additional HTML nav element props.
  *
- * @component
  * @example
  * ```tsx
  * <Navbar className="bg-white border-b px-4">
@@ -123,11 +126,16 @@ import { Button } from "../button/button";
  * ```
  */
 /**
- * A navigation bar component with branding, sections, and items.
+ * Top-level navigation bar component with links and branding elements.
  *
  * @id navbar
  * @name Navbar
+ * @icon Menu
+ * @category navigation
  * @component
+ * @param props - Component properties.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Navbar sections, items, and navigation content.
  */
 export function Navbar({
   className,
@@ -257,88 +265,55 @@ export function NavbarSpacer({
   );
 }
 
-/**
- * Navbar item component for navigation links and buttons.
- *
- * Interactive navigation item that can function as a link (with href)
- * or button (with onClick). Features animated current page indicators,
- * icon support, and responsive design.
- *
- * @param current - Whether this item represents the current page.
- * @param className - Additional CSS classes.
- * @param children - Content including icons, labels, and other elements.
- * @param href - Optional URL for link behavior (uses Next.js Link).
- * @param props - Additional button element props.
- *
- *
- * @id navbar
- * @name Navbar
- * @component
- * @example
- * ```tsx
- * // Link navigation item
- * <NavbarItem href="/dashboard" current>
- *   <DashboardIcon />
- *   <NavbarLabel>Dashboard</NavbarLabel>
- * </NavbarItem>
- *
- * // Button navigation item
- * <NavbarItem onClick={() => handleAction()}>
- *   <ActionIcon />
- *   <NavbarLabel>Action</NavbarLabel>
- * </NavbarItem>
- *
- * // Simple text item
- * <NavbarItem href="/about">
- *   About
- * </NavbarItem>
- *
- * // With avatar
- * <NavbarItem href="/profile">
- *   <Avatar src={user.avatar} />
- *   <NavbarLabel>{user.name}</NavbarLabel>
- *   <ChevronDownIcon />
- * </NavbarItem>
- * ```
- */
-export const /**
-              *
-              */
-  NavbarItem = function NavbarItem(
-    { ref, current, className, children, href, ...props },
-  ) {
-    const classes = cx(
-    // Base - let the minimal variant handle background and colors
-      "relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium sm:text-sm/5",
-      // Leading icon/icon-only
-      "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
-      // Trailing icon (down chevron or similar)
-      "*:not-nth-2:last:data-[slot=icon]:ml-auto *:not-nth-2:last:data-[slot=icon]:size-5 sm:*:not-nth-2:last:data-[slot=icon]:size-4",
-      // Avatar
-      "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 *:data-[slot=avatar]:[--avatar-radius:var(--radius-md)] sm:*:data-[slot=avatar]:size-6",
-    );
+type NavbarItemProps = {
+  ref?: React.RefObject<HTMLButtonElement | null>;
+  current?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  href?: string;
+  [key: string]: any;
+};
 
-    return (
-      <span className={cx(className, "relative")}>
-        {current && (
-          <motion.span
-            layoutId="current-indicator"
-            className="absolute inset-x-2 -bottom-2.5 h-0.5 rounded-full bg-zinc-950 dark:bg-white"
-          />
-        )}
-        <Button
-          ref={ref}
-          variant="minimal"
-          className={classes}
-          data-current={current ? "true" : undefined}
-          render={href ? <Link href={href} /> : undefined}
-          {...props}
-        >
-          {children}
-        </Button>
-      </span>
-    );
-  };
+export const NavbarItem = function NavbarItem({
+  ref,
+  current,
+  className,
+  children,
+  href,
+  ...props
+}: NavbarItemProps) {
+  const classes = cx(
+    // Base - let the minimal variant handle background and colors
+    "relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium sm:text-sm/5",
+    // Leading icon/icon-only
+    "*:data-[slot=icon]:size-6 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:fill-zinc-500 sm:*:data-[slot=icon]:size-5",
+    // Trailing icon (down chevron or similar)
+    "*:not-nth-2:last:data-[slot=icon]:ml-auto *:not-nth-2:last:data-[slot=icon]:size-5 sm:*:not-nth-2:last:data-[slot=icon]:size-4",
+    // Avatar
+    "*:data-[slot=avatar]:-m-0.5 *:data-[slot=avatar]:size-7 *:data-[slot=avatar]:[--avatar-radius:var(--radius-md)] sm:*:data-[slot=avatar]:size-6",
+  );
+
+  return (
+    <span className={cx(className, "relative")}>
+      {current && (
+        <motion.span
+          layoutId="current-indicator"
+          className="absolute inset-x-2 -bottom-2.5 h-0.5 rounded-full bg-zinc-950 dark:bg-white"
+        />
+      )}
+      <Button
+        ref={ref}
+        variant="minimal"
+        className={classes}
+        data-current={current ? "true" : undefined}
+        render={href ? <Link href={href} /> : undefined}
+        {...props}
+      >
+        {children}
+      </Button>
+    </span>
+  );
+};
 
 /**
  * Navbar label component for text content within navbar items.

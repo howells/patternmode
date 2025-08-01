@@ -1,41 +1,48 @@
 "use client";
 
-import { Button, Toast, useToast } from "@patternmode/ui";
+import { Toast, useToast } from "@patternmode/ui";
 
-export function ToastExample() {
+import React from "react";
+
+type ToastExampleProps = {
+  variant?: "success" | "error" | "warning" | "info";
+  title?: string;
+  description?: string;
+};
+
+export function ToastExample({
+  variant = "info",
+  title = "Toast Notification",
+  description = "This is a toast message example",
+}: ToastExampleProps) {
   const toast = useToast();
 
+  const handleShowToast = () => {
+    switch (variant) {
+      case "success":
+        toast.success(title, description);
+        break;
+      case "error":
+        toast.error(title, description);
+        break;
+      case "warning":
+        toast.warning(title, description);
+        break;
+      case "info":
+      default:
+        toast.info(title, description);
+        break;
+    }
+  };
+
   return (
-    <Toast>
-      <div className="space-y-4">
-        <div className="flex gap-2">
-          <Button
-            onClick={() =>
-              toast.success(
-                "Success!",
-                "Your changes have been saved successfully.",
-              )}
-          >
-            Show Success Toast
-          </Button>
-
-          <Button
-            variant="destructive"
-            onClick={() =>
-              toast.error("Error", "Something went wrong. Please try again.")}
-          >
-            Show Error Toast
-          </Button>
-
-          <Button
-            variant="outline"
-            onClick={() =>
-              toast.info("Info", "This is an informational message.")}
-          >
-            Show Info Toast
-          </Button>
-        </div>
-      </div>
-    </Toast>
+    <Toast.Provider>
+      <button
+        onClick={handleShowToast}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Show {variant} Toast
+      </button>
+    </Toast.Provider>
   );
 }

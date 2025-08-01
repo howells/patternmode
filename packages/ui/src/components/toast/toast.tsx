@@ -5,6 +5,7 @@
 import React from "react";
 import { toast as sonnerToast, Toaster } from "sonner";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 
 // Toast variants for consistent styling
@@ -37,11 +38,11 @@ const toastVariants = tv({
 // Toast types
 type ToastType = "default" | "success" | "error" | "warning" | "info";
 
-interface ToastData {
+type ToastData = {
   [key: string]: unknown;
-}
+};
 
-interface BaseToastOptions {
+type BaseToastOptions = {
   title?: string;
   description?: string;
   type?: ToastType;
@@ -52,18 +53,18 @@ interface BaseToastOptions {
     onClick: () => void;
   };
   data?: ToastData;
-}
+};
 
-interface ToastPromiseOptions<T = unknown> {
+type ToastPromiseOptions<T = unknown> = {
   loading: string | BaseToastOptions;
   success: string | ((data: T) => string) | ((data: T) => BaseToastOptions);
   error:
     | string
     | ((error: Error) => string)
     | ((error: Error) => BaseToastOptions);
-}
+};
 
-interface SonnerToastOptions {
+type SonnerToastOptions = {
   id: string;
   duration: number;
   dismissible: boolean;
@@ -73,11 +74,11 @@ interface SonnerToastOptions {
     label: string;
     onClick: () => void;
   };
-}
+};
 
-interface StoredToast extends BaseToastOptions {
+type StoredToast = {
   id: string;
-}
+} & BaseToastOptions;
 
 // Toast Manager class that mimics Base UI's useToastManager API
 class ToastManager {
@@ -207,8 +208,16 @@ const globalToastManager = new ToastManager();
 
 // Context for toast manager
 /**
- * Toast.
+ * Toast notification system with multiple variants and Promise support.
  *
+ * A comprehensive toast notification system built on Sonner with Base UI-style API.
+ * Provides multiple toast types (success, error, warning, info), Promise handling,
+ * customizable positioning, and smooth animations. Perfect for user feedback,
+ * status updates, and notification management.
+ *
+ * @component
+ * @category ui
+ * @icon Bell
  * @id toast
  * @name Toast
  */
@@ -216,7 +225,7 @@ const ToastManagerContext
   = React.createContext<ToastManager>(globalToastManager);
 
 // Provider component that mimics Base UI's Toast.Provider
-interface ToastProviderProps {
+type ToastProviderProps = {
   children: React.ReactNode;
   limit?: number;
   timeout?: number;
@@ -231,35 +240,35 @@ interface ToastProviderProps {
   expand?: boolean;
   richColors?: boolean;
   closeButton?: boolean;
-}
+};
 
 const ToastProvider: React.FC<ToastProviderProps> = ({
-    children,
-    limit = 3,
-    timeout = 5000,
-    toastManager = globalToastManager,
-    position = "top-right",
-    expand = false,
-    richColors = true,
-    closeButton = true,
-  }) => {
-    return (
-      <ToastManagerContext value={toastManager}>
-        {children}
-        <Toaster
-          position={position}
-          toastOptions={{
-            duration: timeout,
-            className: cx(toastVariants()),
-          }}
-          visibleToasts={limit}
-          expand={expand}
-          richColors={richColors}
-          closeButton={closeButton}
-        />
-      </ToastManagerContext>
-    );
-  };
+  children,
+  limit = 3,
+  timeout = 5000,
+  toastManager = globalToastManager,
+  position = "top-right",
+  expand = false,
+  richColors = true,
+  closeButton = true,
+}) => {
+  return (
+    <ToastManagerContext value={toastManager}>
+      {children}
+      <Toaster
+        position={position}
+        toastOptions={{
+          duration: timeout,
+          className: cx(toastVariants()),
+        }}
+        visibleToasts={limit}
+        expand={expand}
+        richColors={richColors}
+        closeButton={closeButton}
+      />
+    </ToastManagerContext>
+  );
+};
 
 // Hook to access toast manager (mimics Base UI's useToastManager)
 const useToastManager = () => {
@@ -295,25 +304,35 @@ const useToast = () => {
 };
 
 // Base UI-style component exports (for API compatibility)
+/**
+ * Temporary notification component for displaying status messages and alerts.
+ *
+ * @id toast
+ * @name Toast
+ * @icon Bell
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ */
 const Toast = {
-    Provider: ToastProvider,
-    useToastManager,
-  };
+  Provider: ToastProvider,
+  useToastManager,
+};
 
 // Additional exports for convenience
 export {
-    Toast,
-    ToastManager,
-    ToastProvider,
-    toastVariants,
-    useToast,
-    useToastManager
+  Toast,
+  ToastManager,
+  ToastProvider,
+  toastVariants,
+  useToast,
+  useToastManager,
 };
 
-    export type {
-        BaseToastOptions,
-        StoredToast,
-        ToastData,
-        ToastPromiseOptions,
-        ToastType
-    };
+export type {
+  BaseToastOptions,
+  StoredToast,
+  ToastData,
+  ToastPromiseOptions,
+  ToastType,
+};

@@ -16,6 +16,8 @@
  * - ARIA attributes and screen reader support
  * - Disabled state handling.
  *
+ * @category forms
+ * @icon Square
  * @example
  * ```tsx
  * // Basic field with label and input
@@ -69,6 +71,7 @@
 
 import { Field as BaseField } from "@base-ui-components/react/field";
 import * as React from "react";
+
 import { cx } from "../../lib/utils";
 import { Input } from "../input/input";
 import { Text } from "../text/text";
@@ -79,37 +82,51 @@ import { Text } from "../text/text";
  * Based on Base UI Field (https://base-ui.com/react/components/field),
  * provides the foundation for accessible form fields with label association,
  * validation states, and proper ARIA attributes.
+ *
+ */
+/**
+ * Form field wrapper component providing label, validation, and layout structure.
+ *
+ * @id field
+ * @name Field
+ * @icon FormInput
+ * @category forms
+ * @component
+ * @param props - Component properties.
+ * @param props.children - Field label, control, description, and error components.
+ * @param props.name - Field name for form submission and validation.
+ * @param props.disabled - Whether the field is disabled.
+ * @param props.invalid - Whether the field has validation errors.
+ * @param props.required - Whether the field is required for form submission.
+ * @param props.className - Additional CSS classes.
  */
 const Field = BaseField.Root;
 
 /**
- * Field label component.
- *
- * Accessible label that associates with the field control for screen readers
- * and proper form semantics. Includes disabled state styling and consistent
- * typography.
- *
- * @component
- * @param className - Additional CSS classes.
+ * Form field wrapper component providing label, validation, and layout structure.
  *
  * @id field
  * @name Field
+ * @icon FormInput
+ * @category forms
+ * @component
+ * @param props - Component properties.
  */
 const FieldLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => (
-    <BaseField.Label
-      ref={ref}
-      className={cx(
+  <BaseField.Label
+    ref={ref}
+    className={cx(
       // base
-        "block text-sm font-medium leading-6",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        // disabled
-        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "block text-sm font-medium leading-6",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // disabled
+      "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+      className,
+    )}
+    {...props}
+  />
+);
 FieldLabel.displayName = "FieldLabel";
 
 /**
@@ -123,13 +140,13 @@ FieldLabel.displayName = "FieldLabel";
  * @param render - Custom render function for different control types.
  */
 const FieldControl = ({ ref, className, render, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => (
-    <BaseField.Control
-      ref={ref}
-      className={className}
-      render={render || (controlProps => <Input {...controlProps} />)}
-      {...props}
-    />
-  );
+  <BaseField.Control
+    ref={ref}
+    className={className}
+    render={render || (({ ref, ...controlProps }) => <Input ref={ref as React.RefObject<HTMLInputElement | null>} {...controlProps} />)}
+    {...props}
+  />
+);
 FieldControl.displayName = "FieldControl";
 
 /**
@@ -141,24 +158,24 @@ FieldControl.displayName = "FieldControl";
  * @param className - Additional CSS classes.
  */
 const FieldDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => (
-    <BaseField.Description
-      ref={ref}
-      render={descriptionProps => (
-        <Text
-          {...descriptionProps}
-          size="sm"
-          className={cx(
+  <BaseField.Description
+    ref={ref}
+    render={descriptionProps => (
+      <Text
+        {...descriptionProps}
+        size="sm"
+        className={cx(
           // text color
-            "text-zinc-600 dark:text-zinc-400",
-            // disabled
-            "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-            className,
-          )}
-        />
-      )}
-      {...props}
-    />
-  );
+          "text-zinc-600 dark:text-zinc-400",
+          // disabled
+          "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+          className,
+        )}
+      />
+    )}
+    {...props}
+  />
+);
 FieldDescription.displayName = "FieldDescription";
 
 /**
@@ -170,20 +187,20 @@ FieldDescription.displayName = "FieldDescription";
  * @param className - Additional CSS classes.
  */
 const FieldError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => (
-    <BaseField.Error
-      ref={ref}
-      className={cx(
+  <BaseField.Error
+    ref={ref}
+    className={cx(
       // base
-        "text-sm leading-6",
-        // text color
-        "text-red-600 dark:text-red-400",
-        // disabled
-        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "text-sm leading-6",
+      // text color
+      "text-red-600 dark:text-red-400",
+      // disabled
+      "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+      className,
+    )}
+    {...props}
+  />
+);
 FieldError.displayName = "FieldError";
 
 /**
@@ -195,10 +212,10 @@ FieldError.displayName = "FieldError";
 const FieldValidity = BaseField.Validity;
 
 export {
-    Field,
-    FieldControl,
-    FieldDescription,
-    FieldError,
-    FieldLabel,
-    FieldValidity
+  Field,
+  FieldControl,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  FieldValidity,
 };

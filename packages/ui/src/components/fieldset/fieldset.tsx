@@ -14,6 +14,8 @@
  * - Disabled state support
  * - Flexible layout and spacing.
  *
+ * @category forms
+ * @icon LayoutGrid
  * @example
  * ```tsx
  * // Basic fieldset
@@ -82,6 +84,7 @@
 
 import { Fieldset as BaseFieldset } from "@base-ui-components/react/fieldset";
 import * as React from "react";
+
 import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/subheading";
 
@@ -114,25 +117,32 @@ import { Subheading } from "../subheading/subheading";
  * ```
  */
 /**
- * A fieldset component that groups related form controls with an optional legend.
+ * Fieldset component for grouping related form fields with legend support.
  *
  * @id fieldset
  * @name Fieldset
+ * @icon FormInput
+ * @category forms
  * @component
+ * @param props - Component properties.
+ * @param props.children - Fieldset legend and form field components.
+ * @param props.disabled - Whether the fieldset and its controls are disabled.
+ * @param props.name - Name for the fieldset group.
+ * @param props.className - Additional CSS classes.
  */
 const Fieldset = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Root> | null> }) => (
-    <BaseFieldset.Root
-      ref={ref}
-      className={cx(
+  <BaseFieldset.Root
+    ref={ref}
+    className={cx(
       // base
-        "flex flex-col gap-4 border-0 p-0",
-        // spacing
-        "m-0",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "flex flex-col gap-4 border-0 p-0",
+      // spacing
+      "m-0",
+      className,
+    )}
+    {...props}
+  />
+);
 Fieldset.displayName = "Fieldset";
 
 /**
@@ -152,25 +162,25 @@ Fieldset.displayName = "Fieldset";
  * ```
  */
 const FieldsetLegend = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseFieldset.Legend> & { ref?: React.RefObject<React.ElementRef<typeof BaseFieldset.Legend> | null> }) => (
-    <BaseFieldset.Legend
-      ref={ref}
-      className={cx(
+  <BaseFieldset.Legend
+    ref={ref}
+    className={cx(
       // base
-        "text-lg font-medium leading-6",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        // border
-        "border-b border-zinc-200 dark:border-zinc-800",
-        // spacing
-        "pb-3",
-        // disabled
-        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-        className,
-      )}
-      render={legendProps => <Subheading {...legendProps} />}
-      {...props}
-    />
-  );
+      "text-lg font-medium leading-6",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // border
+      "border-b border-zinc-200 dark:border-zinc-800",
+      // spacing
+      "pb-3",
+      // disabled
+      "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+      className,
+    )}
+    render={legendProps => <Subheading {...legendProps} />}
+    {...props}
+  />
+);
 FieldsetLegend.displayName = "FieldsetLegend";
 
 export { Fieldset, FieldsetLegend };

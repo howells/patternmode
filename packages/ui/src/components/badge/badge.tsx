@@ -1,19 +1,20 @@
 // Tremor Badge [v1.0.0]
 
-import { mergeProps } from "@base-ui-components/react/merge-props";
-import { useRender } from "@base-ui-components/react/use-render";
-import { X } from "lucide-react";
 import type { VariantProps } from "tailwind-variants";
+
 import type { ComponentWithIconsProps } from "../../lib/utils";
 import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import { useRender } from "@base-ui-components/react/use-render";
+import { X } from "lucide-react";
 
 import React from "react";
 import { tv } from "tailwind-variants";
+
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
 import {
-    getColorClasses,
-    getVariantClasses,
+  getColorClasses,
+  getVariantClasses,
 } from "../../lib/variants";
 
 // Badge-specific variant type (semantic + all Tailwind colors)
@@ -164,72 +165,59 @@ const dotIndicatorVariants = tv({
 });
 
 // Inline DismissButton functionality for Badge
-/**
- * A label used to show a status or category.
- *
- * Badge.
- *
- * @component
- * @id badge
- * @name Badge
- * @example
- * ```tsx
- * <Badge>New</Badge>
- * ```
- */
 const InlineDismissButton = (
-    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
-      "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-      "icon"?: React.ComponentType<{
-        className?: string;
-        strokeWidth?: number;
-      }>;
-      "iconStrokeWidth"?: number;
-      "size"?: "sm" | "base" | "lg";
-      "className"?: string;
-      "aria-label"?: string;
-    } & { ref?: React.RefObject<HTMLButtonElement | null> },
-  ) => {
+  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+    "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    "icon"?: React.ComponentType<{
+      className?: string;
+      strokeWidth?: number;
+    }>;
+    "iconStrokeWidth"?: number;
+    "size"?: "sm" | "base" | "lg";
+    "className"?: string;
+    "aria-label"?: string;
+  } & { ref?: React.RefObject<HTMLButtonElement | null> },
+) => {
   // Size-based icon sizing
-    const iconSizeMap = {
-      sm: "xs" as const,
-      base: "xs" as const,
-      lg: "sm" as const,
-    };
-
-    const iconSize = iconSizeMap[size];
-    const iconSizeClass = iconUtils.getIconSize(iconSize);
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        onClick={onClick}
-        className={cx(
-        // Base button styling
-          "flex items-center justify-center rounded-full transition-colors",
-          // Size-based dimensions
-          size === "sm" && "size-4",
-          size === "base" && "size-5",
-          size === "lg" && "size-6",
-          // Color styling (subtle, context-aware)
-          "text-zinc-500 dark:text-zinc-400",
-          // Hover states
-          "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
-          // Focus states
-          "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className,
-        )}
-        aria-label={ariaLabel}
-      >
-        <IconComponent
-          className={cx(iconSizeClass, "shrink-0")}
-          strokeWidth={iconStrokeWidth}
-          aria-hidden="true"
-        />
-      </button>
-    );
+  const iconSizeMap = {
+    sm: "xs" as const,
+    base: "xs" as const,
+    lg: "sm" as const,
   };
+
+  const iconSize = iconSizeMap[size];
+  const iconSizeClass = iconUtils.getIconSize(iconSize);
+
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={onClick}
+      className={cx(
+        // Base button styling
+        "flex items-center justify-center rounded-full transition-colors",
+        // Size-based dimensions
+        size === "sm" && "size-4",
+        size === "base" && "size-5",
+        size === "lg" && "size-6",
+        // Color styling (subtle, context-aware)
+        "text-zinc-500 dark:text-zinc-400",
+        // Hover states
+        "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
+        // Focus states
+        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
+        className,
+      )}
+      aria-label={ariaLabel}
+    >
+      <IconComponent
+        className={cx(iconSizeClass, "shrink-0")}
+        strokeWidth={iconStrokeWidth}
+        aria-hidden="true"
+      />
+    </button>
+  );
+};
 
 /**
  * Badge component props.
@@ -237,10 +225,7 @@ const InlineDismissButton = (
  * @augments VariantProps<typeof badgeVariants>
  * @augments ComponentWithIconsProps
  */
-interface BadgeProps
-  extends useRender.ComponentProps<"span">,
-  VariantProps<typeof badgeVariants>,
-  ComponentWithIconsProps {
+type BadgeProps = {
   /**
    * Whether to show a border around the badge.
    * @default false
@@ -279,152 +264,113 @@ interface BadgeProps
     className?: string;
     strokeWidth?: number;
   }>;
-}
+} & useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & ComponentWithIconsProps;
 
 /**
- * A small status or label component built with Base UI's useRender pattern.
+ * Small status indicator component for labels, counts, and categorical information.
  *
- * Based on Base UI's useRender hook for flexible rendering, providing status indicators,
- * labels, and tags with multiple color variants and sizes. Supports left and right icons
- * for enhanced visual context, and an optional dismiss button for removable badges.
- *
+ * @id badge
+ * @name Badge
+ * @icon Tag
+ * @category ui
  * @component
- * @example
- * ```tsx
- * // Basic usage
- * <Badge>New</Badge>
- *
- * // With variants
- * <Badge variant="success">Completed</Badge>
- * <Badge variant="error">Failed</Badge>
- *
- * // With icons
- * <Badge leftIcon={CheckIcon} variant="success">Verified</Badge>
- * <Badge rightIcon={ArrowRightIcon}>Continue</Badge>
- *
- * // Different sizes
- * <Badge size="sm">Small</Badge>
- * <Badge size="lg">Large</Badge>
- *
- * // With or without border
- * <Badge bordered>Bordered</Badge>
- *
- * // Rounded (pill-shaped) with automatic extra padding
- * <Badge rounded>Pill Badge</Badge>
- * <Badge rounded variant="success">Success Pill</Badge>
- *
- * // With status dot (overrides icons)
- * <Badge statusDot>Ready</Badge>
- * <Badge statusDot statusAnimated>Building</Badge>
- * <Badge statusDot variant="error">Error Status</Badge>
- *
- * // Color variants
- * <Badge variant="purple">Purple Badge</Badge>
- * <Badge variant="emerald">Emerald Badge</Badge>
- * <Badge variant="pink" rounded>Pink Pill</Badge>
- *
- * // With dismiss button
- * <Badge dismissible onDismiss={() => handleRemove()}>Dismissible</Badge>
- * <Badge dismissible onDismiss={handleRemove} dismissIcon={TrashIcon}>Custom Dismiss</Badge>
- *
- * // Combination with icons and dismiss
- * <Badge
- *   leftIcon={UserIcon}
- *   dismissible
- *   onDismiss={handleRemoveUser}
- *   variant="neutral"
- * >
- *   John Doe
- * </Badge>
- * ```
+ * @param props - Component properties.
+ * @param props.variant - Visual style variant of the badge.
+ * @param props.size - Size variant of the badge.
+ * @param props.bordered - Whether to show a border around the badge.
+ * @param props.rounded - Whether to use full border radius for a pill shape.
+ * @param props.leftIcon - Icon component to display on the left side.
+ * @param props.rightIcon - Icon component to display on the right side.
+ * @param props.iconStrokeWidth - Stroke width for icons.
+ * @param props.statusDot - Whether to show a status dot instead of icons.
+ * @param props.statusAnimated - Whether to animate the status dot for active statuses.
+ * @param props.onDismiss - Callback function called when the dismiss button is clicked.
+ * @param props.dismissIcon - Custom icon component for the dismiss button.
+ * @param props.children - Content to display in the badge.
+ * @param props.className - Additional CSS classes.
  */
 const Badge = (
-    { ref: forwardedRef, render = <span />, variant, size = "base", bordered, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
-  ) => {
-    const hasChildren = children != null && children !== "";
-    const hasLeftIcon = LeftIcon != null;
-    const hasRightIcon = RightIcon != null;
-    const hasDismissButton = dismissible && onDismiss != null;
+  { ref: forwardedRef, render = <span />, variant, size = "base", bordered, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible: _dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
+) => {
+  // Get appropriate icon size for badge size
+  const iconSize = badgeToIconSizeMap[size];
+  const iconSizeClass = iconUtils.getIconSize(iconSize);
+  const iconClassName = `${iconSizeClass} shrink-0`;
 
-    // Get appropriate icon size for badge size
-    const iconSize = badgeToIconSizeMap[size];
-    const iconSizeClass = iconUtils.getIconSize(iconSize);
-    const iconClassName = `${iconSizeClass} shrink-0`;
+  // Use default variant when statusDot is true (unless custom color or variant provided)
+  const effectiveVariant = variant;
 
-    // Use default variant when statusDot is true (unless custom color or variant provided)
-    const effectiveVariant = variant;
+  const renderBadgeContent = () => {
+    const hasLeftIcon = LeftIcon && !statusDot; // Dot overrides left icon
+    const hasRightIcon = RightIcon && !statusDot; // Dot overrides right icon
+    const hasDismissButton = Boolean(onDismiss);
+    const hasStatusDot = Boolean(statusDot);
 
-    const renderBadgeContent = () => {
-      const hasLeftIcon = LeftIcon && !statusDot; // Dot overrides left icon
-      const hasRightIcon = RightIcon && !statusDot; // Dot overrides right icon
-      const hasDismissButton = Boolean(onDismiss);
-      const hasStatusDot = Boolean(statusDot);
+    // Status dot size mapping - one size smaller than badge for better balance
+    const statusDotSize
+          = size === "sm" ? "sm" : size === "base" ? "sm" : "default";
 
-      // Status dot size mapping - one size smaller than badge for better balance
-      const statusDotSize
-        = size === "sm" ? "sm" : size === "base" ? "sm" : "default";
+    // Use statusAnimated prop directly since statusDot is just boolean
+    const shouldAnimate = statusAnimated;
 
-      // Use statusAnimated prop directly since statusDot is just boolean
-      const shouldAnimate = statusAnimated;
-
-      return (
-        <>
-          {hasStatusDot && (
-            <span
-              className={cx(
-                dotIndicatorVariants({ size: statusDotSize, animated: shouldAnimate }),
-                getColorClasses(effectiveVariant || "default").bgSolid,
-                // Add dynamic before: color for animation
-                shouldAnimate && `before:bg-${getColorClasses(effectiveVariant || "default").color}-500`,
-              )}
-              aria-hidden="true"
-            />
-          )}
-          {hasLeftIcon && (
-            <LeftIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
-          )}
-          {children}
-          {hasRightIcon && (
-            <RightIcon
-              className={iconClassName}
-              strokeWidth={iconStrokeWidth}
-            />
-          )}
-          {hasDismissButton && (
-            <InlineDismissButton
-              onClick={onDismiss}
-              icon={DismissIcon}
-              iconStrokeWidth={iconStrokeWidth}
-              size={size}
-              className={cx(
+    return (
+      <>
+        {hasStatusDot && (
+          <span
+            className={cx(
+              dotIndicatorVariants({ size: statusDotSize, animated: shouldAnimate }),
+              getColorClasses(effectiveVariant || "default").bgSolid,
+              // Add dynamic before: color for animation
+              shouldAnimate && `before:bg-${getColorClasses(effectiveVariant || "default").color}-500`,
+            )}
+            aria-hidden="true"
+          />
+        )}
+        {hasLeftIcon && (
+          <LeftIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
+        )}
+        {children}
+        {hasRightIcon && (
+          <RightIcon
+            className={iconClassName}
+            strokeWidth={iconStrokeWidth}
+          />
+        )}
+        {hasDismissButton && (
+          <InlineDismissButton
+            onClick={onDismiss}
+            icon={DismissIcon}
+            iconStrokeWidth={iconStrokeWidth}
+            size={size}
+            className={cx(
               // Negative margin to pull closer like Tag does
-                size === "sm" && "-ml-1",
-                size === "base" && "-ml-1",
-                size === "lg" && "-ml-1.5",
-              )}
-            />
-          )}
-        </>
-      );
-    };
-
-    const defaultProps: useRender.ElementProps<"span"> = {
-      className: cx(
-        badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
-        className,
-      ),
-      children: renderBadgeContent(),
-    };
-
-    const element = useRender({
-      render,
-      ref: forwardedRef,
-      props: mergeProps<"span">(defaultProps, otherProps),
-    });
-
-    return element;
+              size === "sm" && "-ml-1",
+              size === "base" && "-ml-1",
+              size === "lg" && "-ml-1.5",
+            )}
+          />
+        )}
+      </>
+    );
   };
+
+  const defaultProps: useRender.ElementProps<"span"> = {
+    className: cx(
+      badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
+      className,
+    ),
+    children: renderBadgeContent(),
+  };
+
+  const element = useRender({
+    render,
+    ref: forwardedRef ?? undefined,
+    props: { ...defaultProps, ...otherProps },
+  });
+
+  return element;
+};
 
 Badge.displayName = "Badge";
 
-export { Badge, badgeVariants, type BadgeProps };
+export { Badge, type BadgeProps, badgeVariants };

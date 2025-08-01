@@ -1,8 +1,81 @@
+/**
+ * Split Button Components.
+ *
+ * A two-part button component that combines a primary action button with a dropdown
+ * menu trigger. Perfect for providing a default action while offering additional
+ * related options through the dropdown menu.
+ *
+ * Features:
+ * - Primary action button with full button functionality
+ * - Dropdown menu integration with Base UI Menu components
+ * - Multiple visual variants (default, secondary, destructive, outline, ghost)
+ * - Size variants and rounded corner options
+ * - Loading states and icon support
+ * - Proper keyboard navigation and accessibility
+ * - Focus management between button and menu
+ * - Disabled state handling
+ * - Dark mode support
+ * - Customizable dropdown positioning and collision handling.
+ *
+ * @example
+ * ```tsx
+ * // Basic split button
+ * <SplitButton
+ *   buttonContent="Save Document"
+ *   onButtonClick={() => saveDocument()}
+ * >
+ *   <MenuItem>Save As...</MenuItem>
+ *   <MenuItem>Save Copy</MenuItem>
+ *   <MenuSeparator />
+ *   <MenuItem>Export PDF</MenuItem>
+ * </SplitButton>
+ *
+ * // With loading state and icon
+ * <SplitButton
+ *   buttonContent="Deploy"
+ *   leftIcon={CloudUpload}
+ *   isLoading={isDeploying}
+ *   loadingText="Deploying..."
+ *   onButtonClick={() => deploy()}
+ * >
+ *   <MenuItem>Deploy to Staging</MenuItem>
+ *   <MenuItem>Deploy to Production</MenuItem>
+ *   <MenuSeparator />
+ *   <MenuItem>Schedule Deployment</MenuItem>
+ * </SplitButton>
+ *
+ * // Different variants
+ * <SplitButton
+ *   variant="destructive"
+ *   buttonContent="Delete Item"
+ *   onButtonClick={() => deleteItem()}
+ * >
+ *   <MenuItem>Delete Permanently</MenuItem>
+ *   <MenuItem>Move to Trash</MenuItem>
+ * </SplitButton>
+ *
+ * // With custom menu positioning
+ * <SplitButton
+ *   buttonContent="Actions"
+ *   menuProps={{
+ *     align: "start",
+ *     sideOffset: 12,
+ *     collisionPadding: 16
+ *   }}
+ *   onButtonClick={() => primaryAction()}
+ * >
+ *   <MenuItem>Secondary Action</MenuItem>
+ *   <MenuItem>Alternative Action</MenuItem>
+ * </SplitButton>
+ * ```
+ */
+
 "use client";
 
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import { tv } from "tailwind-variants";
+
 import { cx, focusRing } from "../../lib/utils";
 import { Button } from "../button/button";
 import { Menu, MenuContent, MenuTrigger } from "../menu/menu";
@@ -171,7 +244,7 @@ type SplitButtonVariant
     | "ghost";
 type SplitButtonSize = "default" | "sm";
 
-interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+type SplitButtonProps = {
   /**
    * Visual variant of the split button.
    * @example
@@ -228,128 +301,131 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
    * Custom dropdown icon (defaults to ChevronDown).
    */
   dropdownIcon?: React.ComponentType<{ className?: string }>;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * Split Button.
+ * Compound button with primary action and dropdown menu for secondary actions.
  *
- * @component
  * @id split-button
- * @name Split Button
+ * @name SplitButton
+ * @icon MoreHorizontal
+ * @category utility
+ * @component
+ * @param props - Component properties.
  */
 const SplitButton = (
-    { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
+  { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
 
-    return (
-      <div
-        ref={ref}
+  return (
+    <div
+      ref={ref}
+      className={cx(
+        splitButtonVariants({ variant, size, rounded }),
+        disabled && "data-disabled",
+        className,
+      )}
+      {...props}
+    >
+      {/* Main Button */}
+      <Button
+        variant={variant}
+        size={size}
+        rounded={false} // We handle rounding at the container level
+        disabled={disabled}
+        isLoading={isLoading}
+        loadingText={loadingText}
+        leftIcon={leftIcon}
+        onClick={onButtonClick}
         className={cx(
-          splitButtonVariants({ variant, size, rounded }),
-          disabled && "data-disabled",
-          className,
-        )}
-        {...props}
-      >
-        {/* Main Button */}
-        <Button
-          variant={variant}
-          size={size}
-          rounded={false} // We handle rounding at the container level
-          disabled={disabled}
-          isLoading={isLoading}
-          loadingText={loadingText}
-          leftIcon={leftIcon}
-          onClick={onButtonClick}
-          className={cx(
           // Remove default button styling that conflicts with split layout
-            "shadow-none inset-ring-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent",
-            // Add split-specific styling
-            "flex-1 justify-start",
-            rounded ? "rounded-l-full" : "rounded-l-md",
-            "rounded-r-none",
-            // Handle padding based on size
-            size === "sm" ? "px-2.5" : "px-3",
-            // Hover states that match the container
-            variant === "default" && [
-              "text-white dark:text-white",
-              "hover:bg-zinc-800 dark:hover:bg-zinc-200",
-              "disabled:text-white disabled:bg-transparent",
-              "dark:disabled:text-zinc-300 dark:disabled:bg-transparent",
-            ],
-            variant === "secondary" && [
-              "text-zinc-900 dark:text-zinc-50",
-              "hover:bg-zinc-200 dark:hover:bg-zinc-700",
-              "disabled:text-zinc-400 disabled:bg-transparent",
-              "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
-            ],
-            variant === "destructive" && [
-              "text-white dark:text-white",
-              "hover:bg-red-600 dark:hover:bg-red-800",
-              "disabled:text-white disabled:bg-transparent",
-              "dark:disabled:text-red-400 dark:disabled:bg-transparent",
-            ],
-            variant === "outline" && [
-              "text-zinc-900 dark:text-zinc-50",
-              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-              "disabled:text-zinc-400 disabled:bg-transparent",
-              "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
-            ],
-            variant === "ghost" && [
-              "text-zinc-900 dark:text-zinc-50",
-              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-              "disabled:text-zinc-400 disabled:bg-transparent",
-              "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
-            ],
+          "shadow-none inset-ring-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent",
+          // Add split-specific styling
+          "flex-1 justify-start",
+          rounded ? "rounded-l-full" : "rounded-l-md",
+          "rounded-r-none",
+          // Handle padding based on size
+          size === "sm" ? "px-2.5" : "px-3",
+          // Hover states that match the container
+          variant === "default" && [
+            "text-white dark:text-white",
+            "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+            "disabled:text-white disabled:bg-transparent",
+            "dark:disabled:text-zinc-300 dark:disabled:bg-transparent",
+          ],
+          variant === "secondary" && [
+            "text-zinc-900 dark:text-zinc-50",
+            "hover:bg-zinc-200 dark:hover:bg-zinc-700",
+            "disabled:text-zinc-400 disabled:bg-transparent",
+            "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
+          ],
+          variant === "destructive" && [
+            "text-white dark:text-white",
+            "hover:bg-red-600 dark:hover:bg-red-800",
+            "disabled:text-white disabled:bg-transparent",
+            "dark:disabled:text-red-400 dark:disabled:bg-transparent",
+          ],
+          variant === "outline" && [
+            "text-zinc-900 dark:text-zinc-50",
+            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+            "disabled:text-zinc-400 disabled:bg-transparent",
+            "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
+          ],
+          variant === "ghost" && [
+            "text-zinc-900 dark:text-zinc-50",
+            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+            "disabled:text-zinc-400 disabled:bg-transparent",
+            "dark:disabled:text-zinc-600 dark:disabled:bg-transparent",
+          ],
+        )}
+      >
+        {buttonContent}
+      </Button>
+
+      {/* Separator */}
+      <div
+        className={cx(
+          "w-px h-full",
+          variant === "default" && ["bg-white/20 dark:bg-black/20"],
+          variant === "secondary" && ["bg-zinc-300 dark:bg-zinc-600"],
+          variant === "destructive" && ["bg-white/20 dark:bg-white/10"],
+          variant === "outline" && ["bg-zinc-300 dark:bg-zinc-600"],
+          variant === "ghost" && ["bg-zinc-300 dark:bg-zinc-600"],
+        )}
+      />
+
+      {/* Dropdown Menu */}
+      <Menu>
+        <MenuTrigger
+          render={(
+            <button
+              type="button"
+              disabled={disabled}
+              className={cx(
+                dropdownTriggerVariants({ variant, size }),
+                rounded ? "rounded-r-full" : "rounded-r-md",
+                "rounded-l-none",
+              )}
+              aria-label="Open menu"
+            />
           )}
         >
-          {buttonContent}
-        </Button>
-
-        {/* Separator */}
-        <div
-          className={cx(
-            "w-px h-full",
-            variant === "default" && ["bg-white/20 dark:bg-black/20"],
-            variant === "secondary" && ["bg-zinc-300 dark:bg-zinc-600"],
-            variant === "destructive" && ["bg-white/20 dark:bg-white/10"],
-            variant === "outline" && ["bg-zinc-300 dark:bg-zinc-600"],
-            variant === "ghost" && ["bg-zinc-300 dark:bg-zinc-600"],
-          )}
-        />
-
-        {/* Dropdown Menu */}
-        <Menu>
-          <MenuTrigger
-            render={(
-              <button
-                type="button"
-                disabled={disabled}
-                className={cx(
-                  dropdownTriggerVariants({ variant, size }),
-                  rounded ? "rounded-r-full" : "rounded-r-md",
-                  "rounded-l-none",
-                )}
-                aria-label="Open menu"
-              />
-            )}
-          >
-            <DropdownIcon className={iconSize} />
-          </MenuTrigger>
-          <MenuContent
-            align="end"
-            sideOffset={8}
-            collisionPadding={8}
-            {...menuProps}
-          >
-            {children}
-          </MenuContent>
-        </Menu>
-      </div>
-    );
-  };
+          <DropdownIcon className={iconSize} />
+        </MenuTrigger>
+        <MenuContent
+          align="end"
+          sideOffset={8}
+          collisionPadding={8}
+          {...menuProps}
+        >
+          {children}
+        </MenuContent>
+      </Menu>
+    </div>
+  );
+};
 
 SplitButton.displayName = "SplitButton";
 
-export { SplitButton, splitButtonVariants, type SplitButtonProps };
+export { SplitButton, type SplitButtonProps, splitButtonVariants };

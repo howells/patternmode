@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   ResponsiveDrawer,
   ResponsiveDrawerBody,
@@ -11,6 +12,7 @@ import {
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function ResponsiveDrawerExample() {
@@ -66,3 +68,22 @@ export function DefaultExample() {
     </ResponsiveDrawer>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "ResponsiveDrawerExample",
+    title: "Responsive Drawer",
+    description: "Responsive Drawer example",
+    component: ResponsiveDrawerExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+];

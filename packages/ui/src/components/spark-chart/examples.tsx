@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { SparkBarChart } from "@patternmode/ui";
+
 import React from "react";
 
 export function SparkChartExample() {
@@ -76,3 +80,28 @@ export function AreaExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "SparkChartExample",
+    title: "Spark Chart",
+    description: "Spark Chart example",
+    component: SparkChartExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "AreaExample",
+    title: "Area",
+    description: "Area example",
+    component: AreaExample,
+  },
+];

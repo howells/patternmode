@@ -103,8 +103,10 @@
  */
 
 import type React from "react";
+
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+
 import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 
@@ -136,6 +138,21 @@ import { Button } from "../button/button";
  * @component
  * @id pagination
  * @name Pagination
+ * @category navigation
+ * @icon MoreHorizontal
+ */
+/**
+ * Page navigation component with previous/next controls and page indicators.
+ *
+ * @id pagination
+ * @name Pagination
+ * @icon MoreHorizontal
+ * @category navigation
+ * @component
+ * @param props - Component properties.
+ * @param props.aria-label - Accessible label for screen readers (defaults to "Page navigation").
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Pagination controls including previous/next buttons and page list.
  */
 export function Pagination({
   "aria-label": ariaLabel = "Page navigation",

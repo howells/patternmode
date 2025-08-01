@@ -77,6 +77,7 @@
 
 import { ScrollArea as BaseScrollArea } from "@base-ui-components/react/scroll-area";
 import * as React from "react";
+
 import { cx } from "../../lib/utils";
 
 /**
@@ -87,7 +88,7 @@ import { cx } from "../../lib/utils";
  * @interface ScrollAreaProps
  * @augments React.ComponentPropsWithoutRef<"div">
  */
-interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
+type ScrollAreaProps = {
   /**
    * Content to be made scrollable.
    */
@@ -108,14 +109,15 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
    * Additional CSS classes for the viewport.
    */
   viewportClassName?: string;
-}
+} & React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Custom scrollable area with styled scrollbars.
  *
  * Provides a scrollable container with custom-styled scrollbars that work
  * consistently across browsers. Supports vertical, horizontal, or both
- * scroll orientations with smooth hover effects.
+ * scroll orientations with smooth hover effects. Perfect for chat windows,
+ * content areas, sidebars, and any interface requiring custom scrolling.
  *
  * @param className - Additional CSS classes for the root element.
  * @param children - Content to be made scrollable.
@@ -124,10 +126,11 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
  * @param thumbClassName - Custom classes for scrollbar thumb.
  * @param viewportClassName - Custom classes for the viewport.
  *
- *
+ * @component
+ * @category ui
+ * @icon ArrowUpDown
  * @id scroll-area
  * @name Scroll Area
- * @component
  * @example
  * ```tsx
  * // Basic usage
@@ -158,66 +161,69 @@ interface ScrollAreaProps extends React.ComponentPropsWithoutRef<"div"> {
  * ```
  */
 /**
- * Augments native scroll functionality for custom, cross-browser styling.
+ * Custom scrollable container component with styled scrollbars and smooth scrolling.
  *
  * @id scroll-area
- * @name Scroll Area
+ * @name ScrollArea
+ * @icon Scroll
+ * @category utility
  * @component
+ * @param props - Component properties.
  */
 const ScrollArea = (
-    { ref, className, children, orientation = "vertical", scrollbarClassName, thumbClassName, viewportClassName, ...props }: ScrollAreaProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => (
-    <BaseScrollArea.Root
-      ref={ref}
-      className={cx("relative overflow-hidden group", className)}
-      {...props}
+  { ref, className, children, orientation = "vertical", scrollbarClassName, thumbClassName, viewportClassName, ...props }: ScrollAreaProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => (
+  <BaseScrollArea.Root
+    ref={ref}
+    className={cx("relative overflow-hidden group", className)}
+    {...props}
+  >
+    <BaseScrollArea.Viewport
+      className={cx("h-full w-full rounded-[inherit]", viewportClassName)}
     >
-      <BaseScrollArea.Viewport
-        className={cx("h-full w-full rounded-[inherit]", viewportClassName)}
+      <BaseScrollArea.Content>{children}</BaseScrollArea.Content>
+    </BaseScrollArea.Viewport>
+    {(orientation === "vertical" || orientation === "both") && (
+      <BaseScrollArea.Scrollbar
+        orientation="vertical"
+        className={cx(
+          "flex h-full w-2.5 touch-none select-none border-l border-l-transparent p-[1px] transition-all duration-200",
+          "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
+          "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+          scrollbarClassName,
+        )}
       >
-        <BaseScrollArea.Content>{children}</BaseScrollArea.Content>
-      </BaseScrollArea.Viewport>
-      {(orientation === "vertical" || orientation === "both") && (
-        <BaseScrollArea.Scrollbar
-          orientation="vertical"
+        <BaseScrollArea.Thumb
           className={cx(
-            "flex h-full w-2.5 touch-none select-none border-l border-l-transparent p-[1px] transition-all duration-200",
-            "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
-            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-            scrollbarClassName,
+            "relative flex-1 rounded-full bg-zinc-300 dark:bg-zinc-600",
+            "hover:bg-zinc-400 dark:hover:bg-zinc-500",
+            thumbClassName,
           )}
-        >
-          <BaseScrollArea.Thumb
-            className={cx(
-              "relative flex-1 rounded-full bg-zinc-300 dark:bg-zinc-600",
-              "hover:bg-zinc-400 dark:hover:bg-zinc-500",
-              thumbClassName,
-            )}
-          />
-        </BaseScrollArea.Scrollbar>
-      )}
-      {(orientation === "horizontal" || orientation === "both") && (
-        <BaseScrollArea.Scrollbar
-          orientation="horizontal"
+        />
+      </BaseScrollArea.Scrollbar>
+    )}
+    {(orientation === "horizontal" || orientation === "both") && (
+      <BaseScrollArea.Scrollbar
+        orientation="horizontal"
+        className={cx(
+          "flex h-2.5 w-full touch-none select-none border-t border-t-transparent p-[1px] transition-all duration-200",
+          "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
+          "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+          scrollbarClassName,
+        )}
+      >
+        <BaseScrollArea.Thumb
           className={cx(
-            "flex h-2.5 w-full touch-none select-none border-t border-t-transparent p-[1px] transition-all duration-200",
-            "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
-            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-            scrollbarClassName,
+            "relative rounded-full bg-zinc-300 dark:bg-zinc-600",
+            "hover:bg-zinc-400 dark:hover:bg-zinc-500",
+            thumbClassName,
           )}
-        >
-          <BaseScrollArea.Thumb
-            className={cx(
-              "relative rounded-full bg-zinc-300 dark:bg-zinc-600",
-              "hover:bg-zinc-400 dark:hover:bg-zinc-500",
-              thumbClassName,
-            )}
-          />
-        </BaseScrollArea.Scrollbar>
-      )}
-      <BaseScrollArea.Corner />
-    </BaseScrollArea.Root>
-  );
+        />
+      </BaseScrollArea.Scrollbar>
+    )}
+    <BaseScrollArea.Corner />
+  </BaseScrollArea.Root>
+);
 
 ScrollArea.displayName = "ScrollArea";
 
@@ -252,25 +258,25 @@ ScrollArea.displayName = "ScrollArea";
  * ```
  */
 const ScrollBar = ({ ref, className, orientation = "vertical", ...props }: React.ComponentPropsWithoutRef<typeof BaseScrollArea.Scrollbar> & { ref?: React.RefObject<React.ElementRef<typeof BaseScrollArea.Scrollbar> | null> }) => (
-    <BaseScrollArea.Scrollbar
-      ref={ref}
-      orientation={orientation}
-      className={cx(
-        "flex touch-none select-none transition-all duration-200",
-        "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
-        orientation === "vertical"
-        && "h-full w-2.5 border-l border-l-transparent p-[1px]",
-        orientation === "horizontal"
-        && "h-2.5 w-full border-t border-t-transparent p-[1px]",
-        "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-        className,
-      )}
-      {...props}
-    >
-      <BaseScrollArea.Thumb className="relative flex-1 rounded-full bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500" />
-    </BaseScrollArea.Scrollbar>
-  );
+  <BaseScrollArea.Scrollbar
+    ref={ref}
+    orientation={orientation}
+    className={cx(
+      "flex touch-none select-none transition-all duration-200",
+      "opacity-0 group-hover:opacity-100 data-[state=visible]:opacity-100",
+      orientation === "vertical"
+      && "h-full w-2.5 border-l border-l-transparent p-[1px]",
+      orientation === "horizontal"
+      && "h-2.5 w-full border-t border-t-transparent p-[1px]",
+      "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+      className,
+    )}
+    {...props}
+  >
+    <BaseScrollArea.Thumb className="relative flex-1 rounded-full bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500" />
+  </BaseScrollArea.Scrollbar>
+);
 
 ScrollBar.displayName = "ScrollBar";
 
-export { ScrollArea, ScrollBar };
+export { ScrollArea, type ScrollAreaProps, ScrollBar };

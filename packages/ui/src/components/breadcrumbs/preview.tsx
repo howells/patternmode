@@ -1,48 +1,11 @@
-import {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@patternmode/ui";
+"use client";
+
+import { Breadcrumbs } from "@patternmode/ui";
+
 import React from "react";
 
-// Example component for preview system
-export const /**
-              *
-              */
-  BreadcrumbsExample = ({
-    showEllipsis = false,
-    ...props
-  }: {
-    showEllipsis?: boolean;
-    [key: string]: unknown;
-  }) => {
-    return (
-      <Breadcrumb {...props}>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          {showEllipsis && (
-            <>
-              <BreadcrumbItem>
-                <BreadcrumbEllipsis />
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-            </>
-          )}
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/components">Components</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumbs</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-    );
-  };
+type BreadcrumbsExampleProps = React.ComponentProps<typeof Breadcrumbs>;
+
+export function BreadcrumbsExample(props: React.ComponentProps<typeof Breadcrumbs>) {
+  return <Breadcrumbs {...props} />;
+}

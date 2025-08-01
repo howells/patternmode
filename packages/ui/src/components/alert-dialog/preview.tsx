@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,48 +11,38 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@patternmode/ui";
+
 import React from "react";
 
-// Example component for preview system
-export const /**
-              *
-              */
-  AlertDialogExample = ({
-    variant = "default",
-    title = "Are you absolutely sure?",
-    description = "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-    cancelText = "Cancel",
-    actionText = "Continue",
-    ...props
-  }: {
-    variant?: string;
-    title?: string;
-    description?: string;
-    cancelText?: string;
-    actionText?: string;
-    [key: string]: unknown;
-  }) => {
-    const isDestructive = variant === "destructive";
+export function AlertDialogExample(props: React.ComponentProps<typeof AlertDialog>) {
+  // Use controlled mode to avoid uncontrolled state changes
+  const [internalOpen, setInternalOpen] = React.useState(false);
 
-    return (
-      <AlertDialog {...props}>
-        <AlertDialogTrigger>
-          {isDestructive ? "Delete Account" : "Save Changes"}
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{title}</AlertDialogTitle>
-            <AlertDialogDescription>{description}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{cancelText}</AlertDialogCancel>
-            <AlertDialogAction
-              variant={isDestructive ? "destructive" : "default"}
-            >
-              {actionText}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    );
-  };
+  // If open is provided in props, use it (controlled from parent)
+  // Otherwise use internal state (controlled from this component)
+  const isControlledFromParent = props.open !== undefined;
+  const open = isControlledFromParent ? props.open : internalOpen;
+  const onOpenChange = isControlledFromParent ? props.onOpenChange : setInternalOpen;
+
+  // Remove open/defaultOpen/onOpenChange from props to avoid conflicts
+  const { open: _, defaultOpen: __, onOpenChange: ___, ...restProps } = props;
+
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange} {...restProps}>
+      <AlertDialogTrigger>Delete Account</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction variant="destructive">Delete Account</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}

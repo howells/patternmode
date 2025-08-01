@@ -6,7 +6,7 @@
  */
 
 // Type definitions for configuration
-export interface IconConfig {
+export type IconConfig = {
   strokeWidth: {
     default: number;
     thin: number;
@@ -20,21 +20,21 @@ export interface IconConfig {
     lg: string;
     xl: string;
   };
-}
+};
 
-export interface ComponentConfig {
+export type ComponentConfig = {
   // Global icon stroke width - used by all components for consistency
   iconStrokeWidth: number;
-}
+};
 
-export interface LibraryConfig {
+export type LibraryConfig = {
   icons: IconConfig;
   components: ComponentConfig;
   theme: {
     cssPrefix: string;
     useCssCustomProperties: boolean;
   };
-}
+};
 
 // Default configuration
 const defaultConfig: LibraryConfig = {

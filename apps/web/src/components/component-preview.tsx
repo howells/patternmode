@@ -1,9 +1,22 @@
 "use client";
 
-import { CodeBlock, getDynamicIconByName, Loader, Tabs, TabsContent, TabsList, TabsTrigger, VStack } from "@patternmode/ui";
 import dynamic from "next/dynamic";
 import React from "react";
-import { usePropExplorer } from "./prop-explorer-context";
+
+import {
+  Breadcrumbs,
+  Button,
+  CodeBlock,
+  getDynamicIconByName,
+  Loader,
+  SparkAreaChart,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@patternmode/ui";
+
+import { usePropExplorer } from "../features/prop-explorer/prop-explorer-context";
 
 // Component that dynamically calculates grid-aligned positioning
 const GridAlignedContainer: React.FC<{
@@ -16,6 +29,7 @@ const GridAlignedContainer: React.FC<{
   const containerRef = React.useRef<HTMLDivElement>(null);
   const componentRef = React.useRef<HTMLDivElement>(null);
   const [leftPosition, setLeftPosition] = React.useState(96);
+  const [isWiderThanContainer, setIsWiderThanContainer] = React.useState(false);
 
   React.useEffect(() => {
     const calculatePosition = () => {
@@ -24,16 +38,22 @@ const GridAlignedContainer: React.FC<{
         const componentWidth = componentRef.current.offsetWidth;
         const gridSize = 24; // 24px grid size
 
-        // Calculate the center position
-        const centerPosition = (containerWidth - componentWidth) / 2;
+        // Check if component is wider than container
+        const isWide = componentWidth > containerWidth - 48; // 48px for padding
+        setIsWiderThanContainer(isWide);
 
-        // Snap to nearest grid intersection
-        const gridOffset = 24; // First visible grid line
-        const snappedLeft =
-          Math.round((centerPosition - gridOffset) / gridSize) * gridSize +
-          gridOffset;
+        if (!isWide) {
+          // Calculate the center position
+          const centerPosition = (containerWidth - componentWidth) / 2;
 
-        setLeftPosition(snappedLeft);
+          // Snap to nearest grid intersection
+          const gridOffset = 24; // First visible grid line
+          const snappedLeft
+            = Math.round((centerPosition - gridOffset) / gridSize) * gridSize
+              + gridOffset;
+
+          setLeftPosition(snappedLeft);
+        }
       }
     };
 
@@ -78,6 +98,26 @@ const GridAlignedContainer: React.FC<{
     );
   }
 
+  // For wide components, use centered positioning without absolute left
+  if (isWiderThanContainer) {
+    return (
+      <div
+        ref={containerRef}
+        className="relative flex justify-center"
+        style={{
+          minHeight: "400px",
+          paddingTop: "72px", // equivalent to top-18
+          paddingLeft: "24px",
+          paddingRight: "24px",
+        }}
+      >
+        <div ref={componentRef} className="flex justify-center">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
@@ -90,7 +130,7 @@ const GridAlignedContainer: React.FC<{
         ref={componentRef}
         className="absolute top-18"
         style={{
-          left: leftPosition + "px",
+          left: `${leftPosition}px`,
         }}
       >
         {children}
@@ -99,17 +139,17 @@ const GridAlignedContainer: React.FC<{
   );
 };
 
-interface ComponentPreviewProps {
+type ComponentPreviewProps = {
   componentId: string;
   category?: string;
   componentPath?: string;
-}
+};
 
 // Map componentId to import path
 const getComponentImportPath = (
   componentId: string,
   category?: string,
-  componentPath?: string
+  componentPath?: string,
 ): string => {
   // Use provided path if available
   if (componentPath) {
@@ -130,7 +170,7 @@ const getComponentImportPath = (
   }
 
   // Convert componentId to kebab-case for directory structure
-  const kebabCase = componentId
+  const _kebabCase = componentId
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .toLowerCase();
 
@@ -144,7 +184,7 @@ const getExportedComponentName = (componentId: string): string => {
   if (componentId.includes("-")) {
     return componentId
       .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join("");
   }
 
@@ -155,28 +195,34 @@ const getExportedComponentName = (componentId: string): string => {
 // Generate JSX code from component props for the Code tab
 const generateLiveCode = (
   componentName: string,
-  props: Record<string, unknown>
+  props: Record<string, unknown>,
 ): string => {
   const { children, ...otherProps } = props;
 
   const propsArray = Object.entries(otherProps)
     .filter(
-      ([, value]) => value !== "" && value !== false && value !== undefined
+      ([, value]) => value !== "" && value !== false && value !== undefined,
     )
     .map(([key, value]) => {
-      if (value === true) return key;
-      if (typeof value === "string") return key + '="' + value + '"';
-      if (key.includes("Icon") && typeof value === "string")
-        return key + "={" + value + "Icon}";
-      return key + "={" + JSON.stringify(value) + "}";
+      if (value === true) {
+        return key;
+      }
+      if (typeof value === "string") {
+        return `${key}="${value}"`;
+      }
+      if (key.includes("Icon") && typeof value === "string") {
+        return `${key}={${value}Icon}`;
+      }
+      return `${key}={${JSON.stringify(value)}}`;
     });
 
-  const propsString = propsArray.length > 0 ? " " + propsArray.join(" ") : "";
+  const propsString = propsArray.length > 0 ? ` ${propsArray.join(" ")}` : "";
 
   if (children && children !== "") {
-    return "<" + componentName + propsString + ">\n  " + children + "\n</" + componentName + ">";
-  } else {
-    return "<" + componentName + propsString + " />";
+    return `<${componentName}${propsString}>\n  ${children}\n</${componentName}>`;
+  }
+  else {
+    return `<${componentName}${propsString} />`;
   }
 };
 
@@ -187,13 +233,10 @@ const getComponentName = (componentId: string): string => {
   return getExportedComponentName(baseComponent);
 };
 
-// Import components statically to avoid dynamic import issues
-import { Breadcrumb, Button, SparkAreaChart } from "@patternmode/ui";
-
 // Static component mapping
-const componentMap: Record<string, React.ComponentType<any>> = {
-  button: Button,
-  breadcrumbs: Breadcrumb,
+const componentMap: Record<string, React.ComponentType<unknown>> = {
+  "button": Button,
+  "breadcrumbs": Breadcrumbs,
   "spark-chart": SparkAreaChart, // Use SparkAreaChart as default spark chart
 };
 
@@ -201,7 +244,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
 const createDynamicComponent = (
   componentId: string,
   category?: string,
-  componentPath?: string
+  componentPath?: string,
 ) => {
   // Use static mapping for known components
   if (componentMap[componentId]) {
@@ -212,28 +255,34 @@ const createDynamicComponent = (
     };
   }
 
+  // For preview components, convert component name to ExampleComponent format
+  // e.g., "accordion" -> "AccordionExample"
+  const previewComponentId = componentId.toLowerCase().endsWith("example")
+    ? componentId
+    : `${getExportedComponentName(componentId)}Example`;
+
   return dynamic(
     () => {
       const importPath = getComponentImportPath(
-        componentId,
+        previewComponentId,
         category,
-        componentPath
+        componentPath,
       );
-      const exportedName = getExportedComponentName(componentId);
+      const exportedName = getExportedComponentName(previewComponentId);
 
       console.log(
-        "Attempting to import component: " + componentId + " from " + importPath
+        `Attempting to import component: ${previewComponentId} from ${importPath}`,
       );
 
       return import(importPath)
         .then((mod) => {
           console.log(
-            "Successfully imported from three-file structure: " + importPath
+            `Successfully imported from three-file structure: ${importPath}`,
           );
 
           // If the component has a PropExplorer config with examples, try to use the first example's render function
-          const propConfig =
-            mod[exportedName.toLowerCase() + "PropConfig"] || mod.propConfig;
+          const propConfig
+            = mod[`${exportedName.toLowerCase()}PropConfig`] || mod.propConfig;
 
           // Check if there's an example with a render function
           if (propConfig?.examples?.[0]?.render) {
@@ -244,16 +293,16 @@ const createDynamicComponent = (
           const component = mod[exportedName] || mod.default;
           if (!component) {
             console.error(
-              "No component found with name " + exportedName + " in " + importPath
+              `No component found with name ${exportedName} in ${importPath}`,
             );
-            throw new Error("Component " + exportedName + " not found in module");
+            throw new Error(`Component ${exportedName} not found in module`);
           }
           return { default: component };
         })
         .catch((error) => {
           console.warn(
-            "Failed to load from three-file structure (" + importPath + "):",
-            error.message
+            `Failed to load from three-file structure (${importPath}):`,
+            error.message,
           );
 
           // Try a few different fallback strategies
@@ -263,53 +312,53 @@ const createDynamicComponent = (
 
           // Strategy 1: Try flat structure in ui folder
           const flatPath = "@patternmode/ui";
-          console.log("Trying fallback: " + flatPath);
+          console.log(`Trying fallback: ${flatPath}`);
 
           return import(flatPath)
             .then((mod) => {
               console.log(
-                "Successfully imported from flat structure: " + flatPath
+                `Successfully imported from flat structure: ${flatPath}`,
               );
               const component = mod[exportedName] || mod.default;
               if (!component) {
                 throw new Error(
-                  "Component " + exportedName + " not found in " + flatPath
+                  `Component ${exportedName} not found in ${flatPath}`,
                 );
               }
               return { default: component };
             })
             .catch((fallbackError) => {
               console.warn(
-                "Flat structure fallback also failed (" + flatPath + "):",
-                fallbackError.message
+                `Flat structure fallback also failed (${flatPath}):`,
+                fallbackError.message,
               );
 
               // Strategy 2: Try different category paths if category is provided
               if (category && category !== "ui") {
-                const categoryPath = "@/components/" + category + "/" + kebabCase;
-                console.log("Trying category fallback: " + categoryPath);
+                const categoryPath = `@/components/${category}/${kebabCase}`;
+                console.log(`Trying category fallback: ${categoryPath}`);
 
                 return import(categoryPath)
                   .then((mod) => {
                     console.log(
-                      "Successfully imported from category structure: " + categoryPath
+                      `Successfully imported from category structure: ${categoryPath}`,
                     );
                     const component = mod[exportedName] || mod.default;
                     if (!component) {
                       throw new Error(
-                        "Component " + exportedName + " not found in " + categoryPath
+                        `Component ${exportedName} not found in ${categoryPath}`,
                       );
                     }
                     return { default: component };
                   })
                   .catch((categoryError) => {
                     console.error(
-                      "All import strategies failed for " + componentId + ":",
+                      `All import strategies failed for ${componentId}:`,
                       {
                         threeFile: error.message,
                         flat: fallbackError.message,
                         category: categoryError.message,
-                      }
+                      },
                     );
 
                     // Return a fallback error component
@@ -317,7 +366,9 @@ const createDynamicComponent = (
                       default: () => (
                         <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
                           <p className="font-medium">
-                            {componentId} preview
+                            {componentId}
+                            {" "}
+                            preview
                           </p>
                           <p className="text-xs mt-1">Interactive preview coming soon</p>
                         </div>
@@ -328,18 +379,20 @@ const createDynamicComponent = (
 
               // If no category, just throw the original error
               console.error(
-                "All import strategies failed for " + componentId + ":",
+                `All import strategies failed for ${componentId}:`,
                 {
                   threeFile: error.message,
                   flat: fallbackError.message,
-                }
+                },
               );
 
               return {
                 default: () => (
                   <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
                     <p className="font-medium">
-                      {componentId} preview
+                      {componentId}
+                      {" "}
+                      preview
                     </p>
                     <p className="text-xs mt-1">Interactive preview coming soon</p>
                   </div>
@@ -351,11 +404,11 @@ const createDynamicComponent = (
     {
       loading: () => (
         <div className="flex items-center justify-center p-8">
-          <Loader aria-label={"Loading " + componentId} />
+          <Loader aria-label={`Loading ${componentId}`} />
         </div>
       ),
       ssr: false,
-    }
+    },
   ) as React.ComponentType<
     Record<string, unknown> & { children?: React.ReactNode }
   >;
@@ -371,7 +424,7 @@ export function ComponentPreview({
   // Create dynamic component for this specific componentId
   const Component = React.useMemo(
     () => createDynamicComponent(componentId, category, componentPath),
-    [componentId, category, componentPath]
+    [componentId, category, componentPath],
   );
 
   // Create final props for the component
@@ -388,7 +441,8 @@ export function ComponentPreview({
         if (iconComponent) {
           finalProps[key] = iconComponent;
         }
-      } else if (isIconProp && value === "") {
+      }
+      else if (isIconProp && value === "") {
         // Remove empty icon props
         delete finalProps[key];
       }
@@ -398,7 +452,8 @@ export function ComponentPreview({
     Object.entries(finalProps).forEach(([key, value]) => {
       if (value === "true") {
         finalProps[key] = true;
-      } else if (value === "false") {
+      }
+      else if (value === "false") {
         finalProps[key] = false;
       }
     });
@@ -413,12 +468,19 @@ export function ComponentPreview({
       if (props.children !== undefined) {
         const childrenContent = String(props.children);
         return <Component {...componentProps}>{childrenContent}</Component>;
-      } else {
+      }
+      else {
         return <Component {...componentProps} />;
       }
-    } catch (renderError) {
+    }
+    catch (renderError) {
       console.error("Error rendering component:", renderError);
-      return <div className="text-red-500">Error rendering {componentId}</div>;
+      return (
+        <div className="text-red-500">
+          Error rendering
+          {componentId}
+        </div>
+      );
     }
   };
 
@@ -435,7 +497,7 @@ export function ComponentPreview({
 
         <TabsContent value="preview" data-testid="component-preview">
           <div data-testid="preview-container">
-            <GridAlignedContainer isResponsive={componentId.toLowerCase().includes('textarea')}>
+            <GridAlignedContainer isResponsive={componentId.toLowerCase().includes("textarea")}>
               {renderComponent()}
             </GridAlignedContainer>
           </div>

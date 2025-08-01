@@ -1,6 +1,8 @@
 // Tremor Raw cx [v0.0.0]
 
-import { type ClassValue, clsx } from "clsx";
+import type { ClassValue } from "clsx";
+
+import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cx(...inputs: ClassValue[]) {
@@ -60,9 +62,9 @@ export const iconUtils = {
 };
 
 // Shared component props for components that support left/right icons
-export interface ComponentWithIconsProps {
+export type ComponentWithIconsProps = {
   leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /** Stroke width for icons (defaults to 1) */
   iconStrokeWidth?: number;
-}
+};

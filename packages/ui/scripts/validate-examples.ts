@@ -14,22 +14,22 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-interface ValidationResult {
+type ValidationResult = {
   component: string;
   valid: boolean;
   errors: string[];
   warnings: string[];
   exampleCount: number;
   categories: string[];
-}
+};
 
-interface _ExampleMetadata {
+type _ExampleMetadata = {
   id: string;
   title: string;
   description: string;
   category?: string;
   tags?: string[];
-}
+};
 
 // ANSI color codes
 const colors = {

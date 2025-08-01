@@ -1,8 +1,9 @@
 // Tremor Switch [v1.0.0] - Base UI
 
+import type { VariantProps } from "tailwind-variants";
+
 import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
@@ -73,87 +74,171 @@ const switchVariants = tv({
  * <Switch>Enable notifications</Switch>
  * ```
  */
-interface SwitchProps
-  extends Omit<
-      React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>,
-      "children"
-    >,
-  VariantProps<typeof switchVariants> {
+type SwitchProps = {
   /**
    * Optional label text displayed next to the switch.
    */
   label?: string;
-}
+} & Omit<
+      React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>,
+      "children"
+    > & VariantProps<typeof switchVariants>;
 
 /**
- * A toggle switch component built on Base UI's Switch primitive.
+ * A binary toggle switch component for on/off states with smooth animations and full accessibility support.
  *
- * Based on Base UI's Switch (https://base-ui.com/react/components/switch),
- * providing accessible on/off controls with smooth animations and focus management.
- * Features multiple sizes and optional label support with Tremor-inspired styling.
+ * Built on Base UI's Switch primitive, this component provides an intuitive toggle interface for
+ * binary choices. Unlike checkboxes, switches are designed for immediate state changes and are
+ * commonly used for settings, preferences, and feature toggles.
  *
+ * **Key Features:**
+ * - **Smooth Animations**: Fluid thumb movement with CSS transitions
+ * - **Keyboard Accessible**: Space and Enter key activation with proper focus management
+ * - **Size Variants**: Small and default sizes for different UI contexts
+ * - **Optional Labels**: Built-in label support with proper association
+ * - **Touch Optimized**: Large touch targets for mobile devices
+ * - **Form Integration**: Works seamlessly with forms and controlled/uncontrolled patterns
+ * - **Visual States**: Clear on/off visual distinction with color and position changes.
  *
- * @id switch
- * @name Switch
- * @component
+ * **Common Use Cases:**
+ * - Settings and preferences panels
+ * - Feature toggles and experiments
+ * - Notification and privacy controls
+ * - Theme switching (dark/light mode)
+ * - Form field enables/disables
+ * - API endpoint activation
+ * - Real-time feature flags.
+ *
+ * **Accessibility:**
+ * - Proper ARIA attributes (role="switch", aria-checked)
+ * - Keyboard navigation with space and enter keys
+ * - Screen reader announcements for state changes
+ * - Focus management and visual focus indicators
+ * - Semantic switch role instead of checkbox.
+ *
+ * @category inputs
+ * @icon ToggleLeft
  * @example
  * ```tsx
- * // Basic switch
- * <Switch />
+ * // Basic uncontrolled switch
+ * <Switch defaultChecked={false} />
  *
- * // Controlled switch
- * <Switch checked={enabled} onCheckedChange={setEnabled} />
+ * // Controlled switch with state management
+ * <Switch
+ *   checked={notifications}
+ *   onCheckedChange={setNotifications}
+ * />
  *
- * // With label
- * <Switch label="Enable notifications" />
+ * // Switch with label
+ * <Switch
+ *   label="Enable email notifications"
+ *   checked={emailEnabled}
+ *   onCheckedChange={setEmailEnabled}
+ * />
  *
- * // Different sizes
- * <Switch size="small" />
- * <Switch size="default" />
+ * // Small size for compact layouts
+ * <Switch
+ *   size="small"
+ *   label="Dark mode"
+ *   checked={isDarkMode}
+ *   onCheckedChange={setIsDarkMode}
+ * />
  *
  * // Form integration
- * <Switch name="newsletter" defaultChecked />
- * ```
+ * <form onSubmit={handleSubmit}>
+ *   <Switch
+ *     name="newsletter"
+ *     label="Subscribe to newsletter"
+ *     defaultChecked={true}
+ *   />
+ *   <Switch
+ *     name="marketing"
+ *     label="Marketing emails"
+ *     disabled={!newsletter}
+ *   />
+ *   <button type="submit">Save Settings</button>
+ * </form>
  *
- * @see https://base-ui.com/react/components/switch - Base UI documentation
+ * // Settings panel with multiple switches
+ * <div className="space-y-4">
+ *   <div className="flex justify-between items-center">
+ *     <span className="font-medium">Privacy Settings</span>
+ *   </div>
+ *
+ *   <Switch
+ *     label="Share analytics data"
+ *     checked={settings.analytics}
+ *     onCheckedChange={(checked) =>
+ *       updateSettings({ analytics: checked })
+ *     }
+ *   />
+ *
+ *   <Switch
+ *     label="Allow marketing communications"
+ *     checked={settings.marketing}
+ *     onCheckedChange={(checked) =>
+ *       updateSettings({ marketing: checked })
+ *     }
+ *   />
+ *
+ *   <Switch
+ *     label="Enable location tracking"
+ *     checked={settings.location}
+ *     onCheckedChange={(checked) =>
+ *       updateSettings({ location: checked })
+ *     }
+ *     size="small"
+ *   />
+ * </div>
+ *
+ * // Disabled state
+ * <Switch
+ *   label="Premium feature"
+ *   disabled={!isPremiumUser}
+ *   checked={false}
+ * />
+ * ```
  */
 /**
- * A control that allows the user to toggle between checked and not checked.
+ * Toggle switch component for binary on/off state selection.
  *
  * @id switch
  * @name Switch
+ * @icon ToggleLeft
+ * @category inputs
  * @component
+ * @param props - Component properties.
  */
 const Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null> }) => {
-    const { root, thumb } = switchVariants({ size });
+  const { root, thumb } = switchVariants({ size });
 
-    if (label) {
-      return (
-        <div className="flex items-center space-x-2">
-          <BaseSwitch.Root
-            ref={forwardedRef}
-            className={cx(root(), className)}
-            {...props}
-          >
-            <BaseSwitch.Thumb className={cx(thumb())} />
-          </BaseSwitch.Root>
-          <span className="text-sm text-zinc-900 dark:text-zinc-100">
-            {label}
-          </span>
-        </div>
-      );
-    }
-
+  if (label) {
     return (
-      <BaseSwitch.Root
-        ref={forwardedRef}
-        className={cx(root(), className)}
-        {...props}
-      >
-        <BaseSwitch.Thumb className={cx(thumb())} />
-      </BaseSwitch.Root>
+      <div className="flex items-center space-x-2">
+        <BaseSwitch.Root
+          ref={forwardedRef}
+          className={cx(root(), className)}
+          {...props}
+        >
+          <BaseSwitch.Thumb className={cx(thumb())} />
+        </BaseSwitch.Root>
+        <span className="text-sm text-zinc-900 dark:text-zinc-100">
+          {label}
+        </span>
+      </div>
     );
-  };
+  }
+
+  return (
+    <BaseSwitch.Root
+      ref={forwardedRef}
+      className={cx(root(), className)}
+      {...props}
+    >
+      <BaseSwitch.Thumb className={cx(thumb())} />
+    </BaseSwitch.Root>
+  );
+};
 
 Switch.displayName = "Switch";
 
@@ -161,4 +246,4 @@ Switch.displayName = "Switch";
 const SwitchRoot = BaseSwitch.Root;
 const SwitchThumb = BaseSwitch.Thumb;
 
-export { Switch, SwitchRoot, SwitchThumb, switchVariants };
+export { Switch, type SwitchProps, SwitchRoot, SwitchThumb, switchVariants };

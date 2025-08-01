@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  typescript: {
+    // Disable Next.js TypeScript plugin warnings about serialization
+    ignoreBuildErrors: false,
+  },
+  experimental: {
+    typedRoutes: false,
+  },
 };
 
 export default nextConfig;

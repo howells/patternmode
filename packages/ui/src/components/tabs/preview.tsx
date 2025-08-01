@@ -1,8 +1,15 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
-import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import type { ButtonSize } from "../button/button";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui";
+
+import { BarChart3, FileText, Settings, Users } from "lucide-react";
+import React from "react";
+
+type TabsExampleProps = {
+  [key: string]: unknown;
+};
 
 export function TabsExample({
   defaultValue = "overview",
@@ -18,12 +25,14 @@ export function TabsExample({
   hideDivider?: boolean;
   showIcons?: boolean;
 } & React.ComponentProps<typeof Tabs>) {
-  const icons = showIcons ? {
-    overview: FileText,
-    analytics: BarChart3,
-    reports: Users,
-    notifications: Settings,
-  } : {};
+  const icons = showIcons
+    ? {
+        overview: FileText,
+        analytics: BarChart3,
+        reports: Users,
+        notifications: Settings,
+      }
+    : {};
 
   return (
     <Tabs defaultValue={defaultValue} {...props}>

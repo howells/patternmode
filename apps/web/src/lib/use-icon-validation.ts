@@ -2,10 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-interface IconValidationData {
+type IconValidationData = {
   kebabNames: Set<string>;
   pascalNames: Set<string>;
-}
+};
 
 /**
  * Fetch all valid icon names from the API for validation purposes.
@@ -13,16 +13,16 @@ interface IconValidationData {
  */
 async function fetchValidIcons(): Promise<IconValidationData> {
   const response = await fetch("/api/icons?limit=9999");
-  
+
   if (!response.ok) {
     throw new Error("Failed to fetch valid icons");
   }
 
   const data = await response.json();
-  
+
   const kebabNames = new Set<string>();
   const pascalNames = new Set<string>();
-  
+
   data.icons.forEach((icon: { kebab: string; pascal: string }) => {
     kebabNames.add(icon.kebab);
     pascalNames.add(icon.pascal);
@@ -34,7 +34,7 @@ async function fetchValidIcons(): Promise<IconValidationData> {
 /**
  * Hook to validate icon names against the official Lucide React library.
  * Fetches all valid icons once per session and caches them indefinitely.
- * 
+ *
  * @returns Object with validation functions for both kebab-case and PascalCase names
  */
 export function useIconValidation() {
@@ -51,7 +51,7 @@ export function useIconValidation() {
    * Check if a kebab-case icon name is valid (e.g., "arrow-down", "file-json-2")
    */
   const isValidKebabIcon = (name: string): boolean => {
-    if (!data || !name || typeof name !== "string") return false;
+    if (!data || !name || typeof name !== "string") { return false; }
     return data.kebabNames.has(name);
   };
 
@@ -59,7 +59,7 @@ export function useIconValidation() {
    * Check if a PascalCase icon name is valid (e.g., "ArrowDown", "FileJson2")
    */
   const isValidPascalIcon = (name: string): boolean => {
-    if (!data || !name || typeof name !== "string") return false;
+    if (!data || !name || typeof name !== "string") { return false; }
     return data.pascalNames.has(name);
   };
 

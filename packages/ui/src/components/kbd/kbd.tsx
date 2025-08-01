@@ -42,9 +42,11 @@
  * ```
  */
 
-import React from "react";
 import type { VariantProps } from "tailwind-variants";
+
+import React from "react";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 
 const kbdVariants = tv({
@@ -87,9 +89,7 @@ const kbdVariants = tv({
 /**
  * Props for the Kbd component.
  */
-interface KbdProps
-  extends React.ComponentPropsWithoutRef<"kbd">,
-  VariantProps<typeof kbdVariants> {
+type KbdProps = {
   /**
    * Array of keys to display (for complex combinations).
    */
@@ -102,7 +102,7 @@ interface KbdProps
    * Visual variant - use 'onDarkButton' or 'onLightButton' when inside buttons.
    */
   variant?: "default" | "onDarkButton" | "onLightButton";
-}
+} & React.ComponentPropsWithoutRef<"kbd"> & VariantProps<typeof kbdVariants>;
 
 /**
  * Keyboard shortcut display component.
@@ -122,82 +122,92 @@ interface KbdProps
  * @id kbd
  * @name Kbd
  */
+/**
+ * Keyboard key display component for showing keyboard shortcuts and commands.
+ *
+ * @id kbd
+ * @name Kbd
+ * @icon Command
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ */
 const Kbd = (
-    { ref, className, children, keys, platform = "auto", size, variant, ...props }: KbdProps & { ref?: React.RefObject<HTMLElement | null> },
-  ) => {
+  { ref, className, children, keys, platform = "auto", size, variant, ...props }: KbdProps & { ref?: React.RefObject<HTMLElement | null> },
+) => {
   // Use state to handle platform detection after hydration to avoid SSR mismatch
-    const [isMac, setIsMac] = React.useState(false);
-    const [isHydrated, setIsHydrated] = React.useState(false);
+  const [isMac, setIsMac] = React.useState(false);
+  const [isHydrated, setIsHydrated] = React.useState(false);
 
-    React.useEffect(() => {
-      setIsHydrated(true);
+  React.useEffect(() => {
+    setIsHydrated(true);
 
-      if (platform === "mac") {
-        setIsMac(true);
-      }
-      else if (platform === "pc") {
-        setIsMac(false);
-      }
-      else if (platform === "auto") {
-      // Only detect platform after hydration to avoid SSR mismatch
-        setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.userAgent));
-      }
-    }, [platform]);
-
-    // Convert platform-agnostic keys to platform-specific
-    const processKeys = (keyList: string[]) => {
-      return keyList.map((key) => {
-        switch (key.toLowerCase()) {
-          case "mod":
-          case "cmd":
-          case "command":
-            return isHydrated && isMac ? "⌘" : "Ctrl";
-          case "ctrl":
-          case "control":
-            return isHydrated && isMac ? "⌃" : "Ctrl";
-          case "alt":
-          case "option":
-            return isHydrated && isMac ? "⌥" : "Alt";
-          case "shift":
-            return isHydrated && isMac ? "⇧" : "Shift";
-          case "meta":
-            return isHydrated && isMac ? "⌘" : "Win";
-          default:
-            return key;
-        }
-      });
-    };
-
-    // For multiple keys, render each as separate kbd elements
-    if (keys && keys.length > 0) {
-      const processedKeys = processKeys(keys);
-      return (
-        <span
-          className={cx("inline-flex items-center gap-1", className)}
-          {...props}
-        >
-          {processedKeys.map((key, index) => (
-            <React.Fragment key={index}>
-              {index > 0 && <span className="text-zinc-400 text-xs">+</span>}
-              <kbd className={cx(kbdVariants({ size, variant }))}>{key}</kbd>
-            </React.Fragment>
-          ))}
-        </span>
-      );
+    if (platform === "mac") {
+      setIsMac(true);
     }
+    else if (platform === "pc") {
+      setIsMac(false);
+    }
+    else if (platform === "auto") {
+      // Only detect platform after hydration to avoid SSR mismatch
+      setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.userAgent));
+    }
+  }, [platform]);
 
-    // For single keys or children, render as single kbd
+  // Convert platform-agnostic keys to platform-specific
+  const processKeys = (keyList: string[]) => {
+    return keyList.map((key) => {
+      switch (key.toLowerCase()) {
+        case "mod":
+        case "cmd":
+        case "command":
+          return isHydrated && isMac ? "⌘" : "Ctrl";
+        case "ctrl":
+        case "control":
+          return isHydrated && isMac ? "⌃" : "Ctrl";
+        case "alt":
+        case "option":
+          return isHydrated && isMac ? "⌥" : "Alt";
+        case "shift":
+          return isHydrated && isMac ? "⇧" : "Shift";
+        case "meta":
+          return isHydrated && isMac ? "⌘" : "Win";
+        default:
+          return key;
+      }
+    });
+  };
+
+  // For multiple keys, render each as separate kbd elements
+  if (keys && keys.length > 0) {
+    const processedKeys = processKeys(keys);
     return (
-      <kbd
-        ref={ref}
-        className={cx(kbdVariants({ size, variant }), className)}
+      <span
+        className={cx("inline-flex items-center gap-1", className)}
         {...props}
       >
-        {children}
-      </kbd>
+        {processedKeys.map((key, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <span className="text-zinc-400 text-xs">+</span>}
+            <kbd className={cx(kbdVariants({ size, variant }))}>{key}</kbd>
+          </React.Fragment>
+        ))}
+      </span>
     );
-  };
+  }
+
+  // For single keys or children, render as single kbd
+  return (
+    <kbd
+      ref={ref}
+      className={cx(kbdVariants({ size, variant }), className)}
+      {...props}
+    >
+      {children}
+    </kbd>
+  );
+};
 
 Kbd.displayName = "Kbd";
 
-export { Kbd, kbdVariants, type KbdProps };
+export { Kbd, type KbdProps, kbdVariants };

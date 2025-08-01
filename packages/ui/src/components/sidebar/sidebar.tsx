@@ -4,6 +4,7 @@ import { LayoutGroup } from "framer-motion";
 import { Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import Link from "next/link";
 import React, { useId, useState } from "react";
+
 import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 import { ScrollArea } from "../scroll-area/scroll-area";
@@ -12,17 +13,14 @@ import { Tooltip } from "../tooltip/tooltip";
 
 // Sidebar-specific title component for navigation hierarchy
 /**
- * A versatile sidebar component for navigation and content organization.
+ * Collapsible sidebar component for navigation and supplementary content organization.
  *
- * Sidebar.
- *
- * @component
  * @id sidebar
  * @name Sidebar
- * @example
- * ```tsx
- * <SidebarTitle>Content</SidebarTitle>
- * ```
+ * @icon Sidebar
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 function SidebarTitle({
   level = 1,
@@ -65,6 +63,21 @@ function SidebarTitle({
 }
 
 // Root Sidebar Container
+/**
+ * Collapsible sidebar component for navigation and supplementary content organization.
+ *
+ * @id sidebar
+ * @name Sidebar
+ * @icon Sidebar
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.isCollapsed - Whether the sidebar is in collapsed state.
+ * @param props.onToggle - Callback fired when toggle button is clicked.
+ * @param props.showToggle - Whether to show the collapse/expand toggle button.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Sidebar sections, items, and navigation content.
+ */
 export function Sidebar({
   className,
   children,
@@ -322,45 +335,42 @@ export function SidebarGroup({
 }
 
 // Level 3: Individual Items
-export const /**
-              *
-              */
-  SidebarItem = function SidebarItem(
-    { ref, current, className, children, isCollapsed, href, icon, leftIcon: LeftIcon, tooltipDelay = 0, onClick, ...props }: {
-      current?: boolean;
+export const SidebarItem = function SidebarItem(
+  { ref, current, className, children, isCollapsed, href, icon, leftIcon: LeftIcon, tooltipDelay = 0, onClick, ...props }: {
+    current?: boolean;
+    className?: string;
+    children: React.ReactNode;
+    isCollapsed?: boolean;
+    href?: string;
+    icon?: React.ComponentType<{
       className?: string;
-      children: React.ReactNode;
-      isCollapsed?: boolean;
-      href?: string;
-      icon?: React.ComponentType<{
-        className?: string;
-        strokeWidth?: number;
-      }>;
-      leftIcon?: React.ComponentType<{
-        className?: string;
-        strokeWidth?: number;
-      }>;
-      tooltipDelay?: number;
-    } & Omit<React.ComponentPropsWithoutRef<"button">, "className"> & { ref?: React.RefObject<HTMLButtonElement | null> },
-  ) {
-    const [isNavigating, setIsNavigating] = useState(false);
+      strokeWidth?: number;
+    }>;
+    leftIcon?: React.ComponentType<{
+      className?: string;
+      strokeWidth?: number;
+    }>;
+    tooltipDelay?: number;
+  } & Omit<React.ComponentPropsWithoutRef<"button">, "className"> & { ref?: React.RefObject<HTMLButtonElement | null> },
+) {
+  const [isNavigating, setIsNavigating] = useState(false);
 
-    const handleClick = (e: React.MouseEvent) => {
-      if (href) {
-        setIsNavigating(true);
-        setTimeout(() => setIsNavigating(false), 150);
-      }
-      if (onClick) {
-        onClick(e as React.MouseEvent<HTMLButtonElement>);
-      }
-    };
+  const handleClick = (e: React.MouseEvent) => {
+    if (href) {
+      setIsNavigating(true);
+      setTimeout(() => setIsNavigating(false), 150);
+    }
+    if (onClick) {
+      onClick(e as React.MouseEvent<HTMLButtonElement>);
+    }
+  };
 
-    // Handle collapsed state: if children is a simple string, apply collapsed logic
-    const shouldHideContent = isCollapsed && typeof children === "string";
-    const displayChildren = shouldHideContent ? null : children;
+  // Handle collapsed state: if children is a simple string, apply collapsed logic
+  const shouldHideContent = isCollapsed && typeof children === "string";
+  const displayChildren = shouldHideContent ? null : children;
 
-    // If it's a simple string and collapsed, wrap it with collapsed styling
-    const wrappedChildren
+  // If it's a simple string and collapsed, wrap it with collapsed styling
+  const wrappedChildren
     = isCollapsed && typeof children === "string"
       ? null
       : React.isValidElement(
@@ -380,110 +390,110 @@ export const /**
             </span>
           );
 
-    // For collapsed state with tooltip, create a simple element to avoid nested buttons
-    if (isCollapsed && typeof children === "string") {
+  // For collapsed state with tooltip, create a simple element to avoid nested buttons
+  if (isCollapsed && typeof children === "string") {
     // Safely render icon with proper error handling
-      const renderIcon = (
-        IconComponent:
-          | React.ComponentType<{ className?: string; strokeWidth?: number }>
-          | null
-          | undefined,
-      ) => {
-        if (!IconComponent || typeof IconComponent !== "function") {
-          return null;
-        }
+    const renderIcon = (
+      IconComponent:
+        | React.ComponentType<{ className?: string; strokeWidth?: number }>
+        | null
+        | undefined,
+    ) => {
+      if (!IconComponent || typeof IconComponent !== "function") {
+        return null;
+      }
 
-        try {
-          return React.createElement(IconComponent, {
-            className: "size-4",
-            strokeWidth: 1.5,
-          });
-        }
-        catch (error) {
+      try {
+        return React.createElement(IconComponent, {
+          className: "size-4",
+          strokeWidth: 1.5,
+        });
+      }
+      catch (error) {
         // Silently catch any icon rendering errors
-          console.warn("Icon rendering failed:", error);
-          return null;
-        }
-      };
+        console.warn("Icon rendering failed:", error);
+        return null;
+      }
+    };
 
-      const collapsedElement = href
-        ? (
-            <Link
-              href={href}
-              onClick={handleClick}
-              className={cx(
-                "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
-                "h-8 w-8 rounded-md",
-                "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
-                "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-                "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
-              )}
-            >
-              {renderIcon(icon || LeftIcon)}
-            </Link>
-          )
-        : (
-            <button
-              onClick={handleClick}
-              className={cx(
-                "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
-                "h-8 w-8 rounded-md",
-                "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
-                "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-                "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
-              )}
-              {...props}
-            >
-              {renderIcon(icon || LeftIcon)}
-            </button>
-          );
-
-      return (
-        <span
-          className={cx(className, "relative block px-2")}
-          data-component="SidebarItem"
-        >
-          <Tooltip
-            content={children}
-            side="right"
-            sideOffset={8}
-            delayDuration={tooltipDelay}
+    const collapsedElement = href
+      ? (
+          <Link
+            href={href}
+            onClick={handleClick}
+            className={cx(
+              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
+              "h-8 w-8 rounded-md",
+              "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
+              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+              "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
+            )}
           >
-            {collapsedElement}
-          </Tooltip>
-        </span>
-      );
-    }
-
-    // For expanded state or non-string children, use Button component
-    const buttonElement = (
-      <Button
-        render={href ? <Link href={href} /> : undefined}
-        variant="inverse-ghost"
-        shadow={false}
-        icon={icon}
-        leftIcon={LeftIcon}
-        onClick={handleClick}
-        fullWidth={!isCollapsed}
-        size={isCollapsed ? "icon-sm" : "sm"}
-        textAlign={isCollapsed ? "center" : "left"}
-        ref={ref}
-        title={isCollapsed && typeof children === "string" ? children : undefined}
-        {...props}
-      >
-        {wrappedChildren}
-      </Button>
-    );
+            {renderIcon(icon || LeftIcon)}
+          </Link>
+        )
+      : (
+          <button
+            onClick={handleClick}
+            className={cx(
+              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
+              "h-8 w-8 rounded-md",
+              "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
+              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+              "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
+            )}
+            {...props}
+          >
+            {renderIcon(icon || LeftIcon)}
+          </button>
+        );
 
     return (
       <span
         className={cx(className, "relative block px-2")}
         data-component="SidebarItem"
       >
-        {buttonElement}
+        <Tooltip
+          content={children}
+          side="right"
+          sideOffset={8}
+          delayDuration={tooltipDelay}
+        >
+          {collapsedElement}
+        </Tooltip>
       </span>
     );
-  };
+  }
+
+  // For expanded state or non-string children, use Button component
+  const buttonElement = (
+    <Button
+      render={href ? <Link href={href} /> : undefined}
+      variant="inverse-ghost"
+      shadow={false}
+      icon={icon}
+      leftIcon={LeftIcon}
+      onClick={handleClick}
+      fullWidth={!isCollapsed}
+      size={isCollapsed ? "icon-sm" : "sm"}
+      textAlign={isCollapsed ? "center" : "left"}
+      ref={ref}
+      title={isCollapsed && typeof children === "string" ? children : undefined}
+      {...props}
+    >
+      {wrappedChildren}
+    </Button>
+  );
+
+  return (
+    <span
+      className={cx(className, "relative block px-2")}
+      data-component="SidebarItem"
+    >
+      {buttonElement}
+    </span>
+  );
+};
 
 // Utility: Divider
 export function SidebarDivider({

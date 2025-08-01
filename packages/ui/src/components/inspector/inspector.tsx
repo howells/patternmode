@@ -112,6 +112,7 @@
 
 import { Settings, X } from "lucide-react";
 import React from "react";
+
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
 import { ScrollArea } from "../scroll-area/scroll-area";
@@ -154,6 +155,16 @@ import { ScrollArea } from "../scroll-area/scroll-area";
  * @component
  * @id inspector
  * @name Inspector
+ */
+/**
+ * Development tool component for inspecting and debugging component properties.
+ *
+ * @id inspector
+ * @name Inspector
+ * @icon Settings
+ * @category utility
+ * @component
+ * @param props - Component properties.
  */
 export function Inspector({
   className,

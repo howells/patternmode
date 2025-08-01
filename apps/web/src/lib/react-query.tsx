@@ -56,13 +56,13 @@ export function getQueryClient() {
 /**
  * Props for the ReactQueryProvider component.
  */
-interface ReactQueryProviderProps {
+type ReactQueryProviderProps = {
   children: React.ReactNode;
   /** Optional custom query client (uses global instance by default) */
   client?: QueryClient;
   /** Show React Query DevTools in development (default: true) */
   showDevtools?: boolean;
-}
+};
 
 /**
  * React Query provider component.
@@ -176,7 +176,7 @@ export function usePrefetchIcons() {
         pages: 1, // Only prefetch first page
       });
     },
-    [queryClient]
+    [queryClient],
   );
 
   return { prefetchIcons };
@@ -195,7 +195,7 @@ export function useInvalidateIcons() {
         queryKey: QueryKeys.icons(search),
       });
     },
-    [queryClient]
+    [queryClient],
   );
 
   const invalidateAllIcons = React.useCallback(async () => {

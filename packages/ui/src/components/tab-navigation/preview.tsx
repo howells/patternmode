@@ -1,16 +1,11 @@
 "use client";
 
-import { TabNavigation, TabNavigationLink } from "@patternmode/ui";
+import { TabNavigation } from "@patternmode/ui";
 
-export function Example() {
-  return (
-    <TabNavigation>
-      <TabNavigation>
-        <TabNavigationLink href="#dashboard">Dashboard</TabNavigationLink>
-        <TabNavigationLink href="#analytics">Analytics</TabNavigationLink>
-        <TabNavigationLink href="#reports">Reports</TabNavigationLink>
-        <TabNavigationLink href="#settings">Settings</TabNavigationLink>
-      </TabNavigation>
-    </TabNavigation>
-  );
+import React from "react";
+
+type TabNavigationExampleProps = React.ComponentProps<typeof TabNavigation>;
+
+export function TabNavigationExample(props: React.ComponentProps<typeof TabNavigation>) {
+  return <TabNavigation {...props} />;
 }

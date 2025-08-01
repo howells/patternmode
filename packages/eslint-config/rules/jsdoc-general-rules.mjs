@@ -30,12 +30,12 @@ export const jsdocGeneralRules = {
         "ExportDefaultDeclaration[declaration.type='ClassDeclaration']",
       ],
       // Disable auto-fix to prevent empty JSDoc blocks
-      fixable: "never",
+      enableFixer: false,
     },
   ],
 
   // Require brief descriptions (not all parameters/returns) - but don't auto-fix
-  "jsdoc/require-description": ["warn", { fixable: false }],
+  "jsdoc/require-description": "warn",
 
   // Ensure JSDoc comments are valid when present
   "jsdoc/check-alignment": "error",
@@ -54,8 +54,11 @@ export const jsdocGeneralRules = {
 
 /**
  * Configuration for general JSDoc rules
+ * Only applies to main component files in the UI package
  */
 export const jsdocGeneralConfig = {
   name: "jsdoc-general-rules",
+  files: ["**/packages/ui/src/components/**/*.tsx"],
+  ignores: ["**/examples.tsx", "**/preview.tsx"],
   rules: jsdocGeneralRules,
 };

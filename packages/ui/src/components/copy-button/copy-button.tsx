@@ -48,6 +48,7 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
+
 import { Check, Copy } from "lucide-react";
 import React, { useState } from "react";
 
@@ -62,8 +63,7 @@ import { Button } from "../button/button";
  * @interface CopyButtonProps
  * @augments Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">
  */
-interface CopyButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+type CopyButtonProps = {
   /**
    * Text content to copy to clipboard.
    */
@@ -88,7 +88,7 @@ interface CopyButtonProps
    * Additional CSS classes.
    */
   className?: string;
-}
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">;
 
 /**
  * A button component for copying text to the clipboard.
@@ -152,45 +152,58 @@ interface CopyButtonProps
  * @name Copy Button
  * @component
  */
-export const /**
-              *
-              */
-  CopyButton = (
-    { ref, text, copyLabel = "Copy", copiedLabel = "Copied", copyIcon: CopyIcon = Copy, copiedIcon: CopiedIcon = Check, className, ...props }: CopyButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
-  ) => {
-    const [copied, setCopied] = useState(false);
+/**
+ * Button component for copying text content to the clipboard with feedback.
+ *
+ * @id copy-button
+ * @name CopyButton
+ * @icon Copy
+ * @category utility
+ * @component
+ * @param props - Component properties.
+ * @param props.text - Text content to copy to clipboard.
+ * @param props.copyLabel - Label text for the copy state (default: "Copy").
+ * @param props.copiedLabel - Label text for the copied state (default: "Copied").
+ * @param props.copyIcon - Icon component for the copy state (default: Copy).
+ * @param props.copiedIcon - Icon component for the copied state (default: Check).
+ * @param props.className - Additional CSS classes.
+ */
+export const CopyButton = (
+  { ref, text, copyLabel = "Copy", copiedLabel = "Copied", copyIcon: CopyIcon = Copy, copiedIcon: CopiedIcon = Check, className, ...props }: CopyButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
+) => {
+  const [copied, setCopied] = useState(false);
 
-    /**
-     * Copies text to clipboard using the Clipboard API.
-     *
-     * Handles the copy operation with visual feedback and automatic
-     * state reset after 2 seconds. Logs errors if copying fails.
-     */
-    const copyToClipboard = async () => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-      catch (err) {
-        console.error("Failed to copy text: ", err);
-      }
-    };
-
-    return (
-      <Button
-        ref={ref}
-        variant="ghost"
-        size="sm"
-        onClick={copyToClipboard}
-        leftIcon={copied ? CopiedIcon : CopyIcon}
-        className={className}
-        {...props}
-      >
-        {copied ? copiedLabel : copyLabel}
-      </Button>
-    );
+  /**
+   * Copies text to clipboard using the Clipboard API.
+   *
+   * Handles the copy operation with visual feedback and automatic
+   * state reset after 2 seconds. Logs errors if copying fails.
+   */
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+    catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
   };
+
+  return (
+    <Button
+      ref={ref}
+      variant="ghost"
+      size="sm"
+      onClick={copyToClipboard}
+      leftIcon={copied ? CopiedIcon : CopyIcon}
+      className={className}
+      {...props}
+    >
+      {copied ? copiedLabel : copyLabel}
+    </Button>
+  );
+};
 
 CopyButton.displayName = "CopyButton";
 

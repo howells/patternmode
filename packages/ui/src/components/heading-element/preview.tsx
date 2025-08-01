@@ -1,31 +1,12 @@
+"use client";
+
+import type { HeadingElementProps } from "./heading-element";
 import { HeadingElement } from "@patternmode/ui";
+
 import React from "react";
 
-// Example component for preview system
-export const /**
-              *
-              */
-  HeadingElementExample = ({
-    level = 1,
-    children = "Heading Text",
-    className = "",
-    ...props
-  }: {
-    level?: 1 | 2 | 3 | 4 | 5 | 6;
-    children?: string;
-    className?: string;
-    [key: string]: unknown;
-  }) => {
-    return (
-      <div className="flex justify-center">
-        <HeadingElement level={level} className={className} {...props}>
-          {children}
-        </HeadingElement>
-      </div>
-    );
-  };
+type HeadingElementExampleProps = HeadingElementProps;
 
-// Default export for the preview system
-export function Example() {
-  return <HeadingElementExample />;
+export function HeadingElementExample(props: HeadingElementProps) {
+  return <HeadingElement {...props} />;
 }

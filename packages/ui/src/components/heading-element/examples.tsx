@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { HeadingElement } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -120,7 +124,47 @@ export function SemanticHierarchyExample() {
     </div>
   );
 }
-export const /**
-              *
-              */
-  HeadingElementExample = DefaultExample;
+export const HeadingElementExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "HeadingElementExample",
+    title: "Heading Element",
+    description: "Heading Element example",
+    component: HeadingElementExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "AllLevelsExample",
+    title: "All Levels",
+    description: "All Levels example",
+    component: AllLevelsExample,
+  },
+  {
+    id: "StyledExample",
+    title: "Styled",
+    description: "Styled example",
+    component: StyledExample,
+  },
+  {
+    id: "AccessibilityExample",
+    title: "Accessibility",
+    description: "Accessibility example",
+    component: AccessibilityExample,
+  },
+  {
+    id: "SemanticHierarchyExample",
+    title: "Semantic Hierarchy",
+    description: "Semantic Hierarchy example",
+    component: SemanticHierarchyExample,
+  },
+];

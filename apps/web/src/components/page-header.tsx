@@ -1,14 +1,12 @@
 "use client";
 
-import { Badge } from "@patternmode/ui";
-import { Heading } from "@patternmode/ui";
-import { Text } from "@patternmode/ui";
+import { Badge, Heading, Text } from "@patternmode/ui";
 
-interface PageHeaderProps {
+type PageHeaderProps = {
   title: string;
   description?: string;
   badge?: string;
-}
+};
 
 export function PageHeader({ title, description, badge }: PageHeaderProps) {
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Button,
   Popover,
@@ -10,6 +11,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 export function PopoverExample() {
@@ -198,3 +200,52 @@ export function ControlledExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "PopoverExample",
+    title: "Popover",
+    description: "Popover example",
+    component: PopoverExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "PositionsExample",
+    title: "Positions",
+    description: "Positions example",
+    component: PositionsExample,
+  },
+  {
+    id: "WithArrowExample",
+    title: "With Arrow",
+    description: "With Arrow example",
+    component: WithArrowExample,
+  },
+  {
+    id: "WithCloseExample",
+    title: "With Close",
+    description: "With Close example",
+    component: WithCloseExample,
+  },
+  {
+    id: "RichContentExample",
+    title: "Rich Content",
+    description: "Rich Content example",
+    component: RichContentExample,
+  },
+  {
+    id: "ControlledExample",
+    title: "Controlled",
+    description: "Controlled example",
+    component: ControlledExample,
+  },
+];

@@ -1,0 +1,6 @@
+{
+  "name": "@patternmode/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TypeScript configurations for the patternmode monorepo"
+}

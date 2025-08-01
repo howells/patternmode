@@ -2,14 +2,16 @@
 
 import { ComboChart } from "@patternmode/ui";
 
-interface ComboChartExampleProps {
+import React from "react";
+
+type ComboChartExampleProps = {
   showXAxis?: boolean;
   showLegend?: boolean;
   showTooltip?: boolean;
   showGridLines?: boolean;
   enableBiaxial?: boolean;
   enableLegendSlider?: boolean;
-}
+};
 
 export function ComboChartExample({
   showXAxis = true,

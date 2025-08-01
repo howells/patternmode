@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { NumberField } from "@patternmode/ui";
+
 import React from "react";
 
 export function NumberFieldExample() {
@@ -57,7 +61,53 @@ export function DisabledExample() {
   return <NumberField label="Read Only" defaultValue={42} disabled />;
 }
 
-export const /**
-              *
-              */
-  DefaultExample = NumberFieldExample;
+export const DefaultExample = NumberFieldExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "NumberFieldExample",
+    title: "Number Field",
+    description: "Number Field example",
+    component: NumberFieldExample,
+  },
+  {
+    id: "WithConstraintsExample",
+    title: "With Constraints",
+    description: "With Constraints example",
+    component: WithConstraintsExample,
+  },
+  {
+    id: "WithoutSteppersExample",
+    title: "Without Steppers",
+    description: "Without Steppers example",
+    component: WithoutSteppersExample,
+  },
+  {
+    id: "DisabledScrubAreaExample",
+    title: "Disabled Scrub Area",
+    description: "Disabled Scrub Area example",
+    component: DisabledScrubAreaExample,
+  },
+  {
+    id: "FullWidthExample",
+    title: "Full Width",
+    description: "Full Width example",
+    component: FullWidthExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+];

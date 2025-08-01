@@ -1,12 +1,14 @@
 "use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
+import { getComponentConfig } from "@patternmode/ui/component-registry";
 import React from "react";
-import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
-import { PropExplorerProvider, usePropExplorer } from "../prop-explorer-context";
-import { PropExplorerContent } from "../prop-explorer-controls";
 
-interface CellData {
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
+
+import { PropExplorerProvider, usePropExplorer } from "../../features/prop-explorer/prop-explorer-context";
+import { PropExplorerContent } from "../../features/prop-explorer/prop-explorer-controls";
+
+type CellData = {
   componentId: string;
   props: Record<string, unknown>;
   position?: {
@@ -15,21 +17,21 @@ interface CellData {
     colStart?: number;
     rowStart?: number;
   };
-}
+};
 
-interface PropsEditorPopoverProps {
+type PropsEditorPopoverProps = {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
   cellData: CellData;
-  onUpdateProps: (props: Record<string, unknown>) => void;
+  onUpdatePropsAction: (props: Record<string, unknown>) => void;
   trigger: React.ReactElement;
-}
+};
 
 export function PropsEditorPopover({
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
   cellData,
-  onUpdateProps,
+  onUpdatePropsAction,
   trigger,
 }: PropsEditorPopoverProps) {
   const config = getComponentConfig(cellData.componentId);
@@ -39,11 +41,11 @@ export function PropsEditorPopover({
   }
 
   const handlePropsUpdate = (newProps: Record<string, unknown>) => {
-    onUpdateProps(newProps);
+    onUpdatePropsAction(newProps);
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={onOpenChange}>
+    <Popover open={isOpen} onOpenChange={onOpenChangeAction}>
       <PopoverTrigger>
         {trigger}
       </PopoverTrigger>
@@ -55,7 +57,11 @@ export function PropsEditorPopover({
       >
         <div className="space-y-4">
           <div className="border-b border-zinc-200 dark:border-zinc-700 pb-3">
-            <h3 className="font-semibold text-sm">{config.name} Props</h3>
+            <h3 className="font-semibold text-sm">
+              {config.name}
+              {" "}
+              Props
+            </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
               Configure the component properties
             </p>
@@ -76,9 +82,9 @@ export function PropsEditorPopover({
 
 // Helper component to watch for prop changes and update parent
 function PropsUpdater({
-  onUpdate
+  onUpdate,
 }: {
-  onUpdate: (props: Record<string, unknown>) => void
+  onUpdate: (props: Record<string, unknown>) => void;
 }) {
   const { props } = usePropExplorer();
 
@@ -91,4 +97,4 @@ function PropsUpdater({
 }
 
 // Re-export the hook for convenience
-export { usePropExplorer } from "../prop-explorer-context";
+export { usePropExplorer } from "../../features/prop-explorer/prop-explorer-context";

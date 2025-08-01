@@ -9,132 +9,16 @@
  */
 
 import type { ComponentConfig, PropMetadata } from "../src/lib/component-config-types";
-
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as process from "node:process";
 
 import { parse } from "react-docgen-typescript";
+import { generateComponentProps } from "./generate-component-props";
 
 const componentsDir = path.resolve("src/components");
 
-/**
- * Component categories based on directory names
- */
-const CATEGORY_MAP: Record<string, string> = {
-  // Text components
-  "code-block": "text",
-  "heading": "text",
-  "heading-element": "text",
-  "kbd": "text",
-  "subheading": "text",
-  "text": "text",
 
-  // Layout components
-  "card": "layout",
-  "divider": "layout",
-  "grid": "layout",
-  "preview-card": "layout",
-  "separator": "layout",
-  "stack": "layout",
-
-  // Navigation
-  "breadcrumbs": "navigation",
-  "menu-bar": "navigation",
-  "navbar": "navigation",
-  "navigation-menu": "navigation",
-  "pagination": "navigation",
-  "sidebar": "navigation",
-  "tab-navigation": "navigation",
-  "tabs": "navigation",
-  "toolbar": "navigation",
-
-  // Feedback
-  "badge": "feedback",
-  "callout": "feedback",
-  "dot": "feedback",
-  "loader": "feedback",
-  "meter": "feedback",
-  "progress": "feedback",
-  "progress-circle": "feedback",
-  "skeleton": "feedback",
-  "tag": "feedback",
-  "toast": "feedback",
-
-  // Overlay
-  "alert-dialog": "overlay",
-  "context-menu": "overlay",
-  "dialog": "overlay",
-  "drawer": "overlay",
-  "menu": "overlay",
-  "popover": "overlay",
-  "responsive-drawer": "overlay",
-  "sheet": "overlay",
-  "tooltip": "overlay",
-
-  // Data
-  "accordion": "data",
-  "collapsible": "data",
-  "description-list": "data",
-  "list": "data",
-  "stacked-list": "data",
-  "table": "data",
-  "tracker": "data",
-
-  // Media
-  "avatar": "media",
-  "carousel": "media",
-  "empty-state": "media",
-  "icon": "media",
-  "icon-container": "media",
-  "inspector": "media",
-
-  // Utility
-  "copy-button": "utility",
-  "dismiss-button": "utility",
-  "scroll-area": "utility",
-  "touch-target": "utility",
-
-  // Inputs
-  "button": "inputs",
-  "calendar": "inputs",
-  "checkbox": "inputs",
-  "checkbox-group": "inputs",
-  "combobox": "inputs",
-  "date-picker": "inputs",
-  "date-range-picker": "inputs",
-  "icon-select": "inputs",
-  "input": "inputs",
-  "number-field": "inputs",
-  "radio": "inputs",
-  "radio-card-group": "inputs",
-  "radio-group": "inputs",
-  "select": "inputs",
-  "select-native": "inputs",
-  "slider": "inputs",
-  "split-button": "inputs",
-  "switch": "inputs",
-  "textarea": "inputs",
-  "toggle": "inputs",
-  "toggle-group": "inputs",
-
-  // Forms
-  "field": "forms",
-  "fieldset": "forms",
-  "form": "forms",
-  "label": "forms",
-  "tag-input": "forms",
-
-  // Charts
-  "area-chart": "charts",
-  "bar-chart": "charts",
-  "bar-list": "charts",
-  "category-bar": "charts",
-  "combo-chart": "charts",
-  "donut-chart": "charts",
-  "line-chart": "charts",
-  "spark-chart": "charts",
-};
 
 /**
  * Extract component info from a component directory
@@ -167,63 +51,58 @@ function extractComponentInfo(componentDir: string): ComponentConfig | null {
   }
 
   try {
-    // Extract props using react-docgen-typescript
-    const componentInfo = parse(componentFile, {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => {
-        // Only include props that have JSDoc descriptions (custom component props)
-        // This filters out inherited HTML attributes that don't have documentation
-        return Boolean(prop.description
-          && prop.description.trim().length > 0
-          && !prop.name.startsWith("aria-")
-          && !prop.name.startsWith("data-")
-          && prop.name !== "key"
-          && prop.name !== "ref"
-          && prop.name !== "className"
-          && !prop.name.startsWith("on")); // Exclude event handlers
-      },
-    });
+    // Generate props using the inline function
+    const props = generateComponentProps(componentDir);
 
-    if (componentInfo.length === 0) {
-      console.log(`⚠️  No props found for ${componentDir}`);
+    if (!props) {
       return null;
     }
 
-    const component = componentInfo[0]; // Take the first exported component
-    const componentName = component.displayName || componentDir;
+    // Convert directory name to PascalCase component name - this is the expected name
+    const componentName = componentDir.split("-").map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1),
+    ).join("");
 
-    // Convert react-docgen props to our PropMetadata format
-    const props: PropMetadata[] = Object.entries(component.props || {}).map(([name, prop]) => ({
-      name,
-      type: prop.type?.name || "unknown",
-      description: prop.description || "",
-      defaultValue: prop.defaultValue?.value,
-      required: prop.required || false,
-      options: prop.type?.name === "enum"
-        ? prop.type.value?.map((v: any) => v.value?.replace(/['"]/g, ""))
-        : undefined,
-    }));
+    // Read source for JSDoc parsing
+    const sourceContent = fs.readFileSync(componentFile, "utf8");
 
-    // Generate basic example
-    const basicExample = {
-      id: "basic",
-      title: "Basic Usage",
-      description: `Basic ${componentName.toLowerCase()} usage`,
-      code: `<${componentName} />`,
-    };
+    // Extract component description using react-docgen-typescript
+    const componentInfo = parse(componentFile, {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: () => false, // We don't need props here, just component description
+    });
+
+    const component = componentInfo[0];
+
+    // Extract icon and category from JSDoc comment
+    let componentIcon: string | undefined;
+    let componentCategory: string | undefined;
+
+    const iconMatch = sourceContent.match(/@icon\s+(\w+)/);
+    if (iconMatch) {
+      componentIcon = iconMatch[1];
+    }
+
+    const categoryMatch = sourceContent.match(/@category\s+(\w+)/);
+    if (categoryMatch) {
+      componentCategory = categoryMatch[1];
+    }
 
     const config = {
       id: componentDir,
       name: componentName,
-      description: component.description || `${componentName} component`,
-      category: (CATEGORY_MAP[componentDir] || "utility") as ComponentConfig["category"],
+      description: component?.description || `${componentName} component`,
+      category: (componentCategory || "utility") as ComponentConfig["category"],
+      icon: componentIcon, // Extract icon from JSDoc @icon tag
       componentId: componentName,
       importStatement: `import { ${componentName} } from "@patternmode/ui";`,
       props,
-      examples: [basicExample],
+      // Examples should be provided via separate examples.tsx files like textarea
+      examples: [],
     };
 
     console.log(`✅ Generated config for ${componentDir} (${props.length} props)`);
+
     return config;
   }
   catch (error) {
@@ -233,9 +112,79 @@ function extractComponentInfo(componentDir: string): ComponentConfig | null {
 }
 
 /**
+ * Update the icon registry with new icons found in components
+ */
+async function updateIconRegistry(usedIcons: Set<string>) {
+  const iconRegistryPath = path.resolve("src/lib/icon-registry.ts");
+  const iconRegistryContent = fs.readFileSync(iconRegistryPath, "utf8");
+
+  // Extract currently imported icons from the file
+  const importMatch = iconRegistryContent.match(/import\s*\{([^}]+)\}\s*from\s*["']lucide-react["'];/);
+  const currentImports = new Set<string>();
+
+  if (importMatch) {
+    const importList = importMatch[1]
+      .split(",")
+      .map(icon => icon.trim())
+      .filter(icon => icon && !icon.startsWith("//"));
+    importList.forEach(icon => currentImports.add(icon));
+  }
+
+  // Find missing icons that need to be added
+  const missingIcons = Array.from(usedIcons).filter(icon => !currentImports.has(icon));
+
+  if (missingIcons.length > 0) {
+    console.log(`📦 Adding ${missingIcons.length} new icons to registry: ${missingIcons.join(", ")}`);
+
+    // Add missing icons to imports
+    const allImports = Array.from(new Set([...currentImports, ...missingIcons])).sort();
+    const newImportStatement = `import {\n  // Component icons\n  ${allImports.join(",\n  ")},\n} from "lucide-react";`;
+
+    // Update the icon registry content
+    let updatedContent = iconRegistryContent.replace(
+      /import\s*\{[^}]+\}\s*from\s*["']lucide-react["'];/,
+      newImportStatement,
+    );
+
+    // Add missing icons to the registry object
+    const registryMatch = updatedContent.match(/(export const ICON_REGISTRY[^{]*\{)([^}]+)(\};)/);
+    if (registryMatch) {
+      const registryStart = registryMatch[1];
+      const registryContent = registryMatch[2];
+      const registryEnd = registryMatch[3];
+
+      // Parse existing registry entries
+      const existingEntries = new Set<string>();
+      const entryMatches = registryContent.matchAll(/^\s*(\w+)[:,]/gm);
+      for (const match of entryMatches) {
+        existingEntries.add(match[1]);
+      }
+
+      // Add missing entries
+      const newEntries = missingIcons.filter(icon => !existingEntries.has(icon));
+      if (newEntries.length > 0) {
+        const newEntriesString = newEntries.map(icon => `  ${icon},`).join("\n");
+        const updatedRegistryContent = `${registryContent.trim()},\n\n  // Auto-added component icons\n${newEntriesString}`;
+        updatedContent = updatedContent.replace(
+          /(export const ICON_REGISTRY[^{]*\{)([^}]+)(\};)/,
+          `$1\n${updatedRegistryContent}\n$3`,
+        );
+      }
+    }
+
+    // Write updated icon registry
+    fs.writeFileSync(iconRegistryPath, updatedContent);
+    console.log(`✅ Updated icon registry with new icons`);
+  }
+  else {
+    console.log(`✅ All component icons already exist in registry`);
+  }
+}
+
+/**
  * Generate the complete component registry
  */
-function generateComponentRegistry() {
+async function generateComponentRegistry() {
   console.log("🚀 Generating component registry from JSDoc...\n");
 
   const componentDirs = fs.readdirSync(componentsDir)
@@ -248,12 +197,18 @@ function generateComponentRegistry() {
 
   const configs: Record<string, ComponentConfig> = {};
   const componentList: Record<string, string[]> = {};
+  const usedIcons: Set<string> = new Set();
 
   // Process each component
   for (const componentDir of componentDirs) {
     const config = extractComponentInfo(componentDir);
     if (config) {
       configs[componentDir] = config;
+
+      // Collect used icons
+      if (config.icon) {
+        usedIcons.add(config.icon);
+      }
 
       // Add to category list
       const category = config.category;
@@ -264,11 +219,55 @@ function generateComponentRegistry() {
     }
   }
 
+  // Update icon registry with any new icons
+  await updateIconRegistry(usedIcons);
+
+  // Validate that each component has exactly one icon
+  const componentsWithIcons = Object.values(configs).filter(config => config.icon);
+  const componentsWithoutIcons = Object.values(configs).filter(config => !config.icon);
+  
+  console.log(`\n🔍 Icon validation:`);
+  console.log(`✅ Components with icons: ${componentsWithIcons.length}`);
+  if (componentsWithoutIcons.length > 0) {
+    console.log(`⚠️  Components without icons: ${componentsWithoutIcons.length}`);
+    console.log(`   Missing icons: ${componentsWithoutIcons.map(c => c.name).join(", ")}`);
+  }
+
+  // Validate icon imports will work (this will throw if any icon doesn't exist)
+  const sortedIcons = Array.from(usedIcons).sort();
+  console.log(`📦 Validating ${sortedIcons.length} icon imports...`);
+  
+  try {
+    // Dynamically import lucide-react to validate all icons exist
+    const lucideModule = await import("lucide-react");
+    const missingIcons = sortedIcons.filter(iconName => !lucideModule[iconName as keyof typeof lucideModule]);
+    
+    if (missingIcons.length > 0) {
+      console.error(`❌ FATAL: Missing icons in lucide-react: ${missingIcons.join(", ")}`);
+      console.error(`💡 Available icons can be found at: https://lucide.dev/icons/`);
+      process.exit(1);
+    }
+    
+    console.log(`✅ All ${sortedIcons.length} icons validated successfully`);
+  } catch (error) {
+    console.error(`❌ FATAL: Failed to validate icons:`, error);
+    process.exit(1);
+  }
+
+  const iconImports = sortedIcons.length > 0 
+    ? `import {\n  ${sortedIcons.join(",\n  ")}\n} from "lucide-react";\n`
+    : "";
+
   // Generate the registry file
   const registryContent = `// Auto-generated component registry from JSDoc
 // DO NOT EDIT - This file is automatically generated by scripts/generate-component-registry.ts
 
-import type { ComponentConfig, ComponentConfigRegistry } from "./lib/component-config-types";
+import type { ComponentConfigRegistry } from "../lib/component-config-types";
+${iconImports}
+// Icon registry for components
+export const componentIcons = {
+${sortedIcons.map(icon => `  ${icon},`).join('\n')}
+};
 
 // Component registry with all component configs
 export const componentRegistry: ComponentConfigRegistry = ${JSON.stringify(configs, null, 2)};
@@ -288,10 +287,48 @@ export function getComponentsByCategory(category: string) {
 export function getComponentConfig(componentId: string) {
   return componentRegistry[componentId];
 }
+
+// Get component icon from imported icons
+export function getComponentIconComponent(componentId: string) {
+  const config = componentRegistry[componentId];
+  if (!config?.icon) {
+    return undefined;
+  }
+  return componentIcons[config.icon as keyof typeof componentIcons];
+}
+
+// Additional helper functions for web app compatibility
+export function getAllComponents() {
+  return Object.values(componentRegistry);
+}
+
+export function getTotalComponentsCount() {
+  return Object.keys(componentRegistry).length;
+}
+
+// Category configuration for web app
+export const CATEGORY_CONFIG = [
+  { key: "data", name: "Data", description: "Components for displaying data" },
+  { key: "ui", name: "Interface", description: "Core UI components" },
+  { key: "charts", name: "Charts", description: "Data visualization components" },
+  { key: "navigation", name: "Navigation", description: "Navigation components" },
+  { key: "inputs", name: "Inputs", description: "Form input components" },
+  { key: "utility", name: "Utility", description: "Utility components" },
+  { key: "forms", name: "Forms", description: "Form components" },
+  { key: "layout", name: "Layout", description: "Layout components" },
+  { key: "typography", name: "Typography", description: "Text components" },
+  { key: "feedback", name: "Feedback", description: "Feedback components" },
+] as const;
+
+export type CategoryKey = typeof CATEGORY_CONFIG[number]["key"];
 `;
 
-  // Write the registry file
-  const registryPath = path.resolve("src/component-registry.ts");
+  // Write the registry file to generated folder
+  const generatedDir = path.resolve("src/generated");
+  if (!fs.existsSync(generatedDir)) {
+    fs.mkdirSync(generatedDir, { recursive: true });
+  }
+  const registryPath = path.resolve("src/generated/component-registry.ts");
   fs.writeFileSync(registryPath, registryContent);
 
   console.log(`\n🎉 Generated component registry with ${Object.keys(configs).length} components`);
@@ -305,4 +342,4 @@ export function getComponentConfig(componentId: string) {
 }
 
 // Run the generator
-generateComponentRegistry();
+generateComponentRegistry().catch(console.error);

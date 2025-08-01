@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { LineChart } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 export function LineChartExample() {
@@ -147,3 +149,46 @@ export function MinimalExample() {
     />
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "LineChartExample",
+    title: "Line Chart",
+    description: "Line Chart example",
+    component: LineChartExample,
+  },
+  {
+    id: "MultipleLinesExample",
+    title: "Multiple Lines",
+    description: "Multiple Lines example",
+    component: MultipleLinesExample,
+  },
+  {
+    id: "WithNullValuesExample",
+    title: "With Null Values",
+    description: "With Null Values example",
+    component: WithNullValuesExample,
+  },
+  {
+    id: "InteractiveExample",
+    title: "Interactive",
+    description: "Interactive example",
+    component: InteractiveExample,
+  },
+  {
+    id: "CustomFormattingExample",
+    title: "Custom Formatting",
+    description: "Custom Formatting example",
+    component: CustomFormattingExample,
+  },
+  {
+    id: "MinimalExample",
+    title: "Minimal",
+    description: "Minimal example",
+    component: MinimalExample,
+  },
+];

@@ -1,18 +1,20 @@
 {
-  // Disable the default formatter, use eslint instead
+  // Disable all formatting completely
   "prettier.enable": false,
   "editor.formatOnSave": false,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
 
-  // Auto fix
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never",
-    "source.sortImports": "never"
-  },
+  // Completely disable code actions to isolate the other formatter
+  "editor.codeActionsOnSave": false,
+  "editor.formatOnSave": false,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
 
-  // Silent the stylistic rules in you IDE, but still auto fix them
+  // Silent ALL stylistic rules in IDE, but still auto fix them (expanded)
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off", "fixable": true },
+    { "rule": "@stylistic/*", "severity": "off", "fixable": true },
     { "rule": "format/*", "severity": "off", "fixable": true },
     { "rule": "*-indent", "severity": "off", "fixable": true },
     { "rule": "*-spacing", "severity": "off", "fixable": true },
@@ -21,7 +23,9 @@
     { "rule": "*-dangle", "severity": "off", "fixable": true },
     { "rule": "*-newline", "severity": "off", "fixable": true },
     { "rule": "*quotes", "severity": "off", "fixable": true },
-    { "rule": "*semi", "severity": "off", "fixable": true }
+    { "rule": "*semi", "severity": "off", "fixable": true },
+    { "rule": "perfectionist/*", "severity": "off", "fixable": true },
+    { "rule": "antfu/*", "severity": "off", "fixable": true }
   ],
 
   // Enable eslint for all supported languages
@@ -72,21 +76,49 @@
     "**/components/**/index.tsx": "${dirname} [Component]"
   },
 
-  // Enhanced TypeScript validation settings
+  // Completely disable TypeScript formatting and language server interference
   "typescript.validate.enable": true,
+  "typescript.format.enable": false,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+  "typescript.format.insertSpaceAfterCommaDelimiter": false,
+  "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
+  "typescript.format.insertSpaceAfterConstructor": false,
+  "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
+  "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
+  "typescript.format.insertSpaceAfterConstructor": false,
+  "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
+  "typescript.format.insertSpaceAfterTypeAssertion": false,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.suggest.autoImports": true,
-  "typescript.suggest.paths": true,
-  "typescript.preferences.organizeImportsIgnoreCase": "auto",
-  "typescript.preferences.organizeImportsCollation": "unicode",
-  "typescript.preferences.organizeImportsNumericCollation": true,
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "typescript.suggest.autoImports": false,
+  "typescript.suggest.paths": false,
+  "typescript.preferences.includeCompletionsForModuleExports": false,
+  "typescript.preferences.includeCompletionsWithSnippetText": false,
   "typescript.suggest.completeFunctionCalls": true,
   "typescript.referencesCodeLens.enabled": true,
   "typescript.implementationsCodeLens.enabled": true,
+  "typescript.surveys.enabled": false,
   "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
@@ -105,11 +137,37 @@
     "editorInfo.foreground": "#33adff"
   },
 
-  // Make ESLint run constantly in the background
+  // Make ESLint run constantly in the background (like sorrel)
   "eslint.run": "onType",
   "eslint.lintTask.enable": true,
-  "eslint.debug": false,
+  "eslint.debug": true,
+  "eslint.trace.server": "verbose",
   "eslint.format.enable": true,
+
+  // Disable ALL competing extensions and formatters
+  "sortImports.on-save": false,
+  "typescriptHero.imports.organizeOnSave": false,
+  "autoimport.autoComplete": false,
+  "typescript-hero.imports.organizeOnSave": false,
+  "typescript.suggest.organizeImports": false,
+  "editor.codeActionsOnSaveTimeout": 3000,
+  "blocksort.enable": false,
+  "vscode-scss-formatter.enable": false,
+
+  // Cursor-specific settings to disable built-in formatters
+  "cursor.formatOnSave": false,
+  "cursor.quickFix.enable": false,
+  "cursor.autoFormat": false,
+  "cursor.codeActions.organizeImports": false,
+  "cursor.typescript.format": false,
+
+  // Disable TypeScript language server formatting entirely
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.preferences.includeCompletionsForModuleExports": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.validate.enable": true,
+  "typescript.format.enable": true,
+  "next.typescript.plugin.enable": false,
   "editor.quickSuggestions": {
     "other": true,
     "comments": false,

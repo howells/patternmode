@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Select,
   SelectContent,
@@ -10,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function SelectExample({
@@ -204,3 +206,40 @@ export function FormSelectExample() {
 }
 
 // DefaultSelect is already exported as SelectExample function above
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "SelectExample",
+    title: "Select",
+    description: "Select example",
+    component: SelectExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithGroupsExample",
+    title: "With Groups",
+    description: "With Groups example",
+    component: WithGroupsExample,
+  },
+  {
+    id: "SmallSizeExample",
+    title: "Small Size",
+    description: "Small Size example",
+    component: SmallSizeExample,
+  },
+  {
+    id: "FormSelectExample",
+    title: "Form Select",
+    description: "Form Select example",
+    component: FormSelectExample,
+  },
+];

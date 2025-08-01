@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Sidebar,
   SidebarBody,
@@ -8,6 +9,7 @@ import {
   SidebarHeader,
   SidebarItem,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -56,3 +58,22 @@ export function WithSubmenuExample() {
     </Sidebar>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithSubmenuExample",
+    title: "With Submenu",
+    description: "With Submenu example",
+    component: WithSubmenuExample,
+  },
+];

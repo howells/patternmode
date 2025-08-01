@@ -1,9 +1,11 @@
+import type { VariantProps } from "tailwind-variants";
+
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
+
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
 import { componentVariants } from "../../lib/variants";
@@ -123,9 +125,7 @@ function renderButtonIcon(
  * @augments useRender.ComponentProps<"button">
  * @augments VariantProps<typeof buttonVariants>
  */
-interface ButtonProps
-  extends useRender.ComponentProps<"button">,
-  VariantProps<typeof buttonVariants> {
+type ButtonProps = {
   /**
    * Whether the button is in a loading state.
    */
@@ -170,440 +170,312 @@ interface ButtonProps
    * Whether the button should have a shadow.
    */
   shadow?: boolean;
-}
+} & useRender.ComponentProps<"button"> & VariantProps<typeof buttonVariants>;
 
 /**
- * A versatile button component built with Base UI's useRender pattern.
- *
- * Based on Base UI's useRender hook for flexible rendering, providing multiple variants,
- * sizes, and states. Supports icons, loading states, and full-width layouts with
- * sophisticated animation and focus management.
+ * Interactive button component with multiple variants and states for user actions.
  *
  * @id button
  * @name Button
+ * @icon Square
+ * @category inputs
  * @component
- * @example
- * ```tsx
- * // Basic usage
- * <Button>Click me</Button>
- *
- * // With variants and sizes
- * <Button variant="destructive">Delete</Button>
- * <Button variant="outline" size="sm">Small</Button>
- *
- * // With icons and loading
- * <Button leftIcon={PlusIcon}>Add Item</Button>
- * <Button isLoading loadingText="Saving...">Save</Button>
- *
- * // Icon-only buttons
- * <Button size="icon" leftIcon={SearchIcon} />
- *
- * // Full-width with alignment
- * <Button fullWidth textAlign="left">Left Aligned</Button>
- *
- * // As different elements
- * <Button render={<Link href="/page" />}>Navigation</Button>
- * ```
+ * @param props - Component properties.
+ * @param props.variant - Visual style variant of the button.
+ * @param props.size - Size variant of the button.
+ * @param props.rounded - Whether to use full border radius for rounded appearance.
+ * @param props.isLoading - Whether the button is in a loading state.
+ * @param props.loadingText - Text to display when loading (defaults to children).
+ * @param props.icon - Icon component (proxy for leftIcon, useful for single-icon buttons).
+ * @param props.leftIcon - Icon component to display on the left side.
+ * @param props.rightIcon - Icon component to display on the right side.
+ * @param props.iconStrokeWidth - Stroke width for icons.
+ * @param props.fullWidth - Whether the button should take full width.
+ * @param props.textAlign - Text alignment within the button.
+ * @param props.kbd - Keyboard shortcut to display.
+ * @param props.kbdPlatform - Platform for keyboard shortcut display.
+ * @param props.shadow - Whether the button should have a shadow.
+ * @param props.disabled - Whether the button is disabled.
+ * @param props.children - Button content and text.
+ * @param props.className - Additional CSS classes.
  */
 const Button = ({
-    ref: forwardedRef,
-    render = <button />,
-    isLoading = false,
-    loadingText,
-    className,
-    disabled,
-    variant,
-    size,
-    rounded,
-    icon,
-    leftIcon: LeftIcon,
-    rightIcon: RightIcon,
-    iconStrokeWidth = config.getIconStrokeWidth(),
-    children,
-    fullWidth,
-    textAlign,
-    kbd,
-    kbdPlatform = "auto",
-    shadow = true,
-    ...props
-  }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-    const hasChildren = children != null && children !== "";
-    const isIconOnly
+  ref: forwardedRef,
+  render = <button />,
+  isLoading = false,
+  loadingText,
+  className,
+  disabled,
+  variant,
+  size,
+  rounded,
+  icon,
+  leftIcon: LeftIcon,
+  rightIcon: RightIcon,
+  iconStrokeWidth = config.getIconStrokeWidth(),
+  children,
+  fullWidth,
+  textAlign,
+  kbd,
+  kbdPlatform = "auto",
+  shadow = true,
+  ...props
+}: ButtonProps) => {
+  const hasChildren = children != null && children !== "";
+  const isIconOnly
     = size === "icon-xs"
       || size === "icon-sm"
       || size === "icon"
       || size === "icon-lg";
     // Prioritize icon prop over leftIcon prop
-    const effectiveLeftIconProp = icon || LeftIcon;
-    const hasLeftIcon
+  const effectiveLeftIconProp = icon || LeftIcon;
+  const hasLeftIcon
     = effectiveLeftIconProp != null
       || (isIconOnly && effectiveLeftIconProp == null);
-    const effectiveLeftIcon
+  const effectiveLeftIcon
     = effectiveLeftIconProp
       || (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : null);
-    const hasRightIcon
+  const hasRightIcon
     = RightIcon != null
       && size !== "icon-xs"
       && size !== "icon-sm"
       && size !== "icon"
       && size !== "icon-lg";
-    const shouldShowChildren
+  const shouldShowChildren
     = hasChildren
       && size !== "icon-xs"
       && size !== "icon-sm"
       && size !== "icon"
       && size !== "icon-lg";
-    const isIconButton
+  const isIconButton
     = size === "icon-xs"
       || size === "icon-sm"
       || size === "icon"
       || size === "icon-lg";
 
-    // Check if children is a complex element (custom layout)
-    const hasCustomLayout = React.isValidElement(children);
+  // Check if children is a complex element (custom layout)
+  const hasCustomLayout = React.isValidElement(children);
 
-    // Handle keyboard shortcuts
-    const kbdKeys = kbd ? (Array.isArray(kbd) ? kbd : [kbd]) : undefined;
-    useButtonKeyboardShortcut(kbdKeys, props.onClick as (() => void) | undefined);
+  // Handle keyboard shortcuts
+  const kbdKeys = kbd ? (Array.isArray(kbd) ? kbd : [kbd]) : undefined;
+  useButtonKeyboardShortcut(kbdKeys, props.onClick as (() => void) | undefined);
 
-    // Determine kbd variant based on button variant
-    const kbdVariant
+  // Determine kbd variant based on button variant
+  const kbdVariant
     = variant === "default" || variant === "destructive"
       ? "onDarkButton"
       : "onLightButton";
 
-    // Icon sizing is now handled by the Icon component via renderButtonIcon
-    // Helper to get icon container size for loader positioning
-    const getIconContainerSize = () => {
-      const sizeStr = size as string;
-      return sizeStr === "xs" || sizeStr === "icon-xs"
-        ? "size-3"
-        : sizeStr === "sm" || sizeStr === "icon-sm"
-          ? "size-3.5"
-          : sizeStr === "lg" || sizeStr === "icon-lg"
-            ? "size-4"
-            : "size-3.5";
-    };
+  // Icon sizing is now handled by the Icon component via renderButtonIcon
+  // Helper to get icon container size for loader positioning
+  const getIconContainerSize = () => {
+    const sizeStr = size as string;
+    return sizeStr === "xs" || sizeStr === "icon-xs"
+      ? "size-3"
+      : sizeStr === "sm" || sizeStr === "icon-sm"
+        ? "size-3.5"
+        : sizeStr === "lg" || sizeStr === "icon-lg"
+          ? "size-4"
+          : "size-3.5";
+  };
 
-    // When loading, Loader replaces leftIcon, and we show loadingText or original children
-    const effectiveChildren = isLoading && loadingText ? loadingText : children;
-    const effectiveShouldShowChildren = shouldShowChildren;
+  // When loading, Loader replaces leftIcon, and we show loadingText or original children
+  const effectiveChildren = isLoading && loadingText ? loadingText : children;
+  const effectiveShouldShowChildren = shouldShowChildren;
 
-    const renderButtonContent = () => {
+  const renderButtonContent = () => {
     // If children is a custom React element AND we don't have explicit icon props AND no kbd, render it directly
-      if (
-        hasCustomLayout
-        && LeftIcon == null
-        && !hasRightIcon
-        && !isLoading
-        && !kbd
-      ) {
-        return children;
-      }
+    if (
+      hasCustomLayout
+      && LeftIcon == null
+      && !hasRightIcon
+      && !isLoading
+      && !kbd
+    ) {
+      return children;
+    }
 
-      // For icon-only buttons with children but no explicit leftIcon, render children directly
-      if (
-        isIconButton
-        && hasChildren
-        && LeftIcon == null
-        && !hasRightIcon
-        && !isLoading
-        && !kbd
-      ) {
-        return children;
-      }
+    // For icon-only buttons with children but no explicit leftIcon, render children directly
+    if (
+      isIconButton
+      && hasChildren
+      && LeftIcon == null
+      && !hasRightIcon
+      && !isLoading
+      && !kbd
+    ) {
+      return children;
+    }
 
-      // For icon-only buttons with leftIcon, render the icon directly without loading states
-      if (
-        isIconButton
-        && effectiveLeftIconProp != null
-        && !hasRightIcon
-        && !isLoading
-        && !kbd
-      ) {
-        return renderButtonIcon(effectiveLeftIconProp, size, iconStrokeWidth);
-      }
+    // For icon-only buttons with leftIcon, render the icon directly without loading states
+    if (
+      isIconButton
+      && effectiveLeftIconProp != null
+      && !hasRightIcon
+      && !isLoading
+      && !kbd
+    ) {
+      return renderButtonIcon(effectiveLeftIconProp, size, iconStrokeWidth);
+    }
 
-      // For icon buttons, wrap any text children in sr-only span
-      const iconButtonChildren = isIconButton && hasChildren && (
-        <span className="sr-only">{effectiveChildren}</span>
-      );
+    // For icon buttons, wrap any text children in sr-only span
+    const iconButtonChildren = isIconButton && hasChildren && (
+      <span className="sr-only">{effectiveChildren}</span>
+    );
 
-      // Determine layout class
-      const layoutClassName = cx(
-        "flex items-center w-full transition-all duration-150 ease-in-out",
-        // For icon-only buttons, center everything
-        size === "icon-xs" || size === "icon-sm" || size === "icon"
-          ? "justify-center"
-          : // Full width with centered text and left elements uses space-between
-          fullWidth && textAlign === "center" && (hasLeftIcon || isLoading)
-            ? "justify-between"
-            : "justify-start gap-x-2",
-      );
+    // Determine layout class
+    const layoutClassName = cx(
+      "flex items-center w-full transition-all duration-150 ease-in-out",
+      // For icon-only buttons, center everything
+      size === "icon-xs" || size === "icon-sm" || size === "icon"
+        ? "justify-center"
+        // Full width with centered text and left elements uses space-between
+        : fullWidth && textAlign === "center" && (hasLeftIcon || isLoading)
+          ? "justify-between"
+          : "justify-start gap-x-2",
+    );
 
-      // Normal width: simple gap layout
-      if (!fullWidth) {
+    // Normal width: simple gap layout
+    if (!fullWidth) {
       // Simple case: no icons, loading state, or kbd
-        if (!hasLeftIcon && !hasRightIcon && !isLoading && !kbd) {
+      if (!hasLeftIcon && !hasRightIcon && !isLoading && !kbd) {
         // For icon buttons, return sr-only wrapped children
-          if (isIconButton && hasChildren) {
-            return iconButtonChildren;
-          }
-          return effectiveShouldShowChildren ? effectiveChildren : null;
+        if (isIconButton && hasChildren) {
+          return iconButtonChildren;
         }
+        return effectiveShouldShowChildren ? effectiveChildren : null;
+      }
 
-        // Simple case with just kbd and no icons/loading
-        if (!hasLeftIcon && !hasRightIcon && !isLoading && kbd) {
-          const content = effectiveShouldShowChildren ? effectiveChildren : null;
-          const kbdElement = (
-            <Kbd
-              keys={Array.isArray(kbd) ? kbd : undefined}
-              platform={kbdPlatform}
-              variant={kbdVariant}
-              className="ml-2"
-            >
-              {Array.isArray(kbd) ? undefined : kbd}
-            </Kbd>
-          );
+      // Simple case with just kbd and no icons/loading
+      if (!hasLeftIcon && !hasRightIcon && !isLoading && kbd) {
+        const content = effectiveShouldShowChildren ? effectiveChildren : null;
+        const kbdElement = (
+          <Kbd
+            keys={Array.isArray(kbd) ? kbd : undefined}
+            platform={kbdPlatform}
+            variant={kbdVariant}
+            className="ml-2"
+          >
+            {Array.isArray(kbd) ? undefined : kbd}
+          </Kbd>
+        );
 
-          if (isIconButton && hasChildren) {
-            return (
-              <span className="flex items-center justify-between w-full">
-                {iconButtonChildren}
-                {kbdElement}
-              </span>
-            );
-          }
-
+        if (isIconButton && hasChildren) {
           return (
             <span className="flex items-center justify-between w-full">
-              {content}
+              {iconButtonChildren}
               {kbdElement}
             </span>
           );
         }
 
         return (
-          <span className={layoutClassName}>
-            {/* Left icon container with CSS transitions */}
-            {(isLoading || hasLeftIcon) && (
-              <span
-                className={cx(
-                  "flex items-center relative transition-all duration-150 ease-in-out",
-                )}
+          <span className="flex items-center justify-between w-full">
+            {content}
+            {kbdElement}
+          </span>
+        );
+      }
+
+      return (
+        <span className={layoutClassName}>
+          {/* Left icon container with CSS transitions */}
+          {(isLoading || hasLeftIcon) && (
+            <span
+              className={cx(
+                "flex items-center relative transition-all duration-150 ease-in-out",
+              )}
+            >
+              <div
+                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
               >
+                {/* Loader */}
                 <div
-                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+                  className={cx(
+                    "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
+                    isLoading ? "opacity-100" : "opacity-0 pointer-events-none",
+                  )}
                 >
-                  {/* Loader */}
+                  <Loader
+                    size={
+                      size === "xs" || size === "icon-xs"
+                        ? "xs"
+                        : size === "sm" || size === "icon-sm"
+                          ? "xs"
+                          : size === "lg" || size === "icon-lg"
+                            ? "base"
+                            : "sm"
+                    }
+                    aria-label={loadingText || "Loading"}
+                  />
+                </div>
+                {/* Left Icon */}
+                {hasLeftIcon && (
                   <div
                     className={cx(
                       "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
-                      isLoading ? "opacity-100" : "opacity-0 pointer-events-none",
+                      !isLoading
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none",
                     )}
                   >
-                    <Loader
-                      size={
-                        size === "xs" || size === "icon-xs"
-                          ? "xs"
-                          : size === "sm" || size === "icon-sm"
-                            ? "xs"
-                            : size === "lg" || size === "icon-lg"
-                              ? "base"
-                              : "sm"
-                      }
-                      aria-label={loadingText || "Loading"}
-                    />
-                  </div>
-                  {/* Left Icon */}
-                  {hasLeftIcon && (
-                    <div
-                      className={cx(
-                        "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
-                        !isLoading
-                          ? "opacity-100"
-                          : "opacity-0 pointer-events-none",
+                    {effectiveLeftIcon
+                      && renderButtonIcon(
+                        effectiveLeftIcon,
+                        size,
+                        iconStrokeWidth,
                       )}
-                    >
-                      {effectiveLeftIcon
-                        && renderButtonIcon(
-                          effectiveLeftIcon,
-                          size,
-                          iconStrokeWidth,
-                        )}
-                    </div>
-                  )}
-                </div>
-              </span>
-            )}
-
-            {isIconButton && hasChildren
-              ? iconButtonChildren
-              : effectiveShouldShowChildren && effectiveChildren}
-
-            {/* Keyboard shortcut */}
-            {kbd && !hasRightIcon && (
-              <Kbd
-                keys={Array.isArray(kbd) ? kbd : undefined}
-                platform={kbdPlatform}
-                variant={kbdVariant}
-                className="ml-auto"
-              >
-                {Array.isArray(kbd) ? undefined : kbd}
-              </Kbd>
-            )}
-
-            {/* Right icon with CSS transitions */}
-            {hasRightIcon && (
-              <span className="flex items-center">
-                {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
-                {kbd && (
-                  <Kbd
-                    keys={Array.isArray(kbd) ? kbd : undefined}
-                    platform={kbdPlatform}
-                    variant={kbdVariant}
-                    className="ml-2"
-                  >
-                    {Array.isArray(kbd) ? undefined : kbd}
-                  </Kbd>
+                  </div>
                 )}
-              </span>
-            )}
-          </span>
-        );
-      }
+              </div>
+            </span>
+          )}
 
-      // Full width with center alignment: spread layout
-      if (textAlign === "center") {
-        return (
-          <span className={layoutClassName}>
-            {/* Left spacer/icon */}
-            {(isLoading || hasLeftIcon) && (
-              <span className="flex items-center relative transition-all duration-150 ease-in-out">
-                <div
-                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
-                >
-                  <div
-                    className={cx(
-                      "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
-                      isLoading ? "opacity-100" : "opacity-0",
-                    )}
-                  >
-                    <Loader
-                      size={
-                        size === "xs" || size === "icon-xs"
-                          ? "xs"
-                          : size === "sm" || size === "icon-sm"
-                            ? "xs"
-                            : size === "lg" || size === "icon-lg"
-                              ? "base"
-                              : "sm"
-                      }
-                      aria-label={loadingText || "Loading"}
-                    />
-                  </div>
-                  {hasLeftIcon && (
-                    <div
-                      className={cx(
-                        "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
-                        !isLoading ? "opacity-100" : "opacity-0",
-                      )}
-                    >
-                      {effectiveLeftIcon
-                        && renderButtonIcon(
-                          effectiveLeftIcon,
-                          size,
-                          iconStrokeWidth,
-                        )}
-                    </div>
-                  )}
-                </div>
-              </span>
-            )}
+          {isIconButton && hasChildren
+            ? iconButtonChildren
+            : effectiveShouldShowChildren && effectiveChildren}
 
-            <div className="flex-1 text-center">
-              {isIconButton && hasChildren
-                ? iconButtonChildren
-                : effectiveShouldShowChildren && effectiveChildren}
-            </div>
+          {/* Keyboard shortcut */}
+          {kbd && !hasRightIcon && (
+            <Kbd
+              keys={Array.isArray(kbd) ? kbd : undefined}
+              platform={kbdPlatform}
+              variant={kbdVariant}
+              className="ml-auto"
+            >
+              {Array.isArray(kbd) ? undefined : kbd}
+            </Kbd>
+          )}
 
-            {/* Right icon */}
+          {/* Right icon with CSS transitions */}
+          {hasRightIcon && (
             <span className="flex items-center">
               {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
-            </span>
-          </span>
-        );
-      }
-
-      // Full width with left/right alignment and right icon: single flex container
-      if (hasRightIcon) {
-        return (
-          <span className="flex items-center gap-x-2 w-full transition-all duration-150 ease-in-out">
-            {/* Left icon container */}
-            {(isLoading || hasLeftIcon) && (
-              <span className="flex items-center relative transition-all duration-150 ease-in-out">
-                <div
-                  className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+              {kbd && (
+                <Kbd
+                  keys={Array.isArray(kbd) ? kbd : undefined}
+                  platform={kbdPlatform}
+                  variant={kbdVariant}
+                  className="ml-2"
                 >
-                  <div
-                    className={cx(
-                      "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
-                      isLoading ? "opacity-100" : "opacity-0",
-                    )}
-                  >
-                    <Loader
-                      size={size === "xs" ? "xs" : size === "sm" ? "xs" : "sm"}
-                      aria-label={loadingText || "Loading"}
-                    />
-                  </div>
-                  {hasLeftIcon && (
-                    <div
-                      className={cx(
-                        "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
-                        !isLoading ? "opacity-100" : "opacity-0",
-                      )}
-                    >
-                      {effectiveLeftIcon
-                        && renderButtonIcon(
-                          effectiveLeftIcon,
-                          size,
-                          iconStrokeWidth,
-                        )}
-                    </div>
-                  )}
-                </div>
-              </span>
-            )}
-
-            {/* Text content */}
-            {isIconButton && hasChildren
-              ? iconButtonChildren
-              : effectiveShouldShowChildren && effectiveChildren}
-
-            {/* Right icon with ml-auto to push to right */}
-            <span className={`flex items-center ${fullWidth ? "ml-auto" : ""}`}>
-              {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
+                  {Array.isArray(kbd) ? undefined : kbd}
+                </Kbd>
+              )}
             </span>
-          </span>
-        );
-      }
+          )}
+        </span>
+      );
+    }
 
-      // Full width with left/right alignment without right icon: normal flow
+    // Full width with center alignment: spread layout
+    if (textAlign === "center") {
       return (
         <span className={layoutClassName}>
-          {/* Left icon container */}
+          {/* Left spacer/icon */}
           {(isLoading || hasLeftIcon) && (
             <span className="flex items-center relative transition-all duration-150 ease-in-out">
               <div
-                className={`relative ${
-                  size === "xs" || size === "icon-xs"
-                    ? "size-3"
-                    : size === "sm" || size === "icon-sm"
-                      ? "size-3.5"
-                      : size === "lg" || size === "icon-lg"
-                        ? "size-4"
-                        : "size-3.5"
-                } flex items-center justify-center`}
+                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
               >
                 <div
                   className={cx(
@@ -612,7 +484,15 @@ const Button = ({
                   )}
                 >
                   <Loader
-                    size={size === "sm" ? "xs" : "sm"}
+                    size={
+                      size === "xs" || size === "icon-xs"
+                        ? "xs"
+                        : size === "sm" || size === "icon-sm"
+                          ? "xs"
+                          : size === "lg" || size === "icon-lg"
+                            ? "base"
+                            : "sm"
+                    }
                     aria-label={loadingText || "Loading"}
                   />
                 </div>
@@ -624,57 +504,171 @@ const Button = ({
                     )}
                   >
                     {effectiveLeftIcon
-                      && renderButtonIcon(effectiveLeftIcon, size, iconStrokeWidth)}
+                      && renderButtonIcon(
+                        effectiveLeftIcon,
+                        size,
+                        iconStrokeWidth,
+                      )}
                   </div>
                 )}
               </div>
             </span>
           )}
+
+          <div className="flex-1 text-center">
+            {isIconButton && hasChildren
+              ? iconButtonChildren
+              : effectiveShouldShowChildren && effectiveChildren}
+          </div>
+
+          {/* Right icon */}
+          <span className="flex items-center">
+            {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
+          </span>
+        </span>
+      );
+    }
+
+    // Full width with left/right alignment and right icon: single flex container
+    if (hasRightIcon) {
+      return (
+        <span className="flex items-center gap-x-2 w-full transition-all duration-150 ease-in-out">
+          {/* Left icon container */}
+          {(isLoading || hasLeftIcon) && (
+            <span className="flex items-center relative transition-all duration-150 ease-in-out">
+              <div
+                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+              >
+                <div
+                  className={cx(
+                    "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
+                    isLoading ? "opacity-100" : "opacity-0",
+                  )}
+                >
+                  <Loader
+                    size={size === "xs" ? "xs" : size === "sm" ? "xs" : "sm"}
+                    aria-label={loadingText || "Loading"}
+                  />
+                </div>
+                {hasLeftIcon && (
+                  <div
+                    className={cx(
+                      "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
+                      !isLoading ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    {effectiveLeftIcon
+                      && renderButtonIcon(
+                        effectiveLeftIcon,
+                        size,
+                        iconStrokeWidth,
+                      )}
+                  </div>
+                )}
+              </div>
+            </span>
+          )}
+
+          {/* Text content */}
           {isIconButton && hasChildren
             ? iconButtonChildren
             : effectiveShouldShowChildren && effectiveChildren}
+
+          {/* Right icon with ml-auto to push to right */}
+          <span className={`flex items-center ${fullWidth ? "ml-auto" : ""}`}>
+            {RightIcon && renderButtonIcon(RightIcon, size, iconStrokeWidth)}
+          </span>
         </span>
       );
-    };
+    }
 
-    const defaultProps: useRender.ElementProps<"button"> = {
-      className: cx(
-        buttonVariants({ variant, size, rounded }),
-        fullWidth && "w-full max-w-[95vw]",
-        // Derive shadow from prop
-        shadow ? "shadow-xs" : "shadow-none",
-        // Derive flex justification from textAlign and fullWidth
-        fullWidth && textAlign === "left"
-          ? "justify-start"
-          : fullWidth && textAlign === "right"
-            ? "justify-end"
-            : fullWidth && textAlign === "center"
-              ? "justify-center"
-              : "justify-center", // default justify for non-fullWidth or no textAlign
-        // Derive text alignment - only when not using fullWidth center (which has its own layout)
-        !(fullWidth && textAlign === "center") && textAlign === "left"
-          ? "text-left"
-          : !(fullWidth && textAlign === "center") && textAlign === "right"
-              ? "text-right"
-              : "text-center", // default text alignment
-        className,
-      ),
-      disabled: disabled || isLoading,
-      type: "button",
-      ...({
-        "data-testid": "ui-button",
-      } as React.HTMLAttributes<HTMLButtonElement>),
-      children: renderButtonContent(),
-    };
-
-    const element = useRender({
-      render,
-      ref: forwardedRef,
-      props: mergeProps<"button">(defaultProps, props),
-    });
-
-    return element;
+    // Full width with left/right alignment without right icon: normal flow
+    return (
+      <span className={layoutClassName}>
+        {/* Left icon container */}
+        {(isLoading || hasLeftIcon) && (
+          <span className="flex items-center relative transition-all duration-150 ease-in-out">
+            <div
+              className={`relative ${
+                size === "xs" || size === "icon-xs"
+                  ? "size-3"
+                  : size === "sm" || size === "icon-sm"
+                    ? "size-3.5"
+                    : size === "lg" || size === "icon-lg"
+                      ? "size-4"
+                      : "size-3.5"
+              } flex items-center justify-center`}
+            >
+              <div
+                className={cx(
+                  "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
+                  isLoading ? "opacity-100" : "opacity-0",
+                )}
+              >
+                <Loader
+                  size={size === "sm" ? "xs" : "sm"}
+                  aria-label={loadingText || "Loading"}
+                />
+              </div>
+              {hasLeftIcon && (
+                <div
+                  className={cx(
+                    "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
+                    !isLoading ? "opacity-100" : "opacity-0",
+                  )}
+                >
+                  {effectiveLeftIcon
+                    && renderButtonIcon(effectiveLeftIcon, size, iconStrokeWidth)}
+                </div>
+              )}
+            </div>
+          </span>
+        )}
+        {isIconButton && hasChildren
+          ? iconButtonChildren
+          : effectiveShouldShowChildren && effectiveChildren}
+      </span>
+    );
   };
+
+  const defaultProps: useRender.ElementProps<"button"> = {
+    className: cx(
+      buttonVariants({ variant, size, rounded }),
+      fullWidth && "w-full max-w-[95vw]",
+      // Derive shadow from prop
+      shadow ? "shadow-xs" : "shadow-none",
+      // Derive flex justification from textAlign and fullWidth
+      fullWidth && textAlign === "left"
+        ? "justify-start"
+        : fullWidth && textAlign === "right"
+          ? "justify-end"
+          : fullWidth && textAlign === "center"
+            ? "justify-center"
+            : "justify-center", // default justify for non-fullWidth or no textAlign
+      // Derive text alignment - only when not using fullWidth center (which has its own layout)
+      !(fullWidth && textAlign === "center") && textAlign === "left"
+        ? "text-left"
+        : !(fullWidth && textAlign === "center") && textAlign === "right"
+            ? "text-right"
+            : "text-center", // default text alignment
+      className,
+    ),
+    disabled: disabled || isLoading,
+    type: "button",
+    ...({
+      "data-testid": "ui-button",
+    } as React.HTMLAttributes<HTMLButtonElement>),
+    children: renderButtonContent(),
+  };
+
+  const element = useRender({
+    render,
+    ref: forwardedRef,
+    props: mergeProps<"button">(defaultProps, props),
+  });
+
+  return element;
+};
 
 Button.displayName = "Button";
 
@@ -698,4 +692,4 @@ export type IconButtonSize = "icon-xs" | "icon-sm" | "icon" | "icon-lg";
  */
 export const iconButtonSizeOptions: IconButtonSize[] = ["icon-xs", "icon-sm", "icon", "icon-lg"];
 
-export { Button, buttonVariants, type ButtonProps };
+export { Button, type ButtonProps, buttonVariants };

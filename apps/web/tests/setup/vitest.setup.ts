@@ -1,22 +1,27 @@
-import { beforeEach } from 'vitest'
+import { beforeEach } from "vitest";
 
 // Set up DOM cleanup between tests
 beforeEach(() => {
-  document.body.innerHTML = ''
-})
+  document.body.innerHTML = "";
+});
 
 // Mock Next.js router if needed
-global.ResizeObserver = global.ResizeObserver || 
-  class ResizeObserver {
+globalThis.ResizeObserver = globalThis.ResizeObserver
+  || class ResizeObserver {
     observe() {}
     unobserve() {}
     disconnect() {}
-  }
+  };
 
 // Mock IntersectionObserver for component testing
-global.IntersectionObserver = global.IntersectionObserver || 
-  class IntersectionObserver {
+globalThis.IntersectionObserver = globalThis.IntersectionObserver
+  || class IntersectionObserver {
+    constructor() {}
     observe() {}
     unobserve() {}
     disconnect() {}
-  }
+    root = null;
+    rootMargin = "";
+    thresholds = [];
+    takeRecords() { return []; }
+  };

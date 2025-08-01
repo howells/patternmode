@@ -105,103 +105,89 @@
 
 import { Dialog } from "@base-ui-components/react/dialog";
 import { X } from "lucide-react";
-
 import * as React from "react";
+
 import { config } from "../../lib/config";
 import { cx, focusRing, iconUtils } from "../../lib/utils";
 
 // Inline DismissButton functionality for Sheet
 /**
- * Extends the Dialog component to display content that complements the main content of the screen.
+ * Overlay panel component sliding from screen edges for mobile-friendly interfaces.
  *
- * Sheet.
- *
- * @component
  * @id sheet
  * @name Sheet
+ * @icon PanelLeft
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 const InlineSheetDismissButton = (
-    { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
-      "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-      "icon"?: React.ComponentType<{
-        className?: string;
-        strokeWidth?: number;
-      }>;
-      "iconStrokeWidth"?: number;
-      "size"?: "sm" | "base" | "lg";
-      "className"?: string;
-      "aria-label"?: string;
-    } & { ref?: React.RefObject<HTMLButtonElement | null> },
-  ) => {
+  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+    "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    "icon"?: React.ComponentType<{
+      className?: string;
+      strokeWidth?: number;
+    }>;
+    "iconStrokeWidth"?: number;
+    "size"?: "sm" | "base" | "lg";
+    "className"?: string;
+    "aria-label"?: string;
+  } & { ref?: React.RefObject<HTMLButtonElement | null> },
+) => {
   // Size-based icon sizing
-    const iconSizeMap = {
-      sm: "xs" as const,
-      base: "xs" as const,
-      lg: "sm" as const,
-    };
-
-    const iconSize = iconSizeMap[size];
-    const iconSizeClass = iconUtils.getIconSize(iconSize);
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        onClick={onClick}
-        className={cx(
-        // Base button styling
-          "flex items-center justify-center rounded-full transition-colors",
-          // Size-based dimensions
-          size === "sm" && "size-4",
-          size === "base" && "size-5",
-          size === "lg" && "size-6",
-          // Color styling (subtle, context-aware)
-          "text-zinc-500 dark:text-zinc-400",
-          // Hover states
-          "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
-          // Focus states
-          "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-          className,
-        )}
-        aria-label={ariaLabel}
-      >
-        <IconComponent
-          className={cx(iconSizeClass, "shrink-0")}
-          strokeWidth={iconStrokeWidth}
-          aria-hidden="true"
-        />
-      </button>
-    );
+  const iconSizeMap = {
+    sm: "xs" as const,
+    base: "xs" as const,
+    lg: "sm" as const,
   };
+
+  const iconSize = iconSizeMap[size];
+  const iconSizeClass = iconUtils.getIconSize(iconSize);
+
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={onClick}
+      className={cx(
+        // Base button styling
+        "flex items-center justify-center rounded-full transition-colors",
+        // Size-based dimensions
+        size === "sm" && "size-4",
+        size === "base" && "size-5",
+        size === "lg" && "size-6",
+        // Color styling (subtle, context-aware)
+        "text-zinc-500 dark:text-zinc-400",
+        // Hover states
+        "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
+        // Focus states
+        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
+        className,
+      )}
+      aria-label={ariaLabel}
+    >
+      <IconComponent
+        className={cx(iconSizeClass, "shrink-0")}
+        strokeWidth={iconStrokeWidth}
+        aria-hidden="true"
+      />
+    </button>
+  );
+};
 
 /**
- * Root sheet component for desktop side panels.
+ * Overlay panel component sliding from screen edges for mobile-friendly interfaces.
  *
- * Container component that manages the sheet's open state and provides
- * context for all child components. Built on Base UI Dialog.Root for
- * full accessibility support.
- *
- * @param props - All Base UI Dialog.Root props (open, onOpenChange, etc.).
- *
+ * @id sheet
+ * @name Sheet
+ * @icon PanelLeft
+ * @category ui
  * @component
- * @example
- * ```tsx
- * // Uncontrolled sheet
- * <Sheet>
- *   <SheetTrigger>Open</SheetTrigger>
- *   <SheetContent>Content</SheetContent>
- * </Sheet>
- *
- * // Controlled sheet
- * <Sheet open={isOpen} onOpenChange={setIsOpen}>
- *   <SheetTrigger>Toggle</SheetTrigger>
- *   <SheetContent>Content</SheetContent>
- * </Sheet>
- * ```
+ * @param props - Component properties.
  */
 const Sheet = (props: React.ComponentPropsWithoutRef<typeof Dialog.Root>) => {
-    return <Dialog.Root {...props} />;
-  };
+  return <Dialog.Root {...props} />;
+};
 Sheet.displayName = "Sheet";
 
 /**
@@ -228,8 +214,8 @@ Sheet.displayName = "Sheet";
  * ```
  */
 const SheetTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Trigger> | null> }) => {
-    return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
-  };
+  return <Dialog.Trigger ref={ref} className={cx(className)} {...props} />;
+};
 SheetTrigger.displayName = "Sheet.Trigger";
 
 /**
@@ -254,8 +240,8 @@ SheetTrigger.displayName = "Sheet.Trigger";
  * ```
  */
 const SheetClose = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Close> | null> }) => {
-    return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
-  };
+  return <Dialog.Close ref={ref} className={cx(className)} {...props} />;
+};
 SheetClose.displayName = "Sheet.Close";
 
 /**
@@ -297,26 +283,26 @@ const SheetPortal = Dialog.Portal;
  * ```
  */
 const SheetOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Backdrop> | null> }) => {
-    return (
-      <Dialog.Backdrop
-        ref={forwardedRef}
-        className={cx(
+  return (
+    <Dialog.Backdrop
+      ref={forwardedRef}
+      className={cx(
         // base
-          "fixed inset-0 z-50 overflow-y-auto",
-          // background color
-          "bg-black/30",
-          // transition
-          "data-[closed]:animate-hide data-[open]:animate-dialog-overlay-show",
-          className,
-        )}
-        {...props}
-        style={{
-          animationDuration: "400ms",
-          animationFillMode: "backwards",
-        }}
-      />
-    );
-  };
+        "fixed inset-0 z-50 overflow-y-auto",
+        // background color
+        "bg-black/30",
+        // transition
+        "data-[closed]:animate-hide data-[open]:animate-dialog-overlay-show",
+        className,
+      )}
+      {...props}
+      style={{
+        animationDuration: "400ms",
+        animationFillMode: "backwards",
+      }}
+    />
+  );
+};
 
 SheetOverlay.displayName = "SheetOverlay";
 
@@ -349,28 +335,28 @@ SheetOverlay.displayName = "SheetOverlay";
  * ```
  */
 const SheetContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Popup> | null> }) => {
-    return (
-      <SheetPortal>
-        <SheetOverlay />
-        <Dialog.Popup
-          ref={forwardedRef}
-          className={cx(
+  return (
+    <SheetPortal>
+      <SheetOverlay />
+      <Dialog.Popup
+        ref={forwardedRef}
+        className={cx(
           // base
-            "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
-            // border color
-            "border-zinc-200 dark:border-zinc-900",
-            // background color
-            "bg-white dark:bg-[#090E1A]",
-            // transition
-            "data-[closed]:animate-sheet-slide-right-and-fade data-[open]:animate-sheet-slide-left-and-fade",
-            focusRing,
-            className,
-          )}
-          {...props}
-        />
-      </SheetPortal>
-    );
-  };
+          "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
+          // border color
+          "border-zinc-200 dark:border-zinc-900",
+          // background color
+          "bg-white dark:bg-[#090E1A]",
+          // transition
+          "data-[closed]:animate-sheet-slide-right-and-fade data-[open]:animate-sheet-slide-left-and-fade",
+          focusRing,
+          className,
+        )}
+        {...props}
+      />
+    </SheetPortal>
+  );
+};
 
 SheetContent.displayName = "SheetContent";
 
@@ -400,27 +386,27 @@ SheetContent.displayName = "SheetContent";
  * ```
  */
 const SheetHeader = ({ ref, children, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return (
-      <div
-        ref={ref}
-        className="flex items-start justify-between gap-x-4 border-b border-zinc-200 pb-4 dark:border-zinc-900"
-        {...props}
-      >
-        <div className={cx("mt-1 flex flex-col gap-y-1", className)}>
-          {children}
-        </div>
-        <Dialog.Close
-          render={(
-            <InlineSheetDismissButton
-              size="lg"
-              aria-label="Close sheet"
-              className="mt-1 shrink-0"
-            />
-          )}
-        />
+  return (
+    <div
+      ref={ref}
+      className="flex items-start justify-between gap-x-4 border-b border-zinc-200 pb-4 dark:border-zinc-900"
+      {...props}
+    >
+      <div className={cx("mt-1 flex flex-col gap-y-1", className)}>
+        {children}
       </div>
-    );
-  };
+      <Dialog.Close
+        render={(
+          <InlineSheetDismissButton
+            size="lg"
+            aria-label="Close sheet"
+            className="mt-1 shrink-0"
+          />
+        )}
+      />
+    </div>
+  );
+};
 
 SheetHeader.displayName = "Sheet.Header";
 
@@ -444,18 +430,18 @@ SheetHeader.displayName = "Sheet.Header";
  * ```
  */
 const SheetTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Title> | null> }) => (
-    <Dialog.Title
-      ref={forwardedRef}
-      className={cx(
+  <Dialog.Title
+    ref={forwardedRef}
+    className={cx(
       // base
-        "text-base font-semibold",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "text-base font-semibold",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      className,
+    )}
+    {...props}
+  />
+);
 
 SheetTitle.displayName = "SheetTitle";
 
@@ -487,8 +473,8 @@ SheetTitle.displayName = "SheetTitle";
  * ```
  */
 const SheetBody = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
-  };
+  return <div ref={ref} className={cx("flex-1 py-4", className)} {...props} />;
+};
 SheetBody.displayName = "Sheet.Body";
 
 /**
@@ -513,14 +499,14 @@ SheetBody.displayName = "Sheet.Body";
  * ```
  */
 const SheetDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof Dialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof Dialog.Description> | null> }) => {
-    return (
-      <Dialog.Description
-        ref={forwardedRef}
-        className={cx("text-zinc-500 dark:text-zinc-500", className)}
-        {...props}
-      />
-    );
-  };
+  return (
+    <Dialog.Description
+      ref={forwardedRef}
+      className={cx("text-zinc-500 dark:text-zinc-500", className)}
+      {...props}
+    />
+  );
+};
 
 SheetDescription.displayName = "SheetDescription";
 
@@ -552,30 +538,30 @@ SheetDescription.displayName = "SheetDescription";
  * ```
  */
 const SheetFooter = ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => {
-    return (
-      <div
-        className={cx(
-          "flex flex-col-reverse border-t border-zinc-200 pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
+  return (
+    <div
+      className={cx(
+        "flex flex-col-reverse border-t border-zinc-200 pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 
 SheetFooter.displayName = "SheetFooter";
 
 export {
-    Sheet,
-    SheetBody,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 };

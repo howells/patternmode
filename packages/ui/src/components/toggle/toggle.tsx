@@ -2,9 +2,10 @@
 
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
+
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
@@ -52,30 +53,109 @@ const toggleVariants = tv({
   },
 });
 
-interface ToggleProps
-  extends React.ComponentPropsWithoutRef<typeof BaseToggle>,
-  VariantProps<typeof toggleVariants> {}
+type ToggleProps = {} & React.ComponentPropsWithoutRef<typeof BaseToggle> & VariantProps<typeof toggleVariants>;
 
 /**
- * A two-state button that can be either on or off.
+ * A two-state button component that toggles between pressed (on) and unpressed (off) states.
  *
- * Toggle.
+ * Unlike a checkbox, Toggle is designed for immediate actions rather than form submission.
+ * It provides visual feedback through pressed states and is commonly used for feature toggles,
+ * view preferences, or tool activation in toolbars and settings panels.
  *
- * @component
- * @id toggle
- * @name Toggle
+ * **Key Features:**
+ * - **Two-State Interaction**: Clear visual distinction between pressed and unpressed states
+ * - **Immediate Feedback**: Instant visual response to user interaction
+ * - **Keyboard Accessible**: Full keyboard support with space and enter key activation
+ * - **Size Variants**: Multiple sizes (sm, default, lg) for different contexts
+ * - **Style Variants**: Default, outline, and ghost variants for different UI contexts
+ * - **Focus Management**: Proper focus indicators and keyboard navigation.
+ *
+ * **Common Use Cases:**
+ * - Toolbar buttons (bold, italic, underline in text editors)
+ * - View toggles (list/grid view, show/hide panels)
+ * - Feature flags and settings toggles
+ * - Filter activation buttons
+ * - Tool selection in editors or design apps.
+ *
+ * **Accessibility:**
+ * - Uses proper ARIA states (aria-pressed) for screen readers
+ * - Keyboard navigation with space and enter keys
+ * - Focus management and visual focus indicators
+ * - Semantic button element with toggle behavior.
+ *
+ * @category inputs
+ * @icon ToggleLeft
  * @example
  * ```tsx
- * <Toggle>Content</Toggle>
+ * // Basic toggle button
+ * <Toggle
+ *   pressed={isBold}
+ *   onPressedChange={setIsBold}
+ * >
+ *   <Bold className="h-4 w-4" />
+ * </Toggle>
+ *
+ * // Toggle with text and icon
+ * <Toggle
+ *   pressed={showSidebar}
+ *   onPressedChange={setShowSidebar}
+ *   variant="outline"
+ *   size="lg"
+ * >
+ *   <Sidebar className="h-4 w-4" />
+ *   Sidebar
+ * </Toggle>
+ *
+ * // Ghost variant for subtle toggles
+ * <Toggle
+ *   pressed={isListView}
+ *   onPressedChange={setIsListView}
+ *   variant="ghost"
+ *   size="sm"
+ * >
+ *   <List className="h-4 w-4" />
+ * </Toggle>
+ *
+ * // Disabled state
+ * <Toggle
+ *   pressed={false}
+ *   disabled
+ * >
+ *   <Settings className="h-4 w-4" />
+ *   Settings
+ * </Toggle>
+ *
+ * // In a toolbar context
+ * <div className="flex items-center gap-1 p-1 border rounded-md">
+ *   <Toggle pressed={isBold} onPressedChange={setIsBold} size="sm">
+ *     <Bold className="h-4 w-4" />
+ *   </Toggle>
+ *   <Toggle pressed={isItalic} onPressedChange={setIsItalic} size="sm">
+ *     <Italic className="h-4 w-4" />
+ *   </Toggle>
+ *   <Toggle pressed={isUnderline} onPressedChange={setIsUnderline} size="sm">
+ *     <Underline className="h-4 w-4" />
+ *   </Toggle>
+ * </div>
  * ```
  */
+/**
+ * Toggle button component for binary state switching with visual feedback.
+ *
+ * @id toggle
+ * @name Toggle
+ * @icon ToggleLeft
+ * @category inputs
+ * @component
+ * @param props - Component properties.
+ */
 const Toggle = ({ ref, className, variant, size, ...props }: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => (
-    <BaseToggle
-      ref={ref}
-      className={cx(toggleVariants({ variant, size }), className)}
-      {...props}
-    />
-  );
+  <BaseToggle
+    ref={ref}
+    className={cx(toggleVariants({ variant, size }), className)}
+    {...props}
+  />
+);
 
 Toggle.displayName = "Toggle";
 
@@ -84,4 +164,4 @@ const ToggleRoot = BaseToggle;
 
 export { Toggle, ToggleRoot, toggleVariants };
 
-    export type { ToggleProps };
+export type { ToggleProps };

@@ -1,19 +1,26 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Button,
+  iconRegistry,
   RadioCardGroup,
   RadioCardIndicator,
   RadioCardItem,
 } from "@patternmode/ui";
-import { Rocket, Truck, Zap } from "lucide-react";
+
 import React, { useState } from "react";
+// Pre-imported icons from registry
+const { Rocket, Truck, Zap } = iconRegistry;
 
 export function RadioCardGroupExample() {
   const [value, setValue] = useState("basic");
 
   return (
-    <RadioCardGroup value={value} onValueChange={value => setValue(value as string)}>
+    <RadioCardGroup
+      value={value}
+      onValueChange={value => setValue(value as string)}
+    >
       <RadioCardItem value="basic">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -63,7 +70,10 @@ export function DefaultExample() {
   const [plan, setPlan] = useState("starter");
 
   return (
-    <RadioCardGroup value={plan} onValueChange={value => setPlan(value as string)}>
+    <RadioCardGroup
+      value={plan}
+      onValueChange={value => setPlan(value as string)}
+    >
       <RadioCardItem value="starter">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -122,7 +132,10 @@ export function HorizontalExample() {
   const [shipping, setShipping] = useState("standard");
 
   return (
-    <RadioCardGroup value={shipping} onValueChange={value => setShipping(value as string)}>
+    <RadioCardGroup
+      value={shipping}
+      onValueChange={value => setShipping(value as string)}
+    >
       <RadioCardItem value="standard">
         <div className="flex items-start justify-between">
           <div className="flex flex-1 items-start space-x-3">
@@ -229,7 +242,10 @@ export function DisabledRadioCardGroup() {
   const [value, setValue] = useState("available1");
 
   return (
-    <RadioCardGroup value={value} onValueChange={value => setValue(value as string)}>
+    <RadioCardGroup
+      value={value}
+      onValueChange={value => setValue(value as string)}
+    >
       <RadioCardItem value="available1">
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -286,7 +302,10 @@ export function ControlledRadioCardGroup() {
         {selectedValue}
       </div>
 
-      <RadioCardGroup value={selectedValue} onValueChange={value => setSelectedValue(value as string)}>
+      <RadioCardGroup
+        value={selectedValue}
+        onValueChange={value => setSelectedValue(value as string)}
+      >
         <RadioCardItem value="option1">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -335,3 +354,28 @@ export function ControlledRadioCardGroup() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "RadioCardGroupExample",
+    title: "Radio Card Group",
+    description: "Radio Card Group example",
+    component: RadioCardGroupExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "HorizontalExample",
+    title: "Horizontal",
+    description: "Horizontal example",
+    component: HorizontalExample,
+  },
+];

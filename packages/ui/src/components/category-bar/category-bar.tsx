@@ -3,16 +3,16 @@
 "use client";
 
 import type {
-    AvailableChartColorsKeys,
+  AvailableChartColorsKeys,
 } from "../../lib/chartUtils";
 
 import React from "react";
+
 import {
-    AvailableChartColors,
-    getColorClassName,
+  AvailableChartColors,
+  getColorClassName,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
-
 import { Tooltip } from "../tooltip/tooltip";
 
 /**
@@ -95,72 +95,71 @@ const formatNumber = (num: number): string => {
 };
 
 /**
- * Component that renders numeric labels above the category bar.
- *
- * Intelligently displays labels at category boundaries with logic to prevent
- * overcrowding. Shows values at 0, significant boundaries, and the maximum value.
- *
- * @component
- * @param values - Array of category values to label.
+ * Horizontal bar chart component for categorical data comparison and ranking.
  *
  * @id category-bar
  * @name CategoryBar
+ * @icon BarChart
+ * @category charts
+ * @component
+ * @see {@link https://recharts.org/en-US/api/BarChart}
+ * @param props - Component properties.
  */
 const BarLabels = ({ values }: { values: number[] }) => {
-    const sumValues = React.useMemo(() => sumNumericArray(values), [values]);
-    let prefixSum = 0;
-    let sumConsecutiveHiddenLabels = 0;
+  const sumValues = React.useMemo(() => sumNumericArray(values), [values]);
+  let prefixSum = 0;
+  let sumConsecutiveHiddenLabels = 0;
 
-    return (
-      <div
-        className={cx(
+  return (
+    <div
+      className={cx(
         // base
-          "relative mb-2 flex h-5 w-full text-sm font-medium",
-          // text color
-          "text-zinc-700 dark:text-zinc-300",
-        )}
-      >
-        <div className="absolute bottom-0 left-0 flex items-center">0</div>
-        {values.map((widthPercentage, index) => {
-          prefixSum += widthPercentage;
+        "relative mb-2 flex h-5 w-full text-sm font-medium",
+        // text color
+        "text-zinc-700 dark:text-zinc-300",
+      )}
+    >
+      <div className="absolute bottom-0 left-0 flex items-center">0</div>
+      {values.map((widthPercentage, index) => {
+        prefixSum += widthPercentage;
 
-          const showLabel
+        const showLabel
           = (widthPercentage >= 0.1 * sumValues
             || sumConsecutiveHiddenLabels >= 0.09 * sumValues)
           && sumValues - prefixSum >= 0.1 * sumValues
           && prefixSum >= 0.1 * sumValues
           && prefixSum < 0.9 * sumValues;
 
-          sumConsecutiveHiddenLabels = showLabel
-            ? 0
-            : (sumConsecutiveHiddenLabels += widthPercentage);
+        sumConsecutiveHiddenLabels = showLabel
+          ? 0
+          : (sumConsecutiveHiddenLabels += widthPercentage);
 
-          const widthPositionLeft = getPositionLeft(widthPercentage, sumValues);
+        const widthPositionLeft = getPositionLeft(widthPercentage, sumValues);
 
-          return (
-            <div
-              key={`item-${index}`}
-              className="flex items-center justify-end pr-0.5"
-              style={{ width: `${widthPositionLeft}%` }}
-            >
-              {showLabel
-                ? (
-                    <span
-                      className={cx("block translate-x-1/2 text-sm tabular-nums")}
-                    >
-                      {formatNumber(prefixSum)}
-                    </span>
-                  )
-                : null}
-            </div>
-          );
-        })}
-        <div className="absolute right-0 bottom-0 flex items-center">
-          {formatNumber(sumValues)}
-        </div>
+        return (
+          <div
+            key={`item-${index}`}
+            className="flex items-center justify-end pr-0.5"
+            style={{ width: `${widthPositionLeft}%` }}
+          >
+            {showLabel
+              ? (
+                  <span
+                    className={cx("block translate-x-1/2 text-sm tabular-nums")}
+                  >
+                    {formatNumber(prefixSum)}
+                  </span>
+                )
+              : null}
+          </div>
+        );
+      })}
+      <div className="absolute right-0 bottom-0 flex items-center">
+        {formatNumber(sumValues)}
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 /**
  * Props for the CategoryBar component.
@@ -171,7 +170,7 @@ const BarLabels = ({ values }: { values: number[] }) => {
  * @interface CategoryBarProps
  * @augments React.HTMLAttributes<HTMLDivElement>
  */
-interface CategoryBarProps extends React.HTMLAttributes<HTMLDivElement> {
+type CategoryBarProps = {
   /**
    * Array of numeric values for each category.
    */
@@ -201,174 +200,128 @@ interface CategoryBarProps extends React.HTMLAttributes<HTMLDivElement> {
    * Whether to show numeric labels above the bar.
    */
   showLabels?: boolean;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * A horizontal bar component for displaying categorical data proportions.
+ * Horizontal bar chart component for categorical data comparison and ranking.
  *
- * Visualizes multiple category values as proportional segments in a horizontal bar.
- * Supports an optional marker overlay for indicating targets, thresholds, or current
- * values. Includes intelligent labeling and tooltip functionality.
- *
- * @param values - Array of numeric values for each category.
- * @param colors - Color themes for categories (defaults to chart colors).
- * @param marker - Optional marker with position and tooltip.
- * @param showLabels - Whether to display numeric labels.
- *
+ * @id category-bar
+ * @name CategoryBar
+ * @icon BarChart
+ * @category charts
  * @component
- * @example
- * ```tsx
- * // Basic category bar
- * <CategoryBar values={[20, 30, 50]} />
- *
- * // With custom colors
- * <CategoryBar
- *   values={[25, 35, 40]}
- *   colors={["blue", "green", "red"]}
- * />
- *
- * // With marker and tooltip
- * <CategoryBar
- *   values={[10, 20, 30, 40]}
- *   marker={{
- *     value: 75,
- *     tooltip: "Target: 75",
- *     showAnimation: true
- *   }}
- * />
- *
- * // Performance dashboard example
- * <CategoryBar
- *   values={[45, 30, 15, 10]} // Good, Fair, Poor, Critical
- *   colors={["emerald", "yellow", "orange", "red"]}
- *   marker={{
- *     value: 85,
- *     tooltip: "Current Score: 85"
- *   }}
- *   className="mb-4"
- * />
- *
- * // Budget allocation visualization
- * <CategoryBar
- *   values={[40000, 25000, 20000, 15000]} // Marketing, Development, Operations, Admin
- *   colors={["blue", "purple", "green", "gray"]}
- *   marker={{
- *     value: 90000,
- *     tooltip: "Budget Used: $90,000",
- *     showAnimation: true
- *   }}
- *   showLabels
- * />
- *
- * // Without labels
- * <CategoryBar
- *   values={[1, 2, 3]}
- *   showLabels={false}
- *   className="h-1"
- * />
- * ```
+ * @see {@link https://recharts.org/en-US/api/BarChart}
+ * @param props - Component properties.
+ * @param props.values - Array of numeric values for each category.
+ * @param props.colors - Color themes for each category (defaults to chart colors).
+ * @param props.marker - Optional marker with position, tooltip, and animation.
+ * @param props.marker.value - Position value for the marker.
+ * @param props.marker.tooltip - Optional tooltip text to show on hover.
+ * @param props.marker.showAnimation - Whether to animate marker position changes.
+ * @param props.showLabels - Whether to show numeric labels above the bar.
+ * @param props.className - Additional CSS classes.
  */
 const CategoryBar = (
-    { ref: forwardedRef, values = [], colors = AvailableChartColors, marker, showLabels = true, className, ...props }: CategoryBarProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    const markerBgColor = React.useMemo(
-      () => getMarkerBgColor(marker?.value, values, colors),
-      [marker, values, colors],
-    );
+  { ref: forwardedRef, values = [], colors = AvailableChartColors, marker, showLabels = true, className, ...props }: CategoryBarProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  const markerBgColor = React.useMemo(
+    () => getMarkerBgColor(marker?.value, values, colors),
+    [marker, values, colors],
+  );
 
-    const maxValue = React.useMemo(() => sumNumericArray(values), [values]);
+  const maxValue = React.useMemo(() => sumNumericArray(values), [values]);
 
-    const adjustedMarkerValue = React.useMemo(() => {
-      if (marker === undefined) { return undefined; }
-      if (marker.value < 0) { return 0; }
-      if (marker.value > maxValue) { return maxValue; }
-      return marker.value;
-    }, [marker, maxValue]);
+  const adjustedMarkerValue = React.useMemo(() => {
+    if (marker === undefined) { return undefined; }
+    if (marker.value < 0) { return 0; }
+    if (marker.value > maxValue) { return maxValue; }
+    return marker.value;
+  }, [marker, maxValue]);
 
-    const markerPositionLeft: number = React.useMemo(
-      () => getPositionLeft(adjustedMarkerValue, maxValue),
-      [adjustedMarkerValue, maxValue],
-    );
+  const markerPositionLeft: number = React.useMemo(
+    () => getPositionLeft(adjustedMarkerValue, maxValue),
+    [adjustedMarkerValue, maxValue],
+  );
 
-    return (
-      <div
-        ref={forwardedRef}
-        className={cx(className)}
-        aria-label="Category bar"
-        aria-valuenow={marker?.value}
-        tremor-id="tremor-raw"
-        {...props}
-      >
-        {showLabels ? <BarLabels values={values} /> : null}
-        <div className="relative flex h-1.5 w-full items-center">
-          <div className="flex h-full flex-1 items-center gap-0.5 overflow-hidden rounded-full">
-            {values.map((value, index) => {
-              const barColor = colors[index] ?? "gray";
-              const percentage = (value / maxValue) * 100;
-              return (
-                <div
-                  key={`item-${index}`}
-                  className={cx(
-                    "h-full",
-                    getColorClassName(
-                      barColor as AvailableChartColorsKeys,
-                      "bg",
-                    ),
-                    percentage === 0 && "hidden",
-                  )}
-                  style={{ width: `${percentage}%` }}
-                />
-              );
-            })}
-          </div>
+  return (
+    <div
+      ref={forwardedRef}
+      className={cx(className)}
+      aria-label="Category bar"
+      aria-valuenow={marker?.value}
+      tremor-id="tremor-raw"
+      {...props}
+    >
+      {showLabels ? <BarLabels values={values} /> : null}
+      <div className="relative flex h-1.5 w-full items-center">
+        <div className="flex h-full flex-1 items-center gap-0.5 overflow-hidden rounded-full">
+          {values.map((value, index) => {
+            const barColor = colors[index] ?? "gray";
+            const percentage = (value / maxValue) * 100;
+            return (
+              <div
+                key={`item-${index}`}
+                className={cx(
+                  "h-full",
+                  getColorClassName(
+                    barColor as AvailableChartColorsKeys,
+                    "bg",
+                  ),
+                  percentage === 0 && "hidden",
+                )}
+                style={{ width: `${percentage}%` }}
+              />
+            );
+          })}
+        </div>
 
-          {marker !== undefined
-            ? (
-                <div
-                  className={cx(
-                    "absolute w-2 -translate-x-1/2",
-                    marker.showAnimation
-                    && "transform-gpu transition-all duration-300 ease-in-out",
-                  )}
-                  style={{
-                    left: `${markerPositionLeft}%`,
-                  }}
-                >
-                  {marker.tooltip
-                    ? (
-                        <Tooltip content={marker.tooltip}>
-                          <div
-                            aria-hidden="true"
-                            className={cx(
-                              "relative mx-auto h-4 w-1 rounded-full ring-2",
-                              "ring-white dark:ring-zinc-950",
-                              markerBgColor,
-                            )}
-                          >
-                            <div
-                              aria-hidden
-                              className="absolute size-7 -translate-x-[45%] -translate-y-[15%]"
-                            >
-                            </div>
-                          </div>
-                        </Tooltip>
-                      )
-                    : (
+        {marker !== undefined
+          ? (
+              <div
+                className={cx(
+                  "absolute w-2 -translate-x-1/2",
+                  marker.showAnimation
+                  && "transform-gpu transition-all duration-300 ease-in-out",
+                )}
+                style={{
+                  left: `${markerPositionLeft}%`,
+                }}
+              >
+                {marker.tooltip
+                  ? (
+                      <Tooltip content={marker.tooltip}>
                         <div
+                          aria-hidden="true"
                           className={cx(
-                            "mx-auto h-4 w-1 rounded-full ring-2",
+                            "relative mx-auto h-4 w-1 rounded-full ring-2",
                             "ring-white dark:ring-zinc-950",
                             markerBgColor,
                           )}
-                        />
-                      )}
-                </div>
-              )
-            : null}
-        </div>
+                        >
+                          <div
+                            aria-hidden
+                            className="absolute size-7 -translate-x-[45%] -translate-y-[15%]"
+                          >
+                          </div>
+                        </div>
+                      </Tooltip>
+                    )
+                  : (
+                      <div
+                        className={cx(
+                          "mx-auto h-4 w-1 rounded-full ring-2",
+                          "ring-white dark:ring-zinc-950",
+                          markerBgColor,
+                        )}
+                      />
+                    )}
+              </div>
+            )
+          : null}
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 CategoryBar.displayName = "CategoryBar";
 

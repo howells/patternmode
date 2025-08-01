@@ -1,11 +1,13 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   RadioCardOption,
   RadioItem,
   RadioLabel,
   RadioOption,
 } from "@patternmode/ui";
+
 import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
@@ -173,3 +175,34 @@ export function RadioCardSizes() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "CheckedExample",
+    title: "Checked",
+    description: "Checked example",
+    component: CheckedExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+  {
+    id: "RadioExample",
+    title: "Radio",
+    description: "Radio example",
+    component: RadioExample,
+  },
+];

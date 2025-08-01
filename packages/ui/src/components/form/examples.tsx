@@ -1,3 +1,6 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Button,
   Form,
@@ -6,6 +9,7 @@ import {
   Textarea,
 } from "@patternmode/ui";
 import React from "react";
+
 import { z } from "zod";
 
 export function FormExample() {
@@ -46,7 +50,23 @@ export function FormExample() {
 }
 
 // Export with the expected naming convention
-export const /**
-              *
-              */
-  DefaultExample = FormExample;
+export const DefaultExample = FormExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "FormExample",
+    title: "Form",
+    description: "Form example",
+    component: FormExample,
+  },
+];

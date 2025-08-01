@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Subheading } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -33,7 +37,35 @@ export function WithContentExample() {
       </ul>
     </div>
   );
-} export const /**
-                *
-                */
-  SubheadingExample = DefaultExample;
+} export const SubheadingExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "SubheadingExample",
+    title: "Subheading",
+    description: "Subheading example",
+    component: SubheadingExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "LevelsExample",
+    title: "Levels",
+    description: "Levels example",
+    component: LevelsExample,
+  },
+  {
+    id: "WithContentExample",
+    title: "With Content",
+    description: "Example with pre-filled content",
+    component: WithContentExample,
+  },
+];

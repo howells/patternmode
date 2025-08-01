@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { AreaChart } from "@patternmode/ui";
+
 import React from "react";
 
 // Sample data for examples
@@ -12,145 +16,182 @@ const chartData = [
 ];
 
 // Default area chart
-export const /**
-              *
-              */
-  DefaultExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["sales", "profit"]}
-    />
-  );
+export const DefaultExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["sales", "profit"]}
+  />
+);
 
 // Stacked area chart
-export const /**
-              *
-              */
-  StackedExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["desktop", "mobile", "tablet"]}
-      type="stacked"
-    />
-  );
+export const StackedExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["desktop", "mobile", "tablet"]}
+    type="stacked"
+  />
+);
 
 // Percentage area chart
-export const /**
-              *
-              */
-  PercentExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["category1", "category2", "category3"]}
-      type="percent"
-    />
-  );
+export const PercentExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["category1", "category2", "category3"]}
+    type="percent"
+  />
+);
 
 // Solid fill area chart
-export const /**
-              *
-              */
-  SolidFillExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["revenue", "expenses"]}
-      fill="solid"
-    />
-  );
+export const SolidFillExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["revenue", "expenses"]}
+    fill="solid"
+  />
+);
 
 // Area chart with axis labels
-export const /**
-              *
-              */
-  WithLabelsExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["value"]}
-      xAxisLabel="Time Period"
-      yAxisLabel="Amount ($)"
-    />
-  );
+export const WithLabelsExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["value"]}
+    xAxisLabel="Time Period"
+    yAxisLabel="Amount ($)"
+  />
+);
 
 // Area chart with custom colors
-export const /**
-              *
-              */
-  CustomColorsExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["sales", "profit"]}
-      colors={["blue", "emerald"]}
-    />
-  );
+export const CustomColorsExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["sales", "profit"]}
+    colors={["blue", "emerald"]}
+  />
+);
 
 // Area chart without legend
-export const /**
-              *
-              */
-  NoLegendExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["sales", "profit"]}
-      showLegend={false}
-    />
-  );
+export const NoLegendExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["sales", "profit"]}
+    showLegend={false}
+  />
+);
 
 // Area chart with value formatter
-export const /**
-              *
-              */
-  FormattedValuesExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["revenue", "expenses"]}
-      valueFormatter={value => `$${value.toLocaleString()}`}
-    />
-  );
+export const FormattedValuesExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["revenue", "expenses"]}
+    valueFormatter={value => `$${value.toLocaleString()}`}
+  />
+);
 
 // Minimal area chart
-export const /**
-              *
-              */
-  MinimalExample = () => (
-    <AreaChart
-      data={chartData}
-      index="date"
-      categories={["sales"]}
-      showXAxis={false}
-      showYAxis={false}
-      showGridLines={false}
-      showLegend={false}
-    />
-  );
+export const MinimalExample = () => (
+  <AreaChart
+    data={chartData}
+    index="date"
+    categories={["sales"]}
+    showXAxis={false}
+    showYAxis={false}
+    showGridLines={false}
+    showLegend={false}
+  />
+);
 
 // Area chart with connected nulls
-export const /**
-              *
-              */
-  ConnectedNullsExample = () => {
-    const dataWithNulls = [
-      { date: "Jan", value: 4000 },
-      { date: "Feb", value: 3000 },
-      { date: "Mar", value: null },
-      { date: "Apr", value: 2780 },
-      { date: "May", value: 1890 },
-      { date: "Jun", value: 2390 },
-    ];
+export const ConnectedNullsExample = () => {
+  const dataWithNulls = [
+    { date: "Jan", value: 4000 },
+    { date: "Feb", value: 3000 },
+    { date: "Mar", value: null },
+    { date: "Apr", value: 2780 },
+    { date: "May", value: 1890 },
+    { date: "Jun", value: 2390 },
+  ];
 
-    return (
-      <AreaChart
-        data={dataWithNulls}
-        index="date"
-        categories={["value"]}
-        connectNulls={true}
-      />
-    );
-  };
+  return (
+    <AreaChart
+      data={dataWithNulls}
+      index="date"
+      categories={["value"]}
+      connectNulls={true}
+    />
+  );
+};
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "StackedExample",
+    title: "Stacked",
+    description: "Stacked example",
+    component: StackedExample,
+  },
+  {
+    id: "PercentExample",
+    title: "Percent",
+    description: "Percent example",
+    component: PercentExample,
+  },
+  {
+    id: "SolidFillExample",
+    title: "Solid Fill",
+    description: "Solid Fill example",
+    component: SolidFillExample,
+  },
+  {
+    id: "WithLabelsExample",
+    title: "With Labels",
+    description: "Example with custom labels",
+    component: WithLabelsExample,
+  },
+  {
+    id: "CustomColorsExample",
+    title: "Custom Colors",
+    description: "Custom Colors example",
+    component: CustomColorsExample,
+  },
+  {
+    id: "NoLegendExample",
+    title: "No Legend",
+    description: "No Legend example",
+    component: NoLegendExample,
+  },
+  {
+    id: "FormattedValuesExample",
+    title: "Formatted Values",
+    description: "Formatted Values example",
+    component: FormattedValuesExample,
+  },
+  {
+    id: "MinimalExample",
+    title: "Minimal",
+    description: "Minimal example",
+    component: MinimalExample,
+  },
+  {
+    id: "ConnectedNullsExample",
+    title: "Connected Nulls",
+    description: "Connected Nulls example",
+    component: ConnectedNullsExample,
+  },
+];

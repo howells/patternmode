@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { ScrollArea, Separator } from "@patternmode/ui";
+
 import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
@@ -84,3 +86,28 @@ export function BothDirectionsScrollArea() {
     </ScrollArea>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "HorizontalExample",
+    title: "Horizontal",
+    description: "Horizontal example",
+    component: HorizontalExample,
+  },
+  {
+    id: "ScrollAreaExample",
+    title: "Scroll Area",
+    description: "Scroll Area example",
+    component: ScrollAreaExample,
+  },
+];

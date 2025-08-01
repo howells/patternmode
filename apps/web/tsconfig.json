@@ -1,22 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../packages/tsconfig/base.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noEmit": true,
     "incremental": true,
-    "module": "esnext",
-    "esModuleInterop": true,
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
@@ -24,6 +9,7 @@
       "@patternmode/ui": ["../../packages/ui/src"],
       "@patternmode/ui/*": ["../../packages/ui/src/*"]
     },
+    "allowJs": true,
     "plugins": [
       {
         "name": "next"
@@ -33,9 +19,9 @@
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "../../packages/ui/src/component-registry.ts", "../../packages/ui/src/lib/component-config-types.ts", "../../packages/ui/src/lib/jsx-to-string.ts"  ],
+    "src/**/*",
+    "tests/**/*"
+  ],
   "exclude": [
     "node_modules"
   ]

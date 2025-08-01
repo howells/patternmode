@@ -1,7 +1,10 @@
 import type { VariantProps } from "tailwind-variants";
+
 import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
 import React from "react";
+
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 import {
   getColorClasses,
@@ -36,8 +39,7 @@ const iconContainerVariants = tv({
   },
 });
 
-export interface IconContainerProps
-  extends VariantProps<typeof iconContainerVariants> {
+export type IconContainerProps = {
   /**
    * The Lucide icon component to render.
    */
@@ -62,7 +64,7 @@ export interface IconContainerProps
    * Custom color variant (overrides variant prop).
    */
   color?: GlobalSemanticVariant | TailwindColor;
-}
+} & VariantProps<typeof iconContainerVariants>;
 
 /**
  * IconContainer component for displaying icons in colored containers.
@@ -96,6 +98,16 @@ export interface IconContainerProps
  * @component
  * @id icon-container
  * @name Icon Container
+ */
+/**
+ * Container component for icons with consistent padding and background styling.
+ *
+ * @id icon-container
+ * @name IconContainer
+ * @icon Square
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 export function IconContainer({
   icon,

@@ -1,10 +1,10 @@
+import type { VariantProps } from "tailwind-variants";
 
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
-import { cx } from "../../lib/utils";
 
+import { cx } from "../../lib/utils";
 // Legacy components for backward compatibility with existing radio-group.tsx usage
 // These use the new Radio components from radio.tsx
 import { RadioItem } from "../radio/radio";
@@ -48,72 +48,151 @@ const radioGroupVariants = tv({
 });
 
 /**
- * A radio group component for managing radio button selections.
+ * A container component that manages a group of radio buttons with mutually exclusive selection behavior.
  *
- * Based on Base UI's RadioGroup (https://base-ui.com/react/components/radio),
- * providing accessible group management for radio buttons with keyboard navigation
- * and focus management. Ensures only one radio can be selected at a time.
+ * RadioGroup provides the essential functionality for managing multiple radio buttons as a cohesive unit,
+ * ensuring only one option can be selected at a time. It handles keyboard navigation, focus management,
+ * and value synchronization across all radio buttons within the group.
  *
- * @param orientation - Layout direction (vertical or horizontal).
- * @param size - Spacing size between items.
- * @param value - Currently selected value.
- * @param onValueChange - Callback when selection changes.
- * @param disabled - Whether the entire group is disabled.
+ * **Key Features:**
+ * - **Mutually Exclusive Selection**: Automatically manages single-choice selection behavior
+ * - **Keyboard Navigation**: Arrow key navigation between radio options
+ * - **Flexible Layout**: Support for both vertical and horizontal orientations
+ * - **Size Control**: Configurable spacing between radio items
+ * - **Form Integration**: Works seamlessly with form libraries and validation systems
+ * - **Accessibility**: Full ARIA support with proper group semantics and focus management
+ * - **Value Management**: Controlled and uncontrolled modes with change callbacks.
  *
+ * **Layout Options:**
+ * - **Vertical** (default): Stack radio buttons vertically with consistent spacing
+ * - **Horizontal**: Arrange radio buttons in a horizontal row for compact layouts
+ * - **Size Variants**: Small, medium, and large spacing options.
  *
- * @id radio-group
- * @name Radio Group
- * @component
+ * **Common Use Cases:**
+ * - Form field selections (single choice from multiple options)
+ * - Settings and preference panels
+ * - Survey and questionnaire responses
+ * - Plan or tier selection interfaces
+ * - Filter options in search interfaces
+ * - Configuration choices in onboarding flows
+ * - Payment method selection.
+ *
+ * **Accessibility:**
+ * - Proper radiogroup ARIA role with group semantics
+ * - Arrow key navigation between radio options
+ * - Home/End key support for quick navigation
+ * - Screen reader announcements for value changes
+ * - Focus management and visual focus indicators
+ * - Semantic association between group and individual radios.
+ *
+ * @category inputs
+ * @icon CircleDot
  * @example
  * ```tsx
- * // Vertical radio group (default)
- * <RadioGroup value={size} onValueChange={setSize}>
- *   <RadioGroupItem value="sm">Small</RadioGroupItem>
- *   <RadioGroupItem value="md">Medium</RadioGroupItem>
- *   <RadioGroupItem value="lg">Large</RadioGroupItem>
+ * // Basic vertical radio group (default)
+ * <RadioGroup value={selectedSize} onValueChange={setSelectedSize}>
+ *   <RadioGroupItem value="small" />
+ *   <RadioGroupItem value="medium" />
+ *   <RadioGroupItem value="large" />
  * </RadioGroup>
  *
- * // Horizontal layout
+ * // Horizontal layout for compact forms
  * <RadioGroup
  *   orientation="horizontal"
  *   value={plan}
  *   onValueChange={setPlan}
+ *   size="sm"
  * >
- *   <RadioGroupItem value="free">Free</RadioGroupItem>
- *   <RadioGroupItem value="pro">Pro</RadioGroupItem>
- *   <RadioGroupItem value="enterprise">Enterprise</RadioGroupItem>
+ *   <RadioGroupItem value="free" />
+ *   <RadioGroupItem value="pro" />
+ *   <RadioGroupItem value="enterprise" />
  * </RadioGroup>
  *
- * // Large spacing
- * <RadioGroup size="lg" value={preference} onValueChange={setPreference}>
- *   <RadioGroupItem value="opt1">Option 1</RadioGroupItem>
- *   <RadioGroupItem value="opt2">Option 2</RadioGroupItem>
+ * // Form integration with validation
+ * <div className="space-y-2">
+ *   <label className="text-sm font-medium">
+ *     Choose your preferred contact method
+ *   </label>
+ *   <RadioGroup
+ *     value={contactMethod}
+ *     onValueChange={setContactMethod}
+ *     orientation="vertical"
+ *     size="md"
+ *   >
+ *     <RadioOption
+ *       value="email"
+ *       label="Email"
+ *       description="We'll send updates to your email address"
+ *     />
+ *     <RadioOption
+ *       value="sms"
+ *       label="SMS"
+ *       description="Receive text messages for important updates"
+ *     />
+ *     <RadioOption
+ *       value="phone"
+ *       label="Phone Call"
+ *       description="Get a call for urgent notifications"
+ *     />
+ *   </RadioGroup>
+ *   {errors.contactMethod && (
+ *     <p className="text-sm text-red-600">{errors.contactMethod}</p>
+ *   )}
+ * </div>
+ *
+ * // Disabled group with default selection
+ * <RadioGroup
+ *   value="readonly"
+ *   disabled
+ *   size="lg"
+ * >
+ *   <RadioOption value="readonly" label="Read Only Mode" />
+ *   <RadioOption value="locked" label="Locked State" />
  * </RadioGroup>
  *
- * // Disabled group
- * <RadioGroup disabled value={locked} onValueChange={setLocked}>
- *   <RadioGroupItem value="readonly">Read Only</RadioGroupItem>
- *   <RadioGroupItem value="locked">Locked</RadioGroupItem>
+ * // Plan selection with card-style options
+ * <RadioGroup
+ *   value={selectedPlan}
+ *   onValueChange={setSelectedPlan}
+ *   orientation="vertical"
+ *   size="lg"
+ * >
+ *   <RadioCardOption
+ *     value="starter"
+ *     title="Starter Plan"
+ *     description="Perfect for individuals getting started"
+ *   />
+ *   <RadioCardOption
+ *     value="team"
+ *     title="Team Plan"
+ *     description="Collaboration features for small teams"
+ *   />
+ *   <RadioCardOption
+ *     value="enterprise"
+ *     title="Enterprise Plan"
+ *     description="Advanced features for large organizations"
+ *   />
  * </RadioGroup>
  * ```
- *
- * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
 /**
- * A set of radio buttons where only one option can be selected at a time.
+ * Group component for managing mutually exclusive radio button selections.
  *
  * @id radio-group
- * @name Radio Group
+ * @name RadioGroup
+ * @icon Circle
+ * @category inputs
  * @component
+ * @param props - Component properties.
  */
 const RadioGroup = ({ ref, className, orientation, size, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
-    & VariantProps<typeof radioGroupVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
-    <BaseRadioGroup
-      ref={ref}
-      className={cx(radioGroupVariants({ orientation, size }), className)}
-      {...props}
-    />
-  );
+  & VariantProps<typeof radioGroupVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null> }) => (
+  <BaseRadioGroup
+    ref={ref}
+    className={cx(radioGroupVariants({ orientation, size }), className)}
+    {...props}
+  />
+);
 RadioGroup.displayName = "RadioGroup";
 
 /**

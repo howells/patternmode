@@ -17,6 +17,8 @@
  * - HTML5 validation fallback
  * - Consistent styling and theming.
  *
+ * @category forms
+ * @icon FileText
  * @example
  * ```tsx
  * // Basic form with Zod validation
@@ -98,10 +100,12 @@
  * ```
  */
 
+import type { z } from "zod";
+
 import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
 import * as React from "react";
-import type { z } from "zod";
+
 import { cx } from "../../lib/utils";
 
 /**
@@ -113,7 +117,7 @@ import { cx } from "../../lib/utils";
  * @interface FormProps
  * @augments React.ComponentPropsWithoutRef<typeof BaseForm>
  */
-interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
+type FormProps = {
   /**
    * Optional Zod schema for form validation.
    */
@@ -126,7 +130,7 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
    * Form content including fields and submit buttons.
    */
   children: React.ReactNode;
-}
+} & React.ComponentPropsWithoutRef<typeof BaseForm>;
 
 /**
  * Root form component with integrated Zod validation.
@@ -166,56 +170,64 @@ interface FormProps extends React.ComponentPropsWithoutRef<typeof BaseForm> {
  * ```
  */
 /**
- * A modern form component that integrates Base UI Form with Zod validation for type-safe, accessible forms.
+ * Form container component with validation and submission handling.
  *
  * @id form
  * @name Form
+ * @icon FileText
+ * @category forms
  * @component
+ * @param props - Component properties.
+ * @param props.schema - Optional Zod schema for form validation.
+ * @param props.onValidSubmit - Callback for successful form submission with validated data.
+ * @param props.children - Form content including fields and submit buttons.
+ * @param props.className - Additional CSS classes.
+ * @param props.onSubmit - Custom submit handler (overrides default validation).
  */
 const Form = ({ ref, schema, onValidSubmit, children, className, onSubmit, ...props }: FormProps & { ref?: React.RefObject<React.ElementRef<typeof BaseForm> | null> }) => {
-    const [errors, setErrors] = React.useState({});
+  const [errors, setErrors] = React.useState({});
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-      const formData = new FormData(event.currentTarget);
-      const data = Object.fromEntries(formData);
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData);
 
-      // Validate with Zod if schema provided
-      if (schema) {
-        const result = schema.safeParse(data);
+    // Validate with Zod if schema provided
+    if (schema) {
+      const result = schema.safeParse(data);
 
-        if (!result.success) {
-          setErrors(result.error.flatten().fieldErrors);
-          return;
-        }
-
-        // Call onValidSubmit with validated data
-        if (onValidSubmit) {
-          await onValidSubmit(result.data as Record<string, unknown>);
-        }
+      if (!result.success) {
+        setErrors(result.error.flatten().fieldErrors);
+        return;
       }
-      else {
+
+      // Call onValidSubmit with validated data
+      if (onValidSubmit) {
+        await onValidSubmit(result.data as Record<string, unknown>);
+      }
+    }
+    else {
       // No schema validation, just call onValidSubmit
-        if (onValidSubmit) {
-          await onValidSubmit(data as Record<string, unknown>);
-        }
+      if (onValidSubmit) {
+        await onValidSubmit(data as Record<string, unknown>);
       }
-    };
-
-    return (
-      <BaseForm
-        ref={ref}
-        className={cx("space-y-6", className)}
-        errors={errors}
-        onClearErrors={() => setErrors({})}
-        onSubmit={handleSubmit}
-        {...props}
-      >
-        {children}
-      </BaseForm>
-    );
+    }
   };
+
+  return (
+    <BaseForm
+      ref={ref}
+      className={cx("space-y-6", className)}
+      errors={errors}
+      onClearErrors={() => setErrors({})}
+      onSubmit={handleSubmit}
+      {...props}
+    >
+      {children}
+    </BaseForm>
+  );
+};
 Form.displayName = "Form";
 
 /**
@@ -227,8 +239,8 @@ Form.displayName = "Form";
  * @param className - Additional CSS classes.
  */
 const FormItem = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return <div ref={ref} className={cx("space-y-3", className)} {...props} />;
-  };
+  return <div ref={ref} className={cx("space-y-3", className)} {...props} />;
+};
 FormItem.displayName = "FormItem";
 
 /**
@@ -240,22 +252,22 @@ FormItem.displayName = "FormItem";
  * @param className - Additional CSS classes.
  */
 const FormLabel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Label> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Label> | null> }) => {
-    return (
-      <BaseField.Label
-        ref={ref}
-        className={cx(
+  return (
+    <BaseField.Label
+      ref={ref}
+      className={cx(
         // base
-          "block text-sm font-medium leading-6",
-          // text color
-          "text-zinc-900 dark:text-zinc-50",
-          // disabled
-          "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+        "block text-sm font-medium leading-6",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // disabled
+        "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-600",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 FormLabel.displayName = "FormLabel";
 
 /**
@@ -267,32 +279,32 @@ FormLabel.displayName = "FormLabel";
  * @param className - Additional CSS classes.
  */
 const FormControl = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Control> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Control> | null> }) => {
-    return (
-      <BaseField.Control
-        ref={ref}
-        className={cx(
+  return (
+    <BaseField.Control
+      ref={ref}
+      className={cx(
         // base
-          "block w-full rounded-md border px-3 py-2 text-sm transition-colors",
-          // border
-          "border-zinc-200 dark:border-zinc-600",
-          // background
-          "bg-white dark:bg-zinc-800",
-          // text
-          "text-zinc-900 dark:text-zinc-50",
-          // placeholder
-          "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
-          // focus
-          "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
-          // disabled
-          "disabled:cursor-not-allowed disabled:opacity-50",
-          // invalid
-          "data-invalid:border-red-500 data-invalid:focus:border-red-500 data-invalid:focus:ring-red-500/20",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+        "block w-full rounded-md border px-3 py-2 text-sm transition-colors",
+        // border
+        "border-zinc-200 dark:border-zinc-600",
+        // background
+        "bg-white dark:bg-zinc-800",
+        // text
+        "text-zinc-900 dark:text-zinc-50",
+        // placeholder
+        "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
+        // focus
+        "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
+        // disabled
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        // invalid
+        "data-invalid:border-red-500 data-invalid:focus:border-red-500 data-invalid:focus:ring-red-500/20",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 FormControl.displayName = "FormControl";
 
 /**
@@ -304,20 +316,20 @@ FormControl.displayName = "FormControl";
  * @param className - Additional CSS classes.
  */
 const FormDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Description> | null> }) => {
-    return (
-      <BaseField.Description
-        ref={ref}
-        className={cx(
+  return (
+    <BaseField.Description
+      ref={ref}
+      className={cx(
         // base
-          "text-sm leading-6",
-          // text color
-          "text-zinc-600 dark:text-zinc-400",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+        "text-sm leading-6",
+        // text color
+        "text-zinc-600 dark:text-zinc-400",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 FormDescription.displayName = "FormDescription";
 
 /**
@@ -329,20 +341,20 @@ FormDescription.displayName = "FormDescription";
  * @param className - Additional CSS classes.
  */
 const FormError = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseField.Error> & { ref?: React.RefObject<React.ElementRef<typeof BaseField.Error> | null> }) => {
-    return (
-      <BaseField.Error
-        ref={ref}
-        className={cx(
+  return (
+    <BaseField.Error
+      ref={ref}
+      className={cx(
         // base
-          "text-sm leading-6",
-          // text color
-          "text-red-600 dark:text-red-400",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+        "text-sm leading-6",
+        // text color
+        "text-red-600 dark:text-red-400",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 FormError.displayName = "FormError";
 
 /**
@@ -350,7 +362,7 @@ FormError.displayName = "FormError";
  *
  * Configuration for complete form fields with all associated elements.
  */
-interface FormFieldProps {
+type FormFieldProps = {
   /**
    * Field name for form data and validation.
    */
@@ -378,10 +390,10 @@ interface FormFieldProps {
   /**
    * Layout orientation for the field.
    * - 'vertical': Label above control (default)
-   * - 'horizontal': Control and label side by side (for checkboxes)
+   * - 'horizontal': Control and label side by side (for checkboxes).
    */
-  orientation?: 'vertical' | 'horizontal';
-}
+  orientation?: "vertical" | "horizontal";
+};
 
 /**
  * Complete form field with label, control, description, and error.
@@ -420,55 +432,47 @@ interface FormFieldProps {
  * </FormField>
  * ```
  */
-const FormField = ({ ref, name, label, description, required, className, children, orientation = 'vertical' }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    if (orientation === 'horizontal') {
-      return (
-        <BaseField.Root name={name} className={className}>
-          <FormItem ref={ref}>
-            <div className="flex items-start gap-3">
-              <div className="mt-1">
-                {children}
-              </div>
-              <div className="space-y-1">
-                {label && (
-                  <FormLabel className="cursor-pointer">
-                    {label}
-                    {required && <span className="text-red-500 ml-1">*</span>}
-                  </FormLabel>
-                )}
-                {description && <FormDescription>{description}</FormDescription>}
-              </div>
-            </div>
-            <FormError />
-          </FormItem>
-        </BaseField.Root>
-      );
-    }
-
+const FormField = ({ ref, name, label, description, required, className, children, orientation = "vertical" }: FormFieldProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  if (orientation === "horizontal") {
     return (
       <BaseField.Root name={name} className={className}>
         <FormItem ref={ref}>
-          {label && (
-            <FormLabel>
-              {label}
-              {required && <span className="text-red-500 ml-1">*</span>}
-            </FormLabel>
-          )}
-          {children}
-          {description && <FormDescription>{description}</FormDescription>}
+          <div className="flex items-start gap-3">
+            <div className="mt-1">
+              {children}
+            </div>
+            <div className="space-y-1">
+              {label && (
+                <FormLabel className="cursor-pointer">
+                  {label}
+                  {required && <span className="text-red-500 ml-1">*</span>}
+                </FormLabel>
+              )}
+              {description && <FormDescription>{description}</FormDescription>}
+            </div>
+          </div>
           <FormError />
         </FormItem>
       </BaseField.Root>
     );
-  };
+  }
+
+  return (
+    <BaseField.Root name={name} className={className}>
+      <FormItem ref={ref}>
+        {label && (
+          <FormLabel>
+            {label}
+            {required && <span className="text-red-500 ml-1">*</span>}
+          </FormLabel>
+        )}
+        {children}
+        {description && <FormDescription>{description}</FormDescription>}
+        <FormError />
+      </FormItem>
+    </BaseField.Root>
+  );
+};
 FormField.displayName = "FormField";
 
-export {
-  Form,
-  FormControl,
-  FormDescription,
-  FormError,
-  FormField,
-  FormItem,
-  FormLabel
-};
+export { Form, FormControl, FormDescription, FormError, FormField, FormItem, FormLabel, type FormProps };

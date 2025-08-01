@@ -1,5 +1,13 @@
+"use client";
+
+import type { BarChartProps } from "./bar-chart";
+
 import { BarChart } from "@patternmode/ui";
 import React from "react";
+
+type BarChartExampleProps = {
+  [key: string]: unknown;
+};
 
 // Sample data for the bar chart
 const sampleData = [
@@ -17,67 +25,14 @@ const sampleData = [
   { month: "Dec", sales: 6200, profit: 3100, expenses: 1800 },
 ];
 
-// Example component for preview system
-export const /**
-              *
-              */
-  BarChartExample = ({
-    type = "default",
-    layout = "horizontal",
-    showXAxis = true,
-    showYAxis = true,
-    showGridLines = true,
-    showTooltip = true,
-    showLegend = true,
-    legendPosition = "right",
-    allowDecimals = true,
-    autoMinValue = false,
-    enableLegendSlider = false,
-    startEndOnly = false,
-    xAxisLabel,
-    yAxisLabel,
-    barCategoryGap,
-    ...props
-  }: {
-    type?: "default" | "stacked" | "percent";
-    layout?: "horizontal" | "vertical";
-    showXAxis?: boolean;
-    showYAxis?: boolean;
-    showGridLines?: boolean;
-    showTooltip?: boolean;
-    showLegend?: boolean;
-    legendPosition?: "left" | "center" | "right";
-    allowDecimals?: boolean;
-    autoMinValue?: boolean;
-    enableLegendSlider?: boolean;
-    startEndOnly?: boolean;
-    xAxisLabel?: string;
-    yAxisLabel?: string;
-    barCategoryGap?: string;
-    [key: string]: unknown;
-  }) => {
-    return (
-      <BarChart
-        data={sampleData}
-        index="month"
-        categories={["sales", "profit", "expenses"]}
-        type={type}
-        layout={layout}
-        showXAxis={showXAxis}
-        showYAxis={showYAxis}
-        showGridLines={showGridLines}
-        showTooltip={showTooltip}
-        showLegend={showLegend}
-        legendPosition={legendPosition}
-        allowDecimals={allowDecimals}
-        autoMinValue={autoMinValue}
-        enableLegendSlider={enableLegendSlider}
-        startEndOnly={startEndOnly}
-        xAxisLabel={xAxisLabel}
-        yAxisLabel={yAxisLabel}
-        barCategoryGap={barCategoryGap}
-        valueFormatter={value => `$${value.toLocaleString()}`}
-        {...props}
-      />
-    );
-  };
+export function BarChartExample(props: BarChartProps) {
+  return (
+    <BarChart
+      data={sampleData}
+      index="month"
+      categories={["sales", "profit", "expenses"]}
+      valueFormatter={value => `$${value.toLocaleString()}`}
+      {...props}
+    />
+  );
+}

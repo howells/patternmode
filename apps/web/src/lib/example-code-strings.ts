@@ -4,7 +4,7 @@
  */
 
 export const exampleCodeStrings = {
-  calendar: {
+  "calendar": {
     "with-preselected": `const [selected, setSelected] = React.useState<Date | undefined>(new Date());
 return <Calendar mode="single" selected={selected} onSelect={setSelected} />;`,
     "specific-default-date": `const [selected, setSelected] = React.useState<Date | undefined>(new Date(2024, 5, 15)); // June 15, 2024
@@ -49,7 +49,7 @@ return (
     <DatePicker value={date} onChange={setDate} />
   </div>
 );`,
-    controlled: `const [date, setDate] = React.useState<Date | undefined>(new Date());
+    "controlled": `const [date, setDate] = React.useState<Date | undefined>(new Date());
 
 return (
   <div className="space-y-4">
@@ -100,7 +100,7 @@ return (
     <DateRangePicker value={range} onChange={setRange} />
   </div>
 );`,
-    controlled: `const [range, setRange] = React.useState<{ from: Date | undefined; to: Date | undefined }>({
+    "controlled": `const [range, setRange] = React.useState<{ from: Date | undefined; to: Date | undefined }>({
   from: new Date(),
   to: addDays(new Date(), 7),
 });

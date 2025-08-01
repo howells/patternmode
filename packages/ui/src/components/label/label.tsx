@@ -16,6 +16,8 @@
  * Based on Base UI Field documentation:
  * https://base-ui.com/react/components/field.
  *
+ * @category forms
+ * @icon Tag
  * @example
  * ```tsx
  * // Basic form label
@@ -67,13 +69,12 @@ import { cx } from "../../lib/utils";
  * @interface LabelProps
  * @augments React.ComponentPropsWithoutRef<typeof Field.Label>
  */
-interface LabelProps
-  extends React.ComponentPropsWithoutRef<typeof Field.Label> {
+type LabelProps = {
   /**
    * Whether the label should appear disabled.
    */
   disabled?: boolean;
-}
+} & React.ComponentPropsWithoutRef<typeof Field.Label>;
 
 /**
  * A semantic label component for form controls.
@@ -107,31 +108,34 @@ interface LabelProps
  * ```
  */
 /**
- * A label component for form inputs and interactive elements with proper accessibility support.
+ * Form label component providing accessible labeling for input elements.
  *
  * @id label
  * @name Label
+ * @icon Tag
+ * @category ui
  * @component
+ * @param props - Component properties.
  */
 const Label = ({ ref: forwardedRef, className, disabled, ...props }: LabelProps & { ref?: React.RefObject<React.ElementRef<typeof Field.Label> | null> }) => (
-    <Field.Label
-      ref={forwardedRef}
-      className={cx(
+  <Field.Label
+    ref={forwardedRef}
+    className={cx(
       // base
-        "text-sm leading-none",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        // disabled
-        {
-          "text-zinc-400 dark:text-zinc-600": disabled,
-        },
-        className,
-      )}
-      aria-disabled={disabled}
-      {...props}
-    />
-  );
+      "text-sm leading-none",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // disabled
+      {
+        "text-zinc-400 dark:text-zinc-600": disabled,
+      },
+      className,
+    )}
+    aria-disabled={disabled}
+    {...props}
+  />
+);
 
 Label.displayName = "Label";
 
-export { Label };
+export { Label, type LabelProps };

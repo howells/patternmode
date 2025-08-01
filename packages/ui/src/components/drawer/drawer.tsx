@@ -5,7 +5,8 @@
  *
  * A collection of components for creating slide-out drawers and bottom sheets.
  * Built on Vaul (https://vaul.emilkowal.ski/), providing smooth animations
- * and touch-friendly interactions for mobile and desktop.
+ * and touch-friendly interactions for mobile and desktop. Perfect for mobile
+ * navigation, action sheets, and contextual content overlays.
  *
  * Features:
  * - Bottom-up sliding drawer
@@ -15,6 +16,9 @@
  * - Keyboard navigation support
  * - Smooth animations and gestures.
  *
+ * @component
+ * @category ui
+ * @icon PanelLeft
  * @example
  * ```tsx
  * // Basic drawer
@@ -122,6 +126,23 @@ import { cx } from "../../lib/utils";
  * Based on Vaul Drawer (https://vaul.emilkowal.ski/), creates the drawer context
  * and manages the overall drawer state. Provides foundation for all drawer functionality.
  */
+/**
+ * Slide-out panel component for navigation or supplementary content.
+ *
+ * @id drawer
+ * @name Drawer
+ * @icon PanelLeft
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.children - Drawer trigger and content components.
+ * @param props.open - Whether the drawer is open when controlled.
+ * @param props.defaultOpen - Whether the drawer is open by default when uncontrolled.
+ * @param props.onOpenChange - Callback fired when the open state changes.
+ * @param props.shouldScaleBackground - Whether to scale the background when drawer is open.
+ * @param props.modal - Whether the drawer should be modal (blocking background interaction).
+ * @param props.direction - Direction from which the drawer slides in.
+ */
 const Drawer = DrawerPrimitive.Root;
 
 /**
@@ -149,31 +170,28 @@ const DrawerPortal = DrawerPrimitive.Portal;
 const DrawerClose = DrawerPrimitive.Close;
 
 /**
- * Drawer overlay component.
- *
- * Semi-transparent backdrop that appears behind the drawer content.
- * Clicking the overlay closes the drawer. Provides visual separation
- * between drawer and underlying content.
- *
- * @component
- * @param className - Additional CSS classes.
+ * Slide-out panel component for navigation or supplementary content.
  *
  * @id drawer
  * @name Drawer
+ * @icon PanelLeft
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 const DrawerOverlay = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
-    <DrawerPrimitive.Overlay
-      ref={ref}
-      className={cx(
+  <DrawerPrimitive.Overlay
+    ref={ref}
+    className={cx(
       // base
-        "fixed inset-0 z-50",
-        // background
-        "bg-black/50 dark:bg-black/80",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "fixed inset-0 z-50",
+      // background
+      "bg-black/50 dark:bg-black/80",
+      className,
+    )}
+    {...props}
+  />
+);
 DrawerOverlay.displayName = "DrawerOverlay";
 
 /**
@@ -187,28 +205,28 @@ DrawerOverlay.displayName = "DrawerOverlay";
  * @param children - Drawer content elements.
  */
 const DrawerContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Content> | null> }) => (
-    <DrawerPortal>
-      <DrawerOverlay />
-      <DrawerPrimitive.Content
-        ref={ref}
-        className={cx(
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cx(
         // base
-          "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-lg border",
-          // background
-          "bg-white dark:bg-zinc-950",
-          // border
-          "border-zinc-200 dark:border-zinc-800",
-          // shadow
-          "shadow-lg",
-          className,
-        )}
-        {...props}
-      >
-        <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-zinc-300 dark:bg-zinc-600" />
-        {children}
-      </DrawerPrimitive.Content>
-    </DrawerPortal>
-  );
+        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-lg border",
+        // background
+        "bg-white dark:bg-zinc-950",
+        // border
+        "border-zinc-200 dark:border-zinc-800",
+        // shadow
+        "shadow-lg",
+        className,
+      )}
+      {...props}
+    >
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-zinc-300 dark:bg-zinc-600" />
+      {children}
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+);
 DrawerContent.displayName = "DrawerContent";
 
 /**
@@ -229,18 +247,18 @@ DrawerContent.displayName = "DrawerContent";
  * ```
  */
 const DrawerHeader = ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => (
-    <div
-      className={cx(
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cx(
       // base
-        "grid gap-1.5 p-4 text-center sm:text-left",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "grid gap-1.5 p-4 text-center sm:text-left",
+      className,
+    )}
+    {...props}
+  />
+);
 DrawerHeader.displayName = "DrawerHeader";
 
 /**
@@ -263,18 +281,18 @@ DrawerHeader.displayName = "DrawerHeader";
  * ```
  */
 const DrawerFooter = ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => (
-    <div
-      className={cx(
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cx(
       // base
-        "mt-auto flex flex-col gap-2 p-4",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "mt-auto flex flex-col gap-2 p-4",
+      className,
+    )}
+    {...props}
+  />
+);
 DrawerFooter.displayName = "DrawerFooter";
 
 /**
@@ -293,18 +311,18 @@ DrawerFooter.displayName = "DrawerFooter";
  * ```
  */
 const DrawerTitle = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Title> | null> }) => (
-    <DrawerPrimitive.Title
-      ref={ref}
-      className={cx(
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cx(
       // base
-        "text-lg font-semibold leading-none tracking-tight",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "text-lg font-semibold leading-none tracking-tight",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      className,
+    )}
+    {...props}
+  />
+);
 DrawerTitle.displayName = "DrawerTitle";
 
 /**
@@ -327,29 +345,29 @@ DrawerTitle.displayName = "DrawerTitle";
  * ```
  */
 const DrawerDescription = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Description> | null> }) => (
-    <DrawerPrimitive.Description
-      ref={ref}
-      className={cx(
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cx(
       // base
-        "text-sm",
-        // text color
-        "text-zinc-500 dark:text-zinc-400",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "text-sm",
+      // text color
+      "text-zinc-500 dark:text-zinc-400",
+      className,
+    )}
+    {...props}
+  />
+);
 DrawerDescription.displayName = "DrawerDescription";
 
 export {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerPortal,
-    DrawerTitle,
-    DrawerTrigger
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
 };

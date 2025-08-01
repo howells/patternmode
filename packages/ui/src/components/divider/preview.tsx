@@ -1,30 +1,14 @@
 "use client";
 
+import type { DividerProps } from "./divider";
+
 import { Divider } from "@patternmode/ui";
 import React from "react";
 
-// Example component for preview system
-export const /**
-              *
-              */
-  DividerExample = ({
-    orientation = "horizontal",
-    spacing = "md",
-    children,
-    ...props
-  }: {
-    orientation?: "horizontal" | "vertical";
-    spacing?: "sm" | "md" | "lg";
-    children?: string;
-    [key: string]: unknown;
-  }) => {
-    return (
-      <Divider
-        orientation={orientation}
-        spacing={spacing}
-        {...props}
-      >
-        {children}
-      </Divider>
-    );
-  };
+type DividerExampleProps = {
+  [key: string]: unknown;
+};
+
+export function DividerExample(props: DividerProps) {
+  return <Divider {...props} />;
+}

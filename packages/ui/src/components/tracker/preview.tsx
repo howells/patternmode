@@ -1,55 +1,18 @@
-import type { TrackerBlockProps } from "@patternmode/ui";
+"use client";
+
+import type { TrackerProps } from "./tracker";
 import { Tracker } from "@patternmode/ui";
+
 import React from "react";
 
-// Preview component for prop explorer system
-export const /**
-              *
-              */
-  TrackerExample = ({
-    data = "[{\"color\":\"bg-emerald-500\",\"tooltip\":\"Step 1: Completed\"},{\"color\":\"bg-blue-500\",\"tooltip\":\"Step 2: In Progress\"},{\"color\":\"bg-zinc-300\",\"tooltip\":\"Step 3: Pending\"}]",
-    defaultBackgroundColor,
-    hoverEffect,
-    ...props
-  }: {
-    data?: string | TrackerBlockProps[];
-    defaultBackgroundColor?: string;
-    hoverEffect?: boolean;
-    [key: string]: unknown;
-  }) => {
-  // Handle prop transformations - convert string to array if needed
-    let trackerData: TrackerBlockProps[];
+type TrackerExampleProps = TrackerProps;
 
-    if (typeof data === "string") {
-      try {
-        trackerData = JSON.parse(data);
-      }
-      catch {
-        trackerData = [
-          { color: "bg-emerald-500", tooltip: "Step 1: Completed" },
-          { color: "bg-blue-500", tooltip: "Step 2: In Progress" },
-          { color: "bg-zinc-300", tooltip: "Step 3: Pending" },
-        ];
-      }
-    }
-    else if (Array.isArray(data)) {
-      trackerData = data;
-    }
-    else {
-    // Default data when no data is provided
-      trackerData = [
-        { color: "bg-emerald-500", tooltip: "Step 1: Completed" },
-        { color: "bg-blue-500", tooltip: "Step 2: In Progress" },
-        { color: "bg-zinc-300", tooltip: "Step 3: Pending" },
-      ];
-    }
+export function TrackerExample(props: TrackerProps) {
+  const defaultData = [
+    { color: "bg-emerald-500", tooltip: "Step 1: Completed" },
+    { color: "bg-blue-500", tooltip: "Step 2: In Progress" },
+    { color: "bg-zinc-300", tooltip: "Step 3: Pending" },
+  ];
 
-    return (
-      <Tracker
-        data={trackerData}
-        defaultBackgroundColor={defaultBackgroundColor}
-        hoverEffect={hoverEffect}
-        {...props}
-      />
-    );
-  };
+  return <Tracker data={defaultData} {...props} />;
+}

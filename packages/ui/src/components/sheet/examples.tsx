@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Button, Checkbox, DescriptionDetails, DescriptionList, DescriptionTerm, Dot, Fieldset, FieldsetLegend, Form, FormControl, FormField, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, Subheading, Text } from "@patternmode/ui";
+
 import React from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
@@ -384,3 +386,28 @@ export function SheetWithForm() {
     </Sheet>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "SidesExample",
+    title: "Sides",
+    description: "Sides example",
+    component: SidesExample,
+  },
+  {
+    id: "SheetExample",
+    title: "Sheet",
+    description: "Sheet example",
+    component: SheetExample,
+  },
+];

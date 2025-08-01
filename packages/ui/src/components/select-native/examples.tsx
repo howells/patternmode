@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { SelectNative } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 export function DefaultExample() {
@@ -192,3 +194,52 @@ export function MultipleExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "SelectNativeExample",
+    title: "Select Native",
+    description: "Select Native example",
+    component: SelectNativeExample,
+  },
+  {
+    id: "WithGroupsExample",
+    title: "With Groups",
+    description: "With Groups example",
+    component: WithGroupsExample,
+  },
+  {
+    id: "ErrorStateExample",
+    title: "Error State",
+    description: "Error State example",
+    component: ErrorStateExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "MultipleExample",
+    title: "Multiple",
+    description: "Multiple example",
+    component: MultipleExample,
+  },
+];

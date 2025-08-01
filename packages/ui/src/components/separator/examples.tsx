@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Separator } from "@patternmode/ui";
+
 import React from "react";
 
 // Default separator
@@ -63,7 +65,41 @@ export function SizesExample() {
     </div>
   );
 }
-export const /**
-              *
-              */
-  SeparatorExample = DefaultExample;
+export const SeparatorExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "SeparatorExample",
+    title: "Separator",
+    description: "Separator example",
+    component: SeparatorExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithTextExample",
+    title: "With Text",
+    description: "With Text example",
+    component: WithTextExample,
+  },
+  {
+    id: "VerticalExample",
+    title: "Vertical",
+    description: "Vertical example",
+    component: VerticalExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+];

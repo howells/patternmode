@@ -1,7 +1,17 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
+
+import {
+  Box,
+  CheckCircle,
+  Database,
+  ExternalLink,
+  FormInput,
+  MessageSquare,
+  Package,
+} from "lucide-react";
+import Link from "next/link";
 
 import {
   Badge,
@@ -10,7 +20,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
   Code,
@@ -29,21 +38,11 @@ import {
   VStack,
 } from "@patternmode/ui";
 
-import {
-  Box,
-  CheckCircle,
-  Code as CodeIcon,
-  Database,
-  ExternalLink,
-  FormInput,
-  MessageSquare,
-  Package,
-} from "lucide-react";
+import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
 
-import Link from "next/link";
 import { PageHeader } from "../components/page-header";
 
-interface CategoryCardProps {
+type CategoryCardProps = {
   icon: LucideIcon;
   title: string;
   description: string;
@@ -52,7 +51,7 @@ interface CategoryCardProps {
   color?: GlobalSemanticVariant | TailwindColor;
   headerBorder?: boolean;
   useHorizontalLayout?: boolean;
-}
+};
 
 function CategoryCard({
   icon: Icon,
@@ -212,7 +211,8 @@ export default function Home() {
                   pnpm package manager (recommended)
                 </ListItem>
                 <ListItem>
-                  <ListIndicator icon={CheckCircle} />A React 19+ project
+                  <ListIndicator icon={CheckCircle} />
+                  A React 19+ project
                   (Next.js, Vite, Create React App, etc.)
                 </ListItem>
                 <ListItem>
@@ -248,8 +248,11 @@ cd patternmode`}
                   </div>
                   <div>
                     <Text>
-                      Or copy individual components from the{" "}
-                      <Code>src/components/ui/</Code> directory into your
+                      Or copy individual components from the
+                      {" "}
+                      <Code>src/components/ui/</Code>
+                      {" "}
+                      directory into your
                       project.
                     </Text>
                   </div>
@@ -330,7 +333,10 @@ pnpm add -D @tailwindcss/postcss tailwindcss
 echo "@import 'tailwindcss';" > src/app/globals.css`}
                   </CodeBlock>
                   <Text>
-                    Update your <Code>postcss.config.js</Code>:
+                    Update your
+                    {" "}
+                    <Code>postcss.config.js</Code>
+                    :
                   </Text>
                   <CodeBlock language="javascript">
                     {`module.exports = {
@@ -340,7 +346,10 @@ echo "@import 'tailwindcss';" > src/app/globals.css`}
 }`}
                   </CodeBlock>
                   <Text>
-                    Add component paths to your <Code>tailwind.config.ts</Code>:
+                    Add component paths to your
+                    {" "}
+                    <Code>tailwind.config.ts</Code>
+                    :
                   </Text>
                   <CodeBlock language="typescript">
                     {`import type { Config } from 'tailwindcss'
@@ -398,8 +407,12 @@ function App() {
                     title="Don't Forget Dependencies"
                     icon={ExternalLink}
                   >
-                    Make sure to also copy the required utility files like{" "}
-                    <Code>@/lib/utils</Code>,<Code>@/lib/variants</Code>, and
+                    Make sure to also copy the required utility files like
+                    {" "}
+                    <Code>@/lib/utils</Code>
+                    ,
+                    <Code>@/lib/variants</Code>
+                    , and
                     any hooks the components depend on.
                   </Callout>
                 </Stack>

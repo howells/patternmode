@@ -1,6 +1,11 @@
-import { Icon } from "@patternmode/ui";
-import { Download, Heart, Search, Settings, Star, User } from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { Icon, iconRegistry } from "@patternmode/ui";
+
 import React from "react";
+// Pre-imported icons from registry
+const { Download, Heart, Search, Settings, Star, User } = iconRegistry;
 
 export function DefaultExample() {
   return <Icon icon={Search} />;
@@ -78,7 +83,47 @@ export function LayoutExample() {
       </div>
     </div>
   );
-} export const /**
-                *
-                */
-  IconExample = DefaultExample;
+} export const IconExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "IconExample",
+    title: "Icon",
+    description: "Icon example",
+    component: IconExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "WithTextExample",
+    title: "With Text",
+    description: "With Text example",
+    component: WithTextExample,
+  },
+  {
+    id: "CustomStrokeExample",
+    title: "Custom Stroke",
+    description: "Custom Stroke example",
+    component: CustomStrokeExample,
+  },
+  {
+    id: "LayoutExample",
+    title: "Layout",
+    description: "Layout example",
+    component: LayoutExample,
+  },
+];

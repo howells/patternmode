@@ -1,22 +1,24 @@
-import { Separator } from "@patternmode/ui";
 import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/component-registry";
 import { notFound } from "next/navigation";
 import React from "react";
+
+import { Separator } from "@patternmode/ui";
+
 import { ComponentExamples } from "../../../../components/component-examples";
-import { ComponentPropExplorer } from "../../../../components/component-prop-explorer";
 import { PageHeader } from "../../../../components/page-header";
+import { ComponentPropExplorer } from "../../../../features/prop-explorer/component-prop-explorer";
 import { createComponentConfig } from "../../../../lib/config-helpers";
 
-interface ComponentPageProps {
+type ComponentPageProps = {
   params: Promise<{
     category: string;
     component: string;
   }>;
-}
+};
 
-type PageProps = ComponentPageProps;
-
-// Function to dynamically load component config
+/**
+ * Dynamically loads component configuration for a given component and category.
+ */
 async function loadComponentConfig(componentId: string, category: string) {
   // First try to get existing config
   const config = getComponentConfig(componentId);
@@ -33,13 +35,13 @@ async function loadComponentConfig(componentId: string, category: string) {
   if (componentList?.includes(componentId as never)) {
     const name = componentId
       .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
     return createComponentConfig(
       componentId,
       name,
-      name + " component - documentation coming soon.",
+      `${name} component - documentation coming soon.`,
       category as "ui" | "inputs" | "forms" | "charts",
       {
         examples: [
@@ -47,10 +49,10 @@ async function loadComponentConfig(componentId: string, category: string) {
             id: "placeholder",
             title: "Coming Soon",
             description: "Documentation for this component is being prepared.",
-            code: "// " + name + " example coming soon",
+            component: () => React.createElement("div", { className: "text-zinc-500" }, `${name} example coming soon`),
           },
         ],
-      }
+      },
     );
   }
 
@@ -98,9 +100,9 @@ export async function generateStaticParams() {
 
   // Generate paths for all components in each category
   const COMPONENT_LIST: Record<string, string[]> = {};
-  Object.keys(componentRegistry).forEach(componentId => {
+  Object.keys(componentRegistry).forEach((componentId) => {
     const config = componentRegistry[componentId];
-    const category = config.category || 'ui';
+    const category = config.category || "ui";
     if (!COMPONENT_LIST[category]) {
       COMPONENT_LIST[category] = [];
     }

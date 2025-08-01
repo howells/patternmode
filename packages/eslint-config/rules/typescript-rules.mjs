@@ -24,6 +24,8 @@ export const typescriptRules = {
       allowIIFEs: true,
     },
   ],
+  // Prevent usage of 'any' type
+  "ts/no-explicit-any": "error",
 };
 
 /**

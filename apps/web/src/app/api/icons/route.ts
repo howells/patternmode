@@ -1,5 +1,7 @@
+import type { NextRequest } from "next/server";
+
 import * as LucideIcons from "lucide-react";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 /**
  * Convert PascalCase to kebab-case
@@ -8,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 function toKebabCase(str: string): string {
   return str
     .replace(/([A-Z])/g, "-$1") // Add dash before capital letters
-    .replace(/([a-z])([0-9])/g, "$1-$2") // Add dash before numbers
+    .replace(/([a-z])(\d)/g, "$1-$2") // Add dash before numbers
     .toLowerCase()
     .replace(/^-/, ""); // Remove leading dash
 }
@@ -30,13 +32,13 @@ function generateIconMapping(): Record<string, string> {
     // 2. Don't end with "Icon" (those are icon data objects, not components)
     // 3. Exclude known utility functions and components
     return (
-      name[0] === name[0].toUpperCase() && // Starts with capital letter
-      !name.endsWith("Icon") && // Exclude icon data objects (e.g., AArrowDownIcon)
-      name !== "Icon" && // Exclude the base Icon component
-      name !== "DynamicIcon" && // Exclude DynamicIcon
-      name !== "createLucideIcon" && // Exclude utility functions
-      name !== "IconNode" && // Exclude type exports
-      !name.startsWith("Lucide") // Exclude Lucide-prefixed utilities
+      name[0] === name[0].toUpperCase() // Starts with capital letter
+      && !name.endsWith("Icon") // Exclude icon data objects (e.g., AArrowDownIcon)
+      && name !== "Icon" // Exclude the base Icon component
+      && name !== "DynamicIcon" // Exclude DynamicIcon
+      && name !== "createLucideIcon" // Exclude utility functions
+      && name !== "IconNode" // Exclude type exports
+      && !name.startsWith("Lucide") // Exclude Lucide-prefixed utilities
     );
   });
 
@@ -60,13 +62,13 @@ const ICON_MAPPING = generateIconMapping();
  */
 const ALL_KEBAB_ICONS = Object.keys(ICON_MAPPING).sort();
 
-interface IconSearchParams {
+type IconSearchParams = {
   page?: number;
   limit?: number;
   search?: string;
-}
+};
 
-interface IconResponse {
+type IconResponse = {
   icons: Array<{
     kebab: string;
     pascal: string;
@@ -75,7 +77,7 @@ interface IconResponse {
   hasMore: boolean;
   page: number;
   limit: number;
-}
+};
 
 /**
  * GET /api/icons
@@ -103,10 +105,10 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
 
     // Parse query parameters with defaults
-    const page = Math.max(0, parseInt(searchParams.get("page") || "0"));
+    const page = Math.max(0, Number.parseInt(searchParams.get("page") || "0"));
     const limit = Math.min(
       200,
-      Math.max(1, parseInt(searchParams.get("limit") || "50"))
+      Math.max(1, Number.parseInt(searchParams.get("limit") || "50")),
     );
     const search = searchParams.get("search")?.trim().toLowerCase() || "";
 
@@ -117,8 +119,8 @@ export async function GET(request: NextRequest) {
       filteredIcons = ALL_KEBAB_ICONS.filter((kebabName) => {
         const pascalName = ICON_MAPPING[kebabName];
         return (
-          kebabName.includes(search) ||
-          pascalName.toLowerCase().includes(search)
+          kebabName.includes(search)
+          || pascalName.toLowerCase().includes(search)
         );
       });
     }
@@ -131,7 +133,7 @@ export async function GET(request: NextRequest) {
     const hasMore = endIndex < totalCount;
 
     // Map to include both kebab and pascal names
-    const icons = paginatedKebabIcons.map((kebab) => ({
+    const icons = paginatedKebabIcons.map(kebab => ({
       kebab,
       pascal: ICON_MAPPING[kebab],
     }));
@@ -149,11 +151,12 @@ export async function GET(request: NextRequest) {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
-  } catch (error) {
+  }
+  catch (error) {
     console.error("Error in /api/icons:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

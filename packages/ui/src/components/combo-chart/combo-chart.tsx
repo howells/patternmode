@@ -3,32 +3,34 @@
 
 "use client";
 
+import type { AxisDomain } from "recharts/types/util/types";
+
+import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
-import type { AxisDomain } from "recharts/types/util/types";
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 
 import {
-    Bar,
-    CartesianGrid,
-    Dot,
-    Label,
-    Line,
-    ComposedChart as RechartsComposedChart,
-    Legend as RechartsLegend,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
+  Bar,
+  CartesianGrid,
+  Dot,
+  Label,
+  Line,
+  ComposedChart as RechartsComposedChart,
+  Legend as RechartsLegend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
+
 import { useOnWindowResize } from "../../hooks/use-on-window-resize";
 import {
-    AvailableChartColors,
+  AvailableChartColors,
 
-    constructCategoryColors,
-    getColorClassName,
-    getYAxisDomain,
-    hasOnlyOneValueForKey,
+  constructCategoryColors,
+  getColorClassName,
+  getYAxisDomain,
+  hasOnlyOneValueForKey,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
@@ -120,7 +122,7 @@ const renderShape = (
  * Configuration for legend item display including category information,
  * color, interaction handlers, and visual state.
  */
-interface LegendItemProps {
+type LegendItemProps = {
   /**
    * Category name for the legend item.
    */
@@ -141,140 +143,135 @@ interface LegendItemProps {
    * Chart type for styling the indicator.
    */
   chartType: "bar" | "line";
-}
+};
 
 /**
- * Individual legend item component for chart legends.
- *
- * Renders clickable legend items with color indicators and category labels.
- * Supports hover effects and selection states for filtering chart data.
- *
- * @component
- * @param name - Category name for the legend item.
- * @param color - Color theme for the visual indicator.
- * @param onClick - Click handler for legend interactions.
- * @param activeLegend - Currently active legend category.
- * @param chartType - Chart type for styling the indicator.
+ * Combination chart supporting multiple chart types in a single visualization.
  *
  * @id combo-chart
- * @name Combo Chart
+ * @name ComboChart
+ * @icon BarChart
+ * @category charts
+ * @component
+ * @see {@link https://recharts.org/en-US/api/ComposedChart}
+ * @param props - Component properties.
  */
 const LegendItem = ({
-    name,
-    color,
-    onClick,
-    activeLegend,
-    chartType,
-  }: LegendItemProps) => {
-    const hasOnValueChange = !!onClick;
-    const colorClass = getColorClassName(color, "bg");
+  name,
+  color,
+  onClick,
+  activeLegend,
+  chartType,
+}: LegendItemProps) => {
+  const hasOnValueChange = !!onClick;
+  const colorClass = getColorClassName(color, "bg");
 
-    return (
-      <li
-        className={cx(
+  return (
+    <li
+      className={cx(
         // base
-          "group inline-flex flex-nowrap items-center gap-1.5 rounded-sm px-2 py-1 whitespace-nowrap transition",
-          hasOnValueChange
-            ? "cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800"
-            : "cursor-default",
+        "group inline-flex flex-nowrap items-center gap-1.5 rounded-sm px-2 py-1 whitespace-nowrap transition",
+        hasOnValueChange
+          ? "cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          : "cursor-default",
+      )}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.(name, color);
+      }}
+    >
+      <span
+        className={cx(
+          { "size-2 rounded-xs": chartType === "bar" },
+          {
+            "h-[3px] w-3.5 shrink-0 rounded-full": chartType === "line",
+          },
+          "shrink-0",
+          colorClass,
+          activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100",
         )}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick?.(name, color);
-        }}
-      >
-        <span
-          className={cx(
-            { "size-2 rounded-xs": chartType === "bar" },
-            {
-              "h-[3px] w-3.5 shrink-0 rounded-full": chartType === "line",
-            },
-            "shrink-0",
-            colorClass,
-            activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100",
-          )}
-          aria-hidden={true}
-        />
-        <p
-          className={cx(
+        aria-hidden={true}
+      />
+      <p
+        className={cx(
           // base
-            "truncate text-xs whitespace-nowrap",
-            // text color
-            "text-zinc-700 dark:text-zinc-300",
-            hasOnValueChange
-            && "group-hover:text-zinc-900 dark:group-hover:text-zinc-50",
-            activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100",
-          )}
-        >
-          {name}
-        </p>
-      </li>
-    );
-  };
+          "truncate text-xs whitespace-nowrap",
+          // text color
+          "text-zinc-700 dark:text-zinc-300",
+          hasOnValueChange
+          && "group-hover:text-zinc-900 dark:group-hover:text-zinc-50",
+          activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100",
+        )}
+      >
+        {name}
+      </p>
+    </li>
+  );
+};
 
-interface ScrollButtonProps {
+type ScrollButtonProps = {
   icon: React.ElementType;
   onClick?: () => void;
   disabled?: boolean;
-}
+};
 
 const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
-    const /**
-           *
-           */
-      Icon = icon;
-    const [isPressed, setIsPressed] = React.useState(false);
-    const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
+  const /**
+         *
+         */
+    Icon = icon;
+  const [isPressed, setIsPressed] = React.useState(false);
+  const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
-    React.useEffect(() => {
-      if (isPressed) {
-        intervalRef.current = setInterval(() => {
-          onClick?.();
-        }, 300);
-      }
-      else {
-        clearInterval(intervalRef.current as NodeJS.Timeout);
-      }
-      return () => clearInterval(intervalRef.current as NodeJS.Timeout);
-    }, [isPressed, onClick]);
+  React.useEffect(() => {
+    if (isPressed) {
+      intervalRef.current = setInterval(() => {
+        onClick?.();
+      }, 300);
+    }
+    else {
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+    }
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
+  }, [isPressed, onClick]);
 
-    React.useEffect(() => {
-      if (disabled) {
-        clearInterval(intervalRef.current as NodeJS.Timeout);
-        setIsPressed(false);
-      }
-    }, [disabled]);
+  React.useEffect(() => {
+    if (disabled) {
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+      setIsPressed(false);
+    }
+  }, [disabled]);
 
-    return (
-      <button
-        type="button"
-        className={cx(
+  return (
+    <button
+      type="button"
+      className={cx(
         // base
-          "group inline-flex size-5 items-center truncate rounded-sm transition",
-          disabled
-            ? "cursor-not-allowed text-zinc-400 dark:text-zinc-600"
-            : "cursor-pointer text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
-        )}
-        disabled={disabled}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick?.();
-        }}
-        onMouseDown={(e) => {
-          e.stopPropagation();
-          setIsPressed(true);
-        }}
-        onMouseUp={(e) => {
-          e.stopPropagation();
-          setIsPressed(false);
-        }}
-      >
-        <Icon className="size-full" aria-hidden="true" />
-      </button>
-    );
-  };
+        "group inline-flex size-5 items-center truncate rounded-sm transition",
+        disabled
+          ? "cursor-not-allowed text-zinc-400 dark:text-zinc-600"
+          : "cursor-pointer text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
+      )}
+      disabled={disabled}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+        setIsPressed(true);
+      }}
+      onMouseUp={(e) => {
+        e.stopPropagation();
+        setIsPressed(false);
+      }}
+    >
+      <Icon className="size-full" aria-hidden="true" />
+    </button>
+  );
+};
 
-interface LegendProps extends React.OlHTMLAttributes<HTMLOListElement> {
+type LegendProps = {
   categories: { name: string; chartType: "bar" | "line" }[];
   barCategoryColors: Map<string, AvailableChartColorsKeys>;
   lineCategoryColors: Map<string, AvailableChartColorsKeys>;
@@ -284,172 +281,172 @@ interface LegendProps extends React.OlHTMLAttributes<HTMLOListElement> {
   ) => void;
   activeLegend?: string;
   enableLegendSlider?: boolean;
-}
+} & React.OlHTMLAttributes<HTMLOListElement>;
 
-interface HasScrollProps {
+type HasScrollProps = {
   left: boolean;
   right: boolean;
-}
+};
 
 const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOListElement | null> }) => {
-    const {
-      categories,
-      barCategoryColors,
-      lineCategoryColors,
-      onClickLegendItem,
-      activeLegend,
-      enableLegendSlider = false,
-      className,
-      ...other
-    } = props;
-    const scrollableRef = React.useRef<HTMLInputElement>(null);
-    const [hasScroll, setHasScroll] = React.useState<HasScrollProps | null>(null);
-    const [isKeyDowned, setIsKeyDowned] = React.useState<string | null>(null);
-    const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
+  const {
+    categories,
+    barCategoryColors,
+    lineCategoryColors,
+    onClickLegendItem,
+    activeLegend,
+    enableLegendSlider = false,
+    className,
+    ...other
+  } = props;
+  const scrollableRef = React.useRef<HTMLInputElement>(null);
+  const [hasScroll, setHasScroll] = React.useState<HasScrollProps | null>(null);
+  const [isKeyDowned, setIsKeyDowned] = React.useState<string | null>(null);
+  const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
-    const checkScroll = React.useCallback(() => {
-      const scrollable = scrollableRef?.current;
-      if (!scrollable) { return; }
+  const checkScroll = React.useCallback(() => {
+    const scrollable = scrollableRef?.current;
+    if (!scrollable) { return; }
 
-      const hasLeftScroll = scrollable.scrollLeft > 0;
-      const hasRightScroll
+    const hasLeftScroll = scrollable.scrollLeft > 0;
+    const hasRightScroll
       = scrollable.scrollWidth - scrollable.clientWidth > scrollable.scrollLeft;
 
-      setHasScroll({ left: hasLeftScroll, right: hasRightScroll });
-    }, [setHasScroll]);
+    setHasScroll({ left: hasLeftScroll, right: hasRightScroll });
+  }, [setHasScroll]);
 
-    const scrollToTest = React.useCallback(
-      (direction: "left" | "right") => {
-        const element = scrollableRef?.current;
-        const width = element?.clientWidth ?? 0;
+  const scrollToTest = React.useCallback(
+    (direction: "left" | "right") => {
+      const element = scrollableRef?.current;
+      const width = element?.clientWidth ?? 0;
 
-        if (element && enableLegendSlider) {
-          element.scrollTo({
-            left:
+      if (element && enableLegendSlider) {
+        element.scrollTo({
+          left:
             direction === "left"
               ? element.scrollLeft - width
               : element.scrollLeft + width,
-            behavior: "smooth",
-          });
-          setTimeout(() => {
-            checkScroll();
-          }, 400);
-        }
-      },
-      [enableLegendSlider, checkScroll],
-    );
+          behavior: "smooth",
+        });
+        setTimeout(() => {
+          checkScroll();
+        }, 400);
+      }
+    },
+    [enableLegendSlider, checkScroll],
+  );
 
-    React.useEffect(() => {
-      const keyDownHandler = (key: string) => {
-        if (key === "ArrowLeft") {
-          scrollToTest("left");
-        }
-        else if (key === "ArrowRight") {
-          scrollToTest("right");
-        }
-      };
-      if (isKeyDowned) {
+  React.useEffect(() => {
+    const keyDownHandler = (key: string) => {
+      if (key === "ArrowLeft") {
+        scrollToTest("left");
+      }
+      else if (key === "ArrowRight") {
+        scrollToTest("right");
+      }
+    };
+    if (isKeyDowned) {
+      keyDownHandler(isKeyDowned);
+      intervalRef.current = setInterval(() => {
         keyDownHandler(isKeyDowned);
-        intervalRef.current = setInterval(() => {
-          keyDownHandler(isKeyDowned);
-        }, 300);
-      }
-      else {
-        clearInterval(intervalRef.current as NodeJS.Timeout);
-      }
-      return () => clearInterval(intervalRef.current as NodeJS.Timeout);
-    }, [isKeyDowned, scrollToTest]);
+      }, 300);
+    }
+    else {
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+    }
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
+  }, [isKeyDowned, scrollToTest]);
 
-    const keyDown = (e: KeyboardEvent) => {
-      e.stopPropagation();
-      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-        e.preventDefault();
-        setIsKeyDowned(e.key);
-      }
-    };
-    const keyUp = (e: KeyboardEvent) => {
-      e.stopPropagation();
-      setIsKeyDowned(null);
-    };
-
-    React.useEffect(() => {
-      const scrollable = scrollableRef?.current;
-      if (enableLegendSlider) {
-        checkScroll();
-        scrollable?.addEventListener("keydown", keyDown);
-        scrollable?.addEventListener("keyup", keyUp);
-      }
-
-      return () => {
-        scrollable?.removeEventListener("keydown", keyDown);
-        scrollable?.removeEventListener("keyup", keyUp);
-      };
-    }, [checkScroll, enableLegendSlider]);
-
-    return (
-      <ol
-        ref={ref}
-        className={cx("relative overflow-hidden", className)}
-        {...other}
-      >
-        <div
-          ref={scrollableRef}
-          className={cx(
-            "flex h-full",
-            enableLegendSlider
-              ? hasScroll?.right || hasScroll?.left
-                ? "snap-mandatory items-center overflow-auto pr-12 pl-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                : ""
-              : "flex-wrap",
-          )}
-        >
-          {categories.map((category, index) => {
-            const barColor = barCategoryColors.get(category.name);
-            const lineColor = lineCategoryColors.get(category.name);
-            return (
-              <LegendItem
-                key={`item-${index}`}
-                name={category.name}
-                chartType={category.chartType}
-                onClick={onClickLegendItem}
-                activeLegend={activeLegend}
-                color={category.chartType === "bar" ? barColor! : lineColor!}
-              />
-            );
-          })}
-        </div>
-        {enableLegendSlider && (hasScroll?.right || hasScroll?.left) ? (
-          <>
-            <div
-              className={cx(
-              // base
-                "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
-                // background color
-                "bg-white dark:bg-zinc-950",
-              )}
-            >
-              <ScrollButton
-                icon={ChevronLeft}
-                onClick={() => {
-                  setIsKeyDowned(null);
-                  scrollToTest("left");
-                }}
-                disabled={!hasScroll?.left}
-              />
-              <ScrollButton
-                icon={ChevronRight}
-                onClick={() => {
-                  setIsKeyDowned(null);
-                  scrollToTest("right");
-                }}
-                disabled={!hasScroll?.right}
-              />
-            </div>
-          </>
-        ) : null}
-      </ol>
-    );
+  const keyDown = (e: KeyboardEvent) => {
+    e.stopPropagation();
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault();
+      setIsKeyDowned(e.key);
+    }
   };
+  const keyUp = (e: KeyboardEvent) => {
+    e.stopPropagation();
+    setIsKeyDowned(null);
+  };
+
+  React.useEffect(() => {
+    const scrollable = scrollableRef?.current;
+    if (enableLegendSlider) {
+      checkScroll();
+      scrollable?.addEventListener("keydown", keyDown);
+      scrollable?.addEventListener("keyup", keyUp);
+    }
+
+    return () => {
+      scrollable?.removeEventListener("keydown", keyDown);
+      scrollable?.removeEventListener("keyup", keyUp);
+    };
+  }, [checkScroll, enableLegendSlider]);
+
+  return (
+    <ol
+      ref={ref}
+      className={cx("relative overflow-hidden", className)}
+      {...other}
+    >
+      <div
+        ref={scrollableRef}
+        className={cx(
+          "flex h-full",
+          enableLegendSlider
+            ? hasScroll?.right || hasScroll?.left
+              ? "snap-mandatory items-center overflow-auto pr-12 pl-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              : ""
+            : "flex-wrap",
+        )}
+      >
+        {categories.map((category, index) => {
+          const barColor = barCategoryColors.get(category.name);
+          const lineColor = lineCategoryColors.get(category.name);
+          return (
+            <LegendItem
+              key={`item-${index}`}
+              name={category.name}
+              chartType={category.chartType}
+              onClick={onClickLegendItem}
+              activeLegend={activeLegend}
+              color={category.chartType === "bar" ? barColor! : lineColor!}
+            />
+          );
+        })}
+      </div>
+      {enableLegendSlider && (hasScroll?.right || hasScroll?.left) ? (
+        <>
+          <div
+            className={cx(
+              // base
+              "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
+              // background color
+              "bg-white dark:bg-zinc-950",
+            )}
+          >
+            <ScrollButton
+              icon={ChevronLeft}
+              onClick={() => {
+                setIsKeyDowned(null);
+                scrollToTest("left");
+              }}
+              disabled={!hasScroll?.left}
+            />
+            <ScrollButton
+              icon={ChevronRight}
+              onClick={() => {
+                setIsKeyDowned(null);
+                scrollToTest("right");
+              }}
+              disabled={!hasScroll?.right}
+            />
+          </div>
+        </>
+      ) : null}
+    </ol>
+  );
+};
 
 Legend.displayName = "Legend";
 
@@ -469,65 +466,65 @@ Legend.displayName = "Legend";
  * @param legendPosition - Legend positioning (left, center, right).
  * @param barYAxisWidth - Width of bar chart Y-axis.
  * @param lineYAxisWidth - Width of line chart Y-axis.
- * @returns Legend component element
+ * @returns Legend component element.
  */
 const ChartLegend = (
-    { payload }: any,
-    barCategoryColors: Map<string, AvailableChartColorsKeys>,
-    lineCategoryColors: Map<string, AvailableChartColorsKeys>,
-    setLegendHeight: React.Dispatch<React.SetStateAction<number>>,
-    activeLegend: string | undefined,
-    onClick?: (category: string, color: AvailableChartColorsKeys) => void,
-    enableLegendSlider?: boolean,
-    legendPosition?: "left" | "center" | "right",
-    barYAxisWidth?: number,
-    lineYAxisWidth?: number,
-  ) => {
-    const legendRef = React.useRef<HTMLDivElement>(null);
+  { payload }: any,
+  barCategoryColors: Map<string, AvailableChartColorsKeys>,
+  lineCategoryColors: Map<string, AvailableChartColorsKeys>,
+  setLegendHeight: React.Dispatch<React.SetStateAction<number>>,
+  activeLegend: string | undefined,
+  onClick?: (category: string, color: AvailableChartColorsKeys) => void,
+  enableLegendSlider?: boolean,
+  legendPosition?: "left" | "center" | "right",
+  barYAxisWidth?: number,
+  lineYAxisWidth?: number,
+) => {
+  const legendRef = React.useRef<HTMLDivElement>(null);
 
-    useOnWindowResize(() => {
-      const calculateHeight = (height: number | undefined) =>
-        height ? Number(height) + 15 : 60;
-      setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
-    });
+  useOnWindowResize(() => {
+    const calculateHeight = (height: number | undefined) =>
+      height ? Number(height) + 15 : 60;
+    setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
+  });
 
-    const filteredPayload = payload.filter((item: any) => item.type !== "none");
+  const filteredPayload = payload.filter((item: any) => item.type !== "none");
 
-    const paddingLeft
+  const paddingLeft
     = legendPosition === "left" && barYAxisWidth ? barYAxisWidth - 8 : 0;
-    const paddingRight
+  const paddingRight
     = (legendPosition === "right" || legendPosition === undefined)
       && lineYAxisWidth
       ? lineYAxisWidth - 8
       : 52;
 
-    return (
-      <div
-        style={{ paddingLeft, paddingRight }}
-        ref={legendRef}
-        className={cx(
-          "flex items-center",
-          { "justify-center": legendPosition === "center" },
-          {
-            "justify-start": legendPosition === "left",
-          },
-          { "justify-end": legendPosition === "right" },
-        )}
-      >
-        <Legend
-          categories={filteredPayload.map((entry: any) => ({
-            name: entry.value,
-            chartType: entry.type === "rect" ? "bar" : entry.type,
-          }))}
-          barCategoryColors={barCategoryColors}
-          lineCategoryColors={lineCategoryColors}
-          onClickLegendItem={onClick}
-          activeLegend={activeLegend}
-          enableLegendSlider={enableLegendSlider}
-        />
-      </div>
-    );
-  };
+  return (
+    <div
+      style={{ paddingLeft, paddingRight }}
+      ref={legendRef}
+      className={cx(
+        "flex items-center",
+        { "justify-center": legendPosition === "center" },
+        {
+          "justify-start": legendPosition === "left",
+        },
+        { "justify-end": legendPosition === "right" },
+      )}
+    >
+      <Legend
+        categories={filteredPayload.map((entry: any) => ({
+          name: entry.value,
+          chartType: entry.type === "rect" ? "bar" : entry.type,
+        }))}
+        barCategoryColors={barCategoryColors}
+        lineCategoryColors={lineCategoryColors}
+        onClickLegendItem={onClick}
+        activeLegend={activeLegend}
+        enableLegendSlider={enableLegendSlider}
+      />
+    </div>
+  );
+};
 
 // #region Tooltip
 
@@ -538,7 +535,7 @@ type TooltipProps = Pick<ChartTooltipProps, "active" | "payload" | "label">;
  *
  * Represents data for a single chart element in tooltip display.
  */
-interface PayloadItem {
+type PayloadItem = {
   /**
    * Category name for the data point.
    */
@@ -571,7 +568,7 @@ interface PayloadItem {
    * Raw payload data from Recharts.
    */
   payload: any;
-}
+};
 
 /**
  * Props for chart tooltip components.
@@ -579,7 +576,7 @@ interface PayloadItem {
  * Configuration for tooltip display including payload data,
  * formatting options, and interaction state.
  */
-interface ChartTooltipProps {
+type ChartTooltipProps = {
   /**
    * Whether tooltip should be visible.
    */
@@ -600,7 +597,7 @@ interface ChartTooltipProps {
    * Formatter function for line values.
    */
   lineValueFormatter?: (value: number) => string;
-}
+};
 
 /**
  * Default tooltip component for combo charts.
@@ -615,105 +612,105 @@ interface ChartTooltipProps {
  * @param lineValueFormatter - Formatter function for line values.
  */
 const ChartTooltip = ({
-    active,
-    payload,
-    label,
-    barValueFormatter = (value: number): string => value.toString(),
-    lineValueFormatter = (value: number): string => value.toString(),
-  }: ChartTooltipProps) => {
-    if (active && payload && payload.length) {
-      const filteredPayload = payload.filter((item: any) => item.type !== "none");
-      return (
-        <div
-          className={cx(
+  active,
+  payload,
+  label,
+  barValueFormatter = (value: number): string => value.toString(),
+  lineValueFormatter = (value: number): string => value.toString(),
+}: ChartTooltipProps) => {
+  if (active && payload && payload.length) {
+    const filteredPayload = payload.filter((item: any) => item.type !== "none");
+    return (
+      <div
+        className={cx(
           // base
-            "rounded-md border text-sm shadow-md",
-            // border color
-            "border-zinc-200 dark:border-zinc-800",
-            // background color
-            "bg-white dark:bg-zinc-950",
-          )}
-        >
-          <div className={cx("border-b border-inherit px-4 py-2")}>
-            <p
-              className={cx(
+          "rounded-md border text-sm shadow-md",
+          // border color
+          "border-zinc-200 dark:border-zinc-800",
+          // background color
+          "bg-white dark:bg-zinc-950",
+        )}
+      >
+        <div className={cx("border-b border-inherit px-4 py-2")}>
+          <p
+            className={cx(
               // base
-                "font-medium",
-                // text color
-                "text-zinc-900 dark:text-zinc-50",
-              )}
-            >
-              {label}
-            </p>
-          </div>
-          <div className={cx("space-y-1 px-4 py-2")}>
-            {filteredPayload.map(
-              ({ value, category, barColor, lineColor, chartType }, index) => (
-                <div
-                  key={`id-${index}`}
-                  className="flex items-center justify-between space-x-8"
-                >
-                  <div className="flex items-center space-x-2">
-                    <div className="flex w-5 items-center justify-center">
-                      <span
-                        aria-hidden="true"
-                        className={cx(
-                          { "size-2 rounded-xs": chartType === "bar" },
-                          {
-                            "h-[3px] w-3.5 shrink-0 rounded-full":
-                            chartType === "line",
-                          },
-                          "shrink-0",
-                          getColorClassName(
-                            chartType === "bar" ? barColor : lineColor,
-                            "bg",
-                          ),
-                        )}
-                      />
-                    </div>
-                    <p
+              "font-medium",
+              // text color
+              "text-zinc-900 dark:text-zinc-50",
+            )}
+          >
+            {label}
+          </p>
+        </div>
+        <div className={cx("space-y-1 px-4 py-2")}>
+          {filteredPayload.map(
+            ({ value, category, barColor, lineColor, chartType }, index) => (
+              <div
+                key={`id-${index}`}
+                className="flex items-center justify-between space-x-8"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="flex w-5 items-center justify-center">
+                    <span
+                      aria-hidden="true"
                       className={cx(
-                      // base
-                        "text-right whitespace-nowrap",
-                        // text color
-                        "text-zinc-700 dark:text-zinc-300",
+                        { "size-2 rounded-xs": chartType === "bar" },
+                        {
+                          "h-[3px] w-3.5 shrink-0 rounded-full":
+                            chartType === "line",
+                        },
+                        "shrink-0",
+                        getColorClassName(
+                          chartType === "bar" ? barColor : lineColor,
+                          "bg",
+                        ),
                       )}
-                    >
-                      {category}
-                    </p>
+                    />
                   </div>
                   <p
                     className={cx(
-                    // base
-                      "text-right font-medium whitespace-nowrap tabular-nums",
+                      // base
+                      "text-right whitespace-nowrap",
                       // text color
-                      "text-zinc-900 dark:text-zinc-50",
+                      "text-zinc-700 dark:text-zinc-300",
                     )}
                   >
-                    {chartType === "bar"
-                      ? barValueFormatter(value)
-                      : lineValueFormatter(value)}
+                    {category}
                   </p>
                 </div>
-              ),
-            )}
-          </div>
+                <p
+                  className={cx(
+                    // base
+                    "text-right font-medium whitespace-nowrap tabular-nums",
+                    // text color
+                    "text-zinc-900 dark:text-zinc-50",
+                  )}
+                >
+                  {chartType === "bar"
+                    ? barValueFormatter(value)
+                    : lineValueFormatter(value)}
+                </p>
+              </div>
+            ),
+          )}
         </div>
-      );
-    }
-    return null;
-  };
+      </div>
+    );
+  }
+  return null;
+};
 
-interface ActiveDot {
+type ActiveDot = {
   index?: number;
   dataKey?: string;
-}
+};
 
-interface BaseEventProps {
+type BaseEventProps = {
   eventType: "category" | "bar" | "dot";
   categoryClicked: string;
   [key: string]: number | string;
-}
+};
 
 /**
  * Event handler props for combo chart interactions.
@@ -723,7 +720,7 @@ interface BaseEventProps {
  */
 type ComboChartEventProps = BaseEventProps | null | undefined;
 
-interface ChartSeries {
+type ChartSeries = {
   categories: string[];
   colors?: AvailableChartColorsKeys[];
   valueFormatter?: (value: number) => string;
@@ -734,7 +731,7 @@ interface ChartSeries {
   autoMinValue?: boolean;
   minValue?: number;
   maxValue?: number;
-}
+};
 
 /**
  * Props for the ComboChart component.
@@ -746,7 +743,7 @@ interface ChartSeries {
  * @interface ComboChartProps
  * @augments React.HTMLAttributes<HTMLDivElement>
  */
-interface ComboChartProps extends React.HTMLAttributes<HTMLDivElement> {
+type ComboChartProps = {
   /**
    * Array of data objects for chart rendering.
    */
@@ -829,170 +826,73 @@ interface ComboChartProps extends React.HTMLAttributes<HTMLDivElement> {
      */
     connectNulls?: boolean;
   };
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * A combination chart component that displays both bar and line series.
+ * Combination chart supporting multiple chart types in a single visualization.
  *
- * Built on Recharts (https://recharts.org/), this component combines bar charts
- * and line charts in a single visualization. Supports biaxial charts with separate
- * Y-axes, interactive legends, customizable tooltips, and extensive styling options.
- * Perfect for displaying related metrics with different scales or units.
- *
- * @param data - Array of data objects for chart rendering.
- * @param index - Key name for X-axis values.
- * @param barSeries - Configuration for bar chart series.
- * @param lineSeries - Configuration for line chart series.
- * @param showLegend - Whether to display interactive legend.
- * @param showTooltip - Whether to show tooltips on hover.
- * @param showGridLines - Whether to display grid lines.
- * @param showXAxis - Whether to show X-axis.
- * @param startEndOnly - Whether to show only start/end X-axis labels.
- * @param tickGap - Minimum gap between X-axis ticks.
- * @param xAxisLabel - Label for X-axis
- * @param intervalType - Interval type for X-axis ticks
- * @param enableBiaxial - Whether to enable biaxial chart with separate Y-axes
- * @param onValueChange - Callback for chart interactions
- * @param enableLegendSlider - Whether to enable legend scrolling
- * @param customTooltip - Custom tooltip component
- * @param tooltipCallback - Callback for tooltip events
- * @param legendPosition - Legend positioning (left, center, right)
- *
+ * @id combo-chart
+ * @name ComboChart
+ * @icon BarChart
+ * @category charts
  * @component
- * @example
- * ```tsx
- * // Basic combo chart with bars and lines
- * <ComboChart
- *   data={[
- *     { month: "Jan", sales: 1200, visitors: 800 },
- *     { month: "Feb", sales: 1800, visitors: 1200 },
- *     { month: "Mar", sales: 1600, visitors: 1000 }
- *   ]}
- *   index="month"
- *   barSeries={{
- *     categories: ["sales"],
- *     valueFormatter: (value) => `$${value}`
- *   }}
- *   lineSeries={{
- *     categories: ["visitors"],
- *     valueFormatter: (value) => `${value} visitors`
- *   }}
- * />
- *
- * // Biaxial chart with different Y-axes
- * <ComboChart
- *   data={salesAndConversionData}
- *   index="date"
- *   barSeries={{
- *     categories: ["revenue"],
- *     valueFormatter: (value) => `$${value.toLocaleString()}`,
- *     yAxisLabel: "Revenue ($)"
- *   }}
- *   lineSeries={{
- *     categories: ["conversionRate"],
- *     valueFormatter: (value) => `${value}%`,
- *     yAxisLabel: "Conversion Rate (%)"
- *   }}
- *   enableBiaxial
- *   showLegend
- *   xAxisLabel="Date"
- * />
- *
- * // Interactive chart with custom tooltip
- * <ComboChart
- *   data={performanceData}
- *   index="quarter"
- *   barSeries={{
- *     categories: ["orders", "returns"],
- *     valueFormatter: (value) => value.toLocaleString()
- *   }}
- *   lineSeries={{
- *     categories: ["satisfaction"],
- *     valueFormatter: (value) => `${value}/5`
- *   }}
- *   onValueChange={(value) => {
- *     console.log('Selected:', value);
- *   }}
- *   customTooltip={CustomTooltip}
- *   enableLegendSlider
- *   showGridLines
- * />
- *
- * // Stacked bars with trend line
- * <ComboChart
- *   data={budgetData}
- *   index="category"
- *   barSeries={{
- *     categories: ["planned", "actual"],
- *     valueFormatter: (value) => `$${value}K`,
- *     yAxisLabel: "Budget ($K)",
- *     type: "stacked"
- *   }}
- *   lineSeries={{
- *     categories: ["efficiency"],
- *     valueFormatter: (value) => `${value}%`
- *   }}
- *   showLegend
- *   className="h-96"
- * />
- * ```
- *
- * @see https://recharts.org/ - Recharts charting library documentation
+ * @see {@link https://recharts.org/en-US/api/ComposedChart}
+ * @param props - Component properties.
  */
 const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    const defaultSeries = {
-      categories: [],
-      colors: AvailableChartColors,
-      valueFormatter: (value: number) => value.toString(),
-      showYAxis: true,
-      yAxisWidth: 56,
-      yAxisLabel: undefined,
-      allowDecimals: true,
-      type: "default",
-      autoMinValue: false,
-      minValue: undefined,
-      maxValue: undefined,
-    };
+  const defaultSeries = {
+    categories: [],
+    colors: AvailableChartColors,
+    valueFormatter: (value: number) => value.toString(),
+    showYAxis: true,
+    yAxisWidth: 56,
+    yAxisLabel: undefined,
+    allowDecimals: true,
+    type: "default",
+    autoMinValue: false,
+    minValue: undefined,
+    maxValue: undefined,
+  };
 
-    const defaultBarSeries = defaultSeries;
-    const defaultLineSeries = {
-      ...defaultSeries,
-      connectNulls: false,
-    };
+  const defaultBarSeries = defaultSeries;
+  const defaultLineSeries = {
+    ...defaultSeries,
+    connectNulls: false,
+  };
 
-    const {
-      data = [],
-      index,
-      startEndOnly = false,
-      showXAxis = true,
-      showGridLines = true,
-      intervalType = "equidistantPreserveStart",
-      showTooltip = true,
-      showLegend = true,
-      legendPosition = "right",
-      enableLegendSlider = false,
-      onValueChange,
-      tickGap = 5,
-      xAxisLabel,
-      enableBiaxial = false,
+  const {
+    data = [],
+    index,
+    startEndOnly = false,
+    showXAxis = true,
+    showGridLines = true,
+    intervalType = "equidistantPreserveStart",
+    showTooltip = true,
+    showLegend = true,
+    legendPosition = "right",
+    enableLegendSlider = false,
+    onValueChange,
+    tickGap = 5,
+    xAxisLabel,
+    enableBiaxial = false,
 
-      barSeries = defaultBarSeries,
-      lineSeries = defaultLineSeries,
-      tooltipCallback,
-      customTooltip,
+    barSeries = defaultBarSeries,
+    lineSeries = defaultLineSeries,
+    tooltipCallback,
+    customTooltip,
 
-      className,
-      ...other
-    } = props;
-    const mergedBarSeries = { ...defaultBarSeries, ...barSeries };
-    const mergedLineSeries = { ...defaultLineSeries, ...lineSeries };
+    className,
+    ...other
+  } = props;
+  const mergedBarSeries = { ...defaultBarSeries, ...barSeries };
+  const mergedLineSeries = { ...defaultLineSeries, ...lineSeries };
 
-    const /**
-           *
-           */
-      CustomTooltip = customTooltip;
+  const /**
+         *
+         */
+    CustomTooltip = customTooltip;
 
-    const paddingValue
+  const paddingValue
       = (!showXAxis
         && !mergedBarSeries.showYAxis
         && enableBiaxial
@@ -1003,434 +903,488 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
         && !mergedLineSeries.showYAxis)
         ? 0
         : 20;
-    const [legendHeight, setLegendHeight] = React.useState(60);
-    const [activeDot, setActiveDot] = React.useState<ActiveDot | undefined>(
-      undefined,
-    );
-    const [activeLegend, setActiveLegend] = React.useState<string | undefined>(
-      undefined,
-    );
+  const [legendHeight, setLegendHeight] = React.useState(60);
+  const [activeDot, setActiveDot] = React.useState<ActiveDot | undefined>(
+    undefined,
+  );
+  const [activeLegend, setActiveLegend] = React.useState<string | undefined>(
+    undefined,
+  );
 
-    const prevActiveRef = React.useRef<boolean | undefined>(undefined);
-    const prevLabelRef = React.useRef<string | undefined>(undefined);
+  const prevActiveRef = React.useRef<boolean | undefined>(undefined);
+  const prevLabelRef = React.useRef<string | undefined>(undefined);
 
-    const barCategoryColors = constructCategoryColors(
-      mergedBarSeries.categories,
-      mergedBarSeries.colors ?? AvailableChartColors,
-    );
-    const lineCategoryColors = constructCategoryColors(
-      mergedLineSeries.categories,
-      mergedLineSeries.colors ?? AvailableChartColors,
-    );
-    const [activeBar, setActiveBar] = React.useState<any | undefined>(
-      undefined,
-    );
-    const barYAxisDomain = getYAxisDomain(
-      mergedBarSeries.autoMinValue ?? false,
-      mergedBarSeries.minValue,
-      mergedBarSeries.maxValue,
-    );
-    const lineYAxisDomain = getYAxisDomain(
-      mergedLineSeries.autoMinValue ?? false,
-      mergedLineSeries.minValue,
-      mergedLineSeries.maxValue,
-    );
-    const hasOnValueChange = !!onValueChange;
-    const stacked = barSeries.type === "stacked";
+  const barCategoryColors = constructCategoryColors(
+    mergedBarSeries.categories,
+    mergedBarSeries.colors ?? AvailableChartColors,
+  );
+  const lineCategoryColors = constructCategoryColors(
+    mergedLineSeries.categories,
+    mergedLineSeries.colors ?? AvailableChartColors,
+  );
+  const [activeBar, setActiveBar] = React.useState<any | undefined>(
+    undefined,
+  );
+  const barYAxisDomain = getYAxisDomain(
+    mergedBarSeries.autoMinValue ?? false,
+    mergedBarSeries.minValue,
+    mergedBarSeries.maxValue,
+  );
+  const lineYAxisDomain = getYAxisDomain(
+    mergedLineSeries.autoMinValue ?? false,
+    mergedLineSeries.minValue,
+    mergedLineSeries.maxValue,
+  );
+  const hasOnValueChange = !!onValueChange;
+  const stacked = barSeries.type === "stacked";
 
-    function onBarClick(data: any, _: any, event: React.MouseEvent) {
-      event.stopPropagation();
-      if (!onValueChange) { return; }
-      if (deepEqual(activeBar, { ...data.payload, value: data.value })) {
-        setActiveLegend(undefined);
-        setActiveBar(undefined);
-        onValueChange?.(null);
-      }
-      else {
-        setActiveLegend(data.tooltipPayload?.[0]?.dataKey);
-        setActiveBar({
-          ...data.payload,
-          value: data.value,
-        });
-        onValueChange?.({
-          eventType: "bar",
-          categoryClicked: data.tooltipPayload?.[0]?.dataKey,
-          ...data.payload,
-        });
-      }
+  function onBarClick(data: any, _: any, event: React.MouseEvent) {
+    event.stopPropagation();
+    if (!onValueChange) { return; }
+    if (deepEqual(activeBar, { ...data.payload, value: data.value })) {
+      setActiveLegend(undefined);
+      setActiveBar(undefined);
+      onValueChange?.(null);
     }
-
-    function onDotClick(itemData: any, event: React.MouseEvent) {
-      event.stopPropagation();
-
-      if (!hasOnValueChange) { return; }
-      if (
-        (itemData.index === activeDot?.index
-          && itemData.dataKey === activeDot?.dataKey)
-        || (hasOnlyOneValueForKey(data, itemData.dataKey)
-          && activeLegend
-          && activeLegend === itemData.dataKey)
-      ) {
-        setActiveLegend(undefined);
-        setActiveDot(undefined);
-        onValueChange?.(null);
-      }
-      else {
-        setActiveBar(undefined);
-        setActiveLegend(itemData.dataKey);
-        setActiveDot({
-          index: itemData.index,
-          dataKey: itemData.dataKey,
-        });
-        onValueChange?.({
-          eventType: "dot",
-          categoryClicked: itemData.dataKey,
-          ...itemData.payload,
-        });
-      }
+    else {
+      setActiveLegend(data.tooltipPayload?.[0]?.dataKey);
+      setActiveBar({
+        ...data.payload,
+        value: data.value,
+      });
+      onValueChange?.({
+        eventType: "bar",
+        categoryClicked: data.tooltipPayload?.[0]?.dataKey,
+        ...data.payload,
+      });
     }
+  }
 
-    function onCategoryClick(dataKey: string) {
-      if (!hasOnValueChange) { return; }
+  function onDotClick(itemData: any, event: React.MouseEvent) {
+    event.stopPropagation();
 
-      if (dataKey === activeLegend && !activeBar && !activeDot) {
-        setActiveLegend(undefined);
-        onValueChange?.(null);
-      }
-      else if (
-        activeBar
-        && activeBar.tooltipPayload?.[0]?.dataKey === dataKey
-      ) {
-        setActiveLegend(dataKey);
-        onValueChange?.({
-          eventType: "category",
-          categoryClicked: dataKey,
-        });
-      }
-      else {
-        setActiveLegend(dataKey);
-        setActiveBar(undefined);
-        setActiveDot(undefined);
-        onValueChange?.({
-          eventType: "category",
-          categoryClicked: dataKey,
-        });
-      }
+    if (!hasOnValueChange) { return; }
+    if (
+      (itemData.index === activeDot?.index
+        && itemData.dataKey === activeDot?.dataKey)
+      || (hasOnlyOneValueForKey(data, itemData.dataKey)
+        && activeLegend
+        && activeLegend === itemData.dataKey)
+    ) {
+      setActiveLegend(undefined);
+      setActiveDot(undefined);
+      onValueChange?.(null);
     }
+    else {
+      setActiveBar(undefined);
+      setActiveLegend(itemData.dataKey);
+      setActiveDot({
+        index: itemData.index,
+        dataKey: itemData.dataKey,
+      });
+      onValueChange?.({
+        eventType: "dot",
+        categoryClicked: itemData.dataKey,
+        ...itemData.payload,
+      });
+    }
+  }
 
-    return (
-      <div
-        ref={forwardedRef}
-        className={cx("h-80 w-full", className)}
-        {...other}
-      >
-        <ResponsiveContainer>
-          <RechartsComposedChart
-            data={data}
-            onClick={
-              hasOnValueChange && (activeLegend || activeBar || activeDot)
-                ? () => {
-                    setActiveBar(undefined);
-                    setActiveDot(undefined);
-                    setActiveLegend(undefined);
-                    onValueChange?.(null);
-                  }
+  function onCategoryClick(dataKey: string) {
+    if (!hasOnValueChange) { return; }
+
+    if (dataKey === activeLegend && !activeBar && !activeDot) {
+      setActiveLegend(undefined);
+      onValueChange?.(null);
+    }
+    else if (
+      activeBar
+      && activeBar.tooltipPayload?.[0]?.dataKey === dataKey
+    ) {
+      setActiveLegend(dataKey);
+      onValueChange?.({
+        eventType: "category",
+        categoryClicked: dataKey,
+      });
+    }
+    else {
+      setActiveLegend(dataKey);
+      setActiveBar(undefined);
+      setActiveDot(undefined);
+      onValueChange?.({
+        eventType: "category",
+        categoryClicked: dataKey,
+      });
+    }
+  }
+
+  return (
+    <div
+      ref={forwardedRef}
+      className={cx("h-80 w-full", className)}
+      {...other}
+    >
+      <ResponsiveContainer>
+        <RechartsComposedChart
+          data={data}
+          onClick={
+            hasOnValueChange && (activeLegend || activeBar || activeDot)
+              ? () => {
+                  setActiveBar(undefined);
+                  setActiveDot(undefined);
+                  setActiveLegend(undefined);
+                  onValueChange?.(null);
+                }
+              : undefined
+          }
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: mergedBarSeries.yAxisLabel ? 20 : undefined,
+            right: mergedLineSeries.yAxisLabel ? 20 : undefined,
+            top: 5,
+          }}
+        >
+          {showGridLines
+            ? (
+                <CartesianGrid
+                  className={cx("stroke-zinc-200 stroke-1 dark:stroke-zinc-800")}
+                  horizontal={true}
+                  vertical={false}
+                />
+              )
+            : null}
+          <XAxis
+            hide={!showXAxis}
+            tick={{
+              transform: "translate(0, 6)",
+            }}
+            fill=""
+            stroke=""
+            className={cx(
+              // base
+              "mt-4 text-xs",
+              // text fill
+              "fill-zinc-500 dark:fill-zinc-500",
+            )}
+            tickLine={false}
+            axisLine={false}
+            minTickGap={tickGap}
+            padding={{
+              left: paddingValue,
+              right: paddingValue,
+            }}
+            dataKey={index}
+            interval={startEndOnly ? "preserveStartEnd" : intervalType}
+            ticks={
+              startEndOnly
+                ? [data[0][index], data[data.length - 1][index]]
                 : undefined
             }
-            margin={{
-              bottom: xAxisLabel ? 30 : undefined,
-              left: mergedBarSeries.yAxisLabel ? 20 : undefined,
-              right: mergedLineSeries.yAxisLabel ? 20 : undefined,
-              top: 5,
-            }}
           >
-            {showGridLines
-              ? (
-                  <CartesianGrid
-                    className={cx("stroke-zinc-200 stroke-1 dark:stroke-zinc-800")}
-                    horizontal={true}
-                    vertical={false}
-                  />
-                )
-              : null}
-            <XAxis
-              hide={!showXAxis}
-              tick={{
-                transform: "translate(0, 6)",
-              }}
-              fill=""
-              stroke=""
-              className={cx(
+            {xAxisLabel && (
+              <Label
+                position="insideBottom"
+                offset={-20}
+                className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
+              >
+                {xAxisLabel}
+              </Label>
+            )}
+          </XAxis>
+          <YAxis
+            yAxisId={enableBiaxial ? "left" : undefined}
+            width={mergedBarSeries.yAxisWidth}
+            hide={!mergedBarSeries.showYAxis}
+            axisLine={false}
+            tickLine={false}
+            fill=""
+            stroke=""
+            className={cx(
               // base
-                "mt-4 text-xs",
-                // text fill
-                "fill-zinc-500 dark:fill-zinc-500",
-              )}
-              tickLine={false}
-              axisLine={false}
-              minTickGap={tickGap}
-              padding={{
-                left: paddingValue,
-                right: paddingValue,
-              }}
-              dataKey={index}
-              interval={startEndOnly ? "preserveStartEnd" : intervalType}
-              ticks={
-                startEndOnly
-                  ? [data[0][index], data[data.length - 1][index]]
-                  : undefined
-              }
-            >
-              {xAxisLabel && (
-                <Label
-                  position="insideBottom"
-                  offset={-20}
-                  className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
-                >
-                  {xAxisLabel}
-                </Label>
-              )}
-            </XAxis>
+              "text-xs",
+              // text fill
+              "fill-zinc-500 dark:fill-zinc-500",
+            )}
+            tick={{
+              transform: "translate(-3, 0)",
+            }}
+            type="number"
+            domain={barYAxisDomain as AxisDomain}
+            tickFormatter={mergedBarSeries.valueFormatter}
+            allowDecimals={mergedBarSeries.allowDecimals}
+          >
+            {mergedBarSeries.yAxisLabel && (
+              <Label
+                position="insideLeft"
+                style={{ textAnchor: "middle" }}
+                angle={-90}
+                offset={-15}
+                className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
+              >
+                {mergedBarSeries.yAxisLabel}
+              </Label>
+            )}
+          </YAxis>
+
+          {enableBiaxial ? (
             <YAxis
-              yAxisId={enableBiaxial ? "left" : undefined}
-              width={mergedBarSeries.yAxisWidth}
-              hide={!mergedBarSeries.showYAxis}
+              yAxisId="right"
+              orientation="right"
+              width={mergedLineSeries.yAxisWidth}
+              hide={!mergedLineSeries.showYAxis}
               axisLine={false}
               tickLine={false}
               fill=""
               stroke=""
               className={cx(
-              // base
+                // base
                 "text-xs",
                 // text fill
                 "fill-zinc-500 dark:fill-zinc-500",
               )}
               tick={{
-                transform: "translate(-3, 0)",
+                transform: "translate(3, 0)",
               }}
               type="number"
-              domain={barYAxisDomain as AxisDomain}
-              tickFormatter={mergedBarSeries.valueFormatter}
-              allowDecimals={mergedBarSeries.allowDecimals}
+              domain={lineYAxisDomain as AxisDomain}
+              tickFormatter={mergedLineSeries.valueFormatter}
+              allowDecimals={mergedLineSeries.allowDecimals}
             >
-              {mergedBarSeries.yAxisLabel && (
+              {mergedLineSeries.yAxisLabel && (
                 <Label
-                  position="insideLeft"
+                  position="insideRight"
                   style={{ textAnchor: "middle" }}
                   angle={-90}
                   offset={-15}
                   className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
                 >
-                  {mergedBarSeries.yAxisLabel}
+                  {mergedLineSeries.yAxisLabel}
                 </Label>
               )}
             </YAxis>
+          ) : null}
 
-            {enableBiaxial ? (
-              <YAxis
-                yAxisId="right"
-                orientation="right"
-                width={mergedLineSeries.yAxisWidth}
-                hide={!mergedLineSeries.showYAxis}
-                axisLine={false}
-                tickLine={false}
-                fill=""
-                stroke=""
-                className={cx(
-                // base
-                  "text-xs",
-                  // text fill
-                  "fill-zinc-500 dark:fill-zinc-500",
-                )}
-                tick={{
-                  transform: "translate(3, 0)",
-                }}
-                type="number"
-                domain={lineYAxisDomain as AxisDomain}
-                tickFormatter={mergedLineSeries.valueFormatter}
-                allowDecimals={mergedLineSeries.allowDecimals}
-              >
-                {mergedLineSeries.yAxisLabel && (
-                  <Label
-                    position="insideRight"
-                    style={{ textAnchor: "middle" }}
-                    angle={-90}
-                    offset={-15}
-                    className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
-                  >
-                    {mergedLineSeries.yAxisLabel}
-                  </Label>
-                )}
-              </YAxis>
-            ) : null}
+          <Tooltip
+            wrapperStyle={{ outline: "none" }}
+            isAnimationActive={true}
+            animationDuration={100}
+            cursor={{ stroke: "#d1d5db", strokeWidth: 1 }}
+            offset={20}
+            position={{
+              y: 0,
+            }}
+            content={({ active, payload, label }) => {
+              const cleanPayload: TooltipProps["payload"] = payload
+                ? payload.map((item: any) => ({
+                    category: item.dataKey,
+                    value: item.value,
+                    index: item.payload[index],
+                    barColor: barCategoryColors.get(
+                      item.dataKey,
+                    ) as AvailableChartColorsKeys,
+                    lineColor: lineCategoryColors.get(
+                      item.dataKey,
+                    ) as AvailableChartColorsKeys,
+                    chartType: barCategoryColors.get(item.dataKey)
+                      ? "bar"
+                      : ("line" as PayloadItem["chartType"]),
+                    type: item.type,
+                    payload: item.payload,
+                  }))
+                : [];
 
-            <Tooltip
-              wrapperStyle={{ outline: "none" }}
-              isAnimationActive={true}
-              animationDuration={100}
-              cursor={{ stroke: "#d1d5db", strokeWidth: 1 }}
-              offset={20}
-              position={{
-                y: 0,
+              if (
+                tooltipCallback
+                && (active !== prevActiveRef.current
+                  || label !== prevLabelRef.current)
+              ) {
+                tooltipCallback({
+                  active,
+                  payload: cleanPayload,
+                  label: label?.toString() ?? "",
+                });
+                prevActiveRef.current = active;
+                prevLabelRef.current
+                    = typeof label === "string" ? label : label?.toString();
+              }
+
+              return showTooltip && active
+                ? (
+                    CustomTooltip
+                      ? (
+                          <CustomTooltip
+                            active={active}
+                            payload={cleanPayload}
+                            label={label?.toString() ?? ""}
+                          />
+                        )
+                      : (
+                          <ChartTooltip
+                            active={active}
+                            payload={cleanPayload}
+                            label={label?.toString() ?? ""}
+                            barValueFormatter={mergedBarSeries.valueFormatter}
+                            lineValueFormatter={mergedLineSeries.valueFormatter}
+                          />
+                        )
+                  )
+                : null;
+            }}
+          />
+          {showLegend
+            ? (
+                <RechartsLegend
+                  verticalAlign="top"
+                  height={legendHeight}
+                  content={({ payload }) =>
+                    ChartLegend(
+                      { payload },
+                      barCategoryColors,
+                      lineCategoryColors,
+                      setLegendHeight,
+                      activeLegend,
+                      hasOnValueChange
+                        ? (clickedLegendItem: string) =>
+                            onCategoryClick(clickedLegendItem)
+                        : undefined,
+                      enableLegendSlider,
+                      legendPosition,
+                      mergedBarSeries.yAxisWidth,
+                      mergedLineSeries.yAxisWidth,
+                    )}
+                />
+              )
+            : null}
+          {mergedBarSeries.categories.map(category => (
+            <Bar
+              yAxisId={enableBiaxial ? "left" : undefined}
+              className={cx(
+                getColorClassName(
+                  barCategoryColors.get(category) as AvailableChartColorsKeys,
+                  "fill",
+                ),
+                onValueChange ? "cursor-pointer" : "",
+              )}
+              key={category}
+              name={category}
+              type="linear"
+              dataKey={category}
+              stackId={stacked ? "stack" : undefined}
+              isAnimationActive={false}
+              fill=""
+              shape={(props: any) =>
+                renderShape(props, activeBar, activeLegend)}
+              onClick={onBarClick}
+            />
+          ))}
+          {/* hidden lines to increase clickable target area */}
+          {onValueChange
+            ? mergedLineSeries.categories.map(category => (
+                <Line
+                  yAxisId={enableBiaxial ? "right" : undefined}
+                  className={cx("cursor-pointer")}
+                  strokeOpacity={0}
+                  key={category}
+                  name={category}
+                  type="linear"
+                  dataKey={category}
+                  stroke="transparent"
+                  fill="transparent"
+                  legendType="none"
+                  tooltipType="none"
+                  strokeWidth={12}
+                  connectNulls={mergedLineSeries.connectNulls}
+                  onClick={(props: any, event) => {
+                    event.stopPropagation();
+                    const { name } = props;
+                    onCategoryClick(name);
+                  }}
+                />
+              ))
+            : null}
+          {mergedLineSeries.categories.map(category => (
+            <Line
+              yAxisId={enableBiaxial ? "right" : undefined}
+              className={cx(
+                getColorClassName(
+                  lineCategoryColors.get(
+                    category,
+                  ) as AvailableChartColorsKeys,
+                  "stroke",
+                ),
+                hasOnValueChange && "cursor-pointer",
+              )}
+              strokeOpacity={
+                activeDot || (activeLegend && activeLegend !== category)
+                  ? 0.3
+                  : 1
+              }
+              activeDot={(props: any) => {
+                const {
+                  cx: cxCoord,
+                  cy: cyCoord,
+                  stroke,
+                  strokeLinecap,
+                  strokeLinejoin,
+                  strokeWidth,
+                  dataKey,
+                } = props;
+                return (
+                  <Dot
+                    className={cx(
+                      "stroke-white dark:stroke-zinc-950",
+                      onValueChange ? "cursor-pointer" : "",
+                      getColorClassName(
+                        lineCategoryColors.get(
+                          dataKey,
+                        ) as AvailableChartColorsKeys,
+                        "fill",
+                      ),
+                    )}
+                    cx={cxCoord}
+                    cy={cyCoord}
+                    r={5}
+                    fill=""
+                    stroke={stroke}
+                    strokeLinecap={strokeLinecap}
+                    strokeLinejoin={strokeLinejoin}
+                    strokeWidth={strokeWidth}
+                    onClick={(_, event) => onDotClick(props, event)}
+                  />
+                );
               }}
-              content={({ active, payload, label }) => {
-                const cleanPayload: TooltipProps["payload"] = payload
-                  ? payload.map((item: any) => ({
-                      category: item.dataKey,
-                      value: item.value,
-                      index: item.payload[index],
-                      barColor: barCategoryColors.get(
-                        item.dataKey,
-                      ) as AvailableChartColorsKeys,
-                      lineColor: lineCategoryColors.get(
-                        item.dataKey,
-                      ) as AvailableChartColorsKeys,
-                      chartType: barCategoryColors.get(item.dataKey)
-                        ? "bar"
-                        : ("line" as PayloadItem["chartType"]),
-                      type: item.type,
-                      payload: item.payload,
-                    }))
-                  : [];
+              dot={(props: any) => {
+                const {
+                  stroke,
+                  strokeLinecap,
+                  strokeLinejoin,
+                  strokeWidth,
+                  cx: cxCoord,
+                  cy: cyCoord,
+                  dataKey,
+                  index,
+                } = props;
 
                 if (
-                  tooltipCallback
-                  && (active !== prevActiveRef.current
-                    || label !== prevLabelRef.current)
+                  (hasOnlyOneValueForKey(data, category)
+                    && !(
+                      activeDot
+                      || (activeLegend && activeLegend !== category)
+                    ))
+                    || (activeDot?.index === index
+                      && activeDot?.dataKey === category)
                 ) {
-                  tooltipCallback({
-                    active,
-                    payload: cleanPayload,
-                    label: label?.toString() ?? "",
-                  });
-                  prevActiveRef.current = active;
-                  prevLabelRef.current
-                    = typeof label === "string" ? label : label?.toString();
-                }
-
-                return showTooltip && active
-                  ? (
-                      CustomTooltip
-                        ? (
-                            <CustomTooltip
-                              active={active}
-                              payload={cleanPayload}
-                              label={label?.toString() ?? ""}
-                            />
-                          )
-                        : (
-                            <ChartTooltip
-                              active={active}
-                              payload={cleanPayload}
-                              label={label?.toString() ?? ""}
-                              barValueFormatter={mergedBarSeries.valueFormatter}
-                              lineValueFormatter={mergedLineSeries.valueFormatter}
-                            />
-                          )
-                    )
-                  : null;
-              }}
-            />
-            {showLegend
-              ? (
-                  <RechartsLegend
-                    verticalAlign="top"
-                    height={legendHeight}
-                    content={({ payload }) =>
-                      ChartLegend(
-                        { payload },
-                        barCategoryColors,
-                        lineCategoryColors,
-                        setLegendHeight,
-                        activeLegend,
-                        hasOnValueChange
-                          ? (clickedLegendItem: string) =>
-                              onCategoryClick(clickedLegendItem)
-                          : undefined,
-                        enableLegendSlider,
-                        legendPosition,
-                        mergedBarSeries.yAxisWidth,
-                        mergedLineSeries.yAxisWidth,
-                      )}
-                  />
-                )
-              : null}
-            {mergedBarSeries.categories.map(category => (
-              <Bar
-                yAxisId={enableBiaxial ? "left" : undefined}
-                className={cx(
-                  getColorClassName(
-                    barCategoryColors.get(category) as AvailableChartColorsKeys,
-                    "fill",
-                  ),
-                  onValueChange ? "cursor-pointer" : "",
-                )}
-                key={category}
-                name={category}
-                type="linear"
-                dataKey={category}
-                stackId={stacked ? "stack" : undefined}
-                isAnimationActive={false}
-                fill=""
-                shape={(props: any) =>
-                  renderShape(props, activeBar, activeLegend)}
-                onClick={onBarClick}
-              />
-            ))}
-            {/* hidden lines to increase clickable target area */}
-            {onValueChange
-              ? mergedLineSeries.categories.map(category => (
-                  <Line
-                    yAxisId={enableBiaxial ? "right" : undefined}
-                    className={cx("cursor-pointer")}
-                    strokeOpacity={0}
-                    key={category}
-                    name={category}
-                    type="linear"
-                    dataKey={category}
-                    stroke="transparent"
-                    fill="transparent"
-                    legendType="none"
-                    tooltipType="none"
-                    strokeWidth={12}
-                    connectNulls={mergedLineSeries.connectNulls}
-                    onClick={(props: any, event) => {
-                      event.stopPropagation();
-                      const { name } = props;
-                      onCategoryClick(name);
-                    }}
-                  />
-                ))
-              : null}
-            {mergedLineSeries.categories.map(category => (
-              <Line
-                yAxisId={enableBiaxial ? "right" : undefined}
-                className={cx(
-                  getColorClassName(
-                    lineCategoryColors.get(
-                      category,
-                    ) as AvailableChartColorsKeys,
-                    "stroke",
-                  ),
-                  hasOnValueChange && "cursor-pointer",
-                )}
-                strokeOpacity={
-                  activeDot || (activeLegend && activeLegend !== category)
-                    ? 0.3
-                    : 1
-                }
-                activeDot={(props: any) => {
-                  const {
-                    cx: cxCoord,
-                    cy: cyCoord,
-                    stroke,
-                    strokeLinecap,
-                    strokeLinejoin,
-                    strokeWidth,
-                    dataKey,
-                  } = props;
                   return (
                     <Dot
+                      key={index}
+                      cx={cxCoord}
+                      cy={cyCoord}
+                      r={5}
+                      stroke={stroke}
+                      fill=""
+                      strokeLinecap={strokeLinecap}
+                      strokeLinejoin={strokeLinejoin}
+                      strokeWidth={strokeWidth}
                       className={cx(
                         "stroke-white dark:stroke-zinc-950",
                         onValueChange ? "cursor-pointer" : "",
@@ -1441,88 +1395,34 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
                           "fill",
                         ),
                       )}
-                      cx={cxCoord}
-                      cy={cyCoord}
-                      r={5}
-                      fill=""
-                      stroke={stroke}
-                      strokeLinecap={strokeLinecap}
-                      strokeLinejoin={strokeLinejoin}
-                      strokeWidth={strokeWidth}
-                      onClick={(_, event) => onDotClick(props, event)}
                     />
                   );
-                }}
-                dot={(props: any) => {
-                  const {
-                    stroke,
-                    strokeLinecap,
-                    strokeLinejoin,
-                    strokeWidth,
-                    cx: cxCoord,
-                    cy: cyCoord,
-                    dataKey,
-                    index,
-                  } = props;
-
-                  if (
-                    (hasOnlyOneValueForKey(data, category)
-                      && !(
-                        activeDot
-                        || (activeLegend && activeLegend !== category)
-                      ))
-                      || (activeDot?.index === index
-                        && activeDot?.dataKey === category)
-                  ) {
-                    return (
-                      <Dot
-                        key={index}
-                        cx={cxCoord}
-                        cy={cyCoord}
-                        r={5}
-                        stroke={stroke}
-                        fill=""
-                        strokeLinecap={strokeLinecap}
-                        strokeLinejoin={strokeLinejoin}
-                        strokeWidth={strokeWidth}
-                        className={cx(
-                          "stroke-white dark:stroke-zinc-950",
-                          onValueChange ? "cursor-pointer" : "",
-                          getColorClassName(
-                            lineCategoryColors.get(
-                              dataKey,
-                            ) as AvailableChartColorsKeys,
-                            "fill",
-                          ),
-                        )}
-                      />
-                    );
-                  }
-                  return <React.Fragment key={index}></React.Fragment>;
-                }}
-                key={`${category}-line-id`}
-                name={category}
-                type="linear"
-                dataKey={category}
-                stroke=""
-                strokeWidth={2}
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                isAnimationActive={false}
-                connectNulls={mergedLineSeries.connectNulls}
-                onClick={(props: any, event) => {
-                  event.stopPropagation();
-                  const { name } = props;
-                  onCategoryClick(name);
-                }}
-              />
-            ))}
-          </RechartsComposedChart>
-        </ResponsiveContainer>
-      </div>
-    );
-  };
+                }
+                return <React.Fragment key={index}></React.Fragment>;
+              }}
+              key={`${category}-line-id`}
+              name={category}
+              type="linear"
+              dataKey={category}
+              stroke=""
+              strokeWidth={2}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              isAnimationActive={false}
+              connectNulls={mergedLineSeries.connectNulls}
+              onClick={(props: any, event) => {
+                event.stopPropagation();
+                const { name } = props;
+                onCategoryClick(name);
+              }}
+            />
+          ))}
+        </RechartsComposedChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
 
 ComboChart.displayName = "ComboChart";
 
-export { ComboChart, type ComboChartEventProps, type TooltipProps };
+export { ComboChart, type ComboChartEventProps, type ComboChartProps, type TooltipProps };

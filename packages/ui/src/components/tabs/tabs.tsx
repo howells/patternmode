@@ -1,11 +1,13 @@
 "use client";
 
+import type { ButtonSize } from "../button/button";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import React from "react";
+
 import { tv } from "tailwind-variants";
 
 import { cx, focusRing } from "../../lib/utils";
-import { Button, type ButtonSize } from "../button/button";
+import { Button } from "../button/button";
 
 const tabsVariants = tv({
   slots: {
@@ -146,8 +148,8 @@ type TabsListVariant = "solid" | "line";
 
 const TabsListVariantContext = React.createContext<TabsListVariant>("line");
 const TabsListSizeContext = React.createContext<ButtonSize>(
-    "default",
-  );
+  "default",
+);
 
 /**
  * Root tabs component built on Base UI's Tabs primitive.
@@ -156,7 +158,7 @@ const TabsListSizeContext = React.createContext<ButtonSize>(
  * providing accessible tabbed interfaces for toggling between related panels
  * on the same page. Features keyboard navigation and proper focus management.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.Root>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.Root>
  * @see {@link https://base-ui.com/react/components/tabs} Base UI Tabs documentation
  *
  * @param {string} [defaultValue] - The value of the tab that should be active when initially rendered. Use when you do not need to control the state of the tabs.
@@ -184,29 +186,32 @@ const TabsListSizeContext = React.createContext<ButtonSize>(
  * @component
  */
 /**
- * A set of layered sections of content—known as tab panels—that are displayed one at a time. Features Geist-style design with clean line indicators.
+ * Tabbed interface component for organizing content into selectable panels.
  *
  * @id tabs
  * @name Tabs
+ * @icon Folder
+ * @category navigation
  * @component
+ * @param props - Component properties.
  */
 const Tabs = ({ ref: forwardedRef, className, ...props }: Omit<React.ComponentPropsWithoutRef<typeof BaseTabs.Root>, "orientation"> & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Root> | null> }) => {
-    const { root } = tabsVariants();
-    return (
-      <BaseTabs.Root
-        ref={forwardedRef}
-        className={cx(root(), className)}
-        {...props}
-      />
-    );
-  };
+  const { root } = tabsVariants();
+  return (
+    <BaseTabs.Root
+      ref={forwardedRef}
+      className={cx(root(), className)}
+      {...props}
+    />
+  );
+};
 
 Tabs.displayName = "Tabs";
 
 /**
  * Props for the TabsList component.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.List>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.List>
  * @interface TabsListProps
  *
  * @property {"solid" | "line"} [variant] - Style variant for the tabs list. "solid" creates button-like tabs in a container, "line" creates underlined tabs with a divider.
@@ -217,8 +222,7 @@ Tabs.displayName = "Tabs";
  * @property {string} [className] - Additional CSS classes to apply to the list element.
  * @property {React.RefObject<React.ElementRef<typeof BaseTabs.List> | null>} [ref] - Ref to the list element.
  */
-interface TabsListProps
-  extends React.ComponentPropsWithoutRef<typeof BaseTabs.List> {
+type TabsListProps = {
   /**
    * Style variant for the tabs list.
    */
@@ -235,7 +239,7 @@ interface TabsListProps
    * Size for solid variant buttons.
    */
   size?: ButtonSize;
-}
+} & React.ComponentPropsWithoutRef<typeof BaseTabs.List>;
 
 /**
  * Container for tab triggers with visual indicator.
@@ -244,13 +248,13 @@ interface TabsListProps
  * with animated indicator that follows the active tab. Supports multiple variants
  * including Geist-style tabs with bottom divider and indicator.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.List>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.List>
  * @see {@link https://base-ui.com/react/components/tabs} Base UI Tabs documentation
  *
- * @param {"solid" | "line"} [variant="line"] - Style variant for the tabs list. "solid" creates button-like tabs in a container, "line" creates underlined tabs with a divider.
- * @param {boolean} [hideDivider=false] - Hide the bottom divider line (only applies to "line" variant).
- * @param {boolean} [hideBorder=false] - Hide the active tab border/indicator (only applies to "line" variant).
- * @param {ButtonSize} [size="default"] - Size for solid variant buttons. Affects padding and text size.
+ * @param {"solid" | "line"} [variant] - Style variant for the tabs list. "solid" creates button-like tabs in a container, "line" creates underlined tabs with a divider.
+ * @param {boolean} [hideDivider] - Hide the bottom divider line (only applies to "line" variant).
+ * @param {boolean} [hideBorder] - Hide the active tab border/indicator (only applies to "line" variant).
+ * @param {ButtonSize} [size] - Size for solid variant buttons. Affects padding and text size.
  * @param {React.ReactNode} [children] - The tab triggers to display.
  * @param {string} [className] - Additional CSS classes to apply to the list element.
  * @param {React.RefObject<React.ElementRef<typeof BaseTabs.List> | null>} [ref] - Ref to the list element.
@@ -269,44 +273,44 @@ interface TabsListProps
  * ```
  */
 const TabsList = (
-    { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "default", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
-  ) => {
-    const { list } = tabsVariants({ variant, size, hideDivider, hideBorder });
+  { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "default", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
+) => {
+  const { list } = tabsVariants({ variant, size, hideDivider, hideBorder });
 
-    return (
-      <BaseTabs.List
-        ref={forwardedRef}
-        className={cx(list(), className)}
-        {...props}
-      >
-        <TabsListVariantContext value={variant}>
-          <TabsListSizeContext value={size}>
-            {children}
-            {variant === "line" && (
-              <BaseTabs.Indicator
-                key={`${variant}-indicator`}
-                className={cx(
-                  tabsVariants({
-                    variant,
-                    size,
-                    hideDivider,
-                    hideBorder,
-                  }).indicator(),
-                )}
-              />
-            )}
-          </TabsListSizeContext>
-        </TabsListVariantContext>
-      </BaseTabs.List>
-    );
-  };
+  return (
+    <BaseTabs.List
+      ref={forwardedRef}
+      className={cx(list(), className)}
+      {...props}
+    >
+      <TabsListVariantContext value={variant}>
+        <TabsListSizeContext value={size}>
+          {children}
+          {variant === "line" && (
+            <BaseTabs.Indicator
+              key={`${variant}-indicator`}
+              className={cx(
+                tabsVariants({
+                  variant,
+                  size,
+                  hideDivider,
+                  hideBorder,
+                }).indicator(),
+              )}
+            />
+          )}
+        </TabsListSizeContext>
+      </TabsListVariantContext>
+    </BaseTabs.List>
+  );
+};
 
 TabsList.displayName = "TabsList";
 
 /**
  * Props for the TabsTrigger component.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
  * @interface TabsTriggerProps
  *
  * @property {string} value - A unique value that associates the trigger with a content panel.
@@ -318,8 +322,7 @@ TabsList.displayName = "TabsList";
  * @property {string} [className] - Additional CSS classes to apply to the trigger element.
  * @property {React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null>} [ref] - Ref to the trigger element.
  */
-interface TabsTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab> {
+type TabsTriggerProps = {
   /**
    * Icon component to display on the left side.
    */
@@ -332,7 +335,7 @@ interface TabsTriggerProps
    * Stroke width for icons.
    */
   iconStrokeWidth?: number;
-}
+} & React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>;
 
 /**
  * Individual tab trigger button for switching between panels.
@@ -342,7 +345,7 @@ interface TabsTriggerProps
  * from parent TabsList and supports disabled states. Uses Button components
  * for both variants to ensure consistent icon support and sizing.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>
  * @see {@link https://base-ui.com/react/components/tabs} Base UI Tabs documentation
  *
  * @param {string} value - A unique value that associates the trigger with a content panel.
@@ -362,74 +365,40 @@ interface TabsTriggerProps
  * ```
  */
 const TabsTrigger = (
-    { ref: forwardedRef, className, children, leftIcon, rightIcon, iconStrokeWidth, ...props }: TabsTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null> },
-  ) => {
-    const variant = React.use(TabsListVariantContext);
-    const size = React.use(TabsListSizeContext);
+  { ref: forwardedRef, className, children, leftIcon, rightIcon, iconStrokeWidth, ...props }: TabsTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Tab> | null> },
+) => {
+  const variant = React.use(TabsListVariantContext);
+  const size = React.use(TabsListSizeContext);
 
-    // Map tab sizes to button sizes - let button handle its own sizing
-    const getButtonSize = (tabSize: ButtonSize) => {
-      // Pass sizes directly to button - button component handles these sizes naturally
-      return tabSize;
-    };
+  // Map tab sizes to button sizes - let button handle its own sizing
+  const getButtonSize = (tabSize: ButtonSize) => {
+    // Pass sizes directly to button - button component handles these sizes naturally
+    return tabSize;
+  };
 
-    // For solid variant, use Button component with render prop to get selected state
-    if (variant === "solid") {
-      return (
-        <BaseTabs.Tab
-          ref={forwardedRef}
-          {...props}
-          render={(tabProps, state) => {
-            const { ref: _, ...buttonProps } = tabProps;
-            return (
-              <Button
-                {...buttonProps}
-                variant={state.selected ? "minimal" : "ghost"}
-                size={getButtonSize(size)}
-                leftIcon={leftIcon}
-                rightIcon={rightIcon}
-                iconStrokeWidth={iconStrokeWidth}
-                shadow={false}
-                disabled={state.disabled}
-                className={cx(
-                  {
-                    "bg-white dark:bg-zinc-900": state.selected,
-                  },
-                  className,
-                )}
-              >
-                {children}
-              </Button>
-            );
-          }}
-        />
-      );
-    }
-
-    // For line variant, use Tab element with Button as child to preserve indicator functionality
+  // For solid variant, use Button component with render prop to get selected state
+  if (variant === "solid") {
     return (
       <BaseTabs.Tab
         ref={forwardedRef}
-        className={cx(
-          className,
-        )}
         {...props}
         render={(tabProps, state) => {
-          // Extract ref and other props - need to handle ref forwarding to button element
-          const { ref: tabRef, className: tabClassName, ...buttonProps } = tabProps;
+          const { ref: _, ...buttonProps } = tabProps;
           return (
             <Button
               {...buttonProps}
-              variant="minimal"
+              variant={state.selected ? "minimal" : "ghost"}
               size={getButtonSize(size)}
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               iconStrokeWidth={iconStrokeWidth}
               shadow={false}
-              render={<button ref={tabRef} />} // Forward Base UI's ref to the button element
               disabled={state.disabled}
               className={cx(
-                tabClassName,
+                {
+                  "bg-white dark:bg-zinc-900": state.selected,
+                },
+                className,
               )}
             >
               {children}
@@ -438,7 +407,41 @@ const TabsTrigger = (
         }}
       />
     );
-  };
+  }
+
+  // For line variant, use Tab element with Button as child to preserve indicator functionality
+  return (
+    <BaseTabs.Tab
+      ref={forwardedRef}
+      className={cx(
+        className,
+      )}
+      {...props}
+      render={(tabProps, state) => {
+        // Extract ref and other props - need to handle ref forwarding to button element
+        const { ref: tabRef, className: tabClassName, ...buttonProps } = tabProps;
+        return (
+          <Button
+            {...buttonProps}
+            variant="minimal"
+            size={getButtonSize(size)}
+            leftIcon={leftIcon}
+            rightIcon={rightIcon}
+            iconStrokeWidth={iconStrokeWidth}
+            shadow={false}
+            render={<button ref={tabRef} />} // Forward Base UI's ref to the button element
+            disabled={state.disabled}
+            className={cx(
+              tabClassName,
+            )}
+          >
+            {children}
+          </Button>
+        );
+      }}
+    />
+  );
+};
 
 TabsTrigger.displayName = "TabsTrigger";
 
@@ -449,7 +452,7 @@ TabsTrigger.displayName = "TabsTrigger";
  * that show/hide based on the active tab selection. Features proper focus
  * management and screen reader support.
  *
- * @extends React.ComponentPropsWithoutRef<typeof BaseTabs.Panel>
+ * @augments React.ComponentPropsWithoutRef<typeof BaseTabs.Panel>
  * @see {@link https://base-ui.com/react/components/tabs} Base UI Tabs documentation
  *
  * @param {string} value - The value that associates the panel with a trigger tab.
@@ -466,16 +469,16 @@ TabsTrigger.displayName = "TabsTrigger";
  * ```
  */
 const TabsContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseTabs.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.Panel> | null> }) => {
-    const { panel } = tabsVariants();
+  const { panel } = tabsVariants();
 
-    return (
-      <BaseTabs.Panel
-        ref={forwardedRef}
-        className={cx(panel(), className)}
-        {...props}
-      />
-    );
-  };
+  return (
+    <BaseTabs.Panel
+      ref={forwardedRef}
+      className={cx(panel(), className)}
+      {...props}
+    />
+  );
+};
 
 TabsContent.displayName = "TabsContent";
 
@@ -526,5 +529,5 @@ export {
   TabsTab,
   TabsTabsList,
   TabsTrigger,
-  tabsVariants
+  tabsVariants,
 };

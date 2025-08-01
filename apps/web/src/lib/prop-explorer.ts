@@ -1,12 +1,12 @@
 // Prop Explorer System [v1.0.0]
 // Self-documenting, extensible prop exploration for Patternmode components
 
-import { VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 /**
  * Base prop metadata that can be extracted from TypeScript types
  */
-export interface PropMetadata {
+export type PropMetadata = {
   /** The prop name */
   name: string;
   /** TypeScript type definition */
@@ -29,22 +29,22 @@ export interface PropMetadata {
   min?: number;
   /** Maximum value for number types */
   max?: number;
-}
+};
 
 /**
  * Variant prop metadata with additional variant-specific information
  */
-export interface VariantPropMetadata extends PropMetadata {
+export type VariantPropMetadata = {
   /** Available variant options */
   options: VariantOption[];
   /** The default variant */
   defaultOption?: string;
-}
+} & PropMetadata;
 
 /**
  * Individual variant option metadata
  */
-export interface VariantOption {
+export type VariantOption = {
   /** The option value */
   value: string;
   /** Display label for the option */
@@ -57,45 +57,45 @@ export interface VariantOption {
   classes?: string[];
   /** Whether this option is deprecated */
   deprecated?: boolean | string;
-}
+};
 
 /**
  * Event handler prop metadata
  */
-export interface EventPropMetadata extends PropMetadata {
+export type EventPropMetadata = {
   /** Event handler signature */
   signature: string;
   /** Parameters passed to the event handler */
   parameters: EventParameter[];
   /** When this event is triggered */
   trigger: string;
-}
+} & PropMetadata;
 
 /**
  * Event parameter metadata
  */
-export interface EventParameter {
+export type EventParameter = {
   name: string;
   type: string;
   description?: string;
-}
+};
 
 /**
  * Slot/children prop metadata
  */
-export interface SlotPropMetadata extends PropMetadata {
+export type SlotPropMetadata = {
   /** Expected child component types */
   acceptedChildren?: string[];
   /** Whether multiple children are allowed */
   multiple?: boolean;
   /** Render prop signature if applicable */
   renderPropSignature?: string;
-}
+} & PropMetadata;
 
 /**
  * Complete prop explorer configuration for a component
  */
-export interface PropExplorerConfig {
+export type PropExplorerConfig = {
   /** Component name */
   componentName: string;
   /** Component display name */
@@ -114,12 +114,12 @@ export interface PropExplorerConfig {
   relatedComponents?: string[];
   /** Component examples showing different prop combinations */
   examples?: PropExample[];
-}
+};
 
 /**
  * Example showing specific prop combinations
  */
-export interface PropExample {
+export type PropExample = {
   id: string;
   title: string;
   description?: string;
@@ -131,7 +131,7 @@ export interface PropExample {
   code?: string;
   /** Highlighted props in this example */
   highlightedProps?: string[];
-}
+};
 
 /**
  * Utility type to extract variant props from tailwind-variants
@@ -144,7 +144,7 @@ export type ExtractVariantProps<T> = T extends VariantProps<infer V>
  * JSDoc-based prop documentation decorator
  * This allows us to add rich documentation directly in component prop interfaces
  */
-export interface PropDocumentation {
+export type PropDocumentation = {
   /**
    * @description Human-readable description of the prop
    * @category The category this prop belongs to
@@ -155,7 +155,7 @@ export interface PropDocumentation {
    * @docLink Link to additional documentation
    */
   [key: string]: unknown;
-}
+};
 
 /**
  * Helper to create prop metadata
@@ -163,7 +163,7 @@ export interface PropDocumentation {
 export function createPropMetadata(
   name: string,
   type: string,
-  options: Omit<PropMetadata, "name" | "type"> = {}
+  options: Omit<PropMetadata, "name" | "type"> = {},
 ): PropMetadata {
   return {
     name,
@@ -183,7 +183,7 @@ export function createEventPropMetadata(
   config: Omit<
     EventPropMetadata,
     "name" | "type" | "signature" | "trigger" | "parameters"
-  > = {}
+  > = {},
 ): EventPropMetadata {
   return {
     name,
@@ -233,7 +233,7 @@ export function registerPropExplorer(config: PropExplorerConfig): void {
  * Get prop explorer configuration for a component
  */
 export function getPropExplorerConfig(
-  componentName: string
+  componentName: string,
 ): PropExplorerConfig | undefined {
   return propExplorerRegistry[componentName];
 }
@@ -250,10 +250,10 @@ export function getAllPropExplorerComponents(): string[] {
  */
 export function searchProps(
   componentName: string,
-  query: string
+  query: string,
 ): PropMetadata[] {
   const config = getPropExplorerConfig(componentName);
-  if (!config) return [];
+  if (!config) { return []; }
 
   const allProps = [
     ...config.props,
@@ -265,10 +265,10 @@ export function searchProps(
   const lowercaseQuery = query.toLowerCase();
 
   return allProps.filter(
-    (prop) =>
-      prop.name.toLowerCase().includes(lowercaseQuery) ||
-      prop.description?.toLowerCase().includes(lowercaseQuery) ||
-      prop.type.toLowerCase().includes(lowercaseQuery)
+    prop =>
+      prop.name.toLowerCase().includes(lowercaseQuery)
+      || prop.description?.toLowerCase().includes(lowercaseQuery)
+      || prop.type.toLowerCase().includes(lowercaseQuery),
   );
 }
 
@@ -276,7 +276,7 @@ export function searchProps(
  * Utility to create PropExplorerConfig from variants definition with additional props
  */
 export function createPropConfig<
-  T extends Record<string, Record<string, unknown>>
+  T extends Record<string, Record<string, unknown>>,
 >(
   componentName: string,
   displayName: string,
@@ -285,23 +285,23 @@ export function createPropConfig<
     variants: T;
     defaultVariants: Partial<{ [K in keyof T]: string }>;
   },
-  additionalProps: PropMetadata[] = []
+  additionalProps: PropMetadata[] = [],
 ): PropExplorerConfig {
   // Extract variants from tailwind-variants
   const variants: VariantPropMetadata[] = Object.entries(
-    variantsDefinition.variants
+    variantsDefinition.variants,
   ).map(([variantName, variantOptions]) => ({
     name: variantName,
     type: Object.keys(variantOptions)
-      .map((key) => `"${key}"`)
+      .map(key => `"${key}"`)
       .join(" | "),
-    options: Object.keys(variantOptions).map((key) => ({
+    options: Object.keys(variantOptions).map(key => ({
       value: key,
       label: key,
     })),
     defaultOption:
-      variantsDefinition.defaultVariants[variantName as keyof T] ||
-      Object.keys(variantOptions)[0],
+      variantsDefinition.defaultVariants[variantName as keyof T]
+      || Object.keys(variantOptions)[0],
     description: `The ${variantName} variant of the component.`,
   }));
 
@@ -321,7 +321,7 @@ export const createProp = {
   string: (
     name: string,
     description: string,
-    defaultValue?: string
+    defaultValue?: string,
   ): PropMetadata => ({
     name,
     type: "string",
@@ -332,7 +332,7 @@ export const createProp = {
   boolean: (
     name: string,
     description: string,
-    defaultValue?: boolean
+    defaultValue?: boolean,
   ): PropMetadata => ({
     name,
     type: "boolean",
@@ -344,7 +344,7 @@ export const createProp = {
     name: string,
     description: string,
     options: string[],
-    defaultValue?: string
+    defaultValue?: string,
   ): PropMetadata => ({
     name,
     type: "select",
@@ -367,7 +367,7 @@ export function createVariantFromUnionType(
   name: string,
   type: string,
   description?: string,
-  defaultValue?: string
+  defaultValue?: string,
 ): VariantPropMetadata | null {
   // Check if the type is a union of string literals (e.g., '"left" | "right"')
   const unionMatch = type.match(/^"([^"]+)"(\s*\|\s*"([^"]+)")+$/);
@@ -377,8 +377,8 @@ export function createVariantFromUnionType(
   }
 
   // Extract all quoted values from the union type
-  const values =
-    type.match(/"([^"]+)"/g)?.map((match) => match.slice(1, -1)) || [];
+  const values
+    = type.match(/"([^"]+)"/g)?.map(match => match.slice(1, -1)) || [];
 
   if (values.length < 2) {
     return null;
@@ -388,7 +388,7 @@ export function createVariantFromUnionType(
     name,
     type,
     description: description || `${name} option`,
-    options: values.map((value) => ({
+    options: values.map(value => ({
       value,
       label: value.charAt(0).toUpperCase() + value.slice(1), // Capitalize first letter
     })),
@@ -401,14 +401,14 @@ export function createVariantFromUnionType(
  */
 export function extractVariantsFromTailwindVariants(
   variants: Record<string, Record<string, unknown>>,
-  defaultVariants: Record<string, string>
+  defaultVariants: Record<string, string>,
 ): VariantPropMetadata[] {
   return Object.entries(variants).map(([variantName, options]) => ({
     name: variantName,
     type: Object.keys(options)
-      .map((key) => `"${key}"`)
+      .map(key => `"${key}"`)
       .join(" | "),
-    options: Object.keys(options).map((key) => ({
+    options: Object.keys(options).map(key => ({
       value: key,
       label: key.charAt(0).toUpperCase() + key.slice(1),
     })),
@@ -426,7 +426,7 @@ export function createPropExplorerConfig(
     variants: Record<string, Record<string, unknown>>;
     defaultVariants: Record<string, string>;
   },
-  additionalProps: PropMetadata[] = []
+  additionalProps: PropMetadata[] = [],
 ): PropExplorerConfig {
   return {
     componentName,
@@ -435,7 +435,7 @@ export function createPropExplorerConfig(
     props: additionalProps,
     variants: extractVariantsFromTailwindVariants(
       variantsDefinition.variants,
-      variantsDefinition.defaultVariants
+      variantsDefinition.defaultVariants,
     ),
   };
 }

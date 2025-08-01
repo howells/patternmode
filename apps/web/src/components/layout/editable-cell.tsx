@@ -1,14 +1,15 @@
 "use client";
 
-import { Button, Card, getDynamicIconByName, Icon } from "@patternmode/ui";
+import { getComponentConfig } from "@patternmode/ui/component-registry";
 import { Plus, Settings, X } from "lucide-react";
-import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
-import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
-import { PropExplorerProvider } from "../prop-explorer-context";
+
+import { Button, Card, getDynamicIconByName, Icon } from "@patternmode/ui";
+
+import { PropExplorerProvider } from "../../features/prop-explorer/prop-explorer-context";
 import { PropsEditorPopover } from "./props-editor-popover";
 
-interface CellData {
+type CellData = {
   componentId: string;
   props: Record<string, unknown>;
   position?: {
@@ -17,15 +18,15 @@ interface CellData {
     colStart?: number;
     rowStart?: number;
   };
-}
+};
 
-interface EditableCellProps {
+type EditableCellProps = {
   cellIndex: number;
   cellData?: CellData;
   onAddComponent: () => void;
   onUpdateProps: (props: Record<string, unknown>) => void;
   onRemoveComponent: () => void;
-}
+};
 
 export function EditableCell({
   cellIndex,
@@ -38,22 +39,24 @@ export function EditableCell({
 
   // Create dynamic component based on componentId
   const DynamicComponent = useMemo(() => {
-    if (!cellData) return null;
+    if (!cellData) { return null; }
 
     const config = getComponentConfig(cellData.componentId);
-    if (!config) return null;
+    if (!config) { return null; }
 
     // Simple placeholder component to fix broken dynamic imports
     return () => (
       <div className="p-4 border border-amber-200 rounded bg-amber-50 text-amber-600 text-sm">
-        Dynamic component loading temporarily disabled: {cellData.componentId}
+        Dynamic component loading temporarily disabled:
+        {" "}
+        {cellData.componentId}
       </div>
     );
   }, [cellData]);
 
   // Process props to handle icon conversion
   const processedProps = useMemo(() => {
-    if (!cellData) return {};
+    if (!cellData) { return {}; }
 
     const finalProps: Record<string, unknown> = { ...cellData.props };
 
@@ -66,7 +69,8 @@ export function EditableCell({
         if (iconComponent) {
           finalProps[key] = iconComponent;
         }
-      } else if (isIconProp && value === "") {
+      }
+      else if (isIconProp && value === "") {
         // Remove empty icon props
         delete finalProps[key];
       }
@@ -76,7 +80,8 @@ export function EditableCell({
     Object.entries(finalProps).forEach(([key, value]) => {
       if (value === "true") {
         finalProps[key] = true;
-      } else if (value === "false") {
+      }
+      else if (value === "false") {
         finalProps[key] = false;
       }
     });
@@ -86,7 +91,7 @@ export function EditableCell({
 
   // Render component if one is assigned to this cell
   const renderComponent = () => {
-    if (!cellData || !DynamicComponent) return null;
+    if (!cellData || !DynamicComponent) { return null; }
 
     try {
       // Create a wrapper component that handles prop spreading safely
@@ -101,7 +106,7 @@ export function EditableCell({
           return React.createElement(
             DynamicComponent,
             otherProps,
-            String(children)
+            String(children),
           );
         }
 
@@ -115,7 +120,8 @@ export function EditableCell({
           </PropExplorerProvider>
         </div>
       );
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Error rendering component:", error);
       return (
         <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded text-sm">
@@ -137,18 +143,19 @@ export function EditableCell({
         <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <PropsEditorPopover
             isOpen={showPropsEditor}
-            onOpenChange={setShowPropsEditor}
+            onOpenChangeAction={setShowPropsEditor}
             cellData={cellData}
-            onUpdateProps={onUpdateProps}
-            trigger={
+            onUpdatePropsAction={onUpdateProps}
+            trigger={(
               <Button
                 size="icon-sm"
                 variant="secondary"
                 rounded
                 onClick={() => setShowPropsEditor(true)}
                 leftIcon={Settings}
-              ></Button>
-            }
+              >
+              </Button>
+            )}
           />
           <Button
             size="icon-sm"
@@ -156,7 +163,8 @@ export function EditableCell({
             rounded
             onClick={onRemoveComponent}
             leftIcon={X}
-          ></Button>
+          >
+          </Button>
         </div>
       </div>
     );

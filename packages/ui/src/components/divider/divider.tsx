@@ -56,8 +56,8 @@
  * ```
  */
 
+
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -158,31 +158,39 @@ const dividerLineVariants = tv({
  * @augments React.ComponentPropsWithoutRef<"div">
  * @augments VariantProps<typeof dividerVariants>
  */
-interface DividerProps
-  extends React.ComponentPropsWithoutRef<"div">,
-  VariantProps<typeof dividerVariants> {
+type DividerProps = {
   /**
    * Optional text content to display in the center of the divider.
    */
   children?: React.ReactNode;
-}
+  /**
+   * Divider orientation - horizontal spans full width, vertical spans full height.
+   */
+  orientation?: "horizontal" | "vertical";
+  /**
+   * Vertical spacing around the divider (ignored for vertical orientation).
+   */
+  spacing?: "none" | "sm" | "md" | "lg";
+} & React.ComponentPropsWithoutRef<"div">;
 
 /**
  * A versatile divider component for visually separating content sections.
  *
  * Provides clean visual separation between content areas with support for
  * both horizontal and vertical orientations. Can include optional text labels
- * positioned in the center of the divider line.
+ * positioned in the center of the divider line. Features responsive design
+ * and consistent styling across light and dark themes.
  *
  * @param className - Additional CSS classes.
  * @param children - Optional text content to display in the center.
  * @param orientation - Divider orientation (horizontal or vertical).
  * @param spacing - Vertical spacing around the divider.
  *
- *
+ * @component
+ * @category ui
+ * @icon Minus
  * @id divider
  * @name Divider
- * @component
  * @example
  * ```tsx
  * // Basic horizontal divider
@@ -225,34 +233,41 @@ interface DividerProps
  * ```
  */
 /**
- * A divider component that visually separates content with optional text label.
+ * Visual separator component for dividing content sections with customizable styling.
  *
  * @id divider
  * @name Divider
+ * @icon Minus
+ * @category ui
  * @component
+ * @param props - Component properties.
+ * @param props.children - Optional text content to display in the center of the divider.
+ * @param props.orientation - Divider orientation - horizontal spans full width, vertical spans full height.
+ * @param props.spacing - Vertical spacing around the divider (ignored for vertical orientation).
+ * @param props.className - Additional CSS class names.
  */
 const Divider = (
-    { ref: forwardedRef, className, children, orientation = "horizontal", spacing, ...props }: DividerProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => (
-    <div
-      ref={forwardedRef}
-      className={cx(dividerVariants({ orientation, spacing }), className)}
-      {...props}
-    >
-      {children
-        ? (
-            <>
-              <div className={cx(dividerLineVariants({ orientation }))} />
-              <div className="whitespace-nowrap text-inherit">{children}</div>
-              <div className={cx(dividerLineVariants({ orientation }))} />
-            </>
-          )
-        : (
+  { ref: forwardedRef, className, children, orientation = "horizontal", spacing, ...props }: DividerProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => (
+  <div
+    ref={forwardedRef}
+    className={cx(dividerVariants({ orientation, spacing }), className)}
+    {...props}
+  >
+    {children
+      ? (
+          <>
             <div className={cx(dividerLineVariants({ orientation }))} />
-          )}
-    </div>
-  );
+            <div className="whitespace-nowrap text-inherit">{children}</div>
+            <div className={cx(dividerLineVariants({ orientation }))} />
+          </>
+        )
+      : (
+          <div className={cx(dividerLineVariants({ orientation }))} />
+        )}
+  </div>
+);
 
 Divider.displayName = "Divider";
 
-export { Divider, dividerVariants, type DividerProps };
+export { Divider, type DividerProps, dividerVariants };

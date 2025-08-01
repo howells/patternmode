@@ -1,9 +1,10 @@
 // Card Component [v1.0.0] - Pure Implementation
 
+import type { VariantProps } from "tailwind-variants";
+
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -73,9 +74,7 @@ const cardVariants = tv({
  *  </Card>
  * ```
  */
-interface CardProps
-  extends useRender.ComponentProps<"div">,
-  VariantProps<typeof cardVariants> {}
+type CardProps = {} & useRender.ComponentProps<"div"> & VariantProps<typeof cardVariants>;
 
 /**
  * A flexible container component with Tremor-inspired styling.
@@ -93,6 +92,8 @@ interface CardProps
  *
  * @id card
  * @name Card
+ * @category ui
+ * @icon RectangleHorizontal
  * @component
  * @example
  * ```tsx
@@ -145,27 +146,35 @@ interface CardProps
  * ```
  */
 /**
- * A flexible container component with subtle styling and shadow for grouping related content.
+ * Container component with consistent styling for grouping related content.
  *
  * @id card
  * @name Card
+ * @icon Square
+ * @category ui
  * @component
+ * @param props - Component properties.
+ * @param props.variant - Visual style variant of the card.
+ * @param props.padding - Padding scale value (0-12).
+ * @param props.fillHeight - Whether card should fill container height.
+ * @param props.render - Custom element to render (defaults to div).
+ * @param props.className - Additional CSS classes.
  */
 const Card = (
-    { ref: forwardedRef, render = <div />, variant, padding, fillHeight, className, ...props }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    const defaultProps: useRender.ElementProps<"div"> = {
-      className: cx(cardVariants({ variant, padding, fillHeight }), className),
-    };
-
-    const element = useRender({
-      render,
-      ref: forwardedRef,
-      props: mergeProps<"div">(defaultProps, props),
-    });
-
-    return element;
+  { ref: forwardedRef, render = <div />, variant, padding, fillHeight, className, ...props }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  const defaultProps: useRender.ElementProps<"div"> = {
+    className: cx(cardVariants({ variant, padding, fillHeight }), className),
   };
+
+  const element = useRender({
+    render,
+    ref: forwardedRef,
+    props: mergeProps<"div">(defaultProps, props),
+  });
+
+  return element;
+};
 
 Card.displayName = "Card";
 
@@ -173,79 +182,81 @@ Card.displayName = "Card";
  * Card header component for titles, descriptions and actions.
  */
 const CardHeader = ({ ref, className, border = false, ...props }: React.HTMLAttributes<HTMLDivElement> & { border?: boolean } & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div
-      ref={ref}
-      className={cx(
-        "flex flex-col space-y-1.5 p-6",
-        border && "border-b border-zinc-200 dark:border-zinc-800",
-        className,
-      )}
-      {...props}
-    />
-  );
+  <div
+    ref={ref}
+    className={cx(
+      "flex flex-col space-y-1.5 p-6",
+      border && "border-b border-zinc-200 dark:border-zinc-800",
+      className,
+    )}
+    {...props}
+  />
+);
 CardHeader.displayName = "CardHeader";
 
 /**
  * Card title component with consistent typography.
  */
 const CardTitle = ({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadingElement> & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
-    <h3
-      ref={ref}
-      className={cx(
-        "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
-        className,
-      )}
-      {...props}
-    />
-  );
+  <h3
+    ref={ref}
+    className={cx(
+      "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
+      className,
+    )}
+    {...props}
+  />
+);
 CardTitle.displayName = "CardTitle";
 
 /**
  * Card description component with muted text styling.
  */
 const CardDescription = ({ ref, className, ...props }: React.HTMLAttributes<HTMLParagraphElement> & { ref?: React.RefObject<HTMLParagraphElement | null> }) => (
-    <p
-      ref={ref}
-      className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
-      {...props}
-    />
-  );
+  <p
+    ref={ref}
+    className={cx("text-sm text-zinc-500 dark:text-zinc-400", className)}
+    {...props}
+  />
+);
 CardDescription.displayName = "CardDescription";
 
 /**
  * Card action component for buttons or interactive elements in the header.
  */
 const CardAction = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div ref={ref} className={cx("flex items-center", className)} {...props} />
-  );
+  <div ref={ref} className={cx("flex items-center", className)} {...props} />
+);
 CardAction.displayName = "CardAction";
 
 /**
  * Card content component for main content area.
  */
 const CardContent = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div ref={ref} className={cx("p-6", className)} {...props} />
-  );
+  <div ref={ref} className={cx("p-6", className)} {...props} />
+);
 CardContent.displayName = "CardContent";
 
 /**
  * Card footer component for actions or additional content.
  */
 const CardFooter = ({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div
-      ref={ref}
-      className={cx("flex items-center p-6 pt-0", className)}
-      {...props}
-    />
-  );
+  <div
+    ref={ref}
+    className={cx("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+);
 CardFooter.displayName = "CardFooter";
 
 export {
-    Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader, CardTitle,
-    cardVariants, type CardProps
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  type CardProps,
+  CardTitle,
+  cardVariants,
 };

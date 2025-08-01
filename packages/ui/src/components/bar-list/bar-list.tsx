@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import { cx, focusRing } from "../../lib/utils";
 
 /**
@@ -44,8 +45,7 @@ type Bar<T> = T & {
  * @interface BarListProps
  * @augments React.HTMLAttributes<HTMLDivElement>
  */
-interface BarListProps<T = unknown>
-  extends React.HTMLAttributes<HTMLDivElement> {
+type BarListProps<T = unknown> = {
   /**
    * Array of data items to visualize as bars.
    */
@@ -66,7 +66,7 @@ interface BarListProps<T = unknown>
    * How to sort the bars by value.
    */
   sortOrder?: "ascending" | "descending" | "none";
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Internal implementation of the bar list component.
@@ -231,6 +231,8 @@ BarListInner.displayName = "BarList";
  * and optional animations. Ideal for showing rankings, comparisons, or
  * progress indicators.
  *
+ * @category charts
+ * @icon BarChart4
  * @template T - Additional properties to include in bar data.
  * @param data - Array of bar data items.
  * @param valueFormatter - Function to format displayed values.
@@ -238,9 +240,6 @@ BarListInner.displayName = "BarList";
  * @param onValueChange - Callback for bar clicks (enables interactivity).
  * @param sortOrder - How to sort bars (ascending, descending, or none).
  *
- *
- * @id bar-list
- * @name BarList
  * @component
  * @example
  * ```tsx
@@ -311,14 +310,17 @@ BarListInner.displayName = "BarList";
  * ```
  */
 /**
- * A horizontal bar chart component for displaying comparative data with optional interactivity.
+ * List-style bar chart component for simple data comparison with text labels.
  *
  * @id bar-list
  * @name BarList
+ * @icon BarChart
+ * @category charts
  * @component
+ * @param props - Component properties.
  */
 const BarList = React.forwardRef(BarListInner) as <T>(
-    p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }
-  ) => ReturnType<typeof BarListInner>;
+  p: BarListProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }
+) => ReturnType<typeof BarListInner>;
 
-export { BarList, type Bar, type BarListProps };
+export { type Bar, BarList, type BarListProps };

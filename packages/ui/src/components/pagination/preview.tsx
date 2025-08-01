@@ -9,6 +9,12 @@ import {
   PaginationPrevious,
 } from "@patternmode/ui";
 
+import React from "react";
+
+type PaginationExampleProps = {
+  [key: string]: unknown;
+};
+
 export function PaginationExample({
   currentPage = 3,
   totalPages = 10,

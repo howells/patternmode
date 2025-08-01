@@ -343,7 +343,7 @@ export const semanticVariants = {
  * Generate color classes for any Tailwind color
  * Supports both semantic variants and custom colors
  */
-export interface ColorClassOptions {
+export type ColorClassOptions = {
   /** The color to use - can be semantic variant or Tailwind color */
   color: SemanticVariant | TailwindColor;
   /** Custom shade for Tailwind colors (ignored for semantic variants) */
@@ -352,7 +352,7 @@ export interface ColorClassOptions {
   bgOpacity?: number;
   /** Opacity for border/ring colors */
   borderOpacity?: number;
-}
+};
 
 /**
  * Generate comprehensive color classes for backgrounds, text, borders, and rings

@@ -1,3 +1,6 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Navbar,
   NavbarDivider,
@@ -5,6 +8,7 @@ import {
   NavbarLabel,
   NavbarSection,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -47,7 +51,30 @@ export function WithDividerExample() {
       </NavbarSection>
     </Navbar>
   );
-} export const /**
-                *
-                */
-  NavbarExample = DefaultExample;
+}
+export const NavbarExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "NavbarExample",
+    title: "Navbar",
+    description: "Navbar example",
+    component: NavbarExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithDividerExample",
+    title: "With Divider",
+    description: "With Divider example",
+    component: WithDividerExample,
+  },
+];

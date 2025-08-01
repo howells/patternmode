@@ -1,3 +1,6 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Table,
   TableBody,
@@ -6,6 +9,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -33,3 +37,16 @@ export function DefaultExample() {
     </Table>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+];

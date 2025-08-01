@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Grid, GridAuto, GridCell } from "@patternmode/ui";
+
 import React from "react";
 
 export function GridExample() {
@@ -243,3 +247,64 @@ export function DashboardExample() {
     </Grid>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "GridExample",
+    title: "Grid",
+    description: "Grid example",
+    component: GridExample,
+  },
+  {
+    id: "ResponsiveExample",
+    title: "Responsive",
+    description: "Responsive example",
+    component: ResponsiveExample,
+  },
+  {
+    id: "SpanningCellsExample",
+    title: "Spanning Cells",
+    description: "Spanning Cells example",
+    component: SpanningCellsExample,
+  },
+  {
+    id: "SolidCellsExample",
+    title: "Solid Cells",
+    description: "Solid Cells example",
+    component: SolidCellsExample,
+  },
+  {
+    id: "OverlayCellsExample",
+    title: "Overlay Cells",
+    description: "Overlay Cells example",
+    component: OverlayCellsExample,
+  },
+  {
+    id: "GuideControlExample",
+    title: "Guide Control",
+    description: "Guide Control example",
+    component: GuideControlExample,
+  },
+  {
+    id: "AutoGridExample",
+    title: "Auto Grid",
+    description: "Auto Grid example",
+    component: AutoGridExample,
+  },
+  {
+    id: "CustomLayoutExample",
+    title: "Custom Layout",
+    description: "Custom Layout example",
+    component: CustomLayoutExample,
+  },
+  {
+    id: "DashboardExample",
+    title: "Dashboard",
+    description: "Dashboard example",
+    component: DashboardExample,
+  },
+];

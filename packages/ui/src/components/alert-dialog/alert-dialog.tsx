@@ -2,6 +2,7 @@
 
 import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
 import * as React from "react";
+
 import { cx } from "../../lib/utils";
 import { Button } from "../button/button";
 import { Subheading } from "../subheading/subheading";
@@ -15,6 +16,8 @@ import { Text } from "../text/text";
  * Features Tremor-inspired styling with proper focus management and keyboard navigation.
  *
  * @component
+ * @category ui
+ * @icon AlertTriangle
  * @example
  * ```tsx
  * <AlertDialog>
@@ -36,47 +39,46 @@ import { Text } from "../text/text";
  *
  * @see https://base-ui.com/react/components/alert-dialog - Base UI documentation
  */
+/**
+ * Modal dialog component for critical alerts and confirmation prompts.
+ *
+ * @id alert-dialog
+ * @name AlertDialog
+ * @icon AlertTriangle
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ */
 const AlertDialog = BaseAlertDialog.Root;
 
 /**
- * Trigger button that opens the alert dialog.
+ * Modal dialog component for critical alerts and confirmation prompts.
  *
- * Supports Base UI's render prop pattern to avoid nested button issues.
- * Can be used with existing Button components or render as default styled button.
- *
- *
- * @component
  * @id alert-dialog
- * @name Alert Dialog
- * @example
- * ```tsx
- * // Default styled trigger
- * <AlertDialogTrigger>Delete Item</AlertDialogTrigger>
- *
- * // With render prop to use existing Button
- * <AlertDialogTrigger render={<Button variant="destructive" />}>
- *   Delete Account
- * </AlertDialogTrigger>
- * ```
+ * @name AlertDialog
+ * @icon AlertTriangle
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 const AlertDialogTrigger = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Trigger> | null> }) => (
-    <BaseAlertDialog.Trigger
-      ref={ref}
-      className={cx(
-        !props.render && [
-          "inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium transition-colors",
-          "hover:bg-zinc-50 hover:text-zinc-900",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-          "disabled:pointer-events-none disabled:opacity-50",
-          "dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
-        ],
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </BaseAlertDialog.Trigger>
-  );
+  <BaseAlertDialog.Trigger
+    ref={ref}
+    className={cx(
+      !props.render && [
+        "inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium transition-colors",
+        "hover:bg-zinc-50 hover:text-zinc-900",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
+      ],
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </BaseAlertDialog.Trigger>
+);
 AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
 const AlertDialogPortal = BaseAlertDialog.Portal;
@@ -93,17 +95,17 @@ const AlertDialogPortal = BaseAlertDialog.Portal;
  * ```
  */
 const AlertDialogBackdrop = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Backdrop> | null> }) => (
-    <BaseAlertDialog.Backdrop
-      ref={ref}
-      className={cx(
-        "fixed inset-0 z-50 bg-black/50 transition-all duration-150",
-        "data-[starting-style]:opacity-0 data-[ending-style]:opacity-0",
-        "dark:bg-black/70",
-        className,
-      )}
-      {...props}
-    />
-  );
+  <BaseAlertDialog.Backdrop
+    ref={ref}
+    className={cx(
+      "fixed inset-0 z-50 bg-black/50 transition-all duration-150",
+      "data-[starting-style]:opacity-0 data-[ending-style]:opacity-0",
+      "dark:bg-black/70",
+      className,
+    )}
+    {...props}
+  />
+);
 AlertDialogBackdrop.displayName = "AlertDialogBackdrop";
 
 /**
@@ -128,21 +130,21 @@ AlertDialogBackdrop.displayName = "AlertDialogBackdrop";
  * ```
  */
 const AlertDialogContent = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Popup> | null> }) => (
-    <AlertDialogPortal>
-      <AlertDialogBackdrop />
-      <BaseAlertDialog.Popup
-        ref={ref}
-        className={cx(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg duration-200 rounded-lg",
-          "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
-          "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
-          "dark:border-zinc-800 dark:bg-zinc-950",
-          className,
-        )}
-        {...props}
-      />
-    </AlertDialogPortal>
-  );
+  <AlertDialogPortal>
+    <AlertDialogBackdrop />
+    <BaseAlertDialog.Popup
+      ref={ref}
+      className={cx(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg duration-200 rounded-lg",
+        "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
+        "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
+        "dark:border-zinc-800 dark:bg-zinc-950",
+        className,
+      )}
+      {...props}
+    />
+  </AlertDialogPortal>
+);
 AlertDialogContent.displayName = "AlertDialogContent";
 
 /**
@@ -160,15 +162,15 @@ AlertDialogContent.displayName = "AlertDialogContent";
  * ```
  */
 const AlertDialogHeader = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div
-      ref={ref}
-      className={cx(
-        "flex flex-col space-y-2 text-center sm:text-left",
-        className,
-      )}
-      {...props}
-    />
-  );
+  <div
+    ref={ref}
+    className={cx(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className,
+    )}
+    {...props}
+  />
+);
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
 /**
@@ -187,15 +189,15 @@ AlertDialogHeader.displayName = "AlertDialogHeader";
  * ```
  */
 const AlertDialogFooter = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-    <div
-      ref={ref}
-      className={cx(
-        "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-        className,
-      )}
-      {...props}
-    />
-  );
+  <div
+    ref={ref}
+    className={cx(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className,
+    )}
+    {...props}
+  />
+);
 AlertDialogFooter.displayName = "AlertDialogFooter";
 
 /**
@@ -210,15 +212,15 @@ AlertDialogFooter.displayName = "AlertDialogFooter";
  * ```
  */
 const AlertDialogTitle = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Title> | null> }) => (
-    <BaseAlertDialog.Title
-      ref={ref}
-      className={cx(className)}
-      render={typeof children === "string" ? <Subheading level={3} /> : undefined}
-      {...props}
-    >
-      {children}
-    </BaseAlertDialog.Title>
-  );
+  <BaseAlertDialog.Title
+    ref={ref}
+    className={cx(className)}
+    render={typeof children === "string" ? <Subheading level={3} /> : undefined}
+    {...props}
+  >
+    {children}
+  </BaseAlertDialog.Title>
+);
 AlertDialogTitle.displayName = "AlertDialogTitle";
 
 /**
@@ -236,15 +238,15 @@ AlertDialogTitle.displayName = "AlertDialogTitle";
  * ```
  */
 const AlertDialogDescription = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Description> | null> }) => (
-    <BaseAlertDialog.Description
-      ref={ref}
-      className={cx(className)}
-      render={typeof children === "string" ? <Text /> : undefined}
-      {...props}
-    >
-      {children}
-    </BaseAlertDialog.Description>
-  );
+  <BaseAlertDialog.Description
+    ref={ref}
+    className={cx(className)}
+    render={typeof children === "string" ? <Text /> : undefined}
+    {...props}
+  >
+    {children}
+  </BaseAlertDialog.Description>
+);
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
 /**
@@ -263,19 +265,19 @@ AlertDialogDescription.displayName = "AlertDialogDescription";
  * ```
  */
 const AlertDialogAction = ({ ref, className, variant = "default", ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & {
-    variant?: "default" | "destructive";
-  } & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
-    <BaseAlertDialog.Close
-      ref={ref}
-      render={(
-        <Button
-          variant={variant}
-          className={typeof className === "string" ? className : undefined}
-        />
-      )}
-      {...props}
-    />
-  );
+  variant?: "default" | "destructive";
+} & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
+  <BaseAlertDialog.Close
+    ref={ref}
+    render={(
+      <Button
+        variant={variant}
+        className={typeof className === "string" ? className : undefined}
+      />
+    )}
+    {...props}
+  />
+);
 AlertDialogAction.displayName = "AlertDialogAction";
 
 /**
@@ -291,20 +293,20 @@ AlertDialogAction.displayName = "AlertDialogAction";
  * ```
  */
 const AlertDialogCancel = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
-    <BaseAlertDialog.Close
-      ref={ref}
-      render={(
-        <Button
-          variant="outline"
-          className={cx(
-            "mt-2 sm:mt-0",
-            typeof className === "string" ? className : undefined,
-          )}
-        />
-      )}
-      {...props}
-    />
-  );
+  <BaseAlertDialog.Close
+    ref={ref}
+    render={(
+      <Button
+        variant="outline"
+        className={cx(
+          "mt-2 sm:mt-0",
+          typeof className === "string" ? className : undefined,
+        )}
+      />
+    )}
+    {...props}
+  />
+);
 AlertDialogCancel.displayName = "AlertDialogCancel";
 
 export {
@@ -318,5 +320,5 @@ export {
   AlertDialogHeader,
   AlertDialogPortal,
   AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTrigger,
 };

@@ -1,12 +1,15 @@
 "use client";
 
-import React from "react";
 import type { VariantProps } from "tailwind-variants";
-import { tv } from "tailwind-variants";
-import { cx } from "../../lib/utils";
+
 import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import React from "react";
+
+import { tv } from "tailwind-variants";
+
+import { cx } from "../../lib/utils";
 import {
-    getColorClasses,
+  getColorClasses,
 } from "../../lib/variants";
 
 // Dot-specific variant type (semantic + all Tailwind colors)
@@ -47,9 +50,7 @@ const dotIndicatorVariants = tv({
   },
 });
 
-interface DotProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-  Omit<VariantProps<typeof dotVariants>, "variant"> {
+type DotProps = {
   /**
    * The semantic variant to display.
    * @example
@@ -70,44 +71,50 @@ interface DotProps
    * Size of the dot.
    */
   size?: "sm" | "default" | "lg";
-}
+} & React.HTMLAttributes<HTMLSpanElement> & Omit<VariantProps<typeof dotVariants>, "variant">;
 
 // Use the central getColorClasses utility
 
 /**
- * A small dot indicator to show status or state.
+ * Small circular indicator component for status, notifications, or decorative purposes.
  *
- * Dot.
- *
- * @component
  * @id dot
  * @name Dot
+ * @icon Circle
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.variant - The semantic variant to display (default, success, warning, error, info, etc.).
+ * @param props.label - Optional label to display next to the dot.
+ * @param props.animated - Whether to show animation for active statuses.
+ * @param props.size - Size of the dot (sm, default, lg).
+ * @param props.className - Additional CSS classes.
  */
 const Dot = (
-    { ref, variant = "default", label, animated = false, size = "default", className, ...props }: DotProps & { ref?: React.RefObject<HTMLSpanElement | null> },
-  ) => {
-    const colorClasses = getColorClasses(variant);
+  { ref, variant = "default", label, animated = false, size = "default", className, ...props }: DotProps & { ref?: React.RefObject<HTMLSpanElement | null> },
+) => {
+  const colorClasses = getColorClasses(variant);
 
-    return (
+  return (
+    <span
+      ref={ref}
+      className={cx(dotVariants({ size }), colorClasses.text, className)}
+      {...props}
+    >
       <span
-        ref={ref}
-        className={cx(dotVariants({ size }), colorClasses.text, className)}
-        {...props}
-      >
-        <span
-          className={cx(
-            dotIndicatorVariants({ size, animated }),
-            colorClasses.bgSolid,
-            // Add dynamic before: color for animation
-            animated && `before:bg-${colorClasses.color}-500`,
-          )}
-          aria-hidden="true"
-        />
-        {label && <span>{label}</span>}
-      </span>
-    );
-  };
+        className={cx(
+          dotIndicatorVariants({ size, animated }),
+          colorClasses.bgSolid,
+          // Add dynamic before: color for animation
+          animated && `before:bg-${colorClasses.color}-500`,
+        )}
+        aria-hidden="true"
+      />
+      {label && <span>{label}</span>}
+    </span>
+  );
+};
 
 Dot.displayName = "Dot";
 
-export { Dot, dotIndicatorVariants, dotVariants, type DotProps };
+export { Dot, dotIndicatorVariants, type DotProps, dotVariants };

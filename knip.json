@@ -1,28 +1,73 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": [
-    "src/app/layout.tsx",
-    "src/app/page.tsx",
-    "src/app/[category]/page.tsx",
-    "src/app/[category]/[component]/page.tsx"
-  ],
-  "project": [
-    "src/**/*.{ts,tsx}",
-    "packages/**/*.{ts,tsx}",
-    "next.config.ts",
-    "eslint.config.mjs",
-    "postcss.config.mjs"
-  ],
+  "workspaces": {
+    ".": {
+      "entry": [
+        "analyze-missing-props.ts",
+        "check-icon-size.js",
+        "icon-check.js",
+        "fix-missing-jsdoc.js",
+        "turbo.json"
+      ],
+      "project": [
+        "*.{js,ts,tsx,mjs}",
+        "!node_modules/**",
+        "!.turbo/**",
+        "!test-results/**"
+      ]
+    },
+    "apps/web": {
+      "entry": [
+        "src/app/**/page.tsx",
+        "src/app/api/**/*.ts",
+        "tailwind.config.ts"
+      ],
+      "project": [
+        "src/**/*.{ts,tsx}",
+        "tests/**/*.{ts,tsx}",
+        "tailwind.config.ts",
+        "next.config.ts",
+        "eslint.config.mjs",
+        "postcss.config.mjs"
+      ]
+    },
+    "packages/ui": {
+      "entry": [
+        "debug-*.js",
+        "scripts/**/*.{ts,js}",
+        "tests/**/*.test.{ts,tsx}"
+      ],
+      "project": [
+        "src/**/*.{ts,tsx}",
+        "scripts/**/*.{ts,js}",
+        "tests/**/*.{ts,tsx}",
+        "debug-*.js",
+        "vitest.config.ts"
+      ]
+    },
+    "packages/eslint-config": {
+      "entry": ["rules/**/*.mjs"],
+      "project": ["**/*.{js,mjs}"]
+    },
+    "packages/tsconfig": {
+      "entry": ["base.json"],
+      "project": ["*.json"]
+    }
+  },
   "ignoreDependencies": [
-    "@types/node",
-    "@types/react",
-    "@types/react-dom",
     "eslint",
     "eslint-config-next",
-    "typescript"
+    "playwright"
   ],
   "ignoreBinaries": [
-    "next",
-    "eslint"
+    "tsx"
+  ],
+  "ignore": [
+    "**/*.d.ts",
+    "**/node_modules/**",
+    "**/.turbo/**",
+    "**/test-results/**",
+    "**/.next/**",
+    "**/tsconfig.tsbuildinfo"
   ]
 }

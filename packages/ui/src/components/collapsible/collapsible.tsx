@@ -4,21 +4,25 @@ import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collap
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
+
 import { cx, focusRing } from "../../lib/utils";
 import { Button } from "../button/button";
 
 /**
- * Root collapsible component built on Base UI's Collapsible primitive.
+ * Container component with show/hide functionality for progressive disclosure.
  *
- * Based on Base UI's Collapsible (https://base-ui.com/react/components/collapsible),
- * providing accessible expandable/collapsible panels with smooth animations.
- * Perfect for FAQ sections, navigation menus, and content organization.
- *
- * @see https://base-ui.com/react/components/collapsible - Base UI documentation
- * @example
- * ```tsx
- * <CollapsibleTrigger>Content</CollapsibleTrigger>
- * ```
+ * @id collapsible
+ * @name Collapsible
+ * @icon ChevronDown
+ * @category data
+ * @component
+ * @param props - Component properties.
+ * @param props.defaultOpen - Whether the collapsible is initially open when uncontrolled.
+ * @param props.open - Whether the collapsible is open when controlled.
+ * @param props.onOpenChange - Callback fired when the open state changes.
+ * @param props.disabled - Whether the collapsible is disabled.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Collapsible trigger and content components.
  */
 const Collapsible = BaseCollapsible.Root;
 
@@ -28,8 +32,7 @@ const Collapsible = BaseCollapsible.Root;
  * @interface CollapsibleTriggerProps
  * @augments React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger>
  */
-interface CollapsibleTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger> {
+type CollapsibleTriggerProps = {
   /**
    * Icon to show when collapsible is closed.
    */
@@ -50,7 +53,7 @@ interface CollapsibleTriggerProps
    * Custom padding classes to apply to the container.
    */
   padding?: string;
-}
+} & React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger>;
 
 /**
  * Trigger button for the collapsible panel.
@@ -89,97 +92,128 @@ interface CollapsibleTriggerProps
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
  */
 /**
- * A collapsible component built on Base UI for expandable content sections with smooth animations.
+ * Container component with show/hide functionality for progressive disclosure.
  *
  * @id collapsible
  * @name Collapsible
+ * @icon ChevronDown
+ * @category data
  * @component
+ * @param props - Component properties.
+ * @param props.closedIcon - Icon to show when collapsible is closed.
+ * @param props.openIcon - Icon to show when collapsible is open.
+ * @param props.asToggleButton - If true, renders as just the toggle button without full-width trigger.
+ * @param props.href - Custom href for when the heading should be a link.
+ * @param props.padding - Custom padding classes to apply to the container.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Content to display in the trigger.
  */
-const CollapsibleTrigger = (
-    { ref, className, children, closedIcon: ClosedIcon = ChevronDown, openIcon: OpenIcon = ChevronUp, asToggleButton = false, href, padding, ...props }: CollapsibleTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Trigger> | null> },
-  ) => {
+const CollapsibleTrigger = ({
+  ref,
+  className,
+  children,
+  closedIcon: ClosedIcon = ChevronDown,
+  openIcon: OpenIcon = ChevronUp,
+  asToggleButton = false,
+  href,
+  padding,
+  ...props
+}: CollapsibleTriggerProps & {
+  ref?: React.RefObject<React.ElementRef<
+    typeof BaseCollapsible.Trigger
+  > | null>;
+}) => {
   // If asToggleButton is true, render just the icon button
-    if (asToggleButton) {
-      return (
-        <BaseCollapsible.Trigger
-          ref={ref}
-          className={cx("group", className)}
-          {...props}
-          render={(props, state) => (
+  if (asToggleButton) {
+    return (
+      <BaseCollapsible.Trigger
+        ref={ref}
+        className={cx("group", className)}
+        {...props}
+        render={(props, state) => {
+          const { ref: _, ...buttonProps } = props;
+          return (
             <Button
               variant="ghost"
               size="icon-sm"
               leftIcon={state.open ? OpenIcon : ClosedIcon}
-              {...props}
+              {...buttonProps}
             />
-          )}
-        />
-      );
-    }
+          );
+        }}
+      />
+    );
+  }
 
-    // If href is provided, render heading as link with separate toggle button
-    if (href && children) {
-      return (
-        <div
-          className={cx("flex items-center justify-between py-2 px-4", padding)}
-        >
-          <Link
-            href={href}
-            className={cx(
-              "flex-1 text-left text-sm font-medium transition-colors",
-              "text-zinc-900 dark:text-zinc-50",
-              "hover:text-zinc-700 dark:hover:text-zinc-300",
-              focusRing,
-            )}
-          >
-            {children}
-          </Link>
-          <BaseCollapsible.Trigger
-            ref={ref}
-            className={cx("group", className)}
-            {...props}
-            render={(props, state) => (
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                leftIcon={state.open ? OpenIcon : ClosedIcon}
-                {...props}
-              />
-            )}
-          />
-        </div>
-      );
-    }
-
-    // Default: full-width trigger (original behavior)
+  // If href is provided, render heading as link with separate toggle button
+  if (href && children) {
     return (
-      <div className={cx("flex items-center justify-between", padding)}>
-        <div
+      <div
+        className={cx("flex items-center justify-between py-2 px-4", padding)}
+      >
+        <Link
+          href={href}
           className={cx(
             "flex-1 text-left text-sm font-medium transition-colors",
             "text-zinc-900 dark:text-zinc-50",
             "hover:text-zinc-700 dark:hover:text-zinc-300",
-            className,
+            focusRing,
           )}
         >
           {children}
-        </div>
+        </Link>
         <BaseCollapsible.Trigger
           ref={ref}
-          className={cx("group")}
+          className={cx("group", className)}
           {...props}
-          render={(props, state) => (
+          render={(props, state) => {
+            const { ref: _, ...buttonProps } = props;
+            return (
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                leftIcon={state.open ? OpenIcon : ClosedIcon}
+                {...buttonProps}
+              />
+            );
+          }}
+        />
+      </div>
+    );
+  }
+
+  // Default: full-width trigger (original behavior)
+  return (
+    <div className={cx("flex items-center justify-between", padding)}>
+      <div
+        className={cx(
+          "flex-1 text-left text-sm font-medium transition-colors",
+          "text-zinc-900 dark:text-zinc-50",
+          "hover:text-zinc-700 dark:hover:text-zinc-300",
+          className,
+        )}
+      >
+        {children}
+      </div>
+      <BaseCollapsible.Trigger
+        ref={ref}
+        className={cx("group")}
+        {...props}
+        render={(props, state) => {
+          const { ref: _, ...buttonProps } = props;
+          return (
             <Button
               variant="ghost"
               size="icon-sm"
               leftIcon={state.open ? OpenIcon : ClosedIcon}
-              {...props}
+              {...buttonProps}
             />
-          )}
-        />
-      </div>
-    );
-  };
+          );
+        }}
+      />
+    </div>
+  );
+};
 CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 /**
@@ -202,29 +236,36 @@ CollapsibleTrigger.displayName = "CollapsibleTrigger";
  *
  * @see https://base-ui.com/react/components/collapsible - Base UI documentation
  */
-const CollapsibleContent = ({ ref, className, children, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Panel> | null> }) => (
-    <BaseCollapsible.Panel
-      ref={ref}
+const CollapsibleContent = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Panel> | null>;
+}) => (
+  <BaseCollapsible.Panel
+    ref={ref}
+    className={cx(
+      "overflow-hidden transition-all duration-200 ease-out",
+      "data-[starting-style]:h-0 data-[ending-style]:h-0",
+      "h-[var(--collapsible-panel-height)]",
+    )}
+    {...props}
+  >
+    <div
       className={cx(
-        "overflow-hidden transition-all duration-200 ease-out",
-        "data-[starting-style]:h-0 data-[ending-style]:h-0",
-        "h-[var(--collapsible-panel-height)]",
-      )}
-      {...props}
-    >
-      <div
-        className={cx(
         // base
-          "pb-2 text-xs",
-          // text color
-          "text-zinc-700 dark:text-zinc-300",
-          className,
-        )}
-      >
-        {children}
-      </div>
-    </BaseCollapsible.Panel>
-  );
+        "pb-2 text-xs",
+        // text color
+        "text-zinc-700 dark:text-zinc-300",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  </BaseCollapsible.Panel>
+);
 CollapsibleContent.displayName = "CollapsibleContent";
 
 /**

@@ -51,9 +51,10 @@
  * ```
  */
 
+import type { VariantProps } from "tailwind-variants";
+
 import { Loader2 } from "lucide-react";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
@@ -109,69 +110,44 @@ const loaderVariants = tv({
  * @augments React.ComponentPropsWithoutRef<"div">
  * @augments VariantProps<typeof loaderVariants>
  */
-interface LoaderProps
-  extends React.ComponentPropsWithoutRef<"div">,
-  VariantProps<typeof loaderVariants> {
+type LoaderProps = {
   /**
    * Accessible label for screen readers describing the loading state.
    */
   "aria-label"?: string;
-}
+  /**
+   * Optional visible label text displayed to the right of the spinner.
+   * If provided without aria-label, will also be used as the aria-label.
+   */
+  "label"?: string;
+} & React.ComponentPropsWithoutRef<"div"> & VariantProps<typeof loaderVariants>;
 
 /**
- * A spinning loader component for indicating loading states.
- *
- * Displays a rotating icon to indicate that content is loading or an
- * operation is in progress. Provides visual feedback to users during
- * async operations with accessible screen reader support.
- *
- * @param size - Size variant for the loader (xs, sm, base, lg, xl).
- * @param className - Additional CSS classes.
- * @param aria-label - Accessible description for screen readers.
- * @param props - Additional HTML div props.
- *
+ * Loading indicator component with various animation styles for async operations.
  *
  * @id loader
  * @name Loader
+ * @icon Loader2
+ * @category ui
  * @component
- * @example
- * ```tsx
- * // Basic usage
- * <Loader aria-label="Loading..." />
- *
- * // Large loader
- * <Loader size="lg" aria-label="Loading data" />
- *
- * // Custom color
- * <Loader className="text-blue-500" aria-label="Processing" />
- *
- * // In button
- * <button disabled>
- *   <Loader size="sm" aria-label="Submitting" />
- *   <span>Submit</span>
- * </button>
- * ```
+ * @param props - Component properties.
  */
-/**
- * A spinning loader indicator with configurable size.
- *
- * @id loader
- * @name Loader
- * @component
- */
-const Loader = ({ ref: forwardedRef, size, className, "aria-label": ariaLabel, ...props }: LoaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-    return (
-      <div
-        ref={forwardedRef}
-        className={cx("inline-flex items-center justify-center", className)}
-        {...props}
-      >
-        <Loader2 className={cx(loaderVariants({ size }))} aria-hidden="true" />
-        {ariaLabel && <span className="sr-only">{ariaLabel}</span>}
-      </div>
-    );
-  };
+const Loader = ({ ref: forwardedRef, size, className, "aria-label": ariaLabel, label, ...props }: LoaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  const finalAriaLabel = ariaLabel || label;
+
+  return (
+    <div
+      ref={forwardedRef}
+      className={cx("inline-flex items-center justify-center", label && "gap-3", className)}
+      {...props}
+    >
+      <Loader2 className={cx(loaderVariants({ size }))} aria-hidden="true" />
+      {label && <span className="text-current">{label}</span>}
+      {finalAriaLabel && <span className="sr-only">{finalAriaLabel}</span>}
+    </div>
+  );
+};
 
 Loader.displayName = "Loader";
 
-export { Loader, loaderVariants, type LoaderProps };
+export { Loader, type LoaderProps, loaderVariants };

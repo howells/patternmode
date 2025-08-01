@@ -1,6 +1,11 @@
-import { Icon, MenuBar, MenuBarContent, MenuBarItem, MenuBarMenu, MenuBarTrigger } from "@patternmode/ui";
-import { Edit, Plus, Trash } from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { Icon, iconRegistry, MenuBar, MenuBarContent, MenuBarItem, MenuBarMenu, MenuBarTrigger } from "@patternmode/ui";
+
 import React from "react";
+// Pre-imported icons from registry
+const { Edit, Plus, Trash } = iconRegistry;
 
 export function DefaultExample() {
   return (
@@ -54,7 +59,29 @@ export function WithIconsExample() {
     </MenuBar>
   );
 }
-export const /**
-              *
-              */
-  MenuBarExample = DefaultExample;
+export const MenuBarExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "MenuBarExample",
+    title: "Menu Bar",
+    description: "Menu Bar example",
+    component: MenuBarExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithIconsExample",
+    title: "With Icons",
+    description: "Example with icon integration",
+    component: WithIconsExample,
+  },
+];

@@ -2,18 +2,18 @@
 
 "use client";
 
-import { cx } from "@/lib/utils";
 import React, { useState } from "react";
-import { Button } from "@patternmode/ui";
-import { CodeBlock } from "@patternmode/ui";
 
-interface DocExampleProps {
+import { cx } from "@/lib/utils";
+import { Button, CodeBlock } from "@patternmode/ui";
+
+type DocExampleProps = {
   title?: string;
   description?: string;
   preview: React.ReactNode;
   code: string;
   className?: string;
-}
+};
 
 export const DocExample = React.forwardRef<HTMLDivElement, DocExampleProps>(
   ({ title, description, preview, code, className }, ref) => {
@@ -47,7 +47,9 @@ export const DocExample = React.forwardRef<HTMLDivElement, DocExampleProps>(
               onClick={() => setShowCode(!showCode)}
               className="text-xs px-2 py-1"
             >
-              {showCode ? "Hide" : "Show"} code
+              {showCode ? "Hide" : "Show"}
+              {" "}
+              code
             </Button>
           </div>
 
@@ -62,7 +64,7 @@ export const DocExample = React.forwardRef<HTMLDivElement, DocExampleProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 DocExample.displayName = "DocExample";

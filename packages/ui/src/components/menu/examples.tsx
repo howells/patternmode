@@ -1,8 +1,11 @@
 "use client";
 
-import { Button, Icon, Menu, MenuCheckboxItem, MenuContent, MenuItem, MenuLabel, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuSubmenu, MenuSubmenuContent, MenuSubmenuTrigger, MenuTrigger } from "@patternmode/ui";
-import { Clipboard, Copy, Plus } from "lucide-react";
+import type { ComponentExample } from "../../lib/component-config-types";
+import { Button, Icon, iconRegistry, Menu, MenuCheckboxItem, MenuContent, MenuItem, MenuLabel, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuSubmenu, MenuSubmenuContent, MenuSubmenuTrigger, MenuTrigger } from "@patternmode/ui";
+
 import React, { useState } from "react";
+// Pre-imported icons from registry
+const { Clipboard, Copy, Plus } = iconRegistry;
 
 export function MenuExample() {
   return (
@@ -182,3 +185,46 @@ export function ComplexMenuExample() {
     </Menu>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "MenuExample",
+    title: "Menu",
+    description: "Menu example",
+    component: MenuExample,
+  },
+  {
+    id: "WithIconsExample",
+    title: "With Icons",
+    description: "Example with icon integration",
+    component: WithIconsExample,
+  },
+  {
+    id: "WithCheckboxesExample",
+    title: "With Checkboxes",
+    description: "With Checkboxes example",
+    component: WithCheckboxesExample,
+  },
+  {
+    id: "WithRadioGroupExample",
+    title: "With Radio Group",
+    description: "With Radio Group example",
+    component: WithRadioGroupExample,
+  },
+  {
+    id: "WithSubmenuExample",
+    title: "With Submenu",
+    description: "With Submenu example",
+    component: WithSubmenuExample,
+  },
+  {
+    id: "ComplexMenuExample",
+    title: "Complex Menu",
+    description: "Complex Menu example",
+    component: ComplexMenuExample,
+  },
+];

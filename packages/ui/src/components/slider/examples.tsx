@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Slider } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
@@ -158,3 +160,46 @@ export function Disabled() {
     />
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "RangeExample",
+    title: "Range",
+    description: "Range example",
+    component: RangeExample,
+  },
+  {
+    id: "StepsExample",
+    title: "Steps",
+    description: "Steps example",
+    component: StepsExample,
+  },
+  {
+    id: "CustomRangeExample",
+    title: "Custom Range",
+    description: "Custom Range example",
+    component: CustomRangeExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+  {
+    id: "SliderExample",
+    title: "Slider",
+    description: "Slider example",
+    component: SliderExample,
+  },
+];

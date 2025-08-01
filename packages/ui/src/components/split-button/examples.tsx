@@ -1,12 +1,18 @@
-import { MenuItem, MenuLabel, MenuSeparator, SplitButton } from "@patternmode/ui";
-import {
-  ChevronDown as ChevronDownIcon,
-  Code as CodeIcon,
-  Download as DownloadIcon,
-  File as FileIcon,
-  Image as ImageIcon,
-} from "lucide-react";
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
+import { iconRegistry, MenuItem, MenuLabel, MenuSeparator, SplitButton } from "@patternmode/ui";
+
 import React from "react";
+
+// Pre-imported icons from registry with aliases
+const {
+  ChevronDown: ChevronDownIcon,
+  Code: CodeIcon,
+  Download: DownloadIcon,
+  File: FileIcon,
+  Image: ImageIcon,
+} = iconRegistry;
 
 export function SplitButtonExample() {
   return (
@@ -128,3 +134,28 @@ export function ComplexMenu() {
     </SplitButton>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "SplitButtonExample",
+    title: "Split Button",
+    description: "Split Button example",
+    component: SplitButtonExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "WithIconsExample",
+    title: "With Icons",
+    description: "Example with icon integration",
+    component: WithIconsExample,
+  },
+];

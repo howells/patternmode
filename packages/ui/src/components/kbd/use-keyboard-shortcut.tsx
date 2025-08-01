@@ -28,7 +28,7 @@
 
 import { useEffect } from "react";
 
-interface UseKeyboardShortcutOptions {
+type UseKeyboardShortcutOptions = {
   /**
    * Whether to prevent default browser behavior.
    */
@@ -41,7 +41,7 @@ interface UseKeyboardShortcutOptions {
    * Target element (defaults to document).
    */
   target?: HTMLElement | Document;
-}
+};
 
 /**
  * Hook for handling keyboard shortcuts.

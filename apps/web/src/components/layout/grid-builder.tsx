@@ -1,13 +1,15 @@
 "use client";
 
-import { Button, Grid, GridCell, Stack, Subheading, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
 import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";
-import { getComponentConfig } from "../../../../../packages/ui/src/component-registry";
+
+import { Button, Grid, GridCell, Stack, Subheading, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
+
+import { getComponentConfig } from "@patternmode/ui/component-registry";
 import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";
 
-interface CellData {
+type CellData = {
   componentId: string;
   props: Record<string, unknown>;
   position?: {
@@ -16,11 +18,11 @@ interface CellData {
     colStart?: number;
     rowStart?: number;
   };
-}
+};
 
 type LayoutMode = "grid" | "stack";
 
-interface GridState {
+type GridState = {
   columns: number;
   rows?: number;
   gap: number;
@@ -28,15 +30,15 @@ interface GridState {
   showRowGuides: boolean;
   minHeight: "none" | "sm" | "md" | "lg" | "xl";
   cells: Record<string, CellData>;
-}
+};
 
-interface StackState {
+type StackState = {
   direction: "vertical" | "horizontal";
   gap: number;
   align: "start" | "center" | "end" | "stretch" | "baseline";
   justify: "start" | "center" | "end" | "between" | "around" | "evenly";
   items: CellData[];
-}
+};
 
 export function GridBuilder() {
   const [layoutMode, setLayoutMode] = useState<LayoutMode>("grid");
@@ -61,7 +63,7 @@ export function GridBuilder() {
   const [gridRows, setGridRows] = useState(1);
   const [showComponentSearch, setShowComponentSearch] = useState(false);
   const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(
-    null
+    null,
   );
 
   const addComponentToCell = (cellIndex: number, componentId: string) => {
@@ -84,16 +86,17 @@ export function GridBuilder() {
 
     if (layoutMode === "grid") {
       const cellKey = `cell-${cellIndex}`;
-      setGridState((prev) => ({
+      setGridState(prev => ({
         ...prev,
         cells: {
           ...prev.cells,
           [cellKey]: newComponent,
         },
       }));
-    } else {
+    }
+    else {
       // For stack mode, insert at the specified index
-      setStackState((prev) => ({
+      setStackState(prev => ({
         ...prev,
         items: [
           ...prev.items.slice(0, cellIndex),
@@ -109,11 +112,11 @@ export function GridBuilder() {
 
   const updateCellProps = (
     cellIndex: number,
-    props: Record<string, unknown>
+    props: Record<string, unknown>,
   ) => {
     if (layoutMode === "grid") {
       const cellKey = `cell-${cellIndex}`;
-      setGridState((prev) => ({
+      setGridState(prev => ({
         ...prev,
         cells: {
           ...prev.cells,
@@ -123,11 +126,12 @@ export function GridBuilder() {
           },
         },
       }));
-    } else {
-      setStackState((prev) => ({
+    }
+    else {
+      setStackState(prev => ({
         ...prev,
         items: prev.items.map((item, index) =>
-          index === cellIndex ? { ...item, props } : item
+          index === cellIndex ? { ...item, props } : item,
         ),
       }));
     }
@@ -141,8 +145,9 @@ export function GridBuilder() {
         delete newCells[cellKey];
         return { ...prev, cells: newCells };
       });
-    } else {
-      setStackState((prev) => ({
+    }
+    else {
+      setStackState(prev => ({
         ...prev,
         items: prev.items.filter((_, index) => index !== cellIndex),
       }));
@@ -166,7 +171,7 @@ export function GridBuilder() {
           cellIndex={index}
           cellData={cellData}
           onAddComponent={() => handleCellClick(index)}
-          onUpdateProps={(props) => updateCellProps(index, props)}
+          onUpdateProps={props => updateCellProps(index, props)}
           onRemoveComponent={() => removeCellComponent(index)}
         />
       </GridCell>
@@ -210,19 +215,19 @@ export function GridBuilder() {
           direction={stackState.direction}
           gap={
             stackState.gap as
-              | 0
-              | 1
-              | 2
-              | 3
-              | 4
-              | 5
-              | 6
-              | 8
-              | 10
-              | 12
-              | 16
-              | 20
-              | 24
+            | 0
+            | 1
+            | 2
+            | 3
+            | 4
+            | 5
+            | 6
+            | 8
+            | 10
+            | 12
+            | 16
+            | 20
+            | 24
           }
           align={stackState.align}
           justify={stackState.justify}
@@ -234,7 +239,7 @@ export function GridBuilder() {
                 cellIndex={index}
                 cellData={item}
                 onAddComponent={() => handleCellClick(index)}
-                onUpdateProps={(props) => updateCellProps(index, props)}
+                onUpdateProps={props => updateCellProps(index, props)}
                 onRemoveComponent={() => removeCellComponent(index)}
               />
             </div>

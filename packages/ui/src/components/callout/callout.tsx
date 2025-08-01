@@ -1,8 +1,10 @@
 // Callout Component [v1.0.0] - Pure Implementation
 
-import React from "react";
 import type { VariantProps } from "tailwind-variants";
+
+import React from "react";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/subheading";
 import { Text } from "../text/text";
@@ -88,9 +90,7 @@ const calloutVariants = tv({
  * @augments React.ComponentPropsWithoutRef<"div">
  * @augments VariantProps<typeof calloutVariants>
  */
-interface CalloutProps
-  extends React.ComponentPropsWithoutRef<"div">,
-  VariantProps<typeof calloutVariants> {
+type CalloutProps = {
   /**
    * Optional title text for the callout.
    */
@@ -99,7 +99,7 @@ interface CalloutProps
    * Optional icon component to display.
    */
   icon?: React.ComponentType<{ className?: string }>;
-}
+} & React.ComponentPropsWithoutRef<"div"> & VariantProps<typeof calloutVariants>;
 
 /**
  * A styled callout component for important messages and notifications.
@@ -116,6 +116,8 @@ interface CalloutProps
  *
  * @id callout
  * @name Callout
+ * @category ui
+ * @icon Info
  * @component
  * @example
  * ```tsx
@@ -155,38 +157,46 @@ interface CalloutProps
  * ```
  */
 /**
- * An alert component that displays important information with optional icon and variant styling.
+ * Highlighted content box for important information, warnings, or tips.
  *
  * @id callout
  * @name Callout
+ * @icon Info
+ * @category ui
  * @component
+ * @param props - Component properties.
+ * @param props.variant - Visual style variant of the callout.
+ * @param props.title - Optional title text for the callout.
+ * @param props.icon - Optional icon component to display.
+ * @param props.children - Main content of the callout.
+ * @param props.className - Additional CSS classes.
  */
 const Callout = (
-    { ref: forwardedRef, title, icon: Icon, className, variant, children, ...props }: CalloutProps & { ref?: React.RefObject<HTMLDivElement | null> },
-  ) => {
-    return (
-      <div
-        ref={forwardedRef}
-        className={cx(calloutVariants({ variant }), className)}
-        {...props}
-      >
-        <div className={cx("flex items-start gap-3")}>
-          {Icon && (
-            <Icon className={cx("size-4 shrink-0 mt-1")} aria-hidden="true" />
+  { ref: forwardedRef, title, icon: Icon, className, variant, children, ...props }: CalloutProps & { ref?: React.RefObject<HTMLDivElement | null> },
+) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cx(calloutVariants({ variant }), className)}
+      {...props}
+    >
+      <div className={cx("flex items-start gap-3")}>
+        {Icon && (
+          <Icon className={cx("size-4 shrink-0 mt-1")} aria-hidden="true" />
+        )}
+        <div className={cx("flex-1")}>
+          {title && <Subheading level={3}>{title}</Subheading>}
+          {children && (
+            <Text className={cx(title ? "mt-2 max-w-prose" : "")}>
+              {children}
+            </Text>
           )}
-          <div className={cx("flex-1")}>
-            {title && <Subheading level={3}>{title}</Subheading>}
-            {children && (
-              <Text className={cx(title ? "mt-2 max-w-prose" : "")}>
-                {children}
-              </Text>
-            )}
-          </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 Callout.displayName = "Callout";
 
-export { Callout, calloutVariants, type CalloutProps };
+export { Callout, type CalloutProps, calloutVariants };

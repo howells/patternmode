@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Button, Tooltip } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 export function TooltipExample() {
@@ -104,3 +106,52 @@ export function ControlledExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "TooltipExample",
+    title: "Tooltip",
+    description: "Tooltip example",
+    component: TooltipExample,
+  },
+  {
+    id: "PositionsExample",
+    title: "Positions",
+    description: "Positions example",
+    component: PositionsExample,
+  },
+  {
+    id: "VariantsExample",
+    title: "Variants",
+    description: "Variants example",
+    component: VariantsExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "NoArrowExample",
+    title: "No Arrow",
+    description: "No Arrow example",
+    component: NoArrowExample,
+  },
+  {
+    id: "RichContentExample",
+    title: "Rich Content",
+    description: "Rich Content example",
+    component: RichContentExample,
+  },
+  {
+    id: "ControlledExample",
+    title: "Controlled",
+    description: "Controlled example",
+    component: ControlledExample,
+  },
+];

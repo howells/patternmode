@@ -1,3 +1,6 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Accordion,
   AccordionContent,
@@ -6,6 +9,7 @@ import {
   Badge,
   Text,
 } from "@patternmode/ui";
+
 import React from "react";
 
 // Default accordion
@@ -107,3 +111,28 @@ export const MixedContentExample = () => (
     </AccordionItem>
   </Accordion>
 );
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "MultipleOpenExample",
+    title: "Multiple Open",
+    description: "Example allowing multiple items to be open",
+    component: MultipleOpenExample,
+  },
+  {
+    id: "MixedContentExample",
+    title: "Mixed Content",
+    description: "Example with mixed content types",
+    component: MixedContentExample,
+  },
+];

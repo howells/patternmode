@@ -5,10 +5,10 @@
 
 import React from "react";
 
-interface FormatOptions {
+type FormatOptions = {
   indent?: number;
   indentChar?: string;
-}
+};
 
 type ComponentType = string | React.ComponentType<unknown>;
 type IconComponent = React.ComponentType<{ className?: string; strokeWidth?: number }>;

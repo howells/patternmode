@@ -106,16 +106,17 @@
 
 import { Menubar as BaseMenubar } from "@base-ui-components/react/menubar";
 import React from "react";
+
 import { cx } from "../../lib/utils";
 import {
-    Menu,
-    MenuContent,
-    MenuItem,
-    MenuSeparator,
-    MenuSubmenu,
-    MenuSubmenuContent,
-    MenuSubmenuTrigger,
-    MenuTrigger,
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSeparator,
+  MenuSubmenu,
+  MenuSubmenuContent,
+  MenuSubmenuTrigger,
+  MenuTrigger,
 } from "../menu/menu";
 
 /**
@@ -146,27 +147,30 @@ import {
  * ```
  */
 /**
- * A horizontal menu bar containing multiple dropdown menus.
+ * Horizontal menu bar component for primary navigation and actions.
  *
  * @id menu-bar
- * @name Menu Bar
+ * @name MenuBar
+ * @icon Menu
+ * @category navigation
  * @component
+ * @param props - Component properties.
  */
 const MenuBar = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseMenubar> & { ref?: React.RefObject<React.ElementRef<typeof BaseMenubar> | null> }) => (
-    <BaseMenubar
-      ref={ref}
-      className={cx(
+  <BaseMenubar
+    ref={ref}
+    className={cx(
       // base
-        "flex rounded-md border p-0.5",
-        // background color
-        "bg-zinc-50 dark:bg-zinc-900",
-        // border color
-        "border-zinc-200 dark:border-zinc-800",
-        className,
-      )}
-      {...props}
-    />
-  );
+      "flex rounded-md border p-0.5",
+      // background color
+      "bg-zinc-50 dark:bg-zinc-900",
+      // border color
+      "border-zinc-200 dark:border-zinc-800",
+      className,
+    )}
+    {...props}
+  />
+);
 MenuBar.displayName = "MenuBar";
 
 /**
@@ -206,9 +210,7 @@ const MenuBarMenu: typeof Menu = Menu;
  * <MenuBarTrigger className="font-bold">Important</MenuBarTrigger>
  * ```
  */
-const MenuBarTrigger: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof MenuTrigger> & React.RefAttributes<React.ElementRef<typeof MenuTrigger>>
-> = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof MenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof MenuTrigger> | null> }) => (
+const MenuBarTrigger = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof MenuTrigger> & { ref?: React.RefObject<React.ElementRef<typeof MenuTrigger> | null> }) => (
   <MenuTrigger
     ref={ref}
     className={cx(
@@ -256,9 +258,7 @@ MenuBarTrigger.displayName = "MenuBarTrigger";
  * </MenuBarContent>
  * ```
  */
-const MenuBarContent: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof MenuContent> & React.RefAttributes<React.ElementRef<typeof MenuContent>>
-> = ({ ref, className, sideOffset = 6, ...props }: React.ComponentPropsWithoutRef<typeof MenuContent> & { ref?: React.RefObject<React.ElementRef<typeof MenuContent> | null> }) => (
+const MenuBarContent = ({ ref, className, sideOffset = 6, ...props }: React.ComponentPropsWithoutRef<typeof MenuContent> & { sideOffset?: number } & { ref?: React.RefObject<React.ElementRef<typeof MenuContent> | null> }) => (
   <MenuContent
     ref={ref}
     className={className}
@@ -352,13 +352,13 @@ const MenuBarSubmenuTrigger: typeof MenuSubmenuTrigger = MenuSubmenuTrigger;
 const MenuBarSubmenuContent: typeof MenuSubmenuContent = MenuSubmenuContent;
 
 export {
-    MenuBar,
-    MenuBarContent,
-    MenuBarItem,
-    MenuBarMenu,
-    MenuBarSeparator,
-    MenuBarSubmenu,
-    MenuBarSubmenuContent,
-    MenuBarSubmenuTrigger,
-    MenuBarTrigger
+  MenuBar,
+  MenuBarContent,
+  MenuBarItem,
+  MenuBarMenu,
+  MenuBarSeparator,
+  MenuBarSubmenu,
+  MenuBarSubmenuContent,
+  MenuBarSubmenuTrigger,
+  MenuBarTrigger,
 };

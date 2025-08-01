@@ -1,4 +1,5 @@
 import type React from "react";
+
 import { cx } from "../../lib/utils";
 
 /**
@@ -7,11 +8,14 @@ import { cx } from "../../lib/utils";
  * Provides a simple animated placeholder for content that is loading.
  * Features a subtle pulse animation and Tremor-inspired styling that
  * works well in both light and dark modes. Perfect for indicating
- * loading states in cards, lists, and forms.
+ * loading states in cards, lists, forms, and any content areas that
+ * need visual loading feedback.
  *
  * @param className - Additional CSS classes to apply.
  *
  * @component
+ * @category ui
+ * @icon RectangleHorizontal
  * @example
  * ```tsx
  * // Basic skeleton placeholder
@@ -49,11 +53,15 @@ import { cx } from "../../lib/utils";
  * ```
  */
 /**
- * Skeleton.
+ * Loading placeholder component mimicking content structure during data fetching.
  *
- * @component
  * @id skeleton
  * @name Skeleton
+ * @icon Loader2
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.className - Additional CSS classes for custom sizing and styling.
  */
 function Skeleton({
   className,

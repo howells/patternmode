@@ -1,25 +1,31 @@
 {
+  "extends": "./packages/tsconfig/base.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "es2020", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "jsx": "react-jsx",
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
+    "moduleResolution": "Bundler",
     "paths": {
-      "@/*": ["apps/web/src/*"],
-      "@patternmode/ui": ["packages/ui/src"],
-      "@patternmode/ui/*": ["packages/ui/src/*"]
-    }
+      "@/*": ["./apps/web/src/*"],
+      "@patternmode/ui/*": ["./packages/ui/src/*"],
+      "@patternmode/ui": ["./packages/ui/src/index.ts"],
+      "@patternmode/eslint-config/*": ["./packages/eslint-config/*"],
+      "@patternmode/eslint-config": ["./packages/eslint-config/index.mjs"]
+    },
+    "types": ["node"]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", ".next"]
+  "include": [
+    "packages/*/src/**/*",
+    "apps/*/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/tests/**",
+    "**/__tests__/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/dist/**",
+    "**/.next/**",
+    "**/build/**"
+  ]
 }

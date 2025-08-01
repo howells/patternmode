@@ -13,8 +13,11 @@ import { Text } from "../text/text";
  * Based on Base UI's Dialog (https://base-ui.com/react/components/dialog),
  * providing accessible modal dialogs with focus management, backdrop interaction,
  * and keyboard navigation. Features Tremor-inspired styling and smooth animations.
+ * Perfect for confirmations, forms, settings panels, and any modal content.
  *
  * @component
+ * @category ui
+ * @icon Square
  * @example
  * ```tsx
  * <Dialog>
@@ -32,6 +35,20 @@ import { Text } from "../text/text";
  * ```
  *
  * @see https://base-ui.com/react/components/dialog - Base UI documentation
+ */
+/**
+ * Modal dialog component for displaying overlaid content and user interactions.
+ *
+ * @id dialog
+ * @name Dialog
+ * @icon Square
+ * @category ui
+ * @component
+ * @param props - Component properties.
+ * @param props.children - Dialog trigger and content components.
+ * @param props.open - Whether the dialog is open when controlled.
+ * @param props.defaultOpen - Whether the dialog is open by default when uncontrolled.
+ * @param props.onOpenChange - Callback fired when the open state changes.
  */
 const Dialog = BaseDialog.Root;
 Dialog.displayName = "Dialog";
@@ -53,39 +70,34 @@ DialogClose.displayName = "DialogClose";
 const DialogPortal = BaseDialog.Portal;
 
 /**
- * Semi-transparent backdrop that appears behind the dialog.
+ * Modal dialog component for displaying overlaid content and user interactions.
  *
- * Provides visual separation and can be configured to close the dialog when clicked.
- * Features smooth fade-in/fade-out transitions matching Base UI patterns.
- *
- *
- * @component
  * @id dialog
  * @name Dialog
- * @example
- * ```tsx
- * <DialogOverlay />
- * ```
+ * @icon Square
+ * @category ui
+ * @component
+ * @param props - Component properties.
  */
 const DialogOverlay = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Backdrop> | null> }) => {
-    return (
-      <BaseDialog.Backdrop
-        ref={forwardedRef}
-        className={cx(
+  return (
+    <BaseDialog.Backdrop
+      ref={forwardedRef}
+      className={cx(
         // base
-          "fixed inset-0 z-50",
-          // background color
-          "bg-black/70",
-          // transition - match Base UI pattern
-          "transition-all duration-150",
-          "data-[starting-style]:opacity-0",
-          "data-[ending-style]:opacity-0",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+        "fixed inset-0 z-50",
+        // background color
+        "bg-black/70",
+        // transition - match Base UI pattern
+        "transition-all duration-150",
+        "data-[starting-style]:opacity-0",
+        "data-[ending-style]:opacity-0",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 DialogOverlay.displayName = "DialogOverlay";
 
 /**
@@ -106,31 +118,31 @@ DialogOverlay.displayName = "DialogOverlay";
  * ```
  */
 const DialogContent = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Popup> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Popup> | null> }) => {
-    return (
-      <DialogPortal>
-        <DialogOverlay />
-        <BaseDialog.Popup
-          ref={forwardedRef}
-          className={cx(
+  return (
+    <DialogPortal>
+      <DialogOverlay />
+      <BaseDialog.Popup
+        ref={forwardedRef}
+        className={cx(
           // base
-            "fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-md border p-6 shadow-lg",
-            // border color
-            "border-zinc-200 dark:border-zinc-900",
-            // background color
-            "bg-white dark:bg-[#090E1A]",
-            // transition - match Base UI pattern with scale and opacity
-            "transition-all duration-150",
-            "data-[starting-style]:scale-90 data-[starting-style]:opacity-0",
-            "data-[ending-style]:scale-90 data-[ending-style]:opacity-0",
-            focusRing,
-            className,
-          )}
-          tremor-id="tremor-raw"
-          {...props}
-        />
-      </DialogPortal>
-    );
-  };
+          "fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-md border p-6 shadow-lg",
+          // border color
+          "border-zinc-200 dark:border-zinc-900",
+          // background color
+          "bg-white dark:bg-[#090E1A]",
+          // transition - match Base UI pattern with scale and opacity
+          "transition-all duration-150",
+          "data-[starting-style]:scale-90 data-[starting-style]:opacity-0",
+          "data-[ending-style]:scale-90 data-[ending-style]:opacity-0",
+          focusRing,
+          className,
+        )}
+        tremor-id="tremor-raw"
+        {...props}
+      />
+    </DialogPortal>
+  );
+};
 DialogContent.displayName = "DialogContent";
 
 /**
@@ -148,11 +160,11 @@ DialogContent.displayName = "DialogContent";
  * ```
  */
 const DialogHeader = ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => {
-    return <div className={cx("flex flex-col gap-y-1", className)} {...props} />;
-  };
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
+  return <div className={cx("flex flex-col gap-y-1", className)} {...props} />;
+};
 DialogHeader.displayName = "DialogHeader";
 
 /**
@@ -167,20 +179,20 @@ DialogHeader.displayName = "DialogHeader";
  * ```
  */
 const DialogTitle = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Title> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Title> | null> }) => (
-    <BaseDialog.Title
-      ref={forwardedRef}
-      render={(
-        <Subheading
-          className={cx(
+  <BaseDialog.Title
+    ref={forwardedRef}
+    render={(
+      <Subheading
+        className={cx(
           // text color
-            "text-zinc-900 dark:text-zinc-50",
-            className,
-          )}
-        />
-      )}
-      {...props}
-    />
-  );
+          "text-zinc-900 dark:text-zinc-50",
+          className,
+        )}
+      />
+    )}
+    {...props}
+  />
+);
 DialogTitle.displayName = "DialogTitle";
 
 /**
@@ -197,14 +209,14 @@ DialogTitle.displayName = "DialogTitle";
  * ```
  */
 const DialogDescription = ({ ref: forwardedRef, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Description> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Description> | null> }) => {
-    return (
-      <BaseDialog.Description
-        ref={forwardedRef}
-        render={<Text className={cx(className)} />}
-        {...props}
-      />
-    );
-  };
+  return (
+    <BaseDialog.Description
+      ref={forwardedRef}
+      render={<Text className={cx(className)} />}
+      {...props}
+    />
+  );
+};
 DialogDescription.displayName = "DialogDescription";
 
 /**
@@ -223,28 +235,28 @@ DialogDescription.displayName = "DialogDescription";
  * ```
  */
 const DialogFooter = ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement>) => {
-    return (
-      <div
-        className={cx(
-          "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-          className,
-        )}
-        {...props}
-      />
-    );
-  };
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
+  return (
+    <div
+      className={cx(
+        "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 DialogFooter.displayName = "DialogFooter";
 
 export {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 };

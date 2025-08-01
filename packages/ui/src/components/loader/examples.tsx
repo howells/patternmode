@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Loader } from "@patternmode/ui";
+
 import React from "react";
 
 export function DefaultExample() {
@@ -25,7 +29,35 @@ export function WithTextExample() {
     </div>
   );
 }
-export const /**
-              *
-              */
-  LoaderExample = DefaultExample;
+export const LoaderExample = DefaultExample;
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "LoaderExample",
+    title: "Loader",
+    description: "Loader example",
+    component: LoaderExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "WithTextExample",
+    title: "With Text",
+    description: "With Text example",
+    component: WithTextExample,
+  },
+];

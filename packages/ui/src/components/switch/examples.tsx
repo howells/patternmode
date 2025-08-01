@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Button, Switch } from "@patternmode/ui";
+
 import React, { useState } from "react";
 
 // Config example ID: "default" -> export name: DefaultExample
@@ -193,3 +195,46 @@ export function Controlled() {
 }
 
 // Removed duplicate FormExample - using the simpler version above
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+  {
+    id: "CheckedExample",
+    title: "Checked",
+    description: "Checked example",
+    component: CheckedExample,
+  },
+  {
+    id: "DisabledExample",
+    title: "Disabled",
+    description: "Disabled example",
+    component: DisabledExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "FormExample",
+    title: "Form",
+    description: "Form example",
+    component: FormExample,
+  },
+  {
+    id: "SwitchExample",
+    title: "Switch",
+    description: "Switch example",
+    component: SwitchExample,
+  },
+];

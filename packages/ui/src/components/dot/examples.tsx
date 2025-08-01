@@ -1,4 +1,8 @@
+"use client";
+
+import type { ComponentExample } from "../../lib/component-config-types";
 import { Dot } from "@patternmode/ui";
+
 import React from "react";
 
 // Basic example - matches config "basic" id
@@ -221,3 +225,64 @@ export function SystemHealthExample() {
     </div>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "BasicExample",
+    title: "Basic",
+    description: "Basic example",
+    component: BasicExample,
+  },
+  {
+    id: "SemanticVariantsExample",
+    title: "Semantic Variants",
+    description: "Semantic Variants example",
+    component: SemanticVariantsExample,
+  },
+  {
+    id: "ColorVariantsExample",
+    title: "Color Variants",
+    description: "Color Variants example",
+    component: ColorVariantsExample,
+  },
+  {
+    id: "SizesExample",
+    title: "Sizes",
+    description: "Sizes example",
+    component: SizesExample,
+  },
+  {
+    id: "WithLabelsExample",
+    title: "With Labels",
+    description: "Example with custom labels",
+    component: WithLabelsExample,
+  },
+  {
+    id: "WithoutLabelsExample",
+    title: "Without Labels",
+    description: "Without Labels example",
+    component: WithoutLabelsExample,
+  },
+  {
+    id: "AnimatedExample",
+    title: "Animated",
+    description: "Animated example",
+    component: AnimatedExample,
+  },
+  {
+    id: "DotExample",
+    title: "Dot",
+    description: "Dot example",
+    component: DotExample,
+  },
+  {
+    id: "SystemHealthExample",
+    title: "System Health",
+    description: "System Health example",
+    component: SystemHealthExample,
+  },
+];

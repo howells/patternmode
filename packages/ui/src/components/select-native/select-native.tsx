@@ -1,7 +1,8 @@
 // Tremor SelectNative [v1.0.0]
 
-import React from "react";
 import type { VariantProps } from "tailwind-variants";
+
+import React from "react";
 import { tv } from "tailwind-variants";
 
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
@@ -12,6 +13,9 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
  * Provides consistent styling for native select dropdowns with
  * Tremor design system colors, hover states, focus rings,
  * and error handling.
+ *
+ * @category inputs
+ * @icon ChevronDown
  * @example
  * ```tsx
  * <SelectNative>Content</SelectNative>
@@ -60,9 +64,7 @@ const selectNativeStyles = tv({
  * @augments React.InputHTMLAttributes<HTMLSelectElement>
  * @augments VariantProps<typeof selectNativeStyles>
  */
-interface SelectNativeProps
-  extends React.InputHTMLAttributes<HTMLSelectElement>,
-  VariantProps<typeof selectNativeStyles> {}
+type SelectNativeProps = {} & React.InputHTMLAttributes<HTMLSelectElement> & VariantProps<typeof selectNativeStyles>;
 
 /**
  * A styled native HTML select component.
@@ -131,23 +133,32 @@ interface SelectNativeProps
  *       For custom-styled selects with search, use the Select component instead.
  */
 /**
- * A native HTML select element with custom styling.
+ * Native HTML select element with consistent styling and accessibility features.
  *
  * @id select-native
- * @name Select Native
+ * @name SelectNative
+ * @icon ChevronDown
+ * @category inputs
  * @component
+ * @param props - Component properties.
+ * @param props.hasError - Whether to show error styling.
+ * @param props.disabled - Whether the select is disabled.
+ * @param props.value - Currently selected value.
+ * @param props.onChange - Callback when selection changes.
+ * @param props.children - Option elements to render.
+ * @param props.className - Additional CSS classes.
  */
 const SelectNative = ({ ref: forwardedRef, className, hasError, ...props }: SelectNativeProps & { ref?: React.RefObject<HTMLSelectElement | null> }) => {
-    return (
-      <select
-        ref={forwardedRef}
-        className={cx(selectNativeStyles({ hasError }), className)}
-        tremor-id="tremor-raw"
-        {...props}
-      />
-    );
-  };
+  return (
+    <select
+      ref={forwardedRef}
+      className={cx(selectNativeStyles({ hasError }), className)}
+      tremor-id="tremor-raw"
+      {...props}
+    />
+  );
+};
 
 SelectNative.displayName = "SelectNative";
 
-export { SelectNative, selectNativeStyles, type SelectNativeProps };
+export { SelectNative, type SelectNativeProps, selectNativeStyles };

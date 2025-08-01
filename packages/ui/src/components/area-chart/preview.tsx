@@ -1,83 +1,57 @@
+"use client";
+
+import type { AreaChartProps } from "./area-chart";
+
 import { AreaChart } from "@patternmode/ui";
 import React from "react";
 
-// Sample data for the area chart
-const sampleData = [
-  { date: "Jan 23", desktop: 167, mobile: 145, tablet: 87 },
-  { date: "Feb 23", desktop: 125, mobile: 110, tablet: 75 },
-  { date: "Mar 23", desktop: 156, mobile: 149, tablet: 94 },
-  { date: "Apr 23", desktop: 165, mobile: 112, tablet: 81 },
-  { date: "May 23", desktop: 153, mobile: 138, tablet: 89 },
-  { date: "Jun 23", desktop: 124, mobile: 145, tablet: 92 },
-  { date: "Jul 23", desktop: 164, mobile: 142, tablet: 85 },
-  { date: "Aug 23", desktop: 136, mobile: 126, tablet: 78 },
-  { date: "Sep 23", desktop: 147, mobile: 151, tablet: 96 },
-  { date: "Oct 23", desktop: 168, mobile: 119, tablet: 83 },
-  { date: "Nov 23", desktop: 145, mobile: 132, tablet: 88 },
-  { date: "Dec 23", desktop: 152, mobile: 141, tablet: 91 },
+// Realistic revenue data for the area chart
+const revenueData = [
+  { month: "Jan", revenue: 45000, profit: 12000, expenses: 33000 },
+  { month: "Feb", revenue: 52000, profit: 18000, expenses: 34000 },
+  { month: "Mar", revenue: 48000, profit: 15000, expenses: 33000 },
+  { month: "Apr", revenue: 61000, profit: 24000, expenses: 37000 },
+  { month: "May", revenue: 55000, profit: 20000, expenses: 35000 },
+  { month: "Jun", revenue: 67000, profit: 28000, expenses: 39000 },
+  { month: "Jul", revenue: 72000, profit: 32000, expenses: 40000 },
+  { month: "Aug", revenue: 68000, profit: 29000, expenses: 39000 },
+  { month: "Sep", revenue: 74000, profit: 35000, expenses: 39000 },
+  { month: "Oct", revenue: 81000, profit: 42000, expenses: 39000 },
+  { month: "Nov", revenue: 78000, profit: 38000, expenses: 40000 },
+  { month: "Dec", revenue: 85000, profit: 45000, expenses: 40000 },
 ];
 
-// Example component for preview system
-export const /**
-              *
-              */
-  AreaChartExample = ({
-    type = "default",
-    fill = "gradient",
-    showXAxis = true,
-    showYAxis = true,
-    showGridLines = true,
-    showTooltip = true,
+export function AreaChartExample(props: AreaChartProps) {
+  const {
+    data = revenueData,
+    index = "month",
+    categories = ["revenue", "profit", "expenses"],
+    valueFormatter = (value: number) => `$${(value / 1000).toFixed(0)}k`,
+    colors = ["blue", "emerald", "pink"],
     showLegend = true,
-    legendPosition = "right",
-    connectNulls = false,
-    allowDecimals = true,
-    autoMinValue = false,
-    enableLegendSlider = false,
-    startEndOnly = false,
-    xAxisLabel,
-    yAxisLabel,
-    ...props
-  }: {
-    type?: "default" | "stacked" | "percent";
-    fill?: "gradient" | "solid" | "none";
-    showXAxis?: boolean;
-    showYAxis?: boolean;
-    showGridLines?: boolean;
-    showTooltip?: boolean;
-    showLegend?: boolean;
-    legendPosition?: "left" | "center" | "right";
-    connectNulls?: boolean;
-    allowDecimals?: boolean;
-    autoMinValue?: boolean;
-    enableLegendSlider?: boolean;
-    startEndOnly?: boolean;
-    xAxisLabel?: string;
-    yAxisLabel?: string;
-    [key: string]: unknown;
-  }) => {
-    return (
+    showTooltip = true,
+    showGridLines = true,
+    className = "h-80 w-128 max-w-full",
+    ...restProps
+  } = props;
+
+  return (
+    <div className="space-y-4">
+
       <AreaChart
-        data={sampleData}
-        index="date"
-        categories={["desktop", "mobile", "tablet"]}
-        type={type}
-        fill={fill}
-        showXAxis={showXAxis}
-        showYAxis={showYAxis}
-        showGridLines={showGridLines}
-        showTooltip={showTooltip}
+        data={data}
+        index={index}
+        categories={categories}
+        valueFormatter={valueFormatter}
+        colors={colors}
         showLegend={showLegend}
-        legendPosition={legendPosition}
-        connectNulls={connectNulls}
-        allowDecimals={allowDecimals}
-        autoMinValue={autoMinValue}
-        enableLegendSlider={enableLegendSlider}
-        startEndOnly={startEndOnly}
-        xAxisLabel={xAxisLabel}
-        yAxisLabel={yAxisLabel}
-        valueFormatter={value => `${value}k`}
-        {...props}
+        showTooltip={showTooltip}
+        showGridLines={showGridLines}
+        className={className}
+        yAxisLabel="Amount ($)"
+        xAxisLabel="Month"
+        {...restProps}
       />
-    );
-  };
+    </div>
+  );
+}

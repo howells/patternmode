@@ -1,11 +1,14 @@
 // Meter Component [v1.0.0] - Base UI Implementation
 
+import type { VariantProps } from "tailwind-variants";
+
+import type { GlobalSemanticVariant } from "../../lib/variants";
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
 import * as React from "react";
-import type { VariantProps } from "tailwind-variants";
+
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
-import type { GlobalSemanticVariant } from "../../lib/variants";
 
 // Meter-specific color mappings that work well for progress indicators
 const meterColorMap = {
@@ -71,9 +74,7 @@ const meterVariants = tv({
  * <Meter value={75} />
  * ```
  */
-interface MeterProps
-  extends React.ComponentPropsWithoutRef<typeof BaseMeter.Root>,
-  VariantProps<typeof meterVariants> {
+type MeterProps = {
   /**
    * Current numeric value to display.
    */
@@ -106,7 +107,7 @@ interface MeterProps
    * Color variant using the global semantic variant system.
    */
   variant?: GlobalSemanticVariant;
-}
+} & React.ComponentPropsWithoutRef<typeof BaseMeter.Root> & VariantProps<typeof meterVariants>;
 
 /**
  * A graphical meter component built on Base UI's Meter primitive.
@@ -116,6 +117,8 @@ interface MeterProps
  * Features optional labels, value display, animations, and multiple color variants
  * perfect for showing progress, usage levels, or status indicators.
  *
+ * @category charts
+ * @icon Gauge
  * @param value - Current numeric value to display.
  * @param min - Minimum value (defaults to 0).
  * @param max - Maximum value (defaults to 100).
@@ -125,9 +128,6 @@ interface MeterProps
  * @param label - Optional descriptive label.
  * @param formatValue - Custom value formatting function.
  *
- *
- * @id meter
- * @name Meter
  * @component
  * @example
  * ```tsx
@@ -172,95 +172,99 @@ interface MeterProps
  * @see https://base-ui.com/react/components/meter - Base UI documentation
  */
 /**
- * A meter component built on Base UI for displaying progress or measurements with customizable styling and value formatting.
+ * Meter component for displaying scalar values within a known range with thresholds.
  *
  * @id meter
  * @name Meter
+ * @icon Gauge
+ * @category ui
  * @component
+ * @see {@link https://www.base-ui.com/react/components/meter}
+ * @param props - Component properties.
  */
 const Meter = (
-    { ref, value, min = 0, max = 100, showAnimation = true, showValue = true, label, formatValue, variant, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
+  { ref, value, min = 0, max = 100, showAnimation = true, showValue = true, label, formatValue, variant, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
+) => {
+  const { track, indicator } = meterVariants({ variant });
+
+  const defaultFormatValue = (
+    val: number,
+    minVal: number,
+    maxVal: number,
   ) => {
-    const { track, indicator } = meterVariants({ variant });
-
-    const defaultFormatValue = (
-      val: number,
-      minVal: number,
-      maxVal: number,
-    ) => {
-      const percentage = Math.round(((val - minVal) / (maxVal - minVal)) * 100);
-      return `${percentage}%`;
-    };
-
-    const formattedValue = formatValue
-      ? formatValue(value, min, max)
-      : defaultFormatValue(value, min, max);
-
-    return (
-      <BaseMeter.Root
-        ref={ref}
-        value={value}
-        min={min}
-        max={max}
-        className={cx("flex w-full items-center gap-3", className)}
-        {...props}
-      >
-        <div className="flex min-w-0 flex-1 flex-col gap-2">
-          {(label || showValue) && (
-            <div className="flex items-center justify-between">
-              {label && (
-                <BaseMeter.Label
-                  className={cx(
-                  // base
-                    "text-sm font-medium leading-6",
-                    // text color
-                    "text-zinc-900 dark:text-zinc-50",
-                  )}
-                >
-                  {label}
-                </BaseMeter.Label>
-              )}
-              {showValue && (
-                <BaseMeter.Value
-                  className={cx(
-                  // base
-                    "text-sm font-medium leading-6 tabular-nums",
-                    // text color
-                    "text-zinc-900 dark:text-zinc-50",
-                  )}
-                >
-                  {formattedValue => formattedValue}
-                </BaseMeter.Value>
-              )}
-            </div>
-          )}
-
-          <BaseMeter.Track
-            className={cx(
-            // base
-              "relative h-1.5 w-full overflow-hidden rounded-full",
-              // background
-              track(),
-              // border
-              "shadow-[inset_0_0_0_1px] shadow-zinc-200/50 dark:shadow-zinc-800/50",
-            )}
-          >
-            <BaseMeter.Indicator
-              className={cx(
-              // base
-                "h-full rounded-full",
-                // background
-                indicator(),
-                // animation
-                showAnimation && "transition-all duration-500 ease-out",
-              )}
-            />
-          </BaseMeter.Track>
-        </div>
-      </BaseMeter.Root>
-    );
+    const percentage = Math.round(((val - minVal) / (maxVal - minVal)) * 100);
+    return `${percentage}%`;
   };
+
+  const formattedValue = formatValue
+    ? formatValue(value, min, max)
+    : defaultFormatValue(value, min, max);
+
+  return (
+    <BaseMeter.Root
+      ref={ref}
+      value={value}
+      min={min}
+      max={max}
+      className={cx("flex w-full items-center gap-3", className)}
+      {...props}
+    >
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
+        {(label || showValue) && (
+          <div className="flex items-center justify-between">
+            {label && (
+              <BaseMeter.Label
+                className={cx(
+                  // base
+                  "text-sm font-medium leading-6",
+                  // text color
+                  "text-zinc-900 dark:text-zinc-50",
+                )}
+              >
+                {label}
+              </BaseMeter.Label>
+            )}
+            {showValue && (
+              <BaseMeter.Value
+                className={cx(
+                  // base
+                  "text-sm font-medium leading-6 tabular-nums",
+                  // text color
+                  "text-zinc-900 dark:text-zinc-50",
+                )}
+              >
+                {formattedValue => formattedValue}
+              </BaseMeter.Value>
+            )}
+          </div>
+        )}
+
+        <BaseMeter.Track
+          className={cx(
+            // base
+            "relative h-1.5 w-full overflow-hidden rounded-full",
+            // background
+            track(),
+            // border
+            "shadow-[inset_0_0_0_1px] shadow-zinc-200/50 dark:shadow-zinc-800/50",
+          )}
+        >
+          <BaseMeter.Indicator
+            className={cx(
+              // base
+              "h-full rounded-full",
+              // background
+              indicator(),
+              // animation
+              showAnimation && "transition-all duration-500 ease-out",
+            )}
+          />
+        </BaseMeter.Track>
+      </div>
+    </BaseMeter.Root>
+  );
+};
 
 Meter.displayName = "Meter";
 
-export { Meter, meterVariants, type MeterProps };
+export { Meter, type MeterProps, meterVariants };

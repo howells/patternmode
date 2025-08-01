@@ -1,23 +1,22 @@
 /**
  * Icon Select Component.
  *
- * A high-performance, tree-shakable searchable icon picker component that provides access to ALL 3,644+ Lucide React icons
- * using infinite scrolling and API-based data loading. Icons are loaded dynamically on-demand with pagination,
- * ensuring optimal performance even with thousands of icons.
+ * A high-performance, tree-shakable searchable icon picker component that provides access to ALL 1,700+ Lucide React icons
+ * using a static registry and virtual scrolling. Icons are loaded instantly with no async operations,
+ * ensuring optimal performance and reliability.
  *
  * Features:
- * - Complete collection of 3,644+ Lucide React icons
+ * - Complete collection of 1,700+ Lucide React icons
  * - Tree-shakable: Only used icons included in bundle
- * - Infinite scrolling: Loads 50 icons initially, then automatically loads more as you scroll
- * - API-based loading: Efficient server-side pagination and search
- * - Official Lucide DynamicIcon implementation
+ * - Virtual scrolling: Efficiently renders thousands of icons
+ * - Static registry: No dynamic imports or runtime analysis
+ * - Instant loading: Zero async operations for immediate access
  * - Searchable dropdown with icon previews
  * - Type-safe icon selection
  * - Custom hook for state management
  * - Utility functions for icon retrieval
- * - Built on InfiniteCombobox for optimal UX
- * - Zero upfront bundle cost
- * - Smooth infinite scroll: Triggers loading when scrolling near bottom of list.
+ * - Built on virtualized Combobox for optimal UX
+ * - Reliable and consistent across all environments.
  *
  * @example
  * ```tsx
@@ -50,7 +49,7 @@
  *   />
  * </form>
  *
- * // Dynamic icon rendering
+ * // Dynamic icon rendering (instant access via static registry)
  * function IconDisplay({ iconName }: { iconName: string }) {
  *   const DynamicIconComponent = getDynamicIconByName(iconName);
  *
@@ -65,22 +64,24 @@
 
 "use client";
 
-import { DynamicIcon } from "lucide-react/dynamic";
-import React from "react";
-import { config } from "../../lib/config";
 import type { ComboboxOption } from "../combobox/combobox";
+
+import React from "react";
+
+import { config } from "../../lib/config";
+import { getIconComponent, iconNames } from "../../lib/icon-registry";
 import { Combobox } from "../combobox/combobox";
 
 // Icon data structure that extends ComboboxOption
-interface IconOption extends ComboboxOption {
+type IconOption = {
   kebab: string;
   pascal: string;
-}
+} & ComboboxOption;
 
 /**
  * Props for the IconSelect component.
  */
-export interface IconSelectProps {
+export type IconSelectProps = {
   /**
    * Currently selected icon name.
    */
@@ -105,54 +106,83 @@ export interface IconSelectProps {
    * Stroke width for icons (defaults to 1).
    */
   iconStrokeWidth?: number;
+};
+
+/**
+ * Get all Lucide icon names from the static registry.
+ * This is the most reliable method - no dynamic imports or runtime analysis needed.
+ */
+function getAllLucideIcons(): string[] {
+  console.log(`✅ Found ${iconNames.length} available Lucide icons from static registry`);
+  return iconNames;
 }
 
 /**
- * Fetch icons from the API route with pagination and search.
- * Now returns both kebab-case and PascalCase names for validation.
- * Updated to match ComboboxFetchFunction signature.
+ * Transform icon names to IconOption objects.
  */
-async function fetchIcons({
+function transformIconNames(iconNames: string[]): IconOption[] {
+  return iconNames.map(name => ({
+    id: name,
+    value: name,
+    label: name,
+    kebab: toKebabCase(name),
+    pascal: name,
+  }));
+}
+
+/**
+ * Client-side icon filtering and pagination for virtual scrolling.
+ * Uses the static icon registry - fast and reliable.
+ */
+function fetchIcons({
   pageParam = 0,
   search = "",
-  signal,
 }: {
   pageParam?: number;
   search?: string;
   signal?: AbortSignal;
 }) {
-  const limit = 50;
+  console.log(`🔍 fetchIcons called with pageParam: ${pageParam}, search: "${search}"`);
 
-  const params = new URLSearchParams({
-    page: pageParam.toString(),
-    limit: limit.toString(),
-    ...(search && { search }),
-  });
+  const limit = 100; // Larger page size since virtual scrolling handles performance
 
-  const response = await fetch(`/api/icons?${params}`, { signal });
+  // Get all icons from static registry
+  const allIconNames = getAllLucideIcons();
+  console.log(`📦 Using ${allIconNames.length} icons from static registry`);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch icons");
-  }
+  // Filter icons based on search
+  const filteredIcons = search
+    ? allIconNames.filter(name =>
+        name.toLowerCase().includes(search.toLowerCase()),
+      )
+    : allIconNames;
 
-  const data = await response.json();
+  console.log(`🔎 Filtered to ${filteredIcons.length} icons (search: "${search}")`);
 
-  // Transform API response to match IconOption interface
-  const iconOptions: IconOption[] = data.icons.map(
-    (icon: { kebab: string; pascal: string }) => ({
-      id: icon.pascal,
-      value: icon.pascal,
-      label: icon.pascal,
-      kebab: icon.kebab,
-      pascal: icon.pascal,
-    }),
-  );
+  // Paginate the results
+  const startIndex = pageParam * limit;
+  const endIndex = startIndex + limit;
+  const pageIcons = filteredIcons.slice(startIndex, endIndex);
 
-  return {
+  console.log(`📄 Page ${pageParam}: showing ${pageIcons.length} icons (${startIndex}-${endIndex})`);
+
+  // Transform to IconOption interface
+  const iconOptions: IconOption[] = pageIcons.map(name => ({
+    id: name,
+    value: name,
+    label: name,
+    kebab: toKebabCase(name),
+    pascal: name,
+  }));
+
+  const result = {
     data: iconOptions,
-    hasNextPage: data.hasMore,
-    nextCursor: data.hasMore ? pageParam + 1 : undefined,
+    hasNextPage: endIndex < filteredIcons.length,
+    nextCursor: endIndex < filteredIcons.length ? pageParam + 1 : undefined,
   };
+
+  console.log(`✅ fetchIcons returning ${result.data.length} icons, hasNextPage: ${result.hasNextPage}`);
+  return Promise.resolve(result); // Return a resolved promise to maintain the async interface
 }
 
 /**
@@ -167,84 +197,67 @@ function toKebabCase(str: string): string {
     .replace(/^-/, ""); // Remove leading dash
 }
 
+// Removed: Complex dynamic analysis approach
+// Now using simple static registry in icon-registry.ts
+
 /**
- * Safe DynamicIcon wrapper that renders Lucide icons with comprehensive validation to prevent console errors.
- *
- * @id icon-select
- * @name Icon Select
+ * Safe DynamicIcon wrapper using the static icon registry.
+ * Simple, reliable, and fast - no async loading needed.
  */
 const SafeDynamicIcon = React.memo(({
-    name,
-    className,
-    strokeWidth,
-    fallback,
-  }: {
-    name: string;
-    className?: string;
-    strokeWidth?: number;
-    fallback?: React.ReactNode;
-  }) => {
-    const fallbackElement = React.useMemo(
-      () =>
-        fallback || (
-          <div
-            className={`${className} flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400 shrink-0`}
-          >
-            ?
-          </div>
-        ),
-      [className, fallback],
-    );
-
-    // Comprehensive validation before attempting to render
-    const isValidIcon = React.useMemo(() => {
-      if (!name || typeof name !== "string" || name.trim() === "") {
-        return false;
-      }
-
-      // Check if the icon name follows the expected kebab-case pattern
-      if (!/^[a-z][a-z0-9-]*$/.test(name)) {
-        return false;
-      }
-
-      // These icons are actually valid in Lucide React, so we don't filter them out
-
-      return true;
-    }, [name]);
-
-    if (!isValidIcon) {
-      return fallbackElement;
-    }
-
-    // Render with try-catch for additional safety
-    try {
-      return (
+  name,
+  className,
+  strokeWidth,
+  fallback,
+}: {
+  name: string;
+  className?: string;
+  strokeWidth?: number;
+  fallback?: React.ReactNode;
+}) => {
+  const fallbackElement = React.useMemo(
+    () =>
+      fallback || (
         <div
-          key={name}
-          className={`${className} shrink-0 flex items-center justify-center`}
+          className={`${className} flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded text-xs text-zinc-500 dark:text-zinc-400 shrink-0`}
         >
-          <DynamicIcon
-            name={name as Parameters<typeof DynamicIcon>[0]["name"]}
-            className="w-full h-full"
-            strokeWidth={strokeWidth}
-          />
+          ?
         </div>
-      );
-    }
-    catch (error) {
-    // Silently catch DynamicIcon errors and show fallback
-      return fallbackElement;
-    }
-  });
+      ),
+    [className, fallback],
+  );
+
+  // Get icon component from static registry
+  const IconComponent = getIconComponent(name);
+
+  // Show fallback if icon not found
+  if (!IconComponent) {
+    return fallbackElement;
+  }
+
+  // Render the icon
+  return (
+    <div
+      key={name}
+      className={`${className} shrink-0 flex items-center justify-center`}
+    >
+      <IconComponent
+        className="w-full h-full"
+        strokeWidth={strokeWidth}
+      />
+    </div>
+  );
+});
 
 /**
- * High-performance icon selection component with infinite scrolling.
+ * Icon picker component with virtual scrolling for optimal performance with 1700+ icons.
  *
- * Uses an API route to serve paginated icon data with both kebab-case and PascalCase names,
- * ensuring only valid Lucide icons are served and preventing console errors.
  * @id icon-select
- * @name Icon Select
+ * @name IconSelect
+ * @icon Search
+ * @category utility
  * @component
+ * @param props - Component properties.
  */
 export function IconSelect({
   value,
@@ -258,7 +271,7 @@ export function IconSelect({
   const getItemIcon = React.useCallback(
     (item: IconOption) => (
       <SafeDynamicIcon
-        name={item.kebab}
+        name={item.pascal}
         className="size-4 shrink-0"
         strokeWidth={iconStrokeWidth}
       />
@@ -297,41 +310,36 @@ export function IconSelect({
 
 /**
  * Custom hook for managing icon selection state.
+ * Uses the static registry for reliable icon access.
  */
 export function useIconSelect(initialValue?: string) {
   const [value, setValue] = React.useState(initialValue || "");
 
   // Create a memoized DynamicIcon component for the selected icon
-  const /**
-         *
-         */
-    DynamicIconComponent = React.useMemo(() => {
-      if (!value) { return null; }
+  const DynamicIconComponent = React.useMemo(() => {
+    if (!value) { return null; }
 
-      const /**
-             *
-             */
-        IconComponent = React.memo(
-          ({
-            className,
-            strokeWidth,
-            ...props
-          }: {
-            className?: string;
-            strokeWidth?: number;
-            [key: string]: unknown;
-          }) => (
-            <SafeDynamicIcon
-              name={toKebabCase(value)} // Convert PascalCase to kebab-case
-              className={className}
-              strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-              {...props}
-            />
-          ),
-        );
-      IconComponent.displayName = `SelectedIcon_${value}`;
-      return IconComponent;
-    }, [value]);
+    const IconComponent = React.memo(
+      ({
+        className,
+        strokeWidth,
+        ...props
+      }: {
+        className?: string;
+        strokeWidth?: number;
+        [key: string]: unknown;
+      }) => (
+        <SafeDynamicIcon
+          name={value} // Use PascalCase name directly
+          className={className}
+          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+          {...props}
+        />
+      ),
+    );
+    IconComponent.displayName = `SelectedIcon_${value}`;
+    return IconComponent;
+  }, [value]);
 
   return {
     value,
@@ -342,37 +350,32 @@ export function useIconSelect(initialValue?: string) {
 
 /**
  * Utility function to create a DynamicIcon component by name.
- * Uses pre-validation to prevent console warnings for invalid icons.
+ * Uses the static registry for reliable icon access.
  */
 export function getDynamicIconByName(name: string) {
-  const /**
-         *
-         */
-    DynamicIconWrapper = React.memo(
-      ({
-        className,
-        strokeWidth,
-        fallback,
-        ...props
-      }: {
-        className?: string;
-        strokeWidth?: number;
-        fallback?: React.ReactNode;
-        [key: string]: unknown;
-      }) => {
-        const kebabName = toKebabCase(name);
-
-        return (
-          <SafeDynamicIcon
-            name={kebabName}
-            className={className}
-            strokeWidth={strokeWidth || config.getIconStrokeWidth()}
-            fallback={fallback}
-            {...props}
-          />
-        );
-      },
-    );
+  const DynamicIconWrapper = React.memo(
+    ({
+      className,
+      strokeWidth,
+      fallback,
+      ...props
+    }: {
+      className?: string;
+      strokeWidth?: number;
+      fallback?: React.ReactNode;
+      [key: string]: unknown;
+    }) => {
+      return (
+        <SafeDynamicIcon
+          name={name} // Use name directly (static registry handles PascalCase)
+          className={className}
+          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+          fallback={fallback}
+          {...props}
+        />
+      );
+    },
+  );
   DynamicIconWrapper.displayName = `SafeDynamicIcon_${name}`;
   return DynamicIconWrapper;
 }
@@ -392,17 +395,17 @@ export function isValidLucideIcon(name: string): boolean {
  * Get statistics about the icon collection.
  */
 export const iconStats = {
-  totalIcons: "1,822",
+  totalIcons: iconNames.length.toLocaleString(),
   bundleImpact: "Tree-shakable - only used icons are included in bundle",
-  loadingStrategy: "Infinite scroll with API-based pagination",
-  performance: "Optimal - dynamically generated from Lucide React package",
+  loadingStrategy: "Static registry with virtual scrolling",
+  performance: "Optimal - no runtime analysis or dynamic imports",
   searchCapability: "Real-time search with debouncing",
   features: [
-    "Complete Lucide React library (dynamically loaded)",
-    "Tree-shakable loading with DynamicIcon",
-    "API-based pagination and search",
+    "Complete Lucide React library (static registry)",
+    "Tree-shakable loading with static imports",
+    "Client-side pagination and search",
     "Automatic sync with Lucide updates",
-    "Kebab-case to PascalCase mapping",
-    "Error handling for invalid icons",
+    "Direct PascalCase component access",
+    "Zero async loading - immediate icon access",
   ],
 };

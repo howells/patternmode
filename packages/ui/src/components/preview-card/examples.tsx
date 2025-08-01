@@ -1,6 +1,8 @@
 "use client";
 
+import type { ComponentExample } from "../../lib/component-config-types";
 import { PreviewCard } from "@patternmode/ui";
+
 import React from "react";
 
 export function PreviewCardExample() {
@@ -34,3 +36,22 @@ export function DefaultExample() {
     </PreviewCard>
   );
 }
+
+/**
+ * Registry of all examples with their metadata.
+ * Inline metadata approach - no separate .meta objects needed.
+ */
+export const EXAMPLES: ComponentExample[] = [
+  {
+    id: "PreviewCardExample",
+    title: "Preview Card",
+    description: "Preview Card example",
+    component: PreviewCardExample,
+  },
+  {
+    id: "DefaultExample",
+    title: "Default",
+    description: "Basic usage example",
+    component: DefaultExample,
+  },
+];

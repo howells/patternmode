@@ -1,6 +1,92 @@
+/**
+ * List Components.
+ *
+ * Flexible components for creating ordered and unordered lists with custom styling,
+ * indicators, and alignment options. Supports traditional bullet/number lists as well
+ * as custom icon-based lists for enhanced visual presentation.
+ *
+ * Features:
+ * - Ordered and unordered list support
+ * - Custom icon indicators with flexible sizing
+ * - Multiple alignment options (start, center, end)
+ * - Marker and plain list variants
+ * - Consistent spacing and typography
+ * - Dark mode support
+ * - Unstyled option for custom styling.
+ *
+ * @category data
+ * @icon List
+ * @example
+ * ```tsx
+ * // Basic unordered list with markers
+ * <List>
+ *   <ListItem>First item</ListItem>
+ *   <ListItem>Second item</ListItem>
+ *   <ListItem>Third item</ListItem>
+ * </List>
+ *
+ * // Ordered list
+ * <List as="ol">
+ *   <ListItem>Step one</ListItem>
+ *   <ListItem>Step two</ListItem>
+ *   <ListItem>Step three</ListItem>
+ * </List>
+ *
+ * // Custom icon indicators
+ * <List variant="plain" align="center">
+ *   <ListItem>
+ *     <ListIndicator icon={CheckCircle} />
+ *     Completed task
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={Clock} />
+ *     In progress task
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={Circle} />
+ *     Pending task
+ *   </ListItem>
+ * </List>
+ *
+ * // Feature list with icons
+ * <List variant="plain">
+ *   <ListItem>
+ *     <ListIndicator icon={Shield} size="sm" />
+ *     Secure authentication
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={Zap} size="sm" />
+ *     Lightning fast performance
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={Users} size="sm" />
+ *     Team collaboration
+ *   </ListItem>
+ * </List>
+ *
+ * // Navigation list
+ * <List variant="plain" align="start">
+ *   <ListItem>
+ *     <ListIndicator icon={Home} />
+ *     <a href="/">Dashboard</a>
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={Settings} />
+ *     <a href="/settings">Settings</a>
+ *   </ListItem>
+ *   <ListItem>
+ *     <ListIndicator icon={User} />
+ *     <a href="/profile">Profile</a>
+ *   </ListItem>
+ * </List>
+ * ```
+ */
+
 import type { VariantProps } from "tailwind-variants";
+
 import React from "react";
 import { tv } from "tailwind-variants";
+
 import { cx } from "../../lib/utils";
 import { Icon } from "../icon/icon";
 
@@ -56,7 +142,12 @@ const indicatorVariants = tv({
   },
 });
 
-export interface ListProps extends VariantProps<typeof listVariants> {
+/**
+ * Props for the List component.
+ *
+ * Configuration for list behavior, styling, and structure.
+ */
+export type ListProps = {
   /**
    * The underlying element to render (ul, ol, etc.).
    */
@@ -73,9 +164,14 @@ export interface ListProps extends VariantProps<typeof listVariants> {
    * The list items.
    */
   children: React.ReactNode;
-}
+} & VariantProps<typeof listVariants>;
 
-export interface ListItemProps extends VariantProps<typeof listItemVariants> {
+/**
+ * Props for the ListItem component.
+ *
+ * Configuration for individual list item styling and content.
+ */
+export type ListItemProps = {
   /**
    * Whether to remove the component's style.
    */
@@ -88,10 +184,14 @@ export interface ListItemProps extends VariantProps<typeof listItemVariants> {
    * The list item content.
    */
   children: React.ReactNode;
-}
+} & VariantProps<typeof listItemVariants>;
 
-export interface ListIndicatorProps
-  extends VariantProps<typeof indicatorVariants> {
+/**
+ * Props for the ListIndicator component.
+ *
+ * Configuration for custom list indicators and icons.
+ */
+export type ListIndicatorProps = {
   /**
    * The icon component to render.
    */
@@ -112,46 +212,31 @@ export interface ListIndicatorProps
    * The indicator content.
    */
   children?: React.ReactNode;
-}
+} & VariantProps<typeof indicatorVariants>;
 
 /**
- * List component for displaying ordered and unordered lists.
+ * Root list component for ordered and unordered lists.
  *
- * @example
- * ```tsx
- * // Basic unordered list
- * <List>
- *   <ListItem>Item 1</ListItem>
- *   <ListItem>Item 2</ListItem>
- * </List>
+ * Flexible container that supports both traditional HTML lists (ul, ol) and
+ * custom styled lists with icon indicators. Provides consistent spacing,
+ * alignment options, and theming support.
  *
- * // Ordered list
- * <List as="ol">
- *   <ListItem>First item</ListItem>
- *   <ListItem>Second item</ListItem>
- * </List>
- *
- * // With custom indicators
- * <List variant="plain" align="center">
- *   <ListItem>
- *     <ListIndicator icon={CheckCircle} />
- *     Completed task
- *   </ListItem>
- *   <ListItem>
- *     <ListIndicator icon={Circle} />
- *     Pending task
- *   </ListItem>
- * </List>
- * ```
+ * @param as - HTML element type (ul, ol, etc.).
+ * @param variant - List style variant (marker or plain).
+ * @param align - Content alignment (start, center, end).
+ * @param unstyled - Remove default styling.
+ * @param className - Additional CSS classes.
+ * @param children - List items content.
  */
 /**
- * A flexible list component supporting ordered/unordered lists with custom indicators and styling.
+ * List component for displaying structured data items with flexible layouts.
  *
- * List.
- *
- * @component
  * @id list
  * @name List
+ * @icon List
+ * @category data
+ * @component
+ * @param props - Component properties.
  */
 export function List({
   as: Component = "ul",
@@ -173,7 +258,16 @@ export function List({
 }
 
 /**
- * List item component.
+ * Individual list item component.
+ *
+ * Container for list item content with consistent styling and alignment.
+ * Supports both marker and plain variants to match the parent List component.
+ *
+ * @param variant - Item style variant (marker or plain).
+ * @param align - Content alignment (start, center, end).
+ * @param unstyled - Remove default styling.
+ * @param className - Additional CSS classes.
+ * @param children - Item content.
  */
 export function ListItem({
   variant,
@@ -197,7 +291,17 @@ export function ListItem({
 }
 
 /**
- * List indicator component for custom markers or icons.
+ * Custom indicator component for list items.
+ *
+ * Provides flexible markers for list items using icons or custom content.
+ * Automatically handles sizing and positioning for consistent visual alignment.
+ *
+ * @param icon - Icon component to render as indicator.
+ * @param size - Icon size (xs, sm, base, lg, xl, 2xl, 3xl).
+ * @param variant - Indicator style variant (marker or plain).
+ * @param unstyled - Remove default styling.
+ * @param className - Additional CSS classes.
+ * @param children - Custom indicator content (used when no icon provided).
  */
 export function ListIndicator({
   icon: IconComponent,

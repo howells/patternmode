@@ -4,117 +4,104 @@
 /**
  * Prop metadata interface for component documentation
  */
-export interface PropMetadata {
+export type PropMetadata = {
   name: string;
   type: string;
   description?: string;
-  defaultValue?: string;
+  defaultValue?: string | boolean | number;
   required?: boolean;
   options?: string[];
-}
+};
 
 /**
  * Example metadata interface - each example must export this along with the component
  */
-export interface ExampleMetadata {
+export type ExampleMetadata = {
   id: string;
   title: string;
   description: string;
   category?: string;
   tags?: string[];
-}
+};
 
 /**
  * Complete example definition with component and metadata
  * Used in the new self-contained examples system
  */
-export interface ComponentExample {
+export type ComponentExample = {
   id: string;
   title: string;
   description: string;
   category?: string;
   tags?: string[];
   component: React.ComponentType;
-}
-
-/**
- * Legacy component example configuration - code examples only
- * @deprecated Use ComponentExample with component property instead
- */
-export interface LegacyComponentExample {
-  id: string;
-  title: string;
-  description: string;
-  code: string;
-  // Optional render function for live preview
-  render?: () => React.ReactElement;
-}
+};
 
 /**
  * API property documentation
  */
-export interface APIProperty {
+export type APIProperty = {
   name: string;
   type: string;
   default?: string;
   description: string;
   required?: boolean;
-}
+};
 
 /**
  * API component documentation
  */
-export interface APIComponent {
+export type APIComponent = {
   name: string;
   description: string;
   properties: APIProperty[];
-}
+};
 
 /**
  * Accessibility documentation
  */
-export interface AccessibilityNote {
+export type AccessibilityNote = {
   key: string;
   description: string;
-}
+};
 
 /**
  * Installation information
  */
-export interface InstallationConfig {
+export type InstallationConfig = {
   npm?: string;
   dependencies?: string[];
-}
+};
 
 /**
  * Accessibility configuration
  */
-export interface AccessibilityConfig {
+export type AccessibilityConfig = {
   pattern?: {
     name: string;
     url: string;
   };
   keyboardShortcuts?: AccessibilityNote[];
   notes?: string[];
-}
+};
 
 /**
  * Additional documentation section
  */
-export interface DocumentationSection {
+export type DocumentationSection = {
   title: string;
   content: string; // Pure string content, no JSX
-}
+};
 
 /**
  * Component configuration - single source of truth for each component
  */
-export interface ComponentConfig {
+export type ComponentConfig = {
   // Basic metadata
   id: string;
   name: string;
   description: string;
-  category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts" | "ui";
+  category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts" | "ui" | "typography";
   icon?: string;
   badge?: string;
 
@@ -130,8 +117,8 @@ export interface ComponentConfig {
   // Props that users can experiment with
   props: PropMetadata[];
 
-  // Code examples (optional when using self-contained examples system)
-  examples?: LegacyComponentExample[];
+  // Examples using the self-contained component system
+  examples?: ComponentExample[];
 
   // API Reference
   api?: APIComponent[];
@@ -141,7 +128,7 @@ export interface ComponentConfig {
 
   // Additional sections
   sections?: DocumentationSection[];
-}
+};
 
 /**
  * Type for the configuration registry

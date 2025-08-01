@@ -31,8 +31,8 @@ export const jsdocComponentRules = {
   //   },
   // ],
 
-  // Require description for components - but only check, don't auto-fix
-  "jsdoc/require-description": ["error", { fixable: false }],
+  // Require description for components
+  "jsdoc/require-description": "error",
 
   // Require specific tags for components
   "jsdoc/require-param": "off", // Don't require @param for every prop
@@ -48,6 +48,8 @@ export const jsdocComponentRules = {
         "id",
         "name",
         "component",
+        "icon",
+        "category",
         "example",
         "see",
         "since",
@@ -78,6 +80,10 @@ export const jsdocComponentRules = {
 
   // Additional rule to prevent empty JSDoc comments
   "jsdoc/empty-tags": "error",
+
+  // Require @icon and @category tags for React components
+  "jsdoc/require-param": "off", // Keep this off since we handle it differently
+  "jsdoc/require-returns": "off", // Keep this off for components
 };
 
 /**

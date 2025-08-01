@@ -1,9 +1,11 @@
 // Tremor Radio [v1.0.0] - Base UI
 
+import type { VariantProps } from "tailwind-variants";
+
 import { Radio as BaseRadio } from "@base-ui-components/react/radio";
 import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
+
 import { cx, focusRing } from "../../lib/utils";
 
 // Radio Item Variants
@@ -152,29 +154,36 @@ const radioCardVariants = tv({
  * <Radio name="option" value="1">Option 1</Radio>
  * ```
  */
+/**
+ * Radio button input for single selections within a group of options.
+ *
+ * @id radio
+ * @name Radio
+ * @icon Circle
+ * @category inputs
+ * @component
+ * @param props - Component properties.
+ */
 const Radio = BaseRadio.Root;
 Radio.displayName = "Radio";
 
 /**
- * Indicator component that shows the selected state of a radio button.
- *
- * Based on Base UI's Radio.Indicator, this component renders the visual indicator
- * (dot) that appears when the radio is selected. Typically used within RadioItem
- * or custom radio implementations.
- *
- * @component
- * @see https://base-ui.com/react/components/radio - Base UI documentation
+ * Radio button input for single selections within a group of options.
  *
  * @id radio
  * @name Radio
+ * @icon Circle
+ * @category inputs
+ * @component
+ * @param props - Component properties.
  */
 const RadioIndicator = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadio.Indicator> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Indicator> | null> }) => (
-    <BaseRadio.Indicator
-      ref={ref}
-      className={cx("flex items-center justify-center", className)}
-      {...props}
-    />
-  );
+  <BaseRadio.Indicator
+    ref={ref}
+    className={cx("flex items-center justify-center", className)}
+    {...props}
+  />
+);
 RadioIndicator.displayName = "RadioIndicator";
 
 /**
@@ -195,19 +204,19 @@ RadioIndicator.displayName = "RadioIndicator";
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
 const RadioItem = ({ ref, className, size, variant, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadio.Root>
-    & VariantProps<typeof radioVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> }) => {
-    const { root, circle, indicator, dot } = radioVariants({ size, variant });
+  & VariantProps<typeof radioVariants> & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> }) => {
+  const { root, circle, indicator, dot } = radioVariants({ size, variant });
 
-    return (
-      <BaseRadio.Root ref={ref} className={cx(root(), className)} {...props}>
-        <div className={circle()}>
-          <BaseRadio.Indicator className={indicator()}>
-            <div className={dot()} />
-          </BaseRadio.Indicator>
-        </div>
-      </BaseRadio.Root>
-    );
-  };
+  return (
+    <BaseRadio.Root ref={ref} className={cx(root(), className)} {...props}>
+      <div className={circle()}>
+        <BaseRadio.Indicator className={indicator()}>
+          <div className={dot()} />
+        </BaseRadio.Indicator>
+      </div>
+    </BaseRadio.Root>
+  );
+};
 RadioItem.displayName = "RadioItem";
 
 /**
@@ -228,15 +237,15 @@ RadioItem.displayName = "RadioItem";
  * ```
  */
 const RadioLabel = ({ ref, className, size, children, ...props }: React.ComponentPropsWithoutRef<"label">
-    & VariantProps<typeof radioLabelVariants> & { ref?: React.RefObject<HTMLLabelElement | null> }) => (
-    <label
-      ref={ref}
-      className={cx(radioLabelVariants({ size }), className)}
-      {...props}
-    >
-      {children}
-    </label>
-  );
+  & VariantProps<typeof radioLabelVariants> & { ref?: React.RefObject<HTMLLabelElement | null> }) => (
+  <label
+    ref={ref}
+    className={cx(radioLabelVariants({ size }), className)}
+    {...props}
+  >
+    {children}
+  </label>
+);
 RadioLabel.displayName = "RadioLabel";
 
 /**
@@ -262,39 +271,39 @@ RadioLabel.displayName = "RadioLabel";
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
 const RadioCard = (
-    { ref, className, size, children, indicator, showIndicator = true, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadio.Root>
-      & VariantProps<typeof radioCardVariants> & {
+  { ref, className, size, children, indicator, showIndicator = true, ...props }: React.ComponentPropsWithoutRef<typeof BaseRadio.Root>
+    & VariantProps<typeof radioCardVariants> & {
       /**
        * Content to display in the card.
        */
-        children?: React.ReactNode;
-        /**
-         * Custom indicator component.
-         */
-        indicator?: React.ReactNode;
-        /**
-         * Whether to show the radio indicator.
-         */
-        showIndicator?: boolean;
-      } & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> },
-  ) => (
-    <BaseRadio.Root
-      ref={ref}
-      className={cx(radioCardVariants({ size }), className)}
-      {...props}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1">{children}</div>
-        {showIndicator && (
-          <div className="flex-shrink-0">
-            {indicator || (
-              <RadioItem size="md" variant="card" value={props.value} />
-            )}
-          </div>
-        )}
-      </div>
-    </BaseRadio.Root>
-  );
+      children?: React.ReactNode;
+      /**
+       * Custom indicator component.
+       */
+      indicator?: React.ReactNode;
+      /**
+       * Whether to show the radio indicator.
+       */
+      showIndicator?: boolean;
+    } & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> },
+) => (
+  <BaseRadio.Root
+    ref={ref}
+    className={cx(radioCardVariants({ size }), className)}
+    {...props}
+  >
+    <div className="flex items-start justify-between gap-3">
+      <div className="flex-1">{children}</div>
+      {showIndicator && (
+        <div className="flex-shrink-0">
+          {indicator || (
+            <RadioItem size="md" variant="card" value={props.value} />
+          )}
+        </div>
+      )}
+    </div>
+  </BaseRadio.Root>
+);
 RadioCard.displayName = "RadioCard";
 
 /**
@@ -302,7 +311,7 @@ RadioCard.displayName = "RadioCard";
  *
  * @interface RadioOptionProps
  */
-interface RadioOptionProps {
+type RadioOptionProps = {
   /**
    * The value of the radio option.
    */
@@ -323,7 +332,7 @@ interface RadioOptionProps {
    * Size variant.
    */
   size?: VariantProps<typeof radioVariants>["size"];
-}
+};
 
 /**
  * Complete radio option with label and optional description.
@@ -351,24 +360,24 @@ interface RadioOptionProps {
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
 const RadioOption = ({ ref, value, label, description, disabled, size = "md", ...props }: RadioOptionProps & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> }) => (
-    <RadioLabel size={size}>
-      <RadioItem
-        ref={ref}
-        value={value}
-        disabled={disabled}
-        size={size}
-        {...props}
-      />
-      <div className="flex flex-col">
-        <span>{label}</span>
-        {description && (
-          <span className="text-xs text-zinc-500 dark:text-zinc-400">
-            {description}
-          </span>
-        )}
-      </div>
-    </RadioLabel>
-  );
+  <RadioLabel size={size}>
+    <RadioItem
+      ref={ref}
+      value={value}
+      disabled={disabled}
+      size={size}
+      {...props}
+    />
+    <div className="flex flex-col">
+      <span>{label}</span>
+      {description && (
+        <span className="text-xs text-zinc-500 dark:text-zinc-400">
+          {description}
+        </span>
+      )}
+    </div>
+  </RadioLabel>
+);
 RadioOption.displayName = "RadioOption";
 
 /**
@@ -376,7 +385,7 @@ RadioOption.displayName = "RadioOption";
  *
  * @interface RadioCardOptionProps
  */
-interface RadioCardOptionProps {
+type RadioCardOptionProps = {
   /**
    * The value of the radio card option.
    */
@@ -401,7 +410,7 @@ interface RadioCardOptionProps {
    * Whether to show the radio indicator.
    */
   showIndicator?: boolean;
-}
+};
 
 /**
  * Complete card-style radio option with title and optional description.
@@ -430,39 +439,39 @@ interface RadioCardOptionProps {
  * @see https://base-ui.com/react/components/radio - Base UI documentation
  */
 const RadioCardOption = (
-    { ref, value, title, description, disabled, size = "md", showIndicator = true, ...props }: RadioCardOptionProps & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> },
-  ) => (
-    <RadioCard
-      ref={ref}
-      value={value}
-      disabled={disabled}
-      size={size}
-      showIndicator={showIndicator}
-      {...props}
-    >
-      <div className="flex flex-col gap-1">
-        <div className="font-medium text-zinc-900 dark:text-zinc-50">
-          {title}
-        </div>
-        {description && (
-          <div className="text-sm text-zinc-600 dark:text-zinc-400">
-            {description}
-          </div>
-        )}
+  { ref, value, title, description, disabled, size = "md", showIndicator = true, ...props }: RadioCardOptionProps & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> },
+) => (
+  <RadioCard
+    ref={ref}
+    value={value}
+    disabled={disabled}
+    size={size}
+    showIndicator={showIndicator}
+    {...props}
+  >
+    <div className="flex flex-col gap-1">
+      <div className="font-medium text-zinc-900 dark:text-zinc-50">
+        {title}
       </div>
-    </RadioCard>
-  );
+      {description && (
+        <div className="text-sm text-zinc-600 dark:text-zinc-400">
+          {description}
+        </div>
+      )}
+    </div>
+  </RadioCard>
+);
 RadioCardOption.displayName = "RadioCardOption";
 
 export {
-    Radio,
-    RadioCard,
-    RadioCardOption,
-    radioCardVariants,
-    RadioIndicator,
-    RadioItem,
-    RadioLabel,
-    radioLabelVariants,
-    RadioOption,
-    radioVariants
+  Radio,
+  RadioCard,
+  RadioCardOption,
+  radioCardVariants,
+  RadioIndicator,
+  RadioItem,
+  RadioLabel,
+  radioLabelVariants,
+  RadioOption,
+  radioVariants,
 };

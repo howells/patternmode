@@ -1,51 +1,57 @@
 /**
  * Description List Components.
  *
- * Components for creating structured description lists using semantic HTML.
- * Provides organized display of term-definition pairs with responsive layouts
- * and consistent styling across light and dark themes.
+ * Semantic components for creating accessible description lists using HTML definition list elements.
+ * Provides responsive grid layout with terms and details arranged in a clean, structured format.
  *
  * Features:
- * - Responsive grid layout
- * - Semantic HTML structure (dl, dt, dd)
+ * - Semantic HTML dl, dt, dd elements
+ * - Responsive grid layout (stacked on mobile, two-column on desktop)
+ * - Consistent spacing and typography
+ * - Border separators between items
  * - Dark mode support
- * - Accessible design
- * - Consistent typography and spacing.
+ * - Accessible structure for screen readers.
  *
+ * @category data
+ * @icon List
  * @example
  * ```tsx
  * // Basic description list
  * <DescriptionList>
  *   <DescriptionTerm>Name</DescriptionTerm>
  *   <DescriptionDetails>John Doe</DescriptionDetails>
+ *
  *   <DescriptionTerm>Email</DescriptionTerm>
- *   <DescriptionDetails>john@example.com</DescriptionDetails>
+ *   <DescriptionDetails>john.doe@company.com</DescriptionDetails>
+ *
  *   <DescriptionTerm>Role</DescriptionTerm>
  *   <DescriptionDetails>Software Engineer</DescriptionDetails>
  * </DescriptionList>
  *
  * // User profile information
  * <DescriptionList>
- *   <DescriptionTerm>Full Name</DescriptionTerm>
- *   <DescriptionDetails>Sarah Johnson</DescriptionDetails>
- *   <DescriptionTerm>Department</DescriptionTerm>
- *   <DescriptionDetails>Product Design</DescriptionDetails>
+ *   <DescriptionTerm>Username</DescriptionTerm>
+ *   <DescriptionDetails>@johndoe</DescriptionDetails>
+ *
+ *   <DescriptionTerm>Member Since</DescriptionTerm>
+ *   <DescriptionDetails>January 2023</DescriptionDetails>
+ *
  *   <DescriptionTerm>Location</DescriptionTerm>
  *   <DescriptionDetails>San Francisco, CA</DescriptionDetails>
- *   <DescriptionTerm>Start Date</DescriptionTerm>
- *   <DescriptionDetails>March 15, 2023</DescriptionDetails>
  * </DescriptionList>
  *
- * // Project details
+ * // System information
  * <DescriptionList>
- *   <DescriptionTerm>Project Name</DescriptionTerm>
- *   <DescriptionDetails>Patternmode Component Library</DescriptionDetails>
  *   <DescriptionTerm>Status</DescriptionTerm>
- *   <DescriptionDetails>In Development</DescriptionDetails>
- *   <DescriptionTerm>Technologies</DescriptionTerm>
- *   <DescriptionDetails>React, TypeScript, Tailwind CSS</DescriptionDetails>
- *   <DescriptionTerm>Team Size</DescriptionTerm>
- *   <DescriptionDetails>5 developers</DescriptionDetails>
+ *   <DescriptionDetails>
+ *     <span className="inline-flex items-center gap-1">
+ *       <span className="w-2 h-2 bg-green-500 rounded-full" />
+ *       Online
+ *     </span>
+ *   </DescriptionDetails>
+ *
+ *   <DescriptionTerm>Last Active</DescriptionTerm>
+ *   <DescriptionDetails>5 minutes ago</DescriptionDetails>
  * </DescriptionList>
  * ```
  */
@@ -63,25 +69,23 @@ import { cx } from "../../lib/utils";
  * @param props - Standard dl element props.
  *
  * @component
- * @example
- * ```tsx
- * <DescriptionList>
- *   <DescriptionTerm>Term</DescriptionTerm>
- *   <DescriptionDetails>Definition</DescriptionDetails>
- * </DescriptionList>
- * ```
  */
 /**
- * Description List.
+ * Definition list component for displaying term-description pairs with consistent formatting.
  *
- * @component
  * @id description-list
- * @name Description List
+ * @name DescriptionList
+ * @icon List
+ * @category data
+ * @component
+ * @param props - Component properties.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - The description terms and details components.
  */
-export function DescriptionList({
+const DescriptionList = ({
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"dl">) {
+}: React.ComponentPropsWithoutRef<"dl">) => {
   return (
     <dl
       {...props}
@@ -91,7 +95,7 @@ export function DescriptionList({
       )}
     />
   );
-}
+};
 
 /**
  * Description term component for definition lists.
@@ -164,3 +168,5 @@ export function DescriptionDetails({
     />
   );
 }
+
+export { DescriptionList };
