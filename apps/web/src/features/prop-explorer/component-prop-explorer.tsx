@@ -82,7 +82,7 @@ export function ComponentPropExplorer({
       <div className="flex flex-1">
         {/* Main content - Live preview */}
         <div
-          className="flex-1 p-6 relative"
+          className="flex-1 p-6 relative overflow-auto"
           data-testid="component-explorer-preview"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23d1d5db'/%3E%3Ccircle cx='13' cy='1' r='0.5' fill='%23d1d5db'/%3E%3Ccircle cx='1' cy='13' r='0.5' fill='%23d1d5db'/%3E%3Ccircle cx='13' cy='13' r='0.5' fill='%23d1d5db'/%3E%3Ccircle cx='1' cy='25' r='1.5' fill='%238b8b8b'/%3E%3C/svg%3E")`,

@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
   Badge,
+  List,
+  ListItem,
   Text,
 } from "@patternmode/ui";
 
@@ -14,7 +16,7 @@ import React from "react";
 
 // Default accordion
 export const DefaultExample = () => (
-  <Accordion>
+  <Accordion className="w-128 max-w-full">
     <AccordionItem value="item-1">
       <AccordionTrigger>What is Patternmode?</AccordionTrigger>
       <AccordionContent>
@@ -36,7 +38,7 @@ export const DefaultExample = () => (
 
 // Multiple open accordion
 export const MultipleOpenExample = () => (
-  <Accordion openMultiple>
+  <Accordion openMultiple className="w-128 max-w-full">
     <AccordionItem value="item-1">
       <AccordionTrigger>What is Patternmode?</AccordionTrigger>
       <AccordionContent>
@@ -58,7 +60,7 @@ export const MultipleOpenExample = () => (
 
 // Mixed content types - demonstrates string vs component handling
 export const MixedContentExample = () => (
-  <Accordion>
+  <Accordion className="w-128 max-w-full">
     <AccordionItem value="string-content">
       <AccordionTrigger>String Content (Auto Text Component)</AccordionTrigger>
       <AccordionContent>
@@ -96,43 +98,18 @@ export const MixedContentExample = () => (
       <AccordionContent>
         <div className="space-y-2">
           <Text>This demonstrates mixed content:</Text>
-          <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>
+          <List variant="marker" className="ml-4">
+            <ListItem>
               <Text size="sm">List items with custom Text components</Text>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem>
               <Text size="sm" className="text-amber-600">
                 Custom colored text that overrides defaults
               </Text>
-            </li>
-          </ul>
+            </ListItem>
+          </List>
         </div>
       </AccordionContent>
     </AccordionItem>
   </Accordion>
 );
-
-/**
- * Registry of all examples with their metadata.
- * Inline metadata approach - no separate .meta objects needed.
- */
-export const EXAMPLES: ComponentExample[] = [
-  {
-    id: "DefaultExample",
-    title: "Default",
-    description: "Basic usage example",
-    component: DefaultExample,
-  },
-  {
-    id: "MultipleOpenExample",
-    title: "Multiple Open",
-    description: "Example allowing multiple items to be open",
-    component: MultipleOpenExample,
-  },
-  {
-    id: "MixedContentExample",
-    title: "Mixed Content",
-    description: "Example with mixed content types",
-    component: MixedContentExample,
-  },
-];

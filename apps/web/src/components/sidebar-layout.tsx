@@ -10,7 +10,6 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 
 import {
-  getDynamicIconByName,
   Sidebar,
   SidebarBody,
   SidebarGroup,

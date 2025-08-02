@@ -171,7 +171,7 @@ type ButtonProps = {
   /**
    * Visual style variant of the button.
    */
-  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
+  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
   /**
    * Size variant of the button.
    */
@@ -224,7 +224,7 @@ type ButtonProps = {
  * @param props - Component properties.
  * @param props.ref - Optional ref to the button element.
  * @param props.render - Custom element to render (defaults to button tag).
- * @param props.variant - Visual style variant ("default" | "secondary" | "outline" | "ghost" | "destructive").
+ * @param props.variant - Visual style variant ("default" | "secondary" | "outline" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal").
  * @param props.size - Size variant ("xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg").
  * @param props.rounded - Whether to use full border radius for rounded appearance.
  * @param props.isLoading - Whether the button is in a loading state (shows spinner).

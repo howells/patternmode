@@ -2,7 +2,7 @@
  * Static Icon Registry
  *
  * This file imports and re-exports all Lucide React icons in a static registry.
- * 
+ *
  * AUTO-GENERATED - Do not edit manually!
  * Run: pnpm run generate-icon-list to regenerate
  *
@@ -1846,7 +1846,7 @@ export const iconNames: string[] = [
   "Zap",
   "ZapOff",
   "ZoomIn",
-  "ZoomOut"
+  "ZoomOut",
 ];
 
 // Create the icon registry by mapping names to components
@@ -1875,16 +1875,3 @@ export function hasIcon(name: string): boolean {
 
 // Export the registry as default for convenience
 export default iconRegistry;
-
-// Debug logging (only in development)
-if (typeof console !== "undefined" && process.env.NODE_ENV === "development") {
-  // eslint-disable-next-line no-console
-  console.log(`📦 Icon Registry: ${iconCount} icons loaded`);
-  if (iconCount > 0) {
-    // eslint-disable-next-line no-console
-    console.log(`🎯 Sample icons: ${iconNames.slice(0, 10).join(", ")}`);
-  }
-  else {
-    console.warn("⚠️ No icons found in registry!");
-  }
-}

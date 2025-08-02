@@ -7,8 +7,10 @@ import {
   Breadcrumbs,
   Button,
   CodeBlock,
+  FieldArrayExample,
   getDynamicIconByName,
   Loader,
+  ScrollArea,
   SparkAreaChart,
   Tabs,
   TabsContent,
@@ -28,53 +30,59 @@ const GridAlignedContainer: React.FC<{
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const componentRef = React.useRef<HTMLDivElement>(null);
-  const [leftPosition, setLeftPosition] = React.useState(96);
-  const [isWiderThanContainer, setIsWiderThanContainer] = React.useState(false);
+  const [gridOffset, setGridOffset] = React.useState(0);
 
   React.useEffect(() => {
-    const calculatePosition = () => {
+    const calculateGridOffset = () => {
       if (containerRef.current && componentRef.current) {
         const containerWidth = containerRef.current.offsetWidth;
         const componentWidth = componentRef.current.offsetWidth;
         const gridSize = 24; // 24px grid size
 
-        // Check if component is wider than container
-        const isWide = componentWidth > containerWidth - 48; // 48px for padding
-        setIsWiderThanContainer(isWide);
+        // Check if component should be grid-aligned (not too wide)
+        const shouldGridAlign = componentWidth <= containerWidth - 96; // Allow some margin
 
-        if (!isWide) {
-          // Calculate the center position
+        if (shouldGridAlign) {
+          // Calculate how far we need to shift to align with grid
+          // The component will be centered by flexbox, then we adjust by small amounts to snap to grid
           const centerPosition = (containerWidth - componentWidth) / 2;
+          const gridStartOffset = 24; // First visible grid line
 
-          // Snap to nearest grid intersection
-          const gridOffset = 24; // First visible grid line
-          const snappedLeft
-            = Math.round((centerPosition - gridOffset) / gridSize) * gridSize
-              + gridOffset;
+          // Find the nearest grid line to the center position
+          const nearestGridLine = Math.round((centerPosition - gridStartOffset) / gridSize) * gridSize + gridStartOffset;
 
-          setLeftPosition(snappedLeft);
+          // Calculate the offset needed to move from center to grid line
+          const offset = nearestGridLine - centerPosition;
+
+          // Clamp the offset to reasonable bounds to prevent extreme shifts
+          const clampedOffset = Math.max(-48, Math.min(48, offset));
+
+          setGridOffset(clampedOffset);
+        }
+        else {
+          setGridOffset(0); // No grid alignment for wide components
         }
       }
     };
 
     // Initial calculation with a small delay to allow component to render
-    const timeoutId = setTimeout(calculatePosition, 100);
+    const timeoutId = setTimeout(calculateGridOffset, 100);
 
     // Use ResizeObserver to watch for component size changes
     const resizeObserver = new ResizeObserver(() => {
-      calculatePosition();
+      calculateGridOffset();
     });
 
     if (componentRef.current) {
       resizeObserver.observe(componentRef.current);
     }
 
-    window.addEventListener("resize", calculatePosition);
+    window.addEventListener("resize", calculateGridOffset);
 
     return () => {
       clearTimeout(timeoutId);
       resizeObserver.disconnect();
-      window.removeEventListener("resize", calculatePosition);
+      window.removeEventListener("resize", calculateGridOffset);
     };
   }, []);
 
@@ -83,12 +91,13 @@ const GridAlignedContainer: React.FC<{
     return (
       <div
         ref={containerRef}
-        className="relative flex justify-center"
+        className="flex justify-center items-start"
         style={{
           minHeight: "400px",
-          paddingTop: "72px", // equivalent to top-18
+          paddingTop: "72px",
           paddingLeft: "24px",
           paddingRight: "24px",
+          paddingBottom: "24px",
         }}
       >
         <div ref={componentRef} className="w-full flex justify-center">
@@ -98,39 +107,24 @@ const GridAlignedContainer: React.FC<{
     );
   }
 
-  // For wide components, use centered positioning without absolute left
-  if (isWiderThanContainer) {
-    return (
-      <div
-        ref={containerRef}
-        className="relative flex justify-center"
-        style={{
-          minHeight: "400px",
-          paddingTop: "72px", // equivalent to top-18
-          paddingLeft: "24px",
-          paddingRight: "24px",
-        }}
-      >
-        <div ref={componentRef} className="flex justify-center">
-          {children}
-        </div>
-      </div>
-    );
-  }
-
+  // For all other components, use flexbox centering with grid offset
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className="flex justify-center items-start"
       style={{
         minHeight: "400px",
+        paddingTop: "72px",
+        paddingLeft: "24px",
+        paddingRight: "24px",
+        paddingBottom: "24px",
       }}
     >
       <div
         ref={componentRef}
-        className="absolute top-18"
         style={{
-          left: `${leftPosition}px`,
+          transform: `translateX(${gridOffset}px)`,
+          transition: "transform 0.2s ease-out",
         }}
       >
         {children}
@@ -238,6 +232,8 @@ const componentMap: Record<string, React.ComponentType<unknown>> = {
   "button": Button,
   "breadcrumbs": Breadcrumbs,
   "spark-chart": SparkAreaChart, // Use SparkAreaChart as default spark chart
+  "FieldArray": FieldArrayExample,
+  "Field Array": FieldArrayExample, // Handle the space-separated version
 };
 
 // Create dynamic component based on componentId and category

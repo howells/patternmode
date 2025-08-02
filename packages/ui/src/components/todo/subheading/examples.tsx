@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentExample } from "../../../lib/component-config-types";
-import { Subheading } from "@patternmode/ui";
+import { List, ListItem, Subheading } from "@patternmode/ui";
 
 import React from "react";
 
@@ -30,11 +30,11 @@ export function WithContentExample() {
       </p>
 
       <Subheading>Key Features</Subheading>
-      <ul className="list-disc pl-5 space-y-1 text-zinc-600">
-        <li>Feature one description</li>
-        <li>Feature two description</li>
-        <li>Feature three description</li>
-      </ul>
+      <List variant="marker" className="pl-5">
+        <ListItem>Feature one description</ListItem>
+        <ListItem>Feature two description</ListItem>
+        <ListItem>Feature three description</ListItem>
+      </List>
     </div>
   );
 } export const SubheadingExample = DefaultExample;

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentExample } from "../../../lib/component-config-types";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger, iconRegistry } from "@patternmode/ui";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger, iconRegistry, List, ListItem } from "@patternmode/ui";
 
 import React from "react";
 // Pre-imported icons from registry
@@ -22,11 +22,11 @@ export const DefaultOpenExample = () => (
   <Collapsible defaultOpen>
     <CollapsibleTrigger>System Requirements</CollapsibleTrigger>
     <CollapsibleContent>
-      <ul className="space-y-1 ml-4">
-        <li>• React 18 or higher</li>
-        <li>• Node.js 16 or higher</li>
-        <li>• TypeScript 4.9 or higher</li>
-      </ul>
+      <List>
+        <ListItem>• React 18 or higher</ListItem>
+        <ListItem>• Node.js 16 or higher</ListItem>
+        <ListItem>• TypeScript 4.9 or higher</ListItem>
+      </List>
     </CollapsibleContent>
   </Collapsible>
 );

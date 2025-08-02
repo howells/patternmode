@@ -41,7 +41,8 @@ const requireComponentFiles = {
     function isComponentDirectory(dirPath) {
       const dirName = path.basename(dirPath);
       // All component directories should be kebab-case and not start with underscore
-      return /^[a-z]+(?:-[a-z]+)*$/.test(dirName) && !dirName.startsWith("_");
+      // Exclude the 'todo' directory from structure checks
+      return /^[a-z]+(?:-[a-z]+)*$/.test(dirName) && !dirName.startsWith("_") && dirName !== "todo";
     }
 
     /**

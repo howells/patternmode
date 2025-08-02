@@ -1,10 +1,12 @@
 import type { ComponentConfig } from "../lib/component-config-types";
 
 import { componentConfig as accordionConfig } from "./accordion/component.config";
+import { componentConfig as fieldArrayConfig } from "./field-array/component.config";
 import { componentConfig as textareaConfig } from "./textarea/component.config";
 
 export const COMPONENT_REGISTRY = {
   accordion: accordionConfig,
+  fieldArray: fieldArrayConfig,
   textarea: textareaConfig,
 } as const satisfies Record<string, ComponentConfig>;
 

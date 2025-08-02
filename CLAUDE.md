@@ -112,23 +112,23 @@ const variants = tv({
 
 ## Component Architecture (CRITICAL)
 
-**MANDATORY: All components follow the new config-first architecture**
+**MANDATORY: All components follow the config-first architecture**
 
 ### File Structure
 ```
 src/components/[component-name]/
 ├── component.tsx        # Implementation with JSDoc-enhanced types
-├── component.config.ts  # Component specification + examples
+├── component.config.ts  # Component specification + examples with imports
 ├── index.tsx           # Export barrel
 ├── examples.tsx        # Example components
 └── preview.tsx         # Preview component (optional)
 ```
 
-### TypeScript + JSDoc Pattern
+### Component Implementation (component.tsx)
 
 **Props must have JSDoc documentation on the TypeScript interface:**
 ```tsx
-type ComponentProps = {
+type TextareaProps = {
   /**
    * Whether to display error styling for form validation.
    * Adds red border and error state styling to indicate validation errors.
@@ -141,62 +141,152 @@ type ComponentProps = {
    * When false: Uses basic native behavior.
    */
   autoResize?: boolean;
-} & BaseComponentProps;
+} & Omit<TextareaAutosizeProps, "style">;
 ```
 
 **Component gets basic JSDoc for metadata only:**
 ```tsx
 /**
- * Auto-resizing component with configurable constraints and error states.
+ * Auto-resizing multi-line text input component built on react-textarea-autosize.
  */
-const Component = ({ 
+export const Textarea = ({ 
   hasError, 
   autoResize = true,  // ← Defaults extracted automatically
   ...props 
-}: ComponentProps) => {
+}: TextareaProps) => {
+  // Implementation...
+};
 ```
 
-### Config File Pattern
+### Config File Pattern (component.config.ts)
 
-**Each component has a companion config file:**
+**Single-component example:**
 ```tsx
+import type { ComponentConfig } from "../../lib/component-config-types";
+import { MessageSquare } from "lucide-react";
+import { Textarea } from "./component";
+import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
+
 export const componentConfig: ComponentConfig = {
-  id: "component-name",
-  name: "ComponentName", 
-  description: "Component description...",
-  category: "inputs", // ui, inputs, forms, charts, etc.
-  icon: IconComponent, // Lucide React icon
-  componentId: "ComponentName",
-  importStatement: "import { ComponentName } from \"@patternmode/ui\";",
-  examples: [/* example objects with live components */]
+  id: "textarea",
+  name: "Textarea",
+  description: "Auto-resizing multi-line text input component...",
+  category: "inputs",
+  icon: MessageSquare,
+  importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
+  examples: [
+    {
+      id: "default",
+      title: "Default",
+      description: "Basic textarea with default settings",
+      component: DefaultExample,
+    },
+    // ... more examples
+  ],
+  components: [
+    {
+      name: "Textarea",
+      description: "Multi-line text input component",
+      component: Textarea,
+    },
+  ],
+};
+```
+
+**Multi-component family example (accordion):**
+```tsx
+import type { ComponentConfig } from "../../lib/component-config-types";
+import { ChevronDown } from "lucide-react";
+import { 
+  Accordion, 
+  AccordionItem, 
+  AccordionTrigger, 
+  AccordionContent 
+} from "./component";
+import { BasicExample, MultipleExample } from "./examples";
+
+export const componentConfig: ComponentConfig = {
+  id: "accordion",
+  name: "Accordion",
+  description: "Vertically stacked set of interactive headings...",
+  category: "ui",
+  icon: ChevronDown,
+  importStatement: `import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@patternmode/ui/accordion";`,
+  examples: [/* imported example components */],
+  components: [
+    {
+      component: Accordion,
+      name: "Accordion", 
+      primary: true,
+      description: "Root container for collapsible content sections."
+    },
+    {
+      component: AccordionItem,
+      name: "AccordionItem",
+      description: "Individual collapsible section within accordion."
+    },
+    {
+      component: AccordionTrigger,
+      name: "AccordionTrigger", 
+      description: "Clickable header that toggles accordion item."
+    },
+    {
+      component: AccordionContent,
+      name: "AccordionContent",
+      description: "Collapsible content area of accordion item."
+    }
+  ],
+};
+```
+
+### Examples File (examples.tsx)
+
+**Export individual example components:**
+```tsx
+export const DefaultExample = () => {
+  const [value, setValue] = React.useState("");
+  return (
+    <Textarea
+      placeholder="Start typing..."
+      value={value}
+      onChange={e => setValue(e.target.value)}
+    />
+  );
+};
+
+export const WithErrorExample = () => {
+  // Implementation...
 };
 ```
 
 ### Key Principles
 
-- **Props documented in TypeScript interface** with JSDoc
+- **Props documented in TypeScript interface** with comprehensive JSDoc
 - **Defaults only in component destructuring** (single source of truth)
-- **Config file contains metadata + examples** (no prop duplication)
-- **Parser extracts** descriptions from JSDoc + defaults from component
+- **Config file imports actual components and examples** (not string references)
+- **Examples loaded from config object** (no dynamic imports needed)
+- **Multi-component families supported** via `components` array with `primary` flag
 - **Export barrel** (`index.tsx`) for clean imports
+- **No build dependencies** - configs can be imported directly
 
 ### Direct Config Usage (No Build Required)
 
-**Configs can be imported and used directly in development:**
-
+**Import and use configs directly in development:**
 ```tsx
 // Import config directly - no build step needed!
-import { componentConfig } from "@patternmode/ui/src/components/textarea/component.config";
+import { componentConfig as textareaConfig } from "@patternmode/ui/src/components/textarea/component.config";
+import { componentConfig as accordionConfig } from "@patternmode/ui/src/components/accordion/component.config";
 
 // Use in prop explorer, documentation, or tooling
-<ComponentPropExplorer config={componentConfig} />
+<ComponentPropExplorer config={textareaConfig} />
+<ComponentExamples componentId="textarea" /> // Gets examples from config.examples
 ```
 
-**Multi-component families supported:**
-```tsx
-// Accordion config includes all 4 components
-import { componentConfig } from "@patternmode/ui/src/components/accordion/component.config";
+### Config-First Examples Loading
 
-// Config contains: Accordion, AccordionItem, AccordionTrigger, AccordionContent
-console.log(componentConfig.components); // Array of ComponentDefinition
+**Examples are now loaded from config objects, not dynamic imports:**
+```tsx
+// ComponentExamples component loads from config.examples
+const config = getComponentConfig(componentId);
+const examples = config.examples; // Direct access, no import() needed
 ```
