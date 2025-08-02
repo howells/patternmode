@@ -10,6 +10,7 @@ export type ComponentExample = {
   code: string;
   preview: React.ReactNode;
   wrapper?: React.ComponentType<{ children: React.ReactNode }>;
+  component?: React.ComponentType;
 };
 
 export type APIProperty = {
@@ -60,6 +61,12 @@ export type ComponentConfig = {
   // Component identifier for prop explorer (optional)
   componentId?: string;
 
+  // Component definitions (for multi-component families)
+  components?: Array<{
+    name: string;
+    component?: React.ComponentType;
+  }>;
+
   // Accessibility information
   accessibility?: {
     pattern?: {
@@ -73,7 +80,7 @@ export type ComponentConfig = {
   // Additional sections
   sections?: {
     title: string;
-    content: string | React.ReactNode;
+    content: string;
   }[];
 };
 

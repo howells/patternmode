@@ -49,6 +49,8 @@ async function loadComponentConfig(componentId: string, category: string) {
             id: "placeholder",
             title: "Coming Soon",
             description: "Documentation for this component is being prepared.",
+            code: `<div className="text-zinc-500">${name} example coming soon</div>`,
+            preview: React.createElement("div", { className: "text-zinc-500" }, `${name} example coming soon`),
             component: () => React.createElement("div", { className: "text-zinc-500" }, `${name} example coming soon`),
           },
         ],
