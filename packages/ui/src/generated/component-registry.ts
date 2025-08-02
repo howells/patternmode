@@ -417,7 +417,7 @@ export const componentRegistry: ComponentConfigRegistry = {
     "id": "avatar",
     "name": "Avatar",
     "description": "User profile image component with fallback initials and various size options.",
-    "category": "ui",
+    "category": "media",
     "icon": "User",
     "componentId": "Avatar",
     "importStatement": "import { Avatar } from \"@patternmode/ui\";",
@@ -432,7 +432,13 @@ export const componentRegistry: ComponentConfigRegistry = {
       {
         "name": "initials",
         "type": "string",
-        "description": "Initials to display when no image is provided.",
+        "description": "Initials to display when no image is provided.\nAutomatically uppercased and limited to 2 characters.",
+        "required": false
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "description": "Arbitrary text content to display when no image is provided.\nCan be numbers, symbols, or any short text (not automatically uppercased).",
         "required": false
       },
       {
@@ -445,7 +451,7 @@ export const componentRegistry: ComponentConfigRegistry = {
       {
         "name": "dynamicBackground",
         "type": "boolean",
-        "description": "Whether to use a dynamic background color based on initials/alt text.",
+        "description": "Whether to use a dynamic background color based on initials/text/alt text.",
         "defaultValue": false,
         "required": false
       },
@@ -469,7 +475,7 @@ export const componentRegistry: ComponentConfigRegistry = {
     "id": "badge",
     "name": "Badge",
     "description": "Small status indicator component for labels, counts, and categorical information.",
-    "category": "ui",
+    "category": "utility",
     "icon": "Tag",
     "componentId": "Badge",
     "importStatement": "import { Badge } from \"@patternmode/ui\";",
@@ -2304,6 +2310,97 @@ export const componentRegistry: ComponentConfigRegistry = {
         "name": "fadeFromIndex",
         "type": "number",
         "description": "Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.",
+        "required": false
+      }
+    ],
+    "examples": []
+  },
+  "dropdown-item": {
+    "id": "dropdown-item",
+    "name": "DropdownItem",
+    "description": "A consistent dropdown item component that extends Button for use across Select, Combobox, TagInput, Menu, and other dropdown components.\n\nBuilt on top of the Button component, inheriting all its functionality (icons, variants, sizes, states) while providing\ndropdown-specific styling and behavior. This ensures consistency across all dropdown components while leveraging\nthe robust Button foundation.\n\n**Key Features:**\n- **Button Foundation**: Inherits all Button functionality (icons, kbd shortcuts, loading states, etc.)\n- **Dropdown Styling**: Specialized styling for dropdown contexts (full width, left alignment, subtle hover)\n- **Selection States**: Visual feedback for highlighted and selected states\n- **Consistent Behavior**: Standardized interaction patterns across all dropdown components\n- **Accessibility**: Proper ARIA attributes and keyboard navigation support inherited from Button\n- **Theme Support**: Full dark mode compatibility.",
+    "category": "utility",
+    "icon": "List",
+    "componentId": "DropdownItem",
+    "importStatement": "import { DropdownItem } from \"@patternmode/ui\";",
+    "props": [
+      {
+        "name": "highlighted",
+        "type": "boolean",
+        "description": "Whether the item is highlighted/focused.",
+        "defaultValue": false,
+        "required": false
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "description": "Whether the item is selected.",
+        "defaultValue": false,
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "description": "Hint text to display on the right.",
+        "required": false
+      },
+      {
+        "name": "kbd",
+        "type": "string | string[]",
+        "description": "Keyboard shortcut to display.",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "ComponentType<{ className?: string; strokeWidth?: number; }>",
+        "description": "Icon component (proxy for leftIcon, useful for single-icon buttons).",
+        "required": false
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "description": "Whether the button is in a loading state.",
+        "required": false
+      },
+      {
+        "name": "loadingText",
+        "type": "string",
+        "description": "Text to display when loading (defaults to children).",
+        "required": false
+      },
+      {
+        "name": "leftIcon",
+        "type": "ComponentType<{ className?: string; strokeWidth?: number; }>",
+        "description": "Icon component to display on the left side.",
+        "required": false
+      },
+      {
+        "name": "rightIcon",
+        "type": "ComponentType<{ className?: string; strokeWidth?: number; }>",
+        "description": "Icon component to display on the right side.",
+        "required": false
+      },
+      {
+        "name": "iconStrokeWidth",
+        "type": "number",
+        "description": "Stroke width for icons (defaults to 1).",
+        "required": false
+      },
+      {
+        "name": "kbdPlatform",
+        "type": "\"mac\" | \"pc\" | \"auto\"",
+        "description": "Platform for keyboard shortcut display.",
+        "required": false,
+        "options": [
+          "mac",
+          "pc",
+          "auto"
+        ]
+      },
+      {
+        "name": "shadow",
+        "type": "boolean",
+        "description": "Whether the button should have a shadow.",
         "required": false
       }
     ],
@@ -4787,130 +4884,191 @@ export const componentRegistry: ComponentConfigRegistry = {
   "tag-input": {
     "id": "tag-input",
     "name": "TagInput",
-    "description": "Input component for creating and managing multiple tags or labels.",
+    "description": "Hook for managing tag input state.",
     "category": "inputs",
     "icon": "Tags",
     "componentId": "TagInput",
     "importStatement": "import { TagInput } from \"@patternmode/ui\";",
     "props": [
       {
-        "name": "options",
-        "type": "TagOption[]",
-        "description": "Array of available tag options.",
+        "name": "pop",
+        "type": "() => string",
+        "description": "Removes the last element from an array and returns it.\nIf the array is empty, undefined is returned and the array is not modified.",
         "required": true
       },
       {
-        "name": "value",
-        "type": "string[]",
-        "description": "Currently selected tag values.",
-        "defaultValue": "[]",
-        "required": false
+        "name": "push",
+        "type": "(...items: string[]) => number",
+        "description": "Appends new elements to the end of an array, and returns the new length of the array.\n@param items New elements to add to the array.",
+        "required": true
       },
       {
-        "name": "placeholder",
-        "type": "string",
-        "description": "Placeholder text for the input.",
-        "defaultValue": "Add tags...",
-        "required": false
+        "name": "join",
+        "type": "(separator?: string) => string",
+        "description": "Adds all the elements of an array into a string, separated by the specified separator string.\n@param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.",
+        "required": true
       },
       {
-        "name": "selectedPlaceholder",
-        "type": "string",
-        "description": "Placeholder text when tags are selected.",
-        "defaultValue": "Add more tags...",
-        "required": false
+        "name": "reverse",
+        "type": "() => string[]",
+        "description": "Reverses the elements in an array in place.\nThis method mutates the array and returns a reference to the same array.",
+        "required": true
       },
       {
-        "name": "emptyMessage",
-        "type": "string",
-        "description": "Message shown when no options match search.",
-        "defaultValue": "No options found.",
-        "required": false
+        "name": "shift",
+        "type": "() => string",
+        "description": "Removes the first element from an array and returns it.\nIf the array is empty, undefined is returned and the array is not modified.",
+        "required": true
       },
       {
-        "name": "disabled",
-        "type": "boolean",
-        "description": "Whether the input is disabled.",
-        "defaultValue": false,
-        "required": false
+        "name": "sort",
+        "type": "(compareFn?: (a: string, b: string) => number) => string[]",
+        "description": "Sorts an array in place.\nThis method mutates the array and returns a reference to the same array.\n@param compareFn Function used to determine the order of the elements. It is expected to return\na negative value if the first argument is less than the second argument, zero if they're equal, and a positive\nvalue otherwise. If omitted, the elements are sorted in ascending, UTF-16 code unit order.\n```ts\n[11,2,22,1].sort((a, b) => a - b)\n```",
+        "required": true
       },
       {
-        "name": "maxTags",
-        "type": "number",
-        "description": "Maximum number of tags that can be selected.",
-        "required": false
+        "name": "splice",
+        "type": "{ (start: number, deleteCount?: number): string[]; (start: number, deleteCount: number, ...items: string[]): string[]; }",
+        "description": "Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n@param start The zero-based location in the array from which to start removing elements.\n@param deleteCount The number of elements to remove.\n@returns An array containing the elements that were deleted.\n@param start The zero-based location in the array from which to start removing elements.\n@param deleteCount The number of elements to remove.\n@param items Elements to insert into the array in place of the deleted elements.\n@returns An array containing the elements that were deleted.",
+        "required": true
       },
       {
-        "name": "allowCreate",
-        "type": "boolean",
-        "description": "Whether to allow creating new tags not in options.",
-        "defaultValue": false,
-        "required": false
+        "name": "unshift",
+        "type": "(...items: string[]) => number",
+        "description": "Inserts new elements at the start of an array, and returns the new length of the array.\n@param items Elements to insert at the start of the array.",
+        "required": true
       },
       {
-        "name": "inputClassName",
-        "type": "string",
-        "description": "Additional CSS classes for input.",
-        "required": false
+        "name": "every",
+        "type": "{ <S extends string>(predicate: (value: string, index: number, array: string[]) => value is S, thisArg?: any): this is S[]; (predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any): boolean; }",
+        "description": "Determines whether all the members of an array satisfy the specified test.\n@param predicate A function that accepts up to three arguments. The every method calls\nthe predicate function for each element in the array until the predicate returns a value\nwhich is coercible to the Boolean value false, or until the end of the array.\n@param thisArg An object to which the this keyword can refer in the predicate function.\nIf thisArg is omitted, undefined is used as the this value.\n@param predicate A function that accepts up to three arguments. The every method calls\nthe predicate function for each element in the array until the predicate returns a value\nwhich is coercible to the Boolean value false, or until the end of the array.\n@param thisArg An object to which the this keyword can refer in the predicate function.\nIf thisArg is omitted, undefined is used as the this value.",
+        "required": true
       },
       {
-        "name": "dropdownClassName",
-        "type": "string",
-        "description": "Additional CSS classes for dropdown.",
-        "required": false
+        "name": "some",
+        "type": "(predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any) => boolean",
+        "description": "Determines whether the specified callback function returns true for any element of an array.\n@param predicate A function that accepts up to three arguments. The some method calls\nthe predicate function for each element in the array until the predicate returns a value\nwhich is coercible to the Boolean value true, or until the end of the array.\n@param thisArg An object to which the this keyword can refer in the predicate function.\nIf thisArg is omitted, undefined is used as the this value.",
+        "required": true
       },
       {
-        "name": "tagClassName",
-        "type": "string",
-        "description": "Additional CSS classes for individual tags.",
-        "required": false
+        "name": "forEach",
+        "type": "(callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void",
+        "description": "Performs the specified action for each element in an array.\n@param callbackfn A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.\n@param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.",
+        "required": true
       },
       {
-        "name": "maxHeight",
-        "type": "number",
-        "description": "Maximum height for dropdown.",
-        "defaultValue": 200,
-        "required": false
+        "name": "map",
+        "type": "<U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]",
+        "description": "Calls a defined callback function on each element of an array, and returns an array that contains the results.\n@param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.\n@param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.",
+        "required": true
       },
       {
-        "name": "iconStrokeWidth",
-        "type": "number",
-        "description": "Stroke width for icons.",
-        "defaultValue": "config.getIconStrokeWidth()",
-        "required": false
+        "name": "filter",
+        "type": "{ <S extends string>(predicate: (value: string, index: number, array: string[]) => value is S, thisArg?: any): S[]; (predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any): string[]; }",
+        "description": "Returns the elements of an array that meet the condition specified in a callback function.\n@param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n@param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n@param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n@param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.",
+        "required": true
       },
       {
-        "name": "renderItem",
-        "type": "(option: TagOption, isHighlighted: boolean, isSelected: boolean) => ReactNode",
-        "description": "Custom render function for dropdown items.",
-        "required": false
+        "name": "reduce",
+        "type": "{ (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string): string; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, ...",
+        "description": "Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n@param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n@param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n@param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n@param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.",
+        "required": true
       },
       {
-        "name": "renderTag",
-        "type": "(option: TagOption, onRemove: () => void) => ReactNode",
-        "description": "Custom render function for selected tags.",
-        "required": false
+        "name": "reduceRight",
+        "type": "{ (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string): string; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, ...",
+        "description": "Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n@param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n@param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n@param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n@param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.",
+        "required": true
       },
       {
-        "name": "filterOptions",
-        "type": "(options: TagOption[], inputValue: string) => TagOption[]",
-        "description": "Custom filter function for options.",
-        "defaultValue": "(\n  options: TagOption[],\n  inputValue: string,\n): TagOption[] => {\n  if (!Array.isArray(options)) { return []; }\n  if (!inputValue) { return options; }\n\n  const lowercaseInput = inputValue.toLowerCase();\n  return options.filter(option =>\n    option.label.toLowerCase().includes(lowercaseInput),\n  );\n}",
-        "required": false
+        "name": "find",
+        "type": "{ <S extends string>(predicate: (value: string, index: number, obj: string[]) => value is S, thisArg?: any): S; (predicate: (value: string, index: number, obj: string[]) => unknown, thisArg?: any): string; }",
+        "description": "Returns the value of the first element in the array where predicate is true, and undefined\notherwise.\n@param predicate find calls predicate once for each element of the array, in ascending\norder, until it finds one where predicate returns true. If such an element is found, find\nimmediately returns that element value. Otherwise, find returns undefined.\n@param thisArg If provided, it will be used as the this value for each invocation of\npredicate. If it is not provided, undefined is used instead.",
+        "required": true
       },
       {
-        "name": "validateNewTag",
-        "type": "(value: string) => boolean",
-        "description": "Function to validate new tag creation.",
-        "defaultValue": "(value: string): boolean => {\n  return value.trim().length > 0 && value.trim().length <= 50;\n}",
-        "required": false
+        "name": "findIndex",
+        "type": "(predicate: (value: string, index: number, obj: string[]) => unknown, thisArg?: any) => number",
+        "description": "Returns the index of the first element in the array where predicate is true, and -1\notherwise.\n@param predicate find calls predicate once for each element of the array, in ascending\norder, until it finds one where predicate returns true. If such an element is found,\nfindIndex immediately returns that element index. Otherwise, findIndex returns -1.\n@param thisArg If provided, it will be used as the this value for each invocation of\npredicate. If it is not provided, undefined is used instead.",
+        "required": true
       },
       {
-        "name": "createNewTag",
-        "type": "(value: string) => TagOption",
-        "description": "Function to create new tag option from input.",
-        "defaultValue": "(value: string): TagOption => {\n  const trimmed = value.trim();\n  return {\n    value: trimmed.toLowerCase().replace(/\\s+/g, \"-\"),\n    label: trimmed,\n  };\n}",
-        "required": false
+        "name": "fill",
+        "type": "(value: string, start?: number, end?: number) => string[]",
+        "description": "Changes all array elements from `start` to `end` index to a static `value` and returns the modified array\n@param value value to fill array section with\n@param start index to start filling the array at. If start is negative, it is treated as\nlength+start where length is the length of the array.\n@param end index to stop filling the array at. If end is negative, it is treated as\nlength+end.",
+        "required": true
+      },
+      {
+        "name": "copyWithin",
+        "type": "(target: number, start: number, end?: number) => string[]",
+        "description": "Returns the this object after copying a section of the array identified by start and end\nto the same array starting at position target\n@param target If target is negative, it is treated as length+target where length is the\nlength of the array.\n@param start If start is negative, it is treated as length+start. If end is negative, it\nis treated as length+end.\n@param end If not specified, length of the this object is used as its default value.",
+        "required": true
+      },
+      {
+        "name": "entries",
+        "type": "() => ArrayIterator<[number, string]>",
+        "description": "Returns an iterable of key, value pairs for every entry in the array",
+        "required": true
+      },
+      {
+        "name": "keys",
+        "type": "() => ArrayIterator<number>",
+        "description": "Returns an iterable of keys in the array",
+        "required": true
+      },
+      {
+        "name": "values",
+        "type": "() => ArrayIterator<string>",
+        "description": "Returns an iterable of values in the array",
+        "required": true
+      },
+      {
+        "name": "flatMap",
+        "type": "<U, This = undefined>(callback: (this: This, value: string, index: number, array: string[]) => U | readonly U[], thisArg?: This) => U[]",
+        "description": "Calls a defined callback function on each element of an array. Then, flattens the result into\na new array.\nThis is identical to a map followed by flat with depth 1.\n@param callback A function that accepts up to three arguments. The flatMap method calls the\ncallback function one time for each element in the array.\n@param thisArg An object to which the this keyword can refer in the callback function. If\nthisArg is omitted, undefined is used as the this value.",
+        "required": true
+      },
+      {
+        "name": "flat",
+        "type": "<A, D extends number = 1>(this: A, depth?: D) => FlatArray<A, D>[]",
+        "description": "Returns a new array with all sub-array elements concatenated into it recursively up to the\nspecified depth.\n@param depth The maximum recursion depth",
+        "required": true
+      },
+      {
+        "name": "findLast",
+        "type": "{ <S extends string>(predicate: (value: string, index: number, array: string[]) => value is S, thisArg?: any): S; (predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any): string; }",
+        "description": "Returns the value of the last element in the array where predicate is true, and undefined\notherwise.\n@param predicate findLast calls predicate once for each element of the array, in descending\norder, until it finds one where predicate returns true. If such an element is found, findLast\nimmediately returns that element value. Otherwise, findLast returns undefined.\n@param thisArg If provided, it will be used as the this value for each invocation of\npredicate. If it is not provided, undefined is used instead.",
+        "required": true
+      },
+      {
+        "name": "findLastIndex",
+        "type": "(predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any) => number",
+        "description": "Returns the index of the last element in the array where predicate is true, and -1\notherwise.\n@param predicate findLastIndex calls predicate once for each element of the array, in descending\norder, until it finds one where predicate returns true. If such an element is found,\nfindLastIndex immediately returns that element index. Otherwise, findLastIndex returns -1.\n@param thisArg If provided, it will be used as the this value for each invocation of\npredicate. If it is not provided, undefined is used instead.",
+        "required": true
+      },
+      {
+        "name": "toReversed",
+        "type": "() => string[]",
+        "description": "Returns a copy of an array with its elements reversed.",
+        "required": true
+      },
+      {
+        "name": "toSorted",
+        "type": "(compareFn?: (a: string, b: string) => number) => string[]",
+        "description": "Returns a copy of an array with its elements sorted.\n@param compareFn Function used to determine the order of the elements. It is expected to return\na negative value if the first argument is less than the second argument, zero if they're equal, and a positive\nvalue otherwise. If omitted, the elements are sorted in ascending, UTF-16 code unit order.\n```ts\n[11, 2, 22, 1].toSorted((a, b) => a - b) // [1, 2, 11, 22]\n```",
+        "required": true
+      },
+      {
+        "name": "toSpliced",
+        "type": "{ (start: number, deleteCount: number, ...items: string[]): string[]; (start: number, deleteCount?: number): string[]; }",
+        "description": "Copies an array and removes elements and, if necessary, inserts new elements in their place. Returns the copied array.\nCopies an array and removes elements while returning the remaining elements.\n@param start The zero-based location in the array from which to start removing elements.\n@param deleteCount The number of elements to remove.\n@param items Elements to insert into the copied array in place of the deleted elements.\n@returns The copied array.\n@param start The zero-based location in the array from which to start removing elements.\n@param deleteCount The number of elements to remove.\n@returns A copy of the original array with the remaining elements.",
+        "required": true
+      },
+      {
+        "name": "with",
+        "type": "(index: number, value: string) => string[]",
+        "description": "Copies an array, then overwrites the value at the provided index with the\ngiven value. If the index is negative, then it replaces from the end\nof the array.\n@param index The index of the value to overwrite. If the index is\nnegative, then it replaces from the end of the array.\n@param value The value to write into the copied array.\n@returns The copied array with the updated value.",
+        "required": true
       }
     ],
     "examples": []
@@ -5291,8 +5449,6 @@ export const COMPONENT_LIST = {
   ],
   "ui": [
     "alert-dialog",
-    "avatar",
-    "badge",
     "calendar",
     "callout",
     "card",
@@ -5330,6 +5486,21 @@ export const COMPONENT_LIST = {
     "meter",
     "spark-chart"
   ],
+  "media": [
+    "avatar"
+  ],
+  "utility": [
+    "badge",
+    "code-block",
+    "copy-button",
+    "dismiss-button",
+    "dropdown-item",
+    "icon",
+    "icon-select",
+    "inspector",
+    "split-button",
+    "tag"
+  ],
   "navigation": [
     "breadcrumbs",
     "menu",
@@ -5360,16 +5531,6 @@ export const COMPONENT_LIST = {
     "textarea",
     "toggle",
     "toggle-group"
-  ],
-  "utility": [
-    "code-block",
-    "copy-button",
-    "dismiss-button",
-    "icon",
-    "icon-select",
-    "inspector",
-    "split-button",
-    "tag"
   ],
   "forms": [
     "field",

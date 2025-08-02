@@ -87,18 +87,23 @@ const breadcrumbVariants = tv({
 });
 
 /**
- * Root breadcrumb navigation container.
+ * Root breadcrumb navigation container showing the current page location within a site hierarchy.
  *
  * Provides semantic navigation structure with proper ARIA labeling.
- * Acts as the container for the entire breadcrumb trail.
- *
+ * Acts as the container for the entire breadcrumb trail using compound components.
  *
  * @id breadcrumbs
  * @name Breadcrumbs
+ * @icon ChevronRight
+ * @category navigation
  * @component
+ * @param props - Component properties.
+ * @param props.ref - Optional ref to the nav element.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - Breadcrumb list content and items.
  * @example
  * ```tsx
- * <Breadcrumb>
+ * <Breadcrumbs>
  *   <BreadcrumbList>
  *     <BreadcrumbItem>
  *       <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -108,27 +113,8 @@ const breadcrumbVariants = tv({
  *       <BreadcrumbPage>Current Page</BreadcrumbPage>
  *     </BreadcrumbItem>
  *   </BreadcrumbList>
- * </Breadcrumb>
+ * </Breadcrumbs>
  * ```
- */
-/**
- * A navigation component that shows the current page.
- *
- * @id breadcrumbs
- * @name Breadcrumbs
- * @component
- */
-/**
- * Navigation component showing the current page location within a site hierarchy.
- *
- * @id breadcrumbs
- * @name Breadcrumbs
- * @icon ChevronRight
- * @category navigation
- * @component
- * @param props - Component properties.
- * @param props.className - Additional CSS classes.
- * @param props.children - Breadcrumb list content and items.
  */
 const Breadcrumbs = ({
   ref,

@@ -341,5 +341,44 @@ export type CategoryKey = typeof CATEGORY_CONFIG[number]["key"];
   }
 }
 
-// Run the generator
-generateComponentRegistry().catch(console.error);
+/**
+ * Generate registry for a single component (for testing/debugging)
+ */
+async function generateSingleComponent(componentName: string) {
+  console.log(`🔍 Generating registry for single component: ${componentName}\n`);
+  
+  const config = extractComponentInfo(componentName);
+  if (!config) {
+    console.error(`❌ Failed to extract component info for ${componentName}`);
+    return;
+  }
+  
+  console.log(`\n✅ Component: ${config.name}`);
+  console.log(`📊 Props found: ${config.props.length}`);
+  console.log(`🏷️  Category: ${config.category}`);
+  console.log(`🎨 Icon: ${config.icon || 'none'}`);
+  
+  if (config.props.length > 0) {
+    console.log(`\n📝 Props details:`);
+    config.props.forEach(prop => {
+      console.log(`  • ${prop.name}: ${prop.type}${prop.required ? ' (required)' : ''}`);
+      if (prop.description) {
+        console.log(`    ${prop.description}`);
+      }
+      if (prop.defaultValue !== undefined) {
+        console.log(`    Default: ${prop.defaultValue}`);
+      }
+    });
+  } else {
+    console.log(`\n⚠️  No props detected - this indicates a parser issue`);
+  }
+}
+
+// Check for single component argument
+const singleComponent = process.argv[2];
+if (singleComponent) {
+  generateSingleComponent(singleComponent).catch(console.error);
+} else {
+  // Run the full generator
+  generateComponentRegistry().catch(console.error);
+}

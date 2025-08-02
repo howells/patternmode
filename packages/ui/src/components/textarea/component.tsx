@@ -3,80 +3,51 @@ import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
-/**
- * Props for the Textarea component.
- *
- * Extends react-textarea-autosize props when `autoResize={true}` (default),
- * falls back to native textarea props when `autoResize={false}`.
- *
- * **Inherited Props:**
- * - All standard HTML textarea attributes (`placeholder`, `value`, `onChange`, `name`, `id`, `required`, `disabled`, etc.)
- * - All react-textarea-autosize props when `autoResize={true}`.
- *
- * @interface TextareaProps
- * @augments React.ComponentPropsWithoutRef<typeof TextareaAutosize>
- * @see {@link https://github.com/Andarist/react-textarea-autosize#props} react-textarea-autosize props
- */
 type TextareaProps = {
-  /**
+  /** 
    * Whether to display error styling for form validation.
    * Adds red border and error state styling to indicate validation errors.
-   *
-   * @default false
    */
   hasError?: boolean;
-
-  /**
+  
+  /** 
    * Whether to enable auto-resizing behavior using react-textarea-autosize.
-   *
-   * - When `true` (default): Uses TextareaAutosize component with intelligent height adjustment
-   * - When `false`: Uses native HTML textarea with fixed height.
-   *
-   * @default true
+   * When true: Uses TextareaAutosize component with intelligent height adjustment.
+   * When false: Uses native HTML textarea with fixed height.
    */
   autoResize?: boolean;
-
-  /**
+  
+  /** 
    * Minimum number of rows to display (react-textarea-autosize prop).
    * The textarea will never be smaller than this height, even when empty.
-   * Only applies when `autoResize={true}`.
-   *
-   * @default 3
+   * Only applies when autoResize=true.
    */
   minRows?: number;
-
-  /**
+  
+  /** 
    * Maximum number of rows before scrolling (react-textarea-autosize prop).
    * When content exceeds this height, the textarea will scroll instead of expanding.
-   * Only applies when `autoResize={true}`.
-   *
-   * @default undefined (no maximum)
+   * Only applies when autoResize=true.
    */
   maxRows?: number;
-
-  /**
+  
+  /** 
    * Callback when textarea height changes (react-textarea-autosize prop).
    * Useful for adjusting parent container layouts or tracking resize events.
-   * Only applies when `autoResize={true}`.
-   *
-   * @param height - New height in pixels.
-   * @param meta - Additional metadata including rowHeight.
+   * Only applies when autoResize=true.
    */
   onHeightChange?: (height: number, meta: TextareaHeightChangeMeta) => void;
-
-  /**
+  
+  /** 
    * Cache measurements for better performance (react-textarea-autosize prop).
    * Enable this for textareas that resize frequently to avoid recalculating dimensions.
-   * Only applies when `autoResize={true}`.
-   *
-   * @default false
+   * Only applies when autoResize=true.
    */
   cacheMeasurements?: boolean;
-
-  /**
+  
+  /** 
    * Standard CSS style object.
-   *
-   * **Note:** When using react-textarea-autosize (`autoResize={true}`),
+   * Note: When using react-textarea-autosize (autoResize=true),
    * height-related styles are managed internally and may be overridden.
    */
   style?: React.CSSProperties;
@@ -90,41 +61,10 @@ type TextareaProps = {
  * @icon FileText
  * @category inputs
  * @component
- * @see {@link https://github.com/Andarist/react-textarea-autosize} react-textarea-autosize documentation
- * @param props - Component properties.
- * @param props.hasError - Whether to display error styling for form validation.
- * @param props.autoResize - Whether to enable auto-resizing behavior (default: true).
- * @param props.minRows - Minimum number of rows to display (default: 3).
- * @param props.maxRows - Maximum number of rows before scrolling.
- * @param props.onHeightChange - Callback when textarea height changes.
- * @param props.cacheMeasurements - Cache measurements for better performance (default: false).
- * @param props.style - Standard CSS style object.
- * @param props.ref - Ref to the textarea element.
- * @param props.className - Additional CSS class names.
- * @example
- * ```tsx
- * // Basic usage
- * <Textarea placeholder="Enter your message..." />
- *
- * // With constraints
- * <Textarea placeholder="Enter your message..." minRows={2} maxRows={6} />
- *
- * // Form integration
- * <Textarea
- *   name="description"
- *   required
- *   hasError={!!errors.description}
- *   placeholder="Describe your request"
- * />
- *
- * // Fixed height (no auto-resize)
- * <Textarea autoResize={false} rows={5} placeholder="Fixed height" />
- * ```
  */
 const Textarea = (
   { ref: forwardedRef, className, hasError, autoResize = true, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
 ) => {
-  // Just use props directly - let React handle invalid props
   const cleanProps = props;
   const baseClassName = cx(
     // base
@@ -144,8 +84,6 @@ const Textarea = (
     focusInput,
     // error
     hasError ? hasErrorInput : "",
-    // invalid (optional)
-    // "dark:aria-invalid:ring-red-400/20 aria-invalid:ring-2 aria-invalid:ring-red-200 aria-invalid:border-red-500 invalid:ring-2 invalid:ring-red-200 invalid:border-red-500"
     className,
   );
 

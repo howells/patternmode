@@ -1,6 +1,6 @@
 "use client";
 
-import type { TextareaProps } from "./textarea";
+import type { TextareaProps } from "./component";
 import { Textarea } from "@patternmode/ui";
 
 import React from "react";

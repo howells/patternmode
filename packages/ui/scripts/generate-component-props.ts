@@ -48,116 +48,48 @@ export function generateComponentProps(componentDir: string): PropMetadata[] | n
     const componentInfo = parse(componentFile, {
       shouldExtractLiteralValuesFromEnum: true,
       propFilter: (prop, component) => {
-        // Only include props that:
-        // 1. Are explicitly declared in the component (not inherited)
-        // 2. Have custom JSDoc descriptions
-        // 3. Are not built-in JS/TS methods or DOM attributes
-
-        // Exclude all known built-in methods and properties
-        const builtinMethods = [
-          // String methods
-          "toString",
-          "charAt",
-          "charCodeAt",
-          "indexOf",
-          "lastIndexOf",
-          "substring",
-          "substr",
-          "slice",
-          "concat",
-          "replace",
-          "split",
-          "toLowerCase",
-          "toUpperCase",
-          "trim",
-          "valueOf",
-          "length",
-          "localeCompare",
-          "match",
-          "search",
-          "toLocaleLowerCase",
-          "toLocaleUpperCase",
-          "codePointAt",
-          "includes",
-          "endsWith",
-          "normalize",
-          "repeat",
-          "startsWith",
-          "anchor",
-          "big",
-          "blink",
-          "bold",
-          "fixed",
-          "fontcolor",
-          "fontsize",
-          "italics",
-          "link",
-          "small",
-          "strike",
-          "sub",
-          "sup",
-          "padStart",
-          "padEnd",
-          "trimEnd",
-          "trimStart",
-          "trimLeft",
-          "trimRight",
-          "matchAll",
-          "replaceAll",
-          "at",
-          "isWellFormed",
-          "toWellFormed",
-          // Object methods
-          "hasOwnProperty",
-          "isPrototypeOf",
-          "propertyIsEnumerable",
-          "toLocaleString",
-          // Symbol methods
-          "__@iterator@308094",
-          // React/DOM props to exclude
-          "key",
-          "ref",
-          "className",
-        ];
-
-        const isBuiltinMethod = builtinMethods.includes(prop.name);
-
-        // Exclude props starting with known prefixes
-        const hasExcludedPrefix = prop.name.startsWith("aria-")
-          || prop.name.startsWith("data-")
-          || prop.name.startsWith("on")
-          || prop.name.startsWith("__@");
-
-        // Exclude common HTML global attributes
-        const htmlGlobalAttributes = [
-          "accessKey", "autoCapitalize", "autoCorrect", "autoSave",
-          "contentEditable", "contextMenu", "dir", "draggable",
-          "enterKeyHint", "hidden", "id", "inert", "inputMode",
-          "is", "itemID", "itemProp", "itemRef", "itemScope",
-          "itemType", "lang", "nonce", "part", "resource",
-          "results", "role", "security", "slot", "spellCheck",
-          "style", "suppressContentEditableWarning", "suppressHydrationWarning",
-          "tabIndex", "translate", "typeof", "unselectable",
-          "vocab", "exportparts", "part", "importparts"
-        ];
-
-        const isHtmlGlobalAttribute = htmlGlobalAttributes.includes(prop.name);
-
-        // Only include props with meaningful descriptions that don't look like TS lib descriptions
-        const hasCustomDescription = Boolean(prop.description
-          && prop.description.trim().length > 0
-          && !prop.description.includes("Returns a string representation")
-          && !prop.description.includes("Returns the character at")
-          && !prop.description.includes("Returns the Unicode value")
-          && !prop.description.includes("@deprecated A legacy feature")
-          && !prop.description.includes("Removes the trailing white space")
-          && !prop.description.includes("Removes the leading white space")
-          && !prop.description.includes("Returns a nonnegative integer Number")
-          && !prop.description.includes("UTF-16 encoded code point")
-          && !prop.description.includes("Returns true if searchString appears")
-          && !prop.description.includes("HTML element"));
-
-        return !isBuiltinMethod && !hasExcludedPrefix && !isHtmlGlobalAttribute && hasCustomDescription;
+        // Comprehensive list of built-in string/object methods to exclude
+        const builtInMethods = new Set([
+          // String prototype methods
+          "toString", "charAt", "charCodeAt", "concat", "indexOf", "lastIndexOf", 
+          "localeCompare", "match", "replace", "search", "slice", "split", 
+          "substr", "substring", "toLowerCase", "toUpperCase", "valueOf", "trim",
+          "trimStart", "trimEnd", "padStart", "padEnd", "repeat", "startsWith",
+          "endsWith", "includes", "normalize", "codePointAt", "fromCharCode",
+          "fromCodePoint", "raw", "anchor", "big", "blink", "bold", "fixed",
+          "fontcolor", "fontsize", "italics", "link", "small", "strike", "sub", "sup",
+          
+          // Object prototype methods
+          "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString",
+          "constructor", "valueOf", "__defineGetter__", "__defineSetter__",
+          "__lookupGetter__", "__lookupSetter__", "__proto__",
+          
+          // Additional JavaScript built-ins
+          "length", "prototype", "name", "caller", "arguments", "apply", "call", "bind"
+        ]);
+        
+        // Exclude props that start with special prefixes (TS internal, symbols, etc.)
+        const hasExcludedPrefix = prop.name.startsWith("__@") || 
+                                 prop.name.startsWith("Symbol.") ||
+                                 prop.name.startsWith("@@");
+        
+        // Keep props that have JSDoc descriptions (our custom props should have them)
+        const hasDescription = Boolean(prop.description && prop.description.trim());
+        
+        // Keep props that are not built-in methods
+        const isNotBuiltIn = !builtInMethods.has(prop.name);
+        
+        // Include if it's not a built-in and either has description OR is a common React prop pattern
+        const isCommonReactProp = ["className", "children", "style", "key", "ref"].includes(prop.name);
+        
+        const shouldInclude = isNotBuiltIn && !hasExcludedPrefix && (hasDescription || isCommonReactProp);
+        
+        // Debug logging only for included props to reduce noise
+        if (shouldInclude) {
+          console.log(`✅ Including prop: ${prop.name} - ${prop.description || 'No description'}`);
+        }
+        
+        return shouldInclude;
       },
     });
 

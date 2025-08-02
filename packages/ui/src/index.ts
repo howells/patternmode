@@ -143,7 +143,7 @@ export * from "./components/tag-input/tag-input";
 
 export * from "./components/tag/tag";
 export * from "./components/text/text";
-export * from "./components/textarea/textarea";
+export * from "./components/textarea";
 export * from "./components/toast/toast";
 export * from "./components/toggle-group/toggle-group";
 export * from "./components/toggle/toggle";

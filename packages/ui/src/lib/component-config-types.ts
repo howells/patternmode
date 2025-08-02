@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+
 // Configuration Types for Patternmode Components
 // These types ensure consistency across all component configurations
 
@@ -6,7 +8,7 @@
  */
 export type PropMetadata = {
   name: string;
-  type: string;
+  type: unknown;
   description?: string;
   defaultValue?: string | boolean | number;
   required?: boolean;
@@ -102,7 +104,7 @@ export type ComponentConfig = {
   name: string;
   description: string;
   category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts" | "ui" | "typography";
-  icon?: string;
+  icon?: React.ReactNode | LucideIcon;
   badge?: string;
 
   // Installation info
@@ -113,9 +115,6 @@ export type ComponentConfig = {
 
   // Component identifier for the example component
   componentId: string;
-
-  // Props that users can experiment with
-  props: PropMetadata[];
 
   // Examples using the self-contained component system
   examples?: ComponentExample[];
@@ -170,9 +169,7 @@ export function validateComponentConfig(config: ComponentConfig): string[] {
   if (!config.importStatement) {
     errors.push("Missing required field: importStatement");
   }
-  if (!config.props) {
-    errors.push("Missing required field: props");
-  }
+
   // Examples are now optional when using self-contained examples system
 
   return errors;

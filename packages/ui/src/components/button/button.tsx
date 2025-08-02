@@ -1,4 +1,4 @@
-import type { VariantProps } from "tailwind-variants";
+// VariantProps not needed anymore since we flattened the props interface
 
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
@@ -122,8 +122,6 @@ function renderButtonIcon(
  * Props for the Button component.
  *
  * @interface ButtonProps
- * @augments useRender.ComponentProps<"button">
- * @augments VariantProps<typeof buttonVariants>
  */
 type ButtonProps = {
   /**
@@ -170,10 +168,53 @@ type ButtonProps = {
    * Whether the button should have a shadow.
    */
   shadow?: boolean;
-} & useRender.ComponentProps<"button"> & VariantProps<typeof buttonVariants>;
+  /**
+   * Visual style variant of the button.
+   */
+  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
+  /**
+   * Size variant of the button.
+   */
+  size?: "xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+  /**
+   * Whether to use full border radius for rounded appearance.
+   */
+  rounded?: boolean;
+  /**
+   * Custom element to render (defaults to button tag).
+   */
+  render?: useRender.RenderProp<Record<string, unknown>>;
+  /**
+   * Ref to the button element.
+   */
+  ref?: React.RefObject<HTMLButtonElement | null>;
+  /**
+   * Additional CSS classes.
+   */
+  className?: string;
+  /**
+   * Button content and text.
+   */
+  children?: React.ReactNode;
+  /**
+   * Whether the button is disabled.
+   */
+  disabled?: boolean;
+  /**
+   * Click event handler.
+   */
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * Button type attribute.
+   */
+  type?: "button" | "submit" | "reset";
+};
 
 /**
  * Interactive button component with multiple variants and states for user actions.
+ *
+ * Supports loading states, icons, keyboard shortcuts, and flexible layouts.
+ * Uses Base UI's render prop pattern for maximum flexibility while maintaining consistent styling.
  *
  * @id button
  * @name Button
@@ -181,23 +222,50 @@ type ButtonProps = {
  * @category inputs
  * @component
  * @param props - Component properties.
- * @param props.variant - Visual style variant of the button.
- * @param props.size - Size variant of the button.
+ * @param props.ref - Optional ref to the button element.
+ * @param props.render - Custom element to render (defaults to button tag).
+ * @param props.variant - Visual style variant ("default" | "secondary" | "outline" | "ghost" | "destructive").
+ * @param props.size - Size variant ("xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg").
  * @param props.rounded - Whether to use full border radius for rounded appearance.
- * @param props.isLoading - Whether the button is in a loading state.
+ * @param props.isLoading - Whether the button is in a loading state (shows spinner).
  * @param props.loadingText - Text to display when loading (defaults to children).
  * @param props.icon - Icon component (proxy for leftIcon, useful for single-icon buttons).
  * @param props.leftIcon - Icon component to display on the left side.
  * @param props.rightIcon - Icon component to display on the right side.
- * @param props.iconStrokeWidth - Stroke width for icons.
+ * @param props.iconStrokeWidth - Stroke width for icons (defaults to config value).
  * @param props.fullWidth - Whether the button should take full width.
- * @param props.textAlign - Text alignment within the button.
- * @param props.kbd - Keyboard shortcut to display.
- * @param props.kbdPlatform - Platform for keyboard shortcut display.
- * @param props.shadow - Whether the button should have a shadow.
+ * @param props.textAlign - Text alignment within the button ("left" | "center" | "right").
+ * @param props.kbd - Keyboard shortcut to display (string or array of strings).
+ * @param props.kbdPlatform - Platform for keyboard shortcut display ("mac" | "pc" | "auto").
+ * @param props.shadow - Whether the button should have a shadow (defaults to true).
  * @param props.disabled - Whether the button is disabled.
+ * @param props.onClick - Click event handler.
+ * @param props.type - Button type attribute ("button" | "submit" | "reset").
  * @param props.children - Button content and text.
  * @param props.className - Additional CSS classes.
+ * @example
+ * ```tsx
+ * // Basic button
+ * <Button>Click me</Button>
+ *
+ * // Button with icon and loading state
+ * <Button leftIcon={Save} isLoading={saving} loadingText="Saving...">
+ *   Save Changes
+ * </Button>
+ *
+ * // Icon-only button
+ * <Button size="icon" icon={Plus} />
+ *
+ * // Button with keyboard shortcut
+ * <Button kbd="cmd+s" onClick={handleSave}>
+ *   Save
+ * </Button>
+ *
+ * // Custom render with Next.js Link
+ * <Button render={<Link href="/dashboard" />}>
+ *   Go to Dashboard
+ * </Button>
+ * ```
  */
 const Button = ({
   ref: forwardedRef,
