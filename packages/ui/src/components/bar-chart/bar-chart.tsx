@@ -1,11 +1,9 @@
-// Tremor BarChart [v1.0.0]
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import isEqual from "fast-deep-equal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 
@@ -32,40 +30,6 @@ import {
 import { cx } from "../../lib/utils";
 
 // #region Shape
-
-/**
- * Performs deep equality comparison between two objects.
- *
- * Used to determine if bar chart elements should be highlighted
- * by comparing active state with current data.
- * @example
- * ```tsx
- * <BarChart data={data} />
- * ```
- */
-function deepEqual<T>(obj1: T, obj2: T): boolean {
-  if (obj1 === obj2) { return true; }
-
-  if (
-    typeof obj1 !== "object"
-    || typeof obj2 !== "object"
-    || obj1 === null
-    || obj2 === null
-  ) {
-    return false;
-  }
-
-  const keys1 = Object.keys(obj1) as Array<keyof T>;
-  const keys2 = Object.keys(obj2) as Array<keyof T>;
-
-  if (keys1.length !== keys2.length) { return false; }
-
-  for (const key of keys1) {
-    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) { return false; }
-  }
-
-  return true;
-}
 
 /**
  * Renders custom bar shape with dynamic opacity based on interaction state.
@@ -104,7 +68,7 @@ const renderShape = (
       height={height}
       opacity={
         activeBar || (activeLegend && activeLegend !== name)
-          ? deepEqual(activeBar, { ...payload, value })
+          ? isEqual(activeBar, { ...payload, value })
             ? fillOpacity
             : 0.3
           : fillOpacity
@@ -140,15 +104,13 @@ type LegendItemProps = {
 };
 
 /**
- * Bar chart component for comparing categorical data with horizontal or vertical bars.
+ * Individual legend item component for bar charts.
  *
- * @id bar-chart
- * @name BarChart
- * @icon BarChart
- * @category charts
- * @component
- * @see {@link https://recharts.org/en-US/api/BarChart}
  * @param props - Component properties.
+ * @param props.name - Display name for the legend item.
+ * @param props.color - Color theme for the legend indicator.
+ * @param props.onClick - Callback when legend item is clicked.
+ * @param props.activeLegend - Currently active legend item name.
  */
 const LegendItem = ({
   name,
@@ -217,10 +179,7 @@ type ScrollButtonProps = {
 };
 
 const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
-  const /**
-         *
-         */
-    Icon = icon;
+  const Icon = icon;
   const [isPressed, setIsPressed] = React.useState(false);
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -303,7 +262,9 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
 
   const checkScroll = React.useCallback(() => {
     const scrollable = scrollableRef?.current;
-    if (!scrollable) { return; }
+    if (!scrollable) {
+      return;
+    }
 
     const hasLeftScroll = scrollable.scrollLeft > 0;
     const hasRightScroll
@@ -410,35 +371,37 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
           />
         ))}
       </div>
-      {enableLegendSlider && (hasScroll?.right || hasScroll?.left) ? (
-        <>
-          <div
-            className={cx(
-              // base
-              "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
-              // background color
-              "bg-white dark:bg-zinc-950",
-            )}
-          >
-            <ScrollButton
-              icon={ChevronLeft}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("left");
-              }}
-              disabled={!hasScroll?.left}
-            />
-            <ScrollButton
-              icon={ChevronRight}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("right");
-              }}
-              disabled={!hasScroll?.right}
-            />
-          </div>
-        </>
-      ) : null}
+      {enableLegendSlider && (hasScroll?.right || hasScroll?.left)
+        ? (
+            <>
+              <div
+                className={cx(
+                  // base
+                  "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
+                  // background color
+                  "bg-white dark:bg-zinc-950",
+                )}
+              >
+                <ScrollButton
+                  icon={ChevronLeft}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("left");
+                  }}
+                  disabled={!hasScroll?.left}
+                />
+                <ScrollButton
+                  icon={ChevronRight}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("right");
+                  }}
+                  disabled={!hasScroll?.right}
+                />
+              </div>
+            </>
+          )
+        : null}
     </ol>
   );
 };
@@ -817,6 +780,36 @@ type BarChartProps = {
  * @component
  * @see {@link https://recharts.org/en-US/api/BarChart}
  * @param props - Component properties.
+ * @param props.ref - Optional ref to the chart container div.
+ * @param props.data - Array of data objects to visualize.
+ * @param props.index - Key in data objects to use for category axis values.
+ * @param props.categories - Array of data keys to display as chart series.
+ * @param props.colors - Color scheme for chart series.
+ * @param props.valueFormatter - Function to format displayed values.
+ * @param props.startEndOnly - Show only first and last category axis labels.
+ * @param props.showXAxis - Whether to display X-axis.
+ * @param props.showYAxis - Whether to display Y-axis.
+ * @param props.showGridLines - Whether to show grid lines.
+ * @param props.yAxisWidth - Width of Y-axis in pixels.
+ * @param props.intervalType - Category axis tick interval strategy.
+ * @param props.showTooltip - Whether to show tooltip on hover.
+ * @param props.showLegend - Whether to display legend.
+ * @param props.autoMinValue - Auto-calculate minimum value axis value.
+ * @param props.minValue - Fixed minimum value axis value.
+ * @param props.maxValue - Fixed maximum value axis value.
+ * @param props.allowDecimals - Allow decimal values on value axis.
+ * @param props.onValueChange - Callback for chart interactions (bar clicks, legend clicks).
+ * @param props.enableLegendSlider - Enable horizontal legend scrolling.
+ * @param props.tickGap - Minimum gap between category axis ticks.
+ * @param props.barCategoryGap - Gap between bar categories (string percentage or number pixels).
+ * @param props.xAxisLabel - Label for X-axis.
+ * @param props.yAxisLabel - Label for Y-axis.
+ * @param props.layout - Chart orientation (horizontal or vertical bars).
+ * @param props.type - Bar stacking type (default, stacked, or percentage).
+ * @param props.legendPosition - Legend horizontal alignment.
+ * @param props.tooltipCallback - Callback for tooltip state changes.
+ * @param props.customTooltip - Custom tooltip component.
+ * @param props.className - Additional CSS classes for the chart container.
  */
 const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {
@@ -851,10 +844,7 @@ const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React
     customTooltip,
     ...other
   } = props;
-  const /**
-         *
-         */
-    CustomTooltip = customTooltip;
+  const CustomTooltip = customTooltip;
   const paddingValue
       = (!showXAxis && !showYAxis) || (startEndOnly && !showYAxis) ? 0 : 20;
   const [legendHeight, setLegendHeight] = React.useState(60);
@@ -878,8 +868,10 @@ const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React
 
   function onBarClick(data: any, _: any, event: React.MouseEvent) {
     event.stopPropagation();
-    if (!onValueChange) { return; }
-    if (deepEqual(activeBar, { ...data.payload, value: data.value })) {
+    if (!onValueChange) {
+      return;
+    }
+    if (isEqual(activeBar, { ...data.payload, value: data.value })) {
       setActiveLegend(undefined);
       setActiveBar(undefined);
       onValueChange?.(null);
@@ -899,7 +891,9 @@ const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React
   }
 
   function onCategoryClick(dataKey: string) {
-    if (!hasOnValueChange) { return; }
+    if (!hasOnValueChange) {
+      return;
+    }
     if (dataKey === activeLegend && !activeBar) {
       setActiveLegend(undefined);
       onValueChange?.(null);

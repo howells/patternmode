@@ -6,6 +6,7 @@
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import isEqual from "fast-deep-equal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 
@@ -35,43 +36,6 @@ import {
 import { cx } from "../../lib/utils";
 
 // #region Shape
-/**
- * Performs deep equality comparison between two objects.
- *
- * Recursively compares objects to determine if they have identical
- * structure and values. Handles nested objects, arrays, and primitive values.
- *
- * @param obj1 - First object to compare.
- * @param obj2 - Second object to compare.
- * @returns True if objects are deeply equal, false otherwise.
- * @example
- * ```tsx
- * <ComboChart data={data} />
- * ```
- */
-function deepEqual<T>(obj1: T, obj2: T): boolean {
-  if (obj1 === obj2) { return true; }
-
-  if (
-    typeof obj1 !== "object"
-    || typeof obj2 !== "object"
-    || obj1 === null
-    || obj2 === null
-  ) {
-    return false;
-  }
-
-  const keys1 = Object.keys(obj1) as Array<keyof T>;
-  const keys2 = Object.keys(obj2) as Array<keyof T>;
-
-  if (keys1.length !== keys2.length) { return false; }
-
-  for (const key of keys1) {
-    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) { return false; }
-  }
-
-  return true;
-}
 
 /**
  * Renders customized bar shapes with hover and selection states.
@@ -79,22 +43,27 @@ function deepEqual<T>(obj1: T, obj2: T): boolean {
  * Creates interactive bar elements with visual feedback for active states.
  * Handles opacity changes based on legend interactions and active selections.
  *
- * @param props - Recharts bar shape properties.
- * @param activeBar - Currently active bar data.
- * @param activeLegend - Currently active legend category.
- * @returns Custom bar shape element.
+ * @param props - Shape properties from Recharts.
+ * @param activeBar - Currently active bar data for comparison.
+ * @param activeLegend - Active legend item name.
+ * @param layout - Chart layout orientation.
  */
 const renderShape = (
   props: any,
   activeBar: any | undefined,
   activeLegend: string | undefined,
+  layout: string,
 ) => {
-  const { fillOpacity, name, payload, value, width, x } = props;
-  let { y, height } = props;
+  const { fillOpacity, name, payload, value } = props;
+  let { x, width, y, height } = props;
 
-  if (height < 0) {
+  if (layout === "horizontal" && height < 0) {
     y += height;
     height = Math.abs(height); // height must be a positive number
+  }
+  else if (layout === "vertical" && width < 0) {
+    x += width;
+    width = Math.abs(width); // width must be a positive number
   }
 
   return (
@@ -105,7 +74,7 @@ const renderShape = (
       height={height}
       opacity={
         activeBar || (activeLegend && activeLegend !== name)
-          ? deepEqual(activeBar, { ...payload, value })
+          ? isEqual(activeBar, { ...payload, value })
             ? fillOpacity
             : 0.3
           : fillOpacity
@@ -941,7 +910,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
   function onBarClick(data: any, _: any, event: React.MouseEvent) {
     event.stopPropagation();
     if (!onValueChange) { return; }
-    if (deepEqual(activeBar, { ...data.payload, value: data.value })) {
+    if (isEqual(activeBar, { ...data.payload, value: data.value })) {
       setActiveLegend(undefined);
       setActiveBar(undefined);
       onValueChange?.(null);
@@ -1273,7 +1242,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
               isAnimationActive={false}
               fill=""
               shape={(props: any) =>
-                renderShape(props, activeBar, activeLegend)}
+                renderShape(props, activeBar, activeLegend, "horizontal")}
               onClick={onBarClick}
             />
           ))}

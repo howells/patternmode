@@ -7,6 +7,7 @@ import * as React from "react";
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
 import { Button } from "../button/button";
+import { DropdownItem } from "../dropdown-item/dropdown-item";
 import { Icon } from "../icon/icon";
 import { Tag } from "../tag/tag";
 
@@ -474,21 +475,16 @@ const TagInput = ({
     }
 
     return (
-      <div className="flex items-center gap-2 flex-1 min-w-0">
-        {option.leftIcon && (
-          <Icon icon={option.leftIcon} strokeWidth={iconStrokeWidth} />
-        )}
-        <span className="truncate">
-          {isNewTag ? `Create "${option.label}"` : option.label}
-        </span>
-        {isSelected && (
-          <Icon
-            icon={Check}
-            className="ml-auto"
-            strokeWidth={iconStrokeWidth}
-          />
-        )}
-      </div>
+      <DropdownItem
+        leftIcon={option.leftIcon}
+        rightIcon={isSelected ? Check : undefined}
+        highlighted={isHighlighted}
+        selected={isSelected}
+        disabled={option.disabled}
+        iconStrokeWidth={iconStrokeWidth}
+      >
+        {isNewTag ? `Create "${option.label}"` : option.label}
+      </DropdownItem>
     );
   };
 
@@ -584,14 +580,8 @@ const TagInput = ({
                           disabled: option.disabled,
                         })}
                         className={cx(
-                          "px-3 py-2 cursor-pointer text-sm flex items-center gap-2",
-                          "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-                          highlightedIndex === index
-                          && "bg-zinc-100 dark:bg-zinc-800",
                           option.data?.isNew === true
                           && "border-t border-zinc-200 dark:border-zinc-800",
-                          option.disabled && "opacity-50 cursor-not-allowed",
-                          focusRing,
                         )}
                       >
                         {renderDropdownItem(option, index)}

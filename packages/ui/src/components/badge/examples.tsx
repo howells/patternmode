@@ -1,12 +1,10 @@
 "use client";
 
 import type { ComponentExample } from "../../lib/component-config-types";
-import { Badge, iconRegistry } from "@patternmode/ui";
+import { Badge } from "@patternmode/ui";
+import { ArrowRight, Check, Trash2 } from "lucide-react";
 
 import React from "react";
-
-// Pre-imported icons from registry
-const { AlertCircle, ArrowRight, Check, Clock, Info, Star, Trash2, TrendingUp, X } = iconRegistry;
 
 // Default badge
 export const DefaultExample = () => <Badge>Badge</Badge>;

@@ -5,10 +5,6 @@ import type { BarChartProps } from "./bar-chart";
 import { BarChart } from "@patternmode/ui";
 import React from "react";
 
-type BarChartExampleProps = {
-  [key: string]: unknown;
-};
-
 // Sample data for the bar chart
 const sampleData = [
   { month: "Jan", sales: 2400, profit: 1200, expenses: 1000 },
@@ -28,6 +24,7 @@ const sampleData = [
 export function BarChartExample(props: BarChartProps) {
   return (
     <BarChart
+      className="w-128 max-w-full"
       data={sampleData}
       index="month"
       categories={["sales", "profit", "expenses"]}
