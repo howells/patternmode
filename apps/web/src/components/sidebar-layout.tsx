@@ -19,48 +19,16 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@patternmode/ui";
-
-import type {
-  COMPONENT_LIST,
-} from "@patternmode/ui/component-registry";
-import type { ComponentConfig } from "../../../../packages/ui/src/lib/component-config-types";
-
 import {
   CATEGORY_CONFIG,
   getAllComponents,
   getComponentsByCategory,
   getTotalComponentsCount,
-} from "@patternmode/ui/component-registry";
-import type { CategoryKey } from "@patternmode/ui/component-registry";
+} from "@patternmode/ui/components/registry";
+
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
-
-// Create a stable icon component cache to prevent re-renders
-const iconComponentCache = new Map<
-  string,
-  React.ComponentType<{ className?: string; strokeWidth?: number }> | null
->();
-
-function getStableIconComponent(iconName: string | undefined) {
-  if (!iconName || typeof iconName !== "string" || iconName.trim() === "") {
-    return null;
-  }
-
-  if (!iconComponentCache.has(iconName)) {
-    try {
-      const IconComponent = getDynamicIconByName(iconName);
-      iconComponentCache.set(iconName, IconComponent);
-    }
-    catch (error) {
-      // If icon loading fails, cache null to prevent repeated attempts
-      console.warn(`Failed to load icon "${iconName}":`, error);
-      iconComponentCache.set(iconName, null);
-    }
-  }
-
-  return iconComponentCache.get(iconName) || null;
-}
 
 type SidebarLayoutProps = {
   children: React.ReactNode;
@@ -151,69 +119,68 @@ function SidebarContent() {
             </ToggleGroup>
           )}
         >
-          {isGrouped ? (
-            // Grouped view: Level 2 categories with Level 3 items
-            <>
-              {CATEGORY_CONFIG.map((category) => {
-                const components = getComponentsByCategory(
-                  category.key,
-                ).sort((a, b) => a.name.localeCompare(b.name));
+          {isGrouped
+            ? (
+                <>
+                  {CATEGORY_CONFIG.map((category) => {
+                    const components = getComponentsByCategory(
+                      category.key,
+                    ).sort((a, b) => a.name.localeCompare(b.name));
 
-                if (components.length === 0) { return null; }
+                    if (components.length === 0) {
+                      return null;
+                    }
 
-                return (
-                  <SidebarGroup
-                    key={category.key}
-                    title={`${category.name} (${components.length})`}
-                    href={`/ui/${category.key}`}
-                    isCollapsed={isCollapsed}
-                    level={2}
-                  >
-                    {components.map((component) => {
-                      const IconComponent = getStableIconComponent(
-                        component.icon,
-                      );
-                      return (
-                        <SidebarItem
-                          key={component.id}
-                          href={`/ui/${category.key}/${component.id}`}
-                          current={isCurrentComponent(
-                            category.key,
-                            component.id,
-                          )}
-                          isCollapsed={isCollapsed}
-                          leftIcon={IconComponent || undefined}
-                        >
-                          {component.name}
-                        </SidebarItem>
-                      );
-                    })}
-                  </SidebarGroup>
-                );
-              })}
-            </>
-          ) : (
-            // Alphabetical view: Flat Level 3 items
-            <>
-              {allComponents.map((component) => {
-                const IconComponent = getStableIconComponent(component.icon);
-                return (
-                  <SidebarItem
-                    key={component.id}
-                    href={`/ui/${component.category}/${component.id}`}
-                    current={isCurrentComponent(
-                      component.category,
-                      component.id,
-                    )}
-                    isCollapsed={isCollapsed}
-                    leftIcon={IconComponent || undefined}
-                  >
-                    {component.name}
-                  </SidebarItem>
-                );
-              })}
-            </>
-          )}
+                    return (
+                      <SidebarGroup
+                        key={category.key}
+                        title={`${category.name} (${components.length})`}
+                        href={`/ui/${category.key}`}
+                        isCollapsed={isCollapsed}
+                        level={2}
+                      >
+                        {components.map((component) => {
+                          return (
+                            <SidebarItem
+                              key={component.id}
+                              href={`/ui/${category.key}/${component.id}`}
+                              current={isCurrentComponent(
+                                category.key,
+                                component.id,
+                              )}
+                              isCollapsed={isCollapsed}
+                              leftIcon={typeof component.icon === "function" ? component.icon : undefined}
+                            >
+                              {component.name}
+                            </SidebarItem>
+                          );
+                        })}
+                      </SidebarGroup>
+                    );
+                  })}
+                </>
+              )
+            : (
+          // Alphabetical view: Flat Level 3 items
+                <>
+                  {allComponents.map((component) => {
+                    return (
+                      <SidebarItem
+                        key={component.id}
+                        href={`/ui/${component.category}/${component.id}`}
+                        current={isCurrentComponent(
+                          component.category,
+                          component.id,
+                        )}
+                        isCollapsed={isCollapsed}
+                        leftIcon={typeof component.icon === "function" ? component.icon : undefined}
+                      >
+                        {component.name}
+                      </SidebarItem>
+                    );
+                  })}
+                </>
+              )}
         </SidebarGroup>
       </SidebarBody>
     </>

@@ -18,8 +18,8 @@ type PropExplorerContentProps = {
 export function PropExplorerContent({ config }: PropExplorerContentProps) {
   const { props, updateProp, resetProps } = usePropExplorer();
 
-  // Use props directly from the centralized config (component registry)
-  const availableProps = config?.props || [];
+  // Use props directly from the config (cast to local PropMetadata type)
+  const availableProps = (config?.props || []) as PropMetadata[];
 
   if (!config || availableProps.length === 0) {
     return (
@@ -59,7 +59,7 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
           })
           .map((prop: PropMetadata) => {
             const currentValue = props[prop.name];
-            const componentName = config.componentId || config.name?.toLowerCase();
+            const componentName = config.id || config.name?.toLowerCase();
 
             return (
               <PropField key={prop.name} prop={prop}>

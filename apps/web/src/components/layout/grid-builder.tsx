@@ -4,8 +4,8 @@ import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";
 
 import { Button, Grid, GridCell, Stack, Subheading, ToggleGroup, ToggleGroupItem } from "@patternmode/ui";
+import { getComponentConfig } from "@patternmode/ui/components/registry";
 
-import { getComponentConfig } from "@patternmode/ui/component-registry";
 import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";
 

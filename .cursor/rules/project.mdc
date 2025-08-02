@@ -258,7 +258,6 @@ We welcome contributions that align with our philosophy of curating the best pat
 4. **Follow our styling and API conventions** with Tremor-inspired design
 5. **Provide comprehensive TypeScript types** with proper generics
 6. **Include accessibility considerations** via Base UI primitives
-7. **Add to component registry** in `src/lib/component-registry.ts`
 
 ### Component Conversion Process
 

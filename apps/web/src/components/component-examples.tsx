@@ -5,15 +5,15 @@ import React from "react";
 import type { ComponentExample } from "@patternmode/ui/lib/component-config-types";
 
 import { Callout, Card, CardContent, CardHeader, Loader, Subheading, Text, VStack } from "@patternmode/ui";
-import { getComponentConfig } from "@patternmode/ui/component-registry";
+import { getComponentConfig } from "@patternmode/ui/components/registry";
 
 type ComponentExamplesProps = {
   componentId: string;
 };
 
 /**
- * Renders examples for a component by loading them from the component's examples.tsx file.
- * Supports both the new EXAMPLES export pattern and legacy _EXAMPLES patterns.
+ * Renders examples for a component by getting them from the component's config object.
+ * Uses the config-first architecture where examples are imported in the config file.
  */
 export function ComponentExamples({ componentId }: ComponentExamplesProps) {
   const [examples, setExamples] = React.useState<ComponentExample[]>([]);
@@ -23,42 +23,31 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
 
   React.useEffect(() => {
     /**
-     * Loads examples from the component's examples.tsx file using dynamic imports.
+     * Loads examples from the component config object.
      */
-    async function loadSelfContainedExamples() {
+    async function loadExamplesFromConfig() {
       try {
         setLoading(true);
         setError(null);
 
-        console.log(`ComponentExamples: Loading examples for ${componentId}`);
-        const examplesModule = await import(`@patternmode/ui/components/${componentId}/examples`);
+        console.log(`ComponentExamples: Loading examples for ${componentId} from config`);
 
-        console.log("ComponentExamples: Examples module keys:", Object.keys(examplesModule));
-
-        // First, look for the new standard "EXAMPLES" export
-        if (examplesModule.EXAMPLES && Array.isArray(examplesModule.EXAMPLES)) {
-          console.log(`ComponentExamples: Found ${examplesModule.EXAMPLES.length} examples in EXAMPLES export`);
-          setExamples(examplesModule.EXAMPLES);
+        if (!config) {
+          setError(`No config found for component ${componentId}`);
+          return;
         }
-        // Fallback: Look for any exported array that ends with "_EXAMPLES" (legacy pattern)
-        else {
-          const examplesRegistryKey = Object.keys(examplesModule).find(key =>
-            key.endsWith("_EXAMPLES") && Array.isArray(examplesModule[key as keyof typeof examplesModule]),
-          );
 
-          if (examplesRegistryKey) {
-            const examplesRegistry = examplesModule[examplesRegistryKey as keyof typeof examplesModule] as ComponentExample[];
-            console.log(`ComponentExamples: Found ${examplesRegistry.length} examples in legacy registry ${examplesRegistryKey}`);
-            setExamples(examplesRegistry);
-          }
-          else {
-            console.log("ComponentExamples: No examples registry found");
-            setError("No self-contained examples found");
-          }
+        if (config.examples && Array.isArray(config.examples) && config.examples.length > 0) {
+          console.log(`ComponentExamples: Found ${config.examples.length} examples in config`);
+          setExamples(config.examples);
+        }
+        else {
+          console.log("ComponentExamples: No examples found in config");
+          setError("No examples found in config");
         }
       }
       catch (err) {
-        console.error("ComponentExamples: Error loading self-contained examples:", err);
+        console.error("ComponentExamples: Error loading examples from config:", err);
         setError(`Failed to load examples: ${(err as Error).message}`);
       }
       finally {
@@ -66,8 +55,8 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
       }
     }
 
-    loadSelfContainedExamples();
-  }, [componentId]);
+    loadExamplesFromConfig();
+  }, [componentId, config]);
 
   const renderContent = () => {
     // Show loading state

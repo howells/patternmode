@@ -3,6 +3,7 @@ import turboPlugin from "eslint-plugin-turbo";
 
 // Component-specific rules (UI package)
 import { componentMetadataConfig } from "./rules/component-metadata-rules.mjs";
+import { componentStructureConfig } from "./rules/component-structure-rules.mjs";
 // General rules (all packages)
 import { importSortingConfig } from "./rules/import-sorting-rules.mjs";
 import { jsdocComponentConfig } from "./rules/jsdoc-component-rules.mjs";
@@ -51,6 +52,7 @@ export const ui = () =>
   })
     .append(jsdocComponentConfig)
     .append(componentMetadataConfig)
+    .append(componentStructureConfig)
     .append(reactComponentPatternConfig)
     .append({
       name: "preview-component-naming",

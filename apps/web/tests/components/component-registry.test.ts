@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { COMPONENT_LIST } from "@patternmode/ui/component-registry";
+import { COMPONENT_LIST } from "@patternmode/ui/components/registry";
 
 describe("component Registry", () => {
   it("should have component categories defined", () => {

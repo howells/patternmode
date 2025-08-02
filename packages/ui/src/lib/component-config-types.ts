@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type React from "react";
 
 // Configuration Types for Patternmode Components
 // These types ensure consistency across all component configurations
@@ -96,6 +97,22 @@ export type DocumentationSection = {
 };
 
 /**
+ * Individual component within a component family
+ */
+export type ComponentDefinition = {
+  /** The actual React component */
+  component: React.ComponentType<any>;
+  /** Display name for the component */
+  name: string;
+  /** Whether this is the primary component in the family */
+  primary?: boolean;
+  /** Custom description for this specific component */
+  description?: string;
+  /** Props specific to this component (optional) */
+  props?: PropMetadata[];
+};
+
+/**
  * Component configuration - single source of truth for each component
  */
 export type ComponentConfig = {
@@ -113,8 +130,14 @@ export type ComponentConfig = {
   // Import statement for documentation
   importStatement: string;
 
-  // Component identifier for the example component
-  componentId: string;
+  // Primary component for automatic prop extraction (optional)
+  component?: React.ComponentType<any>;
+
+  // Component definitions (for single or multi-component families)
+  components?: ComponentDefinition[];
+
+  // Props that users can experiment with (for single components)
+  props?: PropMetadata[];
 
   // Examples using the self-contained component system
   examples?: ComponentExample[];
@@ -143,8 +166,6 @@ export function isComponentConfig(config: unknown): config is ComponentConfig {
     && typeof config === "object"
     && "id" in config
     && "name" in config
-    && "componentId" in config
-    && "props" in config
   );
 }
 
@@ -162,9 +183,6 @@ export function validateComponentConfig(config: ComponentConfig): string[] {
   }
   if (!config.description) {
     errors.push("Missing required field: description");
-  }
-  if (!config.componentId) {
-    errors.push("Missing required field: componentId");
   }
   if (!config.importStatement) {
     errors.push("Missing required field: importStatement");

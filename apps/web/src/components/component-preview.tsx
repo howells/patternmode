@@ -248,10 +248,10 @@ const createDynamicComponent = (
 ) => {
   // Use static mapping for known components
   if (componentMap[componentId]) {
-    // Return a simple wrapper component instead of dynamic import
-    return () => {
+    // Return a simple wrapper component that accepts and forwards props
+    return (props: Record<string, unknown>) => {
       const Component = componentMap[componentId];
-      return React.createElement(Component);
+      return React.createElement(Component, props);
     };
   }
 

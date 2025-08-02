@@ -2,13 +2,12 @@
 
 import React from "react";
 
-import type { ComponentConfig } from "@patternmode/ui";
+import type { ComponentConfig, PropMetadata as ConfigPropMetadata } from "@patternmode/ui";
 
 import { Inspector, InspectorBody } from "@patternmode/ui";
 
-import type { PropMetadata } from "../../lib/prop-explorer";
-
 import { ComponentPreview } from "../../components/component-preview";
+import { getConfigProps, getDefaultProps, getPrimaryComponent } from "./config-utils";
 import { PropExplorerProvider } from "./prop-explorer-context";
 import { PropExplorerContent } from "./prop-explorer-controls";
 
@@ -22,52 +21,64 @@ type ComponentPropExplorerProps = {
 export function ComponentPropExplorer({
   config,
   category,
-  component,
+  component: _component,
   inspectorMaxHeight = "max-h-[400px] lg:max-h-[500px]",
 }: ComponentPropExplorerProps) {
-  // Extract default values from props if available
-  const getDefaultProps = () => {
-    if (!config.props) {
-      return {};
-    }
+  const [props, setProps] = React.useState<ConfigPropMetadata[]>([]);
+  const [defaultProps, setDefaultProps] = React.useState<Record<string, unknown>>({});
+  const [isLoading, setIsLoading] = React.useState(true);
 
-    const defaultProps: Record<string, unknown> = {};
+  // Get the primary component name
+  const primaryComponentName = getPrimaryComponent(config);
 
-    // Extract default values from props
-    config.props.forEach((prop: PropMetadata) => {
-      if (prop.defaultValue !== undefined) {
-        defaultProps[prop.name] = prop.defaultValue;
+  // Load props and default values asynchronously
+  React.useEffect(() => {
+    async function loadProps() {
+      try {
+        const [configProps, configDefaultProps] = await Promise.all([
+          getConfigProps(config),
+          getDefaultProps(config),
+        ]);
+        setProps(configProps as ConfigPropMetadata[]);
+        setDefaultProps(configDefaultProps);
       }
-    });
-
-    // Add default children if the component supports it
-    const childrenProp = config.props.find(
-      (prop: PropMetadata) => prop.name === "children",
-    );
-    if (childrenProp && childrenProp.defaultValue !== undefined) {
-      defaultProps.children = childrenProp.defaultValue;
-    }
-    else if (childrenProp) {
-      // Fallback to component name if no defaultValue is specified
-      defaultProps.children = config.name;
+      catch (error) {
+        console.error("Failed to load props:", error);
+        setProps([]);
+        setDefaultProps({});
+      }
+      finally {
+        setIsLoading(false);
+      }
     }
 
-    return defaultProps;
-  };
+    loadProps();
+  }, [config]);
 
-  // Create a serializable version of the config without render functions
-  const serializableConfig = {
+  // Create a serializable version of the config with loaded props
+  const serializableConfig = React.useMemo((): ComponentConfig => ({
     ...config,
+    props,
     examples:
       config.examples?.map((example: (typeof config.examples)[number]) => ({
         ...example,
         // Remove render function to avoid serialization issues
         render: undefined,
       })) || [],
-  };
+  }), [config, props]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-1">
+        <div className="flex-1 p-6 flex items-center justify-center">
+          <div>Loading props...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <PropExplorerProvider defaultProps={getDefaultProps()}>
+    <PropExplorerProvider defaultProps={defaultProps}>
       <div className="flex flex-1">
         {/* Main content - Live preview */}
         <div
@@ -81,7 +92,7 @@ export function ComponentPropExplorer({
           }}
         >
           <ComponentPreview
-            componentId={config.componentId || component}
+            componentId={primaryComponentName}
             category={category}
           />
         </div>

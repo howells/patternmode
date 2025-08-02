@@ -1,6 +1,5 @@
 "use client";
 
-import { getAllComponents } from "@patternmode/ui/component-registry";
 import { useDebounce } from "@uidotdev/usehooks";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -19,6 +18,7 @@ import {
   Subheading,
   Text,
 } from "@patternmode/ui";
+import { getAllComponents } from "@patternmode/ui/components/registry";
 
 type ComponentSearchProps = {
   placeholder?: string;

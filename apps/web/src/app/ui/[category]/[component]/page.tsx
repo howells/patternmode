@@ -1,8 +1,8 @@
-import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/component-registry";
 import { notFound } from "next/navigation";
 import React from "react";
 
 import { Separator } from "@patternmode/ui";
+import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
 
 import { ComponentExamples } from "../../../../components/component-examples";
 import { PageHeader } from "../../../../components/page-header";
@@ -70,6 +70,21 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
     notFound();
   }
 
+  // Create a serializable version of the config for the client component
+  // Remove non-serializable properties like icon (React components)
+  const serializableConfig = {
+    ...config,
+    icon: undefined, // Remove icon to avoid serialization issues
+    components: config.components?.map(comp => ({
+      ...comp,
+      component: undefined, // Remove component references
+    })),
+    examples: config.examples?.map(example => ({
+      ...example,
+      component: undefined, // Remove component functions
+    })),
+  };
+
   return (
     <div>
       {/* Header */}
@@ -81,7 +96,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
       {/* Main Content - Use ComponentPropExplorer */}
       <ComponentPropExplorer
-        config={config}
+        config={serializableConfig}
         category={category}
         component={component}
       />

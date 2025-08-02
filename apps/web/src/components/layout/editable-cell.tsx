@@ -1,6 +1,5 @@
 "use client";
 
-import { getComponentConfig } from "@patternmode/ui/component-registry";
 import { Plus, Settings, X } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
@@ -29,7 +28,6 @@ type EditableCellProps = {
 };
 
 export function EditableCell({
-  cellIndex,
   cellData,
   onAddComponent,
   onUpdateProps,
@@ -39,10 +37,14 @@ export function EditableCell({
 
   // Create dynamic component based on componentId
   const DynamicComponent = useMemo(() => {
-    if (!cellData) { return null; }
+    if (!cellData) {
+      return null;
+    }
 
     const config = getComponentConfig(cellData.componentId);
-    if (!config) { return null; }
+    if (!config) {
+      return null;
+    }
 
     // Simple placeholder component to fix broken dynamic imports
     return () => (
@@ -56,7 +58,9 @@ export function EditableCell({
 
   // Process props to handle icon conversion
   const processedProps = useMemo(() => {
-    if (!cellData) { return {}; }
+    if (!cellData) {
+      return {};
+    }
 
     const finalProps: Record<string, unknown> = { ...cellData.props };
 
@@ -91,7 +95,9 @@ export function EditableCell({
 
   // Render component if one is assigned to this cell
   const renderComponent = () => {
-    if (!cellData || !DynamicComponent) { return null; }
+    if (!cellData || !DynamicComponent) {
+      return null;
+    }
 
     try {
       // Create a wrapper component that handles prop spreading safely

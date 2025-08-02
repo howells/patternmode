@@ -29,11 +29,6 @@
       "import": "./src/components/*/preview.tsx",
       "require": "./src/components/*/preview.tsx"
     },
-    "./component-registry": {
-      "types": "./src/generated/component-registry.ts",
-      "import": "./src/generated/component-registry.ts",
-      "require": "./src/generated/component-registry.ts"
-    },
     "./styles/globals.css": "./src/styles/globals.css",
     "./package.json": "./package.json"
   },
@@ -47,7 +42,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "validate-examples": "npx tsx scripts/validate-examples.ts",
-    "generate-registry": "tsx scripts/generate-component-registry.ts",
+    "extract-props": "tsx scripts/extract-props.ts",
     "generate-icon-list": "tsx scripts/generate-icon-list.ts"
   },
   "peerDependencies": {
@@ -100,7 +95,7 @@
     "@vitest/ui": "^3.2.4",
     "eslint": "^9",
     "jsdom": "^26.1.0",
-    "react-docgen-typescript": "^2.2.2",
+
     "typescript": "^5",
     "vitest": "^3.2.4"
   },

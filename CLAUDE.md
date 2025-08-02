@@ -110,45 +110,93 @@ const variants = tv({
 - Export component, variants, and prop types
 - Create wrapper components or helper functions when complex typing is needed
 
-## JSDoc Documentation (CRITICAL)
+## Component Architecture (CRITICAL)
 
-**MANDATORY: All components MUST have proper JSDoc comments for registry generation**
+**MANDATORY: All components follow the new config-first architecture**
 
-- **ALL component functions must have JSDoc comments with descriptions**
-- **Component props MUST have JSDoc descriptions to be included in prop explorer**
-- **Use `@category` tag to specify component category (ui, inputs, forms, charts)**
-- **Use `@icon` tag to specify the component's icon (from Lucide React)**
-- **Use `@id` tag
-- **The component registry generation script depends on JSDoc parsing**
-- **Missing JSDoc comments will cause components to be excluded from the registry**
+### File Structure
+```
+src/components/[component-name]/
+├── component.tsx        # Implementation with JSDoc-enhanced types
+├── component.config.ts  # Component specification + examples
+├── index.tsx           # Export barrel
+├── examples.tsx        # Example components
+└── preview.tsx         # Preview component (optional)
+```
 
-Example proper JSDoc documentation:
+### TypeScript + JSDoc Pattern
+
+**Props must have JSDoc documentation on the TypeScript interface:**
+```tsx
+type ComponentProps = {
+  /**
+   * Whether to display error styling for form validation.
+   * Adds red border and error state styling to indicate validation errors.
+   */
+  hasError?: boolean;
+  
+  /**
+   * Whether to enable auto-resizing behavior.
+   * When true: Uses enhanced component with intelligent behavior.
+   * When false: Uses basic native behavior.
+   */
+  autoResize?: boolean;
+} & BaseComponentProps;
+```
+
+**Component gets basic JSDoc for metadata only:**
 ```tsx
 /**
- * A flexible button component with multiple variants and states.
- * Supports different sizes, colors, and loading states.
- *
- * @id component
- * @component
- * @category ui
- * @icon Square
+ * Auto-resizing component with configurable constraints and error states.
  */
-export function Button({
-  /**
-   * The visual style variant of the button.
-   */
-  variant = "primary",
-  /**
-   * The size of the button.
-   */
-  size = "md",
-  /**
-   * Whether the button is in a loading state.
-   */
-  loading = false,
-  children,
-  ...props
-}: ButtonProps) {
-  // Component implementation
-}
+const Component = ({ 
+  hasError, 
+  autoResize = true,  // ← Defaults extracted automatically
+  ...props 
+}: ComponentProps) => {
+```
+
+### Config File Pattern
+
+**Each component has a companion config file:**
+```tsx
+export const componentConfig: ComponentConfig = {
+  id: "component-name",
+  name: "ComponentName", 
+  description: "Component description...",
+  category: "inputs", // ui, inputs, forms, charts, etc.
+  icon: IconComponent, // Lucide React icon
+  componentId: "ComponentName",
+  importStatement: "import { ComponentName } from \"@patternmode/ui\";",
+  examples: [/* example objects with live components */]
+};
+```
+
+### Key Principles
+
+- **Props documented in TypeScript interface** with JSDoc
+- **Defaults only in component destructuring** (single source of truth)
+- **Config file contains metadata + examples** (no prop duplication)
+- **Parser extracts** descriptions from JSDoc + defaults from component
+- **Export barrel** (`index.tsx`) for clean imports
+
+### Direct Config Usage (No Build Required)
+
+**Configs can be imported and used directly in development:**
+
+```tsx
+// Import config directly - no build step needed!
+import { componentConfig } from "@patternmode/ui/src/components/textarea/component.config";
+
+// Use in prop explorer, documentation, or tooling
+<ComponentPropExplorer config={componentConfig} />
+```
+
+**Multi-component families supported:**
+```tsx
+// Accordion config includes all 4 components
+import { componentConfig } from "@patternmode/ui/src/components/accordion/component.config";
+
+// Config contains: Accordion, AccordionItem, AccordionTrigger, AccordionContent
+console.log(componentConfig.components); // Array of ComponentDefinition
 ```

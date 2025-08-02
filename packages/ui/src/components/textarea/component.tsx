@@ -1,21 +1,10 @@
 import type { TextareaAutosizeProps, TextareaHeightChangeMeta } from "react-textarea-autosize";
+import type { TextareaPreviewProps } from "./preview";
 import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
-type TextareaProps = {
-  /**
-   * Whether to display error styling for form validation.
-   * Adds red border and error state styling to indicate validation errors.
-   */
-  hasError?: boolean;
-
-  /**
-   * Whether to enable auto-resizing behavior using react-textarea-autosize.
-   * When true: Uses TextareaAutosize component with intelligent height adjustment.
-   * When false: Uses native HTML textarea with fixed height.
-   */
-  autoResize?: boolean;
+type TextareaProps = TextareaPreviewProps & {
 
   /**
    * Minimum number of rows to display (react-textarea-autosize prop).
@@ -44,6 +33,12 @@ type TextareaProps = {
    * Only applies when autoResize=true.
    */
   cacheMeasurements?: TextareaAutosizeProps["cacheMeasurements"];
+
+  /**
+   * Whether to display error styling for form validation.
+   * Adds red border and error state styling to indicate validation errors.
+   */
+  hasError?: boolean;
 
   /**
    * Standard CSS style object.

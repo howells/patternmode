@@ -1,0 +1,172 @@
+/**
+ * Description List Components.
+ *
+ * Semantic components for creating accessible description lists using HTML definition list elements.
+ * Provides responsive grid layout with terms and details arranged in a clean, structured format.
+ *
+ * Features:
+ * - Semantic HTML dl, dt, dd elements
+ * - Responsive grid layout (stacked on mobile, two-column on desktop)
+ * - Consistent spacing and typography
+ * - Border separators between items
+ * - Dark mode support
+ * - Accessible structure for screen readers.
+ *
+ * @category data
+ * @icon List
+ * @example
+ * ```tsx
+ * // Basic description list
+ * <DescriptionList>
+ *   <DescriptionTerm>Name</DescriptionTerm>
+ *   <DescriptionDetails>John Doe</DescriptionDetails>
+ *
+ *   <DescriptionTerm>Email</DescriptionTerm>
+ *   <DescriptionDetails>john.doe@company.com</DescriptionDetails>
+ *
+ *   <DescriptionTerm>Role</DescriptionTerm>
+ *   <DescriptionDetails>Software Engineer</DescriptionDetails>
+ * </DescriptionList>
+ *
+ * // User profile information
+ * <DescriptionList>
+ *   <DescriptionTerm>Username</DescriptionTerm>
+ *   <DescriptionDetails>@johndoe</DescriptionDetails>
+ *
+ *   <DescriptionTerm>Member Since</DescriptionTerm>
+ *   <DescriptionDetails>January 2023</DescriptionDetails>
+ *
+ *   <DescriptionTerm>Location</DescriptionTerm>
+ *   <DescriptionDetails>San Francisco, CA</DescriptionDetails>
+ * </DescriptionList>
+ *
+ * // System information
+ * <DescriptionList>
+ *   <DescriptionTerm>Status</DescriptionTerm>
+ *   <DescriptionDetails>
+ *     <span className="inline-flex items-center gap-1">
+ *       <span className="w-2 h-2 bg-green-500 rounded-full" />
+ *       Online
+ *     </span>
+ *   </DescriptionDetails>
+ *
+ *   <DescriptionTerm>Last Active</DescriptionTerm>
+ *   <DescriptionDetails>5 minutes ago</DescriptionDetails>
+ * </DescriptionList>
+ * ```
+ */
+
+import { cx } from "../../../lib/utils";
+
+/**
+ * Root container for description lists.
+ *
+ * Creates a semantic description list using the HTML `dl` element with
+ * responsive grid layout. Terms and details are arranged in a two-column
+ * layout on larger screens and stacked on mobile devices.
+ *
+ * @param className - Additional CSS classes.
+ * @param props - Standard dl element props.
+ *
+ * @component
+ */
+/**
+ * Definition list component for displaying term-description pairs with consistent formatting.
+ *
+ * @id description-list
+ * @name DescriptionList
+ * @icon List
+ * @category data
+ * @component
+ * @param props - Component properties.
+ * @param props.className - Additional CSS classes.
+ * @param props.children - The description terms and details components.
+ */
+const DescriptionList = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"dl">) => {
+  return (
+    <dl
+      {...props}
+      className={cx(
+        className,
+        "grid grid-cols-1 text-base/6 sm:grid-cols-[min(50%,--spacing(80))_auto] sm:text-sm/6",
+      )}
+    />
+  );
+};
+
+/**
+ * Description term component for definition lists.
+ *
+ * Represents the term or name being described using the HTML `dt` element.
+ * Provides consistent styling with subtle text color and proper spacing.
+ * Includes border separators between items.
+ *
+ * @param className - Additional CSS classes.
+ * @param props - Standard dt element props.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <DescriptionTerm>Username</DescriptionTerm>
+ * <DescriptionTerm>Email Address</DescriptionTerm>
+ * <DescriptionTerm>Last Login</DescriptionTerm>
+ * ```
+ */
+export function DescriptionTerm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"dt">) {
+  return (
+    <dt
+      {...props}
+      className={cx(
+        className,
+        "col-start-1 border-t border-zinc-950/5 pt-3 text-zinc-500 first:border-none sm:border-t sm:border-zinc-950/5 sm:py-3 dark:border-white/5 dark:text-zinc-400 sm:dark:border-white/5",
+      )}
+    />
+  );
+}
+
+/**
+ * Description details component for definition lists.
+ *
+ * Represents the description or definition corresponding to a term using
+ * the HTML `dd` element. Provides emphasized text styling and proper spacing
+ * to create clear term-definition relationships.
+ *
+ * @param className - Additional CSS classes.
+ * @param props - Standard dd element props.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <DescriptionDetails>john.doe</DescriptionDetails>
+ * <DescriptionDetails>john.doe@company.com</DescriptionDetails>
+ * <DescriptionDetails>2 hours ago</DescriptionDetails>
+ *
+ * // With complex content
+ * <DescriptionDetails>
+ *   <span className="font-semibold">Active</span>
+ *   <span className="text-green-600 ml-2">●</span>
+ * </DescriptionDetails>
+ * ```
+ */
+export function DescriptionDetails({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"dd">) {
+  return (
+    <dd
+      {...props}
+      className={cx(
+        className,
+        "pt-1 pb-3 text-zinc-950 sm:border-t sm:border-zinc-950/5 sm:py-3 sm:nth-2:border-none dark:text-white dark:sm:border-white/5",
+      )}
+    />
+  );
+}
+
+export { DescriptionList };

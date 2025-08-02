@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import type { CategoryKey } from "@patternmode/ui/components/registry";
+
 import {
   Badge,
   Card,
@@ -12,12 +14,10 @@ import {
   Text,
   VStack,
 } from "@patternmode/ui";
-
 import {
   CATEGORY_CONFIG,
   getComponentsByCategory,
-} from "@patternmode/ui/component-registry";
-import type { CategoryKey } from "@patternmode/ui/component-registry";
+} from "@patternmode/ui/components/registry";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -29,7 +29,7 @@ type CategoryPageProps = {
 const categoryInfo = CATEGORY_CONFIG.reduce((acc, category) => {
   const descriptions: Record<CategoryKey, string> = {
     data: "Components for displaying and organizing structured data.",
-    ui: "Core user interface components for building applications.", 
+    ui: "Core user interface components for building applications.",
     inputs: "Form inputs and interactive controls for user data collection.",
     forms: "Form layouts and validation components for complex data entry.",
     charts: "Data visualization components for displaying metrics and analytics.",
@@ -39,7 +39,7 @@ const categoryInfo = CATEGORY_CONFIG.reduce((acc, category) => {
     layout: "Structural components for organizing and positioning content.",
     feedback: "Status indicators, notifications, and user feedback components.",
   };
-  
+
   acc[category.key] = {
     title: `${category.name} Components`,
     description: descriptions[category.key] || `${category.name} components for your application.`,

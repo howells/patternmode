@@ -1,81 +1,86 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
-import { FileText } from "lucide-react";
-import {
-  DefaultExample,
-  DisabledExample,
-  FixedHeightExample,
-  FormIntegrationExample,
-  PerformanceExample,
-  WithContentExample,
-  WithErrorExample,
-  WithHeightCallbackExample,
-  WithRowConstraintsExample,
-} from "./examples";
+import { MessageSquare } from "lucide-react";
+import { Textarea } from "./component";
+import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
+
+// Simple manual prop definitions - just the most useful ones
+const textareaProps = [
+  {
+    name: "placeholder",
+    type: "string",
+    description: "Placeholder text for the textarea.",
+    defaultValue: "",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    description: "Whether the textarea is disabled.",
+    defaultValue: false,
+  },
+  {
+    name: "readOnly",
+    type: "boolean",
+    description: "Whether the textarea is read-only.",
+    defaultValue: false,
+  },
+  {
+    name: "rows",
+    type: "number",
+    description: "Number of visible text lines.",
+    defaultValue: 3,
+  },
+  {
+    name: "className",
+    type: "string",
+    description: "Additional CSS classes to apply.",
+    defaultValue: "",
+  },
+];
+
+// TypeScript type for the component props
+export type TextareaConfigProps = {
+  placeholder?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
+  rows?: number;
+  className?: string;
+  hasError?: boolean;
+  autoResize?: boolean;
+};
 
 export const componentConfig: ComponentConfig = {
-  // Basic metadata
   id: "textarea",
   name: "Textarea",
-  description: "Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.",
+  description: "A multi-line text input control that allows users to enter and edit text.",
   category: "inputs",
-  icon: FileText,
-  componentId: "Textarea",
-  importStatement: "import { Textarea } from \"@patternmode/ui/textarea\";",
-
+  icon: MessageSquare,
+  importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
+  props: textareaProps,
   examples: [
     {
-      id: "DefaultExample",
-      title: "Auto-Resizing Textarea",
-      description: "Basic textarea that automatically adjusts height based on content",
+      id: "default",
+      title: "Default",
+      description: "Basic textarea with default settings",
       component: DefaultExample,
     },
     {
-      id: "WithContentExample",
-      title: "With Initial Content",
-      description: "Textarea with pre-filled content demonstrating auto-resize",
+      id: "with-content",
+      title: "With Content",
+      description: "Textarea with pre-filled content",
       component: WithContentExample,
     },
     {
-      id: "WithRowConstraintsExample",
-      title: "With Row Constraints",
-      description: "Textarea with minimum and maximum row limits",
-      component: WithRowConstraintsExample,
-    },
-    {
-      id: "WithErrorExample",
-      title: "Error State",
-      description: "Textarea with error styling and validation",
+      id: "with-error",
+      title: "With Error",
+      description: "Textarea in error state",
       component: WithErrorExample,
     },
+  ],
+  components: [
     {
-      id: "DisabledExample",
-      title: "Disabled State",
-      description: "Non-interactive textarea with disabled styling",
-      component: DisabledExample,
-    },
-    {
-      id: "FixedHeightExample",
-      title: "Fixed Height",
-      description: "Textarea with auto-resize disabled for fixed height",
-      component: FixedHeightExample,
-    },
-    {
-      id: "WithHeightCallbackExample",
-      title: "Height Change Tracking",
-      description: "Textarea with callback to track height changes",
-      component: WithHeightCallbackExample,
-    },
-    {
-      id: "FormIntegrationExample",
-      title: "Form Integration",
-      description: "Complete form example with multiple textareas",
-      component: FormIntegrationExample,
-    },
-    {
-      id: "PerformanceExample",
-      title: "Performance Optimization",
-      description: "Textarea with measurement caching for better performance",
-      component: PerformanceExample,
+      name: "Textarea",
+      description: "Multi-line text input component",
+      component: Textarea,
     },
   ],
 };

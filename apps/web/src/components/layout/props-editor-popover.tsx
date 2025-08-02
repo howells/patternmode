@@ -1,9 +1,9 @@
 "use client";
 
-import { getComponentConfig } from "@patternmode/ui/component-registry";
 import React from "react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
+import { getComponentConfig } from "@patternmode/ui/components/registry";
 
 import { PropExplorerProvider, usePropExplorer } from "../../features/prop-explorer/prop-explorer-context";
 import { PropExplorerContent } from "../../features/prop-explorer/prop-explorer-controls";
