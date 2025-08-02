@@ -25,7 +25,7 @@ type TextareaProps = TextareaPreviewProps & {
    * Useful for adjusting parent container layouts or tracking resize events.
    * Only applies when autoResize=true.
    */
-  onHeightChange?: TextareaAutosizeProps["onHeightChange"];
+  onHeightChange?: (height: number, meta: TextareaHeightChangeMeta) => void;
 
   /**
    * Cache measurements for better performance (react-textarea-autosize prop).

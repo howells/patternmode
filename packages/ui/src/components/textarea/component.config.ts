@@ -2,40 +2,7 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
 import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
-
-// Simple manual prop definitions - just the most useful ones
-const textareaProps = [
-  {
-    name: "placeholder",
-    type: "string",
-    description: "Placeholder text for the textarea.",
-    defaultValue: "",
-  },
-  {
-    name: "disabled",
-    type: "boolean",
-    description: "Whether the textarea is disabled.",
-    defaultValue: false,
-  },
-  {
-    name: "readOnly",
-    type: "boolean",
-    description: "Whether the textarea is read-only.",
-    defaultValue: false,
-  },
-  {
-    name: "rows",
-    type: "number",
-    description: "Number of visible text lines.",
-    defaultValue: 3,
-  },
-  {
-    name: "className",
-    type: "string",
-    description: "Additional CSS classes to apply.",
-    defaultValue: "",
-  },
-];
+import { textareaPreviewProps } from "./preview";
 
 // TypeScript type for the component props
 export type TextareaConfigProps = {
@@ -55,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   category: "inputs",
   icon: MessageSquare,
   importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
-  props: textareaProps,
+  props: textareaPreviewProps,
   examples: [
     {
       id: "default",
