@@ -4,48 +4,48 @@ import TextareaAutosize from "react-textarea-autosize";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 
 type TextareaProps = {
-  /** 
+  /**
    * Whether to display error styling for form validation.
    * Adds red border and error state styling to indicate validation errors.
    */
   hasError?: boolean;
-  
-  /** 
+
+  /**
    * Whether to enable auto-resizing behavior using react-textarea-autosize.
    * When true: Uses TextareaAutosize component with intelligent height adjustment.
    * When false: Uses native HTML textarea with fixed height.
    */
   autoResize?: boolean;
-  
-  /** 
+
+  /**
    * Minimum number of rows to display (react-textarea-autosize prop).
    * The textarea will never be smaller than this height, even when empty.
    * Only applies when autoResize=true.
    */
-  minRows?: number;
-  
-  /** 
+  minRows?: TextareaAutosizeProps["minRows"];
+
+  /**
    * Maximum number of rows before scrolling (react-textarea-autosize prop).
    * When content exceeds this height, the textarea will scroll instead of expanding.
    * Only applies when autoResize=true.
    */
-  maxRows?: number;
-  
-  /** 
+  maxRows?: TextareaAutosizeProps["maxRows"];
+
+  /**
    * Callback when textarea height changes (react-textarea-autosize prop).
    * Useful for adjusting parent container layouts or tracking resize events.
    * Only applies when autoResize=true.
    */
-  onHeightChange?: (height: number, meta: TextareaHeightChangeMeta) => void;
-  
-  /** 
+  onHeightChange?: TextareaAutosizeProps["onHeightChange"];
+
+  /**
    * Cache measurements for better performance (react-textarea-autosize prop).
    * Enable this for textareas that resize frequently to avoid recalculating dimensions.
    * Only applies when autoResize=true.
    */
-  cacheMeasurements?: boolean;
-  
-  /** 
+  cacheMeasurements?: TextareaAutosizeProps["cacheMeasurements"];
+
+  /**
    * Standard CSS style object.
    * Note: When using react-textarea-autosize (autoResize=true),
    * height-related styles are managed internally and may be overridden.
@@ -55,12 +55,6 @@ type TextareaProps = {
 
 /**
  * Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.
- *
- * @id textarea
- * @name Textarea
- * @icon FileText
- * @category inputs
- * @component
  */
 const Textarea = (
   { ref: forwardedRef, className, hasError, autoResize = true, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },

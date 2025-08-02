@@ -25,19 +25,7 @@ const requireComponentMetadata = {
     },
   },
   create(context) {
-    const validCategories = [
-      "inputs",
-      "layout",
-      "navigation",
-      "feedback",
-      "overlay",
-      "data",
-      "media",
-      "utility",
-      "forms",
-      "charts",
-      "text",
-    ];
+    // validCategories removed as metadata is now handled in component config files
 
     /**
      * Check if a node is the main React component (matches directory name or is the primary export)
@@ -82,30 +70,16 @@ const requireComponentMetadata = {
       return null;
     }
 
-    /**
-     * Parse JSDoc tags from comment
-     */
-    function parseJSDocTags(comment) {
-      const tags = {};
-      const lines = comment.value.split("\n");
-
-      for (const line of lines) {
-        const match = line.match(/^\s*\*\s*@(\w+)\s+(.+)$/);
-        if (match) {
-          const [, tagName, tagValue] = match;
-          tags[tagName] = tagValue.trim();
-        }
-      }
-
-      return tags;
-    }
+    // parseJSDocTags function removed as metadata validation is now handled externally
 
     /**
      * Check component for required metadata
      */
     function checkComponent(node) {
       const componentName = node.id?.name;
-      if (!componentName) { return; }
+      if (!componentName) {
+        return;
+      }
 
       const jsDocComment = getJSDocComment(node);
       if (!jsDocComment) {
@@ -114,39 +88,10 @@ const requireComponentMetadata = {
           messageId: "missingJSDoc",
           data: { name: componentName },
         });
-        return;
       }
 
-      const tags = parseJSDocTags(jsDocComment);
-
-      // Check for @icon tag
-      if (!tags.icon) {
-        context.report({
-          node,
-          messageId: "missingIcon",
-          data: { name: componentName },
-        });
-      }
-
-      // Check for @category tag
-      if (!tags.category) {
-        context.report({
-          node,
-          messageId: "missingCategory",
-          data: { name: componentName },
-        });
-      }
-      else if (!validCategories.includes(tags.category)) {
-        context.report({
-          node,
-          messageId: "invalidCategory",
-          data: {
-            name: componentName,
-            category: tags.category,
-            validCategories: validCategories.join(", "),
-          },
-        });
-      }
+      // @icon and @category tags are now handled in component config files
+      // These checks are disabled as metadata has been moved to external configuration
     }
 
     return {
