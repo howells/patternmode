@@ -120,7 +120,7 @@ export type ComponentConfig = {
   id: string;
   name: string;
   description: string;
-  category: "text" | "layout" | "navigation" | "feedback" | "overlay" | "data" | "media" | "utility" | "inputs" | "forms" | "charts" | "ui" | "typography";
+  category: "display" | "controls" | "layout" | "overlay" | "visual" | "actions" | "media" | "typography" | "navigation" | "charts" | "feedback" | "forms" | "data" | "ui" | "inputs" | "utility";
   icon?: React.ReactNode | LucideIcon;
   badge?: string;
 

@@ -26,7 +26,7 @@ export const componentConfig: ComponentConfig = {
   id: "context-menu",
   name: "Context Menu",
   description: "Right-click contextual menu component with hierarchical action items and keyboard shortcuts.",
-  category: "ui",
+  category: "controls",
   icon: MoreHorizontal,
   importStatement: `import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from "@patternmode/ui/context-menu";`,
   examples: [

@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   id: "subheading",
   name: "Subheading",
   description: "Secondary heading component for section subtitles and supplementary titles.",
-  category: "ui",
+  category: "typography",
   icon: Type,
   importStatement: `import { Subheading } from "@patternmode/ui/subheading";`,
   examples: [

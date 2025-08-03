@@ -15,7 +15,7 @@ export const componentConfig: ComponentConfig = {
   id: "checkbox-group",
   name: "CheckboxGroup",
   description: "A powerful checkbox group component for managing multiple checkbox selections with comprehensive state management and accessibility.",
-  category: "inputs",
+  category: "controls",
   icon: CheckSquare,
   importStatement: `import { CheckboxGroup, CheckboxGroupItem } from "@patternmode/ui/checkbox-group";`,
   examples: [

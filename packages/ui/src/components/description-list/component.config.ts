@@ -16,7 +16,7 @@ export const componentConfig: ComponentConfig = {
   id: "description-list",
   name: "Description List",
   description: "Semantic components for creating accessible description lists with responsive grid layout.",
-  category: "ui",
+  category: "display",
   icon: List,
   importStatement: `import { DescriptionList, DescriptionTerm, DescriptionDetails } from "@patternmode/ui/description-list";`,
   examples: [

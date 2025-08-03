@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   id: "switch",
   name: "Switch",
   description: "A binary toggle switch component for on/off states with smooth animations and full accessibility support.",
-  category: "inputs",
+  category: "controls",
   icon: ToggleRight,
   importStatement: `import { Switch } from "@patternmode/ui/switch";`,
   examples: [

@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   id: "dismiss-button",
   name: "DismissButton",
   description: "Close button component for dismissing modals, alerts, and temporary content.",
-  category: "ui",
+  category: "actions",
   icon: X,
   importStatement: `import { DismissButton } from "@patternmode/ui/dismiss-button";`,
   examples: [

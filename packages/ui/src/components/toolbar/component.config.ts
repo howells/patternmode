@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   id: "toolbar",
   name: "Toolbar",
   description: "A comprehensive toolbar system for creating organized collections of interactive controls, actions, and inputs. Perfect for application headers, editing interfaces, and action bars with full accessibility support.",
-  category: "ui",
+  category: "controls",
   icon: Wrench,
   importStatement: `import { Toolbar, ToolbarButton, ToolbarGroup, ToolbarInput, ToolbarLink, ToolbarSeparator } from "@patternmode/ui/toolbar";`,
   examples: [

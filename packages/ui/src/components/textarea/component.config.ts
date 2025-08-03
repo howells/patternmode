@@ -19,7 +19,7 @@ export const componentConfig: ComponentConfig = {
   id: "textarea",
   name: "Textarea",
   description: "A multi-line text input control that allows users to enter and edit text.",
-  category: "inputs",
+  category: "controls",
   icon: MessageSquare,
   importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
   props: TextareaPreviewProps,

@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   id: "divider",
   name: "Divider",
   description: "A versatile divider component for visually separating content sections.",
-  category: "ui",
+  category: "layout",
   icon: Minus,
   importStatement: `import { Divider } from "@patternmode/ui/divider";`,
   examples: [

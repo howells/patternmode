@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   id: "drawer",
   name: "Drawer",
   description: "A collection of components for creating slide-out drawers and bottom sheets with smooth animations.",
-  category: "ui",
+  category: "overlay",
   icon: PanelRight,
   importStatement: `import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@patternmode/ui/drawer";`,
   examples: [

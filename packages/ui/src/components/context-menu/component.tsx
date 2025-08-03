@@ -21,7 +21,11 @@ type ContextMenuProps = {
    * Required when using controlled mode (open prop).
    */
   onOpenChange?: (open: boolean) => void;
-} & Omit<React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root>, "open" | "defaultOpen" | "onOpenChange"> & {
+  /**
+   * Content to render within the context menu.
+   */
+  children: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root>, "open" | "defaultOpen" | "onOpenChange" | "children"> & {
   ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Root> | null>;
 };
 

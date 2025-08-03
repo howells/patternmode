@@ -20,7 +20,7 @@ export const componentConfig: ComponentConfig = {
   id: "preview-card",
   name: "PreviewCard",
   description: "A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
-  category: "ui",
+  category: "media",
   icon: Eye,
   importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardTitle, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
   examples: [

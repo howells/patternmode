@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   id: "combobox",
   name: "Combobox",
   description: "Searchable dropdown component combining input and select functionality. Built on Downshift for accessibility and React Query for data management, supporting both static options and dynamic server-side filtering with infinite scroll.",
-  category: "inputs",
+  category: "controls",
   icon: ChevronsUpDown,
   importStatement: `import { Combobox } from "@patternmode/ui/combobox";`,
   examples: [

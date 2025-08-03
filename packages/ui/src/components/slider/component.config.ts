@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "slider",
   name: "Slider",
   description: "Range slider component for selecting numeric values within a specified range with full keyboard accessibility and customizable appearance.",
-  category: "inputs",
+  category: "controls",
   icon: Minus,
   importStatement: `import { Slider } from "@patternmode/ui/slider";`,
   examples: [

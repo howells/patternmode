@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "empty-state",
   name: "Empty State",
   description: "A component for displaying empty states when there's no content to show. Provides a structured layout with optional icon, title, description, and action buttons to guide users toward taking action.",
-  category: "ui",
+  category: "display",
   icon: FileX,
   importStatement: `import { EmptyState } from "@patternmode/ui/empty-state";`,
   examples: [

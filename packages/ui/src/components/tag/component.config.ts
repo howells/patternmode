@@ -17,7 +17,7 @@ export const componentConfig: ComponentConfig = {
   id: "tag",
   name: "Tag",
   description: "Label component for categorizing and tagging content with removable options.",
-  category: "ui",
+  category: "visual",
   icon: Tag,
   importStatement: `import { Tag } from "@patternmode/ui/tag";`,
   examples: [

@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "scroll-area",
   name: "Scroll Area",
   description: "Custom scrollable areas with styled scrollbars built on Base UI ScrollArea. Provides cross-browser consistent scrolling behavior with customizable appearance and smooth interactions.",
-  category: "ui",
+  category: "layout",
   icon: ScrollText,
   importStatement: `import { ScrollArea, ScrollBar } from "@patternmode/ui/scroll-area";`,
   examples: [

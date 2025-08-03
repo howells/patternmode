@@ -6,6 +6,7 @@ import React from "react";
 import { tv } from "tailwind-variants";
 
 import { config } from "../../lib/config";
+import { env } from "../../lib/env";
 import { cx } from "../../lib/utils";
 
 const iconVariants = tv({
@@ -93,13 +94,19 @@ function SafeDynamicIcon({
   className?: string;
   fallbackIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 }) {
-  const [hasError, setHasError] = React.useState(false);
+  try {
+    return (
+      <IconComponent
+        className={cx(iconVariants({ size }), className)}
+        strokeWidth={strokeWidth}
+      />
+    );
+  }
+  catch (error) {
+    if (env.NODE_ENV === "development") {
+      console.warn("[Icon] Failed to render dynamic icon:", error);
+    }
 
-  React.useEffect(() => {
-    setHasError(false);
-  }, [IconComponent]);
-
-  if (hasError) {
     const FallbackIconComponent = fallbackIcon;
     return FallbackIconComponent
       ? (
@@ -112,81 +119,19 @@ function SafeDynamicIcon({
           <FallbackIcon className={className} size={size} />
         );
   }
-
-  return (
-    <ErrorBoundary
-      fallback={
-        fallbackIcon
-          ? (() => {
-              const FallbackIconComponent = fallbackIcon;
-              return (
-                <FallbackIconComponent
-                  className={cx(iconVariants({ size }), className)}
-                  strokeWidth={strokeWidth}
-                />
-              );
-            })()
-          : (
-              <FallbackIcon className={className} size={size} />
-            )
-      }
-      onError={() => setHasError(true)}
-    >
-      <IconComponent
-        className={cx(iconVariants({ size }), className)}
-        strokeWidth={strokeWidth}
-      />
-    </ErrorBoundary>
-  );
-}
-
-class ErrorBoundary extends React.Component<
-  {
-    children: React.ReactNode;
-    fallback: React.ReactNode;
-    onError?: () => void;
-  },
-  { hasError: boolean }
-> {
-  constructor(props: {
-    children: React.ReactNode;
-    fallback: React.ReactNode;
-    onError?: () => void;
-  }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(): { hasError: boolean } {
-    return { hasError: true };
-  }
-
-  override componentDidCatch(error: Error) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn("[Icon] Failed to render icon:", error);
-    }
-    this.props.onError?.();
-  }
-
-  override render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-
-    return this.props.children;
-  }
 }
 
 /**
  * Centralized icon display component with consistent sizing and error handling.
  */
-export function Icon({
+function Icon({
   icon: IconComponent,
   size,
-  strokeWidth = config.getIconStrokeWidth(),
+  strokeWidth,
   className,
   fallbackIcon,
 }: IconProps) {
+  const finalStrokeWidth = strokeWidth ?? config.getIconStrokeWidth();
   // Handle case where IconComponent is undefined
   if (!IconComponent) {
     const FallbackIconComponent = fallbackIcon;
@@ -194,7 +139,7 @@ export function Icon({
       ? (
           <FallbackIconComponent
             className={cx(iconVariants({ size }), className)}
-            strokeWidth={strokeWidth}
+            strokeWidth={finalStrokeWidth}
           />
         )
       : (
@@ -212,7 +157,7 @@ export function Icon({
       <SafeDynamicIcon
         icon={IconComponent}
         size={size}
-        strokeWidth={strokeWidth}
+        strokeWidth={finalStrokeWidth}
         className={className}
         fallbackIcon={fallbackIcon}
       />
@@ -223,13 +168,13 @@ export function Icon({
     return (
       <IconComponent
         className={cx(iconVariants({ size }), className)}
-        strokeWidth={strokeWidth}
+        strokeWidth={finalStrokeWidth}
       />
     );
   }
   catch (error) {
     // Handle synchronous errors during icon creation
-    if (process.env.NODE_ENV === "development") {
+    if (env.NODE_ENV === "development") {
       console.warn("[Icon] Failed to render icon:", error);
     }
 
@@ -238,7 +183,7 @@ export function Icon({
       ? (
           <FallbackIconComponent
             className={cx(iconVariants({ size }), className)}
-            strokeWidth={strokeWidth}
+            strokeWidth={finalStrokeWidth}
           />
         )
       : (
@@ -248,6 +193,8 @@ export function Icon({
 }
 
 Icon.displayName = "Icon";
+
+export { Icon };
 
 /**
  * Hook to get appropriate icon size based on component size.

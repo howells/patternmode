@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "stacked-list",
   name: "Stacked List",
   description: "Comprehensive components for building structured lists with consistent styling, interactive states, and flexible layouts for displaying collections of related items.",
-  category: "ui",
+  category: "display",
   icon: List,
   importStatement: `import { StackedList } from "@patternmode/ui/stacked-list";`,
   examples: [

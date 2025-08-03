@@ -3,13 +3,14 @@
 "use client";
 
 import { useWindowSize } from "@uidotdev/usehooks";
-import { motion } from "motion/react";
 import { List, Pilcrow, Rows3 } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 
 import {
+  Badge,
   Sidebar,
   SidebarBody,
   SidebarGroup,
@@ -90,7 +91,13 @@ function SidebarContent() {
       <SidebarBody isCollapsed={isCollapsed}>
         {/* Level 1: Components with view toggle */}
         <SidebarGroup
-          title={`Components (${totalComponentsCount})`}
+          title={(
+            <>
+              Components
+              {" "}
+              <Badge variant="neutral" size="sm">{totalComponentsCount}</Badge>
+            </>
+          )}
           isCollapsed={isCollapsed}
           level={1}
           actions={(
@@ -134,7 +141,13 @@ function SidebarContent() {
                     return (
                       <SidebarGroup
                         key={category.key}
-                        title={`${category.name} (${components.length})`}
+                        title={(
+                          <>
+                            {category.name}
+                            {" "}
+                            <Badge variant="neutral" size="sm">{components.length}</Badge>
+                          </>
+                        )}
                         href={`/ui/${category.key}`}
                         isCollapsed={isCollapsed}
                         level={2}

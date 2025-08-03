@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   id: "copy-button",
   name: "Copy Button",
   description: "Button component for copying text content to the clipboard with visual feedback and customizable labels.",
-  category: "ui",
+  category: "actions",
   icon: Copy,
   importStatement: `import { CopyButton } from "@patternmode/ui/copy-button";`,
   examples: [

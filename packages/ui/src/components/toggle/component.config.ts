@@ -17,7 +17,7 @@ export const componentConfig: ComponentConfig = {
   id: "toggle",
   name: "Toggle",
   description: "A two-state button component that toggles between pressed (on) and unpressed (off) states. Unlike a checkbox, Toggle is designed for immediate actions rather than form submission.",
-  category: "inputs",
+  category: "controls",
   icon: ToggleLeft,
   importStatement: `import { Toggle } from "@patternmode/ui/toggle";`,
   examples: [

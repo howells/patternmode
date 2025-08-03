@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "select-native",
   name: "Select Native",
   description: "A styled native HTML select component with consistent design system styling. Provides platform-native behavior, mobile optimization, and accessibility features using the native HTML select element.",
-  category: "inputs",
+  category: "controls",
   icon: ChevronDown,
   importStatement: `import { SelectNative } from "@patternmode/ui/select-native";`,
   examples: [

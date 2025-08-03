@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "label",
   name: "Label",
   description: "A semantic label component built on Base UI Field.Label for accessible form labeling. Provides consistent typography and styling with support for disabled states and dark mode.",
-  category: "inputs",
+  category: "forms",
   icon: Tag,
   importStatement: `import { Label } from "@patternmode/ui/label";`,
   examples: [

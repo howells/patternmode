@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "text-list",
   name: "Text List",
   description: "Flexible components for creating ordered and unordered lists with custom styling, indicators, and alignment options. Supports traditional bullet/number lists as well as custom icon-based lists for enhanced visual presentation.",
-  category: "ui",
+  category: "display",
   icon: List,
   importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/ui/text-list";`,
   examples: [

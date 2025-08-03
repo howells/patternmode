@@ -228,9 +228,103 @@ export function ProductVariantsExample() {
   );
 }
 
-// Example 4: Custom Render Function
+// Example 4: User Management
+export function UserManagementExample() {
+  const [items, setItems] = React.useState([
+    { name: "John Doe", email: "john@example.com", role: "admin" },
+    { name: "Jane Smith", email: "jane@example.com", role: "user" },
+  ]);
+
+  const userSchema: FieldSchema[] = [
+    {
+      key: "name",
+      type: "input",
+      defaultValue: "",
+      label: "Full Name",
+      placeholder: "Enter full name...",
+      required: true,
+    },
+    {
+      key: "email",
+      type: "input",
+      defaultValue: "",
+      label: "Email Address",
+      placeholder: "Enter email address...",
+      required: true,
+      props: { type: "email" },
+    },
+    {
+      key: "role",
+      type: "select",
+      defaultValue: "user",
+      label: "Role",
+      options: [
+        { label: "User", value: "user" },
+        { label: "Admin", value: "admin" },
+        { label: "Moderator", value: "moderator" },
+      ],
+    },
+  ];
+
+  return (
+    <Stack className="w-96 max-w-full">
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
+            User Management Example
+          </h3>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+            Example with different field types and custom rendering.
+          </p>
+        </div>
+
+        <FieldArray
+          items={items}
+          onItemsChange={setItems}
+          schema={userSchema}
+          minItems={1}
+          maxItems={10}
+          addButtonText="Add User"
+          showItemLabels={true}
+          itemLabel="User"
+          componentMap={{
+            input: ({ value, onChange, ...props }: any) => (
+              <Input
+                value={value || ""}
+                onChange={e => onChange(e.target.value)}
+                {...props}
+              />
+            ),
+            select: ({ value, onChange, options = [], ...props }: any) => (
+              <Select value={value || ""} onValueChange={onChange} {...props}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {options.map((option: any) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ),
+          }}
+        />
+      </div>
+    </Stack>
+  );
+}
+
+// Example 5: Custom Render Function
 export function CustomRenderExample() {
-  const [team, setTeam] = React.useState([
+  type TeamMember = {
+    name: string;
+    role: string;
+    department: string;
+  };
+
+  const [team, setTeam] = React.useState<TeamMember[]>([
     { name: "Alice Johnson", role: "admin", department: "Engineering" },
     { name: "Bob Wilson", role: "user", department: "Design" },
   ]);
@@ -301,7 +395,7 @@ export function CustomRenderExample() {
               <HStack justify="between" align="center">
                 <HStack gap={3} align="center">
                   <Avatar
-                    initials={item.name ? item.name.split(" ").map((n: string) => n[0]).join("") : "?"}
+                    initials={item.name && typeof item.name === "string" ? item.name.split(" ").map((n: string) => n[0]).join("") : "?"}
                     size="base"
                     dynamicBackground
                   />

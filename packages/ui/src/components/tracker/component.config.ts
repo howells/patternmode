@@ -18,7 +18,7 @@ export const componentConfig: ComponentConfig = {
   id: "tracker",
   name: "Tracker",
   description: "Visual progress tracker component for displaying steps, stages, or progress through a process using colored blocks. Each block can have custom colors, tooltips, and hover effects to provide detailed information about different stages.",
-  category: "ui",
+  category: "visual",
   icon: Target,
   importStatement: `import { Tracker } from "@patternmode/ui/tracker";`,
   examples: [

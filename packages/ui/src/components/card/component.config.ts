@@ -28,7 +28,7 @@ export const componentConfig: ComponentConfig = {
   id: "card",
   name: "Card",
   description: "Container component with consistent styling for grouping related content.",
-  category: "ui",
+  category: "display",
   icon: Square,
   importStatement: `import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardAction } from "@patternmode/ui/card";`,
   examples: [

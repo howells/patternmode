@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   id: "radio-card-group",
   name: "Radio Card Group",
   description: "A radio group component that presents options as prominent, selectable cards with enhanced visual design. Ideal for presenting choices that benefit from additional visual space, such as pricing plans, feature comparisons, or options that need rich content like descriptions, icons, or pricing information.",
-  category: "inputs",
+  category: "controls",
   icon: Square,
   importStatement: `import { RadioCardGroup, RadioCardItem, RadioCardIndicator } from "@patternmode/ui/radio-card-group";`,
   examples: [

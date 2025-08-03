@@ -19,6 +19,11 @@
       "import": "./src/index.ts",
       "require": "./src/index.ts"
     },
+    "./*": {
+      "types": "./src/components/*/index.tsx",
+      "import": "./src/components/*/index.tsx",
+      "require": "./src/components/*/index.tsx"
+    },
     "./components/*/examples": {
       "types": "./src/components/*/examples.tsx",
       "import": "./src/components/*/examples.tsx",
@@ -28,6 +33,16 @@
       "types": "./src/components/*/preview.tsx",
       "import": "./src/components/*/preview.tsx",
       "require": "./src/components/*/preview.tsx"
+    },
+    "./registry": {
+      "types": "./src/components/registry.ts",
+      "import": "./src/components/registry.ts",
+      "require": "./src/components/registry.ts"
+    },
+    "./components/registry": {
+      "types": "./src/components/registry.ts",
+      "import": "./src/components/registry.ts",
+      "require": "./src/components/registry.ts"
     },
     "./styles/globals.css": "./src/styles/globals.css",
     "./package.json": "./package.json"
@@ -67,6 +82,7 @@
     "@internationalized/date": "^3.8.2",
     "@react-aria/datepicker": "^3.15.0",
     "@react-stately/datepicker": "^3.15.0",
+    "@t3-oss/env-core": "^0.13.8",
     "@tanstack/react-virtual": "^3.13.12",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

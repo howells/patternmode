@@ -25,7 +25,7 @@ export const componentConfig: ComponentConfig = {
   id: "button",
   name: "Button",
   description: "Interactive button component with multiple variants and states for user actions.",
-  category: "inputs",
+  category: "controls",
   icon: Square,
   importStatement: `import { Button } from "@patternmode/ui/button";`,
   examples: [

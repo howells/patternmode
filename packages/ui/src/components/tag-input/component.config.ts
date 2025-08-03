@@ -16,7 +16,7 @@ export const componentConfig: ComponentConfig = {
   id: "tag-input",
   name: "Tag Input",
   description: "A sophisticated multi-select tag input component with search, filtering, and tag creation capabilities built on Downshift for robust accessibility.",
-  category: "inputs",
+  category: "controls",
   icon: Tags,
   importStatement: `import { TagInput, useTagInput } from "@patternmode/ui/tag-input";`,
   examples: [

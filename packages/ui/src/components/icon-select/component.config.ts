@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   id: "icon-select",
   name: "IconSelect",
   description: "A high-performance, tree-shakable searchable icon picker component that provides access to ALL 1,700+ Lucide React icons using a static registry and virtual scrolling. Icons are loaded instantly with no async operations, ensuring optimal performance and reliability.",
-  category: "inputs",
+  category: "controls",
   icon: Search,
   importStatement: `import { IconSelect, useIconSelect, getDynamicIconByName } from "@patternmode/ui/icon-select";`,
   examples: [

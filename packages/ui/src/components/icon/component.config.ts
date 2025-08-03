@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   id: "icon",
   name: "Icon",
   description: "Centralized icon system providing consistent sizing, styling, and error handling for Lucide React icons across all UI components. Features graceful fallbacks, dynamic icon loading support, and flexible sizing options.",
-  category: "ui",
+  category: "visual",
   icon: Star,
   importStatement: `import { Icon, useIconSize, getIconSizeForContext, createIconWithSize } from "@patternmode/ui/icon";`,
   examples: [

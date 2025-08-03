@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   id: "radio",
   name: "Radio",
   description: "Radio button input for single selections within a group of options. Provides accessible radio button functionality with proper keyboard navigation and form integration.",
-  category: "inputs",
+  category: "controls",
   icon: Circle,
   importStatement: `import { Radio, RadioItem, RadioOption, RadioLabel, RadioCard, RadioCardOption, RadioIndicator } from "@patternmode/ui/radio";`,
   examples: [

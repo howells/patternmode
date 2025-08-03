@@ -222,17 +222,7 @@ export function SidebarBody({
       data-component="SidebarBody"
       className={cx(className, "flex-1")}
       viewportClassName="[&>*+*]:mt-6"
-      scrollbarClassName={cx(
-        // Default scrollbar width
-        "w-2.5",
-        // Thinner scrollbar when collapsed
-        isCollapsed && "w-1.5",
-      )}
-      thumbClassName={cx(
-        // Default thumb styling is handled by ScrollArea
-        // Make thumb thinner when collapsed to match scrollbar
-        isCollapsed && "bg-zinc-400 dark:bg-zinc-500",
-      )}
+      scrollbarClassName="hidden"
       {...props}
     >
       <div data-component="SidebarContent">{children}</div>
@@ -405,17 +395,16 @@ export function SidebarGroup({
       <div
         {...props}
         data-component="SidebarGroup"
-        className={cx(className, "space-y-2")}
+        className={cx(className)}
       >
         {title && (
           <div
             className={cx(
-              "flex items-center justify-between px-4 py-4",
-              sticky && "sticky top-0 z-10 bg-zinc-100/90 dark:bg-zinc-900/90 backdrop-blur-sm border-b border-zinc-950/5 dark:border-white/5",
+              "flex items-center justify-between px-4",
+              sticky && "sticky bg-zinc-100/90 dark:bg-zinc-900/90 backdrop-blur-sm border-b border-zinc-950/5 dark:border-white/5",
+              sticky && level === 1 && "top-0 h-15 z-20",
+              sticky && level === 2 && "top-15 h-12 z-10",
             )}
-            style={sticky ? {
-              top: level === 1 ? "0px" : "60px", // Offset level 2 headers by level 1 header height
-            } : undefined}
           >
             <SidebarTitle level={level} href={href}>
               {title}

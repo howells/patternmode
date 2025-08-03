@@ -48,7 +48,6 @@ import { componentConfig as inspectorConfig } from "./inspector/component.config
 import { componentConfig as kbdConfig } from "./kbd/component.config";
 import { componentConfig as labelConfig } from "./label/component.config";
 import { componentConfig as lineChartConfig } from "./line-chart/component.config";
-import { componentConfig as textListConfig } from "./text-list/component.config";
 import { componentConfig as loaderConfig } from "./loader/component.config";
 import { componentConfig as menuBarConfig } from "./menu-bar/component.config";
 import { componentConfig as menuConfig } from "./menu/component.config";
@@ -84,6 +83,7 @@ import { componentConfig as tableConfig } from "./table/component.config";
 import { componentConfig as tabsConfig } from "./tabs/component.config";
 import { componentConfig as tagInputConfig } from "./tag-input/component.config";
 import { componentConfig as tagConfig } from "./tag/component.config";
+import { componentConfig as textListConfig } from "./text-list/component.config";
 import { componentConfig as textConfig } from "./text/component.config";
 import { componentConfig as textareaConfig } from "./textarea/component.config";
 import { componentConfig as toastConfig } from "./toast/component.config";
@@ -221,22 +221,37 @@ export const COMPONENT_LIST = Object.values(COMPONENT_REGISTRY).reduce((acc, con
 
 // Category configuration for web app
 export const CATEGORY_CONFIG = [
-  { key: "data", name: "Data", description: "Components for displaying data" },
-  { key: "ui", name: "Interface", description: "Core UI components" },
-  { key: "charts", name: "Charts", description: "Data visualization components" },
-  { key: "navigation", name: "Navigation", description: "Navigation components" },
-  { key: "inputs", name: "Inputs", description: "Form input components" },
-  { key: "utility", name: "Utility", description: "Utility components" },
-  { key: "forms", name: "Forms", description: "Form components" },
-  { key: "layout", name: "Layout", description: "Layout components" },
-  { key: "typography", name: "Typography", description: "Text components" },
-  { key: "feedback", name: "Feedback", description: "Feedback components" },
-  { key: "media", name: "Media", description: "Media and visual components" },
-  { key: "overlay", name: "Overlay", description: "Overlay and modal components" },
-  { key: "text", name: "Text", description: "Text and typography components" },
+  { key: "display", name: "Display & Content", description: "Components for displaying and organizing content" },
+  { key: "controls", name: "Interactive Controls", description: "User interaction and input components" },
+  { key: "layout", name: "Layout & Structure", description: "Components for page structure and spacing" },
+  { key: "overlay", name: "Overlays & Modals", description: "Components that appear over content" },
+  { key: "visual", name: "Visual Elements", description: "Small visual indicators and decorative elements" },
+  { key: "actions", name: "Actions & Commands", description: "Components that trigger actions or display commands" },
+  { key: "media", name: "Media & Rich Content", description: "Components for rich media and complex content display" },
+  { key: "typography", name: "Typography", description: "Text and typography components" },
+  { key: "navigation", name: "Navigation", description: "Navigation and wayfinding components" },
+  { key: "charts", name: "Charts", description: "Data visualization components for displaying metrics and analytics" },
+  { key: "feedback", name: "Feedback", description: "Status indicators, notifications, and user feedback components" },
+  { key: "forms", name: "Forms", description: "Form layouts and validation components for complex data entry" },
+  { key: "data", name: "Data", description: "Components for displaying and organizing structured data" },
+  { key: "ui", name: "UI", description: "Core user interface components for building applications" },
+  { key: "inputs", name: "Inputs", description: "Form inputs and interactive controls for user data collection" },
+  { key: "utility", name: "Utility", description: "Helper components and tools for enhanced functionality" },
 ] as const;
 
 export type CategoryKey = typeof CATEGORY_CONFIG[number]["key"];
+
+export function getCategoryInfo(categoryKey: string) {
+  const category = CATEGORY_CONFIG.find(c => c.key === categoryKey);
+  if (!category) {
+    return null;
+  }
+
+  return {
+    title: `${category.name} Components`,
+    description: category.description,
+  };
+}
 
 // Legacy compatibility exports (for existing imports)
 export const componentRegistry = COMPONENT_REGISTRY;

@@ -485,14 +485,12 @@ export function ComponentPreview({
 
   return (
     <Tabs defaultValue="preview">
-      <Stack className="relative">
-        {/* Floating tabs in top-left */}
-        <Stack className="absolute top-0 left-0 z-10">
-          <TabsList variant="solid">
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
-          </TabsList>
-        </Stack>
+      <Stack>
+        {/* Tabs aligned to left with padding instead of absolute positioning */}
+        <TabsList variant="solid">
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
 
         <TabsContent value="preview" data-testid="component-preview">
           <Stack data-testid="preview-container">

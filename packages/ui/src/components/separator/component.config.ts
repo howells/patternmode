@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "separator",
   name: "Separator",
   description: "A visual separator component built on Base UI's Separator primitive for content division. Provides accessible visual division elements with horizontal and vertical orientations, multiple styling variants, and optional text labels.",
-  category: "ui",
+  category: "layout",
   icon: Minus,
   importStatement: `import { Separator } from "@patternmode/ui/separator";`,
   examples: [

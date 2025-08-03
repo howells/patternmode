@@ -28,7 +28,7 @@ export const componentConfig: ComponentConfig = {
   id: "calendar",
   name: "Calendar",
   description: "Date picker component for selecting single dates, date ranges, or multiple dates with customizable navigation and display options.",
-  category: "inputs",
+  category: "controls",
   icon: CalendarIcon,
   importStatement: `import { Calendar } from "@patternmode/ui/calendar";`,
   examples: [

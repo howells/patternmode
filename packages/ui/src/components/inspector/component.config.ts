@@ -19,7 +19,7 @@ export const componentConfig: ComponentConfig = {
   id: "inspector",
   name: "Inspector",
   description: "A side panel component system for displaying detailed information, properties, or controls related to selected content. Features toggleable overlay mode for mobile devices, smooth animations, and structured content organization.",
-  category: "utility",
+  category: "forms",
   icon: Search,
   importStatement: `import { Inspector, InspectorHeader, InspectorBody, InspectorSection, InspectorGroup, InspectorToggle } from "@patternmode/ui/inspector";`,
   examples: [

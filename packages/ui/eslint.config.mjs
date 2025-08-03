@@ -17,6 +17,21 @@ export default ui().append(
     },
   },
   {
+    name: "env-process-override",
+    files: ["**/lib/env.ts"],
+    rules: {
+      "node/no-process-env": "off",
+    },
+  },
+  {
+    name: "react-hooks-override",
+    files: ["**/*.{ts,tsx}"],
+    rules: {
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks-extra/no-direct-set-state-in-use-effect": "off",
+    },
+  },
+  {
     name: "type-preference-override",
     files: ["**/*.{ts,tsx}"],
     rules: {

@@ -16,7 +16,7 @@ export const componentConfig: ComponentConfig = {
   id: "toggle-group",
   name: "Toggle Group",
   description: "A group of related toggle buttons that work together as a cohesive unit for multi-select or single-select interactions. Provides structured grouping with consistent styling and behavior, supporting both single-select and multi-select modes.",
-  category: "inputs",
+  category: "controls",
   icon: ToggleLeft,
   importStatement: `import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/toggle-group";`,
   examples: [

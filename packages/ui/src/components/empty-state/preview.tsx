@@ -1,5 +1,5 @@
 import { DefaultExample } from "./examples";
 
-export default function EmptyStatePreview() {
+export function EmptyStateExample() {
   return <DefaultExample />;
 }

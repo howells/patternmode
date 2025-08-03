@@ -14,7 +14,7 @@ export const componentConfig: ComponentConfig = {
   id: "date-picker",
   name: "Date Picker",
   description: "Date selection component with calendar interface, optional time picker, and preset date options.",
-  category: "inputs",
+  category: "controls",
   icon: Calendar,
   importStatement: `import { DatePicker } from "@patternmode/ui/date-picker";`,
   examples: [

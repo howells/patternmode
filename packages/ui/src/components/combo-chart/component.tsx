@@ -1,6 +1,3 @@
-// Tremor ComboChart [v1.0.0]
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";
@@ -263,7 +260,9 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
 
   const checkScroll = React.useCallback(() => {
     const scrollable = scrollableRef?.current;
-    if (!scrollable) { return; }
+    if (!scrollable) {
+      return;
+    }
 
     const hasLeftScroll = scrollable.scrollLeft > 0;
     const hasRightScroll
@@ -360,47 +359,50 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
         {categories.map((category, index) => {
           const barColor = barCategoryColors.get(category.name);
           const lineColor = lineCategoryColors.get(category.name);
-          return (
-            <LegendItem
-              key={`item-${index}`}
-              name={category.name}
-              chartType={category.chartType}
-              onClick={onClickLegendItem}
-              activeLegend={activeLegend}
-              color={category.chartType === "bar" ? barColor! : lineColor!}
-            />
-          );
+          const props = {
+            name: category.name,
+            chartType: category.chartType,
+            onClick: onClickLegendItem,
+            activeLegend,
+            color: category.chartType === "bar" ? barColor! : lineColor!,
+          };
+          return React.createElement(LegendItem, {
+            key: `item-${index}`,
+            ...props,
+          });
         })}
       </div>
-      {enableLegendSlider && (hasScroll?.right || hasScroll?.left) ? (
-        <>
-          <div
-            className={cx(
-              // base
-              "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
-              // background color
-              "bg-white dark:bg-zinc-950",
-            )}
-          >
-            <ScrollButton
-              icon={ChevronLeft}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("left");
-              }}
-              disabled={!hasScroll?.left}
-            />
-            <ScrollButton
-              icon={ChevronRight}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("right");
-              }}
-              disabled={!hasScroll?.right}
-            />
-          </div>
-        </>
-      ) : null}
+      {enableLegendSlider && (hasScroll?.right || hasScroll?.left)
+        ? (
+            <>
+              <div
+                className={cx(
+                  // base
+                  "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
+                  // background color
+                  "bg-white dark:bg-zinc-950",
+                )}
+              >
+                <ScrollButton
+                  icon={ChevronLeft}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("left");
+                  }}
+                  disabled={!hasScroll?.left}
+                />
+                <ScrollButton
+                  icon={ChevronRight}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("right");
+                  }}
+                  disabled={!hasScroll?.right}
+                />
+              </div>
+            </>
+          )
+        : null}
     </ol>
   );
 };
@@ -549,6 +551,9 @@ type ChartTooltipProps = {
   lineValueFormatter?: (value: number) => string;
 };
 
+const defaultBarValueFormatter = (value: number): string => value.toString();
+const defaultLineValueFormatter = (value: number): string => value.toString();
+
 /**
  * Default tooltip component for combo charts.
  */
@@ -556,8 +561,8 @@ const ChartTooltip = ({
   active,
   payload,
   label,
-  barValueFormatter = (value: number): string => value.toString(),
-  lineValueFormatter = (value: number): string => value.toString(),
+  barValueFormatter = defaultBarValueFormatter,
+  lineValueFormatter = defaultLineValueFormatter,
 }: ChartTooltipProps) => {
   if (active && payload && payload.length) {
     const filteredPayload = payload.filter((item: any) => item.type !== "none");
@@ -588,6 +593,7 @@ const ChartTooltip = ({
           {filteredPayload.map(
             ({ value, category, barColor, lineColor, chartType }, index) => (
               <div
+                // eslint-disable-next-line react/no-array-index-key
                 key={`id-${index}`}
                 className="flex items-center justify-between space-x-8"
               >
@@ -880,7 +886,9 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
 
   function onBarClick(data: any, _: any, event: React.MouseEvent) {
     event.stopPropagation();
-    if (!onValueChange) { return; }
+    if (!onValueChange) {
+      return;
+    }
     if (isEqual(activeBar, { ...data.payload, value: data.value })) {
       setActiveLegend(undefined);
       setActiveBar(undefined);
@@ -903,7 +911,9 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
   function onDotClick(itemData: any, event: React.MouseEvent) {
     event.stopPropagation();
 
-    if (!hasOnValueChange) { return; }
+    if (!hasOnValueChange) {
+      return;
+    }
     if (
       (itemData.index === activeDot?.index
         && itemData.dataKey === activeDot?.dataKey)
@@ -931,7 +941,9 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
   }
 
   function onCategoryClick(dataKey: string) {
-    if (!hasOnValueChange) { return; }
+    if (!hasOnValueChange) {
+      return;
+    }
 
     if (dataKey === activeLegend && !activeBar && !activeDot) {
       setActiveLegend(undefined);
@@ -1066,43 +1078,45 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
             )}
           </YAxis>
 
-          {enableBiaxial ? (
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              width={mergedLineSeries.yAxisWidth}
-              hide={!mergedLineSeries.showYAxis}
-              axisLine={false}
-              tickLine={false}
-              fill=""
-              stroke=""
-              className={cx(
-                // base
-                "text-xs",
-                // text fill
-                "fill-zinc-500 dark:fill-zinc-500",
-              )}
-              tick={{
-                transform: "translate(3, 0)",
-              }}
-              type="number"
-              domain={lineYAxisDomain as AxisDomain}
-              tickFormatter={mergedLineSeries.valueFormatter}
-              allowDecimals={mergedLineSeries.allowDecimals}
-            >
-              {mergedLineSeries.yAxisLabel && (
-                <Label
-                  position="insideRight"
-                  style={{ textAnchor: "middle" }}
-                  angle={-90}
-                  offset={-15}
-                  className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
+          {enableBiaxial
+            ? (
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  width={mergedLineSeries.yAxisWidth}
+                  hide={!mergedLineSeries.showYAxis}
+                  axisLine={false}
+                  tickLine={false}
+                  fill=""
+                  stroke=""
+                  className={cx(
+                    // base
+                    "text-xs",
+                    // text fill
+                    "fill-zinc-500 dark:fill-zinc-500",
+                  )}
+                  tick={{
+                    transform: "translate(3, 0)",
+                  }}
+                  type="number"
+                  domain={lineYAxisDomain as AxisDomain}
+                  tickFormatter={mergedLineSeries.valueFormatter}
+                  allowDecimals={mergedLineSeries.allowDecimals}
                 >
-                  {mergedLineSeries.yAxisLabel}
-                </Label>
-              )}
-            </YAxis>
-          ) : null}
+                  {mergedLineSeries.yAxisLabel && (
+                    <Label
+                      position="insideRight"
+                      style={{ textAnchor: "middle" }}
+                      angle={-90}
+                      offset={-15}
+                      className="fill-zinc-800 text-sm font-medium dark:fill-zinc-200"
+                    >
+                      {mergedLineSeries.yAxisLabel}
+                    </Label>
+                  )}
+                </YAxis>
+              )
+            : null}
 
           <Tooltip
             wrapperStyle={{ outline: "none" }}

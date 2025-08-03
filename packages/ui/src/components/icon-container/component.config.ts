@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "icon-container",
   name: "Icon Container",
   description: "Container component for icons with consistent padding and background styling. Provides semantic variants, custom colors, and multiple sizes for displaying icons with visual emphasis.",
-  category: "ui",
+  category: "visual",
   icon: Package,
   importStatement: `import { IconContainer } from "@patternmode/ui/icon-container";`,
   examples: [

@@ -3,6 +3,7 @@ import React from "react";
 import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Heading } from "../heading/component";
+import { IconContainer } from "../icon-container/component";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 
@@ -80,9 +81,17 @@ type EmptyStateProps = {
 /**
  * A component for displaying empty states when there's no content to show.
  */
-export const EmptyState = (
-  { title, description, icon: Icon, primaryAction, secondaryAction, variant = "default", size = "default", className, ...props }: EmptyStateProps,
-) => {
+export function EmptyState({
+  title,
+  description,
+  icon: Icon,
+  primaryAction,
+  secondaryAction,
+  variant = "default",
+  size = "default",
+  className,
+  ...props
+}: EmptyStateProps) {
   return (
     <div
       className={cx(
@@ -100,27 +109,17 @@ export const EmptyState = (
     >
       {/* Icon */}
       {Icon && (
-        <div
-          className={cx(
-            "flex items-center justify-center rounded-full",
-            // Background styling based on variant
-            variant === "default"
-            && "bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400",
-            variant === "minimal" && "text-zinc-500 dark:text-zinc-500",
-            // Size
-            size === "sm" && "size-12",
-            size === "default" && "size-16",
-            size === "lg" && "size-20",
-          )}
-        >
-          <Icon
-            className={cx(
-              size === "sm" && "size-5",
-              size === "default" && "size-6",
-              size === "lg" && "size-8",
-            )}
-          />
-        </div>
+        <IconContainer
+          icon={Icon}
+          size={
+            size === "sm"
+              ? "sm"
+              : size === "default"
+                ? "lg"
+                : "xl"
+          }
+          variant={variant === "minimal" ? "neutral" : "neutral"}
+        />
       )}
 
       {/* Title */}

@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   id: "carousel",
   name: "Carousel",
   description: "Image and content carousel component with navigation controls and indicators built on Embla Carousel.",
-  category: "ui",
+  category: "media",
   icon: ChevronLeft,
   importStatement: `import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@patternmode/ui/carousel";`,
   examples: [

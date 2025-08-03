@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "split-button",
   name: "Split Button",
   description: "Two-part button component that combines a primary action button with a dropdown menu trigger for providing additional related options.",
-  category: "ui",
+  category: "controls",
   icon: ChevronDown,
   importStatement: `import { SplitButton } from "@patternmode/ui/split-button";`,
   examples: [

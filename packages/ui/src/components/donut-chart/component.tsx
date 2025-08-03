@@ -1,6 +1,3 @@
-// Tremor DonutChart [v1.0.0]
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * Donut Chart Component.
  *
@@ -55,11 +52,13 @@ const parseData = (
  * Calculates the total value for center label display.
  */
 const calculateDefaultLabel = (data: any[], valueKey: string): number => {
-  if (!data || !Array.isArray(data) || !valueKey) { return 0; }
+  if (!data || !Array.isArray(data) || !valueKey) {
+    return 0;
+  }
   return sumNumericArray(
     data
       .map(dataPoint => dataPoint?.[valueKey])
-      .filter(value => typeof value === "number" && !isNaN(value)),
+      .filter(value => typeof value === "number" && !Number.isNaN(value)),
   );
 };
 
@@ -134,6 +133,7 @@ const ChartTooltip = ({
         <div className={cx("space-y-1 px-4 py-2")}>
           {payload.map(({ value, category, color }, index) => (
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={`id-${index}`}
               className="flex items-center justify-between space-x-8"
             >
@@ -290,17 +290,22 @@ type DonutChartProps = {
   customTooltip?: React.ComponentType<TooltipProps>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+const defaultValueFormatter = (value: number) => value.toString();
+
 /**
  * Donut chart component for displaying proportional data with a hollow center.
  */
 const DonutChart = (
-  { ref: forwardedRef, data = [], value, category, colors = AvailableChartColors, variant = "donut", valueFormatter = (value: number) => value.toString(), label, showLabel = false, showTooltip = true, onValueChange, tooltipCallback, customTooltip, className, ...other }: DonutChartProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref: forwardedRef, data = [], value, category, colors = AvailableChartColors, variant = "donut", valueFormatter = defaultValueFormatter, label, showLabel = false, showTooltip = true, onValueChange, tooltipCallback, customTooltip, className, ...other }: DonutChartProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   const CustomTooltip = customTooltip;
   const [activeIndex, setActiveIndex] = React.useState<number | undefined>(
     undefined,
   );
-    // Safety checks for required props
+  const prevActiveRef = React.useRef<boolean | undefined>(undefined);
+  const prevCategoryRef = React.useRef<string | undefined>(undefined);
+
+  // Safety checks for required props
   if (!value || !category) {
     console.warn("DonutChart: Both \"value\" and \"category\" props are required");
     return (
@@ -320,7 +325,7 @@ const DonutChart = (
     && typeof item === "object"
     && item[category] != null
     && typeof item[value] === "number"
-    && !isNaN(item[value]),
+    && !Number.isNaN(item[value]),
   );
 
   const isDonut = variant === "donut";
@@ -345,11 +350,8 @@ const DonutChart = (
     );
   }
 
-  const categories = Array.from(new Set(validData.map(item => item[category])));
+  const categories = Array.from(new Set(validData.map(item => item[category]))) as string[];
   const categoryColors = constructCategoryColors(categories, colors);
-
-  const prevActiveRef = React.useRef<boolean | undefined>(undefined);
-  const prevCategoryRef = React.useRef<string | undefined>(undefined);
 
   const handleShapeClick = (
     data: any,
@@ -357,7 +359,9 @@ const DonutChart = (
     event: React.MouseEvent,
   ) => {
     event.stopPropagation();
-    if (!onValueChange) { return; }
+    if (!onValueChange) {
+      return;
+    }
 
     if (activeIndex === index) {
       setActiveIndex(undefined);

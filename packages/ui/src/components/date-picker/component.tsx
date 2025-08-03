@@ -37,7 +37,7 @@ const isBrowserLocaleClockType24h = () => {
 type TimeSegmentProps = {
   segment: DateSegment;
   state: DateFieldState;
-};
+} & { key?: React.Key };
 
 const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -129,9 +129,11 @@ const TimeInput = ({ ref, hourCycle, ...props }: TimeInputProps) => {
       ref={innerRef}
       className="group/time-input inline-flex w-full gap-x-2"
     >
-      {state.segments.map((segment, i) => (
-        <TimeSegment key={i} segment={segment} state={state} />
-      ))}
+      {state.segments.map((segment, i) => {
+        const props = { segment, state };
+        // eslint-disable-next-line react/no-array-index-key
+        return <TimeSegment key={i} {...props} />;
+      })}
     </div>
   );
 };
@@ -471,7 +473,7 @@ type SingleDatePickerProps = {
   translations?: Omit<Translations, "range">;
 } & Omit<PickerProps, "translations">;
 
-type RangeDatePickerProps = {
+type _RangeDatePickerProps = {
   /**
    * Preset date range options to display in sidebar.
    * Provides quick selection for common date ranges.
@@ -671,7 +673,7 @@ const SingleDatePicker = ({
   );
   const [month, setMonth] = React.useState<Date | undefined>(date);
 
-  const [time, setTime] = React.useState<TimeValue | null>(
+  const [time, setTime] = React.useState<TimeValue | null>(() =>
     value
       ? new Time(value.getHours(), value.getMinutes())
       : defaultValue

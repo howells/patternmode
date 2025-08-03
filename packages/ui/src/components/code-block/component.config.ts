@@ -19,7 +19,7 @@ export const componentConfig: ComponentConfig = {
   id: "code-block",
   name: "CodeBlock",
   description: "Syntax-highlighted code display component with copy functionality and theme support. Built on react-syntax-highlighter with Prism.js, supporting 297+ programming languages with automatic theme switching and professional styling.",
-  category: "ui",
+  category: "media",
   icon: Code,
   importStatement: `import { CodeBlock } from "@patternmode/ui/code-block";`,
   examples: [

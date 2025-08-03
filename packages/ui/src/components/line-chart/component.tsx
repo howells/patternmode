@@ -67,8 +67,6 @@
  * ```
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";
@@ -138,12 +136,12 @@ type LegendItemProps = {
  * @see {@link https://recharts.org/en-US/api/LineChart}
  * @param props - Component properties.
  */
-const LegendItem = ({
+const LegendItem: React.FC<LegendItemProps> = ({
   name,
   color,
   onClick,
   activeLegend,
-}: LegendItemProps) => {
+}) => {
   const hasOnValueChange = !!onClick;
   return (
     <li
@@ -211,10 +209,7 @@ type ScrollButtonProps = {
  * Supports continuous scrolling with mouse hold and keyboard interaction.
  */
 const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
-  const /**
-         *
-         */
-    Icon = icon;
+  const Icon = icon;
   const [isPressed, setIsPressed] = React.useState(false);
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -347,7 +342,9 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
 
   const checkScroll = React.useCallback(() => {
     const scrollable = scrollableRef?.current;
-    if (!scrollable) { return; }
+    if (!scrollable) {
+      return;
+    }
 
     const hasLeftScroll = scrollable.scrollLeft > 0;
     const hasRightScroll
@@ -446,6 +443,7 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       >
         {categories.map((category, index) => (
           <LegendItem
+            // eslint-disable-next-line react/no-array-index-key
             key={`item-${index}`}
             name={category}
             color={colors[index] as AvailableChartColorsKeys}
@@ -454,35 +452,37 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
           />
         ))}
       </div>
-      {enableLegendSlider && (hasScroll?.right || hasScroll?.left) ? (
-        <>
-          <div
-            className={cx(
-              // base
-              "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
-              // background color
-              "bg-white dark:bg-zinc-950",
-            )}
-          >
-            <ScrollButton
-              icon={ChevronLeft}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("left");
-              }}
-              disabled={!hasScroll?.left}
-            />
-            <ScrollButton
-              icon={ChevronRight}
-              onClick={() => {
-                setIsKeyDowned(null);
-                scrollToTest("right");
-              }}
-              disabled={!hasScroll?.right}
-            />
-          </div>
-        </>
-      ) : null}
+      {enableLegendSlider && (hasScroll?.right || hasScroll?.left)
+        ? (
+            <>
+              <div
+                className={cx(
+                  // base
+                  "absolute top-0 right-0 bottom-0 flex h-full items-center justify-center pr-1",
+                  // background color
+                  "bg-white dark:bg-zinc-950",
+                )}
+              >
+                <ScrollButton
+                  icon={ChevronLeft}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("left");
+                  }}
+                  disabled={!hasScroll?.left}
+                />
+                <ScrollButton
+                  icon={ChevronRight}
+                  onClick={() => {
+                    setIsKeyDowned(null);
+                    scrollToTest("right");
+                  }}
+                  disabled={!hasScroll?.right}
+                />
+              </div>
+            </>
+          )
+        : null}
     </ol>
   );
 };
@@ -670,6 +670,7 @@ const ChartTooltip = ({
         <div className={cx("space-y-1 px-4 py-2")}>
           {legendPayload.map(({ value, category, color }, index) => (
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={`id-${index}`}
               className="flex items-center justify-between space-x-8"
             >
@@ -929,10 +930,7 @@ const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<H
     customTooltip,
     ...other
   } = props;
-  const /**
-         *
-         */
-    CustomTooltip = customTooltip;
+  const CustomTooltip = customTooltip;
   const paddingValue
       = (!showXAxis && !showYAxis) || (startEndOnly && !showYAxis) ? 0 : 20;
   const [legendHeight, setLegendHeight] = React.useState(60);
@@ -952,7 +950,9 @@ const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<H
   function onDotClick(itemData: any, event: React.MouseEvent) {
     event.stopPropagation();
 
-    if (!hasOnValueChange) { return; }
+    if (!hasOnValueChange) {
+      return;
+    }
     if (
       (itemData.index === activeDot?.index
         && itemData.dataKey === activeDot?.dataKey)
@@ -979,7 +979,9 @@ const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<H
   }
 
   function onCategoryClick(dataKey: string) {
-    if (!hasOnValueChange) { return; }
+    if (!hasOnValueChange) {
+      return;
+    }
     if (
       (dataKey === activeLegend && !activeDot)
       || (hasOnlyOneValueForKey(data, dataKey)

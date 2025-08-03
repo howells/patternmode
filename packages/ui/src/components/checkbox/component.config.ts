@@ -17,7 +17,7 @@ export const componentConfig: ComponentConfig = {
   id: "checkbox",
   name: "Checkbox",
   description: "A versatile checkbox input component with full accessibility support and indeterminate state capabilities.",
-  category: "inputs",
+  category: "controls",
   icon: Square,
   importStatement: `import { Checkbox } from "@patternmode/ui/checkbox";`,
   examples: [

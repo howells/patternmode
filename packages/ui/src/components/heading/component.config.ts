@@ -12,7 +12,7 @@ export const componentConfig: ComponentConfig = {
   id: "heading",
   name: "Heading",
   description: "Heading component with hierarchical levels and consistent typography styling.",
-  category: "ui",
+  category: "typography",
   icon: Type,
   importStatement: `import { Heading } from "@patternmode/ui/heading";`,
   examples: [

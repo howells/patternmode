@@ -7,7 +7,7 @@ export const componentConfig: ComponentConfig = {
   id: "form",
   name: "Form",
   description: "A modern form system that integrates Base UI Form components with Zod validation for type-safe, accessible forms. Provides comprehensive form building blocks with automatic validation, error handling, and accessibility features.",
-  category: "inputs",
+  category: "forms",
   icon: FileText,
   importStatement: `import { Form, FormField, FormControl, FormLabel, FormDescription, FormError } from "@patternmode/ui/form";`,
   examples: [

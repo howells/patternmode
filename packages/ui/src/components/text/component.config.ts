@@ -13,7 +13,7 @@ export const componentConfig: ComponentConfig = {
   id: "text",
   name: "Text",
   description: "Typography component with consistent text styling and semantic meaning.",
-  category: "ui",
+  category: "display",
   icon: Type,
   importStatement: `import { Text, TextLink, Strong, Code } from "@patternmode/ui/text";`,
   examples: [

@@ -16,7 +16,7 @@ export const componentConfig: ComponentConfig = {
   id: "dot",
   name: "Dot",
   description: "Small circular indicator component for status, notifications, or decorative purposes.",
-  category: "ui",
+  category: "visual",
   icon: Circle,
   importStatement: `import { Dot } from "@patternmode/ui/dot";`,
   examples: [

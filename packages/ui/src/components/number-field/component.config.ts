@@ -15,7 +15,7 @@ export const componentConfig: ComponentConfig = {
   id: "number-field",
   name: "NumberField",
   description: "An advanced numeric input field with stepper controls, interactive scrub area, and comprehensive keyboard navigation. Built on Base UI's NumberField primitive with sophisticated numeric input capabilities.",
-  category: "inputs",
+  category: "controls",
   icon: Hash,
   importStatement: `import { NumberField, NumberFieldLabel, NumberFieldGroup, NumberFieldInput, NumberFieldIncrement, NumberFieldDecrement, NumberFieldScrubCursor } from "@patternmode/ui/number-field";`,
   examples: [

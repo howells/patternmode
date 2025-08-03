@@ -25,7 +25,7 @@ export const componentConfig: ComponentConfig = {
   id: "alert-dialog",
   name: "AlertDialog",
   description: "Modal dialog component for critical alerts and confirmation prompts.",
-  category: "ui",
+  category: "overlay",
   icon: AlertTriangle,
   importStatement: `import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@patternmode/ui/alert-dialog";`,
   examples: [
