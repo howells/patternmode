@@ -4,12 +4,12 @@ import { List as ListComponent, ListIndicator, ListItem } from "./component";
 import { DefaultExample, NestedExample, OrderedExample, PlainListExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
-  id: "list",
-  name: "List",
+  id: "text-list",
+  name: "Text List",
   description: "Flexible components for creating ordered and unordered lists with custom styling, indicators, and alignment options. Supports traditional bullet/number lists as well as custom icon-based lists for enhanced visual presentation.",
   category: "ui",
   icon: List,
-  importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/ui/list";`,
+  importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/ui/text-list";`,
   examples: [
     {
       id: "default",

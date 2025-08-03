@@ -5,7 +5,7 @@ import { ContactListExample, CustomRenderExample, FAQBuilderExample, ProductVari
 import { fieldArrayPreviewProps } from "./preview";
 
 export const componentConfig: ComponentConfig = {
-  id: "fieldArray",
+  id: "field-array",
   name: "FieldArray",
   category: "forms",
   icon: List,

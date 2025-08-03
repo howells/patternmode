@@ -152,7 +152,7 @@ export const MultipleExample = () => {
         onChange={(e) => {
           const values = Array.from(
             e.target.selectedOptions,
-            option => option.value,
+            option => (option as HTMLOptionElement).value,
           );
           setSelected(values);
         }}

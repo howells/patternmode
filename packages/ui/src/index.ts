@@ -124,7 +124,7 @@ export {
   type LineChartEventProps,
   type TooltipProps as LineChartTooltipProps,
 } from "./components/line-chart";
-export * from "./components/list";
+export * from "./components/text-list";
 export * from "./components/loader";
 
 export * from "./components/menu";

@@ -48,7 +48,7 @@ import { componentConfig as inspectorConfig } from "./inspector/component.config
 import { componentConfig as kbdConfig } from "./kbd/component.config";
 import { componentConfig as labelConfig } from "./label/component.config";
 import { componentConfig as lineChartConfig } from "./line-chart/component.config";
-import { componentConfig as listConfig } from "./list/component.config";
+import { componentConfig as textListConfig } from "./text-list/component.config";
 import { componentConfig as loaderConfig } from "./loader/component.config";
 import { componentConfig as menuBarConfig } from "./menu-bar/component.config";
 import { componentConfig as menuConfig } from "./menu/component.config";
@@ -141,7 +141,7 @@ export const COMPONENT_REGISTRY = {
   "kbd": kbdConfig,
   "label": labelConfig,
   "line-chart": lineChartConfig,
-  "list": listConfig,
+  "text-list": textListConfig,
   "loader": loaderConfig,
   "menu": menuConfig,
   "menu-bar": menuBarConfig,
@@ -231,6 +231,9 @@ export const CATEGORY_CONFIG = [
   { key: "layout", name: "Layout", description: "Layout components" },
   { key: "typography", name: "Typography", description: "Text components" },
   { key: "feedback", name: "Feedback", description: "Feedback components" },
+  { key: "media", name: "Media", description: "Media and visual components" },
+  { key: "overlay", name: "Overlay", description: "Overlay and modal components" },
+  { key: "text", name: "Text", description: "Text and typography components" },
 ] as const;
 
 export type CategoryKey = typeof CATEGORY_CONFIG[number]["key"];

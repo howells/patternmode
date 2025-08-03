@@ -34,6 +34,8 @@ const selectTriggerVariants = tv({
     // disabled
     "data-[disabled]:bg-zinc-100 data-[disabled]:text-zinc-400",
     "dark:data-[disabled]:border-zinc-700 dark:data-[disabled]:bg-zinc-800 dark:data-[disabled]:text-zinc-500",
+    // readonly
+    "data-[readonly]:cursor-default data-[readonly]:hover:bg-white dark:data-[readonly]:hover:bg-zinc-950",
     focusInput,
   ],
   variants: {
@@ -188,16 +190,21 @@ type SelectPositionerProps = {
    * Padding for collision detection in pixels.
    */
   collisionPadding?: number;
+  /**
+   * Whether to align the item with the trigger (for better visual alignment).
+   */
+  alignItemWithTrigger?: boolean;
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Positioner>;
 
 /**
  * Positioner component that handles dropdown placement and collision detection.
  */
-const SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, ...props }: SelectPositionerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Positioner> | null> }) => (
+const SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, alignItemWithTrigger = true, ...props }: SelectPositionerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Positioner> | null> }) => (
   <BaseSelect.Positioner
     ref={ref}
     sideOffset={sideOffset}
     collisionPadding={collisionPadding}
+    alignItemWithTrigger={alignItemWithTrigger}
     {...props}
   />
 );
@@ -223,13 +230,17 @@ type SelectContentProps = {
    * Alignment relative to the trigger element.
    */
   align?: "start" | "center" | "end";
+  /**
+   * Whether to align the item with the trigger (for better visual alignment).
+   */
+  alignItemWithTrigger?: boolean;
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Popup>;
 
 /**
  * Dropdown content container that holds the select options.
  */
 const SelectContent = (
-  { ref, className, children, sideOffset = 8, collisionPadding = 10, side = "bottom", align = "start", ...props }: SelectContentProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null> },
+  { ref, className, children, sideOffset = 8, collisionPadding = 10, side = "bottom", align = "start", alignItemWithTrigger = true, ...props }: SelectContentProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null> },
 ) => (
   <SelectPortal>
     <SelectPositioner
@@ -237,6 +248,7 @@ const SelectContent = (
       align={align}
       sideOffset={sideOffset}
       collisionPadding={collisionPadding}
+      alignItemWithTrigger={alignItemWithTrigger}
     >
       <SelectScrollUpButton />
       <BaseSelect.Popup

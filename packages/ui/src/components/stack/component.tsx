@@ -2,43 +2,26 @@
 
 import type { VariantProps } from "tailwind-variants";
 
-import React from "react";
-import { tv } from "tailwind-variants";
+import type { GapValue, ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import * as React from "react";
 
+import { tv } from "tailwind-variants";
+import {
+
+  gapVariants,
+  generateResponsiveSpacingClasses,
+  getBaseSpacingValue,
+  paddingVariants,
+
+} from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
 
 /**
- * Responsive value type for stack properties.
- *
- * Allows specifying different values for different screen sizes.
- * Can be a single value or an object with breakpoint-specific values.
+ * Stack direction options.
  */
-type ResponsiveValue<T>
-  = | T
-    | {
-      /**
-       * Small screens (640px+).
-       */
-      "sm"?: T;
-      /**
-       * Medium screens (768px+).
-       */
-      "md"?: T;
-      /**
-       * Large screens (1024px+).
-       */
-      "lg"?: T;
-      /**
-       * Extra large screens (1280px+).
-       */
-      "xl"?: T;
-      /**
-       * 2X large screens (1536px+).
-       */
-      "2xl"?: T;
-    };
+type StackDirection = "vertical" | "horizontal";
 
-// Stack variants using a 4px grid scale
+// Stack variants using shared spacing utilities
 const stackVariants = tv({
   base: "flex",
   variants: {
@@ -46,42 +29,8 @@ const stackVariants = tv({
       vertical: "flex-col",
       horizontal: "flex-row",
     },
-    gap: {
-      "0": "gap-0",
-      "1": "gap-1", // 4px
-      "2": "gap-2", // 8px
-      "3": "gap-3", // 12px
-      "4": "gap-4", // 16px
-      "5": "gap-5", // 20px
-      "6": "gap-6", // 24px
-      "8": "gap-8", // 32px
-      "10": "gap-10", // 40px
-      "12": "gap-12", // 48px
-      "16": "gap-16", // 64px
-      "20": "gap-20", // 80px
-      "24": "gap-24", // 96px
-      "-6": "", // -24px negative spacing (handled by compoundVariants)
-      "-5": "", // -20px negative spacing (handled by compoundVariants)
-      "-4": "", // -16px negative spacing (handled by compoundVariants)
-      "-3": "", // -12px negative spacing (handled by compoundVariants)
-      "-2": "", // -8px negative spacing (handled by compoundVariants)
-      "-1": "", // -4px negative spacing (handled by compoundVariants)
-    },
-    padding: {
-      0: "p-0",
-      1: "p-1", // 4px
-      2: "p-2", // 8px
-      3: "p-3", // 12px
-      4: "p-4", // 16px
-      5: "p-5", // 20px
-      6: "p-6", // 24px
-      8: "p-8", // 32px
-      10: "p-10", // 40px
-      12: "p-12", // 48px
-      16: "p-16", // 64px
-      20: "p-20", // 80px
-      24: "p-24", // 96px
-    },
+    gap: gapVariants,
+    padding: paddingVariants,
     align: {
       start: "items-start",
       center: "items-center",
@@ -131,90 +80,9 @@ const stackVariants = tv({
  */
 type StackGap = "-6" | "-5" | "-4" | "-3" | "-2" | "-1" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | -6 | -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
 
-/**
- * Stack padding values using 4px grid scale.
- */
-type StackPadding = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-
-/**
- * Stack direction options.
- */
-type StackDirection = "vertical" | "horizontal";
-
-// Helper function to generate responsive classes
-const generateResponsiveClasses = (
-  property: "direction" | "gap" | "padding",
-  value: ResponsiveValue<StackDirection | StackGap | StackPadding> | undefined,
-): string => {
-  if (!value) {
-    return "";
-  }
-
-  // If it's a simple value (not an object), return empty string to use variants
-  if (typeof value !== "object") {
-    return "";
-  }
-
-  const classes: string[] = [];
-  const breakpoints = {
-    "sm": "sm:",
-    "md": "md:",
-    "lg": "lg:",
-    "xl": "xl:",
-    "2xl": "2xl:",
-  };
-
-  Object.entries(value).forEach(([breakpoint, val]) => {
-    if (val === undefined) {
-      return;
-    }
-
-    const prefix = breakpoints[breakpoint as keyof typeof breakpoints] || "";
-
-    if (property === "direction") {
-      if (val === "vertical") {
-        classes.push(`${prefix}flex-col`);
-      }
-      else if (val === "horizontal") {
-        classes.push(`${prefix}flex-row`);
-      }
-    }
-    else if (property === "gap") {
-      const normalizedVal = String(val);
-      classes.push(`${prefix}gap-${normalizedVal}`);
-    }
-    else if (property === "padding") {
-      classes.push(`${prefix}p-${val}`);
-    }
-  });
-
-  return classes.join(" ");
-};
-
 // Helper function to convert gap values to strings
 const normalizeGapValue = (value: StackGap): string => {
   return String(value);
-};
-
-// Helper function to get the base value (non-responsive)
-const getBaseValue = <T,>(
-  value: ResponsiveValue<T> | undefined,
-): T | undefined => {
-  if (value === undefined || value === null) {
-    return undefined;
-  }
-  if (typeof value === "object" && value !== null) {
-    // Return the smallest breakpoint value or undefined
-    const responsiveObj = value as {
-      "sm"?: T;
-      "md"?: T;
-      "lg"?: T;
-      "xl"?: T;
-      "2xl"?: T;
-    };
-    return responsiveObj.sm;
-  }
-  return value as T;
 };
 
 type StackProps = {
@@ -222,17 +90,17 @@ type StackProps = {
    * The direction of the stack - can be responsive.
    * Controls whether children are arranged vertically or horizontally.
    */
-  direction?: ResponsiveValue<StackDirection>;
+  direction?: ResponsiveSpacing<StackDirection>;
   /**
    * Gap between items (4px grid scale) - can be responsive.
    * Supports values from 0-24 using the 4px grid system, plus negative values for overlapping.
    */
-  gap?: ResponsiveValue<StackGap>;
+  gap?: ResponsiveSpacing<GapValue>;
   /**
    * Padding around the stack (4px grid scale) - can be responsive.
    * Adds internal spacing around all stack content using the 4px grid system.
    */
-  padding?: ResponsiveValue<StackPadding>;
+  padding?: ResponsiveSpacing<SpacingValue>;
   /**
    * How to align items along the cross axis.
    * Controls alignment perpendicular to the stack direction.
@@ -267,9 +135,9 @@ const Stack = (
   { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },
 ) => {
   // Get base values for the variants system
-  const baseDirection = getBaseValue(direction) ?? "vertical";
-  const baseGapValue = getBaseValue(gap) ?? 4;
-  const basePadding = getBaseValue(padding);
+  const baseDirection = getBaseSpacingValue(direction) ?? "vertical";
+  const baseGapValue = getBaseSpacingValue(gap) ?? 4;
+  const basePadding = getBaseSpacingValue(padding);
 
   // Normalize gap value to string for tailwind variants
   const baseGap = normalizeGapValue(baseGapValue);
@@ -284,21 +152,31 @@ const Stack = (
     });
   }
 
-  // Generate responsive classes
-  const responsiveDirectionClasses = generateResponsiveClasses(
-    "direction",
-    direction,
-  );
-  const responsiveGapClasses = generateResponsiveClasses("gap", gap);
-  const responsivePaddingClasses = generateResponsiveClasses(
-    "padding",
-    padding,
-  );
+  // Generate responsive classes using shared utilities
+  const responsiveDirectionClasses = generateResponsiveSpacingClasses(
+    "gap", // Using gap as placeholder since we need custom logic for direction
+    direction as ResponsiveSpacing<GapValue>, // Type assertion for compatibility
+  )
+    .replace(/gap-/g, "")
+    .split(" ")
+    .map((cls) => {
+      if (cls.includes("vertical")) {
+        return cls.replace("vertical", "flex-col");
+      }
+      if (cls.includes("horizontal")) {
+        return cls.replace("horizontal", "flex-row");
+      }
+      return cls;
+    })
+    .join(" ");
+
+  const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);
+  const responsivePaddingClasses = generateResponsiveSpacingClasses("padding", padding);
 
   const generatedClasses = stackVariants({
     direction: baseDirection as "vertical" | "horizontal",
     gap: baseGap as "4" | "0" | "1" | "2" | "3" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "-6" | "-5" | "-4" | "-3" | "-2" | "-1",
-    padding: basePadding as StackPadding,
+    padding: basePadding as SpacingValue,
     align,
     justify,
     wrap,
@@ -342,7 +220,7 @@ HStack.displayName = "HStack";
 
 export {
   HStack,
-  type ResponsiveValue,
+  type ResponsiveSpacing,
   Stack,
   type StackProps,
   stackVariants,

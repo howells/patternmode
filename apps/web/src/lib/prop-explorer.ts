@@ -253,7 +253,9 @@ export function searchProps(
   query: string,
 ): PropMetadata[] {
   const config = getPropExplorerConfig(componentName);
-  if (!config) { return []; }
+  if (!config) {
+    return [];
+  }
 
   const allProps = [
     ...config.props,

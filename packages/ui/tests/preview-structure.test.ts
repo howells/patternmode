@@ -49,7 +49,6 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
   const warnings: string[] = [];
 
   const expectedExampleName = `${kebabToPascalCase(componentName)}Example`;
-  const expectedPropsType = `${kebabToPascalCase(componentName)}ExampleProps`;
 
   // Check for "use client" directive
   const hasUseClient = content.startsWith("\"use client\"") || content.startsWith("'use client'");
@@ -100,10 +99,10 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
   const hasSpecificPreviewProps = content.includes(`export const ${previewPropsPattern}`) || content.includes(`export let ${previewPropsPattern}`) || content.includes(`export var ${previewPropsPattern}`);
   const hasGenericPreviewProps = genericPreviewPropsPattern.test(content);
   const hasPreviewProps = hasSpecificPreviewProps || hasGenericPreviewProps;
-  
-  const foundPreviewPropsPattern = hasSpecificPreviewProps 
-    ? previewPropsPattern 
-    : hasGenericPreviewProps 
+
+  const foundPreviewPropsPattern = hasSpecificPreviewProps
+    ? previewPropsPattern
+    : hasGenericPreviewProps
       ? content.match(genericPreviewPropsPattern)?.[0] || null
       : null;
 

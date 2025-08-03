@@ -1,9 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 "use client";
 
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
-
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
 import { DropdownItem } from "../dropdown-item";
@@ -283,7 +283,7 @@ const TagInput = ({
     getItemProps,
     selectItem: _selectItem,
     reset,
-  } = useCombobox({
+  } = useCombobox<TagOption>({
     items: availableOptions,
     itemToString: item => (item ? item.label : ""),
     inputValue,
@@ -459,7 +459,7 @@ const TagInput = ({
                   <div className="overflow-auto" style={{ maxHeight }}>
                     {availableOptions.map((option, index) => (
                       <div
-                        key={`${option.value}-${index}`}
+                        key={`${option.value}`}
                         {...getItemProps({
                           item: option,
                           index,

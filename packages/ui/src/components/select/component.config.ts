@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./component";
-import { DefaultExample, DisabledExample, ErrorStateExample, FormSelectExample, SmallSizeExample, WithGroupsExample } from "./examples";
+import { DefaultExample, DisabledExample, ErrorStateExample, FormIntegrationExample, SmallSizeExample, WithGroupsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "select",
@@ -55,7 +55,7 @@ export const componentConfig: ComponentConfig = {
       id: "form-select",
       title: "Form Integration",
       description: "Select integrated within a complete form",
-      component: FormSelectExample,
+      component: FormIntegrationExample,
     },
   ],
   components: [

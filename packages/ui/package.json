@@ -84,7 +84,9 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@patternmode/eslint-config": "workspace:*"
+    "@patternmode/eslint-config": "workspace:*",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.8"
   },
   "publishConfig": {
     "access": "public"

@@ -1,67 +1,12 @@
-import React from "react";
+import type { SpacingValue } from "../../lib/spacing-utils";
 
+import React from "react";
+import { getPaddingClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
 import { Grid, GridCell } from "../grid";
 import { HStack, Stack } from "../stack";
 import { Subheading } from "../subheading";
 import { Text } from "../text";
-
-// Base container for the stacked list (Entity.List equivalent)
-type StackedListProps = {
-  /**
-   * Whether to show dividers between items.
-   * When true, adds subtle borders between list items for visual separation.
-   */
-  showDividers?: boolean;
-  /**
-   * Gap between items (4px grid scale: 0-24).
-   * Controls the vertical spacing between list items using the 4px grid system.
-   */
-  gap?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-  /**
-   * Padding for each item (4px grid scale: 0-24).
-   * Sets the internal padding for each list item using the 4px grid system.
-   */
-  padding?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-} & React.HTMLAttributes<HTMLUListElement>;
-
-/**
- * Vertically stacked list component for displaying related items with consistent spacing.
- */
-const StackedListRoot = (
-  { ref, showDividers = true, gap = 0, padding = 4, className, children, ...props }: StackedListProps & { ref?: React.RefObject<HTMLUListElement | null> },
-) => {
-  return (
-    <Stack
-      as="ul"
-      ref={ref}
-      direction="vertical"
-      gap={gap}
-      className={cx(
-        // Base styles
-        "overflow-hidden",
-        // Dividers
-        showDividers && "divide-y divide-zinc-200 dark:divide-zinc-800",
-        className,
-      )}
-      {...props}
-    >
-      {React.Children.map(children, (child, index) => {
-        if (React.isValidElement(child) && child.type === StackedListItem) {
-          return React.cloneElement(child, {
-            // @ts-expect-error - we know this is a StackedListItem
-            padding,
-            isFirst: index === 0,
-            isLast: index === React.Children.count(children) - 1,
-          });
-        }
-        return child;
-      })}
-    </Stack>
-  );
-};
-
-StackedListRoot.displayName = "StackedListRoot";
 
 // Individual list item - following Vercel's Entity pattern
 type StackedListItemProps = {
@@ -94,16 +39,14 @@ type StackedListItemProps = {
    * Internal props passed from StackedList.
    * These are automatically provided by the parent component.
    */
-  padding?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-  isFirst?: boolean;
-  isLast?: boolean;
+  padding?: SpacingValue;
 } & React.HTMLAttributes<HTMLLIElement>;
 
 /**
  * Individual item within the stacked list with flexible layout options.
  */
 const StackedListItem = (
-  { ref, left, right, as: Component = "li", href, active = false, padding = 4, isFirst = false, isLast = false, className, children, ...props }: StackedListItemProps & { ref?: React.RefObject<HTMLLIElement | null> },
+  { ref, left, right, as: Component = "li", href, active = false, padding = 4, className, children, ...props }: StackedListItemProps & { ref?: React.RefObject<HTMLLIElement | null> },
 ) => {
   const isInteractive = !!(href || props.onClick || Component === "button");
 
@@ -113,20 +56,8 @@ const StackedListItem = (
       align="center"
       className={cx(
         "w-full",
-        // Padding using Stack's padding system
-        padding === 0 && "p-0",
-        padding === 1 && "p-1",
-        padding === 2 && "p-2",
-        padding === 3 && "p-3",
-        padding === 4 && "p-4",
-        padding === 5 && "p-5",
-        padding === 6 && "p-6",
-        padding === 8 && "p-8",
-        padding === 10 && "p-10",
-        padding === 12 && "p-12",
-        padding === 16 && "p-16",
-        padding === 20 && "p-20",
-        padding === 24 && "p-24",
+        // Padding using shared spacing utility
+        getPaddingClass(padding),
         // Interactive states
         isInteractive && [
           "cursor-pointer transition-colors",
@@ -167,6 +98,60 @@ const StackedListItem = (
 };
 
 StackedListItem.displayName = "StackedListItem";
+
+// Base container for the stacked list (Entity.List equivalent)
+type StackedListProps = {
+  /**
+   * Whether to show dividers between items.
+   * When true, adds subtle borders between list items for visual separation.
+   */
+  showDividers?: boolean;
+  /**
+   * Gap between items (4px grid scale: 0-24).
+   * Controls the vertical spacing between list items using the 4px grid system.
+   */
+  gap?: SpacingValue;
+  /**
+   * Padding for each item (4px grid scale: 0-24).
+   * Sets the internal padding for each list item using the 4px grid system.
+   */
+  padding?: SpacingValue;
+} & React.HTMLAttributes<HTMLUListElement>;
+
+/**
+ * Vertically stacked list component for displaying related items with consistent spacing.
+ */
+const StackedListRoot = (
+  { ref, showDividers = true, gap = 0, padding = 4, className, children, ...props }: StackedListProps & { ref?: React.RefObject<HTMLUListElement | null> },
+) => {
+  return (
+    <Stack
+      as="ul"
+      ref={ref}
+      direction="vertical"
+      gap={gap}
+      className={cx(
+        // Base styles
+        "overflow-hidden",
+        // Dividers
+        showDividers && "divide-y divide-zinc-200 dark:divide-zinc-800",
+        className,
+      )}
+      {...props}
+    >
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && child.type === StackedListItem) {
+          return React.cloneElement(child, {
+            padding,
+          });
+        }
+        return child;
+      })}
+    </Stack>
+  );
+};
+
+StackedListRoot.displayName = "StackedListRoot";
 
 // Content component (Entity.Content equivalent)
 type StackedListContentProps = {

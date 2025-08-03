@@ -1,8 +1,9 @@
 "use client";
 
+import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
 import React from "react";
-import { tv } from "tailwind-variants";
 
+import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
 /**
@@ -126,10 +127,10 @@ type GridProps = {
    */
   rows?: ResponsiveValue<number>;
   /**
-   * Gap between grid items (Tailwind spacing scale).
-   * Uses Tailwind's gap utility classes for consistent spacing.
+   * Gap between grid items (4px grid scale: 0-24).
+   * Uses the standardized spacing scale for consistent spacing.
    */
-  gap?: number;
+  gap?: SpacingValue;
   /**
    * Grid content including GridCell components.
    * Should contain GridCell components or other grid items.

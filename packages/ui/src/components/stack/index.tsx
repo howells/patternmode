@@ -1,6 +1,6 @@
 export {
   HStack,
-  type ResponsiveValue,
+  type ResponsiveSpacing,
   Stack,
   type StackProps,
   stackVariants,

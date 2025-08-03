@@ -22,7 +22,6 @@
 - [ ] **Test package in a fresh project**
 - [ ] **Verify tree-shaking works properly**
 - [ ] **Test SSR compatibility**
-- [ ] **Tree Component** - Expand/collapse functionality, keyboard navigation, selection support, line and icon variants - See [ReUI Tree](https://reui.org/components/tree)
 - [ ] **Scrollspy Component** - Automatic section highlighting, URL hash synchronization, Intersection Observer integration - See [ReUI Scrollspy](https://reui.org/components/scrollspy)
 - [ ] **Stepper Component** - Multi-step form navigation, progress tracking, validation support - See [ReUI Stepper](https://reui.org/components/stepper)
 - [ ] **File Upload Component** - Drag and drop support, progress tracking, multiple file support, preview generation - See [ReUI File Upload](https://reui.org/components/file-upload)
@@ -41,6 +40,24 @@
 - [ ] **Create component CLI for generating new components**
 - [ ] **Add linting rules specific to component patterns**
 - [ ] **Set up automated dependency updates**
+
+## Essential React Aria Components to Add
+
+### High Priority - Missing Core Components
+- [ ] **SearchField Component** - Dedicated search input with built-in accessibility, search icon, clear button
+- [ ] **TimeField Component** - Time input with proper formatting, validation, and accessibility
+- [ ] **ColorPicker Component** - Complete color selection interface with multiple input formats
+- [ ] **ColorArea Component** - 2D color selection area for hue/saturation picking
+- [ ] **ColorSlider Component** - 1D color slider for hue, saturation, brightness selection
+- [ ] **ColorField Component** - Text input for color values with validation
+- [ ] **ColorSwatch Component** - Display color values with accessibility support
+- [ ] **ColorSwatchPicker Component** - Grid of predefined color options
+- [ ] **GridList Component** - 2D selectable grid with keyboard navigation and accessibility
+- [ ] **Tree Component** - Hierarchical data display using @headless-tree/react with expand/collapse, selection, drag/drop, search, and virtualization support
+- [ ] **DropZone Component** - File drop area with drag/drop states and validation
+
+### Medium Priority - Enhanced Form Components  
+- [ ] **FileTrigger Component** - File selection button with proper accessibility
 
 ## Future Ideas & Grand Vision
 

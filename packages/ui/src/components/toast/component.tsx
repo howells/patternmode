@@ -8,6 +8,8 @@ import { tv } from "tailwind-variants";
 
 import { cx } from "../../lib/utils";
 
+type Position = "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
+
 // Toast variants for consistent styling
 const toastVariants = tv({
   base: [
@@ -136,13 +138,7 @@ type ToastProviderProps = {
    * Position where toasts should appear on screen.
    * @default "top-right"
    */
-  position?:
-    | "top-left"
-    | "top-center"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-center"
-    | "bottom-right";
+  position?: Position;
   /**
    * Whether toasts should expand to show more content.
    * @default false
@@ -298,7 +294,7 @@ const ToastProvider: React.FC<ToastProviderProps> = ({
   limit = 3,
   timeout = 5000,
   toastManager = globalToastManager,
-  position = "top-right",
+  position = "top-right" as Position,
   expand = false,
   richColors = true,
   closeButton = true,
