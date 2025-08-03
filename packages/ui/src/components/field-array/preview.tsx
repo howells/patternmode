@@ -1,12 +1,11 @@
 "use client";
 
-import type { FieldArrayItem, FieldSchema } from "./component";
+import type { FieldSchema } from "./component";
 import React from "react";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from "../description-list";
+import { Input } from "../input";
+import { Subheading } from "../subheading";
 import { Textarea } from "../textarea/component";
-import { Checkbox } from "../todo/checkbox/checkbox";
-import { DescriptionDetails, DescriptionList, DescriptionTerm } from "../todo/description-list/description-list";
-import { Input } from "../todo/input/input";
-import { Subheading } from "../todo/subheading/subheading";
 import { FieldArray } from "./component";
 
 // Define the structure for accordion items

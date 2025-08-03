@@ -3,9 +3,9 @@
  * Based on the textarea/examples.tsx pattern, each examples file should:
  *
  * 1. Start with "use client" directive
- * 2. Import ComponentExample type from component-config-types
- * 3. Have example components (functions ending with "Example")
- * 4. Export a standard EXAMPLES array with inline metadata
+ * 2. Import React
+ * 3. Have example components (functions ending with "Example")  
+ * 4. Export individual example components for use in component.config.ts
  * 5. Have at least one example component
  */
 
@@ -19,8 +19,7 @@ type ExampleValidationResult = {
   errors: string[];
   warnings: string[];
   hasUseClient: boolean;
-  hasComponentExampleImport: boolean;
-  hasExamplesExport: boolean;
+  hasReactImport: boolean;
   exampleComponents: string[];
 };
 
@@ -57,18 +56,11 @@ async function validateExampleFile(filePath: string): Promise<ExampleValidationR
     errors.push("Missing 'use client' directive at the top of the file");
   }
 
-  // Check for ComponentExample import
-  const hasComponentExampleImport = content.includes("import type { ComponentExample }")
-    || content.includes("import { ComponentExample }");
-  if (!hasComponentExampleImport) {
-    errors.push("Missing ComponentExample type import from component-config-types");
-  }
-
-  // Check for [COMPONENT]_EXAMPLES export
-  const examplesExportMatch = content.match(/export const (EXAMPLES): ComponentExample\[\] = \[/);
-  const hasExamplesExport = !!examplesExportMatch;
-  if (!hasExamplesExport) {
-    errors.push("Missing properly named EXAMPLES export (should be EXAMPLES: ComponentExample[] = [...])");
+  // Check for React import
+  const hasReactImport = content.includes("import React from \"react\"")
+    || content.includes("import * as React from \"react\"");
+  if (!hasReactImport) {
+    warnings.push("Consider importing React explicitly for better compatibility");
   }
 
   // Find all example components (functions ending with "Example")
@@ -86,30 +78,9 @@ async function validateExampleFile(filePath: string): Promise<ExampleValidationR
   
   const exampleComponents = [...constExampleComponents, ...functionExampleComponents];
 
+  // Check that at least one example component exists
   if (exampleComponents.length === 0) {
     errors.push("No example components found (should have at least one function ending with 'Example')");
-  }
-
-  // Check that the EXAMPLES export includes all example components
-  if (hasExamplesExport) {
-    const examplesArrayMatch = content.match(/export const EXAMPLES: ComponentExample\[\] = \[([\s\S]*?)\];/);
-    if (examplesArrayMatch) {
-      const examplesArrayContent = examplesArrayMatch[1];
-      const missingFromRegistry = exampleComponents.filter(comp =>
-        !examplesArrayContent.includes(comp),
-      );
-      if (missingFromRegistry.length > 0) {
-        errors.push(`Example components not included in EXAMPLES array: ${missingFromRegistry.join(", ")}`);
-      }
-    }
-    else {
-      warnings.push("Could not parse EXAMPLES array content");
-    }
-  }
-
-  // Additional checks
-  if (!content.includes("React from \"react\"")) {
-    warnings.push("Consider importing React explicitly for better compatibility");
   }
 
   const isValid = errors.length === 0;
@@ -120,8 +91,7 @@ async function validateExampleFile(filePath: string): Promise<ExampleValidationR
     errors,
     warnings,
     hasUseClient,
-    hasComponentExampleImport,
-    hasExamplesExport,
+    hasReactImport,
     exampleComponents,
   };
 }
@@ -195,13 +165,11 @@ describe("examples Structure Validation", () => {
     console.log(`\n${"📊 STATISTICS:".padEnd(80, "-")}`);
     const totalExamples = results.reduce((sum, r) => sum + r.exampleComponents.length, 0);
     const filesWithUseClient = results.filter(r => r.hasUseClient).length;
-    const filesWithImports = results.filter(r => r.hasComponentExampleImport).length;
-    const filesWithExports = results.filter(r => r.hasExamplesExport).length;
+    const filesWithReactImport = results.filter(r => r.hasReactImport).length;
 
     console.log(`Total example components: ${totalExamples}`);
     console.log(`Files with "use client": ${filesWithUseClient}/${results.length}`);
-    console.log(`Files with ComponentExample import: ${filesWithImports}/${results.length}`);
-    console.log(`Files with EXAMPLES export: ${filesWithExports}/${results.length}`);
+    console.log(`Files with React import: ${filesWithReactImport}/${results.length}`);
 
     console.log(`\n${"=".repeat(80)}`);
 

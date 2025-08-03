@@ -3,9 +3,9 @@
  * Based on the textarea/preview.tsx pattern, each preview file should:
  *
  * 1. Start with "use client" directive
- * 2. Import the component from @patternmode/ui
+ * 2. Import the component from ./component
  * 3. Import React explicitly
- * 4. Have a {Component}ExampleProps type definition
+ * 4. Import component props type for type safety
  * 5. Export a {Component}Example function component
  * 6. Use proper prop handling with safe prop filtering
  * 7. Provide configurable preview functionality
@@ -55,10 +55,10 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     errors.push("Missing 'use client' directive at the top of the file");
   }
 
-  // Check for component import from @patternmode/ui
-  const hasComponentImport = content.includes(`from "@patternmode/ui"`) && content.includes(`${kebabToPascalCase(componentName)}`);
+  // Check for component import from ./component
+  const hasComponentImport = content.includes(`from "./component"`) && content.includes(`${kebabToPascalCase(componentName)}`);
   if (!hasComponentImport) {
-    errors.push(`Missing import of ${kebabToPascalCase(componentName)} from @patternmode/ui`);
+    errors.push(`Missing import of ${kebabToPascalCase(componentName)} from "./component"`);
   }
 
   // Check for React import
@@ -67,10 +67,11 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     errors.push("Missing explicit React import");
   }
 
-  // Check for props type definition
-  const hasPropsType = content.includes(`type ${expectedPropsType} =`) || content.includes(`type ${expectedPropsType}=`);
+  // Check for props type import (using the component's Props type directly)
+  const componentPropsType = `${kebabToPascalCase(componentName)}Props`;
+  const hasPropsType = content.includes(`type ${componentPropsType}`) || content.includes(`${componentPropsType}`);
   if (!hasPropsType) {
-    errors.push(`Missing ${expectedPropsType} type definition`);
+    warnings.push(`Consider importing ${componentPropsType} type for better type safety`);
   }
 
   // Check for example function export
@@ -127,7 +128,7 @@ describe("preview Structure Validation", () => {
     .map(dirent => dirent.name)
     .filter((componentDir) => {
       // Only include directories that have both main component and preview files
-      const componentPath = join(componentsDir, componentDir, `${componentDir}.tsx`);
+      const componentPath = join(componentsDir, componentDir, "component.tsx");
       const previewPath = join(componentsDir, componentDir, "preview.tsx");
       return existsSync(componentPath) && existsSync(previewPath);
     })

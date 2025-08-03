@@ -116,7 +116,7 @@ function getComponentDirectories(): string[] {
     .map(entry => entry.name)
     .filter((componentDir) => {
       // Only include directories that have a main component file
-      const componentPath = join(componentsDir, componentDir, `${componentDir}.tsx`);
+      const componentPath = join(componentsDir, componentDir, "component.tsx");
       return existsSync(componentPath);
     })
     .sort();
@@ -208,7 +208,7 @@ function extractJSDocContent(jsdocBlock: string, componentDir: string) {
  */
 function validateComponent(componentDir: string): ComponentValidationResult {
   const componentsDir = join(process.cwd(), "src", "components");
-  const componentFilePath = join(componentsDir, componentDir, `${componentDir}.tsx`);
+  const componentFilePath = join(componentsDir, componentDir, "component.tsx");
 
   const result: ComponentValidationResult = {
     componentDir,
@@ -248,7 +248,7 @@ function validateComponent(componentDir: string): ComponentValidationResult {
 
   // Check if file exists
   if (!existsSync(componentFilePath)) {
-    result.issues.push(`Component file not found: ${componentDir}/${componentDir}.tsx`);
+    result.issues.push(`Component file not found: ${componentDir}/component.tsx`);
     return result;
   }
 

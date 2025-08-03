@@ -2,8 +2,6 @@
 
 ## Active Tasks
 
-- [ ] **Recreate component example descriptions** - Make all example descriptions shorter and more pithy (single sentence)
-- [ ] **Centralized prop documentation system** - Create a unified system to document component props once and auto-generate documentation for both TypeScript IntelliSense and the documentation site, avoiding duplication between component JSDoc and config files
 - [ ] **Thorough TypeScript Documentation** - Ensure every component has comprehensive JSDoc comments for all props, interfaces, and functions so TypeScript users can access detailed information through IntelliSense and hover tooltips
 - [ ] **Sub-component documentation system** - Figure out how to properly document and expose sub-components (e.g. @AccordionItem, @DialogContent, @TabsPanel) in both TypeScript IntelliSense and the documentation site, including their props and usage patterns
 - [ ] **Clean up legacy and one-off scripts** - Remove or archive legacy utility scripts that were used for one-time migrations/fixes: `analyze-missing-props.ts`, `check-icon-size.js`, `icon-check.js`, `fix-missing-jsdoc.js`, debug scripts in packages/ui, and most scripts in packages/ui/scripts/ directory that were used for historical component structure fixes

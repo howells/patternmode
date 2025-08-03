@@ -1,0 +1,354 @@
+import { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
+import { Minus, Plus } from "lucide-react";
+import * as React from "react";
+
+import { cx, focusRing } from "../../lib/utils";
+
+type NumberFieldProps = {
+  /**
+   * Optional label text for the field.
+   * Displays above the input with interactive scrub area support.
+   */
+  label?: string;
+  /**
+   * Placeholder text for the input element.
+   * Shows when no value is present to guide user input.
+   */
+  placeholder?: string;
+  /**
+   * Whether to show the interactive scrub area on the label.
+   * When enabled, users can drag on the label to adjust values.
+   */
+  showScrubArea?: boolean;
+  /**
+   * Whether to show increment/decrement buttons.
+   * Controls visibility of stepper controls for precise value adjustment.
+   */
+  showSteppers?: boolean;
+  /**
+   * Whether the field should take full width of its container.
+   * Affects both the input and button group layout.
+   */
+  fullWidth?: boolean;
+  /**
+   * Additional CSS classes for the container element.
+   */
+  className?: string;
+  /**
+   * Additional CSS classes for the input element specifically.
+   */
+  inputClassName?: string;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Root>;
+
+/**
+ * An advanced numeric input field with stepper controls, interactive scrub area, and comprehensive keyboard navigation.
+ */
+const NumberField = (
+  { ref, label, placeholder, showScrubArea = true, showSteppers = true, fullWidth = false, className, inputClassName, id, ...props }: NumberFieldProps & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Root> | null> },
+) => {
+  const generatedId = React.useId();
+  const fieldId = id || generatedId;
+
+  return (
+    <BaseNumberField.Root
+      ref={ref}
+      id={fieldId}
+      className={cx("flex flex-col items-start gap-1", className)}
+      {...props}
+    >
+      {label && (
+        <NumberFieldLabel htmlFor={fieldId} showScrubArea={showScrubArea}>
+          {label}
+        </NumberFieldLabel>
+      )}
+
+      {showSteppers
+        ? (
+            <NumberFieldGroup className={fullWidth ? "w-full" : undefined}>
+              <NumberFieldDecrement />
+              <NumberFieldInput
+                placeholder={placeholder}
+                className={cx(fullWidth ? "flex-1" : undefined, inputClassName)}
+              />
+              <NumberFieldIncrement />
+            </NumberFieldGroup>
+          )
+        : (
+            <NumberFieldInput
+              placeholder={placeholder}
+              className={cx(
+                "rounded-md",
+                fullWidth ? "w-full" : undefined,
+                inputClassName,
+              )}
+            />
+          )}
+    </BaseNumberField.Root>
+  );
+};
+NumberField.displayName = "NumberField";
+
+type NumberFieldLabelProps = {
+  /**
+   * Reference to the label element.
+   */
+  ref?: React.RefObject<HTMLLabelElement | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+  /**
+   * Content to display within the label.
+   */
+  children?: React.ReactNode;
+  /**
+   * Whether to show the interactive scrub area for drag-to-change functionality.
+   */
+  showScrubArea?: boolean;
+} & React.LabelHTMLAttributes<HTMLLabelElement>;
+
+/**
+ * Label component for NumberField with optional interactive scrub area for drag-to-change functionality.
+ */
+const NumberFieldLabel = ({ ref, className, children, showScrubArea = true, ...props }: NumberFieldLabelProps) => (
+  <>
+    {showScrubArea ? (
+      <BaseNumberField.ScrubArea className="cursor-ew-resize">
+        <label
+          ref={ref}
+          className={cx(
+            // base
+            "cursor-ew-resize text-sm font-medium leading-6",
+            // text color
+            "text-zinc-900 dark:text-zinc-50",
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </label>
+        <NumberFieldScrubCursor />
+      </BaseNumberField.ScrubArea>
+    ) : (
+      <label
+        ref={ref}
+        className={cx(
+          // base
+          "text-sm font-medium leading-6",
+          // text color
+          "text-zinc-900 dark:text-zinc-50",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </label>
+    )}
+  </>
+);
+NumberFieldLabel.displayName = "NumberFieldLabel";
+
+type NumberFieldScrubCursorProps = {
+  /**
+   * Reference to the cursor element.
+   */
+  ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.ScrubAreaCursor> | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.ScrubAreaCursor>;
+
+/**
+ * Custom cursor that appears during scrub area interactions for visual feedback.
+ */
+const NumberFieldScrubCursor = ({ ref, className, ...props }: NumberFieldScrubCursorProps) => (
+  <BaseNumberField.ScrubAreaCursor
+    ref={ref}
+    className={cx("drop-shadow-[0_1px_1px_#0008] filter", className)}
+    {...props}
+  >
+    <CursorGrowIcon />
+  </BaseNumberField.ScrubAreaCursor>
+);
+NumberFieldScrubCursor.displayName = "NumberFieldScrubCursor";
+
+type NumberFieldGroupProps = {
+  /**
+   * Reference to the group element.
+   */
+  ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Group> | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Group>;
+
+/**
+ * Container group for NumberField input and stepper buttons with connected borders.
+ */
+const NumberFieldGroup = ({ ref, className, ...props }: NumberFieldGroupProps) => (
+  <BaseNumberField.Group
+    ref={ref}
+    className={cx("flex", className)}
+    {...props}
+  />
+);
+NumberFieldGroup.displayName = "NumberFieldGroup";
+
+type NumberFieldInputProps = {
+  /**
+   * Reference to the input element.
+   */
+  ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Input> | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>;
+
+/**
+ * The numeric input element with tabular number formatting and proper validation.
+ */
+const NumberFieldInput = ({ ref, className, ...props }: NumberFieldInputProps) => (
+  <BaseNumberField.Input
+    ref={ref}
+    className={cx(
+      // base
+      "py-2 w-24 border text-center text-sm tabular-nums transition-colors",
+      // border color
+      "border-zinc-200 dark:border-zinc-700",
+      // background color
+      "bg-white dark:bg-zinc-950",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // placeholder color
+      "placeholder-zinc-400 dark:placeholder-zinc-500",
+      // focus
+      focusRing,
+      // disabled
+      "disabled:cursor-not-allowed disabled:opacity-50",
+      // group context (when used with steppers)
+      "group-[]:border-t group-[]:border-b group-[]:rounded-none group-[]:focus:z-10",
+      className,
+    )}
+    {...props}
+  />
+);
+NumberFieldInput.displayName = "NumberFieldInput";
+
+type NumberFieldIncrementProps = {
+  /**
+   * Reference to the increment button element.
+   */
+  ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Increment> | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+  /**
+   * Custom content for the button (defaults to Plus icon).
+   */
+  children?: React.ReactNode;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Increment>;
+
+/**
+ * Increment button to increase the numeric value by the specified step amount.
+ */
+const NumberFieldIncrement = ({ ref, className, children, ...props }: NumberFieldIncrementProps) => (
+  <BaseNumberField.Increment
+    ref={ref}
+    className={cx(
+      // base
+      "flex py-2 w-10 items-center justify-center rounded-tr-md rounded-br-md border border-l-0 bg-clip-padding text-sm font-medium transition-colors",
+      // border color
+      "border-zinc-200 dark:border-zinc-700",
+      // background color
+      "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // focus
+      focusRing,
+      // disabled
+      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
+      className,
+    )}
+    {...props}
+  >
+    {children || <Plus className="h-4 w-4" />}
+  </BaseNumberField.Increment>
+);
+NumberFieldIncrement.displayName = "NumberFieldIncrement";
+
+type NumberFieldDecrementProps = {
+  /**
+   * Reference to the decrement button element.
+   */
+  ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Decrement> | null>;
+  /**
+   * Additional CSS classes for styling customization.
+   */
+  className?: string;
+  /**
+   * Custom content for the button (defaults to Minus icon).
+   */
+  children?: React.ReactNode;
+} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Decrement>;
+
+/**
+ * Decrement button to decrease the numeric value by the specified step amount.
+ */
+const NumberFieldDecrement = ({ ref, className, children, ...props }: NumberFieldDecrementProps) => (
+  <BaseNumberField.Decrement
+    ref={ref}
+    className={cx(
+      // base
+      "flex py-2 w-10 items-center justify-center rounded-tl-md rounded-bl-md border border-r-0 bg-clip-padding text-sm font-medium transition-colors",
+      // border color
+      "border-zinc-200 dark:border-zinc-700",
+      // background color
+      "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+      // text color
+      "text-zinc-900 dark:text-zinc-50",
+      // focus
+      focusRing,
+      // disabled
+      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
+      className,
+    )}
+    {...props}
+  >
+    {children || <Minus className="h-4 w-4" />}
+  </BaseNumberField.Decrement>
+);
+NumberFieldDecrement.displayName = "NumberFieldDecrement";
+
+/**
+ * Cursor icon with grow arrows for scrub area interactions.
+ */
+function CursorGrowIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg
+      width="26"
+      height="14"
+      viewBox="0 0 24 14"
+      fill="black"
+      stroke="white"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M19.5 5.5L6.49737 5.51844V2L1 6.9999L6.5 12L6.49737 8.5L19.5 8.5V12L25 6.9999L19.5 2V5.5Z" />
+    </svg>
+  );
+}
+
+export {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+  NumberFieldInput,
+  NumberFieldLabel,
+  type NumberFieldProps,
+  NumberFieldScrubCursor,
+};

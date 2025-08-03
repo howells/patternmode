@@ -1,0 +1,63 @@
+import type { ComponentConfig } from "../../lib/component-config-types";
+import { List } from "lucide-react";
+import { List as ListComponent, ListIndicator, ListItem } from "./component";
+import { DefaultExample, NestedExample, OrderedExample, PlainListExample, WithIconsExample } from "./examples";
+
+export const componentConfig: ComponentConfig = {
+  id: "list",
+  name: "List",
+  description: "Flexible components for creating ordered and unordered lists with custom styling, indicators, and alignment options. Supports traditional bullet/number lists as well as custom icon-based lists for enhanced visual presentation.",
+  category: "ui",
+  icon: List,
+  importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/ui/list";`,
+  examples: [
+    {
+      id: "default",
+      title: "Default",
+      description: "Basic unordered list with default marker styling",
+      component: DefaultExample,
+    },
+    {
+      id: "ordered",
+      title: "Ordered List",
+      description: "Numbered list using the ol element",
+      component: OrderedExample,
+    },
+    {
+      id: "with-icons",
+      title: "With Icons",
+      description: "Custom icon indicators for enhanced visual presentation",
+      component: WithIconsExample,
+    },
+    {
+      id: "nested",
+      title: "Nested Lists",
+      description: "Lists with nested sublists for hierarchical content",
+      component: NestedExample,
+    },
+    {
+      id: "plain",
+      title: "Plain Variant",
+      description: "Custom indicators using text or symbols",
+      component: PlainListExample,
+    },
+  ],
+  components: [
+    {
+      name: "List",
+      description: "Root container for list items with configurable styling and alignment",
+      component: ListComponent,
+      primary: true,
+    },
+    {
+      name: "ListItem",
+      description: "Individual list item with consistent styling and layout",
+      component: ListItem,
+    },
+    {
+      name: "ListIndicator",
+      description: "Custom indicator for list items supporting icons or custom content",
+      component: ListIndicator,
+    },
+  ],
+};

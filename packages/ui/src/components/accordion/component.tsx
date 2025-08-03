@@ -5,8 +5,8 @@ import { Plus } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
-import { Subheading } from "../todo/subheading/subheading";
-import { Text } from "../todo/text/text";
+import { Subheading } from "../subheading";
+import { Text } from "../text";
 
 type AccordionProps = AccordionPreviewProps & React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
 

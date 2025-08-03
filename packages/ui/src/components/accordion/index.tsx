@@ -8,3 +8,4 @@ export {
   AccordionTrigger,
   type AccordionTriggerProps,
 } from "./component";
+

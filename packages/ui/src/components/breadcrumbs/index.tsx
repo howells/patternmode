@@ -1,0 +1,16 @@
+export {
+  BreadcrumbEllipsis,
+  type BreadcrumbEllipsisProps,
+  BreadcrumbItem,
+  type BreadcrumbItemProps,
+  BreadcrumbLink,
+  type BreadcrumbLinkProps,
+  BreadcrumbList,
+  type BreadcrumbListProps,
+  BreadcrumbPage,
+  type BreadcrumbPageProps,
+  Breadcrumbs,
+  BreadcrumbSeparator,
+  type BreadcrumbSeparatorProps,
+  type BreadcrumbsProps,
+} from "./component";

@@ -1,6 +1,5 @@
 "use client";
 
-import type { ComponentExample } from "../../lib/component-config-types";
 import {
   Accordion,
   AccordionContent,

@@ -2,17 +2,16 @@
 
 import type { FieldSchema } from "./component";
 import React from "react";
+import { Avatar } from "../avatar";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
+import { Fieldset } from "../fieldset";
+import { Grid, GridCell } from "../grid";
+import { Input } from "../input";
+import { ScrollArea } from "../scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
+import { HStack, Stack, VStack } from "../stack";
 import { Textarea } from "../textarea/component";
-import { Avatar } from "../todo/avatar/avatar";
-import { Button } from "../todo/button/button";
-import { Checkbox } from "../todo/checkbox/checkbox";
-import { Fieldset, FieldsetLegend } from "../todo/fieldset/fieldset";
-import { Grid, GridCell } from "../todo/grid/grid";
-import { Input } from "../todo/input/input";
-import { List, ListIndicator, ListItem } from "../todo/list/list";
-import { ScrollArea } from "../todo/scroll-area/scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../todo/select/select";
-import { HStack, Stack, VStack } from "../todo/stack/stack";
 import { FieldArray } from "./component";
 
 // Example 1: Simple contact list

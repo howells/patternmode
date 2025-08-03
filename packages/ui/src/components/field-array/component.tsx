@@ -3,12 +3,12 @@
 import { GripVertical, Plus } from "lucide-react";
 import React from "react";
 import { cx } from "../../lib/utils";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
+import { DismissButton } from "../dismiss-button";
+import { Input } from "../input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
 import { Textarea } from "../textarea/component";
-import { Button } from "../todo/button/button";
-import { Checkbox } from "../todo/checkbox/checkbox";
-import { DismissButton } from "../todo/dismiss-button/dismiss-button";
-import { Input } from "../todo/input/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../todo/select/select";
 
 // Generic field schema definition
 export type FieldSchema = {
@@ -90,6 +90,8 @@ export type FieldArrayProps<T extends FieldArrayItem = FieldArrayItem> = {
   itemLabel?: string;
 };
 
+const EMPTY_COMPONENT_MAP = {};
+
 /**
  * FieldArray component.
  */
@@ -101,7 +103,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
   maxItems,
   addButtonText = "Add Item",
   sortable = false,
-  componentMap = {},
+  componentMap = EMPTY_COMPONENT_MAP,
   renderItem,
   className,
   showItemLabels = false,
@@ -232,6 +234,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
         if (renderItem) {
           return (
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={index}
               className="group relative border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
             >
@@ -250,6 +253,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
         // Default rendering
         return (
           <div
+            // eslint-disable-next-line react/no-array-index-key
             key={index}
             className="group relative border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
           >

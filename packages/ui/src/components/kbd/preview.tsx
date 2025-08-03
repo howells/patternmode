@@ -1,0 +1,16 @@
+"use client";
+
+import type { KbdProps } from "./component";
+import React from "react";
+import { Kbd } from "./component";
+
+export function KbdExample(props: KbdProps) {
+  return (
+    <div className="flex items-center gap-4 p-4">
+      <span className="text-sm text-zinc-600 dark:text-zinc-400">
+        Keyboard shortcut:
+      </span>
+      <Kbd {...props} />
+    </div>
+  );
+}

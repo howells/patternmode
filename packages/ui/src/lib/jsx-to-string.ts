@@ -90,16 +90,22 @@ function getComponentName(type: ComponentType): string {
  * Format props to string
  */
 function formatProps(props: Props): string {
-  if (!props) { return ""; }
+  if (!props) {
+    return "";
+  }
 
   const propsArray: string[] = [];
 
   Object.entries(props).forEach(([key, value]) => {
     // Skip children and key
-    if (key === "children" || key === "key") { return; }
+    if (key === "children" || key === "key") {
+      return;
+    }
 
     // Skip undefined values
-    if (value === undefined) { return; }
+    if (value === undefined) {
+      return;
+    }
 
     // Handle different value types
     if (value === true) {
@@ -148,7 +154,9 @@ function formatProps(props: Props): string {
  * Format children to string
  */
 function formatChildren(children: Children, options: FormatOptions): string {
-  if (!children) { return ""; }
+  if (!children) {
+    return "";
+  }
 
   const { indent = 0, indentChar = "  " } = options;
 
@@ -211,12 +219,24 @@ function escapeString(str: string): string {
  */
 function formatArray(arr: unknown[]): string {
   const items = arr.map((item) => {
-    if (typeof item === "string") { return `"${escapeString(item)}"`; }
-    if (typeof item === "number") { return String(item); }
-    if (typeof item === "boolean") { return String(item); }
-    if (item === null) { return "null"; }
-    if (item === undefined) { return "undefined"; }
-    if (React.isValidElement(item)) { return jsxToString(item, { indent: 0 }); }
+    if (typeof item === "string") {
+      return `"${escapeString(item)}"`;
+    }
+    if (typeof item === "number") {
+      return String(item);
+    }
+    if (typeof item === "boolean") {
+      return String(item);
+    }
+    if (item === null) {
+      return "null";
+    }
+    if (item === undefined) {
+      return "undefined";
+    }
+    if (React.isValidElement(item)) {
+      return jsxToString(item, { indent: 0 });
+    }
     return JSON.stringify(item);
   });
 

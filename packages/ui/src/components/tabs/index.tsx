@@ -1,0 +1,16 @@
+export {
+  Tabs,
+  TabsContent,
+  type TabsContentProps,
+  TabsIndicator,
+  TabsList,
+  type TabsListProps,
+  TabsPanel,
+  type TabsProps,
+  TabsRoot,
+  TabsTab,
+  TabsTabsList,
+  TabsTrigger,
+  type TabsTriggerProps,
+  tabsVariants,
+} from "./component";

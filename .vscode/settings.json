@@ -197,5 +197,8 @@
   },
   "editor.renderLineHighlight": "all",
   "editor.matchBrackets": "always",
-  "editor.renderWhitespace": "boundary"
+  "editor.renderWhitespace": "boundary",
+  "cSpell.words": [
+    "patternmode"
+  ]
 }

@@ -14,7 +14,6 @@ export default ui().append(
     rules: {
       "no-console": "off",
       "no-alert": "off",
-      "react-refresh/only-export-components": "off",
     },
   },
   {
