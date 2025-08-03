@@ -41,7 +41,7 @@ const DropdownCaption = ({
   displayIndex,
   startMonth,
   endMonth,
-  locale,
+  _locale,
   enableYearNavigation,
   captionLayout,
   disableNavigation,
@@ -51,7 +51,7 @@ const DropdownCaption = ({
   displayIndex: number;
   startMonth?: Date;
   endMonth?: Date;
-  locale?: Partial<Locale>;
+  _locale?: Partial<Locale>;
   enableYearNavigation?: boolean;
   captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years";
   disableNavigation?: boolean;
@@ -83,7 +83,7 @@ const DropdownCaption = ({
       value: getMonth(month).toString(),
       label: format(month, "MMMM"),
     }));
-  }, [startMonth, endMonth, locale]);
+  }, [startMonth, endMonth]);
 
   // Generate year options
   const yearOptions = React.useMemo(() => {
@@ -232,6 +232,168 @@ const DropdownCaption = ({
   );
 };
 
+const ChevronComponent = ({ orientation = "right", ...chevronProps }: { orientation?: "left" | "up" | "down" | "right"; [key: string]: any }) => {
+  if (orientation === "left") {
+    return (
+      <ChevronLeft
+        aria-hidden="true"
+        className="h-4 w-4"
+        {...chevronProps}
+      />
+    );
+  }
+  return (
+    <ChevronRight
+      aria-hidden="true"
+      className="h-4 w-4"
+      {...chevronProps}
+    />
+  );
+};
+
+const MonthCaptionComponent = ({
+  captionProps,
+  captionLayout,
+  enableYearNavigation,
+  numberOfMonths,
+  disableNavigation,
+  startMonth,
+  endMonth,
+  locale,
+}: {
+  captionProps: any;
+  captionLayout: "label" | "dropdown" | "dropdown-months" | "dropdown-years";
+  enableYearNavigation: boolean;
+  numberOfMonths: number;
+  disableNavigation?: boolean;
+  startMonth: Date;
+  endMonth: Date;
+  locale?: Partial<Locale>;
+}) => {
+  const { goToMonth, nextMonth, previousMonth, months } = useDayPicker();
+
+  if (captionLayout === "label") {
+    const currentMonth = captionProps.calendarMonth.date;
+    const displayIndex = captionProps.displayIndex;
+    const isFirst = displayIndex === 0;
+    const isLast = displayIndex === months.length - 1;
+
+    const hideNextButton = numberOfMonths > 1 && (isFirst || !isLast);
+    const hidePreviousButton = numberOfMonths > 1 && (isLast || !isFirst);
+
+    const goToPreviousYear = () => {
+      const targetMonth = addYears(currentMonth, -1);
+      if (previousMonth) {
+        goToMonth(targetMonth);
+      }
+    };
+
+    const goToNextYear = () => {
+      const targetMonth = addYears(currentMonth, 1);
+      if (nextMonth) {
+        goToMonth(targetMonth);
+      }
+    };
+
+    return (
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          {enableYearNavigation && !hidePreviousButton && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              disabled={disableNavigation || !previousMonth}
+              aria-label="Go to previous year"
+              onClick={goToPreviousYear}
+              leftIcon={ChevronsLeft}
+            />
+          )}
+          {!hidePreviousButton && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              disabled={disableNavigation || !previousMonth}
+              aria-label="Go to previous month"
+              onClick={() => previousMonth && goToMonth(previousMonth)}
+              leftIcon={ChevronLeft}
+            />
+          )}
+        </div>
+
+        <div
+          role="presentation"
+          aria-live="polite"
+          className={cx(
+            "text-sm font-medium capitalize tabular-nums",
+            "text-gray-900 dark:text-gray-50",
+          )}
+        >
+          {format(currentMonth, "LLLL yyy")}
+        </div>
+
+        <div className="flex items-center gap-1">
+          {!hideNextButton && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              disabled={disableNavigation || !nextMonth}
+              aria-label="Go to next month"
+              onClick={() => nextMonth && goToMonth(nextMonth)}
+              leftIcon={ChevronRight}
+            />
+          )}
+          {enableYearNavigation && !hideNextButton && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              disabled={disableNavigation || !nextMonth}
+              aria-label="Go to next year"
+              onClick={goToNextYear}
+              leftIcon={ChevronsRight}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+  else {
+    return (
+      <DropdownCaption
+        calendarMonth={captionProps.calendarMonth}
+        displayIndex={captionProps.displayIndex}
+        startMonth={startMonth}
+        endMonth={endMonth}
+        _locale={locale}
+        enableYearNavigation={enableYearNavigation}
+        captionLayout={captionLayout}
+        disableNavigation={disableNavigation}
+        numberOfMonths={numberOfMonths}
+      />
+    );
+  }
+};
+
+const createMonthCaptionWrapper = (
+  captionLayout: "label" | "dropdown" | "dropdown-months" | "dropdown-years",
+  enableYearNavigation: boolean,
+  numberOfMonths: number,
+  disableNavigation?: boolean,
+  startMonth?: Date,
+  endMonth?: Date,
+  locale?: Partial<Locale>,
+) => (captionProps: any) => (
+  <MonthCaptionComponent
+    captionProps={captionProps}
+    captionLayout={captionLayout}
+    enableYearNavigation={enableYearNavigation}
+    numberOfMonths={numberOfMonths}
+    disableNavigation={disableNavigation}
+    startMonth={startMonth!}
+    endMonth={endMonth!}
+    locale={locale}
+  />
+);
+
 /**
  * Props for the Calendar component.
  * Extends DayPicker props with additional calendar-specific options.
@@ -289,6 +451,9 @@ type CalendarProps = DayPickerProps & {
   endMonth?: Date;
 };
 
+const DEFAULT_START_MONTH = new Date(new Date().getFullYear() - 10, 0); // 10 years ago
+const DEFAULT_END_MONTH = new Date(new Date().getFullYear() + 10, 11); // 10 years from now
+
 /**
  * Calendar component for date selection and navigation with customizable appearance.
  */
@@ -301,29 +466,28 @@ const Calendar = ({
   showOutsideDays = true,
   showWeekNumber = false,
   captionLayout = "label",
-  startMonth = new Date(new Date().getFullYear() - 10, 0), // 10 years ago
-  endMonth = new Date(new Date().getFullYear() + 10, 11), // 10 years from now
+  startMonth = DEFAULT_START_MONTH,
+  endMonth = DEFAULT_END_MONTH,
   disableNavigation,
   locale,
   className,
   classNames,
   ...props
 }: CalendarProps) => {
-  const [key, setKey] = React.useState(0);
+  const [currentDate, setCurrentDate] = React.useState(() => new Date());
 
   const handleGoToToday = () => {
     // Force re-render to go to today's month
-    setKey(prev => prev + 1);
+    setCurrentDate(new Date());
   };
 
   return (
     <div className="space-y-3">
       <DayPicker
-        key={key}
         weekStartsOn={weekStartsOn}
         numberOfMonths={numberOfMonths}
         locale={locale}
-        today={new Date()}
+        today={currentDate}
         showOutsideDays={showOutsideDays}
         showWeekNumber={showWeekNumber}
         captionLayout={captionLayout}
@@ -398,134 +562,16 @@ const Calendar = ({
           ...classNames,
         }}
         components={{
-          Chevron: ({ orientation, ...chevronProps }) => {
-            if (orientation === "left") {
-              return (
-                <ChevronLeft
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                  {...chevronProps}
-                />
-              );
-            }
-            return (
-              <ChevronRight
-                aria-hidden="true"
-                className="h-4 w-4"
-                {...chevronProps}
-              />
-            );
-          },
-          // Use custom caption for all layouts
-          MonthCaption: ({ ...captionProps }) => {
-            // Always call hooks at the top level
-            const { goToMonth, nextMonth, previousMonth, months }
-              = useDayPicker();
-
-            if (captionLayout === "label") {
-              // Original label layout with buttons
-              const currentMonth = captionProps.calendarMonth.date;
-              const displayIndex = captionProps.displayIndex;
-              const isFirst = displayIndex === 0;
-              const isLast = displayIndex === months.length - 1;
-
-              const hideNextButton = numberOfMonths > 1 && (isFirst || !isLast);
-              const hidePreviousButton
-                = numberOfMonths > 1 && (isLast || !isFirst);
-
-              const goToPreviousYear = () => {
-                const targetMonth = addYears(currentMonth, -1);
-                if (previousMonth) {
-                  goToMonth(targetMonth);
-                }
-              };
-
-              const goToNextYear = () => {
-                const targetMonth = addYears(currentMonth, 1);
-                if (nextMonth) {
-                  goToMonth(targetMonth);
-                }
-              };
-
-              return (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    {enableYearNavigation && !hidePreviousButton && (
-                      <Button
-                        variant="outline"
-                        size="icon-sm"
-                        disabled={disableNavigation || !previousMonth}
-                        aria-label="Go to previous year"
-                        onClick={goToPreviousYear}
-                        leftIcon={ChevronsLeft}
-                      />
-                    )}
-                    {!hidePreviousButton && (
-                      <Button
-                        variant="outline"
-                        size="icon-sm"
-                        disabled={disableNavigation || !previousMonth}
-                        aria-label="Go to previous month"
-                        onClick={() =>
-                          previousMonth && goToMonth(previousMonth)}
-                        leftIcon={ChevronLeft}
-                      />
-                    )}
-                  </div>
-
-                  <div
-                    role="presentation"
-                    aria-live="polite"
-                    className={cx(
-                      "text-sm font-medium capitalize tabular-nums",
-                      "text-gray-900 dark:text-gray-50",
-                    )}
-                  >
-                    {format(currentMonth, "LLLL yyy")}
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    {!hideNextButton && (
-                      <Button
-                        variant="outline"
-                        size="icon-sm"
-                        disabled={disableNavigation || !nextMonth}
-                        aria-label="Go to next month"
-                        onClick={() => nextMonth && goToMonth(nextMonth)}
-                        leftIcon={ChevronRight}
-                      />
-                    )}
-                    {enableYearNavigation && !hideNextButton && (
-                      <Button
-                        variant="outline"
-                        size="icon-sm"
-                        disabled={disableNavigation || !nextMonth}
-                        aria-label="Go to next year"
-                        onClick={goToNextYear}
-                        leftIcon={ChevronsRight}
-                      />
-                    )}
-                  </div>
-                </div>
-              );
-            }
-            else {
-              // Use custom dropdown caption for dropdown layouts
-              return (
-                <DropdownCaption
-                  calendarMonth={captionProps.calendarMonth}
-                  displayIndex={captionProps.displayIndex}
-                  startMonth={startMonth}
-                  endMonth={endMonth}
-                  locale={locale}
-                  enableYearNavigation={enableYearNavigation}
-                  captionLayout={captionLayout}
-                  disableNavigation={disableNavigation}
-                  numberOfMonths={numberOfMonths}
-                />
-              );
-            }
-          },
+          Chevron: ChevronComponent,
+          MonthCaption: createMonthCaptionWrapper(
+            captionLayout,
+            enableYearNavigation,
+            numberOfMonths,
+            disableNavigation,
+            startMonth,
+            endMonth,
+            locale,
+          ),
         }}
         disableNavigation={disableNavigation}
         {...props}

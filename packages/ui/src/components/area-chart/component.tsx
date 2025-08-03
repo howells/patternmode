@@ -52,12 +52,12 @@ type LegendItemProps = {
   activeLegend?: string;
 };
 
-const LegendItem = ({
+const LegendItem: React.FC<LegendItemProps> = ({
   name,
   color,
   onClick,
   activeLegend,
-}: LegendItemProps) => {
+}) => {
   const hasOnValueChange = !!onClick;
   return (
     <li
@@ -319,6 +319,7 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       >
         {categories.map((category, index) => (
           <LegendItem
+            // eslint-disable-next-line react/no-array-index-key
             key={`item-${index}`}
             name={category}
             color={colors[index] as AvailableChartColorsKeys}

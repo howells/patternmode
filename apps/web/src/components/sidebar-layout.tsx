@@ -3,7 +3,7 @@
 "use client";
 
 import { useWindowSize } from "@uidotdev/usehooks";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { List, Pilcrow, Rows3 } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
