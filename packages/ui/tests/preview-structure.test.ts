@@ -29,6 +29,8 @@ type PreviewValidationResult = {
   expectedExampleName: string;
   actualExampleName: string | null;
   hasSafeProps: boolean;
+  hasPreviewProps: boolean;
+  previewPropsPattern: string | null;
 };
 
 /**
@@ -92,6 +94,23 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     warnings.push("Consider implementing safe props filtering pattern for security");
   }
 
+  // Check for preview props export (required for prop-explorer)
+  const previewPropsPattern = `${kebabToPascalCase(componentName)}PreviewProps`;
+  const genericPreviewPropsPattern = /export\s+(?:const|let|var)\s+\w*[Pp]reviewProps/;
+  const hasSpecificPreviewProps = content.includes(`export const ${previewPropsPattern}`) || content.includes(`export let ${previewPropsPattern}`) || content.includes(`export var ${previewPropsPattern}`);
+  const hasGenericPreviewProps = genericPreviewPropsPattern.test(content);
+  const hasPreviewProps = hasSpecificPreviewProps || hasGenericPreviewProps;
+  
+  const foundPreviewPropsPattern = hasSpecificPreviewProps 
+    ? previewPropsPattern 
+    : hasGenericPreviewProps 
+      ? content.match(genericPreviewPropsPattern)?.[0] || null
+      : null;
+
+  if (!hasPreviewProps) {
+    errors.push(`Missing preview props export - should export '${previewPropsPattern}' or similar for prop-explorer functionality`);
+  }
+
   // Additional structural checks
   if (!content.includes("useState")) {
     warnings.push("Consider adding state management for interactive preview");
@@ -117,6 +136,8 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     expectedExampleName,
     actualExampleName,
     hasSafeProps,
+    hasPreviewProps,
+    previewPropsPattern: foundPreviewPropsPattern,
   };
 }
 
@@ -204,6 +225,7 @@ describe("preview Structure Validation", () => {
     const filesWithPropsType = results.filter(r => r.hasPropsType).length;
     const filesWithExampleFunction = results.filter(r => r.hasExampleFunction).length;
     const filesWithSafeProps = results.filter(r => r.hasSafeProps).length;
+    const filesWithPreviewProps = results.filter(r => r.hasPreviewProps).length;
 
     console.log(`Files with "use client": ${filesWithUseClient}/${results.length}`);
     console.log(`Files with component import: ${filesWithComponentImport}/${results.length}`);
@@ -211,6 +233,7 @@ describe("preview Structure Validation", () => {
     console.log(`Files with props type: ${filesWithPropsType}/${results.length}`);
     console.log(`Files with example function: ${filesWithExampleFunction}/${results.length}`);
     console.log(`Files with safe props: ${filesWithSafeProps}/${results.length}`);
+    console.log(`Files with preview props: ${filesWithPreviewProps}/${results.length}`);
 
     console.log(`\n${"=".repeat(80)}`);
 

@@ -1,12 +1,12 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { Star } from "lucide-react";
-import { createIconWithSize, getIconSizeForContext, Icon, useIconSize } from "./component";
+import { Icon } from "./component";
 import {
   CustomStrokeExample,
   DefaultExample,
   LayoutExample,
   SizesExample,
-  WithTextExample,
+  WithBackgroundExample,
 } from "./examples";
 
 export const componentConfig: ComponentConfig = {
@@ -33,7 +33,7 @@ export const componentConfig: ComponentConfig = {
       id: "with-text",
       title: "With Text",
       description: "Icons paired with text labels in common UI patterns",
-      component: WithTextExample,
+      component: WithBackgroundExample,
     },
     {
       id: "custom-stroke",

@@ -14,7 +14,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  EmptyState,
   Input,
+  Stack,
   Subheading,
   Text,
 } from "@patternmode/ui";
@@ -155,46 +157,54 @@ export function ComponentSearch({
             <div className="max-h-96 overflow-y-auto space-y-4">
               {Object.keys(groupedComponents).length === 0
                 ? (
-                    <div className="py-8 text-center text-zinc-500">
-                      No components found
-                    </div>
+                    <EmptyState
+                      title="No components found"
+                      variant="minimal"
+                      size="sm"
+                    />
                   )
                 : (
                     Object.entries(groupedComponents).map(
                       ([category, components]) => (
                         <div key={category}>
-                          <div className="px-2 py-1 text-xs font-semibold text-zinc-500 capitalize">
+                                                    <Text
+                            size="xs"
+                            className="font-semibold text-zinc-500 capitalize px-2 py-1"
+                          >
                             {category}
-                          </div>
+                          </Text>
                           <div className="space-y-1">
                             {components.map((component) => {
                               const isSelected = currentIndex === selectedIndex;
                               currentIndex++;
 
                               return (
-                                <button
+                                <Button
                                   key={component.name}
-                                  className={`w-full text-left p-3 rounded-lg transition-colors ${
+                                  variant="ghost"
+                                  className={`w-full text-left p-3 justify-start ${
                                     isSelected
                                       ? "bg-zinc-100 dark:bg-zinc-800"
-                                      : "hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                                      : ""
                                   }`}
                                   onClick={() => handleSelect(component)}
                                 >
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                      <Subheading>{component.name}</Subheading>
-                                      <Badge variant="neutral">
-                                        {component.badge
-                                          || component.category
-                                            .charAt(0)
-                                            .toUpperCase()
-                                            + component.category.slice(1)}
-                                      </Badge>
-                                    </div>
-                                  </div>
-                                  <Text size="sm">{component.description}</Text>
-                                </button>
+                                  <Stack gap={2} className="w-full">
+                                    <Stack direction="horizontal" align="center" justify="between">
+                                      <Stack direction="horizontal" align="center" gap={2}>
+                                        <Subheading>{component.name}</Subheading>
+                                        <Badge variant="neutral">
+                                          {component.badge
+                                            || component.category
+                                              .charAt(0)
+                                              .toUpperCase()
+                                              + component.category.slice(1)}
+                                        </Badge>
+                                      </Stack>
+                                    </Stack>
+                                    <Text size="sm">{component.description}</Text>
+                                  </Stack>
+                                </Button>
                               );
                             })}
                           </div>

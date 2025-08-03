@@ -91,7 +91,7 @@ export const CardStyleExample = () => {
 export const CustomStructureExample = () => {
   return (
     <div className="space-y-4">
-      <RadioLabel size="md">
+      <div className="flex items-center gap-2 cursor-pointer text-sm font-medium text-zinc-900 dark:text-zinc-50">
         <RadioItem value="custom1" size="md" />
         <div className="flex flex-col">
           <span className="font-medium">Custom Radio 1</span>
@@ -99,9 +99,9 @@ export const CustomStructureExample = () => {
             Built with individual components
           </span>
         </div>
-      </RadioLabel>
+      </div>
 
-      <RadioLabel size="md">
+      <div className="flex items-center gap-2 cursor-pointer text-sm font-medium text-zinc-900 dark:text-zinc-50">
         <RadioItem value="custom2" size="md" />
         <div className="flex flex-col">
           <span className="font-medium">Custom Radio 2</span>
@@ -109,7 +109,7 @@ export const CustomStructureExample = () => {
             Full control over styling
           </span>
         </div>
-      </RadioLabel>
+      </div>
     </div>
   );
 };

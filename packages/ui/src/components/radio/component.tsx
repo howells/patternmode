@@ -351,25 +351,35 @@ RadioCard.displayName = "RadioCard";
 /**
  * Complete radio option with integrated label and optional description.
  */
-const RadioOption = ({ ref, value, label, description, disabled, size = "md", ...props }: RadioOptionProps) => (
-  <RadioLabel size={size}>
-    <RadioItem
-      ref={ref}
-      value={value}
-      disabled={disabled}
-      size={size}
-      {...props}
-    />
-    <div className="flex flex-col">
-      <span>{label}</span>
-      {description && (
-        <span className="text-xs text-zinc-500 dark:text-zinc-400">
-          {description}
-        </span>
-      )}
+const RadioOption = ({ ref, value, label, description, disabled, size = "md", ...props }: RadioOptionProps) => {
+  const { root, circle, indicator, dot } = radioVariants({ size, variant: "default" });
+  
+  return (
+    <div className={cx(radioLabelVariants({ size }))}>
+      <BaseRadio.Root 
+        ref={ref} 
+        value={value} 
+        disabled={disabled} 
+        className={cx(root())} 
+        {...props}
+      >
+        <div className={circle()}>
+          <BaseRadio.Indicator className={indicator()}>
+            <div className={dot()} />
+          </BaseRadio.Indicator>
+        </div>
+      </BaseRadio.Root>
+      <div className="flex flex-col">
+        <span>{label}</span>
+        {description && (
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
+            {description}
+          </span>
+        )}
+      </div>
     </div>
-  </RadioLabel>
-);
+  );
+};
 RadioOption.displayName = "RadioOption";
 
 /**

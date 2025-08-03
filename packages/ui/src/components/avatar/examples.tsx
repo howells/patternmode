@@ -1,91 +1,92 @@
 "use client";
 
 import React from "react";
+import { Stack } from "../stack";
 import { Avatar, AvatarFallback, AvatarImage, AvatarWithFallback } from "./component";
 
 // Basic avatar examples
 export const DefaultExample = () => {
   return (
-    <div className="flex items-center gap-4">
+    <Stack direction="horizontal" align="center" gap={4}>
       <Avatar
         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
         alt="John Doe"
       />
       <Avatar initials="JD" alt="John Doe" />
       <Avatar initials="AB" alt="Alice Brown" dynamicBackground />
-    </div>
+    </Stack>
   );
 };
 
 // Size variants
 export const SizeVariantsExample = () => {
   return (
-    <div className="flex items-end gap-4">
-      <div className="flex flex-col items-center gap-2">
+    <Stack direction="horizontal" align="end" gap={4}>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=16&h=16&fit=crop&crop=face"
           alt="John Doe"
           size="2xs"
         />
         <span className="text-xs">2xs</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=24&h=24&fit=crop&crop=face"
           alt="John Doe"
           size="xs"
         />
         <span className="text-xs">xs</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
           alt="John Doe"
           size="sm"
         />
         <span className="text-xs">sm</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
           alt="John Doe"
           size="base"
         />
         <span className="text-xs">base</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
           alt="John Doe"
           size="lg"
         />
         <span className="text-xs">lg</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=56&h=56&fit=crop&crop=face"
           alt="John Doe"
           size="xl"
         />
         <span className="text-xs">xl</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
           alt="John Doe"
           size="2xl"
         />
         <span className="text-xs">2xl</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
+      </Stack>
+      <Stack direction="vertical" align="center" gap={2}>
         <Avatar
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&crop=face"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
           alt="John Doe"
           size="3xl"
         />
         <span className="text-xs">3xl</span>
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 };
 

@@ -1,14 +1,10 @@
-// Tremor ToggleGroup [v1.0.0] - Base UI
-
 "use client";
 
 import type { VariantProps } from "tailwind-variants";
-
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React, { createContext, use } from "react";
 import { tv } from "tailwind-variants";
-
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
 import { getIconSizeForContext, Icon } from "../icon";
@@ -98,6 +94,7 @@ const toggleGroupVariants = tv({
 });
 
 type ToggleGroupProps = {
+
   /**
    * The content of the toggle group, typically ToggleGroupItem components.
    */
@@ -127,9 +124,10 @@ type ToggleGroupProps = {
  */
 const ToggleGroup = ({ ref, className, variant, size, orientation, children, ...props }: ToggleGroupProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggleGroup> | null> }) => {
   const { root } = toggleGroupVariants({ variant, size, orientation });
+  const contextValue = React.useMemo(() => ({ size, variant }), [size, variant]);
 
   return (
-    <ToggleGroupContext value={{ size, variant }}>
+    <ToggleGroupContext value={contextValue}>
       <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
         {children}
       </BaseToggleGroup>
@@ -167,8 +165,9 @@ type ToggleGroupItemProps = {
 } & React.ComponentPropsWithoutRef<typeof BaseToggle>;
 
 const ToggleGroupItem = (
-  { ref, className, variant, size, children, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), ...props }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
+  { ref, className, variant, size, children, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth, ...props }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
 ) => {
+  const finalIconStrokeWidth = iconStrokeWidth ?? config.getIconStrokeWidth();
   const context = use(ToggleGroupContext);
   const finalSize = size ?? context.size;
   const finalVariant = variant ?? context.variant;
@@ -202,7 +201,7 @@ const ToggleGroupItem = (
     // For icon-only buttons, render just the icon
     if (isIconOnly && hasLeftIcon) {
       return (
-        <Icon icon={LeftIcon} size={iconSize} strokeWidth={iconStrokeWidth} />
+        <Icon icon={LeftIcon} size={iconSize} strokeWidth={finalIconStrokeWidth} />
       );
     }
 
@@ -211,7 +210,7 @@ const ToggleGroupItem = (
         <Icon
           icon={RightIcon}
           size={iconSize}
-          strokeWidth={iconStrokeWidth}
+          strokeWidth={finalIconStrokeWidth}
         />
       );
     }
@@ -223,7 +222,7 @@ const ToggleGroupItem = (
           <Icon
             icon={LeftIcon}
             size={iconSize}
-            strokeWidth={iconStrokeWidth}
+            strokeWidth={finalIconStrokeWidth}
           />
         )}
         {hasChildren && children}
@@ -231,7 +230,7 @@ const ToggleGroupItem = (
           <Icon
             icon={RightIcon}
             size={iconSize}
-            strokeWidth={iconStrokeWidth}
+            strokeWidth={finalIconStrokeWidth}
           />
         )}
       </span>

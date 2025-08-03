@@ -2,86 +2,89 @@
 
 import React, { useState } from "react";
 import { Button } from "../button";
+import { Stack } from "../stack";
 import { Switch } from "./component";
 
 export const DefaultExample = () => {
   return (
-    <div className="flex items-center space-x-2">
+    <Stack direction="horizontal" align="center" gap={2}>
       <Switch id="airplane-mode" />
       <label htmlFor="airplane-mode">Airplane Mode</label>
-    </div>
+    </Stack>
   );
 };
 
 export const CheckedExample = () => {
   return (
-    <div className="flex items-center space-x-2">
+    <Stack direction="horizontal" align="center" gap={2}>
       <Switch id="notifications" defaultChecked />
       <label htmlFor="notifications">Enable notifications</label>
-    </div>
+    </Stack>
   );
 };
 
 export const DisabledExample = () => {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+    <Stack gap={4}>
+      <Stack direction="horizontal" align="center" gap={2}>
         <Switch id="disabled-off" disabled />
         <label htmlFor="disabled-off" className="text-zinc-500">
           Disabled (off)
         </label>
-      </div>
-      <div className="flex items-center space-x-2">
+      </Stack>
+      <Stack direction="horizontal" align="center" gap={2}>
         <Switch id="disabled-on" defaultChecked disabled />
         <label htmlFor="disabled-on" className="text-zinc-500">
           Disabled (on)
         </label>
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 };
 
 export const SizesExample = () => {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+    <Stack gap={4}>
+      <Stack direction="horizontal" align="center" gap={2}>
         <Switch id="small" size="small" />
         <label htmlFor="small">Small switch</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Switch id="medium" size="default" />
-        <label htmlFor="medium">Default switch</label>
-      </div>
-    </div>
+      </Stack>
+      <Stack direction="horizontal" align="center" gap={2}>
+        <Switch id="default" size="default" />
+        <label htmlFor="default">Default switch</label>
+      </Stack>
+    </Stack>
   );
 };
 
 export const FormExample = () => {
   return (
-    <form className="space-y-4">
-      <div className="space-y-3">
-        <h3 className="text-lg font-medium">Email Preferences</h3>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <label htmlFor="marketing" className="text-sm font-medium">
-              Marketing emails
-            </label>
-            <Switch id="marketing" />
-          </div>
-          <div className="flex items-center justify-between">
-            <label htmlFor="security" className="text-sm font-medium">
-              Security alerts
-            </label>
-            <Switch id="security" defaultChecked />
-          </div>
-          <div className="flex items-center justify-between">
-            <label htmlFor="updates" className="text-sm font-medium">
-              Product updates
-            </label>
-            <Switch id="updates" />
-          </div>
-        </div>
-      </div>
+    <form>
+      <Stack gap={4}>
+        <Stack gap={3}>
+          <h3 className="text-lg font-medium">Email Preferences</h3>
+          <Stack gap={3}>
+            <Stack direction="horizontal" align="center" justify="between">
+              <label htmlFor="marketing" className="text-sm font-medium">
+                Marketing emails
+              </label>
+              <Switch id="marketing" />
+            </Stack>
+            <Stack direction="horizontal" align="center" justify="between">
+              <label htmlFor="security" className="text-sm font-medium">
+                Security alerts
+              </label>
+              <Switch id="security" defaultChecked />
+            </Stack>
+            <Stack direction="horizontal" align="center" justify="between">
+              <label htmlFor="updates" className="text-sm font-medium">
+                Product updates
+              </label>
+              <Switch id="updates" />
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
     </form>
   );
 };
@@ -90,8 +93,8 @@ export const ControlledExample = () => {
   const [isEnabled, setIsEnabled] = useState(false);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+    <Stack gap={4}>
+      <Stack direction="horizontal" align="center" gap={2}>
         <Switch
           checked={isEnabled}
           onCheckedChange={setIsEnabled}
@@ -99,9 +102,9 @@ export const ControlledExample = () => {
         <span className="text-sm">
           Status: {isEnabled ? "Enabled" : "Disabled"}
         </span>
-      </div>
+      </Stack>
 
-      <div className="flex gap-2">
+      <Stack direction="horizontal" gap={2}>
         <Button
           size="sm"
           variant="outline"
@@ -116,7 +119,7 @@ export const ControlledExample = () => {
         >
           Turn Off
         </Button>
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 };

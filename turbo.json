@@ -47,6 +47,11 @@
     },
     "clean": {
       "cache": false
+    },
+    "validate-packages": {
+      "cache": false,
+      "inputs": ["**/package.json", "scripts/validate-package-alignment.ts"],
+      "outputs": []
     }
   }
 }

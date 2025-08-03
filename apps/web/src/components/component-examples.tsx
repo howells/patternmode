@@ -4,7 +4,7 @@ import React from "react";
 
 import type { ComponentExample } from "@patternmode/ui/lib/component-config-types";
 
-import { Callout, Card, CardContent, CardHeader, Loader, Subheading, Text, VStack } from "@patternmode/ui";
+import { Callout, Card, CardContent, CardHeader, Loader, Stack, Subheading, Text, VStack } from "@patternmode/ui";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 
 type ComponentExamplesProps = {
@@ -62,9 +62,9 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
     // Show loading state
     if (loading) {
       return (
-        <div className="flex items-center justify-center py-8 text-zinc-500">
+        <Stack direction="horizontal" align="center" justify="center" className="py-8">
           <Loader size="sm" label="Loading examples..." />
-        </div>
+        </Stack>
       );
     }
 
@@ -77,10 +77,8 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
             <Text>{example.description}</Text>
           </CardHeader>
 
-          <CardContent data-testid="example-content">
-            <div className="flex justify-center">
-              <example.component />
-            </div>
+          <CardContent data-testid="example-content" className="flex justify-center">
+            <example.component />
           </CardContent>
         </Card>
       ));
@@ -88,7 +86,7 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
 
     // Show error or no examples message
     return (
-      <div className="p-4">
+      <Stack padding={4}>
         {error
           ? (
               <Callout variant="error" title="Failed to load examples">
@@ -107,7 +105,7 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
                 {config?.name || componentId}
               </Callout>
             )}
-      </div>
+      </Stack>
     );
   };
 

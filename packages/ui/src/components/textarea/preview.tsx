@@ -14,8 +14,8 @@ export type TextareaPreviewProps = {
   autoResize?: boolean;
 };
 
-// Prop metadata for the prop explorer - single source of truth
-export const textareaPreviewProps = [
+// Preview props for prop explorer
+export const TextareaPreviewProps = [
   {
     name: "placeholder",
     type: "string",

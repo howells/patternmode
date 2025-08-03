@@ -3,7 +3,8 @@
 import { Plus, Settings, X } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
-import { Button, Card, getDynamicIconByName, Icon } from "@patternmode/ui";
+import { Button, Callout, Card, getDynamicIconByName, Icon, Stack } from "@patternmode/ui";
+import { getComponentConfig } from "@patternmode/ui/components/registry";
 
 import { PropExplorerProvider } from "../../features/prop-explorer/prop-explorer-context";
 import { PropsEditorPopover } from "./props-editor-popover";
@@ -48,11 +49,12 @@ export function EditableCell({
 
     // Simple placeholder component to fix broken dynamic imports
     return () => (
-      <div className="p-4 border border-amber-200 rounded bg-amber-50 text-amber-600 text-sm">
-        Dynamic component loading temporarily disabled:
-        {" "}
+      <Callout
+        variant="warning"
+        title="Dynamic component loading temporarily disabled"
+      >
         {cellData.componentId}
-      </div>
+      </Callout>
     );
   }, [cellData]);
 
@@ -120,21 +122,19 @@ export function EditableCell({
       };
 
       return (
-        <div className="w-full">
+        <Stack className="w-full">
           <PropExplorerProvider defaultProps={cellData.props}>
             <ComponentWrapper props={processedProps} />
           </PropExplorerProvider>
-        </div>
+        </Stack>
       );
     }
     catch (error) {
       console.error("Error rendering component:", error);
       return (
-        <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded text-sm">
-          <div className="text-red-700 dark:text-red-400">
-            Error rendering component
-          </div>
-        </div>
+        <Callout variant="error" title="Error rendering component">
+          Failed to render component
+        </Callout>
       );
     }
   };

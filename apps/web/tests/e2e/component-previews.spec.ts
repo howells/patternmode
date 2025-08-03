@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 
 import { expect, test } from "@playwright/test";
 
-import { COMPONENT_LIST } from "@patternmode/ui";
+import { COMPONENT_LIST } from "@patternmode/ui/components/registry";
 
 // Helper function to test a single component page
 async function testComponentPage(

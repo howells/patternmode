@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Heading, Text } from "@patternmode/ui";
+import { Badge, Heading, Stack, Text } from "@patternmode/ui";
 
 type PageHeaderProps = {
   title: string;
@@ -10,12 +10,12 @@ type PageHeaderProps = {
 
 export function PageHeader({ title, description, badge }: PageHeaderProps) {
   return (
-    <div className="space-y-2 px-6 py-6 border-b">
-      <div className="flex items-center gap-3">
+    <Stack gap={2} padding={6} className="border-b">
+      <Stack direction="horizontal" align="center" gap={3}>
         <Heading level={1}>{title}</Heading>
         {badge && <Badge variant="neutral">{badge}</Badge>}
-      </div>
+      </Stack>
       {description && <Text>{description}</Text>}
-    </div>
+    </Stack>
   );
 }

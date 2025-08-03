@@ -3,10 +3,6 @@
   "workspaces": {
     ".": {
       "entry": [
-        "analyze-missing-props.ts",
-        "check-icon-size.js",
-        "icon-check.js",
-        "fix-missing-jsdoc.js",
         "turbo.json"
       ],
       "project": [
@@ -33,7 +29,6 @@
     },
     "packages/ui": {
       "entry": [
-        "debug-*.js",
         "scripts/**/*.{ts,js}",
         "tests/**/*.test.{ts,tsx}"
       ],
@@ -41,7 +36,6 @@
         "src/**/*.{ts,tsx}",
         "scripts/**/*.{ts,js}",
         "tests/**/*.{ts,tsx}",
-        "debug-*.js",
         "vitest.config.ts"
       ]
     },

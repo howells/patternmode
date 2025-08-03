@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutGroup, motion } from "framer-motion";
+import { LayoutGroup, motion } from "motion/react";
 import Link from "next/link";
 import React, { useId } from "react";
 
@@ -17,14 +17,16 @@ type NavbarProps = {
 /**
  * Root navbar component for horizontal navigation layouts.
  */
-export function Navbar({ className, ...props }: NavbarProps) {
+const Navbar = ({ className, ...props }: NavbarProps) => {
   return (
     <nav
       {...props}
       className={cx(className, "flex flex-1 items-center gap-4 py-2.5")}
     />
   );
-}
+};
+
+Navbar.displayName = "Navbar";
 
 type NavbarDividerProps = {
   /**
@@ -169,4 +171,5 @@ export function NavbarLabel({ className, ...props }: NavbarLabelProps) {
   return <span {...props} className={cx(className, "truncate")} />;
 }
 
-export type { NavbarProps, NavbarLabelProps };
+export { Navbar };
+export type { NavbarLabelProps, NavbarProps };

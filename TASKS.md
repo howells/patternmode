@@ -2,18 +2,6 @@
 
 ## Active Tasks
 
-- [ ] **Thorough TypeScript Documentation** - Ensure every component has comprehensive JSDoc comments for all props, interfaces, and functions so TypeScript users can access detailed information through IntelliSense and hover tooltips
-- [ ] **Sub-component documentation system** - Figure out how to properly document and expose sub-components (e.g. @AccordionItem, @DialogContent, @TabsPanel) in both TypeScript IntelliSense and the documentation site, including their props and usage patterns
-- [ ] **Clean up legacy and one-off scripts** - Remove or archive legacy utility scripts that were used for one-time migrations/fixes: `analyze-missing-props.ts`, `check-icon-size.js`, `icon-check.js`, `fix-missing-jsdoc.js`, debug scripts in packages/ui, and most scripts in packages/ui/scripts/ directory that were used for historical component structure fixes
-- [ ] **Component composition audit** - Systematically go through each component looking for any elements that could be other components (e.g. button, text, subheading, dot, etc.) and refactor to use proper component composition instead of hardcoded elements
-- [ ] **Component preview width and visibility audit** - Ensure every component preview and example has sufficient width so components are actually visible and properly displayed, prevent components from inappropriately spanning parent containers unless designed to be full-width
-- [ ] **Standardize component naming and descriptions**
-- [ ] **Create `apps/` directory**
-- [ ] **Move current Next.js app to `apps/web/`**
-- [ ] **Update all import paths and references**
-- [ ] **Update turbo.json configuration** - See [Turborepo docs](https://turbo.build/repo/docs)
-- [ ] **Update workspace dependencies**
-- [ ] **Test that everything still works after restructure**
 - [ ] **Add proper package metadata** (description, keywords, author, license)
 - [ ] **Configure proper exports for different module systems**
 - [ ] **Add repository, bugs, and homepage URLs**
@@ -43,14 +31,12 @@
 - [ ] **ActivityIndicator Component**
 - [ ] **Enhanced Modal Component**
 - [ ] **Add unit tests for all components**
-- [ ] **Improve e2e test reliability**
 - [ ] **Add accessibility tests**
 - [ ] **Performance testing for complex components**
 - [ ] **Improve development server startup time**
 - [ ] **Add better error handling and debugging**
 - [ ] **Optimize hot reload performance**
 - [ ] **Auto-generate API docs from TypeScript**
-- [ ] **Create interactive component explorer**
 - [ ] **Add design guidelines and best practices**
 - [ ] **Create component CLI for generating new components**
 - [ ] **Add linting rules specific to component patterns**
@@ -69,8 +55,6 @@
 ## Success Metrics
 
 ### Short-term (1-2 weeks)
-
-- [ ] Apps/packages turborepo structure complete
 
 ### Medium-term (1-2 months)
 

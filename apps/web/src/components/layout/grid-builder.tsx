@@ -60,7 +60,7 @@ export function GridBuilder() {
     items: [],
   });
 
-  const [gridRows, setGridRows] = useState(1);
+  const [gridRows, _setGridRows] = useState(1);
   const [showComponentSearch, setShowComponentSearch] = useState(false);
   const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(
     null,
@@ -202,59 +202,61 @@ export function GridBuilder() {
       </div>
 
       {/* Layout Preview */}
-      {layoutMode === "grid" ? (
-        <Grid
-          columns={gridState.columns}
-          gap={gridState.gap}
-          minHeight={gridState.minHeight}
-        >
-          {cells}
-        </Grid>
-      ) : (
-        <Stack
-          direction={stackState.direction}
-          gap={
-            stackState.gap as
-            | 0
-            | 1
-            | 2
-            | 3
-            | 4
-            | 5
-            | 6
-            | 8
-            | 10
-            | 12
-            | 16
-            | 20
-            | 24
-          }
-          align={stackState.align}
-          justify={stackState.justify}
-          className="min-h-[200px] border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-4"
-        >
-          {stackState.items.map((item, index) => (
-            <div key={index}>
-              <EditableCell
-                cellIndex={index}
-                cellData={item}
-                onAddComponent={() => handleCellClick(index)}
-                onUpdateProps={props => updateCellProps(index, props)}
-                onRemoveComponent={() => removeCellComponent(index)}
-              />
-            </div>
-          ))}
+      {layoutMode === "grid"
+        ? (
+            <Grid
+              columns={gridState.columns}
+              gap={gridState.gap}
+              minHeight={gridState.minHeight}
+            >
+              {cells}
+            </Grid>
+          )
+        : (
+            <Stack
+              direction={stackState.direction}
+              gap={
+                stackState.gap as
+                | 0
+                | 1
+                | 2
+                | 3
+                | 4
+                | 5
+                | 6
+                | 8
+                | 10
+                | 12
+                | 16
+                | 20
+                | 24
+              }
+              align={stackState.align}
+              justify={stackState.justify}
+              className="min-h-[200px] border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-4"
+            >
+              {stackState.items.map((item, index) => (
+                <Stack key={index}>
+                  <EditableCell
+                    cellIndex={index}
+                    cellData={item}
+                    onAddComponent={() => handleCellClick(index)}
+                    onUpdateProps={props => updateCellProps(index, props)}
+                    onRemoveComponent={() => removeCellComponent(index)}
+                  />
+                </Stack>
+              ))}
 
-          {/* Add item button for stack */}
-          <Button
-            variant="outline-dashed"
-            className="min-h-[80px]"
-            onClick={() => handleCellClick(stackState.items.length)}
-          >
-            Add Component
-          </Button>
-        </Stack>
-      )}
+              {/* Add item button for stack */}
+              <Button
+                variant="outline-dashed"
+                className="min-h-[80px]"
+                onClick={() => handleCellClick(stackState.items.length)}
+              >
+                Add Component
+              </Button>
+            </Stack>
+          )}
 
       {/* Component Search */}
       <ComponentSearch

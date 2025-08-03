@@ -15,6 +15,7 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
+  Stack,
   ToggleGroup,
   ToggleGroupItem,
 } from "@patternmode/ui";
@@ -148,7 +149,11 @@ function SidebarContent() {
                                 component.id,
                               )}
                               isCollapsed={isCollapsed}
-                              leftIcon={typeof component.icon === "function" ? component.icon : undefined}
+                              leftIcon={
+                                typeof component.icon === "function"
+                                  ? component.icon
+                                  : undefined
+                              }
                             >
                               {component.name}
                             </SidebarItem>
@@ -172,7 +177,11 @@ function SidebarContent() {
                           component.id,
                         )}
                         isCollapsed={isCollapsed}
-                        leftIcon={typeof component.icon === "function" ? component.icon : undefined}
+                        leftIcon={
+                          typeof component.icon === "function"
+                            ? component.icon
+                            : undefined
+                        }
                       >
                         {component.name}
                       </SidebarItem>
@@ -206,12 +215,12 @@ function MainContent({ children }: { children: React.ReactNode }) {
         marginLeft: isMobile ? "0" : "var(--sidebar-width)",
       }}
     >
-      <div className="flex flex-col min-h-0 flex-1">
+      <Stack direction="vertical" className="min-h-0 flex-1">
         <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-end">
           <ComponentSearch />
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
-      </div>
+      </Stack>
     </motion.div>
   );
 }

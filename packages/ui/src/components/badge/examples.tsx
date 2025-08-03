@@ -2,6 +2,7 @@
 
 import { AlertCircle, ArrowRight, Check, Clock, Star, Trash2 } from "lucide-react";
 import React from "react";
+import { Stack } from "../stack";
 import { Badge } from "./component";
 
 // Default badge
@@ -16,7 +17,7 @@ export const WithIconsExample = () => (
 
 // Badge with dismiss button
 export const DismissExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge onDismiss={() => {}}>Removable</Badge>
     <Badge
       variant="success"
@@ -32,12 +33,12 @@ export const DismissExample = () => (
     >
       Delete me
     </Badge>
-  </div>
+  </Stack>
 );
 
 // Different variants
 export const VariantsExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge variant="default">Default</Badge>
     <Badge variant="success">Success</Badge>
     <Badge variant="warning">Warning</Badge>
@@ -45,21 +46,21 @@ export const VariantsExample = () => (
     <Badge variant="info">Info</Badge>
     <Badge variant="blue">Blue</Badge>
     <Badge variant="purple">Purple</Badge>
-  </div>
+  </Stack>
 );
 
 // Different sizes
 export const SizesExample = () => (
-  <div className="flex items-center gap-2">
+  <Stack direction="horizontal" align="center" gap={2}>
     <Badge size="sm">Small</Badge>
     <Badge size="base">Base</Badge>
     <Badge size="lg">Large</Badge>
-  </div>
+  </Stack>
 );
 
 // Rounded badges
 export const RoundedExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge rounded>Pill Badge</Badge>
     <Badge rounded variant="success" leftIcon={Check}>
       Approved
@@ -67,12 +68,12 @@ export const RoundedExample = () => (
     <Badge rounded variant="warning" leftIcon={Clock}>
       Pending
     </Badge>
-  </div>
+  </Stack>
 );
 
 // Bordered badges
 export const BorderedExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge bordered>Bordered</Badge>
     <Badge bordered variant="info" leftIcon={AlertCircle}>
       Information
@@ -80,22 +81,22 @@ export const BorderedExample = () => (
     <Badge bordered rounded variant="success">
       Featured
     </Badge>
-  </div>
+  </Stack>
 );
 
 // Status dot badges
 export const StatusDotExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge statusDot variant="success">Online</Badge>
     <Badge statusDot variant="warning">Away</Badge>
     <Badge statusDot variant="error">Offline</Badge>
     <Badge statusDot statusAnimated variant="info">Live</Badge>
-  </div>
+  </Stack>
 );
 
 // Complex example with all features
 export const ComplexExample = () => (
-  <div className="flex flex-wrap gap-2">
+  <Stack direction="horizontal" wrap gap={2}>
     <Badge
       variant="purple"
       leftIcon={Star}
@@ -120,5 +121,5 @@ export const ComplexExample = () => (
     >
       Requires Attention
     </Badge>
-  </div>
+  </Stack>
 );

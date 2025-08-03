@@ -2,7 +2,7 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
 import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
-import { textareaPreviewProps } from "./preview";
+import { TextareaPreviewProps } from "./preview";
 
 // TypeScript type for the component props
 export type TextareaConfigProps = {
@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   category: "inputs",
   icon: MessageSquare,
   importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
-  props: textareaPreviewProps,
+  props: TextareaPreviewProps,
   examples: [
     {
       id: "default",

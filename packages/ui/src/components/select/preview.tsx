@@ -9,12 +9,36 @@ import {
   SelectValue,
 } from "./component";
 
-type SelectProps = React.ComponentPropsWithoutRef<typeof Select>;
+type SelectExampleProps = {
+  placeholder?: string;
+  disabled?: boolean;
+  hasError?: boolean;
+  size?: "default" | "sm";
+  defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
+};
 
-export function SelectExample(props: SelectProps) {
+export function SelectExample(props: SelectExampleProps) {
+  const items = [
+    { label: props.placeholder || "Select a fruit...", value: null },
+    { label: "Apple", value: "apple" },
+    { label: "Banana", value: "banana" },
+    { label: "Orange", value: "orange" },
+    { label: "Grape", value: "grape" },
+    { label: "Strawberry", value: "strawberry" },
+    { label: "Pineapple", value: "pineapple" },
+  ];
+
   return (
-    <Select {...props}>
-      <SelectTrigger className="w-[180px]">
+    <Select
+      defaultValue={props.defaultValue}
+      value={props.value}
+      onValueChange={props.onValueChange}
+      disabled={props.disabled}
+      items={items}
+    >
+      <SelectTrigger className="w-[180px]" hasError={props.hasError} size={props.size}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -22,7 +46,51 @@ export function SelectExample(props: SelectProps) {
         <SelectItem value="banana">Banana</SelectItem>
         <SelectItem value="orange">Orange</SelectItem>
         <SelectItem value="grape">Grape</SelectItem>
+        <SelectItem value="strawberry">Strawberry</SelectItem>
+        <SelectItem value="pineapple">Pineapple</SelectItem>
       </SelectContent>
     </Select>
   );
 }
+
+// Preview props for prop explorer
+export const SelectPreviewProps = [
+  {
+    name: "placeholder",
+    type: "string",
+    description: "Placeholder text shown when no value is selected.",
+    defaultValue: "Select a fruit...",
+  },
+  {
+    name: "defaultValue",
+    type: "select",
+    description: "Default selected value.",
+    options: [
+      { label: "None", value: "" },
+      { label: "Apple", value: "apple" },
+      { label: "Banana", value: "banana" },
+      { label: "Orange", value: "orange" },
+      { label: "Grape", value: "grape" },
+    ],
+    defaultValue: "",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant affecting padding and text size.",
+    options: ["default", "sm"],
+    defaultValue: "default",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    description: "Whether the select is disabled.",
+    defaultValue: false,
+  },
+  {
+    name: "hasError",
+    type: "boolean",
+    description: "Whether to display error styling.",
+    defaultValue: false,
+  },
+];

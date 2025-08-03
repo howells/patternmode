@@ -1,45 +1,72 @@
 "use client";
 
-import { Download, Heart, Search, Settings, Star, User } from "lucide-react";
+import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
 import React from "react";
+import { Stack } from "../stack";
 import { Icon } from "./component";
 
-export function DefaultExample() {
-  return <Icon icon={Search} />;
-}
-
-export function SizesExample() {
+// Basic icons
+export const DefaultExample = () => {
   return (
-    <div className="flex items-center gap-4">
-      <Icon icon={Heart} size="xs" />
-      <Icon icon={Heart} size="sm" />
-      <Icon icon={Heart} size="base" />
-      <Icon icon={Heart} size="lg" />
-      <Icon icon={Heart} size="xl" />
-      <Icon icon={Heart} size="2xl" />
-      <Icon icon={Heart} size="3xl" />
-    </div>
+    <Stack direction="horizontal" align="center" gap={4}>
+      <Icon icon={User} />
+      <Icon icon={Heart} />
+      <Icon icon={Star} />
+      <Icon icon={Check} />
+    </Stack>
   );
-}
+};
 
-export function WithTextExample() {
+// Different sizes
+export const SizesExample = () => {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2">
+    <Stack direction="horizontal" align="center" gap={2}>
+      <Icon icon={Star} size="xs" />
+      <Icon icon={Star} size="sm" />
+      <Icon icon={Star} size="base" />
+      <Icon icon={Star} size="lg" />
+      <Icon icon={Star} size="xl" />
+    </Stack>
+  );
+};
+
+// Different colors
+export const ColorsExample = () => {
+  return (
+    <Stack direction="horizontal" align="center" gap={4}>
+      <Icon icon={Heart} className="text-red-500" />
+      <Icon icon={Star} className="text-yellow-500" />
+      <Icon icon={Check} className="text-green-500" />
+      <Icon icon={User} className="text-blue-500" />
+    </Stack>
+  );
+};
+
+// Icons with backgrounds
+export const WithBackgroundExample = () => {
+  return (
+    <Stack direction="horizontal" align="center" gap={2}>
+      <Stack direction="horizontal" align="center" gap={2} className="p-3 border rounded">
         <Icon icon={User} />
         <span>Profile</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Icon icon={Settings} />
-        <span>Settings</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Icon icon={Download} />
-        <span>Download</span>
-      </div>
-    </div>
+      </Stack>
+
+      <Stack direction="horizontal" align="center" className="p-3 border rounded">
+        <Icon icon={Heart} className="text-red-500" />
+      </Stack>
+
+      <Stack direction="horizontal" align="center" gap={1}>
+        <Icon icon={Star} className="text-yellow-500" size="sm" />
+        <span className="text-sm">4.5</span>
+      </Stack>
+
+      <Stack direction="horizontal" align="center" gap={3}>
+        <span>Next</span>
+        <Icon icon={ArrowRight} size="sm" />
+      </Stack>
+    </Stack>
   );
-}
+};
 
 export function CustomStrokeExample() {
   return (

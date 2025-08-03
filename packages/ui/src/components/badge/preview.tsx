@@ -1,55 +1,129 @@
 "use client";
 
 import type { BadgeProps } from "./component";
+import { AlertCircle, Check, Star, X } from "lucide-react";
 import React from "react";
 import { Badge } from "./component";
 
-// Example component for preview system
-export function BadgeExample({
-  variant = "default",
-  size = "base",
-  bordered,
-  rounded,
-  statusAnimated,
-  leftIcon,
-  rightIcon,
-  children = "Badge",
-  dismissible,
-  dismissIcon,
-  ...props
-}: {
-  variant?: BadgeProps["variant"];
-  size?: BadgeProps["size"];
-  bordered?: boolean;
-  rounded?: boolean;
-  statusAnimated?: boolean;
-  leftIcon?: React.ComponentType<{ className?: string }>;
-  rightIcon?: React.ComponentType<{ className?: string }>;
-  children?: string;
-  dismissible?: boolean;
-  dismissIcon?: React.ComponentType<{ className?: string }>;
-  [key: string]: unknown;
-}) {
+export function BadgeExample(props: BadgeProps) {
   // Convert boolean to actual dismiss handler for preview
-  const handleDismiss = dismissible
+  const handleDismiss = props.dismissible
     ? () => console.warn("Badge dismissed")
     : undefined;
 
+  const { ref, ...badgeProps } = props;
+
   return (
     <Badge
-      variant={variant}
-      size={size}
-      bordered={bordered}
-      rounded={rounded}
-      statusAnimated={statusAnimated}
-      leftIcon={leftIcon}
-      rightIcon={rightIcon}
-      dismissible={dismissible}
       onDismiss={handleDismiss}
-      {...(dismissIcon && { dismissIcon })}
-      {...props}
+      {...badgeProps}
     >
-      {children}
+      {props.children || "Badge"}
     </Badge>
   );
 }
+
+// Preview props for prop explorer
+export const BadgePreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Badge text content.",
+    defaultValue: "Badge",
+  },
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual style variant affecting color scheme.",
+    options: [
+      "default",
+      "neutral",
+      "success",
+      "info",
+      "warning",
+      "error",
+      "critical",
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose",
+    ],
+    defaultValue: "default",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant affecting padding and text size.",
+    options: ["sm", "base", "lg"],
+    defaultValue: "base",
+  },
+  {
+    name: "leftIcon",
+    type: "select",
+    description: "Icon component to display on the left side.",
+    options: [
+      { label: "None", value: null },
+      { label: "Star", value: Star },
+      { label: "Check", value: Check },
+      { label: "Alert", value: AlertCircle },
+      { label: "X", value: X },
+    ],
+    defaultValue: null,
+  },
+  {
+    name: "rightIcon",
+    type: "select",
+    description: "Icon component to display on the right side.",
+    options: [
+      { label: "None", value: null },
+      { label: "Star", value: Star },
+      { label: "Check", value: Check },
+      { label: "Alert", value: AlertCircle },
+      { label: "X", value: X },
+    ],
+    defaultValue: null,
+  },
+  {
+    name: "bordered",
+    type: "boolean",
+    description: "Whether to show a border around the badge.",
+    defaultValue: false,
+  },
+  {
+    name: "rounded",
+    type: "boolean",
+    description: "Whether to use full border radius for a pill shape.",
+    defaultValue: false,
+  },
+  {
+    name: "statusDot",
+    type: "boolean",
+    description: "Whether to show a status dot instead of icons.",
+    defaultValue: false,
+  },
+  {
+    name: "statusAnimated",
+    type: "boolean",
+    description: "Whether to animate the status dot for active statuses.",
+    defaultValue: false,
+  },
+  {
+    name: "dismissible",
+    type: "boolean",
+    description: "Whether the badge can be dismissed.",
+    defaultValue: false,
+  },
+];

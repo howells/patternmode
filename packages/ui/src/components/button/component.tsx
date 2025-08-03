@@ -158,7 +158,7 @@ type ButtonProps = {
    * Visual style variant of the button.
    * Controls color scheme and visual emphasis.
    */
-  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
+  variant?: "default" | "secondary" | "outline" | "outline-dashed" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
   /**
    * Size variant of the button.
    * Icon sizes are for icon-only buttons without text.

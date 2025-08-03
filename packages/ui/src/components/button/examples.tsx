@@ -2,6 +2,7 @@
 
 import { Button, iconRegistry } from "@patternmode/ui";
 import React from "react";
+import { HStack } from "../stack";
 
 // Pre-imported icons from registry
 const { ArrowRight, Plus } = iconRegistry;
@@ -21,6 +22,9 @@ export const DestructiveExample = () => (
 
 // Outline variant
 export const OutlineExample = () => <Button variant="outline">Outline</Button>;
+
+// Outline dashed variant
+export const OutlineDashedExample = () => <Button variant="outline-dashed">Outline Dashed</Button>;
 
 // Ghost variant
 export const GhostExample = () => <Button variant="ghost">Ghost</Button>;
@@ -55,18 +59,10 @@ export const SizesExample = () => (
     <Button size="sm">Small</Button>
     <Button size="default">Default</Button>
     <Button size="lg">Large</Button>
-    <Button size="icon-xs">
-      <Plus />
-    </Button>
-    <Button size="icon-sm">
-      <Plus />
-    </Button>
-    <Button size="icon">
-      <Plus />
-    </Button>
-    <Button size="icon-lg">
-      <Plus />
-    </Button>
+    <Button size="icon-xs" icon={Plus} />
+    <Button size="icon-sm" icon={Plus} />
+    <Button size="icon" icon={Plus} />
+    <Button size="icon-lg" icon={Plus} />
   </div>
 );
 
@@ -97,17 +93,14 @@ export const LoadingWithTextExample = () => (
 
 // Text alignment
 export const TextAlignExample = () => (
-  <div className="flex flex-col gap-2">
+  <HStack gap={2}>
     <Button fullWidth textAlign="left">
       Left Aligned
     </Button>
     <Button fullWidth textAlign="center">
       Center Aligned
     </Button>
-    <Button fullWidth textAlign="right">
-      Right Aligned
-    </Button>
-  </div>
+  </HStack>
 );
 
 // Keyboard shortcuts

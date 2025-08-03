@@ -6,12 +6,14 @@ import React from "react";
 import {
   Breadcrumbs,
   Button,
+  Callout,
   CodeBlock,
   FieldArrayExample,
   getDynamicIconByName,
   Loader,
   ScrollArea,
   SparkAreaChart,
+  Stack,
   Tabs,
   TabsContent,
   TabsList,
@@ -472,40 +474,41 @@ export function ComponentPreview({
     catch (renderError) {
       console.error("Error rendering component:", renderError);
       return (
-        <div className="text-red-500">
-          Error rendering
+        <Callout variant="error" title="Error rendering component">
+          Failed to render
+          {" "}
           {componentId}
-        </div>
+        </Callout>
       );
     }
   };
 
   return (
     <Tabs defaultValue="preview">
-      <div className="relative">
+      <Stack className="relative">
         {/* Floating tabs in top-left */}
-        <div className="absolute top-0 left-0 z-10">
+        <Stack className="absolute top-0 left-0 z-10">
           <TabsList variant="solid">
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
-        </div>
+        </Stack>
 
         <TabsContent value="preview" data-testid="component-preview">
-          <div data-testid="preview-container">
+          <Stack data-testid="preview-container">
             <GridAlignedContainer isResponsive={componentId.toLowerCase().includes("textarea")}>
               {renderComponent()}
             </GridAlignedContainer>
-          </div>
+          </Stack>
         </TabsContent>
         <TabsContent value="code">
-          <div>
+          <Stack>
             <CodeBlock language="tsx">
               {generateLiveCode(getComponentName(componentId), componentProps)}
             </CodeBlock>
-          </div>
+          </Stack>
         </TabsContent>
-      </div>
+      </Stack>
     </Tabs>
   );
 }

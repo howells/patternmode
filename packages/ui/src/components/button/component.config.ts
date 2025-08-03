@@ -12,6 +12,7 @@ import {
   LinkExample,
   LoadingExample,
   LoadingWithTextExample,
+  OutlineDashedExample,
   OutlineExample,
   RoundedExample,
   SecondaryExample,
@@ -51,6 +52,12 @@ export const componentConfig: ComponentConfig = {
       title: "Outline",
       description: "Outlined button variant",
       component: OutlineExample,
+    },
+    {
+      id: "outline-dashed",
+      title: "Outline Dashed",
+      description: "Outlined button with dashed border",
+      component: OutlineDashedExample,
     },
     {
       id: "ghost",

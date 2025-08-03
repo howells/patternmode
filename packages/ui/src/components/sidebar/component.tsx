@@ -1,7 +1,7 @@
 "use client";
 
-import { LayoutGroup } from "framer-motion";
 import { Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
+import { LayoutGroup } from "motion/react";
 import Link from "next/link";
 import React, { useId, useState } from "react";
 
@@ -93,14 +93,14 @@ type SidebarProps = {
 /**
  * Collapsible sidebar component for navigation and supplementary content organization.
  */
-export function Sidebar({
+const Sidebar = ({
   className,
   children,
   isCollapsed = false,
   onToggle,
   showToggle = false,
   ...props
-}: SidebarProps) {
+}: SidebarProps) => {
   return (
     <nav
       {...props}
@@ -123,7 +123,9 @@ export function Sidebar({
       {children}
     </nav>
   );
-}
+};
+
+Sidebar.displayName = "Sidebar";
 
 /**
  * Props for the SidebarToggle component.
@@ -467,7 +469,7 @@ type SidebarItemProps = {
 export const SidebarItem = function SidebarItem(
   { ref, current, className, children, isCollapsed, href, icon, leftIcon: LeftIcon, tooltipDelay = 0, onClick, ...props }: SidebarItemProps,
 ) {
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [_isNavigating, setIsNavigating] = useState(false);
 
   const handleClick = (e: React.MouseEvent) => {
     if (href) {
@@ -481,7 +483,7 @@ export const SidebarItem = function SidebarItem(
 
   // Handle collapsed state: if children is a simple string, apply collapsed logic
   const shouldHideContent = isCollapsed && typeof children === "string";
-  const displayChildren = shouldHideContent ? null : children;
+  const _displayChildren = shouldHideContent ? null : children;
 
   // If it's a simple string and collapsed, wrap it with collapsed styling
   const wrappedChildren
@@ -628,7 +630,9 @@ export function SidebarDivider({
   isCollapsed,
   ...props
 }: SidebarDividerProps) {
-  if (isCollapsed) { return null; }
+  if (isCollapsed) {
+    return null;
+  }
   return (
     <Separator
       {...props}
@@ -639,6 +643,7 @@ export function SidebarDivider({
 }
 
 export {
+  Sidebar,
   type SidebarBodyProps,
   type SidebarDividerProps,
   type SidebarFooterProps,
