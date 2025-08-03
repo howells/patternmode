@@ -310,6 +310,11 @@ type SidebarGroupProps = {
    * Delay in milliseconds before showing tooltip when collapsed.
    */
   tooltipDelay?: number;
+  /**
+   * Whether the group title should stick to the top when scrolling.
+   * Creates a section list behavior for better navigation.
+   */
+  sticky?: boolean;
 } & React.ComponentPropsWithoutRef<"div">;
 
 /**
@@ -325,6 +330,7 @@ export function SidebarGroup({
   level = 1,
   groupIcon,
   tooltipDelay = 0,
+  sticky = true,
   ...props
 }: SidebarGroupProps) {
   const id = useId();
@@ -399,10 +405,18 @@ export function SidebarGroup({
       <div
         {...props}
         data-component="SidebarGroup"
-        className={cx(className, "space-y-2 py-4")}
+        className={cx(className, "space-y-2")}
       >
         {title && (
-          <div className="flex items-center justify-between px-4">
+          <div
+            className={cx(
+              "flex items-center justify-between px-4 py-4",
+              sticky && "sticky top-0 z-10 bg-zinc-100/90 dark:bg-zinc-900/90 backdrop-blur-sm border-b border-zinc-950/5 dark:border-white/5",
+            )}
+            style={sticky ? {
+              top: level === 1 ? "0px" : "60px", // Offset level 2 headers by level 1 header height
+            } : undefined}
+          >
             <SidebarTitle level={level} href={href}>
               {title}
             </SidebarTitle>
@@ -415,7 +429,7 @@ export function SidebarGroup({
             )}
           </div>
         )}
-        <div className="space-y-1">{children}</div>
+        <div className={cx("space-y-1", title ? "pb-4" : "py-4")}>{children}</div>
       </div>
     </LayoutGroup>
   );
@@ -550,6 +564,7 @@ export const SidebarItem = function SidebarItem(
         )
       : (
           <button
+            type="button"
             onClick={handleClick}
             className={cx(
               "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
@@ -594,7 +609,7 @@ export const SidebarItem = function SidebarItem(
       size={isCollapsed ? "icon-sm" : "sm"}
       textAlign={isCollapsed ? "center" : "left"}
       ref={ref}
-      title={isCollapsed && typeof children === "string" ? children : undefined}
+
       {...props}
     >
       {wrappedChildren}

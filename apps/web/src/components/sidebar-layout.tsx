@@ -173,11 +173,7 @@ function SidebarContent() {
                           component.id,
                         )}
                         isCollapsed={isCollapsed}
-                        leftIcon={
-                          typeof component.icon === "function"
-                            ? component.icon
-                            : undefined
-                        }
+                        leftIcon={component.icon}
                       >
                         {component.name}
                       </SidebarItem>
