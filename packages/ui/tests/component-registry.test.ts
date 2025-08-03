@@ -135,7 +135,7 @@ describe("component Registry", () => {
 
     it("should have expected categories", () => {
       const categories = Object.keys(COMPONENT_LIST);
-      const expectedCategories = ["inputs", "layout", "navigation"];
+      const expectedCategories = ["controls", "layout", "navigation", "charts", "feedback"];
 
       expectedCategories.forEach((expectedCategory) => {
         expect(categories).toContain(expectedCategory);
@@ -174,7 +174,7 @@ describe("component Registry", () => {
 
     it("should have expected categories", () => {
       const categoryKeys = CATEGORY_CONFIG.map(cat => cat.key);
-      const expectedKeys = ["data", "ui", "charts", "navigation", "inputs", "utility", "forms", "layout", "typography", "feedback"];
+      const expectedKeys = ["display", "controls", "layout", "overlay", "visual", "actions", "media", "typography", "navigation", "charts", "feedback", "forms"];
 
       expectedKeys.forEach((expectedKey) => {
         expect(categoryKeys).toContain(expectedKey);

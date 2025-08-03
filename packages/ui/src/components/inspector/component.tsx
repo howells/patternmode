@@ -347,3 +347,12 @@ export function InspectorToggle({
     </button>
   );
 }
+
+export type {
+  InspectorProps,
+  InspectorHeaderProps,
+  InspectorBodyProps,
+  InspectorSectionProps,
+  InspectorGroupProps,
+  InspectorToggleProps,
+};

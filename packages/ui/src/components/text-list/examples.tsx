@@ -3,92 +3,91 @@
 import { CheckCircle, Circle } from "lucide-react";
 import React from "react";
 
-import { List, ListIndicator, ListItem } from "./component";
+import { TextList, TextListIndicator, TextListItem } from "./component";
 
 export function DefaultExample() {
   return (
-    <List>
-      <ListItem>
+    <TextList>
+      <TextListItem>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit
-      </ListItem>
-      <ListItem>
+      </TextListItem>
+      <TextListItem>
         Assumenda, quia temporibus eveniet a libero incidunt suscipit
-      </ListItem>
-      <ListItem>
+      </TextListItem>
+      <TextListItem>
         Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-      </ListItem>
-    </List>
+      </TextListItem>
+    </TextList>
   );
 }
 
 export function OrderedExample() {
   return (
-    <List as="ol">
-      <ListItem>
+    <TextList as="ol">
+      <TextListItem>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit
-      </ListItem>
-      <ListItem>
+      </TextListItem>
+      <TextListItem>
         Assumenda, quia temporibus eveniet a libero incidunt suscipit
-      </ListItem>
-      <ListItem>
+      </TextListItem>
+      <TextListItem>
         Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-      </ListItem>
-    </List>
+      </TextListItem>
+    </TextList>
   );
 }
 
 export function WithIconsExample() {
   return (
-    <List variant="plain" align="center">
-      <ListItem>
-        <ListIndicator icon={CheckCircle} />
+    <TextList variant="plain" align="center">
+      <TextListItem>
+        <TextListIndicator icon={CheckCircle} />
         Lorem ipsum dolor sit amet, consectetur adipisicing elit
-      </ListItem>
-      <ListItem>
-        <ListIndicator icon={CheckCircle} />
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator icon={CheckCircle} />
         Assumenda, quia temporibus eveniet a libero incidunt suscipit
-      </ListItem>
-      <ListItem>
-        <ListIndicator icon={Circle} />
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator icon={Circle} />
         Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-      </ListItem>
-    </List>
+      </TextListItem>
+    </TextList>
   );
 }
 
 export function NestedExample() {
   return (
-    <List>
-      <ListItem>First order item</ListItem>
-      <ListItem>First order item</ListItem>
-      <ListItem>
+    <TextList>
+      <TextListItem>First order item</TextListItem>
+      <TextListItem>First order item</TextListItem>
+      <TextListItem>
         First order item with list
-        <List className="ml-5 mt-2">
-          <ListItem>Nested item</ListItem>
-          <ListItem>Nested item</ListItem>
-          <ListItem>Nested item</ListItem>
-        </List>
-      </ListItem>
-      <ListItem>First order item</ListItem>
-    </List>
+        <TextList className="ml-5 mt-2">
+          <TextListItem>Nested item</TextListItem>
+          <TextListItem>Nested item</TextListItem>
+        </TextList>
+      </TextListItem>
+      <TextListItem>First order item</TextListItem>
+    </TextList>
   );
 }
 
 export function PlainListExample() {
   return (
-    <List variant="plain">
-      <ListItem>
-        <ListIndicator>•</ListIndicator>
+    <TextList variant="plain">
+      <TextListItem>
+        <TextListIndicator>•</TextListIndicator>
         Custom bullet point with plain variant
-      </ListItem>
-      <ListItem>
-        <ListIndicator>→</ListIndicator>
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator>→</TextListIndicator>
         Arrow indicator for navigation items
-      </ListItem>
-      <ListItem>
-        <ListIndicator>★</ListIndicator>
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator>★</TextListIndicator>
         Star indicator for featured items
-      </ListItem>
-    </List>
+      </TextListItem>
+    </TextList>
   );
 }

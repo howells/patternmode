@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, Search, Settings, Trash2, User } from "lucide-react";
 import { DropdownItem } from "./component";
 

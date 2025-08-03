@@ -1,20 +1,80 @@
 "use client";
 
 import React from "react";
+import { Button } from "../button";
 import { Toast, useToast } from "./component";
 
-export function ToastExample() {
+type ToastExampleProps = {
+  title?: string;
+  description?: string;
+  type?: "default" | "success" | "error" | "warning" | "info";
+  duration?: number;
+  dismissible?: boolean;
+};
+
+export function ToastExample(props: ToastExampleProps) {
   const toast = useToast();
 
   const showToast = () => {
-    toast.success("Toast Title", "This is a toast notification message.");
+    const { title = "Notification", description = "This is a toast notification.", type = "default" } = props;
+
+    switch (type) {
+      case "success":
+        toast.success(title, description);
+        break;
+      case "error":
+        toast.error(title, description);
+        break;
+      case "warning":
+        toast.warning(title, description);
+        break;
+      case "info":
+        toast.info(title, description);
+        break;
+      default:
+        toast.toast({ title, description });
+        break;
+    }
   };
 
   return (
-    <Toast.Provider>
-      <button onClick={showToast} className="px-4 py-2 bg-blue-500 text-white rounded">
-        Show Toast
-      </button>
-    </Toast.Provider>
+    <Button onClick={showToast}>
+      Show Toast
+    </Button>
   );
 }
+
+// Preview props for prop explorer
+export const ToastPreviewProps = [
+  {
+    name: "title",
+    type: "string",
+    description: "The main title/message of the toast notification.",
+    defaultValue: "Notification",
+  },
+  {
+    name: "description",
+    type: "string",
+    description: "Optional description text displayed below the title.",
+    defaultValue: "This is a toast notification.",
+  },
+  {
+    name: "type",
+    type: "select",
+    description: "Visual variant of the toast affecting color scheme.",
+    options: ["default", "success", "error", "warning", "info"],
+    defaultValue: "default",
+  },
+  {
+    name: "duration",
+    type: "number",
+    description: "How long the toast should remain visible in milliseconds.",
+    defaultValue: 5000,
+  },
+  {
+    name: "dismissible",
+    type: "boolean",
+    description: "Whether the user can manually dismiss the toast.",
+    defaultValue: true,
+  },
+];

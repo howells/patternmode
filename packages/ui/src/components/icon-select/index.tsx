@@ -4,4 +4,5 @@ export {
   iconStats,
   isValidLucideIcon,
   useIconSelect,
+  type IconSelectProps,
 } from "./component";

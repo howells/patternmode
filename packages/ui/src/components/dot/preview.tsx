@@ -1,9 +1,36 @@
+import type { DotProps } from "./component";
 import { Dot } from "./component";
 
-export const DotExample = () => (
-  <div className="flex items-center gap-3">
-    <Dot variant="success" />
-    <Dot variant="warning" />
-    <Dot variant="error" />
-  </div>
-);
+export function DotExample(props: DotProps) {
+  return <Dot {...props} />;
+}
+
+// Preview props for prop explorer
+export const DotPreviewProps = [
+  {
+    name: "variant",
+    type: "select",
+    description: "The semantic variant to display. Supports both semantic variants and all Tailwind color names.",
+    options: ["default", "success", "warning", "error", "info", "blue", "green", "red", "yellow", "purple", "pink", "indigo"],
+    defaultValue: "default",
+  },
+  {
+    name: "label",
+    type: "string",
+    description: "Optional label to display next to the dot.",
+    defaultValue: "",
+  },
+  {
+    name: "animated",
+    type: "boolean",
+    description: "Whether to show animation for active statuses.",
+    defaultValue: false,
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size of the dot. Controls both the dot size and text size when label is provided.",
+    options: ["sm", "default", "lg"],
+    defaultValue: "default",
+  },
+];

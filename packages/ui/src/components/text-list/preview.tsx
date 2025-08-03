@@ -1,11 +1,9 @@
 "use client";
 
-import type { ListProps } from "./component";
+import type { TextListProps } from "./component";
 import React from "react";
-import { List } from "./component";
+import { TextList } from "./component";
 
-type ListExampleProps = ListProps;
-
-export function ListExample(props: ListProps) {
-  return <List {...props} />;
+export function TextListExample(props: TextListProps) {
+  return <TextList {...props} />;
 }

@@ -589,7 +589,7 @@ export const SidebarItem = function SidebarItem(
   const buttonElement = (
     <Button
       render={href ? <Link href={href} /> : undefined}
-      variant="inverse-ghost"
+      variant={current ? "secondary" : "inverse-ghost"}
       shadow={false}
       icon={icon}
       leftIcon={LeftIcon}

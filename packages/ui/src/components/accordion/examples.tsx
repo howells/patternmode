@@ -6,9 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
   Badge,
-  List,
-  ListItem,
   Text,
+  TextList,
+  TextListItem,
 } from "@patternmode/ui";
 
 import React from "react";
@@ -97,16 +97,16 @@ export const MixedContentExample = () => (
       <AccordionContent>
         <div className="space-y-2">
           <Text>This demonstrates mixed content:</Text>
-          <List variant="marker" className="ml-4">
-            <ListItem>
+          <TextList variant="marker" className="ml-4">
+            <TextListItem>
               <Text size="sm">List items with custom Text components</Text>
-            </ListItem>
-            <ListItem>
+            </TextListItem>
+            <TextListItem>
               <Text size="sm" className="text-amber-600">
                 Custom colored text that overrides defaults
               </Text>
-            </ListItem>
-          </List>
+            </TextListItem>
+          </TextList>
         </div>
       </AccordionContent>
     </AccordionItem>

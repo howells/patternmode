@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { List } from "lucide-react";
-import { List as ListComponent, ListIndicator, ListItem } from "./component";
+import { TextList as ListComponent, TextListIndicator, TextListItem } from "./component";
 import { DefaultExample, NestedExample, OrderedExample, PlainListExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
@@ -44,20 +44,20 @@ export const componentConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "List",
+      name: "TextList",
       description: "Root container for list items with configurable styling and alignment",
       component: ListComponent,
       primary: true,
     },
     {
-      name: "ListItem",
+      name: "TextListItem",
       description: "Individual list item with consistent styling and layout",
-      component: ListItem,
+      component: TextListItem,
     },
     {
-      name: "ListIndicator",
+      name: "TextListIndicator",
       description: "Custom indicator for list items supporting icons or custom content",
-      component: ListIndicator,
+      component: TextListIndicator,
     },
   ],
 };

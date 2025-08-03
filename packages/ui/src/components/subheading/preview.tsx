@@ -7,7 +7,24 @@ import { Subheading } from "./component";
 export function SubheadingExample(props: SubheadingProps) {
   return (
     <Subheading {...props}>
-      Section Subheading
+      {props.children || "Section Subheading"}
     </Subheading>
   );
 }
+
+// Preview props for prop explorer
+export const SubheadingPreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Text content of the subheading.",
+    defaultValue: "Section Subheading",
+  },
+  {
+    name: "level",
+    type: "select",
+    description: "Heading level determining which HTML element to render (h1-h6).",
+    options: [1, 2, 3, 4, 5, 6],
+    defaultValue: 2,
+  },
+];

@@ -22,7 +22,7 @@ import {
 
 import { usePropExplorer } from "../features/prop-explorer/prop-explorer-context";
 
-// Component that dynamically calculates grid-aligned positioning
+// Component that centers components horizontally
 const GridAlignedContainer: React.FC<{
   children: React.ReactNode;
   isResponsive?: boolean;
@@ -30,107 +30,19 @@ const GridAlignedContainer: React.FC<{
   children,
   isResponsive = false,
 }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const componentRef = React.useRef<HTMLDivElement>(null);
-  const [gridOffset, setGridOffset] = React.useState(0);
-
-  React.useEffect(() => {
-    const calculateGridOffset = () => {
-      if (containerRef.current && componentRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const componentWidth = componentRef.current.offsetWidth;
-        const gridSize = 24; // 24px grid size
-
-        // Check if component should be grid-aligned (not too wide)
-        const shouldGridAlign = componentWidth <= containerWidth - 96; // Allow some margin
-
-        if (shouldGridAlign) {
-          // Calculate how far we need to shift to align with grid
-          // The component will be centered by flexbox, then we adjust by small amounts to snap to grid
-          const centerPosition = (containerWidth - componentWidth) / 2;
-          const gridStartOffset = 24; // First visible grid line
-
-          // Find the nearest grid line to the center position
-          const nearestGridLine = Math.round((centerPosition - gridStartOffset) / gridSize) * gridSize + gridStartOffset;
-
-          // Calculate the offset needed to move from center to grid line
-          const offset = nearestGridLine - centerPosition;
-
-          // Clamp the offset to reasonable bounds to prevent extreme shifts
-          const clampedOffset = Math.max(-48, Math.min(48, offset));
-
-          setGridOffset(clampedOffset);
-        }
-        else {
-          setGridOffset(0); // No grid alignment for wide components
-        }
-      }
-    };
-
-    // Initial calculation with a small delay to allow component to render
-    const timeoutId = setTimeout(calculateGridOffset, 100);
-
-    // Use ResizeObserver to watch for component size changes
-    const resizeObserver = new ResizeObserver(() => {
-      calculateGridOffset();
-    });
-
-    if (componentRef.current) {
-      resizeObserver.observe(componentRef.current);
-    }
-
-    window.addEventListener("resize", calculateGridOffset);
-
-    return () => {
-      clearTimeout(timeoutId);
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", calculateGridOffset);
-    };
-  }, []);
-
   if (isResponsive) {
     // For responsive components, provide full width and center them
     return (
-      <div
-        ref={containerRef}
-        className="flex justify-center items-start"
-        style={{
-          minHeight: "400px",
-          paddingTop: "72px",
-          paddingLeft: "24px",
-          paddingRight: "24px",
-          paddingBottom: "24px",
-        }}
-      >
-        <div ref={componentRef} className="w-full flex justify-center">
-          {children}
-        </div>
+      <div className="w-full flex justify-center">
+        {children}
       </div>
     );
   }
 
-  // For all other components, use flexbox centering with grid offset
+  // For all other components, just center them horizontally
   return (
-    <div
-      ref={containerRef}
-      className="flex justify-center items-start"
-      style={{
-        minHeight: "400px",
-        paddingTop: "72px",
-        paddingLeft: "24px",
-        paddingRight: "24px",
-        paddingBottom: "24px",
-      }}
-    >
-      <div
-        ref={componentRef}
-        style={{
-          transform: `translateX(${gridOffset}px)`,
-          transition: "transform 0.2s ease-out",
-        }}
-      >
-        {children}
-      </div>
+    <div className="flex justify-center">
+      {children}
     </div>
   );
 };

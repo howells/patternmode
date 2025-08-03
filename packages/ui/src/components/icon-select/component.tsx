@@ -17,7 +17,7 @@ type IconOption = {
 /**
  * Props for the IconSelect component.
  */
-type IconSelectProps = {
+export type IconSelectProps = {
   /**
    * Currently selected icon name in PascalCase format.
    * This is the icon name as it appears in the Lucide React library.

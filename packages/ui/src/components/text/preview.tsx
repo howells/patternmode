@@ -7,7 +7,24 @@ import { Text } from "./component";
 export function TextExample(props: TextProps) {
   return (
     <Text {...props}>
-      This is a text component that demonstrates typography and inherits its styling from the parent or props.
+      {props.children || "This is a text component that demonstrates typography and inherits its styling from the parent or props."}
     </Text>
   );
 }
+
+// Preview props for prop explorer
+export const TextPreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Text content to display.",
+    defaultValue: "This is a text component that demonstrates typography and inherits its styling from the parent or props.",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Text size variant controlling font size.",
+    options: ["2xs", "xs", "sm", "base", "lg", "xl"],
+    defaultValue: "sm",
+  },
+];

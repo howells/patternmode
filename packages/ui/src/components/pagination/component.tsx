@@ -253,4 +253,11 @@ export function PaginationGap({
   );
 }
 
-export type { PaginationProps };
+export type {
+  PaginationProps,
+  PaginationPreviousProps,
+  PaginationNextProps,
+  PaginationListProps,
+  PaginationPageProps,
+  PaginationGapProps,
+};

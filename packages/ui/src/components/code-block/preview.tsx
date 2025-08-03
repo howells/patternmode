@@ -1,11 +1,11 @@
 "use client";
 
+import type { CodeBlockProps } from "./component";
 import React from "react";
 import { CodeBlock } from "./component";
 
-export const CodeBlockExample = () => (
-  <CodeBlock language="typescript">
-    {`interface User {
+export function CodeBlockExample(props: CodeBlockProps) {
+  const defaultCode = `interface User {
   id: number;
   name: string;
   email: string;
@@ -17,8 +17,47 @@ function createUser(data: Partial<User>): User {
     name: data.name || "Anonymous",
     email: data.email || "",
   };
-}`}
-  </CodeBlock>
-);
+}`;
 
-export default CodeBlockExample;
+  return (
+    <CodeBlock language="typescript" {...props}>
+      {props.children || defaultCode}
+    </CodeBlock>
+  );
+}
+
+// Preview props for prop explorer
+export const CodeBlockPreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Code content to syntax highlight.",
+    defaultValue: `interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function createUser(data: Partial<User>): User {
+  return {
+    id: Date.now(),
+    name: data.name || "Anonymous",
+    email: data.email || "",
+  };
+}`,
+  },
+  {
+    name: "language",
+    type: "select",
+    description: "Programming language for syntax highlighting.",
+    options: ["typescript", "javascript", "tsx", "jsx", "python", "java", "css", "html", "json", "bash"],
+    defaultValue: "typescript",
+  },
+  {
+    name: "theme",
+    type: "select",
+    description: "Color theme for syntax highlighting.",
+    options: ["auto", "light", "dark"],
+    defaultValue: "auto",
+  },
+];

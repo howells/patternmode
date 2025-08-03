@@ -14,3 +14,40 @@ export function KbdExample(props: KbdProps) {
     </div>
   );
 }
+
+// Preview props for prop explorer
+export const KbdPreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Single key or text content to display.",
+    defaultValue: "⌘K",
+  },
+  {
+    name: "keys",
+    type: "array",
+    description: "Array of keys to display for complex key combinations.",
+    defaultValue: ["cmd", "shift", "k"],
+  },
+  {
+    name: "platform",
+    type: "select",
+    description: "Platform for modifier key display.",
+    options: ["auto", "mac", "pc"],
+    defaultValue: "auto",
+  },
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual variant for different contexts.",
+    options: ["default", "onDarkButton", "onLightButton"],
+    defaultValue: "default",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant affecting padding and text size.",
+    options: ["xs", "sm", "base", "lg"],
+    defaultValue: "sm",
+  },
+];

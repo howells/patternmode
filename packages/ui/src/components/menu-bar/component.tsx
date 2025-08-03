@@ -34,11 +34,7 @@ type MenuBarProps = {
 } & React.ComponentPropsWithoutRef<typeof BaseMenubar>;
 
 /**
- * Root menu bar component for horizontal menu navigation.
- *
- * Creates a horizontal container for menu bar items with proper styling
- * and accessibility. Built on Base UI Menubar for full keyboard navigation
- * and screen reader support.
+ * Horizontal menu bar component for primary navigation with full keyboard and screen reader support.
  */
 const MenuBar = ({ ref, className, ...props }: MenuBarProps) => (
   <BaseMenubar

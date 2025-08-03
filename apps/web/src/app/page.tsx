@@ -2,6 +2,18 @@
 
 import type { LucideIcon } from "lucide-react";
 
+import { Badge } from "@patternmode/ui/badge";
+import { Button } from "@patternmode/ui/button";
+import { Callout } from "@patternmode/ui/callout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@patternmode/ui/card";
+import { CodeBlock } from "@patternmode/ui/code-block";
+import { Grid, GridCell } from "@patternmode/ui/grid";
+import { Heading } from "@patternmode/ui/heading";
+import { IconContainer } from "@patternmode/ui/icon-container";
+import { HStack, Stack, VStack } from "@patternmode/ui/stack";
+import { Subheading } from "@patternmode/ui/subheading";
+import { Code, Text } from "@patternmode/ui/text";
+import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/text-list";
 import {
   Box,
   CheckCircle,
@@ -12,31 +24,6 @@ import {
   Package,
 } from "lucide-react";
 import Link from "next/link";
-
-import {
-  Badge,
-  Button,
-  Callout,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Code,
-  CodeBlock,
-  Grid,
-  GridCell,
-  Heading,
-  HStack,
-  IconContainer,
-  List,
-  ListIndicator,
-  ListItem,
-  Stack,
-  Subheading,
-  Text,
-  VStack,
-} from "@patternmode/ui";
 
 import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
 
@@ -81,11 +68,11 @@ function CategoryCard({
           </HStack>
         </CardHeader>
         <CardContent>
-          <List>
+          <TextList>
             {items.map((item, index) => (
-              <ListItem key={index}>{item}</ListItem>
+              <TextListItem key={index}>{item}</TextListItem>
             ))}
-          </List>
+          </TextList>
         </CardContent>
       </Card>
     );
@@ -99,11 +86,11 @@ function CategoryCard({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <List>
+        <TextList>
           {items.map((item, index) => (
-            <ListItem key={index}>{item}</ListItem>
+            <TextListItem key={index}>{item}</TextListItem>
           ))}
-        </List>
+        </TextList>
       </CardContent>
     </Card>
   );
@@ -201,25 +188,25 @@ export default function Home() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <List align="center">
-                <ListItem>
-                  <ListIndicator icon={CheckCircle} />
+              <TextList align="center">
+                <TextListItem>
+                  <TextListIndicator icon={CheckCircle} />
                   Node.js 18.0.0 or higher
-                </ListItem>
-                <ListItem>
-                  <ListIndicator icon={CheckCircle} />
+                </TextListItem>
+                <TextListItem>
+                  <TextListIndicator icon={CheckCircle} />
                   pnpm package manager (recommended)
-                </ListItem>
-                <ListItem>
-                  <ListIndicator icon={CheckCircle} />
+                </TextListItem>
+                <TextListItem>
+                  <TextListIndicator icon={CheckCircle} />
                   A React 19+ project
                   (Next.js, Vite, Create React App, etc.)
-                </ListItem>
-                <ListItem>
-                  <ListIndicator icon={CheckCircle} />
+                </TextListItem>
+                <TextListItem>
+                  <TextListIndicator icon={CheckCircle} />
                   Tailwind CSS v4+ for styling
-                </ListItem>
-              </List>
+                </TextListItem>
+              </TextList>
             </CardContent>
           </Card>
 

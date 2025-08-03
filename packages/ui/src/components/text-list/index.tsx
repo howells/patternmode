@@ -1,14 +1,14 @@
 export {
   indicatorVariants,
-  List,
-  ListIndicator,
-  ListItem,
   listItemVariants,
   listVariants,
+  TextList,
+  TextListIndicator,
+  TextListItem,
 } from "./component";
 export type {
-  ListIndicatorProps,
-  ListItemProps,
-  ListProps,
   ListVariantProps,
+  TextListIndicatorProps,
+  TextListItemProps,
+  TextListProps,
 } from "./component";

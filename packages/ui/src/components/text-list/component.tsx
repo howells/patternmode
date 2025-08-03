@@ -59,9 +59,9 @@ const indicatorVariants = tv({
 });
 
 /**
- * Props for the List component.
+ * Props for the TextList component.
  */
-export type ListProps = {
+export type TextListProps = {
   /**
    * The underlying HTML element to render for the list container.
    * Commonly 'ul' for unordered lists or 'ol' for ordered lists.
@@ -98,9 +98,9 @@ export type ListProps = {
 } & VariantProps<typeof listVariants>;
 
 /**
- * Props for the ListItem component.
+ * Props for the TextListItem component.
  */
-export type ListItemProps = {
+export type TextListItemProps = {
   /**
    * The visual style variant that should match the parent List component.
    * 'marker' for traditional list styling, 'plain' for custom indicator styling.
@@ -129,9 +129,9 @@ export type ListItemProps = {
 } & VariantProps<typeof listItemVariants>;
 
 /**
- * Props for the ListIndicator component.
+ * Props for the TextListIndicator component.
  */
-export type ListIndicatorProps = {
+export type TextListIndicatorProps = {
   /**
    * The icon component to render as the list item indicator.
    * Should be a Lucide React icon or similar component that accepts className and strokeWidth props.
@@ -167,8 +167,19 @@ export type ListIndicatorProps = {
 
 /**
  * Flexible list component for creating ordered and unordered lists with custom styling.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <TextList variant="plain">
+ *   <TextListItem>
+ *     <TextListIndicator icon={CheckIcon} />
+ *     First item
+ *   </TextListItem>
+ * </TextList>
+ * ```
  */
-export function List({
+export function TextList({
   as: Component = "ul",
   variant,
   align,
@@ -176,7 +187,7 @@ export function List({
   className,
   children,
   ...props
-}: ListProps) {
+}: TextListProps) {
   return (
     <Component
       className={cx(!unstyled && listVariants({ variant, align }), className)}
@@ -189,15 +200,17 @@ export function List({
 
 /**
  * Individual list item component with consistent styling and alignment.
+ *
+ * @component
  */
-export function ListItem({
+export function TextListItem({
   variant,
   align,
   unstyled,
   className,
   children,
   ...props
-}: ListItemProps) {
+}: TextListItemProps) {
   return (
     <li
       className={cx(
@@ -214,7 +227,12 @@ export function ListItem({
 /**
  * Custom indicator component for list items with flexible icon or content support.
  */
-export function ListIndicator({
+/**
+ * Indicator component for list items with icon or custom content support.
+ *
+ * @component
+ */
+export function TextListIndicator({
   icon: IconComponent,
   size = "base",
   variant,
@@ -222,7 +240,7 @@ export function ListIndicator({
   className,
   children,
   ...props
-}: ListIndicatorProps) {
+}: TextListIndicatorProps) {
   return (
     <span
       className={cx(!unstyled && indicatorVariants({ variant }), className)}
