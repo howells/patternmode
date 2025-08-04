@@ -1,9 +1,10 @@
 "use client";
 
-import { Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
+import { ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import Link from "next/link";
-import React, { useId, useState } from "react";
+import * as React from "react";
+import { useId, useState } from "react";
 
 import { cx } from "../../lib/utils";
 import { Button } from "../button";
@@ -308,6 +309,24 @@ type SidebarGroupProps = {
    * Creates a section list behavior for better navigation.
    */
   sticky?: boolean;
+  /**
+   * Whether the group can be collapsed/expanded.
+   * Shows chevron icon and allows toggling content visibility.
+   */
+  collapsible?: boolean;
+  /**
+   * Whether the group is initially collapsed (only applies if collapsible is true).
+   * @default false
+   */
+  defaultCollapsed?: boolean;
+  /**
+   * Controlled collapsed state (only applies if collapsible is true).
+   */
+  collapsed?: boolean;
+  /**
+   * Callback fired when the group is collapsed/expanded.
+   */
+  onCollapsedChange?: (collapsed: boolean) => void;
 } & React.ComponentPropsWithoutRef<"div">;
 
 /**
@@ -324,9 +343,25 @@ export function SidebarGroup({
   groupIcon,
   tooltipDelay = 0,
   sticky = true,
+  collapsible = false,
+  defaultCollapsed = false,
+  collapsed: controlledCollapsed,
+  onCollapsedChange,
   ...props
 }: SidebarGroupProps) {
   const id = useId();
+  const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
+
+  // Use controlled state if provided, otherwise use internal state
+  const isGroupCollapsed = controlledCollapsed !== undefined ? controlledCollapsed : internalCollapsed;
+
+  const handleToggleCollapsed = () => {
+    const newCollapsed = !isGroupCollapsed;
+    if (controlledCollapsed === undefined) {
+      setInternalCollapsed(newCollapsed);
+    }
+    onCollapsedChange?.(newCollapsed);
+  };
 
   // When collapsed, show group as an icon item with tooltip
   if (isCollapsed && heading) {
@@ -409,9 +444,22 @@ export function SidebarGroup({
               sticky && level === 2 && "top-15 h-12 z-10",
             )}
           >
-            <SidebarTitle level={level} href={href}>
-              {heading}
-            </SidebarTitle>
+            <div className="flex items-center gap-2 flex-1">
+              <SidebarTitle level={level} href={href}>
+                {heading}
+              </SidebarTitle>
+              {collapsible && !isCollapsed && (
+                <Button
+                  variant="inverse-ghost"
+                  size="icon-xs"
+                  shadow={false}
+                  onClick={handleToggleCollapsed}
+                  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+                  aria-label={isGroupCollapsed ? "Expand group" : "Collapse group"}
+                  leftIcon={isGroupCollapsed ? ChevronDown : ChevronUp}
+                />
+              )}
+            </div>
             {actions && (
               <div
                 className={cx("flex items-center", isCollapsed && "opacity-0")}
@@ -421,7 +469,15 @@ export function SidebarGroup({
             )}
           </div>
         )}
-        <div className={cx("space-y-1", heading ? "pb-4" : "py-4")}>{children}</div>
+        <div
+          className={cx(
+            "space-y-1 transition-all duration-200 ease-in-out overflow-hidden",
+            heading ? "pb-4" : "py-4",
+            collapsible && isGroupCollapsed && "max-h-0 pb-0 opacity-0",
+          )}
+        >
+          {children}
+        </div>
       </div>
     </LayoutGroup>
   );

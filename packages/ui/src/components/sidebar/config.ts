@@ -15,7 +15,7 @@ import { CollapsibleExample, DefaultExample, NavigationExample, WithGroupsExampl
 export const sidebarConfig: ComponentConfig = {
   id: "sidebar",
   name: "Sidebar",
-  description: "Collapsible sidebar component for navigation and supplementary content organization. Features collapsible state, grouped navigation items, and responsive design with smooth animations.",
+  description: "Collapsible sidebar component for navigation and supplementary content organization. Features collapsible state, grouped navigation items with collapsible groups, and responsive design with smooth animations.",
   category: "navigation",
   icon: PanelLeft,
   importStatement: `import { Sidebar, SidebarHeader, SidebarBody, SidebarFooter, SidebarGroup, SidebarItem, SidebarToggle, SidebarDivider } from "@patternmode/ui/sidebar";`,
@@ -23,25 +23,25 @@ export const sidebarConfig: ComponentConfig = {
     {
       id: "default",
       title: "Default",
-      description: "Basic sidebar with header, navigation groups, and footer",
+      description: "Basic sidebar with header, navigation groups, and collapsible sections",
       component: DefaultExample,
     },
     {
       id: "collapsible",
       title: "Collapsible",
-      description: "Sidebar with toggle functionality and collapsed state",
+      description: "Sidebar with toggle functionality and collapsed state with collapsible groups",
       component: CollapsibleExample,
     },
     {
       id: "with-groups",
-      title: "With Groups",
-      description: "Sidebar with organized navigation groups and sections",
+      title: "With Collapsible Groups",
+      description: "Sidebar with organized navigation groups that can be collapsed and expanded",
       component: WithGroupsExample,
     },
     {
       id: "navigation",
       title: "Interactive Navigation",
-      description: "Sidebar with interactive navigation and state management",
+      description: "Sidebar with interactive navigation, state management, and collapsible sections",
       component: NavigationExample,
     },
   ],
@@ -69,7 +69,7 @@ export const sidebarConfig: ComponentConfig = {
     },
     {
       name: "SidebarGroup",
-      description: "Group container for organizing related navigation items.",
+      description: "Group container for organizing related navigation items with collapsible functionality.",
       component: SidebarGroup,
     },
     {

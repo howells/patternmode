@@ -77,7 +77,7 @@ type CheckboxGroupItemProps = {
    * Label content displayed next to the checkbox.
    * Can be simple text or complex React elements for rich layouts.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Whether this specific checkbox item is disabled.
    * When disabled, the item becomes unclickable and visually dimmed.

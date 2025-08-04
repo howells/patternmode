@@ -262,6 +262,7 @@ const CategoryBar = (
               >
                 {marker.tooltip
                   ? (
+                      // @ts-ignore
                       <Tooltip content={marker.tooltip}>
                         <div
                           aria-hidden="true"

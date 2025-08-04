@@ -1,9 +1,9 @@
 "use client";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@patternmode/ui/components/accordion";
-import { Badge } from "@patternmode/ui/components/badge";
-import { Text } from "@patternmode/ui/components/text";
-import { TextList, TextListItem } from "@patternmode/ui/components/text-list";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./component";
+import { Badge } from "../badge/component";
+import { Text } from "../text/component";
+import { TextList, TextListItem } from "../text-list/component";
 
 import React from "react";
 

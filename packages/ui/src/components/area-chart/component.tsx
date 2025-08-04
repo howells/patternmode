@@ -858,6 +858,7 @@ const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<H
 
   return (
     <div ref={ref} className={cx("h-80 w-full", className)} data-testid="area-chart" {...other}>
+      {/* @ts-ignore */}
       <ResponsiveContainer>
         <RechartsAreaChart
           data={data}

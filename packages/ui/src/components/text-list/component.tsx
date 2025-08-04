@@ -94,7 +94,7 @@ export type TextListProps = {
    * The list items and content to display within the list.
    * Typically contains ListItem components but can include any valid React nodes.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & VariantProps<typeof listVariants>;
 
 /**
@@ -123,9 +123,9 @@ export type TextListItemProps = {
   className?: string;
   /**
    * The content to display within the list item.
-   * Can include text, ListIndicator components, links, or other React nodes.
+   * Can include text, ListIndicator components, links, or other React nodes.  
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & VariantProps<typeof listItemVariants>;
 
 /**

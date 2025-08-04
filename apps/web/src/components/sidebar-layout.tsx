@@ -15,7 +15,6 @@ import {
   CATEGORY_CONFIG,
   getAllComponents,
   getComponentsByCategory,
-  getTotalComponentsCount,
 } from "@patternmode/ui/components/registry";
 import {
   Sidebar,
@@ -85,7 +84,6 @@ function SidebarContent() {
 
   // Get data from shared registry
   const allComponents = getAllComponents();
-  const totalComponentsCount = getTotalComponentsCount();
 
   return (
     <>
@@ -107,9 +105,7 @@ function SidebarContent() {
         {/* Level 1: Components with view toggle */}
         <SidebarGroup
           heading={(
-            <SidebarGroupTitle
-              badge={<Badge variant="neutral" size="xs" border rounded>{totalComponentsCount}</Badge>}
-            >
+            <SidebarGroupTitle>
               Components
             </SidebarGroupTitle>
           )}
@@ -156,10 +152,10 @@ function SidebarContent() {
                     return (
                       <SidebarGroup
                         key={category.key}
+                        collapsible={true}
                         heading={(
                           <SidebarGroupTitle
                             level={2}
-                            badge={<Badge variant="neutral" size="sm">{components.length}</Badge>}
                           >
                             {category.name}
                           </SidebarGroupTitle>

@@ -7,123 +7,75 @@ import { TextList, TextListIndicator, TextListItem } from "./component";
 
 export function DefaultExample() {
   return (
-    <TextList children={(
-      <>
-        <TextListItem children="Lorem ipsum dolor sit amet, consectetur adipisicing elit" />
-        <TextListItem children="Assumenda, quia temporibus eveniet a libero incidunt suscipit" />
-        <TextListItem children="Quidem, ipsam illum quis sed voluptatum quae eum fugit earum" />
-      </>
-    )}
-    />
+    <TextList>
+      <TextListItem>Lorem ipsum dolor sit amet, consectetur adipisicing elit</TextListItem>
+      <TextListItem>Assumenda, quia temporibus eveniet a libero incidunt suscipit</TextListItem>
+      <TextListItem>Quidem, ipsam illum quis sed voluptatum quae eum fugit earum</TextListItem>
+    </TextList>
   );
 }
 
 export function OrderedExample() {
   return (
-    <TextList
-      as="ol"
-      children={(
-        <>
-          <TextListItem children="First ordered item with automatic numbering" />
-          <TextListItem children="Second ordered item with semantic list structure" />
-          <TextListItem children="Third ordered item demonstrating proper accessibility" />
-        </>
-      )}
-    />
+    <TextList as="ol">
+      <TextListItem>First ordered item with automatic numbering</TextListItem>
+      <TextListItem>Second ordered item with semantic list structure</TextListItem>
+      <TextListItem>Third ordered item demonstrating proper accessibility</TextListItem>
+    </TextList>
   );
 }
 
 export function WithIconsExample() {
   return (
-    <TextList
-      variant="plain"
-      align="center"
-      children={(
-        <>
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={CheckCircle} />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit
-            </>
-          )}
-          />
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={CheckCircle} />
-              Assumenda, quia temporibus eveniet a libero incidunt suscipit
-            </>
-          )}
-          />
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={Circle} />
-              Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-            </>
-          )}
-          />
-        </>
-      )}
-    />
+    <TextList variant="plain" align="center">
+      <TextListItem>
+        <TextListIndicator icon={CheckCircle} />
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator icon={CheckCircle} />
+        Assumenda, quia temporibus eveniet a libero incidunt suscipit
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator icon={Circle} />
+        Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
+      </TextListItem>
+    </TextList>
   );
 }
 
 export function NestedExample() {
   return (
-    <TextList children={(
-      <>
-        <TextListItem children="First order item" />
-        <TextListItem children="First order item" />
-        <TextListItem children={(
-          <>
-            First order item with nested list
-            <TextList
-              className="ml-5 mt-2"
-              children={(
-                <>
-                  <TextListItem children="Nested item" />
-                  <TextListItem children="Nested item" />
-                </>
-              )}
-            />
-          </>
-        )}
-        />
-        <TextListItem children="First order item" />
-      </>
-    )}
-    />
+    <TextList>
+      <TextListItem>Parent list item with nested content</TextListItem>
+      <TextListItem>
+        Second parent item containing:
+        <TextList className="ml-6 mt-2">
+          <TextListItem>First nested item</TextListItem>
+          <TextListItem>Second nested item</TextListItem>
+          <TextListItem>Third nested item</TextListItem>
+        </TextList>
+      </TextListItem>
+      <TextListItem>Final parent item</TextListItem>
+    </TextList>
   );
 }
 
 export function PlainVariantExample() {
   return (
-    <TextList
-      variant="plain"
-      children={(
-        <>
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={CheckCircle} />
-              Plain variant removes default list styling
-            </>
-          )}
-          />
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={CheckCircle} />
-              Useful when you want custom indicators or styling
-            </>
-          )}
-          />
-          <TextListItem children={(
-            <>
-              <TextListIndicator icon={CheckCircle} />
-              Maintains semantic list structure for accessibility
-            </>
-          )}
-          />
-        </>
-      )}
-    />
+    <TextList variant="plain">
+      <TextListItem>
+        <TextListIndicator>•</TextListIndicator>
+        First item with custom bullet
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator>→</TextListIndicator>
+        Second item with arrow indicator
+      </TextListItem>
+      <TextListItem>
+        <TextListIndicator>★</TextListIndicator>
+        Third item with star indicator
+      </TextListItem>
+    </TextList>
   );
 }

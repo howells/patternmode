@@ -841,6 +841,7 @@ const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React
       data-testid="bar-chart"
       {...other}
     >
+      {/* @ts-ignore */}
       <ResponsiveContainer>
         <RechartsBarChart
           data={data}

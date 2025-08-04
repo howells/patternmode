@@ -43,7 +43,7 @@ export const DefaultExample = () => {
               Team
             </SidebarItem>
           </SidebarGroup>
-          <SidebarGroup title="Management">
+          <SidebarGroup heading="Management" collapsible>
             <SidebarItem href="#projects" leftIcon={FolderOpen}>
               Projects
             </SidebarItem>
@@ -118,7 +118,7 @@ export const CollapsibleExample = () => {
 
           <SidebarDivider isCollapsed={isCollapsed} />
 
-          <SidebarGroup title="Tools" isCollapsed={isCollapsed}>
+          <SidebarGroup heading="Tools" isCollapsed={isCollapsed} collapsible>
             <SidebarItem
               href="#search"
               leftIcon={Search}
@@ -159,6 +159,9 @@ export const CollapsibleExample = () => {
 };
 
 export const WithGroupsExample = () => {
+  const [managementCollapsed, setManagementCollapsed] = useState(false);
+  const [communicationCollapsed, setCommunicationCollapsed] = useState(true);
+
   return (
     <div className="h-96 border rounded-lg overflow-hidden">
       <Sidebar className="bg-white dark:bg-zinc-950">
@@ -167,7 +170,7 @@ export const WithGroupsExample = () => {
           <div className="text-sm text-zinc-500 dark:text-zinc-400">Team Alpha</div>
         </SidebarHeader>
         <SidebarBody>
-          <SidebarGroup title="Main">
+          <SidebarGroup heading="Main">
             <SidebarItem href="#dashboard" current leftIcon={Home}>
               Dashboard
             </SidebarItem>
@@ -176,7 +179,12 @@ export const WithGroupsExample = () => {
             </SidebarItem>
           </SidebarGroup>
 
-          <SidebarGroup title="Project Management">
+          <SidebarGroup
+            heading="Project Management"
+            collapsible
+            collapsed={managementCollapsed}
+            onCollapsedChange={setManagementCollapsed}
+          >
             <SidebarItem href="#projects" leftIcon={FolderOpen}>
               Projects
             </SidebarItem>
@@ -188,7 +196,12 @@ export const WithGroupsExample = () => {
             </SidebarItem>
           </SidebarGroup>
 
-          <SidebarGroup title="Communication">
+          <SidebarGroup
+            heading="Communication"
+            collapsible
+            collapsed={communicationCollapsed}
+            onCollapsedChange={setCommunicationCollapsed}
+          >
             <SidebarItem href="#notifications" leftIcon={Bell}>
               Notifications
             </SidebarItem>
@@ -217,6 +230,7 @@ export const WithGroupsExample = () => {
 
 export const NavigationExample = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
+  const [toolsCollapsed, setToolsCollapsed] = useState(false);
 
   const handleNavigation = (page: string) => {
     setCurrentPage(page);
@@ -237,7 +251,7 @@ export const NavigationExample = () => {
           </div>
         </SidebarHeader>
         <SidebarBody>
-          <SidebarGroup title="Overview">
+          <SidebarGroup heading="Overview">
             <SidebarItem
               onClick={() => handleNavigation("dashboard")}
               current={currentPage === "dashboard"}
@@ -254,7 +268,12 @@ export const NavigationExample = () => {
             </SidebarItem>
           </SidebarGroup>
 
-          <SidebarGroup title="Management">
+          <SidebarGroup
+            heading="Management"
+            collapsible
+            collapsed={toolsCollapsed}
+            onCollapsedChange={setToolsCollapsed}
+          >
             <SidebarItem
               onClick={() => handleNavigation("projects")}
               current={currentPage === "projects"}
