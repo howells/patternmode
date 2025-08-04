@@ -29,7 +29,8 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo build && changeset publish",
-    "generate:pages": "node scripts/generate-component-pages.js",
+    "generate:pages": "node apps/web/scripts/generate-component-pages.js",
+    "validate:build": "node scripts/validate-build.js",
     "prebuild": "pnpm run generate:pages"
   },
   "devDependencies": {
