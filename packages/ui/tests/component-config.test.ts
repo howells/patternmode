@@ -79,7 +79,7 @@ async function findComponentConfigFiles(componentsDir: string): Promise<Array<{ 
       if (entry.isDirectory()) {
         await walkDir(fullPath);
       }
-      else if (entry.name === "component.config.ts") {
+      else if (entry.name === "config.ts") {
         const componentId = path.basename(path.dirname(fullPath));
         configFiles.push({ configPath: fullPath, componentId });
       }
@@ -103,7 +103,7 @@ async function validateComponentConfigFile(configPath: string, componentId: stri
   try {
     // Dynamic import the config file
     const configModule = await import(configPath);
-    config = configModule.componentConfig as ComponentConfig;
+    config = configModule[Object.keys(configModule).find(key => key.endsWith("Config")) || "config"] as ComponentConfig;
 
     if (!config) {
       errors.push("No componentConfig export found");
@@ -208,15 +208,15 @@ async function validateComponentConfigFile(configPath: string, componentId: stri
 }
 
 describe("component Config Validation", () => {
-  it("should find all component.config.ts files", async () => {
+  it("should find all config.ts files", async () => {
     const componentsDir = path.join(process.cwd(), "src/components");
     const configFiles = await findComponentConfigFiles(componentsDir);
 
     expect(configFiles.length).toBeGreaterThan(0);
-    console.log(`Found ${configFiles.length} component.config.ts files`);
+    console.log(`Found ${configFiles.length} config.ts files`);
   });
 
-  it("should validate all component.config.ts files structure", async () => {
+  it("should validate all config.ts files structure", async () => {
     const componentsDir = path.join(process.cwd(), "src/components");
     const configFiles = await findComponentConfigFiles(componentsDir);
 
@@ -350,7 +350,7 @@ describe("component Config Validation", () => {
 
     for (const { componentId } of configFiles) {
       const result = await validateComponentConfigFile(
-        path.join(componentsDir, componentId, "component.config.ts"),
+        path.join(componentsDir, componentId, "config.ts"),
         componentId,
       );
 
@@ -388,7 +388,7 @@ describe("component Config Validation", () => {
 
   it("should validate specific config file patterns", async () => {
     // Test a known good config (button)
-    const buttonConfigPath = path.join(process.cwd(), "src/components/button/component.config.ts");
+    const buttonConfigPath = path.join(process.cwd(), "src/components/button/config.ts");
     const result = await validateComponentConfigFile(buttonConfigPath, "button");
 
     expect(result.isValid).toBe(true);

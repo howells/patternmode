@@ -134,7 +134,7 @@ export const CustomStructureExample = () => {
   return (
     <RadioGroup value={value} onValueChange={value => setValue(value as string)}>
       <div className="flex items-center space-x-2">
-        <RadioGroupItem value="custom1" />
+        <RadioGroupItem value="custom1">Custom Item 1</RadioGroupItem>
         <div className="flex flex-col">
           <span className="text-sm font-medium">Custom Item 1</span>
           <span className="text-xs text-zinc-500">With custom layout</span>
@@ -142,7 +142,7 @@ export const CustomStructureExample = () => {
       </div>
 
       <div className="flex items-center space-x-2">
-        <RadioGroupItem value="custom2" />
+        <RadioGroupItem value="custom2">Custom Item 2</RadioGroupItem>
         <div className="flex flex-col">
           <span className="text-sm font-medium">Custom Item 2</span>
           <span className="text-xs text-zinc-500">

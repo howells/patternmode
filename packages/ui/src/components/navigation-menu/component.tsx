@@ -10,7 +10,9 @@ type NavigationMenuProps = React.ComponentPropsWithoutRef<typeof BaseNavigationM
  * Root navigation menu component with dropdown submenus and keyboard navigation.
  */
 const NavigationMenu = (props: NavigationMenuProps) => (
-  <BaseNavigationMenu.Root data-testid="navigation-menu" {...props} />
+  <BaseNavigationMenu.Root data-testid="navigation-menu" {...props}>
+    {props.children}
+  </BaseNavigationMenu.Root>
 );
 
 type NavigationMenuListProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.List>;

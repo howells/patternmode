@@ -9,7 +9,9 @@ type PreviewCardProps = React.ComponentPropsWithoutRef<typeof BasePreviewCard.Ro
  * Root preview card component for hover-triggered content previews.
  */
 const PreviewCard = (props: PreviewCardProps) => (
-  <BasePreviewCard.Root data-testid="preview-card" {...props} />
+  <BasePreviewCard.Root data-testid="preview-card" {...props}>
+    {props.children}
+  </BasePreviewCard.Root>
 );
 
 type PreviewCardTriggerProps = {

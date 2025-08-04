@@ -39,7 +39,9 @@ type RadioCardIndicatorProps = React.ComponentPropsWithoutRef<typeof Radio.Indic
  * Card-style radio group with enhanced visual presentation for option selection.
  */
 const RadioCardGroup = ({ ref, className, ...props }: RadioCardGroupProps) => (
-  <BaseRadioGroup data-testid="radio-card-group" ref={ref} className={cx("grid gap-2", className)} {...props} />
+  <BaseRadioGroup data-testid="radio-card-group" ref={ref} className={cx("grid gap-2", className)} {...props}>
+    {props.children}
+  </BaseRadioGroup>
 );
 RadioCardGroup.displayName = "RadioCardGroup";
 

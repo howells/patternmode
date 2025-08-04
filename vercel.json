@@ -14,10 +14,7 @@
   "crons": [],
   "env": {},
   "build": {
-    "env": {
-      "TURBO_TOKEN": "@turbo-token",
-      "TURBO_TEAM": "@turbo-team"
-    }
+    "env": {}
   },
   "headers": [
     {

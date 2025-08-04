@@ -65,7 +65,9 @@ const RadioGroup = ({ ref, className, orientation, size, ...props }: RadioGroupP
     ref={ref}
     className={cx(radioGroupVariants({ orientation, size }), className)}
     {...props}
-  />
+  >
+    {props.children}
+  </BaseRadioGroup>
 );
 RadioGroup.displayName = "RadioGroup";
 

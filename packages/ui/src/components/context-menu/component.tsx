@@ -103,7 +103,9 @@ type ContextMenuRadioItemProps = {
  * Right-click contextual menu component with hierarchical action items.
  */
 const ContextMenu = ({ ref: _forwardedRef, ...props }: ContextMenuProps) => (
-  <BaseContextMenu.Root data-testid="context-menu" {...props} />
+  <BaseContextMenu.Root data-testid="context-menu" {...props}>
+    {props.children}
+  </BaseContextMenu.Root>
 );
 
 ContextMenu.displayName = "ContextMenu";

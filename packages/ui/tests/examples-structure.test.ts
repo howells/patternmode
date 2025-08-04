@@ -71,17 +71,19 @@ async function validateExampleFile(filePath: string, componentId: string): Promi
   }
 
   // Find all example components (functions ending with "Example")
-  // Look for both const and function exports
-  const constExampleMatches = content.match(/export const (\w*Example) = \(/g) || [];
+  // Look for both const and function exports, including arrow functions
+  const constExampleMatches = content.match(/export const (\w*Example)\s*=/g) || [];
   const functionExampleMatches = content.match(/export function (\w*Example)/g) || [];
 
-  const constExampleComponents = constExampleMatches.map(match =>
-    match.replace("export const ", "").replace(" = (", ""),
-  );
+  const constExampleComponents = constExampleMatches.map(match => {
+    const nameMatch = match.match(/export const (\w*Example)/);
+    return nameMatch ? nameMatch[1] : '';
+  }).filter(Boolean);
 
-  const functionExampleComponents = functionExampleMatches.map(match =>
-    match.replace("export function ", ""),
-  );
+  const functionExampleComponents = functionExampleMatches.map(match => {
+    const nameMatch = match.match(/export function (\w*Example)/);
+    return nameMatch ? nameMatch[1] : '';
+  }).filter(Boolean);
 
   const exampleComponents = [...constExampleComponents, ...functionExampleComponents];
 
