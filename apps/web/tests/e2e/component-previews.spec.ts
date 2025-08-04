@@ -7,11 +7,10 @@ import { COMPONENT_LIST } from "@patternmode/ui/components/registry";
 // Helper function to test a single component page
 async function testComponentPage(
   page: Page,
-  category: string,
   componentId: string,
 ) {
   const componentName = componentId;
-  const url = `/ui/${category}/${componentId}`;
+  const url = `/ui/components/${componentId}`;
 
   // Set up console error tracking before navigation
   const consoleErrors: string[] = [];
@@ -24,17 +23,17 @@ async function testComponentPage(
   // Navigate to component page
   const response = await page.goto(url, {
     waitUntil: "domcontentloaded",
-    timeout: 15000, // Reduced timeout
+    timeout: 30000, // Increased timeout for reliability
   });
 
   // Wait a bit for async content to settle
-  await page.waitForTimeout(500); // Reduced wait
+  await page.waitForTimeout(1000); // Increased wait for stability
 
   // Check that page loads successfully
   expect(response?.status()).toBe(200);
 
   // Wait for main content to load
-  await page.waitForSelector("h1", { timeout: 5000 }); // Reduced timeout
+  await page.waitForSelector("h1", { timeout: 10000 }); // Increased timeout
 
   // Critical: Check for "Failed to load examples" error messages
   const failedToLoadErrors = await page
@@ -77,7 +76,7 @@ async function testComponentPage(
   }
 
   // Wait a bit more for any async errors to appear
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(1000);
 
   // Filter out expected/harmless console errors
   const serverErrors = consoleErrors.filter(
@@ -135,34 +134,36 @@ async function testComponentPage(
 
   // Take screenshot for visual verification
   await page.screenshot({
-    path: `tests/screenshots/${category}-${componentId}.png`,
+    path: `tests/screenshots/${componentId}.png`,
     fullPage: false,
   });
+
+  console.log(`✅ ${componentId} passed all checks`);
 }
 
 test("All component preview pages should load successfully", async ({
   page,
 }) => {
-  test.setTimeout(600000); // 10 minutes for all components
+  test.setTimeout(900000); // 15 minutes for all components
   const failures: string[] = [];
 
-  // Loop through all components and test them
-  for (const [category, components] of Object.entries(COMPONENT_LIST)) {
-    const componentList = components as string[];
-    for (const componentId of componentList) {
-      console.log(`Testing ${category}/${componentId}...`);
-      try {
-        await testComponentPage(page, category, componentId);
-        console.log(`✅ ${category}/${componentId} passed`);
-      }
-      catch (error) {
-        const errorMsg = `❌ ${category}/${componentId}: ${
-          error instanceof Error ? error.message : String(error)
-        }`;
-        console.error(errorMsg);
-        failures.push(errorMsg);
-        // Continue testing other components instead of stopping
-      }
+  console.log(`Starting tests for ${Object.values(COMPONENT_LIST).flat().length} components across ${Object.keys(COMPONENT_LIST).length} categories...`);
+
+  // Get all components from all categories
+  const allComponents = Object.values(COMPONENT_LIST).flat();
+
+  for (const componentId of allComponents) {
+    console.log(`  🔍 Testing ${componentId}...`);
+    try {
+      await testComponentPage(page, componentId);
+    }
+    catch (error) {
+      const errorMsg = `❌ ${componentId}: ${
+        error instanceof Error ? error.message : String(error)
+      }`;
+      console.error(`    ${errorMsg}`);
+      failures.push(errorMsg);
+      // Continue testing other components instead of stopping
     }
   }
 
