@@ -45,7 +45,6 @@ import { componentConfig as iconContainerConfig } from "./icon-container/compone
 import { componentConfig as iconSelectConfig } from "./icon-select/component.config";
 import { componentConfig as iconConfig } from "./icon/component.config";
 import { componentConfig as inputConfig } from "./input/component.config";
-import { componentConfig as inspectorConfig } from "./inspector/component.config";
 import { componentConfig as kbdConfig } from "./kbd/component.config";
 import { componentConfig as labelConfig } from "./label/component.config";
 import { componentConfig as lineChartConfig } from "./line-chart/component.config";
@@ -140,7 +139,6 @@ export const COMPONENT_REGISTRY = {
   "icon-container": iconContainerConfig,
   "icon-select": iconSelectConfig,
   "input": inputConfig,
-  "inspector": inspectorConfig,
   "kbd": kbdConfig,
   "label": labelConfig,
   "line-chart": lineChartConfig,

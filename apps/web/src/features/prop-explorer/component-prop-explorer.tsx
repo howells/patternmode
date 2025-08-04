@@ -4,7 +4,7 @@ import React from "react";
 
 import type { ComponentConfig, PropMetadata as ConfigPropMetadata } from "@patternmode/ui";
 
-import { Inspector, InspectorBody } from "@patternmode/ui";
+import { ScrollArea } from "@patternmode/ui";
 
 import { ComponentPreview } from "../../components/component-preview";
 import { getConfigProps, getDefaultProps, getPrimaryComponent } from "./config-utils";
@@ -89,19 +89,26 @@ export function ComponentPropExplorer({
 
         {/* Inspector - Visible on lg screens and up */}
         <div className={`hidden lg:block ${inspectorMaxHeight}`}>
-          <Inspector>
-            <InspectorBody>
-              {isPropsLoading
-                ? (
-                    <div className="p-4 text-center text-sm text-zinc-500">
-                      Loading properties...
-                    </div>
-                  )
-                : (
-                    <PropExplorerContent config={propExplorerConfig} />
-                  )}
-            </InspectorBody>
-          </Inspector>
+          <aside
+            data-testid="inspector"
+            className="flex h-full w-80 flex-shrink-0 flex-col border-l bg-zinc-50/50 dark:border-zinc-800 dark:bg-zinc-900/50"
+          >
+            <div className="flex-1 min-h-0 relative">
+              <ScrollArea className="h-full">
+                <div className="px-6 py-6">
+                  {isPropsLoading
+                    ? (
+                        <div className="p-4 text-center text-sm text-zinc-500">
+                          Loading properties...
+                        </div>
+                      )
+                    : (
+                        <PropExplorerContent config={propExplorerConfig} />
+                      )}
+                </div>
+              </ScrollArea>
+            </div>
+          </aside>
         </div>
       </div>
     </PropExplorerProvider>

@@ -116,8 +116,6 @@ export * from "./components/icon";
 export * from "./components/icon-container";
 export * from "./components/icon-select";
 export * from "./components/input";
-
-export * from "./components/inspector";
 export * from "./components/kbd";
 export * from "./components/label";
 export {
