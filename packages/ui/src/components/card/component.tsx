@@ -85,7 +85,7 @@ const Card = (
   const basePaddingClass = basePadding !== undefined ? getPaddingClass(basePadding) : "";
 
   const defaultProps: useRender.ElementProps<"div"> = {
-    className: cx(
+    "className": cx(
       cardVariants({ variant, fillHeight }),
       basePaddingClass,
       responsivePaddingClasses,
@@ -118,7 +118,7 @@ type CardHeaderProps = {
   className?: string;
   /**
    * Header content.
-   * Usually includes CardTitle, CardDescription, and CardAction.
+   * Usually includes CardHeading and CardDescription.
    */
   children?: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
@@ -211,27 +211,6 @@ const CardDescription = ({ ref, className, ...props }: CardDescriptionProps & { 
 );
 CardDescription.displayName = "CardDescription";
 
-type CardActionProps = {
-  /**
-   * Additional CSS classes.
-   * Applied to the action container.
-   */
-  className?: string;
-  /**
-   * Action content.
-   * Usually buttons or interactive elements.
-   */
-  children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
-
-/**
- * Card action component for buttons or interactive elements in the header.
- */
-const CardAction = ({ ref, className, ...props }: CardActionProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-  <div ref={ref} className={cx("flex items-center", className)} {...props} />
-);
-CardAction.displayName = "CardAction";
-
 type CardContentProps = {
   /**
    * Additional CSS classes.
@@ -280,8 +259,6 @@ CardFooter.displayName = "CardFooter";
 
 export {
   Card,
-  CardAction,
-  type CardActionProps,
   CardContent,
   type CardContentProps,
   CardDescription,

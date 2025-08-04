@@ -334,11 +334,11 @@ const Badge = (
   };
 
   const defaultProps: useRender.ElementProps<"span"> = {
-    className: cx(
+    "className": cx(
       badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
       className,
     ),
-    children: renderBadgeContent(),
+    "children": renderBadgeContent(),
     "data-testid": "badge",
   };
 

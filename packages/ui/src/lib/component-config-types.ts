@@ -123,7 +123,7 @@ export type ComponentConfig = {
   category: "display" | "controls" | "layout" | "overlay" | "visual" | "actions" | "media" | "typography" | "navigation" | "charts" | "feedback" | "forms" | "data" | "ui" | "inputs" | "utility";
   icon?: React.ReactNode | LucideIcon;
   badge?: string;
-  
+
   /**
    * Whether this is a featured component - core to any UI library.
    * Featured components are fundamental building blocks that users expect

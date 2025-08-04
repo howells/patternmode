@@ -8,10 +8,10 @@ import {
   PreviewCardDescription,
   PreviewCardFooter,
   PreviewCardHeader,
+  PreviewCardHeading,
   PreviewCardImage,
   PreviewCardPortal,
   PreviewCardPositioner,
-  PreviewCardHeading,
   PreviewCardTrigger,
 } from "./component";
 import { DefaultExample, UserProfileExample, WithImageExample } from "./examples";

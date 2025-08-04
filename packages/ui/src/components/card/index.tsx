@@ -1,7 +1,5 @@
 export {
   Card,
-  CardAction,
-  type CardActionProps,
   CardContent,
   type CardContentProps,
   CardDescription,

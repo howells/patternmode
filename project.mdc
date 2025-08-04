@@ -2,14 +2,83 @@
 
 _The best of the React ecosystem, unified under Base UI primitives with professional Tremor styling._
 
+## Component Architecture (CRITICAL)
+
+**MANDATORY: All components follow the config-first architecture**
+
+### File Structure
+```
+src/components/[component-name]/
+├── component.tsx        # Implementation with JSDoc-enhanced types
+├── component.config.ts  # Component specification + examples with imports
+├── index.tsx           # Export barrel
+├── examples.tsx        # Example components
+└── preview.tsx         # Preview component (optional)
+```
+
+### Component Implementation Requirements
+
+**1. Props with JSDoc documentation on TypeScript interface:**
+```tsx
+type ComponentProps = {
+  /**
+   * Whether to display error styling for form validation.
+   * Adds red border and error state styling to indicate validation errors.
+   */
+  hasError?: boolean;
+} & React.ComponentPropsWithoutRef<"div">;
+```
+
+**2. Component with basic JSDoc for metadata:**
+```tsx
+/**
+ * Auto-resizing multi-line text input component built on react-textarea-autosize.
+ */
+export const Component = ({ hasError = false, ...props }: ComponentProps) => {
+  // Implementation...
+};
+```
+
+**3. MANDATORY data-testid matching directory name:**
+```tsx
+// Component directory: /src/components/button/
+export const Button = (props: ButtonProps) => {
+  return (
+    <button
+      data-testid="button"  // ← MUST match directory name exactly
+      {...props}
+    />
+  );
+};
+```
+
+### TypeScript Standards
+
+- **NEVER use `any` type or type assertions (`as`, `as unknown as`, `!`)**
+- **Use proper TypeScript types and interfaces**
+- Use `VariantProps<typeof variants>` for variant props
+- Extend `useRender.ComponentProps<"element">` for Base UI integration
+- Export component, variants, and prop types
+
+### Import Structure
+
+**Individual component imports only - NO barrel imports:**
+```tsx
+// ✅ CORRECT
+import { Button } from "@patternmode/ui/components/button";
+import { Card } from "@patternmode/ui/components/card";
+
+// ❌ INCORRECT - Barrel imports not supported
+import { Button, Card } from "@patternmode/ui";
+```
+
 ## Styling Conventions
 
 ### Use Object-Based Conditional Classes
 
-When applying conditional styles with `clsx`, prefer object-based syntax over arrays or ternary operators for better readability and maintainability.
+When applying conditional styles with `clsx`, prefer object-based syntax:
 
 **✅ Good - Object-based approach:**
-
 ```tsx
 className={clsx(
   // Base styles
@@ -23,130 +92,68 @@ className={clsx(
   {
     "text-zinc-700 dark:text-zinc-300": !current,
     "text-zinc-900 dark:text-zinc-100": current,
-  },
-  // Background
-  {
-    "bg-zinc-100 dark:bg-zinc-800": current,
-    "bg-zinc-50 dark:bg-zinc-850": isNavigating,
-  },
-  // Interactive states
-  "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-  "hover:text-zinc-900 dark:hover:text-zinc-100",
-  // Typography
-  {
-    "font-medium": current,
   }
 )}
 ```
 
-**❌ Avoid - Array-based approach:**
+### Focus Styling
+
+**ALWAYS use standardized focus utilities:**
+- **`@focusInput`** - For input elements (text fields, selects, etc.)
+- **`@focusRing`** - For interactive elements (buttons, links, etc.)
 
 ```tsx
-className={clsx(
-  "base-styles",
-  isCollapsed ? "collapsed-styles" : "expanded-styles",
-  current && [
-    "current-bg",
-    "current-text",
-    "current-font"
+import { focusInput, focusRing } from "@/lib/utils";
+
+const variants = tv({
+  base: [
+    "...",
+    focusRing, // or focusInput for input elements
+    "...",
   ],
-  isNavigating && "navigating-bg"
-)}
+});
 ```
-
-### Benefits:
-
-- **Organized by concern**: Layout, colors, backgrounds, etc.
-- **Self-documenting**: Clear comments explain each group
-- **Easier to maintain**: Find and modify related styles quickly
-- **Better readability**: Consistent structure across components
-
-## Component Structure
-
-### Icon Component
-
-Icon component to display on the left side of navigation items and buttons, following Base UI patterns with Tremor styling.
 
 ## Base UI Integration Guidelines
 
 ### Always Use `render=` Prop, Never `asChild`
 
-When integrating with Base UI primitives, always use the `render=` prop pattern instead of `asChild`. The `asChild` prop is a Radix UI pattern that we don't use in this codebase.
-
 **✅ Correct - Base UI `render=` prop:**
-
 ```tsx
-// Base UI primitive renders the component
 <BaseAlertDialog.Close
   render={<Button variant="destructive" />}
 >
   Delete
 </BaseAlertDialog.Close>
-
-// Custom wrapper following the same pattern
-<BaseDialog.Trigger
-  render={<CustomButton {...props} />}
->
-  Open Dialog
-</BaseDialog.Trigger>
 ```
 
 **❌ Incorrect - Radix `asChild` pattern:**
-
 ```tsx
-// Don't use asChild - this is Radix UI pattern
 <BaseAlertDialog.Close asChild>
   <Button variant="destructive">Delete</Button>
 </BaseAlertDialog.Close>
-
-// Also incorrect - component rendering primitive
-<Button
-  render={<BaseAlertDialog.Close />}
-  variant="destructive"
->
-  Delete
-</Button>
 ```
 
-### Benefits of `render=` Pattern:
+## Development Guidelines
 
-- **Consistent with Base UI**: Follows Base UI's composition patterns
-- **Better TypeScript**: Proper type inference and ref forwarding
-- **Cleaner API**: Single component with render prop vs nested structure
-- **Framework Agnostic**: Base UI's render pattern works across frameworks
+### Package Manager
+**ALWAYS use pnpm for package management** - Never use npm or yarn.
 
-## Code Organization Preferences
+### JIT TypeScript Execution
+**MANDATORY: This project uses JIT (Just-In-Time) TypeScript execution ONLY**
+- **NEVER create, import, or reference .js files**
+- **ALL code must be TypeScript (.ts/.tsx) and executed directly**
+- **NEVER build anything - no compilation step should exist**
 
-### No Barrel Files (index.js/index.ts)
+### Tailwind CSS 4
+**MANDATORY: This project uses Tailwind CSS 4 with new syntax**
+- **Use `@import "tailwindcss";` NOT `@tailwind base/components/utilities;`**
+- **Use `@theme` blocks for custom theme configuration**
 
-Avoid using barrel files (index.js/index.ts files that re-export other modules). Use direct imports instead for better clarity and maintainability.
+### Development Server
+**NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
-**✅ Preferred - Direct imports:**
-
-```tsx
-// Clear, explicit imports showing exactly where each item comes from
-import { jsdocComponentConfig } from "./rules/jsdoc-component-rules.mjs";
-import { reactComponentPatternConfig } from "./rules/react-component-patterns.mjs";
-import { turboConfig } from "./rules/turbo-rules.mjs";
-import { typescriptConfig } from "./rules/typescript-rules.mjs";
-```
-
-**❌ Avoid - Barrel file imports:**
-
-```tsx
-// Obscures the actual source of imports
-import {
-  jsdocComponentConfig,
-  reactComponentPatternConfig,
-  turboConfig,
-  typescriptConfig,
-} from "./rules/index.mjs";
-```
-
-### Benefits of Direct Imports:
-
-- **Explicit dependencies**: Clear understanding of where each import comes from
-- **Better IDE support**: Easier navigation to source files
-- **Reduced indirection**: No intermediate files to maintain
-- **Tree-shaking friendly**: Bundlers can optimize better with direct imports
-- **Simpler refactoring**: Moving files doesn't require updating barrel exports
+### Dynamic Imports
+**NEVER use direct dynamic imports like `await import("@patternmode/ui")`**
+- Use Next.js `dynamic()` function instead
+- Static imports are preferred whenever possible

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { DotProps } from "./component";
+import React from "react";
 import { Dot } from "./component";
 
 export function DotExample(props: DotProps) {

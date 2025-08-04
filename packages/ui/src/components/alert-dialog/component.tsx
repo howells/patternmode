@@ -9,16 +9,13 @@ import { Text } from "../text/component";
 /**
  * Root container for alert dialog components that require user confirmation.
  */
-const AlertDialog = React.forwardRef<
-  React.ElementRef<typeof BaseAlertDialog.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Root>
->(({ ...props }, ref) => (
+const AlertDialog = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Root> | null> }) => (
   <BaseAlertDialog.Root
     ref={ref}
     data-testid="alert-dialog"
     {...props}
   />
-));
+);
 AlertDialog.displayName = "AlertDialog";
 
 type AlertDialogTriggerProps = {

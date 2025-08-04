@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import type { DropdownItemProps } from "./component";
 import { User } from "lucide-react";
+import React from "react";
 import { DropdownItem } from "./component";
 
 export function DropdownItemExample(props: DropdownItemProps) {

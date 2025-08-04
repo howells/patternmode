@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import type { IconContainerProps } from "./component";
 import { Calendar } from "lucide-react";
+import React from "react";
 import { IconContainer } from "./component";
 
 export function IconContainerExample(props: IconContainerProps) {

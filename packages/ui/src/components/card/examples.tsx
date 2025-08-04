@@ -4,7 +4,6 @@ import React from "react";
 import { Button } from "../button/component";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -27,9 +26,9 @@ export const FullStructureExample = () => (
     <CardHeader>
       <CardHeading>Card Title</CardHeading>
       <CardDescription>This is a card description that provides additional context.</CardDescription>
-      <CardAction>
+      <div className="flex items-center">
         <Button variant="outline" size="sm">Action</Button>
-      </CardAction>
+      </div>
     </CardHeader>
     <CardContent>
       <p>This is the main content of the card. It can contain any type of content including text, images, or other components.</p>

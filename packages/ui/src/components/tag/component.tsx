@@ -146,7 +146,7 @@ const Tag = (
   { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps,
 ) => {
   const defaultProps: useRender.ElementProps<"span"> = {
-    className: cx(
+    "className": cx(
       // base
       "inline-flex items-center gap-x-2 rounded-full py-1 text-sm",
       // padding logic
@@ -160,7 +160,7 @@ const Tag = (
       className,
     ),
     "data-testid": "tag",
-    children: (
+    "children": (
       <>
         {avatar && (
           <Avatar

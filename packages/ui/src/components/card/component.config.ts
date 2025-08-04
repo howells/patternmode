@@ -2,7 +2,6 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { Square } from "lucide-react";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -31,7 +30,7 @@ export const componentConfig: ComponentConfig = {
   category: "display",
   featured: true,
   icon: Square,
-  importStatement: `import { Card, CardHeader, CardHeading, CardDescription, CardContent, CardFooter, CardAction } from "@patternmode/ui/card";`,
+  importStatement: `import { Card, CardHeader, CardHeading, CardDescription, CardContent, CardFooter } from "@patternmode/ui/card";`,
   examples: [
     {
       id: "default",
@@ -128,11 +127,7 @@ export const componentConfig: ComponentConfig = {
       description: "Description text with muted styling",
       component: CardDescription,
     },
-    {
-      name: "CardAction",
-      description: "Action container for buttons in header",
-      component: CardAction,
-    },
+
     {
       name: "CardContent",
       description: "Main content area with standard padding",

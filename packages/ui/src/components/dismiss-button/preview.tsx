@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { DismissButtonProps } from "./component";
+import React from "react";
 import { DismissButton } from "./component";
 
 export function DismissButtonExample(props: DismissButtonProps) {

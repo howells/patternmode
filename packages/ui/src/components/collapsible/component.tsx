@@ -11,16 +11,13 @@ import { Button } from "../button";
 /**
  * Root container for collapsible content sections.
  */
-const Collapsible = React.forwardRef<
-  React.ElementRef<typeof BaseCollapsible.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseCollapsible.Root>
->(({ ...props }, ref) => (
+const Collapsible = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Root> | null> }) => (
   <BaseCollapsible.Root
     ref={ref}
     data-testid="collapsible"
     {...props}
   />
-));
+);
 Collapsible.displayName = "Collapsible";
 
 /**

@@ -5,7 +5,7 @@
 import type { CardProps } from "./component";
 import React from "react";
 import { Button } from "../button/component";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
 
 export function CardExample(props: CardProps) {
   const { ref, ...cardProps } = props;
@@ -15,9 +15,9 @@ export function CardExample(props: CardProps) {
       <CardHeader>
         <CardHeading>{props.children || "Preview Card"}</CardHeading>
         <CardDescription>This is how the Card component looks in the preview.</CardDescription>
-        <CardAction>
+        <div className="flex items-center">
           <Button variant="outline" size="sm">Action</Button>
-        </CardAction>
+        </div>
       </CardHeader>
       <CardContent>
         <p>This is the main content area of the card component. You can customize the card's appearance using the props controls.</p>

@@ -9,8 +9,8 @@ import {
   PreviewCardDescription,
   PreviewCardFooter,
   PreviewCardHeader,
-  PreviewCardImage,
   PreviewCardHeading,
+  PreviewCardImage,
   PreviewCardTrigger,
 } from "./component";
 

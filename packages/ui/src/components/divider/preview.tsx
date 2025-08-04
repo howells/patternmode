@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { DividerProps } from "./component";
+import React from "react";
 import { Divider } from "./component";
 
 export function DividerExample(props: DividerProps) {

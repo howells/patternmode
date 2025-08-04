@@ -1,13 +1,13 @@
 "use client";
 
+import React from "react";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./component";
-
-import React from "react";
 
 // Props that users can configure in the prop explorer
 export type AccordionPreviewProps = {

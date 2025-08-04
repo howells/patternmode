@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Field as BaseField } from "@base-ui-components/react/field";
+import React from "react";
 import { Input } from "../input/component";
 import { Field, FieldControl, FieldDescription, FieldLabel } from "./component";
 

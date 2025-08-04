@@ -15,12 +15,9 @@ import { cx } from "../../lib/utils";
 /**
  * Root drawer component.
  */
-const Drawer = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Root>
->(({ ...props }, ref) => (
+const Drawer = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Root> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Root> | null> }) => (
   <DrawerPrimitive.Root {...props} data-testid="drawer" />
-));
+);
 Drawer.displayName = "Drawer";
 
 /**

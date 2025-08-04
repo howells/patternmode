@@ -184,12 +184,11 @@ const FormControl = ({ className, children, ...props }: FormControlProps & { chi
   if (children) {
     return (
       <BaseField.Control
-        render={(controlProps) => (
+        render={controlProps => (
           <div className={className}>
-            {React.isValidElement(children) 
+            {React.isValidElement(children)
               ? React.cloneElement(children, { ...controlProps, ...children.props })
-              : children
-            }
+              : children}
           </div>
         )}
         {...props}

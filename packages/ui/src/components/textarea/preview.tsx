@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import type { TextareaProps } from "./component";
 import { Textarea } from "./component";
 
 // Props that users can configure in the prop explorer
@@ -68,13 +67,13 @@ export function TextareaExample(props: TextareaPreviewProps) {
 
   // Define allowed props for security
   const allowedProps = [
-    'placeholder',
-    'disabled', 
-    'readOnly',
-    'rows',
-    'className',
-    'hasError',
-    'autoResize'
+    "placeholder",
+    "disabled",
+    "readOnly",
+    "rows",
+    "className",
+    "hasError",
+    "autoResize",
   ];
 
   // Safe props filtering - only pass known safe props

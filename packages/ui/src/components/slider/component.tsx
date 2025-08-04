@@ -101,13 +101,13 @@ const Slider = (
     thumb,
     value: valueClass,
   } = sliderVariants();
-  
+
   // Ensure we always have a proper value to avoid hydration mismatches
   const currentValue = value ?? defaultValue ?? [0];
   const valueArray = Array.isArray(currentValue)
     ? currentValue
     : [currentValue];
-  
+
   // Clean props to pass to BaseSlider - ensure value is never undefined
   const sliderProps = {
     ...props,

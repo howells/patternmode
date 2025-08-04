@@ -365,10 +365,10 @@ export {
   PreviewCardDescription,
   PreviewCardFooter,
   PreviewCardHeader,
+  PreviewCardHeading,
   PreviewCardImage,
   PreviewCardPortal,
   PreviewCardPositioner,
-  PreviewCardHeading,
   PreviewCardTrigger,
 };
 
