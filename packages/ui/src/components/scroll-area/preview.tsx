@@ -17,3 +17,14 @@ export function ScrollAreaExample(props: ScrollAreaProps) {
     </ScrollArea>
   );
 }
+
+// Preview props for prop explorer
+export const ScrollAreaPreviewProps = [
+  {
+    name: "orientation",
+    type: "select",
+    description: "Scroll orientation determining which direction(s) content can be scrolled.",
+    defaultValue: "vertical",
+    options: ["vertical", "horizontal", "both"],
+  },
+];

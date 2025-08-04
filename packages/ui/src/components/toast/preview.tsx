@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "../button";
-import { Toast, useToast } from "./component";
+import { useToast } from "./component";
 
 type ToastExampleProps = {
   title?: string;

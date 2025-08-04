@@ -1,8 +1,8 @@
 "use client";
 
-import { Field } from "../field/component";
 import type { LabelProps } from "./component";
 import React from "react";
+import { Field } from "../field/component";
 import { Label } from "./component";
 
 export function LabelExample(props: LabelProps) {

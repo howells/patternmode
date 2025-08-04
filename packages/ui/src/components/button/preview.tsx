@@ -1,7 +1,7 @@
 "use client";
 
 import type { ButtonProps } from "./component";
-import { Save, Download, Plus, Settings } from "lucide-react";
+import { Download, Plus, Save, Settings } from "lucide-react";
 import React from "react";
 import { Button } from "./component";
 

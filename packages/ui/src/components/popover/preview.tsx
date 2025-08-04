@@ -31,3 +31,13 @@ export function PopoverExample(props: PopoverProps) {
     </Popover>
   );
 }
+
+// Preview props for prop explorer
+export const PopoverPreviewProps = [
+  {
+    name: "open",
+    type: "boolean",
+    description: "Controls whether the popover is open (controlled mode).",
+    defaultValue: false,
+  },
+];

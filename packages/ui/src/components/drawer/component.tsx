@@ -1,5 +1,3 @@
-// Tremor Drawer [v1.0.0] - Vaul
-
 /**
  * Drawer Components.
  *

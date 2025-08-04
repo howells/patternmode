@@ -1,7 +1,7 @@
 "use client";
 
 import type { InputProps } from "./component";
-import { Search, User, Mail, Lock } from "lucide-react";
+import { Lock, Mail, Search, User } from "lucide-react";
 import React from "react";
 import { Input } from "./component";
 

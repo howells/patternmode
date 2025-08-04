@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { Search } from "lucide-react";
-import { getDynamicIconByName, IconSelect, useIconSelect } from "./component";
+import { IconSelect } from "./component";
 import {
   CustomPlaceholderExample,
   DefaultExample,

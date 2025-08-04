@@ -15,4 +15,3 @@ export type {
   MenuBarProps,
   MenuBarTriggerProps,
 } from "./component";
-

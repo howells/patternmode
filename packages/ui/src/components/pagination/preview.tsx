@@ -25,3 +25,13 @@ export function PaginationExample(props: PaginationProps) {
     </Pagination>
   );
 }
+
+// Preview props for prop explorer
+export const PaginationPreviewProps = [
+  {
+    name: "aria-label",
+    type: "string",
+    description: "Accessible label for screen readers describing the pagination navigation.",
+    defaultValue: "Page navigation",
+  },
+];

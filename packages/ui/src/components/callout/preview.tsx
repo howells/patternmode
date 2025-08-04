@@ -18,3 +18,20 @@ export function CalloutExample(props: CalloutProps) {
     </Callout>
   );
 }
+
+// Preview props for prop explorer
+export const CalloutPreviewProps = [
+  {
+    name: "title",
+    type: "string",
+    description: "Optional title text for the callout displayed prominently at the top.",
+    defaultValue: "Important Information",
+  },
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual style variant that controls the color scheme to indicate message type.",
+    defaultValue: "default",
+    options: ["default", "success", "error", "warning", "neutral"],
+  },
+];

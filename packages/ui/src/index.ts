@@ -124,12 +124,11 @@ export {
   type LineChartEventProps,
   type TooltipProps as LineChartTooltipProps,
 } from "./components/line-chart";
-export * from "./components/text-list";
 export * from "./components/loader";
-
 export * from "./components/menu";
 
 export * from "./components/menu-bar";
+
 export * from "./components/meter";
 export * from "./components/navbar";
 export * from "./components/navigation-menu";
@@ -144,12 +143,12 @@ export * from "./components/progress-utils";
 export * from "./components/radio";
 export * from "./components/radio-card-group";
 export * from "./components/radio-group";
+// Component configs (exported with unique names to avoid conflicts)
+export * from "./components/responsive-drawer";
 // Component Registry - for documentation and tooling
 // Component registry exports are handled separately - not exported to prevent componentConfig conflicts
 // export * from "./components/registry";
 
-// Component configs (exported with unique names to avoid conflicts)
-export * from "./components/responsive-drawer";
 export * from "./components/scroll-area";
 export * from "./components/select";
 export * from "./components/select-native";
@@ -170,6 +169,7 @@ export * from "./components/tabs";
 export * from "./components/tag";
 export * from "./components/tag-input";
 export * from "./components/text";
+export * from "./components/text-list";
 export * from "./components/textarea";
 export * from "./components/toast";
 export * from "./components/toggle";
@@ -181,16 +181,17 @@ export * from "./components/tracker";
 // Component registry utilities
 // Component registry exports are now handled above via export * from "./components/registry"
 
+// Core utilities and configuration
+export { BREAKPOINTS, MEDIA_QUERIES } from "./lib/breakpoints";
+
 // Component configuration types
 export type { ComponentConfig, ComponentExample, PropMetadata } from "./lib/component-config-types";
-
 export * from "./lib/config";
 
 // Icon registry and utilities
 export { getIconComponent, hasIcon, iconCount, iconNames, iconRegistry } from "./lib/icon-registry";
-export type { LucideIconComponent } from "./lib/icon-registry";
 
-// Core utilities and configuration
+export type { LucideIconComponent } from "./lib/icon-registry";
 export * from "./lib/utils";
 export * from "./lib/variants";
 

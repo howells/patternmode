@@ -7,9 +7,13 @@ import {
   DescriptionTerm,
 } from "./component";
 
-export function DescriptionListExample() {
+type DescriptionListProps = React.ComponentPropsWithoutRef<"dl"> & {
+  className?: string;
+};
+
+export function DescriptionListExample(props: DescriptionListProps) {
   return (
-    <DescriptionList>
+    <DescriptionList {...props}>
       <DescriptionTerm>Name</DescriptionTerm>
       <DescriptionDetails>John Doe</DescriptionDetails>
       <DescriptionTerm>Email</DescriptionTerm>
@@ -19,3 +23,9 @@ export function DescriptionListExample() {
     </DescriptionList>
   );
 }
+
+// Preview props for prop explorer
+export const DescriptionListPreviewProps = [
+  // Note: DescriptionList component uses standard HTML dl attributes
+  // No specific configurable props beyond standard HTML attributes
+];

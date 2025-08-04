@@ -12,6 +12,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **NEVER create, import, or reference .js files anywhere in the turborepo**
 - **ALL code must be TypeScript (.ts/.tsx) and executed directly without compilation**
+- **NEVER build anything - no compilation step should exist**
+- **The `dist/` folder is reserved for a future processing pipeline that will contain processed components with JSDoc derived from TypeScript prop definitions (not yet built)**
+- **All package.json exports must point to `src/` files, never `dist/` files**
 
 
 ## Tailwind CSS 4 (CRITICAL)

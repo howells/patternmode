@@ -4,7 +4,7 @@ import type { BarChartProps } from "./component";
 import React from "react";
 import { SparkBarChart } from "./component";
 
-export function SparkBarChartExample(props: BarChartProps) {
+export function SparkChartExample(props: BarChartProps) {
   const data = [
     { x: "Jan", y: 10 },
     { x: "Feb", y: 20 },

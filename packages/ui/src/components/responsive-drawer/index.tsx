@@ -21,4 +21,3 @@ export type {
   ResponsiveDrawerTitleProps,
   ResponsiveDrawerTriggerProps,
 } from "./component";
-

@@ -20,4 +20,3 @@ export type {
   RadioOptionProps,
   RadioProps,
 } from "./component";
-

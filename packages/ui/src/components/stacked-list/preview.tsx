@@ -22,3 +22,27 @@ export function StackedListExample(props: StackedListProps) {
     </StackedList>
   );
 }
+
+// Preview props for prop explorer
+export const StackedListPreviewProps = [
+  {
+    name: "showDividers",
+    type: "boolean",
+    description: "Whether to show dividers between items for visual separation.",
+    defaultValue: true,
+  },
+  {
+    name: "gap",
+    type: "select",
+    description: "Gap between items using 4px grid scale.",
+    defaultValue: 0,
+    options: ["0", "1", "2", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24"],
+  },
+  {
+    name: "padding",
+    type: "select",
+    description: "Padding for each item using 4px grid scale.",
+    defaultValue: 4,
+    options: ["0", "1", "2", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24"],
+  },
+];

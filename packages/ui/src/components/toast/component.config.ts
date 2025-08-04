@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { Bell } from "lucide-react";
-import { Toast, ToastProvider } from "./component";
+import { ToastProvider } from "./component";
 import {
   ComplexPromiseExample,
   CustomDurationExample,

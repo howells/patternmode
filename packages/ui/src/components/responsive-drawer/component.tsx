@@ -1,8 +1,9 @@
 "use client";
 
+import { useMediaQuery } from "@uidotdev/usehooks";
 import React from "react";
 
-import { useIsMobile } from "../../hooks/use-mobile";
+import { MEDIA_QUERIES } from "../../lib/breakpoints";
 // Mobile drawer (Vaul)
 import {
   Drawer,
@@ -178,7 +179,7 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <Drawer {...props}>{children}</Drawer>;
@@ -195,7 +196,7 @@ const ResponsiveDrawerTrigger: React.FC<ResponsiveDrawerTriggerProps> = ({
   render,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     // Vaul uses asChild pattern, so we need to convert render prop to asChild
@@ -219,7 +220,7 @@ const ResponsiveDrawerContent: React.FC<ResponsiveDrawerContentProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <DrawerContent {...props}>{children}</DrawerContent>;
@@ -235,7 +236,7 @@ const ResponsiveDrawerHeader: React.FC<ResponsiveDrawerHeaderProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <DrawerHeader {...props}>{children}</DrawerHeader>;
@@ -251,7 +252,7 @@ const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <DrawerTitle {...props}>{children}</DrawerTitle>;
@@ -266,7 +267,7 @@ const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
 const ResponsiveDrawerDescription: React.FC<
   ResponsiveDrawerDescriptionProps
 > = ({ children, ...props }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <DrawerDescription {...props}>{children}</DrawerDescription>;
@@ -282,7 +283,7 @@ const ResponsiveDrawerBody: React.FC<ResponsiveDrawerBodyProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     // Mobile drawer doesn't have a specific body component, just use a div
@@ -303,7 +304,7 @@ const ResponsiveDrawerFooter: React.FC<ResponsiveDrawerFooterProps> = ({
   children,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     return <DrawerFooter {...props}>{children}</DrawerFooter>;
@@ -320,7 +321,7 @@ const ResponsiveDrawerClose: React.FC<ResponsiveDrawerCloseProps> = ({
   render,
   ...props
 }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
     // Vaul uses asChild pattern, so we need to convert render prop to asChild

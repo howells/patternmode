@@ -7,12 +7,12 @@ import { Slider } from "./component";
 export function SliderExample(props: SliderProps) {
   return (
     <div className="w-full space-y-4">
-      <Slider 
-        defaultValue={[50]} 
-        max={100} 
+      <Slider
+        defaultValue={[50]}
+        max={100}
         min={0}
-        step={1} 
-        {...props} 
+        step={1}
+        {...props}
       />
     </div>
   );

@@ -1,55 +1,84 @@
 {
   "name": "@patternmode/ui",
   "version": "0.1.0",
-  "description": "A comprehensive UI component library built with React, Tailwind CSS, and Base UI",
-  "author": "Daniel Howells",
+  "description": "A comprehensive UI component library built with React, Tailwind CSS, and Base UI. Features accessible, customizable components with TypeScript support, modern design patterns, and excellent developer experience.",
+  "author": {
+    "name": "Daniel Howells",
+    "email": "daniel@patternmode.com",
+    "url": "https://github.com/danielhowells"
+  },
+  "type": "module",
   "license": "MIT",
+  "homepage": "https://patternmode.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternmode/patternmode.git",
+    "directory": "packages/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/patternmode/patternmode/issues"
+  },
   "keywords": [
     "react",
     "ui",
     "components",
     "tailwind",
+    "tailwindcss",
     "design-system",
-    "typescript"
+    "typescript",
+    "accessibility",
+    "a11y",
+    "base-ui",
+    "headless-ui",
+    "component-library",
+    "react-components",
+    "ui-kit",
+    "design-tokens",
+    "modern-ui",
+    "responsive",
+    "customizable",
+    "open-source"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "import": "./src/index.ts",
-      "require": "./src/index.ts"
+      "default": "./src/index.ts"
     },
-    "./*": {
-      "types": "./src/components/*/index.tsx",
-      "import": "./src/components/*/index.tsx",
-      "require": "./src/components/*/index.tsx"
-    },
-    "./components/*/examples": {
-      "types": "./src/components/*/examples.tsx",
-      "import": "./src/components/*/examples.tsx",
-      "require": "./src/components/*/examples.tsx"
-    },
-    "./components/*/preview": {
-      "types": "./src/components/*/preview.tsx",
-      "import": "./src/components/*/preview.tsx",
-      "require": "./src/components/*/preview.tsx"
-    },
-    "./registry": {
-      "types": "./src/components/registry.ts",
-      "import": "./src/components/registry.ts",
-      "require": "./src/components/registry.ts"
-    },
-    "./components/registry": {
-      "types": "./src/components/registry.ts",
-      "import": "./src/components/registry.ts",
-      "require": "./src/components/registry.ts"
+    "./components/*": {
+      "types": "./src/components/*/index.ts",
+      "import": "./src/components/*/index.ts",
+      "default": "./src/components/*/index.ts"
     },
     "./styles/globals.css": "./src/styles/globals.css",
+    "./lib/*": {
+      "types": "./src/lib/*.ts",
+      "import": "./src/lib/*.ts",
+      "default": "./src/lib/*.ts"
+    },
+    "./hooks/*": {
+      "types": "./src/hooks/*.ts",
+      "import": "./src/hooks/*.ts",
+      "default": "./src/hooks/*.ts"
+    },
     "./package.json": "./package.json"
   },
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "types": "./src/index.ts",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
@@ -59,7 +88,9 @@
     "test:ui": "vitest --ui",
     "validate-examples": "npx tsx scripts/validate-examples.ts",
     "extract-props": "tsx scripts/extract-props.ts",
-    "generate-icon-list": "tsx scripts/generate-icon-list.ts"
+    "generate-icon-list": "tsx scripts/generate-icon-list.ts",
+    "prepublishOnly": "npm run typecheck && npm run test",
+    "prepack": "npm run build"
   },
   "peerDependencies": {
     "@base-ui-components/react": "^1.0.0-beta.2",
@@ -73,7 +104,13 @@
     "zod": "^4.0.0"
   },
   "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
     "next": {
+      "optional": true
+    },
+    "recharts": {
       "optional": true
     }
   },
@@ -84,6 +121,7 @@
     "@react-stately/datepicker": "^3.15.0",
     "@t3-oss/env-core": "^0.13.8",
     "@tanstack/react-virtual": "^3.13.12",
+    "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
@@ -105,6 +143,7 @@
     "vitest": "^2.1.8"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

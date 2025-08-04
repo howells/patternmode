@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import type { DismissButtonProps } from "./component";
 import { DismissButton } from "./component";
 

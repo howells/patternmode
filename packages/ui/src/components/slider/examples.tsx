@@ -22,7 +22,7 @@ export function WithValueExample() {
         </label>
         <Slider
           value={value}
-          onValueChange={(newValue) => setValue(Array.isArray(newValue) ? newValue : [newValue])}
+          onValueChange={newValue => setValue(Array.isArray(newValue) ? newValue : [newValue])}
           max={100}
           step={10}
           showValue
@@ -43,7 +43,7 @@ export function CustomRangeExample() {
         </label>
         <Slider
           value={value}
-          onValueChange={(newValue) => setValue(Array.isArray(newValue) ? newValue : [newValue])}
+          onValueChange={newValue => setValue(Array.isArray(newValue) ? newValue : [newValue])}
           min={-10}
           max={40}
           step={1}
@@ -66,7 +66,7 @@ export function VerticalExample() {
     <div className="h-64 flex items-center">
       <Slider
         value={value}
-        onValueChange={(newValue) => setValue(Array.isArray(newValue) ? newValue : [newValue])}
+        onValueChange={newValue => setValue(Array.isArray(newValue) ? newValue : [newValue])}
         min={0}
         max={100}
         step={1}

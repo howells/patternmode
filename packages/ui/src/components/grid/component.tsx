@@ -1,6 +1,6 @@
 "use client";
 
-import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import type { SpacingValue } from "../../lib/spacing-utils";
 import React from "react";
 
 import { tv } from "tailwind-variants";

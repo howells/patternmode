@@ -14,3 +14,19 @@ export function SelectNativeExample(props: SelectNativeProps) {
     </SelectNative>
   );
 }
+
+// Preview props for prop explorer
+export const SelectNativePreviewProps = [
+  {
+    name: "hasError",
+    type: "boolean",
+    description: "Whether to display error styling for form validation.",
+    defaultValue: false,
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    description: "Whether the select is disabled.",
+    defaultValue: false,
+  },
+];

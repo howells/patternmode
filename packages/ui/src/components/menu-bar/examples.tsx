@@ -1,8 +1,8 @@
 "use client";
 
+import { ChevronRight, Edit, FileText, HelpCircle, Plus, Settings, Trash } from "lucide-react";
 import React from "react";
 import { Icon } from "../icon/component";
-import { Edit, Plus, Trash, ChevronRight, Settings, HelpCircle, FileText } from "lucide-react";
 import {
   MenuBar,
   MenuBarContent,

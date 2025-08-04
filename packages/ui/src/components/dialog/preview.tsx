@@ -13,9 +13,22 @@ import {
   DialogTrigger,
 } from "./component";
 
-export function DialogExample() {
+type DialogProps = React.ComponentProps<typeof Dialog> & {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
+
+export function DialogExample(props: DialogProps) {
+  const [internalOpen, setInternalOpen] = React.useState(false);
+
+  const isControlledFromParent = props.open !== undefined;
+  const open = isControlledFromParent ? props.open : internalOpen;
+  const onOpenChange = isControlledFromParent ? props.onOpenChange : setInternalOpen;
+
+  const { open: _, onOpenChange: __, ...restProps } = props;
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange} {...restProps}>
       <DialogTrigger render={<Button />}>Open Dialog</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -37,3 +50,13 @@ export function DialogExample() {
     </Dialog>
   );
 }
+
+// Preview props for prop explorer
+export const DialogPreviewProps = [
+  {
+    name: "open",
+    type: "boolean",
+    description: "Controls whether the dialog is open (controlled mode).",
+    defaultValue: false,
+  },
+];

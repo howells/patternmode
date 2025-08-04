@@ -353,14 +353,14 @@ RadioCard.displayName = "RadioCard";
  */
 const RadioOption = ({ ref, value, label, description, disabled, size = "md", ...props }: RadioOptionProps) => {
   const { root, circle, indicator, dot } = radioVariants({ size, variant: "default" });
-  
+
   return (
     <div className={cx(radioLabelVariants({ size }))}>
-      <BaseRadio.Root 
-        ref={ref} 
-        value={value} 
-        disabled={disabled} 
-        className={cx(root())} 
+      <BaseRadio.Root
+        ref={ref}
+        value={value}
+        disabled={disabled}
+        className={cx(root())}
         {...props}
       >
         <div className={circle()}>

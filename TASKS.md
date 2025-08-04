@@ -2,9 +2,6 @@
 
 ## Active Tasks
 
-- [ ] **Add proper package metadata** (description, keywords, author, license)
-- [ ] **Configure proper exports for different module systems**
-- [ ] **Add repository, bugs, and homepage URLs**
 - [ ] **Set up proper versioning strategy**
 - [ ] **Ensure clean builds with proper typing**
 - [ ] **Set up automated builds for CI/CD**
@@ -56,7 +53,7 @@
 - [ ] **Tree Component** - Hierarchical data display using @headless-tree/react with expand/collapse, selection, drag/drop, search, and virtualization support
 - [ ] **DropZone Component** - File drop area with drag/drop states and validation
 
-### Medium Priority - Enhanced Form Components  
+### Medium Priority - Enhanced Form Components
 - [ ] **FileTrigger Component** - File selection button with proper accessibility
 
 ## Future Ideas & Grand Vision

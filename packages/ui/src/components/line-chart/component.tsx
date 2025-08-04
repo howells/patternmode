@@ -72,7 +72,9 @@
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import { useWindowSize } from "@uidotdev/usehooks";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import React from "react";
 
 import {
@@ -87,8 +89,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-import { useOnWindowResize } from "../../hooks/use-on-window-resize";
 import {
   AvailableChartColors,
 
@@ -515,12 +515,13 @@ const ChartLegend = (
   yAxisWidth?: number,
 ) => {
   const legendRef = React.useRef<HTMLDivElement>(null);
+  const windowSize = useWindowSize();
 
-  useOnWindowResize(() => {
+  React.useEffect(() => {
     const calculateHeight = (height: number | undefined) =>
       height ? Number(height) + 15 : 60;
     setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
-  });
+  }, [windowSize.width, windowSize.height]);
 
   const legendPayload = payload.filter((item: any) => item.type !== "none");
 

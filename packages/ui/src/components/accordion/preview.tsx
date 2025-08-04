@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@patternmode/ui";
+} from "./component";
 
 import React from "react";
 

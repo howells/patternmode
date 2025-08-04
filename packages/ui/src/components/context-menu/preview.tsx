@@ -3,9 +3,14 @@
 import React from "react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "./component";
 
-export function ContextMenuExample() {
+type ContextMenuProps = React.ComponentProps<typeof ContextMenu> & {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
+
+export function ContextMenuExample(props: ContextMenuProps) {
   return (
-    <ContextMenu>
+    <ContextMenu {...props}>
       <ContextMenuTrigger className="p-4 border rounded-lg text-center cursor-pointer">
         Right-click me
       </ContextMenuTrigger>
@@ -17,3 +22,13 @@ export function ContextMenuExample() {
     </ContextMenu>
   );
 }
+
+// Preview props for prop explorer
+export const ContextMenuPreviewProps = [
+  {
+    name: "open",
+    type: "boolean",
+    description: "Controls whether the context menu is open (controlled mode).",
+    defaultValue: false,
+  },
+];

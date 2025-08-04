@@ -46,3 +46,13 @@ export function AlertDialogExample(props: React.ComponentProps<typeof AlertDialo
     </AlertDialog>
   );
 }
+
+// Preview props for prop explorer
+export const AlertDialogPreviewProps = [
+  {
+    name: "open",
+    type: "boolean",
+    description: "Controls whether the alert dialog is open (controlled mode).",
+    defaultValue: false,
+  },
+];

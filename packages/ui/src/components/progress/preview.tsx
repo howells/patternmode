@@ -4,7 +4,7 @@ import type { ProgressBarProps } from "./component";
 import React from "react";
 import { ProgressBar } from "./component";
 
-export function ProgressBarExample(props: ProgressBarProps) {
+export function ProgressExample(props: ProgressBarProps) {
   return <ProgressBar value={75} showValue={true} {...props} />;
 }
 
@@ -18,7 +18,7 @@ export const ProgressPreviewProps = [
   },
   {
     name: "showValue",
-    type: "boolean", 
+    type: "boolean",
     description: "Whether to display the progress percentage.",
     defaultValue: true,
   },

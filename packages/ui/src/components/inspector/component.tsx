@@ -349,10 +349,10 @@ export function InspectorToggle({
 }
 
 export type {
-  InspectorProps,
-  InspectorHeaderProps,
   InspectorBodyProps,
-  InspectorSectionProps,
   InspectorGroupProps,
+  InspectorHeaderProps,
+  InspectorProps,
+  InspectorSectionProps,
   InspectorToggleProps,
 };

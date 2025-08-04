@@ -16,3 +16,21 @@ export function ToolbarExample(props: ToolbarProps) {
     </Toolbar>
   );
 }
+
+// Preview props for prop explorer
+export const ToolbarPreviewProps = [
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual variant of the toolbar.",
+    options: ["default", "bordered", "floating"],
+    defaultValue: "default",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant affecting padding and button dimensions.",
+    options: ["sm", "default", "lg"],
+    defaultValue: "default",
+  },
+];

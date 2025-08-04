@@ -26,3 +26,9 @@ export function NavbarExample(props: NavbarProps) {
     </Navbar>
   );
 }
+
+// Preview props for prop explorer
+export const NavbarPreviewProps = [
+  // Note: Navbar is primarily a container component
+  // Visual customization happens through NavbarItem, NavbarSection, etc.
+];

@@ -39,3 +39,13 @@ export function BreadcrumbsExample(props: BreadcrumbsProps) {
     </Breadcrumbs>
   );
 }
+
+// Preview props for prop explorer
+export const BreadcrumbsPreviewProps = [
+  {
+    name: "aria-label",
+    type: "string",
+    description: "Accessible label for screen readers describing the breadcrumb navigation.",
+    defaultValue: "breadcrumb",
+  },
+];

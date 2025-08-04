@@ -38,7 +38,6 @@ const iconContainerVariants = tv({
   },
 });
 
-
 /**
  * Container component for icons with consistent padding and background styling.
  */
