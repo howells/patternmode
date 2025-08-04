@@ -30,6 +30,8 @@ export default function {{COMPONENT_NAME}}Page() {
         category={componentConfig.category}
       />
 
+      <Separator />
+
       {/* Examples */}
       <ComponentExamples componentId="{{COMPONENT_ID}}" />
     </div>
