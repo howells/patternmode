@@ -1,0 +1,1 @@
+export { TagGroup, type TagGroupProps } from "./component";

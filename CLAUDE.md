@@ -117,7 +117,7 @@ src/components/[component-name]/
 ├── component.config.ts  # Component specification + examples with imports
 ├── index.tsx           # Export barrel
 ├── examples.tsx        # Example components
-└── preview.tsx         # Preview component (optional)
+└── preview.tsx         # Preview component (mandatory)
 ```
 
 ### Component Implementation (component.tsx)

@@ -3,8 +3,10 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import type { CardProps } from "./component";
+import { ButtonGroup } from "@patternmode/ui/components/button-group";
 import React from "react";
 import { Button } from "../button/component";
+import { Text } from "../text/component";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
 
 export function CardExample(props: CardProps) {
@@ -12,19 +14,18 @@ export function CardExample(props: CardProps) {
 
   return (
     <Card {...cardProps}>
-      <CardHeader>
+      <CardHeader border>
         <CardHeading>{props.children || "Preview Card"}</CardHeading>
         <CardDescription>This is how the Card component looks in the preview.</CardDescription>
-        <div className="flex items-center">
-          <Button variant="outline" size="sm">Action</Button>
-        </div>
       </CardHeader>
       <CardContent>
-        <p>This is the main content area of the card component. You can customize the card's appearance using the props controls.</p>
+        <Text>This is the main content area of the card component. You can customize the card's appearance using the props controls.</Text>
       </CardContent>
-      <CardFooter>
-        <Button>Primary Action</Button>
-        <Button variant="outline">Cancel</Button>
+      <CardFooter border>
+        <ButtonGroup>
+          <Button>Primary Action</Button>
+          <Button variant="outline">Cancel</Button>
+        </ButtonGroup>
       </CardFooter>
     </Card>
   );

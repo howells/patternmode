@@ -16,7 +16,7 @@ const cardVariants = tv({
   variants: {
     variant: {
       default: [
-        "shadow-xs inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10",
+        "border",
         "bg-white dark:bg-[#090E1A]",
       ],
       dashed: [
@@ -234,6 +234,11 @@ CardContent.displayName = "CardContent";
 
 type CardFooterProps = {
   /**
+   * Whether to show a border at the top of the footer.
+   * Useful for visually separating footer from content.
+   */
+  border?: boolean;
+  /**
    * Additional CSS classes.
    * Applied to the footer container.
    */
@@ -248,10 +253,16 @@ type CardFooterProps = {
 /**
  * Card footer component for actions or additional content.
  */
-const CardFooter = ({ ref, className, ...props }: CardFooterProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+const CardFooter = ({ ref, className, border = false, ...props }: CardFooterProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
   <div
     ref={ref}
-    className={cx("flex items-center p-6 pt-0", className)}
+    className={cx(
+      "flex items-center px-6 pb-6 rounded-b-lg",
+      "bg-zinc-50 dark:bg-zinc-900",
+      border ? "pt-6" : "pt-0",
+      border && "border-t",
+      className,
+    )}
     {...props}
   />
 );

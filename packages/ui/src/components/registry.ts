@@ -10,6 +10,7 @@ import { componentConfig as barChartConfig } from "./bar-chart/component.config"
 import { componentConfig as barListConfig } from "./bar-list/component.config";
 import { componentConfig as breadcrumbsConfig } from "./breadcrumbs/component.config";
 import { componentConfig as buttonConfig } from "./button/component.config";
+import { componentConfig as buttonGroupConfig } from "./button-group/component.config";
 import { componentConfig as calendarConfig } from "./calendar/component.config";
 import { componentConfig as calloutConfig } from "./callout/component.config";
 import { componentConfig as cardConfig } from "./card/component.config";
@@ -83,6 +84,7 @@ import { componentConfig as tableConfig } from "./table/component.config";
 import { componentConfig as tabsConfig } from "./tabs/component.config";
 import { componentConfig as tagInputConfig } from "./tag-input/component.config";
 import { componentConfig as tagConfig } from "./tag/component.config";
+import { componentConfig as tagGroupConfig } from "./tag-group/component.config";
 import { componentConfig as textListConfig } from "./text-list/component.config";
 import { componentConfig as textConfig } from "./text/component.config";
 import { componentConfig as textareaConfig } from "./textarea/component.config";
@@ -103,6 +105,7 @@ export const COMPONENT_REGISTRY = {
   "bar-list": barListConfig,
   "breadcrumbs": breadcrumbsConfig,
   "button": buttonConfig,
+  "button-group": buttonGroupConfig,
   "calendar": calendarConfig,
   "callout": calloutConfig,
   "card": cardConfig,
@@ -176,6 +179,7 @@ export const COMPONENT_REGISTRY = {
   "table": tableConfig,
   "tabs": tabsConfig,
   "tag": tagConfig,
+  "tag-group": tagGroupConfig,
   "tag-input": tagInputConfig,
   "text": textConfig,
   "textarea": textareaConfig,
