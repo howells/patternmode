@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@source "../src/components/**/*.{ts,tsx}";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: InterVariable, sans-serif;
+  --font-mono: "SFMono-Regular", "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", monospace;
+}
+
+/* Base styles for testing */
+body {
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure components have proper styling in tests */
+#root {
+  min-height: 100vh;
+  padding: 1rem;
+  isolation: isolate; /* Required for Base UI components */
+}

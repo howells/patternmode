@@ -92,7 +92,7 @@ const Card = (
       className,
     ),
     "data-testid": "card",
-  };
+  } as React.HTMLAttributes<HTMLDivElement>;
 
   const element = useRender({
     render,

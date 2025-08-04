@@ -75,7 +75,7 @@ const europeanCities = {
 };
 
 export function TagInputExample({
-  allowCreate = false,
+  allowCreate = true,
   maxTags = 5,
   showDescriptions = false,
   placeholder,
@@ -106,6 +106,10 @@ export function TagInputExample({
         disabled={disabled}
         wrap={wrap}
         maxHeight={maxHeight}
+        onCreate={value => ({
+          value: value.toLowerCase().replace(/\s+/g, "-"),
+          label: value,
+        })}
       />
     </div>
   );
@@ -117,7 +121,7 @@ export const tagInputPreviewProps = [
     name: "allowCreate",
     type: "boolean",
     description: "Whether users can create custom tags that don't exist in the predefined options.",
-    defaultValue: false,
+    defaultValue: true,
   },
   {
     name: "maxTags",

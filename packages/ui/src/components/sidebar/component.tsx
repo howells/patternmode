@@ -42,8 +42,10 @@ function SidebarTitle({
   ...props
 }: SidebarTitleProps) {
   const baseClasses = cx(
-    "font-medium transition-colors",
-    level === 1 ? "text-xs" : "text-2xs uppercase tracking-wide",
+    "transition-colors text-xs",
+    {
+      "font-medium": level === 1,
+    },
     className,
   );
 

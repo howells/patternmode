@@ -26,9 +26,9 @@ export type TagOption = {
    */
   disabled?: boolean;
   /**
-   * Icon to display on the left side.
+   * Icon to display on the tag.
    */
-  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /**
    * Additional data for the tag.
    */
@@ -238,7 +238,7 @@ const TagInput = ({
     const filteredResult = safeFilterOptions(safeOptions, inputValue);
     const filtered = Array.isArray(filteredResult) ? filteredResult : [];
     const finalFiltered = filtered.filter(
-      option => !safeValue.includes(option.value) && !option.disabled,
+      option => option && !safeValue.includes(option.value) && !option.disabled,
     );
 
     // Add "create new" option if allowed and input is valid
@@ -302,12 +302,18 @@ const TagInput = ({
       const { type, changes } = actionAndChanges;
 
       switch (type) {
-        case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           return {
             ...changes,
             isOpen: false,
             inputValue: "",
+          };
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          // For Enter key, only clear input if an item was actually selected
+          return {
+            ...changes,
+            isOpen: false,
+            inputValue: changes.selectedItem ? "" : state.inputValue,
           };
         case useCombobox.stateChangeTypes.InputBlur:
           return {
@@ -332,6 +338,21 @@ const TagInput = ({
       // Remove last tag when backspace is pressed on empty input
       handleRemoveTag(safeValue[safeValue.length - 1]);
     }
+    else if (e.key === "Enter" && allowCreate && inputValue.trim() && onValidate(inputValue)) {
+      // Handle Enter key for tag creation
+      const exactMatch = options.find(
+        opt => opt.label.toLowerCase() === inputValue.trim().toLowerCase(),
+      );
+
+      if (!exactMatch && !safeValue.includes(inputValue.trim().toLowerCase().replace(/\s+/g, "-"))) {
+        // Create new tag
+        const newTag = onCreate(inputValue);
+        const newValues = [...safeValue, newTag.value];
+        onValueChange?.(newValues);
+        setInputValue("");
+        e.preventDefault();
+      }
+    }
   };
 
   // Check if max tags reached
@@ -347,6 +368,7 @@ const TagInput = ({
       <Tag
         key={option.value}
         value={option.label}
+        icon={option.icon}
         dismissible
         onDismiss={() => handleRemoveTag(option.value)}
         className={cx("text-xs", tagClassName)}
@@ -366,7 +388,7 @@ const TagInput = ({
 
     return (
       <DropdownItem
-        leftIcon={option.leftIcon}
+        leftIcon={option.icon}
         rightIcon={isSelected ? Check : undefined}
         highlighted={isHighlighted}
         selected={isSelected}
@@ -379,7 +401,7 @@ const TagInput = ({
   };
 
   return (
-    <div className={cx("relative", className)} data-testid="tag-input">
+    <div className={cx("relative w-full max-w-sm", className)} data-testid="tag-input">
       {/* Hidden label for accessibility */}
       <label {...getLabelProps()} className="sr-only">
         {placeholder}
@@ -388,8 +410,8 @@ const TagInput = ({
       {/* Main input container */}
       <div
         className={cx(
-          "min-h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950",
-          "flex items-center gap-1 p-2",
+          "h-control-base w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950",
+          "flex items-center gap-1 px-2 py-1",
           wrap ? "flex-wrap" : "overflow-x-auto",
           focusRing,
           disabled
@@ -462,7 +484,7 @@ const TagInput = ({
                   <div className="overflow-auto" style={{ maxHeight }}>
                     {availableOptions.map((option, index) => (
                       <div
-                        key={`${option.value}`}
+                        key={option.data?.isNew ? `create-${option.value}` : option.value}
                         {...getItemProps({
                           item: option,
                           index,

@@ -1,10 +1,8 @@
-// Tremor DismissButton [v1.0.0]
-
 import { X } from "lucide-react";
 import React from "react";
 
 import { config } from "../../lib/config";
-import { cx, iconUtils } from "../../lib/utils";
+import { cx, focusRing, iconUtils } from "../../lib/utils";
 
 type DismissButtonProps = {
   /**
@@ -67,17 +65,17 @@ const DismissButton = (
       className={cx(
         // Base button styling
         "flex items-center justify-center rounded-full transition-colors",
-        // Size-based dimensions - align with control system
-        size === "xs" && "size-control-xs",
-        size === "sm" && "size-control-sm", 
-        size === "base" && "size-control-base",
-        size === "lg" && "size-control-lg",
-        // Color styling (subtle, context-aware)
-        "text-zinc-500 dark:text-zinc-400",
+        // Size-based dimensions
+        size === "xs" && "size-4",
+        size === "sm" && "size-5",
+        size === "base" && "size-6",
+        size === "lg" && "size-8",
+        // Color styling (low opacity for any background)
+        "text-zinc-700/60 dark:text-zinc-300/70",
         // Hover states
-        "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
+        "hover:bg-zinc-600/10 hover:text-zinc-700/80 dark:hover:bg-zinc-300/15 dark:hover:text-zinc-300/90",
         // Focus states
-        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
+        focusRing,
         className,
       )}
       aria-label={ariaLabel}

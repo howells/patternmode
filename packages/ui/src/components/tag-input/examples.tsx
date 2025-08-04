@@ -9,16 +9,16 @@ import { TagInput, useTagInput } from "./component";
 
 // Sample data for examples
 const technologies: TagOption[] = [
-  { value: "react", label: "React", leftIcon: Code },
-  { value: "typescript", label: "TypeScript", leftIcon: Code },
-  { value: "nextjs", label: "Next.js", leftIcon: Code },
-  { value: "tailwind", label: "Tailwind CSS", leftIcon: Palette },
-  { value: "nodejs", label: "Node.js", leftIcon: Code },
-  { value: "python", label: "Python", leftIcon: Code },
-  { value: "javascript", label: "JavaScript", leftIcon: Code },
-  { value: "vue", label: "Vue.js", leftIcon: Code },
-  { value: "angular", label: "Angular", leftIcon: Code },
-  { value: "svelte", label: "Svelte", leftIcon: Code },
+  { value: "react", label: "React", icon: Code },
+  { value: "typescript", label: "TypeScript", icon: Code },
+  { value: "nextjs", label: "Next.js", icon: Code },
+  { value: "tailwind", label: "Tailwind CSS", icon: Palette },
+  { value: "nodejs", label: "Node.js", icon: Code },
+  { value: "python", label: "Python", icon: Code },
+  { value: "javascript", label: "JavaScript", icon: Code },
+  { value: "vue", label: "Vue.js", icon: Code },
+  { value: "angular", label: "Angular", icon: Code },
+  { value: "svelte", label: "Svelte", icon: Code },
 ];
 
 const skills: TagOption[] = [
@@ -38,42 +38,42 @@ const users: TagOption[] = [
   {
     value: "1",
     label: "John Doe",
-    leftIcon: User,
+    icon: User,
     data: { email: "john@example.com", role: "Admin" },
   },
   {
     value: "2",
     label: "Jane Smith",
-    leftIcon: User,
+    icon: User,
     data: { email: "jane@example.com", role: "Editor" },
   },
   {
     value: "3",
     label: "Bob Johnson",
-    leftIcon: User,
+    icon: User,
     data: { email: "bob@example.com", role: "Viewer" },
   },
   {
     value: "4",
     label: "Alice Brown",
-    leftIcon: User,
+    icon: User,
     data: { email: "alice@example.com", role: "Admin" },
   },
   {
     value: "5",
     label: "Charlie Wilson",
-    leftIcon: User,
+    icon: User,
     data: { email: "charlie@example.com", role: "Editor" },
   },
 ];
 
 const locations: TagOption[] = [
-  { value: "nyc", label: "New York City", leftIcon: MapPin },
-  { value: "sf", label: "San Francisco", leftIcon: MapPin },
-  { value: "london", label: "London", leftIcon: MapPin },
-  { value: "tokyo", label: "Tokyo", leftIcon: MapPin },
-  { value: "berlin", label: "Berlin", leftIcon: MapPin },
-  { value: "sydney", label: "Sydney", leftIcon: MapPin },
+  { value: "nyc", label: "New York City", icon: MapPin },
+  { value: "sf", label: "San Francisco", icon: MapPin },
+  { value: "london", label: "London", icon: MapPin },
+  { value: "tokyo", label: "Tokyo", icon: MapPin },
+  { value: "berlin", label: "Berlin", icon: MapPin },
+  { value: "sydney", label: "Sydney", icon: MapPin },
 ];
 
 export const DefaultExample = () => {
@@ -141,6 +141,10 @@ export const WithTagCreationExample = () => {
         placeholder="Add skills (or create new ones)..."
         allowCreate
         onValidate={value => value.length >= 2 && value.length <= 30}
+        onCreate={value => ({
+          value: value.toLowerCase().replace(/\s+/g, "-"),
+          label: value,
+        })}
       />
       <p className="text-sm text-zinc-600">
         Type to search existing skills or create new ones
@@ -184,7 +188,7 @@ export const CustomTagRenderingExample = () => {
           ${isSelected ? "font-medium" : ""}
         `}
         >
-          {option.leftIcon && <Icon icon={option.leftIcon} />}
+          {option.icon && <Icon icon={option.icon} />}
           <div className="flex flex-col">
             <span className="text-sm">{option.label}</span>
             <span className="text-xs text-zinc-500">
@@ -274,7 +278,7 @@ export const ComplexExample = () => {
           onCreate={value => ({
             value: value.toLowerCase().replace(/\s+/g, "-"),
             label: value,
-            leftIcon: MapPin,
+            icon: MapPin,
           })}
           className="max-w-md"
         />

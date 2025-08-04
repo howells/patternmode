@@ -2,12 +2,12 @@
 
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { X } from "lucide-react";
 import React from "react";
 
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
 import { Avatar } from "../avatar/component";
+import { DismissButton } from "../dismiss-button/component";
 
 /**
  * Get padding classes based on avatar and dismissible state.
@@ -25,63 +25,6 @@ function getPaddingClasses(
     return dismissible ? "pl-2.5 pr-1" : "px-3";
   }
 }
-
-/**
- * Internal dismiss button component for tags.
- */
-const InlineTagDismissButton = (
-  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
-    "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    "icon"?: React.ComponentType<{
-      className?: string;
-      strokeWidth?: number;
-    }>;
-    "iconStrokeWidth"?: number;
-    "size"?: "sm" | "base" | "lg";
-    "className"?: string;
-    "aria-label"?: string;
-  } & { ref?: React.RefObject<HTMLButtonElement | null> },
-) => {
-  // Size-based icon sizing
-  const iconSizeMap = {
-    sm: "xs" as const,
-    base: "xs" as const,
-    lg: "sm" as const,
-  };
-
-  const iconSize = iconSizeMap[size];
-  const iconSizeClass = iconUtils.getIconSize(iconSize);
-
-  return (
-    <button
-      ref={ref}
-      type="button"
-      onClick={onClick}
-      className={cx(
-        // Base button styling
-        "flex items-center justify-center rounded-full transition-colors",
-        // Size-based dimensions
-        size === "sm" && "size-4",
-        size === "base" && "size-5",
-        size === "lg" && "size-6",
-        // Color styling (subtle, context-aware)
-        "text-zinc-500 dark:text-zinc-400",
-        // Hover states
-        "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
-        // Focus states
-        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-        className,
-      )}
-      aria-label={ariaLabel}
-    >
-      <IconComponent
-        className={cx(iconSizeClass, "shrink-0")}
-        strokeWidth={iconStrokeWidth}
-        aria-hidden="true"
-      />
-    </button>
-  );
-};
 
 type TagProps = {
   /**
@@ -115,6 +58,22 @@ type TagProps = {
    */
   onDismiss?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
+   * Icon component (proxy for leftIcon).
+   * This is essentially an alias for leftIcon, useful for single-icon tags.
+   * Takes precedence over leftIcon when both are provided.
+   */
+  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /**
+   * Icon component to display on the left side.
+   * Used for icon-text combinations.
+   */
+  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /**
+   * Stroke width for icons (defaults to config value).
+   * Controls the thickness of icon strokes.
+   */
+  iconStrokeWidth?: number;
+  /**
    * Avatar configuration for user tags.
    * When provided, displays a small avatar before the tag content.
    */
@@ -143,10 +102,13 @@ type TagProps = {
  * Label component for categorizing and tagging content with removable options.
  */
 const Tag = (
-  { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps,
+  { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, icon, leftIcon, iconStrokeWidth = config.getIconStrokeWidth(), avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps,
 ) => {
+  // Prioritize icon prop over leftIcon prop
+  const effectiveIcon = icon || leftIcon;
   const defaultProps: useRender.ElementProps<"span"> = {
-    "className": cx(
+    "data-testid": "tag",
+    className: cx(
       // base
       "inline-flex items-center gap-x-2 rounded-full py-1 text-sm",
       // padding logic
@@ -159,8 +121,7 @@ const Tag = (
       "ring-1 ring-inset ring-zinc-200 dark:ring-zinc-800",
       className,
     ),
-    "data-testid": "tag",
-    "children": (
+    children: (
       <>
         {avatar && (
           <Avatar
@@ -170,6 +131,13 @@ const Tag = (
             size="xs"
             className="size-6"
           />
+        )}
+        {effectiveIcon && !avatar && (
+          React.createElement(effectiveIcon, {
+            "className": cx(iconUtils.getIconSize("xs"), "shrink-0"),
+            "strokeWidth": iconStrokeWidth,
+            "aria-hidden": "true",
+          })
         )}
         {label && (
           <>
@@ -194,9 +162,9 @@ const Tag = (
           )}
         </span>
         {dismissible && (
-          <InlineTagDismissButton
+          <DismissButton
             onClick={onDismiss}
-            size="base"
+            size="xs"
             className={cx(
               // base - adjust margin based on whether there's a count
               count !== undefined && count !== "" ? "-ml-1.5" : "-ml-1",
@@ -205,7 +173,7 @@ const Tag = (
           />
         )}
       </>
-    ),
+    ) as React.ReactNode,
   };
 
   const element = useRender({

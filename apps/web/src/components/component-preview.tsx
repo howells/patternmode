@@ -4,15 +4,11 @@ import dynamic from "next/dynamic";
 import React from "react";
 
 import {
-  Breadcrumbs,
-  Button,
   Callout,
   CodeBlock,
-  FieldArrayExample,
   getDynamicIconByName,
   Loader,
   ScrollArea,
-  SparkAreaChart,
   Stack,
   Tabs,
   TabsContent,
@@ -141,30 +137,12 @@ const getComponentName = (componentId: string): string => {
   return getExportedComponentName(baseComponent);
 };
 
-// Static component mapping
-const componentMap: Record<string, React.ComponentType<unknown>> = {
-  "button": Button,
-  "breadcrumbs": Breadcrumbs,
-  "spark-chart": SparkAreaChart, // Use SparkAreaChart as default spark chart
-  "FieldArray": FieldArrayExample,
-  "Field Array": FieldArrayExample, // Handle the space-separated version
-};
-
 // Create dynamic component based on componentId and category
 const createDynamicComponent = (
   componentId: string,
   category?: string,
   componentPath?: string,
 ) => {
-  // Use static mapping for known components
-  if (componentMap[componentId]) {
-    // Return a simple wrapper component that accepts and forwards props
-    return (props: Record<string, unknown>) => {
-      const Component = componentMap[componentId];
-      return React.createElement(Component, props);
-    };
-  }
-
   // For preview components, convert component name to ExampleComponent format
   // e.g., "accordion" -> "AccordionExample"
   const previewComponentId = componentId.toLowerCase().endsWith("example")
@@ -172,7 +150,7 @@ const createDynamicComponent = (
     : `${getExportedComponentName(componentId)}Example`;
 
   return dynamic(
-    () => {
+    async () => {
       const importPath = getComponentImportPath(
         previewComponentId,
         category,
@@ -184,118 +162,97 @@ const createDynamicComponent = (
         `Attempting to import component: ${previewComponentId} from ${importPath}`,
       );
 
-      return import(importPath)
-        .then((mod) => {
-          console.log(
-            `Successfully imported from three-file structure: ${importPath}`,
+      try {
+        // Try the main import path first
+        const mod = await import(importPath);
+        console.log(
+          `Successfully imported from three-file structure: ${importPath}`,
+        );
+
+        // If the component has a PropExplorer config with examples, try to use the first example's render function
+        const propConfig
+          = mod[`${exportedName.toLowerCase()}PropConfig`] || mod.propConfig;
+
+        // Check if there's an example with a render function
+        if (propConfig?.examples?.[0]?.render) {
+          return { default: propConfig.examples[0].render };
+        }
+
+        // Try to get the named export first, then fall back to default
+        const component = mod[exportedName] || mod.default;
+        if (!component) {
+          console.error(
+            `No component found with name ${exportedName} in ${importPath}`,
           );
+          throw new Error(`Component ${exportedName} not found in module`);
+        }
+        return { default: component };
+      }
+      catch (error) {
+        console.warn(
+          `Failed to load from three-file structure (${importPath}):`,
+          error.message,
+        );
 
-          // If the component has a PropExplorer config with examples, try to use the first example's render function
-          const propConfig
-            = mod[`${exportedName.toLowerCase()}PropConfig`] || mod.propConfig;
+        // Try fallback strategies
+        const kebabCase = componentId
+          .replace(/([a-z])([A-Z])/g, "$1-$2")
+          .toLowerCase();
 
-          // Check if there's an example with a render function
-          if (propConfig?.examples?.[0]?.render) {
-            return { default: propConfig.examples[0].render };
-          }
-
-          // Try to get the named export first, then fall back to default
-          const component = mod[exportedName] || mod.default;
-          if (!component) {
-            console.error(
-              `No component found with name ${exportedName} in ${importPath}`,
-            );
-            throw new Error(`Component ${exportedName} not found in module`);
-          }
-          return { default: component };
-        })
-        .catch((error) => {
-          console.warn(
-            `Failed to load from three-file structure (${importPath}):`,
-            error.message,
-          );
-
-          // Try a few different fallback strategies
-          const kebabCase = componentId
-            .replace(/([a-z])([A-Z])/g, "$1-$2")
-            .toLowerCase();
-
+        try {
           // Strategy 1: Try flat structure in ui folder
           const flatPath = "@patternmode/ui";
           console.log(`Trying fallback: ${flatPath}`);
 
-          return import(flatPath)
-            .then((mod) => {
+          const mod = await import(flatPath);
+          console.log(
+            `Successfully imported from flat structure: ${flatPath}`,
+          );
+
+          const component = mod[exportedName] || mod.default;
+          if (!component) {
+            throw new Error(
+              `Component ${exportedName} not found in ${flatPath}`,
+            );
+          }
+          return { default: component };
+        }
+        catch (fallbackError) {
+          console.warn(
+            `Flat structure fallback also failed (@patternmode/ui):`,
+            fallbackError.message,
+          );
+
+          // Strategy 2: Try different category paths if category is provided
+          if (category && category !== "ui") {
+            try {
+              const categoryPath = `@/components/${category}/${kebabCase}`;
+              console.log(`Trying category fallback: ${categoryPath}`);
+
+              const mod = await import(categoryPath);
               console.log(
-                `Successfully imported from flat structure: ${flatPath}`,
+                `Successfully imported from category structure: ${categoryPath}`,
               );
+
               const component = mod[exportedName] || mod.default;
               if (!component) {
                 throw new Error(
-                  `Component ${exportedName} not found in ${flatPath}`,
+                  `Component ${exportedName} not found in ${categoryPath}`,
                 );
               }
               return { default: component };
-            })
-            .catch((fallbackError) => {
-              console.warn(
-                `Flat structure fallback also failed (${flatPath}):`,
-                fallbackError.message,
-              );
-
-              // Strategy 2: Try different category paths if category is provided
-              if (category && category !== "ui") {
-                const categoryPath = `@/components/${category}/${kebabCase}`;
-                console.log(`Trying category fallback: ${categoryPath}`);
-
-                return import(categoryPath)
-                  .then((mod) => {
-                    console.log(
-                      `Successfully imported from category structure: ${categoryPath}`,
-                    );
-                    const component = mod[exportedName] || mod.default;
-                    if (!component) {
-                      throw new Error(
-                        `Component ${exportedName} not found in ${categoryPath}`,
-                      );
-                    }
-                    return { default: component };
-                  })
-                  .catch((categoryError) => {
-                    console.error(
-                      `All import strategies failed for ${componentId}:`,
-                      {
-                        threeFile: error.message,
-                        flat: fallbackError.message,
-                        category: categoryError.message,
-                      },
-                    );
-
-                    // Return a fallback error component
-                    return {
-                      default: () => (
-                        <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
-                          <p className="font-medium">
-                            {componentId}
-                            {" "}
-                            preview
-                          </p>
-                          <p className="text-xs mt-1">Interactive preview coming soon</p>
-                        </div>
-                      ),
-                    };
-                  });
-              }
-
-              // If no category, just throw the original error
+            }
+            catch (categoryError) {
               console.error(
                 `All import strategies failed for ${componentId}:`,
                 {
                   threeFile: error.message,
                   flat: fallbackError.message,
+                  category: categoryError.message,
                 },
               );
 
+              // Return a fallback error component
               return {
                 default: () => (
                   <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
@@ -308,8 +265,32 @@ const createDynamicComponent = (
                   </div>
                 ),
               };
-            });
-        });
+            }
+          }
+
+          // If no category, return fallback error component
+          console.error(
+            `All import strategies failed for ${componentId}:`,
+            {
+              threeFile: error.message,
+              flat: fallbackError.message,
+            },
+          );
+
+          return {
+            default: () => (
+              <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
+                <p className="font-medium">
+                  {componentId}
+                  {" "}
+                  preview
+                </p>
+                <p className="text-xs mt-1">Interactive preview coming soon</p>
+              </div>
+            ),
+          };
+        }
+      }
     },
     {
       loading: () => (
