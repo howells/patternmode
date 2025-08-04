@@ -58,7 +58,7 @@ const comboboxListVariants = tv({
     // base
     "absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg dark:bg-zinc-950",
     // border
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // scrollbar
     "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
   ],
@@ -601,7 +601,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           // base
           "absolute z-50 mt-1 w-full rounded-md border bg-white shadow-lg dark:bg-zinc-950",
           // border
-          "border-zinc-200 dark:border-zinc-800",
+          " dark:border-zinc-800",
           !isOpen && "hidden",
         )}
         data-testid="combobox-dropdown"
@@ -610,7 +610,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         {/* Search Input - Fixed at top */}
         <div
           className={cx(
-            "border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
+            "border-b  dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
             size === "sm" && "p-1.5",
             size === "base" && "p-2",
             size === "lg" && "p-2.5",

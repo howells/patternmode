@@ -110,7 +110,7 @@ const DialogContent = ({
           // base
           "fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-md border p-6 shadow-lg",
           // border color
-          "border-zinc-200 dark:border-zinc-900",
+          " dark:border-zinc-900",
           // background color
           "bg-white dark:bg-[#090E1A]",
           // transition

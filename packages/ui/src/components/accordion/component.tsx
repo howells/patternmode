@@ -117,7 +117,7 @@ const AccordionItem = ({
       // base
       "overflow-hidden border-b first:mt-0",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       className,
     )}
     tremor-id="tremor-raw"

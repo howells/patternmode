@@ -73,7 +73,7 @@ const FieldsetLegend = ({ className, ...props }: FieldsetLegendProps) => (
       // text color
       "text-zinc-900 dark:text-zinc-50",
       // border
-      "border-b border-zinc-200 dark:border-zinc-800",
+      "border-b  dark:border-zinc-800",
       // spacing
       "pb-3",
       // disabled

@@ -87,7 +87,7 @@ export function SheetExample({
                 Settings
               </a>
             </nav>
-            <div className="mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+            <div className="mt-6 pt-6 border-t  dark:border-zinc-800">
               <a href="#" className="block px-3 py-2 text-sm text-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/10">
                 Sign Out
               </a>
@@ -107,7 +107,7 @@ export function SheetExample({
                   <input
                     type="text"
                     placeholder="Enter display name"
-                    className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm"
+                    className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md text-sm"
                   />
                 </div>
                 <div>
@@ -117,7 +117,7 @@ export function SheetExample({
                   <input
                     type="email"
                     placeholder="Enter email address"
-                    className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm"
+                    className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md text-sm"
                   />
                 </div>
               </div>

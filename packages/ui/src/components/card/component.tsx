@@ -11,7 +11,7 @@ import { Subheading } from "../subheading/component";
 const cardVariants = tv({
   base: [
     // base
-    "relative w-full rounded-lg text-left text-sm",
+    "relative w-full max-w-xl rounded-lg text-left text-sm",
   ],
   variants: {
     variant: {
@@ -20,9 +20,9 @@ const cardVariants = tv({
         "bg-white dark:bg-[#090E1A]",
       ],
       dashed: [
-        "border-2 border-dashed border-zinc-300 dark:border-zinc-600",
-        "hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors",
+        "border border-dashed border-zinc-300 dark:border-zinc-600",
         "bg-transparent",
+        "[&_.card-border]:border-dashed [&_.card-border]:border-zinc-300 dark:[&_.card-border]:border-zinc-600",
       ],
     },
     fillHeight: {
@@ -131,7 +131,7 @@ const CardHeader = ({ ref, className, border = false, ...props }: CardHeaderProp
     ref={ref}
     className={cx(
       "flex flex-col space-y-1.5 p-6",
-      border && "border-b border-zinc-200 dark:border-zinc-800",
+      border && "border-b border-zinc-200 dark:border-zinc-800 card-border",
       className,
     )}
     {...props}
@@ -260,7 +260,7 @@ const CardFooter = ({ ref, className, border = false, ...props }: CardFooterProp
       "flex items-center px-6 pb-6 rounded-b-lg",
       "bg-zinc-50 dark:bg-zinc-900",
       border ? "pt-6" : "pt-0",
-      border && "border-t",
+      border && "border-t card-border",
       className,
     )}
     {...props}

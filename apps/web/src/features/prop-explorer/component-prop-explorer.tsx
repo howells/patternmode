@@ -12,29 +12,30 @@ import { PropExplorerProvider } from "./prop-explorer-context";
 import { PropExplorerContent } from "./prop-explorer-controls";
 
 type ComponentPropExplorerProps = {
-  config: ComponentConfig;
+  componentId: string;
+  componentName: string;
   category: string;
-  component: string;
   inspectorMaxHeight?: string;
 };
 
 export function ComponentPropExplorer({
-  config,
+  componentId,
+  componentName,
   category,
-  component: _component,
   inspectorMaxHeight = "max-h-[400px] lg:max-h-[500px]",
 }: ComponentPropExplorerProps) {
   const [props, setProps] = React.useState<ConfigPropMetadata[]>([]);
   const [defaultProps, setDefaultProps] = React.useState<Record<string, unknown>>({});
   const [isPropsLoading, setIsPropsLoading] = React.useState(true);
 
-  // Get the primary component name
-  const primaryComponentName = getPrimaryComponent(config);
-
   // Load props and default values asynchronously
   React.useEffect(() => {
     async function loadProps() {
       try {
+        // Dynamically import the component config
+        const configModule = await import(`@patternmode/ui/components/${componentId}/component.config`);
+        const config = configModule.componentConfig;
+
         const [configProps, configDefaultProps] = await Promise.all([
           getConfigProps(config),
           getDefaultProps(config),
@@ -53,19 +54,17 @@ export function ComponentPropExplorer({
     }
 
     loadProps();
-  }, [config]);
+  }, [componentId]);
 
-  // Create a serializable version of the config with loaded props
-  const serializableConfig = React.useMemo((): ComponentConfig => ({
-    ...config,
-    props,
-    examples:
-      config.examples?.map((example: (typeof config.examples)[number]) => ({
-        ...example,
-        // Remove render function to avoid serialization issues
-        render: undefined,
-      })) || [],
-  }), [config, props]);
+  // Create a minimal config for PropExplorerContent
+  const propExplorerConfig = React.useMemo(() => ({
+    id: componentId,
+    name: componentName,
+    props: props.map(prop => ({
+      ...prop,
+      type: String(prop.type), // Convert unknown to string
+    })),
+  }), [componentId, componentName, props]);
 
   return (
     <PropExplorerProvider defaultProps={defaultProps}>
@@ -82,9 +81,9 @@ export function ComponentPropExplorer({
           }}
         >
           <ComponentPreview
-            componentId={primaryComponentName}
+            componentId={componentName}
             category={category}
-            componentPath={`@patternmode/ui/components/${config.id}/preview`}
+            componentPath={`@patternmode/ui/components/${componentId}/preview`}
           />
         </div>
 
@@ -99,7 +98,7 @@ export function ComponentPropExplorer({
                     </div>
                   )
                 : (
-                    <PropExplorerContent config={serializableConfig} />
+                    <PropExplorerContent config={propExplorerConfig} />
                   )}
             </InspectorBody>
           </Inspector>

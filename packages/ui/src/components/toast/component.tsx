@@ -18,11 +18,11 @@ const toastVariants = tv({
     // background
     "bg-white dark:bg-zinc-950",
     // border
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
   ],
   variants: {
     variant: {
-      default: "border-zinc-200 dark:border-zinc-800",
+      default: " dark:border-zinc-800",
       success:
         "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-50",
       error:

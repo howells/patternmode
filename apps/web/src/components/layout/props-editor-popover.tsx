@@ -56,7 +56,7 @@ export function PropsEditorPopover({
         sideOffset={8}
       >
         <div className="space-y-4">
-          <div className="border-b border-zinc-200 dark:border-zinc-700 pb-3">
+          <div className="border-b  dark:border-zinc-700 pb-3">
             <h3 className="font-semibold text-sm">
               {config.name}
               {" "}

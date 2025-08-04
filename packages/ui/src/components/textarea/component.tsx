@@ -61,11 +61,11 @@ const Textarea = (
   { ref: forwardedRef, className, hasError, autoResize = true, size = "base", fullWidth = false, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
 ) => {
   const cleanProps = props;
-  
+
   // Size-based styling
   const sizeStyles = {
     xs: "min-h-control-xs px-2 py-1.5 text-xs",
-    sm: "min-h-control-sm px-2.5 py-2 text-sm", 
+    sm: "min-h-control-sm px-2.5 py-2 text-sm",
     base: "min-h-control-base px-3 py-2 text-sm",
     lg: "min-h-control-lg px-4 py-2.5 text-base",
   };
@@ -80,13 +80,13 @@ const Textarea = (
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // border color
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // background color
     "bg-white dark:bg-zinc-950",
     // placeholder color
     "placeholder-zinc-400 dark:placeholder-zinc-500",
     // disabled
-    "disabled:border-zinc-200 disabled:bg-zinc-100 disabled:text-zinc-300",
+    "disabled: disabled:bg-zinc-100 disabled:text-zinc-300",
     "dark:disabled:border-zinc-700 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500",
     // focus
     focusInput,

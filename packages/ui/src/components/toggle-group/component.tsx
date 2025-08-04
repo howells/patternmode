@@ -24,7 +24,7 @@ const toggleGroupVariants = tv({
       // base
       "flex gap-px rounded-md border p-0.5",
       // colors
-      "border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
+      " bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
     ],
     item: [
       // base
@@ -47,11 +47,11 @@ const toggleGroupVariants = tv({
   variants: {
     variant: {
       default: {
-        root: "border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
+        root: " bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
         item: "",
       },
       outline: {
-        root: "border-zinc-200 bg-transparent dark:border-zinc-600",
+        root: " bg-transparent dark:border-zinc-600",
         item: "border border-transparent data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
       },
       ghost: {

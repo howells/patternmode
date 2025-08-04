@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 
+import Logo from "@/components/logo";
 import {
   Badge,
   Sidebar,
@@ -57,10 +58,10 @@ function SidebarContent() {
     = useSidebarView();
 
   // Check if current path matches a component
-  const isCurrentComponent = (category: string, componentId: string) => {
+  const isCurrentComponent = (componentId: string) => {
     return (
       segments.length >= 2
-      && segments[0] === category
+      && segments[0] === "components"
       && segments[1] === componentId
     );
   };
@@ -75,15 +76,12 @@ function SidebarContent() {
         <div className="relative w-full h-full flex items-center">
           <Link
             href="/"
-            className={cx("absolute top-4.5 left-3", {
+            className={cx("absolute top-4.5 left-3 max-lg:hidden", {
               "opacity-100": !isCollapsed,
               "opacity-0": isCollapsed,
             })}
           >
-            <Pilcrow
-              className="size-7 text-zinc-600 dark:text-zinc-400 scale-x-[-1]"
-              strokeWidth={1.5}
-            />
+            <Logo />
           </Link>
         </div>
       </SidebarHeader>
@@ -156,11 +154,8 @@ function SidebarContent() {
                           return (
                             <SidebarItem
                               key={component.id}
-                              href={`/ui/${category.key}/${component.id}`}
-                              current={isCurrentComponent(
-                                category.key,
-                                component.id,
-                              )}
+                              href={`/ui/components/${component.id}`}
+                              current={isCurrentComponent(component.id)}
                               isCollapsed={isCollapsed}
                               leftIcon={component.icon}
                             >
@@ -180,11 +175,8 @@ function SidebarContent() {
                     return (
                       <SidebarItem
                         key={component.id}
-                        href={`/ui/${component.category}/${component.id}`}
-                        current={isCurrentComponent(
-                          component.category,
-                          component.id,
-                        )}
+                        href={`/ui/components/${component.id}`}
+                        current={isCurrentComponent(component.id)}
                         isCollapsed={isCollapsed}
                         leftIcon={component.icon}
                       >
@@ -221,7 +213,16 @@ function MainContent({ children }: { children: React.ReactNode }) {
       }}
     >
       <Stack direction="vertical" gap={0} className="min-h-0 flex-1">
-        <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-end">
+        <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b  dark:border-zinc-800 flex items-center justify-between">
+          <Link
+            href="/"
+            className={cx("lg:hidden opacity-0", {
+              "opacity-100": !isCollapsed,
+              "opacity-0": isCollapsed,
+            })}
+          >
+            <Logo />
+          </Link>
           <ComponentSearch />
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>

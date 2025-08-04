@@ -54,7 +54,7 @@ const tabsVariants = tv({
           // base
           "relative flex items-center justify-start",
           // bottom border (divider)
-          "border-b border-zinc-200 dark:border-zinc-800",
+          "border-b  dark:border-zinc-800",
         ],
         tab: [
 

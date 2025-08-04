@@ -171,7 +171,7 @@ const ContextMenuSubmenuContent = ({
           // text color
           "text-zinc-900 dark:text-zinc-50",
           // border color
-          "border-zinc-200 dark:border-zinc-800",
+          " dark:border-zinc-800",
           // transition
           "will-change-[transform,opacity]",
           "data-[starting-style]:animate-hide",
@@ -215,7 +215,7 @@ const ContextMenuContent = ({
           // text color
           "text-zinc-900 dark:text-zinc-50",
           // border color
-          "border-zinc-200 dark:border-zinc-800",
+          " dark:border-zinc-800",
           // transition
           "will-change-[transform,opacity]",
           "data-[starting-style]:animate-hide",
@@ -431,7 +431,7 @@ const ContextMenuSeparator = ({
     ref={forwardedRef}
     className={cx(
       // base
-      "-mx-1 my-1 h-px border-t border-zinc-200 dark:border-zinc-800",
+      "-mx-1 my-1 h-px border-t  dark:border-zinc-800",
       className,
     )}
     {...props}

@@ -62,7 +62,7 @@ export const CompactExample = () => (
 // No padding card
 export const NoPaddingExample = () => (
   <Card padding={0}>
-    <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
+    <div className="p-6 border-b  dark:border-zinc-800">
       <h3 className="font-semibold">Header</h3>
     </div>
     <div className="p-6">

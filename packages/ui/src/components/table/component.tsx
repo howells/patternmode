@@ -72,7 +72,7 @@ const Table = ({ ref: forwardedRef, className, ...props }: TableProps) => (
       // base
       "w-full caption-bottom border-b",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       className,
     )}
     data-testid="table"
@@ -103,7 +103,7 @@ const TableHeaderCell = ({ ref: forwardedRef, className, ...props }: TableHeader
       // text color
       "text-zinc-900 dark:text-zinc-50",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       className,
     )}
     {...props}
@@ -180,7 +180,7 @@ const TableFoot = ({ ref: forwardedRef, className, ...props }: TableFootProps) =
         // text color
         "text-zinc-900 dark:text-zinc-50",
         // border color
-        "border-zinc-200 dark:border-zinc-800",
+        " dark:border-zinc-800",
         className,
       )}
       {...props}

@@ -47,7 +47,7 @@ export const Inspector = ({
           // Base layout
           "flex h-full w-80 flex-shrink-0 flex-col",
           // Border and background
-          "border-l border-zinc-200 bg-zinc-50/50",
+          "border-l  bg-zinc-50/50",
           "dark:border-zinc-800 dark:bg-zinc-900/50",
           className,
         )}
@@ -74,7 +74,7 @@ export const Inspector = ({
           // Base layout
           "flex h-full w-80 flex-shrink-0 flex-col",
           // Border and background
-          "border-l border-zinc-200 bg-zinc-50/50",
+          "border-l  bg-zinc-50/50",
           "dark:border-zinc-800 dark:bg-zinc-900/50",
           // Overlay positioning and animation
           asOverlay && [
@@ -107,7 +107,7 @@ export const InspectorHeader = ({
         // Base layout
         "flex flex-shrink-0 items-center justify-between px-6 py-6",
         // Border
-        "border-b border-zinc-200 dark:border-zinc-800",
+        "border-b  dark:border-zinc-800",
         className,
       )}
       {...props}
@@ -305,7 +305,7 @@ export const InspectorToggle = ({
       className={cx(
         // Base button styling
         "flex items-center justify-center w-12 h-12 rounded-full",
-        "bg-white dark:bg-zinc-800 shadow-lg border border-zinc-200 dark:border-zinc-700",
+        "bg-white dark:bg-zinc-800 shadow-lg border  dark:border-zinc-700",
         // Hover and focus states
         "hover:bg-zinc-50 dark:hover:bg-zinc-700",
         "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",

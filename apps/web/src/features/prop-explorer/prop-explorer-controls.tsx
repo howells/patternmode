@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import type { ComponentConfig } from "@patternmode/ui";
-
 import { Button, Subheading, Text } from "@patternmode/ui";
 
 import type { PropMetadata } from "../../lib/prop-explorer";
@@ -11,8 +9,14 @@ import type { PropMetadata } from "../../lib/prop-explorer";
 import { ControlFactory, PropField } from "./controls";
 import { usePropExplorer } from "./prop-explorer-context";
 
+type PropExplorerConfig = {
+  id: string;
+  name: string;
+  props: PropMetadata[];
+};
+
 type PropExplorerContentProps = {
-  config?: ComponentConfig;
+  config?: PropExplorerConfig;
 };
 
 export function PropExplorerContent({ config }: PropExplorerContentProps) {

@@ -234,7 +234,7 @@ export const UserListExample = () => {
       {users.map(user => (
         <div
           key={user.id}
-          className="flex items-center gap-3 p-3 rounded-lg border border-zinc-200 dark:border-zinc-800"
+          className="flex items-center gap-3 p-3 rounded-lg border  dark:border-zinc-800"
         >
           <Avatar
             src={user.avatar}

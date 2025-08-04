@@ -39,7 +39,7 @@ const AlertDialogTrigger = ({ ref, className, children, ...props }: AlertDialogT
     ref={ref}
     className={cx(
       !props.render && [
-        "inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center justify-center rounded-md border  bg-white px-4 py-2 text-sm font-medium transition-colors",
         "hover:bg-zinc-50 hover:text-zinc-900",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50",
@@ -103,7 +103,7 @@ const AlertDialogContent = ({ ref, className, ...props }: AlertDialogContentProp
     <BaseAlertDialog.Popup
       ref={ref}
       className={cx(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg duration-200 rounded-lg",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border  bg-white p-6 shadow-lg duration-200 rounded-lg",
         "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
         "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
         "dark:border-zinc-800 dark:bg-zinc-950",

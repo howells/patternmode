@@ -28,7 +28,7 @@ const TabNavigation = ({ ref: forwardedRef, className, children, ...props }: Tab
         // base
         "flex items-center justify-start whitespace-nowrap border-b [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         // border color
-        "border-zinc-200 dark:border-zinc-800",
+        " dark:border-zinc-800",
         className,
       )}
     >
@@ -62,7 +62,7 @@ const TabNavigationLink = ({ ref: forwardedRef, disabled, className, children, .
           // hover
           "group-hover:text-zinc-700 dark:group-hover:text-zinc-400",
           // border hover
-          "group-hover:border-zinc-200 dark:group-hover:border-zinc-400",
+          "group-hover: dark:group-hover:border-zinc-400",
           // selected
           "group-data-active:border-blue-500 group-data-active:text-blue-500",
           "dark:group-data-active:border-blue-500 dark:group-data-active:text-blue-500",

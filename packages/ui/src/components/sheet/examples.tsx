@@ -35,7 +35,7 @@ export const DefaultExample = () => {
             <input
               id="name"
               defaultValue="Daniel Howells"
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
             />
           </div>
           <div className="space-y-2">
@@ -45,7 +45,7 @@ export const DefaultExample = () => {
             <input
               id="username"
               defaultValue="@howells"
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
             />
           </div>
         </div>
@@ -65,7 +65,7 @@ export const SettingsExample = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <button className="inline-flex items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <button className="inline-flex items-center justify-center rounded-md border  dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           Settings
         </button>
       </SheetTrigger>
@@ -86,7 +86,7 @@ export const SettingsExample = () => {
               <select
                 id="theme"
                 defaultValue="system"
-                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+                className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
               >
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
@@ -98,7 +98,7 @@ export const SettingsExample = () => {
                 id="animations"
                 type="checkbox"
                 defaultChecked
-                className="h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 rounded  text-blue-600 focus:ring-blue-500"
               />
               <label htmlFor="animations" className="text-sm text-zinc-900 dark:text-zinc-50">
                 Enable animations
@@ -114,7 +114,7 @@ export const SettingsExample = () => {
                   id="email-notifications"
                   type="checkbox"
                   defaultChecked
-                  className="h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
+                  className="h-4 w-4 rounded  text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="email-notifications" className="text-sm text-zinc-900 dark:text-zinc-50">
                   Email notifications
@@ -124,7 +124,7 @@ export const SettingsExample = () => {
                 <input
                   id="push-notifications"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
+                  className="h-4 w-4 rounded  text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="push-notifications" className="text-sm text-zinc-900 dark:text-zinc-50">
                   Push notifications
@@ -135,7 +135,7 @@ export const SettingsExample = () => {
         </div>
         <SheetFooter>
           <SheetClose>
-            <button className="inline-flex items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
+            <button className="inline-flex items-center justify-center rounded-md border  dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
               Cancel
             </button>
           </SheetClose>
@@ -171,7 +171,7 @@ export const ContactFormExample = () => {
             <input
               id="contact-name"
               placeholder="Enter your full name"
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
             />
           </div>
           <div className="space-y-2">
@@ -182,7 +182,7 @@ export const ContactFormExample = () => {
               id="contact-email"
               type="email"
               placeholder="your@email.com"
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
             />
           </div>
           <div className="space-y-2">
@@ -192,7 +192,7 @@ export const ContactFormExample = () => {
             <input
               id="contact-subject"
               placeholder="What's this about?"
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
             />
           </div>
           <div className="space-y-2">
@@ -203,13 +203,13 @@ export const ContactFormExample = () => {
               id="contact-message"
               placeholder="Type your message here..."
               rows={4}
-              className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 resize-none"
+              className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 resize-none"
             />
           </div>
         </div>
         <SheetFooter>
           <SheetClose>
-            <button className="inline-flex items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
+            <button className="inline-flex items-center justify-center rounded-md border  dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
               Cancel
             </button>
           </SheetClose>
@@ -226,7 +226,7 @@ export const InformationExample = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <button className="inline-flex items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <button className="inline-flex items-center justify-center rounded-md border  dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           About
         </button>
       </SheetTrigger>
@@ -294,7 +294,7 @@ export const InformationExample = () => {
         </div>
         <SheetFooter>
           <SheetClose>
-            <button className="inline-flex items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
+            <button className="inline-flex items-center justify-center rounded-md border  dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-2 text-sm font-medium text-zinc-900 dark:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900">
               Close
             </button>
           </SheetClose>

@@ -118,7 +118,7 @@ export function SplitButtonExample({
           return (
             <div key={index}>
               {showSeparators && index === Math.floor(menuItemCount / 2) && (
-                <div className="border-t border-zinc-200 dark:border-zinc-700 my-1" />
+                <div className="border-t  dark:border-zinc-700 my-1" />
               )}
               <div
                 className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"

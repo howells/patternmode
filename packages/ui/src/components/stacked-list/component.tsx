@@ -233,7 +233,7 @@ const StackedListHeader = ({ title, description, actions, className, ...props }:
       gap={0}
       minHeight="none"
       className={cx(
-        "border-b border-zinc-200 bg-zinc-50 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-900/50",
+        "border-b  bg-zinc-50 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-900/50",
         className,
       )}
       {...props}

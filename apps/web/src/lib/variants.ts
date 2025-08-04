@@ -262,7 +262,7 @@ export const buttonSpecificVariants = {
   ],
   "outline-dashed": [
     // dashed border with normal shadow
-    "border-2 border-dashed border-zinc-300 shadow-xs",
+    "border-2 border-dashed  shadow-xs",
     "dark:border-zinc-600",
     // text color
     "text-zinc-900 dark:text-zinc-50",
@@ -272,7 +272,7 @@ export const buttonSpecificVariants = {
     "hover:bg-zinc-100 hover:border-zinc-400 hover:shadow-xs",
     "dark:hover:bg-zinc-800 dark:hover:border-zinc-500",
     // disabled
-    "disabled:text-zinc-400 disabled:border-zinc-200 disabled:shadow-none",
+    "disabled:text-zinc-400 disabled: disabled:shadow-none",
     "dark:disabled:text-zinc-600 dark:disabled:border-zinc-700",
   ],
   "ghost": [

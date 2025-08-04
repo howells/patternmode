@@ -130,7 +130,7 @@ const PreviewCardContent = (
             // base
             "z-50 w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg border shadow-lg",
             // border color
-            "border-zinc-200 dark:border-zinc-800",
+            " dark:border-zinc-800",
             // background color
             "bg-white dark:bg-zinc-950",
             // animations
@@ -348,7 +348,7 @@ const PreviewCardFooter = ({ ref, className, ...props }: PreviewCardFooterProps)
       // base
       "flex items-center justify-between px-4 py-3",
       // border
-      "border-t border-zinc-200 dark:border-zinc-800",
+      "border-t  dark:border-zinc-800",
       // background
       "bg-zinc-50 dark:bg-zinc-900/50",
       className,

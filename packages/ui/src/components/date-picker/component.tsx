@@ -60,7 +60,7 @@ const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
         // base
         "relative block w-full appearance-none rounded-md border px-2.5 py-1.5 text-left uppercase tabular-nums shadow-xs outline-hidden transition sm:text-sm",
         // border color
-        "border-zinc-200 dark:border-zinc-800",
+        " dark:border-zinc-800",
         // text color
         "text-zinc-900 dark:text-zinc-50",
         // background color
@@ -72,7 +72,7 @@ const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
         {
           "w-fit! border-none bg-transparent px-0 text-zinc-400 shadow-none":
             segment.type === "literal",
-          "border-zinc-200 bg-zinc-100 text-zinc-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-500":
+          " bg-zinc-100 text-zinc-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-500":
             state.isDisabled && segment.text !== ":",
         },
       )}
@@ -149,7 +149,7 @@ const triggerStyles = tv({
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // placeholder color
@@ -615,7 +615,7 @@ const PresetContainer = <TPreset extends Preset, TValue>({
                 // text color
                 "text-zinc-700 dark:text-zinc-300",
                 // border color
-                "border-zinc-200 dark:border-zinc-800",
+                " dark:border-zinc-800",
                 // focus
                 focusRing,
                 // background color
@@ -801,7 +801,7 @@ const SingleDatePicker = ({
               <div
                 className={cx(
                   "relative flex h-14 w-full items-center sm:h-full sm:w-40",
-                  "border-b border-zinc-200 sm:border-r sm:border-b-0 dark:border-zinc-800",
+                  "border-b  sm:border-r sm:border-b-0 dark:border-zinc-800",
                   "overflow-auto",
                 )}
               >
@@ -833,7 +833,7 @@ const SingleDatePicker = ({
                 }) => rest)(props)}
               />
               {showTimePicker && (
-                <div className="border-t border-zinc-200 p-3 dark:border-zinc-800">
+                <div className="border-t  p-3 dark:border-zinc-800">
                   <TimeInput
                     aria-label="Time"
                     onChange={onTimeChange}
@@ -843,7 +843,7 @@ const SingleDatePicker = ({
                   />
                 </div>
               )}
-              <div className="flex items-center gap-x-2 border-t border-zinc-200 p-3 dark:border-zinc-800">
+              <div className="flex items-center gap-x-2 border-t  p-3 dark:border-zinc-800">
                 <Button
                   variant="secondary"
                   className="h-8 w-full"

@@ -573,7 +573,7 @@ const ChartTooltip = ({
           // base
           "rounded-md border text-sm shadow-md",
           // border color
-          "border-zinc-200 dark:border-zinc-800",
+          " dark:border-zinc-800",
           // background color
           "bg-white dark:bg-zinc-950",
         )}

@@ -83,7 +83,7 @@ export function ResponsiveDrawerExample({
                 <input
                   type="text"
                   placeholder="Enter your full name"
-                  className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm"
+                  className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md text-sm"
                 />
               </div>
               <div>
@@ -93,7 +93,7 @@ export function ResponsiveDrawerExample({
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm"
+                  className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md text-sm"
                 />
               </div>
               <div>
@@ -103,7 +103,7 @@ export function ResponsiveDrawerExample({
                 <textarea
                   placeholder="Enter your message"
                   rows={3}
-                  className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm"
+                  className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md text-sm"
                 />
               </div>
             </div>

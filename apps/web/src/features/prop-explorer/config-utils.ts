@@ -88,8 +88,20 @@ export async function getDefaultProps(config: ComponentConfig): Promise<Record<s
   const defaultProps: Record<string, unknown> = {};
 
   props.forEach((prop) => {
+    // Check for standard defaultValue
     if (prop.defaultValue !== undefined) {
       defaultProps[prop.name] = prop.defaultValue;
+    }
+    // Check for variant props with defaultOption
+    else if ("defaultOption" in prop && prop.defaultOption !== undefined) {
+      defaultProps[prop.name] = prop.defaultOption;
+    }
+    // Check for options array with first option as default
+    else if ("options" in prop && Array.isArray(prop.options) && prop.options.length > 0) {
+      const firstOption = prop.options[0];
+      // Handle both string arrays and VariantOption objects
+      const defaultValue = typeof firstOption === "string" ? firstOption : firstOption.value;
+      defaultProps[prop.name] = defaultValue;
     }
   });
 

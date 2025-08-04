@@ -236,7 +236,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
             <div
               // eslint-disable-next-line react/no-array-index-key
               key={index}
-              className="group relative border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
+              className="group relative border  dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
             >
               {showItemLabels && (
                 <div className="flex items-center justify-between mb-3">
@@ -255,7 +255,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
           <div
             // eslint-disable-next-line react/no-array-index-key
             key={index}
-            className="group relative border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
+            className="group relative border  dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
           >
             {/* Header with controls */}
             <div className="flex items-center justify-between mb-3">

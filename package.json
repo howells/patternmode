@@ -28,7 +28,9 @@
     "clean": "turbo clean",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo build && changeset publish"
+    "release": "turbo build && changeset publish",
+    "generate:pages": "node scripts/generate-component-pages.js",
+    "prebuild": "pnpm run generate:pages"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.1.0",

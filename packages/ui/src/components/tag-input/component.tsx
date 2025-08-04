@@ -410,7 +410,7 @@ const TagInput = ({
       {/* Main input container */}
       <div
         className={cx(
-          "h-control-base w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950",
+          "h-control-base w-full rounded-md border  dark:border-zinc-800 bg-white dark:bg-zinc-950",
           "flex items-center gap-1 px-2 py-1",
           wrap ? "flex-wrap" : "overflow-x-auto",
           focusRing,
@@ -468,7 +468,7 @@ const TagInput = ({
       <div
         {...getMenuProps({
           className: cx(
-            "absolute z-50 w-full mt-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-lg",
+            "absolute z-50 w-full mt-1 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md shadow-lg",
             "overflow-hidden",
             (!isOpen || isMaxReached)
             && "opacity-0 pointer-events-none invisible",
@@ -492,7 +492,7 @@ const TagInput = ({
                         })}
                         className={cx(
                           option.data?.isNew === true
-                          && "border-t border-zinc-200 dark:border-zinc-800",
+                          && "border-t  dark:border-zinc-800",
                         )}
                       >
                         {renderDropdownItem(option, index)}

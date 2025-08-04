@@ -29,6 +29,11 @@ export function PropExplorerProvider({
 }: PropExplorerProviderProps) {
   const [props, setProps] = useState<PropExplorerState>(defaultProps);
 
+  // Update state when defaultProps changes (e.g., when async loading completes)
+  React.useEffect(() => {
+    setProps(defaultProps);
+  }, [defaultProps]);
+
   const updateProp = (key: string, value: unknown) => {
     setProps(prev => ({
       ...prev,

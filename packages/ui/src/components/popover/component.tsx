@@ -157,7 +157,7 @@ const PopoverContent = (
             // base
             "z-50 min-w-60 max-w-sm overflow-hidden rounded-md border p-2.5 text-sm shadow-xl shadow-black/[2.5%]",
             // border color
-            "border-zinc-200 dark:border-zinc-800",
+            " dark:border-zinc-800",
             // text color
             "text-zinc-900 dark:text-zinc-50",
             // background color

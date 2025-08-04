@@ -75,7 +75,7 @@ export function SidebarExample({
   }[width];
 
   return (
-    <div className="h-96 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
+    <div className="h-96 border  dark:border-zinc-800 rounded-lg overflow-hidden">
       <Sidebar className={widthClass}>
         <SidebarHeader>
           <div className="flex items-center gap-2">

@@ -233,7 +233,7 @@ export function GridBuilder() {
               }
               align={stackState.align}
               justify={stackState.justify}
-              className="min-h-[200px] border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg p-4"
+              className="min-h-[200px] border-2 border-dashed  dark:border-zinc-600 rounded-lg p-4"
             >
               {stackState.items.map((item, index) => (
                 <Stack key={index}>

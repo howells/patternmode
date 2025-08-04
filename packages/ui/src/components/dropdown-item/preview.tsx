@@ -7,7 +7,7 @@ import { DropdownItem } from "./component";
 
 export function DropdownItemExample(props: DropdownItemProps) {
   return (
-    <div className="w-48 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md p-1">
+    <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
       <DropdownItem leftIcon={User} {...props}>
         {props.children || "Menu Item"}
       </DropdownItem>

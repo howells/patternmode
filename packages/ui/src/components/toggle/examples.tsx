@@ -209,7 +209,7 @@ export function ToolbarExample() {
   });
 
   return (
-    <div className="flex items-center gap-1 p-1 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-950">
+    <div className="flex items-center gap-1 p-1 border  dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-950">
       <Toggle
         size="sm"
         pressed={formatting.bold}

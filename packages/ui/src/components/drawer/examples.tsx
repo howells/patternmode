@@ -60,7 +60,7 @@ export const FormExample = () => (
           <input
             type="text"
             placeholder="Item name"
-            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border  dark:border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="space-y-2">
@@ -70,7 +70,7 @@ export const FormExample = () => (
           <textarea
             placeholder="Item description"
             rows={3}
-            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border dark:border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>

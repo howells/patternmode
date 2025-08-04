@@ -255,7 +255,7 @@ const createDynamicComponent = (
               // Return a fallback error component
               return {
                 default: () => (
-                  <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
+                  <div className="text-zinc-500 p-4 border  rounded bg-zinc-50 dark:bg-zinc-900">
                     <p className="font-medium">
                       {componentId}
                       {" "}
@@ -268,18 +268,9 @@ const createDynamicComponent = (
             }
           }
 
-          // If no category, return fallback error component
-          console.error(
-            `All import strategies failed for ${componentId}:`,
-            {
-              threeFile: error.message,
-              flat: fallbackError.message,
-            },
-          );
-
           return {
             default: () => (
-              <div className="text-zinc-500 p-4 border border-zinc-200 rounded bg-zinc-50 dark:bg-zinc-900">
+              <div className="text-zinc-500 p-4 border rounded bg-zinc-50 dark:bg-zinc-900">
                 <p className="font-medium">
                   {componentId}
                   {" "}
@@ -380,10 +371,12 @@ export function ComponentPreview({
     <Tabs defaultValue="preview">
       <Stack>
         {/* Tabs aligned to left with padding instead of absolute positioning */}
-        <TabsList variant="solid">
-          <TabsTrigger value="preview">Preview</TabsTrigger>
-          <TabsTrigger value="code">Code</TabsTrigger>
-        </TabsList>
+        <div className="flex justify-start">
+          <TabsList variant="solid">
+            <TabsTrigger value="preview">Preview</TabsTrigger>
+            <TabsTrigger value="code">Code</TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="preview" data-testid="component-preview">
           <Stack data-testid="preview-container">

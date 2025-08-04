@@ -156,7 +156,7 @@ const SheetContent = ({ ref: forwardedRef, className, ...props }: SheetContentPr
           // base
           "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
           // border color
-          "border-zinc-200 dark:border-zinc-900",
+          " dark:border-zinc-900",
           // background color
           "bg-white dark:bg-[#090E1A]",
           // transition
@@ -189,7 +189,7 @@ const SheetHeader = ({ ref, children, className, ...props }: SheetHeaderProps & 
   return (
     <div
       ref={ref}
-      className="flex items-start justify-between gap-x-4 border-b border-zinc-200 pb-4 dark:border-zinc-900"
+      className="flex items-start justify-between gap-x-4 border-b  pb-4 dark:border-zinc-900"
       {...props}
     >
       <div className={cx("mt-1 flex flex-col gap-y-1", className)}>
@@ -282,7 +282,7 @@ const SheetFooter = ({
   return (
     <div
       className={cx(
-        "flex flex-col-reverse border-t border-zinc-200 pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
+        "flex flex-col-reverse border-t  pt-4 sm:flex-row sm:justify-end sm:space-x-2 dark:border-zinc-900",
         className,
       )}
       {...props}

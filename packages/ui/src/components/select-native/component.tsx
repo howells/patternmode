@@ -12,7 +12,7 @@ const selectNativeStyles = tv({
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // placeholder color

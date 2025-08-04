@@ -48,10 +48,11 @@ export const CardPreviewProps = [
   },
   {
     name: "padding",
-    type: "select",
-    description: "Padding scale value controlling internal spacing.",
-    options: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    type: "number",
+    description: "Padding scale value (0-24) controlling internal spacing using the 4px grid system.",
     defaultValue: 0,
+    min: 0,
+    max: 24,
   },
   {
     name: "fillHeight",

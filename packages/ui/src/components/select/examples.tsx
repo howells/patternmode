@@ -309,7 +309,7 @@ export const FormIntegrationExample = () => {
           value={formData.name}
           onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
           placeholder="Enter your full name"
-          className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
+          className="w-full rounded-md border  dark:border-zinc-700 px-3 py-2 text-sm bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
         />
       </div>
 
@@ -586,7 +586,7 @@ export const SearchableExample = () => {
               placeholder="Search countries..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="w-full px-2 py-1 text-sm border rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950"
+              className="w-full px-2 py-1 text-sm border rounded  dark:border-zinc-700 bg-white dark:bg-zinc-950"
               onClick={e => e.stopPropagation()}
             />
           </div>

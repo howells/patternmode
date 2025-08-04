@@ -28,7 +28,7 @@ type ComponentSearchProps = {
 };
 
 export function ComponentSearch({
-  placeholder = "Search...",
+  placeholder = "Search",
   onSelectComponent,
   open,
   onOpenChange,

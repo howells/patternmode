@@ -16,7 +16,7 @@ const kbdVariants = tv({
     variant: {
       default: [
         // Light mode
-        "border-zinc-200 bg-zinc-100 text-zinc-600",
+        " bg-zinc-100 text-zinc-600",
         // Dark mode
         "dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400",
       ],

@@ -27,7 +27,7 @@ export const BasicExample = () => {
               <input
                 type="number"
                 defaultValue={320}
-                className="w-full px-3 py-2 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
+                className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
               />
             </InspectorGroup>
             <InspectorGroup>
@@ -37,7 +37,7 @@ export const BasicExample = () => {
               <input
                 type="number"
                 defaultValue={240}
-                className="w-full px-3 py-2 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
+                className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
               />
             </InspectorGroup>
           </InspectorSection>
@@ -72,7 +72,7 @@ export const DesignToolExample = () => {
               <select
                 value={display}
                 onChange={e => setDisplay(e.target.value)}
-                className="w-full px-3 py-2 border border-zinc-200 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
+                className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-sm"
               >
                 <option value="block">Block</option>
                 <option value="flex">Flex</option>
@@ -207,7 +207,7 @@ export const ToggleableExample = () => {
               <input
                 type="color"
                 defaultValue="#ffffff"
-                className="w-full h-10 border border-zinc-200 dark:border-zinc-700 rounded-md"
+                className="w-full h-10 border  dark:border-zinc-700 rounded-md"
               />
             </InspectorGroup>
             <InspectorGroup>

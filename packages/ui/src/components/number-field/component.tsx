@@ -227,7 +227,7 @@ const NumberFieldInput = ({ ref, className, size = "base", ...props }: NumberFie
   // Size-based styling
   const sizeStyles = {
     xs: "h-control-xs px-2 text-xs",
-    sm: "h-control-sm px-2.5 text-sm", 
+    sm: "h-control-sm px-2.5 text-sm",
     base: "h-control-base px-3 text-sm",
     lg: "h-control-lg px-4 text-base",
   };
@@ -241,7 +241,7 @@ const NumberFieldInput = ({ ref, className, size = "base", ...props }: NumberFie
         // size-specific styles
         sizeStyles[size],
         // border color
-        "border-zinc-200 dark:border-zinc-700",
+        " dark:border-zinc-700",
         // background color
         "bg-white dark:bg-zinc-950",
         // text color
@@ -288,7 +288,7 @@ const NumberFieldIncrement = ({ ref, className, children, size = "base", ...prop
   // Size-based styling
   const sizeStyles = {
     xs: "h-control-xs w-8 text-xs",
-    sm: "h-control-sm w-9 text-sm", 
+    sm: "h-control-sm w-9 text-sm",
     base: "h-control-base w-10 text-sm",
     lg: "h-control-lg w-12 text-base",
   };
@@ -302,7 +302,7 @@ const NumberFieldIncrement = ({ ref, className, children, size = "base", ...prop
         // size-specific styles
         sizeStyles[size],
         // border color
-        "border-zinc-200 dark:border-zinc-700",
+        " dark:border-zinc-700",
         // background color
         "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
         // text color
@@ -347,7 +347,7 @@ const NumberFieldDecrement = ({ ref, className, children, size = "base", ...prop
   // Size-based styling
   const sizeStyles = {
     xs: "h-control-xs w-8 text-xs",
-    sm: "h-control-sm w-9 text-sm", 
+    sm: "h-control-sm w-9 text-sm",
     base: "h-control-base w-10 text-sm",
     lg: "h-control-lg w-12 text-base",
   };
@@ -361,7 +361,7 @@ const NumberFieldDecrement = ({ ref, className, children, size = "base", ...prop
         // size-specific styles
         sizeStyles[size],
         // border color
-        "border-zinc-200 dark:border-zinc-700",
+        " dark:border-zinc-700",
         // background color
         "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
         // text color

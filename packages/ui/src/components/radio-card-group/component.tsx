@@ -55,7 +55,7 @@ const RadioCardItem = ({ ref, className, children, ...props }: RadioCardItemProp
       // background color
       "bg-white dark:bg-zinc-950",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       // checked
       "data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
       // disabled
@@ -83,13 +83,13 @@ const RadioCardIndicator = ({ ref, className, ...props }: RadioCardIndicatorProp
       // base
       "relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-full border shadow-xs outline-hidden",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       // background color
       "bg-white dark:bg-zinc-950",
       // checked
       "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
       // disabled
-      "group-data-[disabled]:border-zinc-200 group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
+      "group-data-[disabled]: group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
       "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
       // focus
       focusRing,

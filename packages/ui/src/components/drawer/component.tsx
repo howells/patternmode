@@ -85,7 +85,7 @@ const DrawerContent = ({ ref, className, children, ...props }: DrawerContentProp
         // background
         "bg-white dark:bg-zinc-950",
         // border
-        "border-zinc-200 dark:border-zinc-800",
+        " dark:border-zinc-800",
         // shadow
         "shadow-lg",
         className,

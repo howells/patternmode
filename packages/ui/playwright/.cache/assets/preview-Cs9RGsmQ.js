@@ -1,4 +1,4 @@
-import { r as requireReact, g as getDefaultExportFromCjs, R as React, a as reactExports, _ as __vitePreload, b as React$1 } from './index-B4ZuRjqh.js';
+import { _ as __vitePreload, g as getDefaultExportFromCjs, R as React, b as React$1, a as reactExports, r as requireReact } from './index-B4ZuRjqh.js';
 
 var jsxDevRuntime$2 = {exports: {}};
 
@@ -41288,7 +41288,7 @@ const $ZodCheckGreaterThan = /*@__PURE__*/ $constructor("$ZodCheckGreaterThan", 
         });
     };
 });
-const $ZodCheckMultipleOf = 
+const $ZodCheckMultipleOf =
 /*@__PURE__*/ $constructor("$ZodCheckMultipleOf", (inst, def) => {
     $ZodCheck.init(inst, def);
     inst._zod.onattach.push((inst) => {
@@ -42552,7 +42552,7 @@ const $ZodObject = /*@__PURE__*/ $constructor("$ZodObject", (inst, def) => {
             path: iss.path ? [${k}, ...iss.path] : [${k}]
           })));
         }
-        
+
         if (${id}.value === undefined) {
           if (${k} in input) {
             newResult[${k}] = undefined;
@@ -42712,7 +42712,7 @@ const $ZodUnion = /*@__PURE__*/ $constructor("$ZodUnion", (inst, def) => {
         });
     };
 });
-const $ZodDiscriminatedUnion = 
+const $ZodDiscriminatedUnion =
 /*@__PURE__*/
 $constructor("$ZodDiscriminatedUnion", (inst, def) => {
     $ZodUnion.init(inst, def);
@@ -52622,7 +52622,7 @@ const buttonSpecificVariants = {
   ],
   "outline-dashed": [
     // dashed border with normal shadow
-    "border-2 border-dashed border-zinc-300 shadow-xs",
+    "border-2 border-dashed  shadow-xs",
     "dark:border-zinc-600",
     // text color
     "text-zinc-900 dark:text-zinc-50",
@@ -52632,7 +52632,7 @@ const buttonSpecificVariants = {
     "hover:bg-zinc-100 hover:border-zinc-400 hover:shadow-xs",
     "dark:hover:bg-zinc-800 dark:hover:border-zinc-500",
     // disabled
-    "disabled:text-zinc-400 disabled:border-zinc-200 disabled:shadow-none",
+    "disabled:text-zinc-400 disabled: disabled:shadow-none",
     "dark:disabled:text-zinc-600 dark:disabled:border-zinc-700"
   ],
   "ghost": [
@@ -52814,7 +52814,7 @@ const kbdVariants = rt({
     variant: {
       default: [
         // Light mode
-        "border-zinc-200 bg-zinc-100 text-zinc-600",
+        " bg-zinc-100 text-zinc-600",
         // Dark mode
         "dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400"
       ],
@@ -54202,7 +54202,7 @@ const avatarVariants = rt({
       "xs": "size-control-xs",
       // 28px - aligns with control system for form contexts
       "sm": "size-control-sm",
-      // 36px - aligns with control system for form contexts  
+      // 36px - aligns with control system for form contexts
       "base": "size-control-base",
       // 40px - aligns with control system for form contexts
       "lg": "size-control-lg",
@@ -54826,7 +54826,7 @@ const TagInput = ({
       "div",
       {
         className: cx(
-          "h-control-base w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950",
+          "h-control-base w-full rounded-md border  dark:border-zinc-800 bg-white dark:bg-zinc-950",
           "flex items-center gap-1 px-2 py-1",
           wrap ? "flex-wrap" : "overflow-x-auto",
           focusRing,
@@ -54898,7 +54898,7 @@ const TagInput = ({
       {
         ...getMenuProps({
           className: cx(
-            "absolute z-50 w-full mt-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-lg",
+            "absolute z-50 w-full mt-1 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md shadow-lg",
             "overflow-hidden",
             (!isOpen || isMaxReached) && "opacity-0 pointer-events-none invisible",
             dropdownClassName
@@ -54914,7 +54914,7 @@ const TagInput = ({
               disabled: option.disabled
             }),
             className: cx(
-              option.data?.isNew === true && "border-t border-zinc-200 dark:border-zinc-800"
+              option.data?.isNew === true && "border-t  dark:border-zinc-800"
             ),
             children: renderDropdownItem(option, index)
           },

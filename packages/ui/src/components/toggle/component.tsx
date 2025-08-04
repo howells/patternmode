@@ -15,7 +15,7 @@ const toggleVariants = tv({
     // base
     "group inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-md border px-2 text-sm font-medium shadow-xs transition-all duration-100 ease-in-out",
     // border
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // text color
     "text-zinc-700 dark:text-zinc-300",
     // background color
@@ -38,7 +38,7 @@ const toggleVariants = tv({
       ],
       ghost: [
         "border-transparent",
-        "hover:border-zinc-200 dark:hover:border-zinc-700",
+        "hover: dark:hover:border-zinc-700",
       ],
     },
     size: {

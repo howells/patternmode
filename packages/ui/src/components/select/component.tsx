@@ -25,7 +25,7 @@ const selectTriggerVariants = tv({
     // base
     "group/trigger flex w-full max-w-sm select-none items-center justify-between gap-2 truncate rounded-md border shadow-xs outline-hidden transition",
     // border color
-    "border-zinc-200 dark:border-zinc-800",
+    " dark:border-zinc-800",
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // placeholder
@@ -272,7 +272,7 @@ const SelectContent = (
           // text color
           "text-zinc-900 dark:text-zinc-50",
           // border color
-          "border-zinc-200 dark:border-zinc-800",
+          " dark:border-zinc-800",
           // animations
           "data-[starting-style]:animate-in data-[ending-style]:animate-out",
           "data-[starting-style]:fade-in data-[ending-style]:fade-out",

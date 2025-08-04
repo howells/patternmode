@@ -203,7 +203,7 @@ const FormControl = ({ className, children, ...props }: FormControlProps & { chi
         // base
         "block w-full rounded-md border px-3 py-2 text-sm transition-colors",
         // border
-        "border-zinc-200 dark:border-zinc-600",
+        " dark:border-zinc-600",
         // background
         "bg-white dark:bg-zinc-800",
         // text

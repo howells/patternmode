@@ -46,7 +46,7 @@ const MenuBar = ({ ref, className, ...props }: MenuBarProps) => (
       // background color
       "bg-zinc-50 dark:bg-zinc-900",
       // border color
-      "border-zinc-200 dark:border-zinc-800",
+      " dark:border-zinc-800",
       className,
     )}
     {...props}
