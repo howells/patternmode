@@ -83,7 +83,6 @@ export function ComponentPropExplorer({
           <ComponentPreview
             componentId={componentName}
             category={category}
-            componentPath={`@patternmode/ui/components/${componentId}/preview`}
           />
         </div>
 
