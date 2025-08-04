@@ -20,6 +20,7 @@ export const componentConfig: ComponentConfig = {
   name: "Popover",
   description: "A comprehensive popover system built on Base UI Popover for creating contextual overlays, tooltips, and dropdown content. Features smart positioning, collision detection, and smooth animations.",
   category: "overlay",
+  featured: true,
   icon: MessageSquare,
   importStatement: `import { Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose, PopoverArrow, PopoverBackdrop, PopoverPortal, PopoverPositioner } from "@patternmode/ui/popover";`,
   examples: [

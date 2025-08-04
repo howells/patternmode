@@ -1,120 +1,82 @@
 "use client";
 
-import { AlertTriangle, HelpCircle, Info } from "lucide-react";
+import { HelpCircle, Info, Settings } from "lucide-react";
 import React, { useState } from "react";
 
-import { Button } from "../button/component";
+import { Button } from "../button";
 import { Tooltip } from "./component";
 
 export function DefaultExample() {
   return (
-    <Tooltip content="This is a helpful tooltip">
-      <Button variant="outline">Hover me</Button>
-    </Tooltip>
+    <Tooltip content="This is a helpful tooltip" children={<Button variant="outline">Hover me</Button>} />
   );
 }
 
 export function PositionsExample() {
   return (
     <div className="flex gap-4 flex-wrap justify-center">
-      <Tooltip content="Top tooltip" side="top">
-        <Button variant="outline" size="sm">Top</Button>
-      </Tooltip>
-      <Tooltip content="Right tooltip" side="right">
-        <Button variant="outline" size="sm">Right</Button>
-      </Tooltip>
-      <Tooltip content="Bottom tooltip" side="bottom">
-        <Button variant="outline" size="sm">Bottom</Button>
-      </Tooltip>
-      <Tooltip content="Left tooltip" side="left">
-        <Button variant="outline" size="sm">Left</Button>
-      </Tooltip>
+      <Tooltip content="Top tooltip" side="top" children={<Button variant="outline">Top</Button>} />
+      <Tooltip content="Right tooltip" side="right" children={<Button variant="outline">Right</Button>} />
+      <Tooltip content="Bottom tooltip" side="bottom" children={<Button variant="outline">Bottom</Button>} />
+      <Tooltip content="Left tooltip" side="left" children={<Button variant="outline">Left</Button>} />
     </div>
   );
 }
 
 export function VariantsExample() {
   return (
-    <div className="flex gap-4 items-center">
-      <Tooltip content="Default tooltip with dark background" variant="default">
-        <Button variant="outline">Default</Button>
-      </Tooltip>
-      <Tooltip content="Inverse tooltip with light background" variant="inverse">
-        <Button variant="outline">Inverse</Button>
-      </Tooltip>
+    <div className="flex gap-4">
+      <Tooltip content="Default tooltip with dark background" variant="default" children={<Button variant="outline">Default</Button>} />
+      <Tooltip content="Inverse tooltip with light background" variant="inverse" children={<Button variant="outline">Inverse</Button>} />
     </div>
   );
 }
 
 export function SizesExample() {
   return (
-    <div className="flex gap-4 items-center">
-      <Tooltip content="Small tooltip" size="sm">
-        <Button variant="outline" size="sm">Small</Button>
-      </Tooltip>
-      <Tooltip content="Default size tooltip" size="default">
-        <Button variant="outline">Default</Button>
-      </Tooltip>
-      <Tooltip content="Large tooltip with more content space" size="lg">
-        <Button variant="outline" size="lg">Large</Button>
-      </Tooltip>
+    <div className="flex gap-4">
+      <Tooltip content="Small tooltip" size="sm" children={<Button variant="outline">Small</Button>} />
+      <Tooltip content="Default size tooltip" size="default" children={<Button variant="outline">Default</Button>} />
+      <Tooltip content="Large tooltip with more content space" size="lg" children={<Button variant="outline">Large</Button>} />
     </div>
   );
 }
 
-export function NoArrowExample() {
+export function ArrowExample() {
   return (
-    <div className="flex gap-4 items-center">
-      <Tooltip content="Tooltip with arrow" showArrow={true}>
-        <Button variant="outline">With Arrow</Button>
-      </Tooltip>
-      <Tooltip content="Tooltip without arrow" showArrow={false}>
-        <Button variant="outline">No Arrow</Button>
-      </Tooltip>
+    <div className="flex gap-4">
+      <Tooltip content="Tooltip with arrow" showArrow={true} children={<Button variant="outline">With Arrow</Button>} />
+      <Tooltip content="Tooltip without arrow" showArrow={false} children={<Button variant="outline">No Arrow</Button>} />
     </div>
   );
 }
 
 export function RichContentExample() {
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4">
       <Tooltip
         content={(
-          <div className="space-y-1">
+          <div className="space-y-2">
             <div className="font-semibold">Rich Content Tooltip</div>
-            <div className="text-xs opacity-90">
-              This tooltip contains multiple elements with formatting
-            </div>
-            <div className="text-xs opacity-75">
-              • Feature A
-            </div>
-            <div className="text-xs opacity-75">
-              • Feature B
-            </div>
+            <div className="text-sm">This tooltip contains multiple elements and formatted text.</div>
           </div>
         )}
         size="lg"
-      >
-        <Button variant="outline">
-          <Info className="h-4 w-4 mr-2" />
-          Rich Content
-        </Button>
-      </Tooltip>
-
+        children={<Button variant="outline">Rich Content</Button>}
+      />
       <Tooltip
         content={(
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-500" />
-            <span>Warning message</span>
+            <Info size={16} />
+            <div>
+              <div className="font-semibold">Info Tooltip</div>
+              <div className="text-xs opacity-80">Additional context here</div>
+            </div>
           </div>
         )}
         variant="inverse"
-      >
-        <Button variant="outline">
-          <AlertTriangle className="h-4 w-4 mr-2" />
-          With Icon
-        </Button>
-      </Tooltip>
+        children={<Button variant="outline">With Icon</Button>}
+      />
     </div>
   );
 }
@@ -123,16 +85,18 @@ export function ControlledExample() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4">
       <Tooltip
         content="This tooltip is controlled externally"
         open={open}
         onOpenChange={setOpen}
+        children={<Button variant="outline">Controlled Tooltip</Button>}
+      />
+      <Button
+        onClick={() => setOpen(!open)}
+        variant="secondary"
       >
-        <Button variant="outline">Controlled Tooltip</Button>
-      </Tooltip>
-      <Button onClick={() => setOpen(!open)} variant="secondary">
-        Toggle: {open ? "Open" : "Closed"}
+        {open ? "Close" : "Open"} Tooltip
       </Button>
     </div>
   );
@@ -140,78 +104,41 @@ export function ControlledExample() {
 
 export function DelayExample() {
   return (
-    <div className="flex gap-4 items-center">
-      <Tooltip content="Fast tooltip (0ms delay)" delayDuration={0}>
-        <Button variant="outline" size="sm">No Delay</Button>
-      </Tooltip>
-      <Tooltip content="Default tooltip (150ms delay)" delayDuration={150}>
-        <Button variant="outline" size="sm">Default Delay</Button>
-      </Tooltip>
-      <Tooltip content="Slow tooltip (500ms delay)" delayDuration={500}>
-        <Button variant="outline" size="sm">Slow Delay</Button>
-      </Tooltip>
+    <div className="flex gap-4">
+      <Tooltip content="Fast tooltip (0ms delay)" delayDuration={0} children={<Button variant="outline">No Delay</Button>} />
+      <Tooltip content="Default tooltip (150ms delay)" delayDuration={150} children={<Button variant="outline">Default Delay</Button>} />
+      <Tooltip content="Slow tooltip (500ms delay)" delayDuration={500} children={<Button variant="outline">Slow Delay</Button>} />
     </div>
   );
 }
 
-export function IconTooltipExample() {
+export function IconButtonsExample() {
   return (
-    <div className="flex gap-4 items-center">
-      <Tooltip content="Get help and documentation" side="bottom">
-        <button className="p-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-          <HelpCircle className="h-4 w-4 text-zinc-500" />
-        </button>
-      </Tooltip>
-
-      <Tooltip content="Important information about this feature" side="bottom">
-        <button className="p-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-          <Info className="h-4 w-4 text-blue-500" />
-        </button>
-      </Tooltip>
-
-      <Tooltip content="This action requires caution" side="bottom" variant="inverse">
-        <button className="p-2 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-          <AlertTriangle className="h-4 w-4 text-amber-500" />
-        </button>
-      </Tooltip>
+    <div className="flex gap-4">
+      <Tooltip content="Get help and documentation" side="bottom" children={<Button variant="ghost" size="icon"><HelpCircle size={16} /></Button>} />
+      <Tooltip content="Important information about this feature" side="bottom" children={<Button variant="ghost" size="icon"><Info size={16} /></Button>} />
+      <Tooltip content="This action requires caution" side="bottom" variant="inverse" children={<Button variant="ghost" size="icon"><Settings size={16} /></Button>} />
     </div>
   );
 }
 
 export function AlignmentExample() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       <div>
-        <h4 className="text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300">
-          Bottom Side with Different Alignments
-        </h4>
+        <h4 className="text-sm font-medium mb-4">Bottom Side Alignment</h4>
         <div className="flex gap-4 justify-center">
-          <Tooltip content="Start aligned tooltip" side="bottom" align="start">
-            <Button variant="outline" size="sm">Start</Button>
-          </Tooltip>
-          <Tooltip content="Center aligned tooltip" side="bottom" align="center">
-            <Button variant="outline" size="sm">Center</Button>
-          </Tooltip>
-          <Tooltip content="End aligned tooltip" side="bottom" align="end">
-            <Button variant="outline" size="sm">End</Button>
-          </Tooltip>
+          <Tooltip content="Start aligned tooltip" side="bottom" align="start" children={<Button variant="outline">Start</Button>} />
+          <Tooltip content="Center aligned tooltip" side="bottom" align="center" children={<Button variant="outline">Center</Button>} />
+          <Tooltip content="End aligned tooltip" side="bottom" align="end" children={<Button variant="outline">End</Button>} />
         </div>
       </div>
-
       <div>
-        <h4 className="text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300">
-          Right Side with Different Alignments
-        </h4>
+        <h4 className="text-sm font-medium mb-4">Right Side Alignment</h4>
         <div className="flex flex-col gap-4 items-start">
-          <Tooltip content="Start aligned tooltip" side="right" align="start">
-            <Button variant="outline" size="sm">Start</Button>
-          </Tooltip>
-          <Tooltip content="Center aligned tooltip" side="right" align="center">
-            <Button variant="outline" size="sm">Center</Button>
-          </Tooltip>
-          <Tooltip content="End aligned tooltip" side="right" align="end">
-            <Button variant="outline" size="sm">End</Button>
-          </Tooltip>
+          <Tooltip content="Start aligned tooltip" side="right" align="start" children={<Button variant="outline">Start</Button>} />
+          <Tooltip content="Center aligned tooltip" side="right" align="center" children={<Button variant="outline">Center</Button>} />
+          <Tooltip content="End aligned tooltip" side="right" align="end" children={<Button variant="outline">End</Button>} />
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ export const componentConfig: ComponentConfig = {
   name: "Loader",
   description: "A spinning loader component for indicating loading states and async operations. Built with Lucide React's Loader2 icon and tailwind-variants for consistent sizing and styling across different contexts.",
   category: "feedback",
+  featured: true,
   icon: Loader2,
   importStatement: `import { Loader } from "@patternmode/ui/loader";`,
   examples: [

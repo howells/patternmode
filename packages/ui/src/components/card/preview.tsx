@@ -5,7 +5,7 @@
 import type { CardProps } from "./component";
 import React from "react";
 import { Button } from "../button/component";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./component";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
 
 export function CardExample(props: CardProps) {
   const { ref, ...cardProps } = props;
@@ -13,7 +13,7 @@ export function CardExample(props: CardProps) {
   return (
     <Card {...cardProps}>
       <CardHeader>
-        <CardTitle>{props.children || "Preview Card"}</CardTitle>
+        <CardHeading>{props.children || "Preview Card"}</CardHeading>
         <CardDescription>This is how the Card component looks in the preview.</CardDescription>
         <CardAction>
           <Button variant="outline" size="sm">Action</Button>
@@ -35,7 +35,7 @@ export const CardPreviewProps = [
   {
     name: "children",
     type: "string",
-    description: "Card title content (used in CardTitle).",
+    description: "Card title content (used in CardHeading).",
     defaultValue: "Preview Card",
   },
   {

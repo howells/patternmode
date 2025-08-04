@@ -18,6 +18,7 @@ export const componentConfig: ComponentConfig = {
   name: "Select",
   description: "A select dropdown component built on Base UI's Select primitive. Provides accessible dropdown selection with keyboard navigation, search, and proper focus management with customizable styling.",
   category: "controls",
+  featured: true,
   icon: ChevronDown,
   importStatement: `import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator } from "@patternmode/ui/select";`,
   examples: [

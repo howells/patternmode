@@ -23,6 +23,7 @@ export const componentConfig: ComponentConfig = {
   name: "Progress",
   description: "A comprehensive progress indicator system built on Base UI Progress components. Provides linear progress bars with configurable styling, animations, labels, and value display options for tracking task completion and loading states.",
   category: "feedback",
+  featured: true,
   icon: BarChart,
   importStatement: `import { Progress, ProgressBar, ProgressIndicator, ProgressLabel, ProgressTrack, ProgressValue } from "@patternmode/ui/progress";`,
   examples: [

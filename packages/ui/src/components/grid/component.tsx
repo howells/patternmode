@@ -1,9 +1,10 @@
 "use client";
 
-import type { SpacingValue } from "../../lib/spacing-utils";
+import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
 import React from "react";
 
 import { tv } from "tailwind-variants";
+import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
 
 /**
@@ -127,10 +128,10 @@ type GridProps = {
    */
   rows?: ResponsiveValue<number>;
   /**
-   * Gap between grid items (4px grid scale: 0-24).
+   * Gap between grid items (4px grid scale: 0-24) - can be responsive.
    * Uses the standardized spacing scale for consistent spacing.
    */
-  gap?: SpacingValue;
+  gap?: ResponsiveSpacing<SpacingValue>;
   /**
    * Grid content including GridCell components.
    * Should contain GridCell components or other grid items.
@@ -155,11 +156,21 @@ const Grid = (
 ) => {
   const responsiveGridStyles = generateResponsiveGridStyles(columns, rows);
 
+  // Get base gap value for non-responsive case
+  const baseGap = getBaseSpacingValue(gap) ?? 4;
+
+  // Generate responsive gap classes
+  const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);
+
+  // Get base gap class for fallback
+  const baseGapClass = getGapClass(baseGap);
+
   return (
     <div
       className={cx(
         "grid",
-        `gap-${gap}`,
+        baseGapClass,
+        responsiveGapClasses,
         gridVariants({ minHeight }),
         responsiveGridStyles,
         className,

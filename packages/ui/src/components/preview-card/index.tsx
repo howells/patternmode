@@ -9,6 +9,6 @@ export {
   PreviewCardImage,
   PreviewCardPortal,
   PreviewCardPositioner,
-  PreviewCardTitle,
+  PreviewCardHeading,
   PreviewCardTrigger,
 } from "./component";

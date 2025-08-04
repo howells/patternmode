@@ -24,6 +24,7 @@ export const componentConfig: ComponentConfig = {
   name: "Breadcrumbs",
   description: "Navigation component that shows the current page location within a site hierarchy, helping users understand their position and navigate back to parent pages.",
   category: "navigation",
+  featured: true,
   icon: ChevronRight,
   importStatement: `import { Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "@patternmode/ui/breadcrumbs";`,
   examples: [

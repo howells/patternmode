@@ -16,6 +16,7 @@ export const componentConfig: ComponentConfig = {
   name: "Toast",
   description: "A comprehensive toast notification system built on Sonner with Base UI-style API providing multiple toast types, Promise handling, and customizable positioning.",
   category: "feedback",
+  featured: true,
   icon: Bell,
   importStatement: `import { Toast, ToastProvider, useToast, useToastManager } from "@patternmode/ui/toast";`,
   examples: [

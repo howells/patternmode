@@ -11,7 +11,7 @@ import {
   PreviewCardImage,
   PreviewCardPortal,
   PreviewCardPositioner,
-  PreviewCardTitle,
+  PreviewCardHeading,
   PreviewCardTrigger,
 } from "./component";
 import { DefaultExample, UserProfileExample, WithImageExample } from "./examples";
@@ -22,7 +22,7 @@ export const componentConfig: ComponentConfig = {
   description: "A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
   category: "media",
   icon: Eye,
-  importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardTitle, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
+  importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardHeading, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
   examples: [
     {
       id: "default",
@@ -76,9 +76,9 @@ export const componentConfig: ComponentConfig = {
       component: PreviewCardHeader,
     },
     {
-      name: "PreviewCardTitle",
+      name: "PreviewCardHeading",
       description: "Heading component with prominent typography.",
-      component: PreviewCardTitle,
+      component: PreviewCardHeading,
     },
     {
       name: "PreviewCardDescription",

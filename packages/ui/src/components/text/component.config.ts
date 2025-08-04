@@ -14,6 +14,7 @@ export const componentConfig: ComponentConfig = {
   name: "Text",
   description: "Typography component with consistent text styling and semantic meaning.",
   category: "display",
+  featured: true,
   icon: Type,
   importStatement: `import { Text, TextLink, Strong, Code } from "@patternmode/ui/text";`,
   examples: [

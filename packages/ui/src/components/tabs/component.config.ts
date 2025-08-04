@@ -20,6 +20,7 @@ export const componentConfig: ComponentConfig = {
   name: "Tabs",
   description: "Accessible tabbed interfaces built on Base UI's Tabs primitive for toggling between related panels with keyboard navigation and proper focus management.",
   category: "controls",
+  featured: true,
   icon: Folders,
   importStatement: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@patternmode/ui/tabs";`,
   examples: [

@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Field",
   description: "A collection of components for creating accessible form fields with labels, controls, descriptions, and error handling. Built on Base UI Field for comprehensive form validation and accessibility support.",
   category: "forms",
+  featured: true,
   icon: Square,
   importStatement: `import { Field, FieldLabel, FieldControl, FieldDescription, FieldError } from "@patternmode/ui/field";`,
   examples: [

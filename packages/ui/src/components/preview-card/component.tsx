@@ -243,7 +243,7 @@ const PreviewCardHeader = ({ ref, className, ...props }: PreviewCardHeaderProps)
   />
 );
 
-type PreviewCardTitleProps = {
+type PreviewCardHeadingProps = {
   /**
    * Reference to the title element.
    */
@@ -257,7 +257,7 @@ type PreviewCardTitleProps = {
 /**
  * Title heading component for preview cards with prominent typography.
  */
-const PreviewCardTitle = ({ ref, className, ...props }: PreviewCardTitleProps) => (
+const PreviewCardHeading = ({ ref, className, ...props }: PreviewCardHeadingProps) => (
   <h3
     ref={ref}
     className={cx(
@@ -366,7 +366,7 @@ export {
   PreviewCardImage,
   PreviewCardPortal,
   PreviewCardPositioner,
-  PreviewCardTitle,
+  PreviewCardHeading,
   PreviewCardTrigger,
 };
 

@@ -10,7 +10,7 @@ import {
   PreviewCardFooter,
   PreviewCardHeader,
   PreviewCardImage,
-  PreviewCardTitle,
+  PreviewCardHeading,
   PreviewCardTrigger,
 } from "./component";
 
@@ -22,7 +22,7 @@ export const DefaultExample = () => {
       </PreviewCardTrigger>
       <PreviewCardContent>
         <PreviewCardHeader>
-          <PreviewCardTitle>Card Title</PreviewCardTitle>
+          <PreviewCardHeading>Card Title</PreviewCardHeading>
           <PreviewCardDescription>
             Brief description of the content that appears in the preview.
           </PreviewCardDescription>
@@ -45,7 +45,7 @@ export const WithImageExample = () => {
           alt="Article preview"
         />
         <PreviewCardHeader>
-          <PreviewCardTitle>The Future of Web Development</PreviewCardTitle>
+          <PreviewCardHeading>The Future of Web Development</PreviewCardHeading>
           <PreviewCardDescription>
             Exploring the latest trends and technologies shaping the web.
           </PreviewCardDescription>
@@ -82,7 +82,7 @@ export const UserProfileExample = () => {
               className="w-12 h-12 rounded-full"
             />
             <div>
-              <PreviewCardTitle className="text-base">John Doe</PreviewCardTitle>
+              <PreviewCardHeading className="text-base">John Doe</PreviewCardHeading>
               <PreviewCardDescription className="text-xs">
                 Software Engineer
               </PreviewCardDescription>

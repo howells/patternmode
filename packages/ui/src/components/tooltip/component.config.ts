@@ -3,11 +3,11 @@ import { MessageCircle } from "lucide-react";
 import { Tooltip } from "./component";
 import {
   AlignmentExample,
+  ArrowExample,
   ControlledExample,
   DefaultExample,
   DelayExample,
-  IconTooltipExample,
-  NoArrowExample,
+  IconButtonsExample,
   PositionsExample,
   RichContentExample,
   SizesExample,
@@ -19,6 +19,7 @@ export const componentConfig: ComponentConfig = {
   name: "Tooltip",
   description: "A tooltip component built on Base UI's Tooltip primitive for displaying contextual information. Provides accessible hover/focus-triggered information popups with smart positioning, customizable delays, and smooth animations.",
   category: "overlay",
+  featured: true,
   icon: MessageCircle,
   importStatement: `import { Tooltip } from "@patternmode/ui/tooltip";`,
   examples: [
@@ -50,7 +51,7 @@ export const componentConfig: ComponentConfig = {
       id: "no-arrow",
       title: "Arrow Options",
       description: "Tooltips with and without pointing arrows",
-      component: NoArrowExample,
+      component: ArrowExample,
     },
     {
       id: "rich-content",
@@ -74,7 +75,7 @@ export const componentConfig: ComponentConfig = {
       id: "icon-tooltip",
       title: "Icon Tooltips",
       description: "Tooltips for icon-only buttons and help indicators",
-      component: IconTooltipExample,
+      component: IconButtonsExample,
     },
     {
       id: "alignment",

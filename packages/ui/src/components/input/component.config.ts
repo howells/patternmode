@@ -21,6 +21,7 @@ export const componentConfig: ComponentConfig = {
   name: "Input",
   description: "Single-line text input field with validation support and various styling options including prefix/suffix content, multiple input types, and comprehensive form integration.",
   category: "controls",
+  featured: true,
   icon: Type,
   importStatement: `import { Input } from "@patternmode/ui/input";`,
   examples: [

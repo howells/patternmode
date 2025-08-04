@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardHeading,
 } from "./component";
 import {
   CompactExample,
@@ -29,8 +29,9 @@ export const componentConfig: ComponentConfig = {
   name: "Card",
   description: "Container component with consistent styling for grouping related content.",
   category: "display",
+  featured: true,
   icon: Square,
-  importStatement: `import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardAction } from "@patternmode/ui/card";`,
+  importStatement: `import { Card, CardHeader, CardHeading, CardDescription, CardContent, CardFooter, CardAction } from "@patternmode/ui/card";`,
   examples: [
     {
       id: "default",
@@ -118,9 +119,9 @@ export const componentConfig: ComponentConfig = {
       component: CardHeader,
     },
     {
-      name: "CardTitle",
+      name: "CardHeading",
       description: "Title heading with consistent typography",
-      component: CardTitle,
+      component: CardHeading,
     },
     {
       name: "CardDescription",

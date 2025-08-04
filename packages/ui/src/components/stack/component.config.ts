@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Stack",
   description: "Flexible layout components for arranging content in vertical or horizontal stacks with consistent spacing, alignment, and responsive behavior.",
   category: "layout",
+  featured: true,
   icon: Layout,
   importStatement: `import { Stack, VStack, HStack } from "@patternmode/ui/stack";`,
   examples: [

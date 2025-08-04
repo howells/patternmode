@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardHeading,
 } from "./component";
 
 // Default card
@@ -25,7 +25,7 @@ export const DefaultExample = () => (
 export const FullStructureExample = () => (
   <Card>
     <CardHeader>
-      <CardTitle>Card Title</CardTitle>
+      <CardHeading>Card Title</CardHeading>
       <CardDescription>This is a card description that provides additional context.</CardDescription>
       <CardAction>
         <Button variant="outline" size="sm">Action</Button>
@@ -45,7 +45,7 @@ export const FullStructureExample = () => (
 export const WithTitleExample = () => (
   <Card>
     <CardHeader>
-      <CardTitle>Card Title</CardTitle>
+      <CardHeading>Card Title</CardHeading>
     </CardHeader>
     <CardContent>
       <p>This card includes a title and descriptive content below it.</p>
@@ -94,7 +94,7 @@ export const CustomStylingExample = () => (
 export const NestedExample = () => (
   <Card>
     <CardHeader>
-      <CardTitle>Parent Card</CardTitle>
+      <CardHeading>Parent Card</CardHeading>
     </CardHeader>
     <CardContent>
       <div className="space-y-3">
@@ -151,7 +151,7 @@ export const FillHeightExample = () => (
   <div className="h-64 grid grid-cols-2 gap-4">
     <Card fillHeight>
       <CardHeader>
-        <CardTitle>Tall Card</CardTitle>
+        <CardHeading>Tall Card</CardHeading>
       </CardHeader>
       <CardContent>
         <p>This card fills the available height in its container.</p>
@@ -159,7 +159,7 @@ export const FillHeightExample = () => (
     </Card>
     <Card fillHeight>
       <CardHeader>
-        <CardTitle>Another Tall Card</CardTitle>
+        <CardHeading>Another Tall Card</CardHeading>
       </CardHeader>
       <CardContent>
         <p>Both cards will have equal height regardless of content length.</p>
@@ -173,7 +173,7 @@ export const ProductCardExample = () => (
   <Card className="max-w-sm">
     <div className="aspect-video bg-zinc-100 dark:bg-zinc-800 rounded-t-lg"></div>
     <CardHeader>
-      <CardTitle>Product Name</CardTitle>
+      <CardHeading>Product Name</CardHeading>
       <CardDescription>Brief description of the product and its key features.</CardDescription>
     </CardHeader>
     <CardContent>

@@ -7,12 +7,10 @@ import * as React from "react";
 
 import { tv } from "tailwind-variants";
 import {
-
-  gapVariants,
   generateResponsiveSpacingClasses,
   getBaseSpacingValue,
-  paddingVariants,
-
+  getGapClass,
+  getPaddingClass,
 } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
 
@@ -29,8 +27,6 @@ const stackVariants = tv({
       vertical: "flex-col",
       horizontal: "flex-row",
     },
-    gap: gapVariants,
-    padding: paddingVariants,
     align: {
       start: "items-start",
       center: "items-center",
@@ -52,38 +48,16 @@ const stackVariants = tv({
     },
   },
   compoundVariants: [
-    // Negative spacing for horizontal direction
-    { direction: "horizontal", gap: "-6", class: "-space-x-6" },
-    { direction: "horizontal", gap: "-5", class: "-space-x-5" },
-    { direction: "horizontal", gap: "-4", class: "-space-x-4" },
-    { direction: "horizontal", gap: "-3", class: "-space-x-3" },
-    { direction: "horizontal", gap: "-2", class: "-space-x-2" },
-    { direction: "horizontal", gap: "-1", class: "-space-x-1" },
-    // Negative spacing for vertical direction
-    { direction: "vertical", gap: "-6", class: "-space-y-6" },
-    { direction: "vertical", gap: "-5", class: "-space-y-5" },
-    { direction: "vertical", gap: "-4", class: "-space-y-4" },
-    { direction: "vertical", gap: "-3", class: "-space-y-3" },
-    { direction: "vertical", gap: "-2", class: "-space-y-2" },
-    { direction: "vertical", gap: "-1", class: "-space-y-1" },
+    // Negative spacing for horizontal direction - these will be handled by responsive utilities
+    // but keeping compound variants for complex negative spacing scenarios
+    { direction: "horizontal", class: "space-x-0" }, // Base case for negative spacing
+    { direction: "vertical", class: "space-y-0" }, // Base case for negative spacing
   ],
   defaultVariants: {
     direction: "vertical",
-    gap: "4",
     wrap: false,
   },
 });
-
-/**
- * Stack gap values using 4px grid scale.
- * Accepts both numbers and strings for developer convenience.
- */
-type StackGap = "-6" | "-5" | "-4" | "-3" | "-2" | "-1" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | -6 | -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-
-// Helper function to convert gap values to strings
-const normalizeGapValue = (value: StackGap): string => {
-  return String(value);
-};
 
 type StackProps = {
   /**
@@ -134,64 +108,47 @@ type StackProps = {
 const Stack = (
   { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },
 ) => {
-  // Get base values for the variants system
+  // Get base values for non-responsive cases
   const baseDirection = getBaseSpacingValue(direction) ?? "vertical";
   const baseGapValue = getBaseSpacingValue(gap) ?? 4;
   const basePadding = getBaseSpacingValue(padding);
 
-  // Normalize gap value to string for tailwind variants
-  const baseGap = normalizeGapValue(baseGapValue);
-
-  // Debug logging for negative gaps
-  if (typeof baseGapValue === "number" && baseGapValue < 0) {
-    console.warn("Stack Debug:", {
-      direction: baseDirection,
-      gap: baseGap,
-      baseGapValue,
-      originalGap: gap,
-    });
-  }
-
   // Generate responsive classes using shared utilities
-  const responsiveDirectionClasses = generateResponsiveSpacingClasses(
-    "gap", // Using gap as placeholder since we need custom logic for direction
-    direction as ResponsiveSpacing<GapValue>, // Type assertion for compatibility
-  )
-    .replace(/gap-/g, "")
-    .split(" ")
-    .map((cls) => {
-      if (cls.includes("vertical")) {
-        return cls.replace("vertical", "flex-col");
-      }
-      if (cls.includes("horizontal")) {
-        return cls.replace("horizontal", "flex-row");
-      }
-      return cls;
-    })
-    .join(" ");
-
   const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);
   const responsivePaddingClasses = generateResponsiveSpacingClasses("padding", padding);
 
+  // Get base classes for fallback
+  const baseGapClass = getGapClass(baseGapValue);
+  const basePaddingClass = basePadding !== undefined ? getPaddingClass(basePadding) : "";
+
+  // Generate responsive direction classes (custom logic since direction isn't standard spacing)
+  const responsiveDirectionClasses = typeof direction === "object" && direction !== null
+    ? Object.entries(direction)
+        .map(([breakpoint, value]) => {
+          if (value === undefined) {
+            return "";
+          }
+          const prefix = breakpoint === "sm" ? "sm:" : breakpoint === "md" ? "md:" : breakpoint === "lg" ? "lg:" : breakpoint === "xl" ? "xl:" : breakpoint === "2xl" ? "2xl:" : "";
+          return `${prefix}${value === "vertical" ? "flex-col" : "flex-row"}`;
+        })
+        .filter(Boolean)
+        .join(" ")
+    : "";
+
   const generatedClasses = stackVariants({
     direction: baseDirection as "vertical" | "horizontal",
-    gap: baseGap as "4" | "0" | "1" | "2" | "3" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "-6" | "-5" | "-4" | "-3" | "-2" | "-1",
-    padding: basePadding as SpacingValue,
     align,
     justify,
     wrap,
   });
-
-  // Debug logging for negative gaps
-  if (typeof baseGapValue === "number" && baseGapValue < 0) {
-    console.warn("Generated classes:", generatedClasses);
-  }
 
   return (
     <Component
       ref={ref}
       className={cx(
         generatedClasses,
+        baseGapClass,
+        basePaddingClass,
         responsiveDirectionClasses,
         responsiveGapClasses,
         responsivePaddingClasses,

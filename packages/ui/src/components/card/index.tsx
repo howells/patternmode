@@ -10,8 +10,8 @@ export {
   type CardFooterProps,
   CardHeader,
   type CardHeaderProps,
+  CardHeading,
+  type CardHeadingProps,
   type CardProps,
-  CardTitle,
-  type CardTitleProps,
   cardVariants,
 } from "./component";

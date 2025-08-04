@@ -17,6 +17,7 @@ export const componentConfig: ComponentConfig = {
   name: "Avatar",
   description: "User profile image component with fallback initials and various size options.",
   category: "visual",
+  featured: true,
   icon: User,
   importStatement: `import { Avatar, AvatarWithFallback, AvatarImage, AvatarFallback } from "@patternmode/ui/avatar";`,
   examples: [

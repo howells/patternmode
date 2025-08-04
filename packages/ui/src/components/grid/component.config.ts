@@ -8,6 +8,7 @@ export const componentConfig: ComponentConfig = {
   name: "Grid",
   description: "A flexible grid system for creating responsive layouts. Provides CSS Grid-based components with support for responsive breakpoints and customizable spacing.",
   category: "layout",
+  featured: true,
   icon: Grid3X3,
   importStatement: `import { Grid, GridCell, GridAuto } from "@patternmode/ui/grid";`,
   examples: [

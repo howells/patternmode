@@ -13,6 +13,7 @@ export const componentConfig: ComponentConfig = {
   name: "Heading",
   description: "Heading component with hierarchical levels and consistent typography styling.",
   category: "typography",
+  featured: true,
   icon: Type,
   importStatement: `import { Heading } from "@patternmode/ui/heading";`,
   examples: [

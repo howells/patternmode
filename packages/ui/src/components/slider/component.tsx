@@ -91,7 +91,7 @@ type SliderProps = {
  * Range slider component for selecting numeric values within a specified range.
  */
 const Slider = (
-  { ref: forwardedRef, className, ariaLabelThumb, showValue = false, valueFormatter = value => value.toString(), ...props }: SliderProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null> },
+  { ref: forwardedRef, className, ariaLabelThumb, showValue = false, valueFormatter = value => value.toString(), value, defaultValue, ...props }: SliderProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null> },
 ) => {
   const {
     root,
@@ -101,10 +101,19 @@ const Slider = (
     thumb,
     value: valueClass,
   } = sliderVariants();
-  const currentValue = props.value || props.defaultValue || [0];
+  
+  // Ensure we always have a proper value to avoid hydration mismatches
+  const currentValue = value ?? defaultValue ?? [0];
   const valueArray = Array.isArray(currentValue)
     ? currentValue
     : [currentValue];
+  
+  // Clean props to pass to BaseSlider - ensure value is never undefined
+  const sliderProps = {
+    ...props,
+    value: currentValue,
+    defaultValue: defaultValue ?? [0],
+  };
 
   if (props.orientation === "vertical") {
     return (
@@ -112,7 +121,7 @@ const Slider = (
         <BaseSlider.Root
           ref={forwardedRef as any}
           className={cx(root(), "flex flex-col items-center", className)}
-          {...props}
+          {...sliderProps}
         >
           <BaseSlider.Control className={control()}>
             <BaseSlider.Track className={track()}>
@@ -157,7 +166,7 @@ const Slider = (
       <BaseSlider.Root
         ref={forwardedRef as any}
         className={cx(root(), className)}
-        {...props}
+        {...sliderProps}
       >
         <BaseSlider.Control className={control()}>
           <BaseSlider.Track className={track()}>

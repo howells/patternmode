@@ -17,6 +17,7 @@ export const componentConfig: ComponentConfig = {
   name: "Callout",
   description: "Highlighted content box for important information, warnings, or tips with optional icons and semantic color variants.",
   category: "feedback",
+  featured: true,
   icon: MessageSquare,
   importStatement: `import { Callout } from "@patternmode/ui/callout";`,
   examples: [

@@ -178,7 +178,25 @@ type FormControlProps = {
 /**
  * Form control component with styling and validation states.
  */
-const FormControl = ({ className, ...props }: FormControlProps) => {
+const FormControl = ({ className, children, ...props }: FormControlProps & { children?: React.ReactNode }) => {
+  // If children are provided, use BaseField.Control as a wrapper (render prop pattern)
+  if (children) {
+    return (
+      <BaseField.Control
+        render={(controlProps) => (
+          <div className={className}>
+            {React.isValidElement(children) 
+              ? React.cloneElement(children, { ...controlProps, ...children.props })
+              : children
+            }
+          </div>
+        )}
+        {...props}
+      />
+    );
+  }
+
+  // If no children, render as input element (legacy behavior)
   return (
     <BaseField.Control
       className={cx(

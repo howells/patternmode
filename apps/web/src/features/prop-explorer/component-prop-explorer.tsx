@@ -26,7 +26,7 @@ export function ComponentPropExplorer({
 }: ComponentPropExplorerProps) {
   const [props, setProps] = React.useState<ConfigPropMetadata[]>([]);
   const [defaultProps, setDefaultProps] = React.useState<Record<string, unknown>>({});
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isPropsLoading, setIsPropsLoading] = React.useState(true);
 
   // Get the primary component name
   const primaryComponentName = getPrimaryComponent(config);
@@ -48,7 +48,7 @@ export function ComponentPropExplorer({
         setDefaultProps({});
       }
       finally {
-        setIsLoading(false);
+        setIsPropsLoading(false);
       }
     }
 
@@ -66,16 +66,6 @@ export function ComponentPropExplorer({
         render: undefined,
       })) || [],
   }), [config, props]);
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-1">
-        <div className="flex-1 p-6 flex items-center justify-center">
-          <div>Loading props...</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <PropExplorerProvider defaultProps={defaultProps}>
@@ -102,7 +92,15 @@ export function ComponentPropExplorer({
         <div className={`hidden lg:block ${inspectorMaxHeight}`}>
           <Inspector>
             <InspectorBody>
-              <PropExplorerContent config={serializableConfig} />
+              {isPropsLoading
+                ? (
+                    <div className="p-4 text-center text-sm text-zinc-500">
+                      Loading properties...
+                    </div>
+                  )
+                : (
+                    <PropExplorerContent config={serializableConfig} />
+                  )}
             </InspectorBody>
           </Inspector>
         </div>

@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import { Badge } from "@patternmode/ui/badge";
 import { Button } from "@patternmode/ui/button";
 import { Callout } from "@patternmode/ui/callout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@patternmode/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/card";
 import { CodeBlock } from "@patternmode/ui/code-block";
 import { Grid, GridCell } from "@patternmode/ui/grid";
 import { Heading } from "@patternmode/ui/heading";
@@ -62,7 +62,7 @@ function CategoryCard({
               color={color}
             />
             <VStack gap={1}>
-              <CardTitle>{title}</CardTitle>
+              <CardHeading>{title}</CardHeading>
               <CardDescription>{description}</CardDescription>
             </VStack>
           </HStack>
@@ -82,7 +82,7 @@ function CategoryCard({
     <Card>
       <CardHeader>
         <IconContainer icon={Icon} size="lg" variant={variant} color={color} />
-        <CardTitle>{title}</CardTitle>
+        <CardHeading>{title}</CardHeading>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -217,7 +217,7 @@ export default function Home() {
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 1</Badge>
-                  <CardTitle>Clone or Copy Components</CardTitle>
+                  <CardHeading>Clone or Copy Components</CardHeading>
                 </div>
                 <CardDescription>
                   This is a component library template. Copy the components you
@@ -252,7 +252,7 @@ cd patternmode`}
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 2</Badge>
-                  <CardTitle>Install Required Dependencies</CardTitle>
+                  <CardHeading>Install Required Dependencies</CardHeading>
                 </div>
                 <CardDescription>
                   Install the peer dependencies that the components require to
@@ -299,7 +299,7 @@ pnpm add next@^14.0.0`}
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 3</Badge>
-                  <CardTitle>Set Up Tailwind CSS v4</CardTitle>
+                  <CardHeading>Set Up Tailwind CSS v4</CardHeading>
                 </div>
                 <CardDescription>
                   Configure Tailwind CSS v4 for styling support (required for
@@ -358,7 +358,7 @@ export default {
               <CardHeader>
                 <div>
                   <Badge variant="default">Step 4</Badge>
-                  <CardTitle>Import and Use Components</CardTitle>
+                  <CardHeading>Import and Use Components</CardHeading>
                 </div>
                 <CardDescription>
                   Start using the components in your React application.

@@ -22,6 +22,7 @@ export const componentConfig: ComponentConfig = {
   name: "Dialog",
   description: "Modal dialog component built on Base UI's Dialog primitive with focus management and accessibility.",
   category: "overlay",
+  featured: true,
   icon: MessageSquare,
   importStatement: `import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@patternmode/ui/dialog";`,
   examples: [

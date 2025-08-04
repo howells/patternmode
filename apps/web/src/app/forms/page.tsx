@@ -1,15 +1,24 @@
 "use client";
 
-import { Calendar, Globe, Mail, MapPin, Phone, Shield, Star, Tag, User, Users, Zap } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+import { Calendar, Clipboard, Factory, Globe, Mail, MapPin, Package, Phone, Settings, Shield, Star, Tag, TrendingUp, User, Users, Zap } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 
+import type { GlobalSemanticVariant } from "@patternmode/ui";
+
+import { PageHeader } from "@/components/page-header";
 // UI Components - organized by category
 import {
   // Layout & Display Components
   Badge,
   Button,
   Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
   Checkbox,
   Divider,
   Field,
@@ -20,14 +29,18 @@ import {
   Fieldset,
   // Form Components
   Form,
-
   FormControl,
   FormDescription,
   FormError,
   FormField,
-
   FormLabel,
+
+  Grid,
+  GridCell,
   Heading,
+  HStack,
+  Icon,
+  IconContainer,
   // Input Components
   Input,
   NumberField,
@@ -38,638 +51,837 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-
   SelectValue,
   Slider,
+  Stack,
   Switch,
   TagInput,
   Text,
   Textarea,
+  VStack,
 } from "@patternmode/ui";
 
-// Comprehensive form validation schema
-const formSchema = z.object({
-  // Basic text inputs
-  firstName: z.string().min(2, "First name must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+// Company Information Schema
+const companyInfoSchema = z.object({
+  companyName: z.string().min(2, "Company name must be at least 2 characters"),
+  contactPerson: z.string().min(2, "Contact person name is required"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
-
-  // Address fields
   address: z.string().min(5, "Address must be at least 5 characters"),
   city: z.string().min(2, "City name is required"),
-  zipCode: z.string().min(5, "ZIP code must be at least 5 characters"),
-
-  // Number fields
-  age: z.number().min(18, "Must be at least 18 years old").max(120, "Age must be realistic"),
-  salary: z.number().min(0, "Salary cannot be negative"),
-  experience: z.number().min(0, "Experience cannot be negative").max(50, "Experience must be realistic"),
-
-  // Selection fields
   country: z.string().min(1, "Please select a country"),
-  jobTitle: z.string().min(1, "Please select a job title"),
-
-  // Multi-value fields
-  skills: z.array(z.string()).min(1, "Please select at least one skill"),
-  interests: z.array(z.string()).min(1, "Please add at least one interest"),
-
-  // Boolean fields
-  newsletter: z.boolean(),
-  terms: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
-  marketing: z.boolean(),
-
-  // Range/slider fields
-  satisfaction: z.number().min(1).max(10),
-  budget: z.number().min(1000).max(100000),
-
-  // Text area
-  bio: z.string().min(10, "Bio must be at least 10 characters").max(500, "Bio cannot exceed 500 characters"),
-  comments: z.string().optional(),
 });
 
-type FormData = z.infer<typeof formSchema>;
+// Product Configuration Schema
+const productConfigSchema = z.object({
+  paperclipType: z.string().min(1, "Please select a paperclip type"),
+  material: z.string().min(1, "Please select a material"),
+  coating: z.string().min(1, "Please select a coating"),
+  size: z.string().min(1, "Please select a size"),
+  color: z.array(z.string()).min(1, "Please select at least one color"),
+  quantity: z.number().min(100, "Minimum order is 100 units").max(1000000, "Maximum order is 1,000,000 units"),
+});
 
-const skillOptions = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "typescript", label: "TypeScript" },
-  { value: "react", label: "React" },
-  { value: "nextjs", label: "Next.js" },
-  { value: "nodejs", label: "Node.js" },
-  { value: "python", label: "Python" },
-  { value: "go", label: "Go" },
-  { value: "rust", label: "Rust" },
-  { value: "docker", label: "Docker" },
-  { value: "kubernetes", label: "Kubernetes" },
+// Quality Control Schema
+const qualityControlSchema = z.object({
+  tensileStrength: z.number().min(1).max(10),
+  corrosionResistance: z.number().min(1).max(10),
+  bendability: z.number().min(1).max(10),
+  qualityInspection: z.boolean(),
+  certificationRequired: z.boolean(),
+  specialRequirements: z.string().optional(),
+});
+
+// Production Preferences Schema
+const productionPreferencesSchema = z.object({
+  rushOrder: z.boolean(),
+  packagingType: z.string().min(1, "Please select packaging type"),
+  deliveryDate: z.string().min(1, "Please select delivery timeframe"),
+  newsletter: z.boolean(),
+  terms: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
+});
+
+type ProductConfig = z.infer<typeof productConfigSchema>;
+type QualityControl = z.infer<typeof qualityControlSchema>;
+type ProductionPreferences = z.infer<typeof productionPreferencesSchema>;
+
+const paperclipTypes = [
+  { value: "standard", label: "Standard Paperclip" },
+  { value: "jumbo", label: "Jumbo Paperclip" },
+  { value: "mini", label: "Mini Paperclip" },
+  { value: "butterfly", label: "Butterfly Clip" },
+  { value: "binder", label: "Binder Clip" },
+  { value: "specialty", label: "Specialty Shape" },
 ];
 
-const interestOptions = [
-  { value: "web-development", label: "Web Development", leftIcon: Globe },
-  { value: "mobile-development", label: "Mobile Development", leftIcon: Phone },
-  { value: "devops", label: "DevOps", leftIcon: Zap },
-  { value: "machine-learning", label: "Machine Learning", leftIcon: Star },
-  { value: "cybersecurity", label: "Cybersecurity", leftIcon: Shield },
-  { value: "ui-ux", label: "UI/UX Design", leftIcon: User },
+const materials = [
+  { value: "steel", label: "Galvanized Steel" },
+  { value: "stainless", label: "Stainless Steel" },
+  { value: "brass", label: "Brass" },
+  { value: "aluminum", label: "Aluminum" },
+  { value: "plastic", label: "Plastic Coated" },
 ];
+
+const colorOptions = [
+  { value: "silver", label: "Silver", leftIcon: Star },
+  { value: "gold", label: "Gold", leftIcon: Star },
+  { value: "black", label: "Black", leftIcon: Star },
+  { value: "white", label: "White", leftIcon: Star },
+  { value: "red", label: "Red", leftIcon: Star },
+  { value: "blue", label: "Blue", leftIcon: Star },
+  { value: "green", label: "Green", leftIcon: Star },
+  { value: "rainbow", label: "Rainbow Mix", leftIcon: Star },
+];
+
+const ComposedCardHeader = ({ Icon, iconVariant, heading, description }: { Icon: LucideIcon; iconVariant: GlobalSemanticVariant; heading: string; description: string }) => {
+  return (
+    <CardHeader border>
+      <HStack gap={3} align="center">
+        <IconContainer icon={Icon} variant={iconVariant} size="sm" />
+        <VStack gap={1}>
+          <CardHeading>{heading}</CardHeading>
+          <CardDescription>{description}</CardDescription>
+        </VStack>
+      </HStack>
+    </CardHeader>
+  );
+};
 
 export default function FormsPage() {
-  const [formData, setFormData] = useState<Partial<FormData>>({
+  const [productData, setProductData] = useState<Partial<ProductConfig>>({
+    color: [],
+    quantity: 1000,
+  });
+  const [qualityData, setQualityData] = useState<Partial<QualityControl>>({
+    tensileStrength: 5,
+    corrosionResistance: 5,
+    bendability: 5,
+    qualityInspection: false,
+    certificationRequired: false,
+  });
+  const [preferencesData, setPreferencesData] = useState<Partial<ProductionPreferences>>({
+    rushOrder: false,
     newsletter: false,
     terms: false,
-    marketing: false,
-    satisfaction: 5,
-    budget: 25000,
-    skills: [],
-    interests: [],
   });
 
-  const [submitResult, setSubmitResult] = useState<string | null>(null);
+  const [submitResults, setSubmitResults] = useState<Record<string, string>>({});
 
-  const handleSubmit = async (data: Record<string, unknown>) => {
-    console.log("Form submitted:", data);
-    setSubmitResult("Form submitted successfully! Check the console for details.");
-    setTimeout(() => setSubmitResult(null), 5000);
+  const handleSubmit = (formType: string) => async (data: Record<string, unknown>) => {
+    console.log(`${formType} submitted:`, data);
+    setSubmitResults(prev => ({
+      ...prev,
+      [formType]: `${formType} submitted successfully! Check the console for details.`,
+    }));
+    setTimeout(() => {
+      setSubmitResults((prev) => {
+        const newResults = { ...prev };
+        delete newResults[formType];
+        return newResults;
+      });
+    }, 3000);
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 py-12">
-      <div className="container mx-auto max-w-4xl px-4">
-        <div className="text-center mb-12">
-          <Heading level={1} className="mb-4">
-            Comprehensive Form System Documentation
-          </Heading>
-          <Text className="text-lg text-zinc-600 dark:text-zinc-400 mb-6">
-            A complete showcase of all form components in our UI system, demonstrating validation,
-            accessibility, and various input types.
-          </Text>
-          <div className="flex flex-wrap justify-center gap-2">
-            <Badge bordered>Form</Badge>
-            <Badge bordered>Field</Badge>
-            <Badge bordered>Input</Badge>
-            <Badge bordered>Select</Badge>
-            <Badge bordered>Checkbox</Badge>
-            <Badge bordered>Radio</Badge>
-            <Badge bordered>Switch</Badge>
-            <Badge bordered>Slider</Badge>
-            <Badge bordered>NumberField</Badge>
-            <Badge bordered>TagInput</Badge>
-            <Badge bordered>Textarea</Badge>
-          </div>
-        </div>
+    <>
+      <PageHeader
+        title="Paperclip Factory Order System"
+        description="Complete form system for custom paperclip manufacturing orders, demonstrating all form components and validation patterns."
 
-        {submitResult && (
-          <Card className="mb-8 p-4 bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
-            <Text className="text-green-800 dark:text-green-200">{submitResult}</Text>
-          </Card>
-        )}
+      />
 
-        <Card className="p-8">
-          <Form schema={formSchema} onValidSubmit={handleSubmit}>
-            {/* Personal Information Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6 flex items-center gap-2">
-                <User className="size-5" />
-                Personal Information
-              </Heading>
+      <VStack gap={8} padding={8}>
+        {/* Company Information Form */}
+        <Card>
+          <CardHeader border>
+            <HStack gap={3} align="center">
+              <IconContainer icon={Factory} variant="info" size="sm" />
+              <VStack gap={1}>
+                <CardHeading>Company Information</CardHeading>
+                <CardDescription>Basic input components with validation</CardDescription>
+              </VStack>
+            </HStack>
+          </CardHeader>
+          <CardContent>
+            {submitResults.company && (
+              <Card padding={3}>
+                <Text>{submitResults.company}</Text>
+              </Card>
+            )}
+            <Form schema={companyInfoSchema} onValidSubmit={handleSubmit("company")}>
+              <VStack gap={6}>
+                <Grid columns={{ md: 2 }} gap={4}>
+                  <GridCell>
+                    <FormField name="companyName">
+                      <VStack gap={2}>
+                        <FormLabel>Company Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Acme Paperclip Corp"
+                            prefixIcon={Factory}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Your company's legal business name
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="contactPerson">
+                      <VStack gap={2}>
+                        <FormLabel>Contact Person</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="John Smith"
+                            prefixIcon={User}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Primary contact for this order
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                </Grid>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField name="firstName">
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your first name"
-                      prefixIcon={User}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Your legal first name as it appears on official documents
-                  </FormDescription>
-                  <FormError />
-                </FormField>
+                <Grid columns={{ md: 2 }} gap={4}>
+                  <GridCell>
+                    <FormField name="email">
+                      <VStack gap={2}>
+                        <FormLabel>Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="orders@company.com"
+                            prefixIcon={Mail}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          For order confirmations and updates
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="phone">
+                      <VStack gap={2}>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="tel"
+                            placeholder="+1 (555) 123-4567"
+                            prefixIcon={Phone}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          For urgent order communications
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                </Grid>
 
-                <FormField name="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your last name"
-                      prefixIcon={User}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Your legal last name as it appears on official documents
-                  </FormDescription>
-                  <FormError />
-                </FormField>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField name="email">
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="you@example.com"
-                      prefixIcon={Mail}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    We'll use this email for account notifications and updates
-                  </FormDescription>
-                  <FormError />
-                </FormField>
-
-                <FormField name="phone">
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="tel"
-                      placeholder="+1 (555) 123-4567"
-                      prefixIcon={Phone}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Optional: For account recovery and important notifications
-                  </FormDescription>
-                  <FormError />
-                </FormField>
-              </div>
-            </Fieldset>
-
-            <Divider />
-
-            {/* Address Information Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6 flex items-center gap-2">
-                <MapPin className="size-5" />
-                Address Information
-              </Heading>
-
-              <FormField name="address">
-                <FormLabel>Street Address</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="123 Main Street, Apt 4B"
-                    prefixIcon={MapPin}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Your complete street address including apartment/unit number
-                </FormDescription>
-                <FormError />
-              </FormField>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <FormField name="city">
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input placeholder="New York" />
-                  </FormControl>
-                  <FormError />
-                </FormField>
-
-                <FormField name="country">
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue>Select country</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="us">United States</SelectItem>
-                        <SelectItem value="ca">Canada</SelectItem>
-                        <SelectItem value="uk">United Kingdom</SelectItem>
-                        <SelectItem value="au">Australia</SelectItem>
-                        <SelectItem value="de">Germany</SelectItem>
-                        <SelectItem value="fr">France</SelectItem>
-                        <SelectItem value="jp">Japan</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormDescription>
-                    Select your country of residence
-                  </FormDescription>
-                  <FormError />
-                </FormField>
-
-                <FormField name="zipCode">
-                  <FormLabel>ZIP/Postal Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder="10001" />
-                  </FormControl>
-                  <FormError />
-                </FormField>
-              </div>
-            </Fieldset>
-
-            <Divider />
-
-            {/* Professional Information Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6 flex items-center gap-2">
-                <Users className="size-5" />
-                Professional Information
-              </Heading>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Field name="age">
-                  <FieldLabel>Age</FieldLabel>
-                  <FieldControl
-                    render={({ ref, ...props }) => (
-                      <NumberField
-                        ref={ref}
-                        placeholder="25"
-                        min={18}
-                        max={120}
-                        {...props}
+                <FormField name="address">
+                  <VStack gap={2}>
+                    <FormLabel>Delivery Address</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="123 Industrial Ave, Suite 100"
+                        prefixIcon={MapPin}
                       />
-                    )}
-                  />
-                  <FieldDescription>
-                    Must be 18 or older
-                  </FieldDescription>
-                  <FieldError />
-                </Field>
+                    </FormControl>
+                    <FormDescription>
+                      Complete address for paperclip delivery
+                    </FormDescription>
+                    <FormError />
+                  </VStack>
+                </FormField>
 
-                <Field name="experience">
-                  <FieldLabel>Years of Experience</FieldLabel>
-                  <FieldControl
-                    render={({ ref, ...props }) => (
-                      <NumberField
-                        ref={ref}
-                        placeholder="5"
-                        min={0}
-                        max={50}
-                        {...props}
+                <Grid columns={{ md: 2 }} gap={4}>
+                  <GridCell>
+                    <FormField name="city">
+                      <VStack gap={2}>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Manufacturing City" />
+                        </FormControl>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="country">
+                      <VStack gap={2}>
+                        <FormLabel>Country</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Select country</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="us">United States</SelectItem>
+                              <SelectItem value="ca">Canada</SelectItem>
+                              <SelectItem value="uk">United Kingdom</SelectItem>
+                              <SelectItem value="de">Germany</SelectItem>
+                              <SelectItem value="jp">Japan</SelectItem>
+                              <SelectItem value="cn">China</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>
+                          Country for shipping calculations
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                </Grid>
+
+                <HStack gap={4} justify="end">
+                  <Button type="submit">Save Company Info</Button>
+                </HStack>
+              </VStack>
+            </Form>
+          </CardContent>
+        </Card>
+
+        {/* Product Configuration Form */}
+        <Card>
+          <CardHeader border>
+            <HStack gap={3} align="center">
+              <IconContainer icon={Package} variant="success" size="sm" />
+              <VStack gap={1}>
+                <CardHeading>Product Configuration</CardHeading>
+                <CardDescription>Select components, number fields, and tag inputs</CardDescription>
+              </VStack>
+            </HStack>
+          </CardHeader>
+          <CardContent>
+            {submitResults.product && (
+              <Card padding={3}>
+                <Text>{submitResults.product}</Text>
+              </Card>
+            )}
+            <Form schema={productConfigSchema} onValidSubmit={handleSubmit("product")}>
+              <VStack gap={6}>
+                <Grid columns={{ md: 2 }} gap={4}>
+                  <GridCell>
+                    <FormField name="paperclipType">
+                      <VStack gap={2}>
+                        <FormLabel>Paperclip Type</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Choose paperclip type</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              {paperclipTypes.map(type => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>
+                          Select the style of paperclip to manufacture
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="material">
+                      <VStack gap={2}>
+                        <FormLabel>Material</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Choose material</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              {materials.map(material => (
+                                <SelectItem key={material.value} value={material.value}>
+                                  {material.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>
+                          Base material for paperclip construction
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                </Grid>
+
+                <Grid columns={{ md: 3 }} gap={4}>
+                  <GridCell>
+                    <FormField name="coating">
+                      <VStack gap={2}>
+                        <FormLabel>Coating</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Select coating</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">No Coating</SelectItem>
+                              <SelectItem value="zinc">Zinc Plated</SelectItem>
+                              <SelectItem value="nickel">Nickel Plated</SelectItem>
+                              <SelectItem value="powder">Powder Coated</SelectItem>
+                              <SelectItem value="vinyl">Vinyl Coated</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="size">
+                      <VStack gap={2}>
+                        <FormLabel>Size</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Select size</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="mini">Mini (19mm)</SelectItem>
+                              <SelectItem value="standard">Standard (28mm)</SelectItem>
+                              <SelectItem value="large">Large (33mm)</SelectItem>
+                              <SelectItem value="jumbo">Jumbo (50mm)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <Field name="quantity">
+                      <VStack gap={2}>
+                        <FieldLabel>Quantity</FieldLabel>
+                        <FieldControl
+                          render={({ ref, ...props }) => (
+                            <NumberField
+                              ref={ref}
+                              placeholder="1000"
+                              min={100}
+                              max={1000000}
+                              value={productData.quantity}
+                              onChange={value => setProductData(prev => ({ ...prev, quantity: value }))}
+                              {...props}
+                            />
+                          )}
+                        />
+                        <FieldDescription>
+                          Number of paperclips (100 - 1,000,000)
+                        </FieldDescription>
+                        <FieldError />
+                      </VStack>
+                    </Field>
+                  </GridCell>
+                </Grid>
+
+                <FormField name="color">
+                  <VStack gap={2}>
+                    <FormLabel>Colors</FormLabel>
+                    <FormControl>
+                      <TagInput
+                        options={colorOptions}
+                        placeholder="Select colors"
+                        selectedPlaceholder="Add more colors"
+                        emptyMessage="No colors found"
+                        maxTags={5}
+                        value={productData.color || []}
+                        onValueChange={values => setProductData(prev => ({ ...prev, color: values }))}
                       />
-                    )}
-                  />
-                  <FieldDescription>
-                    Years of professional experience
-                  </FieldDescription>
-                  <FieldError />
-                </Field>
+                    </FormControl>
+                    <FormDescription>
+                      Choose up to 5 colors for your paperclip order
+                    </FormDescription>
+                    <FormError />
+                  </VStack>
+                </FormField>
 
-                <Field name="salary">
-                  <FieldLabel>Expected Salary</FieldLabel>
-                  <FieldControl
-                    render={({ ref, ...props }) => (
-                      <NumberField
-                        ref={ref}
-                        placeholder="75000"
-                        min={0}
-                        prefixText="$"
-                        {...props}
+                <HStack gap={4} justify="end">
+                  <Button type="submit">Configure Product</Button>
+                </HStack>
+              </VStack>
+            </Form>
+          </CardContent>
+        </Card>
+
+        {/* Quality Control Form */}
+        <Card>
+          <ComposedCardHeader Icon={Settings} iconVariant="warning" heading="Quality Control Specifications" description="Sliders, checkboxes, and text areas" />
+          <CardContent>
+            {submitResults.quality && (
+              <Card padding={3}>
+                <Text>{submitResults.quality}</Text>
+              </Card>
+            )}
+            <Form schema={qualityControlSchema} onValidSubmit={handleSubmit("quality")}>
+              <VStack gap={6}>
+                <VStack gap={4}>
+                  <Field name="tensileStrength">
+                    <VStack gap={2}>
+                      <FieldLabel>Tensile Strength Requirement (1-10)</FieldLabel>
+                      <FieldControl
+                        render={({ ref, ...props }) => (
+                          <Slider
+                            {...props}
+                            ref={ref}
+                            min={1}
+                            max={10}
+                            step={1}
+                            showValue={true}
+                            value={[qualityData.tensileStrength || 5]}
+                            onValueChange={values => setQualityData(prev => ({ ...prev, tensileStrength: values[0] }))}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  <FieldDescription>
-                    Annual salary expectation
-                  </FieldDescription>
-                  <FieldError />
-                </Field>
-              </div>
+                      <FieldDescription>
+                        Required strength for paperclip durability (higher = stronger)
+                      </FieldDescription>
+                      <FieldError />
+                    </VStack>
+                  </Field>
 
-              <FormField name="jobTitle">
-                <FormLabel>Job Title</FormLabel>
-                <FormControl>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue>Select your job title</SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="frontend-developer">Frontend Developer</SelectItem>
-                      <SelectItem value="backend-developer">Backend Developer</SelectItem>
-                      <SelectItem value="fullstack-developer">Full Stack Developer</SelectItem>
-                      <SelectItem value="devops-engineer">DevOps Engineer</SelectItem>
-                      <SelectItem value="ui-ux-designer">UI/UX Designer</SelectItem>
-                      <SelectItem value="product-manager">Product Manager</SelectItem>
-                      <SelectItem value="data-scientist">Data Scientist</SelectItem>
-                      <SelectItem value="qa-engineer">QA Engineer</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription>
-                  Your current or desired job title
-                </FormDescription>
-                <FormError />
-              </FormField>
-            </Fieldset>
-
-            <Divider />
-
-            {/* Skills and Interests Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6 flex items-center gap-2">
-                <Star className="size-5" />
-                Skills & Interests
-              </Heading>
-
-              <FormField name="skills">
-                <FormLabel>Technical Skills</FormLabel>
-                <FormControl>
-                  <TagInput
-                    options={skillOptions}
-                    placeholder="Select your skills"
-                    selectedPlaceholder="Add more skills"
-                    emptyMessage="No skills found"
-                    maxTags={8}
-                    value={formData.skills || []}
-                    onValueChange={values => setFormData(prev => ({ ...prev, skills: values }))}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Select up to 8 technical skills that best describe your expertise
-                </FormDescription>
-                <FormError />
-              </FormField>
-
-              <FormField name="interests">
-                <FormLabel>Professional Interests</FormLabel>
-                <FormControl>
-                  <TagInput
-                    options={interestOptions}
-                    placeholder="Select your interests"
-                    selectedPlaceholder="Add more interests"
-                    emptyMessage="No interests found"
-                    allowCreate={true}
-                    maxTags={5}
-                    value={formData.interests || []}
-                    onValueChange={values => setFormData(prev => ({ ...prev, interests: values }))}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Choose areas you're passionate about or want to explore
-                </FormDescription>
-                <FormError />
-              </FormField>
-            </Fieldset>
-
-            <Divider />
-
-            {/* Preferences Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6 flex items-center gap-2">
-                <Zap className="size-5" />
-                Preferences & Ratings
-              </Heading>
-
-              <div className="space-y-6">
-                <Field name="satisfaction">
-                  <FieldLabel>Overall Satisfaction (1-10)</FieldLabel>
-                  <FieldControl
-                    render={({ ref, ...props }) => (
-                      <Slider
-                        ref={ref}
-                        min={1}
-                        max={10}
-                        step={1}
-                        showValue={true}
-                        value={[formData.satisfaction || 5]}
-                        onValueChange={values => setFormData(prev => ({ ...prev, satisfaction: values[0] }))}
-                        {...props}
+                  <Field name="corrosionResistance">
+                    <VStack gap={2}>
+                      <FieldLabel>Corrosion Resistance Level (1-10)</FieldLabel>
+                      <FieldControl
+                        render={({ ref, ...props }) => (
+                          <Slider
+                            {...props}
+                            ref={ref}
+                            min={1}
+                            max={10}
+                            step={1}
+                            showValue={true}
+                            value={[qualityData.corrosionResistance || 5]}
+                            onValueChange={values => setQualityData(prev => ({ ...prev, corrosionResistance: values[0] }))}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  <FieldDescription>
-                    Rate your overall satisfaction with our platform
-                  </FieldDescription>
-                  <FieldError />
-                </Field>
+                      <FieldDescription>
+                        Resistance to rust and environmental damage
+                      </FieldDescription>
+                      <FieldError />
+                    </VStack>
+                  </Field>
 
-                <Field name="budget">
-                  <FieldLabel>Project Budget Range ($1,000 - $100,000)</FieldLabel>
-                  <FieldControl
-                    render={({ ref, ...props }) => (
-                      <Slider
-                        ref={ref}
-                        min={1000}
-                        max={100000}
-                        step={1000}
-                        showValue={true}
-                        value={[formData.budget || 25000]}
-                        onValueChange={values => setFormData(prev => ({ ...prev, budget: values[0] }))}
-                        {...props}
+                  <Field name="bendability">
+                    <VStack gap={2}>
+                      <FieldLabel>Bendability Factor (1-10)</FieldLabel>
+                      <FieldControl
+                        render={({ ref, ...props }) => (
+                          <Slider
+                            {...props}
+                            ref={ref}
+                            min={1}
+                            max={10}
+                            step={1}
+                            showValue={true}
+                            value={[qualityData.bendability || 5]}
+                            onValueChange={values => setQualityData(prev => ({ ...prev, bendability: values[0] }))}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  <FieldDescription>
-                    What's your typical project budget range?
-                  </FieldDescription>
-                  <FieldError />
-                </Field>
-              </div>
-            </Fieldset>
+                      <FieldDescription>
+                        How easily the paperclip should bend without breaking
+                      </FieldDescription>
+                      <FieldError />
+                    </VStack>
+                  </Field>
+                </VStack>
 
-            <Divider />
+                <Grid columns={{ md: 2 }} gap={6}>
+                  <GridCell>
+                    <Field name="qualityInspection">
+                      <HStack gap={3} align="center">
+                        <FieldControl
+                          render={({ ref, ...props }) => (
+                            <Checkbox
+                              ref={ref}
+                              checked={qualityData.qualityInspection}
+                              onCheckedChange={checked => setQualityData(prev => ({ ...prev, qualityInspection: checked }))}
+                              {...props}
+                            />
+                          )}
+                        />
+                        <VStack gap={1}>
+                          <FieldLabel>Quality Inspection Required</FieldLabel>
+                          <FieldDescription>
+                            Include detailed quality control inspection report
+                          </FieldDescription>
+                        </VStack>
+                      </HStack>
+                      <FieldError />
+                    </Field>
+                  </GridCell>
+                  <GridCell>
+                    <Field name="certificationRequired">
+                      <HStack gap={3} align="center">
+                        <FieldControl
+                          render={({ ref, ...props }) => (
+                            <Checkbox
+                              ref={ref}
+                              checked={qualityData.certificationRequired}
+                              onCheckedChange={checked => setQualityData(prev => ({ ...prev, certificationRequired: checked }))}
+                              {...props}
+                            />
+                          )}
+                        />
+                        <VStack gap={1}>
+                          <FieldLabel>ISO Certification</FieldLabel>
+                          <FieldDescription>
+                            Require ISO 9001 quality management certification
+                          </FieldDescription>
+                        </VStack>
+                      </HStack>
+                      <FieldError />
+                    </Field>
+                  </GridCell>
+                </Grid>
 
-            {/* Text Areas Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6">
-                Additional Information
-              </Heading>
+                <FormField name="specialRequirements">
+                  <VStack gap={2}>
+                    <FormLabel>Special Requirements (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Any special manufacturing requirements, custom packaging instructions, or quality specifications..."
+                        minRows={3}
+                        maxRows={6}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Additional specifications or custom requirements for your order
+                    </FormDescription>
+                    <FormError />
+                  </VStack>
+                </FormField>
 
-              <FormField name="bio">
-                <FormLabel>Professional Bio</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Tell us about your professional background, achievements, and what drives you in your career..."
-                    minRows={4}
-                    maxRows={8}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Share your professional story in 10-500 characters
-                </FormDescription>
-                <FormError />
-              </FormField>
+                <HStack gap={4} justify="end">
+                  <Button type="submit">Set Quality Standards</Button>
+                </HStack>
+              </VStack>
+            </Form>
+          </CardContent>
+        </Card>
 
-              <FormField name="comments">
-                <FormLabel>Additional Comments (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Any additional information you'd like to share..."
-                    minRows={3}
-                    maxRows={6}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Optional: Any other details you think would be helpful
-                </FormDescription>
-                <FormError />
-              </FormField>
-            </Fieldset>
-
-            <Divider />
-
-            {/* Checkboxes and Switches Section */}
-            <Fieldset>
-              <Heading level={2} className="mb-6">
-                Preferences & Agreements
-              </Heading>
-
-              <div className="space-y-4">
-                <Field name="newsletter">
-                  <div className="flex items-center space-x-3">
+        {/* Production Preferences Form */}
+        <Card>
+          <CardHeader border>
+            <HStack gap={3} align="center">
+              <IconContainer icon={TrendingUp} variant="positive" size="sm" />
+              <VStack gap={1}>
+                <CardHeading>Production Preferences</CardHeading>
+                <CardDescription>Switches, radio groups, and agreement checkboxes</CardDescription>
+              </VStack>
+            </HStack>
+          </CardHeader>
+          <CardContent>
+            {submitResults.preferences && (
+              <Card padding={3}>
+                <Text>{submitResults.preferences}</Text>
+              </Card>
+            )}
+            <Form schema={productionPreferencesSchema} onValidSubmit={handleSubmit("preferences")}>
+              <VStack gap={6}>
+                <Field name="rushOrder">
+                  <HStack gap={3} align="center">
                     <FieldControl
                       render={({ ref, ...props }) => (
                         <Switch
                           ref={ref}
-                          checked={formData.newsletter}
-                          onCheckedChange={checked => setFormData(prev => ({ ...prev, newsletter: checked }))}
+                          checked={preferencesData.rushOrder}
+                          onCheckedChange={checked => setPreferencesData(prev => ({ ...prev, rushOrder: checked }))}
                           {...props}
                         />
                       )}
                     />
-                    <div>
-                      <FieldLabel>Newsletter Subscription</FieldLabel>
+                    <VStack gap={1}>
+                      <FieldLabel>Rush Order</FieldLabel>
                       <FieldDescription>
-                        Receive weekly updates about new features and industry insights
+                        Expedite production for faster delivery (additional charges apply)
                       </FieldDescription>
-                    </div>
-                  </div>
+                    </VStack>
+                  </HStack>
                   <FieldError />
                 </Field>
 
-                <Field name="marketing">
-                  <div className="flex items-center space-x-3">
-                    <FieldControl
-                      render={({ ref, ...props }) => (
-                        <Checkbox
-                          ref={ref}
-                          checked={formData.marketing}
-                          onCheckedChange={checked => setFormData(prev => ({ ...prev, marketing: checked }))}
-                          {...props}
-                        />
-                      )}
-                    />
-                    <div>
-                      <FieldLabel>Marketing Communications</FieldLabel>
-                      <FieldDescription>
-                        Allow us to send you promotional emails and special offers
-                      </FieldDescription>
-                    </div>
-                  </div>
-                  <FieldError />
-                </Field>
+                <Grid columns={{ md: 2 }} gap={4}>
+                  <GridCell>
+                    <FormField name="packagingType">
+                      <VStack gap={2}>
+                        <FormLabel>Packaging Type</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Select packaging</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="bulk">Bulk Boxes</SelectItem>
+                              <SelectItem value="retail">Retail Packages</SelectItem>
+                              <SelectItem value="custom">Custom Branding</SelectItem>
+                              <SelectItem value="eco">Eco-Friendly</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>
+                          How you'd like your paperclips packaged
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                  <GridCell>
+                    <FormField name="deliveryDate">
+                      <VStack gap={2}>
+                        <FormLabel>Delivery Timeframe</FormLabel>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue>Select timeframe</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="1-week">1 Week</SelectItem>
+                              <SelectItem value="2-weeks">2 Weeks</SelectItem>
+                              <SelectItem value="1-month">1 Month</SelectItem>
+                              <SelectItem value="flexible">Flexible</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>
+                          When you need the order delivered
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </FormField>
+                  </GridCell>
+                </Grid>
 
-                <FormField name="terms">
-                  <div className="flex items-start space-x-3">
-                    <FormControl>
-                      <Checkbox
-                        checked={formData.terms}
-                        onCheckedChange={checked => setFormData(prev => ({ ...prev, terms: checked }))}
+                <Divider />
+
+                <VStack gap={4}>
+                  <Field name="newsletter">
+                    <HStack gap={3} align="center">
+                      <FieldControl
+                        render={({ ref, ...props }) => (
+                          <Switch
+                            ref={ref}
+                            checked={preferencesData.newsletter}
+                            onCheckedChange={checked => setPreferencesData(prev => ({ ...prev, newsletter: checked }))}
+                            {...props}
+                          />
+                        )}
                       />
-                    </FormControl>
-                    <div>
-                      <FormLabel>Terms and Conditions *</FormLabel>
-                      <FormDescription>
-                        I agree to the
-                        {" "}
-                        <a href="#" className="text-blue-600 hover:underline">Terms of Service</a>
-                        {" "}
-                        and
-                        {" "}
-                        <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
-                      </FormDescription>
-                      <FormError />
-                    </div>
-                  </div>
-                </FormField>
-              </div>
-            </Fieldset>
+                      <VStack gap={1}>
+                        <FieldLabel>Manufacturing Newsletter</FieldLabel>
+                        <FieldDescription>
+                          Receive updates about new paperclip designs and manufacturing innovations
+                        </FieldDescription>
+                      </VStack>
+                    </HStack>
+                    <FieldError />
+                  </Field>
 
-            <Divider />
+                  <FormField name="terms">
+                    <HStack gap={3} align="start">
+                      <FormControl>
+                        <Checkbox
+                          checked={preferencesData.terms}
+                          onCheckedChange={checked => setPreferencesData(prev => ({ ...prev, terms: checked }))}
+                        />
+                      </FormControl>
+                      <VStack gap={1}>
+                        <FormLabel>Manufacturing Agreement *</FormLabel>
+                        <FormDescription>
+                          I agree to the Manufacturing Terms and Quality Assurance Policy
+                        </FormDescription>
+                        <FormError />
+                      </VStack>
+                    </HStack>
+                  </FormField>
+                </VStack>
 
-            {/* Submit Section */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-end">
-              <Button type="button" variant="outline">
-                Save as Draft
-              </Button>
-              <Button type="submit" className="sm:min-w-32">
-                Submit Form
-              </Button>
-            </div>
-          </Form>
+                <HStack gap={4} justify="end">
+                  <Button type="button" variant="outline">Save Preferences</Button>
+                  <Button type="submit">Complete Order</Button>
+                </HStack>
+              </VStack>
+            </Form>
+          </CardContent>
         </Card>
 
-        <Card className="mt-8 p-6 bg-zinc-50 dark:bg-zinc-800">
-          <Heading level={3} className="mb-4">
-            Components Demonstrated
-          </Heading>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-            <div>
-              <Text className="font-semibold mb-2">Form Components:</Text>
-              <ul className="space-y-1 text-zinc-600 dark:text-zinc-400">
-                <li>• Form (with Zod validation)</li>
-                <li>• FormField, FormLabel, FormControl</li>
-                <li>• FormDescription, FormError</li>
-                <li>• Field, FieldLabel, FieldControl</li>
-                <li>• FieldDescription, FieldError</li>
-                <li>• Fieldset</li>
-              </ul>
-            </div>
-            <div>
-              <Text className="font-semibold mb-2">Input Components:</Text>
-              <ul className="space-y-1 text-zinc-600 dark:text-zinc-400">
-                <li>• Input (with prefixes/icons)</li>
-                <li>• NumberField (with steppers)</li>
-                <li>• Textarea (auto-resizing)</li>
-                <li>• Select, SelectTrigger, SelectValue</li>
-                <li>• TagInput (with creation)</li>
-              </ul>
-            </div>
-            <div>
-              <Text className="font-semibold mb-2">Control Components:</Text>
-              <ul className="space-y-1 text-zinc-600 dark:text-zinc-400">
-                <li>• Checkbox</li>
-                <li>• Switch</li>
-                <li>• RadioGroup, RadioGroupItem</li>
-                <li>• Slider (with value display)</li>
-                <li>• Button (submit/outline)</li>
-              </ul>
-            </div>
-          </div>
+        {/* Component Documentation */}
+        <Card>
+          <CardHeader border>
+            <HStack gap={3} align="center">
+              <IconContainer icon={Clipboard} variant="neutral" size="sm" />
+              <VStack gap={1}>
+                <CardHeading>Form Components Demonstrated</CardHeading>
+                <CardDescription>Complete overview of all form components used</CardDescription>
+              </VStack>
+            </HStack>
+          </CardHeader>
+          <CardContent>
+            <Grid columns={{ md: 2, lg: 4 }} gap={4}>
+              <GridCell>
+                <VStack gap={2}>
+                  <Text>Basic Inputs:</Text>
+                  <VStack gap={1}>
+                    <Text>• Input (with prefixes)</Text>
+                    <Text>• NumberField</Text>
+                    <Text>• Textarea</Text>
+                  </VStack>
+                </VStack>
+              </GridCell>
+              <GridCell>
+                <VStack gap={2}>
+                  <Text>Selection:</Text>
+                  <VStack gap={1}>
+                    <Text>• Select dropdowns</Text>
+                    <Text>• TagInput (multi-select)</Text>
+                    <Text>• RadioGroup</Text>
+                  </VStack>
+                </VStack>
+              </GridCell>
+              <GridCell>
+                <VStack gap={2}>
+                  <Text>Controls:</Text>
+                  <VStack gap={1}>
+                    <Text>• Checkbox</Text>
+                    <Text>• Switch</Text>
+                    <Text>• Slider (with values)</Text>
+                  </VStack>
+                </VStack>
+              </GridCell>
+              <GridCell>
+                <VStack gap={2}>
+                  <Text>Form System:</Text>
+                  <VStack gap={1}>
+                    <Text>• Zod validation</Text>
+                    <Text>• Error handling</Text>
+                    <Text>• Field descriptions</Text>
+                  </VStack>
+                </VStack>
+              </GridCell>
+            </Grid>
+          </CardContent>
         </Card>
-      </div>
-    </div>
+      </VStack>
+    </>
   );
 }

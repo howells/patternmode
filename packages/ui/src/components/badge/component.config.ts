@@ -18,6 +18,7 @@ export const componentConfig: ComponentConfig = {
   name: "Badge",
   description: "Small status indicator component for labels, counts, and categorical information.",
   category: "visual",
+  featured: true,
   icon: Tag,
   importStatement: `import { Badge } from "@patternmode/ui/badge";`,
   examples: [

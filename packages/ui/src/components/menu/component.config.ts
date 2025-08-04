@@ -29,6 +29,7 @@ export const componentConfig: ComponentConfig = {
   name: "Menu",
   description: "Contextual menu component with hierarchical navigation and action items. Supports icons, shortcuts, checkboxes, radio groups, and nested submenus for complex navigation patterns.",
   category: "navigation",
+  featured: true,
   icon: MoreVertical,
   importStatement: `import { Menu, MenuTrigger, MenuContent, MenuItem, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuLabel, MenuSeparator, MenuSubmenu, MenuSubmenuTrigger, MenuSubmenuContent, MenuGroup } from "@patternmode/ui/menu";`,
   examples: [

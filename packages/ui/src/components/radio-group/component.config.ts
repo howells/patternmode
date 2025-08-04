@@ -15,6 +15,7 @@ export const componentConfig: ComponentConfig = {
   name: "Radio Group",
   description: "A container component that manages a group of radio buttons with mutually exclusive selection behavior. Provides keyboard navigation, focus management, and value synchronization across all radio buttons within the group.",
   category: "controls",
+  featured: true,
   icon: CircleDot,
   importStatement: `import { RadioGroup, RadioGroupItem } from "@patternmode/ui/radio-group";`,
   examples: [

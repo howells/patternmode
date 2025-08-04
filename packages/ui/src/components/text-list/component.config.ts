@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { List } from "lucide-react";
 import { TextList as ListComponent, TextListIndicator, TextListItem } from "./component";
-import { DefaultExample, NestedExample, OrderedExample, PlainListExample, WithIconsExample } from "./examples";
+import { DefaultExample, NestedExample, OrderedExample, PlainVariantExample, WithIconsExample } from "./examples";
 
 export const componentConfig: ComponentConfig = {
   id: "text-list",
@@ -39,7 +39,7 @@ export const componentConfig: ComponentConfig = {
       id: "plain",
       title: "Plain Variant",
       description: "Custom indicators using text or symbols",
-      component: PlainListExample,
+      component: PlainVariantExample,
     },
   ],
   components: [

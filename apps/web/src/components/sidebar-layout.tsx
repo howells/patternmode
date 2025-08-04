@@ -220,7 +220,7 @@ function MainContent({ children }: { children: React.ReactNode }) {
         marginLeft: isMobile ? "0" : "var(--sidebar-width)",
       }}
     >
-      <Stack direction="vertical" className="min-h-0 flex-1">
+      <Stack direction="vertical" gap={0} className="min-h-0 flex-1">
         <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-end">
           <ComponentSearch />
         </header>

@@ -24,6 +24,7 @@ export const componentConfig: ComponentConfig = {
   name: "Table",
   description: "Comprehensive table components for displaying tabular data with professional styling and responsive behavior.",
   category: "display",
+  featured: true,
   icon: Table,
   importStatement: `import { Table, TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, TableFoot, TableCaption } from "@patternmode/ui/table";`,
   examples: [

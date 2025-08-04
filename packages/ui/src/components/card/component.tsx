@@ -1,9 +1,12 @@
+import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
-import { tv } from "tailwind-variants";
 
+import { tv } from "tailwind-variants";
+import { generateResponsiveSpacingClasses, getBaseSpacingValue, getPaddingClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
+import { Subheading } from "../subheading/component";
 
 const cardVariants = tv({
   base: [
@@ -22,25 +25,6 @@ const cardVariants = tv({
         "bg-transparent",
       ],
     },
-    padding: {
-      0: "p-0",
-      0.5: "p-0.5",
-      1: "p-1",
-      1.5: "p-1.5",
-      2: "p-2",
-      2.5: "p-2.5",
-      3: "p-3",
-      3.5: "p-3.5",
-      4: "p-4",
-      5: "p-5",
-      6: "p-6",
-      7: "p-7",
-      8: "p-8",
-      9: "p-9",
-      10: "p-10",
-      11: "p-11",
-      12: "p-12",
-    },
     fillHeight: {
       true: "h-full",
       false: "",
@@ -48,7 +32,6 @@ const cardVariants = tv({
   },
   defaultVariants: {
     variant: "default",
-    padding: 0,
     fillHeight: false,
   },
 });
@@ -60,10 +43,10 @@ type CardProps = {
    */
   variant?: "default" | "dashed";
   /**
-   * Padding scale value (0-12).
-   * Controls internal spacing throughout the card.
+   * Padding scale value (0-24) - can be responsive.
+   * Controls internal spacing throughout the card using the 4px grid system.
    */
-  padding?: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  padding?: ResponsiveSpacing<SpacingValue>;
   /**
    * Whether card should fill container height.
    * Useful for creating equal-height cards in grid layouts.
@@ -92,8 +75,22 @@ type CardProps = {
 const Card = (
   { ref: forwardedRef, render = <div />, variant, padding, fillHeight, className, ...props }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
+  // Get base padding value for non-responsive case
+  const basePadding = getBaseSpacingValue(padding);
+
+  // Generate responsive padding classes
+  const responsivePaddingClasses = generateResponsiveSpacingClasses("padding", padding);
+
+  // Get base padding class if we have a base value
+  const basePaddingClass = basePadding !== undefined ? getPaddingClass(basePadding) : "";
+
   const defaultProps: useRender.ElementProps<"div"> = {
-    className: cx(cardVariants({ variant, padding, fillHeight }), className),
+    className: cx(
+      cardVariants({ variant, fillHeight }),
+      basePaddingClass,
+      responsivePaddingClasses,
+      className,
+    ),
   };
 
   const element = useRender({
@@ -141,33 +138,52 @@ const CardHeader = ({ ref, className, border = false, ...props }: CardHeaderProp
 );
 CardHeader.displayName = "CardHeader";
 
-type CardTitleProps = {
+type CardHeadingProps = {
   /**
    * Additional CSS classes.
-   * Applied to the title heading element.
+   * Applied to the heading element.
    */
   className?: string;
   /**
-   * Title text or content.
-   * Displayed with prominent typography.
+   * Heading text or content.
+   * When a string is provided, uses Subheading component with default styling.
+   * When a React element is provided, renders it directly.
    */
   children?: React.ReactNode;
 } & React.HTMLAttributes<HTMLHeadingElement>;
 
 /**
- * Card title component with consistent typography.
+ * Card heading component with consistent typography.
  */
-const CardTitle = ({ ref, className, ...props }: CardTitleProps & { ref?: React.RefObject<HTMLHeadingElement | null> }) => (
-  <h3
-    ref={ref}
-    className={cx(
-      "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
-      className,
-    )}
-    {...props}
-  />
-);
-CardTitle.displayName = "CardTitle";
+const CardHeading = ({ ref, className, children, ...props }: CardHeadingProps & { ref?: React.RefObject<HTMLHeadingElement | null> }) => {
+  // If children is a string, wrap in Subheading component
+  if (typeof children === "string") {
+    return (
+      <Subheading
+        ref={ref}
+        className={className}
+        {...props}
+      >
+        {children}
+      </Subheading>
+    );
+  }
+
+  // If children is a React element or other content, render directly
+  return (
+    <h3
+      ref={ref}
+      className={cx(
+        "text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </h3>
+  );
+};
+CardHeading.displayName = "CardHeading";
 
 type CardDescriptionProps = {
   /**
@@ -273,8 +289,8 @@ export {
   type CardFooterProps,
   CardHeader,
   type CardHeaderProps,
+  CardHeading,
+  type CardHeadingProps,
   type CardProps,
-  CardTitle,
-  type CardTitleProps,
   cardVariants,
 };
