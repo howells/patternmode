@@ -3,6 +3,7 @@
 import React from "react";
 
 import {
+  Button,
   CodeBlock,
   Stack,
   Tabs,
@@ -25,27 +26,24 @@ export const PreviewTabs: React.FC<PreviewTabsProps> = ({
 }) => {
   return (
     <Tabs defaultValue="preview">
-      <Stack>
+      <Stack gap={6}>
         {/* Tabs aligned to left with padding instead of absolute positioning */}
         <div className="flex justify-start">
           <TabsList variant="solid">
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
+          <Button>Test</Button>
         </div>
 
         <TabsContent value="preview" data-testid="component-preview">
-          <Stack data-testid="preview-container">
-            {previewContent}
-          </Stack>
+          {previewContent}
         </TabsContent>
 
         <TabsContent value="code">
-          <Stack>
-            <CodeBlock language="tsx">
-              {codeContent}
-            </CodeBlock>
-          </Stack>
+          <CodeBlock language="tsx">
+            {codeContent}
+          </CodeBlock>
         </TabsContent>
       </Stack>
     </Tabs>
