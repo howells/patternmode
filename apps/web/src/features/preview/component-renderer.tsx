@@ -4,13 +4,10 @@ import React from "react";
 
 import { Callout, getDynamicIconByName } from "@patternmode/ui";
 
-import { GridAlignedContainer } from "./grid-aligned-container";
-
 type ComponentRendererProps = {
   Component: React.ComponentType<Record<string, unknown> & { children?: React.ReactNode }>;
   componentId: string;
   props: Record<string, unknown>;
-  isResponsive?: boolean;
 };
 
 /**
@@ -58,7 +55,6 @@ export const ComponentRenderer: React.FC<ComponentRendererProps> = ({
   Component,
   componentId,
   props,
-  isResponsive = false,
 }) => {
   const processedProps = useProcessedProps(props);
 
@@ -85,9 +81,5 @@ export const ComponentRenderer: React.FC<ComponentRendererProps> = ({
     }
   };
 
-  return (
-    <GridAlignedContainer isResponsive={isResponsive}>
-      {renderComponent()}
-    </GridAlignedContainer>
-  );
+  return renderComponent();
 };

@@ -1,5 +1,4 @@
 // Component exports
-export { GridAlignedContainer } from "./grid-aligned-container";
 export { ComponentRenderer, useProcessedProps } from "./component-renderer";
 export { PreviewTabs } from "./preview-tabs";
 export { createDynamicComponent, useComponentLoader } from "./component-loader";
