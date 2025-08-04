@@ -72,7 +72,7 @@ export type RadioCardGroupPreviewProps = {
   size?: "sm" | "md" | "lg";
 };
 
-export function RadioCardGroupExample({
+export function RadioCardGroupPreview({
   orientation = "vertical",
   optionCount = 3,
   showPricing = true,
@@ -140,7 +140,7 @@ export function RadioCardGroupExample({
 }
 
 // Preview props for prop explorer
-export const RadioCardGroupPreviewProps = [
+export const radioCardGroupPreviewProps = [
   {
     name: "layout",
     type: "select",

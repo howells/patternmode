@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/textarea/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { textareaConfig } from "@patternmode/ui/components/textarea/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function TextareaPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={textareaConfig.name}
+        description={textareaConfig.description}
+        badge={textareaConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="textarea"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={textareaConfig.name}
+        category={textareaConfig.category}
       />
 
       <Separator />

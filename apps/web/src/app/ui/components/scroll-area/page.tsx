@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/scroll-area/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { scrollAreaConfig } from "@patternmode/ui/components/scroll-area/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ScrollAreaPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={scrollAreaConfig.name}
+        description={scrollAreaConfig.description}
+        badge={scrollAreaConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="scroll-area"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={scrollAreaConfig.name}
+        category={scrollAreaConfig.category}
       />
 
       <Separator />

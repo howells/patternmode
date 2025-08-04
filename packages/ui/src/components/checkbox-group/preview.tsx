@@ -9,7 +9,7 @@ type CheckboxGroupProps = React.ComponentPropsWithoutRef<typeof CheckboxGroup> &
   className?: string;
 };
 
-export function CheckboxGroupExample(props: CheckboxGroupProps) {
+export function CheckboxGroupPreview(props: CheckboxGroupProps) {
   return (
     <CheckboxGroup label="Select options" {...props}>
       <CheckboxGroupItem value="option1">Option 1</CheckboxGroupItem>
@@ -20,7 +20,7 @@ export function CheckboxGroupExample(props: CheckboxGroupProps) {
 }
 
 // Preview props for prop explorer
-export const CheckboxGroupPreviewProps = [
+export const checkboxGroupPreviewProps = [
   {
     name: "label",
     type: "string",

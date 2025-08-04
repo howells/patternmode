@@ -16,3 +16,4 @@ export type {
   ToolbarProps,
   ToolbarSeparatorProps,
 } from "./component";
+export { ToolbarPreview, toolbarPreviewProps } from "./preview";

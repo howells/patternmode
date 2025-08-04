@@ -5,12 +5,12 @@ import React from "react";
 
 import { Meter } from "./component";
 
-export function MeterExample(props: MeterProps) {
+export function MeterPreview(props: MeterProps) {
   return <Meter value={65} label="Progress" showValue={true} {...props} />;
 }
 
 // Preview props for prop explorer
-export const MeterPreviewProps = [
+export const meterPreviewProps = [
   {
     name: "value",
     type: "number",

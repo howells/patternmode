@@ -29,7 +29,7 @@ export type BarListPreviewProps = {
   sortOrder?: "ascending" | "descending" | "none";
 };
 
-export function BarListExample({
+export function BarListPreview({
   showAnimation = true,
   color = "auto",
   sortOrder = "none",
@@ -61,7 +61,7 @@ export function BarListExample({
 }
 
 // Preview props for prop explorer
-export const BarListPreviewProps = [
+export const barListPreviewProps = [
   {
     name: "showAnimation",
     type: "boolean",

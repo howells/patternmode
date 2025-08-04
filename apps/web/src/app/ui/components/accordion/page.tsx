@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/accordion/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { accordionConfig } from "@patternmode/ui/components/accordion/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function AccordionPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={accordionConfig.name}
+        description={accordionConfig.description}
+        badge={accordionConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="accordion"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={accordionConfig.name}
+        category={accordionConfig.category}
       />
 
       <Separator />

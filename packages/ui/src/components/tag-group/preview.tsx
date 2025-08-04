@@ -4,7 +4,7 @@ import * as React from "react";
 import { Tag } from "../tag/component";
 import { TagGroup } from "./component";
 
-export const TagGroupExample = () => {
+export const TagGroupPreview = () => {
   const [tags, setTags] = React.useState([
     { id: 1, value: "React" },
     { id: 2, value: "TypeScript" },
@@ -29,3 +29,20 @@ export const TagGroupExample = () => {
     </div>
   );
 };
+
+// Preview props for prop explorer
+export const tagGroupPreviewProps = [
+  {
+    name: "dismissible",
+    type: "boolean",
+    description: "Whether tags in the group can be dismissed.",
+    defaultValue: false,
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant for all tags in the group.",
+    options: ["sm", "base", "lg"],
+    defaultValue: "base",
+  },
+];

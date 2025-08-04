@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/slider/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { sliderConfig } from "@patternmode/ui/components/slider/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SliderPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={sliderConfig.name}
+        description={sliderConfig.description}
+        badge={sliderConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="slider"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={sliderConfig.name}
+        category={sliderConfig.category}
       />
 
       <Separator />

@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/spark-chart/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { sparkChartConfig } from "@patternmode/ui/components/spark-chart/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SparkChartPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={sparkChartConfig.name}
+        description={sparkChartConfig.description}
+        badge={sparkChartConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="spark-chart"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={sparkChartConfig.name}
+        category={sparkChartConfig.category}
       />
 
       <Separator />

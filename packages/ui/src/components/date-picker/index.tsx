@@ -4,3 +4,4 @@ export {
   type DateRange,
   type DateRangePreset,
 } from "./component";
+export { DatePickerPreview, datePickerPreviewProps } from "./preview";

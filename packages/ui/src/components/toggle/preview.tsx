@@ -5,7 +5,7 @@ import { Bold, Italic, Strikethrough, Underline } from "lucide-react";
 import React from "react";
 import { Toggle } from "./component";
 
-export function ToggleExample(props: ToggleProps) {
+export function TogglePreview(props: ToggleProps) {
   return (
     <Toggle {...props}>
       {props.children || "Toggle"}
@@ -14,7 +14,7 @@ export function ToggleExample(props: ToggleProps) {
 }
 
 // Preview props for prop explorer
-export const TogglePreviewProps = [
+export const togglePreviewProps = [
   {
     name: "children",
     type: "select",

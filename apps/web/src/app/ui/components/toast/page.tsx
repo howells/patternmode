@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/toast/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { toastConfig } from "@patternmode/ui/components/toast/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ToastPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={toastConfig.name}
+        description={toastConfig.description}
+        badge={toastConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="toast"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={toastConfig.name}
+        category={toastConfig.category}
       />
 
       <Separator />

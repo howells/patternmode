@@ -19,3 +19,4 @@ export {
   SheetTrigger,
   type SheetTriggerProps,
 } from "./component";
+export { SheetPreview, sheetPreviewProps } from "./preview";

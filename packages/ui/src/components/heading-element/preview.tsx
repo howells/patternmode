@@ -4,12 +4,12 @@ import type { HeadingElementProps } from "./component";
 import React from "react";
 import { HeadingElement } from "./component";
 
-export function HeadingElementExample(props: HeadingElementProps) {
+export function HeadingElementPreview(props: HeadingElementProps) {
   return <HeadingElement level={2} {...props}>{props.children || "Sample Heading"}</HeadingElement>;
 }
 
 // Preview props for prop explorer
-export const HeadingElementPreviewProps = [
+export const headingElementPreviewProps = [
   {
     name: "children",
     type: "string",

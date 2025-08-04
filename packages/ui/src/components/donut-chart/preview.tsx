@@ -38,7 +38,7 @@ export type DonutChartPreviewProps = {
   variant?: "default" | "pie";
 };
 
-export function DonutChartExample({
+export function DonutChartPreview({
   showLegend = true,
   showLabel = false,
   showTooltip = true,
@@ -63,7 +63,7 @@ export function DonutChartExample({
 }
 
 // Preview props for prop explorer
-export const DonutChartPreviewProps = [
+export const donutChartPreviewProps = [
   {
     name: "showLegend",
     type: "boolean",

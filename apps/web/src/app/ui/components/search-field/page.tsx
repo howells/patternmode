@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/search-field/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { searchFieldConfig } from "@patternmode/ui/components/search-field/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SearchFieldPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={searchFieldConfig.name}
+        description={searchFieldConfig.description}
+        badge={searchFieldConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="search-field"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={searchFieldConfig.name}
+        category={searchFieldConfig.category}
       />
 
       <Separator />

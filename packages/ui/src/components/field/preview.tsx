@@ -7,7 +7,7 @@ import { Field, FieldControl, FieldDescription, FieldLabel } from "./component";
 
 type FieldProps = React.ComponentPropsWithoutRef<typeof BaseField.Root>;
 
-export function FieldExample(props: FieldProps) {
+export function FieldPreview(props: FieldProps) {
   return (
     <Field {...props}>
       <FieldLabel>Email</FieldLabel>
@@ -20,7 +20,7 @@ export function FieldExample(props: FieldProps) {
 }
 
 // Preview props for prop explorer
-export const FieldPreviewProps = [
+export const fieldPreviewProps = [
   {
     name: "disabled",
     type: "boolean",

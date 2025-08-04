@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/preview-card/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { previewCardConfig } from "@patternmode/ui/components/preview-card/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function PreviewCardPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={previewCardConfig.name}
+        description={previewCardConfig.description}
+        badge={previewCardConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="preview-card"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={previewCardConfig.name}
+        category={previewCardConfig.category}
       />
 
       <Separator />

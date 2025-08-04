@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/code-block/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { codeBlockConfig } from "@patternmode/ui/components/code-block/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CodeBlockPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={codeBlockConfig.name}
+        description={codeBlockConfig.description}
+        badge={codeBlockConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="code-block"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={codeBlockConfig.name}
+        category={codeBlockConfig.category}
       />
 
       <Separator />

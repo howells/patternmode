@@ -14,3 +14,4 @@ export {
   type FormLabelProps,
   type FormProps,
 } from "./component";
+export { FormPreview, formPreviewProps } from "./preview";

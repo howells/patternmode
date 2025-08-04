@@ -10,7 +10,7 @@ import {
   PaginationPrevious,
 } from "./component";
 
-export function PaginationExample(props: PaginationProps) {
+export function PaginationPreview(props: PaginationProps) {
   return (
     <Pagination {...props}>
       <PaginationPrevious href="#page1" />
@@ -27,7 +27,7 @@ export function PaginationExample(props: PaginationProps) {
 }
 
 // Preview props for prop explorer
-export const PaginationPreviewProps = [
+export const paginationPreviewProps = [
   {
     name: "aria-label",
     type: "string",

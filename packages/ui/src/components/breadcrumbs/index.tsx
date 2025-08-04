@@ -14,3 +14,4 @@ export {
   type BreadcrumbSeparatorProps,
   type BreadcrumbsProps,
 } from "./component";
+export { BreadcrumbsPreview, breadcrumbsPreviewProps } from "./preview";

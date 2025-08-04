@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/combobox/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { comboboxConfig } from "@patternmode/ui/components/combobox/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ComboboxPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={comboboxConfig.name}
+        description={comboboxConfig.description}
+        badge={comboboxConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="combobox"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={comboboxConfig.name}
+        category={comboboxConfig.category}
       />
 
       <Separator />

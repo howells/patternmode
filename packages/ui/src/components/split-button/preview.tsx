@@ -80,7 +80,7 @@ const actionConfigs = {
   },
 };
 
-export function SplitButtonExample({
+export function SplitButtonPreview({
   size = "md",
   variant = "default",
   showIcons = true,
@@ -136,7 +136,7 @@ export function SplitButtonExample({
 }
 
 // Preview props for prop explorer
-export const SplitButtonPreviewProps = [
+export const splitButtonPreviewProps = [
   {
     name: "variant",
     type: "select",

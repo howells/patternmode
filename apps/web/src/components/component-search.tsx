@@ -4,21 +4,21 @@ import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import type { ComponentConfig, SearchFieldItem } from "@patternmode/ui";
+import type { SearchFieldItem } from "@patternmode/ui/components/search-field";
 
+import { Button } from "@patternmode/ui/components/button";
 import {
-  Badge,
-  Button,
+
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  SearchField,
-  Stack,
-  Subheading,
-  Text,
-} from "@patternmode/ui";
+
+} from "@patternmode/ui/components/dialog";
 import { getAllComponents } from "@patternmode/ui/components/registry";
+import { SearchField } from "@patternmode/ui/components/search-field";
+
+import type { ComponentConfig } from "../lib/component-configs";
 
 type ComponentSearchProps = {
   placeholder?: string;

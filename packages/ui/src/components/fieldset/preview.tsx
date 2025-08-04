@@ -5,7 +5,7 @@ import React from "react";
 import { Field, FieldControl, FieldLabel } from "../field/component";
 import { Fieldset, FieldsetLegend } from "./component";
 
-export function FieldsetExample(props: FieldsetProps) {
+export function FieldsetPreview(props: FieldsetProps) {
   return (
     <Fieldset {...props}>
       <FieldsetLegend>Personal Information</FieldsetLegend>
@@ -24,7 +24,7 @@ export function FieldsetExample(props: FieldsetProps) {
 }
 
 // Preview props for prop explorer
-export const FieldsetPreviewProps = [
+export const fieldsetPreviewProps = [
   {
     name: "disabled",
     type: "boolean",

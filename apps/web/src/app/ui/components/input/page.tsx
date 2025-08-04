@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/input/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { inputConfig } from "@patternmode/ui/components/input/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function InputPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={inputConfig.name}
+        description={inputConfig.description}
+        badge={inputConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="input"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={inputConfig.name}
+        category={inputConfig.category}
       />
 
       <Separator />

@@ -13,3 +13,4 @@ export {
   MenuSubmenuTrigger,
   MenuTrigger,
 } from "./component";
+export { MenuPreview, menuPreviewProps } from "./preview";

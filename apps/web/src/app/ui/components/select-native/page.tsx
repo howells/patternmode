@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/select-native/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { selectNativeConfig } from "@patternmode/ui/components/select-native/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SelectNativePage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={selectNativeConfig.name}
+        description={selectNativeConfig.description}
+        badge={selectNativeConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="select-native"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={selectNativeConfig.name}
+        category={selectNativeConfig.category}
       />
 
       <Separator />

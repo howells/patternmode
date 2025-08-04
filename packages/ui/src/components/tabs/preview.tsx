@@ -5,7 +5,7 @@ import { Button } from "../button";
 import { Text } from "../text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
-export type TabsExampleProps = {
+export type TabsPreviewProps = {
   /**
    * Style variant for the tabs list.
    * "solid" creates button-like tabs in a container, "line" creates underlined tabs with a divider.
@@ -33,13 +33,13 @@ export type TabsExampleProps = {
   showButtonAlignment?: boolean;
 };
 
-export function TabsExample({
+export function TabsPreview({
   variant = "line",
   hideDivider = false,
   size = "default",
   defaultValue = "tab1",
   showButtonAlignment = false,
-}: TabsExampleProps = {}) {
+}: TabsPreviewProps = {}) {
   return (
     <div className="">
       <Tabs defaultValue={defaultValue}>
@@ -84,7 +84,7 @@ export function TabsExample({
 }
 
 // Preview props for prop explorer
-export const TabsPreviewProps = [
+export const tabsPreviewProps = [
   {
     name: "variant",
     type: "select",

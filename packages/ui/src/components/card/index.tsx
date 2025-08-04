@@ -13,3 +13,4 @@ export {
   type CardProps,
   cardVariants,
 } from "./component";
+export { CardPreview, cardPreviewProps } from "./preview";

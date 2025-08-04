@@ -9,7 +9,7 @@ type CollapsibleProps = React.ComponentPropsWithoutRef<typeof Collapsible> & {
   disabled?: boolean;
 };
 
-export function CollapsibleExample(props: CollapsibleProps) {
+export function CollapsiblePreview(props: CollapsibleProps) {
   return (
     <Collapsible defaultOpen {...props}>
       <CollapsibleTrigger>Component Features</CollapsibleTrigger>
@@ -26,7 +26,7 @@ export function CollapsibleExample(props: CollapsibleProps) {
 }
 
 // Preview props for prop explorer
-export const CollapsiblePreviewProps = [
+export const collapsiblePreviewProps = [
   {
     name: "defaultOpen",
     type: "boolean",

@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/calendar/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { calendarConfig } from "@patternmode/ui/components/calendar/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CalendarPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={calendarConfig.name}
+        description={calendarConfig.description}
+        badge={calendarConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="calendar"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={calendarConfig.name}
+        category={calendarConfig.category}
       />
 
       <Separator />

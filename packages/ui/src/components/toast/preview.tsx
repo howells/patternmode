@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "../button";
 import { useToast } from "./component";
 
-type ToastExampleProps = {
+type ToastPreviewProps = {
   title?: string;
   description?: string;
   type?: "default" | "success" | "error" | "warning" | "info";
@@ -12,7 +12,7 @@ type ToastExampleProps = {
   dismissible?: boolean;
 };
 
-export function ToastExample(props: ToastExampleProps) {
+export function ToastPreview(props: ToastPreviewProps) {
   const toast = useToast();
 
   const showToast = () => {
@@ -45,7 +45,7 @@ export function ToastExample(props: ToastExampleProps) {
 }
 
 // Preview props for prop explorer
-export const ToastPreviewProps = [
+export const toastPreviewProps = [
   {
     name: "title",
     type: "string",

@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/stack/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { stackConfig } from "@patternmode/ui/components/stack/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function StackPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={stackConfig.name}
+        description={stackConfig.description}
+        badge={stackConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="stack"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={stackConfig.name}
+        category={stackConfig.category}
       />
 
       <Separator />

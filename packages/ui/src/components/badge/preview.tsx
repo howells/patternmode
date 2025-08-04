@@ -5,7 +5,7 @@ import { AlertCircle, Check, Star, X } from "lucide-react";
 import React from "react";
 import { Badge } from "./component";
 
-export function BadgeExample(props: BadgeProps) {
+export function BadgePreview(props: BadgeProps) {
   // Convert boolean to actual dismiss handler for preview
   const handleDismiss = props.dismissible
     ? () => console.warn("Badge dismissed")
@@ -24,7 +24,7 @@ export function BadgeExample(props: BadgeProps) {
 }
 
 // Preview props for prop explorer
-export const BadgePreviewProps = [
+export const badgePreviewProps = [
   {
     name: "children",
     type: "string",

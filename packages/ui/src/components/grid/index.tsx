@@ -9,3 +9,4 @@ export {
   gridVariants,
   type ResponsiveValue,
 } from "./component";
+export { GridPreview, gridPreviewProps } from "./preview";

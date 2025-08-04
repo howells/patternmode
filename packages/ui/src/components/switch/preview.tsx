@@ -4,12 +4,12 @@ import type { SwitchProps } from "./component";
 import React from "react";
 import { Switch } from "./component";
 
-export function SwitchExample(props: SwitchProps) {
+export function SwitchPreview(props: SwitchProps) {
   return <Switch {...props} />;
 }
 
 // Preview props for prop explorer
-export const SwitchPreviewProps = [
+export const switchPreviewProps = [
   {
     name: "label",
     type: "string",

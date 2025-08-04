@@ -39,7 +39,7 @@ export type BarChartPreviewProps = {
   colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
 };
 
-export function BarChartExample({
+export function BarChartPreview({
   layout = "vertical",
   type = "default",
   showGridLines = true,
@@ -64,7 +64,7 @@ export function BarChartExample({
 }
 
 // Preview props for prop explorer
-export const BarChartPreviewProps = [
+export const barChartPreviewProps = [
   {
     name: "layout",
     type: "select",

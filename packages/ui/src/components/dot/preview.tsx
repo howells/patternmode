@@ -4,12 +4,12 @@ import type { DotProps } from "./component";
 import React from "react";
 import { Dot } from "./component";
 
-export function DotExample(props: DotProps) {
+export function DotPreview(props: DotProps) {
   return <Dot {...props} />;
 }
 
 // Preview props for prop explorer
-export const DotPreviewProps = [
+export const dotPreviewProps = [
   {
     name: "variant",
     type: "select",

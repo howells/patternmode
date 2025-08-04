@@ -93,7 +93,7 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     warnings.push("Consider implementing safe props filtering pattern for security");
   }
 
-  // Check for preview props export (required for prop-explorer)
+  // Check for preview props export (required for preview system)
   const previewPropsPattern = `${kebabToPascalCase(componentName)}PreviewProps`;
   const genericPreviewPropsPattern = /export\s+(?:const|let|var)\s+\w*[Pp]reviewProps/;
   const hasSpecificPreviewProps = content.includes(`export const ${previewPropsPattern}`) || content.includes(`export let ${previewPropsPattern}`) || content.includes(`export var ${previewPropsPattern}`);
@@ -107,7 +107,7 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
       : null;
 
   if (!hasPreviewProps) {
-    errors.push(`Missing preview props export - should export '${previewPropsPattern}' or similar for prop-explorer functionality`);
+    errors.push(`Missing preview props export - should export '${previewPropsPattern}' or similar for preview functionality`);
   }
 
   // Additional structural checks

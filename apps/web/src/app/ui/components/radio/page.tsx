@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/radio/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { radioConfig } from "@patternmode/ui/components/radio/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function RadioPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={radioConfig.name}
+        description={radioConfig.description}
+        badge={radioConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="radio"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={radioConfig.name}
+        category={radioConfig.category}
       />
 
       <Separator />

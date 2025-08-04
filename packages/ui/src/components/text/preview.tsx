@@ -4,7 +4,7 @@ import type { TextProps } from "./component";
 import React from "react";
 import { Text } from "./component";
 
-export function TextExample(props: TextProps) {
+export function TextPreview(props: TextProps) {
   return (
     <Text {...props}>
       {props.children || "This is a text component that demonstrates typography and inherits its styling from the parent or props."}
@@ -13,7 +13,7 @@ export function TextExample(props: TextProps) {
 }
 
 // Preview props for prop explorer
-export const TextPreviewProps = [
+export const textPreviewProps = [
   {
     name: "children",
     type: "string",

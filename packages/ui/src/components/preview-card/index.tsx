@@ -12,3 +12,4 @@ export {
   PreviewCardPositioner,
   PreviewCardTrigger,
 } from "./component";
+export { PreviewCardPreview, previewCardPreviewProps } from "./preview";

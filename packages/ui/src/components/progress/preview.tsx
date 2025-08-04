@@ -4,12 +4,12 @@ import type { ProgressBarProps } from "./component";
 import React from "react";
 import { ProgressBar } from "./component";
 
-export function ProgressExample(props: ProgressBarProps) {
+export function ProgressPreview(props: ProgressBarProps) {
   return <ProgressBar value={75} showValue={true} {...props} />;
 }
 
 // Preview props for prop explorer
-export const ProgressPreviewProps = [
+export const progressPreviewProps = [
   {
     name: "value",
     type: "number",

@@ -11,3 +11,4 @@ export {
   PopoverTitle,
   PopoverTrigger,
 } from "./component";
+export { PopoverPreview, popoverPreviewProps } from "./preview";

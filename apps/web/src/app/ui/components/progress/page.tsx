@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/progress/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { progressConfig } from "@patternmode/ui/components/progress/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ProgressPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={progressConfig.name}
+        description={progressConfig.description}
+        badge={progressConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="progress"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={progressConfig.name}
+        category={progressConfig.category}
       />
 
       <Separator />

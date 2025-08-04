@@ -4,12 +4,12 @@ import type { SkeletonProps } from "./component";
 import React from "react";
 import { Skeleton } from "./component";
 
-export function SkeletonExample(props: SkeletonProps) {
+export function SkeletonPreview(props: SkeletonProps) {
   return <Skeleton className="h-4 w-32" {...props} />;
 }
 
 // Preview props for prop explorer
-export const SkeletonPreviewProps = [
+export const skeletonPreviewProps = [
   {
     name: "className",
     type: "string",

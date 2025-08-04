@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/skeleton/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { skeletonConfig } from "@patternmode/ui/components/skeleton/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SkeletonPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={skeletonConfig.name}
+        description={skeletonConfig.description}
+        badge={skeletonConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="skeleton"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={skeletonConfig.name}
+        category={skeletonConfig.category}
       />
 
       <Separator />

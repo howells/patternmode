@@ -1,98 +1,101 @@
-import type { ComponentConfig } from "../lib/component-config-types";
+import type React from "react";
+
+import type { ComponentConfig, PropMetadata } from "../lib/component-config-types";
 
 // Import all component configs
-import { componentConfig as accordionConfig } from "./accordion/component.config";
-import { componentConfig as alertDialogConfig } from "./alert-dialog/component.config";
-import { componentConfig as areaChartConfig } from "./area-chart/component.config";
-import { componentConfig as avatarConfig } from "./avatar/component.config";
-import { componentConfig as badgeConfig } from "./badge/component.config";
-import { componentConfig as barChartConfig } from "./bar-chart/component.config";
-import { componentConfig as barListConfig } from "./bar-list/component.config";
-import { componentConfig as breadcrumbsConfig } from "./breadcrumbs/component.config";
-import { componentConfig as buttonConfig } from "./button/component.config";
-import { componentConfig as buttonGroupConfig } from "./button-group/component.config";
-import { componentConfig as calendarConfig } from "./calendar/component.config";
-import { componentConfig as calloutConfig } from "./callout/component.config";
-import { componentConfig as cardConfig } from "./card/component.config";
-import { componentConfig as carouselConfig } from "./carousel/component.config";
-import { componentConfig as categoryBarConfig } from "./category-bar/component.config";
-import { componentConfig as checkboxGroupConfig } from "./checkbox-group/component.config";
-import { componentConfig as checkboxConfig } from "./checkbox/component.config";
-import { componentConfig as codeBlockConfig } from "./code-block/component.config";
-import { componentConfig as collapsibleConfig } from "./collapsible/component.config";
-import { componentConfig as comboChartConfig } from "./combo-chart/component.config";
-import { componentConfig as comboboxConfig } from "./combobox/component.config";
-import { componentConfig as contextMenuConfig } from "./context-menu/component.config";
-import { componentConfig as copyButtonConfig } from "./copy-button/component.config";
-import { componentConfig as datePickerConfig } from "./date-picker/component.config";
-import { componentConfig as descriptionListConfig } from "./description-list/component.config";
-import { componentConfig as dialogConfig } from "./dialog/component.config";
-import { componentConfig as dismissButtonConfig } from "./dismiss-button/component.config";
-import { componentConfig as dividerConfig } from "./divider/component.config";
-import { componentConfig as donutChartConfig } from "./donut-chart/component.config";
-import { componentConfig as dotConfig } from "./dot/component.config";
-import { componentConfig as drawerConfig } from "./drawer/component.config";
-import { componentConfig as dropdownItemConfig } from "./dropdown-item/component.config";
-import { componentConfig as emptyStateConfig } from "./empty-state/component.config";
-import { componentConfig as fieldArrayConfig } from "./field-array/component.config";
-import { componentConfig as fieldConfig } from "./field/component.config";
-import { componentConfig as fieldsetConfig } from "./fieldset/component.config";
-import { componentConfig as formConfig } from "./form/component.config";
-import { componentConfig as gridConfig } from "./grid/component.config";
-import { componentConfig as headingElementConfig } from "./heading-element/component.config";
-import { componentConfig as headingConfig } from "./heading/component.config";
-import { componentConfig as iconContainerConfig } from "./icon-container/component.config";
-import { componentConfig as iconSelectConfig } from "./icon-select/component.config";
-import { componentConfig as iconConfig } from "./icon/component.config";
-import { componentConfig as inputConfig } from "./input/component.config";
-import { componentConfig as kbdConfig } from "./kbd/component.config";
-import { componentConfig as labelConfig } from "./label/component.config";
-import { componentConfig as lineChartConfig } from "./line-chart/component.config";
-import { componentConfig as loaderConfig } from "./loader/component.config";
-import { componentConfig as menuBarConfig } from "./menu-bar/component.config";
-import { componentConfig as menuConfig } from "./menu/component.config";
-import { componentConfig as meterConfig } from "./meter/component.config";
-import { componentConfig as navbarConfig } from "./navbar/component.config";
-import { componentConfig as navigationMenuConfig } from "./navigation-menu/component.config";
-import { componentConfig as numberFieldConfig } from "./number-field/component.config";
-import { componentConfig as paginationConfig } from "./pagination/component.config";
-import { componentConfig as popoverConfig } from "./popover/component.config";
-import { componentConfig as previewCardConfig } from "./preview-card/component.config";
-import { componentConfig as progressCircleConfig } from "./progress-circle/component.config";
-import { componentConfig as progressConfig } from "./progress/component.config";
-import { componentConfig as radioCardGroupConfig } from "./radio-card-group/component.config";
-import { componentConfig as radioGroupConfig } from "./radio-group/component.config";
-import { componentConfig as radioConfig } from "./radio/component.config";
-import { componentConfig as responsiveDrawerConfig } from "./responsive-drawer/component.config";
-import { componentConfig as scrollAreaConfig } from "./scroll-area/component.config";
-import { componentConfig as selectNativeConfig } from "./select-native/component.config";
-import { componentConfig as selectConfig } from "./select/component.config";
-import { componentConfig as separatorConfig } from "./separator/component.config";
-import { componentConfig as sheetConfig } from "./sheet/component.config";
-import { componentConfig as sidebarConfig } from "./sidebar/component.config";
-import { componentConfig as skeletonConfig } from "./skeleton/component.config";
-import { componentConfig as sliderConfig } from "./slider/component.config";
-import { componentConfig as sparkChartConfig } from "./spark-chart/component.config";
-import { componentConfig as splitButtonConfig } from "./split-button/component.config";
-import { componentConfig as stackConfig } from "./stack/component.config";
-import { componentConfig as stackedListConfig } from "./stacked-list/component.config";
-import { componentConfig as subheadingConfig } from "./subheading/component.config";
-import { componentConfig as switchConfig } from "./switch/component.config";
-import { componentConfig as tabNavigationConfig } from "./tab-navigation/component.config";
-import { componentConfig as tableConfig } from "./table/component.config";
-import { componentConfig as tabsConfig } from "./tabs/component.config";
-import { componentConfig as tagInputConfig } from "./tag-input/component.config";
-import { componentConfig as tagConfig } from "./tag/component.config";
-import { componentConfig as tagGroupConfig } from "./tag-group/component.config";
-import { componentConfig as textListConfig } from "./text-list/component.config";
-import { componentConfig as textConfig } from "./text/component.config";
-import { componentConfig as textareaConfig } from "./textarea/component.config";
-import { componentConfig as toastConfig } from "./toast/component.config";
-import { componentConfig as toggleGroupConfig } from "./toggle-group/component.config";
-import { componentConfig as toggleConfig } from "./toggle/component.config";
-import { componentConfig as toolbarConfig } from "./toolbar/component.config";
-import { componentConfig as tooltipConfig } from "./tooltip/component.config";
-import { componentConfig as trackerConfig } from "./tracker/component.config";
+import { accordionConfig } from "./accordion/config";
+import { alertDialogConfig } from "./alert-dialog/config";
+import { areaChartConfig } from "./area-chart/config";
+import { avatarConfig } from "./avatar/config";
+import { badgeConfig } from "./badge/config";
+import { barChartConfig } from "./bar-chart/config";
+import { barListConfig } from "./bar-list/config";
+import { breadcrumbsConfig } from "./breadcrumbs/config";
+import { buttonConfig } from "./button/config";
+import { buttonGroupConfig } from "./button-group/config";
+import { calendarConfig } from "./calendar/config";
+import { calloutConfig } from "./callout/config";
+import { cardConfig } from "./card/config";
+import { carouselConfig } from "./carousel/config";
+import { categoryBarConfig } from "./category-bar/config";
+import { checkboxConfig } from "./checkbox/config";
+import { checkboxGroupConfig } from "./checkbox-group/config";
+import { codeBlockConfig } from "./code-block/config";
+import { collapsibleConfig } from "./collapsible/config";
+import { comboChartConfig } from "./combo-chart/config";
+import { comboboxConfig } from "./combobox/config";
+import { contextMenuConfig } from "./context-menu/config";
+import { copyButtonConfig } from "./copy-button/config";
+import { datePickerConfig } from "./date-picker/config";
+import { descriptionListConfig } from "./description-list/config";
+import { dialogConfig } from "./dialog/config";
+import { dismissButtonConfig } from "./dismiss-button/config";
+import { dividerConfig } from "./divider/config";
+import { donutChartConfig } from "./donut-chart/config";
+import { dotConfig } from "./dot/config";
+import { drawerConfig } from "./drawer/config";
+import { dropdownItemConfig } from "./dropdown-item/config";
+import { emptyStateConfig } from "./empty-state/config";
+import { fieldConfig } from "./field/config";
+import { fieldArrayConfig } from "./field-array/config";
+import { fieldsetConfig } from "./fieldset/config";
+import { formConfig } from "./form/config";
+import { gridConfig } from "./grid/config";
+import { headingConfig } from "./heading/config";
+import { headingElementConfig } from "./heading-element/config";
+import { iconConfig } from "./icon/config";
+import { iconContainerConfig } from "./icon-container/config";
+import { iconSelectConfig } from "./icon-select/config";
+import { inputConfig } from "./input/config";
+import { kbdConfig } from "./kbd/config";
+import { labelConfig } from "./label/config";
+import { lineChartConfig } from "./line-chart/config";
+import { loaderConfig } from "./loader/config";
+import { menuConfig } from "./menu/config";
+import { menuBarConfig } from "./menu-bar/config";
+import { meterConfig } from "./meter/config";
+import { navbarConfig } from "./navbar/config";
+import { navigationMenuConfig } from "./navigation-menu/config";
+import { numberFieldConfig } from "./number-field/config";
+import { paginationConfig } from "./pagination/config";
+import { popoverConfig } from "./popover/config";
+import { previewCardConfig } from "./preview-card/config";
+import { progressConfig } from "./progress/config";
+import { progressCircleConfig } from "./progress-circle/config";
+import { radioConfig } from "./radio/config";
+import { radioCardGroupConfig } from "./radio-card-group/config";
+import { radioGroupConfig } from "./radio-group/config";
+import { responsiveDrawerConfig } from "./responsive-drawer/config";
+import { scrollAreaConfig } from "./scroll-area/config";
+import { searchFieldConfig } from "./search-field/config";
+import { selectConfig } from "./select/config";
+import { selectNativeConfig } from "./select-native/config";
+import { separatorConfig } from "./separator/config";
+import { sheetConfig } from "./sheet/config";
+import { sidebarConfig } from "./sidebar/config";
+import { skeletonConfig } from "./skeleton/config";
+import { sliderConfig } from "./slider/config";
+import { sparkChartConfig } from "./spark-chart/config";
+import { splitButtonConfig } from "./split-button/config";
+import { stackConfig } from "./stack/config";
+import { stackedListConfig } from "./stacked-list/config";
+import { subheadingConfig } from "./subheading/config";
+import { switchConfig } from "./switch/config";
+import { tabNavigationConfig } from "./tab-navigation/config";
+import { tableConfig } from "./table/config";
+import { tabsConfig } from "./tabs/config";
+import { tagConfig } from "./tag/config";
+import { tagGroupConfig } from "./tag-group/config";
+import { tagInputConfig } from "./tag-input/config";
+import { textConfig } from "./text/config";
+import { textListConfig } from "./text-list/config";
+import { textareaConfig } from "./textarea/config";
+import { toastConfig } from "./toast/config";
+import { toggleConfig } from "./toggle/config";
+import { toggleGroupConfig } from "./toggle-group/config";
+import { toolbarConfig } from "./toolbar/config";
+import { tooltipConfig } from "./tooltip/config";
+import { trackerConfig } from "./tracker/config";
 
 export const COMPONENT_REGISTRY = {
   "accordion": accordionConfig,
@@ -142,7 +145,6 @@ export const COMPONENT_REGISTRY = {
   "kbd": kbdConfig,
   "label": labelConfig,
   "line-chart": lineChartConfig,
-  "text-list": textListConfig,
   "loader": loaderConfig,
   "menu": menuConfig,
   "menu-bar": menuBarConfig,
@@ -160,6 +162,7 @@ export const COMPONENT_REGISTRY = {
   "radio-group": radioGroupConfig,
   "responsive-drawer": responsiveDrawerConfig,
   "scroll-area": scrollAreaConfig,
+  "search-field": searchFieldConfig,
   "select": selectConfig,
   "select-native": selectNativeConfig,
   "separator": separatorConfig,
@@ -180,6 +183,7 @@ export const COMPONENT_REGISTRY = {
   "tag-group": tagGroupConfig,
   "tag-input": tagInputConfig,
   "text": textConfig,
+  "text-list": textListConfig,
   "textarea": textareaConfig,
   "toast": toastConfig,
   "toggle": toggleConfig,
@@ -209,6 +213,96 @@ export function getComponentsByCategory(category: string): ComponentConfig[] {
 
 export function getTotalComponentsCount(): number {
   return Object.keys(COMPONENT_REGISTRY).length;
+}
+
+// Cache for dynamically imported preview components
+const previewComponentCache = new Map<string, React.ComponentType<any> | null>();
+
+export async function getPreviewComponent(id: string): Promise<React.ComponentType<any> | undefined> {
+  // Check cache first
+  if (previewComponentCache.has(id)) {
+    const cached = previewComponentCache.get(id);
+    return cached || undefined;
+  }
+
+  try {
+    // Convert kebab-case to PascalCase for the preview component name
+    const componentName = id
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+
+    const previewComponentName = `${componentName}Preview`;
+
+    // Dynamically import the preview component
+    const previewModule = await import(`./${id}/preview`);
+    const PreviewComponent = previewModule[previewComponentName];
+
+    if (PreviewComponent) {
+      previewComponentCache.set(id, PreviewComponent);
+      return PreviewComponent;
+    } else {
+      // Cache null to avoid repeated failed imports
+      previewComponentCache.set(id, null);
+      return undefined;
+    }
+  } catch {
+    // If preview doesn't exist, try to get the primary component from config
+    const config = getComponentConfig(id);
+    let fallbackComponent: React.ComponentType<any> | undefined;
+
+    // First try the direct component property
+    if (config?.component) {
+      fallbackComponent = config.component;
+    }
+    // Then try the primary component from components array
+    else if (config?.components) {
+      const primaryComponent = config.components.find(c => c.primary);
+      fallbackComponent = primaryComponent?.component || config.components[0]?.component;
+    }
+
+    // Cache the result (null if no fallback found)
+    previewComponentCache.set(id, fallbackComponent || null);
+    return fallbackComponent;
+  }
+}
+
+// Cache for dynamically imported preview props
+const previewPropsCache = new Map<string, PropMetadata[] | null>();
+
+export async function getPreviewProps(id: string): Promise<PropMetadata[]> {
+  // Check cache first
+  if (previewPropsCache.has(id)) {
+    const cached = previewPropsCache.get(id);
+    return cached || [];
+  }
+
+  try {
+    // Convert kebab-case to camelCase for the preview props name
+    const componentName = id.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    const previewPropsName = `${componentName}PreviewProps`;
+
+    // Dynamically import the preview props
+    const previewModule = await import(`./${id}/preview`);
+    const previewProps = previewModule[previewPropsName];
+
+    if (previewProps && Array.isArray(previewProps)) {
+      previewPropsCache.set(id, previewProps);
+      return previewProps;
+    } else {
+      // Fallback to config props if preview props don't exist
+      const config = getComponentConfig(id);
+      const configProps = config?.props || [];
+      previewPropsCache.set(id, configProps);
+      return configProps;
+    }
+  } catch {
+    // If preview props don't exist, fallback to config props
+    const config = getComponentConfig(id);
+    const configProps = config?.props || [];
+    previewPropsCache.set(id, configProps);
+    return configProps;
+  }
 }
 
 // Component list organized by categories (derived automatically)

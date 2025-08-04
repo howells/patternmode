@@ -4,12 +4,12 @@ import type { SeparatorProps } from "./component";
 import React from "react";
 import { Separator } from "./component";
 
-export function SeparatorExample(props: SeparatorProps) {
+export function SeparatorPreview(props: SeparatorProps) {
   return <Separator {...props} />;
 }
 
 // Preview props for prop explorer
-export const SeparatorPreviewProps = [
+export const separatorPreviewProps = [
   {
     name: "children",
     type: "string",

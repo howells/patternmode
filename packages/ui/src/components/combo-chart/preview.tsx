@@ -40,7 +40,7 @@ export type ComboChartPreviewProps = {
   lineColors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
 };
 
-export function ComboChartExample({
+export function ComboChartPreview({
   showGridLines = true,
   showLegend = true,
   showTooltip = true,
@@ -71,7 +71,7 @@ export function ComboChartExample({
 }
 
 // Preview props for prop explorer
-export const ComboChartPreviewProps = [
+export const comboChartPreviewProps = [
   {
     name: "showGridLines",
     type: "boolean",

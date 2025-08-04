@@ -4,7 +4,7 @@ import type { SubheadingProps } from "./component";
 import React from "react";
 import { Subheading } from "./component";
 
-export function SubheadingExample(props: SubheadingProps) {
+export function SubheadingPreview(props: SubheadingProps) {
   return (
     <Subheading {...props}>
       {props.children || "Section Subheading"}
@@ -13,7 +13,7 @@ export function SubheadingExample(props: SubheadingProps) {
 }
 
 // Preview props for prop explorer
-export const SubheadingPreviewProps = [
+export const subheadingPreviewProps = [
   {
     name: "children",
     type: "string",

@@ -5,7 +5,7 @@ import { Package } from "lucide-react";
 import React from "react";
 import { EmptyState } from "./component";
 
-export function EmptyStateExample(props: EmptyStateProps) {
+export function EmptyStatePreview(props: EmptyStateProps) {
   return (
     <EmptyState
       icon={Package}
@@ -25,7 +25,7 @@ export function EmptyStateExample(props: EmptyStateProps) {
 }
 
 // Preview props for prop explorer
-export const EmptyStatePreviewProps = [
+export const emptyStatePreviewProps = [
   {
     name: "title",
     type: "string",

@@ -58,7 +58,7 @@ const secondaryItems = [
   { id: "settings", label: "Settings", icon: Settings, href: "#settings" },
 ];
 
-export function SidebarExample({
+export function SidebarPreview({
   showIcons = true,
   showFooter = true,
   itemCount = 4,
@@ -162,7 +162,7 @@ export function SidebarExample({
 }
 
 // Preview props for prop explorer
-export const SidebarPreviewProps = [
+export const sidebarPreviewProps = [
   {
     name: "variant",
     type: "select",

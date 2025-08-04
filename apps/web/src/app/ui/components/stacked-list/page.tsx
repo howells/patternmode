@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/stacked-list/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { stackedListConfig } from "@patternmode/ui/components/stacked-list/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function StackedListPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={stackedListConfig.name}
+        description={stackedListConfig.description}
+        badge={stackedListConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="stacked-list"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={stackedListConfig.name}
+        category={stackedListConfig.category}
       />
 
       <Separator />

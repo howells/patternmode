@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/breadcrumbs/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { breadcrumbsConfig } from "@patternmode/ui/components/breadcrumbs/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function BreadcrumbsPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={breadcrumbsConfig.name}
+        description={breadcrumbsConfig.description}
+        badge={breadcrumbsConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="breadcrumbs"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={breadcrumbsConfig.name}
+        category={breadcrumbsConfig.category}
       />
 
       <Separator />

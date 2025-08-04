@@ -6,3 +6,4 @@ export {
   stackVariants,
   VStack,
 } from "./component";
+export { StackPreview, stackPreviewProps } from "./preview";

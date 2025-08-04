@@ -4,7 +4,7 @@ import type { CopyButtonProps } from "./component";
 import React from "react";
 import { CopyButton } from "./component";
 
-export function CopyButtonExample(props: CopyButtonProps) {
+export function CopyButtonPreview(props: CopyButtonProps) {
   return (
     <CopyButton
       text="Hello, World!"
@@ -14,7 +14,7 @@ export function CopyButtonExample(props: CopyButtonProps) {
 }
 
 // Preview props for prop explorer
-export const CopyButtonPreviewProps = [
+export const copyButtonPreviewProps = [
   {
     name: "text",
     type: "string",

@@ -9,3 +9,4 @@ export {
   AvatarWithFallback,
   type AvatarWithFallbackProps,
 } from "./component";
+export { AvatarPreview, avatarPreviewProps } from "./preview";

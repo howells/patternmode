@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/button/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { buttonConfig } from "@patternmode/ui/components/button/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ButtonPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={buttonConfig.name}
+        description={buttonConfig.description}
+        badge={buttonConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="button"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={buttonConfig.name}
+        category={buttonConfig.category}
       />
 
       <Separator />

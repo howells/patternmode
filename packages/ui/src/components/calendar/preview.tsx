@@ -31,7 +31,7 @@ export type CalendarPreviewProps = {
   numberOfMonths?: 1 | 2 | 3;
 };
 
-export function CalendarExample({
+export function CalendarPreview({
   enableYearNavigation = false,
   showToday = true,
   showTodayButton = false,
@@ -58,7 +58,7 @@ export function CalendarExample({
 }
 
 // Preview props for prop explorer
-export const CalendarPreviewProps = [
+export const calendarPreviewProps = [
   {
     name: "enableYearNavigation",
     type: "boolean",

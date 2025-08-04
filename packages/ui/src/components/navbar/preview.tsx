@@ -9,7 +9,7 @@ import {
   NavbarSection,
 } from "./component";
 
-export function NavbarExample(props: NavbarProps) {
+export function NavbarPreview(props: NavbarProps) {
   return (
     <Navbar {...props}>
       <NavbarSection>
@@ -28,7 +28,7 @@ export function NavbarExample(props: NavbarProps) {
 }
 
 // Preview props for prop explorer
-export const NavbarPreviewProps = [
+export const navbarPreviewProps = [
   // Note: Navbar is primarily a container component
   // Visual customization happens through NavbarItem, NavbarSection, etc.
 ];

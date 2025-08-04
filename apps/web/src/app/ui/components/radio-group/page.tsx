@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/radio-group/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { radioGroupConfig } from "@patternmode/ui/components/radio-group/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function RadioGroupPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={radioGroupConfig.name}
+        description={radioGroupConfig.description}
+        badge={radioGroupConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="radio-group"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={radioGroupConfig.name}
+        category={radioGroupConfig.category}
       />
 
       <Separator />

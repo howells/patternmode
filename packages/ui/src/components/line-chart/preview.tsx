@@ -40,7 +40,7 @@ export type LineChartPreviewProps = {
   colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
 };
 
-export function LineChartExample({
+export function LineChartPreview({
   curveType = "linear",
   showDots = false,
   showGridLines = true,
@@ -65,7 +65,7 @@ export function LineChartExample({
 }
 
 // Preview props for prop explorer
-export const LineChartPreviewProps = [
+export const lineChartPreviewProps = [
   {
     name: "curveType",
     type: "select",

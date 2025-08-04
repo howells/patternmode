@@ -23,3 +23,4 @@ export {
   selectTriggerVariants,
   SelectValue,
 } from "./component";
+export { SelectPreview, selectPreviewProps } from "./preview";

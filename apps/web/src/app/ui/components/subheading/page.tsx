@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/subheading/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { subheadingConfig } from "@patternmode/ui/components/subheading/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SubheadingPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={subheadingConfig.name}
+        description={subheadingConfig.description}
+        badge={subheadingConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="subheading"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={subheadingConfig.name}
+        category={subheadingConfig.category}
       />
 
       <Separator />

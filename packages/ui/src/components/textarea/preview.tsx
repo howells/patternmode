@@ -25,7 +25,7 @@ export type TextareaPreviewProps = {
 };
 
 // Preview props for prop explorer
-export const TextareaPreviewProps = [
+export const textareaPreviewProps = [
   {
     name: "placeholder",
     type: "string",
@@ -70,7 +70,7 @@ export const TextareaPreviewProps = [
   },
 ];
 
-export function TextareaExample(props: TextareaPreviewProps) {
+export function TextareaPreview(props: TextareaPreviewProps) {
   const {
     placeholder = "Enter your text here...",
     disabled = false,

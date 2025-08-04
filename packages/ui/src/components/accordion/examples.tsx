@@ -93,12 +93,10 @@ export const MixedContentExample = () => (
           <Text>This demonstrates mixed content:</Text>
           <TextList variant="marker" className="ml-4">
             <TextListItem>
-              <Text size="sm">List items with custom Text components</Text>
+              List items with custom Text components
             </TextListItem>
             <TextListItem>
-              <Text size="sm" className="text-amber-600">
-                Custom colored text that overrides defaults
-              </Text>
+              Custom colored text that overrides defaults
             </TextListItem>
           </TextList>
         </div>

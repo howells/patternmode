@@ -43,7 +43,7 @@ export type RadioGroupPreviewProps = {
   defaultValue?: "option1" | "option2" | "option3" | "option4";
 };
 
-export function RadioGroupExample({
+export function RadioGroupPreview({
   orientation = "vertical",
   spacing = "md",
   optionCount = 3,
@@ -101,7 +101,7 @@ export function RadioGroupExample({
 }
 
 // Preview props for prop explorer
-export const RadioGroupPreviewProps = [
+export const radioGroupPreviewProps = [
   {
     name: "orientation",
     type: "select",

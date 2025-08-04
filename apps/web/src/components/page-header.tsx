@@ -1,6 +1,9 @@
 "use client";
 
-import { Badge, Heading, Stack, Text } from "@patternmode/ui";
+import { Badge } from "@patternmode/ui/components/badge";
+import { Heading } from "@patternmode/ui/components/heading";
+import { Stack } from "@patternmode/ui/components/stack";
+import { Text } from "@patternmode/ui/components/text";
 
 type PageHeaderProps = {
   title: string;

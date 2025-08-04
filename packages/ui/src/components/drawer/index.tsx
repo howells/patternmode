@@ -16,3 +16,4 @@ export {
   type DrawerTitleProps,
   DrawerTrigger,
 } from "./component";
+export { DrawerPreview, drawerPreviewProps } from "./preview";

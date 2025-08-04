@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/form/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { formConfig } from "@patternmode/ui/components/form/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function FormPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={formConfig.name}
+        description={formConfig.description}
+        badge={formConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="form"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={formConfig.name}
+        category={formConfig.category}
       />
 
       <Separator />

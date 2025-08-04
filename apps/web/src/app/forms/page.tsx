@@ -6,60 +6,28 @@ import { Calendar, Clipboard, Factory, Globe, Mail, MapPin, Package, Phone, Sett
 import { useState } from "react";
 import { z } from "zod";
 
-import type { GlobalSemanticVariant } from "@patternmode/ui";
-
 import { PageHeader } from "@/components/page-header";
-// UI Components - organized by category
-import {
-  // Layout & Display Components
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardHeading,
-  Checkbox,
-  Divider,
-  Field,
-  FieldControl,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  Fieldset,
-  // Form Components
-  Form,
-  FormControl,
-  FormDescription,
-  FormError,
-  FormField,
-  FormLabel,
+// UI Component imports
+import { Button } from "@patternmode/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
+import { Checkbox } from "@patternmode/ui/components/checkbox";
+import { Divider } from "@patternmode/ui/components/divider";
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/ui/components/field";
+import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/ui/components/form";
+import { Grid, GridCell } from "@patternmode/ui/components/grid";
+import { IconContainer } from "@patternmode/ui/components/icon-container";
+import { Input } from "@patternmode/ui/components/input";
+import { NumberField } from "@patternmode/ui/components/number-field";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
+import { Slider } from "@patternmode/ui/components/slider";
+import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
+import { Switch } from "@patternmode/ui/components/switch";
+import { TagInput } from "@patternmode/ui/components/tag-input";
+import { Text } from "@patternmode/ui/components/text";
+import { Textarea } from "@patternmode/ui/components/textarea";
 
-  Grid,
-  GridCell,
-  Heading,
-  HStack,
-  Icon,
-  IconContainer,
-  // Input Components
-  Input,
-  NumberField,
-  RadioGroup,
-  RadioGroupItem,
-  // Selection Components
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Slider,
-  Stack,
-  Switch,
-  TagInput,
-  Text,
-  Textarea,
-  VStack,
-} from "@patternmode/ui";
+// Define the type locally since it's not exported
+type GlobalSemanticVariant = "info" | "success" | "warning" | "error" | "neutral" | "positive";
 
 // Company Information Schema
 const companyInfoSchema = z.object({

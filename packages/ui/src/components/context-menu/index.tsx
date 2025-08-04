@@ -14,3 +14,4 @@ export {
   ContextMenuSubmenuTrigger,
   ContextMenuTrigger,
 } from "./component";
+export { ContextMenuPreview, contextMenuPreviewProps } from "./preview";

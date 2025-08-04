@@ -2,11 +2,10 @@
 
 import React from "react";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui";
+import { PreviewProvider, usePreview } from "@/preview/preview-context";
+import { PreviewControls } from "@/preview/preview-controls";
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
-
-import { PropExplorerProvider, usePropExplorer } from "../../features/prop-explorer/prop-explorer-context";
-import { PropExplorerContent } from "../../features/prop-explorer/prop-explorer-controls";
 
 type CellData = {
   componentId: string;
@@ -40,6 +39,12 @@ export function PropsEditorPopover({
     return null;
   }
 
+  // Transform config to match PreviewConfig interface
+  const previewConfig = {
+    componentName: config.name,
+    props: {},
+  };
+
   const handlePropsUpdate = (newProps: Record<string, unknown>) => {
     onUpdatePropsAction(newProps);
   };
@@ -67,13 +72,13 @@ export function PropsEditorPopover({
             </p>
           </div>
 
-          <PropExplorerProvider
+          <PreviewProvider
             defaultProps={cellData.props}
             key={cellData.componentId}
           >
-            <PropExplorerContent config={config} />
+            <PreviewControls config={previewConfig} />
             <PropsUpdater onUpdate={handlePropsUpdate} />
-          </PropExplorerProvider>
+          </PreviewProvider>
         </div>
       </PopoverContent>
     </Popover>
@@ -86,7 +91,7 @@ function PropsUpdater({
 }: {
   onUpdate: (props: Record<string, unknown>) => void;
 }) {
-  const { props } = usePropExplorer();
+  const { props } = usePreview();
 
   // Use useEffect to detect prop changes and update parent
   React.useEffect(() => {
@@ -97,4 +102,4 @@ function PropsUpdater({
 }
 
 // Re-export the hook for convenience
-export { usePropExplorer } from "../../features/prop-explorer/prop-explorer-context";
+export { usePreview } from "../../preview/preview-context";

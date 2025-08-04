@@ -36,7 +36,7 @@ export type MenuBarPreviewProps = {
   showDisabledItems?: boolean;
 };
 
-export function MenuBarExample({
+export function MenuBarPreview({
   menuCount = 3,
   showSubmenus = true,
   showSeparators = true,
@@ -123,7 +123,7 @@ export function MenuBarExample({
 }
 
 // Preview props for prop explorer
-export const MenuBarPreviewProps = [
+export const menuBarPreviewProps = [
   {
     name: "menuCount",
     type: "select",

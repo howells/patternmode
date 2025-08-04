@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/checkbox/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { checkboxConfig } from "@patternmode/ui/components/checkbox/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CheckboxPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={checkboxConfig.name}
+        description={checkboxConfig.description}
+        badge={checkboxConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="checkbox"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={checkboxConfig.name}
+        category={checkboxConfig.category}
       />
 
       <Separator />

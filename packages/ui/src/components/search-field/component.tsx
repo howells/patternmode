@@ -75,7 +75,7 @@ export const SearchField = (
   }, [items, searchValue, maxResults]);
 
   // Group by category if requested
-  const groupedItems = React.useMemo(() => {
+  const groupedItems: Record<string, SearchFieldItem[]> = React.useMemo(() => {
     if (!groupByCategory) {
       return { "": filteredItems };
     }

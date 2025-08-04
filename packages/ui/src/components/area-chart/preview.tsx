@@ -40,7 +40,7 @@ export type AreaChartPreviewProps = {
   colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
 };
 
-export function AreaChartExample({
+export function AreaChartPreview({
   type = "default",
   fill = "gradient",
   showGridLines = true,
@@ -65,7 +65,7 @@ export function AreaChartExample({
 }
 
 // Preview props for prop explorer
-export const AreaChartPreviewProps = [
+export const areaChartPreviewProps = [
   {
     name: "type",
     type: "select",

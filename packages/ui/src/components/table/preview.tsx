@@ -53,7 +53,7 @@ export type TablePreviewProps = {
   showIdColumn?: boolean;
 };
 
-export function TableExample({
+export function TablePreview({
   rowCount = 4,
   showStatus = true,
   showHover = true,
@@ -127,7 +127,7 @@ export function TableExample({
 }
 
 // Preview props for prop explorer
-export const TablePreviewProps = [
+export const tablePreviewProps = [
   {
     name: "showBorders",
     type: "boolean",

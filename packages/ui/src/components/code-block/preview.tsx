@@ -4,7 +4,7 @@ import type { CodeBlockProps } from "./component";
 import React from "react";
 import { CodeBlock } from "./component";
 
-export function CodeBlockExample(props: CodeBlockProps) {
+export function CodeBlockPreview(props: CodeBlockProps) {
   const defaultCode = `interface User {
   id: number;
   name: string;
@@ -27,7 +27,7 @@ function createUser(data: Partial<User>): User {
 }
 
 // Preview props for prop explorer
-export const CodeBlockPreviewProps = [
+export const codeBlockPreviewProps = [
   {
     name: "children",
     type: "string",

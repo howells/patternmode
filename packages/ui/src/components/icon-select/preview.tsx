@@ -36,7 +36,7 @@ export type IconSelectPreviewProps = {
   showPreviews?: boolean;
 };
 
-export function IconSelectExample({
+export function IconSelectPreview({
   layout = "detailed",
   showFormExample = true,
   showStatistics = true,
@@ -249,7 +249,7 @@ export function IconSelectExample({
 }
 
 // Preview props for prop explorer
-export const IconSelectPreviewProps = [
+export const iconSelectPreviewProps = [
   {
     name: "layout",
     type: "select",

@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/separator/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { separatorConfig } from "@patternmode/ui/components/separator/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SeparatorPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={separatorConfig.name}
+        description={separatorConfig.description}
+        badge={separatorConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="separator"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={separatorConfig.name}
+        category={separatorConfig.category}
       />
 
       <Separator />

@@ -7,7 +7,7 @@ import React from "react";
 
 import { Callout } from "./component";
 
-export function CalloutExample(props: CalloutProps) {
+export function CalloutPreview(props: CalloutProps) {
   return (
     <Callout
       title="Important Information"
@@ -20,7 +20,7 @@ export function CalloutExample(props: CalloutProps) {
 }
 
 // Preview props for prop explorer
-export const CalloutPreviewProps = [
+export const calloutPreviewProps = [
   {
     name: "title",
     type: "string",

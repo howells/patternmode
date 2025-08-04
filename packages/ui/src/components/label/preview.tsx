@@ -5,7 +5,7 @@ import React from "react";
 import { Field } from "../field/component";
 import { Label } from "./component";
 
-export function LabelExample(props: LabelProps) {
+export function LabelPreview(props: LabelProps) {
   return (
     <Field>
       <Label htmlFor="demo-input" {...props}>
@@ -16,7 +16,7 @@ export function LabelExample(props: LabelProps) {
 }
 
 // Preview props for prop explorer
-export const LabelPreviewProps = [
+export const labelPreviewProps = [
   {
     name: "children",
     type: "string",

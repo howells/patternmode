@@ -12,3 +12,4 @@ export {
   type PaginationPreviousProps,
   type PaginationProps,
 } from "./component";
+export { PaginationPreview, paginationPreviewProps } from "./preview";

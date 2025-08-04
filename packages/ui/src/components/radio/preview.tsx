@@ -4,7 +4,7 @@ import type { RadioOptionProps } from "./component";
 import React from "react";
 import { RadioOption } from "./component";
 
-export function RadioExample(props: RadioOptionProps) {
+export function RadioPreview(props: RadioOptionProps) {
   return (
     <div className="flex items-center space-x-2">
       <RadioOption value="option1" label="Radio Option" {...props} />
@@ -13,7 +13,7 @@ export function RadioExample(props: RadioOptionProps) {
 }
 
 // Preview props for prop explorer
-export const RadioPreviewProps = [
+export const radioPreviewProps = [
   {
     name: "label",
     type: "string",

@@ -3,30 +3,30 @@
 "use client";
 
 import { useWindowSize } from "@uidotdev/usehooks";
-import { List, Pilcrow, Rows3 } from "lucide-react";
+import { List, Rows3 } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 
 import Logo from "@/components/logo";
-import {
-  Badge,
-  Sidebar,
-  SidebarBody,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarItem,
-  Stack,
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@patternmode/ui";
+import { Badge } from "@patternmode/ui/components/badge";
 import {
   CATEGORY_CONFIG,
   getAllComponents,
   getComponentsByCategory,
   getTotalComponentsCount,
 } from "@patternmode/ui/components/registry";
+import {
+  Sidebar,
+  SidebarBody,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarItem,
+
+} from "@patternmode/ui/components/sidebar";
+import { Stack } from "@patternmode/ui/components/stack";
+import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
 
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";

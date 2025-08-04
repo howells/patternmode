@@ -333,7 +333,7 @@ const Badge = (
     );
   };
 
-  const defaultProps: useRender.ElementProps<"span"> = {
+  const defaultProps: useRender.ElementProps<"span"> & { "data-testid": string } = {
     "className": cx(
       badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
       className,

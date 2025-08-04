@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/meter/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { meterConfig } from "@patternmode/ui/components/meter/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function MeterPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={meterConfig.name}
+        description={meterConfig.description}
+        badge={meterConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="meter"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={meterConfig.name}
+        category={meterConfig.category}
       />
 
       <Separator />

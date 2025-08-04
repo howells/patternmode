@@ -46,7 +46,7 @@ export type ResponsiveDrawerPreviewProps = {
   showSnapPoints?: boolean;
 };
 
-export function ResponsiveDrawerExample({
+export function ResponsiveDrawerPreview({
   breakpoint = "md",
   showFooter = true,
   showCloseButton = true,
@@ -178,7 +178,7 @@ export function ResponsiveDrawerExample({
 }
 
 // Preview props for prop explorer
-export const ResponsiveDrawerPreviewProps = [
+export const responsiveDrawerPreviewProps = [
   {
     name: "breakpoint",
     type: "select",

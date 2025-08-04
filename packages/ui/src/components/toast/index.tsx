@@ -12,3 +12,4 @@ export {
   useToast,
   useToastManager,
 } from "./component";
+export { ToastPreview, toastPreviewProps } from "./preview";

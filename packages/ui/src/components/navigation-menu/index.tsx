@@ -8,3 +8,4 @@ export {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "./component";
+export { NavigationMenuPreview, navigationMenuPreviewProps } from "./preview";

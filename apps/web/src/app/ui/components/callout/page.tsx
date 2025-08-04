@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/callout/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { calloutConfig } from "@patternmode/ui/components/callout/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CalloutPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={calloutConfig.name}
+        description={calloutConfig.description}
+        badge={calloutConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="callout"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={calloutConfig.name}
+        category={calloutConfig.category}
       />
 
       <Separator />

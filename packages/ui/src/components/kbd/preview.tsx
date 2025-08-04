@@ -4,7 +4,7 @@ import type { KbdProps } from "./component";
 import React from "react";
 import { Kbd } from "./component";
 
-export function KbdExample(props: KbdProps) {
+export function KbdPreview(props: KbdProps) {
   return (
     <div className="flex items-center gap-4 p-4">
       <span className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -16,7 +16,7 @@ export function KbdExample(props: KbdProps) {
 }
 
 // Preview props for prop explorer
-export const KbdPreviewProps = [
+export const kbdPreviewProps = [
   {
     name: "children",
     type: "string",

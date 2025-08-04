@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/sheet/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { sheetConfig } from "@patternmode/ui/components/sheet/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SheetPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={sheetConfig.name}
+        description={sheetConfig.description}
+        badge={sheetConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="sheet"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={sheetConfig.name}
+        category={sheetConfig.category}
       />
 
       <Separator />

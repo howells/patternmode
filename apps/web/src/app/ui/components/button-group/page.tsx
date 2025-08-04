@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/button-group/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { buttonGroupConfig } from "@patternmode/ui/components/button-group/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ButtonGroupPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={buttonGroupConfig.name}
+        description={buttonGroupConfig.description}
+        badge={buttonGroupConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="button-group"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={buttonGroupConfig.name}
+        category={buttonGroupConfig.category}
       />
 
       <Separator />

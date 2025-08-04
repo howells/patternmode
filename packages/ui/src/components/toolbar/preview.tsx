@@ -4,7 +4,7 @@ import type { ToolbarProps } from "./component";
 import React from "react";
 import { Toolbar, ToolbarButton, ToolbarSeparator } from "./component";
 
-export function ToolbarExample(props: ToolbarProps) {
+export function ToolbarPreview(props: ToolbarProps) {
   return (
     <Toolbar {...props}>
       <ToolbarButton>Bold</ToolbarButton>
@@ -18,7 +18,7 @@ export function ToolbarExample(props: ToolbarProps) {
 }
 
 // Preview props for prop explorer
-export const ToolbarPreviewProps = [
+export const toolbarPreviewProps = [
   {
     name: "variant",
     type: "select",

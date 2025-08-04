@@ -8,3 +8,4 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./component";
+export { DialogPreview, dialogPreviewProps } from "./preview";

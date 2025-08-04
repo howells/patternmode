@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/card/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { cardConfig } from "@patternmode/ui/components/card/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CardPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={cardConfig.name}
+        description={cardConfig.description}
+        badge={cardConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="card"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={cardConfig.name}
+        category={cardConfig.category}
       />
 
       <Separator />

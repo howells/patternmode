@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "./component";
 
-type SelectExampleProps = {
+type SelectPreviewProps = {
   placeholder?: string;
   disabled?: boolean;
   hasError?: boolean;
@@ -19,7 +19,7 @@ type SelectExampleProps = {
   onValueChange?: (value: string) => void;
 };
 
-export function SelectExample(props: SelectExampleProps) {
+export function SelectPreview(props: SelectPreviewProps) {
   const items = [
     { label: props.placeholder || "Select a fruit...", value: null },
     { label: "Apple", value: "apple" },
@@ -54,7 +54,7 @@ export function SelectExample(props: SelectExampleProps) {
 }
 
 // Preview props for prop explorer
-export const SelectPreviewProps = [
+export const selectPreviewProps = [
   {
     name: "placeholder",
     type: "string",

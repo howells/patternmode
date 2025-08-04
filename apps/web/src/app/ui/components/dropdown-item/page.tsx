@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/dropdown-item/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { dropdownItemConfig } from "@patternmode/ui/components/dropdown-item/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function DropdownItemPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={dropdownItemConfig.name}
+        description={dropdownItemConfig.description}
+        badge={dropdownItemConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="dropdown-item"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={dropdownItemConfig.name}
+        category={dropdownItemConfig.category}
       />
 
       <Separator />

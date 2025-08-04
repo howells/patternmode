@@ -10,3 +10,4 @@ export {
   type FieldLabelProps,
   FieldValidity,
 } from "./component";
+export { FieldPreview, fieldPreviewProps } from "./preview";

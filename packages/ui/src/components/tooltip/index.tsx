@@ -10,3 +10,4 @@ export {
   tooltipVariants,
 } from "./component";
 export type { TooltipProps } from "./component";
+export { TooltipPreview, tooltipPreviewProps } from "./preview";

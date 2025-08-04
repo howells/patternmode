@@ -4,7 +4,7 @@ import type { HeadingProps } from "./component";
 import React from "react";
 import { Heading } from "./component";
 
-export function HeadingExample(props: HeadingProps) {
+export function HeadingPreview(props: HeadingProps) {
   return (
     <Heading level={1} {...props}>
       {props.children || "Heading Text"}
@@ -13,7 +13,7 @@ export function HeadingExample(props: HeadingProps) {
 }
 
 // Preview props for prop explorer
-export const HeadingPreviewProps = [
+export const headingPreviewProps = [
   {
     name: "children",
     type: "string",

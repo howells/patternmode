@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import React from "react";
 
-import { Separator } from "@patternmode/ui";
+import { ComponentExamples } from "@/components/component-examples";
+import { PageHeader } from "@/components/page-header";
+import { createComponentConfig } from "@/lib/config-helpers";
+import { Preview } from "@/preview";
 import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
-
-import { ComponentExamples } from "../../../../components/component-examples";
-import { PageHeader } from "../../../../components/page-header";
-import { ComponentPropExplorer } from "../../../../features/prop-explorer/component-prop-explorer";
-import { createComponentConfig } from "../../../../lib/config-helpers";
+import { Separator } from "@patternmode/ui/components/separator";
 
 type ComponentPageProps = {
   params: Promise<{
@@ -96,11 +95,11 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
         badge={config.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
-        config={serializableConfig}
+      {/* Main Content - Use Preview */}
+      <Preview
+        componentId={component}
+        componentName={serializableConfig.name}
         category={category}
-        component={component}
       />
 
       <Separator />

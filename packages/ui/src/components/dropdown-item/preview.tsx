@@ -5,7 +5,7 @@ import { User } from "lucide-react";
 import React from "react";
 import { DropdownItem } from "./component";
 
-export function DropdownItemExample(props: DropdownItemProps) {
+export function DropdownItemPreview(props: DropdownItemProps) {
   return (
     <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
       <DropdownItem leftIcon={User} {...props}>
@@ -16,7 +16,7 @@ export function DropdownItemExample(props: DropdownItemProps) {
 }
 
 // Preview props for prop explorer
-export const DropdownItemPreviewProps = [
+export const dropdownItemPreviewProps = [
   {
     name: "children",
     type: "string",

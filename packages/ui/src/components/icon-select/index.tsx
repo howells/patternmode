@@ -6,3 +6,4 @@ export {
   isValidLucideIcon,
   useIconSelect,
 } from "./component";
+export { IconSelectPreview, iconSelectPreviewProps } from "./preview";

@@ -8,7 +8,7 @@ type ContextMenuProps = React.ComponentProps<typeof ContextMenu> & {
   onOpenChange?: (open: boolean) => void;
 };
 
-export function ContextMenuExample(props: ContextMenuProps) {
+export function ContextMenuPreview(props: ContextMenuProps) {
   return (
     <ContextMenu {...props}>
       <ContextMenuTrigger className="p-4 border rounded-lg text-center cursor-pointer">
@@ -24,7 +24,7 @@ export function ContextMenuExample(props: ContextMenuProps) {
 }
 
 // Preview props for prop explorer
-export const ContextMenuPreviewProps = [
+export const contextMenuPreviewProps = [
   {
     name: "open",
     type: "boolean",

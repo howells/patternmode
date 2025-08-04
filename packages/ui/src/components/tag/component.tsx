@@ -106,7 +106,7 @@ const Tag = (
 ) => {
   // Prioritize icon prop over leftIcon prop
   const effectiveIcon = icon || leftIcon;
-  const defaultProps: useRender.ElementProps<"span"> = {
+  const defaultProps: useRender.ElementProps<"span"> & { "data-testid": string } = {
     "data-testid": "tag",
     className: cx(
       // base

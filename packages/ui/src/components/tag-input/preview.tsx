@@ -74,7 +74,7 @@ const europeanCities = {
   ],
 };
 
-export function TagInputExample({
+export function TagInputPreview({
   allowCreate = true,
   maxTags = 5,
   showDescriptions = false,

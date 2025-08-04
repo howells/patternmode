@@ -5,12 +5,12 @@ import React from "react";
 
 import { ProgressCircle } from "./component";
 
-export function ProgressCircleExample(props: ProgressCircleProps) {
+export function ProgressCirclePreview(props: ProgressCircleProps) {
   return <ProgressCircle {...props} />;
 }
 
 // Preview props for prop explorer
-export const ProgressCirclePreviewProps = [
+export const progressCirclePreviewProps = [
   {
     name: "value",
     type: "number",

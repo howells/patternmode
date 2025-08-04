@@ -41,7 +41,7 @@ export type DrawerPreviewProps = {
   contentLevel?: "simple" | "detailed" | "form";
 };
 
-export function DrawerExample({
+export function DrawerPreview({
   direction = "bottom",
   showFooter = true,
   showCloseButton = true,
@@ -151,7 +151,7 @@ export function DrawerExample({
 }
 
 // Preview props for prop explorer
-export const DrawerPreviewProps = [
+export const drawerPreviewProps = [
   {
     name: "direction",
     type: "select",

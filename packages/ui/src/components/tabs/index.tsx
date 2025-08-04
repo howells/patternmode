@@ -14,3 +14,4 @@ export {
   type TabsTriggerProps,
   tabsVariants,
 } from "./component";
+export { TabsPreview, tabsPreviewProps } from "./preview";

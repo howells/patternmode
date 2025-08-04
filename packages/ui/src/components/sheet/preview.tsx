@@ -46,7 +46,7 @@ export type SheetPreviewProps = {
   contentLevel?: "simple" | "navigation" | "settings";
 };
 
-export function SheetExample({
+export function SheetPreview({
   side = "right",
   size = "md",
   showFooter = true,
@@ -186,7 +186,7 @@ export function SheetExample({
 }
 
 // Preview props for prop explorer
-export const SheetPreviewProps = [
+export const sheetPreviewProps = [
   {
     name: "side",
     type: "select",

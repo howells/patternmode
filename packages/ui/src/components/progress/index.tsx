@@ -8,3 +8,4 @@ export {
   ProgressValue,
   progressVariants,
 } from "./component";
+export { ProgressPreview, progressPreviewProps } from "./preview";

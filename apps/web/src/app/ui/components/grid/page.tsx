@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/grid/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { gridConfig } from "@patternmode/ui/components/grid/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function GridPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={gridConfig.name}
+        description={gridConfig.description}
+        badge={gridConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="grid"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={gridConfig.name}
+        category={gridConfig.category}
       />
 
       <Separator />

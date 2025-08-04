@@ -12,7 +12,7 @@ import {
 
 } from "./component";
 
-export function BreadcrumbsExample(props: BreadcrumbsProps) {
+export function BreadcrumbsPreview(props: BreadcrumbsProps) {
   return (
     <Breadcrumbs {...props}>
       <BreadcrumbList>
@@ -41,7 +41,7 @@ export function BreadcrumbsExample(props: BreadcrumbsProps) {
 }
 
 // Preview props for prop explorer
-export const BreadcrumbsPreviewProps = [
+export const breadcrumbsPreviewProps = [
   {
     name: "aria-label",
     type: "string",

@@ -1,24 +1,25 @@
+import { Separator } from "@patternmode/ui/components/separator";
+import { tabsConfig } from "@patternmode/ui/components/tabs/config";
+
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/tabs/component.config";
+import { Preview } from "@/preview";
 
 export default function TabsPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={tabsConfig.name}
+        description={tabsConfig.description}
+        badge={tabsConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="tabs"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={tabsConfig.name}
+        category={tabsConfig.category}
       />
 
       <Separator />

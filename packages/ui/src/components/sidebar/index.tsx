@@ -17,3 +17,4 @@ export {
   SidebarToggle,
   type SidebarToggleProps,
 } from "./component";
+export { SidebarPreview, sidebarPreviewProps } from "./preview";

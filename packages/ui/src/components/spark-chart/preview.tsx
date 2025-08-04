@@ -4,7 +4,7 @@ import type { BarChartProps } from "./component";
 import React from "react";
 import { SparkBarChart } from "./component";
 
-export function SparkChartExample(props: BarChartProps) {
+export function SparkChartPreview(props: BarChartProps) {
   const data = [
     { x: "Jan", y: 10 },
     { x: "Feb", y: 20 },
@@ -19,7 +19,7 @@ export function SparkChartExample(props: BarChartProps) {
 }
 
 // Preview props for prop explorer
-export const SparkChartPreviewProps = [
+export const sparkChartPreviewProps = [
   {
     name: "autoMinValue",
     type: "boolean",

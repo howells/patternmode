@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "./component";
 
-export function PopoverExample(props: PopoverProps) {
+export function PopoverPreview(props: PopoverProps) {
   return (
     <Popover {...props}>
       <PopoverTrigger className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
@@ -33,7 +33,7 @@ export function PopoverExample(props: PopoverProps) {
 }
 
 // Preview props for prop explorer
-export const PopoverPreviewProps = [
+export const popoverPreviewProps = [
   {
     name: "open",
     type: "boolean",

@@ -34,7 +34,7 @@ export type TabNavigationPreviewProps = {
   size?: "sm" | "md" | "lg";
 };
 
-export function TabNavigationExample({
+export function TabNavigationPreview({
   tabCount = 4,
   showDisabledTab = false,
   activeTab = "overview",
@@ -69,7 +69,7 @@ export function TabNavigationExample({
 }
 
 // Preview props for prop explorer
-export const TabNavigationPreviewProps = [
+export const tabNavigationPreviewProps = [
   {
     name: "variant",
     type: "select",

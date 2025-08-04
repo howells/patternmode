@@ -4,7 +4,7 @@ import type { TextListProps } from "./component";
 import React from "react";
 import { TextList, TextListItem } from "./component";
 
-export function TextListExample(props: TextListProps) {
+export function TextListPreview(props: TextListProps) {
   return (
     <TextList {...props}>
       <TextListItem>First list item with sample content</TextListItem>
@@ -16,7 +16,7 @@ export function TextListExample(props: TextListProps) {
 }
 
 // Preview props for prop explorer
-export const TextListPreviewProps = [
+export const textListPreviewProps = [
   {
     name: "variant",
     type: "select",

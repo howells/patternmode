@@ -4,7 +4,7 @@ import type { ScrollAreaProps } from "./component";
 import React from "react";
 import { ScrollArea } from "./component";
 
-export function ScrollAreaExample(props: ScrollAreaProps) {
+export function ScrollAreaPreview(props: ScrollAreaProps) {
   return (
     <ScrollArea className="h-32 w-48 border rounded" {...props}>
       <div className="p-4">
@@ -19,7 +19,7 @@ export function ScrollAreaExample(props: ScrollAreaProps) {
 }
 
 // Preview props for prop explorer
-export const ScrollAreaPreviewProps = [
+export const scrollAreaPreviewProps = [
   {
     name: "orientation",
     type: "select",

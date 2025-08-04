@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/tag/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { tagConfig } from "@patternmode/ui/components/tag/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function TagPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={tagConfig.name}
+        description={tagConfig.description}
+        badge={tagConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="tag"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={tagConfig.name}
+        category={tagConfig.category}
       />
 
       <Separator />

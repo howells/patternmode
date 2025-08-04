@@ -33,7 +33,7 @@ export type NavigationMenuPreviewProps = {
   contentLayout?: "simple" | "grid" | "list";
 };
 
-export function NavigationMenuExample({
+export function NavigationMenuPreview({
   orientation = "horizontal",
   itemCount = 2,
   showDescriptions = false,
@@ -114,7 +114,7 @@ export function NavigationMenuExample({
 }
 
 // Preview props for prop explorer
-export const NavigationMenuPreviewProps = [
+export const navigationMenuPreviewProps = [
   {
     name: "orientation",
     type: "select",

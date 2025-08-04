@@ -4,12 +4,12 @@ import type { NumberFieldProps } from "./component";
 import React from "react";
 import { NumberField } from "./component";
 
-export function NumberFieldExample(props: NumberFieldProps) {
+export function NumberFieldPreview(props: NumberFieldProps) {
   return <NumberField label="Quantity" placeholder="Enter quantity" defaultValue={5} min={0} max={100} {...props} />;
 }
 
 // Preview props for prop explorer
-export const NumberFieldPreviewProps = [
+export const numberFieldPreviewProps = [
   {
     name: "label",
     type: "string",

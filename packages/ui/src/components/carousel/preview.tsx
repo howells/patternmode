@@ -32,7 +32,7 @@ export type CarouselPreviewProps = {
   maxWidth?: "xs" | "sm" | "md" | "lg";
 };
 
-export function CarouselExample({
+export function CarouselPreview({
   slideCount = 3,
   orientation = "horizontal",
   loop = false,
@@ -80,7 +80,7 @@ export function CarouselExample({
 }
 
 // Preview props for prop explorer
-export const CarouselPreviewProps = [
+export const carouselPreviewProps = [
   {
     name: "slideCount",
     type: "select",

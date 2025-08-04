@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/text/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { textConfig } from "@patternmode/ui/components/text/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function TextPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={textConfig.name}
+        description={textConfig.description}
+        badge={textConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="text"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={textConfig.name}
+        category={textConfig.category}
       />
 
       <Separator />

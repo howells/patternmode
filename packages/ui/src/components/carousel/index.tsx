@@ -8,3 +8,4 @@ export {
   type CarouselProps,
   useCarousel,
 } from "./component";
+export { CarouselPreview, carouselPreviewProps } from "./preview";

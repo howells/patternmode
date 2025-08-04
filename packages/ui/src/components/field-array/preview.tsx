@@ -64,7 +64,7 @@ export const fieldArrayPreviewProps = [
   },
 ];
 
-export function FieldArrayExample(props: FieldArrayPreviewProps) {
+export function FieldArrayPreview(props: FieldArrayPreviewProps) {
   const {
     minItems = 1,
     maxItems = 5,

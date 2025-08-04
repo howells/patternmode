@@ -3,3 +3,4 @@ export {
   BarList,
   type BarListProps,
 } from "./component";
+export { BarListPreview, barListPreviewProps } from "./preview";

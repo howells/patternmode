@@ -29,7 +29,7 @@ const requireComponentFiles = {
     // Canonical structure for textarea and accordion components
     const requiredFiles = [
       "component.tsx",
-      "component.config.ts",
+      "config.ts",
       "examples.tsx",
       "index.tsx",
       "preview.tsx",

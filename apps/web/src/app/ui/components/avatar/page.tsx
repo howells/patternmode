@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/avatar/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { avatarConfig } from "@patternmode/ui/components/avatar/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function AvatarPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={avatarConfig.name}
+        description={avatarConfig.description}
+        badge={avatarConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="avatar"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={avatarConfig.name}
+        category={avatarConfig.category}
       />
 
       <Separator />

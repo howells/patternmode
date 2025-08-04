@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/navigation-menu/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { navigationMenuConfig } from "@patternmode/ui/components/navigation-menu/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function NavigationMenuPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={navigationMenuConfig.name}
+        description={navigationMenuConfig.description}
+        badge={navigationMenuConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="navigation-menu"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={navigationMenuConfig.name}
+        category={navigationMenuConfig.category}
       />
 
       <Separator />

@@ -9,12 +9,12 @@ type DatePickerProps = React.ComponentProps<typeof DatePicker> & {
   disabled?: boolean;
 };
 
-export function DatePickerExample(props: DatePickerProps) {
+export function DatePickerPreview(props: DatePickerProps) {
   return <DatePicker placeholder="Select a date" {...props} />;
 }
 
 // Preview props for prop explorer
-export const DatePickerPreviewProps = [
+export const datePickerPreviewProps = [
   {
     name: "placeholder",
     type: "string",

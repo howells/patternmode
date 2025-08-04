@@ -4,7 +4,7 @@ import type { GridProps } from "./component";
 import React from "react";
 import { Grid, GridCell } from "./component";
 
-export function GridExample(props: GridProps) {
+export function GridPreview(props: GridProps) {
   return (
     <Grid columns={6} gap={4} {...props}>
       <GridCell className="bg-blue-100 dark:bg-blue-900 p-4 rounded text-center">1</GridCell>
@@ -18,7 +18,7 @@ export function GridExample(props: GridProps) {
 }
 
 // Preview props for prop explorer
-export const GridPreviewProps = [
+export const gridPreviewProps = [
   {
     name: "columns",
     type: "number",

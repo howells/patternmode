@@ -4,7 +4,7 @@ import type { SelectNativeProps } from "./component";
 import React from "react";
 import { SelectNative } from "./component";
 
-export function SelectNativeExample(props: SelectNativeProps) {
+export function SelectNativePreview(props: SelectNativeProps) {
   return (
     <SelectNative {...props}>
       <option value="">Select an option</option>
@@ -16,7 +16,7 @@ export function SelectNativeExample(props: SelectNativeProps) {
 }
 
 // Preview props for prop explorer
-export const SelectNativePreviewProps = [
+export const selectNativePreviewProps = [
   {
     name: "hasError",
     type: "boolean",

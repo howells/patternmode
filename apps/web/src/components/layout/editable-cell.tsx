@@ -1,13 +1,37 @@
 "use client";
 
 import { Plus, Settings, X } from "lucide-react";
+import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
 
-import { Button, Callout, Card, getDynamicIconByName, Icon, Stack } from "@patternmode/ui";
+import { Button } from "@patternmode/ui/components/button";
+import { Callout } from "@patternmode/ui/components/callout";
+import { Card } from "@patternmode/ui/components/card";
+import { Icon } from "@patternmode/ui/components/icon";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
+import { Stack } from "@patternmode/ui/components/stack";
 
-import { PropExplorerProvider } from "../../features/prop-explorer/prop-explorer-context";
+import { PreviewProvider } from "../../preview/preview-context";
 import { PropsEditorPopover } from "./props-editor-popover";
+
+// Dynamic icon loader using next/dynamic
+function getDynamicIcon(iconName: string) {
+  if (!iconName || typeof iconName !== "string") {
+    return null;
+  }
+
+  try {
+    return dynamic(() => import("lucide-react").then(mod => ({
+      default: mod[iconName as keyof typeof mod] as React.ComponentType<{ className?: string; strokeWidth?: number }>,
+    })), {
+      loading: () => null,
+      ssr: false,
+    });
+  }
+  catch {
+    return null;
+  }
+}
 
 type CellData = {
   componentId: string;
@@ -71,7 +95,7 @@ export function EditableCell({
       const isIconProp = key === "icon" || key.endsWith("Icon");
 
       if (isIconProp && typeof value === "string" && value.trim() !== "") {
-        const iconComponent = getDynamicIconByName(value);
+        const iconComponent = getDynamicIcon(value);
         if (iconComponent) {
           finalProps[key] = iconComponent;
         }
@@ -123,9 +147,9 @@ export function EditableCell({
 
       return (
         <Stack className="w-full">
-          <PropExplorerProvider defaultProps={cellData.props}>
+          <PreviewProvider defaultProps={cellData.props}>
             <ComponentWrapper props={processedProps} />
-          </PropExplorerProvider>
+          </PreviewProvider>
         </Stack>
       );
     }

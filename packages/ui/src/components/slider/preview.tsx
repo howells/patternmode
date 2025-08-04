@@ -4,7 +4,7 @@ import type { SliderProps } from "./component";
 import React from "react";
 import { Slider } from "./component";
 
-export function SliderExample(props: SliderProps) {
+export function SliderPreview(props: SliderProps) {
   return (
     <div className="w-full space-y-4">
       <Slider
@@ -19,7 +19,7 @@ export function SliderExample(props: SliderProps) {
 }
 
 // Preview props for prop explorer
-export const SliderPreviewProps = [
+export const sliderPreviewProps = [
   {
     name: "defaultValue",
     type: "number",

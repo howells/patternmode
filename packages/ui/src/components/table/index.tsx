@@ -18,3 +18,4 @@ export {
   TableRow,
   type TableRowProps,
 } from "./component";
+export { TablePreview, tablePreviewProps } from "./preview";

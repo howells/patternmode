@@ -4,7 +4,7 @@ import type { TrackerProps } from "./component";
 import React from "react";
 import { Tracker } from "./component";
 
-export function TrackerExample(props: TrackerProps) {
+export function TrackerPreview(props: TrackerProps) {
   const data = [
     { color: "bg-emerald-500", tooltip: "Operational" },
     { color: "bg-emerald-500", tooltip: "Operational" },
@@ -18,7 +18,7 @@ export function TrackerExample(props: TrackerProps) {
 }
 
 // Preview props for prop explorer
-export const TrackerPreviewProps = [
+export const trackerPreviewProps = [
   {
     name: "data",
     type: "array",

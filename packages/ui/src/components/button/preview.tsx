@@ -5,7 +5,7 @@ import { Download, Plus, Save, Settings } from "lucide-react";
 import React from "react";
 import { Button } from "./component";
 
-export function ButtonExample(props: ButtonProps) {
+export function ButtonPreview(props: ButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleClick = () => {
@@ -30,7 +30,7 @@ export function ButtonExample(props: ButtonProps) {
 }
 
 // Preview props for prop explorer
-export const ButtonPreviewProps = [
+export const buttonPreviewProps = [
   {
     name: "children",
     type: "string",

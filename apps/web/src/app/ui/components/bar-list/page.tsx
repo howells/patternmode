@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/bar-list/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { barListConfig } from "@patternmode/ui/components/bar-list/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function BarListPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={barListConfig.name}
+        description={barListConfig.description}
+        badge={barListConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="bar-list"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={barListConfig.name}
+        category={barListConfig.category}
       />
 
       <Separator />

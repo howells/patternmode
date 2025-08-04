@@ -6,12 +6,12 @@ import React from "react";
 
 import { Tag } from "./component";
 
-export function TagExample(props: TagProps) {
+export function TagPreview(props: TagProps) {
   return <Tag value="Sales" label="Department" {...props} />;
 }
 
 // Preview props for prop explorer
-export const TagPreviewProps = [
+export const tagPreviewProps = [
   {
     name: "value",
     type: "string",

@@ -8,3 +8,4 @@ export {
   type NumberFieldProps,
   NumberFieldScrubCursor,
 } from "./component";
+export { NumberFieldPreview, numberFieldPreviewProps } from "./preview";

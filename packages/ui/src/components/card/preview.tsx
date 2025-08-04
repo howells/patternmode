@@ -9,7 +9,7 @@ import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
 
-export function CardExample(props: CardProps) {
+export function CardPreview(props: CardProps) {
   const { ref, ...cardProps } = props;
 
   return (
@@ -32,7 +32,7 @@ export function CardExample(props: CardProps) {
 }
 
 // Preview props for prop explorer
-export const CardPreviewProps = [
+export const cardPreviewProps = [
   {
     name: "children",
     type: "string",

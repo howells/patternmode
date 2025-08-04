@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/label/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { labelConfig } from "@patternmode/ui/components/label/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function LabelPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={labelConfig.name}
+        description={labelConfig.description}
+        badge={labelConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="label"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={labelConfig.name}
+        category={labelConfig.category}
       />
 
       <Separator />

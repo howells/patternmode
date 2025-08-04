@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/carousel/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { carouselConfig } from "@patternmode/ui/components/carousel/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function CarouselPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={carouselConfig.name}
+        description={carouselConfig.description}
+        badge={carouselConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="carousel"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={carouselConfig.name}
+        category={carouselConfig.category}
       />
 
       <Separator />

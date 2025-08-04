@@ -10,7 +10,7 @@ import {
   PreviewCardTrigger,
 } from "./component";
 
-export function PreviewCardExample(props: PreviewCardProps) {
+export function PreviewCardPreview(props: PreviewCardProps) {
   return (
     <PreviewCard {...props}>
       <PreviewCardTrigger>
@@ -33,7 +33,7 @@ export function PreviewCardExample(props: PreviewCardProps) {
 }
 
 // Preview props for prop explorer
-export const PreviewCardPreviewProps = [
+export const previewCardPreviewProps = [
   {
     name: "sideOffset",
     type: "number",

@@ -4,7 +4,7 @@ import type { CheckboxProps } from "./component";
 import React from "react";
 import { Checkbox } from "./component";
 
-export function CheckboxExample(props: CheckboxProps) {
+export function CheckboxPreview(props: CheckboxProps) {
   return (
     <div className="flex items-center space-x-2">
       <Checkbox {...props} />
@@ -16,7 +16,7 @@ export function CheckboxExample(props: CheckboxProps) {
 }
 
 // Preview props for prop explorer
-export const CheckboxPreviewProps = [
+export const checkboxPreviewProps = [
   {
     name: "children",
     type: "string",

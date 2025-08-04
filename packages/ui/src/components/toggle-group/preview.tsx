@@ -37,7 +37,7 @@ export type ToggleGroupPreviewProps = {
   allowDeselect?: boolean;
 };
 
-export function ToggleGroupExample({
+export function ToggleGroupPreview({
   variant = "default",
   size = "default",
   type = "multiple",
@@ -87,7 +87,7 @@ export function ToggleGroupExample({
 }
 
 // Preview props for prop explorer
-export const ToggleGroupPreviewProps = [
+export const toggleGroupPreviewProps = [
   {
     name: "type",
     type: "select",

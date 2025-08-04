@@ -4,12 +4,12 @@ import type { DismissButtonProps } from "./component";
 import React from "react";
 import { DismissButton } from "./component";
 
-export function DismissButtonExample(props: DismissButtonProps) {
+export function DismissButtonPreview(props: DismissButtonProps) {
   return <DismissButton onClick={() => {}} {...props} />;
 }
 
 // Preview props for prop explorer
-export const DismissButtonPreviewProps = [
+export const dismissButtonPreviewProps = [
   {
     name: "size",
     type: "select",

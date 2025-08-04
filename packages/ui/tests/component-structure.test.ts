@@ -26,9 +26,14 @@ function getComponentDirectories(): string[] {
     .filter(entry => entry.isDirectory())
     .map(entry => entry.name)
     .filter((componentDir) => {
-      // Only include directories that have a main component file
-      const componentPath = join(componentsDir, componentDir, "component.tsx");
-      return existsSync(componentPath);
+      // Skip registry.ts and hidden directories
+      if (componentDir === "registry.ts" || componentDir.startsWith(".")) {
+        return false;
+      }
+
+      // Only include directories that have a config file
+      const configPath = join(componentsDir, componentDir, "config.ts");
+      return existsSync(configPath);
     })
     .sort();
 }
@@ -150,29 +155,35 @@ function hasTestId(componentDir: string): { hasTestId: boolean; testIdPattern?: 
   // Pattern 1: JSX attribute with string literal - data-testid="value"
   const staticMatches = content.match(/data-testid\s*=\s*["'`]([^"'`]+)["'`]/g);
   if (staticMatches) {
-    staticMatches.forEach(match => {
+    staticMatches.forEach((match) => {
       const value = match.match(/["'`]([^"'`]+)["'`]/)?.[1];
-      if (value) patterns.push(value);
+      if (value) {
+        patterns.push(value);
+      }
     });
   }
 
   // Pattern 2: JSX attribute with template literal - data-testid={`value-${var}`}
   const templateMatches = content.match(/data-testid\s*=\s*\{`[^`]*`\}/g);
   if (templateMatches) {
-    templateMatches.forEach(match => {
+    templateMatches.forEach((match) => {
       const template = match.match(/\{`([^`]*)`\}/)?.[1];
-      if (template) patterns.push(`template: ${template}`);
+      if (template) {
+        patterns.push(`template: ${template}`);
+      }
     });
   }
 
   // Pattern 3: JSX attribute with expression - data-testid={variable}
   const expressionMatches = content.match(/data-testid\s*=\s*\{[^}]+\}/g);
   if (expressionMatches) {
-    expressionMatches.forEach(match => {
+    expressionMatches.forEach((match) => {
       // Skip template literals (already handled above)
-      if (!match.includes('`')) {
+      if (!match.includes("`")) {
         const expr = match.match(/\{([^}]+)\}/)?.[1];
-        if (expr) patterns.push(`expression: ${expr.trim()}`);
+        if (expr) {
+          patterns.push(`expression: ${expr.trim()}`);
+        }
       }
     });
   }
@@ -180,24 +191,26 @@ function hasTestId(componentDir: string): { hasTestId: boolean; testIdPattern?: 
   // Pattern 4: Object property - "data-testid": "value"
   const objectMatches = content.match(/["'`]data-testid["'`]\s*:\s*["'`]([^"'`]+)["'`]/g);
   if (objectMatches) {
-    objectMatches.forEach(match => {
+    objectMatches.forEach((match) => {
       const value = match.match(/:\s*["'`]([^"'`]+)["'`]/)?.[1];
-      if (value) patterns.push(value);
+      if (value) {
+        patterns.push(value);
+      }
     });
   }
 
   const testIdCount = patterns.length;
   const hasTestId = testIdCount > 0;
-  
+
   // Return the most specific pattern or the first one found
-  const mainPattern = patterns.length > 0 
+  const mainPattern = patterns.length > 0
     ? patterns.find(p => p === componentDir) || patterns[0] // Prefer component name match
     : undefined;
 
-  return { 
-    hasTestId, 
+  return {
+    hasTestId,
     testIdPattern: mainPattern,
-    testIdCount
+    testIdCount,
   };
 }
 
@@ -281,25 +294,27 @@ describe("component Structure & Requirements", () => {
     componentDirs.forEach((componentDir) => {
       it(`${componentDir} should have static data-testid matching component name`, () => {
         const testIdInfo = hasTestId(componentDir);
-        
+
         if (!testIdInfo.hasTestId) {
           console.warn(`❌ Component ${componentDir} missing data-testid - should add: data-testid="${componentDir}"`);
-        } else {
+        }
+        else {
           // Check if main component has the expected testid pattern
           const expectedTestId = componentDir;
           const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
-          
+
           if (hasCorrectTestId) {
             console.log(`✅ Component ${componentDir} has correct testid: "${testIdInfo.testIdPattern}"`);
-          } else {
-            const countText = testIdInfo.testIdCount > 1 ? ` (${testIdInfo.testIdCount} total)` : '';
+          }
+          else {
+            const countText = testIdInfo.testIdCount > 1 ? ` (${testIdInfo.testIdCount} total)` : "";
             console.warn(`⚠️  Component ${componentDir} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"${countText}`);
           }
         }
-        
+
         // Hard requirement: Every component must have correct data-testid
         expect(testIdInfo.hasTestId, `Component ${componentDir} must have data-testid attribute. Add: data-testid="${componentDir}"`).toBe(true);
-        
+
         if (testIdInfo.hasTestId) {
           const expectedTestId = componentDir;
           const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
@@ -375,10 +390,11 @@ describe("component Structure & Requirements", () => {
           results.withTestIds++;
           const expectedTestId = componentDir;
           const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
-          
+
           if (hasCorrectTestId) {
             results.withCorrectTestIds++;
-          } else if (testIdInfo.testIdPattern) {
+          }
+          else if (testIdInfo.testIdPattern) {
             results.incorrectTestIds.push({
               component: componentDir,
               actual: testIdInfo.testIdPattern,
@@ -430,13 +446,13 @@ describe("component Structure & Requirements", () => {
 
       if (results.missingTestIds.length > 0) {
         console.log(`\n❌ COMPONENTS MISSING TEST IDS (${results.missingTestIds.length}):`);
-        results.missingTestIds.forEach(component => 
+        results.missingTestIds.forEach(component =>
           console.log(`  • ${component} - should add: data-testid="${component}"`));
       }
 
       if (results.incorrectTestIds.length > 0) {
         console.log(`\n⚠️  COMPONENTS WITH INCORRECT TEST IDS (${results.incorrectTestIds.length}):`);
-        results.incorrectTestIds.forEach(({ component, actual, expected }) => 
+        results.incorrectTestIds.forEach(({ component, actual, expected }) =>
           console.log(`  • ${component} - has "${actual}" but should be "${expected}"`));
       }
 

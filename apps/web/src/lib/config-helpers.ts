@@ -75,7 +75,7 @@ export function createComponentConfig(
     examples: options.examples || [],
     installation: options.installation,
     api: options.api,
-    propExplorer: options.propExplorer,
+    preview: options.preview,
     componentId: options.componentId || name,
     accessibility: options.accessibility,
     sections: options.sections,

@@ -4,7 +4,7 @@ import type { StackProps } from "./component";
 import React from "react";
 import { Stack } from "./component";
 
-export function StackExample(props: StackProps) {
+export function StackPreview(props: StackProps) {
   return (
     <Stack {...props}>
       <div className="p-4 bg-blue-100 rounded">Item 1</div>
@@ -15,7 +15,7 @@ export function StackExample(props: StackProps) {
 }
 
 // Preview props for prop explorer
-export const StackPreviewProps = [
+export const stackPreviewProps = [
   {
     name: "direction",
     type: "select",

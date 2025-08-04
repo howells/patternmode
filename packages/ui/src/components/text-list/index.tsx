@@ -12,3 +12,4 @@ export type {
   TextListItemProps,
   TextListProps,
 } from "./component";
+export { TextListPreview, textListPreviewProps } from "./preview";

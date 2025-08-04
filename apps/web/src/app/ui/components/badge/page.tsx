@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/badge/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { badgeConfig } from "@patternmode/ui/components/badge/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function BadgePage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={badgeConfig.name}
+        description={badgeConfig.description}
+        badge={badgeConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="badge"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={badgeConfig.name}
+        category={badgeConfig.category}
       />
 
       <Separator />

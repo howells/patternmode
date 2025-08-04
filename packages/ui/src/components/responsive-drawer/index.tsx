@@ -21,3 +21,4 @@ export type {
   ResponsiveDrawerTitleProps,
   ResponsiveDrawerTriggerProps,
 } from "./component";
+export { ResponsiveDrawerPreview, responsiveDrawerPreviewProps } from "./preview";

@@ -1,6 +1,6 @@
 import type React from "react";
 
-import type { PropExplorerConfig } from "./prop-explorer";
+import type { PreviewConfig } from "./preview";
 
 // Base types for component documentation
 export type ComponentExample = {
@@ -55,10 +55,10 @@ export type ComponentConfig = {
   // API Reference
   api?: APIComponent[];
 
-  // Prop Explorer Configuration (optional)
-  propExplorer?: PropExplorerConfig;
+  // Preview Configuration (optional)
+  preview?: PreviewConfig;
 
-  // Component identifier for prop explorer (optional)
+  // Component identifier for preview system (optional)
   componentId?: string;
 
   // Component definitions (for multi-component families)

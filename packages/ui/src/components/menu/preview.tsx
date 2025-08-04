@@ -41,7 +41,7 @@ export type MenuPreviewProps = {
   showShortcuts?: boolean;
 };
 
-export function MenuExample({
+export function MenuPreview({
   triggerVariant = "outline",
   showSubmenus = true,
   showSeparators = true,
@@ -102,7 +102,7 @@ export function MenuExample({
 }
 
 // Preview props for prop explorer
-export const MenuPreviewProps = [
+export const menuPreviewProps = [
   {
     name: "triggerVariant",
     type: "select",

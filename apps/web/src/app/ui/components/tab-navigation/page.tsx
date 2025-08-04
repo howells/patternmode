@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/tab-navigation/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { tabNavigationConfig } from "@patternmode/ui/components/tab-navigation/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function TabNavigationPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={tabNavigationConfig.name}
+        description={tabNavigationConfig.description}
+        badge={tabNavigationConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="tab-navigation"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={tabNavigationConfig.name}
+        category={tabNavigationConfig.category}
       />
 
       <Separator />

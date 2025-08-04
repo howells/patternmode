@@ -5,7 +5,7 @@ import { Camera } from "lucide-react";
 import React from "react";
 import { Icon } from "./component";
 
-export function IconExample(props: IconProps) {
+export function IconPreview(props: IconProps) {
   const { icon, fallbackIcon, ...otherProps } = props;
 
   // Use the provided icon or fallback to Camera if none provided
@@ -21,7 +21,7 @@ export function IconExample(props: IconProps) {
 }
 
 // Preview props for prop explorer
-export const IconPreviewProps = [
+export const iconPreviewProps = [
   {
     name: "icon",
     type: "select",

@@ -5,12 +5,12 @@ import type { LoaderProps } from "./component";
 import React from "react";
 import { Loader } from "./component";
 
-export function LoaderExample(props: LoaderProps) {
+export function LoaderPreview(props: LoaderProps) {
   return <Loader {...props} />;
 }
 
 // Preview props for prop explorer
-export const LoaderPreviewProps = [
+export const loaderPreviewProps = [
   {
     name: "size",
     type: "select",

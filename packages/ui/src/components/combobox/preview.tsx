@@ -90,7 +90,7 @@ const dataConfigs = {
   },
 };
 
-export function ComboboxExample({
+export function ComboboxPreview({
   dataType = "frameworks",
   optionCount = 5,
   showDescriptions = false,
@@ -132,7 +132,7 @@ export function ComboboxExample({
 }
 
 // Preview props for prop explorer
-export const ComboboxPreviewProps = [
+export const comboboxPreviewProps = [
   {
     name: "dataType",
     type: "select",
@@ -168,4 +168,4 @@ export const ComboboxPreviewProps = [
   },
 ];
 
-export default ComboboxExample;
+export default ComboboxPreview;

@@ -20,3 +20,4 @@ export {
   AlertDialogTrigger,
   type AlertDialogTriggerProps,
 } from "./component";
+export { AlertDialogPreview, alertDialogPreviewProps } from "./preview";

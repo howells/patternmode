@@ -10,3 +10,4 @@ export {
   type StackedListItemProps,
   type StackedListProps,
 } from "./component";
+export { StackedListPreview, stackedListPreviewProps } from "./preview";

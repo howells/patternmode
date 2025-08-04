@@ -5,7 +5,7 @@ import React from "react";
 
 import { CategoryBar } from "./component";
 
-export function CategoryBarExample(props: CategoryBarProps) {
+export function CategoryBarPreview(props: CategoryBarProps) {
   return (
     <CategoryBar
       values={[456, 351, 271, 191]}
@@ -17,7 +17,7 @@ export function CategoryBarExample(props: CategoryBarProps) {
 }
 
 // Preview props for prop explorer
-export const CategoryBarPreviewProps = [
+export const categoryBarPreviewProps = [
   {
     name: "values",
     type: "array",

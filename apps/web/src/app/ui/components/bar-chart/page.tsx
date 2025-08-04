@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/bar-chart/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { barChartConfig } from "@patternmode/ui/components/bar-chart/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function BarChartPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={barChartConfig.name}
+        description={barChartConfig.description}
+        badge={barChartConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="bar-chart"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={barChartConfig.name}
+        category={barChartConfig.category}
       />
 
       <Separator />

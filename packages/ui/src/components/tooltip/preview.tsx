@@ -5,7 +5,7 @@ import React from "react";
 import { Button } from "../button/component";
 import { Tooltip } from "./component";
 
-export function TooltipExample(props: TooltipProps) {
+export function TooltipPreview(props: TooltipProps) {
   return (
     <div className="flex items-center justify-center p-8">
       <Tooltip content={props.content || "This is a tooltip"} {...props}>
@@ -18,7 +18,7 @@ export function TooltipExample(props: TooltipProps) {
 }
 
 // Preview props for prop explorer
-export const TooltipPreviewProps = [
+export const tooltipPreviewProps = [
   {
     name: "content",
     type: "string",

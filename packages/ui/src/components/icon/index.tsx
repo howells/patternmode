@@ -7,3 +7,4 @@ export {
   iconVariants,
   useIconSize,
 } from "./component";
+export { IconPreview, iconPreviewProps } from "./preview";

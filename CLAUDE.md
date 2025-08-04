@@ -274,7 +274,7 @@ import { componentConfig as textareaConfig } from "@patternmode/ui/src/component
 import { componentConfig as accordionConfig } from "@patternmode/ui/src/components/accordion/component.config";
 
 // Use in prop explorer, documentation, or tooling
-<ComponentPropExplorer config={textareaConfig} />
+<Preview config={textareaConfig} />
 <ComponentExamples componentId="textarea" /> // Gets examples from config.examples
 ```
 

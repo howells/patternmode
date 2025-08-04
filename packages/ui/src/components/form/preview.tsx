@@ -5,7 +5,7 @@ import React from "react";
 import { Button } from "../button/component";
 import { Form, FormControl, FormField } from "./component";
 
-export function FormExample(props: FormProps) {
+export function FormPreview(props: FormProps) {
   const handleSubmit = async (data: Record<string, unknown>) => {
     console.log("Form submitted:", data);
   };
@@ -33,7 +33,7 @@ export function FormExample(props: FormProps) {
 }
 
 // Preview props for prop explorer
-export const FormPreviewProps = [
+export const formPreviewProps = [
   // Note: Form component mainly accepts onValidSubmit callback and schema
   // Most visual customization happens through FormField and FormControl components
   // Schema prop is complex (Zod schema) and not suitable for prop explorer

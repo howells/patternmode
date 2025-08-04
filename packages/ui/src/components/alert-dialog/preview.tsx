@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from "./component";
 
-export function AlertDialogExample(props: React.ComponentProps<typeof AlertDialog>) {
+export function AlertDialogPreview(props: React.ComponentProps<typeof AlertDialog>) {
   // Use controlled mode to avoid uncontrolled state changes
   const [internalOpen, setInternalOpen] = React.useState(false);
 
@@ -48,7 +48,7 @@ export function AlertDialogExample(props: React.ComponentProps<typeof AlertDialo
 }
 
 // Preview props for prop explorer
-export const AlertDialogPreviewProps = [
+export const alertDialogPreviewProps = [
   {
     name: "open",
     type: "boolean",

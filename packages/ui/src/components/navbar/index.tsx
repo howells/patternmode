@@ -6,3 +6,4 @@ export {
   NavbarSection,
   NavbarSpacer,
 } from "./component";
+export { NavbarPreview, navbarPreviewProps } from "./preview";

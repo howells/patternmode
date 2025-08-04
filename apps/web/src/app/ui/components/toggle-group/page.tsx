@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/toggle-group/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { toggleGroupConfig } from "@patternmode/ui/components/toggle-group/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function ToggleGroupPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={toggleGroupConfig.name}
+        description={toggleGroupConfig.description}
+        badge={toggleGroupConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="toggle-group"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={toggleGroupConfig.name}
+        category={toggleGroupConfig.category}
       />
 
       <Separator />

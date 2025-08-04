@@ -5,12 +5,12 @@ import { Lock, Mail, Search, User } from "lucide-react";
 import React from "react";
 import { Input } from "./component";
 
-export function InputExample(props: InputProps) {
+export function InputPreview(props: InputProps) {
   return <Input placeholder="Enter text..." {...props} />;
 }
 
 // Preview props for prop explorer
-export const InputPreviewProps = [
+export const inputPreviewProps = [
   {
     name: "placeholder",
     type: "string",

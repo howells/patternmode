@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/icon-container/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { iconContainerConfig } from "@patternmode/ui/components/icon-container/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function IconContainerPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={iconContainerConfig.name}
+        description={iconContainerConfig.description}
+        badge={iconContainerConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="icon-container"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={iconContainerConfig.name}
+        category={iconContainerConfig.category}
       />
 
       <Separator />

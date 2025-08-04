@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/switch/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { switchConfig } from "@patternmode/ui/components/switch/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function SwitchPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={switchConfig.name}
+        description={switchConfig.description}
+        badge={switchConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="switch"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={switchConfig.name}
+        category={switchConfig.category}
       />
 
       <Separator />

@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/empty-state/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { emptyStateConfig } from "@patternmode/ui/components/empty-state/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function EmptyStatePage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={emptyStateConfig.name}
+        description={emptyStateConfig.description}
+        badge={emptyStateConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="empty-state"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={emptyStateConfig.name}
+        category={emptyStateConfig.category}
       />
 
       <Separator />

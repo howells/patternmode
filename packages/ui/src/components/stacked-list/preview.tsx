@@ -4,7 +4,7 @@ import type { StackedListProps } from "./component";
 import React from "react";
 import { StackedList, StackedListItem } from "./component";
 
-export function StackedListExample(props: StackedListProps) {
+export function StackedListPreview(props: StackedListProps) {
   return (
     <StackedList {...props}>
       <StackedListItem>
@@ -24,7 +24,7 @@ export function StackedListExample(props: StackedListProps) {
 }
 
 // Preview props for prop explorer
-export const StackedListPreviewProps = [
+export const stackedListPreviewProps = [
   {
     name: "showDividers",
     type: "boolean",

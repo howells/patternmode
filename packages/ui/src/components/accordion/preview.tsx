@@ -60,7 +60,7 @@ export const accordionPreviewProps = [
   },
 ];
 
-export function AccordionExample(props: AccordionPreviewProps) {
+export function AccordionPreview(props: AccordionPreviewProps) {
   const {
     openMultiple = false,
     disabled = false,

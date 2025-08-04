@@ -2,11 +2,11 @@
  * ESLint rule to enforce correct naming convention for preview components
  *
  * Ensures that files named "preview.tsx" export a component that follows
- * the pattern: {ComponentName}Example
+ * the pattern: {ComponentName}Preview
  *
  * For example:
- * - packages/ui/src/components/accordion/preview.tsx should export "AccordionExample"
- * - packages/ui/src/components/alert-dialog/preview.tsx should export "AlertDialogExample"
+ * - packages/ui/src/components/accordion/preview.tsx should export "AccordionPreview"
+ * - packages/ui/src/components/alert-dialog/preview.tsx should export "AlertDialogPreview"
  */
 
 // No imports needed
@@ -46,12 +46,12 @@ const rule = {
 
     const componentDir = pathParts[componentDirIndex + 1];
 
-    // Convert kebab-case to PascalCase and add "Example"
-    // e.g., "alert-dialog" -> "AlertDialogExample"
+    // Convert kebab-case to PascalCase and add "Preview"
+    // e.g., "alert-dialog" -> "AlertDialogPreview"
     const expectedExportName = `${componentDir
       .split("-")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("")}Example`;
+      .join("")}Preview`;
 
     let hasCorrectExport = false;
     const foundExports = [];
@@ -59,7 +59,7 @@ const rule = {
     return {
       ExportNamedDeclaration(node) {
         if (node.declaration) {
-          // Handle: export const AccordionExample = ...
+          // Handle: export const AccordionPreview = ...
           if (node.declaration.type === "VariableDeclaration") {
             for (const declarator of node.declaration.declarations) {
               if (declarator.id && declarator.id.name) {
@@ -71,7 +71,7 @@ const rule = {
               }
             }
           }
-          // Handle: export function AccordionExample() { ... }
+          // Handle: export function AccordionPreview() { ... }
           else if (node.declaration.type === "FunctionDeclaration" && node.declaration.id) {
             const exportName = node.declaration.id.name;
             foundExports.push(exportName);
@@ -81,7 +81,7 @@ const rule = {
           }
         }
 
-        // Handle: export { AccordionExample }
+        // Handle: export { AccordionPreview }
         if (node.specifiers) {
           for (const specifier of node.specifiers) {
             if (specifier.type === "ExportSpecifier") {
@@ -97,7 +97,7 @@ const rule = {
 
       "Program:exit": function () {
         if (!hasCorrectExport) {
-          const incorrectExport = foundExports.find(name => name.endsWith("Example"));
+          const incorrectExport = foundExports.find(name => name.endsWith("Preview"));
 
           if (incorrectExport) {
             context.report({

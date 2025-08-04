@@ -4,12 +4,12 @@ import type { DividerProps } from "./component";
 import React from "react";
 import { Divider } from "./component";
 
-export function DividerExample(props: DividerProps) {
+export function DividerPreview(props: DividerProps) {
   return <Divider {...props} />;
 }
 
 // Preview props for prop explorer
-export const DividerPreviewProps = [
+export const dividerPreviewProps = [
   {
     name: "children",
     type: "string",

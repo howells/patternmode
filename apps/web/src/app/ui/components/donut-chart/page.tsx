@@ -1,25 +1,25 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/donut-chart/component.config";
+import { Separator } from "@patternmode/ui/components/separator";
+import { donutChartConfig } from "@patternmode/ui/components/donut-chart/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Preview } from "@/preview";
 
 export default function DonutChartPage() {
   return (
     <div>
       {/* Header */}
       <PageHeader
-        title={componentConfig.name}
-        description={componentConfig.description}
-        badge={componentConfig.badge}
+        title={donutChartConfig.name}
+        description={donutChartConfig.description}
+        badge={donutChartConfig.badge}
       />
 
-      {/* Main Content - Use ComponentPropExplorer */}
-      <ComponentPropExplorer
+      {/* Main Content - Use Preview */}
+      <Preview
         componentId="donut-chart"
-        componentName={componentConfig.name}
-        category={componentConfig.category}
+        componentName={donutChartConfig.name}
+        category={donutChartConfig.category}
       />
 
       <Separator />

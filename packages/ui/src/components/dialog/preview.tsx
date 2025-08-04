@@ -18,7 +18,7 @@ type DialogProps = React.ComponentProps<typeof Dialog> & {
   onOpenChange?: (open: boolean) => void;
 };
 
-export function DialogExample(props: DialogProps) {
+export function DialogPreview(props: DialogProps) {
   const [internalOpen, setInternalOpen] = React.useState(false);
 
   const isControlledFromParent = props.open !== undefined;
@@ -52,7 +52,7 @@ export function DialogExample(props: DialogProps) {
 }
 
 // Preview props for prop explorer
-export const DialogPreviewProps = [
+export const dialogPreviewProps = [
   {
     name: "open",
     type: "boolean",

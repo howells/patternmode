@@ -5,12 +5,12 @@ import { Calendar } from "lucide-react";
 import React from "react";
 import { IconContainer } from "./component";
 
-export function IconContainerExample(props: IconContainerProps) {
+export function IconContainerPreview(props: IconContainerProps) {
   return <IconContainer icon={Calendar} {...props} />;
 }
 
 // Preview props for prop explorer
-export const IconContainerPreviewProps = [
+export const iconContainerPreviewProps = [
   {
     name: "icon",
     type: "select",
