@@ -19,9 +19,9 @@ const separatorVariants = tv({
       vertical: "w-px h-full",
     },
     variant: {
-      default: "bg-zinc-300 dark:bg-zinc-700",
-      subtle: "bg-zinc-300 dark:bg-zinc-700",
-      strong: "bg-zinc-400 dark:bg-zinc-600",
+      default: "bg-zinc-200 dark:bg-zinc-800",
+      subtle: "bg-zinc-100 dark:bg-zinc-900",
+      strong: "bg-zinc-200 dark:bg-zinc-800",
     },
     size: {
       sm: "",
