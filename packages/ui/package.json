@@ -81,8 +81,6 @@
     "test:e2e": "NODE_ENV=test playwright test --config=playwright-ct.config.ts",
     "test:e2e:ui": "NODE_ENV=test playwright test --config=playwright-ct.config.ts --ui",
     "validate-examples": "npx tsx scripts/validate-examples.ts",
-    "extract-props": "tsx scripts/extract-props.ts",
-    "generate-icon-list": "tsx scripts/generate-icon-list.ts",
     "prepublishOnly": "npm run typecheck && npm run test",
     "prepack": "npm run build"
   },
