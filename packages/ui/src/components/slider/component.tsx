@@ -121,6 +121,7 @@ const Slider = (
         <BaseSlider.Root
           ref={forwardedRef as any}
           className={cx(root(), "flex flex-col items-center", className)}
+          data-testid="slider"
           {...sliderProps}
         >
           <BaseSlider.Control className={control()}>
@@ -166,6 +167,7 @@ const Slider = (
       <BaseSlider.Root
         ref={forwardedRef as any}
         className={cx(root(), className)}
+        data-testid="slider"
         {...sliderProps}
       >
         <BaseSlider.Control className={control()}>

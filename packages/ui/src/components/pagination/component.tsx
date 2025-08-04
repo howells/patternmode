@@ -24,19 +24,20 @@ type PaginationProps = {
 /**
  * Root pagination component for navigation container with proper accessibility.
  */
-export function Pagination({
+export const Pagination = ({
   "aria-label": ariaLabel = "Page navigation",
   className,
   ...props
-}: PaginationProps) {
+}: PaginationProps) => {
   return (
     <nav
+      data-testid="pagination"
       aria-label={ariaLabel}
       {...props}
       className={cx("flex items-center justify-center gap-2", className)}
     />
   );
-}
+};
 
 type PaginationPreviousProps = {
   /**
@@ -60,12 +61,12 @@ type PaginationPreviousProps = {
 /**
  * Previous page navigation button with automatic disabled state handling.
  */
-export function PaginationPrevious({
+export const PaginationPrevious = ({
   href,
   className,
   children = "Previous",
   disabled = false,
-}: PaginationPreviousProps) {
+}: PaginationPreviousProps) => {
   if (disabled || !href) {
     return (
       <Button
@@ -90,7 +91,7 @@ export function PaginationPrevious({
       <span className="sr-only sm:not-sr-only">{children}</span>
     </Button>
   );
-}
+};
 
 type PaginationNextProps = {
   /**
@@ -114,12 +115,12 @@ type PaginationNextProps = {
 /**
  * Next page navigation button with automatic disabled state handling.
  */
-export function PaginationNext({
+export const PaginationNext = ({
   href,
   className,
   children = "Next",
   disabled = false,
-}: PaginationNextProps) {
+}: PaginationNextProps) => {
   if (disabled || !href) {
     return (
       <Button
@@ -144,7 +145,7 @@ export function PaginationNext({
       <span className="sr-only sm:not-sr-only">{children}</span>
     </Button>
   );
-}
+};
 
 type PaginationListProps = {
   /**
@@ -160,9 +161,9 @@ type PaginationListProps = {
 /**
  * List container for page number buttons with semantic markup.
  */
-export function PaginationList({ className, ...props }: PaginationListProps) {
+export const PaginationList = ({ className, ...props }: PaginationListProps) => {
   return <ul {...props} className={cx("flex items-center gap-1", className)} />;
-}
+};
 
 type PaginationPageProps = {
   /**
@@ -186,12 +187,12 @@ type PaginationPageProps = {
 /**
  * Individual page number button with current page state support.
  */
-export function PaginationPage({
+export const PaginationPage = ({
   href,
   className,
   current = false,
   children,
-}: PaginationPageProps) {
+}: PaginationPageProps) => {
   if (current) {
     return (
       <li>
@@ -218,7 +219,7 @@ export function PaginationPage({
       </Button>
     </li>
   );
-}
+};
 
 type PaginationGapProps = {
   /**
@@ -234,11 +235,11 @@ type PaginationGapProps = {
 /**
  * Gap indicator for truncated page ranges showing omitted pages.
  */
-export function PaginationGap({
+export const PaginationGap = ({
   className,
   children = <MoreHorizontal className="h-4 w-4" />,
   ...props
-}: PaginationGapProps) {
+}: PaginationGapProps) => {
   return (
     <span
       aria-hidden="true"
@@ -251,7 +252,7 @@ export function PaginationGap({
       {children}
     </span>
   );
-}
+};
 
 export type {
   PaginationGapProps,

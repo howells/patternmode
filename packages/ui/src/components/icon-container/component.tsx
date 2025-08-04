@@ -57,6 +57,7 @@ export function IconContainer({
 
   return (
     <div
+      data-testid="icon-container"
       className={cx(
         iconContainerVariants({ size, variant }),
         colorClasses && colorClasses.bgMuted,

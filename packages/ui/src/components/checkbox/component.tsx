@@ -34,6 +34,7 @@ const Checkbox = ({ ref: forwardedRef, className, checked, ...props }: CheckboxP
     <BaseCheckbox.Root
       ref={forwardedRef}
       {...baseUIProps}
+      data-testid="checkbox"
       className={cx(
         // base
         "relative inline-flex size-4 shrink-0 appearance-none items-center justify-center rounded-sm shadow-xs outline-hidden ring-1 ring-inset transition duration-100 enabled:cursor-pointer",

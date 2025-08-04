@@ -781,7 +781,7 @@ const SingleDatePicker = ({
   }, [value, defaultValue]);
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
+    <Popover open={open} onOpenChange={onOpenChange} data-testid="date-picker">
       <Trigger
         placeholder={placeholder}
         disabled={disabled}

@@ -190,6 +190,7 @@ export function TextList({
 }: TextListProps) {
   return (
     <Component
+      data-testid="text-list"
       className={cx(!unstyled && listVariants({ variant, align }), className)}
       {...props}
     >

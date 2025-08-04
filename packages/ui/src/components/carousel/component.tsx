@@ -229,6 +229,7 @@ const Carousel = (
         className={cx("relative", className)}
         role="region"
         aria-roledescription="carousel"
+        data-testid="carousel"
         {...props}
       >
         {children}

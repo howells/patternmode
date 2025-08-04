@@ -196,7 +196,7 @@ type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
    * When true, clears search input after selection for clean state.
    */
   clearSearchOnSelect?: boolean;
-} & VariantProps<typeof comboboxVariants>;
+} & VariantProps<typeof comboboxVariants> & React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Virtualized item list component for handling large datasets efficiently.

@@ -88,7 +88,7 @@ export type FieldArrayProps<T extends FieldArrayItem = FieldArrayItem> = {
    * Custom label for each item (e.g., "Item", "Question", "Section").
    */
   itemLabel?: string;
-};
+} & React.ComponentPropsWithoutRef<"div">;
 
 const EMPTY_COMPONENT_MAP = {};
 
@@ -222,7 +222,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
   };
 
   return (
-    <div className={cx("space-y-4", className)}>
+    <div data-testid="field-array" className={cx("space-y-4", className)}>
       {items.map((item, index) => {
         const itemActions = {
           updateItem: (updates: Partial<T>) => updateItem(index, updates),

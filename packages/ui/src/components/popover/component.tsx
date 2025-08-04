@@ -8,7 +8,9 @@ type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;
 /**
  * Root popover component for creating contextual overlays and tooltips.
  */
-const Popover = BasePopover.Root;
+const Popover = (props: PopoverProps) => (
+  <BasePopover.Root data-testid="popover" {...props} />
+);
 
 type PopoverTriggerProps = {
   /**

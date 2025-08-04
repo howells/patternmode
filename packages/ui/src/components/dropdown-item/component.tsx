@@ -74,6 +74,7 @@ const DropdownItem = ({ ref, className, variant, highlighted = false, selected =
       ref={ref}
       render={<div />}
       variant="ghost"
+      data-testid="dropdown-item"
       className={cx(
         dropdownItemVariants({ variant }),
         className,

@@ -55,6 +55,7 @@ const SelectNative = ({ ref: forwardedRef, className, hasError, ...props }: Sele
     <select
       ref={forwardedRef}
       className={cx(selectNativeStyles({ hasError }), className)}
+      data-testid="select-native"
       {...props}
     />
   );

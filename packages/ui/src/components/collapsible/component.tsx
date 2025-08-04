@@ -11,7 +11,17 @@ import { Button } from "../button";
 /**
  * Root container for collapsible content sections.
  */
-const Collapsible = BaseCollapsible.Root;
+const Collapsible = React.forwardRef<
+  React.ElementRef<typeof BaseCollapsible.Root>,
+  React.ComponentPropsWithoutRef<typeof BaseCollapsible.Root>
+>(({ ...props }, ref) => (
+  <BaseCollapsible.Root
+    ref={ref}
+    data-testid="collapsible"
+    {...props}
+  />
+));
+Collapsible.displayName = "Collapsible";
 
 /**
  * Props for the CollapsibleTrigger component.

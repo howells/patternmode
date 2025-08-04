@@ -18,11 +18,11 @@ export type SubheadingProps = {
 /**
  * Secondary heading component for section subtitles and supplementary titles.
  */
-export function Subheading({
+export const Subheading = ({
   className,
   level = 2,
   ...props
-}: SubheadingProps) {
+}: SubheadingProps) => {
   return (
     <HeadingElement
       level={level}
@@ -30,7 +30,8 @@ export function Subheading({
         className,
         "m-0 text-sm font-semibold text-current sm:text-sm",
       )}
+      data-testid="subheading"
       {...props}
     />
   );
-}
+};

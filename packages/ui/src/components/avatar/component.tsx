@@ -154,6 +154,7 @@ const Avatar = ({
       {...props}
       className={cx(avatarVariants({ size, square }), className)}
       style={backgroundColor ? { backgroundColor } : undefined}
+      data-testid="avatar"
     >
       {displayText && (
         <svg

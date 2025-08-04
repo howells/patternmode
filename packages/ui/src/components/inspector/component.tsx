@@ -30,28 +30,19 @@ type InspectorProps = React.ComponentPropsWithoutRef<"aside"> & {
 
 /**
  * Development tool component for inspecting and debugging component properties.
- *
- * A side panel component system for displaying detailed information, properties,
- * or controls related to selected content. Features toggleable overlay mode for
- * mobile devices, smooth slide-in/out animations, and structured content organization.
- *
- * @param props - Component properties.
- * @param props.isOpen - Whether the inspector is open (for toggleable mode).
- * @param props.onToggle - Callback to toggle the inspector state.
- * @param props.asOverlay - Whether to render as an overlay that slides over content.
- * @param props.className - Additional CSS classes.
  */
-export function Inspector({
+export const Inspector = ({
   className,
   isOpen,
   onToggle,
   asOverlay = false,
   ...props
-}: InspectorProps) {
+}: InspectorProps) => {
   // If not toggleable, render as static panel (original behavior)
   if (!asOverlay && isOpen === undefined) {
     return (
       <aside
+        data-testid="inspector"
         className={cx(
           // Base layout
           "flex h-full w-80 flex-shrink-0 flex-col",
@@ -78,6 +69,7 @@ export function Inspector({
 
       {/* Inspector Panel */}
       <aside
+        data-testid="inspector"
         className={cx(
           // Base layout
           "flex h-full w-80 flex-shrink-0 flex-col",
@@ -98,17 +90,17 @@ export function Inspector({
       />
     </>
   );
-}
+};
 
 type InspectorHeaderProps = React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Inspector header component for titles and controls.
  */
-export function InspectorHeader({
+export const InspectorHeader = ({
   className,
   ...props
-}: InspectorHeaderProps) {
+}: InspectorHeaderProps) => {
   return (
     <div
       className={cx(
@@ -121,17 +113,17 @@ export function InspectorHeader({
       {...props}
     />
   );
-}
+};
 
 type InspectorBodyProps = React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Inspector body component for main scrollable content.
  */
-export function InspectorBody({
+export const InspectorBody = ({
   className,
   ...props
-}: InspectorBodyProps) {
+}: InspectorBodyProps) => {
   const [showGradient, setShowGradient] = React.useState(true);
   const viewportRef = React.useRef<HTMLDivElement>(null);
 
@@ -232,17 +224,17 @@ export function InspectorBody({
       )}
     </div>
   );
-}
+};
 
 type InspectorSectionProps = React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Inspector section component for organizing related content.
  */
-export function InspectorSection({
+export const InspectorSection = ({
   className,
   ...props
-}: InspectorSectionProps) {
+}: InspectorSectionProps) => {
   return (
     <div
       className={cx(
@@ -253,17 +245,17 @@ export function InspectorSection({
       {...props}
     />
   );
-}
+};
 
 type InspectorGroupProps = React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Inspector group component for form control groupings.
  */
-export function InspectorGroup({
+export const InspectorGroup = ({
   className,
   ...props
-}: InspectorGroupProps) {
+}: InspectorGroupProps) => {
   return (
     <div
       className={cx(
@@ -274,7 +266,7 @@ export function InspectorGroup({
       {...props}
     />
   );
-}
+};
 
 type InspectorToggleProps = {
   /**
@@ -299,13 +291,13 @@ type InspectorToggleProps = {
 /**
  * Toggle button for opening/closing the inspector panel.
  */
-export function InspectorToggle({
+export const InspectorToggle = ({
   isOpen,
   onToggle,
   className,
   position = "fixed bottom-6 right-6 lg:hidden",
   ...props
-}: InspectorToggleProps) {
+}: InspectorToggleProps) => {
   return (
     <button
       type="button"
@@ -346,7 +338,7 @@ export function InspectorToggle({
           )}
     </button>
   );
-}
+};
 
 export type {
   InspectorBodyProps,

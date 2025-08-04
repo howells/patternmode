@@ -18,10 +18,11 @@ export type HeadingProps = {
 /**
  * Heading component with hierarchical levels and consistent typography styling.
  */
-export function Heading({ className, level = 1, ...props }: HeadingProps) {
+export const Heading = ({ className, level = 1, ...props }: HeadingProps) => {
   return (
     <HeadingElement
       level={level}
+      data-testid="heading"
       className={cx(
         className,
         "m-0 text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white",
@@ -29,4 +30,4 @@ export function Heading({ className, level = 1, ...props }: HeadingProps) {
       {...props}
     />
   );
-}
+};

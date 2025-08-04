@@ -21,6 +21,7 @@ const Accordion = ({
   <BaseAccordion.Root
     className={cx("flex w-full flex-col", className)}
     orientation={orientation}
+    data-testid="accordion"
     {...props}
   />
 );

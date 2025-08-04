@@ -31,25 +31,26 @@ type TextProps = {
 /**
  * Typography component with consistent text styling and semantic meaning.
  */
-export function Text({ className, size, ...props }: TextProps) {
+export const Text = ({ className, size, ...props }: TextProps) => {
   return (
     <p
       data-slot="text"
+      data-testid="text"
       {...props}
       className={cx(textVariants({ size }), className)}
     />
   );
-}
+};
 
 type TextLinkProps = React.ComponentPropsWithoutRef<typeof Link>;
 
 /**
  * Text link component for navigation within text content.
  */
-export function TextLink({
+export const TextLink = ({
   className,
   ...props
-}: TextLinkProps) {
+}: TextLinkProps) => {
   return (
     <Link
       {...props}
@@ -59,31 +60,31 @@ export function TextLink({
       )}
     />
   );
-}
+};
 
 type StrongProps = React.ComponentPropsWithoutRef<"strong">;
 
 /**
  * Strong text component for emphasis within text content.
  */
-export function Strong({
+export const Strong = ({
   className,
   ...props
-}: StrongProps) {
+}: StrongProps) => {
   return (
     <strong {...props} className={cx(className, "font-medium text-current")} />
   );
-}
+};
 
 type CodeProps = React.ComponentPropsWithoutRef<"code">;
 
 /**
  * Inline code component for displaying code within text content.
  */
-export function Code({
+export const Code = ({
   className,
   ...props
-}: CodeProps) {
+}: CodeProps) => {
   return (
     <code
       {...props}
@@ -93,6 +94,6 @@ export function Code({
       )}
     />
   );
-}
+};
 
 export type { CodeProps, StrongProps, TextLinkProps, TextProps };

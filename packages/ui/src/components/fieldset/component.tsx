@@ -34,6 +34,7 @@ type FieldsetProps = {
  */
 const Fieldset = ({ className, ...props }: FieldsetProps) => (
   <BaseFieldset.Root
+    data-testid="fieldset"
     className={cx(
       // base
       "flex flex-col gap-4 border-0 p-0",

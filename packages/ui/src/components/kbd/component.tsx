@@ -118,6 +118,7 @@ const Kbd = (
     const processedKeys = processKeys(keys);
     return (
       <span
+        data-testid="kbd"
         className={cx("inline-flex items-center gap-1", className)}
         {...props}
       >
@@ -134,6 +135,7 @@ const Kbd = (
   // For single keys or children, render as single kbd
   return (
     <kbd
+      data-testid="kbd"
       ref={ref}
       className={cx(kbdVariants({ size, variant }), className)}
       {...props}

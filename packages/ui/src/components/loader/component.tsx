@@ -88,6 +88,7 @@ const Loader = ({
 
   return (
     <div
+      data-testid="loader"
       ref={forwardedRef}
       className={cx("inline-flex items-center justify-center", label && "gap-3", className)}
       {...props}

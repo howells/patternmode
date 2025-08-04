@@ -838,6 +838,7 @@ const BarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React
     <div
       ref={forwardedRef}
       className={cx("h-80 w-full", className)}
+      data-testid="bar-chart"
       {...other}
     >
       <ResponsiveContainer>

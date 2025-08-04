@@ -128,7 +128,7 @@ const ToggleGroup = ({ ref, className, variant, size, orientation, children, ...
 
   return (
     <ToggleGroupContext value={contextValue}>
-      <BaseToggleGroup ref={ref} className={cx(root(), className)} {...props}>
+      <BaseToggleGroup data-testid="toggle-group" ref={ref} className={cx(root(), className)} {...props}>
         {children}
       </BaseToggleGroup>
     </ToggleGroupContext>

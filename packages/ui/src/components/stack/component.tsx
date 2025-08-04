@@ -154,6 +154,7 @@ const Stack = (
         responsivePaddingClasses,
         className,
       )}
+      data-testid="stack"
       {...props}
     >
       {children}

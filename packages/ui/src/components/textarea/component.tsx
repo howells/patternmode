@@ -80,6 +80,7 @@ const Textarea = (
     // Fallback to regular textarea when auto-resize is disabled
     return (
       <textarea
+        data-testid="textarea"
         ref={forwardedRef}
         className={baseClassName}
         style={style}
@@ -90,6 +91,7 @@ const Textarea = (
 
   return (
     <TextareaAutosize
+      data-testid="textarea"
       ref={forwardedRef}
       className={baseClassName}
       minRows={Math.max(minRows, 1)}

@@ -339,6 +339,7 @@ const Badge = (
       className,
     ),
     children: renderBadgeContent(),
+    "data-testid": "badge",
   };
 
   const element = useRender({

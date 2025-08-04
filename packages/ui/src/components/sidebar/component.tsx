@@ -105,6 +105,7 @@ const Sidebar = ({
     <nav
       {...props}
       data-component="Sidebar"
+      data-testid="sidebar"
       className={cx(className, "flex h-full min-h-0 flex-col relative")}
       style={{
         width: "var(--sidebar-width, 16rem)",

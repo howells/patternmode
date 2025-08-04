@@ -61,6 +61,7 @@ const DismissButton = (
       ref={ref}
       type="button"
       onClick={onClick}
+      data-testid="dismiss-button"
       className={cx(
         // Base button styling
         "flex items-center justify-center rounded-full transition-colors",

@@ -255,6 +255,7 @@ const SplitButton = (
         disabled && "data-disabled",
         className,
       )}
+      data-testid="split-button"
       {...props}
     >
       {/* Main Button */}

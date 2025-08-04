@@ -94,6 +94,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
+      data-testid="empty-state"
       className={cx(
         // Base styles
         "flex flex-col items-center justify-center text-center",

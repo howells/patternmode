@@ -167,6 +167,7 @@ function Icon({
   try {
     return (
       <IconComponent
+        data-testid="icon"
         className={cx(iconVariants({ size }), className)}
         strokeWidth={finalStrokeWidth}
       />

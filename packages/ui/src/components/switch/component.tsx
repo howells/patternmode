@@ -92,6 +92,7 @@ const Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchP
         <BaseSwitch.Root
           ref={forwardedRef}
           className={cx(root(), className)}
+          data-testid="switch"
           {...props}
         >
           <BaseSwitch.Thumb className={cx(thumb())} />
@@ -107,6 +108,7 @@ const Switch = ({ ref: forwardedRef, className, size, label, ...props }: SwitchP
     <BaseSwitch.Root
       ref={forwardedRef}
       className={cx(root(), className)}
+      data-testid="switch"
       {...props}
     >
       <BaseSwitch.Thumb className={cx(thumb())} />

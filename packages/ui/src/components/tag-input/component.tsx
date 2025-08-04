@@ -379,7 +379,7 @@ const TagInput = ({
   };
 
   return (
-    <div className={cx("relative", className)}>
+    <div className={cx("relative", className)} data-testid="tag-input">
       {/* Hidden label for accessibility */}
       <label {...getLabelProps()} className="sr-only">
         {placeholder}

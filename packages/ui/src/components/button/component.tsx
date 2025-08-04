@@ -671,7 +671,7 @@ const Button = ({
     disabled: disabled || isLoading,
     type: "button",
     ...({
-      "data-testid": "ui-button",
+      "data-testid": "button",
     } as React.HTMLAttributes<HTMLButtonElement>),
     children: renderButtonContent(),
   };

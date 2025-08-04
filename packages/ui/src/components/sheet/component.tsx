@@ -71,7 +71,7 @@ type SheetProps = React.ComponentPropsWithoutRef<typeof Dialog.Root>;
  * Sheet overlay panel component sliding from screen edges for desktop-optimized interfaces.
  */
 const Sheet = (props: SheetProps) => {
-  return <Dialog.Root {...props} />;
+  return <Dialog.Root data-testid="sheet" {...props} />;
 };
 Sheet.displayName = "Sheet";
 

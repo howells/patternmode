@@ -162,6 +162,7 @@ const Breadcrumbs = ({
       ref={ref}
       aria-label="breadcrumb"
       className={cx(root(), className)}
+      data-testid="breadcrumbs"
       {...props}
     />
   );

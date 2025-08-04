@@ -104,7 +104,9 @@ const progressVariants = tv({
 /**
  * Root progress component built on Base UI's Progress primitive.
  */
-const Progress = BaseProgress.Root;
+const Progress = (props: React.ComponentPropsWithoutRef<typeof BaseProgress.Root>) => (
+  <BaseProgress.Root data-testid="progress" {...props} />
+);
 Progress.displayName = "Progress";
 
 /**

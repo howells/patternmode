@@ -26,6 +26,7 @@ const Label = ({
   ...props
 }: LabelProps & { ref?: React.RefObject<React.ElementRef<typeof Field.Label> | null> }) => (
   <Field.Label
+    data-testid="label"
     ref={forwardedRef}
     className={cx(
       // base

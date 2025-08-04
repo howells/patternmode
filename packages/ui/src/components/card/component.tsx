@@ -91,6 +91,7 @@ const Card = (
       responsivePaddingClasses,
       className,
     ),
+    "data-testid": "card",
   };
 
   const element = useRender({

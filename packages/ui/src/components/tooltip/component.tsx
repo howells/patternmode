@@ -162,6 +162,7 @@ const Tooltip = ({
           alignOffset={alignOffset}
         >
           <BaseTooltip.Popup
+            data-testid="tooltip"
             ref={forwardedRef}
             className={cx(popup(), className)}
           >

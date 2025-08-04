@@ -222,6 +222,7 @@ const CategoryBar = (
       aria-label="Category bar"
       aria-valuenow={marker?.value}
       tremor-id="tremor-raw"
+      data-testid="category-bar"
       {...props}
     >
       {showLabels ? <BarLabels values={values} /> : null}

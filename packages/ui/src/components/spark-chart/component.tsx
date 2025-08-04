@@ -131,6 +131,7 @@ const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & {
       ref={forwardedRef}
       className={cx("h-12 w-28", className)}
       tremor-id="tremor-raw"
+      data-testid="spark-chart"
       {...other}
     >
       <ResponsiveContainer>
@@ -278,6 +279,7 @@ const SparkLineChart = ({ ref: forwardedRef, ...props }: SparkLineChartProps & {
       ref={forwardedRef}
       className={cx("h-12 w-28", className)}
       tremor-id="tremor-raw"
+      data-testid="spark-chart"
       {...other}
     >
       <ResponsiveContainer>
@@ -400,6 +402,7 @@ const SparkBarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: 
       ref={forwardedRef}
       className={cx("h-12 w-28", className)}
       tremor-id="tremor-raw"
+      data-testid="spark-chart"
       {...other}
     >
       <ResponsiveContainer>

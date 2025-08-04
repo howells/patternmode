@@ -135,6 +135,7 @@ const Meter = (
 
   return (
     <BaseMeter.Root
+      data-testid="meter"
       ref={ref}
       value={value}
       min={min}

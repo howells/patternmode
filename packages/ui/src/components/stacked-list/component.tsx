@@ -137,6 +137,7 @@ const StackedListRoot = (
         showDividers && "divide-y divide-zinc-200 dark:divide-zinc-800",
         className,
       )}
+      data-testid="stacked-list"
       {...props}
     >
       {React.Children.map(children, (child) => {

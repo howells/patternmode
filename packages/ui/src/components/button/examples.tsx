@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, iconRegistry } from "@patternmode/ui";
+import { Button } from "@patternmode/ui/components/button";
+import { iconRegistry } from "@patternmode/ui/lib/icon-registry";
 import React from "react";
 import { HStack } from "../stack";
 

@@ -38,6 +38,7 @@ type MenuBarProps = {
  */
 const MenuBar = ({ ref, className, ...props }: MenuBarProps) => (
   <BaseMenubar
+    data-testid="menu-bar"
     ref={ref}
     className={cx(
       // base

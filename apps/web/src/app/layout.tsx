@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ToastProvider } from "@patternmode/ui";
+import { ToastProvider } from "@patternmode/ui/components/toast";
 
 import { SidebarLayout } from "../components/sidebar-layout";
 import { ReactQueryProvider } from "../lib/react-query";

@@ -2,18 +2,6 @@
 
 import type { LucideIcon } from "lucide-react";
 
-import { Badge } from "@patternmode/ui/badge";
-import { Button } from "@patternmode/ui/button";
-import { Callout } from "@patternmode/ui/callout";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/card";
-import { CodeBlock } from "@patternmode/ui/code-block";
-import { Grid, GridCell } from "@patternmode/ui/grid";
-import { Heading } from "@patternmode/ui/heading";
-import { IconContainer } from "@patternmode/ui/icon-container";
-import { HStack, Stack, VStack } from "@patternmode/ui/stack";
-import { Subheading } from "@patternmode/ui/subheading";
-import { Code, Text } from "@patternmode/ui/text";
-import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/text-list";
 import {
   Box,
   CheckCircle,
@@ -24,6 +12,19 @@ import {
   Package,
 } from "lucide-react";
 import Link from "next/link";
+
+import { Badge } from "@patternmode/ui/components/badge";
+import { Button } from "@patternmode/ui/components/button";
+import { Callout } from "@patternmode/ui/components/callout";
+import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
+import { CodeBlock } from "@patternmode/ui/components/code-block";
+import { Grid, GridCell } from "@patternmode/ui/components/grid";
+import { Heading } from "@patternmode/ui/components/heading";
+import { IconContainer } from "@patternmode/ui/components/icon-container";
+import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
+import { Subheading } from "@patternmode/ui/components/subheading";
+import { Code, Text } from "@patternmode/ui/components/text";
+import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/components/text-list";
 
 import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
 
@@ -182,7 +183,7 @@ export default function Home() {
           {/* Prerequisites */}
           <Card>
             <CardHeader border={true}>
-              <CardTitle>Prerequisites</CardTitle>
+              <CardHeading>Prerequisites</CardHeading>
               <CardDescription>
                 Make sure you have the following installed before proceeding:
               </CardDescription>

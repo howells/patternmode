@@ -16,12 +16,12 @@ export type HeadingElementProps = {
 /**
  * Semantic heading element component with proper HTML heading structure.
  */
-export function HeadingElement({
+export const HeadingElement = ({
   level = 1,
   className,
   ...props
-}: HeadingElementProps) {
+}: HeadingElementProps) => {
   const Element: `h${typeof level}` = `h${level}`;
 
-  return <Element {...props} className={cx(className)} />;
-}
+  return <Element {...props} data-testid="heading-element" className={cx(className)} />;
+};

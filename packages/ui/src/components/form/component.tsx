@@ -74,6 +74,7 @@ const Form = ({ schema, onValidSubmit, children, className, onSubmit, ...props }
 
   return (
     <BaseForm
+      data-testid="form"
       className={cx("space-y-6", className)}
       errors={errors}
       onClearErrors={() => setErrors({})}

@@ -482,7 +482,7 @@ const Calendar = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" data-testid="calendar">
       <DayPicker
         weekStartsOn={weekStartsOn}
         numberOfMonths={numberOfMonths}

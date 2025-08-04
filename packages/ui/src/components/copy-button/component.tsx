@@ -70,6 +70,7 @@ export const CopyButton = ({
       onClick={copyToClipboard}
       leftIcon={copied ? CopiedIcon : CopyIcon}
       className={className}
+      data-testid="copy-button"
       {...props}
     >
       {copied ? copiedLabel : copyLabel}

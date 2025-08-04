@@ -22,7 +22,7 @@ type TabNavigationLinkProps = React.ComponentPropsWithoutRef<typeof NavigationMe
  * Tab-based navigation component for switching between related content sections.
  */
 const TabNavigation = ({ ref: forwardedRef, className, children, ...props }: TabNavigationProps) => (
-  <NavigationMenu.Root ref={forwardedRef} {...props}>
+  <NavigationMenu.Root ref={forwardedRef} data-testid="tab-navigation" {...props}>
     <NavigationMenu.List
       className={cx(
         // base

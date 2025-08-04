@@ -48,7 +48,7 @@ type BarListProps<T = unknown> = {
    * Controls the display order of bars in the list.
    */
   sortOrder?: "ascending" | "descending" | "none";
-} & React.HTMLAttributes<HTMLDivElement>;
+} & React.ComponentPropsWithoutRef<"div">;
 
 function BarListInner<T>(
   {
@@ -86,6 +86,7 @@ function BarListInner<T>(
       ref={forwardedRef}
       className={cx("flex justify-between space-x-6", className)}
       aria-sort={sortOrder}
+      data-testid="bar-list"
       {...props}
     >
       <div className="relative w-full space-y-1.5">

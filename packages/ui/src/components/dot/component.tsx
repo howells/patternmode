@@ -91,6 +91,7 @@ const Dot = (
   return (
     <span
       ref={ref}
+      data-testid="dot"
       className={cx(dotVariants({ size }), colorClasses.text, className)}
       {...props}
     >

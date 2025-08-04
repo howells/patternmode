@@ -182,10 +182,10 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
   const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {
-    return <Drawer {...props}>{children}</Drawer>;
+    return <Drawer data-testid="responsive-drawer" {...props}>{children}</Drawer>;
   }
 
-  return <Sheet {...props}>{children}</Sheet>;
+  return <Sheet data-testid="responsive-drawer" {...props}>{children}</Sheet>;
 };
 
 /**

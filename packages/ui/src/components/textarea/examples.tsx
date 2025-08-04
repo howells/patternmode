@@ -1,7 +1,12 @@
 "use client";
 
 import type { ComponentExample } from "../../lib/component-config-types";
-import { Button, Checkbox, DescriptionDetails, DescriptionList, DescriptionTerm, Fieldset, Form, FormControl, FormField, Textarea } from "@patternmode/ui";
+import { Button } from "@patternmode/ui/components/button";
+import { Checkbox } from "@patternmode/ui/components/checkbox";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/ui/components/description-list";
+import { Fieldset } from "@patternmode/ui/components/fieldset";
+import { Form, FormControl, FormField } from "@patternmode/ui/components/form";
+import { Textarea } from "@patternmode/ui/components/textarea";
 import React from "react";
 
 // Basic auto-resizing textarea

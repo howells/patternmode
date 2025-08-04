@@ -118,6 +118,7 @@ const Divider = (
 ) => (
   <div
     ref={forwardedRef}
+    data-testid="divider"
     className={cx(dividerVariants({ orientation, spacing }), className)}
     {...props}
   >

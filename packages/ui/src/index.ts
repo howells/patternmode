@@ -116,6 +116,7 @@ export * from "./components/icon";
 export * from "./components/icon-container";
 export * from "./components/icon-select";
 export * from "./components/input";
+
 export * from "./components/inspector";
 export * from "./components/kbd";
 export * from "./components/label";
@@ -126,10 +127,10 @@ export {
 } from "./components/line-chart";
 export * from "./components/loader";
 export * from "./components/menu";
-
 export * from "./components/menu-bar";
 
 export * from "./components/meter";
+
 export * from "./components/navbar";
 export * from "./components/navigation-menu";
 export * from "./components/number-field";
@@ -145,11 +146,13 @@ export * from "./components/radio-card-group";
 export * from "./components/radio-group";
 // Component configs (exported with unique names to avoid conflicts)
 export * from "./components/responsive-drawer";
+export * from "./components/scroll-area";
 // Component Registry - for documentation and tooling
 // Component registry exports are handled separately - not exported to prevent componentConfig conflicts
 // export * from "./components/registry";
 
-export * from "./components/scroll-area";
+// Search Components
+export * from "./components/search-field";
 export * from "./components/select";
 export * from "./components/select-native";
 export * from "./components/separator";

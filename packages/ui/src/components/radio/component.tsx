@@ -276,7 +276,9 @@ type RadioCardOptionProps = {
 /**
  * Root radio component built on Base UI's Radio primitive.
  */
-const Radio = BaseRadio.Root;
+const Radio = (props: RadioProps) => (
+  <BaseRadio.Root data-testid="radio" {...props} />
+);
 Radio.displayName = "Radio";
 
 /**

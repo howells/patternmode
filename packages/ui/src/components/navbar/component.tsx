@@ -20,6 +20,7 @@ type NavbarProps = {
 const Navbar = ({ className, ...props }: NavbarProps) => {
   return (
     <nav
+      data-testid="navbar"
       {...props}
       className={cx(className, "flex flex-1 items-center gap-4 py-2.5")}
     />

@@ -303,6 +303,7 @@ const ToastProvider: React.FC<ToastProviderProps> = ({
     <ToastManagerContext value={toastManager}>
       {children}
       <Toaster
+        data-testid="toast"
         position={position}
         toastOptions={{
           duration: timeout,

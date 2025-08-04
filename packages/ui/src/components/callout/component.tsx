@@ -100,6 +100,7 @@ const Callout = (
     <div
       ref={forwardedRef}
       className={cx(calloutVariants({ variant }), className)}
+      data-testid="callout"
       {...props}
     >
       <div className={cx("flex items-start gap-3")}>

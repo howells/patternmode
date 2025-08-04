@@ -389,6 +389,7 @@ const Input = (
 
   return (
     <div
+      data-testid="input"
       className={cx(
         "relative flex items-stretch w-full rounded-md border shadow-xs transition",
         // Border and background colors

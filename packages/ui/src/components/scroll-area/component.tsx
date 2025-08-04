@@ -44,6 +44,7 @@ const ScrollArea = (
   <BaseScrollArea.Root
     ref={ref}
     className={cx("relative overflow-hidden group", className)}
+    data-testid="scroll-area"
     {...props}
   >
     <BaseScrollArea.Viewport

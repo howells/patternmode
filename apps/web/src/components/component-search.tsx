@@ -1,11 +1,10 @@
 "use client";
 
-import { useDebounce } from "@uidotdev/usehooks";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-import type { ComponentConfig } from "@patternmode/ui";
+import type { ComponentConfig, SearchFieldItem } from "@patternmode/ui";
 
 import {
   Badge,
@@ -14,8 +13,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  EmptyState,
-  Input,
+  SearchField,
   Stack,
   Subheading,
   Text,
@@ -38,39 +36,26 @@ export function ComponentSearch({
   const router = useRouter();
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Use controlled state if provided, otherwise use internal state
   const isOpen = open !== undefined ? open : internalIsOpen;
   const setIsOpen = onOpenChange || setInternalIsOpen;
-  const inputRef = useRef<HTMLInputElement>(null);
-  const debouncedSearchTerm = useDebounce(searchTerm, 200);
 
   // Get all components from all categories
   const allComponents = getAllComponents();
 
-  const filteredComponents = debouncedSearchTerm
-    ? allComponents.filter(component =>
-        component.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
-      )
-    : allComponents;
+  // Convert components to SearchFieldItem format
+  const searchItems: SearchFieldItem[] = allComponents.map(component => ({
+    id: component.id,
+    label: component.name,
+    description: component.description,
+    category: component.category,
+    badge: component.badge || component.category.charAt(0).toUpperCase() + component.category.slice(1),
+    data: component, // Store the full component data
+  }));
 
-  // Group by category
-  const groupedComponents = filteredComponents.reduce((groups, component) => {
-    const category = component.category;
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category].push(component);
-    return groups;
-  }, {} as Record<string, ComponentConfig[]>);
-
-  // Reset selection when search changes
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [debouncedSearchTerm]);
-
-  const handleSelect = (component: ComponentConfig) => {
+  const handleSelect = (item: SearchFieldItem) => {
+    const component = item.data as ComponentConfig;
     if (onSelectComponent) {
       onSelectComponent(component);
       setIsOpen(false);
@@ -81,45 +66,6 @@ export function ComponentSearch({
       setIsOpen(false);
     }
   };
-
-  // Handle keyboard navigation with useKeyPress-style approach
-  // Note: Using manual approach since useKeyPress might need experimental version
-  // If you want to use useKeyPress, uncomment the imports and replace this with:
-  // useKeyPress("ArrowDown", () => setSelectedIndex(prev => Math.min(prev + 1, filteredComponents.length - 1)), { enabled: isOpen });
-  // useKeyPress("ArrowUp", () => setSelectedIndex(prev => Math.max(prev - 1, 0)), { enabled: isOpen });
-  // useKeyPress("Enter", () => { ... }, { enabled: isOpen });
-
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelectedIndex(prev =>
-        Math.min(prev + 1, filteredComponents.length - 1),
-      );
-    }
-    else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelectedIndex(prev => Math.max(prev - 1, 0));
-    }
-    else if (e.key === "Enter") {
-      e.preventDefault();
-      const selected = filteredComponents[selectedIndex];
-      if (selected) {
-        handleSelect(selected);
-      }
-    }
-  };
-
-  // Auto-focus input when dialog opens
-  useEffect(() => {
-    if (isOpen) {
-      // Small delay to ensure dialog is fully rendered
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, [isOpen]);
-
-  let currentIndex = 0;
 
   return (
     <>
@@ -143,76 +89,16 @@ export function ComponentSearch({
           </DialogHeader>
 
           <div className="space-y-4">
-            <Input
-              ref={inputRef}
+            <SearchField
               placeholder={placeholder}
               value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              onKeyDown={handleInputKeyDown}
+              onValueChange={setSearchTerm}
+              items={searchItems}
+              onItemSelect={handleSelect}
+              groupByCategory={true}
               autoFocus
-              prefixIcon={Search}
-              prefixStyling={false}
+              className="w-full"
             />
-
-            <div className="max-h-96 overflow-y-auto space-y-4">
-              {Object.keys(groupedComponents).length === 0
-                ? (
-                    <EmptyState
-                      title="No components found"
-                      variant="minimal"
-                      size="sm"
-                    />
-                  )
-                : (
-                    Object.entries(groupedComponents).map(
-                      ([category, components]) => (
-                        <div key={category}>
-                                                    <Text
-                            size="xs"
-                            className="font-semibold text-zinc-500 capitalize px-2 py-1"
-                          >
-                            {category}
-                          </Text>
-                          <div className="space-y-1">
-                            {components.map((component) => {
-                              const isSelected = currentIndex === selectedIndex;
-                              currentIndex++;
-
-                              return (
-                                <Button
-                                  key={component.name}
-                                  variant="ghost"
-                                  className={`w-full text-left p-3 justify-start ${
-                                    isSelected
-                                      ? "bg-zinc-100 dark:bg-zinc-800"
-                                      : ""
-                                  }`}
-                                  onClick={() => handleSelect(component)}
-                                >
-                                  <Stack gap={2} className="w-full">
-                                    <Stack direction="horizontal" align="center" justify="between">
-                                      <Stack direction="horizontal" align="center" gap={2}>
-                                        <Subheading>{component.name}</Subheading>
-                                        <Badge variant="neutral">
-                                          {component.badge
-                                            || component.category
-                                              .charAt(0)
-                                              .toUpperCase()
-                                              + component.category.slice(1)}
-                                        </Badge>
-                                      </Stack>
-                                    </Stack>
-                                    <Text size="sm">{component.description}</Text>
-                                  </Stack>
-                                </Button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ),
-                    )
-                  )}
-            </div>
           </div>
         </DialogContent>
       </Dialog>

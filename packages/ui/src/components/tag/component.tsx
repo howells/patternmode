@@ -159,6 +159,7 @@ const Tag = (
       "ring-1 ring-inset ring-zinc-200 dark:ring-zinc-800",
       className,
     ),
+    "data-testid": "tag",
     children: (
       <>
         {avatar && (

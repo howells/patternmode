@@ -232,6 +232,7 @@ const ProgressCircle = ({ ref, value = 0, max = 100, radius = 32, strokeWidth = 
 
   return (
     <div
+      data-testid="progress-circle"
       ref={ref}
       className={cx(root(), className)}
       role="progressbar"

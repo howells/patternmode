@@ -43,6 +43,7 @@ const CheckboxGroup = ({ ref, className, label, labelId, children, ...props }: C
       "flex flex-col items-start gap-2 text-zinc-900 dark:text-zinc-50",
       className,
     )}
+    data-testid="checkbox-group"
     {...props}
   >
     {label && (

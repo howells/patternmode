@@ -1,19 +1,20 @@
-import { Badge } from "@patternmode/ui/badge";
-import { Card } from "@patternmode/ui/card";
-import { Grid, GridCell } from "@patternmode/ui/grid";
-import { Heading } from "@patternmode/ui/heading";
-import {
-  CATEGORY_CONFIG,
-  getCategoryInfo,
-  getComponentsByCategory,
-} from "@patternmode/ui/registry";
-import { HStack, VStack } from "@patternmode/ui/stack";
-import { Subheading } from "@patternmode/ui/subheading";
-import { Text } from "@patternmode/ui/text";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import type { CategoryKey } from "@patternmode/ui/components/registry";
+
+import { Badge } from "@patternmode/ui/components/badge";
+import { Card } from "@patternmode/ui/components/card";
+import { Grid, GridCell } from "@patternmode/ui/components/grid";
+import { Heading } from "@patternmode/ui/components/heading";
+import {
+  CATEGORY_CONFIG,
+  getCategoryInfo,
+  getComponentsByCategory,
+} from "@patternmode/ui/components/registry";
+import { HStack, VStack } from "@patternmode/ui/components/stack";
+import { Subheading } from "@patternmode/ui/components/subheading";
+import { Text } from "@patternmode/ui/components/text";
 
 type CategoryPageProps = {
   params: Promise<{

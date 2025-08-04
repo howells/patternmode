@@ -173,19 +173,15 @@ const SafeDynamicIcon = React.memo(({
 
 /**
  * Icon picker component with virtual scrolling for optimal performance with 1700+ icons.
- *
- * A high-performance, tree-shakable searchable icon picker component that provides access to ALL 1,700+ Lucide React icons
- * using a static registry and virtual scrolling. Icons are loaded instantly with no async operations,
- * ensuring optimal performance and reliability.
  */
-export function IconSelect({
+export const IconSelect = ({
   value,
   onValueChange,
   placeholder = "Select an icon...",
   disabled = false,
   className,
   iconStrokeWidth = config.getIconStrokeWidth(),
-}: IconSelectProps) {
+}: IconSelectProps) => {
   // Function to render the icon for each item
   const getItemIcon = React.useCallback(
     (item: IconOption) => (
@@ -225,7 +221,7 @@ export function IconSelect({
       />
     </div>
   );
-}
+};
 
 /**
  * Custom hook for managing icon selection state.

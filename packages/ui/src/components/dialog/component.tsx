@@ -56,7 +56,12 @@ type DialogDescriptionProps = {
 /**
  * Modal dialog component built on Base UI's Dialog primitive.
  */
-const Dialog = BaseDialog.Root;
+const Dialog = React.forwardRef<
+  React.ElementRef<typeof BaseDialog.Root>,
+  React.ComponentPropsWithoutRef<typeof BaseDialog.Root>
+>(({ ...props }, ref) => (
+  <BaseDialog.Root {...props} data-testid="dialog" />
+));
 Dialog.displayName = "Dialog";
 
 const DialogTrigger = BaseDialog.Trigger;

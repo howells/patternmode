@@ -71,6 +71,7 @@ type ToggleProps = {
  */
 const Toggle = ({ ref, className, variant, size, ...props }: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => (
   <BaseToggle
+    data-testid="toggle"
     ref={ref}
     className={cx(toggleVariants({ variant, size }), className)}
     {...props}

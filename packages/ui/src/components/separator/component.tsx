@@ -169,6 +169,7 @@ const Separator = (
         separatorVariants({ orientation, variant, size }),
         className,
       )}
+      data-testid="separator"
       {...props}
     />
   );

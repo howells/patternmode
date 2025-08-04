@@ -380,6 +380,7 @@ const DonutChart = (
   return (
     <div
       ref={forwardedRef}
+      data-testid="donut-chart"
       className={cx("h-40 w-40", className)}
       tremor-id="tremor-raw"
       {...other}

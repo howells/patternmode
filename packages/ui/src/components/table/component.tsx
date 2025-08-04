@@ -75,6 +75,7 @@ const Table = ({ ref: forwardedRef, className, ...props }: TableProps) => (
       "border-zinc-200 dark:border-zinc-800",
       className,
     )}
+    data-testid="table"
     {...props}
   />
 );

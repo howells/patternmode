@@ -123,6 +123,7 @@ const Tracker = (
 
   return (
     <div
+      data-testid="tracker"
       ref={forwardedRef}
       className={cx("group flex h-8 w-full items-center", className)}
       {...props}

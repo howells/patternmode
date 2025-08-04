@@ -23,6 +23,7 @@ function Skeleton({
         "animate-pulse rounded-md bg-zinc-100 dark:bg-zinc-800",
         className,
       )}
+      data-testid="skeleton"
       {...props}
     />
   );

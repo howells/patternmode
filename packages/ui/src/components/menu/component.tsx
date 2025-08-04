@@ -12,7 +12,9 @@ import { Icon as IconComponent } from "../icon/component";
 /**
  * Root container for contextual menu with hierarchical navigation and action items.
  */
-const Menu = BaseMenu.Root;
+const Menu = (props: React.ComponentPropsWithoutRef<typeof BaseMenu.Root>) => (
+  <BaseMenu.Root data-testid="menu" {...props} />
+);
 
 const MenuTrigger = BaseMenu.Trigger;
 

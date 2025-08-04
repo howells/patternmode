@@ -51,6 +51,7 @@ const NumberField = (
 
   return (
     <BaseNumberField.Root
+      data-testid="number-field"
       ref={ref}
       id={fieldId}
       className={cx("flex flex-col items-start gap-1", className)}

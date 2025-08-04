@@ -9,7 +9,10 @@ import { config } from "../../lib/config";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 import { Icon } from "../icon";
 
-const Select = BaseSelect.Root;
+const Select = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Root> | null> }) => (
+  <BaseSelect.Root ref={ref} data-testid="select" {...props} />
+);
+Select.displayName = "Select";
 const SelectGroup = BaseSelect.Group;
 
 /**

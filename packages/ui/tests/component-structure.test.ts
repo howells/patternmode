@@ -133,6 +133,74 @@ function hasCorrectExport(componentDir: string): boolean {
   return hasMainExport;
 }
 
+/**
+ * Check if component has proper data-testid attribute for debugging/testing
+ */
+function hasTestId(componentDir: string): { hasTestId: boolean; testIdPattern?: string; testIdCount: number } {
+  const componentsDir = join(process.cwd(), "src", "components");
+  const componentFilePath = join(componentsDir, componentDir, "component.tsx");
+
+  if (!existsSync(componentFilePath)) {
+    return { hasTestId: false, testIdCount: 0 };
+  }
+
+  const content = readFileSync(componentFilePath, "utf8");
+  const patterns: string[] = [];
+
+  // Pattern 1: JSX attribute with string literal - data-testid="value"
+  const staticMatches = content.match(/data-testid\s*=\s*["'`]([^"'`]+)["'`]/g);
+  if (staticMatches) {
+    staticMatches.forEach(match => {
+      const value = match.match(/["'`]([^"'`]+)["'`]/)?.[1];
+      if (value) patterns.push(value);
+    });
+  }
+
+  // Pattern 2: JSX attribute with template literal - data-testid={`value-${var}`}
+  const templateMatches = content.match(/data-testid\s*=\s*\{`[^`]*`\}/g);
+  if (templateMatches) {
+    templateMatches.forEach(match => {
+      const template = match.match(/\{`([^`]*)`\}/)?.[1];
+      if (template) patterns.push(`template: ${template}`);
+    });
+  }
+
+  // Pattern 3: JSX attribute with expression - data-testid={variable}
+  const expressionMatches = content.match(/data-testid\s*=\s*\{[^}]+\}/g);
+  if (expressionMatches) {
+    expressionMatches.forEach(match => {
+      // Skip template literals (already handled above)
+      if (!match.includes('`')) {
+        const expr = match.match(/\{([^}]+)\}/)?.[1];
+        if (expr) patterns.push(`expression: ${expr.trim()}`);
+      }
+    });
+  }
+
+  // Pattern 4: Object property - "data-testid": "value"
+  const objectMatches = content.match(/["'`]data-testid["'`]\s*:\s*["'`]([^"'`]+)["'`]/g);
+  if (objectMatches) {
+    objectMatches.forEach(match => {
+      const value = match.match(/:\s*["'`]([^"'`]+)["'`]/)?.[1];
+      if (value) patterns.push(value);
+    });
+  }
+
+  const testIdCount = patterns.length;
+  const hasTestId = testIdCount > 0;
+  
+  // Return the most specific pattern or the first one found
+  const mainPattern = patterns.length > 0 
+    ? patterns.find(p => p === componentDir) || patterns[0] // Prefer component name match
+    : undefined;
+
+  return { 
+    hasTestId, 
+    testIdPattern: mainPattern,
+    testIdCount
+  };
+}
+
 describe("component Structure & Requirements", () => {
   const componentDirs = getComponentDirectories();
 
@@ -209,6 +277,38 @@ describe("component Structure & Requirements", () => {
     });
   });
 
+  describe("testId Requirements", () => {
+    componentDirs.forEach((componentDir) => {
+      it(`${componentDir} should have static data-testid matching component name`, () => {
+        const testIdInfo = hasTestId(componentDir);
+        
+        if (!testIdInfo.hasTestId) {
+          console.warn(`❌ Component ${componentDir} missing data-testid - should add: data-testid="${componentDir}"`);
+        } else {
+          // Check if main component has the expected testid pattern
+          const expectedTestId = componentDir;
+          const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
+          
+          if (hasCorrectTestId) {
+            console.log(`✅ Component ${componentDir} has correct testid: "${testIdInfo.testIdPattern}"`);
+          } else {
+            const countText = testIdInfo.testIdCount > 1 ? ` (${testIdInfo.testIdCount} total)` : '';
+            console.warn(`⚠️  Component ${componentDir} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"${countText}`);
+          }
+        }
+        
+        // Hard requirement: Every component must have correct data-testid
+        expect(testIdInfo.hasTestId, `Component ${componentDir} must have data-testid attribute. Add: data-testid="${componentDir}"`).toBe(true);
+        
+        if (testIdInfo.hasTestId) {
+          const expectedTestId = componentDir;
+          const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
+          expect(hasCorrectTestId, `Component ${componentDir} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"`).toBe(true);
+        }
+      });
+    });
+  });
+
   describe("validation Summary", () => {
     it("should provide comprehensive validation report", () => {
       const results = {
@@ -218,10 +318,14 @@ describe("component Structure & Requirements", () => {
         withTypeScriptProps: 0,
         withJSDocDescriptions: 0,
         withCorrectExports: 0,
+        withTestIds: 0,
+        withCorrectTestIds: 0,
         missingExamples: [] as string[],
         missingProps: [] as string[],
         longDescriptions: [] as Array<{ component: string; length: number; description: string }>,
         missingExports: [] as string[],
+        missingTestIds: [] as string[],
+        incorrectTestIds: [] as Array<{ component: string; actual: string; expected: string }>,
       };
 
       // Check registry examples
@@ -264,6 +368,27 @@ describe("component Structure & Requirements", () => {
         else {
           results.missingExports.push(componentDir);
         }
+
+        // Test IDs
+        const testIdInfo = hasTestId(componentDir);
+        if (testIdInfo.hasTestId) {
+          results.withTestIds++;
+          const expectedTestId = componentDir;
+          const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
+          
+          if (hasCorrectTestId) {
+            results.withCorrectTestIds++;
+          } else if (testIdInfo.testIdPattern) {
+            results.incorrectTestIds.push({
+              component: componentDir,
+              actual: testIdInfo.testIdPattern,
+              expected: expectedTestId,
+            });
+          }
+        }
+        else {
+          results.missingTestIds.push(componentDir);
+        }
       });
 
       const separator = "=".repeat(80);
@@ -278,6 +403,8 @@ describe("component Structure & Requirements", () => {
       console.log(`Components with TypeScript props: ${results.withTypeScriptProps}/${results.totalComponents} (${Math.round(results.withTypeScriptProps / results.totalComponents * 100)}%)`);
       console.log(`Components with JSDoc descriptions: ${results.withJSDocDescriptions}/${results.totalComponents} (${Math.round(results.withJSDocDescriptions / results.totalComponents * 100)}%)`);
       console.log(`Components with correct exports: ${results.withCorrectExports}/${results.totalComponents} (${Math.round(results.withCorrectExports / results.totalComponents * 100)}%)`);
+      console.log(`Components with test IDs: ${results.withTestIds}/${results.totalComponents} (${Math.round(results.withTestIds / results.totalComponents * 100)}%)`);
+      console.log(`Components with correct test IDs: ${results.withCorrectTestIds}/${results.totalComponents} (${Math.round(results.withCorrectTestIds / results.totalComponents * 100)}%)`);
 
       if (results.missingExamples.length > 0) {
         console.log(`\n❌ COMPONENTS MISSING EXAMPLES (${results.missingExamples.length}):`);
@@ -299,6 +426,18 @@ describe("component Structure & Requirements", () => {
       if (results.missingExports.length > 0) {
         console.log(`\n❌ COMPONENTS WITH EXPORT ISSUES (${results.missingExports.length}):`);
         results.missingExports.forEach(component => console.log(`  • ${component}`));
+      }
+
+      if (results.missingTestIds.length > 0) {
+        console.log(`\n❌ COMPONENTS MISSING TEST IDS (${results.missingTestIds.length}):`);
+        results.missingTestIds.forEach(component => 
+          console.log(`  • ${component} - should add: data-testid="${component}"`));
+      }
+
+      if (results.incorrectTestIds.length > 0) {
+        console.log(`\n⚠️  COMPONENTS WITH INCORRECT TEST IDS (${results.incorrectTestIds.length}):`);
+        results.incorrectTestIds.forEach(({ component, actual, expected }) => 
+          console.log(`  • ${component} - has "${actual}" but should be "${expected}"`));
       }
 
       console.log(`\n${separator}`);

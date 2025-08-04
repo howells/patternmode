@@ -152,6 +152,7 @@ const Toolbar = ({ ref, className, variant, size, orientation, ...props }: Toolb
 
   return (
     <BaseToolbar.Root
+      data-testid="toolbar"
       ref={ref}
       orientation={orientation}
       className={cx(root(), className)}

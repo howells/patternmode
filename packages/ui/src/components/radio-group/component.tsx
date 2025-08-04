@@ -61,6 +61,7 @@ type RadioGroupItemProps = React.ComponentPropsWithoutRef<typeof RadioItem> & {
  */
 const RadioGroup = ({ ref, className, orientation, size, ...props }: RadioGroupProps) => (
   <BaseRadioGroup
+    data-testid="radio-group"
     ref={ref}
     className={cx(radioGroupVariants({ orientation, size }), className)}
     {...props}

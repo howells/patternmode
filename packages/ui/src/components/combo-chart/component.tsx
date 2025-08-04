@@ -975,6 +975,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
     <div
       ref={forwardedRef}
       className={cx("h-80 w-full", className)}
+      data-testid="combo-chart"
       {...other}
     >
       <ResponsiveContainer>

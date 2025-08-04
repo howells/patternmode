@@ -208,6 +208,7 @@ const Tabs = ({ ref: forwardedRef, className, ...props }: TabsProps) => {
     <BaseTabs.Root
       ref={forwardedRef}
       className={cx(root(), className)}
+      data-testid="tabs"
       {...props}
     />
   );

@@ -8,7 +8,13 @@ import { Text } from "../text/component";
 /**
  * Root field component for grouping form controls with labels and validation.
  */
-const Field = BaseField.Root;
+const Field = React.forwardRef<
+  React.ElementRef<typeof BaseField.Root>,
+  React.ComponentPropsWithoutRef<typeof BaseField.Root>
+>(({ ...props }, ref) => (
+  <BaseField.Root {...props} data-testid="field" />
+));
+Field.displayName = "Field";
 
 /**
  * Props for the FieldLabel component.
