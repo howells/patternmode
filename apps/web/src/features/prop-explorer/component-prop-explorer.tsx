@@ -72,7 +72,6 @@ export function ComponentPropExplorer({
         <div
           className="flex-1 p-6 relative overflow-auto"
           data-testid="component-explorer-preview"
-
         >
           <ComponentPreview
             componentId={componentName}

@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Button, Subheading, Text } from "@patternmode/ui";
+import { Text } from "@patternmode/ui";
 
 import type { PropMetadata } from "../../lib/prop-explorer";
 
@@ -45,13 +45,6 @@ export function PropExplorerContent({ config }: PropExplorerContentProps) {
 
   return (
     <div className="space-y-2">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <Subheading level={3}>Props</Subheading>
-        <Button onClick={resetProps} variant="ghost">
-          Reset
-        </Button>
-      </div>
 
       {/* Content */}
       <div className="flex flex-col space-y-4">
