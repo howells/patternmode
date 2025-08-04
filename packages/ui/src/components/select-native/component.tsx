@@ -8,7 +8,7 @@ import { cx, focusInput, hasErrorInput } from "../../lib/utils";
 const selectNativeStyles = tv({
   base: [
     // base
-    "peer w-full cursor-pointer appearance-none truncate rounded-md border py-2 pl-3 pr-7 shadow-xs outline-hidden transition-all sm:text-sm",
+    "peer w-full cursor-pointer appearance-none truncate rounded-md border shadow-xs outline-hidden transition-all",
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
@@ -28,11 +28,23 @@ const selectNativeStyles = tv({
   ],
   variants: {
     /**
+     * Size variant determining height and text size.
+     */
+    size: {
+      xs: "h-control-xs pl-2 pr-6 text-xs",
+      sm: "h-control-sm pl-2.5 pr-7 text-sm",
+      base: "h-control-base pl-3 pr-7 text-sm",
+      lg: "h-control-lg pl-4 pr-8 text-base",
+    },
+    /**
      * Whether to show error styling.
      */
     hasError: {
       true: hasErrorInput,
     },
+  },
+  defaultVariants: {
+    size: "base",
   },
 });
 
@@ -50,11 +62,11 @@ type SelectNativeProps = {
 /**
  * A styled native HTML select component with consistent design system styling.
  */
-const SelectNative = ({ ref: forwardedRef, className, hasError, ...props }: SelectNativeProps & { ref?: React.RefObject<HTMLSelectElement | null> }) => {
+const SelectNative = ({ ref: forwardedRef, className, hasError, size, ...props }: SelectNativeProps & { ref?: React.RefObject<HTMLSelectElement | null> }) => {
   return (
     <select
       ref={forwardedRef}
-      className={cx(selectNativeStyles({ hasError }), className)}
+      className={cx(selectNativeStyles({ hasError, size }), className)}
       data-testid="select-native"
       {...props}
     />

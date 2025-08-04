@@ -12,6 +12,11 @@ export type TextareaPreviewProps = {
   className?: string;
   hasError?: boolean;
   autoResize?: boolean;
+  /**
+   * Size variant determining minimum height and padding.
+   * Controls the base size to align with other form controls.
+   */
+  size?: "xs" | "sm" | "base" | "lg";
 };
 
 // Preview props for prop explorer

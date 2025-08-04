@@ -15,10 +15,10 @@ const avatarVariants = tv({
   variants: {
     size: {
       "2xs": "size-4", // 16px - for very compact UI, inline elements
-      "xs": "size-6", // 24px - for compact UI, tags
-      "sm": "size-8", // 32px - for small contexts, lists
-      "base": "size-10", // 40px - default size, most common
-      "lg": "size-12", // 48px - for headers, prominent display
+      "xs": "size-control-xs", // 28px - aligns with control system for form contexts
+      "sm": "size-control-sm", // 36px - aligns with control system for form contexts  
+      "base": "size-control-base", // 40px - aligns with control system for form contexts
+      "lg": "size-control-lg", // 48px - aligns with control system for form contexts
       "xl": "size-16", // 64px - for profile pages, large display
       "2xl": "size-20", // 80px - for hero sections, main profiles
       "3xl": "size-24", // 96px - for very large display contexts

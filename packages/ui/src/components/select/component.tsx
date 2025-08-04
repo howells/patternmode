@@ -43,8 +43,10 @@ const selectTriggerVariants = tv({
   ],
   variants: {
     size: {
-      default: "px-3 py-2 text-sm",
-      sm: "px-2.5 py-1.5 text-xs",
+      xs: "px-2 h-control-xs text-xs",
+      sm: "px-2.5 h-control-sm text-sm",
+      default: "px-3 h-control-base text-sm",
+      lg: "px-4 h-control-lg text-base",
     },
   },
   defaultVariants: {
@@ -62,11 +64,13 @@ type SelectTriggerProps = {
    */
   hasError?: boolean;
   /**
-   * Size variant determining padding and text size.
-   * - "default": Regular padding and text size for most use cases
-   * - "sm": Smaller padding and text size for compact layouts.
+   * Size variant determining height and text size.
+   * - "xs": Extra small height and text size for very compact layouts
+   * - "sm": Small height and text size for compact layouts
+   * - "default": Regular height and text size for most use cases
+   * - "lg": Large height and text size for prominent displays
    */
-  size?: "default" | "sm";
+  size?: "xs" | "sm" | "default" | "lg";
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & VariantProps<typeof selectTriggerVariants>;
 
 /**

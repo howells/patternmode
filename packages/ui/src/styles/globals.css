@@ -20,6 +20,12 @@
   --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 
   --avatar-radius: 0.5rem;
+
+  /* Control height system for consistent form element sizing */
+  --control-height-xs: 1.75rem; /* 28px */
+  --control-height-sm: 2.25rem; /* 36px */  
+  --control-height-base: 2.5rem; /* 40px */
+  --control-height-lg: 3rem; /* 48px */
 }
 
 @theme {
@@ -137,6 +143,20 @@
       transform: translateX(100%);
     }
   }
+}
+
+/* Control sizing utilities */
+@theme {
+  --height-control-xs: var(--control-height-xs);
+  --height-control-sm: var(--control-height-sm);
+  --height-control-base: var(--control-height-base);
+  --height-control-lg: var(--control-height-lg);
+
+  /* Square sizes derive from control heights */
+  --size-control-xs: var(--control-height-xs);
+  --size-control-sm: var(--control-height-sm);
+  --size-control-base: var(--control-height-base);
+  --size-control-lg: var(--control-height-lg);
 }
 
 /* Set default border colors */

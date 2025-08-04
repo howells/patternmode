@@ -22,6 +22,11 @@
 - [ ] **Scrollspy Component** - Automatic section highlighting, URL hash synchronization, Intersection Observer integration - See [ReUI Scrollspy](https://reui.org/components/scrollspy)
 - [ ] **Stepper Component** - Multi-step form navigation, progress tracking, validation support - See [ReUI Stepper](https://reui.org/components/stepper)
 - [ ] **File Upload Component** - Drag and drop support, progress tracking, multiple file support, preview generation - See [ReUI File Upload](https://reui.org/components/file-upload)
+- [ ] **AutoAnimate Integration** - Add [@formkit/auto-animate](https://github.com/formkit/auto-animate) for smooth transitions in dynamic components
+  - **Target Components**: TagGroup (tag addition/removal), FieldArray (item add/remove/reorder), Accordion (expand/collapse), Tabs (content switching), Select dropdown options, Menu items, Toast notifications, Modal/Dialog animations
+  - **Implementation**: Add `animate?: boolean` prop to enable/disable animations per component
+  - **Benefits**: Zero-config smooth transitions for dynamic content changes, improved UX for list operations
+  - **Usage**: `<TagGroup animate dismissible>` or `<FieldArray animate items={items} />`
 - [ ] **FlatList Component** (Virtualized list)
 - [ ] **SectionList Component** (Sectioned virtualized list)
 - [ ] **ActivityIndicator Component**

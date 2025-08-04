@@ -30,9 +30,10 @@ type DismissButtonProps = {
   "iconStrokeWidth"?: number;
   /**
    * Size of the dismiss button.
+   * Aligns with the control height system for consistent square sizing.
    * @default "base"
    */
-  "size"?: "sm" | "base" | "lg";
+  "size"?: "xs" | "sm" | "base" | "lg";
   /**
    * Accessible label for the button.
    * @default "Remove"
@@ -48,6 +49,7 @@ const DismissButton = (
 ) => {
   // Size-based icon sizing
   const iconSizeMap = {
+    xs: "xs" as const,
     sm: "xs" as const,
     base: "xs" as const,
     lg: "sm" as const,
@@ -65,10 +67,11 @@ const DismissButton = (
       className={cx(
         // Base button styling
         "flex items-center justify-center rounded-full transition-colors",
-        // Size-based dimensions
-        size === "sm" && "size-4",
-        size === "base" && "size-5",
-        size === "lg" && "size-6",
+        // Size-based dimensions - align with control system
+        size === "xs" && "size-control-xs",
+        size === "sm" && "size-control-sm", 
+        size === "base" && "size-control-base",
+        size === "lg" && "size-control-lg",
         // Color styling (subtle, context-aware)
         "text-zinc-500 dark:text-zinc-400",
         // Hover states

@@ -36,20 +36,25 @@ const inputStyles = tv({
   ],
   variants: {
     size: {
+      xs: [
+        "h-control-xs text-xs",
+        // file styles for xs
+        "file:-my-1.5 file:-ml-1.5 file:px-1.5 file:py-1 file:[margin-inline-end:0.375rem]",
+      ],
       sm: [
-        "py-1.5 text-sm",
+        "h-control-sm text-sm",
         // file styles for sm
-        "file:-my-1.5 file:-ml-2 file:px-2 file:py-1.5 file:[margin-inline-end:0.5rem]",
+        "file:-my-2 file:-ml-2 file:px-2 file:py-1.5 file:[margin-inline-end:0.5rem]",
       ],
       base: [
-        "py-2 text-sm",
+        "h-control-base text-sm",
         // file styles for base
-        "file:-my-2 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem]",
+        "file:-my-2.5 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem]",
       ],
       lg: [
-        "py-2.5 text-base",
+        "h-control-lg text-base",
         // file styles for lg
-        "file:-my-2.5 file:-ml-3 file:px-4 file:py-2.5 file:[margin-inline-end:1rem]",
+        "file:-my-3 file:-ml-3 file:px-4 file:py-2.5 file:[margin-inline-end:1rem]",
       ],
     },
     hasError: {
@@ -164,9 +169,9 @@ type InputProps = {
 
   /**
    * Size variant of the input.
-   * Controls padding, text size, and overall dimensions of the input field.
+   * Controls height, text size, and overall dimensions of the input field.
    */
-  size?: "sm" | "base" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
 
   /**
    * Whether to display error styling for form validation.

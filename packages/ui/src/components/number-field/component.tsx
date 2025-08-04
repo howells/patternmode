@@ -31,6 +31,11 @@ type NumberFieldProps = {
    */
   fullWidth?: boolean;
   /**
+   * Size variant determining height and text size for all components.
+   * Controls dimensions to align with other form controls.
+   */
+  size?: "xs" | "sm" | "base" | "lg";
+  /**
    * Additional CSS classes for the container element.
    */
   className?: string;
@@ -44,7 +49,7 @@ type NumberFieldProps = {
  * An advanced numeric input field with stepper controls, interactive scrub area, and comprehensive keyboard navigation.
  */
 const NumberField = (
-  { ref, label, placeholder, showScrubArea = true, showSteppers = true, fullWidth = false, className, inputClassName, id, ...props }: NumberFieldProps & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Root> | null> },
+  { ref, label, placeholder, showScrubArea = true, showSteppers = true, fullWidth = false, size = "base", className, inputClassName, id, ...props }: NumberFieldProps & { ref?: React.RefObject<React.ElementRef<typeof BaseNumberField.Root> | null> },
 ) => {
   const generatedId = React.useId();
   const fieldId = id || generatedId;
@@ -66,16 +71,18 @@ const NumberField = (
       {showSteppers
         ? (
             <NumberFieldGroup className={fullWidth ? "w-full" : undefined}>
-              <NumberFieldDecrement />
+              <NumberFieldDecrement size={size} />
               <NumberFieldInput
+                size={size}
                 placeholder={placeholder}
                 className={cx(fullWidth ? "flex-1" : undefined, inputClassName)}
               />
-              <NumberFieldIncrement />
+              <NumberFieldIncrement size={size} />
             </NumberFieldGroup>
           )
         : (
             <NumberFieldInput
+              size={size}
               placeholder={placeholder}
               className={cx(
                 "rounded-md",
@@ -206,36 +213,53 @@ type NumberFieldInputProps = {
    * Additional CSS classes for styling customization.
    */
   className?: string;
+  /**
+   * Size variant determining height and text size.
+   * Controls dimensions to align with other form controls.
+   */
+  size?: "xs" | "sm" | "base" | "lg";
 } & React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>;
 
 /**
  * The numeric input element with tabular number formatting and proper validation.
  */
-const NumberFieldInput = ({ ref, className, ...props }: NumberFieldInputProps) => (
-  <BaseNumberField.Input
-    ref={ref}
-    className={cx(
-      // base
-      "py-2 w-24 border text-center text-sm tabular-nums transition-colors",
-      // border color
-      "border-zinc-200 dark:border-zinc-700",
-      // background color
-      "bg-white dark:bg-zinc-950",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // placeholder color
-      "placeholder-zinc-400 dark:placeholder-zinc-500",
-      // focus
-      focusRing,
-      // disabled
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      // group context (when used with steppers)
-      "group-[]:border-t group-[]:border-b group-[]:rounded-none group-[]:focus:z-10",
-      className,
-    )}
-    {...props}
-  />
-);
+const NumberFieldInput = ({ ref, className, size = "base", ...props }: NumberFieldInputProps) => {
+  // Size-based styling
+  const sizeStyles = {
+    xs: "h-control-xs px-2 text-xs",
+    sm: "h-control-sm px-2.5 text-sm", 
+    base: "h-control-base px-3 text-sm",
+    lg: "h-control-lg px-4 text-base",
+  };
+
+  return (
+    <BaseNumberField.Input
+      ref={ref}
+      className={cx(
+        // base
+        "w-24 border text-center tabular-nums transition-colors",
+        // size-specific styles
+        sizeStyles[size],
+        // border color
+        "border-zinc-200 dark:border-zinc-700",
+        // background color
+        "bg-white dark:bg-zinc-950",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // placeholder color
+        "placeholder-zinc-400 dark:placeholder-zinc-500",
+        // focus
+        focusRing,
+        // disabled
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        // group context (when used with steppers)
+        "group-[]:border-t group-[]:border-b group-[]:rounded-none group-[]:focus:z-10",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 NumberFieldInput.displayName = "NumberFieldInput";
 
 type NumberFieldIncrementProps = {
@@ -251,34 +275,50 @@ type NumberFieldIncrementProps = {
    * Custom content for the button (defaults to Plus icon).
    */
   children?: React.ReactNode;
+  /**
+   * Size variant determining height to match the input field.
+   */
+  size?: "xs" | "sm" | "base" | "lg";
 } & React.ComponentPropsWithoutRef<typeof BaseNumberField.Increment>;
 
 /**
  * Increment button to increase the numeric value by the specified step amount.
  */
-const NumberFieldIncrement = ({ ref, className, children, ...props }: NumberFieldIncrementProps) => (
-  <BaseNumberField.Increment
-    ref={ref}
-    className={cx(
-      // base
-      "flex py-2 w-10 items-center justify-center rounded-tr-md rounded-br-md border border-l-0 bg-clip-padding text-sm font-medium transition-colors",
-      // border color
-      "border-zinc-200 dark:border-zinc-700",
-      // background color
-      "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // focus
-      focusRing,
-      // disabled
-      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
-      className,
-    )}
-    {...props}
-  >
-    {children || <Plus className="h-4 w-4" />}
-  </BaseNumberField.Increment>
-);
+const NumberFieldIncrement = ({ ref, className, children, size = "base", ...props }: NumberFieldIncrementProps) => {
+  // Size-based styling
+  const sizeStyles = {
+    xs: "h-control-xs w-8 text-xs",
+    sm: "h-control-sm w-9 text-sm", 
+    base: "h-control-base w-10 text-sm",
+    lg: "h-control-lg w-12 text-base",
+  };
+
+  return (
+    <BaseNumberField.Increment
+      ref={ref}
+      className={cx(
+        // base
+        "flex items-center justify-center rounded-tr-md rounded-br-md border border-l-0 bg-clip-padding font-medium transition-colors",
+        // size-specific styles
+        sizeStyles[size],
+        // border color
+        "border-zinc-200 dark:border-zinc-700",
+        // background color
+        "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // focus
+        focusRing,
+        // disabled
+        "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
+        className,
+      )}
+      {...props}
+    >
+      {children || <Plus className="h-4 w-4" />}
+    </BaseNumberField.Increment>
+  );
+};
 NumberFieldIncrement.displayName = "NumberFieldIncrement";
 
 type NumberFieldDecrementProps = {
@@ -294,34 +334,50 @@ type NumberFieldDecrementProps = {
    * Custom content for the button (defaults to Minus icon).
    */
   children?: React.ReactNode;
+  /**
+   * Size variant determining height to match the input field.
+   */
+  size?: "xs" | "sm" | "base" | "lg";
 } & React.ComponentPropsWithoutRef<typeof BaseNumberField.Decrement>;
 
 /**
  * Decrement button to decrease the numeric value by the specified step amount.
  */
-const NumberFieldDecrement = ({ ref, className, children, ...props }: NumberFieldDecrementProps) => (
-  <BaseNumberField.Decrement
-    ref={ref}
-    className={cx(
-      // base
-      "flex py-2 w-10 items-center justify-center rounded-tl-md rounded-bl-md border border-r-0 bg-clip-padding text-sm font-medium transition-colors",
-      // border color
-      "border-zinc-200 dark:border-zinc-700",
-      // background color
-      "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // focus
-      focusRing,
-      // disabled
-      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
-      className,
-    )}
-    {...props}
-  >
-    {children || <Minus className="h-4 w-4" />}
-  </BaseNumberField.Decrement>
-);
+const NumberFieldDecrement = ({ ref, className, children, size = "base", ...props }: NumberFieldDecrementProps) => {
+  // Size-based styling
+  const sizeStyles = {
+    xs: "h-control-xs w-8 text-xs",
+    sm: "h-control-sm w-9 text-sm", 
+    base: "h-control-base w-10 text-sm",
+    lg: "h-control-lg w-12 text-base",
+  };
+
+  return (
+    <BaseNumberField.Decrement
+      ref={ref}
+      className={cx(
+        // base
+        "flex items-center justify-center rounded-tl-md rounded-bl-md border border-r-0 bg-clip-padding font-medium transition-colors",
+        // size-specific styles
+        sizeStyles[size],
+        // border color
+        "border-zinc-200 dark:border-zinc-700",
+        // background color
+        "bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+        // text color
+        "text-zinc-900 dark:text-zinc-50",
+        // focus
+        focusRing,
+        // disabled
+        "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-50 dark:disabled:hover:bg-zinc-800",
+        className,
+      )}
+      {...props}
+    >
+      {children || <Minus className="h-4 w-4" />}
+    </BaseNumberField.Decrement>
+  );
+};
 NumberFieldDecrement.displayName = "NumberFieldDecrement";
 
 /**

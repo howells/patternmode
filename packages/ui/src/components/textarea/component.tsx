@@ -52,12 +52,23 @@ type TextareaProps = TextareaPreviewProps & {
  * Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.
  */
 const Textarea = (
-  { ref: forwardedRef, className, hasError, autoResize = true, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
+  { ref: forwardedRef, className, hasError, autoResize = true, size = "base", minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
 ) => {
   const cleanProps = props;
+  
+  // Size-based styling
+  const sizeStyles = {
+    xs: "min-h-control-xs px-2 py-1.5 text-xs",
+    sm: "min-h-control-sm px-2.5 py-2 text-sm", 
+    base: "min-h-control-base px-3 py-2 text-sm",
+    lg: "min-h-control-lg px-4 py-2.5 text-base",
+  };
+
   const baseClassName = cx(
     // base
-    "flex w-full rounded-md border px-3 py-2 shadow-xs outline-hidden transition-colors sm:text-sm",
+    "flex w-full rounded-md border shadow-xs outline-hidden transition-colors",
+    // size-specific styles
+    sizeStyles[size],
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // border color
