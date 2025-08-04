@@ -31,16 +31,12 @@ export function ComponentPreview({
   // Process props for the component
   const componentProps = useProcessedProps(props);
 
-  // Determine if component should be responsive
-  const isResponsive = componentId.toLowerCase().includes("textarea");
-
   // Generate the preview content
   const previewContent = (
     <ComponentRenderer
       Component={Component}
       componentId={componentId}
       props={props}
-      isResponsive={isResponsive}
     />
   );
 
