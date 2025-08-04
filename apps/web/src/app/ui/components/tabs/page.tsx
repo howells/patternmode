@@ -1,9 +1,8 @@
-import { Separator } from "@patternmode/ui";
-import { componentConfig } from "@patternmode/ui/components/tabs/component.config";
-
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { ComponentPropExplorer } from "@/features/prop-explorer/component-prop-explorer";
+import { Separator } from "@patternmode/ui";
+import { componentConfig } from "@patternmode/ui/components/tabs/component.config";
 
 export default function TabsPage() {
   return (

@@ -56,11 +56,8 @@ export function TabsExample({
               <Button size={size} variant="outline">
                 Regular Button
               </Button>
-              <Button
-                size={size === "lg" ? "lg-tabs" : size === "sm" ? "sm-tabs" : size === "xs" ? "xs-tabs" : "default-tabs"}
-                variant="outline"
-              >
-                Aligned Button
+              <Button size={size} variant="outline">
+                Another Button
               </Button>
             </>
           )}
@@ -100,12 +97,18 @@ export const TabsPreviewProps = [
     type: "select",
     description: "Tabs size variant - affects padding and text size of the tab triggers.",
     options: ["xs", "sm", "default", "lg"],
-    defaultValue: "sm",
+    defaultValue: "default",
   },
   {
     name: "hideDivider",
     type: "boolean",
     description: "Hide the bottom divider line (only applies to line variant).",
+    defaultValue: false,
+  },
+  {
+    name: "showButtonAlignment",
+    type: "boolean",
+    description: "Show buttons next to tabs.",
     defaultValue: false,
   },
   {

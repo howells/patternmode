@@ -33,10 +33,9 @@ export const PreviewTabs: React.FC<PreviewTabsProps> = ({
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
-          <Button>Test</Button>
         </div>
 
-        <TabsContent value="preview" data-testid="component-preview">
+        <TabsContent value="preview" data-testid="component-preview" className="flex justify-center">
           {previewContent}
         </TabsContent>
 

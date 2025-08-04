@@ -33,7 +33,7 @@ export function ComponentExamples({ componentId }: ComponentExamplesProps) {
     // Has examples - render them
     if (config.examples && Array.isArray(config.examples) && config.examples.length > 0) {
       return config.examples.map(example => (
-        <Card key={example.id || example.title} padding={0} data-testid={`example-${example.id || example.title}`}>
+        <Card key={example.id || example.title} padding={0} data-testid={`example-${example.id || example.title}`} className="max-w-full">
           <CardHeader border>
             <Subheading level={3}>{example.title}</Subheading>
             <Text>{example.description}</Text>

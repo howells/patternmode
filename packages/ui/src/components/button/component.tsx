@@ -39,13 +39,20 @@ const buttonVariants = tv({
       "xs": "h-control-xs px-2 text-xs has-[>svg]:px-1.5",
       "sm": "h-control-sm px-2.5 text-sm has-[>svg]:px-2",
       "default": "h-control-base px-3 text-sm has-[>svg]:px-2.5",
-      "lg": "h-control-lg px-4 text-base has-[>svg]:px-3",
+      "lg": "h-control-lg px-4 text-sm has-[>svg]:px-3",
       "icon-xs": "size-control-xs",
       "icon-sm": "size-control-sm",
       "icon": "size-control-base",
       "icon-lg": "size-control-lg",
     },
   },
+  compoundVariants: [
+    {
+      size: "xs",
+      rounded: true,
+      class: "rounded-xs",
+    },
+  ],
   defaultVariants: {
     variant: "default",
     size: "default",

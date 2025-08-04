@@ -38,6 +38,11 @@ const tabsVariants = tv({
         list: [
           // base - button collection style (sized for default = text-xs)
           "inline-flex items-center justify-start bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-md",
+          // Reduce button heights inside tabs to account for container padding
+          "[&_button]:!h-[calc(var(--control-height-base)-0.25rem)]", // default: 40px - 4px = 36px
+          "[&_button[class*='h-control-xs']]:!h-[calc(var(--control-height-xs)-0.25rem)]", // xs: 28px - 4px = 24px
+          "[&_button[class*='h-control-sm']]:!h-[calc(var(--control-height-sm)-0.25rem)]", // sm: 36px - 4px = 32px
+          "[&_button[class*='h-control-lg']]:!h-[calc(var(--control-height-lg)-0.5rem)]", // lg: 48px - 8px = 40px (lg uses p-1)
         ],
         tab: [
           // For solid variant, we'll use Button component instead of these styles
@@ -97,28 +102,44 @@ const tabsVariants = tv({
       variant: "solid",
       size: "xs",
       class: {
-        list: "gap-x-0 p-0.5 rounded-md", // Remove gap, very compact for xs
+        list: [
+          "gap-x-0 p-0.5 rounded-sm", // Remove gap, very compact for xs
+          // Reduce button heights inside tabs for xs size
+          "[&_button]:!h-[calc(var(--control-height-xs)-0.25rem)]", // xs: 28px - 4px = 24px
+        ],
       },
     },
     {
       variant: "solid",
       size: "sm",
       class: {
-        list: "gap-x-0 p-0.5 rounded-md", // Remove gap, keep compact for sm
+        list: [
+          "gap-x-0 p-0.5 rounded-md", // Remove gap, keep compact for sm
+          // Reduce button heights inside tabs for sm size
+          "[&_button]:!h-[calc(var(--control-height-sm)-0.25rem)]", // sm: 36px - 4px = 32px
+        ],
       },
     },
     {
       variant: "solid",
       size: "default",
       class: {
-        list: "gap-x-0 p-0.5 rounded-lg", // Remove gap, use padding
+        list: [
+          "gap-x-0 p-0.5 rounded-lg", // Remove gap, use padding
+          // Reduce button heights inside tabs for default size
+          "[&_button]:!h-[calc(var(--control-height-base)-0.25rem)]", // default: 40px - 4px = 36px
+        ],
       },
     },
     {
       variant: "solid",
       size: "lg",
       class: {
-        list: "gap-x-0 p-1 rounded-lg", // Remove gap, larger container for lg
+        list: [
+          "gap-x-0 p-0.5 rounded-lg", // Remove gap, larger container for lg
+          // Reduce button heights inside tabs for lg size (uses p-1 = 8px total)
+          "[&_button]:!h-[calc(var(--control-height-lg)-0.5rem)]", // lg: 48px - 8px = 40px
+        ],
       },
     },
     {
@@ -218,6 +239,7 @@ Tabs.displayName = "Tabs";
 
 /**
  * Container for tab triggers with visual indicator.
+ * When using solid variant, automatically adjusts the height of sibling buttons to align visually.
  */
 const TabsList = (
   { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "default", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
