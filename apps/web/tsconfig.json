@@ -5,9 +5,15 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@patternmode/ui": ["../../packages/ui/src"],
-      "@patternmode/ui/*": ["../../packages/ui/src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@patternmode/ui": [
+        "../../packages/ui/src"
+      ],
+      "@patternmode/ui/*": [
+        "../../packages/ui/src/*"
+      ]
     },
     "allowJs": true,
     "plugins": [

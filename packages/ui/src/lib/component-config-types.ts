@@ -13,7 +13,9 @@ export type PropMetadata = {
   description?: string;
   defaultValue?: string | boolean | number;
   required?: boolean;
-  options?: string[];
+  options?: string[] | { value: string; label?: string }[];
+  min?: number;
+  max?: number;
 };
 
 /**

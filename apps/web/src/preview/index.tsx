@@ -89,7 +89,7 @@ export function Preview({
         <div className="hidden lg:block">
           <aside
             data-testid="inspector"
-            className="border-l min-w-xs bg-zinc-50"
+            className="border-l min-w-xs bg-zinc-50 h-full"
           >
             <div className="px-6 py-6">
               {isPropsLoading
