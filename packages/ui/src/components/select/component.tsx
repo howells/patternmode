@@ -23,7 +23,7 @@ const SelectValue = BaseSelect.Value;
 const selectTriggerVariants = tv({
   base: [
     // base
-    "group/trigger flex w-full select-none items-center justify-between gap-2 truncate rounded-md border shadow-xs outline-hidden transition",
+    "group/trigger flex w-full max-w-sm select-none items-center justify-between gap-2 truncate rounded-md border shadow-xs outline-hidden transition",
     // border color
     "border-zinc-200 dark:border-zinc-800",
     // text color

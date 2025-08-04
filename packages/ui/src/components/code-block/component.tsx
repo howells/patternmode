@@ -84,7 +84,7 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
     <div
       ref={ref}
       className={cx(
-        "relative rounded-lg border border-zinc-200 dark:border-zinc-800 w-full overflow-hidden",
+        "relative rounded-lg border border-zinc-200 dark:border-zinc-800 w-full min-w-lg overflow-hidden",
         className,
       )}
       data-testid="code-block"

@@ -15,7 +15,7 @@ import { cx, focusInput, focusRing, hasErrorInput } from "../../lib/utils";
 const inputStyles = tv({
   base: [
     // base
-    "relative block w-full appearance-none rounded-md border shadow-xs outline-hidden transition",
+    "relative block w-full max-w-sm appearance-none rounded-md border shadow-xs outline-hidden transition",
     // border color
     "border-zinc-200 dark:border-zinc-800",
     // text color

@@ -70,7 +70,7 @@ const NumberField = (
 
       {showSteppers
         ? (
-            <NumberFieldGroup className={fullWidth ? "w-full" : undefined}>
+            <NumberFieldGroup className={fullWidth ? "w-full" : "w-full max-w-sm"}>
               <NumberFieldDecrement size={size} />
               <NumberFieldInput
                 size={size}
@@ -86,7 +86,7 @@ const NumberField = (
               placeholder={placeholder}
               className={cx(
                 "rounded-md",
-                fullWidth ? "w-full" : undefined,
+                fullWidth ? "w-full" : "w-full max-w-sm",
                 inputClassName,
               )}
             />

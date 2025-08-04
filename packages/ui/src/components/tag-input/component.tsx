@@ -404,7 +404,9 @@ const TagInput = ({
         {/* Selected tags */}
         {wrap
           ? (
-              selectedOptions.map(renderSelectedTag)
+              <div className="flex items-center gap-1 flex-wrap">
+                {selectedOptions.map(renderSelectedTag)}
+              </div>
             )
           : (
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -425,6 +427,7 @@ const TagInput = ({
               className: cx(
                 "flex-1 min-w-0 bg-transparent border-none outline-none text-sm",
                 "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
+                selectedOptions.length > 0 && "ml-1",
                 inputClassName,
               ),
             })}

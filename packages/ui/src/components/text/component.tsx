@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 
 const textVariants = tv({
-  base: "m-0 text-current leading-relaxed",
+  base: "m-0 text-current leading-relaxed min-w-lg",
   variants: {
     size: {
       "2xs": "text-2xs",

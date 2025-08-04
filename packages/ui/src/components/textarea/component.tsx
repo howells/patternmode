@@ -41,6 +41,12 @@ type TextareaProps = TextareaPreviewProps & {
   hasError?: boolean;
 
   /**
+   * Whether the textarea should take full width of its container.
+   * When false, applies max-w-sm constraint for better UX in wide layouts.
+   */
+  fullWidth?: boolean;
+
+  /**
    * Standard CSS style object.
    * Note: When using react-textarea-autosize (autoResize=true),
    * height-related styles are managed internally and may be overridden.
@@ -52,7 +58,7 @@ type TextareaProps = TextareaPreviewProps & {
  * Auto-resizing multi-line text input component built on react-textarea-autosize with configurable constraints and error states.
  */
 const Textarea = (
-  { ref: forwardedRef, className, hasError, autoResize = true, size = "base", minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
+  { ref: forwardedRef, className, hasError, autoResize = true, size = "base", fullWidth = false, minRows = 3, maxRows, onHeightChange, cacheMeasurements = false, style, ...props }: TextareaProps & { ref?: React.RefObject<HTMLTextAreaElement | null> },
 ) => {
   const cleanProps = props;
   
@@ -66,7 +72,9 @@ const Textarea = (
 
   const baseClassName = cx(
     // base
-    "flex w-full rounded-md border shadow-xs outline-hidden transition-colors",
+    "flex rounded-md border shadow-xs outline-hidden transition-colors",
+    // width
+    fullWidth ? "w-full" : "w-full max-w-sm",
     // size-specific styles
     sizeStyles[size],
     // text color

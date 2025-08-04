@@ -5,11 +5,6 @@ import { TagInput } from "./component";
 
 export type TagInputPreviewProps = {
   /**
-   * Data type for the tag options.
-   * Controls what kind of predefined tags are available.
-   */
-  dataType?: "technologies" | "skills" | "categories" | "colors";
-  /**
    * Whether to allow creating new tags.
    * Enables users to add custom tags not in the predefined list.
    */
@@ -20,267 +15,168 @@ export type TagInputPreviewProps = {
    */
   maxTags?: number;
   /**
+   * Minimum number of tags required.
+   * Shows validation when fewer tags are selected.
+   */
+  minTags?: number;
+  /**
    * Whether to show tag descriptions.
    * Displays additional information for predefined tags.
    */
   showDescriptions?: boolean;
   /**
-   * Default selected tags.
-   * Pre-selects tags when the component loads.
+   * Placeholder text when no tags are selected.
+   * Shown when the input is empty.
    */
-  defaultTags?: string[];
+  placeholder?: string;
   /**
-   * Preview layout style.
-   * Controls how the tag input examples are displayed.
+   * Placeholder text when tags are already selected.
+   * Shown when there are existing tags.
    */
-  layout?: "simple" | "detailed" | "compact";
+  selectedPlaceholder?: string;
+  /**
+   * Message shown when no options match search.
+   * Displayed in dropdown when search yields no results.
+   */
+  emptyMessage?: string;
+  /**
+   * Whether the input is disabled.
+   * Prevents all interaction when true.
+   */
+  disabled?: boolean;
+  /**
+   * Whether tags should wrap to new lines.
+   * Controls horizontal scrolling vs wrapping behavior.
+   */
+  wrap?: boolean;
+  /**
+   * Maximum height for dropdown in pixels.
+   * Controls how tall the options list can be.
+   */
+  maxHeight?: number;
 };
 
-const dataConfigs = {
-  technologies: {
-    placeholder: "Select technologies...",
-    options: [
-      { value: "react", label: "React", description: "JavaScript library for building UIs" },
-      { value: "typescript", label: "TypeScript", description: "JavaScript with static typing" },
-      { value: "javascript", label: "JavaScript", description: "Programming language for web" },
-      { value: "nextjs", label: "Next.js", description: "React framework for production" },
-      { value: "tailwind", label: "Tailwind CSS", description: "Utility-first CSS framework" },
-      { value: "nodejs", label: "Node.js", description: "JavaScript runtime environment" },
-      { value: "python", label: "Python", description: "High-level programming language" },
-      { value: "vue", label: "Vue.js", description: "Progressive JavaScript framework" },
-    ],
-  },
-  skills: {
-    placeholder: "Add your skills...",
-    options: [
-      { value: "leadership", label: "Leadership", description: "Team management and guidance" },
-      { value: "communication", label: "Communication", description: "Effective verbal and written skills" },
-      { value: "problem-solving", label: "Problem Solving", description: "Analytical thinking and resolution" },
-      { value: "creativity", label: "Creativity", description: "Innovative thinking and design" },
-      { value: "teamwork", label: "Teamwork", description: "Collaborative working approach" },
-      { value: "time-management", label: "Time Management", description: "Efficient task prioritization" },
-      { value: "adaptability", label: "Adaptability", description: "Flexibility in changing environments" },
-      { value: "critical-thinking", label: "Critical Thinking", description: "Objective analysis and evaluation" },
-    ],
-  },
-  categories: {
-    placeholder: "Select categories...",
-    options: [
-      { value: "frontend", label: "Frontend", description: "User interface development" },
-      { value: "backend", label: "Backend", description: "Server-side development" },
-      { value: "mobile", label: "Mobile", description: "Mobile app development" },
-      { value: "design", label: "Design", description: "User experience and interface design" },
-      { value: "devops", label: "DevOps", description: "Development operations and deployment" },
-      { value: "data", label: "Data Science", description: "Data analysis and machine learning" },
-      { value: "security", label: "Security", description: "Cybersecurity and data protection" },
-      { value: "testing", label: "Testing", description: "Quality assurance and testing" },
-    ],
-  },
-  colors: {
-    placeholder: "Choose colors...",
-    options: [
-      { value: "red", label: "Red", description: "Warm, energetic color" },
-      { value: "blue", label: "Blue", description: "Cool, calming color" },
-      { value: "green", label: "Green", description: "Natural, growth color" },
-      { value: "yellow", label: "Yellow", description: "Bright, optimistic color" },
-      { value: "purple", label: "Purple", description: "Creative, mysterious color" },
-      { value: "orange", label: "Orange", description: "Vibrant, friendly color" },
-      { value: "pink", label: "Pink", description: "Soft, romantic color" },
-      { value: "gray", label: "Gray", description: "Neutral, balanced color" },
-    ],
-  },
+const europeanCities = {
+  placeholder: "Select European cities...",
+  options: [
+    { value: "paris", label: "Paris", description: "Capital of France, City of Light" },
+    { value: "london", label: "London", description: "Capital of United Kingdom" },
+    { value: "berlin", label: "Berlin", description: "Capital of Germany" },
+    { value: "rome", label: "Rome", description: "Capital of Italy, Eternal City" },
+    { value: "madrid", label: "Madrid", description: "Capital of Spain" },
+    { value: "amsterdam", label: "Amsterdam", description: "Capital of Netherlands" },
+    { value: "vienna", label: "Vienna", description: "Capital of Austria" },
+    { value: "prague", label: "Prague", description: "Capital of Czech Republic" },
+    { value: "barcelona", label: "Barcelona", description: "Catalonian city in Spain" },
+    { value: "florence", label: "Florence", description: "Renaissance city in Italy" },
+    { value: "budapest", label: "Budapest", description: "Capital of Hungary" },
+    { value: "lisbon", label: "Lisbon", description: "Capital of Portugal" },
+  ],
 };
 
 export function TagInputExample({
-  dataType = "technologies",
   allowCreate = false,
-  maxTags,
+  maxTags = 5,
   showDescriptions = false,
-  defaultTags = [],
-  layout = "detailed",
+  placeholder,
+  selectedPlaceholder,
+  emptyMessage = "No options found.",
+  disabled = false,
+  wrap = true,
+  maxHeight = 200,
 }: TagInputPreviewProps = {}) {
-  const config = dataConfigs[dataType];
-  const [tags, setTags] = React.useState<string[]>(defaultTags);
-  const [basicTags, setBasicTags] = React.useState<string[]>([]);
-  const [preselectedTags, setPreselectedTags] = React.useState<string[]>(["react", "typescript"]);
-  const [createTags, setCreateTags] = React.useState<string[]>(["custom"]);
+  const [tags, setTags] = React.useState<string[]>(["paris", "london"]);
 
-  const options = config.options.map(option => ({
+  const options = europeanCities.options.map(option => ({
     ...option,
     label: showDescriptions ? `${option.label} - ${option.description}` : option.label,
   }));
 
-  if (layout === "compact") {
-    return (
-      <div className="p-4">
-        <TagInput
-          options={options}
-          value={tags}
-          onValueChange={setTags}
-          placeholder={config.placeholder}
-          allowCreate={allowCreate}
-          maxTags={maxTags}
-        />
-        {tags.length > 0 && (
-          <div className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-            {tags.length} tag{tags.length !== 1 ? "s" : ""} selected
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  if (layout === "simple") {
-    return (
-      <div className="p-6 space-y-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            {dataType.charAt(0).toUpperCase() + dataType.slice(1)}
-          </label>
-          <TagInput
-            options={options}
-            value={tags}
-            onValueChange={setTags}
-            placeholder={config.placeholder}
-            allowCreate={allowCreate}
-            maxTags={maxTags}
-          />
-          {maxTags && (
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">
-              {tags.length}/{maxTags} tags selected
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-8 p-6">
-      {/* Basic Usage */}
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Basic Tag Selection</h3>
-        <div className="space-y-3">
-          <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Choose {dataType}
-          </label>
-          <TagInput
-            options={options}
-            value={basicTags}
-            onValueChange={setBasicTags}
-            placeholder={config.placeholder}
-          />
-          <div className="text-xs text-zinc-500 dark:text-zinc-400">
-            {basicTags.length === 0 ? "No tags selected" : `${basicTags.length} tag${basicTags.length !== 1 ? "s" : ""} selected`}
-          </div>
-        </div>
-      </section>
-
-      {/* Pre-selected Tags */}
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">With Pre-selected Tags</h3>
-        <div className="space-y-3">
-          <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Add more {dataType}
-          </label>
-          <TagInput
-            options={options}
-            value={preselectedTags}
-            onValueChange={setPreselectedTags}
-            placeholder="Add more..."
-            maxTags={maxTags || 5}
-          />
-          <div className="text-xs text-zinc-500 dark:text-zinc-400">
-            {preselectedTags.length}/{maxTags || 5} tags selected
-          </div>
-        </div>
-      </section>
-
-      {/* Custom Tags */}
-      {allowCreate && (
-        <section className="space-y-4">
-          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Create Custom Tags</h3>
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Type to create new tags
-            </label>
-            <TagInput
-              options={options}
-              value={createTags}
-              onValueChange={setCreateTags}
-              placeholder="Type to create custom tags..."
-              allowCreate={true}
-            />
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">
-              Custom tags can be created by typing and pressing Enter
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Configuration Summary */}
-      <section className="space-y-4">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Configuration</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Data Type</div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 capitalize">{dataType}</div>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Allow Create</div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">{allowCreate ? "Yes" : "No"}</div>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Max Tags</div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">{maxTags || "Unlimited"}</div>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Available Options</div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">{options.length} options</div>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Show Descriptions</div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">{showDescriptions ? "Yes" : "No"}</div>
-          </div>
-        </div>
-      </section>
+    <div className="p-6">
+      <TagInput
+        options={options}
+        value={tags}
+        onValueChange={setTags}
+        placeholder={placeholder || europeanCities.placeholder}
+        selectedPlaceholder={selectedPlaceholder}
+        emptyMessage={emptyMessage}
+        allowCreate={allowCreate}
+        maxTags={maxTags}
+        disabled={disabled}
+        wrap={wrap}
+        maxHeight={maxHeight}
+      />
     </div>
   );
 }
 
-// Preview props for prop explorer
-export const TagInputPreviewProps = [
+// Prop explorer configuration
+export const tagInputPreviewProps = [
   {
-    name: "variant",
-    type: "select",
-    description: "Tag input style variant - controls the visual appearance of the input and tags.",
-    options: ["default", "outline", "filled"],
-    defaultValue: "default",
-  },
-  {
-    name: "size",
-    type: "select",
-    description: "Tag input size variant - affects padding and text size of the input and tags.",
-    options: ["sm", "default", "lg"],
-    defaultValue: "default",
+    name: "allowCreate",
+    type: "boolean",
+    description: "Whether users can create custom tags that don't exist in the predefined options.",
+    defaultValue: false,
   },
   {
     name: "maxTags",
-    type: "select",
-    description: "Maximum number of tags allowed - controls the limit of tags that can be added.",
-    options: [3, 5, 8, 10],
+    type: "number",
+    description: "Maximum number of tags that can be selected - input becomes disabled when reached.",
     defaultValue: 5,
+    min: 1,
+    max: 20,
   },
   {
-    name: "showSuggestions",
+    name: "minTags",
+    type: "number",
+    description: "Minimum number of tags required - shows validation message when not met.",
+    defaultValue: 0,
+    min: 0,
+    max: 10,
+  },
+  {
+    name: "showDescriptions",
     type: "boolean",
-    description: "Whether to show tag suggestions - displays autocomplete suggestions when enabled.",
+    description: "Whether to show descriptions alongside tag labels in the dropdown options.",
+    defaultValue: false,
+  },
+  {
+    name: "placeholder",
+    type: "string",
+    description: "Custom placeholder text shown when no tags are selected.",
+    defaultValue: "",
+  },
+  {
+    name: "selectedPlaceholder",
+    type: "string",
+    description: "Custom placeholder text shown when tags are already selected.",
+    defaultValue: "",
+  },
+  {
+    name: "emptyMessage",
+    type: "string",
+    description: "Message displayed when search yields no matching options.",
+    defaultValue: "No options found.",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    description: "Whether the entire input is disabled and non-interactive.",
+    defaultValue: false,
+  },
+  {
+    name: "wrap",
+    type: "boolean",
+    description: "Whether tags should wrap to new lines or scroll horizontally when space is limited.",
     defaultValue: true,
   },
   {
-    name: "allowDuplicates",
-    type: "boolean",
-    description: "Whether to allow duplicate tags - permits adding the same tag multiple times when enabled.",
-    defaultValue: false,
+    name: "maxHeight",
+    type: "number",
+    description: "Maximum height of the dropdown menu in pixels - controls how many options are visible.",
+    defaultValue: 200,
+    min: 100,
+    max: 500,
   },
 ];

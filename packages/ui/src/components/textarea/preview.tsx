@@ -17,6 +17,11 @@ export type TextareaPreviewProps = {
    * Controls the base size to align with other form controls.
    */
   size?: "xs" | "sm" | "base" | "lg";
+  /**
+   * Whether the textarea should take full width of its container.
+   * When false, applies max-w-sm constraint for better UX in wide layouts.
+   */
+  fullWidth?: boolean;
 };
 
 // Preview props for prop explorer
@@ -57,6 +62,12 @@ export const TextareaPreviewProps = [
     description: "Whether the textarea should automatically resize.",
     defaultValue: true,
   },
+  {
+    name: "fullWidth",
+    type: "boolean",
+    description: "Whether to take full width of container.",
+    defaultValue: false,
+  },
 ];
 
 export function TextareaExample(props: TextareaPreviewProps) {
@@ -68,6 +79,7 @@ export function TextareaExample(props: TextareaPreviewProps) {
     className = "",
     hasError = false,
     autoResize = true,
+    fullWidth = false,
   } = props;
 
   // Define allowed props for security
@@ -79,6 +91,7 @@ export function TextareaExample(props: TextareaPreviewProps) {
     "className",
     "hasError",
     "autoResize",
+    "fullWidth",
   ];
 
   // Safe props filtering - only pass known safe props
@@ -90,6 +103,7 @@ export function TextareaExample(props: TextareaPreviewProps) {
     className,
     hasError,
     autoResize,
+    fullWidth,
   };
 
   return <Textarea {...safeProps} />;
