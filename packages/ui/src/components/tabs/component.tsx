@@ -111,7 +111,7 @@ const tabsVariants = tv({
       variant: "solid",
       size: "default",
       class: {
-        list: "gap-x-0 p-0.5 rounded-md", // Remove gap, use padding
+        list: "gap-x-0 p-0.5 rounded-lg", // Remove gap, use padding
       },
     },
     {

@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
+import { Button } from "../button";
+import { Text } from "../text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
-export type TabsPreviewProps = {
+export type TabsExampleProps = {
   /**
    * Style variant for the tabs list.
    * "solid" creates button-like tabs in a container, "line" creates underlined tabs with a divider.
@@ -18,42 +20,66 @@ export type TabsPreviewProps = {
    * Size variant for tabs (applies to "solid" variant).
    * Controls the size of button-style tabs.
    */
-  size?: "xs" | "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "default" | "lg";
   /**
    * Default tab to display.
    * Determines which tab is initially active.
    */
   defaultValue?: "tab1" | "tab2" | "tab3";
+  /**
+   * Show button alignment example.
+   * Demonstrates how to align buttons with solid tabs.
+   */
+  showButtonAlignment?: boolean;
 };
 
 export function TabsExample({
   variant = "line",
   hideDivider = false,
-  size = "sm",
+  size = "default",
   defaultValue = "tab1",
-}: TabsPreviewProps = {}) {
+  showButtonAlignment = false,
+}: TabsExampleProps = {}) {
   return (
-    <div className="p-8">
+    <div className="">
       <Tabs defaultValue={defaultValue}>
-        <TabsList variant={variant} hideDivider={hideDivider} size={size}>
-          <TabsTrigger value="tab1">Overview</TabsTrigger>
-          <TabsTrigger value="tab2">Analytics</TabsTrigger>
-          <TabsTrigger value="tab3">Reports</TabsTrigger>
-        </TabsList>
-        <TabsContent value="tab1">
-          <div className="py-4 text-sm text-zinc-600 dark:text-zinc-400">
+        <div className="flex items-center gap-3">
+          <TabsList variant={variant} hideDivider={hideDivider} size={size}>
+            <TabsTrigger value="tab1">Overview</TabsTrigger>
+            <TabsTrigger value="tab2">Analytics</TabsTrigger>
+            <TabsTrigger value="tab3">Reports</TabsTrigger>
+          </TabsList>
+
+          {/* Show button alignment example for solid variant */}
+          {showButtonAlignment && variant === "solid" && (
+            <>
+              <Button size={size} variant="outline">
+                Regular Button
+              </Button>
+              <Button
+                size={size === "lg" ? "lg-tabs" : size === "sm" ? "sm-tabs" : size === "xs" ? "xs-tabs" : "default-tabs"}
+                variant="outline"
+              >
+                Aligned Button
+              </Button>
+            </>
+          )}
+        </div>
+
+        <TabsContent value="tab1" className="py-4">
+          <Text>
             Overview content goes here. This tab shows general information and metrics.
-          </div>
+          </Text>
         </TabsContent>
-        <TabsContent value="tab2">
-          <div className="py-4 text-sm text-zinc-600 dark:text-zinc-400">
+        <TabsContent value="tab2" className="py-4">
+          <Text>
             Analytics content goes here. This tab displays detailed analytics and insights.
-          </div>
+          </Text>
         </TabsContent>
-        <TabsContent value="tab3">
-          <div className="py-4 text-sm text-zinc-600 dark:text-zinc-400">
+        <TabsContent value="tab3" className="py-4">
+          <Text>
             Reports content goes here. This tab contains various reports and data exports.
-          </div>
+          </Text>
         </TabsContent>
       </Tabs>
     </div>
@@ -63,37 +89,30 @@ export function TabsExample({
 // Preview props for prop explorer
 export const TabsPreviewProps = [
   {
-    name: "orientation",
-    type: "select",
-    description: "Tabs orientation layout - controls whether tabs are arranged horizontally or vertically.",
-    options: ["horizontal", "vertical"],
-    defaultValue: "horizontal",
-  },
-  {
     name: "variant",
     type: "select",
     description: "Tabs style variant - controls the visual appearance of the tab triggers.",
-    options: ["default", "pills", "underline"],
-    defaultValue: "default",
+    options: ["solid", "line"],
+    defaultValue: "line",
   },
   {
     name: "size",
     type: "select",
     description: "Tabs size variant - affects padding and text size of the tab triggers.",
-    options: ["sm", "default", "lg"],
-    defaultValue: "default",
+    options: ["xs", "sm", "default", "lg"],
+    defaultValue: "sm",
   },
   {
-    name: "tabCount",
-    type: "select",
-    description: "Number of tabs to display - controls how many tab panels are shown.",
-    options: [2, 3, 4],
-    defaultValue: 3,
-  },
-  {
-    name: "showContentVariation",
+    name: "hideDivider",
     type: "boolean",
-    description: "Whether to show varied content in each tab - demonstrates different content types when enabled.",
-    defaultValue: true,
+    description: "Hide the bottom divider line (only applies to line variant).",
+    defaultValue: false,
+  },
+  {
+    name: "defaultValue",
+    type: "select",
+    description: "Default tab to display.",
+    options: ["tab1", "tab2", "tab3"],
+    defaultValue: "tab1",
   },
 ];
