@@ -23,7 +23,7 @@ export const toolbarPreviewProps = [
     name: "variant",
     type: "select",
     description: "Visual variant of the toolbar.",
-    options: ["default", "bordered", "floating"],
+    options: ["default", "border", "floating"],
     defaultValue: "default",
   },
   {

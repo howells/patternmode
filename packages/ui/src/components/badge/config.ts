@@ -59,7 +59,7 @@ export const badgeConfig: ComponentConfig = {
       component: RoundedExample,
     },
     {
-      id: "bordered",
+      id: "border",
       title: "Bordered",
       description: "Badges with border outline",
       component: BorderedExample,

@@ -13,7 +13,7 @@ type DescriptionListProps = React.ComponentPropsWithoutRef<"dl"> & {
 
 export function DescriptionListPreview(props: DescriptionListProps) {
   return (
-    <DescriptionList {...props}>
+    <DescriptionList {...props} className="w-full max-w-lg">
       <DescriptionTerm>Name</DescriptionTerm>
       <DescriptionDetails>John Doe</DescriptionDetails>
       <DescriptionTerm>Email</DescriptionTerm>

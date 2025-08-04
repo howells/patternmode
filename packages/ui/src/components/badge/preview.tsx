@@ -67,7 +67,7 @@ export const badgePreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["sm", "base", "lg"],
+    options: ["xs", "sm", "base", "lg"],
     defaultValue: "base",
   },
   {
@@ -97,7 +97,7 @@ export const badgePreviewProps = [
     defaultValue: null,
   },
   {
-    name: "bordered",
+    name: "border",
     type: "boolean",
     description: "Whether to show a border around the badge.",
     defaultValue: false,

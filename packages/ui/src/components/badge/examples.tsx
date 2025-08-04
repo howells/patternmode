@@ -74,11 +74,11 @@ export const RoundedExample = () => (
 // Bordered badges
 export const BorderedExample = () => (
   <Stack direction="horizontal" wrap gap={2}>
-    <Badge bordered>Bordered</Badge>
-    <Badge bordered variant="info" leftIcon={AlertCircle}>
+    <Badge border>Bordered</Badge>
+    <Badge border variant="info" leftIcon={AlertCircle}>
       Information
     </Badge>
-    <Badge bordered rounded variant="success">
+    <Badge border rounded variant="success">
       Featured
     </Badge>
   </Stack>
@@ -101,7 +101,7 @@ export const ComplexExample = () => (
       variant="purple"
       leftIcon={Star}
       rounded
-      bordered
+      border
     >
       Premium
     </Badge>

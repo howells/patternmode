@@ -56,11 +56,12 @@ const badgeVariantsDefinition = {
   variants: {
     variant: badgeVariantStyles,
     size: {
+      xs: "px-1 py-0.5 text-xs font-medium",
       sm: "px-1.5 py-0.5 text-xs font-medium",
       base: "px-2 py-1 text-sm font-medium",
       lg: "px-2.5 py-1.5 text-sm font-medium",
     },
-    bordered: {
+    border: {
       true: "ring-1 ring-inset",
       false: "",
     },
@@ -72,7 +73,7 @@ const badgeVariantsDefinition = {
   defaultVariants: {
     variant: "default",
     size: "base",
-    bordered: false,
+    border: false,
     rounded: false,
   },
 } as const;
@@ -86,6 +87,10 @@ const badgeVariants = tv({
   compoundVariants: [
     // Adjust right padding when dismiss button is present
     {
+      size: "xs",
+      class: "has-[button]:pr-0.5",
+    },
+    {
       size: "sm",
       class: "has-[button]:pr-1",
     },
@@ -98,6 +103,11 @@ const badgeVariants = tv({
       class: "has-[button]:pr-1.5",
     },
     // Add extra horizontal padding for rounded badges to prevent cramped appearance
+    {
+      rounded: true,
+      size: "xs",
+      class: "px-2", // increased from px-1
+    },
     {
       rounded: true,
       size: "sm",
@@ -114,6 +124,11 @@ const badgeVariants = tv({
       class: "px-3.5", // increased from px-2.5
     },
     // When rounded AND has dismiss button, adjust right padding accordingly
+    {
+      rounded: true,
+      size: "xs",
+      class: "has-[button]:pr-1", // slightly more than regular rounded
+    },
     {
       rounded: true,
       size: "sm",
@@ -134,6 +149,7 @@ const badgeVariants = tv({
 
 // Map badge sizes to icon sizes
 const badgeToIconSizeMap = {
+  xs: "xs",
   sm: "xs",
   base: "sm",
   lg: "base",
@@ -168,13 +184,14 @@ const InlineDismissButton = (
       strokeWidth?: number;
     }>;
     "iconStrokeWidth"?: number;
-    "size"?: "sm" | "base" | "lg";
+    "size"?: "xs" | "sm" | "base" | "lg";
     "className"?: string;
     "aria-label"?: string;
   } & { ref?: React.RefObject<HTMLButtonElement | null> },
 ) => {
   // Size-based icon sizing
   const iconSizeMap = {
+    xs: "xs" as const,
     sm: "xs" as const,
     base: "xs" as const,
     lg: "sm" as const,
@@ -192,6 +209,7 @@ const InlineDismissButton = (
         // Base button styling
         "flex items-center justify-center rounded-full transition-colors",
         // Size-based dimensions
+        size === "xs" && "size-3",
         size === "sm" && "size-4",
         size === "base" && "size-5",
         size === "lg" && "size-6",
@@ -219,7 +237,7 @@ type BadgeProps = {
    * Whether to show a border around the badge.
    * Adds a subtle ring border for enhanced visual definition.
    */
-  bordered?: boolean;
+  border?: boolean;
   /**
    * Whether to use full border radius for a pill shape.
    * Automatically adds extra horizontal padding for better visual balance.
@@ -262,14 +280,14 @@ type BadgeProps = {
    * Size variant of the badge.
    * Controls padding, text size, and overall dimensions.
    */
-  size?: "sm" | "base" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
 } & useRender.ComponentProps<"span"> & ComponentWithIconsProps;
 
 /**
  * Small status indicator component for labels, counts, and categorical information.
  */
 const Badge = (
-  { ref: forwardedRef, render = <span />, variant, size = "base", bordered, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible: _dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
+  { ref: forwardedRef, render = <span />, variant, size = "base", border, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible: _dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
 ) => {
   // Get appropriate icon size for badge size
   const iconSize = badgeToIconSizeMap[size];
@@ -287,7 +305,7 @@ const Badge = (
 
     // Status dot size mapping - one size smaller than badge for better balance
     const statusDotSize
-          = size === "sm" ? "sm" : size === "base" ? "sm" : "default";
+          = size === "xs" ? "sm" : size === "sm" ? "sm" : size === "base" ? "sm" : "default";
 
     // Use statusAnimated prop directly since statusDot is just boolean
     const shouldAnimate = statusAnimated;
@@ -323,6 +341,7 @@ const Badge = (
             size={size}
             className={cx(
               // Negative margin to pull closer like Tag does
+              size === "xs" && "-ml-0.5",
               size === "sm" && "-ml-1",
               size === "base" && "-ml-1",
               size === "lg" && "-ml-1.5",
@@ -335,7 +354,7 @@ const Badge = (
 
   const defaultProps: useRender.ElementProps<"span"> & { "data-testid": string } = {
     "className": cx(
-      badgeVariants({ variant: effectiveVariant, size, bordered, rounded }),
+      badgeVariants({ variant: effectiveVariant, size, border, rounded }),
       className,
     ),
     "children": renderBadgeContent(),

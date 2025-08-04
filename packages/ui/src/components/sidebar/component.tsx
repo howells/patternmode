@@ -269,15 +269,15 @@ export function SidebarFooter({
  */
 type SidebarGroupProps = {
   /**
-   * Optional title displayed at the top of the group.
+   * Optional heading displayed at the top of the group.
    */
-  title?: React.ReactNode;
+  heading?: React.ReactNode;
   /**
-   * Optional URL to make the group title clickable.
+   * Optional URL to make the group heading clickable.
    */
   href?: string;
   /**
-   * Optional action elements displayed alongside the title.
+   * Optional action elements displayed alongside the heading.
    */
   actions?: React.ReactNode;
   /**
@@ -304,7 +304,7 @@ type SidebarGroupProps = {
    */
   tooltipDelay?: number;
   /**
-   * Whether the group title should stick to the top when scrolling.
+   * Whether the group heading should stick to the top when scrolling.
    * Creates a section list behavior for better navigation.
    */
   sticky?: boolean;
@@ -315,7 +315,7 @@ type SidebarGroupProps = {
  */
 export function SidebarGroup({
   className,
-  title,
+  heading,
   href,
   actions,
   children,
@@ -329,7 +329,7 @@ export function SidebarGroup({
   const id = useId();
 
   // When collapsed, show group as an icon item with tooltip
-  if (isCollapsed && title) {
+  if (isCollapsed && heading) {
     // Use different icons based on level: Circle for level 1, Dot for level 2
     const DefaultIcon = level === 1 ? Circle : CircleSmall;
     const GroupIcon = groupIcon || DefaultIcon;
@@ -372,10 +372,10 @@ export function SidebarGroup({
           data-component="SidebarGroup"
           className={cx(className, "py-1")}
         >
-          {typeof title === "string"
+          {typeof heading === "string"
             ? (
                 <Tooltip
-                  content={title}
+                  content={heading}
                   side="right"
                   sideOffset={8}
                   delayDuration={tooltipDelay}
@@ -400,7 +400,7 @@ export function SidebarGroup({
         data-component="SidebarGroup"
         className={cx(className)}
       >
-        {title && (
+        {heading && (
           <div
             className={cx(
               "flex items-center justify-between px-4",
@@ -410,7 +410,7 @@ export function SidebarGroup({
             )}
           >
             <SidebarTitle level={level} href={href}>
-              {title}
+              {heading}
             </SidebarTitle>
             {actions && (
               <div
@@ -421,7 +421,7 @@ export function SidebarGroup({
             )}
           </div>
         )}
-        <div className={cx("space-y-1", title ? "pb-4" : "py-4")}>{children}</div>
+        <div className={cx("space-y-1", heading ? "pb-4" : "py-4")}>{children}</div>
       </div>
     </LayoutGroup>
   );

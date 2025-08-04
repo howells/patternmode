@@ -23,14 +23,31 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
-
 } from "@patternmode/ui/components/sidebar";
-import { Stack } from "@patternmode/ui/components/stack";
+import { HStack, Stack } from "@patternmode/ui/components/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
 
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
+
+// Local component for sidebar group titles with badges
+function SidebarGroupTitle({
+  children,
+  badge,
+  level = 1,
+}: {
+  children: React.ReactNode;
+  badge?: React.ReactNode;
+  level?: 1 | 2;
+}) {
+  return (
+    <HStack align="center" gap={2} className={level === 2 ? "opacity-70" : ""}>
+      {children}
+      {badge}
+    </HStack>
+  );
+}
 
 type SidebarLayoutProps = {
   children: React.ReactNode;
@@ -89,12 +106,12 @@ function SidebarContent() {
       <SidebarBody isCollapsed={isCollapsed}>
         {/* Level 1: Components with view toggle */}
         <SidebarGroup
-          title={(
-            <>
+          heading={(
+            <SidebarGroupTitle
+              badge={<Badge variant="neutral" size="xs" border rounded>{totalComponentsCount}</Badge>}
+            >
               Components
-              {" "}
-              <Badge variant="neutral" size="sm">{totalComponentsCount}</Badge>
-            </>
+            </SidebarGroupTitle>
           )}
           isCollapsed={isCollapsed}
           level={1}
@@ -139,12 +156,13 @@ function SidebarContent() {
                     return (
                       <SidebarGroup
                         key={category.key}
-                        title={(
-                          <>
+                        heading={(
+                          <SidebarGroupTitle
+                            level={2}
+                            badge={<Badge variant="neutral" size="sm">{components.length}</Badge>}
+                          >
                             {category.name}
-                            {" "}
-                            <Badge variant="neutral" size="sm">{components.length}</Badge>
-                          </>
+                          </SidebarGroupTitle>
                         )}
                         href={`/ui/${category.key}`}
                         isCollapsed={isCollapsed}
