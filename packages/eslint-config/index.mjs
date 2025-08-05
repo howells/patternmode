@@ -2,11 +2,9 @@ import antfu from "@antfu/eslint-config";
 import turboPlugin from "eslint-plugin-turbo";
 
 // Component-specific rules (UI package)
-import { componentMetadataConfig } from "./rules/component-metadata-rules.mjs";
 import { componentStructureConfig } from "./rules/component-structure-rules.mjs";
 // General rules (all packages)
 import { importSortingConfig } from "./rules/import-sorting-rules.mjs";
-import { jsdocComponentConfig } from "./rules/jsdoc-component-rules.mjs";
 import { jsdocGeneralConfig } from "./rules/jsdoc-general-rules.mjs";
 import { nodeEnvironmentConfig } from "./rules/node-environment-rules.mjs";
 import previewComponentNamingRule from "./rules/preview-component-naming.mjs";
@@ -50,8 +48,6 @@ export const ui = () =>
     },
     lessOpinionated: true,
   })
-    .append(jsdocComponentConfig)
-    .append(componentMetadataConfig)
     .append(componentStructureConfig)
     .append(reactComponentPatternConfig)
     .append({

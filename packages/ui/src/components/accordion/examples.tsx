@@ -1,11 +1,11 @@
 "use client";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./component";
-import { Badge } from "../badge/component";
-import { Text } from "../text/component";
-import { TextList, TextListItem } from "../text-list/component";
-
 import React from "react";
+import { Badge } from "../badge/component";
+import { TextList, TextListItem } from "../text-list/component";
+import { Text } from "../text/component";
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./component";
 
 // Default accordion
 export const DefaultExample = () => (

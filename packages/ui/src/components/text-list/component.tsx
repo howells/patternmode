@@ -1,8 +1,9 @@
+import type { LucideIcon } from "lucide-react";
+
 import type { VariantProps } from "tailwind-variants";
-
 import React from "react";
-import { tv } from "tailwind-variants";
 
+import { tv } from "tailwind-variants";
 import { cx } from "../../lib/utils";
 import { Icon } from "../icon";
 
@@ -123,7 +124,7 @@ export type TextListItemProps = {
   className?: string;
   /**
    * The content to display within the list item.
-   * Can include text, ListIndicator components, links, or other React nodes.  
+   * Can include text, ListIndicator components, links, or other React nodes.
    */
   children?: React.ReactNode;
 } & VariantProps<typeof listItemVariants>;
@@ -137,7 +138,7 @@ export type TextListIndicatorProps = {
    * Should be a Lucide React icon or similar component that accepts className and strokeWidth props.
    * When provided, this takes precedence over children content.
    */
-  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon?: React.ComponentType<{ className?: string; strokeWidth?: number }> | LucideIcon;
   /**
    * The size of the icon indicator when using the icon prop.
    * Controls both width and height of the rendered icon.
@@ -162,25 +163,11 @@ export type TextListIndicatorProps = {
    * Custom content to display as the indicator when no icon is provided.
    * Can be text, symbols, or other React nodes to serve as list markers.
    */
-  children?: React.ReactNode;
+  children?: string | React.ReactNode;
 } & VariantProps<typeof indicatorVariants>;
 
-/**
- * Flexible list component for creating ordered and unordered lists with custom styling.
- *
- * @component
- * @example
- * ```tsx
- * <TextList variant="plain">
- *   <TextListItem>
- *     <TextListIndicator icon={CheckIcon} />
- *     First item
- *   </TextListItem>
- * </TextList>
- * ```
- */
 export function TextList({
-  as: Component = "ul",
+  as = "ul",
   variant,
   align,
   unstyled,
@@ -188,6 +175,8 @@ export function TextList({
   children,
   ...props
 }: TextListProps) {
+  const Component: React.ElementType = as || "ul";
+
   return (
     <Component
       data-testid="text-list"
