@@ -36,7 +36,7 @@
         "tests/**/*.{ts,tsx}",
         "vitest.config.ts",
         "!playwright/**"
-      ],
+      ]
     },
     "packages/eslint-config": {
       "entry": ["rules/**/*.mjs"],
