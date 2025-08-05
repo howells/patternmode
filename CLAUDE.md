@@ -11,9 +11,7 @@
 - **NEVER create, import, or reference .js files anywhere in the turborepo**
 - **ALL code must be TypeScript (.ts/.tsx) and executed directly without compilation**
 - **NEVER build anything - no compilation step should exist**
-- **The `dist/` folder is reserved for a future processing pipeline that will contain processed components with JSDoc derived from TypeScript prop definitions (not yet built)**
 - **All package.json exports must point to `src/` files, never `dist/` files**
-
 
 ## Tailwind CSS 4 (CRITICAL)
 
@@ -21,25 +19,8 @@
 
 - **Use `@import "tailwindcss";` NOT `@tailwind base/components/utilities;`**
 - **Tailwind 4 uses `@theme` blocks for custom theme configuration**
-- **Use `@custom-variant` for custom variant definitions**
 - **PostCSS config uses `"@tailwindcss/postcss"` plugin**
-- **Content paths are defined in `tailwind.config.ts`**
 - **NEVER revert to Tailwind 3 syntax (`@tailwind` directives)**
-- **Global styles are in `src/app/globals.css` with Tailwind 4 syntax**
-
-Example correct Tailwind 4 globals.css:
-
-```css
-@import "tailwindcss";
-
-@theme {
-  --color-brand: #3b82f6;
-}
-```
-
-## Development Server
-
-**NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
 ## Static-Only Import Architecture (CRITICAL)
 
@@ -49,110 +30,21 @@ Example correct Tailwind 4 globals.css:
 - **Dynamic imports cause parsing errors and break the server**
 - **ALL component loading must be static and build-time analyzable**
 - **Registry uses static import maps for predictable bundling**
-- **Use Next.js `dynamic()` function ONLY for code splitting, not component loading**
 
-### Static Registry Pattern
+## Development Server
 
-**All components and previews are statically imported in registry.ts:**
-```typescript
-// Static imports at top of registry.ts
-import { ButtonPreview } from "./button/preview";
-import { CardPreview } from "./card/preview";
-
-// Static registry for immediate access
-export const PREVIEW_REGISTRY = {
-  "button": ButtonPreview,
-  "card": CardPreview,
-  // ... all components
-} as const;
-
-// Simple synchronous lookup - no async needed
-export function getPreviewComponent(id: string): React.ComponentType<any> | undefined {
-  return PREVIEW_REGISTRY[id as ComponentId];
-}
-```
-
-**Benefits of Static-Only Architecture:**
-- ✅ **Eliminates dynamic import warnings and server errors**
-- ✅ **Predictable bundle analysis and tree-shaking**
-- ✅ **Better performance** - no runtime import overhead
-- ✅ **Simpler code** - no async complexity or caching needed
-- ✅ **Build-time safety** - all imports verified at compile time
-
-### Component Registry Purpose
-
-**`@packages/ui/src/components/registry.ts` serves as the central component system hub:**
-
-**What it does:**
-- **Component Discovery**: Centralizes all component configs and preview components for the documentation site
-- **Type Safety**: Provides `ComponentId` union type from all available components
-- **Static Lookups**: Enables fast component/preview retrieval without filesystem scanning
-- **Category Organization**: Groups components by category for navigation
-- **Build Tool Integration**: Used by `generate-component-pages.js` to create doc pages
-
-**Key Functions:**
-- `getComponentConfig(id)` - Get component metadata and examples
-- `getPreviewComponent(id)` - Get interactive preview component for prop exploration
-- `getComponentsByCategory(category)` - Filter components for navigation
-- `getAllComponents()` - List all components for search/indexing
-
-**Important**: Registry is **only for the documentation site** - user applications import components directly via individual paths like `import { Button } from "@patternmode/ui/button"`
+**NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
 ## Browser Testing
 
-**ALWAYS use direct Playwright browser automation for testing web pages** - Never use other browser tools or MCPs like Browserbase when Playwright is available.
-
-- Use `mcp_Playwright_browser_navigate` to visit URLs
-- Use `mcp_Playwright_browser_snapshot` to capture page state
-- Use `mcp_Playwright_browser_take_screenshot` for visual verification
-- Playwright provides reliable, consistent browser automation for testing component pages
-
-## Focus Styling
-
-**ALWAYS use the standardized focus utilities for consistency:**
-
-- **`@focusInput`** - For input elements (text fields, selects, etc.)
-  - Provides ring-based focus styling with blue color scheme
-  - Includes both ring and border color changes
-
-- **`@focusRing`** - For interactive elements (buttons, links, etc.)
-  - Provides outline-based focus styling with blue color scheme
-  - Uses outline-offset for proper visual separation
-
-Import from `src/lib/utils.ts` and use in tailwind-variants:
-
-```tsx
-import { focusInput, focusRing } from "@/lib/utils";
-
-const variants = tv({
-  base: [
-    "...",
-    focusRing, // or focusInput for input elements
-    "...",
-  ],
-});
-```
-
-## Code Organization (CRITICAL)
-
-**MANDATORY: Use single-purpose functions and files for maximum modularity and reusability**
-
-- **Create separate files for focused, single-purpose functions**
-- **Break down complex tasks into smaller, reusable functions**
-- **Each function should have a clear, specific responsibility**
-- **Functions should be easily testable and composable**
-- **Avoid large monolithic functions that handle multiple concerns**
-- **Use imports to compose functionality from multiple focused modules**
-
+**ALWAYS use direct Playwright browser automation for testing web pages** - Never use other browser tools when Playwright is available.
 
 ## TypeScript Standards
 
 - **NEVER use `any` type or type assertions (`as`, `as unknown as`, `!`, etc.)**
-- **Use proper TypeScript types and interfaces instead of forcing type assertions**
 - Use `VariantProps<typeof variants>` for variant props
 - Extend `useRender.ComponentProps<"element">` for Base UI integration
 - Export component, variants, and prop types
-- Create wrapper components or helper functions when complex typing is needed
 
 ### Children Prop Inheritance (CRITICAL)
 
@@ -162,35 +54,19 @@ const variants = tv({
 // ✅ CORRECT - Children inherit as optional from HTML element props
 type CardProps = {
   variant?: "default" | "dashed";
-  padding?: SpacingValue;
   // NO explicit children declaration
 } & useRender.ComponentProps<"div">;
 
-type ToggleGroupProps = {
-  variant?: VariantProps<typeof toggleGroupVariants>["variant"];
-  size?: VariantProps<typeof toggleGroupVariants>["size"];
-  // NO explicit children declaration  
-} & React.ComponentPropsWithoutRef<typeof BaseToggleGroup>;
-
 // ❌ INCORRECT - Explicit children override inheritance as required
 type CardProps = {
-  variant?: "default" | "dashed";
-  children: React.ReactNode;  // ❌ Makes children required, breaks inheritance
+  children: React.ReactNode;  // ❌ Makes children required
 } & useRender.ComponentProps<"div">;
 
 // ❌ INCORRECT - Omit prevents proper inheritance
 type ToggleGroupProps = {
-  children: React.ReactNode;  // ❌ Required children
-  variant?: VariantProps<typeof toggleGroupVariants>["variant"];
+  children: React.ReactNode;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseToggleGroup>, "children">; // ❌ Blocks inheritance
 ```
-
-**Key Principles:**
-- **HTML element props include optional children** - never override this
-- **Explicit `children: React.ReactNode` makes children required**, breaking expected React patterns
-- **`Omit<..., "children">` prevents inheritance** and causes the same issue
-- **Let TypeScript inheritance work naturally** - more flexible and correct
-- **Optional children align with React patterns** where children may or may not be present
 
 ## Component Architecture (CRITICAL)
 
@@ -213,27 +89,16 @@ src/components/[component-name]/
 type TextareaProps = {
   /**
    * Whether to display error styling for form validation.
-   * Adds red border and error state styling to indicate validation errors.
    */
   hasError?: boolean;
+} & useRender.ComponentProps<"textarea">;
 
-  /**
-   * Whether to enable auto-resizing behavior.
-   * When true: Uses enhanced component with intelligent behavior.
-   * When false: Uses basic native behavior.
-   */
-  autoResize?: boolean;
-} & Omit<TextareaAutosizeProps, "style">;
-```
-
-**Component gets basic JSDoc for metadata only:**
-```tsx
 /**
- * Auto-resizing multi-line text input component built on react-textarea-autosize.
+ * Auto-resizing multi-line text input component.
  */
 export const Textarea = ({
   hasError,
-  autoResize = true,  // ← Defaults extracted automatically
+  autoResize = true,  // ← Defaults in component destructuring
   ...props
 }: TextareaProps) => {
   // Implementation...
@@ -242,12 +107,11 @@ export const Textarea = ({
 
 ### Config File Pattern (config.ts)
 
-**Single-component example:**
 ```tsx
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
-import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
+import { DefaultExample, WithErrorExample } from "./examples";
 
 export const textareaConfig: ComponentConfig = {
   id: "textarea",
@@ -263,7 +127,6 @@ export const textareaConfig: ComponentConfig = {
       description: "Basic textarea with default settings",
       component: DefaultExample,
     },
-    // ... more examples
   ],
   components: [
     {
@@ -272,72 +135,6 @@ export const textareaConfig: ComponentConfig = {
       component: Textarea,
     },
   ],
-};
-```
-
-**Multi-component family example (accordion):**
-```tsx
-import type { ComponentConfig } from "../../lib/component-config-types";
-import { ChevronDown } from "lucide-react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent
-} from "./component";
-import { BasicExample, MultipleExample } from "./examples";
-
-export const accordionConfig: ComponentConfig = {
-  id: "accordion",
-  name: "Accordion",
-  description: "Vertically stacked set of interactive headings...",
-  category: "ui",
-  icon: ChevronDown,
-  importStatement: `import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@patternmode/ui/accordion";`,
-  examples: [/* imported example components */],
-  components: [
-    {
-      component: Accordion,
-      name: "Accordion",
-      primary: true,
-      description: "Root container for collapsible content sections."
-    },
-    {
-      component: AccordionItem,
-      name: "AccordionItem",
-      description: "Individual collapsible section within accordion."
-    },
-    {
-      component: AccordionTrigger,
-      name: "AccordionTrigger",
-      description: "Clickable header that toggles accordion item."
-    },
-    {
-      component: AccordionContent,
-      name: "AccordionContent",
-      description: "Collapsible content area of accordion item."
-    }
-  ],
-};
-```
-
-### Examples File (examples.tsx)
-
-**Export individual example components:**
-```tsx
-export const DefaultExample = () => {
-  const [value, setValue] = React.useState("");
-  return (
-    <Textarea
-      placeholder="Start typing..."
-      value={value}
-      onChange={e => setValue(e.target.value)}
-    />
-  );
-};
-
-export const WithErrorExample = () => {
-  // Implementation...
 };
 ```
 
@@ -372,108 +169,14 @@ export function ButtonPreview(props: ButtonProps) {
     </Button>
   );
 }
-
-// Preview props for prop explorer
-export const buttonPreviewProps = [
-  {
-    name: "children",
-    type: "string",
-    description: "Button text content.",
-    defaultValue: "Save Changes",
-  },
-  {
-    name: "variant",
-    type: "select",
-    description: "Visual style variant of the button.",
-    options: ["default", "primary", "secondary", "ghost", "outline", "destructive"],
-    defaultValue: "default",
-  },
-  // ... more props
-];
-```
-
-**Key Preview Principles:**
-- **Accepts component props** for interactive exploration
-- **Shows realistic usage** with meaningful defaults
-- **Includes interactive behavior** when appropriate (loading states, etc.)
-- **Exports prop metadata** for prop explorer tooling
-- **Single component instance** (not multiple examples - those belong in examples.tsx)
-
-### Key Principles
-
-- **Props documented in TypeScript interface** with comprehensive JSDoc
-- **Defaults only in component destructuring** (single source of truth)
-- **Config file imports actual components and examples** (not string references)
-- **Examples loaded from config object** (no dynamic imports needed)
-- **Multi-component families supported** via `components` array with `primary` flag
-- **Export barrel** (`index.tsx`) for clean imports
-- **No build dependencies** - configs can be imported directly
-
-### Direct Config Usage (No Build Required)
-
-**Import and use configs directly in development:**
-```tsx
-// Import config directly - no build step needed!
-import { textareaConfig } from "@patternmode/ui/src/components/textarea/config";
-import { accordionConfig } from "@patternmode/ui/src/components/accordion/config";
-
-// Use in prop explorer, documentation, or tooling
-<Preview config={textareaConfig} />
-<ComponentExamples componentId="textarea" /> // Gets examples from config.examples
-```
-
-### Config-First Examples Loading
-
-**Examples are now loaded from config objects, not dynamic imports:**
-```tsx
-// ComponentExamples component loads from config.examples
-const config = getComponentConfig(componentId);
-const examples = config.examples; // Direct access, no import() needed
 ```
 
 ## Component Structure Requirements (CRITICAL)
 
-**MANDATORY: All components must follow these structural requirements for automated testing and consistency:**
+### 1. Component Exports (REQUIRED)
+All main components MUST use `export const` declarations (not `export function`).
 
-### 1. TypeScript Prop Types (REQUIRED)
-
-Every component MUST have proper TypeScript prop definitions using one of these patterns:
-
-```tsx
-// Pattern 1: Custom prop type extending React props
-type ComponentNameProps = {
-  // your custom props
-} & React.ComponentPropsWithoutRef<"div">; // or appropriate element
-
-// Pattern 2: Interface extending React props
-interface ComponentNameProps extends React.ComponentPropsWithoutRef<"div"> {
-  // your custom props
-}
-
-// Pattern 3: Direct React component props
-const Component = (props: React.ComponentPropsWithoutRef<"div">) => {
-  // implementation
-};
-```
-
-### 2. Component Exports (REQUIRED)
-
-All main components MUST use `export const` declarations (not `export function`):
-
-```tsx
-// ✅ CORRECT - Test will pass
-export const ComponentName = (props: ComponentNameProps) => {
-  // implementation
-};
-
-// ❌ INCORRECT - Test will fail
-export function ComponentName(props: ComponentNameProps) {
-  // implementation
-}
-```
-
-### 3. Data TestID Attributes (MANDATORY)
-
+### 2. Data TestID Attributes (MANDATORY)
 **Every component MUST have a `data-testid` attribute that exactly matches the component directory name:**
 
 ```tsx
@@ -482,79 +185,49 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       data-testid="button"  // ← MUST match directory name exactly
-      className={...}
       {...props}
     />
   );
 };
-
-// Component directory: /src/components/card/
-export const Card = (props: CardProps) => {
-  const defaultProps: useRender.ElementProps<"div"> = {
-    "data-testid": "card",  // ← MUST match directory name exactly
-    "className": cx(cardVariants(), className),
-  };
-
-  return useRender({ render, props: defaultProps });
-};
 ```
 
-**TestID enables predictable Playwright testing:**
-```typescript
-// All components can be tested consistently:
-await page.getByTestId('button').click();
-await page.getByTestId('card').isVisible();
-await page.getByTestId('slider').fill('5');
-```
-
-### 4. JSDoc Documentation (RECOMMENDED)
-
-Component JSDoc descriptions should be ≤140 characters and provide clear, concise descriptions:
-
-```tsx
-/**
- * Search input with dropdown results, keyboard navigation, and filtering. Supports controlled usage.
- */
-export const SearchField = (props: SearchFieldProps) => {
-  // implementation
-};
-```
-
-### 5. Import Structure (CRITICAL)
-
+### 3. Import Structure (CRITICAL)
 **Individual component imports only - NO barrel imports:**
 
 ```tsx
 // ✅ CORRECT - Individual component imports
 import { Button } from "@patternmode/ui/components/button";
 import { Card } from "@patternmode/ui/components/card";
-import { Text } from "@patternmode/ui/components/text";
 
 // ❌ INCORRECT - Barrel imports not supported
-import { Button, Card, Text } from "@patternmode/ui";
+import { Button, Card } from "@patternmode/ui";
 ```
 
-**Package.json export pattern:**
-```json
-{
-  "exports": {
-    "./components/*": {
-      "types": "./src/components/*/index.tsx",
-      "import": "./src/components/*/index.tsx",
-      "default": "./src/components/*/index.tsx"
-    }
-  }
-}
+### 4. Focus Styling
+**ALWAYS use the standardized focus utilities:**
+
+```tsx
+import { focusInput, focusRing } from "@/lib/utils";
+
+const variants = tv({
+  base: [
+    focusRing, // or focusInput for input elements
+  ],
+});
 ```
 
-### Component Structure Validation
+## Code Organization
 
-The project includes automated testing via `tests/component-structure.test.ts` that validates:
+- **Create separate files for focused, single-purpose functions**
+- **Break down complex tasks into smaller, reusable functions**
+- **Use imports to compose functionality from multiple focused modules**
 
-- ✅ **TypeScript prop types** (100% required)
-- ✅ **Export patterns** (100% required)
-- ✅ **TestID attributes** (100% required)
-- ✅ **Component registry** (100% required)
-- ✅ **JSDoc descriptions** (86% coverage, recommended)
+## Component Registry Purpose
 
-**All tests must pass before commits.** Run: `pnpm test component-structure.test.ts`
+**`@packages/ui/src/components/registry.ts` serves as the central component system hub:**
+
+- **Component Discovery**: Centralizes all component configs and preview components for the documentation site
+- **Static Lookups**: Enables fast component/preview retrieval without filesystem scanning
+- **Build Tool Integration**: Used by `generate-component-pages.js` to create doc pages
+
+**Important**: Registry is **only for the documentation site** - user applications import components directly via individual paths.
