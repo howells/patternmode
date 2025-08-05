@@ -267,42 +267,9 @@ export async function getPreviewComponent(id: string): Promise<React.ComponentTy
   }
 }
 
-// Cache for dynamically imported preview props
-const previewPropsCache = new Map<string, PropMetadata[] | null>();
-
-export async function getPreviewProps(id: string): Promise<PropMetadata[]> {
-  // Check cache first
-  if (previewPropsCache.has(id)) {
-    const cached = previewPropsCache.get(id);
-    return cached || [];
-  }
-
-  try {
-    // Convert kebab-case to camelCase for the preview props name
-    const componentName = id.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-    const previewPropsName = `${componentName}PreviewProps`;
-
-    // Dynamically import the preview props
-    const previewModule = await import(`./${id}/preview`);
-    const previewProps = previewModule[previewPropsName];
-
-    if (previewProps && Array.isArray(previewProps)) {
-      previewPropsCache.set(id, previewProps);
-      return previewProps;
-    } else {
-      // Fallback to config props if preview props don't exist
-      const config = getComponentConfig(id);
-      const configProps = config?.props || [];
-      previewPropsCache.set(id, configProps);
-      return configProps;
-    }
-  } catch {
-    // If preview props don't exist, fallback to config props
-    const config = getComponentConfig(id);
-    const configProps = config?.props || [];
-    previewPropsCache.set(id, configProps);
-    return configProps;
-  }
+export function getPreviewProps(id: string): PropMetadata[] {
+  const config = getComponentConfig(id);
+  return config?.props || [];
 }
 
 // Component list organized by categories (derived automatically)

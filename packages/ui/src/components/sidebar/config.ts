@@ -10,7 +10,7 @@ import {
   SidebarItem,
   SidebarToggle,
 } from "./component";
-import { CollapsibleExample, DefaultExample, NavigationExample, WithGroupsExample } from "./examples";
+import { CollapsibleExample, CollapsibleGroupsExample, DefaultExample, NavigationExample, WithGroupsExample } from "./examples";
 
 export const sidebarConfig: ComponentConfig = {
   id: "sidebar",
@@ -28,13 +28,19 @@ export const sidebarConfig: ComponentConfig = {
     },
     {
       id: "collapsible",
-      title: "Collapsible",
+      title: "Collapsible Sidebar",
       description: "Sidebar with toggle functionality and collapsed state with collapsible groups",
       component: CollapsibleExample,
     },
     {
+      id: "collapsible-groups",
+      title: "Collapsible Groups",
+      description: "Demonstration of collapsible group functionality with chevron controls",
+      component: CollapsibleGroupsExample,
+    },
+    {
       id: "with-groups",
-      title: "With Collapsible Groups",
+      title: "With Organized Groups",
       description: "Sidebar with organized navigation groups that can be collapsed and expanded",
       component: WithGroupsExample,
     },

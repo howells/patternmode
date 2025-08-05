@@ -53,7 +53,7 @@ function toCamelCase(str) {
 async function scanComponents() {
   console.log("🔍 Scanning components directory...");
 
-  const componentsDir = path.join(__dirname, "../packages/ui/src/components");
+  const componentsDir = path.join(__dirname, "../../../packages/ui/src/components");
   const componentDirs = fs.readdirSync(componentsDir, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
@@ -242,7 +242,7 @@ export type ComponentConfigRegistry = typeof COMPONENT_REGISTRY;
 async function updateRegistry(components) {
   console.log("🔧 Updating component registry...");
 
-  const registryPath = path.join(__dirname, "../packages/ui/src/components/registry.ts");
+  const registryPath = path.join(__dirname, "../../../packages/ui/src/components/registry.ts");
   const registryContent = generateRegistryFile(components);
 
   // Update the registry file

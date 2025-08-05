@@ -471,8 +471,7 @@ export function SidebarGroup({
         )}
         <div
           className={cx(
-            "space-y-1 transition-all duration-200 ease-in-out overflow-hidden",
-            heading ? "pb-4" : "py-4",
+            "space-y-1",
             collapsible && isGroupCollapsed && "max-h-0 pb-0 opacity-0",
           )}
         >

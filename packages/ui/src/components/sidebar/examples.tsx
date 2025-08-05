@@ -319,3 +319,87 @@ export const NavigationExample = () => {
     </div>
   );
 };
+
+// New example specifically for collapsible groups demonstration
+export const CollapsibleGroupsExample = () => {
+  const [projectsCollapsed, setProjectsCollapsed] = useState(false);
+  const [toolsCollapsed, setToolsCollapsed] = useState(true);
+  const [adminCollapsed, setAdminCollapsed] = useState(false);
+
+  return (
+    <div className="h-96 border rounded-lg overflow-hidden">
+      <Sidebar className="bg-white dark:bg-zinc-950">
+        <SidebarHeader className="p-4">
+          <div className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Collapsible Demo</div>
+          <div className="text-sm text-zinc-500 dark:text-zinc-400">Try collapsing groups!</div>
+        </SidebarHeader>
+        <SidebarBody>
+          <SidebarGroup heading="Always Visible">
+            <SidebarItem href="#dashboard" current leftIcon={Home}>
+              Dashboard
+            </SidebarItem>
+          </SidebarGroup>
+
+          <SidebarGroup
+            heading="Projects"
+            collapsible
+            collapsed={projectsCollapsed}
+            onCollapsedChange={setProjectsCollapsed}
+          >
+            <SidebarItem href="#project-1" leftIcon={FolderOpen}>
+              Project Alpha
+            </SidebarItem>
+            <SidebarItem href="#project-2" leftIcon={FolderOpen}>
+              Project Beta
+            </SidebarItem>
+            <SidebarItem href="#project-3" leftIcon={FolderOpen}>
+              Project Gamma
+            </SidebarItem>
+          </SidebarGroup>
+
+          <SidebarGroup
+            heading="Tools"
+            collapsible
+            collapsed={toolsCollapsed}
+            onCollapsedChange={setToolsCollapsed}
+            defaultCollapsed={true}
+          >
+            <SidebarItem href="#search" leftIcon={Search}>
+              Search
+            </SidebarItem>
+            <SidebarItem href="#analytics" leftIcon={BarChart3}>
+              Analytics
+            </SidebarItem>
+            <SidebarItem href="#calendar" leftIcon={Calendar}>
+              Calendar
+            </SidebarItem>
+          </SidebarGroup>
+
+          <SidebarGroup
+            heading="Administration"
+            collapsible
+            collapsed={adminCollapsed}
+            onCollapsedChange={setAdminCollapsed}
+          >
+            <SidebarItem href="#users" leftIcon={Users}>
+              User Management
+            </SidebarItem>
+            <SidebarItem href="#settings" leftIcon={Settings}>
+              System Settings
+            </SidebarItem>
+            <SidebarItem href="#notifications" leftIcon={Bell}>
+              Notifications
+            </SidebarItem>
+          </SidebarGroup>
+        </SidebarBody>
+        <SidebarFooter>
+          <SidebarGroup>
+            <SidebarItem href="#help" leftIcon={HelpCircle}>
+              Help & Support
+            </SidebarItem>
+          </SidebarGroup>
+        </SidebarFooter>
+      </Sidebar>
+    </div>
+  );
+};
