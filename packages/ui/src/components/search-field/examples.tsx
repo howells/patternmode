@@ -45,24 +45,3 @@ export function GroupedExample() {
   );
 }
 
-/**
- * Controlled SearchField example.
- */
-export function ControlledExample() {
-  const [value, setValue] = React.useState("");
-
-  return (
-    <SearchField
-      placeholder="Controlled search..."
-      value={value}
-      onValueChange={setValue}
-      items={sampleItems.filter(item =>
-        item.label.toLowerCase().includes(value.toLowerCase()),
-      )}
-      onItemSelect={(item) => {
-        setValue(item.label);
-        console.log("Selected:", item);
-      }}
-    />
-  );
-}

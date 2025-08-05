@@ -4,12 +4,10 @@ import { CodeBlock } from "./component";
 import {
   BashExample,
   CssExample,
-  DarkThemeExample,
   DefaultExample,
   HtmlExample,
   JavascriptExample,
   JsonExample,
-  LightThemeExample,
   PythonExample,
   ReactComponentExample,
   TypescriptExample,
@@ -76,18 +74,6 @@ export const codeBlockConfig: ComponentConfig = {
       title: "HTML",
       description: "HTML markup with syntax highlighting",
       component: HtmlExample,
-    },
-    {
-      id: "light-theme",
-      title: "Light Theme",
-      description: "Code block with light theme",
-      component: LightThemeExample,
-    },
-    {
-      id: "dark-theme",
-      title: "Dark Theme",
-      description: "Code block with dark theme",
-      component: DarkThemeExample,
     },
   ],
   components: [

@@ -2,13 +2,13 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { ChevronDown } from "lucide-react";
 import { DropdownItem } from "./component";
 import {
-  DropdownItemBasic,
-  DropdownItemDestructive,
-  DropdownItemSizes,
-  DropdownItemStates,
-  DropdownItemWithHints,
-  DropdownItemWithIcons,
-  DropdownItemWithShortcuts,
+  DropdownItemBasicExample,
+  DropdownItemDestructiveExample,
+  DropdownItemSizesExample,
+  DropdownItemStatesExample,
+  DropdownItemWithHintsExample,
+  DropdownItemWithIconsExample,
+  DropdownItemWithShortcutsExample,
 } from "./examples";
 
 export const dropdownItemConfig: ComponentConfig = {
@@ -23,43 +23,43 @@ export const dropdownItemConfig: ComponentConfig = {
       id: "basic",
       title: "Basic",
       description: "Simple dropdown items with text content",
-      component: DropdownItemBasic,
+      component: DropdownItemBasicExample,
     },
     {
       id: "with-icons",
       title: "With Icons",
       description: "Items with left and right icons",
-      component: DropdownItemWithIcons,
+      component: DropdownItemWithIconsExample,
     },
     {
       id: "states",
       title: "States",
       description: "Different interaction states (normal, highlighted, selected, disabled)",
-      component: DropdownItemStates,
+      component: DropdownItemStatesExample,
     },
     {
       id: "with-shortcuts",
       title: "With Shortcuts",
       description: "Items with keyboard shortcuts",
-      component: DropdownItemWithShortcuts,
+      component: DropdownItemWithShortcutsExample,
     },
     {
       id: "with-hints",
       title: "With Hints",
       description: "Items with hint text on the right",
-      component: DropdownItemWithHints,
+      component: DropdownItemWithHintsExample,
     },
     {
       id: "sizes",
       title: "Sizes",
       description: "Different size variants",
-      component: DropdownItemSizes,
+      component: DropdownItemSizesExample,
     },
     {
       id: "destructive",
       title: "Destructive",
       description: "Destructive actions with warning styling",
-      component: DropdownItemDestructive,
+      component: DropdownItemDestructiveExample,
     },
   ],
   components: [

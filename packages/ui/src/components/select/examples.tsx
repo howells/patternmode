@@ -3,8 +3,6 @@
 import React from "react";
 import {
   Select,
-  SelectArrow,
-  SelectBackdrop,
   SelectContent,
   SelectGroup,
   SelectGroupLabel,
@@ -56,39 +54,6 @@ export const WithGroupsExample = () => {
   );
 };
 
-export const NestedGroupsExample = () => {
-  return (
-    <Select>
-      <SelectTrigger className="w-[300px]">
-        <SelectValue>Select a location...</SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectGroupLabel>United States</SelectGroupLabel>
-          <SelectGroup>
-            <SelectGroupLabel>West Coast</SelectGroupLabel>
-            <SelectItem value="ca-sf">San Francisco, CA</SelectItem>
-            <SelectItem value="ca-la">Los Angeles, CA</SelectItem>
-            <SelectItem value="wa-seattle">Seattle, WA</SelectItem>
-          </SelectGroup>
-          <SelectGroup>
-            <SelectGroupLabel>East Coast</SelectGroupLabel>
-            <SelectItem value="ny-nyc">New York City, NY</SelectItem>
-            <SelectItem value="ma-boston">Boston, MA</SelectItem>
-            <SelectItem value="fl-miami">Miami, FL</SelectItem>
-          </SelectGroup>
-        </SelectGroup>
-        <SelectSeparator />
-        <SelectGroup>
-          <SelectGroupLabel>Canada</SelectGroupLabel>
-          <SelectItem value="on-toronto">Toronto, ON</SelectItem>
-          <SelectItem value="bc-vancouver">Vancouver, BC</SelectItem>
-          <SelectItem value="qc-montreal">Montreal, QC</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-};
 
 export const MultipleSelectionExample = () => {
   const [values, setValues] = React.useState<string[]>([]);
@@ -156,21 +121,6 @@ export const ControlledExample = () => {
   );
 };
 
-export const UncontrolledExample = () => {
-  return (
-    <Select defaultValue="orange">
-      <SelectTrigger className="w-[200px]">
-        <SelectValue>Select a fruit...</SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="apple">Apple</SelectItem>
-        <SelectItem value="banana">Banana</SelectItem>
-        <SelectItem value="orange">Orange</SelectItem>
-        <SelectItem value="grape">Grape</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-};
 
 export const ObjectValuesExample = () => {
   type User = {
@@ -489,149 +439,7 @@ export const DisabledExample = () => {
   );
 };
 
-export const ReadOnlyExample = () => {
-  return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
-        Read-only Select
-      </label>
-      <Select readOnly defaultValue="readonly-value">
-        <SelectTrigger className="w-[200px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="readonly-value">Read-only Value</SelectItem>
-          <SelectItem value="other">Other Option</SelectItem>
-        </SelectContent>
-      </Select>
-      <p className="text-xs text-zinc-500">This select is read-only and cannot be changed.</p>
-    </div>
-  );
-};
 
-export const WithArrowExample = () => {
-  return (
-    <Select>
-      <SelectTrigger className="w-[200px]">
-        <SelectValue>Select with arrow...</SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        <SelectArrow />
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-};
 
-export const WithBackdropExample = () => {
-  return (
-    <Select>
-      <SelectTrigger className="w-[200px]">
-        <SelectValue>Select with backdrop...</SelectValue>
-      </SelectTrigger>
-      <SelectBackdrop />
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-};
 
-export const SearchableExample = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [value, setValue] = React.useState("");
 
-  const countries = [
-    "United States",
-    "United Kingdom",
-    "Canada",
-    "Australia",
-    "Germany",
-    "France",
-    "Japan",
-    "Brazil",
-    "India",
-    "China",
-    "Mexico",
-    "Italy",
-    "Spain",
-    "Netherlands",
-    "Sweden",
-    "Norway",
-    "Denmark",
-    "Finland",
-  ];
-
-  const filteredCountries = countries.filter(country =>
-    country.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  return (
-    <div className="space-y-4">
-      <Select
-        value={value}
-        onValueChange={setValue}
-      >
-        <SelectTrigger className="w-[300px]">
-          <SelectValue>Search and select a country...</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <div className="p-2">
-            <input
-              type="text"
-              placeholder="Search countries..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="w-full px-2 py-1 text-sm border rounded  dark:border-zinc-700 bg-white dark:bg-zinc-950"
-              onClick={e => e.stopPropagation()}
-            />
-          </div>
-          <SelectSeparator />
-          {filteredCountries.length > 0
-            ? (
-                filteredCountries.map(country => (
-                  <SelectItem key={country} value={country.toLowerCase().replace(/\s+/g, "-")}>
-                    {country}
-                  </SelectItem>
-                ))
-              )
-            : (
-                <div className="px-3 py-2 text-sm text-zinc-500">No countries found</div>
-              )}
-        </SelectContent>
-      </Select>
-      {value && (
-        <div className="text-sm text-zinc-600 dark:text-zinc-400">
-          Selected: {countries.find(c => c.toLowerCase().replace(/\s+/g, "-") === value)}
-        </div>
-      )}
-    </div>
-  );
-};
-
-export const LargeDatasetExample = () => {
-  // Generate a large dataset
-  const items = Array.from({ length: 1000 }, (_, i) => ({
-    value: `item-${i + 1}`,
-    label: `Item ${i + 1}`,
-  }));
-
-  return (
-    <Select>
-      <SelectTrigger className="w-[250px]">
-        <SelectValue>Select from 1000 items...</SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {items.map(item => (
-          <SelectItem key={item.value} value={item.value}>
-            {item.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-};

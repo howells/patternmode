@@ -30,17 +30,6 @@ export const SizesExample = () => {
   );
 };
 
-// Different colors
-export const ColorsExample = () => {
-  return (
-    <Stack direction="horizontal" align="center" gap={4}>
-      <Icon icon={Heart} className="text-red-500" />
-      <Icon icon={Star} className="text-yellow-500" />
-      <Icon icon={Check} className="text-green-500" />
-      <Icon icon={User} className="text-blue-500" />
-    </Stack>
-  );
-};
 
 // Icons with backgrounds
 export const WithBackgroundExample = () => {

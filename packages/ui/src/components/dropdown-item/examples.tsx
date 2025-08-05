@@ -3,7 +3,7 @@
 import { Check, Search, Settings, Trash2, User } from "lucide-react";
 import { DropdownItem } from "./component";
 
-export const DropdownItemBasic = () => (
+export const DropdownItemBasicExample = () => (
   <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem>Option 1</DropdownItem>
     <DropdownItem>Option 2</DropdownItem>
@@ -11,7 +11,7 @@ export const DropdownItemBasic = () => (
   </div>
 );
 
-export const DropdownItemWithIcons = () => (
+export const DropdownItemWithIconsExample = () => (
   <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem leftIcon={User}>User Profile</DropdownItem>
     <DropdownItem leftIcon={Settings}>Settings</DropdownItem>
@@ -19,7 +19,7 @@ export const DropdownItemWithIcons = () => (
   </div>
 );
 
-export const DropdownItemStates = () => (
+export const DropdownItemStatesExample = () => (
   <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem>Normal</DropdownItem>
     <DropdownItem highlighted>Highlighted</DropdownItem>
@@ -28,7 +28,7 @@ export const DropdownItemStates = () => (
   </div>
 );
 
-export const DropdownItemWithShortcuts = () => (
+export const DropdownItemWithShortcutsExample = () => (
   <div className="w-64 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem leftIcon={Search} kbd="⌘K">Quick Search</DropdownItem>
     <DropdownItem leftIcon={Settings} kbd="⌘,">Preferences</DropdownItem>
@@ -36,7 +36,7 @@ export const DropdownItemWithShortcuts = () => (
   </div>
 );
 
-export const DropdownItemWithHints = () => (
+export const DropdownItemWithHintsExample = () => (
   <div className="w-64 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem leftIcon={User} hint="Admin">John Doe</DropdownItem>
     <DropdownItem leftIcon={User} hint="Member">Jane Smith</DropdownItem>
@@ -44,7 +44,7 @@ export const DropdownItemWithHints = () => (
   </div>
 );
 
-export const DropdownItemSizes = () => (
+export const DropdownItemSizesExample = () => (
   <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1 space-y-1">
     <div className="text-xs text-zinc-500 px-2 py-1">Small</div>
     <DropdownItem size="sm" leftIcon={User}>Small Item</DropdownItem>
@@ -57,7 +57,7 @@ export const DropdownItemSizes = () => (
   </div>
 );
 
-export const DropdownItemDestructive = () => (
+export const DropdownItemDestructiveExample = () => (
   <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
     <DropdownItem leftIcon={User}>Edit User</DropdownItem>
     <DropdownItem leftIcon={Settings}>Settings</DropdownItem>

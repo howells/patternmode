@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./component";
-import { DefaultExample, DisabledExample, ErrorStateExample, FormIntegrationExample, SmallSizeExample, WithGroupsExample } from "./examples";
+import { DefaultExample, DisabledExample, ErrorStateExample, FormIntegrationExample, SmallSizeExample, WithGroupsExample, MultipleSelectionExample, ControlledExample, ObjectValuesExample, CustomRenderValueExample } from "./examples";
 
 export const selectConfig: ComponentConfig = {
   id: "select",
@@ -57,6 +57,30 @@ export const selectConfig: ComponentConfig = {
       title: "Form Integration",
       description: "Select integrated within a complete form",
       component: FormIntegrationExample,
+    },
+    {
+      id: "multiple-selection",
+      title: "Multiple Selection",
+      description: "Select component with multiple value selection",
+      component: MultipleSelectionExample,
+    },
+    {
+      id: "controlled",
+      title: "Controlled",
+      description: "Controlled select with external state management",
+      component: ControlledExample,
+    },
+    {
+      id: "object-values",
+      title: "Object Values",
+      description: "Select working with complex data objects",
+      component: ObjectValuesExample,
+    },
+    {
+      id: "custom-render",
+      title: "Custom Render",
+      description: "Select with custom value rendering and display",
+      component: CustomRenderValueExample,
     },
   ],
   components: [

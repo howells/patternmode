@@ -96,7 +96,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary';
 }
 
-export function CodeBlockExample({
+export function Button({
   children,
   onClick,
   variant = 'primary'
@@ -171,19 +171,3 @@ export const HtmlExample = () => (
   </CodeBlock>
 );
 
-// Different themes
-export const LightThemeExample = () => (
-  <CodeBlock language="tsx" theme="light">
-    {`const Component = () => {
-  return <div>Light theme code block</div>;
-};`}
-  </CodeBlock>
-);
-
-export const DarkThemeExample = () => (
-  <CodeBlock language="tsx" theme="dark">
-    {`const Component = () => {
-  return <div>Dark theme code block</div>;
-};`}
-  </CodeBlock>
-);
