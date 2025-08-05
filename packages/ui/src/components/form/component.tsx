@@ -187,7 +187,7 @@ const FormControl = ({ className, children, ...props }: FormControlProps & { chi
         render={controlProps => (
           <div className={className}>
             {React.isValidElement(children)
-              ? React.cloneElement(children, { ...controlProps, ...children.props })
+              ? React.cloneElement(children, { ...controlProps, ...(typeof children.props === 'object' && children.props !== null ? children.props : {}) })
               : children}
           </div>
         )}
@@ -350,7 +350,7 @@ const FormField = ({ name, label, description, required, className, children, or
               {description && <FormDescription>{description}</FormDescription>}
             </div>
           </div>
-          <FormError />
+          <FormError>Invalid input</FormError>
         </FormItem>
       </BaseField.Root>
     );
@@ -367,7 +367,7 @@ const FormField = ({ name, label, description, required, className, children, or
         )}
         {children}
         {description && <FormDescription>{description}</FormDescription>}
-        <FormError />
+        <FormError>Invalid input</FormError>
       </FormItem>
     </BaseField.Root>
   );

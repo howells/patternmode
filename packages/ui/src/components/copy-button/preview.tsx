@@ -1,6 +1,6 @@
 "use client";
 
-import type { CopyButtonProps } from "./component";
+import type { CopyButtonProps } from "./types";
 import React from "react";
 import { CopyButton } from "./component";
 

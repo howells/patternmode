@@ -135,12 +135,8 @@ export function ResponsiveDrawerPreview({
   return (
     <div className="p-8 flex justify-center">
       <ResponsiveDrawer>
-        <ResponsiveDrawerTrigger asChild>
-          <Button variant={triggerVariant}>
-            Open Responsive Drawer
-          </Button>
-        </ResponsiveDrawerTrigger>
-        <ResponsiveDrawerContent snapPoints={showSnapPoints ? [0.2, 0.5, 0.8] : undefined}>
+        <ResponsiveDrawerTrigger render={<Button variant={triggerVariant}>Open Responsive Drawer</Button>} />
+        <ResponsiveDrawerContent>
           <ResponsiveDrawerHeader>
             <ResponsiveDrawerTitle>
               {contentLevel === "form"
@@ -151,20 +147,14 @@ export function ResponsiveDrawerPreview({
               This drawer adapts to screen size - modal on desktop, sheet on mobile.
             </ResponsiveDrawerDescription>
             {showCloseButton && (
-              <ResponsiveDrawerClose asChild>
-                <Button variant="ghost" size="sm" className="absolute right-4 top-4">
-                  ×
-                </Button>
-              </ResponsiveDrawerClose>
+              <ResponsiveDrawerClose render={<Button variant="ghost" size="sm" className="absolute right-4 top-4">×</Button>} />
             )}
           </ResponsiveDrawerHeader>
           {getContent()}
           {showFooter && (
             <ResponsiveDrawerFooter>
               <div className="flex gap-2 justify-end px-4">
-                <ResponsiveDrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
-                </ResponsiveDrawerClose>
+                <ResponsiveDrawerClose render={<Button variant="outline">Cancel</Button>} />
                 <Button variant="default">
                   {contentLevel === "form" ? "Send Message" : "Done"}
                 </Button>

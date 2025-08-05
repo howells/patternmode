@@ -128,7 +128,6 @@ const CardHeading = ({ ref, className, children, ...props }: CardHeadingProps & 
   if (typeof children === "string") {
     return (
       <Subheading
-        ref={ref}
         className={className}
         {...props}
       >

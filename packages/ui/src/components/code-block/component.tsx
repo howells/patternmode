@@ -16,14 +16,14 @@ import { codeBlockHeaderVariants, codeBlockLanguageLabelVariants, codeBlockVaria
 /**
  * Syntax-highlighted code display component with copy functionality.
  */
-export const CodeBlock = ({ ref, children, language = "tsx", className, theme = "auto" }: CodeBlockProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CodeBlock = ({ ref, children, language = "tsx", className, theme = "auto" }: CodeBlockProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const codeString = React.useMemo(() => {
     if (typeof children === "string") {
       return children;
     }
     return String(children || "");
   }, [children]);
-  
+
   // Determine theme
   const isDark = React.useMemo(() => {
     if (theme === "light") {

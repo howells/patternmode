@@ -1,6 +1,6 @@
 "use client";
 
-import type { RadioOptionProps } from "./component";
+import type { RadioOptionProps } from "./types";
 import React from "react";
 import { RadioOption } from "./component";
 

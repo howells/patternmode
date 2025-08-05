@@ -38,20 +38,35 @@ export function CalendarPreview({
   mode = "single",
   numberOfMonths = 1,
 }: CalendarPreviewProps = {}) {
-  const [selected, setSelected] = React.useState<Date | Date[] | { from?: Date; to?: Date } | undefined>();
+  const [selected, setSelected] = React.useState<Date | Date[] | { from: Date; to?: Date } | undefined>();
+
+  const handleSelect = (value: Date | Date[] | { from: Date; to?: Date } | undefined) => {
+    setSelected(value);
+  };
 
   return (
     <div className="p-8 flex justify-center">
       <Calendar
-        mode={mode}
-        selected={selected}
-        onSelect={setSelected}
+        {...(mode === "single" && {
+          mode: "single" as const,
+          selected: selected as Date | undefined,
+          onSelect: handleSelect,
+        })}
+        {...(mode === "multiple" && {
+          mode: "multiple" as const,
+          selected: selected as Date[] | undefined,
+          onSelect: handleSelect,
+        })}
+        {...(mode === "range" && {
+          mode: "range" as const,
+          selected: selected as { from: Date; to?: Date } | undefined,
+          onSelect: handleSelect,
+        })}
         enableYearNavigation={enableYearNavigation}
         showToday={showToday}
         showTodayButton={showTodayButton}
         numberOfMonths={numberOfMonths}
         className="rounded-md border"
-        {...(mode === "range" && { required: false })}
       />
     </div>
   );

@@ -87,7 +87,6 @@ export function RadioCardGroupPreview({
     <div className="p-8">
       <RadioCardGroup
         defaultValue={defaultValue}
-        orientation={orientation}
         className={orientation === "horizontal" ? "grid grid-cols-1 md:grid-cols-3 gap-4" : "space-y-4"}
       >
         {displayedOptions.map((option) => {

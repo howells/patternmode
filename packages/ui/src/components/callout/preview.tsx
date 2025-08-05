@@ -1,6 +1,6 @@
 "use client";
 
-import type { CalloutProps } from "./component";
+import type { CalloutProps } from "./types";
 import { Info } from "lucide-react";
 
 import React from "react";

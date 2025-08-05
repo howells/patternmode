@@ -1,6 +1,6 @@
 "use client";
 
-import type { DotProps } from "./component";
+import type { DotProps } from "./types";
 import React from "react";
 import { Dot } from "./component";
 

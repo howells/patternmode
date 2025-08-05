@@ -1,6 +1,6 @@
 "use client";
 
-import type { EmptyStateProps } from "./component";
+import type { EmptyStateProps } from "./types";
 import { Package } from "lucide-react";
 import React from "react";
 import { EmptyState } from "./component";

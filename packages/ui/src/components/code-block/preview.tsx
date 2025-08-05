@@ -1,6 +1,6 @@
 "use client";
 
-import type { CodeBlockProps } from "./component";
+import type { CodeBlockProps } from "./types";
 import React from "react";
 import { CodeBlock } from "./component";
 

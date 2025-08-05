@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProgressBarProps } from "./component";
+import type { ProgressBarProps } from "./types";
 import React from "react";
 import { ProgressBar } from "./component";
 

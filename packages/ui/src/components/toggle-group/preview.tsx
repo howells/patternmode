@@ -58,7 +58,7 @@ export function ToggleGroupPreview({
 
   const items = contentType === "alignment" ? alignmentItems : formattingItems;
   const defaultValue = type === "single"
-    ? (contentType === "alignment" ? "center" : "bold")
+    ? [contentType === "alignment" ? "center" : "bold"]
     : (contentType === "alignment" ? ["center"] : ["bold"]);
 
   return (
@@ -67,7 +67,6 @@ export function ToggleGroupPreview({
         defaultValue={defaultValue}
         variant={variant}
         size={size}
-        type={type}
         disabled={false}
       >
         {items.map((item) => {

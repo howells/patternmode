@@ -1,12 +1,12 @@
 "use client";
 
-import type { MeterProps } from "./component";
+import type { MeterProps } from "./types";
 import React from "react";
 
 import { Meter } from "./component";
 
 export function MeterPreview(props: MeterProps) {
-  return <Meter value={65} label="Progress" showValue={true} {...props} />;
+  return <Meter value={65} {...props} />;
 }
 
 // Preview props for prop explorer
@@ -36,22 +36,5 @@ export const meterPreviewProps = [
     options: ["default", "neutral", "success", "info", "warning", "error", "critical", "positive", "negative"],
     defaultValue: "default",
   },
-  {
-    name: "label",
-    type: "string",
-    description: "Optional descriptive label text displayed above the meter.",
-    defaultValue: "Progress",
-  },
-  {
-    name: "showValue",
-    type: "boolean",
-    description: "Whether to display the formatted value text above the meter.",
-    defaultValue: true,
-  },
-  {
-    name: "showAnimation",
-    type: "boolean",
-    description: "Whether to enable smooth animation transitions when the value changes.",
-    defaultValue: true,
-  },
+
 ];

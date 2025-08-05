@@ -32,12 +32,12 @@ export type ComboChartPreviewProps = {
    * Bar series color scheme.
    * Colors applied to bar categories in order.
    */
-  barColors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  barColors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
   /**
    * Line series color scheme.
    * Colors applied to line categories in order.
    */
-  lineColors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  lineColors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
 };
 
 export function ComboChartPreview({

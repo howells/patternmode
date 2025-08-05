@@ -136,7 +136,6 @@ const Tag = (
           React.createElement(effectiveIcon, {
             "className": cx(iconUtils.getIconSize("xs"), "shrink-0"),
             "strokeWidth": iconStrokeWidth,
-            "aria-hidden": "true",
           })
         )}
         {label && (

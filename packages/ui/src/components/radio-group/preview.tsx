@@ -62,7 +62,7 @@ export function RadioGroupPreview({
       <RadioGroup
         defaultValue={defaultValue}
         orientation={orientation}
-        spacing={spacing}
+        size={spacing}
       >
         {displayedOptions.map(option => (
           <div key={option.value} className="flex items-start space-x-3">

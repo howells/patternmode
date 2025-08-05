@@ -269,7 +269,7 @@ export const FormIntegrationExample = () => {
           name="country"
           required
           value={formData.country}
-          onValueChange={value => setFormData(prev => ({ ...prev, country: value }))}
+          onValueChange={value => setFormData(prev => ({ ...prev, country: value as string }))}
         >
           <SelectTrigger>
             <SelectValue>Select your country...</SelectValue>
@@ -293,7 +293,7 @@ export const FormIntegrationExample = () => {
         <Select
           name="plan"
           value={formData.plan}
-          onValueChange={value => setFormData(prev => ({ ...prev, plan: value }))}
+          onValueChange={value => setFormData(prev => ({ ...prev, plan: value as string }))}
         >
           <SelectTrigger>
             <SelectValue />
@@ -356,7 +356,7 @@ export const ErrorStateExample = () => {
       <Select
         value={value}
         onValueChange={(newValue) => {
-          setValue(newValue);
+          setValue(newValue as string);
           if (newValue) {
             setShowError(false);
           }

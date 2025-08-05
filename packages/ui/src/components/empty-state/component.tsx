@@ -64,9 +64,9 @@ export function EmptyState({
       {/* Actions */}
       {(primaryAction || secondaryAction) && (
         <div
-          className={emptyStateActionsVariants({ 
-            size, 
-            hasMultipleActions 
+          className={emptyStateActionsVariants({
+            size,
+            hasMultipleActions
           })}
         >
           {/* Primary Action */}
@@ -112,5 +112,3 @@ export function EmptyState({
 };
 
 EmptyState.displayName = "EmptyState";
-
-export { EmptyState };

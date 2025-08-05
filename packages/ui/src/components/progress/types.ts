@@ -27,7 +27,7 @@ export type ProgressBarProps = {
    * Color variant for the progress indicator.
    * Affects both the track background and indicator fill colors.
    */
-  variant?: VariantProps<typeof progressVariants>["variant"];
+  variant?: "default" | "neutral" | "warning" | "error" | "success";
   /**
    * Whether to enable smooth animation transitions.
    * When true, progress changes animate smoothly; when false, changes are instant.

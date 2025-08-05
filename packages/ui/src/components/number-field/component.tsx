@@ -218,7 +218,7 @@ type NumberFieldInputProps = {
    * Controls dimensions to align with other form controls.
    */
   size?: "xs" | "sm" | "base" | "lg";
-} & React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>;
+} & Omit<React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>, "size">;
 
 /**
  * The numeric input element with tabular number formatting and proper validation.

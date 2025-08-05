@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComboboxOption } from "./component";
+import type { ComboboxOption } from "./types";
 import React from "react";
 import { Combobox } from "./component";
 

@@ -22,8 +22,8 @@ import { selectTriggerVariants } from "./variants";
 /**
  * Dropdown selection component with searchable options and keyboard navigation.
  */
-const Select = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Root> | null> }) => (
-  <BaseSelect.Root ref={ref} data-testid="select" {...props} />
+const Select = ({ ...props }: React.ComponentPropsWithoutRef<typeof BaseSelect.Root>) => (
+  <BaseSelect.Root data-testid="select" {...props} />
 );
 Select.displayName = "Select";
 const SelectGroup = BaseSelect.Group;

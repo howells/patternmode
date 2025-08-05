@@ -1,6 +1,6 @@
 "use client";
 
-import type { DividerProps } from "./component";
+import type { DividerProps } from "./types";
 import React from "react";
 import { Divider } from "./component";
 

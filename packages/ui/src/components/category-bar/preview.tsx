@@ -9,7 +9,7 @@ export function CategoryBarPreview(props: CategoryBarProps) {
   return (
     <CategoryBar
       values={[456, 351, 271, 191]}
-      colors={["blue", "teal", "amber", "rose"]}
+      colors={["blue", "emerald", "violet", "amber", "gray", "cyan", "pink", "lime", "fuchsia"]}
       showLabels={true}
       {...props}
     />

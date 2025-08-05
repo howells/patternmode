@@ -2,5 +2,5 @@ import * as React from "react";
 import { Progress } from "./component";
 
 export const TestProgress = () => (
-  <Progress>Test Progress</Progress>
+  <Progress value={75} />
 );

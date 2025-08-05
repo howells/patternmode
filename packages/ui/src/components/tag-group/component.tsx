@@ -31,8 +31,8 @@ export const TagGroup = ({
     }
 
     // Only apply props to Tag components
-    if (child.type && typeof child.type === "function" && child.type.displayName === "Tag") {
-      const childProps = { ...child.props };
+    if (child.type && typeof child.type === "function" && (child.type as any).displayName === "Tag") {
+      const childProps = { ...(child.props as Record<string, any>) };
 
       // Apply inherited dismissible if child doesn't have one
       if (dismissible !== undefined && childProps.dismissible === undefined) {

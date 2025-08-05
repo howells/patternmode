@@ -1,6 +1,6 @@
 "use client";
 
-import type { ButtonGroupProps } from "./component";
+import type { ButtonGroupProps } from "./types";
 import * as React from "react";
 import { Button } from "../button/component";
 import { ButtonGroup } from "./component";

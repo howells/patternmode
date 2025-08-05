@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Radio } from "./component";
+import { RadioOption } from "./component";
 
 export const TestRadio = () => (
-  <Radio>Test Radio</Radio>
+  <RadioOption value="option1" label="Radio Option" />
 );

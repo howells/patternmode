@@ -1,6 +1,6 @@
 "use client";
 
-import type { SelectNativeProps } from "./component";
+import type { SelectNativeProps } from "./types";
 import React from "react";
 import { SelectNative } from "./component";
 

@@ -1,14 +1,15 @@
 "use client";
 
-import type { DropdownItemProps } from "./component";
+import type { DropdownItemProps } from "./types";
 import { User } from "lucide-react";
 import React from "react";
 import { DropdownItem } from "./component";
 
 export function DropdownItemPreview(props: DropdownItemProps) {
+  const { ref, ...restProps } = props;
   return (
     <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
-      <DropdownItem leftIcon={User} {...props}>
+      <DropdownItem leftIcon={User} {...restProps}>
         {props.children || "Menu Item"}
       </DropdownItem>
     </div>

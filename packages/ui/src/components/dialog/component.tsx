@@ -56,7 +56,7 @@ type DialogDescriptionProps = {
 /**
  * Modal dialog component built on Base UI's Dialog primitive.
  */
-const Dialog = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseDialog.Root> | null> }) => (
+const Dialog = ({ ...props }: React.ComponentPropsWithoutRef<typeof BaseDialog.Root>) => (
   <BaseDialog.Root {...props} data-testid="dialog" />
 );
 Dialog.displayName = "Dialog";

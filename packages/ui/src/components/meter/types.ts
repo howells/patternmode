@@ -26,4 +26,20 @@ export type MeterProps = {
    * @default "default"
    */
   variant?: GlobalSemanticVariant;
-} & React.ComponentPropsWithoutRef<typeof BaseMeter>;
+  /**
+   * Optional descriptive label text displayed above the meter.
+   */
+  label?: string;
+  /**
+   * Whether to display the formatted value text above the meter.
+   */
+  showValue?: boolean;
+  /**
+   * Whether to enable smooth animation transitions when the value changes.
+   */
+  showAnimation?: boolean;
+  /**
+   * Function to format the displayed value.
+   */
+  formatValue?: (value: number, min: number, max: number) => string;
+} & React.ComponentPropsWithoutRef<typeof BaseMeter.Root>;

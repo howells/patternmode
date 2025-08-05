@@ -1,6 +1,6 @@
 "use client";
 
-import type { IconProps } from "./component";
+import type { IconProps } from "./types";
 import { Camera } from "lucide-react";
 import React from "react";
 import { Icon } from "./component";

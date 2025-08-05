@@ -147,7 +147,6 @@ export const MultipleExample = () => {
       <SelectNative
         id="multiple-select"
         multiple
-        size={4}
         value={selected}
         onChange={(e) => {
           const values = Array.from(

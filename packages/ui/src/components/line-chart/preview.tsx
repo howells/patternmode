@@ -37,7 +37,7 @@ export type LineChartPreviewProps = {
    * Color scheme for chart series.
    * Colors are applied to categories in order.
    */
-  colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  colors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
 };
 
 export function LineChartPreview({
@@ -55,8 +55,6 @@ export function LineChartPreview({
         categories={["sales", "profit"]}
         valueFormatter={value => `$${value.toLocaleString()}`}
         colors={colors}
-        curveType={curveType}
-        showDots={showDots}
         showGridLines={showGridLines}
         showLegend={showLegend}
       />
@@ -97,8 +95,8 @@ export const lineChartPreviewProps = [
     description: "Color scheme for chart series - colors are applied to categories in order.",
     options: [
       { label: "Blue & Emerald", value: ["blue", "emerald"] },
-      { label: "Pink & Orange", value: ["pink", "orange"] },
-      { label: "Indigo & Pink", value: ["indigo", "pink"] },
+      { label: "Pink & Violet", value: ["pink", "violet"] },
+      { label: "Cyan & Fuchsia", value: ["cyan", "fuchsia"] },
     ],
     defaultValue: ["blue", "emerald"],
   },

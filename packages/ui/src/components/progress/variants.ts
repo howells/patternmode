@@ -79,7 +79,7 @@ export const progressVariants = tv({
      */
     animated: {
       true: {
-        indicator: progressAnimationClasses,
+        indicator: progressAnimationClasses.enabled,
       },
       false: {},
     },

@@ -36,7 +36,7 @@ export type BarChartPreviewProps = {
    * Color scheme for chart series.
    * Colors are applied to categories in order.
    */
-  colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  colors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
 };
 
 export function BarChartPreview({
@@ -97,8 +97,8 @@ export const barChartPreviewProps = [
     description: "Color scheme for chart series - colors are applied to categories in order.",
     options: [
       { label: "Blue & Emerald", value: ["blue", "emerald"] },
-      { label: "Pink & Orange", value: ["pink", "orange"] },
-      { label: "Indigo & Pink", value: ["indigo", "pink"] },
+      { label: "Pink & Amber", value: ["pink", "amber"] },
+      { label: "Violet & Pink", value: ["violet", "pink"] },
     ],
     defaultValue: ["blue", "emerald"],
   },

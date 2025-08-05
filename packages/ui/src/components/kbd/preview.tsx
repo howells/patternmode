@@ -1,6 +1,6 @@
 "use client";
 
-import type { KbdProps } from "./component";
+import type { KbdProps } from "./types";
 import React from "react";
 import { Kbd } from "./component";
 

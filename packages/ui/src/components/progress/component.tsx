@@ -84,29 +84,28 @@ ProgressValue.displayName = "ProgressValue";
  * Complete progress bar with all components composed together.
  */
 const ProgressBar = (
-  { ref, value = 0, max = 100, label, showValue = false, valueFormatter, animated = false, variant = "default", className, ...props }: ProgressBarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null> },
+  { ref, value = 0, max = 100, label, showValue = false, valueFormatter, showAnimation = false, variant = "default", className, ...props }: ProgressBarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null> },
 ) => {
-  const { root } = progressVariants({ variant, animated });
+  const { root } = progressVariants({ variant, animated: showAnimation });
   const formatValue = valueFormatter || defaultValueFormatter;
 
   return (
     <Progress
-      ref={ref}
       value={value}
       max={max}
       className={cx(root(), className)}
       {...props}
     >
       {label && (
-        <ProgressLabel variant={variant} animated={animated}>
+        <ProgressLabel variant={variant} animated={showAnimation}>
           {label}
         </ProgressLabel>
       )}
-      <ProgressTrack variant={variant} animated={animated}>
-        <ProgressIndicator variant={variant} animated={animated} />
+      <ProgressTrack variant={variant} animated={showAnimation}>
+        <ProgressIndicator variant={variant} animated={showAnimation} />
       </ProgressTrack>
       {showValue && (
-        <ProgressValue variant={variant} animated={animated}>
+        <ProgressValue variant={variant} animated={showAnimation}>
           {(formattedValue, val) => formatValue(val, max)}
         </ProgressValue>
       )}

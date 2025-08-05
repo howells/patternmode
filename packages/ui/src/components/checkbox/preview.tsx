@@ -1,6 +1,6 @@
 "use client";
 
-import type { CheckboxProps } from "./component";
+import type { CheckboxProps } from "./types";
 import React from "react";
 import { Checkbox } from "./component";
 

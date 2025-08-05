@@ -11,7 +11,7 @@ import { meterVariants } from "./variants";
  * A graphical meter component for displaying scalar values within a known range.
  */
 const Meter = (
-  { ref, value, min = 0, max = 100, variant, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
+  { ref, value, min = 0, max = 100, variant, label, showValue, showAnimation, formatValue, className, ...props }: MeterProps & { ref?: React.RefObject<React.ElementRef<typeof BaseMeter.Root> | null> },
 ) => {
   const { track, indicator } = meterVariants({ variant });
 

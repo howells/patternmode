@@ -27,19 +27,19 @@ export const ButtonGroup = ({
       case "xs":
         return 1;
       case "sm":
-        return 1.5;
+        return 2;
       case "default":
         return 2;
       case "lg":
-        return 2.5;
+        return 3;
       case "icon-xs":
         return 1;
       case "icon-sm":
-        return 1.5;
+        return 2;
       case "icon":
         return 2;
       case "icon-lg":
-        return 2.5;
+        return 3;
       default:
         return 2;
     }
@@ -57,20 +57,21 @@ export const ButtonGroup = ({
     }
 
     // Only apply props to Button components
-    if (child.type && typeof child.type === "function" && child.type.displayName === "Button") {
-      const childProps = { ...child.props };
+    if ((child.type as any)?.displayName === "Button") {
+      const newProps: Record<string, unknown> = {};
+      const childProps = child.props as Record<string, unknown>;
 
       // Apply inherited variant if child doesn't have one
       if (variant && !childProps.variant) {
-        childProps.variant = variant;
+        newProps.variant = variant;
       }
 
       // Apply inherited size if child doesn't have one
       if (size && !childProps.size) {
-        childProps.size = size;
+        newProps.size = size;
       }
 
-      return React.cloneElement(child, childProps);
+      return React.cloneElement(child, newProps);
     }
 
     return child;

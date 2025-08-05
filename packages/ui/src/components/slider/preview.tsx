@@ -1,6 +1,6 @@
 "use client";
 
-import type { SliderProps } from "./component";
+import type { SliderProps } from "./types";
 import React from "react";
 import { Slider } from "./component";
 

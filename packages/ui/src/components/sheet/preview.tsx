@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button } from "../button/component";
+import { DismissButton } from "../dismiss-button/component";
 import {
   Sheet,
   SheetClose,
@@ -143,12 +144,8 @@ export function SheetPreview({
   return (
     <div className="p-8 flex justify-center">
       <Sheet>
-        <SheetTrigger asChild>
-          <Button variant={triggerVariant}>
-            Open Sheet
-          </Button>
-        </SheetTrigger>
-        <SheetContent side={side} size={size}>
+        <SheetTrigger render={<Button variant={triggerVariant}>Open Sheet</Button>} />
+        <SheetContent>
           <SheetHeader>
             <SheetTitle>
               {contentLevel === "navigation"
@@ -159,20 +156,14 @@ export function SheetPreview({
               This demonstrates a {side} sheet with {contentLevel} content.
             </SheetDescription>
             {showCloseButton && (
-              <SheetClose asChild>
-                <Button variant="ghost" size="sm" className="absolute right-4 top-4">
-                  ×
-                </Button>
-              </SheetClose>
+              <SheetClose render={<DismissButton className="absolute right-4 top-4" />} />
             )}
           </SheetHeader>
           {getContent()}
           {showFooter && (
             <SheetFooter className="mt-6">
               <div className="flex gap-2 justify-end">
-                <SheetClose asChild>
-                  <Button variant="outline">Close</Button>
-                </SheetClose>
+                <SheetClose render={<Button variant="outline">Close</Button>} />
                 {contentLevel === "settings" && (
                   <Button variant="default">Save Changes</Button>
                 )}

@@ -1,6 +1,6 @@
 "use client";
 
-import type { LoaderProps } from "./component";
+import type { LoaderProps } from "./types";
 
 import React from "react";
 import { Loader } from "./component";

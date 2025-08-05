@@ -355,36 +355,29 @@ PresetContainer.displayName = "DatePicker.PresetContainer";
 // I'll continue with the rest of the component implementation...
 
 const SingleDatePicker = ({
-  defaultValue,
   value,
-  onChange,
+  onValueChange,
   presets,
   disabled,
-  disabledDays,
-  disableNavigation,
-  className,
-  showTimePicker,
   placeholder = "Select date",
   hasError,
   icon,
   translations,
   enableYearNavigation = false,
   locale = enUS,
-  align = "center",
+  className,
   ...props
-}: SingleProps) => {
+}: SingleDatePickerProps) => {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(
-    value ?? defaultValue ?? undefined,
+    value ?? undefined,
   );
   const [month, setMonth] = React.useState<Date | undefined>(date);
 
   const [time, setTime] = React.useState<TimeValue | null>(() =>
     value
       ? new Time(value.getHours(), value.getMinutes())
-      : defaultValue
-        ? new Time(defaultValue.getHours(), defaultValue.getMinutes())
-        : new Time(0, 0),
+      : new Time(0, 0),
   );
 
   const initialDate = React.useMemo(() => {
@@ -393,8 +386,8 @@ const SingleDatePicker = ({
   }, [open]);
 
   React.useEffect(() => {
-    setDate(value ?? defaultValue ?? undefined);
-  }, [value, defaultValue]);
+    setDate(value ?? undefined);
+  }, [value]);
 
   React.useEffect(() => {
     if (date) {
@@ -429,7 +422,7 @@ const SingleDatePicker = ({
 
   const onDateChange = (date: Date | undefined) => {
     const newDate = date;
-    if (showTimePicker) {
+    if (props.enableTime) {
       if (newDate && !time) {
         setTime(new Time(0, 0));
       }
@@ -467,24 +460,22 @@ const SingleDatePicker = ({
       return null;
     }
 
-    return formatDate(date, locale, showTimePicker);
-  }, [date, locale, showTimePicker]);
+    return formatDate(date, locale, props.enableTime);
+  }, [date, locale, props.enableTime]);
 
   const onApply = () => {
     setOpen(false);
-    onChange?.(date);
+    onValueChange?.(date);
   };
 
   React.useEffect(() => {
-    setDate(value ?? defaultValue ?? undefined);
+    setDate(value ?? undefined);
     setTime(
       value
         ? new Time(value.getHours(), value.getMinutes())
-        : defaultValue
-          ? new Time(defaultValue.getHours(), defaultValue.getMinutes())
-          : new Time(0, 0),
+        : new Time(0, 0),
     );
-  }, [value, defaultValue]);
+  }, [value]);
 
   return (
     <Popover open={open} onOpenChange={onOpenChange} data-testid="date-picker">
@@ -501,7 +492,7 @@ const SingleDatePicker = ({
       >
         {formattedDate}
       </Trigger>
-      <CalendarPopover align={align}>
+      <CalendarPopover>
         <div className="flex">
           <div className="flex flex-col sm:flex-row sm:items-start">
             {presets && presets.length > 0 && (
@@ -528,25 +519,18 @@ const SingleDatePicker = ({
                 onMonthChange={setMonth}
                 selected={date}
                 onSelect={onDateChange}
-                disabled={disabledDays}
+                disabled={disabled}
                 locale={locale}
                 enableYearNavigation={enableYearNavigation}
-                disableNavigation={disableNavigation}
                 initialFocus
-                {...(({
-                  required,
-                  "aria-required": ariaRequired,
-                  ...rest
-                }) => rest)(props)}
               />
-              {showTimePicker && (
+              {props.enableTime && (
                 <div className="border-t  p-3 dark:border-zinc-800">
                   <TimeInput
                     aria-label="Time"
                     onChange={onTimeChange}
                     isDisabled={!date}
                     value={time}
-                    isRequired={props.required}
                   />
                 </div>
               )}
@@ -580,7 +564,7 @@ const SingleDatePicker = ({
  * Date selection component with calendar interface and input field.
  */
 const DatePicker = ({ presets, ...props }: SingleDatePickerProps) => {
-  return <SingleDatePicker presets={presets} {...(props as SingleProps)} />;
+  return <SingleDatePicker presets={presets} {...props} />;
 };
 
 DatePicker.displayName = "DatePicker";

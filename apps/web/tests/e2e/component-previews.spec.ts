@@ -112,6 +112,29 @@ async function testComponentPage(
   }
   expect(componentPreview).toBeGreaterThan(0);
 
+  // Check visual presence - ensure component has width and is visible
+  const previewElement = page.locator("[data-testid=\"component-preview\"]").first();
+  const previewBox = await previewElement.boundingBox();
+  
+  if (!previewBox || previewBox.width === 0 || previewBox.height === 0) {
+    console.error(`❌ ${componentName}: Component preview exists but has no visible dimensions (${previewBox?.width || 0}x${previewBox?.height || 0})`);
+    
+    // Try to check if the component itself has appropriate width classes
+    const hasWidthClass = await previewElement.evaluate((el) => {
+      const classes = el.className;
+      return classes.includes('w-full') || classes.includes('max-w-') || classes.includes('min-w-') || 
+             classes.includes('w-') || el.style.width || el.offsetWidth > 0;
+    });
+    
+    if (!hasWidthClass) {
+      console.error(`❌ ${componentName}: Component lacks width styling - should have w-full max-w-lg or similar`);
+    }
+  }
+  
+  // Ensure minimum visual presence
+  expect(previewBox?.width || 0).toBeGreaterThan(0);
+  expect(previewBox?.height || 0).toBeGreaterThan(0);
+
   // Check that component examples are actually rendered
   const componentExamples = await page
     .locator("[data-testid=\"component-examples\"]")
@@ -132,10 +155,15 @@ async function testComponentPage(
   }
   expect(comingSoonMessages).toBe(0);
 
-  // Take screenshot for visual verification
-  await page.screenshot({
-    path: `tests/screenshots/${componentId}.png`,
-    fullPage: false,
+  // Take screenshot for visual verification with focus on preview area
+  const previewScreenshot = await page.locator("[data-testid=\"component-preview\"]").first().screenshot({
+    path: `tests/screenshots/${componentId}-preview.png`,
+  }).catch(() => {
+    // Fallback to full page if preview screenshot fails
+    return page.screenshot({
+      path: `tests/screenshots/${componentId}.png`,
+      fullPage: false,
+    });
   });
 
   console.log(`✅ ${componentId} passed all checks`);

@@ -30,20 +30,20 @@ export type DonutChartPreviewProps = {
    * Color scheme for chart segments.
    * Colors are applied to segments in order.
    */
-  colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  colors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
   /**
    * Display variant of the donut chart.
    * Controls the visual style and information display.
    */
-  variant?: "default" | "pie";
+  variant?: "donut" | "pie";
 };
 
 export function DonutChartPreview({
   showLegend = true,
   showLabel = false,
   showTooltip = true,
-  colors = ["blue", "emerald", "pink", "orange"],
-  variant = "default",
+  colors = ["blue", "emerald", "pink", "amber"],
+  variant = "donut",
 }: DonutChartPreviewProps = {}) {
   return (
     <div className="p-8">
@@ -53,7 +53,6 @@ export function DonutChartPreview({
         value="value"
         valueFormatter={value => `${value}%`}
         colors={colors}
-        showLegend={showLegend}
         showLabel={showLabel}
         showTooltip={showTooltip}
         variant={variant}

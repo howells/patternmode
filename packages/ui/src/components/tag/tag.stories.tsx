@@ -2,5 +2,5 @@ import * as React from "react";
 import { Tag } from "./component";
 
 export const TestTag = () => (
-  <Tag>Test Tag</Tag>
+  <Tag value="Test Tag" />
 );

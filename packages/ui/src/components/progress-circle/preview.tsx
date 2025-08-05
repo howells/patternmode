@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProgressCircleProps } from "./component";
+import type { ProgressCircleProps } from "./types";
 import React from "react";
 
 import { ProgressCircle } from "./component";

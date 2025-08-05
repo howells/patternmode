@@ -1,6 +1,6 @@
 "use client";
 
-import type { GridProps } from "./component";
+import type { GridProps } from "./types";
 import React from "react";
 import { Grid, GridCell } from "./component";
 

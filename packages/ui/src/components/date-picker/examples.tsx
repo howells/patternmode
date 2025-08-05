@@ -9,7 +9,7 @@ export const DefaultExample = () => (
 );
 
 export const WithTimeExample = () => (
-  <DatePicker placeholder="Select date and time" showTimePicker />
+  <DatePicker placeholder="Select date and time" enableTime />
 );
 
 export const WithPresetsExample = () => (
@@ -47,7 +47,7 @@ export const ControlledExample = () => {
     <DatePicker
       placeholder="Select a date"
       value={value}
-      onChange={setValue}
+      onValueChange={setValue}
     />
   );
 };
@@ -63,6 +63,6 @@ export const WithClockIconExample = () => (
   <DatePicker
     placeholder="Select date and time"
     icon={Clock}
-    showTimePicker
+    enableTime
   />
 );

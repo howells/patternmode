@@ -1,6 +1,6 @@
 "use client";
 
-import type { SeparatorProps } from "./component";
+import type { SeparatorProps } from "./types";
 import React from "react";
 import { Separator } from "./component";
 
