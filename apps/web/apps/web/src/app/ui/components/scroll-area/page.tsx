@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: scrollAreaConfig.name,
+  description: scrollAreaConfig.description,
+  openGraph: {
+    title: scrollAreaConfig.name,
+    description: scrollAreaConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: scrollAreaConfig.name,
+    description: scrollAreaConfig.description,
+  },
+};
+
 export default function ScrollAreaPage() {
   return (
     <div>

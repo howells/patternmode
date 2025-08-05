@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${alertDialogConfig.name} | Patternmode`,
+  description: alertDialogConfig.description,
+  openGraph: {
+    title: `${alertDialogConfig.name} | Patternmode`,
+    description: alertDialogConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${alertDialogConfig.name} | Patternmode`,
+    description: alertDialogConfig.description,
+  },
+};
+
 export default function AlertDialogPage() {
   return (
     <div>

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: previewCardConfig.name,
+  description: previewCardConfig.description,
+  openGraph: {
+    title: previewCardConfig.name,
+    description: previewCardConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: previewCardConfig.name,
+    description: previewCardConfig.description,
+  },
+};
+
 export default function PreviewCardPage() {
   return (
     <div>

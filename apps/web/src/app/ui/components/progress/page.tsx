@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${progressConfig.name} | Patternmode`,
+  description: progressConfig.description,
+  openGraph: {
+    title: `${progressConfig.name} | Patternmode`,
+    description: progressConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${progressConfig.name} | Patternmode`,
+    description: progressConfig.description,
+  },
+};
+
 export default function ProgressPage() {
   return (
     <div>

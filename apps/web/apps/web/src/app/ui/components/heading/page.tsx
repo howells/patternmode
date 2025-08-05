@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: headingConfig.name,
+  description: headingConfig.description,
+  openGraph: {
+    title: headingConfig.name,
+    description: headingConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: headingConfig.name,
+    description: headingConfig.description,
+  },
+};
+
 export default function HeadingPage() {
   return (
     <div>

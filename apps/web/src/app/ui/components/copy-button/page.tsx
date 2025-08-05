@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${copyButtonConfig.name} | Patternmode`,
+  description: copyButtonConfig.description,
+  openGraph: {
+    title: `${copyButtonConfig.name} | Patternmode`,
+    description: copyButtonConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${copyButtonConfig.name} | Patternmode`,
+    description: copyButtonConfig.description,
+  },
+};
+
 export default function CopyButtonPage() {
   return (
     <div>

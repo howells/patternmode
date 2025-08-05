@@ -2,15 +2,15 @@
 
 import type { FieldSchema } from "./component";
 import React from "react";
-import { Avatar } from "../avatar";
-import { Button } from "../button";
-import { Checkbox } from "../checkbox";
-import { Fieldset } from "../fieldset";
-import { Grid, GridCell } from "../grid";
-import { Input } from "../input";
-import { ScrollArea } from "../scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
-import { HStack, Stack, VStack } from "../stack";
+import { Avatar } from "../avatar/component";
+import { Button } from "../button/component";
+import { Checkbox } from "../checkbox/component";
+import { Fieldset } from "../fieldset/component";
+import { Grid, GridCell } from "../grid/component";
+import { Input } from "../input/component";
+import { ScrollArea } from "../scroll-area/component";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select/component";
+import { HStack, Stack, VStack } from "../stack/component";
 import { Textarea } from "../textarea/component";
 import { FieldArray } from "./component";
 

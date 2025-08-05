@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-import { Icon } from "../icon";
+import { Icon } from "../icon/component";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 
 export function DefaultExample() {

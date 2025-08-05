@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: tooltipConfig.name,
+  description: tooltipConfig.description,
+  openGraph: {
+    title: tooltipConfig.name,
+    description: tooltipConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: tooltipConfig.name,
+    description: tooltipConfig.description,
+  },
+};
+
 export default function TooltipPage() {
   return (
     <div>

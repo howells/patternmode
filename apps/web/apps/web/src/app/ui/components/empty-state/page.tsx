@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: emptyStateConfig.name,
+  description: emptyStateConfig.description,
+  openGraph: {
+    title: emptyStateConfig.name,
+    description: emptyStateConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: emptyStateConfig.name,
+    description: emptyStateConfig.description,
+  },
+};
+
 export default function EmptyStatePage() {
   return (
     <div>

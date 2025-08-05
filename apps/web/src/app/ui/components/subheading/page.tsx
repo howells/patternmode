@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${subheadingConfig.name} | Patternmode`,
+  description: subheadingConfig.description,
+  openGraph: {
+    title: `${subheadingConfig.name} | Patternmode`,
+    description: subheadingConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${subheadingConfig.name} | Patternmode`,
+    description: subheadingConfig.description,
+  },
+};
+
 export default function SubheadingPage() {
   return (
     <div>

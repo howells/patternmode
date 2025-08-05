@@ -1,13 +1,23 @@
-import type { VariantProps } from "tailwind-variants";
-
+import type {
+  SelectArrowProps,
+  SelectBackdropProps,
+  SelectContentProps,
+  SelectGroupLabelProps,
+  SelectItemProps,
+  SelectPositionerProps,
+  SelectScrollDownButtonProps,
+  SelectScrollUpButtonProps,
+  SelectSeparatorProps,
+  SelectTriggerProps,
+} from "./types";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
-import * as React from "react";
-import { tv } from "tailwind-variants";
 
+import * as React from "react";
 import { config } from "../../lib/config";
-import { cx, focusInput, hasErrorInput } from "../../lib/utils";
-import { Icon } from "../icon";
+import { cx, hasErrorInput } from "../../lib/utils";
+import { Icon } from "../icon/component";
+import { selectTriggerVariants } from "./variants";
 
 /**
  * Dropdown selection component with searchable options and keyboard navigation.
@@ -22,59 +32,6 @@ const SelectGroup = BaseSelect.Group;
  * Displays the selected value or placeholder text in the trigger.
  */
 const SelectValue = BaseSelect.Value;
-
-const selectTriggerVariants = tv({
-  base: [
-    // base
-    "group/trigger flex w-full max-w-sm select-none items-center justify-between gap-2 truncate rounded-md border shadow-xs outline-hidden transition",
-    // border color
-    " dark:border-zinc-800",
-    // text color
-    "text-zinc-900 dark:text-zinc-50",
-    // placeholder
-    "data-[placeholder]:text-zinc-500 dark:data-[placeholder]:text-zinc-500",
-    // background color
-    "bg-white dark:bg-zinc-950",
-    // hover
-    "hover:bg-zinc-50 dark:hover:bg-zinc-950/50",
-    // disabled
-    "data-[disabled]:bg-zinc-100 data-[disabled]:text-zinc-400",
-    "dark:data-[disabled]:border-zinc-700 dark:data-[disabled]:bg-zinc-800 dark:data-[disabled]:text-zinc-500",
-    // readonly
-    "data-[readonly]:cursor-default data-[readonly]:hover:bg-white dark:data-[readonly]:hover:bg-zinc-950",
-    focusInput,
-  ],
-  variants: {
-    size: {
-      xs: "px-2 h-control-xs text-xs",
-      sm: "px-2.5 h-control-sm text-sm",
-      default: "px-3 h-control-base text-sm",
-      lg: "px-4 h-control-lg text-base",
-    },
-  },
-  defaultVariants: {
-    size: "default",
-  },
-});
-
-/**
- * Props for the SelectTrigger component.
- */
-type SelectTriggerProps = {
-  /**
-   * Whether to display error styling for form validation.
-   * Adds red border and error state styling to indicate validation errors.
-   */
-  hasError?: boolean;
-  /**
-   * Size variant determining height and text size.
-   * - "xs": Extra small height and text size for very compact layouts
-   * - "sm": Small height and text size for compact layouts
-   * - "default": Regular height and text size for most use cases
-   * - "lg": Large height and text size for prominent displays
-   */
-  size?: "xs" | "sm" | "default" | "lg";
-} & React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & VariantProps<typeof selectTriggerVariants>;
 
 /**
  * Clickable trigger that opens the select dropdown and displays the current value.
@@ -112,11 +69,6 @@ const SelectTrigger = ({ ref, className, hasError, size, children, ...props }: S
 SelectTrigger.displayName = "SelectTrigger";
 
 /**
- * Props for the SelectScrollUpButton component.
- */
-type SelectScrollUpButtonProps = React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollUpArrow>;
-
-/**
  * Scroll up button that appears when there are more options above the visible area.
  */
 const SelectScrollUpButton = ({ ref, className, ...props }: SelectScrollUpButtonProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollUpArrow> | null> }) => (
@@ -132,11 +84,6 @@ const SelectScrollUpButton = ({ ref, className, ...props }: SelectScrollUpButton
   </BaseSelect.ScrollUpArrow>
 );
 SelectScrollUpButton.displayName = "SelectScrollUpButton";
-
-/**
- * Props for the SelectScrollDownButton component.
- */
-type SelectScrollDownButtonProps = React.ComponentPropsWithoutRef<typeof BaseSelect.ScrollDownArrow>;
 
 /**
  * Scroll down button that appears when there are more options below the visible area.
@@ -159,11 +106,6 @@ const SelectScrollDownButton = ({ ref, className, ...props }: SelectScrollDownBu
   </BaseSelect.ScrollDownArrow>
 );
 SelectScrollDownButton.displayName = "SelectScrollDownButton";
-
-/**
- * Props for the SelectBackdrop component.
- */
-type SelectBackdropProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Backdrop>;
 
 /**
  * Optional backdrop that appears behind the select dropdown.
@@ -189,24 +131,6 @@ SelectBackdrop.displayName = "SelectBackdrop";
 const SelectPortal = BaseSelect.Portal;
 
 /**
- * Props for the SelectPositioner component.
- */
-type SelectPositionerProps = {
-  /**
-   * Distance from the trigger element in pixels.
-   */
-  sideOffset?: number;
-  /**
-   * Padding for collision detection in pixels.
-   */
-  collisionPadding?: number;
-  /**
-   * Whether to align the item with the trigger (for better visual alignment).
-   */
-  alignItemWithTrigger?: boolean;
-} & React.ComponentPropsWithoutRef<typeof BaseSelect.Positioner>;
-
-/**
  * Positioner component that handles dropdown placement and collision detection.
  */
 const SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, alignItemWithTrigger = true, ...props }: SelectPositionerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Positioner> | null> }) => (
@@ -219,32 +143,6 @@ const SelectPositioner = ({ ref, sideOffset = 8, collisionPadding = 10, alignIte
   />
 );
 SelectPositioner.displayName = "SelectPositioner";
-
-/**
- * Props for the SelectContent component.
- */
-type SelectContentProps = {
-  /**
-   * Distance from the trigger element in pixels.
-   */
-  sideOffset?: number;
-  /**
-   * Padding for collision detection in pixels.
-   */
-  collisionPadding?: number;
-  /**
-   * Preferred placement side relative to the trigger.
-   */
-  side?: "top" | "right" | "bottom" | "left";
-  /**
-   * Alignment relative to the trigger element.
-   */
-  align?: "start" | "center" | "end";
-  /**
-   * Whether to align the item with the trigger (for better visual alignment).
-   */
-  alignItemWithTrigger?: boolean;
-} & React.ComponentPropsWithoutRef<typeof BaseSelect.Popup>;
 
 /**
  * Dropdown content container that holds the select options.
@@ -297,11 +195,6 @@ const SelectContent = (
 SelectContent.displayName = "SelectContent";
 
 /**
- * Props for the SelectGroupLabel component.
- */
-type SelectGroupLabelProps = React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel>;
-
-/**
  * Label component for grouping related select options.
  */
 const SelectGroupLabel = ({ ref, className, ...props }: SelectGroupLabelProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.GroupLabel> | null> }) => (
@@ -318,11 +211,6 @@ const SelectGroupLabel = ({ ref, className, ...props }: SelectGroupLabelProps & 
   />
 );
 SelectGroupLabel.displayName = "SelectGroupLabel";
-
-/**
- * Props for the SelectItem component.
- */
-type SelectItemProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Item>;
 
 /**
  * Individual selectable option within the dropdown.
@@ -363,11 +251,6 @@ const SelectItem = ({ ref, className, children, ...props }: SelectItemProps & { 
 SelectItem.displayName = "SelectItem";
 
 /**
- * Props for the SelectSeparator component.
- */
-type SelectSeparatorProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Separator>;
-
-/**
  * Visual separator for dividing groups of select options.
  */
 const SelectSeparator = ({ ref, className, ...props }: SelectSeparatorProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Separator> | null> }) => (
@@ -384,11 +267,6 @@ const SelectSeparator = ({ ref, className, ...props }: SelectSeparatorProps & { 
   />
 );
 SelectSeparator.displayName = "SelectSeparator";
-
-/**
- * Props for the SelectArrow component.
- */
-type SelectArrowProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Arrow>;
 
 /**
  * Arrow pointer that connects the dropdown to the trigger element.
@@ -428,25 +306,14 @@ SelectArrow.displayName = "SelectArrow";
 export {
   Select,
   SelectArrow,
-  type SelectArrowProps,
   SelectBackdrop,
-  type SelectBackdropProps,
   SelectContent,
-  type SelectContentProps,
   SelectGroup,
   SelectGroupLabel,
-  type SelectGroupLabelProps,
   SelectItem,
-  type SelectItemProps,
   SelectPortal,
   SelectPositioner,
-  type SelectPositionerProps,
-  type SelectScrollDownButtonProps,
-  type SelectScrollUpButtonProps,
   SelectSeparator,
-  type SelectSeparatorProps,
   SelectTrigger,
-  type SelectTriggerProps,
-  selectTriggerVariants,
   SelectValue,
 };

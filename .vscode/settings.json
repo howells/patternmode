@@ -1,12 +1,7 @@
 {
+
   // Disable all formatting completely
   "prettier.enable": false,
-  "editor.formatOnSave": false,
-  "editor.formatOnType": false,
-  "editor.formatOnPaste": false,
-
-  // Completely disable code actions to isolate the other formatter
-  "editor.codeActionsOnSave": false,
   "editor.formatOnSave": false,
   "editor.formatOnType": false,
   "editor.formatOnPaste": false,
@@ -73,7 +68,16 @@
   "workbench.editor.customLabels.patterns": {
     "**/app/**/page.tsx": "${dirname} [Page]",
     "**/app/**/layout.tsx": "${dirname} [Layout]",
-    "**/components/**/index.tsx": "${dirname} [Component]"
+
+    "**/components/**/component.tsx": "${dirname} [Component]",
+    "**/components/**/examples.tsx": "${dirname} [Examples]",
+    "**/components/**/preview.tsx": "${dirname} [Preview]",
+    "**/components/**/config.ts": "${dirname} [Config]",
+    "**/components/**/types.ts": "${dirname} [Types]",
+    "**/components/**/variants.ts": "${dirname} [Variants]",
+    "**/components/**/constants.ts": "${dirname} [Constants]",
+    "**/components/**/*.stories.tsx": "${dirname} [Stories]",
+    "**/components/**/*.playwright.test.tsx": "${dirname} [Test]"
   },
 
   // Completely disable TypeScript formatting and language server interference
@@ -92,20 +96,8 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
-  "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
-  "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
-  "typescript.format.insertSpaceAfterConstructor": false,
-  "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
-  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
   "typescript.format.insertSpaceAfterTypeAssertion": false,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
-  "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
-  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
@@ -163,10 +155,6 @@
 
   // Disable TypeScript language server formatting entirely
   "typescript.preferences.includePackageJsonAutoImports": "on",
-  "typescript.preferences.includeCompletionsForModuleExports": true,
-  "typescript.suggest.autoImports": true,
-  "typescript.validate.enable": true,
-  "typescript.format.enable": true,
   "next.typescript.plugin.enable": false,
   "editor.quickSuggestions": {
     "other": true,

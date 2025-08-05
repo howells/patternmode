@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Button } from "../button";
-import { Text } from "../text";
+import { Button } from "../button/component";
+import { Text } from "../text/component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
 export type TabsPreviewProps = {

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${donutChartConfig.name} | Patternmode`,
+  description: donutChartConfig.description,
+  openGraph: {
+    title: `${donutChartConfig.name} | Patternmode`,
+    description: donutChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${donutChartConfig.name} | Patternmode`,
+    description: donutChartConfig.description,
+  },
+};
+
 export default function DonutChartPage() {
   return (
     <div>

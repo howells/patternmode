@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${skeletonConfig.name} | Patternmode`,
+  description: skeletonConfig.description,
+  openGraph: {
+    title: `${skeletonConfig.name} | Patternmode`,
+    description: skeletonConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${skeletonConfig.name} | Patternmode`,
+    description: skeletonConfig.description,
+  },
+};
+
 export default function SkeletonPage() {
   return (
     <div>

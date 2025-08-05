@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${trackerConfig.name} | Patternmode`,
+  description: trackerConfig.description,
+  openGraph: {
+    title: `${trackerConfig.name} | Patternmode`,
+    description: trackerConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${trackerConfig.name} | Patternmode`,
+    description: trackerConfig.description,
+  },
+};
+
 export default function TrackerPage() {
   return (
     <div>

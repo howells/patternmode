@@ -13,7 +13,7 @@ import {
   getColorClassName,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
-import { Tooltip } from "../tooltip";
+import { Tooltip } from "../tooltip/component";
 
 /**
  * Determines the background color for the marker based on its position.

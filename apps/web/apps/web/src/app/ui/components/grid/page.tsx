@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: gridConfig.name,
+  description: gridConfig.description,
+  openGraph: {
+    title: gridConfig.name,
+    description: gridConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: gridConfig.name,
+    description: gridConfig.description,
+  },
+};
+
 export default function GridPage() {
   return (
     <div>

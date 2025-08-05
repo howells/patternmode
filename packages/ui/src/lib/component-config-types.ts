@@ -11,9 +11,9 @@ export type PropMetadata = {
   name: string;
   type: unknown;
   description?: string;
-  defaultValue?: string | boolean | number;
+  defaultValue?: unknown;
   required?: boolean;
-  options?: string[] | { value: string; label?: string }[];
+  options?: unknown;
   min?: number;
   max?: number;
 };

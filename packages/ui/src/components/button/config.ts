@@ -2,12 +2,14 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { Square } from "lucide-react";
 import { Button } from "./component";
 import {
+  ButtonAsLinkExample,
   DefaultExample,
   DestructiveExample,
   DisabledExample,
   FullWidthExample,
   GhostExample,
   IconPropExample,
+  IconsOnHoverExample,
   KeyboardShortcutsExample,
   LinkExample,
   LoadingExample,
@@ -71,6 +73,18 @@ export const buttonConfig: ComponentConfig = {
       title: "Link",
       description: "Link-styled button",
       component: LinkExample,
+    },
+    {
+      id: "button-as-link",
+      title: "Button as Link",
+      description: "Button that renders as a link using href prop",
+      component: ButtonAsLinkExample,
+    },
+    {
+      id: "icons-on-hover",
+      title: "Icons on Hover",
+      description: "Show left or right icons only on hover",
+      component: IconsOnHoverExample,
     },
     {
       id: "with-icons",

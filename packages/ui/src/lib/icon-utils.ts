@@ -37,7 +37,7 @@
  */
 
 import React from "react";
-import { getIconSizeForContext, Icon } from "../components/icon";
+import { getIconSizeForContext, Icon } from "../components/icon/component";
 import { config } from "./config";
 
 /**

@@ -3,7 +3,7 @@
 import { HelpCircle, Info, Settings } from "lucide-react";
 import React, { useState } from "react";
 
-import { Button } from "../button";
+import { Button } from "../button/component";
 import { Tooltip } from "./component";
 
 export function DefaultExample() {

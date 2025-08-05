@@ -4,193 +4,288 @@ import type { ComponentConfig, PropMetadata } from "../lib/component-config-type
 
 // Import all component configs
 import { accordionConfig } from "./accordion/config";
+import { alertDialogConfig } from "./alert-dialog/config";
+import { areaChartConfig } from "./area-chart/config";
+import { avatarConfig } from "./avatar/config";
+import { badgeConfig } from "./badge/config";
+import { barChartConfig } from "./bar-chart/config";
+import { barListConfig } from "./bar-list/config";
+import { breadcrumbsConfig } from "./breadcrumbs/config";
+import { buttonConfig } from "./button/config";
+import { buttonGroupConfig } from "./button-group/config";
+import { calendarConfig } from "./calendar/config";
+import { calloutConfig } from "./callout/config";
+import { cardConfig } from "./card/config";
+import { carouselConfig } from "./carousel/config";
+import { categoryBarConfig } from "./category-bar/config";
+import { checkboxConfig } from "./checkbox/config";
+import { checkboxGroupConfig } from "./checkbox-group/config";
+import { codeBlockConfig } from "./code-block/config";
+import { collapsibleConfig } from "./collapsible/config";
+import { comboChartConfig } from "./combo-chart/config";
+import { comboboxConfig } from "./combobox/config";
+import { contextMenuConfig } from "./context-menu/config";
+import { copyButtonConfig } from "./copy-button/config";
+import { datePickerConfig } from "./date-picker/config";
+import { descriptionListConfig } from "./description-list/config";
+import { dialogConfig } from "./dialog/config";
+import { dismissButtonConfig } from "./dismiss-button/config";
+import { dividerConfig } from "./divider/config";
+import { donutChartConfig } from "./donut-chart/config";
+import { dotConfig } from "./dot/config";
+import { drawerConfig } from "./drawer/config";
+import { dropdownItemConfig } from "./dropdown-item/config";
+import { emptyStateConfig } from "./empty-state/config";
+import { fieldConfig } from "./field/config";
+import { fieldArrayConfig } from "./field-array/config";
+import { fieldsetConfig } from "./fieldset/config";
+import { formConfig } from "./form/config";
+import { gridConfig } from "./grid/config";
+import { headingConfig } from "./heading/config";
+import { headingElementConfig } from "./heading-element/config";
+import { iconConfig } from "./icon/config";
+import { iconContainerConfig } from "./icon-container/config";
+import { iconSelectConfig } from "./icon-select/config";
+import { inputConfig } from "./input/config";
+import { kbdConfig } from "./kbd/config";
+import { labelConfig } from "./label/config";
+import { lineChartConfig } from "./line-chart/config";
+import { loaderConfig } from "./loader/config";
+import { menuConfig } from "./menu/config";
+import { menuBarConfig } from "./menu-bar/config";
+import { meterConfig } from "./meter/config";
+import { navbarConfig } from "./navbar/config";
+import { navigationMenuConfig } from "./navigation-menu/config";
+import { numberFieldConfig } from "./number-field/config";
+import { paginationConfig } from "./pagination/config";
+import { popoverConfig } from "./popover/config";
+import { previewCardConfig } from "./preview-card/config";
+import { progressConfig } from "./progress/config";
+import { progressCircleConfig } from "./progress-circle/config";
+import { radioConfig } from "./radio/config";
+import { radioCardGroupConfig } from "./radio-card-group/config";
+import { radioGroupConfig } from "./radio-group/config";
+import { responsiveDrawerConfig } from "./responsive-drawer/config";
+import { scrollAreaConfig } from "./scroll-area/config";
+import { searchFieldConfig } from "./search-field/config";
+import { selectConfig } from "./select/config";
+import { selectNativeConfig } from "./select-native/config";
+import { separatorConfig } from "./separator/config";
+import { sheetConfig } from "./sheet/config";
+import { sidebarConfig } from "./sidebar/config";
+import { skeletonConfig } from "./skeleton/config";
+import { sliderConfig } from "./slider/config";
+import { sparkChartConfig } from "./spark-chart/config";
+import { splitButtonConfig } from "./split-button/config";
+import { stackConfig } from "./stack/config";
+import { stackedListConfig } from "./stacked-list/config";
+import { subheadingConfig } from "./subheading/config";
+import { switchConfig } from "./switch/config";
+import { tabNavigationConfig } from "./tab-navigation/config";
+import { tableConfig } from "./table/config";
+import { tabsConfig } from "./tabs/config";
+import { tagConfig } from "./tag/config";
+import { tagGroupConfig } from "./tag-group/config";
+import { tagInputConfig } from "./tag-input/config";
+import { textConfig } from "./text/config";
+import { textListConfig } from "./text-list/config";
+import { textareaConfig } from "./textarea/config";
+import { toastConfig } from "./toast/config";
+import { toggleConfig } from "./toggle/config";
+import { toggleGroupConfig } from "./toggle-group/config";
+import { toolbarConfig } from "./toolbar/config";
+import { tooltipConfig } from "./tooltip/config";
+import { trackerConfig } from "./tracker/config";
+
 // Import all preview components
 import { AccordionPreview } from "./accordion/preview";
-import { alertDialogConfig } from "./alert-dialog/config";
 import { AlertDialogPreview } from "./alert-dialog/preview";
-import { areaChartConfig } from "./area-chart/config";
 import { AreaChartPreview } from "./area-chart/preview";
-import { avatarConfig } from "./avatar/config";
 import { AvatarPreview } from "./avatar/preview";
-import { badgeConfig } from "./badge/config";
 import { BadgePreview } from "./badge/preview";
-import { barChartConfig } from "./bar-chart/config";
 import { BarChartPreview } from "./bar-chart/preview";
-import { barListConfig } from "./bar-list/config";
 import { BarListPreview } from "./bar-list/preview";
-import { breadcrumbsConfig } from "./breadcrumbs/config";
 import { BreadcrumbsPreview } from "./breadcrumbs/preview";
-import { buttonGroupConfig } from "./button-group/config";
-import { ButtonGroupPreview } from "./button-group/preview";
-import { buttonConfig } from "./button/config";
 import { ButtonPreview } from "./button/preview";
-import { calendarConfig } from "./calendar/config";
+import { ButtonGroupPreview } from "./button-group/preview";
 import { CalendarPreview } from "./calendar/preview";
-import { calloutConfig } from "./callout/config";
 import { CalloutPreview } from "./callout/preview";
-import { cardConfig } from "./card/config";
 import { CardPreview } from "./card/preview";
-import { carouselConfig } from "./carousel/config";
 import { CarouselPreview } from "./carousel/preview";
-import { categoryBarConfig } from "./category-bar/config";
 import { CategoryBarPreview } from "./category-bar/preview";
-import { checkboxGroupConfig } from "./checkbox-group/config";
-import { CheckboxGroupPreview } from "./checkbox-group/preview";
-import { checkboxConfig } from "./checkbox/config";
 import { CheckboxPreview } from "./checkbox/preview";
-import { codeBlockConfig } from "./code-block/config";
+import { CheckboxGroupPreview } from "./checkbox-group/preview";
 import { CodeBlockPreview } from "./code-block/preview";
-import { collapsibleConfig } from "./collapsible/config";
 import { CollapsiblePreview } from "./collapsible/preview";
-import { comboChartConfig } from "./combo-chart/config";
 import { ComboChartPreview } from "./combo-chart/preview";
-import { comboboxConfig } from "./combobox/config";
 import { ComboboxPreview } from "./combobox/preview";
-import { contextMenuConfig } from "./context-menu/config";
 import { ContextMenuPreview } from "./context-menu/preview";
-import { copyButtonConfig } from "./copy-button/config";
 import { CopyButtonPreview } from "./copy-button/preview";
-import { datePickerConfig } from "./date-picker/config";
 import { DatePickerPreview } from "./date-picker/preview";
-import { descriptionListConfig } from "./description-list/config";
 import { DescriptionListPreview } from "./description-list/preview";
-import { dialogConfig } from "./dialog/config";
 import { DialogPreview } from "./dialog/preview";
-import { dismissButtonConfig } from "./dismiss-button/config";
 import { DismissButtonPreview } from "./dismiss-button/preview";
-import { dividerConfig } from "./divider/config";
 import { DividerPreview } from "./divider/preview";
-import { donutChartConfig } from "./donut-chart/config";
 import { DonutChartPreview } from "./donut-chart/preview";
-import { dotConfig } from "./dot/config";
 import { DotPreview } from "./dot/preview";
-import { drawerConfig } from "./drawer/config";
 import { DrawerPreview } from "./drawer/preview";
-import { dropdownItemConfig } from "./dropdown-item/config";
 import { DropdownItemPreview } from "./dropdown-item/preview";
-import { emptyStateConfig } from "./empty-state/config";
 import { EmptyStatePreview } from "./empty-state/preview";
-import { fieldArrayConfig } from "./field-array/config";
-import { FieldArrayPreview } from "./field-array/preview";
-import { fieldConfig } from "./field/config";
 import { FieldPreview } from "./field/preview";
-import { fieldsetConfig } from "./fieldset/config";
+import { FieldArrayPreview } from "./field-array/preview";
 import { FieldsetPreview } from "./fieldset/preview";
-import { formConfig } from "./form/config";
 import { FormPreview } from "./form/preview";
-import { gridConfig } from "./grid/config";
 import { GridPreview } from "./grid/preview";
-import { headingElementConfig } from "./heading-element/config";
-import { HeadingElementPreview } from "./heading-element/preview";
-import { headingConfig } from "./heading/config";
 import { HeadingPreview } from "./heading/preview";
-import { iconContainerConfig } from "./icon-container/config";
-import { IconContainerPreview } from "./icon-container/preview";
-import { iconSelectConfig } from "./icon-select/config";
-import { IconSelectPreview } from "./icon-select/preview";
-import { iconConfig } from "./icon/config";
+import { HeadingElementPreview } from "./heading-element/preview";
 import { IconPreview } from "./icon/preview";
-import { inputConfig } from "./input/config";
+import { IconContainerPreview } from "./icon-container/preview";
+import { IconSelectPreview } from "./icon-select/preview";
 import { InputPreview } from "./input/preview";
-import { kbdConfig } from "./kbd/config";
 import { KbdPreview } from "./kbd/preview";
-import { labelConfig } from "./label/config";
 import { LabelPreview } from "./label/preview";
-import { lineChartConfig } from "./line-chart/config";
-
 import { LineChartPreview } from "./line-chart/preview";
-import { loaderConfig } from "./loader/config";
 import { LoaderPreview } from "./loader/preview";
-import { menuBarConfig } from "./menu-bar/config";
-import { MenuBarPreview } from "./menu-bar/preview";
-import { menuConfig } from "./menu/config";
 import { MenuPreview } from "./menu/preview";
-import { meterConfig } from "./meter/config";
+import { MenuBarPreview } from "./menu-bar/preview";
 import { MeterPreview } from "./meter/preview";
-import { navbarConfig } from "./navbar/config";
 import { NavbarPreview } from "./navbar/preview";
-import { navigationMenuConfig } from "./navigation-menu/config";
 import { NavigationMenuPreview } from "./navigation-menu/preview";
-import { numberFieldConfig } from "./number-field/config";
 import { NumberFieldPreview } from "./number-field/preview";
-import { paginationConfig } from "./pagination/config";
 import { PaginationPreview } from "./pagination/preview";
-import { popoverConfig } from "./popover/config";
 import { PopoverPreview } from "./popover/preview";
-import { previewCardConfig } from "./preview-card/config";
 import { PreviewCardPreview } from "./preview-card/preview";
-import { progressCircleConfig } from "./progress-circle/config";
-import { ProgressCirclePreview } from "./progress-circle/preview";
-import { progressConfig } from "./progress/config";
 import { ProgressPreview } from "./progress/preview";
-import { radioCardGroupConfig } from "./radio-card-group/config";
-import { RadioCardGroupPreview } from "./radio-card-group/preview";
-import { radioGroupConfig } from "./radio-group/config";
-import { RadioGroupPreview } from "./radio-group/preview";
-import { radioConfig } from "./radio/config";
+import { ProgressCirclePreview } from "./progress-circle/preview";
 import { RadioPreview } from "./radio/preview";
-import { responsiveDrawerConfig } from "./responsive-drawer/config";
+import { RadioCardGroupPreview } from "./radio-card-group/preview";
+import { RadioGroupPreview } from "./radio-group/preview";
 import { ResponsiveDrawerPreview } from "./responsive-drawer/preview";
-import { scrollAreaConfig } from "./scroll-area/config";
 import { ScrollAreaPreview } from "./scroll-area/preview";
-import { searchFieldConfig } from "./search-field/config";
 import { SearchFieldPreview } from "./search-field/preview";
-import { selectNativeConfig } from "./select-native/config";
-import { SelectNativePreview } from "./select-native/preview";
-import { selectConfig } from "./select/config";
 import { SelectPreview } from "./select/preview";
-import { separatorConfig } from "./separator/config";
+import { SelectNativePreview } from "./select-native/preview";
 import { SeparatorPreview } from "./separator/preview";
-import { sheetConfig } from "./sheet/config";
 import { SheetPreview } from "./sheet/preview";
-import { sidebarConfig } from "./sidebar/config";
 import { SidebarPreview } from "./sidebar/preview";
-import { skeletonConfig } from "./skeleton/config";
 import { SkeletonPreview } from "./skeleton/preview";
-import { sliderConfig } from "./slider/config";
 import { SliderPreview } from "./slider/preview";
-import { sparkChartConfig } from "./spark-chart/config";
 import { SparkChartPreview } from "./spark-chart/preview";
-import { splitButtonConfig } from "./split-button/config";
 import { SplitButtonPreview } from "./split-button/preview";
-import { stackConfig } from "./stack/config";
 import { StackPreview } from "./stack/preview";
-import { stackedListConfig } from "./stacked-list/config";
 import { StackedListPreview } from "./stacked-list/preview";
-import { subheadingConfig } from "./subheading/config";
 import { SubheadingPreview } from "./subheading/preview";
-import { switchConfig } from "./switch/config";
 import { SwitchPreview } from "./switch/preview";
-import { tabNavigationConfig } from "./tab-navigation/config";
 import { TabNavigationPreview } from "./tab-navigation/preview";
-import { tableConfig } from "./table/config";
 import { TablePreview } from "./table/preview";
-import { tabsConfig } from "./tabs/config";
 import { TabsPreview } from "./tabs/preview";
-import { tagGroupConfig } from "./tag-group/config";
-import { TagGroupPreview } from "./tag-group/preview";
-import { tagInputConfig } from "./tag-input/config";
-import { TagInputPreview } from "./tag-input/preview";
-import { tagConfig } from "./tag/config";
 import { TagPreview } from "./tag/preview";
-import { textListConfig } from "./text-list/config";
-import { TextListPreview } from "./text-list/preview";
-import { textConfig } from "./text/config";
+import { TagGroupPreview } from "./tag-group/preview";
+import { TagInputPreview } from "./tag-input/preview";
 import { TextPreview } from "./text/preview";
-import { textareaConfig } from "./textarea/config";
+import { TextListPreview } from "./text-list/preview";
 import { TextareaPreview } from "./textarea/preview";
-import { toastConfig } from "./toast/config";
 import { ToastPreview } from "./toast/preview";
-import { toggleGroupConfig } from "./toggle-group/config";
-import { ToggleGroupPreview } from "./toggle-group/preview";
-import { toggleConfig } from "./toggle/config";
 import { TogglePreview } from "./toggle/preview";
-import { toolbarConfig } from "./toolbar/config";
+import { ToggleGroupPreview } from "./toggle-group/preview";
 import { ToolbarPreview } from "./toolbar/preview";
-import { tooltipConfig } from "./tooltip/config";
 import { TooltipPreview } from "./tooltip/preview";
-import { trackerConfig } from "./tracker/config";
 import { TrackerPreview } from "./tracker/preview";
+
+// Import all preview props
+import { accordionPreviewProps } from "./accordion/preview";
+import { alertDialogPreviewProps } from "./alert-dialog/preview";
+import { areaChartPreviewProps } from "./area-chart/preview";
+import { avatarPreviewProps } from "./avatar/preview";
+import { badgePreviewProps } from "./badge/preview";
+import { barChartPreviewProps } from "./bar-chart/preview";
+import { barListPreviewProps } from "./bar-list/preview";
+import { breadcrumbsPreviewProps } from "./breadcrumbs/preview";
+import { buttonPreviewProps } from "./button/preview";
+import { buttonGroupPreviewProps } from "./button-group/preview";
+import { calendarPreviewProps } from "./calendar/preview";
+import { calloutPreviewProps } from "./callout/preview";
+import { cardPreviewProps } from "./card/preview";
+import { carouselPreviewProps } from "./carousel/preview";
+import { categoryBarPreviewProps } from "./category-bar/preview";
+import { checkboxPreviewProps } from "./checkbox/preview";
+import { checkboxGroupPreviewProps } from "./checkbox-group/preview";
+import { codeBlockPreviewProps } from "./code-block/preview";
+import { collapsiblePreviewProps } from "./collapsible/preview";
+import { comboChartPreviewProps } from "./combo-chart/preview";
+import { comboboxPreviewProps } from "./combobox/preview";
+import { contextMenuPreviewProps } from "./context-menu/preview";
+import { copyButtonPreviewProps } from "./copy-button/preview";
+import { datePickerPreviewProps } from "./date-picker/preview";
+import { descriptionListPreviewProps } from "./description-list/preview";
+import { dialogPreviewProps } from "./dialog/preview";
+import { dismissButtonPreviewProps } from "./dismiss-button/preview";
+import { dividerPreviewProps } from "./divider/preview";
+import { donutChartPreviewProps } from "./donut-chart/preview";
+import { dotPreviewProps } from "./dot/preview";
+import { drawerPreviewProps } from "./drawer/preview";
+import { dropdownItemPreviewProps } from "./dropdown-item/preview";
+import { emptyStatePreviewProps } from "./empty-state/preview";
+import { fieldPreviewProps } from "./field/preview";
+import { fieldArrayPreviewProps } from "./field-array/preview";
+import { fieldsetPreviewProps } from "./fieldset/preview";
+import { formPreviewProps } from "./form/preview";
+import { gridPreviewProps } from "./grid/preview";
+import { headingPreviewProps } from "./heading/preview";
+import { headingElementPreviewProps } from "./heading-element/preview";
+import { iconPreviewProps } from "./icon/preview";
+import { iconContainerPreviewProps } from "./icon-container/preview";
+import { iconSelectPreviewProps } from "./icon-select/preview";
+import { inputPreviewProps } from "./input/preview";
+import { kbdPreviewProps } from "./kbd/preview";
+import { labelPreviewProps } from "./label/preview";
+import { lineChartPreviewProps } from "./line-chart/preview";
+import { loaderPreviewProps } from "./loader/preview";
+import { menuPreviewProps } from "./menu/preview";
+import { menuBarPreviewProps } from "./menu-bar/preview";
+import { meterPreviewProps } from "./meter/preview";
+import { navbarPreviewProps } from "./navbar/preview";
+import { navigationMenuPreviewProps } from "./navigation-menu/preview";
+import { numberFieldPreviewProps } from "./number-field/preview";
+import { paginationPreviewProps } from "./pagination/preview";
+import { popoverPreviewProps } from "./popover/preview";
+import { previewCardPreviewProps } from "./preview-card/preview";
+import { progressPreviewProps } from "./progress/preview";
+import { progressCirclePreviewProps } from "./progress-circle/preview";
+import { radioPreviewProps } from "./radio/preview";
+import { radioCardGroupPreviewProps } from "./radio-card-group/preview";
+import { radioGroupPreviewProps } from "./radio-group/preview";
+import { responsiveDrawerPreviewProps } from "./responsive-drawer/preview";
+import { scrollAreaPreviewProps } from "./scroll-area/preview";
+import { searchFieldPreviewProps } from "./search-field/preview";
+import { selectPreviewProps } from "./select/preview";
+import { selectNativePreviewProps } from "./select-native/preview";
+import { separatorPreviewProps } from "./separator/preview";
+import { sheetPreviewProps } from "./sheet/preview";
+import { sidebarPreviewProps } from "./sidebar/preview";
+import { skeletonPreviewProps } from "./skeleton/preview";
+import { sliderPreviewProps } from "./slider/preview";
+import { sparkChartPreviewProps } from "./spark-chart/preview";
+import { splitButtonPreviewProps } from "./split-button/preview";
+import { stackPreviewProps } from "./stack/preview";
+import { stackedListPreviewProps } from "./stacked-list/preview";
+import { subheadingPreviewProps } from "./subheading/preview";
+import { switchPreviewProps } from "./switch/preview";
+import { tabNavigationPreviewProps } from "./tab-navigation/preview";
+import { tablePreviewProps } from "./table/preview";
+import { tabsPreviewProps } from "./tabs/preview";
+import { tagPreviewProps } from "./tag/preview";
+import { tagGroupPreviewProps } from "./tag-group/preview";
+import { tagInputPreviewProps } from "./tag-input/preview";
+import { textPreviewProps } from "./text/preview";
+import { textListPreviewProps } from "./text-list/preview";
+import { textareaPreviewProps } from "./textarea/preview";
+import { toastPreviewProps } from "./toast/preview";
+import { togglePreviewProps } from "./toggle/preview";
+import { toggleGroupPreviewProps } from "./toggle-group/preview";
+import { toolbarPreviewProps } from "./toolbar/preview";
+import { tooltipPreviewProps } from "./tooltip/preview";
+import { trackerPreviewProps } from "./tracker/preview";
 
 export const COMPONENT_REGISTRY = {
   "accordion": accordionConfig,
@@ -385,6 +480,200 @@ export const PREVIEW_REGISTRY = {
   "tracker": TrackerPreview,
 } as const satisfies Record<string, React.ComponentType<any>>;
 
+// Static preview props registry
+export const PREVIEW_PROPS_REGISTRY = {
+  "accordion": accordionPreviewProps,
+  "alert-dialog": alertDialogPreviewProps,
+  "area-chart": areaChartPreviewProps,
+  "avatar": avatarPreviewProps,
+  "badge": badgePreviewProps,
+  "bar-chart": barChartPreviewProps,
+  "bar-list": barListPreviewProps,
+  "breadcrumbs": breadcrumbsPreviewProps,
+  "button": buttonPreviewProps,
+  "button-group": buttonGroupPreviewProps,
+  "calendar": calendarPreviewProps,
+  "callout": calloutPreviewProps,
+  "card": cardPreviewProps,
+  "carousel": carouselPreviewProps,
+  "category-bar": categoryBarPreviewProps,
+  "checkbox": checkboxPreviewProps,
+  "checkbox-group": checkboxGroupPreviewProps,
+  "code-block": codeBlockPreviewProps,
+  "collapsible": collapsiblePreviewProps,
+  "combo-chart": comboChartPreviewProps,
+  "combobox": comboboxPreviewProps,
+  "context-menu": contextMenuPreviewProps,
+  "copy-button": copyButtonPreviewProps,
+  "date-picker": datePickerPreviewProps,
+  "description-list": descriptionListPreviewProps,
+  "dialog": dialogPreviewProps,
+  "dismiss-button": dismissButtonPreviewProps,
+  "divider": dividerPreviewProps,
+  "donut-chart": donutChartPreviewProps,
+  "dot": dotPreviewProps,
+  "drawer": drawerPreviewProps,
+  "dropdown-item": dropdownItemPreviewProps,
+  "empty-state": emptyStatePreviewProps,
+  "field": fieldPreviewProps,
+  "field-array": fieldArrayPreviewProps,
+  "fieldset": fieldsetPreviewProps,
+  "form": formPreviewProps,
+  "grid": gridPreviewProps,
+  "heading": headingPreviewProps,
+  "heading-element": headingElementPreviewProps,
+  "icon": iconPreviewProps,
+  "icon-container": iconContainerPreviewProps,
+  "icon-select": iconSelectPreviewProps,
+  "input": inputPreviewProps,
+  "kbd": kbdPreviewProps,
+  "label": labelPreviewProps,
+  "line-chart": lineChartPreviewProps,
+  "loader": loaderPreviewProps,
+  "menu": menuPreviewProps,
+  "menu-bar": menuBarPreviewProps,
+  "meter": meterPreviewProps,
+  "navbar": navbarPreviewProps,
+  "navigation-menu": navigationMenuPreviewProps,
+  "number-field": numberFieldPreviewProps,
+  "pagination": paginationPreviewProps,
+  "popover": popoverPreviewProps,
+  "preview-card": previewCardPreviewProps,
+  "progress": progressPreviewProps,
+  "progress-circle": progressCirclePreviewProps,
+  "radio": radioPreviewProps,
+  "radio-card-group": radioCardGroupPreviewProps,
+  "radio-group": radioGroupPreviewProps,
+  "responsive-drawer": responsiveDrawerPreviewProps,
+  "scroll-area": scrollAreaPreviewProps,
+  "search-field": searchFieldPreviewProps,
+  "select": selectPreviewProps,
+  "select-native": selectNativePreviewProps,
+  "separator": separatorPreviewProps,
+  "sheet": sheetPreviewProps,
+  "sidebar": sidebarPreviewProps,
+  "skeleton": skeletonPreviewProps,
+  "slider": sliderPreviewProps,
+  "spark-chart": sparkChartPreviewProps,
+  "split-button": splitButtonPreviewProps,
+  "stack": stackPreviewProps,
+  "stacked-list": stackedListPreviewProps,
+  "subheading": subheadingPreviewProps,
+  "switch": switchPreviewProps,
+  "tab-navigation": tabNavigationPreviewProps,
+  "table": tablePreviewProps,
+  "tabs": tabsPreviewProps,
+  "tag": tagPreviewProps,
+  "tag-group": tagGroupPreviewProps,
+  "tag-input": tagInputPreviewProps,
+  "text": textPreviewProps,
+  "text-list": textListPreviewProps,
+  "textarea": textareaPreviewProps,
+  "toast": toastPreviewProps,
+  "toggle": togglePreviewProps,
+  "toggle-group": toggleGroupPreviewProps,
+  "toolbar": toolbarPreviewProps,
+  "tooltip": tooltipPreviewProps,
+  "tracker": trackerPreviewProps,
+} as const satisfies Record<string, PropMetadata[]>;
+
+// Component metadata registry
+export const COMPONENT_METADATA_REGISTRY = {
+  "accordion": { title: accordionConfig.name, description: accordionConfig.description },
+  "alert-dialog": { title: alertDialogConfig.name, description: alertDialogConfig.description },
+  "area-chart": { title: areaChartConfig.name, description: areaChartConfig.description },
+  "avatar": { title: avatarConfig.name, description: avatarConfig.description },
+  "badge": { title: badgeConfig.name, description: badgeConfig.description },
+  "bar-chart": { title: barChartConfig.name, description: barChartConfig.description },
+  "bar-list": { title: barListConfig.name, description: barListConfig.description },
+  "breadcrumbs": { title: breadcrumbsConfig.name, description: breadcrumbsConfig.description },
+  "button": { title: buttonConfig.name, description: buttonConfig.description },
+  "button-group": { title: buttonGroupConfig.name, description: buttonGroupConfig.description },
+  "calendar": { title: calendarConfig.name, description: calendarConfig.description },
+  "callout": { title: calloutConfig.name, description: calloutConfig.description },
+  "card": { title: cardConfig.name, description: cardConfig.description },
+  "carousel": { title: carouselConfig.name, description: carouselConfig.description },
+  "category-bar": { title: categoryBarConfig.name, description: categoryBarConfig.description },
+  "checkbox": { title: checkboxConfig.name, description: checkboxConfig.description },
+  "checkbox-group": { title: checkboxGroupConfig.name, description: checkboxGroupConfig.description },
+  "code-block": { title: codeBlockConfig.name, description: codeBlockConfig.description },
+  "collapsible": { title: collapsibleConfig.name, description: collapsibleConfig.description },
+  "combo-chart": { title: comboChartConfig.name, description: comboChartConfig.description },
+  "combobox": { title: comboboxConfig.name, description: comboboxConfig.description },
+  "context-menu": { title: contextMenuConfig.name, description: contextMenuConfig.description },
+  "copy-button": { title: copyButtonConfig.name, description: copyButtonConfig.description },
+  "date-picker": { title: datePickerConfig.name, description: datePickerConfig.description },
+  "description-list": { title: descriptionListConfig.name, description: descriptionListConfig.description },
+  "dialog": { title: dialogConfig.name, description: dialogConfig.description },
+  "dismiss-button": { title: dismissButtonConfig.name, description: dismissButtonConfig.description },
+  "divider": { title: dividerConfig.name, description: dividerConfig.description },
+  "donut-chart": { title: donutChartConfig.name, description: donutChartConfig.description },
+  "dot": { title: dotConfig.name, description: dotConfig.description },
+  "drawer": { title: drawerConfig.name, description: drawerConfig.description },
+  "dropdown-item": { title: dropdownItemConfig.name, description: dropdownItemConfig.description },
+  "empty-state": { title: emptyStateConfig.name, description: emptyStateConfig.description },
+  "field": { title: fieldConfig.name, description: fieldConfig.description },
+  "field-array": { title: fieldArrayConfig.name, description: fieldArrayConfig.description },
+  "fieldset": { title: fieldsetConfig.name, description: fieldsetConfig.description },
+  "form": { title: formConfig.name, description: formConfig.description },
+  "grid": { title: gridConfig.name, description: gridConfig.description },
+  "heading": { title: headingConfig.name, description: headingConfig.description },
+  "heading-element": { title: headingElementConfig.name, description: headingElementConfig.description },
+  "icon": { title: iconConfig.name, description: iconConfig.description },
+  "icon-container": { title: iconContainerConfig.name, description: iconContainerConfig.description },
+  "icon-select": { title: iconSelectConfig.name, description: iconSelectConfig.description },
+  "input": { title: inputConfig.name, description: inputConfig.description },
+  "kbd": { title: kbdConfig.name, description: kbdConfig.description },
+  "label": { title: labelConfig.name, description: labelConfig.description },
+  "line-chart": { title: lineChartConfig.name, description: lineChartConfig.description },
+  "loader": { title: loaderConfig.name, description: loaderConfig.description },
+  "menu": { title: menuConfig.name, description: menuConfig.description },
+  "menu-bar": { title: menuBarConfig.name, description: menuBarConfig.description },
+  "meter": { title: meterConfig.name, description: meterConfig.description },
+  "navbar": { title: navbarConfig.name, description: navbarConfig.description },
+  "navigation-menu": { title: navigationMenuConfig.name, description: navigationMenuConfig.description },
+  "number-field": { title: numberFieldConfig.name, description: numberFieldConfig.description },
+  "pagination": { title: paginationConfig.name, description: paginationConfig.description },
+  "popover": { title: popoverConfig.name, description: popoverConfig.description },
+  "preview-card": { title: previewCardConfig.name, description: previewCardConfig.description },
+  "progress": { title: progressConfig.name, description: progressConfig.description },
+  "progress-circle": { title: progressCircleConfig.name, description: progressCircleConfig.description },
+  "radio": { title: radioConfig.name, description: radioConfig.description },
+  "radio-card-group": { title: radioCardGroupConfig.name, description: radioCardGroupConfig.description },
+  "radio-group": { title: radioGroupConfig.name, description: radioGroupConfig.description },
+  "responsive-drawer": { title: responsiveDrawerConfig.name, description: responsiveDrawerConfig.description },
+  "scroll-area": { title: scrollAreaConfig.name, description: scrollAreaConfig.description },
+  "search-field": { title: searchFieldConfig.name, description: searchFieldConfig.description },
+  "select": { title: selectConfig.name, description: selectConfig.description },
+  "select-native": { title: selectNativeConfig.name, description: selectNativeConfig.description },
+  "separator": { title: separatorConfig.name, description: separatorConfig.description },
+  "sheet": { title: sheetConfig.name, description: sheetConfig.description },
+  "sidebar": { title: sidebarConfig.name, description: sidebarConfig.description },
+  "skeleton": { title: skeletonConfig.name, description: skeletonConfig.description },
+  "slider": { title: sliderConfig.name, description: sliderConfig.description },
+  "spark-chart": { title: sparkChartConfig.name, description: sparkChartConfig.description },
+  "split-button": { title: splitButtonConfig.name, description: splitButtonConfig.description },
+  "stack": { title: stackConfig.name, description: stackConfig.description },
+  "stacked-list": { title: stackedListConfig.name, description: stackedListConfig.description },
+  "subheading": { title: subheadingConfig.name, description: subheadingConfig.description },
+  "switch": { title: switchConfig.name, description: switchConfig.description },
+  "tab-navigation": { title: tabNavigationConfig.name, description: tabNavigationConfig.description },
+  "table": { title: tableConfig.name, description: tableConfig.description },
+  "tabs": { title: tabsConfig.name, description: tabsConfig.description },
+  "tag": { title: tagConfig.name, description: tagConfig.description },
+  "tag-group": { title: tagGroupConfig.name, description: tagGroupConfig.description },
+  "tag-input": { title: tagInputConfig.name, description: tagInputConfig.description },
+  "text": { title: textConfig.name, description: textConfig.description },
+  "text-list": { title: textListConfig.name, description: textListConfig.description },
+  "textarea": { title: textareaConfig.name, description: textareaConfig.description },
+  "toast": { title: toastConfig.name, description: toastConfig.description },
+  "toggle": { title: toggleConfig.name, description: toggleConfig.description },
+  "toggle-group": { title: toggleGroupConfig.name, description: toggleGroupConfig.description },
+  "toolbar": { title: toolbarConfig.name, description: toolbarConfig.description },
+  "tooltip": { title: tooltipConfig.name, description: tooltipConfig.description },
+  "tracker": { title: trackerConfig.name, description: trackerConfig.description },
+} as const satisfies Record<string, { title: string; description: string }>;
+
 // Derive types automatically
 export type ComponentId = keyof typeof COMPONENT_REGISTRY;
 
@@ -433,8 +722,19 @@ export function getPreviewComponent(id: string): React.ComponentType<any> | unde
 }
 
 export function getPreviewProps(id: string): PropMetadata[] {
+  // First try to get props from the preview props registry
+  const previewProps = PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
+  if (previewProps) {
+    return previewProps;
+  }
+
+  // Fallback to config props
   const config = getComponentConfig(id);
   return config?.props || [];
+}
+
+export function getComponentMetadata(id: string): { title: string; description: string } | undefined {
+  return COMPONENT_METADATA_REGISTRY[id as keyof typeof COMPONENT_METADATA_REGISTRY];
 }
 
 // Component list organized by categories (derived automatically)

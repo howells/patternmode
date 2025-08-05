@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${searchFieldConfig.name} | Patternmode`,
+  description: searchFieldConfig.description,
+  openGraph: {
+    title: `${searchFieldConfig.name} | Patternmode`,
+    description: searchFieldConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${searchFieldConfig.name} | Patternmode`,
+    description: searchFieldConfig.description,
+  },
+};
+
 export default function SearchFieldPage() {
   return (
     <div>

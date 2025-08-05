@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 
 import { cx } from "../../lib/utils";
-import { Button } from "../button";
+import { Button } from "../button/component";
 
 type PaginationProps = {
   /**

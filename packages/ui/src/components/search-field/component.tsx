@@ -1,11 +1,11 @@
 import { Search, X } from "lucide-react";
 import * as React from "react";
 import { cx } from "../../lib/utils";
-import { Button } from "../button";
-import { EmptyState } from "../empty-state";
-import { Input } from "../input";
-import { Stack } from "../stack";
-import { Text } from "../text";
+import { Button } from "../button/component";
+import { EmptyState } from "../empty-state/component";
+import { Input } from "../input/component";
+import { Stack } from "../stack/component";
+import { Text } from "../text/component";
 
 export type SearchFieldItem = {
   id: string;

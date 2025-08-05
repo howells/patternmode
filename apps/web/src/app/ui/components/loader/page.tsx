@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${loaderConfig.name} | Patternmode`,
+  description: loaderConfig.description,
+  openGraph: {
+    title: `${loaderConfig.name} | Patternmode`,
+    description: loaderConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${loaderConfig.name} | Patternmode`,
+    description: loaderConfig.description,
+  },
+};
+
 export default function LoaderPage() {
   return (
     <div>

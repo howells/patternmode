@@ -1,24 +1,33 @@
 "use client";
 
-import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
-import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
-import type { Locale } from "date-fns";
-import type { VariantProps } from "tailwind-variants";
-import type { Matcher } from "../calendar";
-
+import type {
+  CalendarProps,
+  DatePreset,
+  DateRange,
+  DateRangePreset,
+  PickerProps,
+  Preset,
+  PresetContainerProps,
+  SingleDatePickerProps,
+  SingleProps,
+  TimeInputProps,
+  TimeSegmentProps,
+  Translations,
+  TriggerProps,
+} from "./types";
 import { Time } from "@internationalized/date";
 import { useDateSegment, useTimeField } from "@react-aria/datepicker";
 import { useTimeFieldState } from "@react-stately/datepicker";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Calendar } from "lucide-react";
-import * as React from "react";
-import { tv } from "tailwind-variants";
 
-import { cx, focusInput, focusRing, hasErrorInput } from "../../lib/utils";
-import { Button } from "../button";
-import { Calendar as CalendarPrimitive } from "../calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import * as React from "react";
+import { cx, focusRing } from "../../lib/utils";
+import { Button } from "../button/component";
+import { Calendar as CalendarPrimitive } from "../calendar/component";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover/component";
+import { triggerStyles } from "./variants";
 
 // #region TimeInput
 // ============================================================================
@@ -33,11 +42,6 @@ const isBrowserLocaleClockType24h = () => {
 
   return Number.isInteger(Number(hr));
 };
-
-type TimeSegmentProps = {
-  segment: DateSegment;
-  state: DateFieldState;
-} & { key?: React.Key };
 
 const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -80,19 +84,6 @@ const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
       {segment.isPlaceholder ? segment.placeholder : segment.text}
     </div>
   );
-};
-
-type TimeInputProps = {
-  /**
-   * Hour cycle format (12 or 24 hour).
-   * Determines the display format for hour values.
-   */
-  hourCycle?: 12 | 24;
-} & Omit<
-  AriaTimeFieldProps<TimeValue>,
-  "label" | "shouldForceLeadingZeros" | "description" | "errorMessage"
-> & {
-  ref?: React.RefObject<HTMLDivElement | null>;
 };
 
 const TimeInput = ({ ref, hourCycle, ...props }: TimeInputProps) => {
@@ -141,34 +132,6 @@ TimeInput.displayName = "TimeInput";
 
 // #region Trigger
 // ============================================================================
-
-const triggerStyles = tv({
-  base: [
-    // base
-    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate rounded-md border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
-    // background color
-    "bg-white dark:bg-zinc-950",
-    // border color
-    " dark:border-zinc-800",
-    // text color
-    "text-zinc-900 dark:text-zinc-50",
-    // placeholder color
-    "placeholder-zinc-400 dark:placeholder-zinc-500",
-    // hover
-    "hover:bg-zinc-50 dark:hover:bg-zinc-950/50",
-    // disabled
-    "disabled:pointer-events-none",
-    "disabled:bg-zinc-100 disabled:text-zinc-400",
-    "dark:disabled:border-zinc-800 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500",
-    // focus
-    focusInput,
-  ],
-  variants: {
-    hasError: {
-      true: hasErrorInput,
-    },
-  },
-});
 
 type TriggerProps = {
   /**
@@ -878,4 +841,4 @@ const DatePicker = ({ presets, ...props }: SingleDatePickerProps) => {
 
 DatePicker.displayName = "DatePicker";
 
-export { DatePicker, type DatePreset, type DateRange, type DateRangePreset };
+export { DatePicker };

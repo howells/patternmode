@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: sidebarConfig.name,
+  description: sidebarConfig.description,
+  openGraph: {
+    title: sidebarConfig.name,
+    description: sidebarConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: sidebarConfig.name,
+    description: sidebarConfig.description,
+  },
+};
+
 export default function SidebarPage() {
   return (
     <div>

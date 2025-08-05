@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${collapsibleConfig.name} | Patternmode`,
+  description: collapsibleConfig.description,
+  openGraph: {
+    title: `${collapsibleConfig.name} | Patternmode`,
+    description: collapsibleConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${collapsibleConfig.name} | Patternmode`,
+    description: collapsibleConfig.description,
+  },
+};
+
 export default function CollapsiblePage() {
   return (
     <div>

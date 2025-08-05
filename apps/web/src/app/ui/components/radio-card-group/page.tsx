@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${radioCardGroupConfig.name} | Patternmode`,
+  description: radioCardGroupConfig.description,
+  openGraph: {
+    title: `${radioCardGroupConfig.name} | Patternmode`,
+    description: radioCardGroupConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${radioCardGroupConfig.name} | Patternmode`,
+    description: radioCardGroupConfig.description,
+  },
+};
+
 export default function RadioCardGroupPage() {
   return (
     <div>

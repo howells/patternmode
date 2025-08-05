@@ -6,7 +6,7 @@ import Link from "next/link";
 import * as React from "react";
 
 import { cx, focusRing } from "../../lib/utils";
-import { Button } from "../button";
+import { Button } from "../button/component";
 
 /**
  * Root container for collapsible content sections.

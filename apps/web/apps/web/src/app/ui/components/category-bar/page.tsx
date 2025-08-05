@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: categoryBarConfig.name,
+  description: categoryBarConfig.description,
+  openGraph: {
+    title: categoryBarConfig.name,
+    description: categoryBarConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: categoryBarConfig.name,
+    description: categoryBarConfig.description,
+  },
+};
+
 export default function CategoryBarPage() {
   return (
     <div>

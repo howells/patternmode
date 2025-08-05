@@ -1,16 +1,16 @@
 "use client";
 
-import { ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
+import { ChevronDown, ChevronUp, Circle, ArrowRight, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import Link from "next/link";
 import * as React from "react";
 import { useId, useState } from "react";
 
 import { cx } from "../../lib/utils";
-import { Button } from "../button";
-import { ScrollArea } from "../scroll-area";
-import { Separator } from "../separator";
-import { Tooltip } from "../tooltip";
+import { Button } from "../button/component";
+import { ScrollArea } from "../scroll-area/component";
+import { Separator } from "../separator/component";
+import { Tooltip } from "../tooltip/component";
 
 /**
  * Props for the SidebarTitle component.
@@ -457,6 +457,7 @@ export function SidebarGroup({
                   className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
                   aria-label={isGroupCollapsed ? "Expand group" : "Collapse group"}
                   leftIcon={isGroupCollapsed ? ChevronDown : ChevronUp}
+                  rightIcon={ArrowRight}
                 />
               )}
             </div>
@@ -567,65 +568,8 @@ export const SidebarItem = function SidebarItem(
             </span>
           );
 
-  // For collapsed state with tooltip, create a simple element to avoid nested buttons
+  // For collapsed state with tooltip, use Button component
   if (isCollapsed && typeof children === "string") {
-    // Safely render icon with proper error handling
-    const renderIcon = (
-      IconComponent:
-        | React.ComponentType<{ className?: string; strokeWidth?: number }>
-        | null
-        | undefined,
-    ) => {
-      if (!IconComponent || typeof IconComponent !== "function") {
-        return null;
-      }
-
-      try {
-        return React.createElement(IconComponent, {
-          className: "size-4",
-          strokeWidth: 1.5,
-        });
-      }
-      catch (error) {
-        // Silently catch any icon rendering errors
-        console.warn("Icon rendering failed:", error);
-        return null;
-      }
-    };
-
-    const collapsedElement = href
-      ? (
-          <Link
-            href={href}
-            onClick={handleClick}
-            className={cx(
-              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
-              "h-8 w-8 rounded-md",
-              "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
-              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-              "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
-            )}
-          >
-            {renderIcon(icon || LeftIcon)}
-          </Link>
-        )
-      : (
-          <button
-            type="button"
-            onClick={handleClick}
-            className={cx(
-              "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
-              "h-8 w-8 rounded-md",
-              "text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100",
-              "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-              "focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300",
-            )}
-            {...props}
-          >
-            {renderIcon(icon || LeftIcon)}
-          </button>
-        );
-
     return (
       <span
         className={cx(className, "relative block px-2")}
@@ -637,7 +581,18 @@ export const SidebarItem = function SidebarItem(
           sideOffset={8}
           delayDuration={tooltipDelay}
         >
-          {collapsedElement}
+          <Button
+            href={href}
+            variant={current ? "secondary" : "inverse-ghost"}
+            size="icon-sm"
+            icon={icon}
+            leftIcon={LeftIcon}
+            rightIcon={href ? ArrowRight : undefined}
+            showRightIconOnHover={!!href}
+            onClick={handleClick}
+            shadow={false}
+            {...props}
+          />
         </Tooltip>
       </span>
     );
@@ -646,11 +601,13 @@ export const SidebarItem = function SidebarItem(
   // For expanded state or non-string children, use Button component
   const buttonElement = (
     <Button
-      render={href ? <Link href={href} /> : undefined}
+      href={href}
       variant={current ? "secondary" : "inverse-ghost"}
       shadow={false}
       icon={icon}
       leftIcon={LeftIcon}
+      rightIcon={href ? ArrowRight : undefined}
+      showRightIconOnHover={!!href}
       onClick={handleClick}
       fullWidth={!isCollapsed}
       size={isCollapsed ? "icon-sm" : "sm"}

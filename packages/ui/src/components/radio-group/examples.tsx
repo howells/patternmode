@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../button";
-import { RadioOption } from "../radio";
+import { Button } from "../button/component";
+import { RadioOption } from "../radio/component";
 import { RadioGroup, RadioGroupItem } from "./component";
 
 export const DefaultExample = () => {

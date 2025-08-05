@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: areaChartConfig.name,
+  description: areaChartConfig.description,
+  openGraph: {
+    title: areaChartConfig.name,
+    description: areaChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: areaChartConfig.name,
+    description: areaChartConfig.description,
+  },
+};
+
 export default function AreaChartPage() {
   return (
     <div>

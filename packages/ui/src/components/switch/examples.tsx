@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../button";
-import { Stack } from "../stack";
+import { Button } from "../button/component";
+import { Stack } from "../stack/component";
 import { Switch } from "./component";
 
 export const DefaultExample = () => {

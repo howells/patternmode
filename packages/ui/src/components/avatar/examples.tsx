@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Stack } from "../stack";
+import { Stack } from "../stack/component";
 import { Avatar, AvatarFallback, AvatarImage, AvatarWithFallback } from "./component";
 
 // Basic avatar examples

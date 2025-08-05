@@ -3,7 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const PAGES_DIR = path.join(__dirname, "../apps/web/src/app/ui/components");
+const PAGES_DIR = path.join(__dirname, "../src/app/ui/components");
 
 // Template for component pages
 const PAGE_TEMPLATE = `import { Separator } from "@patternmode/ui/components/separator";
@@ -12,6 +12,21 @@ import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONEN
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
+
+export const metadata = {
+  title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
+  description: {{COMPONENT_CONFIG_NAME}}.description,
+  openGraph: {
+    title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
+    description: {{COMPONENT_CONFIG_NAME}}.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
+    description: {{COMPONENT_CONFIG_NAME}}.description,
+  },
+};
 
 export default function {{COMPONENT_NAME}}Page() {
   return (
@@ -76,17 +91,28 @@ async function scanComponents() {
 function generateImports(components) {
   const configImports = [];
   const previewImports = [];
+  const previewPropsImports = [];
 
   components.forEach((id) => {
     // Config imports
     configImports.push(`import { ${toCamelCase(id)}Config } from "./${id}/config";`);
-    
+
     // Preview imports for static registry
     const pascalName = toPascalCase(id);
     previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
+
+    // Preview props imports (check if they exist)
+    const previewPropsPath = path.join(__dirname, `../../../packages/ui/src/components/${id}/preview.tsx`);
+    if (fs.existsSync(previewPropsPath)) {
+      const previewContent = fs.readFileSync(previewPropsPath, 'utf8');
+      const previewPropsName = `${toCamelCase(id)}PreviewProps`;
+      if (previewContent.includes(`export const ${previewPropsName}`)) {
+        previewPropsImports.push(`import { ${previewPropsName} } from "./${id}/preview";`);
+      }
+    }
   });
 
-  return { configImports, previewImports };
+  return { configImports, previewImports, previewPropsImports };
 }
 
 function generateComponentRegistry(components) {
@@ -107,10 +133,39 @@ function generatePreviewRegistry(components) {
   return entries.join("\n");
 }
 
+function generatePreviewPropsRegistry(components) {
+  const entries = [];
+
+  components.forEach((id) => {
+    // Check if preview props exist
+    const previewPropsPath = path.join(__dirname, `../../../packages/ui/src/components/${id}/preview.tsx`);
+    if (fs.existsSync(previewPropsPath)) {
+      const previewContent = fs.readFileSync(previewPropsPath, 'utf8');
+      const previewPropsName = `${toCamelCase(id)}PreviewProps`;
+      if (previewContent.includes(`export const ${previewPropsName}`)) {
+        entries.push(`  "${id}": ${previewPropsName},`);
+      }
+    }
+  });
+
+  return entries.join("\n");
+}
+
+function generateComponentMetadataRegistry(components) {
+  const entries = components.map((id) => {
+    const camelCaseConfig = `${toCamelCase(id)}Config`;
+    return `  "${id}": { title: ${camelCaseConfig}.name, description: ${camelCaseConfig}.description },`;
+  });
+
+  return entries.join("\n");
+}
+
 function generateRegistryFile(components) {
-  const { configImports, previewImports } = generateImports(components);
+  const { configImports, previewImports, previewPropsImports } = generateImports(components);
   const componentRegistryEntries = generateComponentRegistry(components);
   const previewRegistryEntries = generatePreviewRegistry(components);
+  const previewPropsRegistryEntries = generatePreviewPropsRegistry(components);
+  const componentMetadataRegistryEntries = generateComponentMetadataRegistry(components);
 
   return `import type React from "react";
 
@@ -122,6 +177,9 @@ ${configImports.join("\n")}
 // Import all preview components
 ${previewImports.join("\n")}
 
+// Import all preview props
+${previewPropsImports.join("\n")}
+
 export const COMPONENT_REGISTRY = {
 ${componentRegistryEntries}
 } as const satisfies Record<string, ComponentConfig>;
@@ -130,6 +188,16 @@ ${componentRegistryEntries}
 export const PREVIEW_REGISTRY = {
 ${previewRegistryEntries}
 } as const satisfies Record<string, React.ComponentType<any>>;
+
+// Static preview props registry
+export const PREVIEW_PROPS_REGISTRY = {
+${previewPropsRegistryEntries}
+} as const satisfies Record<string, PropMetadata[]>;
+
+// Component metadata registry
+export const COMPONENT_METADATA_REGISTRY = {
+${componentMetadataRegistryEntries}
+} as const satisfies Record<string, { title: string; description: string }>;
 
 // Derive types automatically
 export type ComponentId = keyof typeof COMPONENT_REGISTRY;
@@ -156,7 +224,7 @@ export function getTotalComponentsCount(): number {
 export function getPreviewComponent(id: string): React.ComponentType<any> | undefined {
   // Static lookup from preview registry
   const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
-  
+
   if (previewComponent) {
     return previewComponent;
   }
@@ -179,8 +247,19 @@ export function getPreviewComponent(id: string): React.ComponentType<any> | unde
 }
 
 export function getPreviewProps(id: string): PropMetadata[] {
+  // First try to get props from the preview props registry
+  const previewProps = PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
+  if (previewProps) {
+    return previewProps;
+  }
+
+  // Fallback to config props
   const config = getComponentConfig(id);
   return config?.props || [];
+}
+
+export function getComponentMetadata(id: string): { title: string; description: string } | undefined {
+  return COMPONENT_METADATA_REGISTRY[id as keyof typeof COMPONENT_METADATA_REGISTRY];
 }
 
 // Component list organized by categories (derived automatically)

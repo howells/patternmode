@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: checkboxGroupConfig.name,
+  description: checkboxGroupConfig.description,
+  openGraph: {
+    title: checkboxGroupConfig.name,
+    description: checkboxGroupConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: checkboxGroupConfig.name,
+    description: checkboxGroupConfig.description,
+  },
+};
+
 export default function CheckboxGroupPage() {
   return (
     <div>

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${toggleGroupConfig.name} | Patternmode`,
+  description: toggleGroupConfig.description,
+  openGraph: {
+    title: `${toggleGroupConfig.name} | Patternmode`,
+    description: toggleGroupConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${toggleGroupConfig.name} | Patternmode`,
+    description: toggleGroupConfig.description,
+  },
+};
+
 export default function ToggleGroupPage() {
   return (
     <div>

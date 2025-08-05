@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${labelConfig.name} | Patternmode`,
+  description: labelConfig.description,
+  openGraph: {
+    title: `${labelConfig.name} | Patternmode`,
+    description: labelConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${labelConfig.name} | Patternmode`,
+    description: labelConfig.description,
+  },
+};
+
 export default function LabelPage() {
   return (
     <div>

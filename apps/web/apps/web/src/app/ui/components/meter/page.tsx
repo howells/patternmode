@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: meterConfig.name,
+  description: meterConfig.description,
+  openGraph: {
+    title: meterConfig.name,
+    description: meterConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: meterConfig.name,
+    description: meterConfig.description,
+  },
+};
+
 export default function MeterPage() {
   return (
     <div>

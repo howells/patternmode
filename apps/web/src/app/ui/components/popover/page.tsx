@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${popoverConfig.name} | Patternmode`,
+  description: popoverConfig.description,
+  openGraph: {
+    title: `${popoverConfig.name} | Patternmode`,
+    description: popoverConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${popoverConfig.name} | Patternmode`,
+    description: popoverConfig.description,
+  },
+};
+
 export default function PopoverPage() {
   return (
     <div>

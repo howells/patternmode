@@ -2,9 +2,9 @@
 
 import type { FieldSchema } from "./component";
 import React from "react";
-import { DescriptionDetails, DescriptionList, DescriptionTerm } from "../description-list";
-import { Input } from "../input";
-import { Subheading } from "../subheading";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from "../description-list/component";
+import { Input } from "../input/component";
+import { Subheading } from "../subheading/component";
 import { Textarea } from "../textarea/component";
 import { FieldArray } from "./component";
 

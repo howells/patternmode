@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${selectNativeConfig.name} | Patternmode`,
+  description: selectNativeConfig.description,
+  openGraph: {
+    title: `${selectNativeConfig.name} | Patternmode`,
+    description: selectNativeConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${selectNativeConfig.name} | Patternmode`,
+    description: selectNativeConfig.description,
+  },
+};
+
 export default function SelectNativePage() {
   return (
     <div>

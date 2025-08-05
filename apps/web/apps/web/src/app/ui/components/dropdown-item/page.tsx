@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: dropdownItemConfig.name,
+  description: dropdownItemConfig.description,
+  openGraph: {
+    title: dropdownItemConfig.name,
+    description: dropdownItemConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: dropdownItemConfig.name,
+    description: dropdownItemConfig.description,
+  },
+};
+
 export default function DropdownItemPage() {
   return (
     <div>

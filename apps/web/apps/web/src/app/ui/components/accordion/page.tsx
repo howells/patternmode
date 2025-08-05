@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: accordionConfig.name,
+  description: accordionConfig.description,
+  openGraph: {
+    title: accordionConfig.name,
+    description: accordionConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: accordionConfig.name,
+    description: accordionConfig.description,
+  },
+};
+
 export default function AccordionPage() {
   return (
     <div>

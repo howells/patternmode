@@ -2,8 +2,8 @@ import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 import React from "react";
 
 import { cx, focusRing } from "../../lib/utils";
-import { Subheading } from "../subheading";
-import { Text } from "../text";
+import { Subheading } from "../subheading/component";
+import { Text } from "../text/component";
 
 type DialogProps = {
   /**

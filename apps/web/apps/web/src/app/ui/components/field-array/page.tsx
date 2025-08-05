@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: fieldArrayConfig.name,
+  description: fieldArrayConfig.description,
+  openGraph: {
+    title: fieldArrayConfig.name,
+    description: fieldArrayConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: fieldArrayConfig.name,
+    description: fieldArrayConfig.description,
+  },
+};
+
 export default function FieldArrayPage() {
   return (
     <div>

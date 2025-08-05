@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Stack } from "../stack";
+import { Stack } from "../stack/component";
 import { Tag } from "./component";
 
 // Basic tags example

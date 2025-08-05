@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${menuConfig.name} | Patternmode`,
+  description: menuConfig.description,
+  openGraph: {
+    title: `${menuConfig.name} | Patternmode`,
+    description: menuConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${menuConfig.name} | Patternmode`,
+    description: menuConfig.description,
+  },
+};
+
 export default function MenuPage() {
   return (
     <div>

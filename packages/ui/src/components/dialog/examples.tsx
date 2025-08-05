@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../button";
-import { Input } from "../input";
+import { Button } from "../button/component";
+import { Input } from "../input/component";
 import {
   Dialog,
   DialogClose,

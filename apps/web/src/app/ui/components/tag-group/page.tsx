@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${tagGroupConfig.name} | Patternmode`,
+  description: tagGroupConfig.description,
+  openGraph: {
+    title: `${tagGroupConfig.name} | Patternmode`,
+    description: tagGroupConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${tagGroupConfig.name} | Patternmode`,
+    description: tagGroupConfig.description,
+  },
+};
+
 export default function TagGroupPage() {
   return (
     <div>

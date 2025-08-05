@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: lineChartConfig.name,
+  description: lineChartConfig.description,
+  openGraph: {
+    title: lineChartConfig.name,
+    description: lineChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: lineChartConfig.name,
+    description: lineChartConfig.description,
+  },
+};
+
 export default function LineChartPage() {
   return (
     <div>

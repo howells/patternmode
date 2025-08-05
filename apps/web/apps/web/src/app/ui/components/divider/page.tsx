@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: dividerConfig.name,
+  description: dividerConfig.description,
+  openGraph: {
+    title: dividerConfig.name,
+    description: dividerConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: dividerConfig.name,
+    description: dividerConfig.description,
+  },
+};
+
 export default function DividerPage() {
   return (
     <div>

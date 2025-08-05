@@ -3,8 +3,8 @@
 import type { TagOption } from "./component";
 import { Code, MapPin, Palette, User } from "lucide-react";
 import React from "react";
-import { Icon } from "../icon";
-import { Tag } from "../tag";
+import { Icon } from "../icon/component";
+import { Tag } from "../tag/component";
 import { TagInput, useTagInput } from "./component";
 
 // Sample data for examples

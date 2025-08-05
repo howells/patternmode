@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: iconConfig.name,
+  description: iconConfig.description,
+  openGraph: {
+    title: iconConfig.name,
+    description: iconConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: iconConfig.name,
+    description: iconConfig.description,
+  },
+};
+
 export default function IconPage() {
   return (
     <div>

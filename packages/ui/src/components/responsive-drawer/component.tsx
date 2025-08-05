@@ -14,7 +14,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../drawer";
+} from "../drawer/component";
 // Desktop sheet (Base UI Dialog)
 import {
   Sheet,
@@ -26,7 +26,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../sheet";
+} from "../sheet/component";
 
 type ResponsiveDrawerProps = {
   /**

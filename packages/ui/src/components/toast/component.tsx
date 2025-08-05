@@ -2,102 +2,12 @@
 
 "use client";
 
+import type { BaseToastOptions, Position, ToastData, ToastPromiseOptions, ToastType } from "./types";
 import React from "react";
+
 import { toast as sonnerToast, Toaster } from "sonner";
-import { tv } from "tailwind-variants";
-
 import { cx } from "../../lib/utils";
-
-type Position = "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
-
-// Toast variants for consistent styling
-const toastVariants = tv({
-  base: [
-    // base
-    "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all",
-    // background
-    "bg-white dark:bg-zinc-950",
-    // border
-    " dark:border-zinc-800",
-  ],
-  variants: {
-    variant: {
-      default: " dark:border-zinc-800",
-      success:
-        "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-50",
-      error:
-        "border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-50",
-      warning:
-        "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-50",
-      info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-50",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-});
-
-// Toast types
-type ToastType = "default" | "success" | "error" | "warning" | "info";
-
-type ToastData = {
-  [key: string]: unknown;
-};
-
-type BaseToastOptions = {
-  /**
-   * The main title/message of the toast notification.
-   */
-  title?: string;
-  /**
-   * Optional description text displayed below the title.
-   */
-  description?: string;
-  /**
-   * Visual variant of the toast affecting color scheme.
-   * @default "default"
-   */
-  type?: ToastType;
-  /**
-   * How long the toast should remain visible in milliseconds.
-   * @default 5000
-   */
-  duration?: number;
-  /**
-   * Whether the user can manually dismiss the toast.
-   * @default true
-   */
-  dismissible?: boolean;
-  /**
-   * Optional action button configuration.
-   */
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
-  /**
-   * Additional data to associate with the toast.
-   */
-  data?: ToastData;
-};
-
-type ToastPromiseOptions<T = unknown> = {
-  /**
-   * Message or options to show while the promise is pending.
-   */
-  loading: string | BaseToastOptions;
-  /**
-   * Message or options to show when the promise resolves successfully.
-   */
-  success: string | ((data: T) => string) | ((data: T) => BaseToastOptions);
-  /**
-   * Message or options to show when the promise rejects.
-   */
-  error:
-    | string
-    | ((error: Error) => string)
-    | ((error: Error) => BaseToastOptions);
-};
+import { toastVariants } from "./variants";
 
 type SonnerToastOptions = {
   id: string;
@@ -374,7 +284,6 @@ export {
   ToastProvider,
   type ToastProviderProps,
   type ToastType,
-  toastVariants,
   useToast,
   useToastManager,
 };

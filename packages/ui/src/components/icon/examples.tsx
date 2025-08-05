@@ -2,7 +2,7 @@
 
 import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
 import React from "react";
-import { Stack } from "../stack";
+import { Stack } from "../stack/component";
 import { Icon } from "./component";
 
 // Basic icons

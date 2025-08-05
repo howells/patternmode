@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${toastConfig.name} | Patternmode`,
+  description: toastConfig.description,
+  openGraph: {
+    title: `${toastConfig.name} | Patternmode`,
+    description: toastConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${toastConfig.name} | Patternmode`,
+    description: toastConfig.description,
+  },
+};
+
 export default function ToastPage() {
   return (
     <div>

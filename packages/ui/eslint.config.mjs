@@ -38,4 +38,18 @@ export default ui().append(
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     },
   },
+  {
+    name: "component-structure-override",
+    files: ["**/src/components/**/*.{ts,tsx}", "**/components/**/*.{ts,tsx}"],
+    rules: {
+      "component-structure/require-component-files": "off",
+    },
+  },
+  {
+    name: "preview-react-refresh-override",
+    files: ["**/preview.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
 );

@@ -1,40 +1,11 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
+import type { CopyButtonProps } from "./types";
+
 import { Check, Copy } from "lucide-react";
 import React, { useState } from "react";
 
-import { Button } from "../button";
-
-type CopyButtonProps = {
-  /**
-   * Text content to copy to clipboard.
-   * The string that will be written to the user's clipboard when the button is clicked.
-   */
-  text: string;
-  /**
-   * Label text for the copy state.
-   * Text displayed on the button before copying (default: "Copy").
-   */
-  copyLabel?: string;
-  /**
-   * Label text for the copied state.
-   * Text displayed on the button after successful copying (default: "Copied").
-   */
-  copiedLabel?: string;
-  /**
-   * Icon component for the copy state.
-   * Lucide icon displayed before copying (default: Copy icon).
-   */
-  copyIcon?: LucideIcon;
-  /**
-   * Icon component for the copied state.
-   * Lucide icon displayed after successful copying (default: Check icon).
-   */
-  copiedIcon?: LucideIcon;
-} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
-  ref?: React.RefObject<HTMLButtonElement | null>;
-};
+import { Button } from "../button/component";
 
 /**
  * Button component for copying text content to the clipboard with visual feedback.
@@ -80,4 +51,4 @@ export const CopyButton = ({
 
 CopyButton.displayName = "CopyButton";
 
-export { type CopyButtonProps };
+export { CopyButton };

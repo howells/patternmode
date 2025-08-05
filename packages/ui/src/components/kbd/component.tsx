@@ -1,68 +1,10 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
+import type { KbdProps } from "./types";
 
 import React from "react";
-import { tv } from "tailwind-variants";
-
 import { cx } from "../../lib/utils";
-
-const kbdVariants = tv({
-  base: [
-    // Base styling
-    "pointer-events-none inline-flex items-center gap-1 rounded border font-mono font-medium",
-  ],
-  variants: {
-    variant: {
-      default: [
-        // Light mode
-        " bg-zinc-100 text-zinc-600",
-        // Dark mode
-        "dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400",
-      ],
-      onDarkButton: [
-        // For use on dark buttons (default, destructive)
-        "border-white/20 bg-white/10 text-white/90",
-        "dark:border-white/20 dark:bg-white/10 dark:text-white/90",
-      ],
-      onLightButton: [
-        // For use on light buttons (secondary, outline, ghost)
-        "border-zinc-900/20 bg-zinc-900/10 text-zinc-900/90",
-        "dark:border-zinc-100/20 dark:bg-zinc-100/10 dark:text-zinc-100/90",
-      ],
-    },
-    size: {
-      xs: "h-4 px-1 text-[9px]",
-      sm: "h-5 px-1.5 text-[10px]",
-      base: "h-6 px-2 text-sm",
-      lg: "h-7 px-2.5 text-sm",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "sm",
-  },
-});
-
-type KbdProps = {
-  /**
-   * Array of keys to display for complex key combinations.
-   * When provided, each key will be rendered as a separate kbd element.
-   * @example ["cmd", "shift", "k"] or ["⌘", "⇧", "K"]
-   */
-  keys?: string[];
-  /**
-   * Platform for modifier key display.
-   * Controls how modifier keys are rendered (Mac symbols vs text).
-   * "auto" detects the platform automatically.
-   */
-  platform?: "mac" | "pc" | "auto";
-  /**
-   * Visual variant for different contexts.
-   * Use "onDarkButton" when inside dark buttons, "onLightButton" for light buttons.
-   */
-  variant?: "default" | "onDarkButton" | "onLightButton";
-} & React.ComponentPropsWithoutRef<"kbd"> & VariantProps<typeof kbdVariants>;
+import { kbdVariants } from "./variants";
 
 /**
  * Keyboard shortcut display component for showing keyboard shortcuts and commands.
@@ -147,4 +89,4 @@ const Kbd = (
 
 Kbd.displayName = "Kbd";
 
-export { Kbd, type KbdProps, kbdVariants };
+export { Kbd };

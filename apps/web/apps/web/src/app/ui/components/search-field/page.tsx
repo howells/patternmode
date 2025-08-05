@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: searchFieldConfig.name,
+  description: searchFieldConfig.description,
+  openGraph: {
+    title: searchFieldConfig.name,
+    description: searchFieldConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: searchFieldConfig.name,
+    description: searchFieldConfig.description,
+  },
+};
+
 export default function SearchFieldPage() {
   return (
     <div>

@@ -2,7 +2,7 @@
 
 import { AlertCircle, ArrowRight, Check, Clock, Star, Trash2 } from "lucide-react";
 import React from "react";
-import { Stack } from "../stack";
+import { Stack } from "../stack/component";
 import { Badge } from "./component";
 
 // Default badge

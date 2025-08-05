@@ -3,38 +3,10 @@ import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
 
-import { tv } from "tailwind-variants";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getPaddingClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/component";
-
-const cardVariants = tv({
-  base: [
-    // base
-    "relative w-full max-w-xl rounded-lg text-left text-sm",
-  ],
-  variants: {
-    variant: {
-      default: [
-        "border",
-        "bg-white dark:bg-[#090E1A]",
-      ],
-      dashed: [
-        "border border-dashed border-zinc-300 dark:border-zinc-600",
-        "bg-transparent",
-        "[&_.card-border]:border-dashed [&_.card-border]:border-zinc-300 dark:[&_.card-border]:border-zinc-600",
-      ],
-    },
-    fillHeight: {
-      true: "h-full",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    fillHeight: false,
-  },
-});
+import { cardVariants } from "./variants";
 
 type CardProps = {
   /**
@@ -276,5 +248,4 @@ export {
   CardHeading,
   type CardHeadingProps,
   type CardProps,
-  cardVariants,
 };

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${descriptionListConfig.name} | Patternmode`,
+  description: descriptionListConfig.description,
+  openGraph: {
+    title: `${descriptionListConfig.name} | Patternmode`,
+    description: descriptionListConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${descriptionListConfig.name} | Patternmode`,
+    description: descriptionListConfig.description,
+  },
+};
+
 export default function DescriptionListPage() {
   return (
     <div>

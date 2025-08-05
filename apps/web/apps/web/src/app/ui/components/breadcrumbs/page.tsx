@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: breadcrumbsConfig.name,
+  description: breadcrumbsConfig.description,
+  openGraph: {
+    title: breadcrumbsConfig.name,
+    description: breadcrumbsConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: breadcrumbsConfig.name,
+    description: breadcrumbsConfig.description,
+  },
+};
+
 export default function BreadcrumbsPage() {
   return (
     <div>

@@ -2,7 +2,7 @@
 
 import { ChevronDown, Code, Download, File, Image } from "lucide-react";
 import React from "react";
-import { MenuItem, MenuLabel, MenuSeparator } from "../menu";
+import { MenuItem, MenuLabel, MenuSeparator } from "../menu/component";
 import { SplitButton } from "./component";
 
 export function DefaultExample() {

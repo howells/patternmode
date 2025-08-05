@@ -3,7 +3,7 @@ import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import * as React from "react";
 
 import { cx } from "../../lib/utils";
-import { Icon as IconComponent } from "../icon";
+import { Icon as IconComponent } from "../icon/component";
 
 type ContextMenuProps = {
   /**

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${selectConfig.name} | Patternmode`,
+  description: selectConfig.description,
+  openGraph: {
+    title: `${selectConfig.name} | Patternmode`,
+    description: selectConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${selectConfig.name} | Patternmode`,
+    description: selectConfig.description,
+  },
+};
+
 export default function SelectPage() {
   return (
     <div>

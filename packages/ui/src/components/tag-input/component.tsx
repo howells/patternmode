@@ -5,8 +5,8 @@ import { Check } from "lucide-react";
 import * as React from "react";
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
-import { DropdownItem } from "../dropdown-item";
-import { Tag } from "../tag";
+import { DropdownItem } from "../dropdown-item/component";
+import { Tag } from "../tag/component";
 
 /**
  * Tag option interface for TagInput.

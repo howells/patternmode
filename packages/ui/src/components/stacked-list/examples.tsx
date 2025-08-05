@@ -2,10 +2,10 @@
 
 import { Calendar, FileText, UserPlus } from "lucide-react";
 import React from "react";
-import { Avatar } from "../avatar";
-import { Badge } from "../badge";
-import { Button } from "../button";
-import { Card } from "../card";
+import { Avatar } from "../avatar/component";
+import { Badge } from "../badge/component";
+import { Button } from "../button/component";
+import { Card } from "../card/component";
 import { StackedList } from "./component";
 
 export function DefaultExample() {

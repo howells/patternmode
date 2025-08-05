@@ -2,123 +2,12 @@
 
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
-
+import type { TooltipProps } from "./types";
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
+
 import React from "react";
-import { tv } from "tailwind-variants";
-
 import { cx } from "../../lib/utils";
-
-const tooltipVariants = tv({
-  slots: {
-    popup: [
-      // base
-      "origin-[var(--transform-origin)] flex flex-col rounded-md px-2 py-1 text-sm shadow-lg z-50",
-      // colors
-      "bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900",
-      // transitions
-      "transition-[transform,scale,opacity] duration-150 ease-in-out",
-      // animations
-      "data-[starting-style]:scale-90 data-[starting-style]:opacity-0",
-      "data-[ending-style]:scale-90 data-[ending-style]:opacity-0",
-    ],
-    arrow: [
-      // positioning based on side
-      "data-[side=bottom]:top-[-8px]",
-      "data-[side=left]:right-[-13px] data-[side=left]:rotate-90",
-      "data-[side=right]:left-[-13px] data-[side=right]:-rotate-90",
-      "data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
-    ],
-  },
-  variants: {
-    variant: {
-      default: {
-        popup: "bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900",
-      },
-      inverse: {
-        popup: "bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
-      },
-    },
-    size: {
-      sm: {
-        popup: "px-2 py-1 text-xs",
-      },
-      default: {
-        popup: "px-2 py-1 text-sm",
-      },
-      lg: {
-        popup: "px-3 py-2 text-base",
-      },
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
-
-type TooltipProps = {
-  /**
-   * The element that triggers the tooltip when hovered or focused.
-   */
-  children: React.ReactElement;
-  /**
-   * Content to display in the tooltip popup. Can be text or rich JSX content.
-   */
-  content: React.ReactNode;
-  /**
-   * Preferred side for tooltip placement relative to the trigger.
-   * @default "top"
-   */
-  side?: "top" | "bottom" | "left" | "right";
-  /**
-   * Distance from the trigger element in pixels.
-   * @default 10
-   */
-  sideOffset?: number;
-  /**
-   * Alignment relative to the trigger element.
-   * @default "center"
-   */
-  align?: "start" | "center" | "end";
-  /**
-   * Offset for alignment positioning in pixels.
-   * @default 0
-   */
-  alignOffset?: number;
-  /**
-   * Whether to show the pointing arrow that connects tooltip to trigger.
-   * @default true
-   */
-  showArrow?: boolean;
-  /**
-   * Delay before showing tooltip in milliseconds.
-   * @default 150
-   */
-  delayDuration?: number;
-  /**
-   * The visual style variant of the tooltip.
-   * @default "default"
-   */
-  variant?: VariantProps<typeof tooltipVariants>["variant"];
-  /**
-   * The size of the tooltip.
-   * @default "default"
-   */
-  size?: VariantProps<typeof tooltipVariants>["size"];
-  /**
-   * Additional CSS classes for the tooltip popup.
-   */
-  className?: string;
-  /**
-   * Click handler for the trigger element.
-   */
-  onClick?: React.MouseEventHandler<HTMLElement>;
-} & Omit<
-      React.ComponentPropsWithoutRef<typeof BaseTooltip.Root>,
-      "children"
-    >;
+import { tooltipVariants } from "./variants";
 
 /**
  * A tooltip component built on Base UI's Tooltip primitive for displaying contextual information.
@@ -219,7 +108,4 @@ export {
   TooltipProvider,
   TooltipRoot,
   TooltipTrigger,
-  tooltipVariants,
 };
-
-export type { TooltipProps };

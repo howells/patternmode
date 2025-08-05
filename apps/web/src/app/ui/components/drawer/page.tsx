@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${drawerConfig.name} | Patternmode`,
+  description: drawerConfig.description,
+  openGraph: {
+    title: `${drawerConfig.name} | Patternmode`,
+    description: drawerConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${drawerConfig.name} | Patternmode`,
+    description: drawerConfig.description,
+  },
+};
+
 export default function DrawerPage() {
   return (
     <div>

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: barChartConfig.name,
+  description: barChartConfig.description,
+  openGraph: {
+    title: barChartConfig.name,
+    description: barChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: barChartConfig.name,
+    description: barChartConfig.description,
+  },
+};
+
 export default function BarChartPage() {
   return (
     <div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TextList, TextListItem } from "../text-list";
+import { TextList, TextListItem } from "../text-list/component";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./component";
 
 type CollapsibleProps = React.ComponentPropsWithoutRef<typeof Collapsible> & {

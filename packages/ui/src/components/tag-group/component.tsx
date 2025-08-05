@@ -1,70 +1,10 @@
 "use client";
 
-import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
+import type { TagGroupProps } from "./types";
 import * as React from "react";
-import { tv } from "tailwind-variants";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
-
-const tagGroupVariants = tv({
-  base: "flex flex-wrap items-center",
-  variants: {
-    align: {
-      start: "justify-start",
-      center: "justify-center",
-      end: "justify-end",
-      between: "justify-between",
-      around: "justify-around",
-      evenly: "justify-evenly",
-    },
-    direction: {
-      row: "flex-row",
-      column: "flex-col",
-    },
-  },
-  defaultVariants: {
-    align: "start",
-    direction: "row",
-  },
-});
-
-type TagGroupProps = {
-  /**
-   * Whether tags in the group can be dismissed.
-   * Individual tags can override this by specifying their own dismissible prop.
-   */
-  dismissible?: boolean;
-  /**
-   * Callback when any tag dismiss button is clicked.
-   * Individual tags can override this with their own onDismiss handler.
-   */
-  onDismiss?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  /**
-   * Gap between tags. Can be responsive.
-   * Automatically calculated based on tag size if not provided.
-   */
-  gap?: GapValue | ResponsiveSpacing<GapValue>;
-  /**
-   * Horizontal alignment of the tag group.
-   * Controls how tags are distributed within the container.
-   */
-  align?: "start" | "center" | "end" | "between" | "around" | "evenly";
-  /**
-   * Layout direction for the tag group.
-   * Controls whether tags flow horizontally or vertically.
-   */
-  direction?: "row" | "column";
-  /**
-   * Additional CSS classes for the container.
-   * Applied to the tag group wrapper element.
-   */
-  className?: string;
-  /**
-   * Child tags to render.
-   * Should only contain Tag components.
-   */
-  children?: React.ReactNode;
-} & React.ComponentPropsWithoutRef<"div">;
+import { tagGroupVariants } from "./variants";
 
 /**
  * Container for grouping tags with shared styling and consistent spacing.
@@ -127,5 +67,3 @@ export const TagGroup = ({
 };
 
 TagGroup.displayName = "TagGroup";
-
-export type { TagGroupProps };

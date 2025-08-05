@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: separatorConfig.name,
+  description: separatorConfig.description,
+  openGraph: {
+    title: separatorConfig.name,
+    description: separatorConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: separatorConfig.name,
+    description: separatorConfig.description,
+  },
+};
+
 export default function SeparatorPage() {
   return (
     <div>

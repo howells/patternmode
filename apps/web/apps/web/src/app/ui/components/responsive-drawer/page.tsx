@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: responsiveDrawerConfig.name,
+  description: responsiveDrawerConfig.description,
+  openGraph: {
+    title: responsiveDrawerConfig.name,
+    description: responsiveDrawerConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: responsiveDrawerConfig.name,
+    description: responsiveDrawerConfig.description,
+  },
+};
+
 export default function ResponsiveDrawerPage() {
   return (
     <div>

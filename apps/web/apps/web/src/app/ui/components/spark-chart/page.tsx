@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: sparkChartConfig.name,
+  description: sparkChartConfig.description,
+  openGraph: {
+    title: sparkChartConfig.name,
+    description: sparkChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: sparkChartConfig.name,
+    description: sparkChartConfig.description,
+  },
+};
+
 export default function SparkChartPage() {
   return (
     <div>

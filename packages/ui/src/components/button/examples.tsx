@@ -33,6 +33,37 @@ export const GhostExample = () => <Button variant="ghost">Ghost</Button>;
 // Link variant
 export const LinkExample = () => <Button variant="link">Link</Button>;
 
+// Button as Link (using href prop)
+export const ButtonAsLinkExample = () => (
+  <div className="flex items-center gap-2">
+    <Button href="/ui/components/button">Go to Button docs</Button>
+    <Button variant="secondary" href="/ui/components/avatar">Go to Avatar docs</Button>
+    <Button variant="outline" href="https://example.com" rightIcon={ArrowRight} showRightIconOnHover>
+      External Link
+    </Button>
+  </div>
+);
+
+// Show icons on hover
+export const IconsOnHoverExample = () => (
+  <div className="flex items-center gap-2">
+    <Button leftIcon={Plus} showLeftIconOnHover>
+      Hover to see left icon
+    </Button>
+    <Button rightIcon={ArrowRight} showRightIconOnHover>
+      Hover to see right icon
+    </Button>
+    <Button
+      href="/ui/components/button"
+      rightIcon={ArrowRight}
+      showRightIconOnHover
+      variant="secondary"
+    >
+      Link with hover arrow
+    </Button>
+  </div>
+);
+
 // With icons
 export const WithIconsExample = () => (
   <Button leftIcon={Plus} rightIcon={ArrowRight}>

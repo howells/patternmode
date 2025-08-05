@@ -3,11 +3,11 @@
 import { GripVertical, Plus } from "lucide-react";
 import React from "react";
 import { cx } from "../../lib/utils";
-import { Button } from "../button";
-import { Checkbox } from "../checkbox";
-import { DismissButton } from "../dismiss-button";
-import { Input } from "../input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
+import { Button } from "../button/component";
+import { Checkbox } from "../checkbox/component";
+import { DismissButton } from "../dismiss-button/component";
+import { Input } from "../input/component";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select/component";
 import { Textarea } from "../textarea/component";
 
 // Generic field schema definition

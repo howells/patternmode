@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: badgeConfig.name,
+  description: badgeConfig.description,
+  openGraph: {
+    title: badgeConfig.name,
+    description: badgeConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: badgeConfig.name,
+    description: badgeConfig.description,
+  },
+};
+
 export default function BadgePage() {
   return (
     <div>

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${paginationConfig.name} | Patternmode`,
+  description: paginationConfig.description,
+  openGraph: {
+    title: `${paginationConfig.name} | Patternmode`,
+    description: paginationConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${paginationConfig.name} | Patternmode`,
+    description: paginationConfig.description,
+  },
+};
+
 export default function PaginationPage() {
   return (
     <div>

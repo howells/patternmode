@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useId } from "react";
 
 import { cx } from "../../lib/utils";
-import { Button } from "../button";
+import { Button } from "../button/component";
 
 type NavbarProps = {
   /**

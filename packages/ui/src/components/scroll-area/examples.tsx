@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Separator } from "../separator";
+import { Separator } from "../separator/component";
 import { ScrollArea } from "./component";
 
 export const DefaultExample = () => {

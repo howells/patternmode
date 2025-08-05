@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: comboChartConfig.name,
+  description: comboChartConfig.description,
+  openGraph: {
+    title: comboChartConfig.name,
+    description: comboChartConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: comboChartConfig.name,
+    description: comboChartConfig.description,
+  },
+};
+
 export default function ComboChartPage() {
   return (
     <div>

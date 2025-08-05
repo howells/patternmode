@@ -1,179 +1,15 @@
 import type { ComponentWithIconsProps } from "../../lib/utils";
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import type { BadgeVariant } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
 import { X } from "lucide-react";
-import React from "react";
-import { tv } from "tailwind-variants";
 
+import React from "react";
 import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
 import {
   getColorClasses,
-  getVariantClasses,
 } from "../../lib/variants";
-
-// Badge-specific variant type (semantic + all Tailwind colors)
-export type BadgeVariant = GlobalSemanticVariant | TailwindColor;
-
-// Badge variant configurations - generate dynamically for all supported colors
-const badgeVariantStyles = {
-  // Global semantic variants
-  default: getVariantClasses("default"),
-  neutral: getVariantClasses("neutral"),
-  success: getVariantClasses("success"),
-  info: getVariantClasses("info"),
-  warning: getVariantClasses("warning"),
-  error: getVariantClasses("error"),
-  critical: getVariantClasses("critical"),
-  positive: getVariantClasses("positive"),
-  negative: getVariantClasses("negative"),
-  // All Tailwind colors
-  slate: getVariantClasses("slate"),
-  gray: getVariantClasses("gray"),
-  zinc: getVariantClasses("zinc"),
-  stone: getVariantClasses("stone"),
-  red: getVariantClasses("red"),
-  orange: getVariantClasses("orange"),
-  amber: getVariantClasses("amber"),
-  yellow: getVariantClasses("yellow"),
-  lime: getVariantClasses("lime"),
-  green: getVariantClasses("green"),
-  emerald: getVariantClasses("emerald"),
-  teal: getVariantClasses("teal"),
-  cyan: getVariantClasses("cyan"),
-  sky: getVariantClasses("sky"),
-  blue: getVariantClasses("blue"),
-  indigo: getVariantClasses("indigo"),
-  violet: getVariantClasses("violet"),
-  purple: getVariantClasses("purple"),
-  fuchsia: getVariantClasses("fuchsia"),
-  pink: getVariantClasses("pink"),
-  rose: getVariantClasses("rose"),
-} as const;
-
-// Define variants structure using badge-specific variants
-const badgeVariantsDefinition = {
-  variants: {
-    variant: badgeVariantStyles,
-    size: {
-      xs: "px-1 py-0.5 text-xs font-medium",
-      sm: "px-1.5 py-0.5 text-xs font-medium",
-      base: "px-2 py-1 text-sm font-medium",
-      lg: "px-2.5 py-1.5 text-sm font-medium",
-    },
-    border: {
-      true: "ring-1 ring-inset",
-      false: "",
-    },
-    rounded: {
-      true: "rounded-full",
-      false: "rounded-md",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "base",
-    border: false,
-    rounded: false,
-  },
-} as const;
-
-// Update badge variants to handle dismiss button padding like Tag does
-const badgeVariants = tv({
-  base: cx(
-    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md font-medium",
-  ),
-  ...badgeVariantsDefinition,
-  compoundVariants: [
-    // Adjust right padding when dismiss button is present
-    {
-      size: "xs",
-      class: "has-[button]:pr-0.5",
-    },
-    {
-      size: "sm",
-      class: "has-[button]:pr-1",
-    },
-    {
-      size: "base",
-      class: "has-[button]:pr-1",
-    },
-    {
-      size: "lg",
-      class: "has-[button]:pr-1.5",
-    },
-    // Add extra horizontal padding for rounded badges to prevent cramped appearance
-    {
-      rounded: true,
-      size: "xs",
-      class: "px-2", // increased from px-1
-    },
-    {
-      rounded: true,
-      size: "sm",
-      class: "px-2.5", // increased from px-1.5
-    },
-    {
-      rounded: true,
-      size: "base",
-      class: "px-3", // increased from px-2
-    },
-    {
-      rounded: true,
-      size: "lg",
-      class: "px-3.5", // increased from px-2.5
-    },
-    // When rounded AND has dismiss button, adjust right padding accordingly
-    {
-      rounded: true,
-      size: "xs",
-      class: "has-[button]:pr-1", // slightly more than regular rounded
-    },
-    {
-      rounded: true,
-      size: "sm",
-      class: "has-[button]:pr-1.5", // slightly more than regular rounded
-    },
-    {
-      rounded: true,
-      size: "base",
-      class: "has-[button]:pr-1.5", // slightly more than regular rounded
-    },
-    {
-      rounded: true,
-      size: "lg",
-      class: "has-[button]:pr-2", // slightly more than regular rounded
-    },
-  ],
-});
-
-// Map badge sizes to icon sizes
-const badgeToIconSizeMap = {
-  xs: "xs",
-  sm: "xs",
-  base: "sm",
-  lg: "base",
-} as const;
-
-// Inline Dot functionality for Badge
-const dotIndicatorVariants = tv({
-  base: ["relative rounded-full", "flex-shrink-0"],
-  variants: {
-    size: {
-      sm: "w-1.5 h-1.5",
-      default: "w-2 h-2",
-      lg: "w-2.5 h-2.5",
-    },
-    animated: {
-      true: "animate-pulse before:absolute before:inset-0 before:rounded-full before:animate-ping before:opacity-75",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    size: "default",
-    animated: false,
-  },
-});
+import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 
 // Inline DismissButton functionality for Badge
 const InlineDismissButton = (
@@ -372,4 +208,4 @@ const Badge = (
 
 Badge.displayName = "Badge";
 
-export { Badge, type BadgeProps, badgeVariants };
+export { Badge, type BadgeProps };

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: contextMenuConfig.name,
+  description: contextMenuConfig.description,
+  openGraph: {
+    title: contextMenuConfig.name,
+    description: contextMenuConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: contextMenuConfig.name,
+    description: contextMenuConfig.description,
+  },
+};
+
 export default function ContextMenuPage() {
   return (
     <div>

@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: calloutConfig.name,
+  description: calloutConfig.description,
+  openGraph: {
+    title: calloutConfig.name,
+    description: calloutConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: calloutConfig.name,
+    description: calloutConfig.description,
+  },
+};
+
 export default function CalloutPage() {
   return (
     <div>

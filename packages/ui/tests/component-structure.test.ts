@@ -45,20 +45,39 @@ function getComponentDirectories(): string[] {
 function hasTypeScriptProps(componentDir: string): boolean {
   const componentsDir = join(process.cwd(), "src", "components");
   const componentFilePath = join(componentsDir, componentDir, "component.tsx");
+  const typesFilePath = join(componentsDir, componentDir, "types.ts");
 
   if (!existsSync(componentFilePath)) {
     return false;
   }
 
-  const content = readFileSync(componentFilePath, "utf8");
+  // Check component.tsx file
+  const componentContent = readFileSync(componentFilePath, "utf8");
+  
+  // Look for TypeScript prop type definitions in component file
+  const hasTypeDefinitionsInComponent = /type\s+\w+Props\s*=/.test(componentContent)
+    || /interface\s+\w+Props\s*\{/.test(componentContent)
+    || /React\.ComponentPropsWithoutRef/.test(componentContent)
+    || /React\.ComponentProps/.test(componentContent);
 
-  // Look for TypeScript prop type definitions
-  const hasTypeDefinitions = /type\s+\w+Props\s*=/.test(content)
-    || /interface\s+\w+Props\s*\{/.test(content)
-    || /React\.ComponentPropsWithoutRef/.test(content)
-    || /React\.ComponentProps/.test(content);
+  if (hasTypeDefinitionsInComponent) {
+    return true;
+  }
 
-  return hasTypeDefinitions;
+  // Check separate types.ts file (for restructured components)
+  if (existsSync(typesFilePath)) {
+    const typesContent = readFileSync(typesFilePath, "utf8");
+    const hasTypeDefinitionsInTypes = /type\s+\w+Props\s*=/.test(typesContent)
+      || /interface\s+\w+Props\s*\{/.test(typesContent)
+      || /React\.ComponentPropsWithoutRef/.test(typesContent)
+      || /React\.ComponentProps/.test(typesContent);
+    
+    if (hasTypeDefinitionsInTypes) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**

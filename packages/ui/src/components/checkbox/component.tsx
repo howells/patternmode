@@ -1,23 +1,12 @@
 // Tremor Checkbox [v1.0.0] - Base UI
 
+import type { CheckboxProps } from "./types";
+
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
 import React from "react";
 
-import { cx, focusRing } from "../../lib/utils";
-
-/**
- * Props for the Checkbox component.
- */
-type CheckboxProps = {
-  /**
-   * Checked state of the checkbox.
-   *
-   * - `true`: Checkbox is checked
-   * - `false`: Checkbox is unchecked
-   * - `"indeterminate"`: Checkbox shows indeterminate state (partial selection).
-   */
-  checked?: boolean | "indeterminate";
-} & Omit<React.ComponentPropsWithoutRef<typeof BaseCheckbox.Root>, "checked">;
+import { cx } from "../../lib/utils";
+import { checkboxIndicatorVariants, checkboxVariants } from "./variants";
 
 /**
  * A versatile checkbox input component with full accessibility support and indeterminate state capabilities.
@@ -35,28 +24,9 @@ const Checkbox = ({ ref: forwardedRef, className, checked, ...props }: CheckboxP
       ref={forwardedRef}
       {...baseUIProps}
       data-testid="checkbox"
-      className={cx(
-        // base
-        "relative inline-flex size-4 shrink-0 appearance-none items-center justify-center rounded-sm shadow-xs outline-hidden ring-1 ring-inset transition duration-100 enabled:cursor-pointer",
-        // text color
-        "text-white dark:text-zinc-50",
-        // background color
-        "bg-white dark:bg-zinc-950",
-        // ring color
-        "ring-zinc-300 dark:ring-zinc-800",
-        // disabled
-        "data-disabled:bg-zinc-100 data-disabled:text-zinc-400 data-disabled:ring-zinc-300",
-        "dark:data-disabled:bg-zinc-800 dark:data-disabled:text-zinc-500 dark:data-disabled:ring-zinc-700",
-        // checked and enabled - Base UI uses data-checked instead of data-[state=checked]
-        "enabled:data-checked:bg-blue-500 enabled:data-checked:ring-0 enabled:data-checked:ring-transparent",
-        // indeterminate - Base UI has data-indeterminate attribute
-        "enabled:data-[indeterminate]:bg-blue-500 enabled:data-[indeterminate]:ring-0 enabled:data-[indeterminate]:ring-transparent",
-        // focus
-        focusRing,
-        className,
-      )}
+      className={cx(checkboxVariants(), className)}
     >
-      <BaseCheckbox.Indicator className="flex size-full items-center justify-center">
+      <BaseCheckbox.Indicator className={checkboxIndicatorVariants()}>
         {checked === "indeterminate"
           ? (
               <svg
@@ -105,4 +75,4 @@ const Checkbox = ({ ref: forwardedRef, className, checked, ...props }: CheckboxP
 
 Checkbox.displayName = "Checkbox";
 
-export { Checkbox, type CheckboxProps };
+export { Checkbox };

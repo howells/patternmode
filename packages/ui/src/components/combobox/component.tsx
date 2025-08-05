@@ -1,202 +1,19 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
-
+import type { ComboboxOption, ComboboxProps } from "./types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
-import React from "react";
-import { tv } from "tailwind-variants";
 
+import React from "react";
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
-import { Button } from "../button";
-import { Icon } from "../icon";
-import { Input } from "../input";
-import { Loader } from "../loader";
-
-/**
- * Base interface for combobox options.
- */
-export type ComboboxOption = {
-  id: string;
-  label: string;
-  value: string;
-  [key: string]: unknown;
-};
-
-/**
- * Function signature for fetching data with search and pagination.
- */
-export type ComboboxFetchFunction<T = ComboboxOption> = (params: {
-  search?: string;
-  pageParam?: number;
-  signal?: AbortSignal;
-}) => Promise<{
-  data: T[];
-  hasNextPage: boolean;
-  nextCursor?: number;
-}>;
-
-const comboboxVariants = tv({
-  base: ["relative w-full"],
-  variants: {
-    size: {
-      sm: "",
-      base: "",
-      lg: "",
-    },
-  },
-  defaultVariants: {
-    size: "base",
-  },
-});
-
-const comboboxListVariants = tv({
-  base: [
-    // base
-    "absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg dark:bg-zinc-950",
-    // border
-    " dark:border-zinc-800",
-    // scrollbar
-    "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
-  ],
-  variants: {
-    size: {
-      sm: "text-xs",
-      base: "text-sm",
-      lg: "text-base",
-    },
-  },
-  defaultVariants: {
-    size: "base",
-  },
-});
-
-const comboboxItemVariants = tv({
-  base: [
-    // base
-    "relative flex cursor-pointer select-none items-center justify-between py-2 px-3 outline-none transition-colors",
-    // hover
-    "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
-    // highlighted
-    "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
-    // selected
-    "data-[selected]:bg-blue-50 data-[selected]:text-blue-900 dark:data-[selected]:bg-blue-900/20 dark:data-[selected]:text-blue-100",
-  ],
-  variants: {
-    size: {
-      sm: "text-xs py-1.5 px-2.5",
-      base: "text-sm py-2 px-3",
-      lg: "text-base py-2.5 px-4",
-    },
-  },
-  defaultVariants: {
-    size: "base",
-  },
-});
-
-/**
- * Props for the Combobox component.
- */
-type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
-  /**
-   * Static options array (alternative to fetchData).
-   * Pre-defined list of selectable options for client-side filtering.
-   */
-  options?: T[];
-  /**
-   * Function to fetch data dynamically with React Query.
-   * Async function for server-side search and pagination support.
-   */
-  fetchData?: ComboboxFetchFunction<T>;
-  /**
-   * React Query key for caching.
-   * Unique identifier for caching and invalidating query results.
-   */
-  queryKey?: (string | number)[];
-  /**
-   * Current selected value.
-   * The currently selected option value, used for controlled state.
-   */
-  value?: string;
-  /**
-   * Callback when selection changes.
-   * Function called when user selects or deselects an option.
-   */
-  onValueChange?: (value: string | undefined) => void;
-  /**
-   * Placeholder text for the input.
-   * Text displayed when no option is selected.
-   */
-  placeholder?: string;
-  /**
-   * Placeholder text for search input.
-   * Text displayed in the search field when empty.
-   */
-  searchPlaceholder?: string;
-  /**
-   * Message to show when no items found.
-   * Text displayed when search returns no results.
-   */
-  emptyMessage?: string;
-  /**
-   * Whether the combobox is disabled.
-   * When true, prevents user interaction and shows disabled styling.
-   */
-  disabled?: boolean;
-  /**
-   * Whether to show error state.
-   * When true, applies error styling to indicate validation issues.
-   */
-  hasError?: boolean;
-  /**
-   * Additional CSS classes.
-   * Custom CSS classes to apply to the combobox container.
-   */
-  className?: string;
-  /**
-   * Search debounce delay in ms.
-   * Time to wait after user stops typing before triggering search.
-   */
-  searchDebounce?: number;
-  /**
-   * Stroke width for icons.
-   * Controls the thickness of icon strokes for visual consistency.
-   */
-  iconStrokeWidth?: number;
-  /**
-   * Function to get the value from an item.
-   * Custom function to extract the value property from option objects.
-   */
-  getItemValue?: (item: T) => string;
-  /**
-   * Function to get the label from an item.
-   * Custom function to extract the display label from option objects.
-   */
-  getItemLabel?: (item: T) => string;
-  /**
-   * Function to get an icon component for an item.
-   * Custom function to render icons for each option in the list.
-   */
-  getItemIcon?: (item: T) => React.ReactNode;
-  /**
-   * Custom render function for items.
-   * Override default item rendering with completely custom components.
-   */
-  renderItem?: (item: T, index: number) => React.ReactNode;
-  /**
-   * Whether to select all text in the input when the menu opens.
-   * When true, highlights all search text on focus for easy replacement.
-   */
-  selectOnFocus?: boolean;
-  /**
-   * Whether to clear the search when an item is selected.
-   * When true, clears search input after selection for clean state.
-   */
-  clearSearchOnSelect?: boolean;
-} & VariantProps<typeof comboboxVariants> & React.ComponentPropsWithoutRef<"div">;
+import { Button } from "../button/component";
+import { Icon } from "../icon/component";
+import { Input } from "../input/component";
+import { Loader } from "../loader/component";
+import { comboboxItemVariants, comboboxVariants } from "./variants";
 
 /**
  * Virtualized item list component for handling large datasets efficiently.
@@ -707,5 +524,4 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 
 Combobox.displayName = "Combobox";
 
-export { Combobox, comboboxVariants };
-export type { ComboboxProps };
+export { Combobox };

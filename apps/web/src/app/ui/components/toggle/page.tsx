@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${toggleConfig.name} | Patternmode`,
+  description: toggleConfig.description,
+  openGraph: {
+    title: `${toggleConfig.name} | Patternmode`,
+    description: toggleConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${toggleConfig.name} | Patternmode`,
+    description: toggleConfig.description,
+  },
+};
+
 export default function TogglePage() {
   return (
     <div>

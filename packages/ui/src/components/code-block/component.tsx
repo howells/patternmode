@@ -2,30 +2,16 @@
 
 "use client";
 
+import type { CodeBlockProps } from "./types";
+
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
 import oneLight from "react-syntax-highlighter/dist/esm/styles/prism/one-light";
 
 import { cx } from "../../lib/utils";
-import { CopyButton } from "../copy-button";
-
-/**
- * Props for the CodeBlock component.
- */
-type CodeBlockProps = {
-  /**
-   * Programming language for syntax highlighting.
-   * Specifies the language for proper syntax highlighting. Defaults to "tsx".
-   * Supports 297+ languages via Prism.js.
-   */
-  language?: string;
-  /**
-   * Color theme for syntax highlighting.
-   * Controls the visual theme of the code block. "auto" detects system preference.
-   */
-  theme?: "light" | "dark" | "auto";
-} & React.ComponentPropsWithoutRef<"div">;
+import { CopyButton } from "../copy-button/component";
+import { codeBlockHeaderVariants, codeBlockLanguageLabelVariants, codeBlockVariants } from "./variants";
 
 /**
  * Syntax-highlighted code display component with copy functionality.
@@ -37,6 +23,7 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
     }
     return String(children || "");
   }, [children]);
+  
   // Determine theme
   const isDark = React.useMemo(() => {
     if (theme === "light") {
@@ -79,14 +66,11 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
   return (
     <div
       ref={ref}
-      className={cx(
-        "relative rounded-lg border  dark:border-zinc-800 w-full min-w-lg overflow-hidden",
-        className,
-      )}
+      className={cx(codeBlockVariants(), className)}
       data-testid="code-block"
     >
-      <div className="flex items-center justify-between border-b  bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-900">
-        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+      <div className={codeBlockHeaderVariants()}>
+        <span className={codeBlockLanguageLabelVariants()}>
           {language}
         </span>
         <CopyButton text={codeString} />
@@ -120,4 +104,4 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
 
 CodeBlock.displayName = "CodeBlock";
 
-export { type CodeBlockProps };
+export { CodeBlock };

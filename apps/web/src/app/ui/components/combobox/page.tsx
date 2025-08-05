@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${comboboxConfig.name} | Patternmode`,
+  description: comboboxConfig.description,
+  openGraph: {
+    title: `${comboboxConfig.name} | Patternmode`,
+    description: comboboxConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${comboboxConfig.name} | Patternmode`,
+    description: comboboxConfig.description,
+  },
+};
+
 export default function ComboboxPage() {
   return (
     <div>

@@ -1,6 +1,5 @@
 "use client";
 
-
 import type { CardProps } from "./component";
 import React from "react";
 import { ButtonGroup } from "../button-group/component";

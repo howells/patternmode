@@ -1,107 +1,18 @@
 import type { IconComponent } from "../../lib/icon-utils";
+import type { ButtonSize, IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { MoreHorizontal } from "lucide-react";
-import React from "react";
+import { ArrowRight, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 
-import { tv } from "tailwind-variants";
+import React from "react";
 import { config } from "../../lib/config";
 import { renderIcon } from "../../lib/icon-utils";
-import { cx, focusRing } from "../../lib/utils";
-import { componentVariants } from "../../lib/variants";
-import { Kbd } from "../kbd";
+import { cx } from "../../lib/utils";
+import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
-import { Loader } from "../loader";
-
-const buttonVariants = tv({
-  base: [
-    // base
-    "relative inline-flex items-center whitespace-nowrap rounded-md text-sm outline-hidden",
-    // cursor - explicit hand pointer for all interactive buttons
-    "cursor-pointer",
-    // add transparent border to match input height
-    "border border-transparent",
-    // background transition - only animate colors and shadows, not position
-    "transition-[background-color,border-color,box-shadow,color] duration-150 ease-in-out",
-    // disabled
-    "disabled:pointer-events-none disabled:shadow-none disabled:cursor-not-allowed",
-    // focus
-    focusRing,
-  ],
-  variants: {
-    variant: componentVariants.button,
-    rounded: {
-      true: "rounded-full",
-      false: "rounded-md",
-    },
-    size: {
-      "xs": "h-control-xs px-2 text-xs has-[>svg]:px-1.5",
-      "sm": "h-control-sm px-2.5 text-sm has-[>svg]:px-2",
-      "default": "h-control-base px-3 text-sm has-[>svg]:px-2.5",
-      "lg": "h-control-lg px-4 text-sm has-[>svg]:px-3",
-      "icon-xs": "size-control-xs",
-      "icon-sm": "size-control-sm",
-      "icon": "size-control-base",
-      "icon-lg": "size-control-lg",
-    },
-  },
-  compoundVariants: [
-    {
-      size: "xs",
-      rounded: true,
-      class: "rounded-xs",
-    },
-  ],
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-    rounded: false,
-  },
-});
-
-/**
- * Creates button-style variants for other components that want to look like buttons
- * but maintain their own semantic behavior (like toggles, tabs, etc.).
- */
-export const createButtonStyleVariants = (
-  pressedVariant: keyof typeof componentVariants.button = "destructive",
-) => ({
-  base: buttonVariants.base,
-  variants: {
-    // Map button variants to toggle states
-    default: [
-      ...componentVariants.button.default,
-      // Add pressed state using the specified variant
-      `data-[pressed]:${componentVariants.button[pressedVariant].join(
-        " data-[pressed]:",
-      )}`,
-    ],
-    secondary: [
-      ...componentVariants.button.secondary,
-      `data-[pressed]:${componentVariants.button[pressedVariant].join(
-        " data-[pressed]:",
-      )}`,
-    ],
-    outline: [
-      ...componentVariants.button.outline,
-      `data-[pressed]:${componentVariants.button[pressedVariant].join(
-        " data-[pressed]:",
-      )}`,
-    ],
-    ghost: [
-      ...componentVariants.button.ghost,
-      `data-[pressed]:${componentVariants.button[pressedVariant].join(
-        " data-[pressed]:",
-      )}`,
-    ],
-    destructive: [
-      ...componentVariants.button.destructive,
-      // When destructive is pressed, make it even more intense
-      "data-[pressed]:bg-red-700 data-[pressed]:hover:bg-red-800 dark:data-[pressed]:bg-red-600 dark:data-[pressed]:hover:bg-red-700",
-    ],
-  },
-  sizes: buttonVariants.variants.size,
-});
+import { Loader } from "../loader/component";
+import { buttonVariants } from "./variants";
 
 type ButtonProps = {
   /**
@@ -169,7 +80,7 @@ type ButtonProps = {
    * Size variant of the button.
    * Icon sizes are for icon-only buttons without text.
    */
-  size?: "xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+  size?: ButtonSize | IconButtonSize;
   /**
    * Whether to use full border radius for rounded appearance.
    * Creates pill-shaped buttons when true.
@@ -178,52 +89,40 @@ type ButtonProps = {
   /**
    * Custom element to render (defaults to button tag).
    * Enables semantic flexibility while maintaining styling.
+   * When href is provided, this is automatically set to Link.
    */
   render?: useRender.RenderProp<Record<string, unknown>>;
+  /**
+   * URL to navigate to when clicked.
+   * When provided, the button automatically renders as a Link.
+   */
+  href?: string;
+  /**
+   * Whether to show the left icon only on hover.
+   * When true, the left icon has opacity-0 normally and opacity-100 on hover.
+   */
+  showLeftIconOnHover?: boolean;
+  /**
+   * Whether to show the right icon only on hover.
+   * When true, the right icon has opacity-0 normally and opacity-100 on hover.
+   */
+  showRightIconOnHover?: boolean;
   /**
    * Ref to the button element.
    * For accessing the underlying DOM element.
    */
   ref?: React.RefObject<HTMLButtonElement | null>;
-  /**
-   * Additional CSS classes.
-   * Merged with component styling classes.
-   */
-  className?: string;
-  /**
-   * Button content and text.
-   * Displayed as button label or screen reader text for icon buttons.
-   * Optional when used as render prop in Base UI components.
-   */
-  children?: React.ReactNode;
-  /**
-   * Whether the button is disabled.
-   * Prevents interactions and shows disabled styling.
-   */
-  disabled?: boolean;
-  /**
-   * Click event handler.
-   * Called when button is clicked or activated via keyboard.
-   */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  /**
-   * Button type attribute.
-   * Controls form submission behavior.
-   */
-  type?: "button" | "submit" | "reset";
-  /**
-   * ARIA role attribute.
-   * Specifies the element's role for accessibility.
-   */
-  role?: string;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * Interactive button component with multiple variants and states for user actions.
  */
 const Button = ({
   ref: forwardedRef,
-  render = <button type="button" />,
+  render,
+  href,
+  showLeftIconOnHover = false,
+  showRightIconOnHover = false,
   isLoading = false,
   loadingText,
   className,
@@ -243,6 +142,8 @@ const Button = ({
   shadow = true,
   ...props
 }: ButtonProps) => {
+  // Automatically set render prop based on href
+  const effectiveRender = render || (href ? <Link href={href} /> : <button type="button" />);
   const hasChildren = children != null && children !== "";
   const isIconOnly
     = size === "icon-xs"
@@ -436,9 +337,11 @@ const Button = ({
                   <div
                     className={cx(
                       "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
-                      !isLoading
-                        ? "opacity-100"
-                        : "opacity-0 pointer-events-none",
+                                              !isLoading
+                          ? showLeftIconOnHover
+                            ? "opacity-0 group-hover/button:opacity-100"
+                            : "opacity-100"
+                          : "opacity-0 pointer-events-none",
                     )}
                   >
                     {effectiveLeftIcon
@@ -472,7 +375,18 @@ const Button = ({
           {/* Right icon with CSS transitions */}
           {hasRightIcon && (
             <span className="flex items-center">
-              {RightIcon && renderIcon(RightIcon, size, iconStrokeWidth)}
+              {RightIcon && (
+                <span
+                  className={cx(
+                    "transition-opacity duration-150 ease-in-out",
+                    showRightIconOnHover
+                      ? "opacity-0 group-hover/button:opacity-100"
+                      : "opacity-100"
+                  )}
+                >
+                  {renderIcon(RightIcon, size, iconStrokeWidth)}
+                </span>
+              )}
               {kbd && (
                 <Kbd
                   keys={Array.isArray(kbd) ? kbd : undefined}
@@ -545,7 +459,18 @@ const Button = ({
 
           {/* Right icon */}
           <span className="flex items-center">
-            {RightIcon && renderIcon(RightIcon, size, iconStrokeWidth)}
+            {RightIcon && (
+              <span
+                className={cx(
+                  "transition-opacity duration-150 ease-in-out",
+                  showRightIconOnHover
+                    ? "opacity-0 group-hover/button:opacity-100"
+                    : "opacity-100"
+                )}
+              >
+                {renderIcon(RightIcon, size, iconStrokeWidth)}
+              </span>
+            )}
           </span>
         </span>
       );
@@ -598,7 +523,18 @@ const Button = ({
 
           {/* Right icon with ml-auto to push to right */}
           <span className={`flex items-center ${fullWidth ? "ml-auto" : ""}`}>
-            {RightIcon && renderIcon(RightIcon, size, iconStrokeWidth)}
+            {RightIcon && (
+              <span
+                className={cx(
+                  "transition-opacity duration-150 ease-in-out",
+                  showRightIconOnHover
+                    ? "opacity-0 group-hover/button:opacity-100"
+                    : "opacity-100"
+                )}
+              >
+                {renderIcon(RightIcon, size, iconStrokeWidth)}
+              </span>
+            )}
           </span>
         </span>
       );
@@ -657,6 +593,8 @@ const Button = ({
     className: cx(
       buttonVariants({ variant, size, rounded }),
       fullWidth && "w-full max-w-[95vw]",
+      // Add group class when using hover effects for icons
+      (showLeftIconOnHover || showRightIconOnHover) && "group/button",
       // Derive shadow from prop
       shadow ? "shadow-xs" : "shadow-none",
       // Derive flex justification from textAlign and fullWidth
@@ -684,7 +622,7 @@ const Button = ({
   };
 
   const element = useRender({
-    render,
+    render: effectiveRender,
     ref: forwardedRef,
     props: mergeProps<"button">(defaultProps, props),
   });
@@ -694,24 +632,4 @@ const Button = ({
 
 Button.displayName = "Button";
 
-/**
- * Button size options that can be reused in other components.
- */
-export type ButtonSize = "xs" | "sm" | "default" | "lg";
-
-/**
- * Array of all button size options for use in configs and other places.
- */
-export const buttonSizeOptions: ButtonSize[] = ["xs", "sm", "default", "lg"];
-
-/**
- * Icon button size options that can be reused in other components.
- */
-export type IconButtonSize = "icon-xs" | "icon-sm" | "icon" | "icon-lg";
-
-/**
- * Array of all icon button size options for use in configs and other places.
- */
-export const iconButtonSizeOptions: IconButtonSize[] = ["icon-xs", "icon-sm", "icon", "icon-lg"];
-
-export { Button, type ButtonProps, buttonVariants };
+export { Button, type ButtonProps };

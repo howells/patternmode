@@ -5,6 +5,21 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/preview";
 
+export const metadata = {
+  title: `${switchConfig.name} | Patternmode`,
+  description: switchConfig.description,
+  openGraph: {
+    title: `${switchConfig.name} | Patternmode`,
+    description: switchConfig.description,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${switchConfig.name} | Patternmode`,
+    description: switchConfig.description,
+  },
+};
+
 export default function SwitchPage() {
   return (
     <div>

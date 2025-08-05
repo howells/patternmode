@@ -27,14 +27,14 @@ import {
 } from "react-day-picker";
 
 import { cx, focusRing } from "../../lib/utils";
-import { Button } from "../button";
+import { Button } from "../button/component";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../select";
+} from "../select/component";
 
 const DropdownCaption = ({
   calendarMonth,

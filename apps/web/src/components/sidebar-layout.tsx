@@ -76,9 +76,10 @@ function SidebarContent() {
   // Check if current path matches a component
   const isCurrentComponent = (componentId: string) => {
     return (
-      segments.length >= 2
-      && segments[0] === "components"
-      && segments[1] === componentId
+      segments.length >= 3
+      && segments[0] === "ui"
+      && segments[1] === "components"
+      && segments[2] === componentId
     );
   };
 
