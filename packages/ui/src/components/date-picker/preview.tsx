@@ -2,15 +2,18 @@
 
 import React from "react";
 import { DatePicker } from "./component";
+import { Calendar } from "lucide-react";
+import type { IconComponent } from "../../lib/icon-utils";
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker> & {
   placeholder?: string;
   hasError?: boolean;
   disabled?: boolean;
+  icon?: IconComponent;
 };
 
 export function DatePickerPreview(props: DatePickerProps) {
-  return <DatePicker placeholder="Select a date" {...props} />;
+  return <DatePicker placeholder="Select a date"  {...props} />;
 }
 
 // Preview props for prop explorer
@@ -32,5 +35,11 @@ export const datePickerPreviewProps = [
     type: "boolean",
     description: "Whether the date picker is disabled.",
     defaultValue: false,
+  },
+  {
+    name: "icon",
+    type: "icon",
+    description: "Icon component to display in the trigger. Defaults to Calendar icon.",
+    defaultValue: "Calendar",
   },
 ];

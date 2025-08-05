@@ -15,6 +15,9 @@ import type {
   Translations,
   TriggerProps,
 } from "./types";
+import type { TimeValue } from "@react-aria/datepicker";
+import type { Locale } from "date-fns";
+import type { VariantProps } from "tailwind-variants";
 import { Time } from "@internationalized/date";
 import { useDateSegment, useTimeField } from "@react-aria/datepicker";
 import { useTimeFieldState } from "@react-stately/datepicker";
@@ -23,11 +26,10 @@ import { enUS } from "date-fns/locale";
 import { Calendar } from "lucide-react";
 
 import * as React from "react";
-import { cx, focusRing } from "../../lib/utils";
+import { cx, focusInput, focusRing } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Calendar as CalendarPrimitive } from "../calendar/component";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover/component";
-import { triggerStyles } from "./variants";
 
 // #region TimeInput
 // ============================================================================
@@ -133,42 +135,42 @@ TimeInput.displayName = "TimeInput";
 // #region Trigger
 // ============================================================================
 
-type TriggerProps = {
-  /**
-   * Placeholder text when no date is selected.
-   * Displayed in muted colors when no value is present.
-   */
-  placeholder?: string;
-} & React.ComponentProps<"button">
-& VariantProps<typeof triggerStyles> & {
-  ref?: React.RefObject<HTMLButtonElement | null>;
-};
-
 const Trigger = ({
   ref: forwardedRef,
   className,
   children,
   placeholder,
   hasError,
+  icon,
   ...props
 }: TriggerProps) => {
+  const IconComponent = Calendar;
+
   return (
     <PopoverTrigger
-      ref={forwardedRef}
-      className={cx(triggerStyles({ hasError }), className)}
-      {...props}
+      render={
+        <Button
+          ref={forwardedRef}
+          variant="outline"
+          leftIcon={IconComponent}
+          textAlign="left"
+
+          className={cx(
+            "justify-start text-left h-control-base",
+            hasError && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+            className
+          )}
+          {...props}
+        />
+      }
     >
-      <Calendar className="size-5 shrink-0 text-zinc-400 dark:text-zinc-600" />
-      <span className="flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap text-zinc-900 dark:text-zinc-50">
-        {children
-          || (placeholder
-            ? (
-                <span className="text-zinc-400 dark:text-zinc-600">
-                  {placeholder}
-                </span>
-              )
-            : null)}
-      </span>
+      {children || (
+        placeholder ? (
+          <span className="text-zinc-400 dark:text-zinc-600">
+            {placeholder}
+          </span>
+        ) : null
+      )}
     </PopoverTrigger>
   );
 };
@@ -209,255 +211,7 @@ const CalendarPopover = ({
 
 CalendarPopover.displayName = "DatePicker.CalendarPopover";
 
-// #region Types
-// ============================================================================
 
-type DateRange = {
-  /**
-   * Start date of the range.
-   * Can be undefined for incomplete ranges.
-   */
-  from: Date | undefined;
-  /**
-   * End date of the range.
-   * Optional for single-ended ranges or incomplete selections.
-   */
-  to?: Date | undefined;
-};
-
-type Preset = {
-  /**
-   * Display label for the preset option.
-   * Shown in the preset selection UI.
-   */
-  label: string;
-};
-
-type DatePreset = {
-  /**
-   * The preset date value.
-   * Date that will be selected when this preset is chosen.
-   */
-  date: Date;
-} & Preset;
-
-type DateRangePreset = {
-  /**
-   * The preset date range value.
-   * Date range that will be selected when this preset is chosen.
-   */
-  dateRange: DateRange;
-} & Preset;
-
-type Translations = {
-  /**
-   * Text for the cancel button.
-   * Used in date picker popover actions.
-   */
-  cancel?: string;
-  /**
-   * Text for the apply button.
-   * Used in date picker popover actions.
-   */
-  apply?: string;
-  /**
-   * Label for the start date in range picker.
-   * Displayed next to start time input.
-   */
-  start?: string;
-  /**
-   * Label for the end date in range picker.
-   * Displayed next to end time input.
-   */
-  end?: string;
-  /**
-   * Label for the date range selection.
-   * Displayed before the selected range text.
-   */
-  range?: string;
-};
-
-type CalendarProps = {
-  /**
-   * Earliest selectable year.
-   * Restricts calendar navigation and date selection.
-   */
-  fromYear?: number;
-  /**
-   * Latest selectable year.
-   * Restricts calendar navigation and date selection.
-   */
-  toYear?: number;
-  /**
-   * Earliest selectable month.
-   * Restricts calendar navigation and date selection.
-   */
-  fromMonth?: Date;
-  /**
-   * Latest selectable month.
-   * Restricts calendar navigation and date selection.
-   */
-  toMonth?: Date;
-  /**
-   * Earliest selectable day.
-   * Restricts calendar navigation and date selection.
-   */
-  fromDay?: Date;
-  /**
-   * Latest selectable day.
-   * Restricts calendar navigation and date selection.
-   */
-  toDay?: Date;
-  /**
-   * Earliest selectable date.
-   * Alternative to individual year/month/day restrictions.
-   */
-  fromDate?: Date;
-  /**
-   * Latest selectable date.
-   * Alternative to individual year/month/day restrictions.
-   */
-  toDate?: Date;
-  /**
-   * Locale for date formatting and localization.
-   * Controls month names, day names, and date formats.
-   */
-  locale?: Locale;
-};
-
-type PickerProps = {
-  /**
-   * Additional CSS classes for styling.
-   * Applied to the trigger button element.
-   */
-  "className"?: string;
-  /**
-   * Whether the picker is disabled.
-   * Prevents interaction and shows disabled styling.
-   */
-  "disabled"?: boolean;
-  /**
-   * Days to disable in the calendar.
-   * Uses react-day-picker matchers for flexible date filtering.
-   */
-  "disabledDays"?: Matcher | Matcher[] | undefined;
-  /**
-   * Whether the field is required.
-   * Affects form validation and accessibility attributes.
-   */
-  "required"?: boolean;
-  /**
-   * Whether to show the time picker component.
-   * Adds time selection alongside date selection.
-   */
-  "showTimePicker"?: boolean;
-  /**
-   * Placeholder text for the input.
-   * Displayed when no date is selected.
-   */
-  "placeholder"?: string;
-  /**
-   * Whether to enable year navigation controls.
-   * Adds dropdown for quick year selection.
-   */
-  "enableYearNavigation"?: boolean;
-  /**
-   * Whether to disable calendar navigation.
-   * Prevents month/year navigation controls.
-   */
-  "disableNavigation"?: boolean;
-  /**
-   * Whether to show error styling.
-   * Adds error visual states to the component.
-   */
-  "hasError"?: boolean;
-  /**
-   * ID for the picker element.
-   * Used for form association and accessibility.
-   */
-  "id"?: string;
-  /**
-   * Custom translations for date picker text.
-   * Localizes button labels and UI text.
-   */
-  "translations"?: Translations;
-  /**
-   * Alignment of the popover relative to trigger.
-   * Controls how the calendar popover positions itself.
-   */
-  "align"?: "center" | "end" | "start";
-  /**
-   * ARIA invalid state.
-   * Indicates validation errors for accessibility.
-   */
-  "aria-invalid"?: boolean;
-  /**
-   * ARIA label for accessibility.
-   * Provides accessible name for screen readers.
-   */
-  "aria-label"?: string;
-  /**
-   * ID of element that labels this picker.
-   * Alternative to aria-label for accessibility.
-   */
-  "aria-labelledby"?: string;
-  /**
-   * ARIA required state.
-   * Indicates required field for accessibility.
-   */
-  "aria-required"?: boolean;
-} & CalendarProps;
-
-type SingleDatePickerProps = {
-  /**
-   * Preset date options to display in sidebar.
-   * Provides quick selection for common dates.
-   */
-  presets?: DatePreset[];
-  /**
-   * Default selected date for uncontrolled mode.
-   * Initial date value when component is not controlled.
-   */
-  defaultValue?: Date;
-  /**
-   * Currently selected date for controlled mode.
-   * Date value managed by parent component.
-   */
-  value?: Date;
-  /**
-   * Callback when date selection changes.
-   * Called with new date value or undefined for clearing.
-   */
-  onChange?: (date: Date | undefined) => void;
-  /**
-   * Translations excluding range-specific labels.
-   * Localizes UI text for single date picker.
-   */
-  translations?: Omit<Translations, "range">;
-} & Omit<PickerProps, "translations">;
-
-type _RangeDatePickerProps = {
-  /**
-   * Preset date range options to display in sidebar.
-   * Provides quick selection for common date ranges.
-   */
-  presets?: DateRangePreset[];
-  /**
-   * Default selected date range for uncontrolled mode.
-   * Initial range value when component is not controlled.
-   */
-  defaultValue?: DateRange;
-  /**
-   * Currently selected date range for controlled mode.
-   * Range value managed by parent component.
-   */
-  value?: DateRange;
-  /**
-   * Callback when date range selection changes.
-   * Called with new range value or undefined for clearing.
-   */
-  onChange?: (dateRange: DateRange | undefined) => void;
-} & PickerProps;
 
 // #region Utility Functions
 // ============================================================================
@@ -482,15 +236,11 @@ const formatDate = (
   return dateString;
 };
 
-type PresetContainerProps<TPreset extends Preset, TValue> = {
-  presets: TPreset[];
-  onSelect: (value: TValue) => void;
-  currentValue?: TValue;
-};
+
 
 const PresetContainer = <TPreset extends Preset, TValue>({
   presets,
-  onSelect,
+  onPresetSelect,
   currentValue,
 }: PresetContainerProps<TPreset, TValue>) => {
   const isDateRangePresets = (
@@ -504,10 +254,10 @@ const PresetContainer = <TPreset extends Preset, TValue>({
 
   const handleClick = (preset: TPreset) => {
     if (isDateRangePresets(preset)) {
-      onSelect(preset.dateRange as TValue);
+      onPresetSelect(preset.dateRange as TValue);
     }
     else if (isDatePresets(preset)) {
-      onSelect(preset.date as TValue);
+      onPresetSelect(preset.date as TValue);
     }
   };
 
@@ -604,14 +354,6 @@ PresetContainer.displayName = "DatePicker.PresetContainer";
 
 // I'll continue with the rest of the component implementation...
 
-type SingleProps = {
-  presets?: DatePreset[];
-  defaultValue?: Date;
-  value?: Date;
-  onChange?: (date: Date | undefined) => void;
-  translations?: Omit<Translations, "range">;
-} & Omit<PickerProps, "translations">;
-
 const SingleDatePicker = ({
   defaultValue,
   value,
@@ -624,6 +366,7 @@ const SingleDatePicker = ({
   showTimePicker,
   placeholder = "Select date",
   hasError,
+  icon,
   translations,
   enableYearNavigation = false,
   locale = enUS,
@@ -750,6 +493,7 @@ const SingleDatePicker = ({
         disabled={disabled}
         className={className}
         hasError={hasError}
+        icon={icon}
         aria-required={props.required || props["aria-required"]}
         aria-invalid={props["aria-invalid"]}
         aria-label={props["aria-label"]}
@@ -772,7 +516,7 @@ const SingleDatePicker = ({
                   <PresetContainer
                     currentValue={date}
                     presets={presets}
-                    onSelect={onDateChange}
+                    onPresetSelect={onDateChange}
                   />
                 </div>
               </div>

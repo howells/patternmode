@@ -6,6 +6,8 @@ import {
   DefaultExample,
   DisabledExample,
   ErrorStateExample,
+  WithCustomIconExample,
+  WithClockIconExample,
   WithPresetsExample,
   WithTimeExample,
 } from "./examples";
@@ -35,6 +37,18 @@ export const datePickerConfig: ComponentConfig = {
       title: "With Presets",
       description: "Date picker with quick preset options",
       component: WithPresetsExample,
+    },
+    {
+      id: "with-custom-icon",
+      title: "With Custom Icon",
+      description: "Date picker with a custom icon",
+      component: WithCustomIconExample,
+    },
+    {
+      id: "with-clock-icon",
+      title: "With Clock Icon",
+      description: "Date picker with clock icon and time selection",
+      component: WithClockIconExample,
     },
     {
       id: "disabled",

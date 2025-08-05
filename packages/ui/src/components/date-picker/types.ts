@@ -2,8 +2,8 @@ import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import type { Locale } from "date-fns";
 import type React from "react";
-import type { VariantProps } from "tailwind-variants";
-import type { triggerStyles } from "./variants";
+import type { IconComponent } from "../../lib/icon-utils";
+import type { Button } from "../button/component";
 
 export type TimeSegmentProps = {
   segment: DateSegment;
@@ -13,6 +13,7 @@ export type TimeSegmentProps = {
 export type TimeInputProps = {
   value?: TimeValue;
   onChange?: (value: TimeValue) => void;
+  ref?: React.RefObject<HTMLDivElement | null>;
 } & Omit<AriaTimeFieldProps<TimeValue>, "value" | "onChange">;
 
 export type TriggerProps = {
@@ -27,16 +28,16 @@ export type TriggerProps = {
    */
   placeholder?: string;
   /**
-   * Whether the date picker trigger is disabled.
-   * When true, prevents interaction and applies disabled styling.
+   * Icon component to display in the trigger.
+   * Defaults to Calendar icon when not provided.
    */
-  disabled?: boolean;
+  icon?: IconComponent;
   /**
    * Content to display in the trigger.
    * Usually the formatted selected date or placeholder text.
    */
   children: React.ReactNode;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof triggerStyles>;
+} & Omit<React.ComponentProps<typeof Button>, "leftIcon" | "children">;
 
 export type DateRange = {
   /**
@@ -139,7 +140,7 @@ export type CalendarProps = {
    * Customizes button and label text for different languages.
    */
   translations?: Translations;
-} & React.ComponentPropsWithoutRef<typeof import("../calendar").Calendar>;
+} & React.ComponentPropsWithoutRef<typeof import("../calendar/component").Calendar>;
 
 export type PickerProps = {
   /**
@@ -192,7 +193,12 @@ export type PickerProps = {
    * Enables time input alongside date selection when true.
    */
   enableTime?: boolean;
-} & Omit<React.ComponentPropsWithoutRef<typeof import("../calendar").Calendar>, "value" | "onValueChange">;
+  /**
+   * Icon component to display in the trigger.
+   * Defaults to Calendar icon when not provided.
+   */
+  icon?: IconComponent;
+} & Omit<React.ComponentPropsWithoutRef<typeof import("../calendar/component").Calendar>, "value" | "onValueChange">;
 
 export type SingleDatePickerProps = {
   /**
