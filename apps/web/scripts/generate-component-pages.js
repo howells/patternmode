@@ -75,13 +75,18 @@ async function scanComponents() {
 
 function generateImports(components) {
   const configImports = [];
+  const previewImports = [];
 
   components.forEach((id) => {
-    // Config imports only - no preview imports needed for config-first architecture
+    // Config imports
     configImports.push(`import { ${toCamelCase(id)}Config } from "./${id}/config";`);
+    
+    // Preview imports for static registry
+    const pascalName = toPascalCase(id);
+    previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
   });
 
-  return { configImports };
+  return { configImports, previewImports };
 }
 
 function generateComponentRegistry(components) {
@@ -93,11 +98,19 @@ function generateComponentRegistry(components) {
   return entries.join("\n");
 }
 
-// Remove preview registry - not needed for config-first architecture
+function generatePreviewRegistry(components) {
+  const entries = components.map((id) => {
+    const pascalName = toPascalCase(id);
+    return `  "${id}": ${pascalName}Preview,`;
+  });
+
+  return entries.join("\n");
+}
 
 function generateRegistryFile(components) {
-  const { configImports } = generateImports(components);
+  const { configImports, previewImports } = generateImports(components);
   const componentRegistryEntries = generateComponentRegistry(components);
+  const previewRegistryEntries = generatePreviewRegistry(components);
 
   return `import type React from "react";
 
@@ -106,9 +119,17 @@ import type { ComponentConfig, PropMetadata } from "../lib/component-config-type
 // Import all component configs
 ${configImports.join("\n")}
 
+// Import all preview components
+${previewImports.join("\n")}
+
 export const COMPONENT_REGISTRY = {
 ${componentRegistryEntries}
 } as const satisfies Record<string, ComponentConfig>;
+
+// Static preview component registry
+export const PREVIEW_REGISTRY = {
+${previewRegistryEntries}
+} as const satisfies Record<string, React.ComponentType<any>>;
 
 // Derive types automatically
 export type ComponentId = keyof typeof COMPONENT_REGISTRY;
@@ -132,56 +153,29 @@ export function getTotalComponentsCount(): number {
   return Object.keys(COMPONENT_REGISTRY).length;
 }
 
-// Cache for dynamically imported preview components
-const previewComponentCache = new Map<string, React.ComponentType<any> | null>();
-
-export async function getPreviewComponent(id: string): Promise<React.ComponentType<any> | undefined> {
-  // Check cache first
-  if (previewComponentCache.has(id)) {
-    const cached = previewComponentCache.get(id);
-    return cached || undefined;
+export function getPreviewComponent(id: string): React.ComponentType<any> | undefined {
+  // Static lookup from preview registry
+  const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
+  
+  if (previewComponent) {
+    return previewComponent;
   }
 
-  try {
-    // Convert kebab-case to PascalCase for the preview component name
-    const componentName = id
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("");
+  // Fallback to primary component from config if no preview exists
+  const config = getComponentConfig(id);
+  let fallbackComponent: React.ComponentType<any> | undefined;
 
-    const previewComponentName = \`\${componentName}Preview\`;
-
-    // Dynamically import the preview component
-    const previewModule = await import(\`./\${id}/preview\`);
-    const PreviewComponent = previewModule[previewComponentName];
-
-    if (PreviewComponent) {
-      previewComponentCache.set(id, PreviewComponent);
-      return PreviewComponent;
-    } else {
-      // Cache null to avoid repeated failed imports
-      previewComponentCache.set(id, null);
-      return undefined;
-    }
-  } catch {
-    // If preview doesn't exist, try to get the primary component from config
-    const config = getComponentConfig(id);
-    let fallbackComponent: React.ComponentType<any> | undefined;
-
-    // First try the direct component property
-    if (config?.component) {
-      fallbackComponent = config.component;
-    }
-    // Then try the primary component from components array
-    else if (config?.components) {
-      const primaryComponent = config.components.find(c => c.primary);
-      fallbackComponent = primaryComponent?.component || config.components[0]?.component;
-    }
-
-    // Cache the result (null if no fallback found)
-    previewComponentCache.set(id, fallbackComponent || null);
-    return fallbackComponent;
+  // First try the direct component property
+  if (config?.component) {
+    fallbackComponent = config.component;
   }
+  // Then try the primary component from components array
+  else if (config?.components) {
+    const primaryComponent = config.components.find(c => c.primary);
+    fallbackComponent = primaryComponent?.component || config.components[0]?.component;
+  }
+
+  return fallbackComponent;
 }
 
 export function getPreviewProps(id: string): PropMetadata[] {

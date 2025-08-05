@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/experimental-ct-react";
-import { TestButton, ClickableButton } from "../../src/components/button/button.stories";
+import { TestButton, ClickableButton } from "./button.stories";
 
 test.describe("Simple Button Test", () => {
   test("should render button", async ({ mount }) => {

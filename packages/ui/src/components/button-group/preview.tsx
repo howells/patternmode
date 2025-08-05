@@ -1,56 +1,70 @@
 "use client";
 
+import type { ButtonGroupProps } from "./component";
 import * as React from "react";
 import { Button } from "../button/component";
 import { ButtonGroup } from "./component";
 
-export const ButtonGroupPreview = () => {
+export function ButtonGroupPreview({
+  children,
+  ...props
+}: ButtonGroupProps) {
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h3 className="text-sm font-medium mb-3">Basic Button Group</h3>
-        <ButtonGroup>
+    <ButtonGroup {...props}>
+      {children || (
+        <>
           <Button>Save</Button>
           <Button>Cancel</Button>
           <Button>Help</Button>
-        </ButtonGroup>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-3">Secondary Variant</h3>
-        <ButtonGroup variant="secondary" size="sm">
-          <Button>Edit</Button>
-          <Button>Delete</Button>
-          <Button>More</Button>
-        </ButtonGroup>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-3">Icon Button Group</h3>
-        <ButtonGroup size="icon-sm">
-          <Button>✕</Button>
-          <Button>✓</Button>
-          <Button>⚙</Button>
-        </ButtonGroup>
-      </div>
-    </div>
+        </>
+      )}
+    </ButtonGroup>
   );
-};
+}
 
 // Preview props for prop explorer
 export const buttonGroupPreviewProps = [
   {
     name: "variant",
     type: "select",
-    description: "Visual style variant for all buttons in the group.",
-    options: ["primary", "secondary", "outline", "ghost"],
-    defaultValue: "primary",
+    description: "Visual style variant inherited by all child buttons.",
+    options: ["default", "primary", "secondary", "outline", "ghost", "destructive"],
+    defaultValue: "default",
   },
   {
     name: "size", 
     type: "select",
-    description: "Size variant for all buttons in the group.",
-    options: ["sm", "base", "lg", "icon-sm", "icon", "icon-lg"],
-    defaultValue: "base",
+    description: "Size variant inherited by all child buttons and affects spacing.",
+    options: ["xs", "sm", "default", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
+    defaultValue: "default",
+  },
+  {
+    name: "align",
+    type: "select", 
+    description: "Horizontal alignment of buttons within the container.",
+    options: ["start", "center", "end", "between", "around", "evenly"],
+    defaultValue: "start",
+  },
+  {
+    name: "wrap",
+    type: "boolean",
+    description: "Whether buttons should wrap to new lines when container width is exceeded.",
+    defaultValue: false,
+  },
+  {
+    name: "gap",
+    type: "select",
+    description: "Custom gap between buttons (overrides size-based gap).",
+    options: [
+      { label: "Auto (based on size)", value: undefined },
+      { label: "0.5", value: 0.5 },
+      { label: "1", value: 1 },
+      { label: "1.5", value: 1.5 },
+      { label: "2", value: 2 },
+      { label: "2.5", value: 2.5 },
+      { label: "3", value: 3 },
+      { label: "4", value: 4 },
+    ],
+    defaultValue: undefined,
   },
 ];

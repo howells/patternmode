@@ -5,8 +5,8 @@ import { defineConfig, devices } from "@playwright/experimental-ct-react";
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: "./tests/playwright",
-  testMatch: "**/*.playwright.test.{ts,tsx}",
+  testDir: ".",
+  testMatch: "**/src/components/**/*.playwright.test.{ts,tsx}",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

@@ -222,20 +222,37 @@ const TagInput = ({
   // Ensure value is always an array to prevent runtime errors
   const safeValue = React.useMemo(() => Array.isArray(value) ? value : [], [value]);
 
+  // Create a complete options list that includes both provided options AND created tags
+  const allOptions = React.useMemo(() => {
+    const safeOptions = Array.isArray(options) ? options : [];
+    const createdOptions: TagOption[] = [];
+    
+    // For each selected value, if it's not in options, it must be a created tag
+    safeValue.forEach(val => {
+      const existsInOptions = safeOptions.some(opt => opt.value === val);
+      if (!existsInOptions) {
+        // Reconstruct the created tag
+        createdOptions.push({
+          value: val,
+          label: val, // Keep it simple - just use the stored value as label
+        });
+      }
+    });
+    
+    return [...safeOptions, ...createdOptions];
+  }, [options, safeValue]);
+
   // Get selected options for display
   const selectedOptions = React.useMemo(() => {
-    const safeOptions = Array.isArray(options) ? options : [];
     return safeValue
-      .map(val => safeOptions.find(opt => opt.value === val))
+      .map(val => allOptions.find(opt => opt.value === val))
       .filter(Boolean) as TagOption[];
-  }, [safeValue, options]);
+  }, [safeValue, allOptions]);
 
   // Filter available options (exclude already selected)
   const availableOptions = React.useMemo(() => {
-    // Ensure options is always an array
-    const safeOptions = Array.isArray(options) ? options : [];
     const safeFilterOptions = typeof filterOptions === "function" ? filterOptions : defaultFilterOptions;
-    const filteredResult = safeFilterOptions(safeOptions, inputValue);
+    const filteredResult = safeFilterOptions(allOptions, inputValue);
     const filtered = Array.isArray(filteredResult) ? filteredResult : [];
     const finalFiltered = filtered.filter(
       option => option && !safeValue.includes(option.value) && !option.disabled,
@@ -243,7 +260,7 @@ const TagInput = ({
 
     // Add "create new" option if allowed and input is valid
     if (allowCreate && inputValue.trim() && onValidate(inputValue)) {
-      const exactMatch = safeOptions.find(
+      const exactMatch = allOptions.find(
         opt => opt.label.toLowerCase() === inputValue.trim().toLowerCase(),
       );
 
@@ -263,8 +280,8 @@ const TagInput = ({
 
     return finalFiltered;
   }, [
-    options,
-    safeValue,
+    allOptions,
+    safeValue,  
     inputValue,
     allowCreate,
     onValidate,

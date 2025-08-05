@@ -97,6 +97,101 @@ import { toolbarConfig } from "./toolbar/config";
 import { tooltipConfig } from "./tooltip/config";
 import { trackerConfig } from "./tracker/config";
 
+// Import all preview components
+import { AccordionPreview } from "./accordion/preview";
+import { AlertDialogPreview } from "./alert-dialog/preview";
+import { AreaChartPreview } from "./area-chart/preview";
+import { AvatarPreview } from "./avatar/preview";
+import { BadgePreview } from "./badge/preview";
+import { BarChartPreview } from "./bar-chart/preview";
+import { BarListPreview } from "./bar-list/preview";
+import { BreadcrumbsPreview } from "./breadcrumbs/preview";
+import { ButtonPreview } from "./button/preview";
+import { ButtonGroupPreview } from "./button-group/preview";
+import { CalendarPreview } from "./calendar/preview";
+import { CalloutPreview } from "./callout/preview";
+import { CardPreview } from "./card/preview";
+import { CarouselPreview } from "./carousel/preview";
+import { CategoryBarPreview } from "./category-bar/preview";
+import { CheckboxPreview } from "./checkbox/preview";
+import { CheckboxGroupPreview } from "./checkbox-group/preview";
+import { CodeBlockPreview } from "./code-block/preview";
+import { CollapsiblePreview } from "./collapsible/preview";
+import { ComboChartPreview } from "./combo-chart/preview";
+import { ComboboxPreview } from "./combobox/preview";
+import { ContextMenuPreview } from "./context-menu/preview";
+import { CopyButtonPreview } from "./copy-button/preview";
+import { DatePickerPreview } from "./date-picker/preview";
+import { DescriptionListPreview } from "./description-list/preview";
+import { DialogPreview } from "./dialog/preview";
+import { DismissButtonPreview } from "./dismiss-button/preview";
+import { DividerPreview } from "./divider/preview";
+import { DonutChartPreview } from "./donut-chart/preview";
+import { DotPreview } from "./dot/preview";
+import { DrawerPreview } from "./drawer/preview";
+import { DropdownItemPreview } from "./dropdown-item/preview";
+import { EmptyStatePreview } from "./empty-state/preview";
+import { FieldPreview } from "./field/preview";
+import { FieldArrayPreview } from "./field-array/preview";
+import { FieldsetPreview } from "./fieldset/preview";
+import { FormPreview } from "./form/preview";
+import { GridPreview } from "./grid/preview";
+import { HeadingPreview } from "./heading/preview";
+import { HeadingElementPreview } from "./heading-element/preview";
+import { IconPreview } from "./icon/preview";
+import { IconContainerPreview } from "./icon-container/preview";
+import { IconSelectPreview } from "./icon-select/preview";
+import { InputPreview } from "./input/preview";
+import { KbdPreview } from "./kbd/preview";
+import { LabelPreview } from "./label/preview";
+import { LineChartPreview } from "./line-chart/preview";
+import { LoaderPreview } from "./loader/preview";
+import { MenuPreview } from "./menu/preview";
+import { MenuBarPreview } from "./menu-bar/preview";
+import { MeterPreview } from "./meter/preview";
+import { NavbarPreview } from "./navbar/preview";
+import { NavigationMenuPreview } from "./navigation-menu/preview";
+import { NumberFieldPreview } from "./number-field/preview";
+import { PaginationPreview } from "./pagination/preview";
+import { PopoverPreview } from "./popover/preview";
+import { PreviewCardPreview } from "./preview-card/preview";
+import { ProgressPreview } from "./progress/preview";
+import { ProgressCirclePreview } from "./progress-circle/preview";
+import { RadioPreview } from "./radio/preview";
+import { RadioCardGroupPreview } from "./radio-card-group/preview";
+import { RadioGroupPreview } from "./radio-group/preview";
+import { ResponsiveDrawerPreview } from "./responsive-drawer/preview";
+import { ScrollAreaPreview } from "./scroll-area/preview";
+import { SearchFieldPreview } from "./search-field/preview";
+import { SelectPreview } from "./select/preview";
+import { SelectNativePreview } from "./select-native/preview";
+import { SeparatorPreview } from "./separator/preview";
+import { SheetPreview } from "./sheet/preview";
+import { SidebarPreview } from "./sidebar/preview";
+import { SkeletonPreview } from "./skeleton/preview";
+import { SliderPreview } from "./slider/preview";
+import { SparkChartPreview } from "./spark-chart/preview";
+import { SplitButtonPreview } from "./split-button/preview";
+import { StackPreview } from "./stack/preview";
+import { StackedListPreview } from "./stacked-list/preview";
+import { SubheadingPreview } from "./subheading/preview";
+import { SwitchPreview } from "./switch/preview";
+import { TabNavigationPreview } from "./tab-navigation/preview";
+import { TablePreview } from "./table/preview";
+import { TabsPreview } from "./tabs/preview";
+import { TagPreview } from "./tag/preview";
+import { TagGroupPreview } from "./tag-group/preview";
+import { TagInputPreview } from "./tag-input/preview";
+import { TextPreview } from "./text/preview";
+import { TextListPreview } from "./text-list/preview";
+import { TextareaPreview } from "./textarea/preview";
+import { ToastPreview } from "./toast/preview";
+import { TogglePreview } from "./toggle/preview";
+import { ToggleGroupPreview } from "./toggle-group/preview";
+import { ToolbarPreview } from "./toolbar/preview";
+import { TooltipPreview } from "./tooltip/preview";
+import { TrackerPreview } from "./tracker/preview";
+
 export const COMPONENT_REGISTRY = {
   "accordion": accordionConfig,
   "alert-dialog": alertDialogConfig,
@@ -193,6 +288,103 @@ export const COMPONENT_REGISTRY = {
   "tracker": trackerConfig,
 } as const satisfies Record<string, ComponentConfig>;
 
+// Static preview component registry
+export const PREVIEW_REGISTRY = {
+  "accordion": AccordionPreview,
+  "alert-dialog": AlertDialogPreview,
+  "area-chart": AreaChartPreview,
+  "avatar": AvatarPreview,
+  "badge": BadgePreview,
+  "bar-chart": BarChartPreview,
+  "bar-list": BarListPreview,
+  "breadcrumbs": BreadcrumbsPreview,
+  "button": ButtonPreview,
+  "button-group": ButtonGroupPreview,
+  "calendar": CalendarPreview,
+  "callout": CalloutPreview,
+  "card": CardPreview,
+  "carousel": CarouselPreview,
+  "category-bar": CategoryBarPreview,
+  "checkbox": CheckboxPreview,
+  "checkbox-group": CheckboxGroupPreview,
+  "code-block": CodeBlockPreview,
+  "collapsible": CollapsiblePreview,
+  "combo-chart": ComboChartPreview,
+  "combobox": ComboboxPreview,
+  "context-menu": ContextMenuPreview,
+  "copy-button": CopyButtonPreview,
+  "date-picker": DatePickerPreview,
+  "description-list": DescriptionListPreview,
+  "dialog": DialogPreview,
+  "dismiss-button": DismissButtonPreview,
+  "divider": DividerPreview,
+  "donut-chart": DonutChartPreview,
+  "dot": DotPreview,
+  "drawer": DrawerPreview,
+  "dropdown-item": DropdownItemPreview,
+  "empty-state": EmptyStatePreview,
+  "field": FieldPreview,
+  "field-array": FieldArrayPreview,
+  "fieldset": FieldsetPreview,
+  "form": FormPreview,
+  "grid": GridPreview,
+  "heading": HeadingPreview,
+  "heading-element": HeadingElementPreview,
+  "icon": IconPreview,
+  "icon-container": IconContainerPreview,
+  "icon-select": IconSelectPreview,
+  "input": InputPreview,
+  "kbd": KbdPreview,
+  "label": LabelPreview,
+  "line-chart": LineChartPreview,
+  "loader": LoaderPreview,
+  "menu": MenuPreview,
+  "menu-bar": MenuBarPreview,
+  "meter": MeterPreview,
+  "navbar": NavbarPreview,
+  "navigation-menu": NavigationMenuPreview,
+  "number-field": NumberFieldPreview,
+  "pagination": PaginationPreview,
+  "popover": PopoverPreview,
+  "preview-card": PreviewCardPreview,
+  "progress": ProgressPreview,
+  "progress-circle": ProgressCirclePreview,
+  "radio": RadioPreview,
+  "radio-card-group": RadioCardGroupPreview,
+  "radio-group": RadioGroupPreview,
+  "responsive-drawer": ResponsiveDrawerPreview,
+  "scroll-area": ScrollAreaPreview,
+  "search-field": SearchFieldPreview,
+  "select": SelectPreview,
+  "select-native": SelectNativePreview,
+  "separator": SeparatorPreview,
+  "sheet": SheetPreview,
+  "sidebar": SidebarPreview,
+  "skeleton": SkeletonPreview,
+  "slider": SliderPreview,
+  "spark-chart": SparkChartPreview,
+  "split-button": SplitButtonPreview,
+  "stack": StackPreview,
+  "stacked-list": StackedListPreview,
+  "subheading": SubheadingPreview,
+  "switch": SwitchPreview,
+  "tab-navigation": TabNavigationPreview,
+  "table": TablePreview,
+  "tabs": TabsPreview,
+  "tag": TagPreview,
+  "tag-group": TagGroupPreview,
+  "tag-input": TagInputPreview,
+  "text": TextPreview,
+  "text-list": TextListPreview,
+  "textarea": TextareaPreview,
+  "toast": ToastPreview,
+  "toggle": TogglePreview,
+  "toggle-group": ToggleGroupPreview,
+  "toolbar": ToolbarPreview,
+  "tooltip": TooltipPreview,
+  "tracker": TrackerPreview,
+} as const satisfies Record<string, React.ComponentType<any>>;
+
 // Derive types automatically
 export type ComponentId = keyof typeof COMPONENT_REGISTRY;
 
@@ -215,56 +407,29 @@ export function getTotalComponentsCount(): number {
   return Object.keys(COMPONENT_REGISTRY).length;
 }
 
-// Cache for dynamically imported preview components
-const previewComponentCache = new Map<string, React.ComponentType<any> | null>();
-
-export async function getPreviewComponent(id: string): Promise<React.ComponentType<any> | undefined> {
-  // Check cache first
-  if (previewComponentCache.has(id)) {
-    const cached = previewComponentCache.get(id);
-    return cached || undefined;
+export function getPreviewComponent(id: string): React.ComponentType<any> | undefined {
+  // Static lookup from preview registry
+  const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
+  
+  if (previewComponent) {
+    return previewComponent;
   }
 
-  try {
-    // Convert kebab-case to PascalCase for the preview component name
-    const componentName = id
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("");
+  // Fallback to primary component from config if no preview exists
+  const config = getComponentConfig(id);
+  let fallbackComponent: React.ComponentType<any> | undefined;
 
-    const previewComponentName = `${componentName}Preview`;
-
-    // Dynamically import the preview component
-    const previewModule = await import(`./${id}/preview`);
-    const PreviewComponent = previewModule[previewComponentName];
-
-    if (PreviewComponent) {
-      previewComponentCache.set(id, PreviewComponent);
-      return PreviewComponent;
-    } else {
-      // Cache null to avoid repeated failed imports
-      previewComponentCache.set(id, null);
-      return undefined;
-    }
-  } catch {
-    // If preview doesn't exist, try to get the primary component from config
-    const config = getComponentConfig(id);
-    let fallbackComponent: React.ComponentType<any> | undefined;
-
-    // First try the direct component property
-    if (config?.component) {
-      fallbackComponent = config.component;
-    }
-    // Then try the primary component from components array
-    else if (config?.components) {
-      const primaryComponent = config.components.find(c => c.primary);
-      fallbackComponent = primaryComponent?.component || config.components[0]?.component;
-    }
-
-    // Cache the result (null if no fallback found)
-    previewComponentCache.set(id, fallbackComponent || null);
-    return fallbackComponent;
+  // First try the direct component property
+  if (config?.component) {
+    fallbackComponent = config.component;
   }
+  // Then try the primary component from components array
+  else if (config?.components) {
+    const primaryComponent = config.components.find(c => c.primary);
+    fallbackComponent = primaryComponent?.component || config.components[0]?.component;
+  }
+
+  return fallbackComponent;
 }
 
 export function getPreviewProps(id: string): PropMetadata[] {

@@ -41,14 +41,62 @@ Example correct Tailwind 4 globals.css:
 
 **NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
-## Dynamic Imports (CRITICAL)
+## Static-Only Import Architecture (CRITICAL)
 
-**NEVER use direct dynamic imports like `await import("@patternmode/ui")`**
+**MANDATORY: This project uses static imports exclusively - NO dynamic imports**
 
+- **NEVER use `await import()` or dynamic import syntax anywhere**
 - **Dynamic imports cause parsing errors and break the server**
-- **Use Next.js `dynamic()` function for component loading instead**
-- **Example: `const Component = dynamic(() => import("@patternmode/ui"), { ssr: false })`**
-- **Static imports are preferred whenever possible**
+- **ALL component loading must be static and build-time analyzable**
+- **Registry uses static import maps for predictable bundling**
+- **Use Next.js `dynamic()` function ONLY for code splitting, not component loading**
+
+### Static Registry Pattern
+
+**All components and previews are statically imported in registry.ts:**
+```typescript
+// Static imports at top of registry.ts
+import { ButtonPreview } from "./button/preview";
+import { CardPreview } from "./card/preview";
+
+// Static registry for immediate access
+export const PREVIEW_REGISTRY = {
+  "button": ButtonPreview,
+  "card": CardPreview,
+  // ... all components
+} as const;
+
+// Simple synchronous lookup - no async needed
+export function getPreviewComponent(id: string): React.ComponentType<any> | undefined {
+  return PREVIEW_REGISTRY[id as ComponentId];
+}
+```
+
+**Benefits of Static-Only Architecture:**
+- ✅ **Eliminates dynamic import warnings and server errors**
+- ✅ **Predictable bundle analysis and tree-shaking**
+- ✅ **Better performance** - no runtime import overhead
+- ✅ **Simpler code** - no async complexity or caching needed
+- ✅ **Build-time safety** - all imports verified at compile time
+
+### Component Registry Purpose
+
+**`@packages/ui/src/components/registry.ts` serves as the central component system hub:**
+
+**What it does:**
+- **Component Discovery**: Centralizes all component configs and preview components for the documentation site
+- **Type Safety**: Provides `ComponentId` union type from all available components
+- **Static Lookups**: Enables fast component/preview retrieval without filesystem scanning
+- **Category Organization**: Groups components by category for navigation
+- **Build Tool Integration**: Used by `generate-component-pages.js` to create doc pages
+
+**Key Functions:**
+- `getComponentConfig(id)` - Get component metadata and examples
+- `getPreviewComponent(id)` - Get interactive preview component for prop exploration
+- `getComponentsByCategory(category)` - Filter components for navigation
+- `getAllComponents()` - List all components for search/indexing
+
+**Important**: Registry is **only for the documentation site** - user applications import components directly via individual paths like `import { Button } from "@patternmode/ui/button"`
 
 ## Browser Testing
 
@@ -114,10 +162,10 @@ const variants = tv({
 ```
 src/components/[component-name]/
 ├── component.tsx        # Implementation with JSDoc-enhanced types
-├── component.config.ts  # Component specification + examples with imports
+├── config.ts           # Component specification + examples with imports
 ├── index.tsx           # Export barrel
 ├── examples.tsx        # Example components
-└── preview.tsx         # Preview component (mandatory)
+└── preview.tsx         # Interactive preview component (mandatory)
 ```
 
 ### Component Implementation (component.tsx)
@@ -154,7 +202,7 @@ export const Textarea = ({
 };
 ```
 
-### Config File Pattern (component.config.ts)
+### Config File Pattern (config.ts)
 
 **Single-component example:**
 ```tsx
@@ -163,7 +211,7 @@ import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
 import { DefaultExample, WithContentExample, WithErrorExample } from "./examples";
 
-export const componentConfig: ComponentConfig = {
+export const textareaConfig: ComponentConfig = {
   id: "textarea",
   name: "Textarea",
   description: "Auto-resizing multi-line text input component...",
@@ -201,7 +249,7 @@ import {
 } from "./component";
 import { BasicExample, MultipleExample } from "./examples";
 
-export const componentConfig: ComponentConfig = {
+export const accordionConfig: ComponentConfig = {
   id: "accordion",
   name: "Accordion",
   description: "Vertically stacked set of interactive headings...",
@@ -255,6 +303,64 @@ export const WithErrorExample = () => {
 };
 ```
 
+### Preview File (preview.tsx)
+
+**Interactive component for prop exploration - accepts component props:**
+```tsx
+"use client";
+
+import type { ButtonProps } from "./component";
+import { Save } from "lucide-react";
+import React from "react";
+import { Button } from "./component";
+
+export function ButtonPreview(props: ButtonProps) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
+  };
+
+  return (
+    <Button
+      leftIcon={Save}
+      isLoading={isLoading}
+      loadingText="Saving..."
+      onClick={handleClick}
+      {...props}
+    >
+      {props.children || "Save Changes"}
+    </Button>
+  );
+}
+
+// Preview props for prop explorer
+export const buttonPreviewProps = [
+  {
+    name: "children",
+    type: "string",
+    description: "Button text content.",
+    defaultValue: "Save Changes",
+  },
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual style variant of the button.",
+    options: ["default", "primary", "secondary", "ghost", "outline", "destructive"],
+    defaultValue: "default",
+  },
+  // ... more props
+];
+```
+
+**Key Preview Principles:**
+- **Accepts component props** for interactive exploration
+- **Shows realistic usage** with meaningful defaults
+- **Includes interactive behavior** when appropriate (loading states, etc.)
+- **Exports prop metadata** for prop explorer tooling
+- **Single component instance** (not multiple examples - those belong in examples.tsx)
+
 ### Key Principles
 
 - **Props documented in TypeScript interface** with comprehensive JSDoc
@@ -270,8 +376,8 @@ export const WithErrorExample = () => {
 **Import and use configs directly in development:**
 ```tsx
 // Import config directly - no build step needed!
-import { componentConfig as textareaConfig } from "@patternmode/ui/src/components/textarea/component.config";
-import { componentConfig as accordionConfig } from "@patternmode/ui/src/components/accordion/component.config";
+import { textareaConfig } from "@patternmode/ui/src/components/textarea/config";
+import { accordionConfig } from "@patternmode/ui/src/components/accordion/config";
 
 // Use in prop explorer, documentation, or tooling
 <Preview config={textareaConfig} />
