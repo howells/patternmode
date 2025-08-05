@@ -1,6 +1,6 @@
 "use client";
 
-import type { AvatarProps } from "./component";
+import type { AvatarProps } from "./types";
 import React from "react";
 import { Avatar } from "./component";
 

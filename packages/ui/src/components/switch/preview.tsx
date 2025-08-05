@@ -1,6 +1,6 @@
 "use client";
 
-import type { SwitchProps } from "./component";
+import type { SwitchProps } from "./types";
 import React from "react";
 import { Switch } from "./component";
 

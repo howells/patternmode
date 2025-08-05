@@ -1,5 +1,3 @@
-// Tremor Tooltip [v1.0.0] - Base UI
-
 "use client";
 
 import type { TooltipProps } from "./types";

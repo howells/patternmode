@@ -2,6 +2,7 @@
 
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import React from "react";
+import { Icon } from "../icon/component";
 import { SplitButton } from "./component";
 
 export type SplitButtonPreviewProps = {
@@ -9,7 +10,7 @@ export type SplitButtonPreviewProps = {
    * Button size variant.
    * Controls the overall size and padding of the split button.
    */
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "default";
   /**
    * Button style variant.
    * Controls the visual styling and color scheme.
@@ -81,7 +82,7 @@ const actionConfigs = {
 };
 
 export function SplitButtonPreview({
-  size = "md",
+  size = "default",
   variant = "default",
   showIcons = true,
   menuItemCount = 3,
@@ -107,7 +108,7 @@ export function SplitButtonPreview({
         variant={variant}
         buttonContent={(
           <div className="flex items-center gap-2">
-            {showIcons && <PrimaryIcon className="h-4 w-4" />}
+            {showIcons && <Icon icon={PrimaryIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
             {config.label}
           </div>
         )}
@@ -124,7 +125,7 @@ export function SplitButtonPreview({
                 className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
                 onClick={() => handleMenuAction(item.label)}
               >
-                {showIcons && <ItemIcon className="h-4 w-4" />}
+                {showIcons && <Icon icon={ItemIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
                 {item.label}
               </div>
             </div>
@@ -148,7 +149,7 @@ export const splitButtonPreviewProps = [
     name: "size",
     type: "select",
     description: "Button size variant - affects padding and text size of the split button.",
-    options: ["sm", "default", "lg"],
+    options: ["sm", "default"],
     defaultValue: "default",
   },
   {

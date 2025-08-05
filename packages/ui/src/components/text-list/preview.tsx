@@ -1,6 +1,6 @@
 "use client";
 
-import type { TextListProps } from "./component";
+import type { TextListProps } from "./types";
 import React from "react";
 import { TextList, TextListItem } from "./component";
 

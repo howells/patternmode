@@ -111,18 +111,13 @@ type StackedListProps = {
    * Controls the vertical spacing between list items using the 4px grid system.
    */
   gap?: SpacingValue;
-  /**
-   * Padding for each item (4px grid scale: 0-24).
-   * Sets the internal padding for each list item using the 4px grid system.
-   */
-  padding?: SpacingValue;
 } & React.HTMLAttributes<HTMLUListElement>;
 
 /**
  * Vertically stacked list component for displaying related items with consistent spacing.
  */
 const StackedListRoot = (
-  { ref, showDividers = true, gap = 0, padding = 4, className, children, ...props }: StackedListProps & { ref?: React.RefObject<HTMLUListElement | null> },
+  { ref, showDividers = true, gap = 0, className, children, ...props }: StackedListProps & { ref?: React.RefObject<HTMLUListElement | null> },
 ) => {
   return (
     <Stack
@@ -140,14 +135,7 @@ const StackedListRoot = (
       data-testid="stacked-list"
       {...props}
     >
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child) && child.type === StackedListItem) {
-          return React.cloneElement(child, {
-            padding,
-          });
-        }
-        return child;
-      })}
+      {children}
     </Stack>
   );
 };

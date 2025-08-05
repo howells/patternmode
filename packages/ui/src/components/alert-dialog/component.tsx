@@ -30,9 +30,8 @@ import {
 /**
  * Root container for alert dialog components that require user confirmation.
  */
-const AlertDialog = ({ ref, ...props }: AlertDialogProps) => (
+const AlertDialog = (props: AlertDialogProps) => (
   <BaseAlertDialog.Root
-    ref={ref}
     data-testid="alert-dialog"
     {...props}
   />

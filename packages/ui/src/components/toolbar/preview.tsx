@@ -1,6 +1,6 @@
 "use client";
 
-import type { ToolbarProps } from "./component";
+import type { ToolbarProps } from "./types";
 import React from "react";
 import { Toolbar, ToolbarButton, ToolbarSeparator } from "./component";
 

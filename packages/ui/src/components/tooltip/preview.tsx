@@ -1,6 +1,6 @@
 "use client";
 
-import type { TooltipProps } from "./component";
+import type { TooltipProps } from "./types";
 import React from "react";
 import { Button } from "../button/component";
 import { Tooltip } from "./component";

@@ -69,10 +69,10 @@ export type SplitButtonProps = {
    * Left icon for the main button.
    * Icon component to display before the button content.
    */
-  leftIcon?: React.ComponentType<{ className?: string }>;
+  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /**
    * Custom dropdown icon (defaults to ChevronDown).
    * Icon component to display in the dropdown trigger button.
    */
-  dropdownIcon?: React.ComponentType<{ className?: string }>;
+  dropdownIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 } & React.HTMLAttributes<HTMLDivElement>;

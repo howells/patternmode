@@ -1,6 +1,6 @@
 "use client";
 
-import type { TagGroupProps } from "./component";
+import type { TagGroupProps } from "./types";
 import * as React from "react";
 import { Tag } from "../tag/component";
 import { TagGroup } from "./component";

@@ -37,7 +37,7 @@ export type AreaChartPreviewProps = {
    * Color scheme for chart series.
    * Colors are applied to categories in order.
    */
-  colors?: Array<"blue" | "emerald" | "pink" | "indigo" | "orange">;
+  colors?: Array<"blue" | "emerald" | "violet" | "amber" | "gray" | "cyan" | "pink" | "lime" | "fuchsia">;
 };
 
 export function AreaChartPreview({
@@ -98,8 +98,8 @@ export const areaChartPreviewProps = [
     description: "Color scheme for chart series - colors are applied to categories in order.",
     options: [
       { label: "Blue & Pink", value: ["blue", "pink"] },
-      { label: "Emerald & Orange", value: ["emerald", "orange"] },
-      { label: "Indigo & Pink", value: ["indigo", "pink"] },
+      { label: "Emerald & Amber", value: ["emerald", "amber"] },
+      { label: "Violet & Pink", value: ["violet", "pink"] },
     ],
     defaultValue: ["blue", "pink"],
   },

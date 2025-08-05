@@ -13,7 +13,7 @@ import { dropdownTriggerVariants, splitButtonVariants } from "./variants";
  * Compound button with primary action and dropdown menu for secondary actions.
  */
 const SplitButton = (
-  { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown as React.ComponentType<{ className?: string; strokeWidth?: number }>, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
 
@@ -51,11 +51,20 @@ const SplitButton = (
       {/* Dropdown Trigger */}
       <Menu>
         <MenuTrigger
-          disabled={disabled}
-          className={cx(
-            dropdownTriggerVariants.base(),
-            dropdownTriggerVariants({ variant, size, rounded }).trigger(),
-          )}
+          render={
+            <Button
+              variant={variant}
+              size={size}
+              rounded={false}
+              disabled={disabled}
+              className={cx(
+                "border-l border-black/10 rounded-l-none",
+                "dark:border-white/10",
+                rounded && "rounded-r-full",
+                dropdownTriggerVariants({ variant, size, rounded }).trigger(),
+              )}
+            />
+          }
         >
           <DropdownIcon className={cx("shrink-0", iconSize)} />
         </MenuTrigger>

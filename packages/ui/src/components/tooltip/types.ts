@@ -61,4 +61,20 @@ export type TooltipProps = {
    * Custom class name for additional styling.
    */
   className?: string;
+  /**
+   * Whether the tooltip is open by default.
+   */
+  defaultOpen?: boolean;
+  /**
+   * Controlled open state of the tooltip.
+   */
+  open?: boolean;
+  /**
+   * Callback fired when the open state changes.
+   */
+  onOpenChange?: (open: boolean) => void;
+  /**
+   * Click handler for the trigger element.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
 };

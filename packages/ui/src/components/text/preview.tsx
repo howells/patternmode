@@ -1,6 +1,6 @@
 "use client";
 
-import type { TextProps } from "./component";
+import type { TextProps } from "./types";
 import React from "react";
 import { Text } from "./component";
 

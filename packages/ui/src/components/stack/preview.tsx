@@ -1,6 +1,6 @@
 "use client";
 
-import type { StackProps } from "./component";
+import type { StackProps } from "./types";
 import React from "react";
 import { Stack } from "./component";
 
