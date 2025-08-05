@@ -1,5 +1,4 @@
 import { beforeEach } from "vitest";
-import "@testing-library/jest-dom";
 
 // Set up DOM cleanup between tests
 beforeEach(() => {

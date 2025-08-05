@@ -36,7 +36,8 @@
         "src/**/*.{ts,tsx}",
         "scripts/**/*.{ts,js}",
         "tests/**/*.{ts,tsx}",
-        "vitest.config.ts"
+        "vitest.config.ts",
+        "!playwright/**"
       ]
     },
     "packages/eslint-config": {
@@ -62,6 +63,8 @@
     "**/.turbo/**",
     "**/test-results/**",
     "**/.next/**",
-    "**/tsconfig.tsbuildinfo"
+    "**/tsconfig.tsbuildinfo",
+    "**/playwright/**",
+    "**/*.playwright.test.tsx"
   ]
 }
