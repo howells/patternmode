@@ -194,6 +194,7 @@ type ButtonProps = {
   /**
    * Button content and text.
    * Displayed as button label or screen reader text for icon buttons.
+   * Optional when used as render prop in Base UI components.
    */
   children?: React.ReactNode;
   /**

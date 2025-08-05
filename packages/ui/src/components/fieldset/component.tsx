@@ -12,7 +12,7 @@ type FieldsetProps = {
    * Fieldset content including legend and form fields.
    * Contains the grouped form controls and their associated legend.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Whether the fieldset and its controls are disabled.
    * When true, all contained form controls become disabled.
@@ -55,7 +55,7 @@ type FieldsetLegendProps = {
    * Legend text content.
    * Provides an accessible label for the fieldset group.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Additional CSS classes for styling customization.
    */

@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@patternmode/ui/components/button";
-import { iconRegistry } from "@patternmode/ui/lib/icon-registry";
 import React from "react";
-import { HStack } from "../stack";
+import { iconRegistry } from "../../lib/icon-registry";
+import { HStack } from "../stack/component";
+import { Button } from "./component";
 
 // Pre-imported icons from registry
 const { ArrowRight, Plus } = iconRegistry;

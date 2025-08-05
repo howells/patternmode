@@ -119,7 +119,7 @@ type ToastProviderProps = {
   /**
    * React children to render within the provider context.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Maximum number of toasts visible at once.
    * @default 3

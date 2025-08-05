@@ -29,7 +29,7 @@ type SidebarTitleProps = {
   /**
    * Title content to display.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & React.ComponentPropsWithoutRef<"span">;
 
 /**

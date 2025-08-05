@@ -66,7 +66,7 @@ type CardProps = {
    * Card content.
    * Can include CardHeader, CardContent, CardFooter, etc.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & useRender.ComponentProps<"div">;
 
 /**
@@ -120,7 +120,7 @@ type CardHeaderProps = {
    * Header content.
    * Usually includes CardHeading and CardDescription.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -150,7 +150,7 @@ type CardHeadingProps = {
    * When a string is provided, uses Subheading component with default styling.
    * When a React element is provided, renders it directly.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLHeadingElement>;
 
 /**
@@ -196,7 +196,7 @@ type CardDescriptionProps = {
    * Description text or content.
    * Displayed with muted styling below the title.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLParagraphElement>;
 
 /**
@@ -221,7 +221,7 @@ type CardContentProps = {
    * Main content.
    * The primary content area of the card.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -247,7 +247,7 @@ type CardFooterProps = {
    * Footer content.
    * Usually action buttons or additional information.
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**

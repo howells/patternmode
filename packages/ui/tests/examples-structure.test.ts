@@ -75,14 +75,14 @@ async function validateExampleFile(filePath: string, componentId: string): Promi
   const constExampleMatches = content.match(/export const (\w*Example)\s*=/g) || [];
   const functionExampleMatches = content.match(/export function (\w*Example)/g) || [];
 
-  const constExampleComponents = constExampleMatches.map(match => {
+  const constExampleComponents = constExampleMatches.map((match) => {
     const nameMatch = match.match(/export const (\w*Example)/);
-    return nameMatch ? nameMatch[1] : '';
+    return nameMatch ? nameMatch[1] : "";
   }).filter(Boolean);
 
-  const functionExampleComponents = functionExampleMatches.map(match => {
+  const functionExampleComponents = functionExampleMatches.map((match) => {
     const nameMatch = match.match(/export function (\w*Example)/);
-    return nameMatch ? nameMatch[1] : '';
+    return nameMatch ? nameMatch[1] : "";
   }).filter(Boolean);
 
   const exampleComponents = [...constExampleComponents, ...functionExampleComponents];

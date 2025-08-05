@@ -4,7 +4,7 @@ import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
-const TabTextContent = ({ children }: { children: React.ReactNode }) => {
+const TabTextContent = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div className="py-4 text-sm text-zinc-600 dark:text-zinc-400">{children}</div>
   );

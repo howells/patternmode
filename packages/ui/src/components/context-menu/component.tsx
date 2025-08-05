@@ -24,7 +24,7 @@ type ContextMenuProps = {
   /**
    * Content to render within the context menu.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root>, "open" | "defaultOpen" | "onOpenChange" | "children"> & {
   ref?: React.RefObject<React.ElementRef<typeof BaseContextMenu.Root> | null>;
 };

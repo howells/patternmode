@@ -192,7 +192,7 @@ type SplitButtonProps = {
    * Menu content - can be any valid menu content.
    * Typically contains MenuItem, MenuSeparator, and MenuLabel components.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Props to pass to the MenuContent component.
    * Allows customization of dropdown positioning and behavior.

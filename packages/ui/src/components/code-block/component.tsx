@@ -18,7 +18,7 @@ type CodeBlockProps = {
    * Code content to syntax highlight.
    * The source code string that will be displayed with syntax highlighting.
    */
-  children: string;
+  children: React.ReactNode;
   /**
    * Programming language for syntax highlighting.
    * Specifies the language for proper syntax highlighting. Defaults to "tsx".
@@ -41,6 +41,12 @@ type CodeBlockProps = {
  * Syntax-highlighted code display component with copy functionality.
  */
 export const CodeBlock = ({ ref, children, language = "tsx", className, theme = "auto" }: CodeBlockProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  const codeString = React.useMemo(() => {
+    if (typeof children === "string") {
+      return children;
+    }
+    return String(children || "");
+  }, [children]);
   // Determine theme
   const isDark = React.useMemo(() => {
     if (theme === "light") {
@@ -93,7 +99,7 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
         <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
           {language}
         </span>
-        <CopyButton text={children} />
+        <CopyButton text={codeString} />
       </div>
       <SyntaxHighlighter
         language={language}
@@ -116,7 +122,7 @@ export const CodeBlock = ({ ref, children, language = "tsx", className, theme = 
           },
         }}
       >
-        {children}
+        {codeString}
       </SyntaxHighlighter>
     </div>
   );

@@ -65,7 +65,7 @@ type TagGroupProps = {
    * Child tags to render.
    * Should only contain Tag components.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & React.ComponentPropsWithoutRef<"div">;
 
 /**

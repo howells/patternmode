@@ -6,7 +6,7 @@
  * 2. Import the component from ./component
  * 3. Import React explicitly
  * 4. Import component props type for type safety
- * 5. Export a {Component}Example function component
+ * 5. Export a {Component}Preview function component
  * 6. Use proper prop handling with safe prop filtering
  * 7. Provide configurable preview functionality
  */
@@ -48,7 +48,7 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  const expectedExampleName = `${kebabToPascalCase(componentName)}Example`;
+  const expectedExampleName = `${kebabToPascalCase(componentName)}Preview`;
 
   // Check for "use client" directive
   const hasUseClient = content.startsWith("\"use client\"") || content.startsWith("'use client'");
@@ -75,8 +75,8 @@ async function validatePreviewFile(filePath: string, componentName: string): Pro
     warnings.push(`Consider importing ${componentPropsType} type for better type safety`);
   }
 
-  // Check for example function export
-  const exportMatch = content.match(/export\s+function\s+(\w+Example)\s*\(/);
+  // Check for preview function export
+  const exportMatch = content.match(/export\s+function\s+(\w+Preview)\s*\(/);
   const hasExampleFunction = !!exportMatch;
   const actualExampleName = exportMatch ? exportMatch[1] : null;
 

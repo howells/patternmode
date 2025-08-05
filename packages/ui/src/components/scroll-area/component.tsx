@@ -10,7 +10,7 @@ type ScrollAreaProps = {
   /**
    * Content to be made scrollable.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Scroll orientation determining which direction(s) content can be scrolled.
    * - "vertical": Only vertical scrolling (default)

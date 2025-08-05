@@ -21,7 +21,7 @@ type FieldLabelProps = {
    * Label text content.
    * Describes the associated form control for accessibility and user guidance.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Additional CSS classes for styling customization.
    */
@@ -83,7 +83,7 @@ type FieldDescriptionProps = {
    * Description text content.
    * Provides additional context or instructions for the form field.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Additional CSS classes for styling customization.
    */

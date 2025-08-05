@@ -33,7 +33,7 @@ type ResponsiveDrawerProps = {
    * Drawer content including trigger and content components.
    * Should contain ResponsiveDrawerTrigger and ResponsiveDrawerContent.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Whether the drawer is open in controlled mode.
@@ -73,7 +73,7 @@ type ResponsiveDrawerContentProps = {
    * Content elements including header, body, and footer components.
    * Typically contains ResponsiveDrawerHeader, ResponsiveDrawerBody, and ResponsiveDrawerFooter.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the content container.
@@ -87,7 +87,7 @@ type ResponsiveDrawerHeaderProps = {
    * Header content including title and description components.
    * Usually contains ResponsiveDrawerTitle and optionally ResponsiveDrawerDescription.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the header section.
@@ -101,7 +101,7 @@ type ResponsiveDrawerTitleProps = {
    * Title text content displayed prominently in the header.
    * Should be descriptive of the drawer's purpose or content.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the title element.
@@ -115,7 +115,7 @@ type ResponsiveDrawerDescriptionProps = {
    * Description text providing additional context about the drawer.
    * Displayed below the title with appropriate styling and accessibility attributes.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the description element.
@@ -129,7 +129,7 @@ type ResponsiveDrawerBodyProps = {
    * Main scrollable content elements of the drawer.
    * Contains the primary content that users interact with.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the body container.
@@ -143,7 +143,7 @@ type ResponsiveDrawerFooterProps = {
    * Footer content typically containing action buttons.
    * Common pattern includes save/cancel or close buttons.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * Additional CSS classes to apply to the footer section.

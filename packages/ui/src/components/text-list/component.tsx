@@ -86,17 +86,7 @@ export type TextListProps = {
    * When true, only user-provided className styles are applied.
    */
   unstyled?: boolean;
-  /**
-   * Additional CSS classes to apply to the list container.
-   * Merged with component's default styling unless unstyled is true.
-   */
-  className?: string;
-  /**
-   * The list items and content to display within the list.
-   * Typically contains ListItem components but can include any valid React nodes.
-   */
-  children?: React.ReactNode;
-} & VariantProps<typeof listVariants>;
+} & React.HTMLAttributes<HTMLUListElement> & VariantProps<typeof listVariants>;
 
 /**
  * Props for the TextListItem component.
@@ -117,17 +107,7 @@ export type TextListItemProps = {
    * When true, only user-provided className styles are applied.
    */
   unstyled?: boolean;
-  /**
-   * Additional CSS classes to apply to the list item.
-   * Merged with component's default styling unless unstyled is true.
-   */
-  className?: string;
-  /**
-   * The content to display within the list item.
-   * Can include text, ListIndicator components, links, or other React nodes.
-   */
-  children?: React.ReactNode;
-} & VariantProps<typeof listItemVariants>;
+} & React.HTMLAttributes<HTMLLIElement> & VariantProps<typeof listItemVariants>;
 
 /**
  * Props for the TextListIndicator component.

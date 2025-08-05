@@ -26,7 +26,7 @@ type RadioCardItemProps = {
    * Content to display inside the radio card.
    * Can include rich content like text, icons, pricing, descriptions, or any JSX elements.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 } & Omit<React.ComponentPropsWithoutRef<typeof Radio.Root>, "value" | "disabled"> & {
   ref?: React.RefObject<React.ElementRef<typeof Radio.Root> | null>;
 };

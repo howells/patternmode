@@ -3,8 +3,8 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import type { CardProps } from "./component";
-import { ButtonGroup } from "@patternmode/ui/components/button-group";
 import React from "react";
+import { ButtonGroup } from "../button-group/component";
 import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";

@@ -978,7 +978,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
       data-testid="combo-chart"
       {...other}
     >
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
         <RechartsComposedChart
           data={data}
           onClick={
