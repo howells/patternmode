@@ -28,9 +28,9 @@ export const DismissibleExample = () => {
   return (
     <TagGroup dismissible>
       {tags.map(tag => (
-        <Tag 
-          key={tag.id} 
-          value={tag.value} 
+        <Tag
+          key={tag.id}
+          value={tag.value}
           onDismiss={() => handleDismiss(tag.id)}
         />
       ))}
@@ -131,9 +131,9 @@ export const MixedOverrideExample = () => {
   return (
     <TagGroup dismissible onDismiss={() => console.log("Group dismiss handler")}>
       {tags.map(tag => (
-        <Tag 
-          key={tag.id} 
-          value={tag.value} 
+        <Tag
+          key={tag.id}
+          value={tag.value}
           dismissible={tag.canDismiss}
           onDismiss={tag.canDismiss ? () => handleDismiss(tag.id) : undefined}
         />

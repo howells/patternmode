@@ -3,7 +3,7 @@ import { TagInput } from "./component";
 
 export const BasicTagInput = () => {
   const [value, setValue] = React.useState<string[]>([]);
-  
+
   return (
     <TagInput
       allowCreate
@@ -21,7 +21,7 @@ export const BasicTagInput = () => {
 
 export const FilterableTagInput = () => {
   const [value, setValue] = React.useState<string[]>([]);
-  
+
   return (
     <TagInput
       placeholder="Add tags..."
@@ -38,7 +38,7 @@ export const FilterableTagInput = () => {
 
 export const CreateableTagInput = () => {
   const [value, setValue] = React.useState<string[]>([]);
-  
+
   return (
     <TagInput
       allowCreate

@@ -108,7 +108,7 @@ const Tag = (
   const effectiveIcon = icon || leftIcon;
   const defaultProps: useRender.ElementProps<"span"> & { "data-testid": string } = {
     "data-testid": "tag",
-    className: cx(
+    "className": cx(
       // base
       "inline-flex items-center gap-x-2 rounded-full py-1 text-sm",
       // padding logic
@@ -121,7 +121,7 @@ const Tag = (
       "ring-1 ring-inset ring-zinc-200 dark:ring-zinc-800",
       className,
     ),
-    children: (
+    "children": (
       <>
         {avatar && (
           <Avatar

@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
-import { DefaultExample, WithContentExample, WithErrorExample, WithRowConstraintsExample, DisabledExample, FixedHeightExample, WithHeightCallbackExample } from "./examples";
+import { DefaultExample, DisabledExample, FixedHeightExample, WithContentExample, WithErrorExample, WithHeightCallbackExample, WithRowConstraintsExample } from "./examples";
 import { textareaPreviewProps } from "./preview";
 
 // TypeScript type for the component props

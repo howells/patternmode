@@ -54,7 +54,6 @@ export const WithGroupsExample = () => {
   );
 };
 
-
 export const MultipleSelectionExample = () => {
   const [values, setValues] = React.useState<string[]>([]);
 
@@ -120,7 +119,6 @@ export const ControlledExample = () => {
     </div>
   );
 };
-
 
 export const ObjectValuesExample = () => {
   type User = {
@@ -438,8 +436,3 @@ export const DisabledExample = () => {
     </div>
   );
 };
-
-
-
-
-

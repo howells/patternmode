@@ -228,7 +228,6 @@ export function ProductVariantsExample() {
   );
 }
 
-
 // Example 5: Custom Render Function
 export function CustomRenderExample() {
   type TeamMember = {

@@ -32,7 +32,7 @@ export const buttonGroupPreviewProps = [
     defaultValue: "default",
   },
   {
-    name: "size", 
+    name: "size",
     type: "select",
     description: "Size variant inherited by all child buttons and affects spacing.",
     options: ["xs", "sm", "default", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
@@ -40,7 +40,7 @@ export const buttonGroupPreviewProps = [
   },
   {
     name: "align",
-    type: "select", 
+    type: "select",
     description: "Horizontal alignment of buttons within the container.",
     options: ["start", "center", "end", "between", "around", "evenly"],
     defaultValue: "start",

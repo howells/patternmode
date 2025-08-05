@@ -30,7 +30,6 @@ export const SizesExample = () => {
   );
 };
 
-
 // Icons with backgrounds
 export const WithBackgroundExample = () => {
   return (

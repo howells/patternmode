@@ -1,19 +1,17 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
+import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
 import * as React from "react";
 import { tv } from "tailwind-variants";
-import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
-import type { TagProps } from "../tag/component";
 
 const tagGroupVariants = tv({
   base: "flex flex-wrap items-center",
   variants: {
     align: {
       start: "justify-start",
-      center: "justify-center", 
+      center: "justify-center",
       end: "justify-end",
       between: "justify-between",
       around: "justify-around",
@@ -75,7 +73,7 @@ export const TagGroup = ({
   dismissible,
   onDismiss,
   gap = 2,
-  align = "start", 
+  align = "start",
   direction = "row",
   className,
   children,
@@ -95,20 +93,20 @@ export const TagGroup = ({
     // Only apply props to Tag components
     if (child.type && typeof child.type === "function" && child.type.displayName === "Tag") {
       const childProps = { ...child.props };
-      
+
       // Apply inherited dismissible if child doesn't have one
       if (dismissible !== undefined && childProps.dismissible === undefined) {
         childProps.dismissible = dismissible;
       }
-      
+
       // Apply inherited onDismiss if child doesn't have one
       if (onDismiss && !childProps.onDismiss) {
         childProps.onDismiss = onDismiss;
       }
-      
+
       return React.cloneElement(child, childProps);
     }
-    
+
     return child;
   });
 

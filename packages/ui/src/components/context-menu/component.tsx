@@ -92,7 +92,7 @@ type ContextMenuRadioItemProps = {
   shortcut?: string;
   /**
    * Hint text to display on the right side.
-   * * Used for additional context or status information.
+   * Used for additional context or status information.
    */
   hint?: string;
 } & React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioItem> & {

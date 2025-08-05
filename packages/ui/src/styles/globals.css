@@ -23,7 +23,7 @@
 
   /* Control height system for consistent form element sizing */
   --control-height-xs: 1.75rem; /* 28px */
-  --control-height-sm: 2.25rem; /* 36px */  
+  --control-height-sm: 2.25rem; /* 36px */
   --control-height-base: 2.5rem; /* 40px */
   --control-height-lg: 3rem; /* 48px */
 }

@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./component";
-import { DefaultExample, DisabledExample, ErrorStateExample, FormIntegrationExample, SmallSizeExample, WithGroupsExample, MultipleSelectionExample, ControlledExample, ObjectValuesExample, CustomRenderValueExample } from "./examples";
+import { ControlledExample, CustomRenderValueExample, DefaultExample, DisabledExample, ErrorStateExample, FormIntegrationExample, MultipleSelectionExample, ObjectValuesExample, SmallSizeExample, WithGroupsExample } from "./examples";
 
 export const selectConfig: ComponentConfig = {
   id: "select",

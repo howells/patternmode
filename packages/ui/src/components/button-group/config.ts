@@ -1,15 +1,15 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { MoreHorizontal } from "lucide-react";
 import { ButtonGroup } from "./component";
-import { 
-  DefaultExample, 
-  VariantExample, 
-  SizeExample, 
-  IconSizeExample,
+import {
   AlignmentExample,
-  WrappingExample,
   CustomGapExample,
-  MixedVariantsExample
+  DefaultExample,
+  IconSizeExample,
+  MixedVariantsExample,
+  SizeExample,
+  VariantExample,
+  WrappingExample,
 } from "./examples";
 
 export const buttonGroupConfig: ComponentConfig = {

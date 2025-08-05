@@ -1,19 +1,18 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
+import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
+import type { ButtonProps } from "../button/component";
 import * as React from "react";
 import { tv } from "tailwind-variants";
-import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
 import { cx } from "../../lib/utils";
-import type { ButtonProps } from "../button/component";
 
 const buttonGroupVariants = tv({
   base: "flex flex-row items-center",
   variants: {
     align: {
       start: "justify-start",
-      center: "justify-center", 
+      center: "justify-center",
       end: "justify-end",
       between: "justify-between",
       around: "justify-around",
@@ -76,7 +75,7 @@ export const ButtonGroup = ({
   variant,
   size = "default",
   gap,
-  align = "start", 
+  align = "start",
   wrap = false,
   className,
   children,
@@ -84,12 +83,12 @@ export const ButtonGroup = ({
 }: ButtonGroupProps) => {
   // Calculate default gap based on size if not provided
   const defaultGap = React.useMemo(() => {
-    if (gap) return gap;
-    
+    if (gap) { return gap; }
+
     switch (size) {
       case "xs":
         return 1;
-      case "sm": 
+      case "sm":
         return 1.5;
       case "default":
         return 2;
@@ -122,20 +121,20 @@ export const ButtonGroup = ({
     // Only apply props to Button components
     if (child.type && typeof child.type === "function" && child.type.displayName === "Button") {
       const childProps = { ...child.props };
-      
+
       // Apply inherited variant if child doesn't have one
       if (variant && !childProps.variant) {
         childProps.variant = variant;
       }
-      
+
       // Apply inherited size if child doesn't have one
       if (size && !childProps.size) {
         childProps.size = size;
       }
-      
+
       return React.cloneElement(child, childProps);
     }
-    
+
     return child;
   });
 

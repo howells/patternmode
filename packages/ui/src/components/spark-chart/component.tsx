@@ -338,15 +338,15 @@ const SparkBarChart = (props: SparkBarChartProps & { ref?: React.RefObject<HTMLD
 
 SparkBarChart.displayName = "SparkBarChart";
 
-export { 
-  SparkChart, 
-  type SparkChartProps,
-  // Legacy exports for backward compatibility
-  SparkAreaChart, 
-  type SparkAreaChartProps, 
-  SparkBarChart, 
-  SparkLineChart, 
-  type SparkLineChartProps,
+export {
   // Deprecated type alias
-  type SparkBarChartProps as BarChartProps
+  type SparkBarChartProps as BarChartProps,
+  // Legacy exports for backward compatibility
+  SparkAreaChart,
+  type SparkAreaChartProps,
+  SparkBarChart,
+  SparkChart,
+  type SparkChartProps,
+  SparkLineChart,
+  type SparkLineChartProps,
 };

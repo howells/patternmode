@@ -65,7 +65,7 @@ export const searchFieldPreviewProps = [
   },
   {
     name: "loading",
-    type: "boolean", 
+    type: "boolean",
     defaultValue: false,
     description: "Whether to show loading state",
   },

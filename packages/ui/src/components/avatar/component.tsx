@@ -16,7 +16,7 @@ const avatarVariants = tv({
     size: {
       "2xs": "size-4", // 16px - for very compact UI, inline elements
       "xs": "size-control-xs", // 28px - aligns with control system for form contexts
-      "sm": "size-control-sm", // 36px - aligns with control system for form contexts  
+      "sm": "size-control-sm", // 36px - aligns with control system for form contexts
       "base": "size-control-base", // 40px - aligns with control system for form contexts
       "lg": "size-control-lg", // 48px - aligns with control system for form contexts
       "xl": "size-16", // 64px - for profile pages, large display

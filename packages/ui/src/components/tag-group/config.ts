@@ -1,15 +1,15 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { Tags } from "lucide-react";
 import { TagGroup } from "./component";
-import { 
-  DefaultExample, 
-  DismissibleExample, 
+import {
   AlignmentExample,
-  DirectionExample,
   CustomGapExample,
+  DefaultExample,
+  DirectionExample,
+  DismissibleExample,
   LabeledTagsExample,
+  MixedOverrideExample,
   TagsWithCountExample,
-  MixedOverrideExample
 } from "./examples";
 
 export const tagGroupConfig: ComponentConfig = {

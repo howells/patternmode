@@ -42,7 +42,7 @@ export function TagGroupPreview({
           />
         ))}
       </TagGroup>
-      
+
       {dismissible && tags.length < 4 && (
         <button
           onClick={handleReset}

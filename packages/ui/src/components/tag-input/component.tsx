@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 "use client";
 
 import { useCombobox } from "downshift";
@@ -226,9 +225,9 @@ const TagInput = ({
   const allOptions = React.useMemo(() => {
     const safeOptions = Array.isArray(options) ? options : [];
     const createdOptions: TagOption[] = [];
-    
+
     // For each selected value, if it's not in options, it must be a created tag
-    safeValue.forEach(val => {
+    safeValue.forEach((val) => {
       const existsInOptions = safeOptions.some(opt => opt.value === val);
       if (!existsInOptions) {
         // Reconstruct the created tag
@@ -238,7 +237,7 @@ const TagInput = ({
         });
       }
     });
-    
+
     return [...safeOptions, ...createdOptions];
   }, [options, safeValue]);
 
@@ -281,7 +280,7 @@ const TagInput = ({
     return finalFiltered;
   }, [
     allOptions,
-    safeValue,  
+    safeValue,
     inputValue,
     allowCreate,
     onValidate,

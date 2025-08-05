@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/experimental-ct-react";
-import { BasicTagInput, FilterableTagInput, CreateableTagInput } from "./tag-input.stories";
+import { BasicTagInput, CreateableTagInput, FilterableTagInput } from "./tag-input.stories";
 
 test.describe("TagInput Component Tests", () => {
   test("should show create option when allowCreate is enabled and typing new text", async ({ mount }) => {
