@@ -1,5 +1,5 @@
 /**
- * Test to validate that all component.config.ts files conform to the expected structure.
+ * Test to validate that all config.ts files conform to the expected structure.
  *
  * Validates:
  * 1. Required fields are present and valid

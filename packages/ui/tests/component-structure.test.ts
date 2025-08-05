@@ -8,6 +8,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import * as ts from "typescript";
 import { COMPONENT_REGISTRY } from "../src/components/registry";
 
 /**
@@ -61,7 +62,7 @@ function hasTypeScriptProps(componentDir: string): boolean {
 }
 
 /**
- * Extract JSDoc description and validate length
+ * Extract JSDoc description using TypeScript Compiler API - the most reliable approach
  */
 function getJSDocDescription(componentDir: string): string | null {
   const componentsDir = join(process.cwd(), "src", "components");
@@ -72,50 +73,97 @@ function getJSDocDescription(componentDir: string): string | null {
   }
 
   const content = readFileSync(componentFilePath, "utf8");
-  const lines = content.split("\n");
 
-  // Find main component definition
-  let componentLineIndex = -1;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (/^(?:export\s+)?const\s+[A-Z][a-zA-Z0-9]*\s*[:=]/.test(line)) {
-      componentLineIndex = i;
-      break;
+  try {
+    // Create TypeScript source file
+    const sourceFile = ts.createSourceFile(
+      componentFilePath,
+      content,
+      ts.ScriptTarget.Latest,
+      true, // setParentNodes
+      ts.ScriptKind.TSX
+    );
+
+    // Convert component directory name to expected component name
+    const expectedComponentName = componentDir
+      .split('-')
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join('');
+
+    let foundJSDoc: string | null = null;
+
+    function visit(node: ts.Node): void {
+      // Look for component declarations
+      const isTargetComponent = (
+        // const ComponentName = ...
+        (ts.isVariableDeclaration(node) && 
+         ts.isIdentifier(node.name) && 
+         node.name.text === expectedComponentName) ||
+        // function ComponentName(...) { ... }
+        (ts.isFunctionDeclaration(node) && 
+         node.name && 
+         ts.isIdentifier(node.name) && 
+         node.name.text === expectedComponentName)
+      );
+
+      if (isTargetComponent) {
+        // Get JSDoc comments using TypeScript's built-in JSDoc support
+        const jsDocTags = ts.getJSDocTags(node);
+        const jsDocComments = ts.getJSDocCommentsAndTags(node);
+        
+        // Try to get the description from JSDoc
+        for (const jsDoc of jsDocComments) {
+          if (ts.isJSDoc(jsDoc) && jsDoc.comment) {
+            if (typeof jsDoc.comment === 'string') {
+              foundJSDoc = jsDoc.comment.trim();
+              return;
+            } else if (Array.isArray(jsDoc.comment)) {
+              // Handle JSDoc comment that is an array of text and tags
+              const textParts = jsDoc.comment
+                .filter(part => ts.isJSDocText(part))
+                .map(part => part.text)
+                .join(' ')
+                .trim();
+              if (textParts) {
+                foundJSDoc = textParts;
+                return;
+              }
+            }
+          }
+        }
+
+        // Fallback: manually look for JSDoc comments above this node
+        const fullText = sourceFile.getFullText();
+        const nodeStart = node.getFullStart();
+        const leadingTrivia = fullText.substring(node.getFullStart(), node.getStart());
+        
+        // Look for JSDoc pattern in leading trivia
+        const jsDocMatch = leadingTrivia.match(/\/\*\*(.*?)\*\//s);
+        if (jsDocMatch) {
+          const jsDocContent = jsDocMatch[1];
+          const descriptionLines = jsDocContent
+            .split('\n')
+            .map(line => line.trim().replace(/^\*\s?/, '').trim())
+            .filter(line => line && !line.startsWith('@'));
+          
+          if (descriptionLines.length > 0) {
+            foundJSDoc = descriptionLines.join(' ').trim();
+            return;
+          }
+        }
+      }
+
+      // Continue traversing child nodes
+      ts.forEachChild(node, visit);
     }
-  }
 
-  if (componentLineIndex === -1) {
+    visit(sourceFile);
+    return foundJSDoc;
+
+  } catch (error) {
+    console.warn(`Failed to parse ${componentFilePath}: ${error}`);
     return null;
   }
-
-  // Look for JSDoc comment above component
-  let jsdocStart = -1;
-  let jsdocEnd = -1;
-
-  for (let i = componentLineIndex - 1; i >= Math.max(0, componentLineIndex - 20); i--) {
-    const line = lines[i].trim();
-
-    if (line === "*/") {
-      jsdocEnd = i;
-    }
-    else if (line === "/**" && jsdocEnd > i) {
-      jsdocStart = i;
-      break;
-    }
-  }
-
-  if (jsdocStart >= 0 && jsdocEnd >= 0) {
-    const jsdocLines = lines.slice(jsdocStart + 1, jsdocEnd);
-    const descriptionLines = jsdocLines
-      .map(line => line.trim().replace(/^\*\s?/, "").trim())
-      .filter(line => line && !line.startsWith("@"));
-
-    if (descriptionLines.length > 0) {
-      return descriptionLines.join(" ").trim();
-    }
-  }
-
-  return null;
 }
 
 /**

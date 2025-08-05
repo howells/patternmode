@@ -5,9 +5,9 @@
  * 1. Start with "use client" directive
  * 2. Import React
  * 3. Have example components (functions ending with "Example")
- * 4. Export individual example components for use in component.config.ts
+ * 4. Export individual example components for use in config.ts
  * 5. Have at least one example component
- * 6. Match the examples defined in component.config.ts
+ * 6. Match the examples defined in config.ts
  */
 
 import { readdir, readFile } from "node:fs/promises";

@@ -10,7 +10,7 @@ _The best of the React ecosystem, unified under Base UI primitives with professi
 ```
 src/components/[component-name]/
 ├── component.tsx        # Implementation with JSDoc-enhanced types
-├── component.config.ts  # Component specification + examples with imports
+├── config.ts  # Component specification + examples with imports
 ├── index.tsx           # Export barrel
 ├── examples.tsx        # Example components
 └── preview.tsx         # Preview component (optional)

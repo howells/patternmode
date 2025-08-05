@@ -146,6 +146,9 @@ export type TextListIndicatorProps = {
   children?: string | React.ReactNode;
 } & VariantProps<typeof indicatorVariants>;
 
+/**
+ * List component with customizable styling and semantic markup options.
+ */
 export function TextList({
   as = "ul",
   variant,

@@ -22,16 +22,22 @@ import {
 
 import {
   AvailableChartColors,
-
   constructCategoryColors,
   getColorClassName,
   getYAxisDomain,
 } from "../../lib/chartUtils";
 import { cx } from "../../lib/utils";
 
-// #region SparkAreaChart
+// #region SparkChart
 
-type SparkAreaChartProps = {
+type SparkChartProps = {
+  /**
+   * Chart variant determining the visual representation.
+   * - "area": Filled area chart with optional gradient
+   * - "line": Simple line chart for trend visualization
+   * - "bar": Bar chart for discrete data points
+   */
+  variant?: "area" | "line" | "bar";
   /**
    * Array of data objects to display in the chart.
    * Each object should contain keys matching the index and categories.
@@ -70,25 +76,35 @@ type SparkAreaChartProps = {
   /**
    * Whether to connect null data points with lines.
    * When true, gaps in data will be bridged with connecting lines.
+   * Only applies to area and line variants.
    */
   connectNulls?: boolean;
   /**
    * Chart stacking type for multiple data series.
    * Controls how multiple categories are displayed relative to each other.
+   * Only applies to area and bar variants.
    */
   type?: "default" | "stacked" | "percent";
   /**
    * Area fill style for visual appearance.
    * Controls the opacity and gradient of filled areas.
+   * Only applies to area variant.
    */
   fill?: "gradient" | "solid" | "none";
+  /**
+   * Gap between bar categories as string or number.
+   * Controls spacing between different data series.
+   * Only applies to bar variant.
+   */
+  barCategoryGap?: string | number;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * Minimal sparkline area chart for inline data visualization and trend indication.
+ * Minimal sparkline chart for inline data visualization and trend indication.
  */
-const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const SparkChart = ({ ref: forwardedRef, ...props }: SparkChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {
+    variant = "bar",
     data = [],
     categories = [],
     index,
@@ -98,8 +114,9 @@ const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & {
     maxValue,
     connectNulls = false,
     type = "default",
-    className,
     fill = "gradient",
+    barCategoryGap,
+    className,
     ...other
   } = props;
 
@@ -108,7 +125,7 @@ const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & {
   const stacked = type === "stacked" || type === "percent";
   const areaId = React.useId();
 
-  const getFillContent = (fillType: SparkAreaChartProps["fill"]) => {
+  const getFillContent = (fillType: SparkChartProps["fill"]) => {
     switch (fillType) {
       case "none":
         return <stop stopColor="currentColor" stopOpacity={0} />;
@@ -126,6 +143,137 @@ const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & {
     }
   };
 
+  const commonProps = {
+    data,
+    margin: {
+      bottom: 1,
+      left: 1,
+      right: 1,
+      top: 1,
+    },
+  };
+
+  const renderChart = () => {
+    switch (variant) {
+      case "area":
+        return (
+          <RechartsAreaChart
+            {...commonProps}
+            stackOffset={type === "percent" ? "expand" : undefined}
+          >
+            <XAxis hide dataKey={index} />
+            <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
+            {categories.map((category) => {
+              const categoryId = `${areaId}-${category.replace(/[^a-z0-9]/gi, "")}`;
+              return (
+                <React.Fragment key={category}>
+                  <defs>
+                    <linearGradient
+                      key={category}
+                      className={cx(
+                        getColorClassName(
+                          categoryColors.get(category) as AvailableChartColorsKeys,
+                          "text",
+                        ),
+                      )}
+                      id={categoryId}
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      {getFillContent(fill)}
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    className={cx(
+                      getColorClassName(
+                        categoryColors.get(category) as AvailableChartColorsKeys,
+                        "stroke",
+                      ),
+                    )}
+                    dot={false}
+                    strokeOpacity={1}
+                    name={category}
+                    type="linear"
+                    dataKey={category}
+                    stroke=""
+                    strokeWidth={2}
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    isAnimationActive={false}
+                    connectNulls={connectNulls}
+                    stackId={stacked ? "stack" : undefined}
+                    fill={`url(#${categoryId})`}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </RechartsAreaChart>
+        );
+
+      case "line":
+        return (
+          <RechartsLineChart {...commonProps}>
+            <XAxis hide dataKey={index} />
+            <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
+            {categories.map(category => (
+              <Line
+                className={cx(
+                  getColorClassName(
+                    categoryColors.get(category) as AvailableChartColorsKeys,
+                    "stroke",
+                  ),
+                )}
+                dot={false}
+                strokeOpacity={1}
+                key={category}
+                name={category}
+                type="linear"
+                dataKey={category}
+                stroke=""
+                strokeWidth={2}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                isAnimationActive={false}
+                connectNulls={connectNulls}
+              />
+            ))}
+          </RechartsLineChart>
+        );
+
+      case "bar":
+      default:
+        return (
+          <RechartsBarChart
+            {...commonProps}
+            stackOffset={type === "percent" ? "expand" : undefined}
+            barCategoryGap={barCategoryGap}
+          >
+            <XAxis hide dataKey={index} />
+            <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
+            {categories.map(category => (
+              <Bar
+                className={cx(
+                  getColorClassName(
+                    categoryColors.get(category) as AvailableChartColorsKeys,
+                    "fill",
+                  ),
+                )}
+                key={category}
+                name={category}
+                type="linear"
+                dataKey={category}
+                stackId={stacked ? "stack" : undefined}
+                isAnimationActive={false}
+                fill=""
+              />
+            ))}
+          </RechartsBarChart>
+        );
+    }
+  };
+
   return (
     <div
       ref={forwardedRef}
@@ -135,314 +283,70 @@ const SparkAreaChart = ({ ref: forwardedRef, ...props }: SparkAreaChartProps & {
       {...other}
     >
       <ResponsiveContainer>
-        <RechartsAreaChart
-          data={data}
-          margin={{
-            bottom: 1,
-            left: 1,
-            right: 1,
-            top: 1,
-          }}
-          stackOffset={type === "percent" ? "expand" : undefined}
-        >
-          <XAxis hide dataKey={index} />
-          <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
-
-          {categories.map((category) => {
-            const categoryId = `${areaId}-${category.replace(
-              /[^a-z0-9]/gi,
-              "",
-            )}`;
-            return (
-              <React.Fragment key={category}>
-                <defs>
-                  <linearGradient
-                    key={category}
-                    className={cx(
-                      getColorClassName(
-                        categoryColors.get(
-                          category,
-                        ) as AvailableChartColorsKeys,
-                        "text",
-                      ),
-                    )}
-                    id={categoryId}
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    {getFillContent(fill)}
-                  </linearGradient>
-                </defs>
-                <Area
-                  className={cx(
-                    getColorClassName(
-                      categoryColors.get(
-                        category,
-                      ) as AvailableChartColorsKeys,
-                      "stroke",
-                    ),
-                  )}
-                  dot={false}
-                  strokeOpacity={1}
-                  name={category}
-                  type="linear"
-                  dataKey={category}
-                  stroke=""
-                  strokeWidth={2}
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  isAnimationActive={false}
-                  connectNulls={connectNulls}
-                  stackId={stacked ? "stack" : undefined}
-                  fill={`url(#${categoryId})`}
-                />
-              </React.Fragment>
-            );
-          })}
-        </RechartsAreaChart>
+        {renderChart()}
       </ResponsiveContainer>
     </div>
   );
 };
+
+SparkChart.displayName = "SparkChart";
+
+// #region Legacy Components (for backward compatibility)
+
+type SparkAreaChartProps = Omit<SparkChartProps, "variant"> & {
+  fill?: SparkChartProps["fill"];
+  type?: SparkChartProps["type"];
+  connectNulls?: SparkChartProps["connectNulls"];
+};
+
+/**
+ * @deprecated Use SparkChart with variant="area" instead
+ * Minimal sparkline area chart for inline data visualization and trend indication.
+ */
+const SparkAreaChart = (props: SparkAreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+  <SparkChart {...props} variant="area" />
+);
 
 SparkAreaChart.displayName = "SparkAreaChart";
 
-// #region SparkLineChart
-
-type SparkLineChartProps = {
-  /**
-   * Array of data objects to display in the chart.
-   * Each object should contain keys matching the index and categories.
-   */
-  data: Record<string, any>[];
-  /**
-   * Array of category names to plot as data series.
-   * These should match keys in the data objects.
-   */
-  categories: string[];
-  /**
-   * Key name for the x-axis data field in each data object.
-   * Used to identify the horizontal axis values.
-   */
-  index: string;
-  /**
-   * Array of color names for chart styling.
-   * Uses predefined color palette for consistent theming.
-   */
-  colors?: AvailableChartColorsKeys[];
-  /**
-   * Whether to automatically calculate minimum value for better scaling.
-   * When true, chart will start from the minimum data value instead of zero.
-   */
-  autoMinValue?: boolean;
-  /**
-   * Explicit minimum value for the y-axis.
-   * Overrides automatic calculation when set.
-   */
-  minValue?: number;
-  /**
-   * Explicit maximum value for the y-axis.
-   * Overrides automatic calculation when set.
-   */
-  maxValue?: number;
-  /**
-   * Whether to connect null data points with lines.
-   * When true, gaps in data will be bridged with connecting lines.
-   */
-  connectNulls?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+type SparkLineChartProps = Omit<SparkChartProps, "variant" | "fill" | "barCategoryGap" | "type"> & {
+  connectNulls?: SparkChartProps["connectNulls"];
+};
 
 /**
+ * @deprecated Use SparkChart with variant="line" instead
  * Minimal sparkline line chart for inline data visualization and trend indication.
  */
-const SparkLineChart = ({ ref: forwardedRef, ...props }: SparkLineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-  const {
-    data = [],
-    categories = [],
-    index,
-    colors = AvailableChartColors,
-    autoMinValue = false,
-    minValue,
-    maxValue,
-    connectNulls = false,
-    className,
-    ...other
-  } = props;
-
-  const categoryColors = constructCategoryColors(categories, colors);
-  const yAxisDomain = getYAxisDomain(autoMinValue, minValue, maxValue);
-
-  return (
-    <div
-      ref={forwardedRef}
-      className={cx("h-12 w-28", className)}
-      tremor-id="tremor-raw"
-      data-testid="spark-chart"
-      {...other}
-    >
-      <ResponsiveContainer>
-        <RechartsLineChart
-          data={data}
-          margin={{
-            bottom: 1,
-            left: 1,
-            right: 1,
-            top: 1,
-          }}
-        >
-          <XAxis hide dataKey={index} />
-          <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
-          {categories.map(category => (
-            <Line
-              className={cx(
-                getColorClassName(
-                  categoryColors.get(category) as AvailableChartColorsKeys,
-                  "stroke",
-                ),
-              )}
-              dot={false}
-              strokeOpacity={1}
-              key={category}
-              name={category}
-              type="linear"
-              dataKey={category}
-              stroke=""
-              strokeWidth={2}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              isAnimationActive={false}
-              connectNulls={connectNulls}
-            />
-          ))}
-        </RechartsLineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+const SparkLineChart = (props: SparkLineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+  <SparkChart {...props} variant="line" />
+);
 
 SparkLineChart.displayName = "SparkLineChart";
 
-// #region SparkBarChart
-
-type BarChartProps = {
-  /**
-   * Array of data objects to display in the chart.
-   * Each object should contain keys matching the index and categories.
-   */
-  data: Record<string, any>[];
-  /**
-   * Key name for the x-axis data field in each data object.
-   * Used to identify the horizontal axis values.
-   */
-  index: string;
-  /**
-   * Array of category names to plot as data series.
-   * These should match keys in the data objects.
-   */
-  categories: string[];
-  /**
-   * Array of color names for chart styling.
-   * Uses predefined color palette for consistent theming.
-   */
-  colors?: AvailableChartColorsKeys[];
-  /**
-   * Whether to automatically calculate minimum value for better scaling.
-   * When true, chart will start from the minimum data value instead of zero.
-   */
-  autoMinValue?: boolean;
-  /**
-   * Explicit minimum value for the y-axis.
-   * Overrides automatic calculation when set.
-   */
-  minValue?: number;
-  /**
-   * Explicit maximum value for the y-axis.
-   * Overrides automatic calculation when set.
-   */
-  maxValue?: number;
-  /**
-   * Gap between bar categories as string or number.
-   * Controls spacing between different data series.
-   */
-  barCategoryGap?: string | number;
-  /**
-   * Chart stacking type for multiple data series.
-   * Controls how multiple categories are displayed relative to each other.
-   */
-  type?: "default" | "stacked" | "percent";
-} & React.HTMLAttributes<HTMLDivElement>;
+type SparkBarChartProps = Omit<SparkChartProps, "variant" | "fill" | "connectNulls"> & {
+  barCategoryGap?: SparkChartProps["barCategoryGap"];
+  type?: SparkChartProps["type"];
+};
 
 /**
+ * @deprecated Use SparkChart with variant="bar" instead
  * Minimal sparkline bar chart for inline data visualization and trend indication.
  */
-const SparkBarChart = ({ ref: forwardedRef, ...props }: BarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-  const {
-    data = [],
-    categories = [],
-    index,
-    colors = AvailableChartColors,
-    autoMinValue = false,
-    minValue,
-    maxValue,
-    barCategoryGap,
-    type = "default",
-    className,
-    ...other
-  } = props;
-
-  const categoryColors = constructCategoryColors(categories, colors);
-
-  const yAxisDomain = getYAxisDomain(autoMinValue, minValue, maxValue);
-  const stacked = type === "stacked" || type === "percent";
-
-  return (
-    <div
-      ref={forwardedRef}
-      className={cx("h-12 w-28", className)}
-      tremor-id="tremor-raw"
-      data-testid="spark-chart"
-      {...other}
-    >
-      <ResponsiveContainer>
-        <RechartsBarChart
-          data={data}
-          margin={{
-            bottom: 1,
-            left: 1,
-            right: 1,
-            top: 1,
-          }}
-          stackOffset={type === "percent" ? "expand" : undefined}
-          barCategoryGap={barCategoryGap}
-        >
-          <XAxis hide dataKey={index} />
-          <YAxis hide={true} domain={yAxisDomain as AxisDomain} />
-
-          {categories.map(category => (
-            <Bar
-              className={cx(
-                getColorClassName(
-                  categoryColors.get(category) as AvailableChartColorsKeys,
-                  "fill",
-                ),
-              )}
-              key={category}
-              name={category}
-              type="linear"
-              dataKey={category}
-              stackId={stacked ? "stack" : undefined}
-              isAnimationActive={false}
-              fill=""
-            />
-          ))}
-        </RechartsBarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+const SparkBarChart = (props: SparkBarChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
+  <SparkChart {...props} variant="bar" />
+);
 
 SparkBarChart.displayName = "SparkBarChart";
 
-export { type BarChartProps, SparkAreaChart, type SparkAreaChartProps, SparkBarChart, SparkLineChart, type SparkLineChartProps };
+export { 
+  SparkChart, 
+  type SparkChartProps,
+  // Legacy exports for backward compatibility
+  SparkAreaChart, 
+  type SparkAreaChartProps, 
+  SparkBarChart, 
+  SparkLineChart, 
+  type SparkLineChartProps,
+  // Deprecated type alias
+  type SparkBarChartProps as BarChartProps
+};

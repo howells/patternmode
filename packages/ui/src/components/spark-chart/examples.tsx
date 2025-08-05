@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SparkAreaChart, SparkBarChart, SparkLineChart } from "./component";
+import { SparkChart } from "./component";
 
 export function DefaultExample() {
   const data = [
@@ -13,7 +13,8 @@ export function DefaultExample() {
   ];
 
   return (
-    <SparkBarChart
+    <SparkChart
+      variant="bar"
       data={data}
       index="month"
       categories={["sales"]}
@@ -32,7 +33,8 @@ export function AreaExample() {
   ];
 
   return (
-    <SparkAreaChart
+    <SparkChart
+      variant="area"
       data={data}
       index="x"
       categories={["y"]}
@@ -54,7 +56,8 @@ export function LineExample() {
   ];
 
   return (
-    <SparkLineChart
+    <SparkChart
+      variant="line"
       data={data}
       index="day"
       categories={["value"]}
@@ -74,21 +77,24 @@ export function MultipleExample() {
 
   return (
     <div className="flex gap-4">
-      <SparkBarChart
+      <SparkChart
+        variant="bar"
         data={data}
         index="x"
         categories={["y"]}
         colors={["pink"]}
         className="h-12 w-20"
       />
-      <SparkAreaChart
+      <SparkChart
+        variant="area"
         data={data}
         index="x"
         categories={["y"]}
         colors={["emerald"]}
         className="h-12 w-20"
       />
-      <SparkLineChart
+      <SparkChart
+        variant="line"
         data={data}
         index="x"
         categories={["y"]}

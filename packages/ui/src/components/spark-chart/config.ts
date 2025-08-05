@@ -1,15 +1,15 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { TrendingUp } from "lucide-react";
-import { SparkAreaChart, SparkBarChart, SparkLineChart } from "./component";
+import { SparkChart } from "./component";
 import { AreaExample, DefaultExample, LineExample, MultipleExample } from "./examples";
 
 export const sparkChartConfig: ComponentConfig = {
   id: "spark-chart",
   name: "Spark Chart",
-  description: "Minimal sparkline charts for inline data visualization and trend indication, available in bar, area, and line variants.",
+  description: "Minimal sparkline chart for inline data visualization with area, bar, and line variants.",
   category: "charts",
   icon: TrendingUp,
-  importStatement: `import { SparkAreaChart, SparkBarChart, SparkLineChart } from "@patternmode/ui/spark-chart";`,
+  importStatement: `import { SparkChart } from "@patternmode/ui/spark-chart";`,
   examples: [
     {
       id: "default",
@@ -32,26 +32,16 @@ export const sparkChartConfig: ComponentConfig = {
     {
       id: "multiple",
       title: "Multiple",
-      description: "Different spark chart types side by side",
+      description: "Different spark chart variants side by side",
       component: MultipleExample,
     },
   ],
   components: [
     {
-      name: "SparkBarChart",
-      description: "Minimal bar chart for inline data visualization",
-      component: SparkBarChart,
+      name: "SparkChart",
+      description: "Minimal sparkline chart with configurable variants",
+      component: SparkChart,
       primary: true,
-    },
-    {
-      name: "SparkAreaChart",
-      description: "Minimal area chart with optional gradient fill",
-      component: SparkAreaChart,
-    },
-    {
-      name: "SparkLineChart",
-      description: "Minimal line chart for trend indication",
-      component: SparkLineChart,
     },
   ],
 };
