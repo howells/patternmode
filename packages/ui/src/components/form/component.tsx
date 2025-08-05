@@ -322,20 +322,11 @@ type FormFieldProps = {
    */
   required?: boolean;
   /**
-   * Additional CSS classes for styling customization.
-   */
-  className?: string;
-  /**
-   * Form control element (input, select, textarea, etc.).
-   * The main interactive element for data input.
-   */
-  children: React.ReactNode;
-  /**
    * Layout orientation for the field.
    * Controls the arrangement of label and control elements.
    */
   orientation?: "vertical" | "horizontal";
-};
+} & React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Complete form field with label, control, description, and error.

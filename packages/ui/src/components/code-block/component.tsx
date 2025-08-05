@@ -15,27 +15,17 @@ import { CopyButton } from "../copy-button";
  */
 type CodeBlockProps = {
   /**
-   * Code content to syntax highlight.
-   * The source code string that will be displayed with syntax highlighting.
-   */
-  children: React.ReactNode;
-  /**
    * Programming language for syntax highlighting.
    * Specifies the language for proper syntax highlighting. Defaults to "tsx".
    * Supports 297+ languages via Prism.js.
    */
   language?: string;
   /**
-   * Additional CSS classes.
-   * Custom CSS classes to apply to the code block container.
-   */
-  className?: string;
-  /**
    * Color theme for syntax highlighting.
    * Controls the visual theme of the code block. "auto" detects system preference.
    */
   theme?: "light" | "dark" | "auto";
-};
+} & React.ComponentPropsWithoutRef<"div">;
 
 /**
  * Syntax-highlighted code display component with copy functionality.

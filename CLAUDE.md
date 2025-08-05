@@ -13,6 +13,45 @@
 - **NEVER build anything - no compilation step should exist**
 - **All package.json exports must point to `src/` files, never `dist/` files**
 
+### TypeScript Path Mappings vs Package Exports
+
+**CRITICAL: Per Turborepo best practices, avoid TypeScript `paths` for JIT packages**
+
+- **Turborepo warns: TypeScript `paths` "can cause failed compilation when using Just-in-Time Packages"**
+- **Use Node.js package `exports` instead of TypeScript `paths` for module resolution**
+- **Each package should handle its own TypeScript compilation independently**
+
+**Package Structure:**
+```json
+// packages/ui/package.json - JIT Package
+{
+  "exports": {
+    "./components/*": {
+      "types": "./src/components/*/index.tsx",
+      "import": "./src/components/*/index.tsx", 
+      "default": "./src/components/*/index.tsx"
+    }
+  }
+}
+
+// apps/web/tsconfig.json - Consumer App
+{
+  "paths": {
+    "@/*": ["./src/*"]
+    // ❌ NO paths to UI package - use package exports instead
+  }
+}
+```
+
+**Import Pattern:**
+```tsx
+// ✅ CORRECT - Uses package exports
+import { Button } from "@patternmode/ui/components/button";
+
+// ❌ INCORRECT - Uses TypeScript paths (causes CI failures)
+import { Button } from "../../packages/ui/src/components/button";
+```
+
 ## Tailwind CSS 4 (CRITICAL)
 
 **MANDATORY: This project uses Tailwind CSS 4 with new syntax**

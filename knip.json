@@ -29,16 +29,14 @@
     },
     "packages/ui": {
       "entry": [
-        "scripts/**/*.{ts,js}",
         "tests/**/*.test.{ts,tsx}"
       ],
       "project": [
         "src/**/*.{ts,tsx}",
-        "scripts/**/*.{ts,js}",
         "tests/**/*.{ts,tsx}",
         "vitest.config.ts",
         "!playwright/**"
-      ]
+      ],
     },
     "packages/eslint-config": {
       "entry": ["rules/**/*.mjs"],
@@ -65,6 +63,7 @@
     "**/.next/**",
     "**/tsconfig.tsbuildinfo",
     "**/playwright/**",
-    "**/*.playwright.test.tsx"
+    "**/*.playwright.test.tsx",
+    "**/playwright/index.ts"
   ]
 }

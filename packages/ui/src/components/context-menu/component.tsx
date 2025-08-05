@@ -22,7 +22,7 @@ type ContextMenuProps = {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Content to render within the context menu.
+   * Content to render within the context menu trigger area.
    */
   children?: React.ReactNode;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root>, "open" | "defaultOpen" | "onOpenChange" | "children"> & {

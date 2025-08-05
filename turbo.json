@@ -17,9 +17,6 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "lint:fix": {
-      "dependsOn": ["^lint:fix"]
-    },
     "typecheck": {
       "dependsOn": ["^typecheck"]
     },
@@ -41,17 +38,8 @@
       "cache": false,
       "inputs": ["src/**", "tests/**", "**/*.spec.*", "playwright.config.*", "package.json"]
     },
-    "test:generate": {
-      "dependsOn": ["^test:generate"],
-      "cache": false
-    },
     "clean": {
       "cache": false
-    },
-    "validate-packages": {
-      "cache": false,
-      "inputs": ["**/package.json", "scripts/validate-package-alignment.ts"],
-      "outputs": []
     },
     "generate:pages": {
       "dependsOn": ["^build"],
