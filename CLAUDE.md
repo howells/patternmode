@@ -154,6 +154,44 @@ const variants = tv({
 - Export component, variants, and prop types
 - Create wrapper components or helper functions when complex typing is needed
 
+### Children Prop Inheritance (CRITICAL)
+
+**MANDATORY: Let children inherit as optional from HTML element props - NEVER declare explicitly**
+
+```tsx
+// ✅ CORRECT - Children inherit as optional from HTML element props
+type CardProps = {
+  variant?: "default" | "dashed";
+  padding?: SpacingValue;
+  // NO explicit children declaration
+} & useRender.ComponentProps<"div">;
+
+type ToggleGroupProps = {
+  variant?: VariantProps<typeof toggleGroupVariants>["variant"];
+  size?: VariantProps<typeof toggleGroupVariants>["size"];
+  // NO explicit children declaration  
+} & React.ComponentPropsWithoutRef<typeof BaseToggleGroup>;
+
+// ❌ INCORRECT - Explicit children override inheritance as required
+type CardProps = {
+  variant?: "default" | "dashed";
+  children: React.ReactNode;  // ❌ Makes children required, breaks inheritance
+} & useRender.ComponentProps<"div">;
+
+// ❌ INCORRECT - Omit prevents proper inheritance
+type ToggleGroupProps = {
+  children: React.ReactNode;  // ❌ Required children
+  variant?: VariantProps<typeof toggleGroupVariants>["variant"];
+} & Omit<React.ComponentPropsWithoutRef<typeof BaseToggleGroup>, "children">; // ❌ Blocks inheritance
+```
+
+**Key Principles:**
+- **HTML element props include optional children** - never override this
+- **Explicit `children: React.ReactNode` makes children required**, breaking expected React patterns
+- **`Omit<..., "children">` prevents inheritance** and causes the same issue
+- **Let TypeScript inheritance work naturally** - more flexible and correct
+- **Optional children align with React patterns** where children may or may not be present
+
 ## Component Architecture (CRITICAL)
 
 **MANDATORY: All components follow the config-first architecture**

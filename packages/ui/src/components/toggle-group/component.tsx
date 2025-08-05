@@ -94,11 +94,6 @@ const toggleGroupVariants = tv({
 });
 
 type ToggleGroupProps = {
-
-  /**
-   * The content of the toggle group, typically ToggleGroupItem components.
-   */
-  children: React.ReactNode;
   /**
    * The visual style variant of the toggle group.
    * @default "default"
@@ -114,10 +109,7 @@ type ToggleGroupProps = {
    * @default "horizontal"
    */
   orientation?: VariantProps<typeof toggleGroupVariants>["orientation"];
-} & Omit<
-      React.ComponentPropsWithoutRef<typeof BaseToggleGroup>,
-      "children"
-    >;
+} & React.ComponentPropsWithoutRef<typeof BaseToggleGroup>;
 
 /**
  * A group of related toggle buttons that work together as a cohesive unit for multi-select or single-select interactions.

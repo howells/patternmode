@@ -62,11 +62,6 @@ type CardProps = {
    * Merged with component styling classes.
    */
   className?: string;
-  /**
-   * Card content.
-   * Can include CardHeader, CardContent, CardFooter, etc.
-   */
-  children: React.ReactNode;
 } & useRender.ComponentProps<"div">;
 
 /**
