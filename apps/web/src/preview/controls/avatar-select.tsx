@@ -21,7 +21,7 @@ export function AvatarSelect({ value, onValueChange, options }: AvatarSelectProp
 
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="overflow-hidden">
+      <SelectTrigger size="xs" className="overflow-hidden">
         <div className="flex items-center gap-2 truncate w-full">
           {selectedOption
             ? (

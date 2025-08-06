@@ -141,7 +141,7 @@ AlertDialogDescription.displayName = "AlertDialogDescription";
 /**
  * Primary action button that closes the dialog and performs the main action.
  */
-const AlertDialogAction = ({ ref, className, variant = "default", ...props }: AlertDialogActionProps & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
+const AlertDialogAction = ({ ref, className, variant = "primary", ...props }: AlertDialogActionProps & { ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Close> | null> }) => (
   <BaseAlertDialog.Close
     ref={ref}
     render={(

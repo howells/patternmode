@@ -10,6 +10,8 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import React, { createContext, useContext, useState } from "react";
 
 import Logo from "@/components/logo";
+import { GitHubLink } from "@/components/github-link";
+import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
 import { Badge } from "@patternmode/ui/components/badge";
 import {
   CATEGORY_CONFIG,
@@ -29,6 +31,7 @@ import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
+import { Separator } from "@patternmode/ui/components/separator";
 
 // Local component for sidebar group titles with badges
 function SidebarGroupTitle({
@@ -228,7 +231,7 @@ function MainContent({ children }: { children: React.ReactNode }) {
       }}
     >
       <Stack direction="vertical" gap={0} className="min-h-0 flex-1">
-        <header className="h-16 px-6 bg-white dark:bg-zinc-900 border-b  dark:border-zinc-800 flex items-center justify-between">
+        <header className="h-16 w-full px-6 bg-white dark:bg-zinc-900 border-b  dark:border-zinc-800 flex items-center justify-between">
           <Link
             href="/"
             className={cx("lg:hidden opacity-0", {
@@ -238,7 +241,12 @@ function MainContent({ children }: { children: React.ReactNode }) {
           >
             <Logo />
           </Link>
-          <ComponentSearch />
+          <div className="ml-auto flex items-center gap-2">
+            <ComponentSearch />
+            <ThemeToggleWrapper size="sm" variant="ghost" />
+            <Separator orientation="vertical" className="h-6" />
+            <GitHubLink />
+          </div>
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </Stack>

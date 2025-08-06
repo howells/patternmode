@@ -53,7 +53,7 @@ const RadioCardItem = ({ ref, className, children, ...props }: RadioCardItemProp
     ref={ref}
     className={cx(
       // base
-      "group relative w-full rounded-md border p-4 text-left shadow-xs transition cursor-pointer focus:outline-hidden",
+      "group relative w-full rounded-md border p-4 text-left  transition cursor-pointer focus:outline-hidden",
       // background color
       "bg-white dark:bg-zinc-950",
       // border color
@@ -83,7 +83,7 @@ const RadioCardIndicator = ({ ref, className, ...props }: RadioCardIndicatorProp
     ref={ref}
     className={cx(
       // base
-      "relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-full border shadow-xs outline-hidden",
+      "relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-full border  outline-hidden",
       // border color
       " dark:border-zinc-800",
       // background color

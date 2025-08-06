@@ -8,8 +8,8 @@ import { Button } from "./component";
 // Pre-imported icons from registry
 const { ArrowRight, Plus } = iconRegistry;
 
-// Default button
-export const DefaultExample = () => <Button>Click me</Button>;
+// Primary button
+export const PrimaryExample = () => <Button>Click me</Button>;
 
 // Secondary variant
 export const SecondaryExample = () => (
@@ -89,7 +89,7 @@ export const SizesExample = () => (
   <div className="flex items-center gap-2">
     <Button size="xs">Extra Small</Button>
     <Button size="sm">Small</Button>
-    <Button size="default">Default</Button>
+    <Button size="base">Base</Button>
     <Button size="lg">Large</Button>
     <Button size="icon-xs" icon={Plus} />
     <Button size="icon-sm" icon={Plus} />
@@ -144,7 +144,7 @@ export const KeyboardShortcutsExample = () => (
     <Button variant="secondary" kbd="Enter">
       Submit
     </Button>
-    <Button variant="default" kbd="Ent">
+    <Button variant="primary" kbd="Ent">
       Button
     </Button>
     <Button

@@ -12,7 +12,7 @@ import {
 
 export const comboChartConfig: ComponentConfig = {
   id: "combo-chart",
-  name: "ComboChart",
+  name: "Combo Chart",
   description: "Combination chart supporting multiple chart types in a single visualization. Built on Recharts with support for bar and line series, biaxial charts, interactive legends, and extensive customization options.",
   category: "charts",
   icon: BarChart3,
@@ -57,7 +57,7 @@ export const comboChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ComboChart",
+      name: "Combo Chart",
       description: "Combination chart component for mixed visualizations",
       component: ComboChart,
     },

@@ -57,7 +57,7 @@ export const textConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "TextLink",
+      name: "Text Link",
       description: "Link component for navigation within text",
       component: TextLink,
     },

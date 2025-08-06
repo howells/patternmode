@@ -211,7 +211,7 @@ type ScrollButtonProps = {
 const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
   const Icon = icon;
   const [isPressed, setIsPressed] = React.useState(false);
-  const intervalRef = React.useRef<number | null>(null);
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   React.useEffect(() => {
     if (isPressed) {
@@ -340,7 +340,7 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
   const scrollButtonsRef = React.useRef<HTMLDivElement>(null);
   const [hasScroll, setHasScroll] = React.useState<HasScrollProps | null>(null);
   const [isKeyDowned, setIsKeyDowned] = React.useState<string | null>(null);
-  const intervalRef = React.useRef<number | null>(null);
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const checkScroll = React.useCallback(() => {
     const scrollable = scrollableRef?.current;

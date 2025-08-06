@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { ToastProvider } from "@patternmode/ui/components/toast";
 
 import { SidebarLayout } from "../components/sidebar-layout";
+import { ThemeProvider } from "../components/theme-provider";
+import { NuqsProviderWrapper } from "../components/nuqs-provider";
 import { ReactQueryProvider } from "../lib/react-query";
 import "./globals.css";
 
@@ -28,11 +30,19 @@ export default function RootLayout({
       </head>
       <body>
         <ReactQueryProvider>
-          <ToastProvider>
-            <div className="isolate">
-              <SidebarLayout>{children}</SidebarLayout>
-            </div>
-          </ToastProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            <ToastProvider>
+              <NuqsProviderWrapper>
+                <div className="isolate">
+                  <SidebarLayout>{children}</SidebarLayout>
+                </div>
+              </NuqsProviderWrapper>
+            </ToastProvider>
+          </ThemeProvider>
         </ReactQueryProvider>
       </body>
     </html>

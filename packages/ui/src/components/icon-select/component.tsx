@@ -5,6 +5,7 @@ import type { ComboboxOption } from "../combobox/types";
 import React from "react";
 
 import { config } from "../../lib/config";
+import type { Size } from "../../lib/component-config-types";
 import { getIconComponent, iconNames } from "../../lib/icon-registry";
 import { Combobox } from "../combobox/component";
 
@@ -35,6 +36,12 @@ export type IconSelectProps = {
    * Provides guidance to users about the expected input.
    */
   placeholder?: string;
+
+  /**
+   * Size variant determining height and text size.
+   * Controls the overall dimensions of the icon select component.
+   */
+  size?: Size;
 
   /**
    * Whether the icon select is disabled.
@@ -178,6 +185,7 @@ export const IconSelect = ({
   value,
   onValueChange,
   placeholder = "Select an icon...",
+  size = "base",
   disabled = false,
   className,
   iconStrokeWidth = config.getIconStrokeWidth(),
@@ -211,6 +219,7 @@ export const IconSelect = ({
         placeholder={placeholder}
         searchPlaceholder="Search icons..."
         emptyMessage="No icons found."
+        size={size}
         disabled={disabled}
         className={className}
         searchDebounce={300} // 300ms search debounce

@@ -49,7 +49,7 @@ export function MenuPreview({
   showShortcuts = true,
 }: MenuPreviewProps = {}) {
   return (
-    <div className="p-8 flex justify-center">
+
       <Menu>
         <MenuTrigger render={<Button variant={triggerVariant} />}>
           Open Menu
@@ -97,7 +97,7 @@ export function MenuPreview({
           </MenuItem>
         </MenuContent>
       </Menu>
-    </div>
+
   );
 }
 

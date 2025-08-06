@@ -3,7 +3,7 @@ import { Square } from "lucide-react";
 import { Button } from "./component";
 import {
   ButtonAsLinkExample,
-  DefaultExample,
+  PrimaryExample,
   DestructiveExample,
   DisabledExample,
   FullWidthExample,
@@ -33,10 +33,10 @@ export const buttonConfig: ComponentConfig = {
   importStatement: `import { Button } from "@patternmode/ui/button";`,
   examples: [
     {
-      id: "default",
-      title: "Default",
-      description: "Basic button with default styling",
-      component: DefaultExample,
+      id: "primary",
+      title: "Primary",
+      description: "Basic button with primary styling",
+      component: PrimaryExample,
     },
     {
       id: "secondary",

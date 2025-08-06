@@ -71,32 +71,32 @@ export const radioConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "RadioItem",
+      name: "Radio Item",
       description: "Styled radio button with visual circle and dot indicator.",
       component: RadioItem,
     },
     {
-      name: "RadioOption",
+      name: "Radio Option",
       description: "Complete radio option with integrated label and description.",
       component: RadioOption,
     },
     {
-      name: "RadioLabel",
+      name: "Radio Label",
       description: "Label component for radio buttons with proper styling.",
       component: RadioLabel,
     },
     {
-      name: "RadioCard",
+      name: "Radio Card",
       description: "Card-style radio button for enhanced presentation.",
       component: RadioCard,
     },
     {
-      name: "RadioCardOption",
+      name: "Radio Card Option",
       description: "Complete card-style radio option with title and description.",
       component: RadioCardOption,
     },
     {
-      name: "RadioIndicator",
+      name: "Radio Indicator",
       description: "Visual indicator component for showing selection state.",
       component: RadioIndicator,
     },

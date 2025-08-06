@@ -84,22 +84,22 @@ export const carouselConfig: ComponentConfig = {
     },
     {
       component: CarouselContent,
-      name: "CarouselContent",
+      name: "Carousel Content",
       description: "Scrollable container for carousel items with overflow handling.",
     },
     {
       component: CarouselItem,
-      name: "CarouselItem",
+      name: "Carousel Item",
       description: "Individual slide container with proper spacing and accessibility.",
     },
     {
       component: CarouselPrevious,
-      name: "CarouselPrevious",
+      name: "Carousel Previous",
       description: "Previous slide navigation button with auto-positioning.",
     },
     {
       component: CarouselNext,
-      name: "CarouselNext",
+      name: "Carousel Next",
       description: "Next slide navigation button with auto-positioning.",
     },
   ],

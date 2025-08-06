@@ -11,7 +11,7 @@ import {
 
 export const dismissButtonConfig: ComponentConfig = {
   id: "dismiss-button",
-  name: "DismissButton",
+  name: "Dismiss Button",
   description: "Close button component for dismissing modals, alerts, and temporary content.",
   category: "actions",
   icon: X,
@@ -50,7 +50,7 @@ export const dismissButtonConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "DismissButton",
+      name: "Dismiss Button",
       description: "Close button component for dismissing content",
       component: DismissButton,
     },

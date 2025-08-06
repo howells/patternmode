@@ -42,17 +42,17 @@ export const accordionConfig: ComponentConfig = {
       component: Accordion,
     },
     {
-      name: "AccordionItem",
+      name: "Accordion Item",
       description: "Individual accordion item",
       component: AccordionItem,
     },
     {
-      name: "AccordionTrigger",
+      name: "Accordion Trigger",
       description: "Clickable trigger for accordion item",
       component: AccordionTrigger,
     },
     {
-      name: "AccordionContent",
+      name: "Accordion Content",
       description: "Collapsible content area",
       component: AccordionContent,
     },

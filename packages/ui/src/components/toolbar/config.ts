@@ -77,27 +77,27 @@ export const toolbarConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "ToolbarButton",
+      name: "Toolbar Button",
       description: "Interactive button component for toolbar actions with hover and pressed states.",
       component: ToolbarButton,
     },
     {
-      name: "ToolbarGroup",
+      name: "Toolbar Group",
       description: "Group component for organizing related toolbar items with consistent spacing.",
       component: ToolbarGroup,
     },
     {
-      name: "ToolbarInput",
+      name: "Toolbar Input",
       description: "Input component for toolbar search and data entry with integrated styling.",
       component: ToolbarInput,
     },
     {
-      name: "ToolbarLink",
+      name: "Toolbar Link",
       description: "Link component for toolbar navigation actions with proper focus management.",
       component: ToolbarLink,
     },
     {
-      name: "ToolbarSeparator",
+      name: "Toolbar Separator",
       description: "Visual separator for dividing toolbar sections and improving organization.",
       component: ToolbarSeparator,
     },

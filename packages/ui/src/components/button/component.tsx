@@ -1,5 +1,6 @@
 import type { IconComponent } from "../../lib/icon-utils";
-import type { ButtonSize, IconButtonSize } from "./types";
+import type { Size } from "../../lib/component-config-types";
+import type { IconButtonSize } from "./types";
 import type { VariantProps } from "tailwind-variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
@@ -71,20 +72,15 @@ type ButtonProps = {
    */
   kbdPlatform?: "mac" | "pc" | "auto";
   /**
-   * Whether the button should have a shadow.
-   * Adds subtle elevation styling when true.
-   */
-  shadow?: boolean;
-  /**
    * Visual style variant of the button.
    * Controls color scheme and visual emphasis.
    */
-  variant?: "default" | "secondary" | "outline" | "outline-dashed" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
+  variant?: "primary" | "secondary" | "outline" | "outline-dashed" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
   /**
    * Size variant of the button.
    * Icon sizes are for icon-only buttons without text.
    */
-  size?: ButtonSize | IconButtonSize;
+  size?: Size | IconButtonSize;
   /**
    * Whether to use full border radius for rounded appearance.
    * Creates pill-shaped buttons when true.
@@ -143,7 +139,6 @@ const Button = ({
   textAlign,
   kbd,
   kbdPlatform = "auto",
-  shadow = true,
   ...props
 }: ButtonProps) => {
   // Automatically set render prop based on href
@@ -176,7 +171,7 @@ const Button = ({
 
   // Determine kbd variant based on button variant
   const kbdVariant
-    = variant === "default" || variant === "destructive"
+    = variant === "primary" || variant === "destructive"
       ? "onDarkButton"
       : "onLightButton";
 
@@ -593,8 +588,6 @@ const Button = ({
       fullWidth && "w-full max-w-[95vw]",
       // Add group class when using hover effects for icons
       (showLeftIconOnHover || showRightIconOnHover) && "group/button",
-      // Derive shadow from prop
-      shadow ? "shadow-xs" : "shadow-none",
       // Derive flex justification from textAlign and fullWidth
       fullWidth && textAlign === "left"
         ? "justify-start"

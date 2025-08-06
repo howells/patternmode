@@ -49,7 +49,7 @@ export function CarouselPreview({
   const slides = Array.from({ length: slideCount }, (_, i) => i + 1);
 
   return (
-    <div className="p-8 flex justify-center">
+
       <Carousel
         className={`w-full ${maxWidthClasses[maxWidth]}`}
         opts={{
@@ -75,7 +75,7 @@ export function CarouselPreview({
           </>
         )}
       </Carousel>
-    </div>
+
   );
 }
 

@@ -10,6 +10,7 @@ export const DefaultExample = () => {
 export const SizesExample = () => {
   return (
     <div className="space-y-4">
+      <Input size="xs" placeholder="Extra small input" />
       <Input size="sm" placeholder="Small input" />
       <Input size="base" placeholder="Base input" />
       <Input size="lg" placeholder="Large input" />

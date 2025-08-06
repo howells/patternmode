@@ -17,7 +17,7 @@ import {
 
 export const categoryBarConfig: ComponentConfig = {
   id: "category-bar",
-  name: "CategoryBar",
+  name: "Category Bar",
   description: "Horizontal bar chart component for categorical data comparison and ranking with optional markers and animations.",
   category: "charts",
   icon: BarChart2,
@@ -92,7 +92,7 @@ export const categoryBarConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "CategoryBar",
+      name: "Category Bar",
       description: "Horizontal bar chart for categorical data visualization",
       component: CategoryBar,
     },

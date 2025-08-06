@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import type { Size } from "../../lib/component-config-types";
 import { Combobox } from "./component";
 
 export type ComboboxPreviewProps = {
@@ -23,7 +24,7 @@ export type ComboboxPreviewProps = {
    * Combobox size variant.
    * Controls the overall size and padding of the input.
    */
-  size?: "sm" | "base" | "lg";
+  size?: Size;
   /**
    * Default selected value.
    * Pre-selects an option when the component loads.
@@ -108,8 +109,7 @@ export function ComboboxPreview({
   }[size];
 
   return (
-    <div className="p-8 flex justify-center">
-      <div className={sizeClass}>
+
         <Combobox
           options={displayedOptions.map(option => ({
             ...option,
@@ -121,13 +121,8 @@ export function ComboboxPreview({
           searchPlaceholder={config.searchPlaceholder}
           size={size}
         />
-        {value && (
-          <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-            Selected: <span className="font-medium">{value}</span>
-          </div>
-        )}
-      </div>
-    </div>
+
+
   );
 }
 

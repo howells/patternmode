@@ -36,7 +36,7 @@ export const radioPreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting radio button and text sizing.",
-    options: ["sm", "md", "lg"],
-    defaultValue: "md",
+    options: ["xs", "sm", "base", "lg"],
+    defaultValue: "base",
   },
 ];

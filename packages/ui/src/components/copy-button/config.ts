@@ -43,7 +43,7 @@ export const copyButtonConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "CopyButton",
+      name: "Copy Button",
       description: "Button that copies text to clipboard with visual feedback.",
       component: CopyButton,
       primary: true,

@@ -38,5 +38,6 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 apps/web/tests/screenshots/*
+packages/ui/playwright/.cache
 packages/ui/playwright/.cache/*
 packages/ui/playwright/*

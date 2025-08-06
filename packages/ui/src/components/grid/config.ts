@@ -57,12 +57,12 @@ export const gridConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "GridCell",
+      name: "Grid Cell",
       description: "Grid cell component for positioning content within a grid",
       component: GridCell,
     },
     {
-      name: "GridAuto",
+      name: "Grid Auto",
       description: "Auto-generating grid component for rapid prototyping",
       component: GridAuto,
     },

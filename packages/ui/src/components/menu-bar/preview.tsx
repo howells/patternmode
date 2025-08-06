@@ -80,7 +80,6 @@ export function MenuBarPreview({
   ].slice(0, menuCount);
 
   return (
-    <div className="p-8 flex justify-center">
       <MenuBar>
         {menus.map((menu, menuIndex) => (
           <React.Fragment key={menu.title}>
@@ -118,7 +117,6 @@ export function MenuBarPreview({
           </React.Fragment>
         ))}
       </MenuBar>
-    </div>
   );
 }
 

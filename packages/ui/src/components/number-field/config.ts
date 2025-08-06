@@ -13,7 +13,7 @@ import { DefaultExample, DisabledExample, DisabledScrubAreaExample, FullWidthExa
 
 export const numberFieldConfig: ComponentConfig = {
   id: "number-field",
-  name: "NumberField",
+  name: "Number Field",
   description: "An advanced numeric input field with stepper controls, interactive scrub area, and comprehensive keyboard navigation. Built on Base UI's NumberField primitive with sophisticated numeric input capabilities.",
   category: "controls",
   icon: Hash,
@@ -58,38 +58,38 @@ export const numberFieldConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "NumberField",
+      name: "Number Field",
       description: "Advanced numeric input with stepper controls and scrub area.",
       component: NumberField,
       primary: true,
     },
     {
-      name: "NumberFieldLabel",
+      name: "Number Field Label",
       description: "Label with optional interactive scrub area.",
       component: NumberFieldLabel,
     },
     {
-      name: "NumberFieldGroup",
+      name: "Number Field Group",
       description: "Container for input and stepper buttons.",
       component: NumberFieldGroup,
     },
     {
-      name: "NumberFieldInput",
+      name: "Number Field Input",
       description: "The numeric input element with validation.",
       component: NumberFieldInput,
     },
     {
-      name: "NumberFieldIncrement",
+      name: "Number Field Increment",
       description: "Button to increase the numeric value.",
       component: NumberFieldIncrement,
     },
     {
-      name: "NumberFieldDecrement",
+      name: "Number Field Decrement",
       description: "Button to decrease the numeric value.",
       component: NumberFieldDecrement,
     },
     {
-      name: "NumberFieldScrubCursor",
+      name: "Number Field Scrub Cursor",
       description: "Custom cursor for scrub area interactions.",
       component: NumberFieldScrubCursor,
     },

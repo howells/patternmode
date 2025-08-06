@@ -69,12 +69,12 @@ export const stackConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "VStack",
+      name: "V Stack",
       description: "Vertical stack helper component",
       component: VStack,
     },
     {
-      name: "HStack",
+      name: "H Stack",
       description: "Horizontal stack helper component",
       component: HStack,
     },

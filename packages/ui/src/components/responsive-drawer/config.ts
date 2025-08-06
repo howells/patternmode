@@ -53,48 +53,48 @@ export const responsiveDrawerConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ResponsiveDrawer",
+      name: "Responsive Drawer",
       description: "Root container that adapts behavior based on screen size.",
       component: ResponsiveDrawer,
       primary: true,
     },
     {
-      name: "ResponsiveDrawerTrigger",
+      name: "Responsive Drawer Trigger",
       description: "Trigger element that opens the drawer.",
       component: ResponsiveDrawerTrigger,
     },
     {
-      name: "ResponsiveDrawerContent",
+      name: "Responsive Drawer Content",
       description: "Main content container with platform-appropriate styling.",
       component: ResponsiveDrawerContent,
     },
     {
-      name: "ResponsiveDrawerHeader",
+      name: "Responsive Drawer Header",
       description: "Header section for title and description.",
       component: ResponsiveDrawerHeader,
     },
     {
-      name: "ResponsiveDrawerTitle",
+      name: "Responsive Drawer Title",
       description: "Title with appropriate typography and accessibility.",
       component: ResponsiveDrawerTitle,
     },
     {
-      name: "ResponsiveDrawerDescription",
+      name: "Responsive Drawer Description",
       description: "Description providing additional context.",
       component: ResponsiveDrawerDescription,
     },
     {
-      name: "ResponsiveDrawerBody",
+      name: "Responsive Drawer Body",
       description: "Scrollable content area for main drawer content.",
       component: ResponsiveDrawerBody,
     },
     {
-      name: "ResponsiveDrawerFooter",
+      name: "Responsive Drawer Footer",
       description: "Footer section for action buttons.",
       component: ResponsiveDrawerFooter,
     },
     {
-      name: "ResponsiveDrawerClose",
+      name: "Responsive Drawer Close",
       description: "Close trigger that dismisses the drawer.",
       component: ResponsiveDrawerClose,
     },

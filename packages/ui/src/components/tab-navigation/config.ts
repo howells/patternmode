@@ -50,13 +50,13 @@ export const tabNavigationConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "TabNavigation",
+      name: "Tab Navigation",
       description: "Root container for tab navigation",
       component: TabNavigation,
       primary: true,
     },
     {
-      name: "TabNavigationLink",
+      name: "Tab Navigation Link",
       description: "Individual tab navigation link with active state support",
       component: TabNavigationLink,
     },

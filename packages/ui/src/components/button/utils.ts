@@ -1,15 +1,16 @@
-import type { ButtonSize, IconButtonSize } from "./types";
+import type { IconButtonSize } from "./types";
+import type { Size } from "../../lib/component-config-types";
 
 /**
  * Maps button sizes to appropriate loader sizes.
  * Used for determining the correct Loader component size based on button size.
  */
-export const getLoaderSize = (buttonSize: ButtonSize | IconButtonSize): "xs" | "sm" | "base" => {
-  const sizeMap: Record<ButtonSize | IconButtonSize, "xs" | "sm" | "base"> = {
+export const getLoaderSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | "base" => {
+  const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base"> = {
     // Text button sizes
     "xs": "xs",
     "sm": "xs",
-    "default": "sm",
+    "base": "sm",
     "lg": "base",
     // Icon button sizes
     "icon-xs": "xs",
@@ -25,12 +26,12 @@ export const getLoaderSize = (buttonSize: ButtonSize | IconButtonSize): "xs" | "
  * Maps button sizes to icon container CSS classes.
  * Used for determining the correct container size for icons and loaders.
  */
-export const getIconContainerSize = (buttonSize: ButtonSize | IconButtonSize): string => {
-  const sizeMap: Record<ButtonSize | IconButtonSize, string> = {
+export const getIconContainerSize = (buttonSize: Size | IconButtonSize): string => {
+  const sizeMap: Record<Size | IconButtonSize, string> = {
     // Text button sizes
     "xs": "size-3",
     "sm": "size-3.5",
-    "default": "size-3.5",
+    "base": "size-3.5",
     "lg": "size-4",
     // Icon button sizes
     "icon-xs": "size-3",
@@ -46,6 +47,6 @@ export const getIconContainerSize = (buttonSize: ButtonSize | IconButtonSize): s
  * Checks if a button size is a small icon-only button.
  * Used for layout decisions in the button component.
  */
-export const isSmallIconButton = (buttonSize: ButtonSize | IconButtonSize): boolean => {
+export const isSmallIconButton = (buttonSize: Size | IconButtonSize): boolean => {
   return buttonSize === "icon-xs" || buttonSize === "icon-sm" || buttonSize === "icon";
 };

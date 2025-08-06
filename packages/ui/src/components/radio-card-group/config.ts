@@ -50,18 +50,18 @@ export const radioCardGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "RadioCardGroup",
+      name: "Radio Card Group",
       description: "Root container for radio card options with grid layout.",
       component: RadioCardGroup,
       primary: true,
     },
     {
-      name: "RadioCardItem",
+      name: "Radio Card Item",
       description: "Individual selectable card item with enhanced styling.",
       component: RadioCardItem,
     },
     {
-      name: "RadioCardIndicator",
+      name: "Radio Card Indicator",
       description: "Visual indicator showing selection state with circular design.",
       component: RadioCardIndicator,
     },

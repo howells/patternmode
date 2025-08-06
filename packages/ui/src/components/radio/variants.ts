@@ -21,7 +21,7 @@ export const radioVariants = tv({
     ],
     circle: [
       // base
-      "flex shrink-0 items-center justify-center rounded-full border shadow-xs",
+      "flex shrink-0 items-center justify-center rounded-full border ",
       // border color
       " dark:border-zinc-800",
       // background color
@@ -36,12 +36,17 @@ export const radioVariants = tv({
   },
   variants: {
     size: {
+      xs: {
+        root: "size-3",
+        circle: "size-3",
+        dot: "size-0.5",
+      },
       sm: {
         root: "size-4",
         circle: "size-4",
         dot: "size-1",
       },
-      md: {
+      base: {
         root: "size-4",
         circle: "size-4",
         dot: "size-1.5",
@@ -82,7 +87,7 @@ export const radioVariants = tv({
     },
   },
   defaultVariants: {
-    size: "md",
+    size: "base",
     variant: "default",
   },
 });
@@ -104,13 +109,14 @@ export const radioLabelVariants = tv({
   ],
   variants: {
     size: {
+      xs: "gap-1 text-xs",
       sm: "gap-1.5 text-xs",
-      md: "gap-2 text-sm",
+      base: "gap-2 text-sm",
       lg: "gap-2.5 text-base",
     },
   },
   defaultVariants: {
-    size: "md",
+    size: "base",
   },
 });
 
@@ -123,7 +129,7 @@ export const radioLabelVariants = tv({
 export const radioCardVariants = tv({
   base: [
     // base
-    "group relative w-full rounded-md border p-4 text-left shadow-xs transition cursor-pointer",
+    "group relative w-full rounded-md border p-4 text-left  transition cursor-pointer",
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
@@ -139,12 +145,13 @@ export const radioCardVariants = tv({
   ],
   variants: {
     size: {
+      xs: "p-2",
       sm: "p-3",
-      md: "p-4",
+      base: "p-4",
       lg: "p-5",
     },
   },
   defaultVariants: {
-    size: "md",
+    size: "base",
   },
 });

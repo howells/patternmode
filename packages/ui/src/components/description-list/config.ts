@@ -47,18 +47,18 @@ export const descriptionListConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "DescriptionList",
+      name: "Description List",
       description: "Root container for description lists with semantic HTML structure.",
       component: DescriptionList,
       primary: true,
     },
     {
-      name: "DescriptionTerm",
+      name: "Description Term",
       description: "Term component representing the label in a description list.",
       component: DescriptionTerm,
     },
     {
-      name: "DescriptionDetails",
+      name: "Description Details",
       description: "Details component representing the value in a description list.",
       component: DescriptionDetails,
     },

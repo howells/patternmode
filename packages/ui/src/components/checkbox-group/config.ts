@@ -13,7 +13,7 @@ import {
 
 export const checkboxGroupConfig: ComponentConfig = {
   id: "checkbox-group",
-  name: "CheckboxGroup",
+  name: "Checkbox Group",
   description: "A powerful checkbox group component for managing multiple checkbox selections with comprehensive state management and accessibility.",
   category: "controls",
   icon: CheckSquare,
@@ -65,13 +65,13 @@ export const checkboxGroupConfig: ComponentConfig = {
   components: [
     {
       component: CheckboxGroup,
-      name: "CheckboxGroup",
+      name: "Checkbox Group",
       primary: true,
       description: "Root container for managing multiple checkbox selections.",
     },
     {
       component: CheckboxGroupItem,
-      name: "CheckboxGroupItem",
+      name: "Checkbox Group Item",
       description: "Individual checkbox item within the group.",
     },
   ],

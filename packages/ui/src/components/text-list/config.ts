@@ -44,18 +44,18 @@ export const textListConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "TextList",
+      name: "Text List",
       description: "Root container for list items with configurable styling and alignment",
       component: ListComponent,
       primary: true,
     },
     {
-      name: "TextListItem",
+      name: "Text List Item",
       description: "Individual list item with consistent styling and layout",
       component: TextListItem,
     },
     {
-      name: "TextListIndicator",
+      name: "Text List Indicator",
       description: "Custom indicator for list items supporting icons or custom content",
       component: TextListIndicator,
     },

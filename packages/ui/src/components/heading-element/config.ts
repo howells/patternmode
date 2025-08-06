@@ -32,7 +32,7 @@ export const headingElementConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "HeadingElement",
+      name: "Heading Element",
       description: "Semantic heading element with configurable level",
       component: HeadingElement,
       primary: true,

@@ -73,6 +73,11 @@
       "import": "./src/components/*/config.ts",
       "default": "./src/components/*/config.ts"
     },
+    "./components/*/preview": {
+      "types": "./src/components/*/preview.tsx",
+      "import": "./src/components/*/preview.tsx",
+      "default": "./src/components/*/preview.tsx"
+    },
     "./styles/globals.css": "./src/styles/globals.css",
     "./lib/*": {
       "types": "./src/lib/*.ts",

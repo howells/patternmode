@@ -9,11 +9,10 @@ import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
-import { Button } from "../button/component";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
 import { Loader } from "../loader/component";
-import { comboboxItemVariants, comboboxVariants } from "./variants";
+import { comboboxItemVariants, comboboxListVariants, comboboxTriggerVariants, comboboxVariants } from "./variants";
 
 /**
  * Virtualized item list component for handling large datasets efficiently.
@@ -45,7 +44,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
   defaultRenderItem: (item: T, index: number) => React.ReactNode;
   highlightedIndex: number;
   selectedItem: T | null;
-  size: "sm" | "base" | "lg";
+  size: "xs" | "sm" | "base" | "lg";
   iconStrokeWidth: number;
   isFetchingNextPage: boolean;
   hasNextPage: boolean | undefined;
@@ -54,9 +53,10 @@ function VirtualizedItemList<T extends ComboboxOption>({
   // Calculate item height based on size
   const itemHeight = React.useMemo(() => {
     switch (size) {
-      case "sm": return 32; // py-1.5 px-2.5 with text-xs
-      case "lg": return 48; // py-2.5 px-4 with text-base
-      default: return 40; // py-2 px-3 with text-sm
+      case "xs": return 24; // py-1 px-2 with text-xs leading-tight (12px text + 8px padding)
+      case "sm": return 28; // py-1 px-2.5 with text-sm (14px text + 8px padding + line height)
+      case "lg": return 40; // py-2 px-4 with text-base (16px text + 16px padding + line height)
+      default: return 34; // py-1.5 px-3 with text-sm (14px text + 12px padding + line height)
     }
   }, [size]);
 
@@ -381,44 +381,47 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     },
   );
 
-  // Map combobox sizes to button sizes
-  const buttonSize = size === "base" ? "default" : size;
 
   return (
     <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox">
       {/* Trigger Button */}
-      <Button
-        variant="outline"
-        size={buttonSize}
+      <button
+        type="button"
         disabled={disabled}
-        rightIcon={isOpen ? ChevronUp : ChevronDown}
-        fullWidth
         className={cx(
+          comboboxTriggerVariants({ size }),
           hasError && hasErrorInput,
           !selectedItem && "text-zinc-500 dark:text-zinc-400",
         )}
         data-testid="combobox-trigger"
         {...getToggleButtonProps()}
       >
-        {selectedItem
-          ? (
-              <div className="flex items-center gap-2 min-w-0">
-                {getItemIcon && getItemIcon(selectedItem)}
-                <span className="truncate">{getItemLabel(selectedItem)}</span>
-              </div>
-            )
-          : (
-              placeholder
-            )}
-      </Button>
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          {selectedItem
+            ? (
+                <>
+                  {getItemIcon && getItemIcon(selectedItem)}
+                  <span className="truncate">{getItemLabel(selectedItem)}</span>
+                </>
+              )
+            : placeholder}
+        </div>
+        <Icon
+          icon={isOpen ? ChevronUp : ChevronDown}
+          size="sm"
+          strokeWidth={config.getIconStrokeWidth()}
+          className={cx(
+            "transition-transform duration-200 flex-shrink-0",
+            "text-zinc-400 dark:text-zinc-500",
+          )}
+          aria-hidden="true"
+        />
+      </button>
 
       {/* Dropdown Menu */}
       <div
         className={cx(
-          // base
-          "absolute z-50 mt-1 w-full rounded-md border bg-white shadow-lg dark:bg-zinc-950",
-          // border
-          " dark:border-zinc-800",
+          comboboxListVariants({ size }),
           !isOpen && "hidden",
         )}
         data-testid="combobox-dropdown"
@@ -428,6 +431,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         <div
           className={cx(
             "border-b  dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-t-md",
+            size === "xs" && "p-1",
             size === "sm" && "p-1.5",
             size === "base" && "p-2",
             size === "lg" && "p-2.5",
@@ -465,12 +469,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 
         {/* Virtual Scrollable Content Area */}
         <div
-          className={cx(
-            "h-60 overflow-auto rounded-b-md",
-            size === "sm" && "text-xs",
-            size === "base" && "text-sm",
-            size === "lg" && "text-base",
-          )}
+          className="h-60 overflow-auto"
           ref={scrollRef}
           data-testid="combobox-options"
         >

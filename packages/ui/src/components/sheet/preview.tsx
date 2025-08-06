@@ -142,7 +142,6 @@ export function SheetPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
       <Sheet>
         <SheetTrigger render={<Button variant={triggerVariant}>Open Sheet</Button>} />
         <SheetContent>
@@ -165,14 +164,13 @@ export function SheetPreview({
               <div className="flex gap-2 justify-end">
                 <SheetClose render={<Button variant="outline">Close</Button>} />
                 {contentLevel === "settings" && (
-                  <Button variant="default">Save Changes</Button>
+                  <Button variant="primary">Save Changes</Button>
                 )}
               </div>
             </SheetFooter>
           )}
         </SheetContent>
       </Sheet>
-    </div>
   );
 }
 

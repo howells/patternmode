@@ -58,13 +58,13 @@ export const radioGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "RadioGroup",
+      name: "Radio Group",
       description: "Root container for managing mutually exclusive radio selections.",
       component: RadioGroup,
       primary: true,
     },
     {
-      name: "RadioGroupItem",
+      name: "Radio Group Item",
       description: "Legacy radio item component for backward compatibility.",
       component: RadioGroupItem,
     },

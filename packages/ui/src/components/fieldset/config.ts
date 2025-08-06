@@ -44,7 +44,7 @@ export const fieldsetConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "FieldsetLegend",
+      name: "Fieldset Legend",
       description: "Legend component for labeling fieldset groups",
       component: FieldsetLegend,
     },

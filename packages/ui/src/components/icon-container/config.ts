@@ -68,7 +68,7 @@ export const iconContainerConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "IconContainer",
+      name: "Icon Container",
       description: "Container component for icons with background and padding",
       component: IconContainer,
     },

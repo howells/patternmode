@@ -13,7 +13,7 @@ import {
 
 export const dropdownItemConfig: ComponentConfig = {
   id: "dropdown-item",
-  name: "DropdownItem",
+  name: "Dropdown Item",
   description: "A consistent dropdown item component that extends Button for use across dropdown components.",
   category: "actions",
   icon: ChevronDown,
@@ -64,7 +64,7 @@ export const dropdownItemConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "DropdownItem",
+      name: "Dropdown Item",
       description: "Consistent dropdown item built on Button foundation",
       component: DropdownItem,
     },

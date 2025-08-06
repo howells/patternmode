@@ -45,27 +45,27 @@ export const fieldConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "FieldLabel",
+      name: "Field Label",
       description: "Accessible label component for form controls",
       component: FieldLabel,
     },
     {
-      name: "FieldControl",
+      name: "Field Control",
       description: "Form control wrapper with validation integration",
       component: FieldControl,
     },
     {
-      name: "FieldDescription",
+      name: "Field Description",
       description: "Helper text component for additional context",
       component: FieldDescription,
     },
     {
-      name: "FieldError",
+      name: "Field Error",
       description: "Error message component for validation feedback",
       component: FieldError,
     },
     {
-      name: "FieldValidity",
+      name: "Field Validity",
       description: "Validation state component for programmatic access",
       component: FieldValidity,
     },

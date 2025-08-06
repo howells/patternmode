@@ -78,17 +78,17 @@ export const avatarConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "AvatarWithFallback",
+      name: "Avatar With Fallback",
       description: "Base UI avatar root with automatic fallback handling",
       component: AvatarWithFallback,
     },
     {
-      name: "AvatarImage",
+      name: "Avatar Image",
       description: "Image component for use within AvatarWithFallback",
       component: AvatarImage,
     },
     {
-      name: "AvatarFallback",
+      name: "Avatar Fallback",
       description: "Fallback content when avatar image fails to load",
       component: AvatarFallback,
     },

@@ -12,7 +12,7 @@ import {
 
 export const lineChartConfig: ComponentConfig = {
   id: "line-chart",
-  name: "LineChart",
+  name: "Line Chart",
   description: "A comprehensive line chart component built on Recharts for displaying time series data, trends, and multi-category comparisons. Features interactive legends, tooltips, and extensive customization options.",
   category: "charts",
   icon: TrendingUp,
@@ -57,7 +57,7 @@ export const lineChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "LineChart",
+      name: "Line Chart",
       description: "Interactive line chart component for time series data visualization",
       component: LineChart,
     },

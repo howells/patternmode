@@ -36,6 +36,7 @@ export function NumberControl({ prop, currentValue, onValueChange }: PropControl
     <FieldControl
       render={() => (
         <NumberField
+          size="xs"
           value={finalValue}
           onValueChange={value => onValueChange(value)}
           placeholder={numericDefaultValue != null ? String(numericDefaultValue) : ""}

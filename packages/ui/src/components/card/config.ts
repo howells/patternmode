@@ -113,28 +113,28 @@ export const cardConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "CardHeader",
+      name: "Card Header",
       description: "Header section for titles and actions",
       component: CardHeader,
     },
     {
-      name: "CardHeading",
+      name: "Card Heading",
       description: "Title heading with consistent typography",
       component: CardHeading,
     },
     {
-      name: "CardDescription",
+      name: "Card Description",
       description: "Description text with muted styling",
       component: CardDescription,
     },
 
     {
-      name: "CardContent",
+      name: "Card Content",
       description: "Main content area with standard padding",
       component: CardContent,
     },
     {
-      name: "CardFooter",
+      name: "Card Footer",
       description: "Footer section for actions and additional content",
       component: CardFooter,
     },

@@ -66,3 +66,24 @@ export const WithClockIconExample = () => (
     enableTime
   />
 );
+
+export const SizesExample = () => (
+  <div className="space-y-4">
+    <div>
+      <label className="block text-xs font-medium mb-1">Extra Small</label>
+      <DatePicker size="xs" placeholder="Extra small date picker" />
+    </div>
+    <div>
+      <label className="block text-xs font-medium mb-1">Small</label>
+      <DatePicker size="sm" placeholder="Small date picker" />
+    </div>
+    <div>
+      <label className="block text-sm font-medium mb-1">Base (Default)</label>
+      <DatePicker size="base" placeholder="Base date picker" />
+    </div>
+    <div>
+      <label className="block text-base font-medium mb-1">Large</label>
+      <DatePicker size="lg" placeholder="Large date picker" />
+    </div>
+  </div>
+);

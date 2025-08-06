@@ -8,11 +8,11 @@
 @theme {
   --avatar-radius: 0.5rem;
 
-  /* Control height system reusing Tailwind's spacing theme values */
-  --control-height-xs: theme(spacing.7); /* 28px - reuses h-7/w-7 value */
-  --control-height-sm: theme(spacing.9); /* 36px - reuses h-9/w-9 value */
-  --control-height-base: theme(spacing.10); /* 40px - reuses h-10/w-10 value */
-  --control-height-lg: theme(spacing.12); /* 48px - reuses h-12/w-12 value */
+  /* Control height system using hardcoded values (theme() directive causes dev server issues) */
+  --control-height-xs: 2rem; /* 32px - matches h-8/w-8 */
+  --control-height-sm: 2.25rem; /* 36px - matches h-9/w-9 */
+  --control-height-base: 2.5rem; /* 40px - matches h-10/w-10 */
+  --control-height-lg: 3rem; /* 48px - matches h-12/w-12 */
 }
 
 /* Control sizing utilities */

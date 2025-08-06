@@ -38,13 +38,13 @@ export const scrollAreaConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ScrollArea",
+      name: "Scroll Area",
       description: "Main scrollable container with customizable scrollbars and orientations.",
       component: ScrollArea,
       primary: true,
     },
     {
-      name: "ScrollBar",
+      name: "Scroll Bar",
       description: "Standalone scrollbar component for custom scroll implementations.",
       component: ScrollBar,
     },

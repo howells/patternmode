@@ -45,32 +45,32 @@ export const formConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "FormField",
+      name: "Form Field",
       description: "Complete form field with label, control, description, and error",
       component: FormField,
     },
     {
-      name: "FormControl",
+      name: "Form Control",
       description: "Form control component with styling and validation states",
       component: FormControl,
     },
     {
-      name: "FormLabel",
+      name: "Form Label",
       description: "Form label component with consistent styling",
       component: FormLabel,
     },
     {
-      name: "FormDescription",
+      name: "Form Description",
       description: "Form description component for help text",
       component: FormDescription,
     },
     {
-      name: "FormError",
+      name: "Form Error",
       description: "Form error message component for validation feedback",
       component: FormError,
     },
     {
-      name: "FormItem",
+      name: "Form Item",
       description: "Form item container for grouping field components",
       component: FormItem,
     },

@@ -133,7 +133,6 @@ export function ResponsiveDrawerPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
       <ResponsiveDrawer>
         <ResponsiveDrawerTrigger render={<Button variant={triggerVariant}>Open Responsive Drawer</Button>} />
         <ResponsiveDrawerContent>
@@ -155,7 +154,7 @@ export function ResponsiveDrawerPreview({
             <ResponsiveDrawerFooter>
               <div className="flex gap-2 justify-end px-4">
                 <ResponsiveDrawerClose render={<Button variant="outline">Cancel</Button>} />
-                <Button variant="default">
+                <Button variant="primary">
                   {contentLevel === "form" ? "Send Message" : "Done"}
                 </Button>
               </div>
@@ -163,7 +162,6 @@ export function ResponsiveDrawerPreview({
           )}
         </ResponsiveDrawerContent>
       </ResponsiveDrawer>
-    </div>
   );
 }
 

@@ -45,7 +45,7 @@ export function CalendarPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
+
       <Calendar
         {...(mode === "single" && {
           mode: "single" as const,
@@ -68,7 +68,7 @@ export function CalendarPreview({
         numberOfMonths={numberOfMonths}
         className="rounded-md border"
       />
-    </div>
+
   );
 }
 

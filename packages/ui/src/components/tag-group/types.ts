@@ -18,10 +18,10 @@ export type TagGroupProps = {
    */
   gap?: GapValue | ResponsiveSpacing<GapValue>;
   /**
-   * Horizontal alignment of the tag group.
-   * Controls how tags are distributed within the container.
+   * How to distribute tags along the main axis.
+   * Controls spacing and distribution of tags within the container.
    */
-  align?: "start" | "center" | "end" | "between" | "around" | "evenly";
+  justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
   /**
    * Layout direction for the tag group.
    * Controls whether tags flow horizontally or vertically.

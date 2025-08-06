@@ -1,6 +1,6 @@
 import type { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import type * as React from "react";
-import type { ButtonSize } from "../button/types";
+import type { Size } from "../../lib/component-config-types";
 
 export type TabsListVariant = "solid" | "line";
 
@@ -27,9 +27,9 @@ export type TabsListProps = {
   hideBorder?: boolean;
   /**
    * Size for solid variant buttons. Affects padding and text size.
-   * @default "default"
+   * @default "base"
    */
-  size?: ButtonSize;
+  size?: Size;
 } & React.ComponentPropsWithoutRef<typeof BaseTabs.List>;
 
 export type TabsTriggerProps = {

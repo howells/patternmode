@@ -13,7 +13,7 @@ export const ButtonGroup = ({
   variant,
   size = "default",
   gap,
-  align = "start",
+  justify = "start",
   wrap = false,
   className,
   children,
@@ -81,7 +81,7 @@ export const ButtonGroup = ({
     <div
       data-testid="button-group"
       className={cx(
-        buttonGroupVariants({ align, wrap }),
+        buttonGroupVariants({ justify, wrap }),
         baseGapClass,
         responsiveGapClasses,
         className,

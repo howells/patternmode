@@ -94,12 +94,24 @@ export function CustomRenderingExample() {
 }
 
 export function SizesExample() {
+  const [xsValue, setXsValue] = React.useState<string>();
   const [smValue, setSmValue] = React.useState<string>();
   const [baseValue, setBaseValue] = React.useState<string>();
   const [lgValue, setLgValue] = React.useState<string>();
 
   return (
     <div className="space-y-4">
+      <div className="w-44">
+        <label className="block text-xs font-medium mb-1">Extra Small</label>
+        <Combobox
+          size="xs"
+          options={fruits}
+          value={xsValue}
+          onValueChange={setXsValue}
+          placeholder="Extra small combobox"
+        />
+      </div>
+
       <div className="w-48">
         <label className="block text-xs font-medium mb-1">Small</label>
         <Combobox

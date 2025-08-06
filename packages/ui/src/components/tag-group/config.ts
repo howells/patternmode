@@ -14,7 +14,7 @@ import {
 
 export const tagGroupConfig: ComponentConfig = {
   id: "tag-group",
-  name: "TagGroup",
+  name: "Tag Group",
   description: "Container for grouping tags with shared styling and consistent spacing. Child tags inherit props from the parent group.",
   category: "ui",
   icon: Tags,
@@ -71,7 +71,7 @@ export const tagGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "TagGroup",
+      name: "Tag Group",
       description: "Container for grouping tags with shared props and consistent spacing",
       component: TagGroup,
       primary: true,

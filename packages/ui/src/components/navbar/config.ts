@@ -45,27 +45,27 @@ export const navbarConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "NavbarSection",
+      name: "Navbar Section",
       description: "Groups related navbar items with shared animation context.",
       component: NavbarSection,
     },
     {
-      name: "NavbarItem",
+      name: "Navbar Item",
       description: "Interactive navigation item with current state support.",
       component: NavbarItem,
     },
     {
-      name: "NavbarLabel",
+      name: "Navbar Label",
       description: "Text label with automatic truncation for navbar items.",
       component: NavbarLabel,
     },
     {
-      name: "NavbarDivider",
+      name: "Navbar Divider",
       description: "Visual separator between navbar sections.",
       component: NavbarDivider,
     },
     {
-      name: "NavbarSpacer",
+      name: "Navbar Spacer",
       description: "Flexible spacer for pushing sections apart.",
       component: NavbarSpacer,
     },

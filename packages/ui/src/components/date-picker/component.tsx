@@ -64,7 +64,7 @@ const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
       ref={ref}
       className={cx(
         // base
-        "relative block w-full appearance-none rounded-md border px-2.5 py-1.5 text-left uppercase tabular-nums shadow-xs outline-hidden transition sm:text-sm",
+        "relative block w-full appearance-none rounded-md border px-2.5 py-1.5 text-left uppercase tabular-nums  outline-hidden transition sm:text-sm",
         // border color
         " dark:border-zinc-800",
         // text color
@@ -142,6 +142,7 @@ const Trigger = ({
   placeholder,
   hasError,
   icon,
+  size = "base",
   ...props
 }: TriggerProps) => {
   const IconComponent = Calendar;
@@ -152,11 +153,16 @@ const Trigger = ({
         <Button
           ref={forwardedRef}
           variant="outline"
+          size={size}
           leftIcon={IconComponent}
           textAlign="left"
-
           className={cx(
-            "justify-start text-left h-control-base",
+            "justify-start text-left",
+            // Size-based height classes to override Button's default sizing
+            size === "xs" && "h-control-xs",
+            size === "sm" && "h-control-sm", 
+            size === "base" && "h-control-base",
+            size === "lg" && "h-control-lg",
             hasError && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
             className
           )}
@@ -324,7 +330,7 @@ const PresetContainer = <TPreset extends Preset, TValue>({
               title={preset.label}
               className={cx(
                 // base
-                "relative w-full overflow-hidden rounded-sm border px-2.5 py-1.5 text-left text-base text-ellipsis whitespace-nowrap shadow-xs outline-hidden transition-all sm:border-none sm:py-2 sm:text-sm sm:shadow-none",
+                "relative w-full overflow-hidden rounded-sm border px-2.5 py-1.5 text-left text-base text-ellipsis whitespace-nowrap  outline-hidden transition-all sm:border-none sm:py-2 sm:text-sm sm:shadow-none",
                 // text color
                 "text-zinc-700 dark:text-zinc-300",
                 // border color
@@ -360,6 +366,7 @@ const SingleDatePicker = ({
   presets,
   disabled,
   placeholder = "Select date",
+  size = "base",
   hasError,
   icon,
   translations,
@@ -482,6 +489,7 @@ const SingleDatePicker = ({
       <Trigger
         placeholder={placeholder}
         disabled={disabled}
+        size={size}
         className={className}
         hasError={hasError}
         icon={icon}
@@ -544,7 +552,7 @@ const SingleDatePicker = ({
                   {translations?.cancel ?? "Cancel"}
                 </Button>
                 <Button
-                  variant="default"
+                  variant="primary"
                   className="h-8 w-full"
                   type="button"
                   onClick={onApply}

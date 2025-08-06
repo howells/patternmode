@@ -2,6 +2,7 @@ import type { Select as BaseSelect } from "@base-ui-components/react/select";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
+import type { Size } from "../../lib/component-config-types";
 import type { selectTriggerVariants } from "./variants";
 
 /**
@@ -17,10 +18,10 @@ export type SelectTriggerProps = {
    * Size variant determining height and text size.
    * - "xs": Extra small height and text size for very compact layouts
    * - "sm": Small height and text size for compact layouts
-   * - "default": Regular height and text size for most use cases
+   * - "base": Regular height and text size for most use cases
    * - "lg": Large height and text size for prominent displays
    */
-  size?: "xs" | "sm" | "default" | "lg";
+  size?: Size;
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & VariantProps<typeof selectTriggerVariants>;
 
 /**
@@ -80,6 +81,10 @@ export type SelectContentProps = {
    * Whether to align the item with the trigger (for better visual alignment).
    */
   alignItemWithTrigger?: boolean;
+  /**
+   * Size variant for text and spacing (inherited from trigger).
+   */
+  size?: Size;
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Popup>;
 
 /**
@@ -90,7 +95,12 @@ export type SelectGroupLabelProps = React.ComponentPropsWithoutRef<typeof BaseSe
 /**
  * Props for the SelectItem component.
  */
-export type SelectItemProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Item>;
+export type SelectItemProps = {
+  /**
+   * Size variant for text and spacing (inherited from trigger).
+   */
+  size?: Size;
+} & React.ComponentPropsWithoutRef<typeof BaseSelect.Item>;
 
 /**
  * Props for the SelectSeparator component.

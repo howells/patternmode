@@ -86,7 +86,7 @@ export const RadioCard = (
       {showIndicator && (
         <div className="flex-shrink-0">
           {indicator || (
-            <RadioItem size="md" variant="card" value={props.value} />
+            <RadioItem size="base" variant="card" value={props.value} />
           )}
         </div>
       )}
@@ -98,7 +98,7 @@ RadioCard.displayName = "RadioCard";
 /**
  * Complete radio option with integrated label and optional description.
  */
-export const RadioOption = ({ ref, value, label, description, disabled, size = "md", ...props }: RadioOptionProps) => {
+export const RadioOption = ({ ref, value, label, description, disabled, size = "base", ...props }: RadioOptionProps) => {
   const { root, circle, indicator, dot } = radioVariants({ size, variant: "default" });
 
   return (
@@ -133,7 +133,7 @@ RadioOption.displayName = "RadioOption";
  * Complete card-style radio option with title and optional description.
  */
 export const RadioCardOption = (
-  { ref, value, title, description, disabled, size = "md", showIndicator = true, ...props }: RadioCardOptionProps,
+  { ref, value, title, description, disabled, size = "base", showIndicator = true, ...props }: RadioCardOptionProps,
 ) => (
   <RadioCard
     ref={ref}

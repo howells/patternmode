@@ -12,7 +12,7 @@ import {
 
 export const donutChartConfig: ComponentConfig = {
   id: "donut-chart",
-  name: "DonutChart",
+  name: "Donut Chart",
   description: "A donut and pie chart component for visualizing proportional data with interactive features.",
   category: "charts",
   icon: PieChart,
@@ -57,7 +57,7 @@ export const donutChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "DonutChart",
+      name: "Donut Chart",
       description: "Donut and pie chart component for proportional data visualization",
       component: DonutChart,
     },

@@ -140,7 +140,7 @@ export function EmptyStateExample() {
         title="No team members"
         description="Get started by adding your first team member."
         icon={<UserPlus className="size-12" />}
-        action={<Button variant="default">Add Team Member</Button>}
+        action={<Button variant="primary">Add Team Member</Button>}
       />
     </StackedList>
   );

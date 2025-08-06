@@ -10,8 +10,9 @@ export function DateControl({ currentValue, onValueChange }: PropControlProps) {
     <FieldControl
       render={() => (
         <DatePicker
+          size="xs"
           value={currentValue instanceof Date ? currentValue : undefined}
-          onChange={date => onValueChange(date)}
+          onValueChange={date => onValueChange(date)}
           placeholder="Select date"
         />
       )}

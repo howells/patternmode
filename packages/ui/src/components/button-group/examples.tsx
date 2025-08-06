@@ -62,15 +62,15 @@ export const IconSizeExample = () => {
 export const AlignmentExample = () => {
   return (
     <div className="space-y-4 w-full">
-      <ButtonGroup align="start" className="w-full">
+      <ButtonGroup justify="start" className="w-full">
         <Button>Left</Button>
         <Button>Aligned</Button>
       </ButtonGroup>
-      <ButtonGroup align="center" className="w-full">
+      <ButtonGroup justify="center" className="w-full">
         <Button>Center</Button>
         <Button>Aligned</Button>
       </ButtonGroup>
-      <ButtonGroup align="end" className="w-full">
+      <ButtonGroup justify="end" className="w-full">
         <Button>Right</Button>
         <Button>Aligned</Button>
       </ButtonGroup>

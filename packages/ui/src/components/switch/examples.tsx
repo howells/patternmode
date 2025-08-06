@@ -46,12 +46,20 @@ export const SizesExample = () => {
   return (
     <Stack gap={4}>
       <Stack direction="horizontal" align="center" gap={2}>
-        <Switch id="small" size="small" />
-        <label htmlFor="small">Small switch</label>
+        <Switch id="xs" size="xs" />
+        <label htmlFor="xs">Extra small switch</label>
       </Stack>
       <Stack direction="horizontal" align="center" gap={2}>
-        <Switch id="default" size="default" />
-        <label htmlFor="default">Default switch</label>
+        <Switch id="sm" size="sm" />
+        <label htmlFor="sm">Small switch</label>
+      </Stack>
+      <Stack direction="horizontal" align="center" gap={2}>
+        <Switch id="base" size="base" />
+        <label htmlFor="base">Base switch</label>
+      </Stack>
+      <Stack direction="horizontal" align="center" gap={2}>
+        <Switch id="lg" size="lg" />
+        <label htmlFor="lg">Large switch</label>
       </Stack>
     </Stack>
   );

@@ -10,16 +10,21 @@ function getStringOptions(prop: PropControlProps["prop"]): string[] {
   if (!prop.options) {
     return [];
   }
-  
+
+  // Type guard to check if it's an array
+  if (!Array.isArray(prop.options)) {
+    return [];
+  }
+
   // Type guard to check if it's a string array
   const isStringArray = (arr: any[]): arr is string[] => {
     return arr.length > 0 && typeof arr[0] === "string";
   };
-  
+
   if (isStringArray(prop.options)) {
     return prop.options;
   }
-  
+
   // Handle object array with value property
   return prop.options.map(opt => {
     if (typeof opt === "object" && opt !== null && "value" in opt) {
@@ -43,7 +48,7 @@ export function SelectControl({ prop, currentValue, onValueChange }: PropControl
           value={currentValue != null ? String(currentValue) : ""}
           onValueChange={value => onValueChange(value)}
         >
-          <SelectTrigger>
+          <SelectTrigger size="xs">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

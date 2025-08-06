@@ -6,7 +6,7 @@ import { focusRing } from "../../lib/utils";
 export const splitButtonVariants = tv({
   base: [
     // base
-    "relative inline-flex items-center shadow-xs outline-hidden",
+    "relative inline-flex items-center  outline-hidden",
     // background transition - only animate colors and shadows, not position
     "transition-[background-color,border-color,box-shadow,color] duration-150 ease-in-out",
     // disabled
@@ -16,12 +16,12 @@ export const splitButtonVariants = tv({
     variant: {
       default: [
         // inset border with normal shadow using proper Tailwind classes
-        "inset-ring-1 inset-ring-white/10 shadow-xs",
+        "inset-ring-1 inset-ring-white/10 ",
         "dark:inset-ring-black/20",
         // background color
         "bg-zinc-900 dark:bg-zinc-50",
         // hover with enhanced inset border
-        "hover:inset-ring-white/15 hover:shadow-xs",
+        "hover:inset-ring-white/15 hover:",
         "dark:hover:inset-ring-black/25",
         // disabled
         "data-disabled:bg-zinc-400 data-disabled:inset-ring-white/5 data-disabled:shadow-none",
@@ -29,23 +29,23 @@ export const splitButtonVariants = tv({
       ],
       secondary: [
         // clean secondary without border, just shadow
-        "shadow-xs",
+        "",
         // background color
         "bg-zinc-100 dark:bg-zinc-800",
         // hover with shadow only
-        "hover:shadow-xs",
+        "hover:",
         // disabled
         "data-disabled:bg-zinc-50 data-disabled:shadow-none",
         "dark:data-disabled:bg-zinc-900",
       ],
       destructive: [
         // inset border with normal shadow using proper Tailwind classes
-        "inset-ring-1 inset-ring-white/20 shadow-xs",
+        "inset-ring-1 inset-ring-white/20 ",
         "dark:inset-ring-white/10",
         // background color
         "bg-red-600 dark:bg-red-600",
         // hover with enhanced inset border
-        "hover:inset-ring-white/25 hover:shadow-xs",
+        "hover:inset-ring-white/25 hover:",
         "dark:hover:inset-ring-white/15",
         // disabled
         "data-disabled:bg-red-300 data-disabled:inset-ring-white/10 data-disabled:shadow-none",
@@ -53,12 +53,12 @@ export const splitButtonVariants = tv({
       ],
       outline: [
         // ring border with shadow - using explicit border classes
-        "ring-1 ring-zinc-300 shadow-xs",
+        "ring-1 ring-zinc-300 ",
         "dark:ring-zinc-700",
         // background transparent initially
         "bg-transparent",
         // hover with shadow ring
-        "hover:ring-zinc-400 hover:shadow-xs",
+        "hover:ring-zinc-400 hover:",
         "dark:hover:ring-zinc-600",
         // disabled
         "data-disabled:ring-zinc-200 data-disabled:shadow-none",
@@ -66,11 +66,11 @@ export const splitButtonVariants = tv({
       ],
       ghost: [
         // no border, just shadow for consistency
-        "shadow-xs",
+        "",
         // background transparent initially
         "bg-transparent",
         // hover maintains clean look
-        "hover:shadow-xs",
+        "hover:",
         // disabled clean look
         "data-disabled:shadow-none",
       ],

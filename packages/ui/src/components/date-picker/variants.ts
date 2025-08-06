@@ -5,7 +5,7 @@ import { focusInput, hasErrorInput } from "../../lib/utils";
 export const triggerStyles = tv({
   base: [
     // base
-    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate rounded-md border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
+    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate rounded-md border px-3 py-2  outline-hidden transition-all sm:text-sm",
     // background color
     "bg-white dark:bg-zinc-950",
     // border color

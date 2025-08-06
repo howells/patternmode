@@ -19,6 +19,7 @@ export function IconControl({ currentValue, onValueChange }: PropControlProps) {
     <FieldControl
       render={() => (
         <IconSelect
+          size="xs"
           value={currentStringValue}
           onValueChange={value => {
             // Convert string icon name to actual icon component

@@ -10,11 +10,11 @@
 }
 
 @theme inline {
-  /* Text sizes - referencing Tailwind's existing fontSize variables */
-  --text-xl: var(--font-size-xl); /* 1.25rem / 20px - matches Tailwind */
-  --text-lg: var(--font-size-lg); /* 1.125rem / 18px - matches Tailwind */
-  --text-base: var(--font-size-base); /* 1rem / 16px - matches Tailwind */
-  --text-xs: var(--font-size-xs); /* 0.75rem / 12px - matches Tailwind */
+  /* Text sizes - hardcoded values (theme() directive causes dev server issues) */
+  --text-xl: 1.25rem; /* 20px - matches Tailwind */
+  --text-lg: 1.125rem; /* 18px - matches Tailwind */
+  --text-base: 1rem; /* 16px - matches Tailwind */
+  --text-xs: 0.75rem; /* 12px - matches Tailwind */
 }
 
 /* Custom typography classes using our revised text sizes */

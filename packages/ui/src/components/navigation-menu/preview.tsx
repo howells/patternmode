@@ -83,7 +83,6 @@ export function NavigationMenuPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
       <NavigationMenu orientation={orientation}>
         <NavigationMenuList>
           {menuItems.map(menu => (
@@ -109,7 +108,6 @@ export function NavigationMenuPreview({
           ))}
         </NavigationMenuList>
       </NavigationMenu>
-    </div>
   );
 }
 

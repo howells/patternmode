@@ -6,7 +6,7 @@ import { fieldArrayPreviewProps } from "./preview";
 
 export const fieldArrayConfig: ComponentConfig = {
   id: "field-array",
-  name: "FieldArray",
+  name: "Field Array",
   category: "forms",
   icon: List,
   description: "Generic field array component for managing dynamic lists of structured data with configurable schemas.",

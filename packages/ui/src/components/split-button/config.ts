@@ -50,7 +50,7 @@ export const splitButtonConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "SplitButton",
+      name: "Split Button",
       description: "Compound button with primary action and dropdown menu",
       component: SplitButton,
     },

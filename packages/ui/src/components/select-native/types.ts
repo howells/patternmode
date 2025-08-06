@@ -1,5 +1,6 @@
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
+import type { Size } from "../../lib/component-config-types";
 import type { selectNativeStyles } from "./variants";
 
 /**
@@ -11,4 +12,9 @@ export type SelectNativeProps = {
    * Adds red border and error state styling to indicate validation errors.
    */
   hasError?: boolean;
+  /**
+   * Size variant of the select input.
+   * Controls height and padding of the select element.
+   */
+  size?: Size;
 } & React.InputHTMLAttributes<HTMLSelectElement> & VariantProps<typeof selectNativeStyles>;

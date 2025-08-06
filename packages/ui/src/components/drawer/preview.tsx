@@ -110,7 +110,7 @@ export function DrawerPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
+
       <Drawer direction={direction}>
         <DrawerTrigger asChild>
           <Button variant={triggerVariant}>
@@ -138,7 +138,7 @@ export function DrawerPreview({
                 <DrawerClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DrawerClose>
-                <Button variant="default">
+                <Button variant="primary">
                   {contentLevel === "form" ? "Save" : "Confirm"}
                 </Button>
               </div>
@@ -146,7 +146,7 @@ export function DrawerPreview({
           )}
         </DrawerContent>
       </Drawer>
-    </div>
+
   );
 }
 

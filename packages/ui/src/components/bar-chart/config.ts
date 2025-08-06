@@ -18,7 +18,7 @@ import {
 
 export const barChartConfig: ComponentConfig = {
   id: "bar-chart",
-  name: "BarChart",
+  name: "Bar Chart",
   description: "Bar chart component for comparing categorical data with horizontal or vertical bars.",
   category: "charts",
   icon: BarChartIcon,
@@ -99,7 +99,7 @@ export const barChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "BarChart",
+      name: "Bar Chart",
       description: "Main bar chart component with comprehensive configuration options",
       component: BarChart,
       primary: true,

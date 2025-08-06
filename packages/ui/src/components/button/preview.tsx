@@ -41,15 +41,15 @@ export const buttonPreviewProps = [
     name: "variant",
     type: "select",
     description: "Visual style variant of the button.",
-    options: ["default", "primary", "secondary", "ghost", "outline", "destructive"],
-    defaultValue: "default",
+    options: ["primary", "secondary", "ghost", "outline", "destructive"],
+    defaultValue: "primary",
   },
   {
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["xs", "sm", "default", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
-    defaultValue: "default",
+    options: ["xs", "sm", "base", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
+    defaultValue: "base",
   },
   {
     name: "leftIcon",
@@ -105,12 +105,6 @@ export const buttonPreviewProps = [
     name: "rounded",
     type: "boolean",
     description: "Whether the button should have rounded corners.",
-    defaultValue: false,
-  },
-  {
-    name: "shadow",
-    type: "boolean",
-    description: "Whether the button should have a shadow.",
     defaultValue: false,
   },
   {

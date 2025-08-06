@@ -90,6 +90,7 @@ import { tagInputConfig } from "./tag-input/config";
 import { textConfig } from "./text/config";
 import { textListConfig } from "./text-list/config";
 import { textareaConfig } from "./textarea/config";
+import { themeToggleConfig } from "./theme-toggle/config";
 import { toastConfig } from "./toast/config";
 import { toggleConfig } from "./toggle/config";
 import { toggleGroupConfig } from "./toggle-group/config";
@@ -185,6 +186,7 @@ import { TagInputPreview } from "./tag-input/preview";
 import { TextPreview } from "./text/preview";
 import { TextListPreview } from "./text-list/preview";
 import { TextareaPreview } from "./textarea/preview";
+import { ThemeTogglePreview } from "./theme-toggle/preview";
 import { ToastPreview } from "./toast/preview";
 import { TogglePreview } from "./toggle/preview";
 import { ToggleGroupPreview } from "./toggle-group/preview";
@@ -375,6 +377,7 @@ export const COMPONENT_REGISTRY = {
   "text": textConfig,
   "text-list": textListConfig,
   "textarea": textareaConfig,
+  "theme-toggle": themeToggleConfig,
   "toast": toastConfig,
   "toggle": toggleConfig,
   "toggle-group": toggleGroupConfig,
@@ -472,6 +475,7 @@ export const PREVIEW_REGISTRY = {
   "text": TextPreview,
   "text-list": TextListPreview,
   "textarea": TextareaPreview,
+  "theme-toggle": ThemeTogglePreview,
   "toast": ToastPreview,
   "toggle": TogglePreview,
   "toggle-group": ToggleGroupPreview,
@@ -666,6 +670,7 @@ export const COMPONENT_METADATA_REGISTRY = {
   "text": { title: textConfig.name, description: textConfig.description },
   "text-list": { title: textListConfig.name, description: textListConfig.description },
   "textarea": { title: textareaConfig.name, description: textareaConfig.description },
+  "theme-toggle": { title: themeToggleConfig.name, description: themeToggleConfig.description },
   "toast": { title: toastConfig.name, description: toastConfig.description },
   "toggle": { title: toggleConfig.name, description: toggleConfig.description },
   "toggle-group": { title: toggleGroupConfig.name, description: toggleGroupConfig.description },

@@ -3,6 +3,7 @@ import React from "react";
 
 import { Field, FieldLabel } from "@patternmode/ui/components/field";
 import { Tooltip } from "@patternmode/ui/components/tooltip";
+import { VStack } from "@patternmode/ui/components/stack";
 
 import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
 
@@ -16,8 +17,8 @@ type PropFieldProps = {
 
 export function PropField({ prop, children, className }: PropFieldProps) {
   return (
-    <div className="space-y-2">
-      <Field className={cx("gap-y-2 flex flex-col", className)}>
+    <VStack className="space-y-2">
+      <Field className={cx("", className)}>
         <div className="flex items-center gap-1">
           <FieldLabel>{prop.name}</FieldLabel>
           {prop.description && (
@@ -28,6 +29,6 @@ export function PropField({ prop, children, className }: PropFieldProps) {
         </div>
         {children}
       </Field>
-    </div>
+    </VStack>
   );
 }

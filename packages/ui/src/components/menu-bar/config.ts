@@ -53,48 +53,48 @@ export const menuBarConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "MenuBar",
+      name: "Menu Bar",
       description: "Root container for horizontal menu navigation with proper styling and accessibility.",
       component: MenuBar,
       primary: true,
     },
     {
-      name: "MenuBarMenu",
+      name: "Menu Bar Menu",
       description: "Individual menu section within the menu bar.",
       component: MenuBarMenu,
     },
     {
-      name: "MenuBarTrigger",
+      name: "Menu Bar Trigger",
       description: "Clickable menu section header that opens dropdown content.",
       component: MenuBarTrigger,
     },
     {
-      name: "MenuBarContent",
+      name: "Menu Bar Content",
       description: "Dropdown content container for menu items.",
       component: MenuBarContent,
     },
     {
-      name: "MenuBarItem",
+      name: "Menu Bar Item",
       description: "Individual clickable menu option within dropdown content.",
       component: MenuBarItem,
     },
     {
-      name: "MenuBarSeparator",
+      name: "Menu Bar Separator",
       description: "Visual separator for grouping menu items.",
       component: MenuBarSeparator,
     },
     {
-      name: "MenuBarSubmenu",
+      name: "Menu Bar Submenu",
       description: "Container for nested submenu structures.",
       component: MenuBarSubmenu,
     },
     {
-      name: "MenuBarSubmenuTrigger",
+      name: "Menu Bar Submenu Trigger",
       description: "Trigger button for opening nested submenu content.",
       component: MenuBarSubmenuTrigger,
     },
     {
-      name: "MenuBarSubmenuContent",
+      name: "Menu Bar Submenu Content",
       description: "Content container for nested submenu items.",
       component: MenuBarSubmenuContent,
     },

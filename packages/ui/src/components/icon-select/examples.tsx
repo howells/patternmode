@@ -107,6 +107,57 @@ export const HookExample = () => {
   );
 };
 
+export const SizesExample = () => {
+  const [xsValue, setXsValue] = React.useState<string>("");
+  const [smValue, setSmValue] = React.useState<string>("");
+  const [baseValue, setBaseValue] = React.useState<string>("");
+  const [lgValue, setLgValue] = React.useState<string>("");
+
+  return (
+    <div className="space-y-4">
+      <div className="w-44">
+        <label className="block text-xs font-medium mb-1">Extra Small</label>
+        <IconSelect
+          size="xs"
+          value={xsValue}
+          onValueChange={setXsValue}
+          placeholder="Extra small icon select"
+        />
+      </div>
+
+      <div className="w-48">
+        <label className="block text-xs font-medium mb-1">Small</label>
+        <IconSelect
+          size="sm"
+          value={smValue}
+          onValueChange={setSmValue}
+          placeholder="Small icon select"
+        />
+      </div>
+
+      <div className="w-56">
+        <label className="block text-sm font-medium mb-1">Base (Default)</label>
+        <IconSelect
+          size="base"
+          value={baseValue}
+          onValueChange={setBaseValue}
+          placeholder="Base icon select"
+        />
+      </div>
+
+      <div className="w-64">
+        <label className="block text-base font-medium mb-1">Large</label>
+        <IconSelect
+          size="lg"
+          value={lgValue}
+          onValueChange={setLgValue}
+          placeholder="Large icon select"
+        />
+      </div>
+    </div>
+  );
+};
+
 export const DynamicIconExample = () => {
   const [iconName, setIconName] = React.useState<string>("Star");
 

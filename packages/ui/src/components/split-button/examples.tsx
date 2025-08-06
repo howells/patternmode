@@ -8,7 +8,7 @@ import { SplitButton } from "./component";
 export function DefaultExample() {
   return (
     <div className="flex gap-2">
-      <SplitButton variant="default" buttonContent="Default">
+      <SplitButton variant="primary" buttonContent="Default">
         <MenuItem>Action 1</MenuItem>
         <MenuItem>Action 2</MenuItem>
       </SplitButton>

@@ -1,6 +1,10 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
+import { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
+import { Slider as BaseSlider } from "@base-ui-components/react/slider";
+import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
+import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 
 import { Calendar, Clipboard, Factory, Globe, Mail, MapPin, Package, Phone, Settings, Shield, Star, Tag, TrendingUp, User, Users, Zap } from "lucide-react";
 import { useState } from "react";
@@ -439,17 +443,20 @@ export default function FormsPage() {
                       <VStack gap={2}>
                         <FieldLabel>Quantity</FieldLabel>
                         <FieldControl
-                          render={({ ref, ...props }) => (
-                            <NumberField
-                              ref={ref}
-                              placeholder="1000"
-                              min={100}
-                              max={1000000}
-                              value={productData.quantity}
-                              onChange={value => setProductData(prev => ({ ...prev, quantity: value }))}
-                              {...props}
+                          render={({ ref, ...props }) => {
+                            const { defaultValue, ...filteredProps } = props;
+                            return (
+                              <NumberField
+                                ref={ref as React.RefObject<React.ElementRef<typeof BaseNumberField.Root> | null>}
+                                placeholder="1000"
+                                min={100}
+                                max={1000000}
+                                value={productData.quantity}
+                                onChange={value => setProductData(prev => ({ ...prev, quantity: value }))}
+                                {...filteredProps}
                             />
-                          )}
+                            );
+                          }}
                         />
                         <FieldDescription>
                           Number of paperclips (100 - 1,000,000)
@@ -505,18 +512,21 @@ export default function FormsPage() {
                     <VStack gap={2}>
                       <FieldLabel>Tensile Strength Requirement (1-10)</FieldLabel>
                       <FieldControl
-                        render={({ ref, ...props }) => (
-                          <Slider
-                            {...props}
-                            ref={ref}
-                            min={1}
-                            max={10}
-                            step={1}
-                            showValue={true}
-                            value={[qualityData.tensileStrength || 5]}
-                            onValueChange={values => setQualityData(prev => ({ ...prev, tensileStrength: values[0] }))}
-                          />
-                        )}
+                        render={({ ref, ...props }) => {
+                          const { defaultValue, ...filteredProps } = props;
+                          return (
+                            <Slider
+                              {...filteredProps}
+                              ref={ref as React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null>}
+                              min={1}
+                              max={10}
+                              step={1}
+                              showValue={true}
+                              value={[qualityData.tensileStrength || 5]}
+                              onValueChange={values => setQualityData(prev => ({ ...prev, tensileStrength: values[0] }))}
+                            />
+                          );
+                        }}
                       />
                       <FieldDescription>
                         Required strength for paperclip durability (higher = stronger)
@@ -529,18 +539,21 @@ export default function FormsPage() {
                     <VStack gap={2}>
                       <FieldLabel>Corrosion Resistance Level (1-10)</FieldLabel>
                       <FieldControl
-                        render={({ ref, ...props }) => (
-                          <Slider
-                            {...props}
-                            ref={ref}
-                            min={1}
-                            max={10}
-                            step={1}
-                            showValue={true}
-                            value={[qualityData.corrosionResistance || 5]}
-                            onValueChange={values => setQualityData(prev => ({ ...prev, corrosionResistance: values[0] }))}
-                          />
-                        )}
+                        render={({ ref, ...props }) => {
+                          const { defaultValue, ...filteredProps } = props;
+                          return (
+                            <Slider
+                              {...filteredProps}
+                              ref={ref as React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null>}
+                              min={1}
+                              max={10}
+                              step={1}
+                              showValue={true}
+                              value={[qualityData.corrosionResistance || 5]}
+                              onValueChange={values => setQualityData(prev => ({ ...prev, corrosionResistance: values[0] }))}
+                            />
+                          );
+                        }}
                       />
                       <FieldDescription>
                         Resistance to rust and environmental damage
@@ -553,18 +566,21 @@ export default function FormsPage() {
                     <VStack gap={2}>
                       <FieldLabel>Bendability Factor (1-10)</FieldLabel>
                       <FieldControl
-                        render={({ ref, ...props }) => (
-                          <Slider
-                            {...props}
-                            ref={ref}
-                            min={1}
-                            max={10}
-                            step={1}
-                            showValue={true}
-                            value={[qualityData.bendability || 5]}
-                            onValueChange={values => setQualityData(prev => ({ ...prev, bendability: values[0] }))}
-                          />
-                        )}
+                        render={({ ref, ...props }) => {
+                          const { defaultValue, ...filteredProps } = props;
+                          return (
+                            <Slider
+                              {...filteredProps}
+                              ref={ref as React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null>}
+                              min={1}
+                              max={10}
+                              step={1}
+                              showValue={true}
+                              value={[qualityData.bendability || 5]}
+                              onValueChange={values => setQualityData(prev => ({ ...prev, bendability: values[0] }))}
+                            />
+                          );
+                        }}
                       />
                       <FieldDescription>
                         How easily the paperclip should bend without breaking
@@ -581,7 +597,7 @@ export default function FormsPage() {
                         <FieldControl
                           render={({ ref, ...props }) => (
                             <Checkbox
-                              ref={ref}
+                              ref={ref as React.RefObject<React.ElementRef<typeof BaseCheckbox.Root> | null>}
                               checked={qualityData.qualityInspection}
                               onCheckedChange={checked => setQualityData(prev => ({ ...prev, qualityInspection: checked }))}
                               {...props}
@@ -604,7 +620,7 @@ export default function FormsPage() {
                         <FieldControl
                           render={({ ref, ...props }) => (
                             <Checkbox
-                              ref={ref}
+                              ref={ref as React.RefObject<React.ElementRef<typeof BaseCheckbox.Root> | null>}
                               checked={qualityData.certificationRequired}
                               onCheckedChange={checked => setQualityData(prev => ({ ...prev, certificationRequired: checked }))}
                               {...props}
@@ -672,7 +688,7 @@ export default function FormsPage() {
                     <FieldControl
                       render={({ ref, ...props }) => (
                         <Switch
-                          ref={ref}
+                          ref={ref as React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null>}
                           checked={preferencesData.rushOrder}
                           onCheckedChange={checked => setPreferencesData(prev => ({ ...prev, rushOrder: checked }))}
                           {...props}
@@ -748,7 +764,7 @@ export default function FormsPage() {
                       <FieldControl
                         render={({ ref, ...props }) => (
                           <Switch
-                            ref={ref}
+                            ref={ref as React.RefObject<React.ElementRef<typeof BaseSwitch.Root> | null>}
                             checked={preferencesData.newsletter}
                             onCheckedChange={checked => setPreferencesData(prev => ({ ...prev, newsletter: checked }))}
                             {...props}

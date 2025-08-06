@@ -80,32 +80,32 @@ export const breadcrumbsConfig: ComponentConfig = {
     },
     {
       component: BreadcrumbList,
-      name: "BreadcrumbList",
+      name: "Breadcrumb List",
       description: "Ordered list container that holds all breadcrumb items and separators.",
     },
     {
       component: BreadcrumbItem,
-      name: "BreadcrumbItem",
+      name: "Breadcrumb Item",
       description: "Individual container for each breadcrumb link or page indicator.",
     },
     {
       component: BreadcrumbLink,
-      name: "BreadcrumbLink",
+      name: "Breadcrumb Link",
       description: "Clickable link element for navigating to parent pages in the hierarchy.",
     },
     {
       component: BreadcrumbPage,
-      name: "BreadcrumbPage",
+      name: "Breadcrumb Page",
       description: "Current page indicator that shows the active location (non-clickable).",
     },
     {
       component: BreadcrumbSeparator,
-      name: "BreadcrumbSeparator",
+      name: "Breadcrumb Separator",
       description: "Visual separator between breadcrumb items, hidden from screen readers.",
     },
     {
       component: BreadcrumbEllipsis,
-      name: "BreadcrumbEllipsis",
+      name: "Breadcrumb Ellipsis",
       description: "Ellipsis indicator for truncated breadcrumb paths to save space.",
     },
   ],

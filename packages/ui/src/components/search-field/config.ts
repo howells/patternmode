@@ -5,7 +5,7 @@ import { DefaultExample, GroupedExample, WithItemsExample } from "./examples";
 
 export const searchFieldConfig: ComponentConfig = {
   id: "search-field",
-  name: "SearchField",
+  name: "Search Field",
   description: "A search input with dropdown results and keyboard navigation",
   category: "inputs",
   featured: false,

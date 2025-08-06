@@ -18,7 +18,7 @@ import { DefaultExample, UserProfileExample, WithImageExample } from "./examples
 
 export const previewCardConfig: ComponentConfig = {
   id: "preview-card",
-  name: "PreviewCard",
+  name: "Preview Card",
   description: "A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
   category: "media",
   icon: Eye,
@@ -45,63 +45,63 @@ export const previewCardConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "PreviewCard",
+      name: "Preview Card",
       description: "Root container for hover-triggered content previews.",
       component: PreviewCard,
       primary: true,
     },
     {
-      name: "PreviewCardTrigger",
+      name: "Preview Card Trigger",
       description: "Interactive element that shows preview on hover.",
       component: PreviewCardTrigger,
     },
     {
-      name: "PreviewCardContent",
+      name: "Preview Card Content",
       description: "Main content container with positioning.",
       component: PreviewCardContent,
     },
     {
-      name: "PreviewCardArrow",
+      name: "Preview Card Arrow",
       description: "Visual arrow pointing to trigger element.",
       component: PreviewCardArrow,
     },
     {
-      name: "PreviewCardImage",
+      name: "Preview Card Image",
       description: "Header image with consistent aspect ratio.",
       component: PreviewCardImage,
     },
     {
-      name: "PreviewCardHeader",
+      name: "Preview Card Header",
       description: "Container for title and description.",
       component: PreviewCardHeader,
     },
     {
-      name: "PreviewCardHeading",
+      name: "Preview Card Heading",
       description: "Heading component with prominent typography.",
       component: PreviewCardHeading,
     },
     {
-      name: "PreviewCardDescription",
+      name: "Preview Card Description",
       description: "Description text with muted styling.",
       component: PreviewCardDescription,
     },
     {
-      name: "PreviewCardBody",
+      name: "Preview Card Body",
       description: "Main content area between header and footer.",
       component: PreviewCardBody,
     },
     {
-      name: "PreviewCardFooter",
+      name: "Preview Card Footer",
       description: "Footer section for actions and metadata.",
       component: PreviewCardFooter,
     },
     {
-      name: "PreviewCardPortal",
+      name: "Preview Card Portal",
       description: "Portal for rendering outside DOM tree.",
       component: PreviewCardPortal,
     },
     {
-      name: "PreviewCardPositioner",
+      name: "Preview Card Positioner",
       description: "Smart positioning with collision detection.",
       component: PreviewCardPositioner,
     },

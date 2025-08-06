@@ -2,6 +2,7 @@
 
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import React from "react";
+import type { Size } from "../../lib/component-config-types";
 import { Icon } from "../icon/component";
 import { SplitButton } from "./component";
 
@@ -10,12 +11,12 @@ export type SplitButtonPreviewProps = {
    * Button size variant.
    * Controls the overall size and padding of the split button.
    */
-  size?: "sm" | "default";
+  size?: Size;
   /**
    * Button style variant.
    * Controls the visual styling and color scheme.
    */
-  variant?: "default" | "outline" | "ghost" | "destructive";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
   /**
    * Whether to show icons in the dropdown menu.
    * Displays relevant icons alongside menu items.
@@ -82,8 +83,8 @@ const actionConfigs = {
 };
 
 export function SplitButtonPreview({
-  size = "default",
-  variant = "default",
+  size = "base",
+  variant = "primary",
   showIcons = true,
   menuItemCount = 3,
   primaryAction = "save",
@@ -102,7 +103,6 @@ export function SplitButtonPreview({
   };
 
   return (
-    <div className="p-8 flex justify-center">
       <SplitButton
         size={size}
         variant={variant}
@@ -132,7 +132,6 @@ export function SplitButtonPreview({
           );
         })}
       </SplitButton>
-    </div>
   );
 }
 

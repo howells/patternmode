@@ -45,27 +45,27 @@ export const paginationConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "PaginationPrevious",
+      name: "Pagination Previous",
       description: "Previous page navigation button with disabled state.",
       component: PaginationPrevious,
     },
     {
-      name: "PaginationNext",
+      name: "Pagination Next",
       description: "Next page navigation button with disabled state.",
       component: PaginationNext,
     },
     {
-      name: "PaginationList",
+      name: "Pagination List",
       description: "Semantic list container for page number buttons.",
       component: PaginationList,
     },
     {
-      name: "PaginationPage",
+      name: "Pagination Page",
       description: "Individual page button with current state support.",
       component: PaginationPage,
     },
     {
-      name: "PaginationGap",
+      name: "Pagination Gap",
       description: "Gap indicator for truncated page ranges.",
       component: PaginationGap,
     },

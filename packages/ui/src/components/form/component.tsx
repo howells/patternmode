@@ -265,8 +265,9 @@ type FormErrorProps = {
   /**
    * Error message content.
    * Displays validation errors with proper styling.
+   * Optional - when not provided, displays automatic validation errors from form state.
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Validation constraint to match for display.
    * Allows conditional error display based on validation rules.

@@ -50,7 +50,7 @@ export const selectNativeConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "SelectNative",
+      name: "Select Native",
       description: "Native HTML select element with consistent styling and accessibility features.",
       component: SelectNative,
       primary: true,

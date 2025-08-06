@@ -7,6 +7,7 @@ import * as React from "react";
 import { useId, useState } from "react";
 
 import { cx } from "../../lib/utils";
+import type { IconComponent } from "../../lib/icon-utils";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";
@@ -162,7 +163,7 @@ export function SidebarToggle({
       onClick={onToggle}
       variant="inverse-ghost"
       size="icon-xs"
-      shadow={false}
+
       className={cx(className)}
       aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       leftIcon={isCollapsed ? PanelLeft : PanelLeftDashed}
@@ -452,7 +453,7 @@ export function SidebarGroup({
                 <Button
                   variant="inverse-ghost"
                   size="icon-xs"
-                  shadow={false}
+
                   onClick={handleToggleCollapsed}
                   className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
                   aria-label={isGroupCollapsed ? "Expand group" : "Collapse group"}
@@ -512,10 +513,7 @@ type SidebarItemProps = {
   /**
    * Left-side icon component (alternative to icon prop).
    */
-  leftIcon?: React.ComponentType<{
-    className?: string;
-    strokeWidth?: number;
-  }>;
+  leftIcon?: IconComponent;
   /**
    * Delay in milliseconds before showing tooltip when collapsed.
    */
@@ -590,7 +588,7 @@ export const SidebarItem = function SidebarItem(
             rightIcon={href ? ArrowRight : undefined}
             showRightIconOnHover={!!href}
             onClick={handleClick}
-            shadow={false}
+
             {...props}
           />
         </Tooltip>
@@ -603,7 +601,7 @@ export const SidebarItem = function SidebarItem(
     <Button
       href={href}
       variant={current ? "secondary" : "inverse-ghost"}
-      shadow={false}
+
       icon={icon}
       leftIcon={LeftIcon}
       rightIcon={href ? ArrowRight : undefined}

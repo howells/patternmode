@@ -10,6 +10,7 @@ export function BooleanControl({ currentValue, onValueChange }: PropControlProps
     <FieldControl
       render={() => (
         <Switch
+          size="xs"
           checked={currentValue === true}
           onCheckedChange={checked => onValueChange(checked)}
         />

@@ -2,6 +2,7 @@ import type { Radio as BaseRadio } from "@base-ui-components/react/radio";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { radioCardVariants, radioLabelVariants, radioVariants } from "./variants";
+import type { Size } from "../../lib/component-config-types";
 
 export type RadioProps = React.ComponentPropsWithoutRef<typeof BaseRadio.Root>;
 
@@ -14,7 +15,7 @@ export type RadioItemProps = {
    * Size of the radio button affecting the overall dimensions and internal spacing.
    * Controls the circle size, dot size, and overall clickable area.
    */
-  size?: VariantProps<typeof radioVariants>["size"];
+  size?: Size;
 
   /**
    * Visual variant of the radio button affecting styling context.
@@ -30,7 +31,7 @@ export type RadioLabelProps = {
    * Size variant affecting text size and spacing between radio and label.
    * Should match the size of the associated radio button for consistent appearance.
    */
-  size?: VariantProps<typeof radioLabelVariants>["size"];
+  size?: Size;
 } & React.ComponentPropsWithoutRef<"label"> & {
   ref?: React.RefObject<HTMLLabelElement | null>;
 };
@@ -40,7 +41,7 @@ export type RadioCardProps = {
    * Size variant affecting the padding and overall card dimensions.
    * Larger sizes provide more space for rich content layouts.
    */
-  size?: VariantProps<typeof radioCardVariants>["size"];
+  size?: Size;
 
   /**
    * Content to display within the radio card.
@@ -92,7 +93,7 @@ export type RadioOptionProps = {
    * Size variant affecting the radio button and text sizing.
    * Should be consistent within a radio group for proper alignment.
    */
-  size?: VariantProps<typeof radioVariants>["size"];
+  size?: Size;
 } & {
   ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null>;
 };
@@ -126,7 +127,7 @@ export type RadioCardOptionProps = {
    * Size variant affecting the card padding and internal spacing.
    * Larger sizes accommodate more complex content layouts.
    */
-  size?: VariantProps<typeof radioCardVariants>["size"];
+  size?: Size;
 
   /**
    * Whether to display the radio selection indicator within the card.

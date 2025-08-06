@@ -69,17 +69,17 @@ export const tabsConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "TabsList",
+      name: "Tabs List",
       description: "Container for tab triggers with visual indicator",
       component: TabsList,
     },
     {
-      name: "TabsTrigger",
+      name: "Tabs Trigger",
       description: "Individual tab trigger button for switching between panels",
       component: TabsTrigger,
     },
     {
-      name: "TabsContent",
+      name: "Tabs Content",
       description: "Content panel that displays when its corresponding tab is active",
       component: TabsContent,
     },

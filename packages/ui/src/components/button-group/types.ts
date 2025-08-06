@@ -20,10 +20,10 @@ export type ButtonGroupProps = {
    */
   gap?: GapValue | ResponsiveSpacing<GapValue>;
   /**
-   * Horizontal alignment of the button group.
-   * Controls how buttons are distributed within the container.
+   * How to distribute buttons along the main axis.
+   * Controls spacing and distribution of buttons within the container.
    */
-  align?: "start" | "center" | "end" | "between" | "around" | "evenly";
+  justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
   /**
    * Whether buttons should wrap to new lines.
    * When true, buttons will wrap if they exceed container width.

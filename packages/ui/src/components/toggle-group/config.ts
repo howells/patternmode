@@ -71,13 +71,13 @@ export const toggleGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ToggleGroup",
+      name: "Toggle Group",
       description: "Root container for toggle group items with coordinated state management.",
       component: ToggleGroup,
       primary: true,
     },
     {
-      name: "ToggleGroupItem",
+      name: "Toggle Group Item",
       description: "Individual toggle button within a toggle group.",
       component: ToggleGroupItem,
     },

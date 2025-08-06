@@ -3,6 +3,7 @@ import type { TextareaPreviewProps } from "./preview";
 import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { cx, focusInput, hasErrorInput } from "../../lib/utils";
+import { textareaStyles } from "./variants";
 
 type TextareaProps = TextareaPreviewProps & {
 
@@ -62,21 +63,9 @@ const Textarea = (
 ) => {
   const cleanProps = props;
 
-  // Size-based styling
-  const sizeStyles = {
-    xs: "min-h-control-xs px-2 py-1.5 text-xs",
-    sm: "min-h-control-sm px-2.5 py-2 text-sm",
-    base: "min-h-control-base px-3 py-2 text-sm",
-    lg: "min-h-control-lg px-4 py-2.5 text-base",
-  };
-
   const baseClassName = cx(
-    // base
-    "flex rounded-md border shadow-xs outline-hidden transition-colors",
-    // width
-    fullWidth ? "w-full" : "w-full max-w-sm",
-    // size-specific styles
-    sizeStyles[size],
+    textareaStyles({ size, fullWidth }),
+    "outline-hidden transition-colors",
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // border color

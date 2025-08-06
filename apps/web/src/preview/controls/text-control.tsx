@@ -16,6 +16,7 @@ export function TextControl({ prop, currentValue, onValueChange }: PropControlPr
         return (
           <Input
             {...inputProps}
+            size="xs"
             value={stringValue}
             onChange={e => onValueChange(e.target.value)}
             placeholder={prop.defaultValue != null ? String(prop.defaultValue) : ""}
@@ -34,6 +35,7 @@ export function TextareaControl({ prop, currentValue, onValueChange }: PropContr
         return (
           <Textarea
             {...inputProps}
+            size="xs"
             value={currentValue != null ? String(currentValue) : ""}
             onChange={e => onValueChange(e.target.value)}
             placeholder={prop.defaultValue != null ? String(prop.defaultValue) : ""}

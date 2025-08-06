@@ -2,12 +2,18 @@ import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { iconVariants } from "./variants";
 
+/**
+ * Standard icon component type used across all components.
+ * Compatible with Lucide icons and other icon libraries.
+ */
+export type IconComponent = React.ComponentType<{ className?: string; strokeWidth?: number }>;
+
 export type IconProps = {
   /**
    * The Lucide icon component to render.
    * Should be a React component that accepts className and strokeWidth props.
    */
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon: IconComponent;
   /**
    * Visual size of the icon affecting its dimensions.
    * Xs (12px) for very small contexts, sm (14px) for small buttons,
@@ -30,7 +36,7 @@ export type IconProps = {
    * Fallback icon component to display if the main icon fails to render.
    * Provides graceful degradation when icons are missing or fail to load.
    */
-  fallbackIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  fallbackIcon?: IconComponent;
 } & VariantProps<typeof iconVariants>;
 
 export type { VariantProps as IconVariantProps } from "tailwind-variants";

@@ -9,6 +9,7 @@ import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
+import type { SpacingValue } from "@patternmode/ui/lib/spacing-utils";
 
 import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";
@@ -29,7 +30,7 @@ type LayoutMode = "grid" | "stack";
 type GridState = {
   columns: number;
   rows?: number;
-  gap: number;
+  gap: SpacingValue;
   showColumnGuides: boolean;
   showRowGuides: boolean;
   minHeight: "none" | "sm" | "md" | "lg" | "xl";
@@ -38,7 +39,7 @@ type GridState = {
 
 type StackState = {
   direction: "vertical" | "horizontal";
-  gap: number;
+  gap: SpacingValue;
   align: "start" | "center" | "end" | "stretch" | "baseline";
   justify: "start" | "center" | "end" | "between" | "around" | "evenly";
   items: CellData[];

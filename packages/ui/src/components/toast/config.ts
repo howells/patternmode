@@ -65,7 +65,7 @@ export const toastConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ToastProvider",
+      name: "Toast Provider",
       description: "Provider component for toast context and notifications",
       component: ToastProvider,
       primary: true,

@@ -38,7 +38,7 @@ export const sparkChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "SparkChart",
+      name: "Spark Chart",
       description: "Minimal sparkline chart with configurable variants",
       component: SparkChart,
       primary: true,

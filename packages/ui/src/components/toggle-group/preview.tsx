@@ -62,7 +62,6 @@ export function ToggleGroupPreview({
     : (contentType === "alignment" ? ["center"] : ["bold"]);
 
   return (
-    <div className="p-8 flex justify-center">
       <ToggleGroup
         defaultValue={defaultValue}
         variant={variant}
@@ -81,7 +80,6 @@ export function ToggleGroupPreview({
           );
         })}
       </ToggleGroup>
-    </div>
   );
 }
 

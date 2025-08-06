@@ -2,6 +2,7 @@ import type { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import type { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
+import type { IconComponent } from "../../lib/icon-utils";
 import type { toggleGroupVariants } from "./variants";
 
 export type ToggleGroupProps = {
@@ -30,11 +31,11 @@ export type ToggleGroupItemProps = {
   /**
    * Icon component to display on the left side of the toggle item.
    */
-  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  leftIcon?: IconComponent;
   /**
    * Icon component to display on the right side of the toggle item.
    */
-  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  rightIcon?: IconComponent;
   /**
    * Custom stroke width for icons. If not provided, uses the global config value.
    */

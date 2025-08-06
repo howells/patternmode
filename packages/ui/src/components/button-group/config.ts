@@ -14,7 +14,7 @@ import {
 
 export const buttonGroupConfig: ComponentConfig = {
   id: "button-group",
-  name: "ButtonGroup",
+  name: "Button Group",
   description: "Container for grouping buttons with shared styling and consistent spacing. Child buttons inherit props from the parent group.",
   category: "ui",
   icon: MoreHorizontal,
@@ -71,7 +71,7 @@ export const buttonGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ButtonGroup",
+      name: "Button Group",
       description: "Container for grouping buttons with shared props and consistent spacing",
       component: ButtonGroup,
       primary: true,

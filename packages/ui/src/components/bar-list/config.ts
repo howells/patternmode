@@ -18,7 +18,7 @@ import {
 
 export const barListConfig: ComponentConfig = {
   id: "bar-list",
-  name: "BarList",
+  name: "Bar List",
   description: "List-style bar chart component for simple data comparison with text labels.",
   category: "charts",
   icon: BarChart4,
@@ -99,7 +99,7 @@ export const barListConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "BarList",
+      name: "Bar List",
       description: "Main bar list component for displaying ranked data",
       component: BarList,
       primary: true,

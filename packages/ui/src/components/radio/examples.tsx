@@ -19,7 +19,7 @@ export const SizesExample = () => {
   return (
     <div className="space-y-4">
       <RadioOption value="small" label="Small Radio" size="sm" />
-      <RadioOption value="medium" label="Medium Radio" size="md" />
+      <RadioOption value="medium" label="Medium Radio" size="base" />
       <RadioOption value="large" label="Large Radio" size="lg" />
     </div>
   );
@@ -91,7 +91,7 @@ export const CustomStructureExample = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 cursor-pointer text-sm font-medium text-zinc-900 dark:text-zinc-50">
-        <RadioItem value="custom1" size="md" />
+        <RadioItem value="custom1" size="base" />
         <div className="flex flex-col">
           <span className="font-medium">Custom Radio 1</span>
           <span className="text-sm text-zinc-500">
@@ -101,7 +101,7 @@ export const CustomStructureExample = () => {
       </div>
 
       <div className="flex items-center gap-2 cursor-pointer text-sm font-medium text-zinc-900 dark:text-zinc-50">
-        <RadioItem value="custom2" size="md" />
+        <RadioItem value="custom2" size="base" />
         <div className="flex flex-col">
           <span className="font-medium">Custom Radio 2</span>
           <span className="text-sm text-zinc-500">

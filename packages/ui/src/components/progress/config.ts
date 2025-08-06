@@ -72,7 +72,7 @@ export const progressConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ProgressBar",
+      name: "Progress Bar",
       description: "Complete progress bar with all components composed together",
       component: ProgressBar,
       primary: true,
@@ -83,22 +83,22 @@ export const progressConfig: ComponentConfig = {
       component: Progress,
     },
     {
-      name: "ProgressTrack",
+      name: "Progress Track",
       description: "Progress track component containing the background rail",
       component: ProgressTrack,
     },
     {
-      name: "ProgressIndicator",
+      name: "Progress Indicator",
       description: "Visual indicator showing progress completion",
       component: ProgressIndicator,
     },
     {
-      name: "ProgressLabel",
+      name: "Progress Label",
       description: "Accessible label for the progress bar",
       component: ProgressLabel,
     },
     {
-      name: "ProgressValue",
+      name: "Progress Value",
       description: "Displays the current progress value",
       component: ProgressValue,
     },

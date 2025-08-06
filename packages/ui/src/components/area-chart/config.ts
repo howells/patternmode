@@ -16,7 +16,7 @@ import {
 
 export const areaChartConfig: ComponentConfig = {
   id: "area-chart",
-  name: "AreaChart",
+  name: "Area Chart",
   description: "Area chart component for visualizing data trends over time with filled regions.",
   category: "charts",
   icon: BarChart,
@@ -85,7 +85,7 @@ export const areaChartConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "AreaChart",
+      name: "Area Chart",
       description: "Main area chart component with comprehensive configuration options",
       component: AreaChart,
       primary: true,

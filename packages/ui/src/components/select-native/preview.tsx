@@ -3,6 +3,7 @@
 import type { SelectNativeProps } from "./types";
 import React from "react";
 import { SelectNative } from "./component";
+import { sizes } from "../../lib/component-config-types";
 
 export function SelectNativePreview(props: SelectNativeProps) {
   return (
@@ -17,6 +18,13 @@ export function SelectNativePreview(props: SelectNativeProps) {
 
 // Preview props for prop explorer
 export const selectNativePreviewProps = [
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant of the select input.",
+    defaultValue: "base",
+    options: sizes,
+  },
   {
     name: "hasError",
     type: "boolean",

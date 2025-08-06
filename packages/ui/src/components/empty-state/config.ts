@@ -38,7 +38,7 @@ export const emptyStateConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "EmptyState",
+      name: "Empty State",
       description: "Empty state component with icon, title, description, and actions",
       component: EmptyState,
     },

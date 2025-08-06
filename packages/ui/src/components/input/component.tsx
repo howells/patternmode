@@ -9,6 +9,8 @@ import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { cx, focusRing } from "../../lib/utils";
+import { formControlContainerVariants, formControlElementVariants } from "../../lib/form-control-variants";
+import { inputElementStyles } from "./variants";
 
 /**
  * Single-line text input field with validation support and various styling options.
@@ -23,6 +25,7 @@ const Input = (
 
   // Icon size and color based on input size (like Button component)
   const iconSize = {
+    "size-3": size === "xs",
     "size-3.5": size === "sm",
     "size-4": size === "base",
     "size-5": size === "lg",
@@ -33,12 +36,11 @@ const Input = (
   );
 
   // Gap size based on input size
-  const gapSize = {
-    "gap-0.5": size === "sm", // 2px gap for small
-    "gap-1": size === "base", // 4px gap for base
-    "gap-1.5": size === "lg", // 6px gap for large
-  };
-  const gapClassName = cx(gapSize);
+  const gapClassName = size === "xs" || size === "sm"
+    ? "gap-0.5"
+    : size === "base"
+      ? "gap-1"
+      : "gap-1.5";
 
   // Resolve prefix - can be explicit prefix prop, or combination of prefixText/prefixIcon
   const resolvedPrefix
@@ -118,6 +120,7 @@ const Input = (
                 ? (
                     <Eye
                       className={cx("shrink-0", {
+                        "size-3": size === "xs",
                         "size-3.5": size === "sm",
                         "size-4": size === "base",
                         "size-5": size === "lg",
@@ -128,6 +131,7 @@ const Input = (
                 : (
                     <EyeOff
                       className={cx("shrink-0", {
+                        "size-3": size === "xs",
                         "size-3.5": size === "sm",
                         "size-4": size === "base",
                         "size-5": size === "lg",
@@ -163,29 +167,37 @@ const Input = (
 
   // Calculate left padding
   const leftPadding = hasUnstyledPrefix
-    ? size === "sm"
-      ? "pl-1.5"
-      : size === "base"
-        ? "pl-2"
-        : "pl-2.5"
-    : size === "sm"
-      ? "pl-2.5"
-      : size === "base"
-        ? "pl-3"
-        : "pl-3.5";
+    ? size === "xs"
+      ? "pl-1"
+      : size === "sm"
+        ? "pl-1.5"
+        : size === "base"
+          ? "pl-2"
+          : "pl-2.5"
+    : size === "xs"
+      ? "pl-2"
+      : size === "sm"
+        ? "pl-2.5"
+        : size === "base"
+          ? "pl-3"
+          : "pl-3.5";
 
   // Calculate right padding
   const rightPadding = hasUnstyledSuffix
-    ? size === "sm"
-      ? "pr-1.5"
-      : size === "base"
-        ? "pr-2"
-        : "pr-2.5"
-    : size === "sm"
-      ? "pr-2.5"
-      : size === "base"
-        ? "pr-3"
-        : "pr-3.5";
+    ? size === "xs"
+      ? "pr-1"
+      : size === "sm"
+        ? "pr-1.5"
+        : size === "base"
+          ? "pr-2"
+          : "pr-2.5"
+    : size === "xs"
+      ? "pr-2"
+      : size === "sm"
+        ? "pr-2.5"
+        : size === "base"
+          ? "pr-3"
+          : "pr-3.5";
 
   const paddingClasses = cx(leftPadding, rightPadding);
 
@@ -217,11 +229,8 @@ const Input = (
     <div
       data-testid="input"
       className={cx(
-        "relative flex items-stretch w-full rounded-md border shadow-xs transition",
-        // Border and background colors
-        " dark:border-zinc-800 bg-white dark:bg-zinc-950",
-        // Error states
-        hasError && "border-red-500 dark:border-red-500",
+        formControlContainerVariants({ size, hasError }),
+        "items-stretch",
         // Focus-within for container focus
         "focus-within:ring-2 focus-within:ring-blue-200 dark:focus-within:ring-blue-700/30 focus-within:border-blue-500 dark:focus-within:border-blue-700",
         // Minimal variant overrides
@@ -237,22 +246,30 @@ const Input = (
             "flex items-center shrink-0 order-1",
             // Font size based on input size
             {
-              "text-xs": size === "sm",
+              "text-xs": size === "xs" || size === "sm",
               "text-sm": size === "base" || size === "lg",
             },
             // Styling controls background and border
             prefixStyling && [
               "bg-zinc-50 dark:bg-zinc-900/50 border-r  dark:border-zinc-700",
-              "rounded-l-md",
+              // Size-based prefix border radius
+              {
+                "rounded-l-sm": size === "xs",
+                "rounded-l": size === "sm",
+                "rounded-l-md": size === "base", 
+                "rounded-l-lg": size === "lg",
+              },
             ],
             // Padding - less when unstyled (no container to pad)
             prefixStyling
               ? {
+                  "px-1.5": size === "xs",
                   "px-2": size === "sm",
                   "px-2.5": size === "base",
                   "px-3": size === "lg",
                 }
               : {
+                  "pl-1.5": size === "xs",
                   "pl-2": size === "sm",
                   "pl-2.5": size === "base",
                   "pl-3": size === "lg",
@@ -267,20 +284,10 @@ const Input = (
         ref={forwardedRef}
         type={isPassword ? typeState : type}
         className={cx(
-          // Remove all border/background styles - container handles this
-          "flex-1 bg-transparent border-0 outline-none shadow-none ring-0 focus:ring-0 focus:border-0 order-2",
-          // Size-based padding and text
-          {
-            "py-1.5 text-sm": size === "sm",
-            "py-2 text-sm": size === "base",
-            "py-2.5 text-base": size === "lg",
-          },
+          inputElementStyles({ size }),
+          "order-2",
           // Simple padding
           paddingClasses,
-          // Text and placeholder colors
-          "text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 dark:placeholder-zinc-500",
-          // Disabled states
-          "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-500",
           // File input styles
           "file:-my-2 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem] file:cursor-pointer file:rounded-l-[5px] file:rounded-r-none file:border-0 file:outline-hidden focus:outline-hidden data-disabled:pointer-events-none file:data-disabled:pointer-events-none file:border-solid file: file:bg-zinc-50 file:text-zinc-500 file:hover:bg-zinc-100 dark:file:border-zinc-800 dark:file:bg-zinc-950 dark:file:hover:bg-zinc-900/20 dark:file:data-disabled:border-zinc-700 file:[border-inline-end-width:1px] file:data-disabled:bg-zinc-100 file:data-disabled:text-zinc-500 dark:file:data-disabled:bg-zinc-800",
           inputClassName,
@@ -295,22 +302,30 @@ const Input = (
             "flex items-center shrink-0 order-3",
             // Font size based on input size
             {
-              "text-xs": size === "sm",
+              "text-xs": size === "xs" || size === "sm",
               "text-sm": size === "base" || size === "lg",
             },
             // Styling controls background and border
             suffixStyling && [
               "bg-zinc-50 dark:bg-zinc-900/50 border-l  dark:border-zinc-700",
-              "rounded-r-md",
+              // Size-based suffix border radius
+              {
+                "rounded-r-sm": size === "xs",
+                "rounded-r": size === "sm",
+                "rounded-r-md": size === "base",
+                "rounded-r-lg": size === "lg", 
+              },
             ],
             // Padding - less when unstyled (no container to pad)
             suffixStyling
               ? {
+                  "px-1.5": size === "xs",
                   "px-2": size === "sm",
                   "px-2.5": size === "base",
                   "px-3": size === "lg",
                 }
               : {
+                  "pl-0.5 pr-1.5": size === "xs",
                   "pl-0.5 pr-2": size === "sm",
                   "pl-1 pr-2.5": size === "base",
                   "pl-1 pr-3": size === "lg",

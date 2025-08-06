@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 export const tagGroupVariants = tv({
   base: "flex flex-wrap items-center",
   variants: {
-    align: {
+    justify: {
       start: "justify-start",
       center: "justify-center",
       end: "justify-end",
@@ -17,7 +17,7 @@ export const tagGroupVariants = tv({
     },
   },
   defaultVariants: {
-    align: "start",
+    justify: "start",
     direction: "row",
   },
 });

@@ -2,6 +2,7 @@ import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import type { Locale } from "date-fns";
 import type React from "react";
+import type { Size } from "../../lib/component-config-types";
 import type { IconComponent } from "../../lib/icon-utils";
 import type { Button } from "../button/component";
 
@@ -28,6 +29,11 @@ export type TriggerProps = {
    */
   placeholder?: string;
   /**
+   * Size variant determining height and text size.
+   * Controls the overall dimensions of the date picker trigger.
+   */
+  size?: Size;
+  /**
    * Icon component to display in the trigger.
    * Defaults to Calendar icon when not provided.
    */
@@ -37,7 +43,7 @@ export type TriggerProps = {
    * Usually the formatted selected date or placeholder text.
    */
   children: React.ReactNode;
-} & Omit<React.ComponentProps<typeof Button>, "leftIcon" | "children">;
+} & Omit<React.ComponentProps<typeof Button>, "leftIcon" | "children" | "size">;
 
 export type DateRange = {
   /**
@@ -158,6 +164,11 @@ export type PickerProps = {
    * Shown when no date is selected.
    */
   placeholder?: string;
+  /**
+   * Size variant determining height and text size.
+   * Controls the overall dimensions of the date picker trigger.
+   */
+  size?: Size;
   /**
    * Whether the picker is disabled.
    * Prevents interaction when true.

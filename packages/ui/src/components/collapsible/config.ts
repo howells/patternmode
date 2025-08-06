@@ -69,17 +69,17 @@ export const collapsibleConfig: ComponentConfig = {
     },
     {
       component: CollapsibleTrigger,
-      name: "CollapsibleTrigger",
+      name: "Collapsible Trigger",
       description: "Clickable header that toggles collapsible content.",
     },
     {
       component: CollapsibleContent,
-      name: "CollapsibleContent",
+      name: "Collapsible Content",
       description: "Collapsible content area with smooth animations.",
     },
     {
       component: ChevronIcon,
-      name: "ChevronIcon",
+      name: "Chevron Icon",
       description: "Simple chevron icon for collapsible indicators.",
     },
   ],

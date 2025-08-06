@@ -1,8 +1,19 @@
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
+import type { IconComponent } from "../components/icon/types";
 
 // Configuration Types for Patternmode Components
 // These types ensure consistency across all component configurations
+
+/**
+ * Universal size type used across all components
+ */
+export type Size = "xs" | "sm" | "base" | "lg";
+
+/**
+ * Array of all available sizes for iteration and validation
+ */
+export const sizes: Size[] = ["xs", "sm", "base", "lg"];
 
 /**
  * Prop metadata interface for component documentation
@@ -123,7 +134,7 @@ export type ComponentConfig = {
   name: string;
   description: string;
   category: "display" | "controls" | "layout" | "overlay" | "visual" | "actions" | "media" | "typography" | "navigation" | "charts" | "feedback" | "forms" | "data" | "ui" | "inputs" | "utility";
-  icon?: React.ReactNode | LucideIcon;
+  icon?: IconComponent;
   badge?: string;
 
   /**

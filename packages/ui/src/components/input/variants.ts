@@ -2,10 +2,51 @@ import { tv } from "tailwind-variants";
 
 import { focusInput, hasErrorInput } from "../../lib/utils";
 
+// Variant for input container (wrapper div that handles styling)
+export const inputContainerStyles = tv({
+  base: "relative flex items-stretch w-full border transition",
+  variants: {
+    size: {
+      xs: "rounded-sm",
+      sm: "rounded", 
+      base: "rounded-md",
+      lg: "rounded-lg",
+    },
+  },
+  defaultVariants: {
+    size: "base",
+  },
+});
+
+// Variant for inner input element (no borders/backgrounds - container handles those)
+export const inputElementStyles = tv({
+  base: [
+    // Remove all border/background styles - container handles this
+    "flex-1 bg-transparent border-0 outline-none shadow-none ring-0 focus:ring-0 focus:border-0",
+    // Text and placeholder colors
+    "text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 dark:placeholder-zinc-500",
+    // Disabled states  
+    "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-500",
+    // remove search cancel button (optional)
+    "[&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden",
+  ],
+  variants: {
+    size: {
+      xs: ["py-0.5 text-xs leading-tight"],
+      sm: ["py-1 text-sm"],
+      base: ["py-1.5 text-sm"], 
+      lg: ["py-2 text-base"],
+    },
+  },
+  defaultVariants: {
+    size: "base",
+  },
+});
+
 export const inputStyles = tv({
   base: [
     // base
-    "relative block w-full max-w-sm appearance-none rounded-md border shadow-xs outline-hidden transition",
+    "relative block w-full max-w-sm appearance-none border outline-hidden transition",
     // border color
     " dark:border-zinc-800",
     // text color
@@ -27,22 +68,22 @@ export const inputStyles = tv({
   variants: {
     size: {
       xs: [
-        "h-control-xs text-xs",
+        "h-control-xs text-xs leading-tight rounded-sm",
         // file styles for xs
         "file:-my-1.5 file:-ml-1.5 file:px-1.5 file:py-1 file:[margin-inline-end:0.375rem]",
       ],
       sm: [
-        "h-control-sm text-sm",
+        "h-control-sm text-sm rounded",
         // file styles for sm
         "file:-my-2 file:-ml-2 file:px-2 file:py-1.5 file:[margin-inline-end:0.5rem]",
       ],
       base: [
-        "h-control-base text-sm",
+        "h-control-base text-sm rounded-md",
         // file styles for base
         "file:-my-2.5 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem]",
       ],
       lg: [
-        "h-control-lg text-base",
+        "h-control-lg text-base rounded-lg",
         // file styles for lg
         "file:-my-3 file:-ml-3 file:px-4 file:py-2.5 file:[margin-inline-end:1rem]",
       ],

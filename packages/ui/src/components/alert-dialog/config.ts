@@ -23,7 +23,7 @@ import {
 
 export const alertDialogConfig: ComponentConfig = {
   id: "alert-dialog",
-  name: "AlertDialog",
+  name: "Alert Dialog",
   description: "Modal dialog component for critical alerts and confirmation prompts.",
   category: "overlay",
   icon: AlertTriangle,
@@ -62,58 +62,58 @@ export const alertDialogConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "AlertDialog",
+      name: "Alert Dialog",
       description: "Root component for alert dialog",
       component: AlertDialog,
       primary: true,
     },
     {
-      name: "AlertDialogTrigger",
+      name: "Alert Dialog Trigger",
       description: "Button that triggers the alert dialog",
       component: AlertDialogTrigger,
     },
     {
-      name: "AlertDialogContent",
+      name: "Alert Dialog Content",
       description: "Main content container for the dialog",
       component: AlertDialogContent,
     },
     {
-      name: "AlertDialogHeader",
+      name: "Alert Dialog Header",
       description: "Header container for title and description",
       component: AlertDialogHeader,
     },
     {
-      name: "AlertDialogTitle",
+      name: "Alert Dialog Title",
       description: "Title heading for the dialog",
       component: AlertDialogTitle,
     },
     {
-      name: "AlertDialogDescription",
+      name: "Alert Dialog Description",
       description: "Description text for additional context",
       component: AlertDialogDescription,
     },
     {
-      name: "AlertDialogFooter",
+      name: "Alert Dialog Footer",
       description: "Footer container for action buttons",
       component: AlertDialogFooter,
     },
     {
-      name: "AlertDialogCancel",
+      name: "Alert Dialog Cancel",
       description: "Cancel button that closes without action",
       component: AlertDialogCancel,
     },
     {
-      name: "AlertDialogAction",
+      name: "Alert Dialog Action",
       description: "Primary action button for confirmation",
       component: AlertDialogAction,
     },
     {
-      name: "AlertDialogBackdrop",
+      name: "Alert Dialog Backdrop",
       description: "Semi-transparent backdrop overlay",
       component: AlertDialogBackdrop,
     },
     {
-      name: "AlertDialogPortal",
+      name: "Alert Dialog Portal",
       description: "Portal component for rendering outside DOM tree",
       component: AlertDialogPortal,
     },

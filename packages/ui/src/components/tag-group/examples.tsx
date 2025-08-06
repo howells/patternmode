@@ -41,15 +41,15 @@ export const DismissibleExample = () => {
 export const AlignmentExample = () => {
   return (
     <div className="space-y-4 w-full">
-      <TagGroup align="start" className="w-full">
+      <TagGroup justify="start" className="w-full">
         <Tag value="Left" />
         <Tag value="Aligned" />
       </TagGroup>
-      <TagGroup align="center" className="w-full">
+      <TagGroup justify="center" className="w-full">
         <Tag value="Center" />
         <Tag value="Aligned" />
       </TagGroup>
-      <TagGroup align="end" className="w-full">
+      <TagGroup justify="end" className="w-full">
         <Tag value="Right" />
         <Tag value="Aligned" />
       </TagGroup>

@@ -2,6 +2,7 @@ import type { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
+import type { Size } from "../../lib/component-config-types";
 import type { switchVariants } from "./variants";
 
 export type SwitchProps = {
@@ -13,9 +14,9 @@ export type SwitchProps = {
   /**
    * The size variant of the switch component.
    * Controls both the switch track and thumb dimensions.
-   * @default "default"
+   * @default "base"
    */
-  size?: "default" | "small";
+  size?: Size;
 } & Omit<
       React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>,
       "children"

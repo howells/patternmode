@@ -79,7 +79,7 @@ export const progressCircleConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "ProgressCircle",
+      name: "Progress Circle",
       description: "Circular progress indicator component",
       component: ProgressCircle,
     },

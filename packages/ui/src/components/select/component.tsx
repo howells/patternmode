@@ -17,7 +17,7 @@ import * as React from "react";
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
 import { Icon } from "../icon/component";
-import { selectTriggerVariants } from "./variants";
+import { selectItemVariants, selectPopoverVariants, selectTriggerVariants } from "./variants";
 
 /**
  * Dropdown selection component with searchable options and keyboard navigation.
@@ -148,7 +148,7 @@ SelectPositioner.displayName = "SelectPositioner";
  * Dropdown content container that holds the select options.
  */
 const SelectContent = (
-  { ref, className, children, sideOffset = 8, collisionPadding = 10, side = "bottom", align = "start", alignItemWithTrigger = true, ...props }: SelectContentProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null> },
+  { ref, className, children, sideOffset = 8, collisionPadding = 10, side = "bottom", align = "start", alignItemWithTrigger = true, size = "base", ...props }: SelectContentProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null> },
 ) => (
   <SelectPortal>
     <SelectPositioner
@@ -162,18 +162,7 @@ const SelectContent = (
       <BaseSelect.Popup
         ref={ref}
         className={cx(
-          // base
-          "relative z-50 overflow-hidden rounded-md border shadow-xl shadow-black/[2.5%]",
-          // widths
-          "min-w-[var(--anchor-width)] max-w-[95vw]",
-          // heights
-          "max-h-[var(--available-height)]",
-          // background color
-          "bg-white dark:bg-zinc-950",
-          // text color
-          "text-zinc-900 dark:text-zinc-50",
-          // border color
-          " dark:border-zinc-800",
+          selectPopoverVariants({ size }),
           // animations
           "data-[starting-style]:animate-in data-[ending-style]:animate-out",
           "data-[starting-style]:fade-in data-[ending-style]:fade-out",
@@ -215,21 +204,14 @@ SelectGroupLabel.displayName = "SelectGroupLabel";
 /**
  * Individual selectable option within the dropdown.
  */
-const SelectItem = ({ ref, className, children, ...props }: SelectItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Item> | null> }) => {
+const SelectItem = ({ ref, className, children, size = "base", ...props }: SelectItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Item> | null> }) => {
   return (
     <BaseSelect.Item
       ref={ref}
       className={cx(
-        // base
-        "grid cursor-pointer grid-cols-[1fr_20px] gap-x-2 rounded-sm px-3 py-2 outline-hidden transition-colors data-[selected]:font-semibold sm:text-sm",
-        // text color
-        "text-zinc-900 dark:text-zinc-50",
+        selectItemVariants({ size }),
         // disabled
         "data-[disabled]:pointer-events-none data-[disabled]:text-zinc-400 data-[disabled]:hover:bg-none dark:data-[disabled]:text-zinc-600",
-        // focus/highlight
-        "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-900",
-        // hover
-        "hover:bg-zinc-100 dark:hover:bg-zinc-900",
         className,
       )}
       {...props}

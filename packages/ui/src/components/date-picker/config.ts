@@ -71,7 +71,7 @@ export const datePickerConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "DatePicker",
+      name: "Date Picker",
       description: "Date selection component with calendar interface and optional features.",
       component: DatePicker,
       primary: true,

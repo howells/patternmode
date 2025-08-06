@@ -50,7 +50,7 @@ export const stackedListConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "StackedList",
+      name: "Stacked List",
       description: "Root container for the stacked list with compound components",
       component: StackedList,
       primary: true,

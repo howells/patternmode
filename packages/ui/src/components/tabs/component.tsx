@@ -1,6 +1,6 @@
 "use client";
 
-import type { ButtonSize } from "../button/types";
+import type { Size } from "../../lib/component-config-types";
 import type { TabsContentProps, TabsListProps, TabsListVariant, TabsProps, TabsTriggerProps } from "./types";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 
@@ -101,7 +101,7 @@ const TabsTrigger = (
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               iconStrokeWidth={iconStrokeWidth}
-              shadow={false}
+
               disabled={state.disabled}
               className={cx(
                 {
@@ -137,7 +137,7 @@ const TabsTrigger = (
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             iconStrokeWidth={iconStrokeWidth}
-            shadow={false}
+
             render={<button ref={tabRef} />} // Forward Base UI's ref to the button element
             disabled={state.disabled}
             className={cx(

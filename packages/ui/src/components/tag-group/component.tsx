@@ -13,7 +13,7 @@ export const TagGroup = ({
   dismissible,
   onDismiss,
   gap = 2,
-  align = "start",
+  justify = "start",
   direction = "row",
   className,
   children,
@@ -54,7 +54,7 @@ export const TagGroup = ({
     <div
       data-testid="tag-group"
       className={cx(
-        tagGroupVariants({ align, direction }),
+        tagGroupVariants({ justify, direction }),
         baseGapClass,
         responsiveGapClasses,
         className,

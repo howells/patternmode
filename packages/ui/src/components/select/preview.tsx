@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import type { Size } from "../../lib/component-config-types";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,7 @@ type SelectPreviewProps = {
   placeholder?: string;
   disabled?: boolean;
   hasError?: boolean;
-  size?: "default" | "sm";
+  size?: Size;
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;

@@ -26,7 +26,7 @@ export const buttonVariants = tv({
     size: {
       "xs": "h-control-xs px-2 text-xs has-[>svg]:px-1.5",
       "sm": "h-control-sm px-2.5 text-sm has-[>svg]:px-2",
-      "default": "h-control-base px-3 text-sm has-[>svg]:px-2.5",
+      "base": "h-control-base px-3 text-sm has-[>svg]:px-2.5",
       "lg": "h-control-lg px-4 text-sm has-[>svg]:px-3",
       "icon-xs": "size-control-xs",
       "icon-sm": "size-control-sm",
@@ -37,28 +37,28 @@ export const buttonVariants = tv({
   compoundVariants: [
     {
       size: "xs",
-      variant: ["default", "secondary", "outline", "ghost"],
+      variant: ["primary", "secondary", "outline", "ghost"],
       class: "gap-1",
     },
     {
       size: "sm",
-      variant: ["default", "secondary", "outline", "ghost"],
+      variant: ["primary", "secondary", "outline", "ghost"],
       class: "gap-1.5",
     },
     {
-      size: "default",
-      variant: ["default", "secondary", "outline", "ghost"],
+      size: "base",
+      variant: ["primary", "secondary", "outline", "ghost"],
       class: "gap-2",
     },
     {
       size: "lg",
-      variant: ["default", "secondary", "outline", "ghost"],
+      variant: ["primary", "secondary", "outline", "ghost"],
       class: "gap-2.5",
     },
   ],
   defaultVariants: {
-    variant: "default",
-    size: "default",
+    variant: "primary",
+    size: "base",
     rounded: false,
   },
 });
@@ -73,8 +73,8 @@ export const createButtonStyleVariants = (
   base: buttonVariants.base,
   variants: {
     // Map button variants to toggle states
-    default: [
-      ...componentVariants.button.default,
+    primary: [
+      ...componentVariants.button.primary,
       // Add pressed state using the specified variant
       `data-[pressed]:${componentVariants.button[pressedVariant].join(
         " data-[pressed]:",

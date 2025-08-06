@@ -61,7 +61,7 @@ export const tableConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "TableRoot",
+      name: "Table Root",
       description: "Root container with responsive horizontal scrolling",
       component: TableRoot,
     },
@@ -72,37 +72,37 @@ export const tableConfig: ComponentConfig = {
       primary: true,
     },
     {
-      name: "TableHead",
+      name: "Table Head",
       description: "Table header section container",
       component: TableHead,
     },
     {
-      name: "TableHeaderCell",
+      name: "Table Header Cell",
       description: "Header cell for table columns",
       component: TableHeaderCell,
     },
     {
-      name: "TableBody",
+      name: "Table Body",
       description: "Table body section with row dividers",
       component: TableBody,
     },
     {
-      name: "TableRow",
+      name: "Table Row",
       description: "Table row container with consistent padding",
       component: TableRow,
     },
     {
-      name: "TableCell",
+      name: "Table Cell",
       description: "Individual data cell with muted styling",
       component: TableCell,
     },
     {
-      name: "TableFoot",
+      name: "Table Foot",
       description: "Table footer section for summary rows",
       component: TableFoot,
     },
     {
-      name: "TableCaption",
+      name: "Table Caption",
       description: "Table caption for accessibility and context",
       component: TableCaption,
     },
