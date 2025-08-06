@@ -4,7 +4,6 @@ import type { IconProps } from "./types";
 
 import React from "react";
 import { config } from "../../lib/config";
-import { env } from "../../lib/env";
 import { cx } from "../../lib/utils";
 import { iconVariants } from "./variants";
 
@@ -53,9 +52,7 @@ function SafeDynamicIcon({
     );
   }
   catch (error) {
-    if (env.NODE_ENV === "development") {
-      console.warn("[Icon] Failed to render dynamic icon:", error);
-    }
+    console.warn("[Icon] Failed to render dynamic icon:", error);
 
     const FallbackIconComponent = fallbackIcon;
     return FallbackIconComponent
@@ -125,9 +122,7 @@ function Icon({
   }
   catch (error) {
     // Handle synchronous errors during icon creation
-    if (env.NODE_ENV === "development") {
-      console.warn("[Icon] Failed to render icon:", error);
-    }
+    console.warn("[Icon] Failed to render icon:", error);
 
     const FallbackIconComponent = fallbackIcon;
     return FallbackIconComponent

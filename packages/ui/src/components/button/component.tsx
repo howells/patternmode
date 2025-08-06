@@ -1,5 +1,6 @@
 import type { IconComponent } from "../../lib/icon-utils";
 import type { ButtonSize, IconButtonSize } from "./types";
+import type { VariantProps } from "tailwind-variants";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { ArrowRight, MoreHorizontal } from "lucide-react";
@@ -13,6 +14,9 @@ import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";
 import { buttonVariants } from "./variants";
+import { getLoaderSize, getIconContainerSize, isSmallIconButton } from "./utils";
+
+
 
 type ButtonProps = {
   /**
@@ -112,7 +116,7 @@ type ButtonProps = {
    * For accessing the underlying DOM element.
    */
   ref?: React.RefObject<HTMLButtonElement | null>;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>;
 
 /**
  * Interactive button component with multiple variants and states for user actions.
@@ -144,37 +148,24 @@ const Button = ({
 }: ButtonProps) => {
   // Automatically set render prop based on href
   const effectiveRender = render || (href ? <Link href={href} /> : <button type="button" />);
+
   const hasChildren = children != null && children !== "";
-  const isIconOnly
-    = size === "icon-xs"
-      || size === "icon-sm"
-      || size === "icon"
-      || size === "icon-lg";
+
+  const isIconOnly = size?.includes("icon") ?? false;
+
     // Prioritize icon prop over leftIcon prop
   const effectiveLeftIconProp = icon || LeftIcon;
-  const hasLeftIcon
-    = effectiveLeftIconProp != null
-      || (isIconOnly && effectiveLeftIconProp == null);
+
+  const hasLeftIcon = effectiveLeftIconProp != null || (isIconOnly && effectiveLeftIconProp == null);
+
   const effectiveLeftIcon
-    = effectiveLeftIconProp
-      || (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : null);
-  const hasRightIcon
-    = RightIcon != null
-      && size !== "icon-xs"
-      && size !== "icon-sm"
-      && size !== "icon"
-      && size !== "icon-lg";
-  const shouldShowChildren
-    = hasChildren
-      && size !== "icon-xs"
-      && size !== "icon-sm"
-      && size !== "icon"
-      && size !== "icon-lg";
-  const isIconButton
-    = size === "icon-xs"
-      || size === "icon-sm"
-      || size === "icon"
-      || size === "icon-lg";
+    = effectiveLeftIconProp || (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : null);
+
+  const hasRightIcon= RightIcon != null && !isIconOnly;
+
+  const shouldShowChildren= hasChildren && !isIconOnly;
+
+  const isIconButton= isIconOnly;
 
   // Check if children is a complex element (custom layout)
   const hasCustomLayout = React.isValidElement(children);
@@ -190,17 +181,6 @@ const Button = ({
       : "onLightButton";
 
   // Icon sizing is now handled by the Icon component via renderIcon
-  // Helper to get icon container size for loader positioning
-  const getIconContainerSize = () => {
-    const sizeStr = size as string;
-    return sizeStr === "xs" || sizeStr === "icon-xs"
-      ? "size-3"
-      : sizeStr === "sm" || sizeStr === "icon-sm"
-        ? "size-3.5"
-        : sizeStr === "lg" || sizeStr === "icon-lg"
-          ? "size-4"
-          : "size-3.5";
-  };
 
   // When loading, Loader replaces leftIcon, and we show loadingText or original children
   const effectiveChildren = isLoading && loadingText ? loadingText : children;
@@ -241,6 +221,28 @@ const Button = ({
       return renderIcon(effectiveLeftIconProp, size, iconStrokeWidth);
     }
 
+    // For icon-only buttons in loading state, render centered loader
+    if (
+      isIconButton
+      && isLoading
+      && !kbd
+    ) {
+      return (
+        <Loader
+          size={
+            size === "icon-xs"
+              ? "xs"
+              : size === "icon-sm"
+                ? "xs"
+                : size === "icon-lg"
+                  ? "base"
+                  : "sm"
+          }
+          aria-label={loadingText || "Loading"}
+        />
+      );
+    }
+
     // For icon buttons, wrap any text children in sr-only span
     const iconButtonChildren = isIconButton && hasChildren && (
       <span className="sr-only">{effectiveChildren}</span>
@@ -250,7 +252,7 @@ const Button = ({
     const layoutClassName = cx(
       "flex items-center w-full transition-all duration-150 ease-in-out",
       // For icon-only buttons, center everything
-      size === "icon-xs" || size === "icon-sm" || size === "icon"
+      isSmallIconButton(size)
         ? "justify-center"
         // Full width with centered text and left elements uses space-between
         : fullWidth && textAlign === "center" && (hasLeftIcon || isLoading)
@@ -267,6 +269,11 @@ const Button = ({
           return iconButtonChildren;
         }
         return effectiveShouldShowChildren ? effectiveChildren : null;
+      }
+
+      // Icon-only buttons in loading state should not go through normal layout
+      if (isIconButton && isLoading) {
+        return null; // This case is handled above
       }
 
       // Simple case with just kbd and no icons/loading
@@ -310,7 +317,7 @@ const Button = ({
               )}
             >
               <div
-                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+                className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
               >
                 {/* Loader */}
                 <div
@@ -320,15 +327,7 @@ const Button = ({
                   )}
                 >
                   <Loader
-                    size={
-                      size === "xs" || size === "icon-xs"
-                        ? "xs"
-                        : size === "sm" || size === "icon-sm"
-                          ? "xs"
-                          : size === "lg" || size === "icon-lg"
-                            ? "base"
-                            : "sm"
-                    }
+                    size={getLoaderSize(size)}
                     aria-label={loadingText || "Loading"}
                   />
                 </div>
@@ -405,13 +404,18 @@ const Button = ({
 
     // Full width with center alignment: spread layout
     if (textAlign === "center") {
+      // Icon-only buttons in loading state should not go through normal layout
+      if (isIconButton && isLoading) {
+        return null; // This case is handled above
+      }
+
       return (
         <span className={layoutClassName}>
           {/* Left spacer/icon */}
           {(isLoading || hasLeftIcon) && (
             <span className="flex items-center relative transition-all duration-150 ease-in-out">
               <div
-                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+                className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
               >
                 <div
                   className={cx(
@@ -420,15 +424,7 @@ const Button = ({
                   )}
                 >
                   <Loader
-                    size={
-                      size === "xs" || size === "icon-xs"
-                        ? "xs"
-                        : size === "sm" || size === "icon-sm"
-                          ? "xs"
-                          : size === "lg" || size === "icon-lg"
-                            ? "base"
-                            : "sm"
-                    }
+                    size={getLoaderSize(size)}
                     aria-label={loadingText || "Loading"}
                   />
                 </div>
@@ -478,13 +474,18 @@ const Button = ({
 
     // Full width with left/right alignment and right icon: single flex container
     if (hasRightIcon) {
+      // Icon-only buttons in loading state should not go through normal layout
+      if (isIconButton && isLoading) {
+        return null; // This case is handled above
+      }
+
       return (
         <span className="flex items-center gap-x-2 w-full transition-all duration-150 ease-in-out">
           {/* Left icon container */}
           {(isLoading || hasLeftIcon) && (
             <span className="flex items-center relative transition-all duration-150 ease-in-out">
               <div
-                className={`relative ${getIconContainerSize()} flex items-center justify-center`}
+                className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
               >
                 <div
                   className={cx(
@@ -493,7 +494,7 @@ const Button = ({
                   )}
                 >
                   <Loader
-                    size={size === "xs" ? "xs" : size === "sm" ? "xs" : "sm"}
+                    size={getLoaderSize(size)}
                     aria-label={loadingText || "Loading"}
                   />
                 </div>
@@ -541,21 +542,18 @@ const Button = ({
     }
 
     // Full width with left/right alignment without right icon: normal flow
+    // Icon-only buttons in loading state should not go through normal layout
+    if (isIconButton && isLoading) {
+      return null; // This case is handled above
+    }
+
     return (
       <span className={layoutClassName}>
         {/* Left icon container */}
         {(isLoading || hasLeftIcon) && (
           <span className="flex items-center relative transition-all duration-150 ease-in-out">
             <div
-              className={`relative ${
-                size === "xs" || size === "icon-xs"
-                  ? "size-3"
-                  : size === "sm" || size === "icon-sm"
-                    ? "size-3.5"
-                    : size === "lg" || size === "icon-lg"
-                      ? "size-4"
-                      : "size-3.5"
-              } flex items-center justify-center`}
+              className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
             >
               <div
                 className={cx(
@@ -564,7 +562,7 @@ const Button = ({
                 )}
               >
                 <Loader
-                  size={size === "sm" ? "xs" : "sm"}
+                  size={getLoaderSize(size)}
                   aria-label={loadingText || "Loading"}
                 />
               </div>

@@ -129,12 +129,18 @@
     "editorInfo.foreground": "#33adff"
   },
 
-  // Make ESLint run constantly in the background (like sorrel)
+  // Make ESLint run constantly in the background
   "eslint.run": "onType",
   "eslint.lintTask.enable": true,
   "eslint.debug": true,
   "eslint.trace.server": "verbose",
   "eslint.format.enable": true,
+
+  // Enable ESLint auto-fix on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
 
   // Disable ALL competing extensions and formatters
   "sortImports.on-save": false,
