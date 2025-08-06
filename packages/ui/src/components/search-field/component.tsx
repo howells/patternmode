@@ -54,7 +54,19 @@ export const SearchField = (
   const searchValue = value !== undefined ? value : internalValue;
   const setSearchValue = onValueChange || setInternalValue;
   const currentSelectedIndex = selectedIndex !== undefined ? selectedIndex : internalSelectedIndex;
-  const setCurrentSelectedIndex = onSelectedIndexChange || setInternalSelectedIndex;
+  
+  // Create a consistent setter that handles both function and direct value updates
+  const setCurrentSelectedIndex = React.useCallback((indexOrUpdater: number | ((prev: number) => number)) => {
+    const newIndex = typeof indexOrUpdater === 'function' 
+      ? indexOrUpdater(currentSelectedIndex) 
+      : indexOrUpdater;
+    
+    if (onSelectedIndexChange) {
+      onSelectedIndexChange(newIndex);
+    } else {
+      setInternalSelectedIndex(newIndex);
+    }
+  }, [currentSelectedIndex, onSelectedIndexChange]);
 
   // Filter and limit results
   const filteredItems = React.useMemo(() => {
