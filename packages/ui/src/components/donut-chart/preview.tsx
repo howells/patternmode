@@ -46,7 +46,7 @@ export function DonutChartPreview({
   variant = "donut",
 }: DonutChartPreviewProps = {}) {
   return (
-    <div className="p-8">
+    <div className="p-8 w-full max-w-lg">
       <DonutChart
         data={previewData}
         category="name"

@@ -2,6 +2,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const { camelCase, pascalCase } = require("es-toolkit");
 
 const PAGES_DIR = path.join(__dirname, "../src/app/ui/components");
 
@@ -54,16 +55,6 @@ export default function {{COMPONENT_NAME}}Page() {
 }
 `;
 
-function toPascalCase(str) {
-  return str
-    .split("-")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
-}
-
-function toCamelCase(str) {
-  return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-}
 
 async function scanComponents() {
   console.log("🔍 Scanning components directory...");
@@ -95,17 +86,17 @@ function generateImports(components) {
 
   components.forEach((id) => {
     // Config imports
-    configImports.push(`import { ${toCamelCase(id)}Config } from "./${id}/config";`);
+    configImports.push(`import { ${camelCase(id)}Config } from "./${id}/config";`);
 
     // Preview imports for static registry
-    const pascalName = toPascalCase(id);
+    const pascalName = pascalCase(id);
     previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
 
     // Preview props imports (check if they exist)
     const previewPropsPath = path.join(__dirname, `../../../packages/ui/src/components/${id}/preview.tsx`);
     if (fs.existsSync(previewPropsPath)) {
       const previewContent = fs.readFileSync(previewPropsPath, 'utf8');
-      const previewPropsName = `${toCamelCase(id)}PreviewProps`;
+      const previewPropsName = `${camelCase(id)}PreviewProps`;
       if (previewContent.includes(`export const ${previewPropsName}`)) {
         previewPropsImports.push(`import { ${previewPropsName} } from "./${id}/preview";`);
       }
@@ -117,7 +108,7 @@ function generateImports(components) {
 
 function generateComponentRegistry(components) {
   const entries = components.map((id) => {
-    const camelCaseConfig = `${toCamelCase(id)}Config`;
+    const camelCaseConfig = `${camelCase(id)}Config`;
     return `  "${id}": ${camelCaseConfig},`;
   });
 
@@ -126,7 +117,7 @@ function generateComponentRegistry(components) {
 
 function generatePreviewRegistry(components) {
   const entries = components.map((id) => {
-    const pascalName = toPascalCase(id);
+    const pascalName = pascalCase(id);
     return `  "${id}": ${pascalName}Preview,`;
   });
 
@@ -141,7 +132,7 @@ function generatePreviewPropsRegistry(components) {
     const previewPropsPath = path.join(__dirname, `../../../packages/ui/src/components/${id}/preview.tsx`);
     if (fs.existsSync(previewPropsPath)) {
       const previewContent = fs.readFileSync(previewPropsPath, 'utf8');
-      const previewPropsName = `${toCamelCase(id)}PreviewProps`;
+      const previewPropsName = `${camelCase(id)}PreviewProps`;
       if (previewContent.includes(`export const ${previewPropsName}`)) {
         entries.push(`  "${id}": ${previewPropsName},`);
       }
@@ -153,7 +144,7 @@ function generatePreviewPropsRegistry(components) {
 
 function generateComponentMetadataRegistry(components) {
   const entries = components.map((id) => {
-    const camelCaseConfig = `${toCamelCase(id)}Config`;
+    const camelCaseConfig = `${camelCase(id)}Config`;
     return `  "${id}": { title: ${camelCaseConfig}.name, description: ${camelCaseConfig}.description },`;
   });
 
@@ -349,9 +340,9 @@ async function generateComponentPages() {
     }
 
     // Generate page content
-    const configName = `${toCamelCase(id)}Config`;
+    const configName = `${camelCase(id)}Config`;
     const pageContent = PAGE_TEMPLATE
-      .replace(/\{\{COMPONENT_NAME\}\}/g, toPascalCase(id))
+      .replace(/\{\{COMPONENT_NAME\}\}/g, pascalCase(id))
       .replace(/\{\{COMPONENT_ID\}\}/g, id)
       .replace(/\{\{COMPONENT_CONFIG_NAME\}\}/g, configName);
 

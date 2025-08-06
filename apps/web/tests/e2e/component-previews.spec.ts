@@ -135,6 +135,33 @@ async function testComponentPage(
   expect(previewBox?.width || 0).toBeGreaterThan(0);
   expect(previewBox?.height || 0).toBeGreaterThan(0);
 
+  // Special checks for chart components - ensure they have visual content
+  const isChartComponent = componentName.includes('chart') || componentName.includes('Chart');
+  if (isChartComponent) {
+    // Charts should have SVG content rendered
+    const svgElements = await page.locator('svg').count();
+    if (svgElements === 0) {
+      console.error(`❌ ${componentName}: Chart component has no SVG elements - chart may not be rendering`);
+      expect(svgElements).toBeGreaterThan(0);
+    }
+    
+    // Charts should have actual visual elements (paths, rects, circles, etc.)
+    const chartElements = await page.locator('svg path, svg rect, svg circle, svg line').count();
+    if (chartElements === 0) {
+      console.error(`❌ ${componentName}: Chart SVG exists but has no visual elements (paths, rects, circles, lines)`);
+    }
+    expect(chartElements).toBeGreaterThan(0);
+    
+    // ResponsiveContainer should have proper dimensions
+    const responsiveContainer = await page.locator('[data-testid*="chart"] .recharts-responsive-container').count();
+    if (responsiveContainer > 0) {
+      const containerBox = await page.locator('[data-testid*="chart"] .recharts-responsive-container').first().boundingBox();
+      if (!containerBox || containerBox.width === 0 || containerBox.height === 0) {
+        console.error(`❌ ${componentName}: ResponsiveContainer exists but has no dimensions (${containerBox?.width || 0}x${containerBox?.height || 0})`);
+      }
+    }
+  }
+
   // Check that component examples are actually rendered
   const componentExamples = await page
     .locator("[data-testid=\"component-examples\"]")

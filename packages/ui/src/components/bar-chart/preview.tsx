@@ -47,7 +47,7 @@ export function BarChartPreview({
   colors = ["blue", "emerald"],
 }: BarChartPreviewProps = {}) {
   return (
-    <div className="p-8">
+    <div className="p-8 w-full max-w-2xl">
       <BarChart
         data={previewData}
         index="category"

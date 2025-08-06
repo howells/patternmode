@@ -44,14 +44,7 @@ export function ServerMonitoringExample() {
     { color: "bg-yellow-500", tooltip: "API Gateway: Warning (high latency)" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Server Status Overview
-      </h4>
-      <Tracker data={data} hoverEffect />
-    </div>
-  );
+  return <Tracker data={data} hoverEffect />;
 }
 
 export function DeploymentPipelineExample() {
@@ -63,14 +56,7 @@ export function DeploymentPipelineExample() {
     { color: "bg-zinc-300", tooltip: "Production Deploy: Waiting" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Deployment Pipeline
-      </h4>
-      <Tracker data={data} />
-    </div>
-  );
+  return <Tracker data={data} />;
 }
 
 export function TaskCompletionExample() {
@@ -84,14 +70,7 @@ export function TaskCompletionExample() {
     { color: "bg-zinc-300", tooltip: "Launch: Not started" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Project Milestone Tracker
-      </h4>
-      <Tracker data={data} hoverEffect className="w-96" />
-    </div>
-  );
+  return <Tracker data={data} hoverEffect className="w-96" />;
 }
 
 export function CustomColorExample() {
@@ -103,14 +82,7 @@ export function CustomColorExample() {
     { color: "bg-gray-300", tooltip: "Deployment: Not Started" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Custom Color Scheme
-      </h4>
-      <Tracker data={data} defaultBackgroundColor="bg-gray-200" />
-    </div>
-  );
+  return <Tracker data={data} defaultBackgroundColor="bg-gray-200" />;
 }
 
 export function SalesQuarterExample() {
@@ -121,14 +93,7 @@ export function SalesQuarterExample() {
     { color: "bg-blue-500", tooltip: "Q4: Current quarter (On track)" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Sales Performance by Quarter
-      </h4>
-      <Tracker data={data} hoverEffect />
-    </div>
-  );
+  return <Tracker data={data} hoverEffect />;
 }
 
 export function BugTrackingExample() {
@@ -140,14 +105,7 @@ export function BugTrackingExample() {
     { color: "bg-gray-400", tooltip: "Feature requests: 12" },
   ];
 
-  return (
-    <div className="space-y-3">
-      <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-        Bug Priority Distribution
-      </h4>
-      <Tracker data={data} hoverEffect />
-    </div>
-  );
+  return <Tracker data={data} hoverEffect />;
 }
 
 export function MinimalExample() {

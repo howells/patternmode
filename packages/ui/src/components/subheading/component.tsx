@@ -28,7 +28,7 @@ export const Subheading = ({
       level={level}
       className={cx(
         className,
-        "m-0 text-sm font-semibold text-current sm:text-sm",
+        "m-0 text-sm font-semibold text-current",
       )}
       data-testid="subheading"
       {...props}

@@ -48,7 +48,7 @@ export function AreaChartPreview({
   colors = ["blue", "pink"],
 }: AreaChartPreviewProps = {}) {
   return (
-    <div className="p-8">
+    <div className="p-8 w-full max-w-2xl">
       <AreaChart
         data={previewData}
         index="month"

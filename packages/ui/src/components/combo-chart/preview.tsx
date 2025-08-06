@@ -48,7 +48,7 @@ export function ComboChartPreview({
   lineColors = ["emerald"],
 }: ComboChartPreviewProps = {}) {
   return (
-    <div className="p-8">
+    <div className="p-8 w-full max-w-2xl">
       <ComboChart
         data={previewData}
         index="month"

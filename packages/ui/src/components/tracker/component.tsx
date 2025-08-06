@@ -38,18 +38,42 @@ type TrackerBlockProps = {
   defaultBackgroundColor?: string;
 };
 
+type TrackerSize = "xs" | "sm" | "default" | "lg";
+
 const Block = ({
   color,
   tooltip,
   defaultBackgroundColor,
   hoverEffect,
-}: TrackerBlockProps) => {
+  size = "default",
+}: TrackerBlockProps & { size?: TrackerSize }) => {
   const [open, setOpen] = React.useState(false);
+
+  // Size-based width classes
+  const sizeClasses = {
+    xs: "w-2",
+    sm: "w-3",
+    default: "w-4",
+    lg: "w-6",
+  };
+
+  // Size-based height classes
+  const heightClasses = {
+    xs: "h-4",
+    sm: "h-5",
+    default: "h-6",
+    lg: "h-8",
+  };
+
   return (
     <PreviewCard open={open} onOpenChange={setOpen}>
       <PreviewCardTrigger
         onClick={() => setOpen(true)}
-        className="size-full overflow-hidden px-[0.5px] transition first:rounded-l-[4px] first:pl-0 last:rounded-r-[4px] last:pr-0 sm:px-px"
+        className={cx(
+          "overflow-hidden px-[0.5px] transition first:rounded-l-[4px] first:pl-0 last:rounded-r-[4px] last:pr-0 sm:px-px",
+          sizeClasses[size],
+          heightClasses[size],
+        )}
       >
         <div
           className={cx(
@@ -86,6 +110,11 @@ type TrackerProps = {
    */
   data: TrackerBlockProps[] | string;
   /**
+   * Size variant of the tracker blocks.
+   * @default "default"
+   */
+  size?: TrackerSize;
+  /**
    * Default background color for blocks that don't have a specific color defined.
    * @default "bg-zinc-400 dark:bg-zinc-400"
    */
@@ -101,7 +130,7 @@ type TrackerProps = {
  * Visual progress tracker component for displaying steps, stages, or progress through a process using colored blocks.
  */
 const Tracker = (
-  { ref: forwardedRef, data = [], defaultBackgroundColor = "bg-zinc-400 dark:bg-zinc-400", className, hoverEffect, ...props }: TrackerProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref: forwardedRef, data = [], size = "default", defaultBackgroundColor = "bg-zinc-400 dark:bg-zinc-400", className, hoverEffect, ...props }: TrackerProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   // Handle prop transformation - convert string to array if needed
   let trackerData: TrackerBlockProps[];
@@ -125,12 +154,13 @@ const Tracker = (
     <div
       data-testid="tracker"
       ref={forwardedRef}
-      className={cx("group flex h-8 w-full items-center", className)}
+      className={cx("group flex w-full items-center", className)}
       {...props}
     >
       {trackerData.map((blockProps, index) => (
         <Block
           key={blockProps.key ?? index}
+          size={size}
           defaultBackgroundColor={defaultBackgroundColor}
           hoverEffect={hoverEffect}
           {...blockProps}
@@ -144,4 +174,4 @@ Tracker.displayName = "Tracker";
 
 export { Tracker };
 
-export type { TrackerBlockProps, TrackerProps };
+export type { TrackerBlockProps, TrackerProps, TrackerSize };

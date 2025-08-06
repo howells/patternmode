@@ -1,163 +1,51 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@import "./typography.css";
+@import "./animations.css";
 @source "../components/**/*.{ts,tsx}";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: InterVariable, sans-serif;
-  --font-sans--font-feature-settings: "cv11", "liga", "calt", "dlig", "ss03", "cv03", "cv04", "cv01", "cv10";
-  --font-mono: "SFMono-Regular", "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", monospace;
-  --text-xl: 1.25rem; /* 20px */
-  --text-lg: 1.125rem; /* 18px */
-  --text-base: 1rem; /* 16px */
-  --text-sm: 0.8125rem; /* 13px */
-  --text-xs: 0.75rem; /* 12px */
-  --text-2xs: 0.6875rem; /* 11px */
-
-  /* Override Tailwind's default easing curves */
-  --ease-in: cubic-bezier(0.42, 0, 1, 1);
-  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
-
   --avatar-radius: 0.5rem;
 
-  /* Control height system for consistent form element sizing */
-  --control-height-xs: 1.75rem; /* 28px */
-  --control-height-sm: 2.25rem; /* 36px */
-  --control-height-base: 2.5rem; /* 40px */
-  --control-height-lg: 3rem; /* 48px */
-}
-
-@theme {
-  --animate-hide: hide 150ms var(--ease-in-out);
-  --animate-slide-down-and-fade: slideDownAndFade 150ms var(--ease-out);
-  --animate-slide-left-and-fade: slideLeftAndFade 150ms var(--ease-out);
-  --animate-slide-up-and-fade: slideUpAndFade 150ms var(--ease-out);
-  --animate-slide-right-and-fade: slideRightAndFade 150ms var(--ease-out);
-  --animate-accordion-open: accordionOpen 150ms var(--ease-out);
-  --animate-accordion-close: accordionClose 150ms var(--ease-in);
-  --animate-dialog-overlay-show: dialogOverlayShow 150ms var(--ease-out);
-  --animate-dialog-content-show: dialogContentShow 150ms var(--ease-out);
-  --animate-sheet-slide-left-and-fade: sheetSlideLeftAndFade 150ms var(--ease-out);
-  --animate-sheet-slide-right-and-fade: sheetSlideRightAndFade 150ms var(--ease-in);
-
-  @keyframes hide {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  @keyframes slideDownAndFade {
-    from {
-      opacity: 0;
-      transform: translateY(-6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes slideLeftAndFade {
-    from {
-      opacity: 0;
-      transform: translateX(6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes slideUpAndFade {
-    from {
-      opacity: 0;
-      transform: translateY(6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes slideRightAndFade {
-    from {
-      opacity: 0;
-      transform: translateX(-6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes accordionOpen {
-    from {
-      height: 0px;
-    }
-    to {
-      height: var(--panel-height);
-    }
-  }
-  @keyframes accordionClose {
-    from {
-      height: var(--panel-height);
-    }
-    to {
-      height: 0px;
-    }
-  }
-  @keyframes dialogOverlayShow {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes dialogContentShow {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -45%) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
-  @keyframes sheetSlideLeftAndFade {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes sheetSlideRightAndFade {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-  }
+  /* Control height system reusing Tailwind's spacing theme values */
+  --control-height-xs: theme(spacing.7); /* 28px - reuses h-7/w-7 value */
+  --control-height-sm: theme(spacing.9); /* 36px - reuses h-9/w-9 value */
+  --control-height-base: theme(spacing.10); /* 40px - reuses h-10/w-10 value */
+  --control-height-lg: theme(spacing.12); /* 48px - reuses h-12/w-12 value */
 }
 
 /* Control sizing utilities */
-@theme {
-  --height-control-xs: var(--control-height-xs);
-  --height-control-sm: var(--control-height-sm);
-  --height-control-base: var(--control-height-base);
-  --height-control-lg: var(--control-height-lg);
+@layer utilities {
+  .h-control-xs {
+    height: var(--control-height-xs);
+  }
+  .h-control-sm {
+    height: var(--control-height-sm);
+  }
+  .h-control-base {
+    height: var(--control-height-base);
+  }
+  .h-control-lg {
+    height: var(--control-height-lg);
+  }
 
-  /* Square sizes derive from control heights */
-  --size-control-xs: var(--control-height-xs);
-  --size-control-sm: var(--control-height-sm);
-  --size-control-base: var(--control-height-base);
-  --size-control-lg: var(--control-height-lg);
+  .size-control-xs {
+    width: var(--control-height-xs);
+    height: var(--control-height-xs);
+  }
+  .size-control-sm {
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+  }
+  .size-control-base {
+    width: var(--control-height-base);
+    height: var(--control-height-base);
+  }
+  .size-control-lg {
+    width: var(--control-height-lg);
+    height: var(--control-height-lg);
+  }
 }
 
 /* Set default border colors */

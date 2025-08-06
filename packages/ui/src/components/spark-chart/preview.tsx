@@ -2,7 +2,7 @@
 
 import type { BarChartProps } from "./component";
 import React from "react";
-import { SparkBarChart } from "./component";
+import { SparkChart } from "./component";
 
 export function SparkChartPreview(props: BarChartProps) {
   const data = [
@@ -15,7 +15,11 @@ export function SparkChartPreview(props: BarChartProps) {
     { x: "Jul", y: 20 },
   ];
 
-  return <SparkBarChart data={data} index="x" categories={["y"]} {...props} />;
+  return (
+    <div className="w-full max-w-lg">
+      <SparkChart variant="bar" data={data} index="x" categories={["y"]} {...props} />
+    </div>
+  );
 }
 
 // Preview props for prop explorer

@@ -48,7 +48,7 @@ export function LineChartPreview({
   colors = ["blue", "emerald"],
 }: LineChartPreviewProps = {}) {
   return (
-    <div className="p-8">
+    <div className="p-8 w-full max-w-2xl">
       <LineChart
         data={previewData}
         index="month"

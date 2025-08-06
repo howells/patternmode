@@ -12,7 +12,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "inputs": ["$TURBO_DEFAULT$", ".env.local"]
+      "inputs": ["$TURBO_DEFAULT$", ".env.local", "src/styles/**/*.css", "packages/ui/src/styles/**/*.css"]
     },
     "lint": {
       "dependsOn": ["^lint"]

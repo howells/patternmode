@@ -13,7 +13,7 @@ import { emptyStateActionsVariants, emptyStateContentVariants, emptyStateVariant
 /**
  * A component for displaying empty states when there's no content to show.
  */
-export function EmptyState({
+export const EmptyState = ({
   title,
   description,
   icon: Icon,
@@ -23,7 +23,7 @@ export function EmptyState({
   size = "default",
   className,
   ...props
-}: EmptyStateProps) {
+}: EmptyStateProps) => {
   const hasMultipleActions = !!(primaryAction && secondaryAction);
 
   return (

@@ -14,29 +14,21 @@ export function TrackerPreview(props: TrackerProps) {
     { color: "bg-emerald-500", tooltip: "Operational" },
   ];
 
-  return <Tracker data={data} {...props} />;
+  return (
+    <div className="flex justify-center items-center w-full">
+      <Tracker data={data} {...props} />
+    </div>
+  );
 }
 
 // Preview props for prop explorer
 export const trackerPreviewProps = [
   {
-    name: "data",
-    type: "array",
-    description: "Array of block configurations for the tracker.",
-    defaultValue: [
-      { color: "bg-emerald-500", tooltip: "Operational" },
-      { color: "bg-emerald-500", tooltip: "Operational" },
-      { color: "bg-yellow-500", tooltip: "Degraded" },
-      { color: "bg-emerald-500", tooltip: "Operational" },
-      { color: "bg-red-500", tooltip: "Down" },
-      { color: "bg-emerald-500", tooltip: "Operational" },
-    ],
-  },
-  {
-    name: "defaultBackgroundColor",
-    type: "string",
-    description: "Default background color for blocks that don't have a specific color defined.",
-    defaultValue: "bg-zinc-400 dark:bg-zinc-400",
+    name: "size",
+    type: "select",
+    description: "Size variant of the tracker blocks.",
+    options: ["xs", "sm", "default", "lg"],
+    defaultValue: "default",
   },
   {
     name: "hoverEffect",

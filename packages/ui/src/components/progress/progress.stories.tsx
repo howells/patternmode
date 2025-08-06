@@ -1,6 +1,10 @@
 import * as React from "react";
-import { Progress } from "./component";
+import { Progress, ProgressIndicator, ProgressTrack } from "./component";
 
 export const TestProgress = () => (
-  <Progress value={75} />
+  <Progress value={75}>
+    <ProgressTrack>
+      <ProgressIndicator />
+    </ProgressTrack>
+  </Progress>
 );
