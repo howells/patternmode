@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
-import { ChevronDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import {
   Select,
   SelectArrow,
@@ -19,7 +19,7 @@ export const selectConfig: ComponentConfig = {
   description: "A select dropdown component built on Base UI's Select primitive. Provides accessible dropdown selection with keyboard navigation, search, and proper focus management with customizable styling.",
   category: "controls",
   featured: true,
-  icon: ChevronDown,
+  icon: ChevronsUpDown,
   importStatement: `import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator } from "@patternmode/ui/select";`,
   examples: [
     {

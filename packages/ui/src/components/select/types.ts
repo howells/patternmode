@@ -1,4 +1,5 @@
 import type { Select as BaseSelect } from "@base-ui-components/react/select";
+import type { useRender } from "@base-ui-components/react/use-render";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -22,6 +23,11 @@ export type SelectTriggerProps = {
    * - "lg": Large height and text size for prominent displays
    */
   size?: Size;
+  /**
+   * Custom element to render (defaults to native trigger styling).
+   * Enables using Button or other components as the trigger.
+   */
+  render?: useRender.RenderProp<Record<string, unknown>>;
 } & React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & VariantProps<typeof selectTriggerVariants>;
 
 /**

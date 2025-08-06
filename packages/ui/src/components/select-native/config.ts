@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
-import { ChevronDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { SelectNative } from "./component";
 import { DefaultExample, DisabledExample, ErrorStateExample, MultipleExample, WithGroupsExample, WithLabelExample } from "./examples";
 
@@ -8,7 +8,7 @@ export const selectNativeConfig: ComponentConfig = {
   name: "Select Native",
   description: "A styled native HTML select component with consistent design system styling. Provides platform-native behavior, mobile optimization, and accessibility features using the native HTML select element.",
   category: "controls",
-  icon: ChevronDown,
+  icon: ChevronsUpDown,
   importStatement: `import { SelectNative } from "@patternmode/ui/select-native";`,
   examples: [
     {

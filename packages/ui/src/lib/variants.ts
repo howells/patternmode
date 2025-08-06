@@ -245,19 +245,18 @@ export const buttonSpecificVariants = {
     "dark:disabled:bg-red-950 dark:disabled:text-red-400 dark:disabled:inset-ring-white/5",
   ],
   "outline": [
-    // inset border
-    "inset-ring-1 inset-ring-black/15",
-    "dark:inset-ring-white/15",
+    // border (use default form control border color)
+    "border-zinc-200 dark:border-zinc-800",
     // text color
     "text-zinc-900 dark:text-zinc-50",
     // background color
     "bg-white dark:bg-zinc-950",
-    // hover with enhanced inset border
-    "hover:bg-zinc-100 hover:inset-ring-black/20",
-    "dark:hover:bg-zinc-800 dark:hover:inset-ring-white/20",
+    // hover with enhanced border
+    "hover:bg-zinc-50 hover:border-zinc-300",
+    "dark:hover:bg-zinc-900 dark:hover:border-zinc-700",
     // disabled
-    "disabled:text-zinc-400 disabled:inset-ring-black/10",
-    "dark:disabled:text-zinc-600 dark:disabled:inset-ring-white/10",
+    "disabled:text-zinc-400 disabled:border-zinc-200",
+    "dark:disabled:text-zinc-600 dark:disabled:border-zinc-800",
   ],
   "outline-dashed": [
     // dashed border

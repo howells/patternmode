@@ -20,10 +20,10 @@ export const selectNativeStyles = tv({
      * Size variant determining height and text size.
      */
     size: {
-      xs: "h-control-xs pl-2 pr-6",
-      sm: "h-control-sm pl-2.5 pr-7",
-      base: "h-control-base pl-3 pr-7",
-      lg: "h-control-lg pl-4 pr-8",
+      xs: "pl-2 pr-8",
+      sm: "pl-2.5 pr-9",
+      base: "pl-3 pr-10",
+      lg: "pl-4 pr-12",
     },
     /**
      * Whether to show error styling.
@@ -32,6 +32,29 @@ export const selectNativeStyles = tv({
       true: hasErrorInput,
     },
   },
+  compoundVariants: [
+    // Override the inherited padding from formControlElementVariants
+    {
+      variant: "standalone",
+      size: "xs",
+      class: "h-control-xs pl-2 pr-8 rounded-sm",
+    },
+    {
+      variant: "standalone", 
+      size: "sm",
+      class: "h-control-sm pl-2.5 pr-9 rounded",
+    },
+    {
+      variant: "standalone",
+      size: "base", 
+      class: "h-control-base pl-3 pr-10 rounded-md",
+    },
+    {
+      variant: "standalone",
+      size: "lg",
+      class: "h-control-lg pl-4 pr-12 rounded-lg",
+    },
+  ],
   defaultVariants: {
     size: "base",
     variant: "standalone",

@@ -4,10 +4,11 @@ import type { ComboboxOption, ComboboxProps } from "./types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 import React from "react";
 import { config } from "../../lib/config";
+import { renderIcon } from "../../lib/icon-utils";
 import { cx, hasErrorInput } from "../../lib/utils";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
@@ -391,7 +392,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         className={cx(
           comboboxTriggerVariants({ size }),
           hasError && hasErrorInput,
-          !selectedItem && "text-zinc-500 dark:text-zinc-400",
         )}
         data-testid="combobox-trigger"
         {...getToggleButtonProps()}
@@ -404,18 +404,13 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
                   <span className="truncate">{getItemLabel(selectedItem)}</span>
                 </>
               )
-            : placeholder}
+            : (
+                <span className="text-zinc-500 dark:text-zinc-500">{placeholder}</span>
+              )}
         </div>
-        <Icon
-          icon={isOpen ? ChevronUp : ChevronDown}
-          size="sm"
-          strokeWidth={config.getIconStrokeWidth()}
-          className={cx(
-            "transition-transform duration-200 flex-shrink-0",
-            "text-zinc-400 dark:text-zinc-500",
-          )}
-          aria-hidden="true"
-        />
+        <span className="text-zinc-400 dark:text-zinc-500">
+          {renderIcon(ChevronsUpDown, size, config.getIconStrokeWidth())}
+        </span>
       </button>
 
       {/* Dropdown Menu */}

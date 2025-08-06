@@ -16,6 +16,7 @@ import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
+import { Button } from "../button/component";
 import { Icon } from "../icon/component";
 import { selectItemVariants, selectPopoverVariants, selectTriggerVariants } from "./variants";
 
@@ -36,33 +37,29 @@ const SelectValue = BaseSelect.Value;
 /**
  * Clickable trigger that opens the select dropdown and displays the current value.
  */
-const SelectTrigger = ({ ref, className, hasError, size, children, ...props }: SelectTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Trigger> | null> }) => {
+const SelectTrigger = ({ ref, className, hasError, size, children, render, ...props }: SelectTriggerProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Trigger> | null> }) => {
+  // Default to Button render unless custom render prop is provided
+  const defaultRender = (
+    <Button
+      variant="outline"
+      size={size}
+      rightIcon={ChevronsUpDown}
+      fullWidth
+      className={cx(
+        "justify-between",
+        hasError && hasErrorInput,
+        className,
+      )}
+    />
+  );
+
   return (
     <BaseSelect.Trigger
       ref={ref}
-      className={cx(
-        selectTriggerVariants({ size }),
-        hasError ? hasErrorInput : "",
-        className,
-      )}
+      render={render || defaultRender}
       {...props}
     >
-      <span className="truncate">{children}</span>
-      <BaseSelect.Icon>
-        <ChevronsUpDown
-          className={cx(
-            // base
-            "shrink-0",
-            // size based on trigger size
-            size === "sm" ? "size-3" : "size-4",
-            // text color
-            "text-zinc-400 dark:text-zinc-600",
-            // disabled
-            "group-data-[disabled]/trigger:text-zinc-300 dark:group-data-[disabled]/trigger:text-zinc-600",
-          )}
-          aria-hidden="true"
-        />
-      </BaseSelect.Icon>
+      {children}
     </BaseSelect.Trigger>
   );
 };
