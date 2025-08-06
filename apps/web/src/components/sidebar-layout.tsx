@@ -129,7 +129,7 @@ function SidebarContent() {
                   }
                 }
               }}
-              size="sm"
+              size="xs"
               className={isCollapsed ? "opacity-0" : ""}
             >
               <ToggleGroupItem value="grouped" leftIcon={Rows3}>

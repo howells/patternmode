@@ -2,6 +2,7 @@
 @import "./typography.css";
 @import "./animations.css";
 @source "../components/**/*.{ts,tsx}";
+@source "../lib/**/*.ts";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

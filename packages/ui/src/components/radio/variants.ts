@@ -1,58 +1,57 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
+import { borderRadiusVariants } from "../../lib/border-radius";
 
 /**
- * Style variants for radio button components.
+ * Style variants for radio components.
  *
- * Provides consistent styling for radio indicators including circle,
- * dot, and interactive states across different sizes and variants.
+ * Provides consistent styling for radio buttons including sizing,
+ * colors, states, and accessibility features.
  */
 export const radioVariants = tv({
   slots: {
     root: [
       // base
-      "group relative flex items-center justify-center appearance-none outline-hidden",
-      // focus
-      ...focusRing,
-    ],
-    indicator: [
-      // base
-      "flex items-center justify-center",
+      "group relative inline-flex items-center",
     ],
     circle: [
       // base
-      "flex shrink-0 items-center justify-center rounded-full border dark:border-zinc-800",
-      // background color
+      "relative flex shrink-0 items-center justify-center border-2 transition-all duration-150 ease-in-out",
+      // border
+      "border-zinc-300 dark:border-zinc-600",
+      // background
       "bg-white dark:bg-zinc-950",
+      // focus
+      focusRing,
+      // disabled
+      "disabled:pointer-events-none",
     ],
     dot: [
       // base
-      "shrink-0 rounded-full",
-      // indicator color
-      "bg-white",
+      "absolute transition-all duration-150 ease-in-out",
+      // colors
+      "bg-white dark:bg-zinc-50",
+      // disabled
+      "group-data-[disabled]:bg-zinc-100 dark:group-data-[disabled]:bg-zinc-800",
     ],
   },
   variants: {
     size: {
       xs: {
-        root: "size-3",
-        circle: "size-3",
-        dot: "size-0.5",
-      },
-      sm: {
-        root: "size-4",
-        circle: "size-4",
+        circle: `size-3 ${borderRadiusVariants.xs}`,
         dot: "size-1",
       },
-      base: {
-        root: "size-4",
-        circle: "size-4",
+      sm: {
+        circle: `size-3.5 ${borderRadiusVariants.sm}`,
         dot: "size-1.5",
       },
-      lg: {
-        root: "size-5",
-        circle: "size-5",
+      base: {
+        circle: `size-4 ${borderRadiusVariants.base}`,
         dot: "size-2",
+      },
+      lg: {
+        circle: `size-5 ${borderRadiusVariants.lg}`,
+        dot: "size-2.5",
       },
     },
     variant: {
@@ -127,7 +126,7 @@ export const radioLabelVariants = tv({
 export const radioCardVariants = tv({
   base: [
     // base
-    "group relative w-full rounded-md border p-4 text-left transition cursor-pointer",
+    "group relative w-full border p-4 text-left transition cursor-pointer",
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
@@ -143,10 +142,10 @@ export const radioCardVariants = tv({
   ],
   variants: {
     size: {
-      xs: "p-2",
-      sm: "p-3",
-      base: "p-4",
-      lg: "p-5",
+      xs: `p-2 ${borderRadiusVariants.xs}`,
+      sm: `p-3 ${borderRadiusVariants.sm}`,
+      base: `p-4 ${borderRadiusVariants.base}`,
+      lg: `p-5 ${borderRadiusVariants.lg}`,
     },
   },
   defaultVariants: {

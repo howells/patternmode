@@ -1,8 +1,11 @@
 import type { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import type { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
+import type { useRender } from "@base-ui-components/react/use-render";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { IconComponent } from "../../lib/icon-utils";
+import type { Size } from "../../lib/component-config-types";
+import type { ButtonProps } from "../button/component";
 import type { toggleGroupVariants } from "./variants";
 
 export type ToggleGroupProps = {
@@ -13,9 +16,9 @@ export type ToggleGroupProps = {
   variant?: VariantProps<typeof toggleGroupVariants>["variant"];
   /**
    * The size of the toggle group and its items.
-   * @default "default"
+   * @default "base"
    */
-  size?: VariantProps<typeof toggleGroupVariants>["size"];
+  size?: Size;
   /**
    * The layout orientation of the toggle group.
    * @default "horizontal"
@@ -47,5 +50,22 @@ export type ToggleGroupItemProps = {
   /**
    * The size of the toggle item. Inherits from parent ToggleGroup if not specified.
    */
-  size?: VariantProps<typeof toggleGroupVariants>["size"];
+  size?: Size;
+  /**
+   * Custom element to render (defaults to Button).
+   * Enables using custom components as the toggle item.
+   */
+  render?: useRender.RenderProp<Record<string, unknown>>;
+  /**
+   * Icon component (proxy for leftIcon) for the default Button render.
+   */
+  icon?: ButtonProps["icon"];
+  /**
+   * Whether the button should take full width in the default render.
+   */
+  fullWidth?: ButtonProps["fullWidth"];
+  /**
+   * Whether the button should have rounded corners in the default render.
+   */
+  rounded?: ButtonProps["rounded"];
 } & React.ComponentPropsWithoutRef<typeof BaseToggle>;

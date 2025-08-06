@@ -1,17 +1,18 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
+import { borderRadiusVariants } from "../../lib/border-radius";
 
 export const toggleGroupVariants = tv({
   slots: {
     root: [
       // base
-      "flex gap-px rounded-md border p-0.5",
+      "flex gap-px border p-0.5",
       // colors
-      " bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
+      "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700",
     ],
     item: [
       // base
-      "flex items-center justify-center rounded-sm text-sm font-medium select-none transition-all duration-100 ease-in-out",
+      "flex items-center justify-center text-sm font-medium select-none transition-all duration-100 ease-in-out",
       // colors
       "text-zinc-600 dark:text-zinc-400",
       // hover
@@ -30,11 +31,11 @@ export const toggleGroupVariants = tv({
   variants: {
     variant: {
       default: {
-        root: " bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
+        root: "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700",
         item: "",
       },
       outline: {
-        root: " bg-transparent dark:border-zinc-600",
+        root: "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-600",
         item: "border border-transparent data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
       },
       ghost: {
@@ -44,20 +45,40 @@ export const toggleGroupVariants = tv({
     },
     size: {
       xs: {
-        root: "gap-0.5 p-0.5",
-        item: "h-4 px-1 text-xs rounded-sm", // Extra small size
+        root: [
+          `gap-0.5 p-0.5 ${borderRadiusVariants.xs}`,
+          // Directly target button elements to adjust height (reduced by 6px total)
+          "[&_button]:!h-[calc(var(--control-height-xs)-0.375rem)]", // xs: 32px - 6px = 26px
+          "[&_button]:!min-h-[calc(var(--control-height-xs)-0.375rem)]",
+        ],
+        item: `h-4 px-1 text-xs ${borderRadiusVariants.xs}`, // Extra small size
       },
       sm: {
-        root: "gap-0.5 p-0.5",
-        item: "h-6 px-2 text-xs rounded-sm", // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
+        root: [
+          `gap-0.5 p-0.5 ${borderRadiusVariants.sm}`,
+          // Directly target button elements to adjust height (reduced by 6px total)
+          "[&_button]:!h-[calc(var(--control-height-sm)-0.375rem)]", // sm: 36px - 6px = 30px
+          "[&_button]:!min-h-[calc(var(--control-height-sm)-0.375rem)]",
+        ],
+        item: `h-6 px-2 text-xs ${borderRadiusVariants.sm}`, // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
       },
-      default: {
-        root: "gap-px p-0.5",
-        item: "h-8 px-3 text-sm rounded-sm", // Match button default: py-2 px-3 text-sm
+      base: {
+        root: [
+          `gap-px p-0.5 ${borderRadiusVariants.base}`,
+          // Directly target button elements to adjust height (reduced by 6px total)
+          "[&_button]:!h-[calc(var(--control-height-base)-0.375rem)]", // base: 40px - 6px = 34px
+          "[&_button]:!min-h-[calc(var(--control-height-base)-0.375rem)]",
+        ],
+        item: `h-8 px-3 text-sm ${borderRadiusVariants.base}`, // Match button base: py-2 px-3 text-sm
       },
       lg: {
-        root: "gap-1 p-1",
-        item: "h-10 px-4 text-base rounded-md", // Match button lg: py-2.5 px-4 text-base
+        root: [
+          `gap-1 p-1 ${borderRadiusVariants.lg}`,
+          // Directly target button elements to adjust height (reduced by 10px total for lg)
+          "[&_button]:!h-[calc(var(--control-height-lg)-0.625rem)]", // lg: 48px - 10px = 38px
+          "[&_button]:!min-h-[calc(var(--control-height-lg)-0.625rem)]",
+        ],
+        item: `h-10 px-4 text-base ${borderRadiusVariants.lg}`, // Match button lg: py-2.5 px-4 text-base
       },
     },
     orientation: {
@@ -71,7 +92,7 @@ export const toggleGroupVariants = tv({
   },
   defaultVariants: {
     variant: "default",
-    size: "default",
+    size: "base",
     orientation: "horizontal",
   },
 });

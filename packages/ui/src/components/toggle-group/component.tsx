@@ -3,9 +3,11 @@
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
+import { useRender } from "@base-ui-components/react/use-render";
 import React, { use } from "react";
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
+import { Button } from "../button/component";
 import { getIconSizeForContext, Icon } from "../icon/component";
 import { ToggleGroupContext } from "./constants";
 import { toggleGroupVariants } from "./variants";
@@ -29,7 +31,21 @@ const ToggleGroup = ({ ref, className, variant, size, orientation, children, ...
 ToggleGroup.displayName = "ToggleGroup";
 
 const ToggleGroupItem = (
-  { ref, className, variant, size, children, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth, ...props }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
+  {
+    ref,
+    className,
+    variant,
+    size,
+    children,
+    leftIcon: LeftIcon,
+    rightIcon: RightIcon,
+    iconStrokeWidth,
+    render,
+    icon,
+    fullWidth,
+    rounded,
+    ...props
+  }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
 ) => {
   const finalIconStrokeWidth = iconStrokeWidth ?? config.getIconStrokeWidth();
   const context = use(ToggleGroupContext);
@@ -57,66 +73,32 @@ const ToggleGroupItem = (
   const iconSize = getIconSizeForContext(finalSize);
 
   const renderContent = () => {
-    // If no icons, return children directly
-    if (!hasLeftIcon && !hasRightIcon) {
-      return children;
-    }
-
-    // For icon-only buttons, render just the icon
-    if (isIconOnly && hasLeftIcon) {
-      return (
-        <Icon icon={LeftIcon} size={iconSize} strokeWidth={finalIconStrokeWidth} />
-      );
-    }
-
-    if (isIconOnly && hasRightIcon) {
-      return (
-        <Icon
-          icon={RightIcon}
-          size={iconSize}
-          strokeWidth={finalIconStrokeWidth}
-        />
-      );
-    }
-
-    // For buttons with text and icons
-    return (
-      <span className="flex items-center justify-center gap-2">
-        {hasLeftIcon && (
-          <Icon
-            icon={LeftIcon}
-            size={iconSize}
-            strokeWidth={finalIconStrokeWidth}
-          />
-        )}
-        {hasChildren && children}
-        {hasRightIcon && (
-          <Icon
-            icon={RightIcon}
-            size={iconSize}
-            strokeWidth={finalIconStrokeWidth}
-          />
-        )}
-      </span>
-    );
+    return children;
   };
 
   return (
     <BaseToggle
       ref={ref}
-      className={cx(
-        item(),
-        // For icon-only buttons, make them square like button icon sizes
-        isIconOnly && finalSize === "xs" && "min-w-4 w-4",
-        isIconOnly && finalSize === "sm" && "min-w-6 w-6",
-        isIconOnly && finalSize === "default" && "min-w-8 w-8",
-        isIconOnly && finalSize === "lg" && "min-w-10 w-10",
-        className,
-      )}
+      render={render || ((toggleProps, state) => {
+        const { ref: _, ...buttonProps } = toggleProps;
+        return (
+          <Button
+            {...buttonProps}
+            variant={state.pressed ? "secondary" : "ghost"}
+            size={finalSize}
+            leftIcon={LeftIcon}
+            rightIcon={RightIcon}
+            icon={icon}
+            iconStrokeWidth={finalIconStrokeWidth}
+            fullWidth={fullWidth}
+            rounded={rounded}
+          >
+            {renderContent()}
+          </Button>
+        );
+      })}
       {...props}
-    >
-      {renderContent()}
-    </BaseToggle>
+    />
   );
 };
 

@@ -1,10 +1,12 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
+import type { Size } from "../../lib/component-config-types";
+import { borderRadiusVariants } from "../../lib/border-radius";
 
 export const toggleVariants = tv({
   base: [
     // base
-    "group inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-md border px-2 text-sm font-medium  transition-all duration-100 ease-in-out",
+    "group inline-flex h-9 min-w-9 items-center justify-center gap-2 border px-2 text-sm font-medium transition-all duration-100 ease-in-out",
     // border
     " dark:border-zinc-800",
     // text color
@@ -33,13 +35,14 @@ export const toggleVariants = tv({
       ],
     },
     size: {
-      sm: "h-8 min-w-8 px-1.5 text-xs",
-      default: "h-9 min-w-9 px-2 text-sm",
-      lg: "h-10 min-w-10 px-3 text-base",
+      xs: `h-7 min-w-7 px-1 text-xs ${borderRadiusVariants.xs}`,
+      sm: `h-8 min-w-8 px-1.5 text-xs ${borderRadiusVariants.sm}`,
+      base: `h-9 min-w-9 px-2 text-sm ${borderRadiusVariants.base}`,
+      lg: `h-10 min-w-10 px-3 text-base ${borderRadiusVariants.lg}`,
     },
   },
   defaultVariants: {
     variant: "default",
-    size: "default",
+    size: "base",
   },
 });

@@ -1,69 +1,134 @@
 "use client";
 
+import React, { useState, useMemo } from "react";
 import { PageHeader } from "@/components/page-header";
 import { Stack, HStack } from "@patternmode/ui/components/stack";
+import { Button } from "@patternmode/ui/components/button";
+import { Card } from "@patternmode/ui/components/card";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
-import { Rows3, MoreHorizontal, Copy } from "lucide-react";
-import { useQueryState, parseAsStringLiteral } from "nuqs";
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
+import { SortableList } from "@patternmode/ui/components/sortable-list";
+import { Input } from "@patternmode/ui/components/input";
+import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
+import { Rows3, MoreHorizontal, Plus, Trash2, Settings2, GripVertical } from "lucide-react";
+import { useQueryState, parseAsJson } from "nuqs";
 import type { Size } from "@patternmode/ui/lib/component-config-types";
+import type { GapValue } from "@patternmode/ui/lib/spacing-utils";
 import { sizes } from "@patternmode/ui/lib/component-config-types";
+import {
+  COMPONENT_REGISTRY,
+  PREVIEW_REGISTRY,
+  type ComponentId
+} from "@patternmode/ui/components/registry";
 
-// Import component previews
-import { ButtonPreview } from "@patternmode/ui/components/button/preview";
-import { InputPreview } from "@patternmode/ui/components/input/preview";
-import { ComboboxPreview } from "@patternmode/ui/components/combobox/preview";
-import { CheckboxPreview } from "@patternmode/ui/components/checkbox/preview";
-import { RadioPreview } from "@patternmode/ui/components/radio/preview";
-import { AvatarPreview } from "@patternmode/ui/components/avatar/preview";
-import { CopyButtonPreview } from "@patternmode/ui/components/copy-button/preview";
-import { DatePickerPreview } from "@patternmode/ui/components/date-picker/preview";
-import { IconContainerPreview } from "@patternmode/ui/components/icon-container/preview";
-import { SelectPreview } from "@patternmode/ui/components/select/preview";
-import { SelectNativePreview } from "@patternmode/ui/components/select-native/preview";
-import { SplitButtonPreview } from "@patternmode/ui/components/split-button/preview";
+// Layout configuration type
+type LayoutConfig = {
+  id: string;
+  direction: "vertical" | "horizontal";
+  size: Size;
+  gap: GapValue;
+  components: string[]; // Array of component IDs
+};
 
+// Create component items for SortableList
+function createComponentItems(
+  selectedComponents: string[],
+  allComponents: ComponentId[]
+): SortableListItem[] {
+  // Create a map of selected components for quick lookup
+  const selectedSet = new Set(selectedComponents);
 
-export default function LayoutPage() {
-  const [direction, setDirection] = useQueryState(
-    "direction",
-    parseAsStringLiteral(["vertical", "horizontal"] as const).withDefault("horizontal")
+  // Create items for all components
+  return allComponents.map(id => {
+    const config = COMPONENT_REGISTRY[id];
+    return {
+      id,
+      label: config.name,
+      active: selectedSet.has(id),
+    };
+  });
+}
+
+// Gap options for the Stack component
+const gapOptions: GapValue[] = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24];
+
+// Component that renders a single layout
+function LayoutSection({
+  layout,
+  onUpdate,
+  onDelete
+}: {
+  layout: LayoutConfig;
+  onUpdate: (layout: LayoutConfig) => void;
+  onDelete: () => void;
+}) {
+  const [componentsPopoverOpen, setComponentsPopoverOpen] = useState(false);
+  const [componentSearch, setComponentSearch] = useState("");
+
+  // Get all available component IDs
+  const allComponentIds = useMemo(
+    () => Object.keys(COMPONENT_REGISTRY) as ComponentId[],
+    []
   );
-  const [size, setSize] = useQueryState(
-    "size",
-    parseAsStringLiteral(sizes).withDefault("base")
+
+  // Filter components based on search
+  const filteredComponentIds = useMemo(() => {
+    if (!componentSearch) return allComponentIds;
+    const searchLower = componentSearch.toLowerCase();
+    return allComponentIds.filter(id => {
+      const config = COMPONENT_REGISTRY[id];
+      return config.name.toLowerCase().includes(searchLower);
+    });
+  }, [allComponentIds, componentSearch]);
+
+  // Create sortable items for component selection
+  const componentItems = useMemo(
+    () => createComponentItems(layout.components, filteredComponentIds),
+    [layout.components, filteredComponentIds]
   );
 
-  const components = [
-    { name: "Button", component: <ButtonPreview size={size} /> },
-    { name: "Input", component: <InputPreview size={size} /> },
-    { name: "Select", component: <SelectPreview size={size} /> },
-    { name: "Select Native", component: <SelectNativePreview size={size} /> },
-    { name: "Combobox", component: <ComboboxPreview size={size} /> },
-    { name: "Checkbox", component: <CheckboxPreview /> },
-    { name: "Radio", component: <RadioPreview value="option1" label="Radio Option" size={size} /> },
-    { name: "Avatar", component: <AvatarPreview size={size} /> },
-    { name: "Copy Button", component: <CopyButtonPreview text="Copy me" /> },
-    { name: "Date Picker", component: <DatePickerPreview size={size} /> },
-    { name: "Icon Container", component: <IconContainerPreview icon={Copy} size={size === "xs" ? "sm" : size} /> },
-    { name: "Split Button", component: <SplitButtonPreview size={size} /> },
-  ];
+  // Handle component selection changes
+  const handleComponentsChange = (items: SortableListItem[]) => {
+    const activeComponents = items
+      .filter(item => item.active)
+      .map(item => item.id);
+    onUpdate({ ...layout, components: activeComponents });
+  };
+
+  // Render selected components
+  const renderedComponents = useMemo(() => {
+    return layout.components.map(componentId => {
+      const PreviewComponent = PREVIEW_REGISTRY[componentId as ComponentId];
+      if (!PreviewComponent) return null;
+
+      // Pass size prop if the component supports it
+      // Note: Not all components support size, so we pass it unconditionally
+      // Components that don't support it will ignore it
+      // We use any to bypass TypeScript's strict prop checking since
+      // preview components handle their own defaults
+      const props: any = { size: layout.size };
+      return (
+        <div key={componentId} className="min-w-0">
+          <PreviewComponent {...props} />
+        </div>
+      );
+    });
+  }, [layout.components, layout.size]);
 
   return (
-    <div>
-      <PageHeader
-        title="Sizing Comparison"
-        description="Compare component sizes side-by-side to ensure visual consistency across the design system."
-      />
-      <div className="p-8">
-        <HStack>
+    <Card className="max-w-none">
+      {/* Layout Controls Header */}
+      <div className="mb-4 flex items-center justify-between">
+        <HStack gap={2}>
+          {/* Direction Toggle */}
           <ToggleGroup
-            value={[direction]}
+            value={[layout.direction]}
             onValueChange={(value) => {
               if (value.length > 0) {
-                setDirection(value[0] as "vertical" | "horizontal");
+                onUpdate({ ...layout, direction: value[0] as "vertical" | "horizontal" });
               }
             }}
-            size="sm"
+
           >
             <ToggleGroupItem value="horizontal" leftIcon={MoreHorizontal}>
               Horizontal
@@ -73,34 +138,187 @@ export default function LayoutPage() {
             </ToggleGroupItem>
           </ToggleGroup>
 
+          {/* Size Selector */}
           <ToggleGroup
-            value={[size]}
+            value={[layout.size]}
             onValueChange={(value) => {
               if (value.length > 0) {
-                setSize(value[0] as Size);
+                onUpdate({ ...layout, size: value[0] as Size });
               }
             }}
-            size="sm"
+
           >
-            <ToggleGroupItem value="xs">X Small</ToggleGroupItem>
-            <ToggleGroupItem value="sm">Small</ToggleGroupItem>
-            <ToggleGroupItem value="base">Base</ToggleGroupItem>
-            <ToggleGroupItem value="lg">Large</ToggleGroupItem>
+            {sizes.map(size => (
+              <ToggleGroupItem key={size} value={size}>
+                {size.toUpperCase()}
+              </ToggleGroupItem>
+            ))}
           </ToggleGroup>
+
+          {/* Gap Selector */}
+          <ToggleGroup
+            value={[layout.gap.toString()]}
+            onValueChange={(value) => {
+              if (value.length > 0) {
+                onUpdate({ ...layout, gap: parseInt(value[0]) as GapValue });
+              }
+            }}
+          >
+            <ToggleGroupItem value="2">Gap 2</ToggleGroupItem>
+            <ToggleGroupItem value="4">Gap 4</ToggleGroupItem>
+            <ToggleGroupItem value="8">Gap 8</ToggleGroupItem>
+            <ToggleGroupItem value="12">Gap 12</ToggleGroupItem>
+            <ToggleGroupItem value="16">Gap 16</ToggleGroupItem>
+          </ToggleGroup>
+
+          {/* Component Selector */}
+          <Popover open={componentsPopoverOpen} onOpenChange={setComponentsPopoverOpen}>
+            <PopoverTrigger icon={Settings2}>
+              Components ({layout.components.length})
+            </PopoverTrigger>
+            <PopoverContent className="w-96 p-4" align="start">
+              <div className="mb-3">
+                <h3 className="text-sm font-medium">Select Components</h3>
+                <p className="text-xs text-zinc-500 mt-1">
+                  Choose and order components for this layout
+                </p>
+                <Input
+                  placeholder="Search components..."
+                  value={componentSearch}
+                  onChange={(e) => setComponentSearch(e.target.value)}
+                  size="sm"
+                  className="mt-2"
+                />
+              </div>
+              <div className="max-h-96 overflow-y-auto border border-zinc-200 dark:border-zinc-800 rounded-lg">
+                <SortableList
+                  items={componentItems}
+                  onChange={handleComponentsChange}
+                  size="sm"
+                />
+              </div>
+              <div className="mt-3 flex justify-end">
+                <Button
+                  size="sm"
+                  onClick={() => setComponentsPopoverOpen(false)}
+                >
+                  Done
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </HStack>
 
-        <Stack
-          direction={direction}
-          gap={2}
-          align={direction === "horizontal" ? "center" : "start"}
-          className="flex-wrap"
+        {/* Delete Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          leftIcon={Trash2}
+          onClick={onDelete}
+          className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
         >
-          {components.map(({ name, component }) => (
-            <div key={name}>
-              {component}
-            </div>
+          Delete
+        </Button>
+      </div>
+
+      {/* Component Stack */}
+      <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 min-h-[200px]">
+        {renderedComponents.length > 0 ? (
+          <Stack
+            direction={layout.direction}
+            gap={layout.gap}
+            align={layout.direction === "horizontal" ? "center" : "start"}
+            wrap
+          >
+            {renderedComponents}
+          </Stack>
+        ) : (
+          <div className="flex items-center justify-center h-[200px] text-zinc-400">
+            <p className="text-sm">No components selected. Click "Components" to add some.</p>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+}
+
+// Main Layout Builder Page
+export default function LayoutBuilderPage() {
+  // Store layouts array in URL
+  const [layouts, setLayouts] = useQueryState(
+    "layouts",
+    parseAsJson<LayoutConfig[]>((value) => value as LayoutConfig[]).withDefault([
+      {
+        id: "1",
+        direction: "horizontal",
+        size: "base",
+        gap: 4,
+        components: ["button", "input", "select"],
+      },
+    ])
+  );
+
+  // Add a new layout
+  const addLayout = () => {
+    const newLayout: LayoutConfig = {
+      id: Date.now().toString(),
+      direction: "horizontal",
+      size: "base",
+      gap: 4,
+      components: [],
+    };
+    setLayouts([...layouts, newLayout]);
+  };
+
+  // Update a specific layout
+  const updateLayout = (updatedLayout: LayoutConfig) => {
+    setLayouts(layouts.map(layout =>
+      layout.id === updatedLayout.id ? updatedLayout : layout
+    ));
+  };
+
+  // Delete a layout
+  const deleteLayout = (layoutId: string) => {
+    setLayouts(layouts.filter(layout => layout.id !== layoutId));
+  };
+
+  return (
+    <div>
+      <PageHeader
+        title="Layout Builder"
+        description="Create and configure multiple component layouts with Stack. Experiment with direction, spacing, and component selection."
+      />
+
+      <div className="p-8">
+        {/* Add Layout Button */}
+        <div className="mb-6">
+          <Button
+            onClick={addLayout}
+            leftIcon={Plus}
+            variant="primary"
+          >
+            Add Layout
+          </Button>
+        </div>
+
+        {/* Layout Sections */}
+        <Stack gap={6}>
+          {layouts.map(layout => (
+            <LayoutSection
+              key={layout.id}
+              layout={layout}
+              onUpdate={updateLayout}
+              onDelete={() => deleteLayout(layout.id)}
+            />
           ))}
         </Stack>
+
+        {/* Empty State */}
+        {layouts.length === 0 && (
+          <Card className="p-12 text-center">
+            <p className="text-zinc-500 mb-4">No layouts yet. Click "Add Layout" to get started.</p>
+          </Card>
+        )}
       </div>
     </div>
   );

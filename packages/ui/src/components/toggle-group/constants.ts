@@ -7,6 +7,6 @@ export const ToggleGroupContext = createContext<{
   size: VariantProps<typeof toggleGroupVariants>["size"];
   variant: VariantProps<typeof toggleGroupVariants>["variant"];
 }>({
-  size: "default",
+  size: "base",
   variant: "default",
 });

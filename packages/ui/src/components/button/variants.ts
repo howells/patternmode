@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
 import { componentVariants } from "../../lib/variants";
+import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 
 export const buttonVariants = tv({
   base: [
@@ -20,17 +21,17 @@ export const buttonVariants = tv({
   variants: {
     variant: componentVariants.button,
     rounded: {
-      true: "rounded-full",
+      true: extendedBorderRadiusVariants.full,
     },
     size: {
-      "xs": "h-control-xs px-2 text-xs has-[>svg]:px-1.5 rounded-sm",
-      "sm": "h-control-sm px-2.5 text-sm has-[>svg]:px-2 rounded",
-      "base": "h-control-base px-3 text-sm has-[>svg]:px-2.5 rounded-md",
-      "lg": "h-control-lg px-4 text-sm has-[>svg]:px-3 rounded-lg",
-      "icon-xs": "size-control-xs rounded-sm",
-      "icon-sm": "size-control-sm rounded",
-      "icon": "size-control-base rounded-md",
-      "icon-lg": "size-control-lg rounded-lg",
+      "xs": `h-control-xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
+      "sm": `h-control-sm px-2.5 text-sm has-[>svg]:px-2 ${borderRadiusVariants.sm}`,
+      "base": `h-control-base px-3 text-sm has-[>svg]:px-2.5 ${borderRadiusVariants.base}`,
+      "lg": `h-control-lg px-4 text-sm has-[>svg]:px-3 ${borderRadiusVariants.lg}`,
+      "icon-xs": `size-control-xs ${borderRadiusVariants.xs}`,
+      "icon-sm": `size-control-sm ${borderRadiusVariants.sm}`,
+      "icon": `size-control-base ${borderRadiusVariants.base}`,
+      "icon-lg": `size-control-lg ${borderRadiusVariants.lg}`,
     },
   },
   compoundVariants: [

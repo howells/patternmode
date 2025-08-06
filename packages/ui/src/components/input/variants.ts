@@ -1,16 +1,17 @@
 import { tv } from "tailwind-variants";
 
 import { focusInput, hasErrorInput } from "../../lib/utils";
+import { borderRadiusVariants } from "../../lib/border-radius";
 
 // Variant for input container (wrapper div that handles styling)
 export const inputContainerStyles = tv({
   base: "relative flex items-stretch w-full border transition",
   variants: {
     size: {
-      xs: "rounded-sm",
-      sm: "rounded", 
-      base: "rounded-md",
-      lg: "rounded-lg",
+      xs: borderRadiusVariants.xs,
+      sm: borderRadiusVariants.sm,
+      base: borderRadiusVariants.base,
+      lg: borderRadiusVariants.lg,
     },
   },
   defaultVariants: {
@@ -25,7 +26,7 @@ export const inputElementStyles = tv({
     "flex-1 bg-transparent border-0 outline-none shadow-none ring-0 focus:ring-0 focus:border-0",
     // Text and placeholder colors
     "text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 dark:placeholder-zinc-500",
-    // Disabled states  
+    // Disabled states
     "data-disabled:text-zinc-400 dark:data-disabled:text-zinc-500",
     // remove search cancel button (optional)
     "[&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden",
@@ -34,7 +35,7 @@ export const inputElementStyles = tv({
     size: {
       xs: ["py-0.5 text-xs leading-tight"],
       sm: ["py-1 text-sm"],
-      base: ["py-1.5 text-sm"], 
+      base: ["py-1.5 text-sm"],
       lg: ["py-2 text-base"],
     },
   },
@@ -68,22 +69,22 @@ export const inputStyles = tv({
   variants: {
     size: {
       xs: [
-        "h-control-xs text-xs leading-tight rounded-sm",
+        `h-control-xs text-xs leading-tight ${borderRadiusVariants.xs}`,
         // file styles for xs
         "file:-my-1.5 file:-ml-1.5 file:px-1.5 file:py-1 file:[margin-inline-end:0.375rem]",
       ],
       sm: [
-        "h-control-sm text-sm rounded",
+        `h-control-sm text-sm ${borderRadiusVariants.sm}`,
         // file styles for sm
         "file:-my-2 file:-ml-2 file:px-2 file:py-1.5 file:[margin-inline-end:0.5rem]",
       ],
       base: [
-        "h-control-base text-sm rounded-md",
+        `h-control-base text-sm ${borderRadiusVariants.base}`,
         // file styles for base
         "file:-my-2.5 file:-ml-2.5 file:px-3 file:py-2 file:[margin-inline-end:0.75rem]",
       ],
       lg: [
-        "h-control-lg text-base rounded-lg",
+        `h-control-lg text-base ${borderRadiusVariants.lg}`,
         // file styles for lg
         "file:-my-3 file:-ml-3 file:px-4 file:py-2.5 file:[margin-inline-end:1rem]",
       ],

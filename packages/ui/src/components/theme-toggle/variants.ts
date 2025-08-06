@@ -1,11 +1,12 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
 import { componentVariants } from "../../lib/variants";
+import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 
 export const themeToggleVariants = tv({
   base: [
     // base
-    "relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm outline-hidden",
+    "relative inline-flex items-center justify-center whitespace-nowrap text-sm outline-hidden",
     // cursor
     "cursor-pointer",
     // border
@@ -22,12 +23,12 @@ export const themeToggleVariants = tv({
   variants: {
     variant: componentVariants.button,
     rounded: {
-      true: "rounded-full",
-      false: "rounded-md",
+      true: extendedBorderRadiusVariants.full,
+      false: borderRadiusVariants.base,
     },
     size: {
       "xs": "size-control-xs",
-      "sm": "size-control-sm", 
+      "sm": "size-control-sm",
       "default": "size-control-base",
       "lg": "size-control-lg",
     },

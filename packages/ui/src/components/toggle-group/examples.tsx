@@ -191,7 +191,7 @@ export function SizesExample() {
           Default
         </h4>
         <ToggleGroup
-          size="default"
+          size="base"
           value={defaultValue}
           onValueChange={setDefaultValue}
         >
@@ -287,6 +287,72 @@ export function ControlledExample() {
       >
         Clear Selection
       </button>
+    </div>
+  );
+}
+
+export function ButtonAlignmentExample() {
+  const [alignment, setAlignment] = React.useState<string[]>(["left"]);
+  const [size, setSize] = React.useState<"xs" | "sm" | "base" | "lg">("base");
+
+  return (
+    <div className="space-y-6">
+      <div>
+                <h4 className="text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300">
+          Size: {size}
+        </h4>
+        <div className="flex items-center gap-3">
+          <ToggleGroup size={size} value={alignment} onValueChange={setAlignment}>
+            <ToggleGroupItem value="left">
+              <Icon icon={AlignLeft} />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="center">
+              <Icon icon={AlignCenter} />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="right">
+              <Icon icon={AlignRight} />
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          <button
+            className={`px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors ${
+              size === "xs" ? "text-xs h-8" :
+              size === "sm" ? "text-sm h-9" :
+              size === "lg" ? "text-base h-12" :
+              "text-sm h-10"
+            }`}
+          >
+            Regular Button
+          </button>
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => setSize("xs")}
+          className={`px-2 py-1 text-xs rounded ${size === "xs" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
+        >
+          XS
+        </button>
+        <button
+          onClick={() => setSize("sm")}
+          className={`px-2 py-1 text-xs rounded ${size === "sm" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
+        >
+          SM
+        </button>
+        <button
+          onClick={() => setSize("base")}
+          className={`px-2 py-1 text-xs rounded ${size === "base" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
+        >
+          Base
+        </button>
+        <button
+          onClick={() => setSize("lg")}
+          className={`px-2 py-1 text-xs rounded ${size === "lg" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
+        >
+          LG
+        </button>
+      </div>
     </div>
   );
 }

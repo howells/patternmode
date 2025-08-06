@@ -14,7 +14,7 @@ export type ToggleGroupPreviewProps = {
    * Size variant for the toggle group items.
    * Controls the dimensions and padding of toggle buttons.
    */
-  size?: "xs" | "sm" | "default" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
   /**
    * Selection type for the toggle group.
    * Single allows one item, multiple allows several items to be selected.
@@ -39,7 +39,7 @@ export type ToggleGroupPreviewProps = {
 
 export function ToggleGroupPreview({
   variant = "default",
-  size = "default",
+  size = "base",
   type = "multiple",
   contentType = "alignment",
   showIcons = true,
@@ -103,8 +103,8 @@ export const toggleGroupPreviewProps = [
     name: "size",
     type: "select",
     description: "Toggle group size variant - affects padding and text size of the toggle items.",
-    options: ["sm", "default", "lg"],
-    defaultValue: "default",
+    options: ["sm", "base", "lg"],
+    defaultValue: "base",
   },
   {
     name: "orientation",

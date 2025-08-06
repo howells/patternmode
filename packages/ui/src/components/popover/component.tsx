@@ -1,7 +1,11 @@
 import { Popover as BasePopover } from "@base-ui-components/react/popover";
+import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";
 
 import { cx } from "../../lib/utils";
+import { Button, type ButtonProps } from "../button/component";
+import type { IconComponent } from "../../lib/icon-utils";
+import type { Size } from "../../lib/component-config-types";
 
 type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;
 
@@ -21,26 +25,85 @@ type PopoverTriggerProps = {
    * Additional CSS classes for styling customization.
    */
   className?: string;
+  /**
+   * Custom element to render (defaults to Button).
+   * Enables using custom components as the trigger.
+   */
+  render?: useRender.RenderProp<Record<string, unknown>>;
+  /**
+   * Button variant to use for the default render.
+   */
+  variant?: ButtonProps["variant"];
+  /**
+   * Button size to use for the default render.
+   */
+  size?: Size;
+  /**
+   * Icon component to display on the left side of the default Button render.
+   */
+  leftIcon?: ButtonProps["leftIcon"];
+  /**
+   * Icon component to display on the right side of the default Button render.
+   */
+  rightIcon?: ButtonProps["rightIcon"];
+  /**
+   * Icon component (proxy for leftIcon) for the default Button render.
+   */
+  icon?: ButtonProps["icon"];
+  /**
+   * Whether the button should take full width in the default render.
+   */
+  fullWidth?: ButtonProps["fullWidth"];
+  /**
+   * Whether the button should have rounded corners in the default render.
+   */
+  rounded?: ButtonProps["rounded"];
 } & React.ComponentPropsWithoutRef<typeof BasePopover.Trigger>;
 
 /**
  * Trigger element that opens the popover when activated with proper focus states.
  */
-const PopoverTrigger = ({ ref, className, ...props }: PopoverTriggerProps) => (
-  <BasePopover.Trigger
-    ref={ref}
-    className={cx(
-      // base
-      "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors",
-      // focus
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
-      // disabled
-      "disabled:pointer-events-none disabled:opacity-50",
-      className,
-    )}
-    {...props}
-  />
-);
+const PopoverTrigger = ({
+  ref,
+  className,
+  children,
+  render,
+  variant = "outline",
+  size,
+  leftIcon,
+  rightIcon,
+  icon,
+  fullWidth,
+  rounded,
+  ...props
+}: PopoverTriggerProps) => {
+  // Default to Button render unless custom render prop is provided
+  const defaultRender = (
+    <Button
+      variant={variant}
+      size={size}
+      leftIcon={leftIcon}
+      rightIcon={rightIcon}
+      icon={icon}
+      fullWidth={fullWidth}
+      rounded={rounded}
+      className={cx(
+        "cursor-pointer",
+        className,
+      )}
+    />
+  );
+
+  return (
+    <BasePopover.Trigger
+      ref={ref}
+      render={render || defaultRender}
+      {...props}
+    >
+      {children}
+    </BasePopover.Trigger>
+  );
+};
 PopoverTrigger.displayName = "PopoverTrigger";
 
 type PopoverPortalProps = React.ComponentPropsWithoutRef<typeof BasePopover.Portal>;

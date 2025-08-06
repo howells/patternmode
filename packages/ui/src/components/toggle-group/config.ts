@@ -2,6 +2,7 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { ToggleLeft } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 import {
+  ButtonAlignmentExample,
   ControlledExample,
   DefaultExample,
   DisabledExample,
@@ -67,6 +68,12 @@ export const toggleGroupConfig: ComponentConfig = {
       title: "Controlled",
       description: "Controlled toggle group with external state management",
       component: ControlledExample,
+    },
+    {
+      id: "button-alignment",
+      title: "Button Alignment",
+      description: "Toggle group aligned with regular buttons to demonstrate consistent heights",
+      component: ButtonAlignmentExample,
     },
   ],
   components: [

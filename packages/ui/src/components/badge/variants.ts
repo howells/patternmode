@@ -3,6 +3,7 @@ import { cx } from "../../lib/utils";
 import {
   getVariantClasses,
 } from "../../lib/variants";
+import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 
 // Badge variant configurations - generate dynamically for all supported colors
 const badgeVariantStyles = {
@@ -55,8 +56,8 @@ const badgeVariantsDefinition = {
       false: "",
     },
     rounded: {
-      true: "rounded-full",
-      false: "rounded-md",
+      true: extendedBorderRadiusVariants.full,
+      false: borderRadiusVariants.base,
     },
   },
   defaultVariants: {
@@ -70,7 +71,8 @@ const badgeVariantsDefinition = {
 // Update badge variants to handle dismiss button padding like Tag does
 export const badgeVariants = tv({
   base: cx(
-    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md",
+    "inline-flex items-center gap-x-1.5 whitespace-nowrap",
+    borderRadiusVariants.base,
   ),
   ...badgeVariantsDefinition,
   compoundVariants: [
@@ -174,48 +176,6 @@ export const badgeVariants = tv({
       rounded: true,
       size: "lg",
       class: "has-[svg:last-child]:pr-3",
-    },
-    // When rounded AND has both left icon and dismiss button, adjust both paddings
-    {
-      rounded: true,
-      size: "xs",
-      class: "has-[svg:first-child]:has-[button]:pl-1.5 has-[svg:first-child]:has-[button]:pr-1",
-    },
-    {
-      rounded: true,
-      size: "sm",
-      class: "has-[svg:first-child]:has-[button]:pl-2 has-[svg:first-child]:has-[button]:pr-1.5",
-    },
-    {
-      rounded: true,
-      size: "base",
-      class: "has-[svg:first-child]:has-[button]:pl-2.5 has-[svg:first-child]:has-[button]:pr-1.5",
-    },
-    {
-      rounded: true,
-      size: "lg",
-      class: "has-[svg:first-child]:has-[button]:pl-3 has-[svg:first-child]:has-[button]:pr-2",
-    },
-    // When rounded AND has right icon and dismiss button, adjust both paddings
-    {
-      rounded: true,
-      size: "xs",
-      class: "has-[svg:last-child]:has-[button]:pl-1.5 has-[svg:last-child]:has-[button]:pr-1",
-    },
-    {
-      rounded: true,
-      size: "sm",
-      class: "has-[svg:last-child]:has-[button]:pl-2 has-[svg:last-child]:has-[button]:pr-1.5",
-    },
-    {
-      rounded: true,
-      size: "base",
-      class: "has-[svg:last-child]:has-[button]:pl-2.5 has-[svg:last-child]:has-[button]:pr-1.5",
-    },
-    {
-      rounded: true,
-      size: "lg",
-      class: "has-[svg:last-child]:has-[button]:pl-3 has-[svg:last-child]:has-[button]:pr-2",
     },
   ],
 });

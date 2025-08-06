@@ -4,22 +4,59 @@
 
 import type { ToggleProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
+import { useRender } from "@base-ui-components/react/use-render";
 
 import React from "react";
 import { cx } from "../../lib/utils";
+import { Button } from "../button/component";
 import { toggleVariants } from "./variants";
 
 /**
  * A two-state button component that toggles between pressed (on) and unpressed (off) states.
  */
-const Toggle = ({ ref, className, variant, size, ...props }: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => (
-  <BaseToggle
-    data-testid="toggle"
-    ref={ref}
-    className={cx(toggleVariants({ variant, size }), className)}
-    {...props}
-  />
-);
+const Toggle = ({
+  ref,
+  className,
+  variant,
+  size,
+  children,
+  render,
+  leftIcon,
+  rightIcon,
+  icon,
+  fullWidth,
+  rounded,
+  ...props
+}: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => {
+  return (
+    <BaseToggle
+      data-testid="toggle"
+      ref={ref}
+      render={render || ((toggleProps, state) => {
+        const { ref: _, ...buttonProps } = toggleProps;
+        return (
+          <Button
+            {...buttonProps}
+            variant={state.pressed ? "secondary" : "ghost"}
+            size={size}
+            leftIcon={leftIcon}
+            rightIcon={rightIcon}
+            icon={icon}
+            fullWidth={fullWidth}
+            rounded={rounded}
+            className={cx(
+              toggleVariants({ variant, size }),
+              className,
+            )}
+          >
+            {children}
+          </Button>
+        );
+      })}
+      {...props}
+    />
+  );
+};
 
 Toggle.displayName = "Toggle";
 

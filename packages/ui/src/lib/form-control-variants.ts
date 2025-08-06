@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 
 import { focusInput, hasErrorInput } from "./utils";
+import { borderRadiusVariants } from "./border-radius";
 
 /**
  * Shared variants for form control containers (Input, Select, etc.)
@@ -18,10 +19,10 @@ export const formControlContainerVariants = tv({
   ],
   variants: {
     size: {
-      xs: "h-control-xs rounded-sm",
-      sm: "h-control-sm rounded", 
-      base: "h-control-base rounded-md",
-      lg: "h-control-lg rounded-lg",
+      xs: `h-control-xs ${borderRadiusVariants.xs}`,
+      sm: `h-control-sm ${borderRadiusVariants.sm}`,
+      base: `h-control-base ${borderRadiusVariants.base}`,
+      lg: `h-control-lg ${borderRadiusVariants.lg}`,
     },
     hasError: {
       true: "border-red-500 dark:border-red-500",
@@ -50,7 +51,7 @@ export const formControlElementVariants = tv({
     size: {
       xs: "text-xs leading-tight",
       sm: "text-sm",
-      base: "text-sm", 
+      base: "text-sm",
       lg: "text-base",
     },
     variant: {
@@ -72,22 +73,22 @@ export const formControlElementVariants = tv({
     {
       variant: "standalone",
       size: "xs",
-      class: "h-control-xs px-2 rounded-sm",
-    },
-    {
-      variant: "standalone", 
-      size: "sm",
-      class: "h-control-sm px-2.5 rounded",
+      class: `h-control-xs px-2 ${borderRadiusVariants.xs}`,
     },
     {
       variant: "standalone",
-      size: "base", 
-      class: "h-control-base px-3 rounded-md",
+      size: "sm",
+      class: `h-control-sm px-2.5 ${borderRadiusVariants.sm}`,
+    },
+    {
+      variant: "standalone",
+      size: "base",
+      class: `h-control-base px-3 ${borderRadiusVariants.base}`,
     },
     {
       variant: "standalone",
       size: "lg",
-      class: "h-control-lg px-4 rounded-lg",
+      class: `h-control-lg px-4 ${borderRadiusVariants.lg}`,
     },
     // Contained sizing includes padding only (height handled by container)
     {
@@ -97,7 +98,7 @@ export const formControlElementVariants = tv({
     },
     {
       variant: "contained",
-      size: "sm", 
+      size: "sm",
       class: "py-1.5 px-2.5",
     },
     {

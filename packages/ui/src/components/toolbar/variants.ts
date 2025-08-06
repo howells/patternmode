@@ -1,23 +1,22 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
+import { borderRadiusVariants } from "../../lib/border-radius";
 
 export const toolbarVariants = tv({
   slots: {
     root: [
       // base
-      "flex items-center gap-px rounded-md border p-0.5",
+      "flex items-center gap-px border p-0.5",
       // colors
-      " bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800",
+      "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700",
     ],
     button: [
       // base
-      "flex items-center justify-center rounded-sm font-medium select-none transition-all duration-100 ease-in-out",
+      "flex items-center justify-center font-medium select-none transition-all duration-100 ease-in-out",
       // colors
       "text-zinc-600 dark:text-zinc-400",
       // hover
       "hover:bg-zinc-100 dark:hover:bg-zinc-700",
-      // active
-      "active:bg-zinc-200 dark:active:bg-zinc-600",
       // highlighted (keyboard navigation)
       "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-700",
       // pressed (for toggle buttons)
@@ -30,7 +29,7 @@ export const toolbarVariants = tv({
     ],
     link: [
       // base
-      "flex items-center justify-center rounded-sm font-medium select-none transition-all duration-100 ease-in-out no-underline",
+      "flex items-center justify-center font-medium select-none transition-all duration-100 ease-in-out no-underline",
       // colors
       "text-zinc-500 dark:text-zinc-400",
       // hover
@@ -43,7 +42,7 @@ export const toolbarVariants = tv({
     ],
     input: [
       // base
-      "flex items-center justify-center rounded-sm font-medium transition-all duration-100 ease-in-out",
+      "flex items-center justify-center font-medium transition-all duration-100 ease-in-out",
       // colors
       "text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-950",
       // border
@@ -82,22 +81,22 @@ export const toolbarVariants = tv({
     },
     size: {
       sm: {
-        root: "gap-0.5 p-0.5",
-        button: "h-6 min-w-6 px-1.5 text-xs",
-        link: "h-6 px-1.5 text-xs",
-        input: "h-6 px-1.5 text-xs",
+        root: `gap-0.5 p-0.5 ${borderRadiusVariants.sm}`,
+        button: `h-6 min-w-6 px-1.5 text-xs ${borderRadiusVariants.sm}`,
+        link: `h-6 px-1.5 text-xs ${borderRadiusVariants.sm}`,
+        input: `h-6 px-1.5 text-xs ${borderRadiusVariants.sm}`,
       },
       default: {
-        root: "gap-px p-0.5",
-        button: "h-8 min-w-8 px-3 text-sm",
-        link: "h-8 px-3 text-sm",
-        input: "h-8 px-3 text-sm",
+        root: `gap-px p-0.5 ${borderRadiusVariants.base}`,
+        button: `h-8 min-w-8 px-3 text-sm ${borderRadiusVariants.base}`,
+        link: `h-8 px-3 text-sm ${borderRadiusVariants.base}`,
+        input: `h-8 px-3 text-sm ${borderRadiusVariants.base}`,
       },
       lg: {
-        root: "gap-1 p-1",
-        button: "h-10 min-w-10 px-4 text-base",
-        link: "h-10 px-4 text-base",
-        input: "h-10 px-4 text-base",
+        root: `gap-1 p-1 ${borderRadiusVariants.lg}`,
+        button: `h-10 min-w-10 px-4 text-base ${borderRadiusVariants.lg}`,
+        link: `h-10 px-4 text-base ${borderRadiusVariants.lg}`,
+        input: `h-10 px-4 text-base ${borderRadiusVariants.lg}`,
       },
     },
     orientation: {
