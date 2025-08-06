@@ -187,7 +187,7 @@ const FormControl = ({ className, children, ...props }: FormControlProps & { chi
         render={controlProps => (
           <div className={className}>
             {React.isValidElement(children)
-              ? React.cloneElement(children, { ...controlProps, ...(typeof children.props === 'object' && children.props !== null ? children.props : {}) })
+              ? React.cloneElement(children, { ...controlProps, ...(typeof children.props === "object" && children.props !== null ? children.props : {}) })
               : children}
           </div>
         )}

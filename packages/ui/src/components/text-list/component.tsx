@@ -28,7 +28,7 @@ export const TextList = ({
       {children}
     </Component>
   );
-}
+};
 
 /**
  * Individual list item component with consistent styling and alignment.

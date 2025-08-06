@@ -3,12 +3,11 @@
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import { useRender } from "@base-ui-components/react/use-render";
 import React, { use } from "react";
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
-import { getIconSizeForContext, Icon } from "../icon/component";
+import { getIconSizeForContext } from "../icon/component";
 import { ToggleGroupContext } from "./constants";
 import { toggleGroupVariants } from "./variants";
 

@@ -1,16 +1,11 @@
 "use client";
 
+import type { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
+import type { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
+import type { Slider as BaseSlider } from "@base-ui-components/react/slider";
+import type { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import type { LucideIcon } from "lucide-react";
-import { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
-import { Slider as BaseSlider } from "@base-ui-components/react/slider";
-import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
-import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 
-import { Calendar, Clipboard, Factory, Globe, Mail, MapPin, Package, Phone, Settings, Shield, Star, Tag, TrendingUp, User, Users, Zap } from "lucide-react";
-import { useState } from "react";
-import { z } from "zod";
-
-import { PageHeader } from "@/components/page-header";
 // UI Component imports
 import { Button } from "@patternmode/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
@@ -24,11 +19,16 @@ import { Input } from "@patternmode/ui/components/input";
 import { NumberField } from "@patternmode/ui/components/number-field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
 import { Slider } from "@patternmode/ui/components/slider";
-import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
+import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Switch } from "@patternmode/ui/components/switch";
 import { TagInput } from "@patternmode/ui/components/tag-input";
 import { Text } from "@patternmode/ui/components/text";
 import { Textarea } from "@patternmode/ui/components/textarea";
+import { Clipboard, Factory, Mail, MapPin, Package, Phone, Settings, Star, TrendingUp, User } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
+
+import { PageHeader } from "@/components/page-header";
 
 // Define the type locally since it's not exported
 type GlobalSemanticVariant = "info" | "success" | "warning" | "error" | "neutral" | "positive";
@@ -454,7 +454,7 @@ export default function FormsPage() {
                                 value={productData.quantity}
                                 onChange={value => setProductData(prev => ({ ...prev, quantity: value }))}
                                 {...filteredProps}
-                            />
+                              />
                             );
                           }}
                         />

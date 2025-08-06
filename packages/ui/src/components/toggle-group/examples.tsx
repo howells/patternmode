@@ -298,7 +298,7 @@ export function ButtonAlignmentExample() {
   return (
     <div className="space-y-6">
       <div>
-                <h4 className="text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300">
+        <h4 className="text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300">
           Size: {size}
         </h4>
         <div className="flex items-center gap-3">
@@ -316,10 +316,13 @@ export function ButtonAlignmentExample() {
 
           <button
             className={`px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors ${
-              size === "xs" ? "text-xs h-8" :
-              size === "sm" ? "text-sm h-9" :
-              size === "lg" ? "text-base h-12" :
-              "text-sm h-10"
+              size === "xs"
+                ? "text-xs h-8"
+                : size === "sm"
+                  ? "text-sm h-9"
+                  : size === "lg"
+                    ? "text-base h-12"
+                    : "text-sm h-10"
             }`}
           >
             Regular Button

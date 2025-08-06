@@ -1,15 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { Button } from './component';
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { Button } from "./component";
 
-describe('Button Component', () => {
-  it('should render correctly', () => {
+describe("button Component", () => {
+  it("should render correctly", () => {
     render(<Button>Click me</Button>);
-    expect(screen.getByRole('button')).toBeDefined();
+    expect(screen.getByRole("button")).toBeDefined();
   });
 
-  it('should display the correct text', () => {
+  it("should display the correct text", () => {
     render(<Button>Test Button</Button>);
-    expect(screen.getByText('Test Button')).toBeDefined();
+    expect(screen.getByText("Test Button")).toBeDefined();
   });
 });

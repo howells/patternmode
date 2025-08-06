@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import { focusRing } from "../../lib/utils";
 import { borderRadiusVariants } from "../../lib/border-radius";
+import { focusRing } from "../../lib/utils";
 
 /**
  * Style variants for radio components.

@@ -83,31 +83,31 @@ export function NavigationMenuPreview({
   };
 
   return (
-      <NavigationMenu orientation={orientation}>
-        <NavigationMenuList>
-          {menuItems.map(menu => (
-            <NavigationMenuItem key={menu.title}>
-              <NavigationMenuTrigger>{menu.title}</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className={getContentClassName()}>
-                  {menu.items.map(item => (
-                    <NavigationMenuLink key={item.name} href={item.href}>
-                      <div>
-                        <div className="font-medium">{item.name}</div>
-                        {showDescriptions && (
-                          <div className="text-sm text-zinc-600 dark:text-zinc-400">
-                            {item.desc}
-                          </div>
-                        )}
-                      </div>
-                    </NavigationMenuLink>
-                  ))}
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
+    <NavigationMenu orientation={orientation}>
+      <NavigationMenuList>
+        {menuItems.map(menu => (
+          <NavigationMenuItem key={menu.title}>
+            <NavigationMenuTrigger>{menu.title}</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className={getContentClassName()}>
+                {menu.items.map(item => (
+                  <NavigationMenuLink key={item.name} href={item.href}>
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      {showDescriptions && (
+                        <div className="text-sm text-zinc-600 dark:text-zinc-400">
+                          {item.desc}
+                        </div>
+                      )}
+                    </div>
+                  </NavigationMenuLink>
+                ))}
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
 

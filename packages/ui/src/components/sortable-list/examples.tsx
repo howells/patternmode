@@ -19,8 +19,8 @@ export const DefaultExample = () => {
 
   return (
     <div className="max-w-md">
-      <SortableList 
-        items={items} 
+      <SortableList
+        items={items}
         onChange={setItems}
       />
       <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-900 rounded-md">
@@ -45,8 +45,8 @@ export const ReorderOnlyExample = () => {
 
   return (
     <div className="max-w-md">
-      <SortableList 
-        items={items} 
+      <SortableList
+        items={items}
         onChange={setItems}
         showCheckbox={false}
       />
@@ -66,8 +66,8 @@ export const CheckboxOnlyExample = () => {
 
   return (
     <div className="max-w-md">
-      <SortableList 
-        items={items} 
+      <SortableList
+        items={items}
         onChange={setItems}
         showDragHandle={false}
         allowReorder={false}
@@ -88,8 +88,8 @@ export const WithDisabledItemsExample = () => {
 
   return (
     <div className="max-w-md">
-      <SortableList 
-        items={items} 
+      <SortableList
+        items={items}
         onChange={setItems}
       />
     </div>
@@ -166,8 +166,8 @@ export const FormFieldsExample = () => {
     <div className="max-w-md">
       <h3 className="text-sm font-medium mb-3">Select and order form fields</h3>
       <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
-        <SortableList 
-          items={items} 
+        <SortableList
+          items={items}
           onChange={setItems}
         />
       </div>

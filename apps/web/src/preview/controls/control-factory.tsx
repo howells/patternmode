@@ -1,6 +1,7 @@
+import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+
 import React from "react";
 
-import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
 import type { PropControlProps } from "./types";
 
 import { getPropOverride } from "../prop-overrides";

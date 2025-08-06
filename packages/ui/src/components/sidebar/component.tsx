@@ -1,13 +1,13 @@
 "use client";
 
-import { ChevronDown, ChevronUp, Circle, ArrowRight, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
+import type { IconComponent } from "../../lib/icon-utils";
+import { ArrowRight, ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import Link from "next/link";
 import * as React from "react";
-import { useId, useState } from "react";
 
+import { useId, useState } from "react";
 import { cx } from "../../lib/utils";
-import type { IconComponent } from "../../lib/icon-utils";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";

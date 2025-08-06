@@ -12,5 +12,6 @@ export const TestComboChart = () => (
     showGridLines
     showTooltip
     enableLegendSlider
-  >Test ComboChart</ComboChart>
+  >Test ComboChart
+  </ComboChart>
 );

@@ -1,8 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import type { ComponentConfig } from "@patternmode/ui/lib/component-config-types";
 
 import { Button } from "@patternmode/ui/components/button";
 import {
@@ -12,12 +10,13 @@ import {
   DialogTitle,
 } from "@patternmode/ui/components/dialog";
 import { Input } from "@patternmode/ui/components/input";
+import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
 import { Text } from "@patternmode/ui/components/text";
-import { getAllComponents } from "@patternmode/ui/components/registry";
 import { cx } from "@patternmode/ui/lib/utils";
-
-import type { ComponentConfig } from "@patternmode/ui/lib/component-config-types";
+import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 
 type ComponentSearchProps = {
   placeholder?: string;
@@ -50,16 +49,16 @@ export function ComponentSearch({
 
     if (searchTerm.trim()) {
       filtered = allComponents.filter(component =>
-        component.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        component.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        component.category.toLowerCase().includes(searchTerm.toLowerCase())
+        component.name.toLowerCase().includes(searchTerm.toLowerCase())
+        || component.description.toLowerCase().includes(searchTerm.toLowerCase())
+        || component.category.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     // Group by category
     const grouped = filtered.reduce((acc, component) => {
       const category = component.category.charAt(0).toUpperCase() + component.category.slice(1);
-      if (!acc[category]) acc[category] = [];
+      if (!acc[category]) { acc[category] = []; }
       acc[category].push(component);
       return acc;
     }, {} as Record<string, ComponentConfig[]>);
@@ -70,7 +69,8 @@ export function ComponentSearch({
   const handleSelect = useCallback((component: ComponentConfig) => {
     if (onSelectComponent) {
       onSelectComponent(component);
-    } else {
+    }
+    else {
       const url = `/ui/${component.category}/${component.id}`;
       router.push(url);
     }
@@ -81,10 +81,12 @@ export function ComponentSearch({
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex(prev => Math.min(prev + 1, filteredComponents.length - 1));
-    } else if (e.key === "ArrowUp") {
+    }
+    else if (e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedIndex(prev => Math.max(prev - 1, 0));
-    } else if (e.key === "Enter" && filteredComponents[selectedIndex]) {
+    }
+    else if (e.key === "Enter" && filteredComponents[selectedIndex]) {
       e.preventDefault();
       handleSelect(filteredComponents[selectedIndex]);
     }
@@ -120,7 +122,7 @@ export function ComponentSearch({
             <Input
               placeholder={placeholder}
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
               prefixIcon={Search}
               autoFocus
@@ -128,48 +130,50 @@ export function ComponentSearch({
             />
 
             <div className="h-80 overflow-y-auto">
-              {filteredComponents.length === 0 ? (
-                <div className="py-8 text-center">
-                  <Text className="text-zinc-500">No components found</Text>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {Object.entries(groupedComponents).map(([category, components]) => (
-                    <div key={category}>
-                      <Text size="sm" className="font-semibold text-zinc-500 mb-2 px-1">
-                        {category}
-                      </Text>
-                      <div className="space-y-1">
-                        {components.map((component, index) => {
-                          const globalIndex = filteredComponents.indexOf(component);
-                          const isSelected = globalIndex === selectedIndex;
-
-                          return (
-                            <button
-                              key={component.id}
-                              className={cx(
-                                "w-full text-left p-3 rounded-md transition-colors",
-                                "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-                                "focus:outline-none focus:bg-zinc-100 dark:focus:bg-zinc-800",
-                                isSelected && "bg-zinc-100 dark:bg-zinc-800"
-                              )}
-                              onClick={() => handleSelect(component)}
-                              onMouseEnter={() => setSelectedIndex(globalIndex)}
-                            >
-                              <Stack gap={1}>
-                                <Text className="font-medium">{component.name}</Text>
-                                <Text size="sm" className="text-zinc-600 dark:text-zinc-400">
-                                  {component.description}
-                                </Text>
-                              </Stack>
-                            </button>
-                          );
-                        })}
-                      </div>
+              {filteredComponents.length === 0
+                ? (
+                    <div className="py-8 text-center">
+                      <Text className="text-zinc-500">No components found</Text>
                     </div>
-                  ))}
-                </div>
-              )}
+                  )
+                : (
+                    <div className="space-y-4">
+                      {Object.entries(groupedComponents).map(([category, components]) => (
+                        <div key={category}>
+                          <Text size="sm" className="font-semibold text-zinc-500 mb-2 px-1">
+                            {category}
+                          </Text>
+                          <div className="space-y-1">
+                            {components.map((component, index) => {
+                              const globalIndex = filteredComponents.indexOf(component);
+                              const isSelected = globalIndex === selectedIndex;
+
+                              return (
+                                <button
+                                  key={component.id}
+                                  className={cx(
+                                    "w-full text-left p-3 rounded-md transition-colors",
+                                    "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+                                    "focus:outline-none focus:bg-zinc-100 dark:focus:bg-zinc-800",
+                                    isSelected && "bg-zinc-100 dark:bg-zinc-800",
+                                  )}
+                                  onClick={() => handleSelect(component)}
+                                  onMouseEnter={() => setSelectedIndex(globalIndex)}
+                                >
+                                  <Stack gap={1}>
+                                    <Text className="font-medium">{component.name}</Text>
+                                    <Text size="sm" className="text-zinc-600 dark:text-zinc-400">
+                                      {component.description}
+                                    </Text>
+                                  </Stack>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
             </div>
           </div>
         </DialogContent>

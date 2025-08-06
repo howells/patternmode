@@ -1,11 +1,11 @@
-import { Popover as BasePopover } from "@base-ui-components/react/popover";
-import { useRender } from "@base-ui-components/react/use-render";
-import React from "react";
-
-import { cx } from "../../lib/utils";
-import { Button, type ButtonProps } from "../button/component";
-import type { IconComponent } from "../../lib/icon-utils";
+import type { useRender } from "@base-ui-components/react/use-render";
 import type { Size } from "../../lib/component-config-types";
+
+import type { ButtonProps } from "../button/component";
+import { Popover as BasePopover } from "@base-ui-components/react/popover";
+import React from "react";
+import { cx } from "../../lib/utils";
+import { Button } from "../button/component";
 
 type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;
 

@@ -1,7 +1,6 @@
-import React from "react";
-
 import { FieldControl } from "@patternmode/ui/components/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
+import React from "react";
 
 import type { PropControlProps } from "./types";
 
@@ -26,7 +25,7 @@ function getStringOptions(prop: PropControlProps["prop"]): string[] {
   }
 
   // Handle object array with value property
-  return prop.options.map(opt => {
+  return prop.options.map((opt) => {
     if (typeof opt === "object" && opt !== null && "value" in opt) {
       return opt.value;
     }

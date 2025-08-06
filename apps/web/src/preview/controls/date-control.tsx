@@ -1,7 +1,6 @@
-import React from "react";
-
 import { DatePicker } from "@patternmode/ui/components/date-picker";
 import { FieldControl } from "@patternmode/ui/components/field";
+import React from "react";
 
 import type { PropControlProps } from "./types";
 

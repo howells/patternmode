@@ -62,12 +62,6 @@ const ICON_MAPPING = generateIconMapping();
  */
 const ALL_KEBAB_ICONS = Object.keys(ICON_MAPPING).sort();
 
-type IconSearchParams = {
-  page?: number;
-  limit?: number;
-  search?: string;
-};
-
 type IconResponse = {
   icons: Array<{
     kebab: string;

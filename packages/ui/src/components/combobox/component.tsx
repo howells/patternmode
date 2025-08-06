@@ -382,7 +382,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     },
   );
 
-
   return (
     <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox">
       {/* Trigger Button */}

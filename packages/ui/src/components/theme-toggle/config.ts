@@ -2,13 +2,13 @@ import type { ComponentConfig } from "../../lib/component-config-types";
 import { Palette } from "lucide-react";
 import { ThemeToggle } from "./component";
 import {
+  DarkThemeExample,
   DefaultExample,
+  DisabledExample,
+  LoadingExample,
+  RoundedExample,
   SizesExample,
   VariantsExample,
-  RoundedExample,
-  LoadingExample,
-  DarkThemeExample,
-  DisabledExample,
 } from "./examples";
 
 export const themeToggleConfig: ComponentConfig = {
@@ -27,7 +27,7 @@ export const themeToggleConfig: ComponentConfig = {
     },
     {
       id: "sizes",
-      title: "Sizes", 
+      title: "Sizes",
       description: "Different size variants from xs to lg",
       component: SizesExample,
     },

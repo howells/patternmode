@@ -1,11 +1,11 @@
 "use client";
 
+import type { Size } from "../../lib/component-config-types";
 import React from "react";
+import { sizes } from "../../lib/component-config-types";
 import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
-import type { Size } from "../../lib/component-config-types";
-import { sizes } from "../../lib/component-config-types";
 
 export type TabsPreviewProps = {
   /**
@@ -106,5 +106,5 @@ export const tabsPreviewProps = [
     type: "boolean",
     description: "Hide the bottom divider line (only applies to line variant).",
     defaultValue: false,
-  }
+  },
 ];

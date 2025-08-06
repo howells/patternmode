@@ -158,16 +158,16 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
       }, 300);
     }
     else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) { clearInterval(intervalRef.current); }
     }
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) { clearInterval(intervalRef.current); }
     };
   }, [isPressed, onClick]);
 
   React.useEffect(() => {
     if (disabled) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) { clearInterval(intervalRef.current); }
       setIsPressed(false);
     }
   }, [disabled]);
@@ -303,10 +303,10 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       }, 300);
     }
     else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) { clearInterval(intervalRef.current); }
     }
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) { clearInterval(intervalRef.current); }
     };
   }, [isKeyDowned, scrollToTest]);
 

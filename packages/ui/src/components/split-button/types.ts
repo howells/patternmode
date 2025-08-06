@@ -1,7 +1,7 @@
 import type React from "react";
-import type { MenuContent } from "../menu/component";
 import type { Size } from "../../lib/component-config-types";
 import type { ButtonVariant } from "../../lib/variants";
+import type { MenuContent } from "../menu/component";
 
 export type SplitButtonVariant = ButtonVariant;
 

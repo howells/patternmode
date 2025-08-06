@@ -1,4 +1,3 @@
-
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";

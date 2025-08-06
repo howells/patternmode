@@ -18,7 +18,7 @@ import { config } from "../../lib/config";
 import { cx, hasErrorInput } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Icon } from "../icon/component";
-import { selectItemVariants, selectPopoverVariants, selectTriggerVariants } from "./variants";
+import { selectItemVariants, selectPopoverVariants } from "./variants";
 
 /**
  * Dropdown selection component with searchable options and keyboard navigation.

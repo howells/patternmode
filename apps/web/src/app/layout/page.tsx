@@ -1,27 +1,30 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import { PageHeader } from "@/components/page-header";
-import { Stack } from "@patternmode/ui/components/stack";
-import { Button } from "@patternmode/ui/components/button";
-import { Card } from "@patternmode/ui/components/card";
-import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@patternmode/ui/components/select";
-import { SortableList } from "@patternmode/ui/components/sortable-list";
-import { Input } from "@patternmode/ui/components/input";
-import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/ui/components/toolbar";
+import type { ComponentId } from "@patternmode/ui/components/registry";
 import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
-import { Rows3, MoreHorizontal, Plus, Trash2, Settings2, GripVertical } from "lucide-react";
-import { useQueryState, parseAsJson } from "nuqs";
 import type { Size } from "@patternmode/ui/lib/component-config-types";
 import type { GapValue } from "@patternmode/ui/lib/spacing-utils";
-import { sizes } from "@patternmode/ui/lib/component-config-types";
+
+import { Button } from "@patternmode/ui/components/button";
+import { Card } from "@patternmode/ui/components/card";
+import { Input } from "@patternmode/ui/components/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
 import {
   COMPONENT_REGISTRY,
+
   PREVIEW_REGISTRY,
-  type ComponentId
 } from "@patternmode/ui/components/registry";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
+import { SortableList } from "@patternmode/ui/components/sortable-list";
+import { Stack } from "@patternmode/ui/components/stack";
+import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/ui/components/toolbar";
+import { sizes } from "@patternmode/ui/lib/component-config-types";
+import { MoreHorizontal, Plus, Rows3, Settings2, Trash2 } from "lucide-react";
+import { parseAsJson, useQueryState } from "nuqs";
+import React, { useMemo, useState } from "react";
+
+import { PageHeader } from "@/components/page-header";
 
 // Layout configuration type
 type LayoutConfig = {
@@ -35,13 +38,13 @@ type LayoutConfig = {
 // Create component items for SortableList
 function createComponentItems(
   selectedComponents: string[],
-  allComponents: ComponentId[]
+  allComponents: ComponentId[],
 ): SortableListItem[] {
   // Create a map of selected components for quick lookup
   const selectedSet = new Set(selectedComponents);
 
   // Create items for all components
-  return allComponents.map(id => {
+  return allComponents.map((id) => {
     const config = COMPONENT_REGISTRY[id];
     return {
       id,
@@ -58,7 +61,7 @@ const gapOptions: GapValue[] = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24];
 function LayoutSection({
   layout,
   onUpdate,
-  onDelete
+  onDelete,
 }: {
   layout: LayoutConfig;
   onUpdate: (layout: LayoutConfig) => void;
@@ -70,14 +73,14 @@ function LayoutSection({
   // Get all available component IDs
   const allComponentIds = useMemo(
     () => Object.keys(COMPONENT_REGISTRY) as ComponentId[],
-    []
+    [],
   );
 
   // Filter components based on search
   const filteredComponentIds = useMemo(() => {
-    if (!componentSearch) return allComponentIds;
+    if (!componentSearch) { return allComponentIds; }
     const searchLower = componentSearch.toLowerCase();
-    return allComponentIds.filter(id => {
+    return allComponentIds.filter((id) => {
       const config = COMPONENT_REGISTRY[id];
       return config.name.toLowerCase().includes(searchLower);
     });
@@ -86,7 +89,7 @@ function LayoutSection({
   // Create sortable items for component selection
   const componentItems = useMemo(
     () => createComponentItems(layout.components, filteredComponentIds),
-    [layout.components, filteredComponentIds]
+    [layout.components, filteredComponentIds],
   );
 
   // Handle component selection changes
@@ -99,9 +102,9 @@ function LayoutSection({
 
   // Render selected components
   const renderedComponents = useMemo(() => {
-    return layout.components.map(componentId => {
+    return layout.components.map((componentId) => {
       const PreviewComponent = PREVIEW_REGISTRY[componentId as ComponentId];
-      if (!PreviewComponent) return null;
+      if (!PreviewComponent) { return null; }
 
       // Pass size prop if the component supports it
       // Note: Not all components support size, so we pass it unconditionally
@@ -150,7 +153,7 @@ function LayoutSection({
             <Select
               value={layout.size}
               onValueChange={(value) => {
-                if (typeof value === 'string') {
+                if (typeof value === "string") {
                   onUpdate({ ...layout, size: value as Size });
                 }
               }}
@@ -178,8 +181,8 @@ function LayoutSection({
             <Select
               value={layout.gap.toString()}
               onValueChange={(value) => {
-                if (typeof value === 'string') {
-                  onUpdate({ ...layout, gap: parseInt(value) as GapValue });
+                if (typeof value === "string") {
+                  onUpdate({ ...layout, gap: Number.parseInt(value) as GapValue });
                 }
               }}
             >
@@ -204,7 +207,9 @@ function LayoutSection({
           <Popover open={componentsPopoverOpen} onOpenChange={setComponentsPopoverOpen}>
             <PopoverTrigger className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
               <Settings2 className="h-4 w-4" />
-              Components ({layout.components.length})
+              Components (
+              {layout.components.length}
+              )
             </PopoverTrigger>
             <PopoverContent className="w-96 p-4" align="start">
               <div className="mb-3">
@@ -215,7 +220,7 @@ function LayoutSection({
                 <Input
                   placeholder="Search components..."
                   value={componentSearch}
-                  onChange={(e) => setComponentSearch(e.target.value)}
+                  onChange={e => setComponentSearch(e.target.value)}
                   size="sm"
                   className="mt-2"
                 />
@@ -255,20 +260,22 @@ function LayoutSection({
 
       {/* Component Stack */}
       <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 min-h-[200px]">
-        {renderedComponents.length > 0 ? (
-          <Stack
-            direction={layout.direction}
-            gap={layout.gap}
-            align={layout.direction === "horizontal" ? "center" : "start"}
-            wrap
-          >
-            {renderedComponents}
-          </Stack>
-        ) : (
-          <div className="flex items-center justify-center h-[200px] text-zinc-400">
-            <p className="text-sm">No components selected. Click "Components" to add some.</p>
-          </div>
-        )}
+        {renderedComponents.length > 0
+          ? (
+              <Stack
+                direction={layout.direction}
+                gap={layout.gap}
+                align={layout.direction === "horizontal" ? "center" : "start"}
+                wrap
+              >
+                {renderedComponents}
+              </Stack>
+            )
+          : (
+              <div className="flex items-center justify-center h-[200px] text-zinc-400">
+                <p className="text-sm">No components selected. Click "Components" to add some.</p>
+              </div>
+            )}
       </div>
     </Card>
   );
@@ -279,7 +286,7 @@ export default function LayoutBuilderPage() {
   // Store layouts array in URL
   const [layouts, setLayouts] = useQueryState(
     "layouts",
-    parseAsJson<LayoutConfig[]>((value) => value as LayoutConfig[]).withDefault([
+    parseAsJson<LayoutConfig[]>(value => value as LayoutConfig[]).withDefault([
       {
         id: "1",
         direction: "horizontal",
@@ -287,7 +294,7 @@ export default function LayoutBuilderPage() {
         gap: 4,
         components: ["button", "input", "select"],
       },
-    ])
+    ]),
   );
 
   // Add a new layout
@@ -305,7 +312,7 @@ export default function LayoutBuilderPage() {
   // Update a specific layout
   const updateLayout = (updatedLayout: LayoutConfig) => {
     setLayouts(layouts.map(layout =>
-      layout.id === updatedLayout.id ? updatedLayout : layout
+      layout.id === updatedLayout.id ? updatedLayout : layout,
     ));
   };
 

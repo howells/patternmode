@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
 
 import { formControlElementVariants } from "../../lib/form-control-variants";
-import { focusInput } from "../../lib/utils";
 
 export const selectTriggerVariants = tv({
   extend: formControlElementVariants,
@@ -21,7 +20,7 @@ export const selectTriggerVariants = tv({
   variants: {
     size: {
       xs: "h-control-xs",
-      sm: "h-control-sm", 
+      sm: "h-control-sm",
       base: "h-control-base",
       lg: "h-control-lg",
     },
@@ -44,7 +43,7 @@ export const selectPopoverVariants = tv({
     "bg-white dark:bg-zinc-950",
     // text color
     "text-zinc-900 dark:text-zinc-50",
-    // border color  
+    // border color
     " dark:border-zinc-800",
   ],
   variants: {
@@ -69,7 +68,7 @@ export const selectItemVariants = tv({
     // hover
     "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
     // highlighted
-    "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800", 
+    "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
   ],
   variants: {
     size: {

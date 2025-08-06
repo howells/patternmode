@@ -27,7 +27,8 @@ const SelectNative = ({ ref: forwardedRef, className, hasError, size, ...props }
         size === "sm" && "pr-3",
         size === "base" && "pr-3",
         size === "lg" && "pr-4",
-      )}>
+      )}
+      >
         <span className="text-zinc-400 dark:text-zinc-500">
           {renderIcon(ChevronsUpDown, size, config.getIconStrokeWidth())}
         </span>

@@ -46,28 +46,28 @@ export function CalendarPreview({
 
   return (
 
-      <Calendar
-        {...(mode === "single" && {
-          mode: "single" as const,
-          selected: selected as Date | undefined,
-          onSelect: handleSelect,
-        })}
-        {...(mode === "multiple" && {
-          mode: "multiple" as const,
-          selected: selected as Date[] | undefined,
-          onSelect: handleSelect,
-        })}
-        {...(mode === "range" && {
-          mode: "range" as const,
-          selected: selected as { from: Date; to?: Date } | undefined,
-          onSelect: handleSelect,
-        })}
-        enableYearNavigation={enableYearNavigation}
-        showToday={showToday}
-        showTodayButton={showTodayButton}
-        numberOfMonths={numberOfMonths}
-        className="rounded-md border"
-      />
+    <Calendar
+      {...(mode === "single" && {
+        mode: "single" as const,
+        selected: selected as Date | undefined,
+        onSelect: handleSelect,
+      })}
+      {...(mode === "multiple" && {
+        mode: "multiple" as const,
+        selected: selected as Date[] | undefined,
+        onSelect: handleSelect,
+      })}
+      {...(mode === "range" && {
+        mode: "range" as const,
+        selected: selected as { from: Date; to?: Date } | undefined,
+        onSelect: handleSelect,
+      })}
+      enableYearNavigation={enableYearNavigation}
+      showToday={showToday}
+      showTodayButton={showTodayButton}
+      numberOfMonths={numberOfMonths}
+      className="rounded-md border"
+    />
 
   );
 }

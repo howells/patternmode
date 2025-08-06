@@ -1,10 +1,10 @@
-import type { IconComponent } from "../../lib/icon-utils";
-import type { Size } from "../../lib/component-config-types";
-import type { IconButtonSize } from "./types";
 import type { VariantProps } from "tailwind-variants";
+import type { Size } from "../../lib/component-config-types";
+import type { IconComponent } from "../../lib/icon-utils";
+import type { IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { ArrowRight, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 
 import React from "react";
@@ -14,10 +14,8 @@ import { cx } from "../../lib/utils";
 import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";
+import { getIconContainerSize, getLoaderSize, isSmallIconButton } from "./utils";
 import { buttonVariants } from "./variants";
-import { getLoaderSize, getIconContainerSize, isSmallIconButton } from "./utils";
-
-
 
 type ButtonProps = {
   /**
@@ -148,7 +146,7 @@ const Button = ({
 
   const isIconOnly = size?.includes("icon") ?? false;
 
-    // Prioritize icon prop over leftIcon prop
+  // Prioritize icon prop over leftIcon prop
   const effectiveLeftIconProp = icon || LeftIcon;
 
   const hasLeftIcon = effectiveLeftIconProp != null || (isIconOnly && effectiveLeftIconProp == null);
@@ -156,11 +154,11 @@ const Button = ({
   const effectiveLeftIcon
     = effectiveLeftIconProp || (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : null);
 
-  const hasRightIcon= RightIcon != null && !isIconOnly;
+  const hasRightIcon = RightIcon != null && !isIconOnly;
 
-  const shouldShowChildren= hasChildren && !isIconOnly;
+  const shouldShowChildren = hasChildren && !isIconOnly;
 
-  const isIconButton= isIconOnly;
+  const isIconButton = isIconOnly;
 
   // Check if children is a complex element (custom layout)
   const hasCustomLayout = React.isValidElement(children);
@@ -331,11 +329,11 @@ const Button = ({
                   <div
                     className={cx(
                       "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
-                                              !isLoading
-                          ? showLeftIconOnHover
-                            ? "opacity-0 group-hover/button:opacity-100"
-                            : "opacity-100"
-                          : "opacity-0 pointer-events-none",
+                      !isLoading
+                        ? showLeftIconOnHover
+                          ? "opacity-0 group-hover/button:opacity-100"
+                          : "opacity-100"
+                        : "opacity-0 pointer-events-none",
                     )}
                   >
                     {effectiveLeftIcon
@@ -375,7 +373,7 @@ const Button = ({
                     "transition-opacity duration-150 ease-in-out",
                     showRightIconOnHover
                       ? "opacity-0 group-hover/button:opacity-100"
-                      : "opacity-100"
+                      : "opacity-100",
                   )}
                 >
                   {renderIcon(RightIcon, size, iconStrokeWidth)}
@@ -456,7 +454,7 @@ const Button = ({
                   "transition-opacity duration-150 ease-in-out",
                   showRightIconOnHover
                     ? "opacity-0 group-hover/button:opacity-100"
-                    : "opacity-100"
+                    : "opacity-100",
                 )}
               >
                 {renderIcon(RightIcon, size, iconStrokeWidth)}
@@ -525,7 +523,7 @@ const Button = ({
                   "transition-opacity duration-150 ease-in-out",
                   showRightIconOnHover
                     ? "opacity-0 group-hover/button:opacity-100"
-                    : "opacity-100"
+                    : "opacity-100",
                 )}
               >
                 {renderIcon(RightIcon, size, iconStrokeWidth)}

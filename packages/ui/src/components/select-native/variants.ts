@@ -40,13 +40,13 @@ export const selectNativeStyles = tv({
       class: "h-control-xs pl-2 pr-8 rounded-sm",
     },
     {
-      variant: "standalone", 
+      variant: "standalone",
       size: "sm",
       class: "h-control-sm pl-2.5 pr-9 rounded",
     },
     {
       variant: "standalone",
-      size: "base", 
+      size: "base",
       class: "h-control-base pl-3 pr-10 rounded-md",
     },
     {

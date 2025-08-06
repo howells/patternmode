@@ -1,5 +1,5 @@
-import { Separator } from "@patternmode/ui/components/separator";
 import { descriptionListConfig } from "@patternmode/ui/components/description-list/config";
+import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${descriptionListConfig.name} | Patternmode`,
     description: descriptionListConfig.description,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${descriptionListConfig.name} | Patternmode`,
     description: descriptionListConfig.description,
   },

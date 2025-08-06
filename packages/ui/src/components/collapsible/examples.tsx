@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./component";
-import { Button } from "../button/component";
 import { ButtonGroup } from "../button-group/component";
+import { Button } from "../button/component";
 import { VStack } from "../stack/component";
 import { TextList, TextListItem } from "../text-list/component";
-import { Text, Code } from "../text/component";
+import { Code, Text } from "../text/component";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./component";
 
 // Default collapsible
 export const DefaultExample = () => (
@@ -47,7 +47,7 @@ export const NestedContentExample = () => (
   <Collapsible className="max-w-md">
     <CollapsibleTrigger>Installation Guide</CollapsibleTrigger>
     <CollapsibleContent>
-      <VStack >
+      <VStack>
         <Text>Install PatternMode in your project:</Text>
         <Code className="block bg-zinc-100 dark:bg-zinc-800 p-2 rounded text-sm">
           pnpm add patternmode
@@ -60,7 +60,6 @@ export const NestedContentExample = () => (
     </CollapsibleContent>
   </Collapsible>
 );
-
 
 // Controlled collapsible
 export const ControlledExample = () => {

@@ -2,8 +2,8 @@
 
 import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 import { VStack } from "../stack/component";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
 const TabTextContent = ({ children }: { children?: React.ReactNode }) => {
   return (
@@ -168,59 +168,56 @@ export const SolidSizesExample = () => {
   return (
     <VStack>
 
-        <Tabs defaultValue="tab1">
-          <TabsList variant="solid" size="xs">
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger value="tab3">Tab 3</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">
-            <TabTextContent>Extra small solid tabs content</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab2">
-            <TabTextContent>Content for Tab 2</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab3">
-            <TabTextContent>Content for Tab 3</TabTextContent>
-          </TabsContent>
-        </Tabs>
+      <Tabs defaultValue="tab1">
+        <TabsList variant="solid" size="xs">
+          <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+          <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+          <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">
+          <TabTextContent>Extra small solid tabs content</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <TabTextContent>Content for Tab 2</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab3">
+          <TabTextContent>Content for Tab 3</TabTextContent>
+        </TabsContent>
+      </Tabs>
 
+      <Tabs defaultValue="tab1">
+        <TabsList variant="solid" size="base">
+          <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+          <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+          <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">
+          <TabTextContent>Default solid tabs content</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <TabTextContent>Content for Tab 2</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab3">
+          <TabTextContent>Content for Tab 3</TabTextContent>
+        </TabsContent>
+      </Tabs>
 
-
-        <Tabs defaultValue="tab1">
-          <TabsList variant="solid" size="base">
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger value="tab3">Tab 3</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">
-            <TabTextContent>Default solid tabs content</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab2">
-            <TabTextContent>Content for Tab 2</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab3">
-            <TabTextContent>Content for Tab 3</TabTextContent>
-          </TabsContent>
-        </Tabs>
-
-
-        <Tabs defaultValue="tab1">
-          <TabsList variant="solid" size="lg">
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger value="tab3">Tab 3</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">
-            <TabTextContent>Large solid tabs content</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab2">
-            <TabTextContent>Content for Tab 2</TabTextContent>
-          </TabsContent>
-          <TabsContent value="tab3">
-            <TabTextContent>Content for Tab 3</TabTextContent>
-          </TabsContent>
-        </Tabs>
+      <Tabs defaultValue="tab1">
+        <TabsList variant="solid" size="lg">
+          <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+          <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+          <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">
+          <TabTextContent>Large solid tabs content</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <TabTextContent>Content for Tab 2</TabTextContent>
+        </TabsContent>
+        <TabsContent value="tab3">
+          <TabTextContent>Content for Tab 3</TabTextContent>
+        </TabsContent>
+      </Tabs>
 
     </VStack>
   );

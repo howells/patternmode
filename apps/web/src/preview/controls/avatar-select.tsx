@@ -1,8 +1,7 @@
+import { Avatar } from "@patternmode/ui/components/avatar";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@patternmode/ui/components/select";
 import Image from "next/image";
 import React from "react";
-
-import { Avatar } from "@patternmode/ui/components/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
 
 export type AvatarOption = {
   value: string;

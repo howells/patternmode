@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${splitButtonConfig.name} | Patternmode`,
     description: splitButtonConfig.description,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${splitButtonConfig.name} | Patternmode`,
     description: splitButtonConfig.description,
   },

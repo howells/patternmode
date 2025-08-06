@@ -62,24 +62,24 @@ export function ToggleGroupPreview({
     : (contentType === "alignment" ? ["center"] : ["bold"]);
 
   return (
-      <ToggleGroup
-        defaultValue={defaultValue}
-        variant={variant}
-        size={size}
-        disabled={false}
-      >
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <ToggleGroupItem key={item.value} value={item.value}>
-              <div className="flex items-center gap-2">
-                {showIcons && <Icon className="h-4 w-4" />}
-                <span className={showIcons ? "" : ""}>{item.label}</span>
-              </div>
-            </ToggleGroupItem>
-          );
-        })}
-      </ToggleGroup>
+    <ToggleGroup
+      defaultValue={defaultValue}
+      variant={variant}
+      size={size}
+      disabled={false}
+    >
+      {items.map((item) => {
+        const Icon = item.icon;
+        return (
+          <ToggleGroupItem key={item.value} value={item.value}>
+            <div className="flex items-center gap-2">
+              {showIcons && <Icon className="h-4 w-4" />}
+              <span className={showIcons ? "" : ""}>{item.label}</span>
+            </div>
+          </ToggleGroupItem>
+        );
+      })}
+    </ToggleGroup>
   );
 }
 

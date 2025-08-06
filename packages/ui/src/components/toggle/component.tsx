@@ -4,7 +4,6 @@
 
 import type { ToggleProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
-import { useRender } from "@base-ui-components/react/use-render";
 
 import React from "react";
 import { cx } from "../../lib/utils";

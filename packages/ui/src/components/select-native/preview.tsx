@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { SelectNative } from "./component";
-import { sizes } from "../../lib/component-config-types";
 import type { Size } from "../../lib/component-config-types";
+import React from "react";
+import { sizes } from "../../lib/component-config-types";
+import { SelectNative } from "./component";
 
 type SelectNativePreviewProps = {
   size?: Size;

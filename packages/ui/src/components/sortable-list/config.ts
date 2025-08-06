@@ -1,13 +1,13 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { List } from "lucide-react";
 import { SortableList } from "./component";
-import { 
-  DefaultExample, 
-  ReorderOnlyExample, 
+import {
   CheckboxOnlyExample,
-  WithDisabledItemsExample,
+  DefaultExample,
+  FormFieldsExample,
+  ReorderOnlyExample,
   SizesExample,
-  FormFieldsExample 
+  WithDisabledItemsExample,
 } from "./examples";
 
 export const sortableListConfig: ComponentConfig = {

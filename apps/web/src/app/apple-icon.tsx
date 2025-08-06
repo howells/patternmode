@@ -1,14 +1,14 @@
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from "next/og";
 
 // Route segment config
-export const runtime = 'edge'
+export const runtime = "edge";
 
 // Image metadata
 export const size = {
   width: 180,
   height: 180,
-}
-export const contentType = 'image/png'
+};
+export const contentType = "image/png";
 
 // Image generation
 export default function AppleIcon() {
@@ -18,14 +18,14 @@ export default function AppleIcon() {
       <div
         style={{
           fontSize: 120,
-          background: 'white',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#52525b', // zinc-600
-          borderRadius: '20px', // Rounded corners for iOS
+          background: "white",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#52525b", // zinc-600
+          borderRadius: "20px", // Rounded corners for iOS
         }}
       >
         {/* Pilcrow icon as SVG */}
@@ -38,7 +38,7 @@ export default function AppleIcon() {
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ transform: 'scaleX(-1)' }} // Flip horizontally like in logo
+          style={{ transform: "scaleX(-1)" }} // Flip horizontally like in logo
         >
           <path d="M13 4v16" />
           <path d="M17 4v16" />
@@ -51,6 +51,6 @@ export default function AppleIcon() {
       // For convenience, we can re-use the exported icons size metadata
       // config to also set the ImageResponse's width and height.
       ...size,
-    }
-  )
+    },
+  );
 }

@@ -6,8 +6,8 @@ import {
   DefaultExample,
   DisabledExample,
   ErrorStateExample,
-  WithCustomIconExample,
   WithClockIconExample,
+  WithCustomIconExample,
   WithPresetsExample,
   WithTimeExample,
 } from "./examples";

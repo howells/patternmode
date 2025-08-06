@@ -133,35 +133,35 @@ export function ResponsiveDrawerPreview({
   };
 
   return (
-      <ResponsiveDrawer>
-        <ResponsiveDrawerTrigger render={<Button variant={triggerVariant}>Open Responsive Drawer</Button>} />
-        <ResponsiveDrawerContent>
-          <ResponsiveDrawerHeader>
-            <ResponsiveDrawerTitle>
-              {contentLevel === "form"
-                ? "Contact Form"
-                : contentLevel === "list" ? "Recent Items" : "Responsive Drawer"}
-            </ResponsiveDrawerTitle>
-            <ResponsiveDrawerDescription>
-              This drawer adapts to screen size - modal on desktop, sheet on mobile.
-            </ResponsiveDrawerDescription>
-            {showCloseButton && (
-              <ResponsiveDrawerClose render={<Button variant="ghost" size="sm" className="absolute right-4 top-4">×</Button>} />
-            )}
-          </ResponsiveDrawerHeader>
-          {getContent()}
-          {showFooter && (
-            <ResponsiveDrawerFooter>
-              <div className="flex gap-2 justify-end px-4">
-                <ResponsiveDrawerClose render={<Button variant="outline">Cancel</Button>} />
-                <Button variant="primary">
-                  {contentLevel === "form" ? "Send Message" : "Done"}
-                </Button>
-              </div>
-            </ResponsiveDrawerFooter>
+    <ResponsiveDrawer>
+      <ResponsiveDrawerTrigger render={<Button variant={triggerVariant}>Open Responsive Drawer</Button>} />
+      <ResponsiveDrawerContent>
+        <ResponsiveDrawerHeader>
+          <ResponsiveDrawerTitle>
+            {contentLevel === "form"
+              ? "Contact Form"
+              : contentLevel === "list" ? "Recent Items" : "Responsive Drawer"}
+          </ResponsiveDrawerTitle>
+          <ResponsiveDrawerDescription>
+            This drawer adapts to screen size - modal on desktop, sheet on mobile.
+          </ResponsiveDrawerDescription>
+          {showCloseButton && (
+            <ResponsiveDrawerClose render={<Button variant="ghost" size="sm" className="absolute right-4 top-4">×</Button>} />
           )}
-        </ResponsiveDrawerContent>
-      </ResponsiveDrawer>
+        </ResponsiveDrawerHeader>
+        {getContent()}
+        {showFooter && (
+          <ResponsiveDrawerFooter>
+            <div className="flex gap-2 justify-end px-4">
+              <ResponsiveDrawerClose render={<Button variant="outline">Cancel</Button>} />
+              <Button variant="primary">
+                {contentLevel === "form" ? "Send Message" : "Done"}
+              </Button>
+            </div>
+          </ResponsiveDrawerFooter>
+        )}
+      </ResponsiveDrawerContent>
+    </ResponsiveDrawer>
   );
 }
 

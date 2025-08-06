@@ -1,10 +1,10 @@
 "use client";
 
-import type { SortableListItem, SortableListProps } from "./types";
 import type { DragEndEvent } from "@dnd-kit/core";
+import type { SortableListItem, SortableListProps } from "./types";
 import {
-  DndContext,
   closestCenter,
+  DndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -14,14 +14,12 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import {
   useSortable,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { cx } from "../../lib/utils";
 import { Checkbox } from "../checkbox/component";
 
@@ -80,7 +78,7 @@ const SortableItem = ({
         // Dragging state
         isDragging && "opacity-50 shadow-lg z-50",
         // Disabled state
-        item.disabled && "opacity-50 cursor-not-allowed"
+        item.disabled && "opacity-50 cursor-not-allowed",
       )}
     >
       {/* Drag Handle */}
@@ -88,7 +86,7 @@ const SortableItem = ({
         <div
           className={cx(
             "flex-shrink-0 text-zinc-400 dark:text-zinc-600 touch-none",
-            item.disabled ? "cursor-not-allowed" : "cursor-grab active:cursor-grabbing"
+            item.disabled ? "cursor-not-allowed" : "cursor-grab active:cursor-grabbing",
           )}
           {...attributes}
           {...listeners}
@@ -101,7 +99,7 @@ const SortableItem = ({
       {showCheckbox && (
         <Checkbox
           checked={item.active || false}
-          onCheckedChange={(checked) => onToggle(item.id, checked as boolean)}
+          onCheckedChange={checked => onToggle(item.id, checked as boolean)}
           disabled={item.disabled}
         />
       )}
@@ -110,7 +108,7 @@ const SortableItem = ({
       <span
         className={cx(
           "flex-1 select-none",
-          item.disabled && "text-zinc-400 dark:text-zinc-600"
+          item.disabled && "text-zinc-400 dark:text-zinc-600",
         )}
       >
         {item.label}
@@ -142,7 +140,7 @@ export const SortableList = ({
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   // Update internal state when props change
@@ -157,8 +155,8 @@ export const SortableList = ({
       return;
     }
 
-    const oldIndex = items.findIndex((item) => item.id === active.id);
-    const newIndex = items.findIndex((item) => item.id === over.id);
+    const oldIndex = items.findIndex(item => item.id === active.id);
+    const newIndex = items.findIndex(item => item.id === over.id);
 
     const newItems = arrayMove(items, oldIndex, newIndex);
     setItems(newItems);
@@ -167,7 +165,7 @@ export const SortableList = ({
 
   const handleToggle = useCallback((itemId: string, checked: boolean) => {
     const newItems = items.map(item =>
-      item.id === itemId ? { ...item, active: checked } : item
+      item.id === itemId ? { ...item, active: checked } : item,
     );
     setItems(newItems);
     onChange?.(newItems);
@@ -179,31 +177,31 @@ export const SortableList = ({
       <div
         className={cx(
           "w-full",
-          className
+          className,
         )}
         data-testid="sortable-list"
       >
-        {items.map((item) => (
+        {items.map(item => (
           <div
             key={item.id}
             className={cx(
               "flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 transition-all",
               size === "sm" ? "text-sm py-1.5 px-2" : size === "lg" ? "text-base py-3 px-4" : "text-sm py-2 px-3",
               "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
-              item.disabled && "opacity-50 cursor-not-allowed"
+              item.disabled && "opacity-50 cursor-not-allowed",
             )}
           >
             {showCheckbox && (
               <Checkbox
                 checked={item.active || false}
-                onCheckedChange={(checked) => handleToggle(item.id, checked as boolean)}
+                onCheckedChange={checked => handleToggle(item.id, checked as boolean)}
                 disabled={item.disabled}
               />
             )}
             <span
               className={cx(
                 "flex-1 select-none",
-                item.disabled && "text-zinc-400 dark:text-zinc-600"
+                item.disabled && "text-zinc-400 dark:text-zinc-600",
               )}
             >
               {item.label}
@@ -218,7 +216,7 @@ export const SortableList = ({
     <div
       className={cx(
         "w-full",
-        className
+        className,
       )}
       data-testid="sortable-list"
     >
@@ -231,7 +229,7 @@ export const SortableList = ({
           items={items.map(item => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          {items.map((item) => (
+          {items.map(item => (
             <SortableItem
               key={item.id}
               item={item}

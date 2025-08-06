@@ -1,7 +1,7 @@
 "use client";
 
+import { CalendarDays, Clock } from "lucide-react";
 import React from "react";
-import { Calendar, CalendarDays, Clock } from "lucide-react";
 import { DatePicker } from "./component";
 
 export const DefaultExample = () => (

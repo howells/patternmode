@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Size } from "../../lib/component-config-types";
+import React from "react";
 import {
   Select,
   SelectContent,

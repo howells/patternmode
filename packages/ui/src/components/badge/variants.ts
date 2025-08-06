@@ -1,9 +1,9 @@
 import { tv } from "tailwind-variants";
+import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 import { cx } from "../../lib/utils";
 import {
   getVariantClasses,
 } from "../../lib/variants";
-import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 
 // Badge variant configurations - generate dynamically for all supported colors
 const badgeVariantStyles = {

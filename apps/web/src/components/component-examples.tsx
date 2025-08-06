@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
-
 import { Callout } from "@patternmode/ui/components/callout";
 import { Card, CardContent, CardHeader } from "@patternmode/ui/components/card";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack, VStack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { Text } from "@patternmode/ui/components/text";
+import React from "react";
 
 type ComponentExamplesProps = {
   componentId: string;

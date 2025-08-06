@@ -1,8 +1,5 @@
 import type { Progress as BaseProgress } from "@base-ui-components/react/progress";
 import type * as React from "react";
-import type { VariantProps } from "tailwind-variants";
-
-import type { progressVariants } from "./variants";
 
 export type ProgressBarProps = {
   /**

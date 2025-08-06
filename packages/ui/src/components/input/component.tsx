@@ -8,8 +8,8 @@ import { Eye, EyeOff, Search } from "lucide-react";
 
 import React from "react";
 import { config } from "../../lib/config";
+import { formControlContainerVariants } from "../../lib/form-control-variants";
 import { cx, focusRing } from "../../lib/utils";
-import { formControlContainerVariants, formControlElementVariants } from "../../lib/form-control-variants";
 import { inputElementStyles } from "./variants";
 
 /**
@@ -256,7 +256,7 @@ const Input = (
               {
                 "rounded-l-sm": size === "xs",
                 "rounded-l": size === "sm",
-                "rounded-l-md": size === "base", 
+                "rounded-l-md": size === "base",
                 "rounded-l-lg": size === "lg",
               },
             ],
@@ -313,7 +313,7 @@ const Input = (
                 "rounded-r-sm": size === "xs",
                 "rounded-r": size === "sm",
                 "rounded-r-md": size === "base",
-                "rounded-r-lg": size === "lg", 
+                "rounded-r-lg": size === "lg",
               },
             ],
             // Padding - less when unstyled (no container to pad)

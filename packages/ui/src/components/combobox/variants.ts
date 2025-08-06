@@ -34,7 +34,7 @@ export const comboboxListVariants = tv({
     "absolute z-50 mt-1 w-full",
     // Add fixed height and scrolling
     "max-h-60 overflow-auto",
-    // Add scrollbar styling 
+    // Add scrollbar styling
     "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
   ],
   variants: {

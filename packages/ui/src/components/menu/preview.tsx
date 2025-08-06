@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { ButtonProps } from "../button/component";
+import React from "react";
 import { Button } from "../button/component";
 import { buttonVariants } from "../button/types";
 import {
@@ -52,53 +52,53 @@ export function MenuPreview({
 }: MenuPreviewProps = {}) {
   return (
 
-      <Menu>
-        <MenuTrigger render={<Button variant={triggerVariant} />}>
-          Open Menu
-        </MenuTrigger>
-        <MenuContent>
-          <MenuItem>
-            <span>Profile</span>
-            {showShortcuts && (
-              <span className="ml-auto text-xs text-zinc-400">⌘P</span>
-            )}
-          </MenuItem>
-          <MenuItem>
-            <span>Settings</span>
-            {showShortcuts && (
-              <span className="ml-auto text-xs text-zinc-400">⌘,</span>
-            )}
-          </MenuItem>
-          {showSeparators && <MenuSeparator />}
-          {showSubmenus && (
-            <MenuSubmenu>
-              <MenuSubmenuTrigger>More Options</MenuSubmenuTrigger>
-              <MenuSubmenuContent>
-                <MenuItem>Export Data</MenuItem>
-                <MenuItem>Import Data</MenuItem>
-                <MenuSeparator />
-                <MenuItem>Advanced Settings</MenuItem>
-              </MenuSubmenuContent>
-            </MenuSubmenu>
+    <Menu>
+      <MenuTrigger render={<Button variant={triggerVariant} />}>
+        Open Menu
+      </MenuTrigger>
+      <MenuContent>
+        <MenuItem>
+          <span>Profile</span>
+          {showShortcuts && (
+            <span className="ml-auto text-xs text-zinc-400">⌘P</span>
           )}
-          <MenuItem disabled={showDisabledItems}>
-            <span>Team (Coming Soon)</span>
-          </MenuItem>
-          {showSeparators && <MenuSeparator />}
-          <MenuItem>
-            <span>Help</span>
-            {showShortcuts && (
-              <span className="ml-auto text-xs text-zinc-400">⌘?</span>
-            )}
-          </MenuItem>
-          <MenuItem>
-            <span>Sign Out</span>
-            {showShortcuts && (
-              <span className="ml-auto text-xs text-zinc-400">⌘Q</span>
-            )}
-          </MenuItem>
-        </MenuContent>
-      </Menu>
+        </MenuItem>
+        <MenuItem>
+          <span>Settings</span>
+          {showShortcuts && (
+            <span className="ml-auto text-xs text-zinc-400">⌘,</span>
+          )}
+        </MenuItem>
+        {showSeparators && <MenuSeparator />}
+        {showSubmenus && (
+          <MenuSubmenu>
+            <MenuSubmenuTrigger>More Options</MenuSubmenuTrigger>
+            <MenuSubmenuContent>
+              <MenuItem>Export Data</MenuItem>
+              <MenuItem>Import Data</MenuItem>
+              <MenuSeparator />
+              <MenuItem>Advanced Settings</MenuItem>
+            </MenuSubmenuContent>
+          </MenuSubmenu>
+        )}
+        <MenuItem disabled={showDisabledItems}>
+          <span>Team (Coming Soon)</span>
+        </MenuItem>
+        {showSeparators && <MenuSeparator />}
+        <MenuItem>
+          <span>Help</span>
+          {showShortcuts && (
+            <span className="ml-auto text-xs text-zinc-400">⌘?</span>
+          )}
+        </MenuItem>
+        <MenuItem>
+          <span>Sign Out</span>
+          {showShortcuts && (
+            <span className="ml-auto text-xs text-zinc-400">⌘Q</span>
+          )}
+        </MenuItem>
+      </MenuContent>
+    </Menu>
 
   );
 }

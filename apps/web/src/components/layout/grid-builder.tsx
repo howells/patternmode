@@ -1,7 +1,6 @@
 "use client";
 
-import { Grid as GridIcon, List } from "lucide-react";
-import React, { useState } from "react";
+import type { SpacingValue } from "@patternmode/ui/lib/spacing-utils";
 
 import { Button } from "@patternmode/ui/components/button";
 import { Grid, GridCell } from "@patternmode/ui/components/grid";
@@ -9,7 +8,8 @@ import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
-import type { SpacingValue } from "@patternmode/ui/lib/spacing-utils";
+import { Grid as GridIcon, List } from "lucide-react";
+import React, { useState } from "react";
 
 import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";

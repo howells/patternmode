@@ -2,22 +2,12 @@
 
 "use client";
 
-import { useWindowSize } from "@uidotdev/usehooks";
-import { List, Rows3 } from "lucide-react";
-import { motion } from "motion/react";
-import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
-import React, { createContext, useContext, useState } from "react";
-
-import Logo from "@/components/logo";
-import { GitHubLink } from "@/components/github-link";
-import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
-import { Badge } from "@patternmode/ui/components/badge";
 import {
   CATEGORY_CONFIG,
   getAllComponents,
   getComponentsByCategory,
 } from "@patternmode/ui/components/registry";
+import { Separator } from "@patternmode/ui/components/separator";
 import {
   Sidebar,
   SidebarBody,
@@ -27,11 +17,20 @@ import {
 } from "@patternmode/ui/components/sidebar";
 import { HStack, Stack } from "@patternmode/ui/components/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { List, Rows3 } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import { useSelectedLayoutSegments } from "next/navigation";
+import React, { createContext, useContext, useState } from "react";
+
+import { GitHubLink } from "@/components/github-link";
+import Logo from "@/components/logo";
+import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
 
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
-import { Separator } from "@patternmode/ui/components/separator";
 
 // Local component for sidebar group titles with badges
 function SidebarGroupTitle({

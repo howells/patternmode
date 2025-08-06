@@ -50,31 +50,31 @@ export function CarouselPreview({
 
   return (
 
-      <Carousel
-        className={`w-full ${maxWidthClasses[maxWidth]}`}
-        opts={{
-          loop,
-          axis: orientation === "vertical" ? "y" : "x",
-        }}
-      >
-        <CarouselContent className={orientation === "vertical" ? "flex-col h-48" : ""}>
-          {slides.map(slide => (
-            <CarouselItem key={slide} className={orientation === "vertical" ? "pt-1 basis-1/3" : ""}>
-              <Card>
-                <div className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{slide}</span>
-                </div>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        {showNavigation && (
-          <>
-            <CarouselPrevious />
-            <CarouselNext />
-          </>
-        )}
-      </Carousel>
+    <Carousel
+      className={`w-full ${maxWidthClasses[maxWidth]}`}
+      opts={{
+        loop,
+        axis: orientation === "vertical" ? "y" : "x",
+      }}
+    >
+      <CarouselContent className={orientation === "vertical" ? "flex-col h-48" : ""}>
+        {slides.map(slide => (
+          <CarouselItem key={slide} className={orientation === "vertical" ? "pt-1 basis-1/3" : ""}>
+            <Card>
+              <div className="flex aspect-square items-center justify-center p-6">
+                <span className="text-4xl font-semibold">{slide}</span>
+              </div>
+            </Card>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      {showNavigation && (
+        <>
+          <CarouselPrevious />
+          <CarouselNext />
+        </>
+      )}
+    </Carousel>
 
   );
 }

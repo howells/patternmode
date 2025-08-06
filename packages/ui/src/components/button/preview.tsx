@@ -1,11 +1,11 @@
 "use client";
 
 import type { ButtonProps } from "./component";
-import { Download, Plus, Save, Settings } from "lucide-react";
+import { Save } from "lucide-react";
 import React from "react";
-import { Button } from "./component";
-import { componentVariants } from "../../lib/variants";
 import { sizes } from "../../lib/component-config-types";
+import { componentVariants } from "../../lib/variants";
+import { Button } from "./component";
 
 export function ButtonPreview(props: ButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);

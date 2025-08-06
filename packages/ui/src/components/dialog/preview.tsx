@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button } from "../button/component";
+import { Text } from "../text/component";
 import {
   Dialog,
   DialogClose,
@@ -12,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./component";
-import { Text } from "../text/component";
 
 type DialogProps = React.ComponentProps<typeof Dialog> & {
   open?: boolean;

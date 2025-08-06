@@ -1,6 +1,6 @@
-import type { AccordionPreviewProps } from "./preview";
 import type { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
 import type React from "react";
+import type { AccordionPreviewProps } from "./preview";
 
 export type AccordionProps = AccordionPreviewProps & React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
 

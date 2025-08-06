@@ -1,13 +1,13 @@
 "use client";
 
+import type { Size } from "../../lib/component-config-types";
+import type { ButtonVariant } from "../../lib/variants";
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import React from "react";
-import type { Size } from "../../lib/component-config-types";
+import { sizes } from "../../lib/component-config-types";
+import { componentVariants } from "../../lib/variants";
 import { Icon } from "../icon/component";
 import { SplitButton } from "./component";
-import { sizes } from "../../lib/component-config-types";
-import type { ButtonVariant } from "../../lib/variants";
-import { componentVariants } from "../../lib/variants";
 
 export type SplitButtonPreviewProps = {
   /**
@@ -106,35 +106,35 @@ export function SplitButtonPreview({
   };
 
   return (
-      <SplitButton
-        size={size}
-        variant={variant}
-        buttonContent={(
-          <div className="flex items-center gap-2">
-            {showIcons && <Icon icon={PrimaryIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
-            {config.label}
-          </div>
-        )}
-        onButtonClick={handlePrimaryAction}
-      >
-        {displayedItems.map((item, index) => {
-          const ItemIcon = item.icon;
-          return (
-            <div key={index}>
-              {showSeparators && index === Math.floor(menuItemCount / 2) && (
-                <div className="border-t  dark:border-zinc-700 my-1" />
-              )}
-              <div
-                className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
-                onClick={() => handleMenuAction(item.label)}
-              >
-                {showIcons && <Icon icon={ItemIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
-                {item.label}
-              </div>
+    <SplitButton
+      size={size}
+      variant={variant}
+      buttonContent={(
+        <div className="flex items-center gap-2">
+          {showIcons && <Icon icon={PrimaryIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
+          {config.label}
+        </div>
+      )}
+      onButtonClick={handlePrimaryAction}
+    >
+      {displayedItems.map((item, index) => {
+        const ItemIcon = item.icon;
+        return (
+          <div key={index}>
+            {showSeparators && index === Math.floor(menuItemCount / 2) && (
+              <div className="border-t  dark:border-zinc-700 my-1" />
+            )}
+            <div
+              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+              onClick={() => handleMenuAction(item.label)}
+            >
+              {showIcons && <Icon icon={ItemIcon as React.ComponentType<{ className?: string; strokeWidth?: number }>} size="sm" />}
+              {item.label}
             </div>
-          );
-        })}
-      </SplitButton>
+          </div>
+        );
+      })}
+    </SplitButton>
   );
 }
 

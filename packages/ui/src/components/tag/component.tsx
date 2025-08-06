@@ -134,8 +134,8 @@ const Tag = (
         )}
         {effectiveIcon && !avatar && (
           React.createElement(effectiveIcon, {
-            "className": cx(iconUtils.getIconSize("xs"), "shrink-0"),
-            "strokeWidth": iconStrokeWidth,
+            className: cx(iconUtils.getIconSize("xs"), "shrink-0"),
+            strokeWidth: iconStrokeWidth,
           })
         )}
         {label && (

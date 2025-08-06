@@ -7,6 +7,7 @@ This document describes the centralized border-radius system implemented to ensu
 ## Problem
 
 Previously, border-radius values were hardcoded in each component's variant definitions, leading to:
+
 - Inconsistency between components
 - Duplication of border-radius logic
 - Difficulty maintaining visual consistency
@@ -17,15 +18,18 @@ Previously, border-radius values were hardcoded in each component's variant defi
 Created a centralized border-radius system in `packages/ui/src/lib/border-radius.ts` that provides:
 
 ### Core Functions
+
 - `getBorderRadius(size: Size)`: Get border radius class for a given size
 - `getExtendedBorderRadius(size: Size | "full")`: Get border radius including full rounded option
 
 ### Constants
+
 - `borderRadiusBySize`: Standard border radius values for different sizes
 - `borderRadiusVariants`: Border radius variants for use in tailwind-variants
 - `extendedBorderRadiusVariants`: Extended options including full rounded
 
 ### Size Mapping
+
 ```typescript
 {
   xs: "rounded-sm",    // 2px
@@ -40,11 +44,13 @@ Created a centralized border-radius system in `packages/ui/src/lib/border-radius
 The following components have been updated to use the centralized border-radius system:
 
 ### ✅ Button (`packages/ui/src/components/button/variants.ts`)
+
 - All size variants now use centralized border-radius
 - Icon button variants updated
 - Rounded prop uses extended border-radius system
 
 ### ✅ Toggle Group (`packages/ui/src/components/toggle-group/variants.ts` & `component.tsx`)
+
 - Root and item border-radius now consistent with button
 - All size variants updated
 - **Button size adjustment**: Toggle group items now use smaller button sizes to fit within the container
@@ -54,35 +60,43 @@ The following components have been updated to use the centralized border-radius 
   - `lg` toggle group → `base` buttons
 
 ### ✅ Tabs (`packages/ui/src/components/tabs/variants.ts`)
+
 - Solid variant compound variants updated
 - Consistent with toggle-group styling
 - Uses centralized container button adjustments
 
 ### ✅ Form Controls (`packages/ui/src/lib/form-control-variants.ts`)
+
 - Container and element variants updated
 - Standalone form controls use centralized border-radius
 
 ### ✅ Input (`packages/ui/src/components/input/variants.ts`)
+
 - Container and input styles updated
 - All size variants now consistent
 
 ### ✅ Theme Toggle (`packages/ui/src/components/theme-toggle/variants.ts`)
+
 - Base and rounded variants updated
 - Consistent with button component
 
 ### ✅ Toggle (`packages/ui/src/components/toggle/variants.ts`)
+
 - All size variants updated
 - Consistent border-radius across sizes
 
 ### ✅ Badge (`packages/ui/src/components/badge/variants.ts`)
+
 - Base and rounded variants updated
 - Extended border-radius support for full rounded
 
 ### ✅ Toolbar (`packages/ui/src/components/toolbar/variants.ts`)
+
 - Root, button, link, and input variants updated
 - All size variants now consistent
 
 ### ✅ Radio (`packages/ui/src/components/radio/variants.ts`)
+
 - Circle and card variants updated
 - Consistent border-radius across all radio components
 
@@ -97,9 +111,11 @@ The following components have been updated to use the centralized border-radius 
 ## Special Cases
 
 ### Container Button Adjustments
+
 For components that contain buttons (like toggle groups and tabs), we have a centralized system in `packages/ui/src/lib/container-button-adjustments.ts` that handles:
 
 #### Height Adjustments
+
 Buttons inside containers need their height reduced to fit properly:
 
 ```typescript
@@ -113,6 +129,7 @@ const heightAdjustments = {
 ```
 
 #### Border Radius Adjustments
+
 Buttons inside containers need their border radius reduced to account for container padding:
 
 ```typescript
@@ -126,6 +143,7 @@ const borderRadiusAdjustments = {
 ```
 
 #### Usage
+
 ```typescript
 import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
 
@@ -142,12 +160,14 @@ size: {
 ```
 
 This ensures that when a container has `size="base"`, the constituent buttons have:
+
 - **Height**: `40px - 6px = 34px`
 - **Border radius**: `6px - 2px = 4px`
 
 ## Usage
 
 ### In Component Variants
+
 ```typescript
 import { borderRadiusVariants } from "../../lib/border-radius";
 
@@ -164,6 +184,7 @@ export const myComponentVariants = tv({
 ```
 
 ### For Extended Options (including full rounded)
+
 ```typescript
 import { extendedBorderRadiusVariants } from "../../lib/border-radius";
 
@@ -178,6 +199,7 @@ export const myComponentVariants = tv({
 ```
 
 ### Using Functions
+
 ```typescript
 import { getBorderRadius } from "../../lib/border-radius";
 
@@ -185,6 +207,7 @@ const borderRadius = getBorderRadius("base"); // Returns "rounded-md"
 ```
 
 ### For Container Components
+
 ```typescript
 import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
 

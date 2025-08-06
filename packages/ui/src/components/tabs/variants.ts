@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import { focusRing } from "../../lib/utils";
 import { borderRadiusVariants } from "../../lib/border-radius";
 import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
+import { focusRing } from "../../lib/utils";
 
 export const tabsVariants = tv({
   slots: {

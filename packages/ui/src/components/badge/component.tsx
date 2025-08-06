@@ -5,13 +5,13 @@ import { X } from "lucide-react";
 
 import React from "react";
 import { config } from "../../lib/config";
+import { getIconComponent } from "../../lib/icon-registry";
 import { cx, iconUtils } from "../../lib/utils";
 import {
   getColorClasses,
 } from "../../lib/variants";
-import { getIconComponent } from "../../lib/icon-registry";
-import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 import { DismissButton } from "../dismiss-button/component";
+import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 
 type BadgeProps = {
   /**

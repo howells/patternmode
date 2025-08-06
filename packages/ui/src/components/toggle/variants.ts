@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
-import { focusRing } from "../../lib/utils";
-import type { Size } from "../../lib/component-config-types";
 import { borderRadiusVariants } from "../../lib/border-radius";
+import { focusRing } from "../../lib/utils";
 
 export const toggleVariants = tv({
   base: [

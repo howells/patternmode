@@ -1,7 +1,7 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import Link from "next/link";
 import { Button } from "@patternmode/ui/components/button";
 import { Icon } from "@patternmode/ui/components/icon";
+import Link from "next/link";
 
 export function GitHubLink() {
   return (

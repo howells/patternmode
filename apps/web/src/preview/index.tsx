@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-
 import type { PropMetadata as ConfigPropMetadata } from "@patternmode/ui/lib/component-config-types";
+
+import React from "react";
 
 import { getConfigProps, getDefaultProps } from "./config-utils";
 import { PreviewProvider } from "./preview-context";

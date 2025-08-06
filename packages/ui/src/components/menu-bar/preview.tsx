@@ -80,43 +80,43 @@ export function MenuBarPreview({
   ].slice(0, menuCount);
 
   return (
-      <MenuBar>
-        {menus.map((menu, menuIndex) => (
-          <React.Fragment key={menu.title}>
-            <MenuBarMenu>
-              <MenuBarTrigger>{menu.title}</MenuBarTrigger>
-              <MenuBarContent>
-                {menu.items.map((item, itemIndex) => (
-                  <React.Fragment key={item.label}>
-                    <MenuBarItem
-                      disabled={showDisabledItems && itemIndex === 2}
-                    >
-                      <span>{item.label}</span>
-                      {item.shortcut && (
-                        <span className="ml-auto text-xs text-zinc-400">
-                          {item.shortcut}
-                        </span>
-                      )}
-                    </MenuBarItem>
-                    {showSeparators && itemIndex === 1 && menuIndex === 0 && (
-                      <MenuBarSeparator />
+    <MenuBar>
+      {menus.map((menu, menuIndex) => (
+        <React.Fragment key={menu.title}>
+          <MenuBarMenu>
+            <MenuBarTrigger>{menu.title}</MenuBarTrigger>
+            <MenuBarContent>
+              {menu.items.map((item, itemIndex) => (
+                <React.Fragment key={item.label}>
+                  <MenuBarItem
+                    disabled={showDisabledItems && itemIndex === 2}
+                  >
+                    <span>{item.label}</span>
+                    {item.shortcut && (
+                      <span className="ml-auto text-xs text-zinc-400">
+                        {item.shortcut}
+                      </span>
                     )}
-                    {showSubmenus && item.label === "Zoom In" && (
-                      <MenuBarSubmenu>
-                        <MenuBarSubmenuTrigger>More Options</MenuBarSubmenuTrigger>
-                        <MenuBarSubmenuContent>
-                          <MenuBarItem>Fit to Window</MenuBarItem>
-                          <MenuBarItem>Actual Size</MenuBarItem>
-                        </MenuBarSubmenuContent>
-                      </MenuBarSubmenu>
-                    )}
-                  </React.Fragment>
-                ))}
-              </MenuBarContent>
-            </MenuBarMenu>
-          </React.Fragment>
-        ))}
-      </MenuBar>
+                  </MenuBarItem>
+                  {showSeparators && itemIndex === 1 && menuIndex === 0 && (
+                    <MenuBarSeparator />
+                  )}
+                  {showSubmenus && item.label === "Zoom In" && (
+                    <MenuBarSubmenu>
+                      <MenuBarSubmenuTrigger>More Options</MenuBarSubmenuTrigger>
+                      <MenuBarSubmenuContent>
+                        <MenuBarItem>Fit to Window</MenuBarItem>
+                        <MenuBarItem>Actual Size</MenuBarItem>
+                      </MenuBarSubmenuContent>
+                    </MenuBarSubmenu>
+                  )}
+                </React.Fragment>
+              ))}
+            </MenuBarContent>
+          </MenuBarMenu>
+        </React.Fragment>
+      ))}
+    </MenuBar>
   );
 }
 

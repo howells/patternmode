@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Size } from "../../lib/component-config-types";
+import React from "react";
 import { Combobox } from "./component";
 
 export type ComboboxPreviewProps = {
@@ -110,18 +110,17 @@ export function ComboboxPreview({
 
   return (
 
-        <Combobox
-          options={displayedOptions.map(option => ({
-            ...option,
-            label: showDescriptions ? `${option.label} - ${option.description}` : option.label,
-          }))}
-          value={value}
-          onValueChange={setValue}
-          placeholder={config.placeholder}
-          searchPlaceholder={config.searchPlaceholder}
-          size={size}
-        />
-
+    <Combobox
+      options={displayedOptions.map(option => ({
+        ...option,
+        label: showDescriptions ? `${option.label} - ${option.description}` : option.label,
+      }))}
+      value={value}
+      onValueChange={setValue}
+      placeholder={config.placeholder}
+      searchPlaceholder={config.searchPlaceholder}
+      size={size}
+    />
 
   );
 }

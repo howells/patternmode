@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${toggleConfig.name} | Patternmode`,
     description: toggleConfig.description,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${toggleConfig.name} | Patternmode`,
     description: toggleConfig.description,
   },

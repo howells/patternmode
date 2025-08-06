@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-
 import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+
+import React from "react";
 
 import { ControlFactory } from "./controls/control-factory";
 import { PropField } from "./controls/prop-field";
@@ -47,7 +47,7 @@ export function PreviewControls({ config }: PreviewControlsProps) {
             <ControlFactory
               prop={metadata}
               currentValue={props[propKey]}
-              onValueChange={(value) => updateProp(propKey, value)}
+              onValueChange={value => updateProp(propKey, value)}
               componentName={config.componentName}
             />
           </PropField>

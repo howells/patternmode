@@ -1,9 +1,8 @@
 "use client";
 
+import type { IconComponent } from "../../lib/icon-utils";
 import React from "react";
 import { DatePicker } from "./component";
-import { Calendar } from "lucide-react";
-import type { IconComponent } from "../../lib/icon-utils";
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker> & {
   placeholder?: string;
@@ -13,7 +12,7 @@ type DatePickerProps = React.ComponentProps<typeof DatePicker> & {
 };
 
 export function DatePickerPreview(props: DatePickerProps) {
-  return <DatePicker placeholder="Select a date"  {...props} />;
+  return <DatePicker placeholder="Select a date" {...props} />;
 }
 
 // Preview props for prop explorer

@@ -4,7 +4,6 @@ import type { ThemeToggleProps } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
 import { Moon, Sun } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
 import { Icon } from "../icon/component";
 import { Loader } from "../loader/component";
@@ -26,7 +25,6 @@ export const ThemeToggle = ({
   className,
   ...otherProps
 }: ThemeToggleProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-
   // Map theme toggle size to icon size
   const getIconSize = (size: ThemeToggleProps["size"]) => {
     switch (size) {
@@ -82,16 +80,16 @@ export const ThemeToggle = ({
   };
 
   const defaultProps: useRender.ElementProps<"button"> & { "data-testid": string } = {
-    type: "button" as const,
-    className: cx(
+    "type": "button" as const,
+    "className": cx(
       themeToggleVariants({ size, variant, rounded }),
       className,
     ),
     "aria-label": `Switch to ${otherTheme} theme`,
-    onClick: onToggle,
-    disabled: isLoading || otherProps.disabled,
+    "onClick": onToggle,
+    "disabled": isLoading || otherProps.disabled,
     "data-testid": "theme-toggle",
-    children: (
+    "children": (
       <>
         {/* Touch target for mobile devices */}
         <span className="absolute size-12 pointer-fine:hidden" aria-hidden="true" />

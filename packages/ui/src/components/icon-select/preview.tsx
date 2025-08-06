@@ -1,13 +1,12 @@
 "use client";
 
-
+import type { Size } from "../../lib/component-config-types";
 import React from "react";
-import { IconSelect, useIconSelect } from "./component";
-import { Size } from "../../lib/component-config-types";
 import { sizes } from "../../lib/component-config-types";
+import { IconSelect, useIconSelect } from "./component";
 
 type IconSelectPreviewProps = {
-  size?: Size
+  size?: Size;
 };
 
 export function IconSelectPreview({ size = "base" }: IconSelectPreviewProps) {

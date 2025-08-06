@@ -142,35 +142,35 @@ export function SheetPreview({
   };
 
   return (
-      <Sheet>
-        <SheetTrigger render={<Button variant={triggerVariant}>Open Sheet</Button>} />
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>
-              {contentLevel === "navigation"
-                ? "Navigation"
-                : contentLevel === "settings" ? "Settings" : "Sheet Preview"}
-            </SheetTitle>
-            <SheetDescription>
-              This demonstrates a {side} sheet with {contentLevel} content.
-            </SheetDescription>
-            {showCloseButton && (
-              <SheetClose render={<DismissButton className="absolute right-4 top-4" />} />
-            )}
-          </SheetHeader>
-          {getContent()}
-          {showFooter && (
-            <SheetFooter className="mt-6">
-              <div className="flex gap-2 justify-end">
-                <SheetClose render={<Button variant="outline">Close</Button>} />
-                {contentLevel === "settings" && (
-                  <Button variant="primary">Save Changes</Button>
-                )}
-              </div>
-            </SheetFooter>
+    <Sheet>
+      <SheetTrigger render={<Button variant={triggerVariant}>Open Sheet</Button>} />
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>
+            {contentLevel === "navigation"
+              ? "Navigation"
+              : contentLevel === "settings" ? "Settings" : "Sheet Preview"}
+          </SheetTitle>
+          <SheetDescription>
+            This demonstrates a {side} sheet with {contentLevel} content.
+          </SheetDescription>
+          {showCloseButton && (
+            <SheetClose render={<DismissButton className="absolute right-4 top-4" />} />
           )}
-        </SheetContent>
-      </Sheet>
+        </SheetHeader>
+        {getContent()}
+        {showFooter && (
+          <SheetFooter className="mt-6">
+            <div className="flex gap-2 justify-end">
+              <SheetClose render={<Button variant="outline">Close</Button>} />
+              {contentLevel === "settings" && (
+                <Button variant="primary">Save Changes</Button>
+              )}
+            </div>
+          </SheetFooter>
+        )}
+      </SheetContent>
+    </Sheet>
   );
 }
 

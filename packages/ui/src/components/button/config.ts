@@ -3,7 +3,6 @@ import { Square } from "lucide-react";
 import { Button } from "./component";
 import {
   ButtonAsLinkExample,
-  PrimaryExample,
   DestructiveExample,
   DisabledExample,
   FullWidthExample,
@@ -16,6 +15,7 @@ import {
   LoadingWithTextExample,
   OutlineDashedExample,
   OutlineExample,
+  PrimaryExample,
   RoundedExample,
   SecondaryExample,
   SizesExample,

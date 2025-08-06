@@ -111,41 +111,41 @@ export function DrawerPreview({
 
   return (
 
-      <Drawer direction={direction}>
-        <DrawerTrigger asChild>
-          <Button variant={triggerVariant}>
-            Open Drawer
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Drawer Preview</DrawerTitle>
-            <DrawerDescription>
-              This demonstrates a {direction} drawer with {contentLevel} content.
-            </DrawerDescription>
-            {showCloseButton && (
-              <DrawerClose asChild>
-                <Button variant="ghost" size="sm" className="absolute right-4 top-4">
-                  ×
-                </Button>
-              </DrawerClose>
-            )}
-          </DrawerHeader>
-          {getContent()}
-          {showFooter && (
-            <DrawerFooter>
-              <div className="flex gap-2 justify-end">
-                <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-                <Button variant="primary">
-                  {contentLevel === "form" ? "Save" : "Confirm"}
-                </Button>
-              </div>
-            </DrawerFooter>
+    <Drawer direction={direction}>
+      <DrawerTrigger asChild>
+        <Button variant={triggerVariant}>
+          Open Drawer
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Drawer Preview</DrawerTitle>
+          <DrawerDescription>
+            This demonstrates a {direction} drawer with {contentLevel} content.
+          </DrawerDescription>
+          {showCloseButton && (
+            <DrawerClose asChild>
+              <Button variant="ghost" size="sm" className="absolute right-4 top-4">
+                ×
+              </Button>
+            </DrawerClose>
           )}
-        </DrawerContent>
-      </Drawer>
+        </DrawerHeader>
+        {getContent()}
+        {showFooter && (
+          <DrawerFooter>
+            <div className="flex gap-2 justify-end">
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+              <Button variant="primary">
+                {contentLevel === "form" ? "Save" : "Confirm"}
+              </Button>
+            </div>
+          </DrawerFooter>
+        )}
+      </DrawerContent>
+    </Drawer>
 
   );
 }

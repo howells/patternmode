@@ -1,7 +1,6 @@
 import type { useRender } from "@base-ui-components/react/use-render";
-import type { ButtonProps } from "../button/component";
 import type { Size } from "../../lib/component-config-types";
-
+import type { ButtonProps } from "../button/component";
 
 export type ThemeToggleProps = {
   /**

@@ -1,11 +1,11 @@
 "use client";
 
+import type { Size } from "../../lib/component-config-types";
+
 import type { ComboboxOption } from "../combobox/types";
 
 import React from "react";
-
 import { config } from "../../lib/config";
-import type { Size } from "../../lib/component-config-types";
 import { getIconComponent, iconNames } from "../../lib/icon-registry";
 import { Combobox } from "../combobox/component";
 

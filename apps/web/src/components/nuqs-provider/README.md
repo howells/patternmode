@@ -14,7 +14,7 @@ The nuqs integration is already configured in this project:
 ### Basic Usage
 
 ```tsx
-import { useQueryState, parseAsString } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 
 function MyComponent() {
   const [name, setName] = useQueryState("name", parseAsString.withDefault(""));
@@ -22,7 +22,7 @@ function MyComponent() {
   return (
     <input
       value={name || ""}
-      onChange={(e) => setName(e.target.value)}
+      onChange={e => setName(e.target.value)}
     />
   );
 }
@@ -34,16 +34,16 @@ nuqs provides several built-in parsers for different data types:
 
 ```tsx
 import {
-  parseAsString,
-  parseAsInteger,
-  parseAsFloat,
-  parseAsBoolean,
-  parseAsTimestamp,
-  parseAsIsoDateTime,
   parseAsArrayOf,
+  parseAsBoolean,
+  parseAsFloat,
+  parseAsInteger,
+  parseAsIsoDateTime,
   parseAsJson,
+  parseAsString,
   parseAsStringEnum,
-  parseAsStringLiteral
+  parseAsStringLiteral,
+  parseAsTimestamp
 } from "nuqs";
 
 // String (default)
@@ -69,7 +69,7 @@ const [direction, setDirection] = useQueryState(
 
 // Custom parser
 const [hex, setHex] = useQueryState("hex", {
-  parse: (query: string) => parseInt(query, 16),
+  parse: (query: string) => Number.parseInt(query, 16),
   serialize: value => value.toString(16)
 });
 ```

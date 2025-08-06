@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
-import { focusInput, hasErrorInput } from "./utils";
 import { borderRadiusVariants } from "./border-radius";
+import { focusInput, hasErrorInput } from "./utils";
 
 /**
  * Shared variants for form control containers (Input, Select, etc.)

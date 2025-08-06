@@ -68,7 +68,7 @@ export const EmptyState = ({
         <div
           className={emptyStateActionsVariants({
             size,
-            hasMultipleActions
+            hasMultipleActions,
           })}
         >
           {/* Primary Action */}

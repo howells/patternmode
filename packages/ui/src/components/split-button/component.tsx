@@ -7,8 +7,8 @@ import React from "react";
 import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Menu, MenuContent, MenuTrigger } from "../menu/component";
-import { dropdownTriggerVariants, splitButtonVariants } from "./variants";
 import { Separator } from "../separator/component";
+import { splitButtonVariants } from "./variants";
 
 /**
  * Compound button with primary action and dropdown menu for secondary actions.
@@ -65,14 +65,14 @@ const SplitButton = (
         orientation="vertical"
         className={cx(
           "z-10 opacity-25 absolute h-1/2 top-1/2 -translate-y-1/2",
-          getSeparatorPosition()
+          getSeparatorPosition(),
         )}
       />
 
       {/* Dropdown Trigger */}
       <Menu>
         <MenuTrigger
-          render={
+          render={(
             <Button
               variant={variant}
               size={size}
@@ -84,7 +84,7 @@ const SplitButton = (
                 !rounded && "rounded-r-lg",
               )}
             />
-          }
+          )}
         >
         </MenuTrigger>
         <MenuContent

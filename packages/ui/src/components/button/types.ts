@@ -17,5 +17,5 @@ export const buttonVariants = [
   "destructive",
   "inverse-ghost",
   "link",
-  "minimal"
+  "minimal",
 ] as const;

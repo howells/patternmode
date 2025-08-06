@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
+import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 import { focusRing } from "../../lib/utils";
 import { componentVariants } from "../../lib/variants";
-import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
 
 export const themeToggleVariants = tv({
   base: [
@@ -27,10 +27,10 @@ export const themeToggleVariants = tv({
       false: borderRadiusVariants.base,
     },
     size: {
-      "xs": "size-control-xs",
-      "sm": "size-control-sm",
-      "base": "size-control-base",
-      "lg": "size-control-lg",
+      xs: "size-control-xs",
+      sm: "size-control-sm",
+      base: "size-control-base",
+      lg: "size-control-lg",
     },
   },
   defaultVariants: {

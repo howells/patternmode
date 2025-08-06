@@ -1,23 +1,18 @@
 "use client";
 
+import type { TimeValue } from "@react-aria/datepicker";
+import type { Locale } from "date-fns";
 import type {
-  CalendarProps,
   DatePreset,
   DateRange,
   DateRangePreset,
-  PickerProps,
   Preset,
   PresetContainerProps,
   SingleDatePickerProps,
-  SingleProps,
   TimeInputProps,
   TimeSegmentProps,
-  Translations,
   TriggerProps,
 } from "./types";
-import type { TimeValue } from "@react-aria/datepicker";
-import type { Locale } from "date-fns";
-import type { VariantProps } from "tailwind-variants";
 import { Time } from "@internationalized/date";
 import { useDateSegment, useTimeField } from "@react-aria/datepicker";
 import { useTimeFieldState } from "@react-stately/datepicker";
@@ -149,7 +144,7 @@ const Trigger = ({
 
   return (
     <PopoverTrigger
-      render={
+      render={(
         <Button
           ref={forwardedRef}
           variant="outline"
@@ -160,22 +155,24 @@ const Trigger = ({
             "justify-start text-left",
             // Size-based height classes to override Button's default sizing
             size === "xs" && "h-control-xs",
-            size === "sm" && "h-control-sm", 
+            size === "sm" && "h-control-sm",
             size === "base" && "h-control-base",
             size === "lg" && "h-control-lg",
             hasError && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-            className
+            className,
           )}
           {...props}
         />
-      }
+      )}
     >
       {children || (
-        placeholder ? (
-          <span className="text-zinc-400 dark:text-zinc-600">
-            {placeholder}
-          </span>
-        ) : null
+        placeholder
+          ? (
+              <span className="text-zinc-400 dark:text-zinc-600">
+                {placeholder}
+              </span>
+            )
+          : null
       )}
     </PopoverTrigger>
   );
@@ -217,8 +214,6 @@ const CalendarPopover = ({
 
 CalendarPopover.displayName = "DatePicker.CalendarPopover";
 
-
-
 // #region Utility Functions
 // ============================================================================
 
@@ -241,8 +236,6 @@ const formatDate = (
 
   return dateString;
 };
-
-
 
 const PresetContainer = <TPreset extends Preset, TValue>({
   presets,

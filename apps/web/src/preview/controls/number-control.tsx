@@ -1,7 +1,6 @@
-import React from "react";
-
 import { FieldControl } from "@patternmode/ui/components/field";
 import { NumberField } from "@patternmode/ui/components/number-field";
+import React from "react";
 
 import type { PropControlProps } from "./types";
 

@@ -1,5 +1,5 @@
-import type { IconButtonSize } from "./types";
 import type { Size } from "../../lib/component-config-types";
+import type { IconButtonSize } from "./types";
 
 /**
  * Array of all button size options for use in configs and other places.

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "../button/component";
 import { Input } from "../input/component";
+import { Text } from "../text/component";
 import {
   Dialog,
   DialogClose,
@@ -13,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./component";
-import { Text } from "../text/component";
 
 export const DefaultExample = () => (
   <Dialog>
@@ -25,7 +25,7 @@ export const DefaultExample = () => (
           This is a dialog description that explains what the dialog is for.
         </DialogDescription>
       </DialogHeader>
-        <Text>Dialog content goes here.</Text>
+      <Text>Dialog content goes here.</Text>
       <DialogFooter>
         <DialogClose render={<Button variant="secondary" />}>
           Cancel
