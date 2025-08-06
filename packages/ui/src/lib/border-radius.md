@@ -53,6 +53,11 @@ The following components have been updated to use the centralized border-radius 
   - `base` toggle group → `sm` buttons
   - `lg` toggle group → `base` buttons
 
+### ✅ Tabs (`packages/ui/src/components/tabs/variants.ts`)
+- Solid variant compound variants updated
+- Consistent with toggle-group styling
+- Uses centralized container button adjustments
+
 ### ✅ Form Controls (`packages/ui/src/lib/form-control-variants.ts`)
 - Container and element variants updated
 - Standalone form controls use centralized border-radius
@@ -73,10 +78,6 @@ The following components have been updated to use the centralized border-radius 
 - Base and rounded variants updated
 - Extended border-radius support for full rounded
 
-### ✅ Tabs (`packages/ui/src/components/tabs/variants.ts`)
-- Solid variant compound variants updated
-- Consistent with toggle-group styling
-
 ### ✅ Toolbar (`packages/ui/src/components/toolbar/variants.ts`)
 - Root, button, link, and input variants updated
 - All size variants now consistent
@@ -95,23 +96,54 @@ The following components have been updated to use the centralized border-radius 
 
 ## Special Cases
 
-### Toggle Group Button Sizing
-Toggle groups have a special size adjustment system to ensure buttons fit properly within the container:
+### Container Button Adjustments
+For components that contain buttons (like toggle groups and tabs), we have a centralized system in `packages/ui/src/lib/container-button-adjustments.ts` that handles:
+
+#### Height Adjustments
+Buttons inside containers need their height reduced to fit properly:
 
 ```typescript
-// When inside a toggle group, use a smaller size to fit within the container
-const getAdjustedButtonSize = (toggleGroupSize: string) => {
-  switch (toggleGroupSize) {
-    case "xs": return "xs";
-    case "sm": return "xs";
-    case "base": return "sm";  // This is the key fix for base size
-    case "lg": return "base";
-    default: return "sm";
-  }
+// Height adjustments for buttons inside containers
+const heightAdjustments = {
+  xs: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
+  sm: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
+  base: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
+  lg: "0.625rem", // 10px - accounts for p-1 (4px top + 4px bottom) + extra 2px
 };
 ```
 
-This ensures that when a toggle group has `size="base"`, the constituent buttons use `size="sm"` to fit properly within the container without making it too large.
+#### Border Radius Adjustments
+Buttons inside containers need their border radius reduced to account for container padding:
+
+```typescript
+// Border radius adjustments for buttons inside containers
+const borderRadiusAdjustments = {
+  xs: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
+  sm: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
+  base: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
+  lg: "0.25rem", // 4px - accounts for p-1 (4px top + 4px bottom)
+};
+```
+
+#### Usage
+```typescript
+import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
+
+// In component variants
+size: {
+  base: {
+    root: [
+      `gap-px p-0.5 ${borderRadiusVariants.base}`,
+      // Use centralized button adjustments
+      ...containerButtonAdjustments.base,
+    ],
+  },
+}
+```
+
+This ensures that when a container has `size="base"`, the constituent buttons have:
+- **Height**: `40px - 6px = 34px`
+- **Border radius**: `6px - 2px = 4px`
 
 ## Usage
 
@@ -150,6 +182,24 @@ export const myComponentVariants = tv({
 import { getBorderRadius } from "../../lib/border-radius";
 
 const borderRadius = getBorderRadius("base"); // Returns "rounded-md"
+```
+
+### For Container Components
+```typescript
+import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
+
+export const myContainerVariants = tv({
+  variants: {
+    size: {
+      base: {
+        root: [
+          `gap-px p-0.5 ${borderRadiusVariants.base}`,
+          ...containerButtonAdjustments.base,
+        ],
+      },
+    },
+  },
+});
 ```
 
 ## Future Considerations

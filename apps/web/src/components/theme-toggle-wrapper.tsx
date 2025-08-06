@@ -8,11 +8,11 @@ type ThemeToggleWrapperProps = {
   /**
    * Size variant for the toggle button.
    */
-  size?: "xs" | "sm" | "default" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
   /**
    * Visual variant for the toggle button.
    */
-  variant?: "default" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "outline-dashed" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
   /**
    * Whether to use rounded/pill shape.
    */
@@ -28,8 +28,8 @@ type ThemeToggleWrapperProps = {
  * with next-themes for the web application.
  */
 export function ThemeToggleWrapper({
-  size = "default",
-  variant = "outline", 
+  size = "base",
+  variant = "outline",
   rounded = false,
   className,
 }: ThemeToggleWrapperProps) {

@@ -9,13 +9,14 @@ export const emptyStateVariants = tv({
   ],
   variants: {
     size: {
+      xs: "gap-2 py-6 px-3",
       sm: "gap-3 py-8 px-4",
-      default: "gap-4 py-12 px-6",
+      base: "gap-4 py-12 px-6",
       lg: "gap-6 py-16 px-12",
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "base",
   },
 });
 
@@ -27,8 +28,9 @@ export const emptyStateActionsVariants = tv({
   base: "flex flex-col items-center",
   variants: {
     size: {
+      xs: "gap-1 mt-1",
       sm: "gap-2 mt-2",
-      default: "gap-3 mt-4", 
+      base: "gap-3 mt-4",
       lg: "gap-4 mt-6",
     },
     hasMultipleActions: {
@@ -37,7 +39,7 @@ export const emptyStateActionsVariants = tv({
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "base",
     hasMultipleActions: false,
   },
 });

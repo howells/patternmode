@@ -1,10 +1,7 @@
 import type { useRender } from "@base-ui-components/react/use-render";
+import type { ButtonProps } from "../button/component";
+import type { Size } from "../../lib/component-config-types";
 
-/**
- * Theme toggle size options.
- * Controls the overall dimensions and icon size.
- */
-export type ThemeToggleSize = "xs" | "sm" | "default" | "lg";
 
 export type ThemeToggleProps = {
   /**
@@ -26,12 +23,12 @@ export type ThemeToggleProps = {
    * Size variant for the toggle button.
    * Controls the overall dimensions and icon size.
    */
-  size?: ThemeToggleSize;
+  size?: Size;
   /**
    * Visual variant for the toggle button.
    * Controls the styling and background appearance.
    */
-  variant?: "default" | "secondary" | "outline" | "ghost";
+  variant?: ButtonProps["variant"];
   /**
    * Whether to use rounded/pill shape.
    * When true, button becomes fully rounded instead of using border radius.

@@ -30,8 +30,8 @@ export const SizeExample = () => {
         <Button>Small</Button>
         <Button>Buttons</Button>
       </ButtonGroup>
-      <ButtonGroup size="default">
-        <Button>Default</Button>
+      <ButtonGroup size="base">
+        <Button>Base</Button>
         <Button>Size</Button>
       </ButtonGroup>
       <ButtonGroup size="lg">

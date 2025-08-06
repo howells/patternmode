@@ -3,6 +3,7 @@
 import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
+import { VStack } from "../stack/component";
 
 const TabTextContent = ({ children }: { children?: React.ReactNode }) => {
   return (
@@ -123,7 +124,7 @@ export const SizesExample = () => {
       <div>
         <h3 className="mb-4 text-sm font-medium">Default</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="line" size="default">
+          <TabsList variant="line" size="base">
             <TabsTrigger value="tab1">Overview</TabsTrigger>
             <TabsTrigger value="tab2">Analytics</TabsTrigger>
             <TabsTrigger value="tab3">Reports</TabsTrigger>
@@ -165,9 +166,8 @@ export const SizesExample = () => {
 
 export const SolidSizesExample = () => {
   return (
-    <div className="space-y-8">
-      <div>
-        <h3 className="mb-4 text-sm font-medium">Extra Small (xs)</h3>
+    <VStack>
+
         <Tabs defaultValue="tab1">
           <TabsList variant="solid" size="xs">
             <TabsTrigger value="tab1">Tab 1</TabsTrigger>
@@ -184,12 +184,11 @@ export const SolidSizesExample = () => {
             <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
-      </div>
 
-      <div>
-        <h3 className="mb-4 text-sm font-medium">Default</h3>
+
+
         <Tabs defaultValue="tab1">
-          <TabsList variant="solid" size="default">
+          <TabsList variant="solid" size="base">
             <TabsTrigger value="tab1">Tab 1</TabsTrigger>
             <TabsTrigger value="tab2">Tab 2</TabsTrigger>
             <TabsTrigger value="tab3">Tab 3</TabsTrigger>
@@ -204,10 +203,8 @@ export const SolidSizesExample = () => {
             <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
-      </div>
 
-      <div>
-        <h3 className="mb-4 text-sm font-medium">Large (lg)</h3>
+
         <Tabs defaultValue="tab1">
           <TabsList variant="solid" size="lg">
             <TabsTrigger value="tab1">Tab 1</TabsTrigger>
@@ -224,8 +221,8 @@ export const SolidSizesExample = () => {
             <TabTextContent>Content for Tab 3</TabTextContent>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
+
+    </VStack>
   );
 };
 

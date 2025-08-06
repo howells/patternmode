@@ -1,6 +1,6 @@
 /**
  * React Fast Refresh Compliance Test
- * 
+ *
  * Tests component restructuring progress for React Fast Refresh compliance.
  * Tracks which components have been restructured to separate concerns.
  */
@@ -89,7 +89,7 @@ function hasReactRefreshViolations(componentDir: string): {
   const hasVariantsFile = existsSync(variantsFilePath);
   const hasTypesFile = existsSync(typesFilePath);
   const hasConstantsFile = existsSync(constantsFilePath);
-  
+
   const isRestructured = hasVariantsFile || hasTypesFile || hasConstantsFile;
 
   return {
@@ -122,6 +122,29 @@ describe("React Fast Refresh Compliance Progress", () => {
     console.log(`Found ${componentDirs.length} component directories`);
   });
 
+  // Create individual test cases for each component
+  describe("Individual Component Compliance", () => {
+    // Create individual test cases for each component
+    componentDirs.forEach((componentDir) => {
+      it(`${componentDir} should be React Fast Refresh compliant`, () => {
+        const analysis = hasReactRefreshViolations(componentDir);
+        const externalCompliant = externalImportUsesComponent(componentDir);
+
+        // Test core requirements
+        expect(analysis.hasViolations, `${componentDir}: Should not have react-refresh violations`).toBe(false);
+
+        // Log warnings for non-restructured components but don't fail the test
+        if (!analysis.isRestructured) {
+          console.warn(`${componentDir}: Not yet restructured (missing variants.ts, types.ts, or constants.ts)`);
+        }
+
+        if (!externalCompliant) {
+          console.warn(`${componentDir}: External import does not resolve to component.tsx`);
+        }
+      });
+    });
+  });
+
   describe("Restructuring Progress", () => {
     it("should track component restructuring progress", () => {
       const results = {
@@ -130,12 +153,12 @@ describe("React Fast Refresh Compliance Progress", () => {
         violatingComponents: 0,
         compliantComponents: 0,
         externalImportCompliant: 0,
-        
+
         // Categorized lists
         restructured: [] as string[],
         violating: [] as Array<{ component: string; violations: string[] }>,
         compliant: [] as string[],
-        
+
         // Detailed breakdown
         withVariantsFile: [] as string[],
         withTypesFile: [] as string[],
@@ -235,7 +258,7 @@ describe("React Fast Refresh Compliance Progress", () => {
   describe("Individual Component Status", () => {
     // Test the known restructured components
     const knownRestructured = ["button", "card", "badge"];
-    
+
     knownRestructured.forEach((componentDir) => {
       it(`${componentDir} should be properly restructured`, () => {
         const analysis = hasReactRefreshViolations(componentDir);
@@ -243,7 +266,7 @@ describe("React Fast Refresh Compliance Progress", () => {
 
         expect(analysis.isRestructured, `${componentDir} should have separate files`).toBe(true);
         expect(externalCompliant, `${componentDir} external import should resolve to component.tsx`).toBe(true);
-        
+
         // These components should not have violations in component.tsx anymore
         expect(analysis.hasViolations, `${componentDir}/component.tsx should not export non-components`).toBe(false);
       });
@@ -253,7 +276,7 @@ describe("React Fast Refresh Compliance Progress", () => {
   describe("Package.json Export Resolution", () => {
     it("should verify external imports resolve to component.tsx for restructured components", () => {
       const restructuredComponents = ["button", "card", "badge"];
-      
+
       restructuredComponents.forEach((componentDir) => {
         const resolvedPath = require.resolve(`@patternmode/ui/components/${componentDir}`);
         expect(resolvedPath).toContain("/component.tsx");

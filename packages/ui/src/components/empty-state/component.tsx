@@ -20,7 +20,7 @@ export const EmptyState = ({
   primaryAction,
   secondaryAction,
   variant = "default",
-  size = "default",
+  size = "base",
   className,
   ...props
 }: EmptyStateProps) => {
@@ -37,11 +37,13 @@ export const EmptyState = ({
         <IconContainer
           icon={Icon}
           size={
-            size === "sm"
+            size === "xs"
               ? "sm"
-              : size === "default"
-                ? "lg"
-                : "xl"
+              : size === "sm"
+                ? "sm"
+                : size === "base"
+                  ? "lg"
+                  : "xl"
           }
           variant={variant === "minimal" ? "neutral" : "neutral"}
         />
@@ -72,8 +74,8 @@ export const EmptyState = ({
           {/* Primary Action */}
           {primaryAction && (
             <Button
-              variant="default"
-              size={size === "sm" ? "sm" : "default"}
+              variant="primary"
+              size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
               disabled={primaryAction.disabled}
               onClick={primaryAction.onClick}
               render={
@@ -92,7 +94,7 @@ export const EmptyState = ({
           {secondaryAction && (
             <Button
               variant="ghost"
-              size={size === "sm" ? "sm" : "default"}
+              size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
               onClick={secondaryAction.onClick}
               render={
                 secondaryAction.href

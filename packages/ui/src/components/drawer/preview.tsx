@@ -33,7 +33,7 @@ export type DrawerPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the drawer trigger button.
    */
-  triggerVariant?: "default" | "outline" | "ghost";
+  triggerVariant?: "primary" | "secondary" | "outline" | "outline-dashed" | "ghost" | "inverse-ghost" | "link" | "minimal";
   /**
    * Content complexity level.
    * Determines how much content is displayed in the drawer.
@@ -45,7 +45,7 @@ export function DrawerPreview({
   direction = "bottom",
   showFooter = true,
   showCloseButton = true,
-  triggerVariant = "default",
+  triggerVariant = "primary",
   contentLevel = "simple",
 }: DrawerPreviewProps = {}) {
   const getContent = () => {
@@ -175,8 +175,8 @@ export const drawerPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the drawer trigger button.",
-    options: ["default", "outline", "ghost"],
-    defaultValue: "default",
+    options: ["primary", "secondary", "outline", "outline-dashed", "ghost", "inverse-ghost", "link", "minimal"],
+    defaultValue: "primary",
   },
   {
     name: "contentLevel",

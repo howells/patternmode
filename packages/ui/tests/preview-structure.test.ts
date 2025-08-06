@@ -162,6 +162,27 @@ describe("preview Structure Validation", () => {
     expect(componentDirs).toContain("textarea");
   });
 
+  // Create individual test cases for each component's preview file
+  describe("Individual Component Previews", () => {
+    // Create individual test cases for each component
+    componentDirs.forEach((componentDir) => {
+      it(`${componentDir} preview should follow canonical structure`, async () => {
+        const previewPath = join(componentsDir, componentDir, "preview.tsx");
+        const result = await validatePreviewFile(previewPath, componentDir);
+
+        // Test core requirements
+        expect(result.hasUseClient, `${componentDir}: Should have 'use client' directive`).toBe(true);
+        expect(result.hasComponentImport, `${componentDir}: Should import component from ./component`).toBe(true);
+        expect(result.hasExampleFunction, `${componentDir}: Should have preview function export`).toBe(true);
+
+        // Log warnings but don't fail the test
+        if (result.warnings.length > 0) {
+          console.warn(`${componentDir} warnings:`, result.warnings);
+        }
+      });
+    });
+  });
+
   it("should validate all preview.tsx files structure", async () => {
     const results: PreviewValidationResult[] = [];
     const invalidFiles: string[] = [];
@@ -256,26 +277,5 @@ describe("preview Structure Validation", () => {
     // Just ensure we can validate the file
     expect(result).toBeDefined();
     expect(result.componentName).toBe("textarea");
-  });
-
-  componentDirs.forEach((componentDir) => {
-    it(`${componentDir} preview should follow canonical structure`, async () => {
-      const previewPath = join(componentsDir, componentDir, "preview.tsx");
-      const result = await validatePreviewFile(previewPath, componentDir);
-
-      // Test core requirements (relaxed for current structure)
-      if (!result.hasUseClient) {
-        console.warn(`${componentDir} preview missing "use client" directive`);
-      }
-      if (!result.hasComponentImport) {
-        console.warn(`${componentDir} preview missing component import`);
-      }
-      if (!result.hasExampleFunction) {
-        console.warn(`${componentDir} preview missing example function`);
-      }
-
-      // Just check that the file exists and can be validated
-      expect(result).toBeDefined();
-    });
   });
 });

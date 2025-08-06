@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
 import { borderRadiusVariants } from "../../lib/border-radius";
+import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
 
 export const toggleGroupVariants = tv({
   slots: {
@@ -47,36 +48,32 @@ export const toggleGroupVariants = tv({
       xs: {
         root: [
           `gap-0.5 p-0.5 ${borderRadiusVariants.xs}`,
-          // Directly target button elements to adjust height (reduced by 6px total)
-          "[&_button]:!h-[calc(var(--control-height-xs)-0.375rem)]", // xs: 32px - 6px = 26px
-          "[&_button]:!min-h-[calc(var(--control-height-xs)-0.375rem)]",
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.xs,
         ],
         item: `h-4 px-1 text-xs ${borderRadiusVariants.xs}`, // Extra small size
       },
       sm: {
         root: [
           `gap-0.5 p-0.5 ${borderRadiusVariants.sm}`,
-          // Directly target button elements to adjust height (reduced by 6px total)
-          "[&_button]:!h-[calc(var(--control-height-sm)-0.375rem)]", // sm: 36px - 6px = 30px
-          "[&_button]:!min-h-[calc(var(--control-height-sm)-0.375rem)]",
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.sm,
         ],
         item: `h-6 px-2 text-xs ${borderRadiusVariants.sm}`, // Match button sm: py-1.5 px-2.5 text-xs but adjusted for toggle
       },
       base: {
         root: [
           `gap-px p-0.5 ${borderRadiusVariants.base}`,
-          // Directly target button elements to adjust height (reduced by 6px total)
-          "[&_button]:!h-[calc(var(--control-height-base)-0.375rem)]", // base: 40px - 6px = 34px
-          "[&_button]:!min-h-[calc(var(--control-height-base)-0.375rem)]",
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.base,
         ],
         item: `h-8 px-3 text-sm ${borderRadiusVariants.base}`, // Match button base: py-2 px-3 text-sm
       },
       lg: {
         root: [
           `gap-1 p-1 ${borderRadiusVariants.lg}`,
-          // Directly target button elements to adjust height (reduced by 10px total for lg)
-          "[&_button]:!h-[calc(var(--control-height-lg)-0.625rem)]", // lg: 48px - 10px = 38px
-          "[&_button]:!min-h-[calc(var(--control-height-lg)-0.625rem)]",
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.lg,
         ],
         item: `h-10 px-4 text-base ${borderRadiusVariants.lg}`, // Match button lg: py-2.5 px-4 text-base
       },

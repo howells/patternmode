@@ -11,7 +11,7 @@ import { buttonGroupVariants } from "./variants";
  */
 export const ButtonGroup = ({
   variant,
-  size = "default",
+  size = "base",
   gap,
   justify = "start",
   wrap = false,
@@ -28,7 +28,7 @@ export const ButtonGroup = ({
         return 1;
       case "sm":
         return 2;
-      case "default":
+      case "base":
         return 2;
       case "lg":
         return 3;

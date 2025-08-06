@@ -9,8 +9,7 @@ export function GitHubLink() {
       href="https://github.com/howells/patternmode"
       variant="ghost"
       size="icon-sm"
-      target="_blank"
-      rel="noopener noreferrer"
+      render={<Link href="https://github.com/howells/patternmode" target="_blank" rel="noopener noreferrer" />}
     >
       <Icon icon={SiGithub} size="sm" />
       <span className="sr-only">GitHub</span>

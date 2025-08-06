@@ -588,7 +588,6 @@ export const SidebarItem = function SidebarItem(
             rightIcon={href ? ArrowRight : undefined}
             showRightIconOnHover={!!href}
             onClick={handleClick}
-
             {...props}
           />
         </Tooltip>
@@ -601,7 +600,6 @@ export const SidebarItem = function SidebarItem(
     <Button
       href={href}
       variant={current ? "secondary" : "inverse-ghost"}
-
       icon={icon}
       leftIcon={LeftIcon}
       rightIcon={href ? ArrowRight : undefined}
@@ -611,7 +609,6 @@ export const SidebarItem = function SidebarItem(
       size={isCollapsed ? "icon-sm" : "sm"}
       textAlign={isCollapsed ? "center" : "left"}
       ref={ref}
-
       {...props}
     >
       {wrappedChildren}

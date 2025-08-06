@@ -4,6 +4,8 @@ import React from "react";
 import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
+import type { Size } from "../../lib/component-config-types";
+import { sizes } from "../../lib/component-config-types";
 
 export type TabsPreviewProps = {
   /**
@@ -20,7 +22,7 @@ export type TabsPreviewProps = {
    * Size variant for tabs (applies to "solid" variant).
    * Controls the size of button-style tabs.
    */
-  size?: "xs" | "sm" | "default" | "lg";
+  size?: Size;
   /**
    * Default tab to display.
    * Determines which tab is initially active.
@@ -36,7 +38,7 @@ export type TabsPreviewProps = {
 export function TabsPreview({
   variant = "line",
   hideDivider = false,
-  size = "default",
+  size = "base",
   defaultValue = "tab1",
   showButtonAlignment = false,
 }: TabsPreviewProps = {}) {
@@ -96,26 +98,13 @@ export const tabsPreviewProps = [
     name: "size",
     type: "select",
     description: "Tabs size variant - affects padding and text size of the tab triggers.",
-    options: ["xs", "sm", "default", "lg"],
-    defaultValue: "default",
+    options: sizes,
+    defaultValue: "base",
   },
   {
     name: "hideDivider",
     type: "boolean",
     description: "Hide the bottom divider line (only applies to line variant).",
     defaultValue: false,
-  },
-  {
-    name: "showButtonAlignment",
-    type: "boolean",
-    description: "Show buttons next to tabs.",
-    defaultValue: false,
-  },
-  {
-    name: "defaultValue",
-    type: "select",
-    description: "Default tab to display.",
-    options: ["tab1", "tab2", "tab3"],
-    defaultValue: "tab1",
-  },
+  }
 ];

@@ -5,6 +5,9 @@ import React from "react";
 import type { Size } from "../../lib/component-config-types";
 import { Icon } from "../icon/component";
 import { SplitButton } from "./component";
+import { sizes } from "../../lib/component-config-types";
+import type { ButtonVariant } from "../../lib/variants";
+import { componentVariants } from "../../lib/variants";
 
 export type SplitButtonPreviewProps = {
   /**
@@ -16,7 +19,7 @@ export type SplitButtonPreviewProps = {
    * Button style variant.
    * Controls the visual styling and color scheme.
    */
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
+  variant?: ButtonVariant;
   /**
    * Whether to show icons in the dropdown menu.
    * Displays relevant icons alongside menu items.
@@ -141,28 +144,21 @@ export const splitButtonPreviewProps = [
     name: "variant",
     type: "select",
     description: "Button style variant - controls the visual appearance of both parts of the split button.",
-    options: ["default", "primary", "secondary", "outline", "destructive"],
-    defaultValue: "default",
+    options: Object.keys(componentVariants.button),
+    defaultValue: "primary",
   },
   {
     name: "size",
     type: "select",
     description: "Button size variant - affects padding and text size of the split button.",
-    options: ["sm", "default"],
-    defaultValue: "default",
+    options: sizes,
+    defaultValue: "base",
   },
   {
-    name: "actionCount",
-    type: "select",
-    description: "Number of dropdown actions - controls how many secondary actions are available.",
-    options: [2, 3, 4, 5],
-    defaultValue: 3,
-  },
-  {
-    name: "showIcons",
-    type: "boolean",
-    description: "Whether to show icons in dropdown actions - displays icons alongside action text when enabled.",
-    defaultValue: true,
+    name: "dropdownIcon",
+    type: "icon-select",
+    description: "Icon to display in the dropdown trigger button.",
+    defaultValue: "ChevronDown",
   },
   {
     name: "showDividers",

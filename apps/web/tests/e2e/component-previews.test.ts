@@ -115,22 +115,22 @@ async function testComponentPage(
   // Check visual presence - ensure component has width and is visible
   const previewElement = page.locator("[data-testid=\"component-preview\"]").first();
   const previewBox = await previewElement.boundingBox();
-  
+
   if (!previewBox || previewBox.width === 0 || previewBox.height === 0) {
     console.error(`❌ ${componentName}: Component preview exists but has no visible dimensions (${previewBox?.width || 0}x${previewBox?.height || 0})`);
-    
+
     // Try to check if the component itself has appropriate width classes
     const hasWidthClass = await previewElement.evaluate((el) => {
       const classes = el.className;
-      return classes.includes('w-full') || classes.includes('max-w-') || classes.includes('min-w-') || 
+      return classes.includes('w-full') || classes.includes('max-w-') || classes.includes('min-w-') ||
              classes.includes('w-') || el.style.width || (el instanceof HTMLElement && el.offsetWidth > 0);
     });
-    
+
     if (!hasWidthClass) {
       console.error(`❌ ${componentName}: Component lacks width styling - should have w-full max-w-lg or similar`);
     }
   }
-  
+
   // Ensure minimum visual presence
   expect(previewBox?.width || 0).toBeGreaterThan(0);
   expect(previewBox?.height || 0).toBeGreaterThan(0);
@@ -144,14 +144,14 @@ async function testComponentPage(
       console.error(`❌ ${componentName}: Chart component has no SVG elements - chart may not be rendering`);
       expect(svgElements).toBeGreaterThan(0);
     }
-    
+
     // Charts should have actual visual elements (paths, rects, circles, etc.)
     const chartElements = await page.locator('svg path, svg rect, svg circle, svg line').count();
     if (chartElements === 0) {
       console.error(`❌ ${componentName}: Chart SVG exists but has no visual elements (paths, rects, circles, lines)`);
     }
     expect(chartElements).toBeGreaterThan(0);
-    
+
     // ResponsiveContainer should have proper dimensions
     const responsiveContainer = await page.locator('[data-testid*="chart"] .recharts-responsive-container').count();
     if (responsiveContainer > 0) {
@@ -196,44 +196,23 @@ async function testComponentPage(
   console.log(`✅ ${componentId} passed all checks`);
 }
 
-test("All component preview pages should load successfully", async ({
-  page,
-}) => {
-  test.setTimeout(900000); // 15 minutes for all components
-  const failures: string[] = [];
+// Get all components from all categories
+const allComponents = Object.values(COMPONENT_LIST).flat();
 
-  console.log(`Starting tests for ${Object.values(COMPONENT_LIST).flat().length} components across ${Object.keys(COMPONENT_LIST).length} categories...`);
+// Create individual test cases for each component
+allComponents.forEach((componentId) => {
+  test(`Component ${componentId} should load successfully`, async ({ page }) => {
+    test.setTimeout(60000); // 1 minute per component
+    await testComponentPage(page, componentId);
+  });
+});
 
-  // Get all components from all categories
-  const allComponents = Object.values(COMPONENT_LIST).flat();
-
-  for (const componentId of allComponents) {
-    console.log(`  🔍 Testing ${componentId}...`);
-    try {
-      await testComponentPage(page, componentId);
-    }
-    catch (error) {
-      const errorMsg = `❌ ${componentId}: ${
-        error instanceof Error ? error.message : String(error)
-      }`;
-      console.error(`    ${errorMsg}`);
-      failures.push(errorMsg);
-      // Continue testing other components instead of stopping
-    }
-  }
-
-  // Report all failures at the end
-  if (failures.length > 0) {
-    console.error(`\n🚨 TOTAL FAILURES: ${failures.length}`);
-    failures.forEach(failure => console.error(failure));
-    throw new Error(
-      `${failures.length} components failed e2e tests:\n${failures.join("\n")}`,
-    );
-  }
-
-  console.log(
-    `\n🎉 SUCCESS: All ${
-      Object.values(COMPONENT_LIST).flat().length
-    } components passed e2e tests!`,
-  );
+// Optional: Keep a summary test that runs after all individual tests
+test.describe("Component Preview Summary", () => {
+  test("All components should be tested", () => {
+    // This test will always pass but serves as a summary
+    // The actual testing is done in the individual component tests above
+    expect(allComponents.length).toBeGreaterThan(0);
+    console.log(`\n📊 Test Summary: ${allComponents.length} components tested individually`);
+  });
 });

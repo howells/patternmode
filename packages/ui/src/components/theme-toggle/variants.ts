@@ -29,13 +29,13 @@ export const themeToggleVariants = tv({
     size: {
       "xs": "size-control-xs",
       "sm": "size-control-sm",
-      "default": "size-control-base",
+      "base": "size-control-base",
       "lg": "size-control-lg",
     },
   },
   defaultVariants: {
     variant: "outline",
-    size: "default",
+    size: "base",
     rounded: false,
   },
 });

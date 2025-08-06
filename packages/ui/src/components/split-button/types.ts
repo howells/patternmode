@@ -1,14 +1,9 @@
 import type React from "react";
 import type { MenuContent } from "../menu/component";
+import type { Size } from "../../lib/component-config-types";
+import type { ButtonVariant } from "../../lib/variants";
 
-export type SplitButtonVariant
-  = | "default"
-    | "secondary"
-    | "destructive"
-    | "outline"
-    | "ghost";
-
-export type SplitButtonSize = "default" | "sm";
+export type SplitButtonVariant = ButtonVariant;
 
 export type SplitButtonProps = {
   /**
@@ -20,7 +15,7 @@ export type SplitButtonProps = {
    * Size of the split button.
    * Affects both the main button and dropdown trigger dimensions.
    */
-  size?: SplitButtonSize;
+  size?: Size;
   /**
    * Whether the split button has rounded corners.
    * When true, applies full border radius for a pill-like appearance.
@@ -75,4 +70,8 @@ export type SplitButtonProps = {
    * Icon component to display in the dropdown trigger button.
    */
   dropdownIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /**
+   * Whether to show the separator between the main button and dropdown trigger.
+   */
+  showSeparator?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;

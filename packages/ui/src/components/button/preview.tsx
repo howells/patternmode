@@ -4,6 +4,8 @@ import type { ButtonProps } from "./component";
 import { Download, Plus, Save, Settings } from "lucide-react";
 import React from "react";
 import { Button } from "./component";
+import { componentVariants } from "../../lib/variants";
+import { sizes } from "../../lib/component-config-types";
 
 export function ButtonPreview(props: ButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -41,40 +43,26 @@ export const buttonPreviewProps = [
     name: "variant",
     type: "select",
     description: "Visual style variant of the button.",
-    options: ["primary", "secondary", "ghost", "outline", "destructive"],
+    options: Object.keys(componentVariants.button),
     defaultValue: "primary",
   },
   {
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["xs", "sm", "base", "lg", "icon-xs", "icon-sm", "icon", "icon-lg"],
+    options: [...sizes, "icon-xs", "icon-sm", "icon", "icon-lg"],
     defaultValue: "base",
   },
   {
     name: "leftIcon",
     type: "select",
     description: "Icon component to display on the left side.",
-    options: [
-      { label: "None", value: null },
-      { label: "Save", value: Save },
-      { label: "Download", value: Download },
-      { label: "Plus", value: Plus },
-      { label: "Settings", value: Settings },
-    ],
     defaultValue: Save,
   },
   {
     name: "rightIcon",
     type: "select",
     description: "Icon component to display on the right side.",
-    options: [
-      { label: "None", value: null },
-      { label: "Save", value: Save },
-      { label: "Download", value: Download },
-      { label: "Plus", value: Plus },
-      { label: "Settings", value: Settings },
-    ],
     defaultValue: null,
   },
   {

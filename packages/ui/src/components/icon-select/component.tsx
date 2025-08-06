@@ -171,12 +171,14 @@ const SafeDynamicIcon = React.memo(({
       className={`${className} shrink-0 flex items-center justify-center`}
     >
       <IconComponent
-        className="w-full h-full"
+        className="w-5 h-5"
         strokeWidth={strokeWidth}
       />
     </div>
   );
 });
+
+SafeDynamicIcon.displayName = "SafeDynamicIcon";
 
 /**
  * Icon picker component with virtual scrolling for optimal performance with 1700+ icons.
@@ -195,7 +197,7 @@ export const IconSelect = ({
     (item: IconOption) => (
       <SafeDynamicIcon
         name={item.pascal}
-        className="size-4 shrink-0"
+        className="size-5 shrink-0 flex items-center justify-center text-zinc-700 dark:text-zinc-300"
         strokeWidth={iconStrokeWidth}
       />
     ),

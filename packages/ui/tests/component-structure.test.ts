@@ -53,7 +53,7 @@ function hasTypeScriptProps(componentDir: string): boolean {
 
   // Check component.tsx file
   const componentContent = readFileSync(componentFilePath, "utf8");
-  
+
   // Look for TypeScript prop type definitions in component file
   const hasTypeDefinitionsInComponent = /type\s+\w+Props\s*=/.test(componentContent)
     || /interface\s+\w+Props\s*\{/.test(componentContent)
@@ -71,7 +71,7 @@ function hasTypeScriptProps(componentDir: string): boolean {
       || /interface\s+\w+Props\s*\{/.test(typesContent)
       || /React\.ComponentPropsWithoutRef/.test(typesContent)
       || /React\.ComponentProps/.test(typesContent);
-    
+
     if (hasTypeDefinitionsInTypes) {
       return true;
     }
@@ -111,17 +111,17 @@ function getJSDocDescription(componentDir: string): string | null {
 
     let foundJSDoc: string | null = null;
 
-    function visit(node: ts.Node): void {
+        const visit = (node: ts.Node): void => {
       // Look for component declarations
       const isTargetComponent = (
         // const ComponentName = ...
-        (ts.isVariableDeclaration(node) && 
-         ts.isIdentifier(node.name) && 
+        (ts.isVariableDeclaration(node) &&
+         ts.isIdentifier(node.name) &&
          node.name.text === expectedComponentName) ||
         // function ComponentName(...) { ... }
-        (ts.isFunctionDeclaration(node) && 
-         node.name && 
-         ts.isIdentifier(node.name) && 
+        (ts.isFunctionDeclaration(node) &&
+         node.name &&
+         ts.isIdentifier(node.name) &&
          node.name.text === expectedComponentName)
       );
 
@@ -129,7 +129,7 @@ function getJSDocDescription(componentDir: string): string | null {
         // Get JSDoc comments using TypeScript's built-in JSDoc support
         const jsDocTags = ts.getJSDocTags(node);
         const jsDocComments = ts.getJSDocCommentsAndTags(node);
-        
+
         // Try to get the description from JSDoc
         for (const jsDoc of jsDocComments) {
           if (ts.isJSDoc(jsDoc) && jsDoc.comment) {
@@ -139,8 +139,8 @@ function getJSDocDescription(componentDir: string): string | null {
             } else if (Array.isArray(jsDoc.comment)) {
               // Handle JSDoc comment that is an array of text and tags
               const textParts = jsDoc.comment
-                .filter(part => ts.isJSDocText(part))
-                .map(part => part.text)
+                .filter(part => part.kind === ts.SyntaxKind.JSDocText)
+                .map(part => (part as any).text)
                 .join(' ')
                 .trim();
               if (textParts) {
@@ -155,16 +155,16 @@ function getJSDocDescription(componentDir: string): string | null {
         const fullText = sourceFile.getFullText();
         const nodeStart = node.getFullStart();
         const leadingTrivia = fullText.substring(node.getFullStart(), node.getStart());
-        
+
         // Look for JSDoc pattern in leading trivia
-        const jsDocMatch = leadingTrivia.match(/\/\*\*(.*?)\*\//s);
+        const jsDocMatch = leadingTrivia.match(/\/\*\*([\s\S]*?)\*\//);
         if (jsDocMatch) {
           const jsDocContent = jsDocMatch[1];
           const descriptionLines = jsDocContent
             .split('\n')
             .map(line => line.trim().replace(/^\*\s?/, '').trim())
             .filter(line => line && !line.startsWith('@'));
-          
+
           if (descriptionLines.length > 0) {
             foundJSDoc = descriptionLines.join(' ').trim();
             return;
@@ -174,7 +174,7 @@ function getJSDocDescription(componentDir: string): string | null {
 
       // Continue traversing child nodes
       ts.forEachChild(node, visit);
-    }
+    };
 
     visit(sourceFile);
     return foundJSDoc;
@@ -318,6 +318,7 @@ describe("component Structure & Requirements", () => {
   });
 
   describe("typeScript Requirements", () => {
+    // Create individual test cases for each component
     componentDirs.forEach((componentDir) => {
       it(`${componentDir} should have TypeScript prop types defined`, () => {
         const hasProps = hasTypeScriptProps(componentDir);
@@ -327,6 +328,7 @@ describe("component Structure & Requirements", () => {
   });
 
   describe("jSDoc Requirements", () => {
+    // Create individual test cases for each component
     componentDirs.forEach((componentDir) => {
       it(`${componentDir} should have concise JSDoc description (≤140 chars)`, () => {
         const description = getJSDocDescription(componentDir);
@@ -344,6 +346,7 @@ describe("component Structure & Requirements", () => {
   });
 
   describe("component Structure", () => {
+    // Create individual test cases for each component
     componentDirs.forEach((componentDir) => {
       it(`${componentDir} should export main component correctly`, () => {
         const componentsDir = join(process.cwd(), "src", "components");
@@ -358,6 +361,7 @@ describe("component Structure & Requirements", () => {
   });
 
   describe("testId Requirements", () => {
+    // Create individual test cases for each component
     componentDirs.forEach((componentDir) => {
       it(`${componentDir} should have static data-testid matching component name`, () => {
         const testIdInfo = hasTestId(componentDir);

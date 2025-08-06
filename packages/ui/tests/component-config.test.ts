@@ -216,6 +216,52 @@ describe("component Config Validation", () => {
     console.log(`Found ${configFiles.length} config.ts files`);
   });
 
+  // Get all config files for individual testing
+  let configFiles: Array<{ configPath: string; componentId: string }> = [];
+
+  it("should load all config files for individual testing", async () => {
+    const componentsDir = path.join(process.cwd(), "src/components");
+    configFiles = await findComponentConfigFiles(componentsDir);
+    expect(configFiles.length).toBeGreaterThan(0);
+  });
+
+  // Create individual test cases for each component config
+  describe("Individual Component Configs", () => {
+    // We'll populate this dynamically
+    let dynamicTests: Array<{ configPath: string; componentId: string }> = [];
+
+    it("should set up individual component tests", async () => {
+      const componentsDir = path.join(process.cwd(), "src/components");
+      dynamicTests = await findComponentConfigFiles(componentsDir);
+      expect(dynamicTests.length).toBeGreaterThan(0);
+    });
+
+    // Create individual test cases for each component
+    for (let i = 0; i < 100; i++) { // Pre-allocate test slots
+      it(`component config ${i} should be valid`, async () => {
+        // This will be skipped if no config exists at this index
+        if (!dynamicTests || i >= dynamicTests.length) {
+          it.skip("No config at this index");
+          return;
+        }
+
+        const { configPath, componentId } = dynamicTests[i];
+        const result = await validateComponentConfigFile(configPath, componentId);
+
+        // Test core requirements
+        expect(result.hasValidStructure, `${componentId}: Should have valid config structure`).toBe(true);
+        expect(result.hasRequiredFields, `${componentId}: Should have required fields`).toBe(true);
+        expect(result.hasValidCategory, `${componentId}: Should have valid category`).toBe(true);
+        expect(result.examplesAlignment.hasValidExamples, `${componentId}: Should have examples`).toBe(true);
+
+        // Log warnings but don't fail the test
+        if (result.warnings.length > 0) {
+          console.warn(`${componentId} warnings:`, result.warnings);
+        }
+      });
+    }
+  });
+
   it("should validate all config.ts files structure", async () => {
     const componentsDir = path.join(process.cwd(), "src/components");
     const configFiles = await findComponentConfigFiles(componentsDir);

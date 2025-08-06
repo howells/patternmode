@@ -94,7 +94,7 @@ export type AlertDialogActionProps = {
    * Visual style variant for the action button.
    * Use "destructive" for dangerous actions like deleting data.
    */
-  variant?: "default" | "destructive";
+  variant?: "primary" | "secondary" | "destructive" | "outline" | "outline-dashed" | "ghost" | "inverse-ghost" | "link" | "minimal";
   /**
    * Additional CSS classes.
    * Applied to the action button element.

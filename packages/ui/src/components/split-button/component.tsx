@@ -8,45 +8,66 @@ import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Menu, MenuContent, MenuTrigger } from "../menu/component";
 import { dropdownTriggerVariants, splitButtonVariants } from "./variants";
+import { Separator } from "../separator/component";
 
 /**
  * Compound button with primary action and dropdown menu for secondary actions.
  */
 const SplitButton = (
-  { ref, variant = "default", size = "default", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown as React.ComponentType<{ className?: string; strokeWidth?: number }>, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref, variant = "primary", size = "base", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown as React.ComponentType<{ className?: string; strokeWidth?: number }>, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
-  const iconSize = size === "sm" ? "size-3.5" : "size-3.5";
+  // Calculate separator position based on size
+  const getSeparatorPosition = () => {
+    switch (size) {
+      case "xs":
+        return "right-7"; // h-control-xs = 24px, so right-7 (28px)
+      case "sm":
+        return "right-8"; // h-control-sm = 28px, so right-8 (32px)
+      case "base":
+        return "right-9"; // h-control-base = 32px, so right-9 (36px)
+      case "lg":
+        return "right-12"; // h-control-lg = 40px, so right-10 (40px)
+      default:
+        return "right-9";
+    }
+  };
 
   return (
     <div
       ref={ref}
+      data-testid="split-button"
       className={cx(
-        splitButtonVariants({ variant, size, rounded }),
+        splitButtonVariants({ rounded }),
         disabled && "data-disabled",
         className,
       )}
-      data-testid="split-button"
       {...props}
     >
       {/* Main Button */}
       <Button
         variant={variant}
         size={size}
-        rounded={false} // We handle rounding at the container level
         disabled={disabled || isLoading}
         isLoading={isLoading}
         loadingText={loadingText}
         leftIcon={leftIcon}
         onClick={onButtonClick}
         className={cx(
-          "flex-1 rounded-l-lg",
+          "rounded-r-none border-r-0",
           rounded && "rounded-l-full",
-          // Remove right border radius
-          "rounded-r-none",
+          !rounded && "rounded-l-lg",
         )}
       >
         {buttonContent}
       </Button>
+
+      <Separator
+        orientation="vertical"
+        className={cx(
+          "z-10 opacity-25 absolute h-1/2 top-1/2 -translate-y-1/2",
+          getSeparatorPosition()
+        )}
+      />
 
       {/* Dropdown Trigger */}
       <Menu>
@@ -55,18 +76,16 @@ const SplitButton = (
             <Button
               variant={variant}
               size={size}
-              rounded={false}
               disabled={disabled}
+              icon={DropdownIcon}
               className={cx(
-                "border-l border-black/10 rounded-l-none",
-                "dark:border-white/10",
+                "rounded-l-none border-l-0",
                 rounded && "rounded-r-full",
-                dropdownTriggerVariants({ variant, size, rounded }).trigger(),
+                !rounded && "rounded-r-lg",
               )}
             />
           }
         >
-          <DropdownIcon className={cx("shrink-0", iconSize)} />
         </MenuTrigger>
         <MenuContent
           align="end"

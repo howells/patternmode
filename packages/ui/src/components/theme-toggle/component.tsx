@@ -2,37 +2,39 @@
 
 import type { ThemeToggleProps } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
-import { Loader2, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { cx } from "../../lib/utils";
+import { Icon } from "../icon/component";
+import { Loader } from "../loader/component";
 import { themeToggleVariants } from "./variants";
 
 /**
  * Toggle button for switching between light and dark themes.
  * Generic component that requires theme state and toggle handler from parent.
  */
-export const ThemeToggle = ({ 
-  ref: forwardedRef, 
+export const ThemeToggle = ({
+  ref: forwardedRef,
   render = <button />,
-  theme, 
-  onToggle, 
-  isLoading = false, 
-  size = "default", 
-  variant = "outline", 
-  rounded = false, 
+  theme,
+  onToggle,
+  isLoading = false,
+  size = "base",
+  variant = "outline",
+  rounded = false,
   className,
-  ...otherProps 
+  ...otherProps
 }: ThemeToggleProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-  
-  // Get icon size based on button size
+
+  // Map theme toggle size to icon size
   const getIconSize = (size: ThemeToggleProps["size"]) => {
     switch (size) {
       case "xs":
         return "sm" as const;
       case "sm":
         return "sm" as const;
-      case "default":
+      case "base":
         return "base" as const;
       case "lg":
         return "lg" as const;
@@ -43,18 +45,13 @@ export const ThemeToggle = ({
 
   const iconSize = getIconSize(size);
   const otherTheme = theme === "dark" ? "light" : "dark";
-  const strokeWidth = config.getIconStrokeWidth();
 
   const renderToggleContent = () => {
     if (isLoading) {
       return (
-        <Loader2 
-          className={cx("animate-spin text-current", {
-            "size-3": iconSize === "sm",
-            "size-4": iconSize === "base", 
-            "size-5": iconSize === "lg",
-          })}
-          strokeWidth={strokeWidth}
+        <Loader
+          size={size}
+          aria-label="Loading theme toggle"
         />
       );
     }
@@ -62,31 +59,23 @@ export const ThemeToggle = ({
     return (
       <>
         {/* Sun icon - visible in light mode */}
-        <Sun
+        <Icon
+          icon={Sun}
+          size={iconSize}
           className={cx(
             "text-current transition-all duration-200",
             theme === "dark" ? "scale-0 opacity-0" : "scale-100 opacity-100",
-            {
-              "size-3": iconSize === "sm",
-              "size-4": iconSize === "base", 
-              "size-5": iconSize === "lg",
-            }
           )}
-          strokeWidth={strokeWidth}
         />
-        
-        {/* Moon icon - visible in dark mode */}  
-        <Moon
+
+        {/* Moon icon - visible in dark mode */}
+        <Icon
+          icon={Moon}
+          size={iconSize}
           className={cx(
             "absolute text-current transition-all duration-200",
             theme === "light" ? "scale-0 opacity-0" : "scale-100 opacity-100",
-            {
-              "size-3": iconSize === "sm",
-              "size-4": iconSize === "base", 
-              "size-5": iconSize === "lg",
-            }
           )}
-          strokeWidth={strokeWidth}
         />
       </>
     );

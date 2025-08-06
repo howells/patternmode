@@ -1,4 +1,5 @@
 import type React from "react";
+import type { Size } from "../../lib/component-config-types";
 
 export type EmptyStateProps = {
   /**
@@ -65,5 +66,5 @@ export type EmptyStateProps = {
    * Size variant affecting spacing and icon size.
    * Controls overall scale and visual hierarchy.
    */
-  size?: "sm" | "default" | "lg";
+  size?: Size;
 } & React.HTMLAttributes<HTMLDivElement>;

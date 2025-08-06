@@ -230,19 +230,18 @@ export const buttonSpecificVariants = {
     "dark:disabled:bg-zinc-900 dark:disabled:text-zinc-600",
   ],
   "destructive": [
-    // inset border
-    "inset-ring-1 inset-ring-white/20",
-    "dark:inset-ring-white/10",
+    // border
+    "border border-red-500 dark:border-red-600",
     // text color
     "text-white dark:text-white",
     // background color
     "bg-red-500 dark:bg-red-900",
-    // hover with enhanced inset border
-    "hover:bg-red-600 hover:inset-ring-white/25",
-    "dark:hover:bg-red-800 dark:hover:inset-ring-white/15",
+    // hover with enhanced border
+    "hover:bg-red-600 hover:border-red-600",
+    "dark:hover:bg-red-800 dark:hover:border-red-700",
     // disabled
-    "disabled:bg-red-300 disabled:text-white disabled:inset-ring-white/15",
-    "dark:disabled:bg-red-950 dark:disabled:text-red-400 dark:disabled:inset-ring-white/5",
+    "disabled:bg-red-300 disabled:text-white disabled:border-red-300",
+    "dark:disabled:bg-red-950 dark:disabled:text-red-400 dark:disabled:border-red-800",
   ],
   "outline": [
     // border (use default form control border color)
@@ -420,19 +419,18 @@ export const componentVariants = {
   button: {
     // Global semantic variants with simple styling
     primary: [
-      // inset border
-      "inset-ring-1 inset-ring-white/10",
-      "dark:inset-ring-black/20",
+      // border
+      "border border-zinc-900 dark:border-zinc-50",
       // text color
-      "text-white dark:text-white",
+      "text-white dark:text-zinc-900",
       // background color
       "bg-zinc-900 dark:bg-zinc-50",
-      // hover with enhanced inset border
-      "hover:bg-zinc-800 hover:inset-ring-white/15",
-      "dark:hover:bg-zinc-200 dark:hover:inset-ring-black/25",
+      // hover with enhanced border
+      "hover:bg-zinc-800 hover:border-zinc-800",
+      "dark:hover:bg-zinc-200 dark:hover:border-zinc-200",
       // disabled
-      "disabled:bg-zinc-400 disabled:text-white disabled:inset-ring-white/5",
-      "dark:disabled:bg-zinc-600 dark:disabled:text-zinc-300 dark:disabled:inset-ring-black/10",
+      "disabled:bg-zinc-400 disabled:text-white disabled:border-zinc-400",
+      "dark:disabled:bg-zinc-600 dark:disabled:text-zinc-300 dark:disabled:border-zinc-600",
     ],
     ...buttonSpecificVariants,
   },

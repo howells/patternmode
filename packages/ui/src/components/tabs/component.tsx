@@ -10,9 +10,7 @@ import { Button } from "../button/component";
 import { tabsVariants } from "./variants";
 
 const TabsListVariantContext = React.createContext<TabsListVariant>("line");
-const TabsListSizeContext = React.createContext<ButtonSize>(
-  "default",
-);
+const TabsListSizeContext = React.createContext<Size>("base");
 
 /**
  * Root tabs component built on Base UI's Tabs primitive.
@@ -36,7 +34,7 @@ Tabs.displayName = "Tabs";
  * When using solid variant, automatically adjusts the height of sibling buttons to align visually.
  */
 const TabsList = (
-  { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "default", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
+  { ref: forwardedRef, className, variant = "line", hideDivider = false, hideBorder = false, size = "base", children, ...props }: TabsListProps & { ref?: React.RefObject<React.ElementRef<typeof BaseTabs.List> | null> },
 ) => {
   const { list } = tabsVariants({ variant, size, hideDivider, hideBorder });
 
@@ -80,7 +78,7 @@ const TabsTrigger = (
   const size = React.use(TabsListSizeContext);
 
   // Map tab sizes to button sizes - let button handle its own sizing
-  const getButtonSize = (tabSize: ButtonSize) => {
+  const getButtonSize = (tabSize: Size) => {
     // Pass sizes directly to button - button component handles these sizes naturally
     return tabSize;
   };
@@ -96,7 +94,7 @@ const TabsTrigger = (
           return (
             <Button
               {...buttonProps}
-              variant={state.selected ? "minimal" : "ghost"}
+              variant={state.selected ? "minimal" : "secondary"}
               size={getButtonSize(size)}
               leftIcon={leftIcon}
               rightIcon={rightIcon}

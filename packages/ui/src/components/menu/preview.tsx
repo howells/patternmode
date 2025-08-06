@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
+import type { ButtonProps } from "../button/component";
 import { Button } from "../button/component";
+import { buttonVariants } from "../button/types";
 import {
   Menu,
   MenuContent,
@@ -18,7 +20,7 @@ export type MenuPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the menu trigger button.
    */
-  triggerVariant?: "default" | "outline" | "ghost";
+  triggerVariant?: ButtonProps["variant"];
   /**
    * Whether to show submenu items.
    * Demonstrates nested menu functionality when enabled.
@@ -42,7 +44,7 @@ export type MenuPreviewProps = {
 };
 
 export function MenuPreview({
-  triggerVariant = "outline",
+  triggerVariant = "primary",
   showSubmenus = true,
   showSeparators = true,
   showDisabledItems = false,
@@ -107,8 +109,8 @@ export const menuPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the menu trigger button.",
-    options: ["default", "outline", "ghost"],
-    defaultValue: "outline",
+    options: buttonVariants,
+    defaultValue: "primary",
   },
   {
     name: "showSubmenus",

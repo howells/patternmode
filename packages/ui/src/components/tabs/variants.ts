@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../lib/utils";
 import { borderRadiusVariants } from "../../lib/border-radius";
+import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
 
 export const tabsVariants = tv({
   slots: {
@@ -31,6 +32,10 @@ export const tabsVariants = tv({
       // line indicator - bottom line that sits on the divider
       "-bottom-px left-0 h-px w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] z-10",
       "bg-zinc-900 dark:bg-zinc-50",
+    ],
+    panel: [
+      // base
+      "outline-hidden",
     ],
   },
   variants: {
@@ -73,7 +78,7 @@ export const tabsVariants = tv({
         list: "gap-x-3", // tighter spacing for line variant
         tab: "", // smaller height and text size for line variant only
       },
-      default: {
+      base: {
         list: "gap-x-4", // spacing for line variant
         tab: "", // height and text size for line variant only
       },
@@ -97,8 +102,8 @@ export const tabsVariants = tv({
       class: {
         list: [
           `gap-x-0 p-0.5 ${borderRadiusVariants.xs}`, // Remove gap, very compact for xs
-          // Reduce button heights inside tabs for xs size
-          "[&_button]:!h-[calc(var(--control-height-xs)-0.25rem)]", // xs: 28px - 4px = 24px
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.xs,
         ],
       },
     },
@@ -108,19 +113,19 @@ export const tabsVariants = tv({
       class: {
         list: [
           `gap-x-0 p-0.5 ${borderRadiusVariants.sm}`, // Remove gap, keep compact for sm
-          // Reduce button heights inside tabs for sm size
-          "[&_button]:!h-[calc(var(--control-height-sm)-0.25rem)]", // sm: 36px - 4px = 32px
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.sm,
         ],
       },
     },
     {
       variant: "solid",
-      size: "default",
+      size: "base",
       class: {
         list: [
           `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`, // Remove gap, use padding
-          // Reduce button heights inside tabs for default size
-          "[&_button]:!h-[calc(var(--control-height-base)-0.25rem)]", // default: 40px - 4px = 36px
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.base,
         ],
       },
     },
@@ -130,8 +135,8 @@ export const tabsVariants = tv({
       class: {
         list: [
           `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`, // Remove gap, larger container for lg
-          // Reduce button heights inside tabs for lg size (uses p-1 = 8px total)
-          "[&_button]:!h-[calc(var(--control-height-lg)-0.5rem)]", // lg: 48px - 8px = 40px
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.lg,
         ],
       },
     },
@@ -152,7 +157,7 @@ export const tabsVariants = tv({
   ],
   defaultVariants: {
     variant: "line",
-    size: "default",
+    size: "base",
     hideDivider: false,
     hideBorder: false,
   },

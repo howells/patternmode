@@ -4,6 +4,7 @@
 import React from "react";
 import { IconSelect, useIconSelect } from "./component";
 import { Size } from "../../lib/component-config-types";
+import { sizes } from "../../lib/component-config-types";
 
 type IconSelectPreviewProps = {
   size?: Size
@@ -32,7 +33,7 @@ export const iconSelectPreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant determining height and text size.",
-    options: ["xs", "sm", "base", "lg"],
-    defaultValue: "xs",
+    options: sizes,
+    defaultValue: "base",
   },
 ];

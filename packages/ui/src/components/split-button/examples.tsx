@@ -57,7 +57,7 @@ export function SizesExample() {
         <MenuItem>Action 2</MenuItem>
       </SplitButton>
 
-      <SplitButton size="default" buttonContent="Default">
+      <SplitButton size="base" buttonContent="Default">
         <MenuItem>Action 1</MenuItem>
         <MenuItem>Action 2</MenuItem>
       </SplitButton>

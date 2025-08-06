@@ -8,9 +8,9 @@ export const DefaultExample = () => {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
   return (
-    <ThemeToggle 
-      theme={theme} 
-      onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+    <ThemeToggle
+      theme={theme}
+      onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
     />
   );
 };
@@ -20,25 +20,25 @@ export const SizesExample = () => {
 
   return (
     <Stack direction="horizontal" align="center" gap={4}>
-      <ThemeToggle 
+      <ThemeToggle
         size="xs"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         size="sm"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
-        size="default"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+      <ThemeToggle
+        size="base"
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         size="lg"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
     </Stack>
   );
@@ -49,25 +49,25 @@ export const VariantsExample = () => {
 
   return (
     <Stack direction="horizontal" align="center" gap={4}>
-      <ThemeToggle 
-        variant="default"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+      <ThemeToggle
+        variant="primary"
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         variant="secondary"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         variant="outline"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         variant="ghost"
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
     </Stack>
   );
@@ -78,15 +78,15 @@ export const RoundedExample = () => {
 
   return (
     <Stack direction="horizontal" align="center" gap={4}>
-      <ThemeToggle 
+      <ThemeToggle
         rounded={false}
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
-      <ThemeToggle 
+      <ThemeToggle
         rounded={true}
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
     </Stack>
   );
@@ -106,8 +106,8 @@ export const LoadingExample = () => {
   };
 
   return (
-    <ThemeToggle 
-      theme={theme} 
+    <ThemeToggle
+      theme={theme}
       onToggle={handleToggle}
       isLoading={isLoading}
     />
@@ -119,9 +119,9 @@ export const DarkThemeExample = () => {
 
   return (
     <div className="p-4 bg-zinc-900 rounded-md">
-      <ThemeToggle 
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+      <ThemeToggle
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
       />
     </div>
   );
@@ -132,13 +132,13 @@ export const DisabledExample = () => {
 
   return (
     <Stack direction="horizontal" align="center" gap={4}>
-      <ThemeToggle 
-        theme={theme} 
-        onToggle={() => setTheme(theme === "light" ? "dark" : "light")} 
+      <ThemeToggle
+        theme={theme}
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
         disabled
       />
-      <ThemeToggle 
-        theme="dark" 
+      <ThemeToggle
+        theme="dark"
         onToggle={() => {}}
         disabled
       />
