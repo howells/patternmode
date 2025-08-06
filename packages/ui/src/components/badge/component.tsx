@@ -9,6 +9,7 @@ import { cx, iconUtils } from "../../lib/utils";
 import {
   getColorClasses,
 } from "../../lib/variants";
+import { getIconComponent } from "../../lib/icon-registry";
 import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 import { DismissButton } from "../dismiss-button/component";
 
@@ -77,9 +78,13 @@ const Badge = (
   // Use default variant when statusDot is true (unless custom color or variant provided)
   const effectiveVariant = variant;
 
+  // Convert string icon names to components
+  const LeftIconComponent = typeof LeftIcon === "string" ? getIconComponent(LeftIcon) : LeftIcon;
+  const RightIconComponent = typeof RightIcon === "string" ? getIconComponent(RightIcon) : RightIcon;
+
   const renderBadgeContent = () => {
-    const hasLeftIcon = LeftIcon && !statusDot; // Dot overrides left icon
-    const hasRightIcon = RightIcon && !statusDot; // Dot overrides right icon
+    const hasLeftIcon = LeftIconComponent && !statusDot; // Dot overrides left icon
+    const hasRightIcon = RightIconComponent && !statusDot; // Dot overrides right icon
     const hasDismissButton = Boolean(_dismissible || onDismiss);
     const hasStatusDot = Boolean(statusDot);
 
@@ -104,11 +109,11 @@ const Badge = (
           />
         )}
         {hasLeftIcon && (
-          <LeftIcon className={iconClassName} strokeWidth={iconStrokeWidth} />
+          <LeftIconComponent className={iconClassName} strokeWidth={iconStrokeWidth} />
         )}
         {children}
         {hasRightIcon && (
-          <RightIcon
+          <RightIconComponent
             className={iconClassName}
             strokeWidth={iconStrokeWidth}
           />

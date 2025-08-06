@@ -45,13 +45,13 @@ const badgeVariantsDefinition = {
   variants: {
     variant: badgeVariantStyles,
     size: {
-      xs: "px-1 py-0.5 text-xs font-medium",
-      sm: "px-1.5 py-0.5 text-xs font-medium",
-      base: "px-2 py-1 text-sm font-medium",
-      lg: "px-2.5 py-1.5 text-sm font-medium",
+      xs: "px-1.5 py-0.5 text-xs",
+      sm: "px-2 py-0.5 text-xs",
+      base: "px-2 py-1 text-sm",
+      lg: "px-3 py-2 text-sm",
     },
     border: {
-      true: "ring-1 ring-inset",
+      true: "ring-1 ring-inset ring-current/10",
       false: "",
     },
     rounded: {
@@ -70,7 +70,7 @@ const badgeVariantsDefinition = {
 // Update badge variants to handle dismiss button padding like Tag does
 export const badgeVariants = tv({
   base: cx(
-    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md font-medium",
+    "inline-flex items-center gap-x-1.5 whitespace-nowrap rounded-md",
   ),
   ...badgeVariantsDefinition,
   compoundVariants: [
@@ -95,43 +95,127 @@ export const badgeVariants = tv({
     {
       rounded: true,
       size: "xs",
-      class: "px-2", // increased from px-1
+      class: "px-2",
     },
     {
       rounded: true,
       size: "sm",
-      class: "px-2.5", // increased from px-1.5
+      class: "px-2.5",
     },
     {
       rounded: true,
       size: "base",
-      class: "px-3", // increased from px-2
+      class: "px-3",
     },
     {
       rounded: true,
       size: "lg",
-      class: "px-3.5", // increased from px-2.5
+      class: "px-3.5",
     },
     // When rounded AND has dismiss button, adjust right padding accordingly
     {
       rounded: true,
       size: "xs",
-      class: "has-[button]:pr-1", // slightly more than regular rounded
+      class: "has-[button]:pr-1",
     },
     {
       rounded: true,
       size: "sm",
-      class: "has-[button]:pr-1.5", // slightly more than regular rounded
+      class: "has-[button]:pr-1.5",
     },
     {
       rounded: true,
       size: "base",
-      class: "has-[button]:pr-1.5", // slightly more than regular rounded
+      class: "has-[button]:pr-1.5",
     },
     {
       rounded: true,
       size: "lg",
-      class: "has-[button]:pr-2", // slightly more than regular rounded
+      class: "has-[button]:pr-2",
+    },
+    // Adjust left padding when badge has left icon (reduces padding to prevent spacious appearance)
+    {
+      rounded: true,
+      size: "xs",
+      class: "has-[svg:first-child]:pl-1.5",
+    },
+    {
+      rounded: true,
+      size: "sm",
+      class: "has-[svg:first-child]:pl-2",
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "has-[svg:first-child]:pl-2.5",
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "has-[svg:first-child]:pl-3",
+    },
+    // Adjust right padding when badge has right icon (reduces padding to prevent spacious appearance)
+    {
+      rounded: true,
+      size: "xs",
+      class: "has-[svg:last-child]:pr-1.5",
+    },
+    {
+      rounded: true,
+      size: "sm",
+      class: "has-[svg:last-child]:pr-2",
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "has-[svg:last-child]:pr-2.5",
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "has-[svg:last-child]:pr-3",
+    },
+    // When rounded AND has both left icon and dismiss button, adjust both paddings
+    {
+      rounded: true,
+      size: "xs",
+      class: "has-[svg:first-child]:has-[button]:pl-1.5 has-[svg:first-child]:has-[button]:pr-1",
+    },
+    {
+      rounded: true,
+      size: "sm",
+      class: "has-[svg:first-child]:has-[button]:pl-2 has-[svg:first-child]:has-[button]:pr-1.5",
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "has-[svg:first-child]:has-[button]:pl-2.5 has-[svg:first-child]:has-[button]:pr-1.5",
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "has-[svg:first-child]:has-[button]:pl-3 has-[svg:first-child]:has-[button]:pr-2",
+    },
+    // When rounded AND has right icon and dismiss button, adjust both paddings
+    {
+      rounded: true,
+      size: "xs",
+      class: "has-[svg:last-child]:has-[button]:pl-1.5 has-[svg:last-child]:has-[button]:pr-1",
+    },
+    {
+      rounded: true,
+      size: "sm",
+      class: "has-[svg:last-child]:has-[button]:pl-2 has-[svg:last-child]:has-[button]:pr-1.5",
+    },
+    {
+      rounded: true,
+      size: "base",
+      class: "has-[svg:last-child]:has-[button]:pl-2.5 has-[svg:last-child]:has-[button]:pr-1.5",
+    },
+    {
+      rounded: true,
+      size: "lg",
+      class: "has-[svg:last-child]:has-[button]:pl-3 has-[svg:last-child]:has-[button]:pr-2",
     },
   ],
 });

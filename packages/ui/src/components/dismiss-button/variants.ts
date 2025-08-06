@@ -5,19 +5,19 @@ export const dismissButtonVariants = tv({
   base: [
     // Base button styling
     "flex items-center justify-center rounded-full transition-colors",
-    // Color styling (low opacity for any background)
-    "text-zinc-700/60 dark:text-zinc-300/70",
-    // Hover states
-    "hover:bg-zinc-600/10 hover:text-zinc-700/80 dark:hover:bg-zinc-300/15 dark:hover:text-zinc-300/90",
+    // Inherit text color from parent
+    "text-current",
+    // Hover states with current color
+    "hover:bg-current/10 hover:text-current",
     // Focus states
     focusRing,
   ],
   variants: {
     size: {
-      xs: "size-3",
-      sm: "size-3.5",
-      base: "size-4",
-      lg: "size-5",
+      xs: "size-3.5",
+      sm: "size-4",
+      base: "size-5",
+      lg: "size-6",
     },
   },
   defaultVariants: {
