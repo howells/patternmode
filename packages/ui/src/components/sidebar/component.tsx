@@ -444,7 +444,7 @@ export function SidebarGroup({
               sticky && level === 2 && "top-15 h-12 z-10",
             )}
           >
-            <div className="flex items-center gap-2 flex-1">
+            <div className="flex items-center justify-between gap-2 flex-1">
               <SidebarTitle level={level} href={href}>
                 {heading}
               </SidebarTitle>
