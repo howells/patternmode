@@ -7,21 +7,22 @@ import { config } from "../../lib/config";
 import { cx, iconUtils } from "../../lib/utils";
 import { dismissButtonVariants } from "./variants";
 
+// Map dismiss button sizes to icon sizes (direct 1:1 mapping)
+const dismissButtonToIconSizeMap = {
+  xs: "xs",
+  sm: "sm",
+  base: "base",
+  lg: "lg",
+} as const;
+
 /**
  * Close button component for dismissing modals, alerts, and temporary content.
  */
 const DismissButton = (
   { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove", ...props }: DismissButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
 ) => {
-  // Size-based icon sizing
-  const iconSizeMap = {
-    xs: "xs" as const,
-    sm: "xs" as const,
-    base: "xs" as const,
-    lg: "sm" as const,
-  };
-
-  const iconSize = iconSizeMap[size];
+  // Get appropriate icon size for dismiss button size (matching badge icon sizing)
+  const iconSize = dismissButtonToIconSizeMap[size];
   const iconSizeClass = iconUtils.getIconSize(iconSize);
 
   return (

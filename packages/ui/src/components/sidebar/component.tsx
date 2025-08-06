@@ -161,7 +161,7 @@ export function SidebarToggle({
       data-component="SidebarToggle"
       onClick={onToggle}
       variant="inverse-ghost"
-      size="icon-sm"
+      size="icon-xs"
       shadow={false}
       className={cx(className)}
       aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}

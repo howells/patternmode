@@ -14,10 +14,10 @@ export const dismissButtonVariants = tv({
   ],
   variants: {
     size: {
-      xs: "size-4",
-      sm: "size-5",
-      base: "size-6",
-      lg: "size-8",
+      xs: "size-3",
+      sm: "size-3.5",
+      base: "size-4",
+      lg: "size-5",
     },
   },
   defaultVariants: {

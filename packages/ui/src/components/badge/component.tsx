@@ -10,63 +10,7 @@ import {
   getColorClasses,
 } from "../../lib/variants";
 import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
-
-// Inline DismissButton functionality for Badge
-const InlineDismissButton = (
-  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
-    "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    "icon"?: React.ComponentType<{
-      className?: string;
-      strokeWidth?: number;
-    }>;
-    "iconStrokeWidth"?: number;
-    "size"?: "xs" | "sm" | "base" | "lg";
-    "className"?: string;
-    "aria-label"?: string;
-  } & { ref?: React.RefObject<HTMLButtonElement | null> },
-) => {
-  // Size-based icon sizing
-  const iconSizeMap = {
-    xs: "xs" as const,
-    sm: "xs" as const,
-    base: "xs" as const,
-    lg: "sm" as const,
-  };
-
-  const iconSize = iconSizeMap[size];
-  const iconSizeClass = iconUtils.getIconSize(iconSize);
-
-  return (
-    <button
-      ref={ref}
-      type="button"
-      onClick={onClick}
-      className={cx(
-        // Base button styling
-        "flex items-center justify-center rounded-full transition-colors",
-        // Size-based dimensions
-        size === "xs" && "size-3",
-        size === "sm" && "size-4",
-        size === "base" && "size-5",
-        size === "lg" && "size-6",
-        // Color styling (inherit from badge)
-        "text-current opacity-70",
-        // Hover states
-        "hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10",
-        // Focus states
-        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
-        className,
-      )}
-      aria-label={ariaLabel}
-    >
-      <IconComponent
-        className={cx(iconSizeClass, "shrink-0")}
-        strokeWidth={iconStrokeWidth}
-        aria-hidden="true"
-      />
-    </button>
-  );
-};
+import { DismissButton } from "../dismiss-button/component";
 
 type BadgeProps = {
   /**
@@ -170,7 +114,7 @@ const Badge = (
           />
         )}
         {hasDismissButton && (
-          <InlineDismissButton
+          <DismissButton
             onClick={onDismiss}
             icon={DismissIcon}
             iconStrokeWidth={iconStrokeWidth}
