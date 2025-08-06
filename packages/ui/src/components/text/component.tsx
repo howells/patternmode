@@ -60,7 +60,7 @@ export const Code = ({
       {...props}
       className={cx(
         className,
-        "rounded-sm border border-current/10 bg-current/5 px-0.5 text-sm font-medium text-current sm:text-[0.8125rem]",
+        "rounded-sm px-2.5 border border-current/10 bg-current/5 text-sm font-medium text-current sm:text-[0.8125rem]",
       )}
     />
   );

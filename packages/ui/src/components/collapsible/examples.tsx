@@ -2,6 +2,11 @@
 
 import React from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./component";
+import { Button } from "../button/component";
+import { ButtonGroup } from "../button-group/component";
+import { VStack } from "../stack/component";
+import { TextList, TextListItem } from "../text-list/component";
+import { Text, Code } from "../text/component";
 
 // Default collapsible
 export const DefaultExample = () => (
@@ -18,11 +23,11 @@ export const DefaultOpenExample = () => (
   <Collapsible defaultOpen>
     <CollapsibleTrigger>System Requirements</CollapsibleTrigger>
     <CollapsibleContent>
-      <div className="space-y-1">
-        <div>• React 18 or higher</div>
-        <div>• Node.js 16 or higher</div>
-        <div>• TypeScript 4.9 or higher</div>
-      </div>
+      <TextList>
+        <TextListItem>React 18 or higher</TextListItem>
+        <TextListItem>Node.js 16 or higher</TextListItem>
+        <TextListItem>TypeScript 4.9 or higher</TextListItem>
+      </TextList>
     </CollapsibleContent>
   </Collapsible>
 );
@@ -39,119 +44,58 @@ export const DisabledExample = () => (
 
 // Rich content
 export const NestedContentExample = () => (
-  <Collapsible>
+  <Collapsible className="max-w-md">
     <CollapsibleTrigger>Installation Guide</CollapsibleTrigger>
     <CollapsibleContent>
-      <div className="space-y-3">
-        <p>Install PatternMode in your project:</p>
-        <code className="block bg-zinc-100 dark:bg-zinc-800 p-2 rounded text-sm">
+      <VStack >
+        <Text>Install PatternMode in your project:</Text>
+        <Code className="block bg-zinc-100 dark:bg-zinc-800 p-2 rounded text-sm">
           pnpm add patternmode
-        </code>
-        <p>Then import components as needed:</p>
-        <code className="block bg-zinc-100 dark:bg-zinc-800 p-2 rounded text-sm">
+        </Code>
+        <Text>Then import components as needed:</Text>
+        <Code className="block bg-zinc-100 dark:bg-zinc-800 p-2 rounded text-sm">
           {`import { Button } from "patternmode"`}
-        </code>
-      </div>
+        </Code>
+      </VStack>
     </CollapsibleContent>
   </Collapsible>
 );
 
-// FAQ accordion style
-export const FaqExample = () => (
-  <div className="space-y-2">
-    <Collapsible>
-      <CollapsibleTrigger className="text-left w-full">
-        How do I get started with PatternMode?
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <p className="pl-6 text-sm text-zinc-600 dark:text-zinc-400">
-          Getting started is easy! Install the package using npm or pnpm, then import the components you need.
-          Check out our documentation for detailed guides and examples.
-        </p>
-      </CollapsibleContent>
-    </Collapsible>
-
-    <Collapsible>
-      <CollapsibleTrigger className="text-left w-full">
-        Is PatternMode accessible?
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <p className="pl-6 text-sm text-zinc-600 dark:text-zinc-400">
-          Yes! All components are built with accessibility in mind, following WCAG guidelines
-          and best practices for keyboard navigation and screen reader support.
-        </p>
-      </CollapsibleContent>
-    </Collapsible>
-
-    <Collapsible>
-      <CollapsibleTrigger className="text-left w-full">
-        Can I customize the styling?
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <p className="pl-6 text-sm text-zinc-600 dark:text-zinc-400">
-          Absolutely! PatternMode uses Tailwind CSS and supports full customization through
-          className props, CSS variables, and theme configuration.
-        </p>
-      </CollapsibleContent>
-    </Collapsible>
-  </div>
-);
-
-// Card style collapsible
-export const CardStyleExample = () => (
-  <div className="border rounded-lg overflow-hidden">
-    <Collapsible>
-      <CollapsibleTrigger className="w-full p-4 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
-        <div className="flex items-center justify-between">
-          <span className="font-medium">Important Information</span>
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <div className="px-4 pb-4 border-t pt-4">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            This section contains important information about your account settings
-            and preferences. Please review carefully before making any changes.
-          </p>
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
-  </div>
-);
 
 // Controlled collapsible
 export const ControlledExample = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-2">
-        <button
+    <VStack className="min-w-md">
+      <ButtonGroup size="xs">
+        <Button
+          variant="secondary"
           onClick={() => setOpen(true)}
-          className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Open
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="secondary"
           onClick={() => setOpen(false)}
-          className="px-3 py-1 text-sm bg-zinc-200 dark:bg-zinc-800 rounded hover:bg-zinc-300 dark:hover:bg-zinc-700"
         >
           Close
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="secondary"
           onClick={() => setOpen(!open)}
-          className="px-3 py-1 text-sm bg-zinc-200 dark:bg-zinc-800 rounded hover:bg-zinc-300 dark:hover:bg-zinc-700"
         >
           Toggle
-        </button>
-      </div>
+        </Button>
+      </ButtonGroup>
 
       <Collapsible open={open} onOpenChange={setOpen}>
         <CollapsibleTrigger>Controlled Content</CollapsibleTrigger>
         <CollapsibleContent>
-          <p>This collapsible is controlled by the buttons above.</p>
+          <Text>This collapsible is controlled by the buttons above.</Text>
         </CollapsibleContent>
       </Collapsible>
-    </div>
+    </VStack>
   );
 };
 
@@ -160,23 +104,23 @@ export const NestedExample = () => (
   <Collapsible defaultOpen>
     <CollapsibleTrigger>Parent Section</CollapsibleTrigger>
     <CollapsibleContent>
-      <div className="ml-4 mt-2 space-y-2">
-        <p>This is the parent content.</p>
+      <VStack>
+        <Text>This is the parent content.</Text>
 
         <Collapsible>
           <CollapsibleTrigger>Child Section 1</CollapsibleTrigger>
           <CollapsibleContent>
-            <p className="ml-4">This is nested content 1.</p>
+            <Text>This is nested content 1.</Text>
           </CollapsibleContent>
         </Collapsible>
 
         <Collapsible>
           <CollapsibleTrigger>Child Section 2</CollapsibleTrigger>
           <CollapsibleContent>
-            <p className="ml-4">This is nested content 2.</p>
+            <Text>This is nested content 2.</Text>
           </CollapsibleContent>
         </Collapsible>
-      </div>
+      </VStack>
     </CollapsibleContent>
   </Collapsible>
 );

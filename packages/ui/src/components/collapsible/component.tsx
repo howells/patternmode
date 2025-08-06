@@ -1,19 +1,18 @@
-// Collapsible Component [v1.0.0] - Tremor Style
 
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import Link from "next/link";
 import * as React from "react";
 
-import { cx, focusRing } from "../../lib/utils";
+import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 
 /**
  * Root container for collapsible content sections.
  */
-const Collapsible = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Root> | null> }) => (
+const Collapsible = ({ ref, className, ...props }: React.ComponentPropsWithoutRef<typeof BaseCollapsible.Root> & { ref?: React.RefObject<React.ElementRef<typeof BaseCollapsible.Root> | null> }) => (
   <BaseCollapsible.Root
     ref={ref}
+    className={cx("w-full max-w-xs", className)}
     data-testid="collapsible"
     {...props}
   />
@@ -35,16 +34,6 @@ type CollapsibleTriggerProps = {
    */
   openIcon?: React.ComponentType<{ className?: string }>;
   /**
-   * If true, renders as just the toggle button without full-width trigger.
-   * When enabled, displays only the icon button for toggling, useful for custom layouts.
-   */
-  asToggleButton?: boolean;
-  /**
-   * Custom href for when the heading should be a link.
-   * When provided, the trigger text becomes a clickable link while maintaining separate toggle functionality.
-   */
-  href?: string;
-  /**
    * Custom padding classes to apply to the container.
    * Override default padding with custom spacing classes for layout customization.
    */
@@ -60,8 +49,6 @@ const CollapsibleTrigger = ({
   children,
   closedIcon: ClosedIcon = ChevronDown,
   openIcon: OpenIcon = ChevronUp,
-  asToggleButton = false,
-  href,
   padding,
   ...props
 }: CollapsibleTriggerProps & {
@@ -69,68 +56,8 @@ const CollapsibleTrigger = ({
     typeof BaseCollapsible.Trigger
   > | null>;
 }) => {
-  // If asToggleButton is true, render just the icon button
-  if (asToggleButton) {
-    return (
-      <BaseCollapsible.Trigger
-        ref={ref}
-        className={cx("group", className)}
-        {...props}
-        render={(props, state) => {
-          const { ref: _, ...buttonProps } = props;
-          return (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              leftIcon={state.open ? OpenIcon : ClosedIcon}
-              {...buttonProps}
-            />
-          );
-        }}
-      />
-    );
-  }
-
-  // If href is provided, render heading as link with separate toggle button
-  if (href && children) {
-    return (
-      <div
-        className={cx("flex items-center justify-between py-2 px-4", padding)}
-      >
-        <Link
-          href={href}
-          className={cx(
-            "flex-1 text-left text-sm font-medium transition-colors",
-            "text-zinc-900 dark:text-zinc-50",
-            "hover:text-zinc-700 dark:hover:text-zinc-300",
-            focusRing,
-          )}
-        >
-          {children}
-        </Link>
-        <BaseCollapsible.Trigger
-          ref={ref}
-          className={cx("group", className)}
-          {...props}
-          render={(props, state) => {
-            const { ref: _, ...buttonProps } = props;
-            return (
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                leftIcon={state.open ? OpenIcon : ClosedIcon}
-                {...buttonProps}
-              />
-            );
-          }}
-        />
-      </div>
-    );
-  }
-
-  // Default: full-width trigger (original behavior)
   return (
-    <div className={cx("flex items-center justify-between", padding)}>
+    <div className={cx("flex items-center justify-between w-full", padding)}>
       <div
         className={cx(
           "flex-1 text-left text-sm font-medium transition-colors",
@@ -150,7 +77,7 @@ const CollapsibleTrigger = ({
           return (
             <Button
               variant="ghost"
-              size="icon-sm"
+              size="icon-xs"
               leftIcon={state.open ? OpenIcon : ClosedIcon}
               {...buttonProps}
             />
@@ -185,7 +112,7 @@ const CollapsibleContent = ({
     <div
       className={cx(
         // base
-        "pb-2 text-xs",
+        "pt-2 b-2 text-sm",
         // text color
         "text-zinc-700 dark:text-zinc-300",
         className,

@@ -7,12 +7,10 @@ import {
   CollapsibleTrigger,
 } from "./component";
 import {
-  CardStyleExample,
   ControlledExample,
   DefaultExample,
   DefaultOpenExample,
   DisabledExample,
-  FaqExample,
   NestedContentExample,
   NestedExample,
 } from "./examples";
@@ -48,18 +46,6 @@ export const collapsibleConfig: ComponentConfig = {
       title: "Rich Content",
       description: "Collapsible with complex nested content",
       component: NestedContentExample,
-    },
-    {
-      id: "faq",
-      title: "FAQ Style",
-      description: "Multiple collapsibles in FAQ accordion style",
-      component: FaqExample,
-    },
-    {
-      id: "card-style",
-      title: "Card Style",
-      description: "Collapsible styled as a card with hover effects",
-      component: CardStyleExample,
     },
     {
       id: "controlled",
