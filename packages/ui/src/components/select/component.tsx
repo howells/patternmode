@@ -57,6 +57,7 @@ const SelectTrigger = ({ ref, className, hasError, size, children, render, ...pr
     <BaseSelect.Trigger
       ref={ref}
       render={render || defaultRender}
+      nativeButton={true}
       {...props}
     >
       {children}

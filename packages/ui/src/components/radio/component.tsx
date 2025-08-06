@@ -45,7 +45,7 @@ export const RadioItem = ({ ref, className, size, variant, ...props }: RadioItem
   const { root, circle, indicator, dot } = radioVariants({ size, variant });
 
   return (
-    <BaseRadio.Root ref={ref} className={cx(root(), className)} {...props}>
+    <BaseRadio.Root ref={ref} className={cx(root(), className)} nativeButton={true} {...props}>
       <div className={circle()}>
         <BaseRadio.Indicator className={indicator()}>
           <div className={dot()} />
@@ -79,6 +79,7 @@ export const RadioCard = (
   <BaseRadio.Root
     ref={ref}
     className={cx(radioCardVariants({ size }), className)}
+    nativeButton={true}
     {...props}
   >
     <div className="flex items-start justify-between gap-3">
@@ -108,6 +109,7 @@ export const RadioOption = ({ ref, value, label, description, disabled, size = "
         value={value}
         disabled={disabled}
         className={cx(root())}
+        nativeButton={true}
         {...props}
       >
         <div className={circle()}>

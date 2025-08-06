@@ -6,7 +6,7 @@ import type { selectNativeStyles } from "./variants";
 /**
  * Props for the SelectNative component.
  */
-export type SelectNativeProps = {
+export type SelectNativeProps = Omit<React.InputHTMLAttributes<HTMLSelectElement>, 'size'> & {
   /**
    * Whether to display error styling for form validation.
    * Adds red border and error state styling to indicate validation errors.
@@ -16,5 +16,5 @@ export type SelectNativeProps = {
    * Size variant of the select input.
    * Controls height and padding of the select element.
    */
-  size?: Size;
-} & React.InputHTMLAttributes<HTMLSelectElement> & VariantProps<typeof selectNativeStyles>;
+  size?: "xs" | "sm" | "base" | "lg";
+};

@@ -75,6 +75,7 @@ import { sheetConfig } from "./sheet/config";
 import { sidebarConfig } from "./sidebar/config";
 import { skeletonConfig } from "./skeleton/config";
 import { sliderConfig } from "./slider/config";
+import { sortableListConfig } from "./sortable-list/config";
 import { sparkChartConfig } from "./spark-chart/config";
 import { splitButtonConfig } from "./split-button/config";
 import { stackConfig } from "./stack/config";
@@ -171,6 +172,7 @@ import { SheetPreview } from "./sheet/preview";
 import { SidebarPreview } from "./sidebar/preview";
 import { SkeletonPreview } from "./skeleton/preview";
 import { SliderPreview } from "./slider/preview";
+import { SortableListPreview } from "./sortable-list/preview";
 import { SparkChartPreview } from "./spark-chart/preview";
 import { SplitButtonPreview } from "./split-button/preview";
 import { StackPreview } from "./stack/preview";
@@ -267,6 +269,7 @@ import { sheetPreviewProps } from "./sheet/preview";
 import { sidebarPreviewProps } from "./sidebar/preview";
 import { skeletonPreviewProps } from "./skeleton/preview";
 import { sliderPreviewProps } from "./slider/preview";
+import { sortableListPreviewProps } from "./sortable-list/preview";
 import { sparkChartPreviewProps } from "./spark-chart/preview";
 import { splitButtonPreviewProps } from "./split-button/preview";
 import { stackPreviewProps } from "./stack/preview";
@@ -362,6 +365,7 @@ export const COMPONENT_REGISTRY = {
   "sidebar": sidebarConfig,
   "skeleton": skeletonConfig,
   "slider": sliderConfig,
+  "sortable-list": sortableListConfig,
   "spark-chart": sparkChartConfig,
   "split-button": splitButtonConfig,
   "stack": stackConfig,
@@ -460,6 +464,7 @@ export const PREVIEW_REGISTRY = {
   "sidebar": SidebarPreview,
   "skeleton": SkeletonPreview,
   "slider": SliderPreview,
+  "sortable-list": SortableListPreview,
   "spark-chart": SparkChartPreview,
   "split-button": SplitButtonPreview,
   "stack": StackPreview,
@@ -558,6 +563,7 @@ export const PREVIEW_PROPS_REGISTRY = {
   "sidebar": sidebarPreviewProps,
   "skeleton": skeletonPreviewProps,
   "slider": sliderPreviewProps,
+  "sortable-list": sortableListPreviewProps,
   "spark-chart": sparkChartPreviewProps,
   "split-button": splitButtonPreviewProps,
   "stack": stackPreviewProps,
@@ -655,6 +661,7 @@ export const COMPONENT_METADATA_REGISTRY = {
   "sidebar": { title: sidebarConfig.name, description: sidebarConfig.description },
   "skeleton": { title: skeletonConfig.name, description: skeletonConfig.description },
   "slider": { title: sliderConfig.name, description: sliderConfig.description },
+  "sortable-list": { title: sortableListConfig.name, description: sortableListConfig.description },
   "spark-chart": { title: sparkChartConfig.name, description: sparkChartConfig.description },
   "split-button": { title: splitButtonConfig.name, description: splitButtonConfig.description },
   "stack": { title: stackConfig.name, description: stackConfig.description },

@@ -1,13 +1,20 @@
 "use client";
 
-import type { SelectNativeProps } from "./types";
 import React from "react";
 import { SelectNative } from "./component";
 import { sizes } from "../../lib/component-config-types";
+import type { Size } from "../../lib/component-config-types";
 
-export function SelectNativePreview(props: SelectNativeProps) {
+type SelectNativePreviewProps = {
+  size?: Size;
+  hasError?: boolean;
+  disabled?: boolean;
+};
+
+export function SelectNativePreview(props: SelectNativePreviewProps) {
+  const { size, hasError, disabled } = props;
   return (
-    <SelectNative {...props}>
+    <SelectNative size={size} hasError={hasError} disabled={disabled}>
       <option value="">Select an option</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>

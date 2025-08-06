@@ -13,7 +13,7 @@ export const radioVariants = tv({
       // base
       "group relative flex items-center justify-center appearance-none outline-hidden",
       // focus
-      focusRing,
+      ...focusRing,
     ],
     indicator: [
       // base
@@ -21,9 +21,7 @@ export const radioVariants = tv({
     ],
     circle: [
       // base
-      "flex shrink-0 items-center justify-center rounded-full border ",
-      // border color
-      " dark:border-zinc-800",
+      "flex shrink-0 items-center justify-center rounded-full border dark:border-zinc-800",
       // background color
       "bg-white dark:bg-zinc-950",
     ],
@@ -63,7 +61,7 @@ export const radioVariants = tv({
           // checked
           "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
           // disabled
-          "group-data-[disabled]: group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
+          "group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
           "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
         ],
         dot: [
@@ -76,7 +74,7 @@ export const radioVariants = tv({
           // checked
           "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
           // disabled
-          "group-data-[disabled]: group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
+          "group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
           "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
         ],
         dot: [
@@ -129,11 +127,11 @@ export const radioLabelVariants = tv({
 export const radioCardVariants = tv({
   base: [
     // base
-    "group relative w-full rounded-md border p-4 text-left  transition cursor-pointer",
+    "group relative w-full rounded-md border p-4 text-left transition cursor-pointer",
     // background color
     "bg-white dark:bg-zinc-950",
     // border color
-    " dark:border-zinc-800",
+    "dark:border-zinc-800",
     // checked
     "data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
     // disabled
