@@ -17,7 +17,7 @@ import { Text } from "@patternmode/ui/components/text";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { cx } from "@patternmode/ui/lib/utils";
 
-import type { ComponentConfig } from "../lib/component-configs";
+import type { ComponentConfig } from "@patternmode/ui/lib/component-config-types";
 
 type ComponentSearchProps = {
   placeholder?: string;
