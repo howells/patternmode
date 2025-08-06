@@ -126,7 +126,7 @@ export function SizesExample() {
           Default
         </h4>
         <Toggle
-          size="default"
+          size="base"
           pressed={defaultPressed}
           onPressedChange={setDefaultPressed}
         >

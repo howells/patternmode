@@ -80,7 +80,25 @@
     "**/components/**/*.playwright.test.tsx": "${dirname} [Test]"
   },
 
-  // Completely disable TypeScript formatting and language server interference
+  // TypeScript configuration for pnpm workspace
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.tsdk": "./node_modules/.pnpm/typescript@5.9.2/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "typescript.suggest.autoImports": false,
+  "typescript.suggest.paths": false,
+  "typescript.preferences.includeCompletionsForModuleExports": false,
+  "typescript.preferences.includeCompletionsWithSnippetText": false,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.surveys.enabled": false,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.validate.enable": true,
   "typescript.format.enable": false,
   "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
@@ -98,24 +116,6 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
   "typescript.format.insertSpaceAfterTypeAssertion": false,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.updateImportsOnFileMove.enabled": "never",
-  "typescript.suggest.autoImports": false,
-  "typescript.suggest.paths": false,
-  "typescript.preferences.includeCompletionsForModuleExports": false,
-  "typescript.preferences.includeCompletionsWithSnippetText": false,
-  "typescript.suggest.completeFunctionCalls": true,
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.implementationsCodeLens.enabled": true,
-  "typescript.surveys.enabled": false,
-  "typescript.inlayHints.parameterNames.enabled": "all",
-  "typescript.inlayHints.variableTypes.enabled": true,
-  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "typescript.inlayHints.parameterTypes.enabled": true,
-  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
 
   // Problem visualization
   "problems.decorations.enabled": true,
@@ -194,5 +194,44 @@
   "editor.renderWhitespace": "boundary",
   "cSpell.words": [
     "patternmode"
-  ]
+  ],
+
+  // Test configuration
+  "vitest.enable": true,
+  "vitest.commandLine": "pnpm test",
+  "vitest.include": [
+    "**/*.{test,spec}.{js,ts,jsx,tsx}"
+  ],
+  "playwright.include": [
+    "**/*.playwright.test.{js,ts,jsx,tsx}"
+  ],
+  "vitest.exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.next/**",
+    "**/e2e/**"
+  ],
+  "vitest.root": ".",
+  "testing.automaticallyOpenPeekView": "never",
+  "testing.followRunningTest": true,
+  "testing.gutterEnabled": true,
+  "testing.openTesting": "openOnTestStart",
+  "testing.autoRun.delay": 1000,
+  "testing.autoRun.mode": "test-src-file",
+
+  // Ensure both test runners are properly configured
+  "testing.autoDiscover": true,
+
+  // Configure both test runners
+  "testing.testExplorer.addToEditorContextMenu": true,
+  "testing.testExplorer.gutterDecoration": true,
+  "testing.testExplorer.onReload": "retire",
+  "testing.testExplorer.onStart": "reset",
+
+  // Playwright specific settings
+  "playwright.env": {
+    "NODE_ENV": "test"
+  },
+  "playwright.configFile": "apps/web/playwright.config.ts",
+  "testing.automaticallyOpenTestResults": "openOnTestStart"
 }

@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "vitest.vitest",
+    "ms-playwright.playwright",
+    "ms-vscode.vscode-json",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
