@@ -116,10 +116,11 @@ type ToggleGroupProps = {
 src/components/[component-name]/
 ├── component.tsx        # Implementation with JSDoc-enhanced types
 ├── config.ts           # Component specification + examples with imports
-├── index.tsx           # Export barrel
 ├── examples.tsx        # Example components
 └── preview.tsx         # Interactive preview component (mandatory)
 ```
+
+**IMPORTANT: DO NOT create `index.tsx` files per component** - The package.json exports point directly to component.tsx files for consistency across all components.
 
 ### Component Implementation (component.tsx)
 

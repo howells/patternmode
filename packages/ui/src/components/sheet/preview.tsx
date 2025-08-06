@@ -39,7 +39,7 @@ export type SheetPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the sheet trigger button.
    */
-  triggerVariant?: "default" | "outline" | "ghost";
+  triggerVariant?: "primary" | "outline" | "ghost";
   /**
    * Content complexity level.
    * Determines how much content is displayed in the sheet.
@@ -52,7 +52,7 @@ export function SheetPreview({
   size = "md",
   showFooter = true,
   showCloseButton = true,
-  triggerVariant = "default",
+  triggerVariant = "primary",
   contentLevel = "simple",
 }: SheetPreviewProps = {}) {
   const getContent = () => {
@@ -199,8 +199,8 @@ export const sheetPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the sheet trigger button.",
-    options: ["default", "outline", "ghost"],
-    defaultValue: "outline",
+    options: ["primary", "outline", "ghost"],
+    defaultValue: "primary",
   },
   {
     name: "contentLevel",

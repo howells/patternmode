@@ -2,13 +2,15 @@
 
 import React, { useState, useMemo } from "react";
 import { PageHeader } from "@/components/page-header";
-import { Stack, HStack } from "@patternmode/ui/components/stack";
+import { Stack } from "@patternmode/ui/components/stack";
 import { Button } from "@patternmode/ui/components/button";
 import { Card } from "@patternmode/ui/components/card";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@patternmode/ui/components/select";
 import { SortableList } from "@patternmode/ui/components/sortable-list";
 import { Input } from "@patternmode/ui/components/input";
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/ui/components/toolbar";
 import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
 import { Rows3, MoreHorizontal, Plus, Trash2, Settings2, GripVertical } from "lucide-react";
 import { useQueryState, parseAsJson } from "nuqs";
@@ -116,10 +118,10 @@ function LayoutSection({
   }, [layout.components, layout.size]);
 
   return (
-    <Card className="max-w-none">
-      {/* Layout Controls Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <HStack gap={2}>
+    <Card className="p-6">
+      {/* Layout Controls Toolbar */}
+      <Toolbar className="mb-4" size="sm">
+        <ToolbarGroup>
           {/* Direction Toggle */}
           <ToggleGroup
             value={[layout.direction]}
@@ -128,7 +130,7 @@ function LayoutSection({
                 onUpdate({ ...layout, direction: value[0] as "vertical" | "horizontal" });
               }
             }}
-
+            size="sm"
           >
             <ToggleGroupItem value="horizontal" leftIcon={MoreHorizontal}>
               Horizontal
@@ -137,43 +139,71 @@ function LayoutSection({
               Vertical
             </ToggleGroupItem>
           </ToggleGroup>
+        </ToolbarGroup>
 
+        <ToolbarSeparator />
+
+        <ToolbarGroup>
           {/* Size Selector */}
-          <ToggleGroup
-            value={[layout.size]}
-            onValueChange={(value) => {
-              if (value.length > 0) {
-                onUpdate({ ...layout, size: value[0] as Size });
-              }
-            }}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-zinc-600 dark:text-zinc-400">Size:</span>
+            <Select
+              value={layout.size}
+              onValueChange={(value) => {
+                if (typeof value === 'string') {
+                  onUpdate({ ...layout, size: value as Size });
+                }
+              }}
+            >
+              <SelectTrigger className="w-24" size="sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {sizes.map(size => (
+                  <SelectItem key={size} value={size}>
+                    {size.toUpperCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </ToolbarGroup>
 
-          >
-            {sizes.map(size => (
-              <ToggleGroupItem key={size} value={size}>
-                {size.toUpperCase()}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+        <ToolbarSeparator />
 
+        <ToolbarGroup>
           {/* Gap Selector */}
-          <ToggleGroup
-            value={[layout.gap.toString()]}
-            onValueChange={(value) => {
-              if (value.length > 0) {
-                onUpdate({ ...layout, gap: parseInt(value[0]) as GapValue });
-              }
-            }}
-          >
-            <ToggleGroupItem value="2">Gap 2</ToggleGroupItem>
-            <ToggleGroupItem value="4">Gap 4</ToggleGroupItem>
-            <ToggleGroupItem value="8">Gap 8</ToggleGroupItem>
-            <ToggleGroupItem value="12">Gap 12</ToggleGroupItem>
-            <ToggleGroupItem value="16">Gap 16</ToggleGroupItem>
-          </ToggleGroup>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-zinc-600 dark:text-zinc-400">Gap:</span>
+            <Select
+              value={layout.gap.toString()}
+              onValueChange={(value) => {
+                if (typeof value === 'string') {
+                  onUpdate({ ...layout, gap: parseInt(value) as GapValue });
+                }
+              }}
+            >
+              <SelectTrigger className="w-20" size="sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {gapOptions.map(gap => (
+                  <SelectItem key={gap} value={gap.toString()}>
+                    {gap}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </ToolbarGroup>
 
+        <ToolbarSeparator />
+
+        <ToolbarGroup>
           {/* Component Selector */}
           <Popover open={componentsPopoverOpen} onOpenChange={setComponentsPopoverOpen}>
-            <PopoverTrigger icon={Settings2}>
+            <PopoverTrigger className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
+              <Settings2 className="h-4 w-4" />
               Components ({layout.components.length})
             </PopoverTrigger>
             <PopoverContent className="w-96 p-4" align="start">
@@ -207,19 +237,21 @@ function LayoutSection({
               </div>
             </PopoverContent>
           </Popover>
-        </HStack>
+        </ToolbarGroup>
 
-        {/* Delete Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          leftIcon={Trash2}
-          onClick={onDelete}
-          className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-        >
-          Delete
-        </Button>
-      </div>
+        <div className="ml-auto">
+          {/* Delete Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            leftIcon={Trash2}
+            onClick={onDelete}
+            className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+          >
+            Delete
+          </Button>
+        </div>
+      </Toolbar>
 
       {/* Component Stack */}
       <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 min-h-[200px]">

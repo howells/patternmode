@@ -10,28 +10,17 @@ import { borderRadiusVariants } from "../../lib/border-radius";
  */
 export const radioVariants = tv({
   slots: {
-    root: [
-      // base
-      "group relative inline-flex items-center",
-    ],
+    root: "group relative inline-flex items-center",
     circle: [
-      // base
       "relative flex shrink-0 items-center justify-center border-2 transition-all duration-150 ease-in-out",
-      // border
       "border-zinc-300 dark:border-zinc-600",
-      // background
       "bg-white dark:bg-zinc-950",
-      // focus
       focusRing,
-      // disabled
       "disabled:pointer-events-none",
     ],
     dot: [
-      // base
       "absolute transition-all duration-150 ease-in-out",
-      // colors
       "bg-white dark:bg-zinc-50",
-      // disabled
       "group-data-[disabled]:bg-zinc-100 dark:group-data-[disabled]:bg-zinc-800",
     ],
   },
@@ -56,30 +45,12 @@ export const radioVariants = tv({
     },
     variant: {
       default: {
-        circle: [
-          // checked
-          "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
-          // disabled
-          "group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
-          "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
-        ],
-        dot: [
-          // disabled
-          "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500",
-        ],
+        circle: "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500 group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400 dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
+        dot: "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500",
       },
       card: {
-        circle: [
-          // checked
-          "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
-          // disabled
-          "group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400",
-          "dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
-        ],
-        dot: [
-          // disabled
-          "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500",
-        ],
+        circle: "group-data-[checked]:border-0 group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500 group-data-[disabled]:bg-zinc-100 group-data-[disabled]:text-zinc-400 dark:group-data-[disabled]:border-zinc-700 dark:group-data-[disabled]:bg-zinc-800",
+        dot: "group-data-[disabled]:bg-zinc-400 dark:group-data-[disabled]:bg-zinc-500",
       },
     },
   },
@@ -150,5 +121,39 @@ export const radioCardVariants = tv({
   },
   defaultVariants: {
     size: "base",
+  },
+});
+
+/**
+ * Style variants for radio group components.
+ *
+ * Provides layout and spacing control for radio button groups
+ * including orientation and gap management.
+ */
+export const radioGroupVariants = tv({
+  base: [
+    // base
+    "grid gap-2",
+  ],
+  variants: {
+    /**
+     * Layout orientation of radio items.
+     */
+    orientation: {
+      vertical: "grid-cols-1",
+      horizontal: "grid-flow-col auto-cols-max gap-4",
+    },
+    /**
+     * Spacing size between radio items.
+     */
+    size: {
+      sm: "gap-1.5",
+      md: "gap-2",
+      lg: "gap-3",
+    },
+  },
+  defaultVariants: {
+    orientation: "vertical",
+    size: "md",
   },
 });

@@ -2,13 +2,19 @@
 
 import type { RadioOptionProps } from "./types";
 import React from "react";
-import { RadioOption } from "./component";
+import { RadioGroup, RadioOption } from "./component";
 
 export function RadioPreview(props: RadioOptionProps) {
+  const [selectedValue, setSelectedValue] = React.useState<string>("option1");
+
   return (
-    <div className="flex items-center space-x-2">
-      <RadioOption value="option1" label="Radio Option" {...props} />
-    </div>
+    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+      <div className="space-y-3">
+        <RadioOption value="option1" label={props.label || "Radio Option"} {...props} />
+        <RadioOption value="option2" label="Alternative Option" size={props.size} disabled={props.disabled} />
+        <RadioOption value="option3" label="Third Option" size={props.size} disabled={props.disabled} />
+      </div>
+    </RadioGroup>
   );
 }
 

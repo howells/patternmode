@@ -1,12 +1,39 @@
 import type { Radio as BaseRadio } from "@base-ui-components/react/radio";
+import type { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { radioCardVariants, radioLabelVariants, radioVariants } from "./variants";
+import type { radioCardVariants, radioGroupVariants, radioLabelVariants, radioVariants } from "./variants";
 import type { Size } from "../../lib/component-config-types";
 
 export type RadioProps = React.ComponentPropsWithoutRef<typeof BaseRadio.Root>;
 
-export type RadioIndicatorProps = React.ComponentPropsWithoutRef<typeof BaseRadio.Indicator> & {
+export type RadioGroupProps = {
+  /**
+   * Layout orientation of the radio group.
+   * Vertical stacks radio items in a column, horizontal arranges them in a row.
+   */
+  orientation?: VariantProps<typeof radioGroupVariants>["orientation"];
+
+  /**
+   * Spacing size between radio items.
+   * Controls the gap between individual radio buttons within the group.
+   */
+  size?: VariantProps<typeof radioGroupVariants>["size"];
+} & React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & {
+  ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null>;
+};
+
+export type RadioIndicatorProps = {
+  /**
+   * Size of the radio indicator affecting the overall dimensions.
+   */
+  size?: Size;
+
+  /**
+   * Visual variant of the radio indicator affecting styling context.
+   */
+  variant?: VariantProps<typeof radioVariants>["variant"];
+} & React.ComponentPropsWithoutRef<typeof BaseRadio.Indicator> & {
   ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Indicator> | null>;
 };
 

@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./component";
+import { Text } from "../text/component";
 
 type DialogProps = React.ComponentProps<typeof Dialog> & {
   open?: boolean;
@@ -19,16 +20,12 @@ type DialogProps = React.ComponentProps<typeof Dialog> & {
 };
 
 export function DialogPreview(props: DialogProps) {
-  const [internalOpen, setInternalOpen] = React.useState(false);
-
-  const isControlledFromParent = props.open !== undefined;
-  const open = isControlledFromParent ? props.open : internalOpen;
-  const onOpenChange = isControlledFromParent ? props.onOpenChange : setInternalOpen;
+  const [open, setOpen] = React.useState(false);
 
   const { open: _, onOpenChange: __, ...restProps } = props;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange} {...restProps}>
+    <Dialog open={open} onOpenChange={setOpen} {...restProps}>
       <DialogTrigger render={<Button />}>Open Dialog</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -37,9 +34,7 @@ export function DialogPreview(props: DialogProps) {
             This is a dialog description that explains what the dialog is for.
           </DialogDescription>
         </DialogHeader>
-        <div className="py-4">
-          <p>Dialog content goes here.</p>
-        </div>
+        <Text>Dialog content goes here.</Text>
         <DialogFooter>
           <DialogClose render={<Button variant="secondary" />}>
             Cancel

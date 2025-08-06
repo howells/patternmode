@@ -4,6 +4,7 @@ import {
   Radio,
   RadioCard,
   RadioCardOption,
+  RadioGroup,
   RadioIndicator,
   RadioItem,
   RadioLabel,
@@ -24,7 +25,7 @@ export const radioConfig: ComponentConfig = {
   description: "Radio button input for single selections within a group of options. Provides accessible radio button functionality with proper keyboard navigation and form integration.",
   category: "controls",
   icon: Circle,
-  importStatement: `import { Radio, RadioItem, RadioOption, RadioLabel, RadioCard, RadioCardOption, RadioIndicator } from "@patternmode/ui/radio";`,
+  importStatement: `import { Radio, RadioGroup, RadioItem, RadioOption, RadioLabel, RadioCard, RadioCardOption, RadioIndicator } from "@patternmode/ui/components/radio";`,
   examples: [
     {
       id: "default",
@@ -69,6 +70,11 @@ export const radioConfig: ComponentConfig = {
       description: "Root radio component built on Base UI's Radio primitive.",
       component: Radio,
       primary: true,
+    },
+    {
+      name: "Radio Group",
+      description: "Group component for managing mutually exclusive radio button selections.",
+      component: RadioGroup,
     },
     {
       name: "Radio Item",

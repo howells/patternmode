@@ -33,7 +33,7 @@ export type ResponsiveDrawerPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the drawer trigger button.
    */
-  triggerVariant?: "default" | "outline" | "ghost";
+  triggerVariant?: "primary" | "outline" | "ghost";
   /**
    * Content complexity level.
    * Determines how much content is displayed in the drawer.
@@ -50,7 +50,7 @@ export function ResponsiveDrawerPreview({
   breakpoint = "md",
   showFooter = true,
   showCloseButton = true,
-  triggerVariant = "default",
+  triggerVariant = "primary",
   contentLevel = "simple",
   showSnapPoints = false,
 }: ResponsiveDrawerPreviewProps = {}) {
@@ -190,8 +190,8 @@ export const responsiveDrawerPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the drawer trigger button.",
-    options: ["default", "outline", "ghost"],
-    defaultValue: "outline",
+    options: ["primary", "outline", "ghost"],
+    defaultValue: "primary",
   },
   {
     name: "contentLevel",

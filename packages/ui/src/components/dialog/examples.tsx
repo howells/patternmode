@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./component";
+import { Text } from "../text/component";
 
 export const DefaultExample = () => (
   <Dialog>
@@ -24,9 +25,7 @@ export const DefaultExample = () => (
           This is a dialog description that explains what the dialog is for.
         </DialogDescription>
       </DialogHeader>
-      <div className="py-4">
-        <p>Dialog content goes here.</p>
-      </div>
+        <Text>Dialog content goes here.</Text>
       <DialogFooter>
         <DialogClose render={<Button variant="secondary" />}>
           Cancel

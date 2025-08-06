@@ -64,7 +64,6 @@ import { progressConfig } from "./progress/config";
 import { progressCircleConfig } from "./progress-circle/config";
 import { radioConfig } from "./radio/config";
 import { radioCardGroupConfig } from "./radio-card-group/config";
-import { radioGroupConfig } from "./radio-group/config";
 import { responsiveDrawerConfig } from "./responsive-drawer/config";
 import { scrollAreaConfig } from "./scroll-area/config";
 import { searchFieldConfig } from "./search-field/config";
@@ -161,7 +160,6 @@ import { ProgressPreview } from "./progress/preview";
 import { ProgressCirclePreview } from "./progress-circle/preview";
 import { RadioPreview } from "./radio/preview";
 import { RadioCardGroupPreview } from "./radio-card-group/preview";
-import { RadioGroupPreview } from "./radio-group/preview";
 import { ResponsiveDrawerPreview } from "./responsive-drawer/preview";
 import { ScrollAreaPreview } from "./scroll-area/preview";
 import { SearchFieldPreview } from "./search-field/preview";
@@ -258,7 +256,6 @@ import { progressPreviewProps } from "./progress/preview";
 import { progressCirclePreviewProps } from "./progress-circle/preview";
 import { radioPreviewProps } from "./radio/preview";
 import { radioCardGroupPreviewProps } from "./radio-card-group/preview";
-import { radioGroupPreviewProps } from "./radio-group/preview";
 import { responsiveDrawerPreviewProps } from "./responsive-drawer/preview";
 import { scrollAreaPreviewProps } from "./scroll-area/preview";
 import { searchFieldPreviewProps } from "./search-field/preview";
@@ -354,7 +351,6 @@ export const COMPONENT_REGISTRY = {
   "progress-circle": progressCircleConfig,
   "radio": radioConfig,
   "radio-card-group": radioCardGroupConfig,
-  "radio-group": radioGroupConfig,
   "responsive-drawer": responsiveDrawerConfig,
   "scroll-area": scrollAreaConfig,
   "search-field": searchFieldConfig,
@@ -453,7 +449,6 @@ export const PREVIEW_REGISTRY = {
   "progress-circle": ProgressCirclePreview,
   "radio": RadioPreview,
   "radio-card-group": RadioCardGroupPreview,
-  "radio-group": RadioGroupPreview,
   "responsive-drawer": ResponsiveDrawerPreview,
   "scroll-area": ScrollAreaPreview,
   "search-field": SearchFieldPreview,
@@ -552,7 +547,6 @@ export const PREVIEW_PROPS_REGISTRY = {
   "progress-circle": progressCirclePreviewProps,
   "radio": radioPreviewProps,
   "radio-card-group": radioCardGroupPreviewProps,
-  "radio-group": radioGroupPreviewProps,
   "responsive-drawer": responsiveDrawerPreviewProps,
   "scroll-area": scrollAreaPreviewProps,
   "search-field": searchFieldPreviewProps,
@@ -650,7 +644,6 @@ export const COMPONENT_METADATA_REGISTRY = {
   "progress-circle": { title: progressCircleConfig.name, description: progressCircleConfig.description },
   "radio": { title: radioConfig.name, description: radioConfig.description },
   "radio-card-group": { title: radioCardGroupConfig.name, description: radioCardGroupConfig.description },
-  "radio-group": { title: radioGroupConfig.name, description: radioGroupConfig.description },
   "responsive-drawer": { title: responsiveDrawerConfig.name, description: responsiveDrawerConfig.description },
   "scroll-area": { title: scrollAreaConfig.name, description: scrollAreaConfig.description },
   "search-field": { title: searchFieldConfig.name, description: searchFieldConfig.description },

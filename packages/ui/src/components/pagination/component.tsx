@@ -197,7 +197,7 @@ export const PaginationPage = ({
     return (
       <li>
         <Button
-          variant="default"
+          variant="primary"
           aria-label={`Page ${children}`}
           aria-current="page"
           className={cx("min-w-10", className)}
