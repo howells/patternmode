@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "../../lib/component-config-types";
 import { Square } from "lucide-react";
-import { Field, FieldControl, FieldDescription, FieldError, FieldLabel, FieldValidity } from "./component";
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "./component";
 import { CompleteFieldExample, DefaultExample, WithDescriptionExample, WithErrorExample } from "./examples";
 
 export const fieldConfig: ComponentConfig = {
@@ -63,11 +63,6 @@ export const fieldConfig: ComponentConfig = {
       name: "Field Error",
       description: "Error message component for validation feedback",
       component: FieldError,
-    },
-    {
-      name: "Field Validity",
-      description: "Validation state component for programmatic access",
-      component: FieldValidity,
     },
   ],
 };

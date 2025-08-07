@@ -179,7 +179,17 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
   children,
   ...props
 }) => {
+  const [mounted, setMounted] = React.useState(false);
   const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // During SSR or before mounting, default to Sheet (desktop view)
+  if (!mounted) {
+    return <Sheet data-testid="responsive-drawer" {...props}>{children}</Sheet>;
+  }
 
   if (isMobile) {
     return <Drawer data-testid="responsive-drawer" {...props}>{children}</Drawer>;

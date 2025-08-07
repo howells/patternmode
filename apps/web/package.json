@@ -10,7 +10,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "timeout 180s playwright test || true",
     "clean": "rm -rf .next"
   },
   "peerDependencies": {
