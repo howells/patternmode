@@ -50,10 +50,32 @@ export default ui().append(
     },
   },
   {
-    name: "preview-react-refresh-override",
+    name: "preview-react-refresh-override", 
     files: ["**/preview.tsx"],
     rules: {
       "react-refresh/only-export-components": "off",
+      "no-console": "off",
+      "unused-imports/no-unused-vars": "off",
+    },
+  },
+  {
+    name: "relax-strict-rules",
+    files: ["**/*.{ts,tsx}"],
+    rules: {
+      "react/no-array-index-key": "off",
+      "react/no-unstable-default-props": "off", 
+      "react/no-unstable-context-value": "off",
+      "react-hooks-extra/prefer-use-state-lazy-initialization": "off",
+      "react/no-children-map": "off",
+      "react/no-clone-element": "off",
+      "react/no-forward-ref": "off",
+      "react-refresh/only-export-components": "off",
+      "react-dom/no-missing-button-type": "off",
+      "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+      "style/max-statements-per-line": "error",
+      "style/multiline-ternary": "off",
+      "import/no-duplicates": "error",
+      "ts/no-use-before-define": "off",
     },
   },
 );

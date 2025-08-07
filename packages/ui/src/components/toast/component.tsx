@@ -1,5 +1,3 @@
-// Tremor Toast [v1.0.0] - Base UI API with Sonner
-
 "use client";
 
 import type { BaseToastOptions, Position, ToastData, ToastPromiseOptions, ToastType } from "./types";

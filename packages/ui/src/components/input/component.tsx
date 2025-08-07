@@ -1,7 +1,5 @@
 "use client";
 
-// Tremor Input [v2.0.0] - Base UI
-
 import type { InputProps } from "./types";
 import { Input as BaseInput } from "@base-ui-components/react/input";
 import { Eye, EyeOff, Search } from "lucide-react";

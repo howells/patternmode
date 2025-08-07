@@ -98,11 +98,11 @@ export function SplitButtonPreview({
   const PrimaryIcon = config.icon;
 
   const handlePrimaryAction = () => {
-    console.log(`Primary ${primaryAction} action triggered`);
+    // Primary action triggered
   };
 
-  const handleMenuAction = (action: string) => {
-    console.log(`Menu action triggered: ${action}`);
+  const handleMenuAction = (_action: string) => {
+    // Menu action triggered
   };
 
   return (

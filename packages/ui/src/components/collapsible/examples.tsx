@@ -13,7 +13,7 @@ export const DefaultExample = () => (
   <Collapsible>
     <CollapsibleTrigger>What is PatternMode?</CollapsibleTrigger>
     <CollapsibleContent>
-      PatternMode is a modern React component library built on Base UI primitives with Tremor-inspired styling.
+      PatternMode is a modern React component library built on Base UI primitives.
     </CollapsibleContent>
   </Collapsible>
 );

@@ -202,7 +202,9 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   } = useInfiniteQuery({
     queryKey: [...queryKey, debouncedSearch],
     queryFn: async ({ pageParam = 0, signal }) => {
-      if (!fetchData) { return { data: [], hasNextPage: false }; }
+      if (!fetchData) {
+        return { data: [], hasNextPage: false };
+      }
       return fetchData({
         search: debouncedSearch,
         pageParam,
@@ -218,8 +220,12 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 
   // Use either static options or fetched data (flattened from infinite query pages)
   const allItems: T[] = React.useMemo(() => {
-    if (options) { return options; }
-    if (!infiniteData?.pages) { return []; }
+    if (options) {
+      return options;
+    }
+    if (!infiniteData?.pages) {
+      return [];
+    }
 
     // Flatten all pages into a single array
     return infiniteData.pages.flatMap(page => page.data);

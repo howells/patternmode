@@ -1,6 +1,3 @@
-// Tremor Spark Chart [v1.0.0]
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";

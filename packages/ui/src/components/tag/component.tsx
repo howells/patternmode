@@ -1,5 +1,3 @@
-// Tremor Tag [v1.0.0] - Base UI
-
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import React from "react";

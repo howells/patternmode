@@ -1,5 +1,3 @@
-// Tremor TabNavigation [v1.0.0] - Base UI
-
 import { NavigationMenu } from "@base-ui-components/react/navigation-menu";
 import React from "react";
 

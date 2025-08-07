@@ -1,7 +1,5 @@
 "use client";
 
-// Tremor Tracker [v1.0.0] - Base UI
-
 import React from "react";
 
 import { cx } from "../../lib/utils";

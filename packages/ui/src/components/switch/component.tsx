@@ -1,5 +1,3 @@
-// Tremor Switch [v1.0.0] - Base UI
-
 import type { SwitchProps } from "./types";
 import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 

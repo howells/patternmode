@@ -1,5 +1,3 @@
-// Tremor Toolbar [v1.0.0] - Base UI
-
 "use client";
 
 import type {

@@ -606,7 +606,7 @@ const ChartTooltip = ({
         </div>
         <div className={cx("space-y-1 px-4 py-2")}>
           {filteredPayload.map(
-            ({ value, category, barColor, lineColor, chartType }, index) => (
+            ({ value, category, barColor, lineColor, chartType }, _index) => (
               <div
                 key={category}
                 className="flex items-center justify-between space-x-8"

@@ -1,5 +1,3 @@
-// Tremor CodeBlock [v1.0.0] - Base UI
-
 "use client";
 
 import type { CodeBlockProps } from "./types";

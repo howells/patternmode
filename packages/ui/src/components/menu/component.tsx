@@ -1,5 +1,3 @@
-// Tremor Menu [v1.0.0] - Base UI
-
 "use client";
 
 import { Menu as BaseMenu } from "@base-ui-components/react/menu";

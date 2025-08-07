@@ -1,5 +1,3 @@
-// Tremor Table [v1.0.0]
-
 import React from "react";
 
 import { cx } from "../../lib/utils";

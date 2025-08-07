@@ -1,5 +1,3 @@
-// Tremor Checkbox [v1.0.0] - Base UI
-
 import type { CheckboxProps } from "./types";
 
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";

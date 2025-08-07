@@ -21,7 +21,9 @@ export const ButtonGroup = ({
 }: ButtonGroupProps) => {
   // Calculate default gap based on size if not provided
   const defaultGap = React.useMemo(() => {
-    if (gap) { return gap; }
+    if (gap) {
+      return gap;
+    }
 
     switch (size) {
       case "xs":

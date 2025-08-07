@@ -1,5 +1,3 @@
-// Tremor Toggle [v1.0.0] - Base UI
-
 "use client";
 
 import type { ToggleProps } from "./types";
@@ -32,7 +30,7 @@ const Toggle = ({
       data-testid="toggle"
       ref={ref}
       render={render || ((toggleProps, state) => {
-        const { ref: _, ...buttonProps } = toggleProps;
+        const { ref: _ref, ...buttonProps } = toggleProps;
         return (
           <Button
             {...buttonProps}

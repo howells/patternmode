@@ -2,15 +2,7 @@
 
 ## Overview
 
-Patternmode is a modern React component library that combines the best design patterns and developer experience from leading UI libraries while building on a solid, accessible foundation. We curate and adapt components from shadcn/ui, Radix UI, Tailwind UI (Catalyst), and other excellent libraries, porting them to Base UI primitives with Tremor-inspired styling.
-
-## Core Principles
-
-1. **Accessibility First**: Built on Base UI primitives that provide robust accessibility out of the box
-2. **Developer Experience**: Copy-paste friendly components with excellent TypeScript support
-3. **Design Consistency**: Cohesive visual language inspired by Tremor's professional aesthetic
-4. **Performance**: Modern React patterns with minimal runtime overhead
-5. **Customization**: Flexible styling with Tailwind CSS and tailwind-variants
+Patternmode is a modern React component library that combines the best design patterns and developer experience from leading UI libraries while building on a solid, accessible foundation. We curate and adapt components from shadcn/ui, Radix UI, Tailwind UI (Catalyst), and other excellent libraries, porting them to Base UI primitives.
 
 ## Technical Architecture
 
@@ -63,14 +55,6 @@ Every component in Patternmode follows a consistent three-file structure for opt
 - Provides the interactive preview experience
 - Bridges between the prop explorer system and the pure component
 
-### Styling Strategy
-
-We use a hybrid approach combining the best of different styling methodologies:
-
-1. **Tremor-Inspired Base Styles**: Professional, clean aesthetic with consistent spacing and typography
-2. **tailwind-variants**: For type-safe component variants and responsive design
-3. **CSS Custom Properties**: For dynamic theming and component-specific styling
-4. **Utility Classes**: Tailwind utilities for rapid customization
 
 ## Component Development Process
 
@@ -81,7 +65,6 @@ We analyze components from multiple sources:
 - shadcn/ui component patterns and APIs
 - Tailwind UI design implementations
 - Radix UI accessibility patterns
-- Tremor styling approaches
 
 ### 2. Base UI Integration
 
@@ -217,14 +200,6 @@ export const BadgeExample = ({
 };
 ```
 
-### 4. Styling Adaptation
-
-Components receive Tremor-inspired styling with:
-
-- Consistent color palettes (grays, blues, semantic colors)
-- Professional spacing and typography scales
-- Dark mode support throughout
-- Focus management and keyboard navigation styles
 
 ### 5. API Design
 
@@ -255,7 +230,7 @@ We welcome contributions that align with our philosophy of curating the best pat
    - `component.tsx`: Pure component implementation
    - `config.tsx`: Pure TypeScript configuration
    - `example.tsx`: Preview component for prop explorer
-4. **Follow our styling and API conventions** with Tremor-inspired design
+
 5. **Provide comprehensive TypeScript types** with proper generics
 6. **Include accessibility considerations** via Base UI primitives
 
@@ -276,7 +251,7 @@ This project builds upon the excellent work of the open-source community. We mai
 
 ---
 
-_Patternmode: The best of the React ecosystem, unified under Base UI primitives with professional Tremor styling._
+_Patternmode: The best of the React ecosystem, unified under Base UI primitives._
 description:
 globs:
 alwaysApply: false

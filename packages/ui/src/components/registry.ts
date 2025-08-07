@@ -4,10 +4,8 @@ import type { ComponentConfig, PropMetadata } from "../lib/component-config-type
 
 // Import all component configs
 import { accordionConfig } from "./accordion/config";
-// Import all preview components
-import { AccordionPreview } from "./accordion/preview";
-// Import all preview props
-import { accordionPreviewProps } from "./accordion/preview";
+// Import all preview components and props
+import { AccordionPreview, accordionPreviewProps } from "./accordion/preview";
 import { alertDialogConfig } from "./alert-dialog/config";
 import { AlertDialogPreview, alertDialogPreviewProps } from "./alert-dialog/preview";
 import { areaChartConfig } from "./area-chart/config";

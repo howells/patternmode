@@ -207,9 +207,15 @@ const CategoryBar = (
   const maxValue = React.useMemo(() => sumNumericArray(values), [values]);
 
   const adjustedMarkerValue = React.useMemo(() => {
-    if (marker === undefined) { return undefined; }
-    if (marker.value < 0) { return 0; }
-    if (marker.value > maxValue) { return maxValue; }
+    if (marker === undefined) {
+      return undefined;
+    }
+    if (marker.value < 0) {
+      return 0;
+    }
+    if (marker.value > maxValue) {
+      return maxValue;
+    }
     return marker.value;
   }, [marker, maxValue]);
 
