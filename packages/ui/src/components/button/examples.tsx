@@ -2,7 +2,7 @@
 
 import React from "react";
 import { iconRegistry } from "../../lib/icon-registry";
-import { HStack } from "../stack/component";
+import { Stack, HStack } from "../stack/component";
 import { Button } from "./component";
 
 // Pre-imported icons from registry
@@ -137,7 +137,10 @@ export const TextAlignExample = () => (
 
 // Keyboard shortcuts
 export const KeyboardShortcutsExample = () => (
-  <div className="flex gap-3 items-start">
+  <Stack direction={{
+    "default":"vertical",
+    lg:"horizontal"
+  }}>
     <Button kbd={["mod", "K"]} leftIcon={Plus}>
       Search
     </Button>
@@ -154,5 +157,5 @@ export const KeyboardShortcutsExample = () => (
     >
       Command Palette
     </Button>
-  </div>
+  </Stack>
 );

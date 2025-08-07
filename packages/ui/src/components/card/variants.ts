@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 export const cardVariants = tv({
   base: [
     // base
-    "relative w-full max-w-xl rounded-lg text-left text-sm",
+    "relative w-full rounded-lg text-left text-sm",
   ],
   variants: {
     variant: {

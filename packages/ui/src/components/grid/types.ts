@@ -1,38 +1,6 @@
 import type React from "react";
 import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
-
-/**
- * Responsive value type for grid properties.
- */
-export type ResponsiveValue<T>
-  = | T
-    | {
-    /**
-     * Small screens (640px+).
-     * Defines grid behavior for mobile landscape and up.
-     */
-      "sm"?: T;
-      /**
-       * Medium screens (768px+).
-       * Defines grid behavior for tablets and up.
-       */
-      "md"?: T;
-      /**
-       * Large screens (1024px+).
-       * Defines grid behavior for desktop and up.
-       */
-      "lg"?: T;
-      /**
-       * Extra large screens (1280px+).
-       * Defines grid behavior for large desktop screens.
-       */
-      "xl"?: T;
-      /**
-       * 2X large screens (1536px+).
-       * Defines grid behavior for extra large displays.
-       */
-      "2xl"?: T;
-    };
+import type { ResponsiveValue } from "../../lib/responsive-utils";
 
 /**
  * Props for the Grid component.

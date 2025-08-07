@@ -50,18 +50,100 @@ export function AlignmentExample() {
 
 export function ResponsiveExample() {
   return (
-    <Stack
-      direction={{ sm: "vertical", lg: "horizontal" }}
-      gap={{ sm: 2, md: 4, lg: 6 }}
-    >
-      <div className="p-4 bg-blue-100 rounded flex-1">
-        Mobile: Stacked vertically with gap-2
+    <div className="space-y-8">
+      {/* Mobile-first: defaults to vertical, horizontal on large screens */}
+      <div>
+        <h4 className="text-sm font-medium text-zinc-700 mb-3">Mobile-first (implicit default)</h4>
+        <p className="text-xs text-zinc-600 mb-3">Vertical on mobile → horizontal on lg+</p>
+        <Stack direction={{ lg: "horizontal" }} gap={4}>
+          <div className="p-4 bg-blue-100 rounded flex-1">
+            Default: Vertical on mobile
+          </div>
+          <div className="p-4 bg-green-100 rounded flex-1">
+            lg+: Horizontal layout
+          </div>
+          <div className="p-4 bg-red-100 rounded flex-1">
+            Resize to see change!
+          </div>
+        </Stack>
       </div>
-      <div className="p-4 bg-green-100 rounded flex-1">
-        Desktop: Side by side with gap-6
+
+      {/* Explicit default with overrides */}
+      <div>
+        <h4 className="text-sm font-medium text-zinc-700 mb-3">Explicit default</h4>
+        <p className="text-xs text-zinc-600 mb-3">Horizontal on mobile → vertical on lg+</p>
+        <Stack
+          direction={{ default: "horizontal", lg: "vertical" }}
+          gap={4}
+        >
+          <div className="p-4 bg-purple-100 rounded flex-1">
+            Default: Horizontal on mobile
+          </div>
+          <div className="p-4 bg-orange-100 rounded flex-1">
+            lg+: Vertical layout
+          </div>
+        </Stack>
       </div>
-      <div className="p-4 bg-red-100 rounded flex-1">Responsive behavior!</div>
-    </Stack>
+
+      {/* Multi-breakpoint responsive */}
+      <div>
+        <h4 className="text-sm font-medium text-zinc-700 mb-3">Multi-breakpoint</h4>
+        <p className="text-xs text-zinc-600 mb-3">Vertical sm + small gap → horizontal lg + large gap</p>
+        <Stack
+          direction={{ sm: "vertical", lg: "horizontal" }}
+          gap={{ sm: 2, md: 4, lg: 6 }}
+        >
+          <div className="p-4 bg-teal-100 rounded flex-1">
+            sm: Vertical with gap-2
+          </div>
+          <div className="p-4 bg-amber-100 rounded flex-1">
+            lg: Horizontal with gap-6
+          </div>
+        </Stack>
+      </div>
+
+      {/* Max-width breakpoints */}
+      <div>
+        <h4 className="text-sm font-medium text-zinc-700 mb-3">Max-width breakpoints</h4>
+        <p className="text-xs text-zinc-600 mb-3">Horizontal default → vertical on max-md and below</p>
+        <Stack
+          direction={{ default: "horizontal", "max-md": "vertical" }}
+          gap={4}
+        >
+          <div className="p-4 bg-pink-100 rounded flex-1">
+            Tablet+: Horizontal
+          </div>
+          <div className="p-4 bg-cyan-100 rounded flex-1">
+            Mobile: Vertical
+          </div>
+          <div className="p-4 bg-lime-100 rounded flex-1">
+            Responsive direction!
+          </div>
+        </Stack>
+      </div>
+
+      {/* Complex responsive scenario */}
+      <div>
+        <h4 className="text-sm font-medium text-zinc-700 mb-3">Complex responsive</h4>
+        <p className="text-xs text-zinc-600 mb-3">Different directions + gaps + padding at each breakpoint</p>
+        <Stack
+          direction={{ sm: "vertical", md: "horizontal", xl: "vertical" }}
+          gap={{ sm: 1, md: 3, lg: 5 }}
+          padding={{ sm: 2, md: 4, lg: 6 }}
+          className="bg-zinc-50 rounded-lg"
+        >
+          <div className="p-3 bg-rose-100 rounded text-sm">
+            sm: vertical, gap-1, p-2
+          </div>
+          <div className="p-3 bg-sky-100 rounded text-sm">
+            md: horizontal, gap-3, p-4
+          </div>
+          <div className="p-3 bg-emerald-100 rounded text-sm">
+            xl: vertical, gap-5, p-6
+          </div>
+        </Stack>
+      </div>
+    </div>
   );
 }
 

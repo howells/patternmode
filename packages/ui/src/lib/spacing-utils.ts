@@ -21,8 +21,13 @@ export type GapValue = SpacingValue | -6 | -5 | -4 | -3 | -2 | -1;
 /**
  * Responsive value type for spacing properties.
  * Allows specifying different values for different screen sizes.
+ * Supports both min-width (sm, md, lg, xl, 2xl) and max-width (max-sm, max-md, max-lg, max-xl) breakpoints.
  */
 export type ResponsiveSpacing<T> = T | {
+  /**
+   * Default value (mobile-first).
+   */
+  "default"?: T;
   /**
    * Small screens (640px+).
    */
@@ -43,6 +48,22 @@ export type ResponsiveSpacing<T> = T | {
    * 2X large screens (1536px+).
    */
   "2xl"?: T;
+  /**
+   * Max small screens (639px and below).
+   */
+  "max-sm"?: T;
+  /**
+   * Max medium screens (767px and below).
+   */
+  "max-md"?: T;
+  /**
+   * Max large screens (1023px and below).
+   */
+  "max-lg"?: T;
+  /**
+   * Max extra large screens (1279px and below).
+   */
+  "max-xl"?: T;
 };
 
 /**

@@ -8,41 +8,37 @@ import {
   getGapClass,
   getPaddingClass,
 } from "../../lib/spacing-utils";
+import { createResponsiveClasses, getResponsiveBase } from "../../lib/responsive-utils";
 import { cx } from "../../lib/utils";
 import { stackVariants } from "./variants";
 
 /**
  * Layout component for arranging items vertically or horizontally with consistent spacing.
+ * 
+ * Supports responsive orientation with three approaches:
+ * 1. String: `direction="vertical"` or `direction="horizontal"`
+ * 2. Mobile-first: `direction={{ lg: "horizontal" }}` (defaults to vertical)
+ * 3. Explicit default: `direction={{ default: "horizontal", lg: "vertical" }}`
+ * 
+ * Responsive breakpoints: sm, md, lg, xl, 2xl, max-sm, max-md, max-lg, max-xl
+ * Generates appropriate Tailwind classes (flex-col, flex-row) with breakpoint prefixes.
  */
 const Stack = (
   { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },
 ) => {
   // Get base values for non-responsive cases
-  const baseDirection = getBaseSpacingValue(direction) ?? "vertical";
   const baseGapValue = getBaseSpacingValue(gap) ?? 4;
   const basePadding = getBaseSpacingValue(padding);
+  const baseDirection = getResponsiveBase(direction, "vertical");
 
   // Generate responsive classes using shared utilities
   const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);
   const responsivePaddingClasses = generateResponsiveSpacingClasses("padding", padding);
+  const responsiveDirectionClasses = createResponsiveClasses.direction(direction);
 
   // Get base classes for fallback
   const baseGapClass = getGapClass(baseGapValue);
   const basePaddingClass = basePadding !== undefined ? getPaddingClass(basePadding) : "";
-
-  // Generate responsive direction classes (custom logic since direction isn't standard spacing)
-  const responsiveDirectionClasses = typeof direction === "object" && direction !== null
-    ? Object.entries(direction)
-        .map(([breakpoint, value]) => {
-          if (value === undefined) {
-            return "";
-          }
-          const prefix = breakpoint === "sm" ? "sm:" : breakpoint === "md" ? "md:" : breakpoint === "lg" ? "lg:" : breakpoint === "xl" ? "xl:" : breakpoint === "2xl" ? "2xl:" : "";
-          return `${prefix}${value === "vertical" ? "flex-col" : "flex-row"}`;
-        })
-        .filter(Boolean)
-        .join(" ")
-    : "";
 
   const generatedClasses = stackVariants({
     direction: baseDirection as "vertical" | "horizontal",

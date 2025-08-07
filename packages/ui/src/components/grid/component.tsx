@@ -1,58 +1,21 @@
 "use client";
 
-import type { GridAutoProps, GridCellProps, GridProps, ResponsiveValue } from "./types";
+import type { GridAutoProps, GridCellProps, GridProps } from "./types";
 import React from "react";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
+import { createResponsiveClasses, type ResponsiveValue } from "../../lib/responsive-utils";
 import { cx } from "../../lib/utils";
 import { gridCellVariants, gridVariants } from "./variants";
 
-// Helper function to generate responsive grid styles
+// Generate responsive grid styles using shared utilities
 const generateResponsiveGridStyles = (
   columns: ResponsiveValue<number> | undefined,
   rows: ResponsiveValue<number> | undefined,
 ): string => {
-  const styles: string[] = [];
-  const breakpoints = {
-    "sm": "sm:",
-    "md": "md:",
-    "lg": "lg:",
-    "xl": "xl:",
-    "2xl": "2xl:",
-  };
-
-  // Handle columns
-  if (columns !== undefined) {
-    if (typeof columns === "object") {
-      Object.entries(columns).forEach(([breakpoint, value]) => {
-        if (value !== undefined) {
-          const prefix
-            = breakpoints[breakpoint as keyof typeof breakpoints] || "";
-          styles.push(`${prefix}grid-cols-${value}`);
-        }
-      });
-    }
-    else {
-      styles.push(`grid-cols-${columns}`);
-    }
-  }
-
-  // Handle rows
-  if (rows !== undefined) {
-    if (typeof rows === "object") {
-      Object.entries(rows).forEach(([breakpoint, value]) => {
-        if (value !== undefined) {
-          const prefix
-            = breakpoints[breakpoint as keyof typeof breakpoints] || "";
-          styles.push(`${prefix}grid-rows-${value}`);
-        }
-      });
-    }
-    else {
-      styles.push(`grid-rows-${rows}`);
-    }
-  }
-
-  return styles.join(" ");
+  const columnClasses = createResponsiveClasses.gridColumns(columns);
+  const rowClasses = createResponsiveClasses.gridRows(rows);
+  
+  return [columnClasses, rowClasses].filter(Boolean).join(" ");
 };
 
 /**

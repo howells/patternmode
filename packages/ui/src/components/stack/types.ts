@@ -1,6 +1,7 @@
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { GapValue, ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import type { ResponsiveValue } from "../../lib/responsive-utils";
 import type { stackVariants } from "./variants";
 
 /**
@@ -13,7 +14,7 @@ export type StackProps = {
    * The direction of the stack - can be responsive.
    * Controls whether children are arranged vertically or horizontally.
    */
-  direction?: ResponsiveSpacing<StackDirection>;
+  direction?: ResponsiveValue<StackDirection>;
   /**
    * Gap between items (4px grid scale) - can be responsive.
    * Supports values from 0-24 using the 4px grid system, plus negative values for overlapping.
