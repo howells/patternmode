@@ -50,10 +50,13 @@ type BarListProps<T = unknown> = {
   sortOrder?: "ascending" | "descending" | "none";
 } & React.ComponentPropsWithoutRef<"div">;
 
+const EMPTY_DATA_ARRAY: any[] = [];
+const DEFAULT_VALUE_FORMATTER = (value: number) => value.toString();
+
 function BarListInner<T>(
   {
-    data = [],
-    valueFormatter = value => value.toString(),
+    data = EMPTY_DATA_ARRAY,
+    valueFormatter = DEFAULT_VALUE_FORMATTER,
     showAnimation = false,
     onValueChange,
     sortOrder = "descending",

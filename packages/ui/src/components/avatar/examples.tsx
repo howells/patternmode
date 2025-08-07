@@ -287,9 +287,9 @@ export const AvatarGroupExample = () => {
       <div className="space-y-4">
         <h4 className="text-sm font-semibold">Team Members (Small)</h4>
         <div className="flex -space-x-2">
-          {users.map((user, index) => (
+          {users.map((user, _index) => (
             <Avatar
-              key={index}
+              key={user.name}
               src={user.avatar}
               initials={user.initials}
               alt={user.name}
@@ -310,9 +310,9 @@ export const AvatarGroupExample = () => {
           Project Contributors (Large)
         </h4>
         <div className="flex -space-x-3">
-          {users.map((user, index) => (
+          {users.map((user, _index) => (
             <Avatar
-              key={index}
+              key={user.name}
               src={user.avatar}
               initials={user.initials}
               alt={user.name}

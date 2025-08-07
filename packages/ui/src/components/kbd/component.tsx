@@ -65,7 +65,7 @@ const Kbd = (
         {...props}
       >
         {processedKeys.map((key, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={key}>
             {index > 0 && <span className="text-zinc-400 text-xs">+</span>}
             <kbd className={cx(kbdVariants({ size, variant }))}>{key}</kbd>
           </React.Fragment>

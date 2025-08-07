@@ -232,6 +232,7 @@ export const WithHookExample = () => {
 
       <div className="flex flex-wrap gap-2">
         <button
+          type="button"
           onClick={() => tagInput.addTag("javascript")}
           className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200"
           disabled={tagInput.hasTag("javascript")}
@@ -239,13 +240,15 @@ export const WithHookExample = () => {
           + JavaScript
         </button>
         <button
-          onClick={() => tagInput.addTag("python")}
+          type="button"
+          onClick={() => tagInput.addTag("python"))
           className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200"
           disabled={tagInput.hasTag("python")}
         >
           + Python
         </button>
         <button
+          type="button"
           onClick={tagInput.clearTags}
           className="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-full hover:bg-red-200"
           disabled={tagInput.count === 0}

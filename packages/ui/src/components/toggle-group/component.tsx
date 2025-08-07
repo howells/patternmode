@@ -50,12 +50,12 @@ const ToggleGroupItem = (
   const context = use(ToggleGroupContext);
   const finalSize = size ?? context.size;
   const finalVariant = variant ?? context.variant;
-  const { item } = toggleGroupVariants({
+  const { item: _item } = toggleGroupVariants({
     variant: finalVariant,
     size: finalSize,
   });
 
-  const hasChildren = children != null && children !== "";
+  const _hasChildren = children != null && children !== "";
   const hasLeftIcon = LeftIcon != null;
   const hasRightIcon = RightIcon != null;
 
@@ -66,10 +66,10 @@ const ToggleGroupItem = (
   const hasVisibleText = childrenString.length > 0;
 
   // Determine if this is an icon-only button (no visible text content)
-  const isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
+  const _isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
 
   // Get appropriate icon size based on the toggle group size
-  const iconSize = getIconSizeForContext(finalSize);
+  const _iconSize = getIconSizeForContext(finalSize);
 
   const renderContent = () => {
     return children;

@@ -5,7 +5,7 @@ import { cx, focusRing } from "../../lib/utils";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 
-type DialogProps = {
+type _DialogProps = {
   /**
    * Whether the dialog is open when controlled.
    * When provided, the dialog becomes controlled and requires onOpenChange.

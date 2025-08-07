@@ -136,7 +136,7 @@ const TabsTrigger = (
             rightIcon={rightIcon}
             iconStrokeWidth={iconStrokeWidth}
 
-            render={<button ref={tabRef} />} // Forward Base UI's ref to the button element
+            render={<button type="button" ref={tabRef} />} // Forward Base UI's ref to the button element
             disabled={state.disabled}
             className={cx(
               tabClassName,

@@ -51,7 +51,7 @@ const PreviewCardTrigger = ({ ref, className, ...props }: PreviewCardTriggerProp
   />
 );
 
-type PreviewCardPortalProps = React.ComponentPropsWithoutRef<typeof BasePreviewCard.Portal>;
+type _PreviewCardPortalProps = React.ComponentPropsWithoutRef<typeof BasePreviewCard.Portal>;
 
 /**
  * Portal component for rendering preview card content outside normal DOM flow.

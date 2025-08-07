@@ -50,7 +50,7 @@ export const WithArrowExample = () => {
           <PopoverClose className="px-3 py-1 text-sm border rounded hover:bg-zinc-50">
             Cancel
           </PopoverClose>
-          <button className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
+          <button type="button" className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
             Learn More
           </button>
         </div>
@@ -76,7 +76,7 @@ export const WithBackdropExample = () => {
             <PopoverClose className="px-3 py-1 text-sm border rounded hover:bg-zinc-50">
               Cancel
             </PopoverClose>
-            <button className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
+            <button type="button" className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
               Confirm
             </button>
           </div>

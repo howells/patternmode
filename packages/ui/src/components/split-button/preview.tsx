@@ -120,7 +120,7 @@ export function SplitButtonPreview({
       {displayedItems.map((item, index) => {
         const ItemIcon = item.icon;
         return (
-          <div key={index}>
+          <div key={item.label}>
             {showSeparators && index === Math.floor(menuItemCount / 2) && (
               <div className="border-t  dark:border-zinc-700 my-1" />
             )}

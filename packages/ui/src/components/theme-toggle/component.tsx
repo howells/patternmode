@@ -15,7 +15,7 @@ import { themeToggleVariants } from "./variants";
  */
 export const ThemeToggle = ({
   ref: forwardedRef,
-  render = <button />,
+  render = <button type="button" />,
   theme,
   onToggle,
   isLoading = false,

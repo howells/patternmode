@@ -38,7 +38,7 @@ export function TabNavigationPreview({
   tabCount = 4,
   showDisabledTab = false,
   activeTab = "overview",
-  size = "md",
+  size: _size = "md",
 }: TabNavigationPreviewProps = {}) {
   let displayedTabs = tabItems.slice(0, tabCount);
 

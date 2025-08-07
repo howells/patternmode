@@ -123,16 +123,22 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isPressed, onClick]);
 
   React.useEffect(() => {
     if (disabled) {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
       setIsPressed(false);
     }
   }, [disabled]);
@@ -268,10 +274,14 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isKeyDowned, scrollToTest]);
 
@@ -321,8 +331,7 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       >
         {categories.map((category, index) => (
           <LegendItem
-            // eslint-disable-next-line react/no-array-index-key
-            key={`item-${index}`}
+            key={category}
             name={category}
             color={colors[index] as AvailableChartColorsKeys}
             onClick={onClickLegendItem}
@@ -384,7 +393,7 @@ const ChartLegend = (
     const calculateHeight = (height: number | undefined) =>
       height ? Number(height) + 15 : 60;
     setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
-  }, [windowSize.width, windowSize.height]);
+  }, [windowSize.width, windowSize.height, setLegendHeight]);
 
   const legendPayload = payload.filter((item: any) => item.type !== "none");
 
@@ -496,9 +505,9 @@ const ChartTooltip = ({
           </p>
         </div>
         <div className={cx("space-y-1 px-4 py-2")}>
-          {payload.map(({ value, category, color }, index) => (
+          {payload.map(({ value, category, color }, _index) => (
             <div
-              key={`id-${index}`}
+              key={category}
               className="flex items-center justify-between space-x-8"
             >
               <div className="flex items-center space-x-2">
@@ -712,13 +721,16 @@ type AreaChartProps = {
   customTooltip?: React.ComponentType<TooltipProps>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+const EMPTY_DATA_ARRAY: any[] = [];
+const EMPTY_CATEGORIES_ARRAY: string[] = [];
+
 /**
  * Area chart component for visualizing data trends over time with filled regions.
  */
 const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {
-    data = [],
-    categories = [],
+    data = EMPTY_DATA_ARRAY,
+    categories = EMPTY_CATEGORIES_ARRAY,
     index,
     colors = AvailableChartColors,
     valueFormatter = (value: number) => value.toString(),
@@ -862,7 +874,7 @@ const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<H
 
   return (
     <div ref={ref} className={cx("h-80 w-full", className)} data-testid="area-chart" {...other}>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error ResponsiveContainer has type conflicts with Recharts v3.1.0+ */}
       <ResponsiveContainer>
         <RechartsAreaChart
           data={data}
@@ -1142,7 +1154,7 @@ const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<H
                     ) {
                       return (
                         <Dot
-                          key={index}
+                          key={`${category}-${index}`}
                           cx={cxCoord}
                           cy={cyCoord}
                           r={5}
@@ -1164,7 +1176,7 @@ const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<H
                         />
                       );
                     }
-                    return <React.Fragment key={index}></React.Fragment>;
+                    return <React.Fragment key={`${category}-${index}`}></React.Fragment>;
                   }}
                   key={`area-${category}`}
                   name={category}

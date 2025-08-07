@@ -190,11 +190,14 @@ type CategoryBarProps = {
   showLabels?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+const EMPTY_VALUES_ARRAY: CategoryBarValue[] = [];
+const DEFAULT_COLORS = AvailableChartColors;
+
 /**
  * Horizontal bar chart component for categorical data comparison and ranking.
  */
 const CategoryBar = (
-  { ref: forwardedRef, values = [], colors = AvailableChartColors, marker, showLabels = true, className, ...props }: CategoryBarProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref: forwardedRef, values = EMPTY_VALUES_ARRAY, colors = DEFAULT_COLORS, marker, showLabels = true, className, ...props }: CategoryBarProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   const markerBgColor = React.useMemo(
     () => getMarkerBgColor(marker?.value, values, colors),
@@ -262,7 +265,7 @@ const CategoryBar = (
               >
                 {marker.tooltip
                   ? (
-                      // @ts-ignore
+                      // @ts-expect-error Tooltip content prop accepts ReactNode but type definition is restrictive
                       <Tooltip content={marker.tooltip}>
                         <div
                           aria-hidden="true"

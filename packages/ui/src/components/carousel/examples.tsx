@@ -72,7 +72,7 @@ export const MultipleItemsExample = () => (
   <Carousel className="w-full max-w-sm">
     <CarouselContent className="-ml-1">
       {Array.from({ length: 5 }).map((_, index) => (
-        <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+        <CarouselItem key={`carousel-item-${index}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
           <Card>
             <div className="flex aspect-square items-center justify-center p-6">
               <span className="text-2xl font-semibold">{index + 1}</span>
@@ -221,7 +221,7 @@ export const AutoPlayExample = () => {
     <Carousel setApi={setApi} className="w-full max-w-xs">
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
+          <CarouselItem key={`auto-play-${index}`}>
             <Card>
               <div className="flex aspect-square items-center justify-center p-6">
                 <span className="text-4xl font-semibold">{index + 1}</span>
@@ -241,7 +241,7 @@ export const ResponsiveExample = () => (
   <Carousel className="w-full">
     <CarouselContent>
       {Array.from({ length: 8 }).map((_, index) => (
-        <CarouselItem key={index} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+        <CarouselItem key={`responsive-${index}`} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
           <Card>
             <div className="flex aspect-square items-center justify-center p-6">
               <span className="text-2xl font-semibold">{index + 1}</span>

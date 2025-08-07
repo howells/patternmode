@@ -102,11 +102,14 @@ type SparkChartProps = {
 /**
  * Minimal sparkline chart for inline data visualization and trend indication.
  */
+const EMPTY_DATA_ARRAY: any[] = [];
+const EMPTY_CATEGORIES_ARRAY: string[] = [];
+
 const SparkChart = ({ ref: forwardedRef, ...props }: SparkChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {
     variant = "bar",
-    data = [],
-    categories = [],
+    data = EMPTY_DATA_ARRAY,
+    categories = EMPTY_CATEGORIES_ARRAY,
     index,
     colors = AvailableChartColors,
     autoMinValue = false,

@@ -139,7 +139,7 @@ export function FieldArrayPreview(props: FieldArrayPreviewProps) {
           </Subheading>
           <DescriptionList>
             {accordionItems.map((item, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={`${item.text}-${index}`}>
                 <DescriptionTerm>Item {index + 1}</DescriptionTerm>
                 <DescriptionDetails>{item.text}</DescriptionDetails>
               </React.Fragment>

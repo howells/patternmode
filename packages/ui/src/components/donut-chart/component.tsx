@@ -133,8 +133,7 @@ const ChartTooltip = ({
         <div className={cx("space-y-1 px-4 py-2")}>
           {payload.map(({ value, category, color }, index) => (
             <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={`id-${index}`}
+              key={category}
               className="flex items-center justify-between space-x-8"
             >
               <div className="flex items-center space-x-2">
@@ -292,11 +291,13 @@ type DonutChartProps = {
 
 const defaultValueFormatter = (value: number) => value.toString();
 
+const EMPTY_DATA_ARRAY: any[] = [];
+
 /**
  * Donut chart component for displaying proportional data with a hollow center.
  */
 const DonutChart = (
-  { ref: forwardedRef, data = [], value, category, colors = AvailableChartColors, variant = "donut", valueFormatter = defaultValueFormatter, label, showLabel = false, showTooltip = true, onValueChange, tooltipCallback, customTooltip, className, ...other }: DonutChartProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref: forwardedRef, data = EMPTY_DATA_ARRAY, value, category, colors = AvailableChartColors, variant = "donut", valueFormatter = defaultValueFormatter, label, showLabel = false, showTooltip = true, onValueChange, tooltipCallback, customTooltip, className, ...other }: DonutChartProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   const CustomTooltip = customTooltip;
   const [activeIndex, setActiveIndex] = React.useState<number | undefined>(

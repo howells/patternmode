@@ -49,7 +49,7 @@ export type SheetPreviewProps = {
 
 export function SheetPreview({
   side = "right",
-  size = "md",
+  size: _size = "md",
   showFooter = true,
   showCloseButton = true,
   triggerVariant = "primary",

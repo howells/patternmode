@@ -31,12 +31,12 @@ export const WithTextExample = () => {
           placeholder="Password"
           className="w-full px-3 py-2 border  dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50"
         />
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+        <button type="button" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
           Sign In
         </button>
       </div>
       <Separator>or</Separator>
-      <button className="w-full border  dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 font-medium py-2 px-4 rounded-md transition-colors">
+      <button type="button" className="w-full border  dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 font-medium py-2 px-4 rounded-md transition-colors">
         Continue with Google
       </button>
     </div>

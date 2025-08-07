@@ -184,16 +184,22 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isPressed, onClick]);
 
   React.useEffect(() => {
     if (disabled) {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
       setIsPressed(false);
     }
   }, [disabled]);
@@ -310,10 +316,14 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isKeyDowned, scrollToTest]);
 
@@ -435,7 +445,7 @@ const ChartLegend = (
     const calculateHeight = (height: number | undefined) =>
       height ? Number(height) + 15 : 60;
     setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
-  }, [windowSize.width, windowSize.height]);
+  }, [windowSize.width, windowSize.height, setLegendHeight]);
 
   const filteredPayload = payload.filter((item: any) => item.type !== "none");
 
@@ -598,8 +608,7 @@ const ChartTooltip = ({
           {filteredPayload.map(
             ({ value, category, barColor, lineColor, chartType }, index) => (
               <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={`id-${index}`}
+                key={category}
                 className="flex items-center justify-between space-x-8"
               >
                 <div className="flex items-center space-x-2">
@@ -814,8 +823,10 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
     connectNulls: false,
   };
 
+  const EMPTY_DATA_ARRAY: any[] = [];
+
   const {
-    data = [],
+    data = EMPTY_DATA_ARRAY,
     index,
     startEndOnly = false,
     showXAxis = true,
@@ -1336,7 +1347,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
                 ) {
                   return (
                     <Dot
-                      key={index}
+                      key={`${category}-${index}`}
                       cx={cxCoord}
                       cy={cyCoord}
                       r={5}
@@ -1358,7 +1369,7 @@ const ComboChart = ({ ref: forwardedRef, ...props }: ComboChartProps & { ref?: R
                     />
                   );
                 }
-                return <React.Fragment key={index}></React.Fragment>;
+                return <React.Fragment key={`${category}-${index}`}></React.Fragment>;
               }}
               key={`${category}-line-id`}
               name={category}

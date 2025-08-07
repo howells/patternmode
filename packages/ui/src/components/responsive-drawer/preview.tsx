@@ -52,7 +52,7 @@ export function ResponsiveDrawerPreview({
   showCloseButton = true,
   triggerVariant = "primary",
   contentLevel = "simple",
-  showSnapPoints = false,
+  showSnapPoints: _showSnapPoints = false,
 }: ResponsiveDrawerPreviewProps = {}) {
   const getContent = () => {
     switch (contentLevel) {
@@ -117,8 +117,7 @@ export function ResponsiveDrawerPreview({
             </div>
             <div className="space-y-1">
               {["Project Alpha", "Design System", "Mobile App", "Website Redesign", "Marketing Campaign"].map((item, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={index} className="px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer">
+                <div key={item} className="px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">{item}</span>
                     <span className="text-xs text-zinc-500">{index + 1}d ago</span>

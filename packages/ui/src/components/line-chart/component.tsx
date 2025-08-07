@@ -220,16 +220,22 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isPressed, onClick]);
 
   React.useEffect(() => {
     if (disabled) {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
       setIsPressed(false);
     }
   }, [disabled]);
@@ -394,10 +400,14 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       }, 300);
     }
     else {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     }
     return () => {
-      if (intervalRef.current) { clearInterval(intervalRef.current); }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [isKeyDowned, scrollToTest]);
 
@@ -447,8 +457,7 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
       >
         {categories.map((category, index) => (
           <LegendItem
-            // eslint-disable-next-line react/no-array-index-key
-            key={`item-${index}`}
+            key={category}
             name={category}
             color={colors[index] as AvailableChartColorsKeys}
             onClick={onClickLegendItem}
@@ -525,7 +534,7 @@ const ChartLegend = (
     const calculateHeight = (height: number | undefined) =>
       height ? Number(height) + 15 : 60;
     setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
-  }, [windowSize.width, windowSize.height]);
+  }, [windowSize.width, windowSize.height, setLegendHeight]);
 
   const legendPayload = payload.filter((item: any) => item.type !== "none");
 
@@ -675,8 +684,7 @@ const ChartTooltip = ({
         <div className={cx("space-y-1 px-4 py-2")}>
           {legendPayload.map(({ value, category, color }, index) => (
             <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={`id-${index}`}
+              key={category}
               className="flex items-center justify-between space-x-8"
             >
               <div className="flex items-center space-x-2">
@@ -901,13 +909,16 @@ type LineChartProps = {
   customTooltip?: React.ComponentType<TooltipProps>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+const EMPTY_DATA_ARRAY: any[] = [];
+const EMPTY_CATEGORIES_ARRAY: string[] = [];
+
 /**
  * Line chart component for displaying data trends and changes over time.
  */
 const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {
-    data = [],
-    categories = [],
+    data = EMPTY_DATA_ARRAY,
+    categories = EMPTY_CATEGORIES_ARRAY,
     index,
     colors = AvailableChartColors,
     valueFormatter = (value: number) => value.toString(),
@@ -1251,7 +1262,7 @@ const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<H
                 ) {
                   return (
                     <Dot
-                      key={index}
+                      key={`${category}-${index}`}
                       cx={cxCoord}
                       cy={cyCoord}
                       r={5}
@@ -1273,7 +1284,7 @@ const LineChart = ({ ref, ...props }: LineChartProps & { ref?: React.RefObject<H
                     />
                   );
                 }
-                return <React.Fragment key={index}></React.Fragment>;
+                return <React.Fragment key={`${category}-${index}`}></React.Fragment>;
               }}
               key={category}
               name={category}

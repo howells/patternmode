@@ -106,7 +106,7 @@ const PopoverTrigger = ({
 };
 PopoverTrigger.displayName = "PopoverTrigger";
 
-type PopoverPortalProps = React.ComponentPropsWithoutRef<typeof BasePopover.Portal>;
+type _PopoverPortalProps = React.ComponentPropsWithoutRef<typeof BasePopover.Portal>;
 
 /**
  * Portal component for rendering popover content outside normal DOM flow.

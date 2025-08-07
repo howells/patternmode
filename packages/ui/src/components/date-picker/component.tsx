@@ -119,8 +119,7 @@ const TimeInput = ({ ref, hourCycle, ...props }: TimeInputProps) => {
     >
       {state.segments.map((segment, i) => {
         const props = { segment, state };
-        // eslint-disable-next-line react/no-array-index-key
-        return <TimeSegment key={i} {...props} />;
+        return <TimeSegment key={`${segment.type}-${i}`} {...props} />;
       })}
     </div>
   );

@@ -75,7 +75,7 @@ export const FormExample = () => (
         </div>
       </div>
       <DrawerFooter>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        <button type="button" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
           Add Item
         </button>
         <DrawerClose className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 rounded-md hover:bg-zinc-300 dark:hover:bg-zinc-600">
@@ -135,7 +135,7 @@ export const SettingsExample = () => (
         </div>
       </div>
       <DrawerFooter>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        <button type="button" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
           Save Changes
         </button>
         <DrawerClose className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 rounded-md hover:bg-zinc-300 dark:hover:bg-zinc-600">

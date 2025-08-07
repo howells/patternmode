@@ -2,6 +2,10 @@ import { ui } from "@patternmode/eslint-config";
 
 export default ui().append(
   {
+    name: "ignore-markdown-files",
+    ignores: ["**/*.md"],
+  },
+  {
     name: "test-console-override",
     files: ["**/*.test.{ts,tsx,js,jsx}", "**/tests/**/*.{ts,tsx,js,jsx}"],
     rules: {

@@ -24,7 +24,7 @@ const Meter = (
     return `${percentage}%`;
   };
 
-  const formattedValue = formatValue
+  const _formattedValue = formatValue
     ? formatValue(value, min, max)
     : defaultFormatValue(value, min, max);
 

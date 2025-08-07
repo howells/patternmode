@@ -41,8 +41,8 @@ export type LineChartPreviewProps = {
 };
 
 export function LineChartPreview({
-  curveType = "linear",
-  showDots = false,
+  curveType: _curveType = "linear",
+  showDots: _showDots = false,
   showGridLines = true,
   showLegend = true,
   colors = ["blue", "emerald"],

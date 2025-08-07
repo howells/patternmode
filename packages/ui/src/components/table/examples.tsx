@@ -140,7 +140,7 @@ export const InteractiveExample = () => {
             <TableCell>John Doe</TableCell>
             <TableCell>2 minutes ago</TableCell>
             <TableCell>
-              <button className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+              <button type="button" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                 Edit
               </button>
             </TableCell>
@@ -154,7 +154,7 @@ export const InteractiveExample = () => {
             <TableCell>Jane Smith</TableCell>
             <TableCell>1 hour ago</TableCell>
             <TableCell>
-              <button className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+              <button type="button" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                 Edit
               </button>
             </TableCell>

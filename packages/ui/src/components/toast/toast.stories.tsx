@@ -5,7 +5,7 @@ export const TestToast = () => {
   const { toast } = useToast();
 
   return (
-    <button onClick={() => toast({ title: "Test Toast", description: "This is a test toast message" })}>
+    <button type="button" onClick={() => toast({ title: "Test Toast", description: "This is a test toast message" })}>
       Show Toast
     </button>
   );

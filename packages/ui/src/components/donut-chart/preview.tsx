@@ -39,7 +39,7 @@ export type DonutChartPreviewProps = {
 };
 
 export function DonutChartPreview({
-  showLegend = true,
+  showLegend: _showLegend = true,
   showLabel = false,
   showTooltip = true,
   colors = ["blue", "emerald", "pink", "amber"],

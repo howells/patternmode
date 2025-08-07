@@ -126,11 +126,13 @@ type TrackerProps = {
   hoverEffect?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+const EMPTY_TRACKER_DATA: TrackerBlockProps[] = [];
+
 /**
  * Visual progress tracker component for displaying steps, stages, or progress through a process using colored blocks.
  */
 const Tracker = (
-  { ref: forwardedRef, data = [], size = "default", defaultBackgroundColor = "bg-zinc-400 dark:bg-zinc-400", className, hoverEffect, ...props }: TrackerProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref: forwardedRef, data = EMPTY_TRACKER_DATA, size = "default", defaultBackgroundColor = "bg-zinc-400 dark:bg-zinc-400", className, hoverEffect, ...props }: TrackerProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   // Handle prop transformation - convert string to array if needed
   let trackerData: TrackerBlockProps[];

@@ -15,14 +15,14 @@ const NavigationMenu = (props: NavigationMenuProps) => (
   </BaseNavigationMenu.Root>
 );
 
-type NavigationMenuListProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.List>;
+type _NavigationMenuListProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.List>;
 
 /**
  * Navigation menu list component for menu item containers.
  */
 const NavigationMenuList = BaseNavigationMenu.List;
 
-type NavigationMenuItemProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Item>;
+type _NavigationMenuItemProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Item>;
 
 /**
  * Navigation menu item component for individual menu sections.

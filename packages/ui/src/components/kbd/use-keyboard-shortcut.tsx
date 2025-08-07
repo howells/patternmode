@@ -43,6 +43,8 @@ type UseKeyboardShortcutOptions = {
   target?: HTMLElement | Document;
 };
 
+const DEFAULT_KEYBOARD_SHORTCUT_OPTIONS: UseKeyboardShortcutOptions = {};
+
 /**
  * Hook for handling keyboard shortcuts.
  *
@@ -53,9 +55,9 @@ type UseKeyboardShortcutOptions = {
 export function useKeyboardShortcut(
   keys: string[],
   callback: () => void,
-  options: UseKeyboardShortcutOptions = {},
+  options: UseKeyboardShortcutOptions = DEFAULT_KEYBOARD_SHORTCUT_OPTIONS,
 ) {
-  const { preventDefault = true, enabled = true, target } = options;
+  const { preventDefault = true, enabled = true, target: _target } = options;
 
   // Convert keys to platform-specific format
   const normalizeKeys = (keyList: string[]) => {
@@ -154,7 +156,7 @@ export function useKeyboardShortcut(
 export function useButtonKeyboardShortcut(
   keys: string[] | undefined,
   onClick: (() => void) | undefined,
-  options: UseKeyboardShortcutOptions = {},
+  options: UseKeyboardShortcutOptions = DEFAULT_KEYBOARD_SHORTCUT_OPTIONS,
 ) {
   useKeyboardShortcut(keys || [], onClick || (() => {}), {
     ...options,

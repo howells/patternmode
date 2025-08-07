@@ -84,6 +84,7 @@ export const AnimatedExample = () => {
   return (
     <div className="space-y-4">
       <button
+        type="button"
         onClick={refreshData}
         className="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
       >

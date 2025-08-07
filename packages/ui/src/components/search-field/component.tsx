@@ -40,11 +40,13 @@ export type SearchFieldProps = {
   onSelectedIndexChange?: (index: number) => void;
 };
 
+const EMPTY_ITEMS_ARRAY: SearchFieldItem[] = [];
+
 /**
  * Search input with dropdown results, keyboard navigation, and filtering. Supports controlled and uncontrolled usage.
  */
 export const SearchField = (
-  { ref, placeholder = "Search...", value, onValueChange, items = [], onItemSelect, onSubmit, onClear, groupByCategory = false, showClearButton = true, emptyStateTitle = "No results found", emptyStateDescription, maxResults, className, inputClassName, dropdownClassName, autoFocus = false, disabled = false, loading = false, selectedIndex = 0, onSelectedIndexChange }: SearchFieldProps & { ref?: React.RefObject<HTMLInputElement | null> },
+  { ref, placeholder = "Search...", value, onValueChange, items = EMPTY_ITEMS_ARRAY, onItemSelect, onSubmit, onClear, groupByCategory = false, showClearButton = true, emptyStateTitle = "No results found", emptyStateDescription, maxResults, className, inputClassName, dropdownClassName, autoFocus = false, disabled = false, loading = false, selectedIndex = 0, onSelectedIndexChange }: SearchFieldProps & { ref?: React.RefObject<HTMLInputElement | null> },
 ) => {
   const [internalValue, setInternalValue] = React.useState("");
   const [internalSelectedIndex, setInternalSelectedIndex] = React.useState(0);

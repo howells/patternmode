@@ -7,6 +7,8 @@ import { cx } from "../../lib/utils";
 import { imageSizeMap } from "./constants";
 import { avatarVariants } from "./variants";
 
+const DEFAULT_IMAGE_PROPS = {};
+
 /**
  * User profile image component with fallback initials and various size options.
  */
@@ -21,7 +23,7 @@ const Avatar = ({
   dynamicBackground = false,
   className,
   ImageComponent,
-  imageProps = {},
+  imageProps = DEFAULT_IMAGE_PROPS,
   ...props
 }: AvatarProps & { ref?: React.RefObject<HTMLSpanElement | null> }) => {
   // Determine what text to display and how to format it

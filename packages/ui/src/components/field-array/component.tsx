@@ -91,6 +91,7 @@ export type FieldArrayProps<T extends FieldArrayItem = FieldArrayItem> = {
 } & React.ComponentPropsWithoutRef<"div">;
 
 const EMPTY_COMPONENT_MAP = {};
+const EMPTY_OPTIONS_ARRAY: any[] = [];
 
 /**
  * FieldArray component.
@@ -125,7 +126,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
         {...props}
       />
     ),
-    select: ({ value, onChange, options = [], placeholder, ...props }: any) => (
+    select: ({ value, onChange, options = EMPTY_OPTIONS_ARRAY, placeholder, ...props }: any) => (
       <Select value={value || ""} onValueChange={onChange} placeholder={placeholder} {...props}>
         <SelectTrigger>
           <SelectValue />
@@ -230,12 +231,16 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
           moveItem,
         };
 
+        // Generate a stable key from item content or use a combination of stable fields
+        const itemKey = (item as any).id 
+          ? (item as any).id 
+          : JSON.stringify(item) + `-${index}`;
+
         // Use custom render function if provided
         if (renderItem) {
           return (
             <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
+              key={itemKey}
               className="group relative border  dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
             >
               {showItemLabels && (
@@ -253,8 +258,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
         // Default rendering
         return (
           <div
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={itemKey}
             className="group relative border  dark:border-zinc-700 rounded-lg p-4 bg-white dark:bg-zinc-950"
           >
             {/* Header with controls */}

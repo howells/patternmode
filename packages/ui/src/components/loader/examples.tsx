@@ -28,7 +28,7 @@ export const WithLabelExample = () => {
 
 export const InButtonExample = () => {
   return (
-    <button disabled className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md opacity-50 cursor-not-allowed">
+    <button type="button" disabled className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md opacity-50 cursor-not-allowed">
       <Loader size="sm" aria-label="Submitting" />
       <span>Submitting...</span>
     </button>

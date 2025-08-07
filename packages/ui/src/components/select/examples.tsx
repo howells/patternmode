@@ -101,12 +101,14 @@ export const ControlledExample = () => {
       </Select>
       <div className="flex gap-2">
         <button
+          type="button"
           onClick={() => setValue("banana")}
           className="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 rounded"
         >
           Set to Banana
         </button>
         <button
+          type="button"
           onClick={() => setValue("")}
           className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded"
         >

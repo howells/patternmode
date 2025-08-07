@@ -79,7 +79,7 @@ export function RadioCardGroupPreview({
   showIcons = true,
   showPopularBadge = true,
   defaultValue = "basic",
-  size = "md",
+  size: _size = "md",
 }: RadioCardGroupPreviewProps = {}) {
   const displayedOptions = planOptions.slice(0, optionCount);
 
@@ -120,7 +120,7 @@ export function RadioCardGroupPreview({
                       </div>
                       <ul className="space-y-1">
                         {option.features.map((feature, index) => (
-                          <li key={index} className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                          <li key={feature} className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
                             <Check className="h-3 w-3 text-green-500" />
                             {feature}
                           </li>

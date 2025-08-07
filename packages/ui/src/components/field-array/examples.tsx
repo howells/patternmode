@@ -14,6 +14,8 @@ import { HStack, Stack, VStack } from "../stack/component";
 import { Textarea } from "../textarea/component";
 import { FieldArray } from "./component";
 
+const EMPTY_OPTIONS_ARRAY: any[] = [];
+
 // Example 1: Simple contact list
 export function ContactListExample() {
   const [contacts, setContacts] = React.useState([
@@ -287,7 +289,7 @@ export function CustomRenderExample() {
                 {...props}
               />
             ),
-            select: ({ value, onChange, options = [], ...props }: any) => (
+            select: ({ value, onChange, options = EMPTY_OPTIONS_ARRAY, ...props }: any) => (
               <Select value={value || ""} onValueChange={onChange} {...props}>
                 <SelectTrigger>
                   <SelectValue />

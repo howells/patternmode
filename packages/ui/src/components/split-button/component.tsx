@@ -10,11 +10,13 @@ import { Menu, MenuContent, MenuTrigger } from "../menu/component";
 import { Separator } from "../separator/component";
 import { splitButtonVariants } from "./variants";
 
+const DEFAULT_MENU_PROPS = {};
+
 /**
  * Compound button with primary action and dropdown menu for secondary actions.
  */
 const SplitButton = (
-  { ref, variant = "primary", size = "base", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown as React.ComponentType<{ className?: string; strokeWidth?: number }>, menuProps = {}, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
+  { ref, variant = "primary", size = "base", rounded = false, buttonContent, children, onButtonClick, disabled = false, isLoading = false, loadingText, leftIcon, dropdownIcon: DropdownIcon = ChevronDown as React.ComponentType<{ className?: string; strokeWidth?: number }>, menuProps = DEFAULT_MENU_PROPS, className, ...props }: SplitButtonProps & { ref?: React.RefObject<HTMLDivElement | null> },
 ) => {
   // Calculate separator position based on size
   const getSeparatorPosition = () => {

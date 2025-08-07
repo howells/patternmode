@@ -10,7 +10,7 @@ type IconSelectPreviewProps = {
 };
 
 export function IconSelectPreview({ size = "base" }: IconSelectPreviewProps) {
-  const { value, setValue, DynamicIconComponent } = useIconSelect("Camera");
+  const { value, setValue, DynamicIconComponent: _DynamicIconComponent } = useIconSelect("Camera");
 
   return (
     <div className="p-4 space-y-3">

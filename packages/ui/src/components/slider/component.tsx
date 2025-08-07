@@ -21,7 +21,7 @@ const Slider = (
     track,
     indicator,
     thumb,
-    value: valueClass,
+    value: _valueClass,
   } = sliderVariants();
 
   // Ensure we always have a proper value to avoid hydration mismatches
@@ -51,7 +51,7 @@ const Slider = (
               <BaseSlider.Indicator className={indicator()} />
               {valueArray.map((_, index) => (
                 <BaseSlider.Thumb
-                  key={index}
+                  key={`thumb-${index}`}
                   className={thumb()}
                   getAriaLabel={() =>
                     ariaLabelThumb || `Slider thumb ${index + 1}`}
@@ -72,7 +72,7 @@ const Slider = (
                     : (
                         <div className="flex flex-col items-center gap-1">
                           {values.map((val, index) => (
-                            <span key={index}>{valueFormatter(val)}</span>
+                            <span key={`value-${index}`}>{valueFormatter(val)}</span>
                           ))}
                         </div>
                       )}
@@ -97,7 +97,7 @@ const Slider = (
             <BaseSlider.Indicator className={indicator()} />
             {valueArray.map((_, index) => (
               <BaseSlider.Thumb
-                key={index}
+                key={`thumb-${index}`}
                 className={thumb()}
                 getAriaLabel={() =>
                   ariaLabelThumb || `Slider thumb ${index + 1}`}
@@ -118,7 +118,7 @@ const Slider = (
                   : (
                       <div className="flex justify-between w-full">
                         {values.map((val, index) => (
-                          <span key={index}>{valueFormatter(val)}</span>
+                          <span key={`value-${index}`}>{valueFormatter(val)}</span>
                         ))}
                       </div>
                     )}

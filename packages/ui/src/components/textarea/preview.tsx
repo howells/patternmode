@@ -83,7 +83,7 @@ export function TextareaPreview(props: TextareaPreviewProps) {
   } = props;
 
   // Define allowed props for security
-  const allowedProps = [
+  const _allowedProps = [
     "placeholder",
     "disabled",
     "readOnly",

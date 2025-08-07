@@ -126,7 +126,7 @@ export const GridAuto = ({ cellCount = 6, renderCell, ...gridProps }: GridAutoPr
   return (
     <Grid {...gridProps}>
       {Array.from({ length: cellCount }, (_, index) => (
-        <GridCell key={index}>
+        <GridCell key={`grid-cell-${index}`}>
           {renderCell ? renderCell(index) : index + 1}
         </GridCell>
       ))}

@@ -282,6 +282,7 @@ export function ControlledExample() {
         </ToggleGroup>
       </div>
       <button
+        type="button"
         onClick={() => setValue([])}
         className="text-sm px-3 py-1 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded transition-colors"
       >
@@ -315,6 +316,7 @@ export function ButtonAlignmentExample() {
           </ToggleGroup>
 
           <button
+            type="button"
             className={`px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors ${
               size === "xs"
                 ? "text-xs h-8"
@@ -332,25 +334,29 @@ export function ButtonAlignmentExample() {
 
       <div className="flex gap-2">
         <button
+          type="button"
           onClick={() => setSize("xs")}
           className={`px-2 py-1 text-xs rounded ${size === "xs" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           XS
         </button>
         <button
-          onClick={() => setSize("sm")}
+          type="button"
+          onClick={() => setSize("sm"))
           className={`px-2 py-1 text-xs rounded ${size === "sm" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           SM
         </button>
         <button
-          onClick={() => setSize("base")}
+          type="button"
+          onClick={() => setSize("base"))
           className={`px-2 py-1 text-xs rounded ${size === "base" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           Base
         </button>
         <button
-          onClick={() => setSize("lg")}
+          type="button"
+          onClick={() => setSize("lg"))
           className={`px-2 py-1 text-xs rounded ${size === "lg" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           LG

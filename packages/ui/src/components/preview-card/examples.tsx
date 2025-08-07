@@ -58,7 +58,7 @@ export const WithImageExample = () => {
         </PreviewCardBody>
         <PreviewCardFooter>
           <span className="text-xs text-zinc-500">TechBlog.com</span>
-          <button className="text-xs text-blue-600 hover:underline">
+          <button type="button" className="text-xs text-blue-600 hover:underline">
             Read more
           </button>
         </PreviewCardFooter>
@@ -96,7 +96,7 @@ export const UserProfileExample = () => {
         </PreviewCardBody>
         <PreviewCardFooter>
           <span className="text-xs text-zinc-500">Joined March 2022</span>
-          <button className="text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
+          <button type="button" className="text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
             Follow
           </button>
         </PreviewCardFooter>

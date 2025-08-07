@@ -26,7 +26,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
   getItemIcon,
   getItemProps,
   renderItem,
-  defaultRenderItem,
+  defaultRenderItem: _defaultRenderItem,
   highlightedIndex,
   selectedItem,
   size,
@@ -79,7 +79,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
     ) {
       fetchNextPage();
     }
-  }, [virtualizer.getVirtualItems(), items.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [virtualizer, items.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <div
@@ -270,7 +270,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
     getInputProps,
     getItemProps,
     highlightedIndex,
-    openMenu,
+    openMenu: _openMenu,
   } = useCombobox<T>({
     items,
     itemToString: () => "", // Always return empty to prevent auto-filling input

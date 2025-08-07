@@ -102,7 +102,7 @@ export function ComboboxPreview({
   const config = dataConfigs[dataType];
   const displayedOptions = config.options.slice(0, optionCount);
 
-  const sizeClass = {
+  const _sizeClass = {
     sm: "w-48",
     md: "w-64",
     lg: "w-80",

@@ -16,7 +16,7 @@ import { inputElementStyles } from "./variants";
  * Single-line text input field with validation support and various styling options.
  */
 const Input = (
-  { ref: forwardedRef, className, inputClassName, hasError, enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = config.getIconStrokeWidth(), minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
+  { ref: forwardedRef, className, inputClassName, hasError, enableStepper: _enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = config.getIconStrokeWidth(), minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
 ) => {
   const [typeState, setTypeState] = React.useState(type);
 
@@ -158,8 +158,8 @@ const Input = (
   const hasBuiltInSuffix = false; // Now handled via effectiveSuffix
 
   // Calculate padding adjustments - only apply when prefix/suffix exists
-  const shouldApplyLeftPadding = hasCustomPrefix || hasBuiltInPrefix;
-  const shouldApplyRightPadding = hasCustomSuffix || hasBuiltInSuffix;
+  const _shouldApplyLeftPadding = hasCustomPrefix || hasBuiltInPrefix;
+  const _shouldApplyRightPadding = hasCustomSuffix || hasBuiltInSuffix;
 
   // Simple padding logic - reduce padding only for UNSTYLED prefix/suffix
   const hasUnstyledPrefix = hasCustomPrefix && !prefixStyling;
