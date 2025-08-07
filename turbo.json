@@ -24,15 +24,6 @@
       "dependsOn": ["^test", "typecheck"],
       "inputs": ["src/**", "tests/**", "**/*.test.*", "vitest.config.*", "package.json"]
     },
-    "test:ui": {
-      "dependsOn": ["^test:ui"],
-      "cache": false,
-      "persistent": true
-    },
-    "test:run": {
-      "dependsOn": ["^test:run", "typecheck"],
-      "inputs": ["src/**", "tests/**", "**/*.test.*", "vitest.config.*", "package.json"]
-    },
     "test:e2e": {
       "dependsOn": ["^build"],
       "cache": false,
