@@ -241,7 +241,7 @@ export const WithHookExample = () => {
         </button>
         <button
           type="button"
-          onClick={() => tagInput.addTag("python"))
+          onClick={() => tagInput.addTag("python")}
           className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200"
           disabled={tagInput.hasTag("python")}
         >

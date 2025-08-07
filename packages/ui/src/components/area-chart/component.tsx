@@ -874,7 +874,6 @@ const AreaChart = ({ ref, ...props }: AreaChartProps & { ref?: React.RefObject<H
 
   return (
     <div ref={ref} className={cx("h-80 w-full", className)} data-testid="area-chart" {...other}>
-      {/* @ts-expect-error ResponsiveContainer has type conflicts with Recharts v3.1.0+ */}
       <ResponsiveContainer>
         <RechartsAreaChart
           data={data}

@@ -342,21 +342,21 @@ export function ButtonAlignmentExample() {
         </button>
         <button
           type="button"
-          onClick={() => setSize("sm"))
+          onClick={() => setSize("sm")}
           className={`px-2 py-1 text-xs rounded ${size === "sm" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           SM
         </button>
         <button
           type="button"
-          onClick={() => setSize("base"))
+          onClick={() => setSize("base")}
           className={`px-2 py-1 text-xs rounded ${size === "base" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           Base
         </button>
         <button
           type="button"
-          onClick={() => setSize("lg"))
+          onClick={() => setSize("lg")}
           className={`px-2 py-1 text-xs rounded ${size === "lg" ? "bg-blue-500 text-white" : "bg-zinc-100 hover:bg-zinc-200"}`}
         >
           LG
