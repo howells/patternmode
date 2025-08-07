@@ -1,7 +1,7 @@
 import { Fieldset as BaseFieldset } from "@base-ui-components/react/fieldset";
-import * as React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx } from "../../lib/utils";
+import * as React from "react";
 import { Subheading } from "../subheading/component";
 
 /**

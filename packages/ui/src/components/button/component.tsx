@@ -4,12 +4,12 @@ import type { IconComponent } from "../../lib/icon-utils";
 import type { IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { MoreHorizontal } from "lucide-react";
+import { cx } from "@patternmode/ui/cx";
 
+import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { renderIcon } from "../../lib/icon-utils";
-import { cx } from "../../lib/utils";
 import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";

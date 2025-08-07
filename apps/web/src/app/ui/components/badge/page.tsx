@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { badgeConfig } from "@patternmode/ui/components/badge/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${badgeConfig.name} | Patternmode`,
   description: badgeConfig.description,
   openGraph: {

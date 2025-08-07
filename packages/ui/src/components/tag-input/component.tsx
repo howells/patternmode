@@ -1,10 +1,11 @@
 "use client";
 
+import { cx } from "@patternmode/ui/cx";
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
 import { config } from "../../lib/config";
-import { cx, focusRing } from "../../lib/utils";
+import { focusRing } from "../../lib/focus-styles";
 import { DropdownItem } from "../dropdown-item/component";
 import { Tag } from "../tag/component";
 

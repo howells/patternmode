@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { meterConfig } from "@patternmode/ui/components/meter/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${meterConfig.name} | Patternmode`,
   description: meterConfig.description,
   openGraph: {

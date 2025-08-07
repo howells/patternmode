@@ -1,11 +1,13 @@
-import { toggleConfig } from "@patternmode/ui/components/toggle/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { toggleConfig } from "@patternmode/ui/components/toggle/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${toggleConfig.name} | Patternmode`,
   description: toggleConfig.description,
   openGraph: {

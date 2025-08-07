@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import { focusInput, hasErrorInput } from "../../lib/utils";
+import { focusInput, hasErrorInput } from "../../lib/focus-styles";
 
 export const triggerStyles = tv({
   base: [

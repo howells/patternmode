@@ -1,6 +1,6 @@
 import type { DescriptionDetailsProps, DescriptionListProps, DescriptionTermProps } from "./types";
 
-import { cx } from "../../lib/utils";
+import { cx } from "@patternmode/ui/cx";
 import { descriptionDetailsVariants, descriptionListVariants, descriptionTermVariants } from "./variants";
 
 /**

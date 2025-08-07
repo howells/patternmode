@@ -2,8 +2,8 @@
 
 import type { DropdownItemProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import * as React from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { dropdownItemVariants } from "./variants";
 

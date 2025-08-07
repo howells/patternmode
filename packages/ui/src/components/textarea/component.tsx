@@ -1,8 +1,9 @@
 import type { TextareaAutosizeProps, TextareaHeightChangeMeta } from "react-textarea-autosize";
 import type { TextareaPreviewProps } from "./preview";
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { cx, focusInput, hasErrorInput } from "../../lib/utils";
+import { focusInput, hasErrorInput } from "../../lib/focus-styles";
 import { textareaStyles } from "./variants";
 
 type TextareaProps = TextareaPreviewProps & {

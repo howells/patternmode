@@ -58,7 +58,9 @@ export function ComponentSearch({
     // Group by category
     const grouped = filtered.reduce((acc, component) => {
       const category = component.category.charAt(0).toUpperCase() + component.category.slice(1);
-      if (!acc[category]) { acc[category] = []; }
+      if (!acc[category]) {
+        acc[category] = [];
+      }
       acc[category].push(component);
       return acc;
     }, {} as Record<string, ComponentConfig[]>);
@@ -144,7 +146,7 @@ export function ComponentSearch({
                             {category}
                           </Text>
                           <div className="space-y-1">
-                            {components.map((component, index) => {
+                            {components.map((component, _index) => {
                               const globalIndex = filteredComponents.indexOf(component);
                               const isSelected = globalIndex === selectedIndex;
 

@@ -1,7 +1,8 @@
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx, focusRing } from "../../lib/utils";
+import React from "react";
+import { focusRing } from "../../lib/focus-styles";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 

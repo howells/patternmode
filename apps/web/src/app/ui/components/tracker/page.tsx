@@ -1,11 +1,13 @@
-import { trackerConfig } from "@patternmode/ui/components/tracker/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { trackerConfig } from "@patternmode/ui/components/tracker/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${trackerConfig.name} | Patternmode`,
   description: trackerConfig.description,
   openGraph: {

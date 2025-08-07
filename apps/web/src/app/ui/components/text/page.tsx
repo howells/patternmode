@@ -1,11 +1,13 @@
-import { textConfig } from "@patternmode/ui/components/text/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { textConfig } from "@patternmode/ui/components/text/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${textConfig.name} | Patternmode`,
   description: textConfig.description,
   openGraph: {

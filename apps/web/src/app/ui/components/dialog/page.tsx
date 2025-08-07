@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { dialogConfig } from "@patternmode/ui/components/dialog/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${dialogConfig.name} | Patternmode`,
   description: dialogConfig.description,
   openGraph: {

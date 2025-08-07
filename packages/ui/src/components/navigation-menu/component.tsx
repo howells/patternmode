@@ -1,8 +1,8 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui-components/react/navigation-menu";
+import { cx } from "@patternmode/ui/cx";
 import { ChevronDown } from "lucide-react";
-import React from "react";
 
-import { cx } from "../../lib/utils";
+import React from "react";
 
 type NavigationMenuProps = React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Root>;
 

@@ -1,5 +1,6 @@
 "use client";
 
+import type { GlobalSemanticVariant, TailwindColor } from "@patternmode/ui/lib/variants";
 import type { LucideIcon } from "lucide-react";
 
 import { Badge } from "@patternmode/ui/components/badge";
@@ -27,15 +28,13 @@ import Link from "next/link";
 
 import { PageHeader } from "../components/page-header";
 
-import type { SemanticVariant, TailwindColor } from "@/lib/variants/variant-types";
-
 type CategoryCardProps = {
   icon: LucideIcon;
   title: string;
   description: string;
   items: string[];
-  variant?: SemanticVariant;
-  color?: SemanticVariant | TailwindColor;
+  variant?: GlobalSemanticVariant;
+  color?: GlobalSemanticVariant | TailwindColor;
   headerBorder?: boolean;
   useHorizontalLayout?: boolean;
 };

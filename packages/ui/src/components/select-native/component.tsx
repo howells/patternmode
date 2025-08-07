@@ -1,10 +1,10 @@
 import type { SelectNativeProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { renderIcon } from "../../lib/icon-utils";
-import { cx } from "../../lib/utils";
 import { selectNativeStyles } from "./variants";
 
 /**

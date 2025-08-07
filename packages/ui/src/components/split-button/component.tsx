@@ -1,10 +1,10 @@
 "use client";
 
 import type { SplitButtonProps } from "./types";
-import { ChevronDown } from "lucide-react";
+import { cx } from "@patternmode/ui/cx";
 
+import { ChevronDown } from "lucide-react";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Menu, MenuContent, MenuTrigger } from "../menu/component";
 import { Separator } from "../separator/component";

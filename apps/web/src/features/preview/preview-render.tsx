@@ -198,24 +198,22 @@ export function PreviewDisplay({
 
   return (
     <Tabs defaultValue="preview">
-      <Stack gap={6}>
-        <div className="flex justify-start">
-          <TabsList variant="solid">
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
-          </TabsList>
-        </div>
 
-        <TabsContent value="preview" data-testid="component-preview" className="flex justify-center">
-          {renderComponent()}
-        </TabsContent>
+      <TabsList variant="solid">
+        <TabsTrigger value="preview">Preview</TabsTrigger>
+        <TabsTrigger value="code">Code</TabsTrigger>
+      </TabsList>
 
-        <TabsContent value="code">
-          <CodeBlock language="tsx">
-            {codeContent}
-          </CodeBlock>
-        </TabsContent>
-      </Stack>
+      <TabsContent value="preview" data-testid="component-preview" className="flex justify-center">
+        {renderComponent()}
+      </TabsContent>
+
+      <TabsContent value="code">
+        <CodeBlock language="tsx">
+          {codeContent}
+        </CodeBlock>
+      </TabsContent>
+
     </Tabs>
   );
 }

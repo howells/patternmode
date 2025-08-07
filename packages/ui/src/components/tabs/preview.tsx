@@ -28,56 +28,38 @@ export type TabsPreviewProps = {
    * Determines which tab is initially active.
    */
   defaultValue?: "tab1" | "tab2" | "tab3";
-  /**
-   * Show button alignment example.
-   * Demonstrates how to align buttons with solid tabs.
-   */
-  showButtonAlignment?: boolean;
 };
 
 export function TabsPreview({
   variant = "line",
   hideDivider = false,
   size = "base",
-  defaultValue = "tab1",
-  showButtonAlignment = false,
+  defaultValue = "tab1"
 }: TabsPreviewProps = {}) {
   return (
-    <div className="">
+    <div className="max-w-2xl w-full">
       <Tabs defaultValue={defaultValue}>
-        <div className="flex items-center gap-3">
+
           <TabsList variant={variant} hideDivider={hideDivider} size={size}>
             <TabsTrigger value="tab1">Overview</TabsTrigger>
             <TabsTrigger value="tab2">Analytics</TabsTrigger>
             <TabsTrigger value="tab3">Reports</TabsTrigger>
           </TabsList>
 
-          {/* Show button alignment example for solid variant */}
-          {showButtonAlignment && variant === "solid" && (
-            <>
-              <Button size={size} variant="outline">
-                Regular Button
-              </Button>
-              <Button size={size} variant="outline">
-                Another Button
-              </Button>
-            </>
-          )}
-        </div>
 
         <TabsContent value="tab1" className="py-4">
           <Text>
-            Overview content goes here. This tab shows general information and metrics.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </Text>
         </TabsContent>
         <TabsContent value="tab2" className="py-4">
           <Text>
-            Analytics content goes here. This tab displays detailed analytics and insights.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
           </Text>
         </TabsContent>
         <TabsContent value="tab3" className="py-4">
           <Text>
-            Reports content goes here. This tab contains various reports and data exports.
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam.
           </Text>
         </TabsContent>
       </Tabs>

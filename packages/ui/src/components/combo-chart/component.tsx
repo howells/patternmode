@@ -3,12 +3,13 @@
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import { cx } from "@patternmode/ui/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { isEqual } from "es-toolkit";
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import React from "react";
-
 import {
   Bar,
   CartesianGrid,
@@ -30,7 +31,6 @@ import {
   getYAxisDomain,
   hasOnlyOneValueForKey,
 } from "../../lib/chartUtils";
-import { cx } from "../../lib/utils";
 
 // #region Shape
 

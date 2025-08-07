@@ -84,6 +84,16 @@
       "import": "./src/lib/*.ts",
       "default": "./src/lib/*.ts"
     },
+    "./utils": {
+      "types": "./src/utils.ts",
+      "import": "./src/utils.ts",
+      "default": "./src/utils.ts"
+    },
+    "./cx": {
+      "types": "./src/cx.ts",
+      "import": "./src/cx.ts",
+      "default": "./src/cx.ts"
+    },
     "./package.json": "./package.json"
   },
   "files": [

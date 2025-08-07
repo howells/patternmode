@@ -3,9 +3,9 @@
 import type { CheckboxGroupItemProps, CheckboxGroupProps } from "./types";
 
 import { CheckboxGroup as BaseCheckboxGroup } from "@base-ui-components/react/checkbox-group";
-import * as React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx } from "../../lib/utils";
+import * as React from "react";
 import { Checkbox } from "../checkbox/component";
 import {
   checkboxGroupItemTextVariants,

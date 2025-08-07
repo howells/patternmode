@@ -1,10 +1,10 @@
 "use client";
 
 import type { BaseToastOptions, Position, ToastData, ToastPromiseOptions, ToastType } from "./types";
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
+import React from "react";
 import { toast as sonnerToast, Toaster } from "sonner";
-import { cx } from "../../lib/utils";
 import { toastVariants } from "./variants";
 
 type SonnerToastOptions = {

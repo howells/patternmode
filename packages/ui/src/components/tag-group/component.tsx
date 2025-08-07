@@ -1,9 +1,9 @@
 "use client";
 
 import type { TagGroupProps } from "./types";
+import { cx } from "@patternmode/ui/cx";
 import * as React from "react";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
-import { cx } from "../../lib/utils";
 import { tagGroupVariants } from "./variants";
 
 /**

@@ -8,8 +8,12 @@ import type { PropControlProps } from "./types";
 export function IconControl({ currentValue, onValueChange }: PropControlProps) {
   // Convert current icon component back to string for display
   const currentStringValue = React.useMemo(() => {
-    if (!currentValue) { return ""; }
-    if (typeof currentValue === "string") { return currentValue; }
+    if (!currentValue) {
+      return "";
+    }
+    if (typeof currentValue === "string") {
+      return currentValue;
+    }
     // Try to find the icon name by comparing components (fallback)
     return "";
   }, [currentValue]);

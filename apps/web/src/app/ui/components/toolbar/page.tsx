@@ -1,11 +1,13 @@
-import { toolbarConfig } from "@patternmode/ui/components/toolbar/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { toolbarConfig } from "@patternmode/ui/components/toolbar/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${toolbarConfig.name} | Patternmode`,
   description: toolbarConfig.description,
   openGraph: {

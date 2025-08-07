@@ -4,8 +4,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/compone
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import React from "react";
 
-import { PreviewProvider, usePreview } from "@/preview/preview-context";
-import { PreviewControls } from "@/preview/preview-controls";
+import { PreviewProvider, usePreview } from "@/features/preview/preview-context";
+import { PreviewControls } from "@/features/preview/preview-controls";
 
 type CellData = {
   componentId: string;
@@ -102,4 +102,4 @@ function PropsUpdater({
 }
 
 // Re-export the hook for convenience
-export { usePreview } from "../../preview/preview-context";
+export { usePreview } from "../../features/preview/preview-context";

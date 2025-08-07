@@ -107,7 +107,7 @@ export function ResponsiveExample() {
         <h4 className="text-sm font-medium text-zinc-700 mb-3">Max-width breakpoints</h4>
         <p className="text-xs text-zinc-600 mb-3">Horizontal default → vertical on max-md and below</p>
         <Stack
-          direction={{ default: "horizontal", "max-md": "vertical" }}
+          direction={{ "default": "horizontal", "max-md": "vertical" }}
           gap={4}
         >
           <div className="p-4 bg-pink-100 rounded flex-1">

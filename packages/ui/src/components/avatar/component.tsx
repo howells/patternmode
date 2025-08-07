@@ -1,9 +1,9 @@
 import type { AvatarFallbackProps, AvatarImageProps, AvatarProps, AvatarWithFallbackProps } from "./types";
 import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
 
+import { cx } from "@patternmode/ui/cx";
 import * as React from "react";
 import { getColorFromName } from "../../lib/colors";
-import { cx } from "../../lib/utils";
 import { imageSizeMap } from "./constants";
 import { avatarVariants } from "./variants";
 

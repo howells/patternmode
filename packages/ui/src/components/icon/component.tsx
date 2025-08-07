@@ -2,9 +2,9 @@
 
 import type { IconProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
 import { config } from "../../lib/config";
-import { cx } from "../../lib/utils";
 import { iconVariants } from "./variants";
 
 function FallbackIcon({

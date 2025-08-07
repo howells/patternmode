@@ -7,10 +7,10 @@
 
 "use client";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
-import { Drawer as DrawerPrimitive } from "vaul";
 
-import { cx } from "../../lib/utils";
+import { Drawer as DrawerPrimitive } from "vaul";
 
 /**
  * Root drawer component.

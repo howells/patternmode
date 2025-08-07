@@ -1,11 +1,13 @@
-import { stackConfig } from "@patternmode/ui/components/stack/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { stackConfig } from "@patternmode/ui/components/stack/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${stackConfig.name} | Patternmode`,
   description: stackConfig.description,
   openGraph: {

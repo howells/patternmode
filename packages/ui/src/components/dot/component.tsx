@@ -2,8 +2,8 @@
 
 import type { DotProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { getColorClasses } from "../../lib/variants";
 import { dotIndicatorVariants, dotVariants } from "./variants";
 

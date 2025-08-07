@@ -3,6 +3,8 @@
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import { cx } from "@patternmode/ui/cx";
+
 import React from "react";
 
 import {
@@ -16,14 +18,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
 import {
   AvailableChartColors,
   constructCategoryColors,
   getColorClassName,
   getYAxisDomain,
 } from "../../lib/chartUtils";
-import { cx } from "../../lib/utils";
 
 // #region SparkChart
 

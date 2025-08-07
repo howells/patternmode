@@ -1,10 +1,11 @@
 "use client";
 
+import type { ResponsiveValue } from "../../lib/responsive-utils";
 import type { GridAutoProps, GridCellProps, GridProps } from "./types";
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
+import { createResponsiveClasses } from "../../lib/responsive-utils";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
-import { createResponsiveClasses, type ResponsiveValue } from "../../lib/responsive-utils";
-import { cx } from "../../lib/utils";
 import { gridCellVariants, gridVariants } from "./variants";
 
 // Generate responsive grid styles using shared utilities
@@ -14,7 +15,7 @@ const generateResponsiveGridStyles = (
 ): string => {
   const columnClasses = createResponsiveClasses.gridColumns(columns);
   const rowClasses = createResponsiveClasses.gridRows(rows);
-  
+
   return [columnClasses, rowClasses].filter(Boolean).join(" ");
 };
 

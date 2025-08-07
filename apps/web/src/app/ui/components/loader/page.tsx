@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { loaderConfig } from "@patternmode/ui/components/loader/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${loaderConfig.name} | Patternmode`,
   description: loaderConfig.description,
   openGraph: {

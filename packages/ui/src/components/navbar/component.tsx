@@ -1,10 +1,10 @@
 "use client";
 
+import { cx } from "@patternmode/ui/cx";
 import { LayoutGroup, motion } from "motion/react";
 import Link from "next/link";
-import React, { useId } from "react";
 
-import { cx } from "../../lib/utils";
+import React, { useId } from "react";
 import { Button } from "../button/component";
 
 type NavbarProps = {

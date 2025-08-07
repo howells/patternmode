@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
-import { focusRing } from "../../lib/utils";
+import { focusRing } from "../../lib/focus-styles";
 import { componentVariants } from "../../lib/variants";
 
 export const buttonVariants = tv({

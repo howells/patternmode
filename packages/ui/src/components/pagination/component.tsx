@@ -1,9 +1,9 @@
 import type React from "react";
 
+import { cx } from "@patternmode/ui/cx";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import Link from "next/link";
 
-import { cx } from "../../lib/utils";
+import Link from "next/link";
 import { Button } from "../button/component";
 
 type PaginationProps = {

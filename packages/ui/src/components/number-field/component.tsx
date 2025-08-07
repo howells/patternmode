@@ -1,8 +1,9 @@
 import { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
+import { cx } from "@patternmode/ui/cx";
 import { Minus, Plus } from "lucide-react";
-import * as React from "react";
 
-import { cx, focusRing } from "../../lib/utils";
+import * as React from "react";
+import { focusRing } from "../../lib/focus-styles";
 
 type NumberFieldProps = {
   /**

@@ -78,7 +78,9 @@ function LayoutSection({
 
   // Filter components based on search
   const filteredComponentIds = useMemo(() => {
-    if (!componentSearch) { return allComponentIds; }
+    if (!componentSearch) {
+      return allComponentIds;
+    }
     const searchLower = componentSearch.toLowerCase();
     return allComponentIds.filter((id) => {
       const config = COMPONENT_REGISTRY[id];
@@ -104,17 +106,25 @@ function LayoutSection({
   const renderedComponents = useMemo(() => {
     return layout.components.map((componentId) => {
       const PreviewComponent = PREVIEW_REGISTRY[componentId as ComponentId];
-      if (!PreviewComponent) { return null; }
+      if (!PreviewComponent) {
+        return null;
+      }
 
       // Pass size prop if the component supports it
       // Note: Not all components support size, so we pass it unconditionally
       // Components that don't support it will ignore it
-      // We use any to bypass TypeScript's strict prop checking since
+      // We use Record<string, unknown> to bypass TypeScript's strict prop checking since
       // preview components handle their own defaults
-      const props: any = { size: layout.size };
+      const props: Record<string, unknown> = {
+        size: layout.size,
+        // Provide default children for components that require it
+        children: `${componentId} preview`,
+      };
+      // Cast to a more flexible component type to handle different prop shapes
+      const Component = PreviewComponent as React.ComponentType<Record<string, unknown>>;
       return (
         <div key={componentId} className="min-w-0">
-          <PreviewComponent {...props} />
+          <Component {...props} />
         </div>
       );
     });

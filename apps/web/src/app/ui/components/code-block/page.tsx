@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { codeBlockConfig } from "@patternmode/ui/components/code-block/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${codeBlockConfig.name} | Patternmode`,
   description: codeBlockConfig.description,
   openGraph: {

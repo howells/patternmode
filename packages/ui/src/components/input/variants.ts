@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 import { borderRadiusVariants } from "../../lib/border-radius";
-import { focusInput, hasErrorInput } from "../../lib/utils";
+import { focusInput, hasErrorInput } from "../../lib/focus-styles";
 
 // Variant for input container (wrapper div that handles styling)
 export const inputContainerStyles = tv({

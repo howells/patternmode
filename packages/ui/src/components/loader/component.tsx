@@ -1,8 +1,8 @@
 import type { LoaderProps } from "./types";
-import { Loader2 } from "lucide-react";
+import { cx } from "@patternmode/ui/cx";
 
+import { Loader2 } from "lucide-react";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { loaderVariants } from "./variants";
 
 /**

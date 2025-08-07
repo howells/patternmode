@@ -16,7 +16,7 @@ function getStringOptions(prop: PropControlProps["prop"]): string[] {
   }
 
   // Type guard to check if it's a string array
-  const isStringArray = (arr: any[]): arr is string[] => {
+  const isStringArray = (arr: unknown[]): arr is string[] => {
     return arr.length > 0 && typeof arr[0] === "string";
   };
 

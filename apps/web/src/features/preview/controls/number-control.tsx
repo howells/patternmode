@@ -1,10 +1,9 @@
 import { FieldControl } from "@patternmode/ui/components/field";
 import { NumberField } from "@patternmode/ui/components/number-field";
+import { config as uiConfig } from "@patternmode/ui/lib/config";
 import React from "react";
 
 import type { PropControlProps } from "./types";
-
-import { config as uiConfig } from "../../../../../packages/ui/src/lib/config";
 
 export function NumberControl({ prop, currentValue, onValueChange }: PropControlProps) {
   // Handle default values that are function calls (like config.getIconStrokeWidth())

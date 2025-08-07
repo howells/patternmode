@@ -1,11 +1,13 @@
-import { subheadingConfig } from "@patternmode/ui/components/subheading/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { subheadingConfig } from "@patternmode/ui/components/subheading/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${subheadingConfig.name} | Patternmode`,
   description: subheadingConfig.description,
   openGraph: {

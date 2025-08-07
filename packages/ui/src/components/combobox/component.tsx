@@ -1,15 +1,16 @@
 "use client";
 
 import type { ComboboxOption, ComboboxProps } from "./types";
+import { cx } from "@patternmode/ui/cx";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
-import { Check, ChevronsUpDown } from "lucide-react";
 
+import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
+import { hasErrorInput } from "../../lib/focus-styles";
 import { renderIcon } from "../../lib/icon-utils";
-import { cx, hasErrorInput } from "../../lib/utils";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
 import { Loader } from "../loader/component";

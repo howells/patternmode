@@ -1,6 +1,6 @@
+import { cx } from "@patternmode/ui/cx";
 import { Search, X } from "lucide-react";
 import * as React from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { EmptyState } from "../empty-state/component";
 import { Input } from "../input/component";

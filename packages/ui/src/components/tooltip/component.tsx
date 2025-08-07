@@ -3,8 +3,8 @@
 import type { TooltipProps } from "./types";
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { tooltipVariants } from "./variants";
 
 /**

@@ -1,7 +1,7 @@
 import { Field } from "@base-ui-components/react/field";
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx } from "../../lib/utils";
+import React from "react";
 
 /**
  * Props for the Label component.

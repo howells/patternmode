@@ -8,6 +8,8 @@
 "use client";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
+import { cx } from "@patternmode/ui/cx";
+
 import React from "react";
 
 import {
@@ -17,13 +19,11 @@ import {
   Sector,
   Tooltip,
 } from "recharts";
-
 import {
   AvailableChartColors,
   constructCategoryColors,
   getColorClassName,
 } from "../../lib/chartUtils";
-import { cx } from "../../lib/utils";
 
 /**
  * Sums all values in a numeric array.

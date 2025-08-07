@@ -3,10 +3,9 @@ import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
 import { Field, FieldLabel } from "@patternmode/ui/components/field";
 import { VStack } from "@patternmode/ui/components/stack";
 import { Tooltip } from "@patternmode/ui/components/tooltip";
+import { cx } from "@patternmode/ui/cx";
 import { HelpCircle } from "lucide-react";
 import React from "react";
-
-import { cx } from "@/lib/utils/tailwind";
 
 type PropFieldProps = {
   prop: PropMetadata;

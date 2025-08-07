@@ -1,25 +1,25 @@
 "use client";
 
 import type { StackProps } from "./types";
+import { cx } from "@patternmode/ui/cx";
 import * as React from "react";
+import { createResponsiveClasses, getResponsiveBase } from "../../lib/responsive-utils";
 import {
   generateResponsiveSpacingClasses,
   getBaseSpacingValue,
   getGapClass,
   getPaddingClass,
 } from "../../lib/spacing-utils";
-import { createResponsiveClasses, getResponsiveBase } from "../../lib/responsive-utils";
-import { cx } from "../../lib/utils";
 import { stackVariants } from "./variants";
 
 /**
  * Layout component for arranging items vertically or horizontally with consistent spacing.
- * 
+ *
  * Supports responsive orientation with three approaches:
  * 1. String: `direction="vertical"` or `direction="horizontal"`
  * 2. Mobile-first: `direction={{ lg: "horizontal" }}` (defaults to vertical)
  * 3. Explicit default: `direction={{ default: "horizontal", lg: "vertical" }}`
- * 
+ *
  * Responsive breakpoints: sm, md, lg, xl, 2xl, max-sm, max-md, max-lg, max-xl
  * Generates appropriate Tailwind classes (flex-col, flex-row) with breakpoint prefixes.
  */

@@ -9,14 +9,16 @@ const { scanComponents } = require("../../../packages/ui/scripts/generate-regist
 const PAGES_DIR = path.join(__dirname, "../src/app/ui/components");
 
 // Template for component pages
-const PAGE_TEMPLATE = `import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONENT_ID}}/config";
+const PAGE_TEMPLATE = `import type { Metadata } from "next";
+
+import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONENT_ID}}/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
   description: {{COMPONENT_CONFIG_NAME}}.description,
   openGraph: {

@@ -1,10 +1,11 @@
 import type { DismissButtonProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import { X } from "lucide-react";
-import React from "react";
 
+import React from "react";
 import { config } from "../../lib/config";
-import { cx, iconUtils } from "../../lib/utils";
+import { iconUtils } from "../../lib/icon-sizing";
 import { dismissButtonVariants } from "./variants";
 
 // Map dismiss button sizes to icon sizes (direct 1:1 mapping)

@@ -5,7 +5,7 @@ import { ToastProvider } from "@patternmode/ui/components/toast";
 import { NuqsProviderWrapper } from "../components/nuqs-provider";
 import { SidebarLayout } from "../components/sidebar-layout";
 import { ThemeProvider } from "../components/theme-provider";
-import { ReactQueryProvider } from "../lib/react-query";
+import { ReactQueryProvider } from "../providers/query-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants } from "../../lib/border-radius";
 import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
-import { focusRing } from "../../lib/utils";
+import { focusRing } from "../../lib/focus-styles";
 
 export const toggleGroupVariants = tv({
   slots: {

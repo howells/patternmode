@@ -1,8 +1,8 @@
 import type { SpacingValue } from "../../lib/spacing-utils";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
 import { getPaddingClass } from "../../lib/spacing-utils";
-import { cx } from "../../lib/utils";
 import { Grid, GridCell } from "../grid/component";
 import { HStack, Stack } from "../stack/component";
 import { Subheading } from "../subheading/component";

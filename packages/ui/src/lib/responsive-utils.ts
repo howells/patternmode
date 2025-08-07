@@ -1,11 +1,11 @@
 /**
  * Shared responsive utilities for handling breakpoint-based properties.
  * Provides standardized responsive types and class generation utilities.
- * 
+ *
  * Tailwind 4 Class Detection:
- * flex-col flex-row sm:flex-col sm:flex-row md:flex-col md:flex-row 
+ * flex-col flex-row sm:flex-col sm:flex-row md:flex-col md:flex-row
  * lg:flex-col lg:flex-row xl:flex-col xl:flex-row 2xl:flex-col 2xl:flex-row
- * max-sm:flex-col max-sm:flex-row max-md:flex-col max-md:flex-row 
+ * max-sm:flex-col max-sm:flex-row max-md:flex-col max-md:flex-row
  * max-lg:flex-col max-lg:flex-row max-xl:flex-col max-xl:flex-row
  * grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5 grid-cols-6
  * grid-cols-7 grid-cols-8 grid-cols-9 grid-cols-10 grid-cols-11 grid-cols-12
@@ -88,28 +88,28 @@ export function getResponsiveBase<T>(value: ResponsiveValue<T> | undefined, fall
   if (value === undefined) {
     return fallback;
   }
-  
+
   if (typeof value === "object" && value !== null) {
     // Check if there's an explicit default, otherwise use fallback
     return (value as Record<string, T>).default ?? fallback;
   }
-  
+
   return value as T;
 }
 
 /**
  * Generate responsive CSS classes from a responsive value and class generator function.
- * 
+ *
  * @param value - The responsive value (string/number or object with breakpoints)
  * @param classGenerator - Function to generate the CSS class from a value
  * @returns Space-separated string of responsive classes
- * 
+ *
  * @example
  * ```tsx
  * // For direction: { default: "horizontal", lg: "vertical" }
  * generateResponsiveClasses(direction, (dir) => dir === "vertical" ? "flex-col" : "flex-row")
  * // Returns: "flex-row lg:flex-col"
- * 
+ *
  * // For columns: { sm: 2, lg: 4 }
  * generateResponsiveClasses(columns, (cols) => `grid-cols-${cols}`)
  * // Returns: "sm:grid-cols-2 lg:grid-cols-4"
@@ -156,27 +156,27 @@ export const responsiveClassGenerators = {
    */
   direction: (direction: "vertical" | "horizontal"): string =>
     direction === "vertical" ? "flex-col" : "flex-row",
-  
+
   /**
    * Generate grid column classes.
    */
   gridColumns: (columns: number): string => `grid-cols-${columns}`,
-  
+
   /**
    * Generate grid row classes.
    */
   gridRows: (rows: number): string => `grid-rows-${rows}`,
-  
+
   /**
    * Generate display classes.
    */
-  display: (display: "block" | "flex" | "grid" | "inline" | "hidden"): string => 
+  display: (display: "block" | "flex" | "grid" | "inline" | "hidden"): string =>
     display === "hidden" ? "hidden" : `${display}`,
-  
+
   /**
    * Generate text alignment classes.
    */
-  textAlign: (align: "left" | "center" | "right" | "justify"): string => 
+  textAlign: (align: "left" | "center" | "right" | "justify"): string =>
     `text-${align}`,
 };
 
@@ -190,25 +190,25 @@ export const createResponsiveClasses = {
    */
   direction: (value: ResponsiveValue<"vertical" | "horizontal"> | undefined): string =>
     generateResponsiveClasses(value, responsiveClassGenerators.direction),
-    
+
   /**
    * Generate responsive grid column classes.
    */
   gridColumns: (value: ResponsiveValue<number> | undefined): string =>
     generateResponsiveClasses(value, responsiveClassGenerators.gridColumns),
-    
+
   /**
    * Generate responsive grid row classes.
    */
   gridRows: (value: ResponsiveValue<number> | undefined): string =>
     generateResponsiveClasses(value, responsiveClassGenerators.gridRows),
-    
+
   /**
    * Generate responsive display classes.
    */
   display: (value: ResponsiveValue<"block" | "flex" | "grid" | "inline" | "hidden"> | undefined): string =>
     generateResponsiveClasses(value, responsiveClassGenerators.display),
-    
+
   /**
    * Generate responsive text alignment classes.
    */

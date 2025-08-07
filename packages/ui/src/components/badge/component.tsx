@@ -1,12 +1,13 @@
-import type { ComponentWithIconsProps } from "../../lib/utils";
+import type { ComponentWithIconsProps } from "../../lib/icon-sizing";
 import type { BadgeVariant } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
-import { X } from "lucide-react";
+import { cx } from "@patternmode/ui/cx";
 
+import { X } from "lucide-react";
 import React from "react";
 import { config } from "../../lib/config";
 import { getIconComponent } from "../../lib/icon-registry";
-import { cx, iconUtils } from "../../lib/utils";
+import { iconUtils } from "../../lib/icon-sizing";
 import {
   getColorClasses,
 } from "../../lib/variants";

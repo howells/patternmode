@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx } from "../../lib/utils";
+import React from "react";
 import {
   PreviewCard,
   PreviewCardContent,

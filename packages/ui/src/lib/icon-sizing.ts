@@ -1,5 +1,5 @@
 /**
- * Icon Utilities
+ * Icon Sizing Utilities
  *
  * Utilities for working with icons, including sizing and component props.
  */
@@ -27,8 +27,8 @@ export const iconUtils = {
 
 // Shared component props for components that support left/right icons
 export type ComponentWithIconsProps = {
-  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  leftIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }> | string;
+  rightIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }> | string;
   /** Stroke width for icons (defaults to 1) */
   iconStrokeWidth?: number;
 };

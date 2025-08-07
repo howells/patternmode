@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants } from "../../lib/border-radius";
 import { containerButtonAdjustments } from "../../lib/container-button-adjustments";
-import { focusRing } from "../../lib/utils";
+import { focusRing } from "../../lib/focus-styles";
 
 export const tabsVariants = tv({
   slots: {
@@ -66,7 +66,14 @@ export const tabsVariants = tv({
           focusRing,
           "focus-visible:bg-none focus-visible:-outline-offset-1",
         ],
-        indicator: "hidden", // No indicator for solid variant
+        indicator: [
+          // base - grey block indicator that follows the tab
+          "absolute transition-all duration-200 ease-in-out delay-75",
+          "bottom-0.5 left-0.5 h-[calc(100%-4px)] w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] z-0",
+          "bg-zinc-100 dark:bg-zinc-700",
+          // rounded corners to match the container
+          "rounded-[calc(theme(borderRadius.lg)-2px)]",
+        ],
       },
     },
     size: {
@@ -105,6 +112,9 @@ export const tabsVariants = tv({
           // Use centralized button adjustments
           ...containerButtonAdjustments.xs,
         ],
+        indicator: [
+          "rounded-[calc(theme(borderRadius.xs)-2px)]",
+        ],
       },
     },
     {
@@ -115,6 +125,9 @@ export const tabsVariants = tv({
           `gap-x-0 p-0.5 ${borderRadiusVariants.sm}`, // Remove gap, keep compact for sm
           // Use centralized button adjustments
           ...containerButtonAdjustments.sm,
+        ],
+        indicator: [
+          "rounded-[calc(theme(borderRadius.sm)-2px)]",
         ],
       },
     },
@@ -127,6 +140,9 @@ export const tabsVariants = tv({
           // Use centralized button adjustments
           ...containerButtonAdjustments.base,
         ],
+        indicator: [
+          "rounded-[calc(theme(borderRadius.lg)-2px)]",
+        ],
       },
     },
     {
@@ -137,6 +153,9 @@ export const tabsVariants = tv({
           `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`, // Remove gap, larger container for lg
           // Use centralized button adjustments
           ...containerButtonAdjustments.lg,
+        ],
+        indicator: [
+          "rounded-[calc(theme(borderRadius.lg)-2px)]",
         ],
       },
     },

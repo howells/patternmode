@@ -4,8 +4,8 @@ import type { Size } from "../../lib/component-config-types";
 import type { TabsContentProps, TabsListProps, TabsListVariant, TabsProps, TabsTriggerProps } from "./types";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 
+import { cx } from "@patternmode/ui/cx";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { tabsVariants } from "./variants";
 
@@ -47,9 +47,9 @@ const TabsList = (
       <TabsListVariantContext value={variant}>
         <TabsListSizeContext value={size}>
           {children}
-          {variant === "line" && (
+          {(variant === "line" || variant === "solid") && (
             <BaseTabs.Indicator
-              key={`${variant}-indicator`}
+              key={`${variant}-${size}-indicator`}
               className={cx(
                 tabsVariants({
                   variant,
@@ -94,17 +94,14 @@ const TabsTrigger = (
           return (
             <Button
               {...buttonProps}
-              variant={state.selected ? "minimal" : "secondary"}
+              variant="minimal"
               size={getButtonSize(size)}
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               iconStrokeWidth={iconStrokeWidth}
-
               disabled={state.disabled}
               className={cx(
-                {
-                  "bg-white dark:bg-zinc-900": state.selected,
-                },
+                "relative z-10",
                 className,
               )}
             >

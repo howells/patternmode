@@ -1,13 +1,13 @@
 "use client";
 
 import type { IconComponent } from "../../lib/icon-utils";
+import { cx } from "@patternmode/ui/cx";
 import { ArrowRight, ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import Link from "next/link";
-import * as React from "react";
 
+import * as React from "react";
 import { useId, useState } from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";

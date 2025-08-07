@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
+
 import { progressCircleConfig } from "@patternmode/ui/components/progress-circle/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${progressCircleConfig.name} | Patternmode`,
   description: progressCircleConfig.description,
   openGraph: {

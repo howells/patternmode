@@ -1,7 +1,7 @@
 import type { CodeProps, StrongProps, TextLinkProps, TextProps } from "./types";
 
+import { cx } from "@patternmode/ui/cx";
 import Link from "next/link";
-import { cx } from "../../lib/utils";
 import { textVariants } from "./variants";
 
 /**

@@ -1,8 +1,8 @@
 "use client";
 
+import { cx } from "@patternmode/ui/cx";
 import { GripVertical, Plus } from "lucide-react";
 import React from "react";
-import { cx } from "../../lib/utils";
 import { Button } from "../button/component";
 import { Checkbox } from "../checkbox/component";
 import { DismissButton } from "../dismiss-button/component";

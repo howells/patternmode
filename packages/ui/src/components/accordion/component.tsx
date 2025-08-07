@@ -6,11 +6,11 @@ import type {
 } from "./types";
 
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
+import { cx } from "@patternmode/ui/cx";
 import { Plus } from "lucide-react";
-import React from "react";
 
+import React from "react";
 import { config } from "../../lib/config";
-import { cx } from "../../lib/utils";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 import {

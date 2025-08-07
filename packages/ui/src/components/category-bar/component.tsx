@@ -6,13 +6,13 @@ import type {
   AvailableChartColorsKeys,
 } from "../../lib/chartUtils";
 
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
+import React from "react";
 import {
   AvailableChartColors,
   getColorClassName,
 } from "../../lib/chartUtils";
-import { cx } from "../../lib/utils";
 import { Tooltip } from "../tooltip/component";
 
 /**

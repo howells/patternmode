@@ -55,7 +55,7 @@ export const ResponsiveExample = () => {
       <div>
         <h4 className="text-sm font-medium text-zinc-700 mb-3">Max-width breakpoints</h4>
         <p className="text-xs text-zinc-600 mb-3">4 cols default → 2 cols on max-lg and below</p>
-        <Grid columns={{ default: 4, "max-lg": 2 }} gap={4}>
+        <Grid columns={{ "default": 4, "max-lg": 2 }} gap={4}>
           <GridCell className="bg-purple-100 dark:bg-purple-900 p-4 rounded text-center">1</GridCell>
           <GridCell className="bg-purple-100 dark:bg-purple-900 p-4 rounded text-center">2</GridCell>
           <GridCell className="bg-purple-100 dark:bg-purple-900 p-4 rounded text-center">3</GridCell>

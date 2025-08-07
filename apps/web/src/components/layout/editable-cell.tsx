@@ -10,7 +10,7 @@ import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
 
-import { PreviewProvider } from "../../preview/preview-context";
+import { PreviewProvider } from "../../features/preview/preview-context";
 import { PropsEditorPopover } from "./props-editor-popover";
 
 // Dynamic icon loader using next/dynamic

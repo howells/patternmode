@@ -1,5 +1,5 @@
 import type { HeadingElementProps } from "../heading-element/component";
-import { cx } from "../../lib/utils";
+import { cx } from "@patternmode/ui/cx";
 import { HeadingElement } from "../heading-element/component";
 
 export type SubheadingProps = {

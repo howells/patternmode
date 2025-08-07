@@ -17,6 +17,7 @@ import {
 } from "@patternmode/ui/components/sidebar";
 import { HStack, Stack } from "@patternmode/ui/components/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
+import { cx } from "@patternmode/ui/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { List, Rows3 } from "lucide-react";
 import { motion } from "motion/react";
@@ -27,7 +28,6 @@ import React, { createContext, useContext, useState } from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
-import { cx } from "@/lib/utils/tailwind";
 
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { ComponentSearch } from "./component-search";

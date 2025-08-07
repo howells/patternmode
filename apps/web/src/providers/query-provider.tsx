@@ -6,13 +6,9 @@
  * Provider component that wraps the application with React Query functionality.
  */
 
-import type { QueryClient } from "@tanstack/react-query";
-
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
-
-import { getQueryClient } from "./query-client";
 
 /**
  * Props for the ReactQueryProvider component.
@@ -44,7 +40,7 @@ type ReactQueryProviderProps = {
  *
  * // With custom client
  * function App() {
- *   const customClient = createQueryClient();
+ *   const customClient = new QueryClient();
  *
  *   return (
  *     <ReactQueryProvider client={customClient}>
@@ -68,11 +64,21 @@ export function ReactQueryProvider({
   client,
   showDevtools = true,
 }: ReactQueryProviderProps) {
-  const queryClient = client || getQueryClient();
+  const [queryClient] = React.useState(
+    () => client || new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 5 * 60 * 1000,
+          gcTime: 10 * 60 * 1000,
+        },
+      },
+    }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
+      {/* eslint-disable-next-line node/no-process-env */}
       {showDevtools && process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools
           initialIsOpen={false}

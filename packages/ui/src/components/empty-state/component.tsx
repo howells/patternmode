@@ -1,8 +1,8 @@
 import type { EmptyStateProps } from "./types";
 
-import React from "react";
+import { cx } from "@patternmode/ui/cx";
 
-import { cx } from "../../lib/utils";
+import React from "react";
 import { Button } from "../button/component";
 import { Heading } from "../heading/component";
 import { IconContainer } from "../icon-container/component";

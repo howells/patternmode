@@ -1,6 +1,6 @@
+import { cx } from "@patternmode/ui/cx";
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
-import { cx } from "../../lib/utils";
 import {
   getVariantClasses,
 } from "../../lib/variants";

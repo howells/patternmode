@@ -1,11 +1,13 @@
-import { sliderConfig } from "@patternmode/ui/components/slider/config";
+import type { Metadata } from "next";
+
 import { Separator } from "@patternmode/ui/components/separator";
+import { sliderConfig } from "@patternmode/ui/components/slider/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
+import { Preview } from "@/features/preview";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${sliderConfig.name} | Patternmode`,
   description: sliderConfig.description,
   openGraph: {

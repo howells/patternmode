@@ -1,12 +1,11 @@
-import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
+import { componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
 import { Separator } from "@patternmode/ui/components/separator";
 import { notFound } from "next/navigation";
 import React from "react";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { createComponentConfig } from "@/lib/config-helpers";
-import { Preview } from "@/preview";
+import { PreviewDisplay } from "@/features/preview/preview-render";
 
 type ComponentPageProps = {
   params: Promise<{
@@ -16,48 +15,17 @@ type ComponentPageProps = {
 };
 
 /**
- * Dynamically loads component configuration for a given component and category.
+ * Loads component configuration from the registry.
  */
 async function loadComponentConfig(componentId: string, category: string) {
-  // First try to get existing config
   const config = getComponentConfig(componentId);
 
-  if (config) {
-    return config;
+  // Verify component exists and belongs to the correct category
+  if (!config || config.category !== category) {
+    return null;
   }
 
-  // Component configs are only in the web app, not the UI package
-  // Skip trying to load from @patternmode/ui as it only exports components
-
-  // Create placeholder config if component exists in our list
-  const componentList = COMPONENT_LIST[category as keyof typeof COMPONENT_LIST];
-  if (componentList?.includes(componentId as never)) {
-    const name = componentId
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-
-    return createComponentConfig(
-      componentId,
-      name,
-      `${name} component - documentation coming soon.`,
-      category as "ui" | "inputs" | "forms" | "charts",
-      {
-        examples: [
-          {
-            id: "placeholder",
-            title: "Coming Soon",
-            description: "Documentation for this component is being prepared.",
-            code: `<div className="text-zinc-500">${name} example coming soon</div>`,
-            preview: React.createElement("div", { className: "text-zinc-500" }, `${name} example coming soon`),
-            component: () => React.createElement("div", { className: "text-zinc-500" }, `${name} example coming soon`),
-          },
-        ],
-      },
-    );
-  }
-
-  return null;
+  return config;
 }
 
 export default async function ComponentPage({ params }: ComponentPageProps) {
@@ -66,14 +34,13 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   // Load component configuration
   const config = await loadComponentConfig(component, category);
 
-  // Check if component exists and belongs to the correct category
-  if (!config || config.category !== category) {
+  if (!config) {
     notFound();
   }
 
   // Create a serializable version of the config for the client component
   // Remove non-serializable properties like icon (React components)
-  const serializableConfig = {
+  const _serializableConfig = {
     ...config,
     icon: undefined, // Remove icon to avoid serialization issues
     components: config.components?.map(comp => ({
@@ -96,9 +63,8 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
       />
 
       {/* Main Content - Use Preview */}
-      <Preview
+      <PreviewDisplay
         componentId={component}
-        componentName={serializableConfig.name}
         category={category}
       />
 
