@@ -11,7 +11,7 @@ export function BadgePreview(props: BadgeProps) {
     ? () => console.warn("Badge dismissed")
     : undefined;
 
-  const { ref, ...badgeProps } = props;
+  const { ref: _ref, ...badgeProps } = props;
 
   return (
     <Badge
