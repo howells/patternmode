@@ -37,7 +37,7 @@ test.describe("Sidebar Navigation", () => {
     }
 
     // Check that there are component links in the sidebar
-    const componentLinks = sidebar.locator("a[href*=\"/ui/\"]");
+    const componentLinks = sidebar.locator("a[href^=\"/ui/components/\"]");
     const linkCount = await componentLinks.count();
     expect(linkCount).toBeGreaterThan(0);
 
@@ -49,7 +49,7 @@ test.describe("Sidebar Navigation", () => {
       : null;
 
     if (firstFewLinks) {
-      expect(firstFewLinks).toMatch(/^\/ui\/\w+\/[\w-]+$/);
+      expect(firstFewLinks).toMatch(/^\/ui\/components\/[\w-]+$/);
       console.log(`✓ Link format correct: ${firstFewLinks}`);
     }
   });
@@ -151,7 +151,7 @@ test.describe("Sidebar Navigation", () => {
     await page.waitForSelector("[data-testid=\"sidebar\"]", { timeout: 10000 });
 
     // Find the first component link in the sidebar
-    const componentLinks = page.locator("[data-testid=\"sidebar\"] a[href*=\"/ui/\"]");
+    const componentLinks = page.locator("[data-testid=\"sidebar\"] a[href^=\"/ui/components/\"]");
     const firstLink = componentLinks.first();
 
     await expect(firstLink).toBeVisible();
@@ -240,7 +240,7 @@ test.describe("Sidebar Navigation", () => {
       console.log("ℹ No specific active state indicator found - this may be expected");
 
       // Just verify that the button link exists in the sidebar
-      const buttonLink = sidebar.locator("a[href*=\"/button\"]");
+      const buttonLink = sidebar.locator("a[href$=\"/components/button\"]");
       await expect(buttonLink).toBeVisible();
       console.log("✓ Button component link found in sidebar");
     }

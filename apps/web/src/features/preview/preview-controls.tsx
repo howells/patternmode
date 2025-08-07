@@ -2,6 +2,8 @@
 
 import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
+import { VStack } from "@patternmode/ui/components/stack";
+import { Subheading } from "@patternmode/ui/components/subheading";
 import React from "react";
 
 import { ControlFactory } from "./controls/control-factory";
@@ -27,16 +29,8 @@ export function PreviewControls({ config }: PreviewControlsProps) {
   const propEntries = Object.entries(config.props);
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="font-semibold">Props</h3>
-        <button
-          onClick={resetProps}
-          className="text-sm text-gray-500 hover:text-gray-700"
-        >
-          Reset
-        </button>
-      </div>
+    <VStack>
+      <Subheading>Props</Subheading>
 
       <div className="space-y-3">
         {propEntries.map(([propKey, metadata]) => (
@@ -53,6 +47,6 @@ export function PreviewControls({ config }: PreviewControlsProps) {
           </PropField>
         ))}
       </div>
-    </div>
+    </VStack>
   );
 }

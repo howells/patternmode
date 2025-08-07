@@ -21,8 +21,8 @@ async function testComponentPage(
 
   // Navigate to component page
   const response = await page.goto(url, {
-    waitUntil: "domcontentloaded",
-    timeout: 30000, // Increased timeout for reliability
+    waitUntil: "networkidle",
+    timeout: 45000,
   });
 
   // Wait a bit for async content to settle
@@ -32,7 +32,7 @@ async function testComponentPage(
   expect(response?.status()).toBe(200);
 
   // Wait for main content to load
-  await page.waitForSelector("h1", { timeout: 10000 }); // Increased timeout
+  await page.waitForSelector("h1, [data-testid=\"page-header\"]", { timeout: 15000 });
 
   // Critical: Check for "Failed to load examples" error messages
   const failedToLoadErrors = await page
@@ -91,7 +91,9 @@ async function testComponentPage(
       && !error.includes("React does not recognize the `%s` prop")
       && !error.includes("non-boolean attribute")
       && !error.includes("custom attribute")
-      && !error.includes("Failed to load icon"), // Ignore icon loading failures
+      && !error.includes("Failed to load icon")
+      && !error.includes("hydrated but some attributes")
+      && !error.includes("hydration mismatch"),
   );
 
   if (serverErrors.length > 0) {

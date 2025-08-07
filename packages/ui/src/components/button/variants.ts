@@ -98,6 +98,12 @@ export const createButtonStyleVariants = (
         " data-[pressed]:",
       )}`,
     ],
+    "inverse-ghost": [
+      ...componentVariants.button["inverse-ghost"],
+      `data-[pressed]:${componentVariants.button[pressedVariant].join(
+        " data-[pressed]:",
+      )}`,
+    ],
     destructive: [
       ...componentVariants.button.destructive,
       // When destructive is pressed, make it even more intense

@@ -8,7 +8,6 @@ import {
   EqualDistributionExample,
   ManyCategoriesExample,
   NoLabelsExample,
-  PerformanceMetricsExample,
   ProgressTrackingExample,
   SurveyResultsExample,
   UnevenDistributionExample,
@@ -52,12 +51,6 @@ export const categoryBarConfig: ComponentConfig = {
       title: "Many Categories",
       description: "Category bar with multiple data segments",
       component: ManyCategoriesExample,
-    },
-    {
-      id: "performance-metrics",
-      title: "Performance Metrics",
-      description: "Multiple category bars for system monitoring",
-      component: PerformanceMetricsExample,
     },
     {
       id: "budget-allocation",

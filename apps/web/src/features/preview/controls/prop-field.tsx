@@ -1,7 +1,7 @@
 import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
-import { Field, FieldLabel } from "@patternmode/ui/components/field";
-import { VStack } from "@patternmode/ui/components/stack";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/ui/components/description-list";
+import { Icon } from "@patternmode/ui/components/icon";
 import { Tooltip } from "@patternmode/ui/components/tooltip";
 import { cx } from "@patternmode/ui/utils/cx";
 import { HelpCircle } from "lucide-react";
@@ -15,18 +15,18 @@ type PropFieldProps = {
 
 export function PropField({ prop, children, className }: PropFieldProps) {
   return (
-    <VStack className="space-y-2">
-      <Field className={cx("", className)}>
-        <div className="flex items-center gap-1">
-          <FieldLabel>{prop.name}</FieldLabel>
-          {prop.description && (
-            <Tooltip content={prop.description}>
-              <HelpCircle className="size-3 text-zinc-500 dark:text-zinc-400" />
-            </Tooltip>
-          )}
-        </div>
+    <DescriptionList size="xs" className="items-center sm:[grid-template-columns:1fr_2fr]">
+      <DescriptionTerm className="text-xs flex items-center self-center space-x-1">
+        <span className="truncate">{prop.name}</span>
+        {prop.description && (
+          <Tooltip content={prop.description}>
+            <Icon size="xs" icon={HelpCircle} />
+          </Tooltip>
+        )}
+      </DescriptionTerm>
+      <DescriptionDetails className={cx("self-center ", className)}>
         {children}
-      </Field>
-    </VStack>
+      </DescriptionDetails>
+    </DescriptionList>
   );
 }

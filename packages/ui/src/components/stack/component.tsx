@@ -13,15 +13,7 @@ import {
 import { stackVariants } from "./variants";
 
 /**
- * Layout component for arranging items vertically or horizontally with consistent spacing.
- *
- * Supports responsive orientation with three approaches:
- * 1. String: `direction="vertical"` or `direction="horizontal"`
- * 2. Mobile-first: `direction={{ lg: "horizontal" }}` (defaults to vertical)
- * 3. Explicit default: `direction={{ default: "horizontal", lg: "vertical" }}`
- *
- * Responsive breakpoints: sm, md, lg, xl, 2xl, max-sm, max-md, max-lg, max-xl
- * Generates appropriate Tailwind classes (flex-col, flex-row) with breakpoint prefixes.
+ * Layout component for vertical or horizontal stacking with configurable spacing and responsive direction.
  */
 const Stack = (
   { ref, direction = "vertical", gap, padding, align, justify, wrap = false, as: Component = "div", className, children, ...props }: StackProps & { ref?: React.RefObject<HTMLElement | null> },

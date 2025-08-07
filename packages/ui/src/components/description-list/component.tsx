@@ -6,12 +6,16 @@ import { descriptionDetailsVariants, descriptionListVariants, descriptionTermVar
 /**
  * Root container for description lists with semantic HTML structure.
  */
-const DescriptionList = ({ className, ...props }: DescriptionListProps) => {
+const DescriptionList = ({ className, columns, termWidth, valueWidth = "1fr", size = "base", border = true, ...props }: DescriptionListProps) => {
   return (
     <dl
       {...props}
       data-testid="description-list"
-      className={cx(descriptionListVariants(), className)}
+      className={cx(
+        descriptionListVariants({ columns: columns ? undefined : "default", size, border }),
+        className
+      )}
+      style={columns || termWidth ? { gridTemplateColumns: columns ?? `${termWidth ?? "auto"} ${valueWidth}` } : undefined}
     />
   );
 };

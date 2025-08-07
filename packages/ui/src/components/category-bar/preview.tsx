@@ -11,6 +11,7 @@ export function CategoryBarPreview(props: CategoryBarProps) {
       values={[456, 351, 271, 191]}
       colors={["blue", "emerald", "violet", "amber", "gray", "cyan", "pink", "lime", "fuchsia"]}
       showLabels={true}
+      className="w-full max-w-96"
       {...props}
     />
   );

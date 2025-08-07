@@ -6,6 +6,7 @@ import { Button } from "@patternmode/ui/components/button";
 import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@patternmode/ui/components/registry";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@patternmode/ui/components/sheet";
+import { HStack } from "@patternmode/ui/components/stack";
 import { cx } from "@patternmode/ui/utils/cx";
 import { Settings2 } from "lucide-react";
 import React from "react";
@@ -75,9 +76,9 @@ export function Preview({ componentId, componentName, category }: PreviewProps) 
 
   return (
     <PreviewProvider defaultProps={defaultProps}>
-      <div className="relative flex gap-4">
+      <HStack gap={0}>
         {/* Main Preview Area */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 p-6">
           <PreviewDisplay
             componentId={componentId}
             category={category}
@@ -87,7 +88,7 @@ export function Preview({ componentId, componentName, category }: PreviewProps) 
 
         {/* Desktop Prop Controls - Toggleable Right Sidebar */}
         {config && (
-          <>
+          <div className="relative">
             {/* Toggle Button */}
             <Button
               variant="secondary"
@@ -119,9 +120,9 @@ export function Preview({ componentId, componentName, category }: PreviewProps) 
               </div>
             </div>
 
-          </>
+          </div>
         )}
-      </div>
+      </HStack>
     </PreviewProvider>
   );
 }

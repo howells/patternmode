@@ -190,6 +190,12 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  // Ensure SSR and first client render markup match to avoid hydration mismatch
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fetch data with React Query infinite query (only if fetchData is provided)
   const {
@@ -477,47 +483,57 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           ref={scrollRef}
           data-testid="combobox-options"
         >
-          {/* Loading State */}
-          {isLoading && (
+          {(!isMounted) ? (
+            // Render a stable placeholder on SSR and initial client render
             <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
               <Loader size="sm" />
               <span className="ml-2 text-sm text-zinc-500">Loading...</span>
             </div>
-          )}
+          ) : (
+            <>
+              {/* Loading State */}
+              {isLoading && (
+                <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
+                  <Loader size="sm" />
+                  <span className="ml-2 text-sm text-zinc-500">Loading...</span>
+                </div>
+              )}
 
-          {/* Error State */}
-          {error && !isLoading && (
-            <div className="flex items-center justify-center py-4 text-red-500" data-testid="combobox-error">
-              <span className="text-sm">Failed to load options</span>
-            </div>
-          )}
+              {/* Error State */}
+              {error && !isLoading && (
+                <div className="flex items-center justify-center py-4 text-red-500" data-testid="combobox-error">
+                  <span className="text-sm">Failed to load options</span>
+                </div>
+              )}
 
-          {/* Virtual Items List */}
-          {!isLoading && !error && items.length > 0 && (
-            <VirtualizedItemList
-              items={items}
-              parentRef={scrollRef}
-              getItemValue={getItemValue}
-              getItemLabel={getItemLabel}
-              getItemIcon={getItemIcon}
-              getItemProps={getItemProps}
-              renderItem={renderItem}
-              defaultRenderItem={defaultRenderItem}
-              highlightedIndex={highlightedIndex}
-              selectedItem={selectedItem}
-              size={size}
-              iconStrokeWidth={iconStrokeWidth}
-              isFetchingNextPage={isFetchingNextPage}
-              hasNextPage={hasNextPage}
-              fetchNextPage={fetchNextPage}
-            />
-          )}
+              {/* Virtual Items List */}
+              {!isLoading && !error && items.length > 0 && (
+                <VirtualizedItemList
+                  items={items}
+                  parentRef={scrollRef}
+                  getItemValue={getItemValue}
+                  getItemLabel={getItemLabel}
+                  getItemIcon={getItemIcon}
+                  getItemProps={getItemProps}
+                  renderItem={renderItem}
+                  defaultRenderItem={defaultRenderItem}
+                  highlightedIndex={highlightedIndex}
+                  selectedItem={selectedItem}
+                  size={size}
+                  iconStrokeWidth={iconStrokeWidth}
+                  isFetchingNextPage={isFetchingNextPage}
+                  hasNextPage={hasNextPage}
+                  fetchNextPage={fetchNextPage}
+                />
+              )}
 
-          {/* Empty State */}
-          {!isLoading && !error && items.length === 0 && (
-            <div className="flex items-center justify-center py-4 text-zinc-500" data-testid="combobox-empty">
-              <span className="text-sm">{emptyMessage}</span>
-            </div>
+              {/* Empty State */}
+              {!isLoading && !error && items.length === 0 && (
+                <div className="flex items-center justify-center py-4 text-zinc-500" data-testid="combobox-empty">
+                  <span className="text-sm">{emptyMessage}</span>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

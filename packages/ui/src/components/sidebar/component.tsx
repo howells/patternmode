@@ -44,7 +44,7 @@ function SidebarTitle({
   ...props
 }: SidebarTitleProps) {
   const baseClasses = cx(
-    "transition-colors text-xs",
+    "transition-colors text-sm",
     {
       "font-medium": level === 1,
     },
@@ -453,9 +453,7 @@ export function SidebarGroup({
                 <Button
                   variant="inverse-ghost"
                   size="icon-xs"
-
                   onClick={handleToggleCollapsed}
-                  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
                   aria-label={isGroupCollapsed ? "Expand group" : "Collapse group"}
                   leftIcon={isGroupCollapsed ? ChevronDown : ChevronUp}
                   rightIcon={ArrowRight}
@@ -581,7 +579,7 @@ export const SidebarItem = function SidebarItem(
         >
           <Button
             href={href}
-            variant={current ? "secondary" : "inverse-ghost"}
+            variant={"inverse-ghost"}
             size="icon-sm"
             icon={icon}
             leftIcon={LeftIcon}
@@ -599,7 +597,7 @@ export const SidebarItem = function SidebarItem(
   const buttonElement = (
     <Button
       href={href}
-      variant={current ? "secondary" : "inverse-ghost"}
+      variant={"inverse-ghost"}
       icon={icon}
       leftIcon={LeftIcon}
       rightIcon={href ? ArrowRight : undefined}

@@ -8,7 +8,7 @@ import {
 } from "./component";
 
 export const DefaultExample = () => (
-  <DescriptionList>
+  <DescriptionList className="w-full max-w-lg">
     <DescriptionTerm>Name</DescriptionTerm>
     <DescriptionDetails>John Doe</DescriptionDetails>
     <DescriptionTerm>Email</DescriptionTerm>
@@ -19,7 +19,7 @@ export const DefaultExample = () => (
 );
 
 export const UserProfileExample = () => (
-  <DescriptionList>
+  <DescriptionList className="w-full max-w-lg">
     <DescriptionTerm>Full Name</DescriptionTerm>
     <DescriptionDetails>Sarah Johnson</DescriptionDetails>
     <DescriptionTerm>Username</DescriptionTerm>
@@ -36,7 +36,7 @@ export const UserProfileExample = () => (
 );
 
 export const ProjectDetailsExample = () => (
-  <DescriptionList>
+  <DescriptionList className="w-full max-w-lg">
     <DescriptionTerm>Project Name</DescriptionTerm>
     <DescriptionDetails>Patternmode Component Library</DescriptionDetails>
     <DescriptionTerm>Status</DescriptionTerm>
@@ -56,7 +56,7 @@ export const ProjectDetailsExample = () => (
 );
 
 export const SystemInfoExample = () => (
-  <DescriptionList>
+  <DescriptionList className="w-full max-w-lg">
     <DescriptionTerm>Operating System</DescriptionTerm>
     <DescriptionDetails>macOS Sonoma 14.5</DescriptionDetails>
     <DescriptionTerm>Node.js Version</DescriptionTerm>

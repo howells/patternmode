@@ -6,7 +6,7 @@ import { CategoryBar } from "./component";
 
 // Default category bar
 export const DefaultExample = () => (
-  <CategoryBar values={[40, 30, 20, 10]} />
+  <CategoryBar values={[40, 30, 20, 10]} className="w-full max-w-96"/>
 );
 
 // Category bar with marker
@@ -18,56 +18,33 @@ export const WithMarkerExample = () => (
       tooltip: "Target: 50",
       showAnimation: true,
     }}
+    className="w-full max-w-96"
   />
 );
 
 // No labels
 export const NoLabelsExample = () => (
-  <CategoryBar values={[25, 35, 25, 15]} showLabels={false} />
+  <CategoryBar values={[25, 35, 25, 15]} showLabels={false}className="w-full max-w-96" />
 );
 
 // Uneven distribution
 export const UnevenDistributionExample = () => (
-  <CategoryBar values={[60, 15, 15, 10]} />
+  <CategoryBar values={[60, 15, 15, 10]} className="w-full max-w-96"/>
 );
 
 // Many categories
 export const ManyCategoriesExample = () => (
-  <CategoryBar values={[20, 18, 16, 14, 12, 10, 8, 2]} />
+  <CategoryBar values={[20, 18, 16, 14, 12, 10, 8, 2]}className="w-full max-w-96" />
 );
 
-// Performance metrics
-export const PerformanceMetricsExample = () => (
-  <div className="space-y-4">
-    <div>
-      <p className="text-sm font-medium mb-2">CPU Usage</p>
-      <CategoryBar
-        values={[45, 30, 15, 10]}
-        colors={["emerald", "amber", "amber", "pink"]}
-        showLabels={true}
-      />
-    </div>
-    <div>
-      <p className="text-sm font-medium mb-2">Memory Usage</p>
-      <CategoryBar
-        values={[60, 25, 10, 5]}
-        colors={["blue", "cyan", "amber", "pink"]}
-        marker={{
-          value: 75,
-          tooltip: "Warning threshold: 75%",
-        }}
-      />
-    </div>
-  </div>
-);
 
 // Budget allocation
 export const BudgetAllocationExample = () => (
-  <div className="space-y-2">
+  <div className="space-y-2 w-full max-w-96">
     <h3 className="text-sm font-medium">Budget Allocation</h3>
     <CategoryBar
       values={[35, 25, 20, 15, 5]}
-      colors={["blue", "emerald", "violet", "amber", "gray"]}
+      colors={["blue", "emerald", "violet", "amber", "gray"]}className="w-full max-w-96"
     />
     <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
       <span>Marketing (35%)</span>
@@ -81,12 +58,12 @@ export const BudgetAllocationExample = () => (
 
 // Survey results
 export const SurveyResultsExample = () => (
-  <div className="space-y-2">
+  <div className="space-y-2 w-full max-w-96">
     <h3 className="text-sm font-medium">Customer Satisfaction Survey</h3>
     <CategoryBar
       values={[45, 30, 15, 7, 3]}
       colors={["emerald", "lime", "amber", "amber", "pink"]}
-      showLabels={false}
+      showLabels={false}className="w-full max-w-96"
     />
     <div className="grid grid-cols-5 gap-1 text-xs text-center">
       <span className="text-emerald-600">Excellent</span>
@@ -100,7 +77,7 @@ export const SurveyResultsExample = () => (
 
 // Progress tracking
 export const ProgressTrackingExample = () => (
-  <div className="space-y-4">
+  <div className="space-y-4 w-full max-w-96">
     <div>
       <div className="flex justify-between mb-2">
         <span className="text-sm font-medium">Project Progress</span>
@@ -121,13 +98,13 @@ export const ProgressTrackingExample = () => (
 
 // Two categories (binary)
 export const BinaryExample = () => (
-  <div className="space-y-4">
+  <div className="space-y-4 w-full max-w-96">
     <div>
       <p className="text-sm font-medium mb-2">Success Rate</p>
       <CategoryBar
         values={[85, 15]}
         colors={["emerald", "pink"]}
-        showLabels={false}
+        showLabels={false}className="w-full max-w-96"
       />
       <div className="flex justify-between text-xs mt-1">
         <span className="text-emerald-600">Success: 85%</span>
@@ -139,5 +116,5 @@ export const BinaryExample = () => (
 
 // Equal distribution
 export const EqualDistributionExample = () => (
-  <CategoryBar values={[25, 25, 25, 25]} colors={["blue", "emerald", "violet", "amber"]} />
+  <CategoryBar values={[25, 25, 25, 25]} colors={["blue", "emerald", "violet", "amber"]}className="w-full max-w-96" />
 );

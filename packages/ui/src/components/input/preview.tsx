@@ -6,7 +6,7 @@ import React from "react";
 import { Input } from "./component";
 
 export function InputPreview(props: InputProps) {
-  return <Input placeholder="Enter text..." {...props} />;
+  return <Input placeholder="Enter text..." className="w-full max-w-96" {...props} />;
 }
 
 // Preview props for prop explorer

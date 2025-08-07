@@ -7,7 +7,7 @@ export const DefaultExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <IconSelect
         value={selectedIcon}
         onValueChange={setSelectedIcon}
@@ -29,7 +29,7 @@ export const WithValueExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("Camera");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <IconSelect
         value={selectedIcon}
         onValueChange={setSelectedIcon}
@@ -49,7 +49,7 @@ export const CustomPlaceholderExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <IconSelect
         value={selectedIcon}
         onValueChange={setSelectedIcon}
@@ -69,11 +69,13 @@ export const CustomPlaceholderExample = () => {
 
 export const DisabledExample = () => {
   return (
-    <IconSelect
-      value="Settings"
-      disabled={true}
-      placeholder="This is disabled..."
-    />
+    <div className="w-full max-w-96">
+      <IconSelect
+        value="Settings"
+        disabled={true}
+        placeholder="This is disabled..."
+      />
+    </div>
   );
 };
 
@@ -81,7 +83,7 @@ export const HookExample = () => {
   const { value, setValue, DynamicIconComponent } = useIconSelect("Heart");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <IconSelect
         value={value}
         onValueChange={setValue}
@@ -114,7 +116,7 @@ export const SizesExample = () => {
   const [lgValue, setLgValue] = React.useState<string>("");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <div className="w-44">
         <label className="block text-xs font-medium mb-1">Extra Small</label>
         <IconSelect
@@ -167,7 +169,7 @@ export const DynamicIconExample = () => {
   const BellIcon = getDynamicIconByName("Bell");
 
   return (
-    <div className="space-y-4">
+    <div className="w-full max-w-96 space-y-4">
       <IconSelect
         value={iconName}
         onValueChange={setIconName}

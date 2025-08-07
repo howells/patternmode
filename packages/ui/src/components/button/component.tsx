@@ -616,8 +616,10 @@ const Button = ({
     type: "button",
     ...({
       "data-testid": "button",
+      "data-variant": variant,
     } as React.HTMLAttributes<HTMLButtonElement>),
     children: renderButtonContent(),
+
   };
 
   const element = useRender({
