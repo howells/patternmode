@@ -1,5 +1,5 @@
-import { meterConfig } from "@patternmode/ui/components/meter/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { meterConfig } from "@patternmode/ui/components/meter/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${meterConfig.name} | Patternmode`,
     description: meterConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${meterConfig.name} | Patternmode`,
     description: meterConfig.description,
   },

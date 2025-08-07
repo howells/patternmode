@@ -1,5 +1,5 @@
-import { loaderConfig } from "@patternmode/ui/components/loader/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { loaderConfig } from "@patternmode/ui/components/loader/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${loaderConfig.name} | Patternmode`,
     description: loaderConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${loaderConfig.name} | Patternmode`,
     description: loaderConfig.description,
   },

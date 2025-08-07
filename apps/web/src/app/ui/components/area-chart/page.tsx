@@ -1,5 +1,5 @@
-import { areaChartConfig } from "@patternmode/ui/components/area-chart/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { areaChartConfig } from "@patternmode/ui/components/area-chart/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${areaChartConfig.name} | Patternmode`,
     description: areaChartConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${areaChartConfig.name} | Patternmode`,
     description: areaChartConfig.description,
   },

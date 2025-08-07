@@ -32,7 +32,7 @@ ToggleGroup.displayName = "ToggleGroup";
 const ToggleGroupItem = (
   {
     ref,
-    className,
+    className: _className,
     variant,
     size,
     children,

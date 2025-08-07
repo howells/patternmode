@@ -1,5 +1,5 @@
-import { drawerConfig } from "@patternmode/ui/components/drawer/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { drawerConfig } from "@patternmode/ui/components/drawer/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${drawerConfig.name} | Patternmode`,
     description: drawerConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${drawerConfig.name} | Patternmode`,
     description: drawerConfig.description,
   },

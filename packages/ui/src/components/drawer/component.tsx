@@ -15,7 +15,7 @@ import { cx } from "../../lib/utils";
 /**
  * Root drawer component.
  */
-const Drawer = ({ ref, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Root> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Root> | null> }) => (
+const Drawer = ({ ref: _ref, ...props }: React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Root> & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Root> | null> }) => (
   <DrawerPrimitive.Root {...props} data-testid="drawer">
     {props.children}
   </DrawerPrimitive.Root>
@@ -47,9 +47,9 @@ type DrawerOverlayProps = {
 /**
  * Drawer overlay component.
  */
-const DrawerOverlay = ({ ref, className, ...props }: DrawerOverlayProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
+const DrawerOverlay = ({ ref: _ref, className, ...props }: DrawerOverlayProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
   <DrawerPrimitive.Overlay
-    ref={ref}
+    ref={_ref}
     className={cx(
       // base
       "fixed inset-0 z-50",
@@ -76,11 +76,11 @@ type DrawerContentProps = {
 /**
  * Main drawer content component.
  */
-const DrawerContent = ({ ref, className, children, ...props }: DrawerContentProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Content> | null> }) => (
+const DrawerContent = ({ ref: _ref, className, children, ...props }: DrawerContentProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Content> | null> }) => (
   <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
-      ref={ref}
+      ref={_ref}
       className={cx(
         // base
         "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-lg border",
@@ -161,9 +161,9 @@ type DrawerTitleProps = {
 /**
  * Drawer title component.
  */
-const DrawerTitle = ({ ref, className, ...props }: DrawerTitleProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Title> | null> }) => (
+const DrawerTitle = ({ ref: _ref, className, ...props }: DrawerTitleProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Title> | null> }) => (
   <DrawerPrimitive.Title
-    ref={ref}
+    ref={_ref}
     className={cx(
       // base
       "text-lg font-semibold leading-none tracking-tight",
@@ -186,9 +186,9 @@ type DrawerDescriptionProps = {
 /**
  * Drawer description component.
  */
-const DrawerDescription = ({ ref, className, ...props }: DrawerDescriptionProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Description> | null> }) => (
+const DrawerDescription = ({ ref: _ref, className, ...props }: DrawerDescriptionProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Description> | null> }) => (
   <DrawerPrimitive.Description
-    ref={ref}
+    ref={_ref}
     className={cx(
       // base
       "text-sm",

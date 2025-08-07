@@ -8,7 +8,7 @@ export function ThemeTogglePreview(props: ThemeToggleProps) {
   const [theme, setTheme] = React.useState<"light" | "dark">(props.theme || "light");
 
   // Remove ref from props to avoid type conflicts
-  const { ref, ...restProps } = props;
+  const { ref: _ref, ...restProps } = props;
 
   return (
     <ThemeToggle

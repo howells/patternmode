@@ -4,58 +4,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { camelCase, pascalCase } = require("es-toolkit");
 
-const PAGES_DIR = path.join(__dirname, "../src/app/ui/components");
-
-// Template for component pages
-const PAGE_TEMPLATE = `import { Separator } from "@patternmode/ui/components/separator";
-import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONENT_ID}}/config";
-
-import { ComponentExamples } from "@/components/component-examples";
-import { PageHeader } from "@/components/page-header";
-import { Preview } from "@/preview";
-
-export const metadata = {
-  title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
-  description: {{COMPONENT_CONFIG_NAME}}.description,
-  openGraph: {
-    title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
-    description: {{COMPONENT_CONFIG_NAME}}.description,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: \`\${{{COMPONENT_CONFIG_NAME}}.name} | Patternmode\`,
-    description: {{COMPONENT_CONFIG_NAME}}.description,
-  },
-};
-
-export default function {{COMPONENT_NAME}}Page() {
-  return (
-    <div>
-      {/* Header */}
-      <PageHeader
-        title={{{COMPONENT_CONFIG_NAME}}.name}
-        description={{{COMPONENT_CONFIG_NAME}}.description}
-        badge={{{COMPONENT_CONFIG_NAME}}.badge}
-      />
-
-      {/* Main Content - Use Preview */}
-      <Preview
-        componentId="{{COMPONENT_ID}}"
-        componentName={{{COMPONENT_CONFIG_NAME}}.name}
-        category={{{COMPONENT_CONFIG_NAME}}.category}
-      />
-
-      <Separator />
-
-      {/* Examples */}
-      <ComponentExamples componentId="{{COMPONENT_ID}}" />
-    </div>
-  );
-}
-`;
-
-
 async function scanComponents() {
   console.log("🔍 Scanning components directory...");
 
@@ -82,28 +30,33 @@ async function scanComponents() {
 function generateImports(components) {
   const configImports = [];
   const previewImports = [];
-  const previewPropsImports = [];
 
   components.forEach((id) => {
     // Config imports
     configImports.push(`import { ${camelCase(id)}Config } from "./${id}/config";`);
 
-    // Preview imports for static registry
+    // Combined preview imports - get both component and props from same import
     const pascalName = pascalCase(id);
-    previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
-
-    // Preview props imports (check if they exist)
     const previewPropsPath = path.join(__dirname, `../../../packages/ui/src/components/${id}/preview.tsx`);
+    
     if (fs.existsSync(previewPropsPath)) {
       const previewContent = fs.readFileSync(previewPropsPath, 'utf8');
       const previewPropsName = `${camelCase(id)}PreviewProps`;
+      
       if (previewContent.includes(`export const ${previewPropsName}`)) {
-        previewPropsImports.push(`import { ${previewPropsName} } from "./${id}/preview";`);
+        // Import both component and props in one statement
+        previewImports.push(`import { ${pascalName}Preview, ${previewPropsName} } from "./${id}/preview";`);
+      } else {
+        // Import only component if no props
+        previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
       }
+    } else {
+      // Import only component if no preview file
+      previewImports.push(`import { ${pascalName}Preview } from "./${id}/preview";`);
     }
   });
 
-  return { configImports, previewImports, previewPropsImports };
+  return { configImports, previewImports };
 }
 
 function generateComponentRegistry(components) {
@@ -152,7 +105,7 @@ function generateComponentMetadataRegistry(components) {
 }
 
 function generateRegistryFile(components) {
-  const { configImports, previewImports, previewPropsImports } = generateImports(components);
+  const { configImports, previewImports } = generateImports(components);
   const componentRegistryEntries = generateComponentRegistry(components);
   const previewRegistryEntries = generatePreviewRegistry(components);
   const previewPropsRegistryEntries = generatePreviewPropsRegistry(components);
@@ -165,11 +118,8 @@ import type { ComponentConfig, PropMetadata } from "../lib/component-config-type
 // Import all component configs
 ${configImports.join("\n")}
 
-// Import all preview components
+// Import all preview components and props
 ${previewImports.join("\n")}
-
-// Import all preview props
-${previewPropsImports.join("\n")}
 
 export const COMPONENT_REGISTRY = {
 ${componentRegistryEntries}
@@ -303,7 +253,11 @@ export type ComponentConfigRegistry = typeof COMPONENT_REGISTRY;
 `;
 }
 
-async function updateRegistry(components) {
+async function generateRegistry() {
+  console.log("🚀 Generating component registry...");
+
+  const components = await scanComponents();
+  
   console.log("🔧 Updating component registry...");
 
   const registryPath = path.join(__dirname, "../../../packages/ui/src/components/registry.ts");
@@ -313,49 +267,13 @@ async function updateRegistry(components) {
   fs.writeFileSync(registryPath, registryContent);
 
   console.log("✅ Updated registry.ts successfully!");
-}
-
-async function generateComponentPages() {
-  console.log("🚀 Updating registry and generating component pages...");
-
-  const components = await scanComponents();
-
-  // Update the registry.ts file with all discovered components
-  await updateRegistry(components);
-
-  // Ensure components directory exists
-  if (!fs.existsSync(PAGES_DIR)) {
-    fs.mkdirSync(PAGES_DIR, { recursive: true });
-  }
-
-  let totalGenerated = 0;
-
-  components.forEach((id) => {
-    const componentDir = path.join(PAGES_DIR, id);
-    const pageFile = path.join(componentDir, "page.tsx");
-
-    // Ensure component directory exists
-    if (!fs.existsSync(componentDir)) {
-      fs.mkdirSync(componentDir, { recursive: true });
-    }
-
-    // Generate page content
-    const configName = `${camelCase(id)}Config`;
-    const pageContent = PAGE_TEMPLATE
-      .replace(/\{\{COMPONENT_NAME\}\}/g, pascalCase(id))
-      .replace(/\{\{COMPONENT_ID\}\}/g, id)
-      .replace(/\{\{COMPONENT_CONFIG_NAME\}\}/g, configName);
-
-    // Write page file
-    fs.writeFileSync(pageFile, pageContent);
-    totalGenerated++;
-
-    console.log(`✅ Generated: components/${id}/page.tsx`);
-  });
-
-  console.log(`🎉 Generated ${totalGenerated} component pages!`);
-  console.log("📍 URLs will be: /ui/components/{component-id}");
+  
+  return components;
 }
 
 // Run the script
-generateComponentPages();
+if (require.main === module) {
+  generateRegistry();
+}
+
+module.exports = { generateRegistry, scanComponents };

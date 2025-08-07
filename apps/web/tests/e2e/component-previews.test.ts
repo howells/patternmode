@@ -184,11 +184,11 @@ async function testComponentPage(
 
   // Take screenshot for visual verification with focus on preview area
   const previewScreenshot = await page.locator("[data-testid=\"component-preview\"]").first().screenshot({
-    path: `tests/screenshots/${componentId}-preview.png`,
+    path: `./tests/screenshots/${componentId}-preview.png`,
   }).catch(() => {
     // Fallback to full page if preview screenshot fails
     return page.screenshot({
-      path: `tests/screenshots/${componentId}.png`,
+      path: `./tests/screenshots/${componentId}.png`,
       fullPage: false,
     });
   });

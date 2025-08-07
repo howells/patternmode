@@ -29,9 +29,7 @@
     "knip": "knip --no-progress",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo build && changeset publish",
-    "generate:pages": "node apps/web/scripts/generate-component-pages.js",
-    "prebuild": "pnpm run generate:pages"
+    "release": "turbo build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

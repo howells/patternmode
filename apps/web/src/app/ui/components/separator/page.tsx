@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${separatorConfig.name} | Patternmode`,
     description: separatorConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${separatorConfig.name} | Patternmode`,
     description: separatorConfig.description,
   },

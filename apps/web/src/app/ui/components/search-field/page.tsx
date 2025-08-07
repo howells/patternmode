@@ -1,5 +1,5 @@
-import { searchFieldConfig } from "@patternmode/ui/components/search-field/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { searchFieldConfig } from "@patternmode/ui/components/search-field/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${searchFieldConfig.name} | Patternmode`,
     description: searchFieldConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${searchFieldConfig.name} | Patternmode`,
     description: searchFieldConfig.description,
   },

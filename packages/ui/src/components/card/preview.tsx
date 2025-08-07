@@ -8,7 +8,7 @@ import { Text } from "../text/component";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardHeading } from "./component";
 
 export function CardPreview(props: CardProps) {
-  const { ref, ...cardProps } = props;
+  const { ref: _ref, ...cardProps } = props;
 
   return (
     <Card {...cardProps}>

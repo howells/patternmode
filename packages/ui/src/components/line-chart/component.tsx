@@ -455,11 +455,11 @@ const Legend = ({ ref, ...props }: LegendProps & { ref?: React.RefObject<HTMLOLi
             : "flex-wrap",
         )}
       >
-        {categories.map((category, index) => (
+        {categories.map((category, _index) => (
           <LegendItem
             key={category}
             name={category}
-            color={colors[index] as AvailableChartColorsKeys}
+            color={colors[_index] as AvailableChartColorsKeys}
             onClick={onClickLegendItem}
             activeLegend={activeLegend}
           />
@@ -682,7 +682,7 @@ const ChartTooltip = ({
           </p>
         </div>
         <div className={cx("space-y-1 px-4 py-2")}>
-          {legendPayload.map(({ value, category, color }, index) => (
+          {legendPayload.map(({ value, category, color }, _index) => (
             <div
               key={category}
               className="flex items-center justify-between space-x-8"

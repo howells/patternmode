@@ -1,5 +1,5 @@
-import { dismissButtonConfig } from "@patternmode/ui/components/dismiss-button/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { dismissButtonConfig } from "@patternmode/ui/components/dismiss-button/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${dismissButtonConfig.name} | Patternmode`,
     description: dismissButtonConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${dismissButtonConfig.name} | Patternmode`,
     description: dismissButtonConfig.description,
   },

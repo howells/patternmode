@@ -6,7 +6,7 @@ import React from "react";
 import { DropdownItem } from "./component";
 
 export function DropdownItemPreview(props: DropdownItemProps) {
-  const { ref, ...restProps } = props;
+  const { ref: _ref, ...restProps } = props;
   return (
     <div className="w-48 bg-white dark:bg-zinc-950 border  dark:border-zinc-800 rounded-md p-1">
       <DropdownItem leftIcon={User} {...restProps}>

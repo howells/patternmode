@@ -1,5 +1,5 @@
-import { categoryBarConfig } from "@patternmode/ui/components/category-bar/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { categoryBarConfig } from "@patternmode/ui/components/category-bar/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${categoryBarConfig.name} | Patternmode`,
     description: categoryBarConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${categoryBarConfig.name} | Patternmode`,
     description: categoryBarConfig.description,
   },

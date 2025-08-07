@@ -87,7 +87,9 @@ export function useKeyboardShortcut(
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!enabled) { return; }
+    if (!enabled) {
+      return;
+    }
 
     const normalizedKeys = normalizeKeys(keys);
 
@@ -138,7 +140,9 @@ export function useKeyboardShortcut(
 
   // Use native event listener with proper cleanup
   useEffect(() => {
-    if (!enabled) { return; }
+    if (!enabled) {
+      return;
+    }
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);

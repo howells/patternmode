@@ -1,5 +1,5 @@
-import { breadcrumbsConfig } from "@patternmode/ui/components/breadcrumbs/config";
 import { Separator } from "@patternmode/ui/components/separator";
+import { breadcrumbsConfig } from "@patternmode/ui/components/breadcrumbs/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${breadcrumbsConfig.name} | Patternmode`,
     description: breadcrumbsConfig.description,
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${breadcrumbsConfig.name} | Patternmode`,
     description: breadcrumbsConfig.description,
   },

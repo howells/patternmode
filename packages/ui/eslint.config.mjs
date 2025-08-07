@@ -14,7 +14,7 @@ export default ui().append(
   },
   {
     name: "examples-console-override",
-    files: ["**/examples.tsx"],
+    files: ["**/examples.tsx", "**/preview.tsx"],
     rules: {
       "no-console": "off",
       "no-alert": "off",
@@ -56,6 +56,14 @@ export default ui().append(
       "react-refresh/only-export-components": "off",
       "no-console": "off",
       "unused-imports/no-unused-vars": "off",
+    },
+  },
+  {
+    name: "registry-override",
+    files: ["**/registry.ts"],
+    rules: {
+      "perfectionist/sort-imports": "off",
+      "import/no-duplicates": "off",
     },
   },
   {

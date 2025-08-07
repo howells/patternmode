@@ -135,7 +135,7 @@ const Trigger = ({
   children,
   placeholder,
   hasError,
-  icon,
+  icon: _icon,
   size = "base",
   ...props
 }: TriggerProps) => {
@@ -360,7 +360,7 @@ const SingleDatePicker = ({
   placeholder = "Select date",
   size = "base",
   hasError,
-  icon,
+  icon: _icon,
   translations,
   enableYearNavigation = false,
   locale = enUS,
@@ -484,7 +484,7 @@ const SingleDatePicker = ({
         size={size}
         className={className}
         hasError={hasError}
-        icon={icon}
+        icon={_icon}
         aria-required={props.required || props["aria-required"]}
         aria-invalid={props["aria-invalid"]}
         aria-label={props["aria-label"]}

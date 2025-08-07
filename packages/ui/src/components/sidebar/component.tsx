@@ -187,7 +187,7 @@ type SidebarHeaderProps = {
  */
 export function SidebarHeader({
   className,
-  isCollapsed,
+  isCollapsed: _isCollapsed,
   ...props
 }: SidebarHeaderProps) {
   return (
@@ -218,7 +218,7 @@ type SidebarBodyProps = {
  */
 export function SidebarBody({
   className,
-  isCollapsed,
+  isCollapsed: _isCollapsed,
   children,
   ...props
 }: SidebarBodyProps) {
@@ -251,7 +251,7 @@ type SidebarFooterProps = {
  */
 export function SidebarFooter({
   className,
-  isCollapsed,
+  isCollapsed: _isCollapsed,
   ...props
 }: SidebarFooterProps) {
   return (

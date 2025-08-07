@@ -19,12 +19,12 @@ Progress.displayName = "Progress";
 /**
  * Progress track component containing the background rail.
  */
-const ProgressTrack = ({ ref, className, variant, animated, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Track>
+const ProgressTrack = ({ ref: _ref, className, variant, animated, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Track>
   & { variant?: "default" | "neutral" | "warning" | "error" | "success"; animated?: boolean } & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Track> | null> }) => {
   const { track } = progressVariants({ variant, animated });
   return (
     <BaseProgress.Track
-      ref={ref}
+      ref={_ref}
       className={cx(track(), className)}
       {...props}
     />
@@ -35,12 +35,12 @@ ProgressTrack.displayName = "ProgressTrack";
 /**
  * Visual indicator showing progress completion.
  */
-const ProgressIndicator = ({ ref, className, variant, animated, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Indicator>
+const ProgressIndicator = ({ ref: _ref, className, variant, animated, ...props }: React.ComponentPropsWithoutRef<typeof BaseProgress.Indicator>
   & { variant?: "default" | "neutral" | "warning" | "error" | "success"; animated?: boolean } & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Indicator> | null> }) => {
   const { indicator } = progressVariants({ variant, animated });
   return (
     <BaseProgress.Indicator
-      ref={ref}
+      ref={_ref}
       className={cx(indicator(), className)}
       {...props}
     />
@@ -84,7 +84,7 @@ ProgressValue.displayName = "ProgressValue";
  * Complete progress bar with all components composed together.
  */
 const ProgressBar = (
-  { ref, value = 0, max = 100, label, showValue = false, valueFormatter, showAnimation = false, variant = "default", className, ...props }: ProgressBarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null> },
+  { ref: _ref, value = 0, max = 100, label, showValue = false, valueFormatter, showAnimation = false, variant = "default", className, ...props }: ProgressBarProps & { ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null> },
 ) => {
   const { root } = progressVariants({ variant, animated: showAnimation });
   const formatValue = valueFormatter || defaultValueFormatter;

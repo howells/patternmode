@@ -13,7 +13,7 @@ export function EmptyStatePreview(props: EmptyStateProps) {
       description="Get started by creating your first item."
       primaryAction={{
         label: "Create Item",
-        onClick: () => alert("Create item clicked"),
+        onClick: () => window.alert("Create item clicked"),
       }}
       secondaryAction={{
         label: "Learn More",
