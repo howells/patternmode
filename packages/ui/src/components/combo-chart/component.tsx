@@ -4,7 +4,7 @@ import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
 import { useWindowSize } from "@uidotdev/usehooks";
-import isEqual from "fast-deep-equal";
+import { isEqual } from "es-toolkit";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import React from "react";
