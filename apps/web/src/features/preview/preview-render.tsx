@@ -197,23 +197,23 @@ export function PreviewDisplay({
   const codeContent = generateLiveCode(getComponentName(componentId), processedProps);
 
   return (
-    <Tabs defaultValue="preview">
+    <div className="w-full">
+      <Tabs defaultValue="preview">
+        <TabsList variant="solid">
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
 
-      <TabsList variant="solid">
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Code</TabsTrigger>
-      </TabsList>
+        <TabsContent value="preview" data-testid="component-preview" className="flex justify-center mt-6">
+          {renderComponent()}
+        </TabsContent>
 
-      <TabsContent value="preview" data-testid="component-preview" className="flex justify-center">
-        {renderComponent()}
-      </TabsContent>
-
-      <TabsContent value="code">
-        <CodeBlock language="tsx">
-          {codeContent}
-        </CodeBlock>
-      </TabsContent>
-
-    </Tabs>
+        <TabsContent value="code" className="mt-6">
+          <CodeBlock language="tsx">
+            {codeContent}
+          </CodeBlock>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

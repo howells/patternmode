@@ -30,7 +30,7 @@ const Toggle = ({
       data-testid="toggle"
       ref={ref}
       render={render || ((toggleProps, state) => {
-        const { ref: _ref, ...buttonProps } = toggleProps;
+        const { ref: toggleRef, ...buttonProps } = toggleProps;
         return (
           <Button
             {...buttonProps}
@@ -41,6 +41,7 @@ const Toggle = ({
             icon={icon}
             fullWidth={fullWidth}
             rounded={rounded}
+            render={<button type="button" ref={toggleRef} />}
             className={cx(
               toggleVariants({ variant, size }),
               className,

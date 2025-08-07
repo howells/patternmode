@@ -6,8 +6,11 @@ import React from "react";
 import { Toggle } from "./component";
 
 export function TogglePreview(props: ToggleProps) {
+  // Remove controlled props to make it interactive
+  const { pressed, ...interactiveProps } = props;
+
   return (
-    <Toggle {...props}>
+    <Toggle {...interactiveProps}>
       {props.children || "Toggle"}
     </Toggle>
   );
@@ -42,18 +45,8 @@ export const togglePreviewProps = [
     options: ["sm", "default", "lg"],
     defaultValue: "default",
   },
-  {
-    name: "pressed",
-    type: "boolean",
-    description: "Whether the toggle is pressed (controlled).",
-    defaultValue: false,
-  },
-  {
-    name: "defaultPressed",
-    type: "boolean",
-    description: "Whether the toggle is initially pressed.",
-    defaultValue: false,
-  },
+
+
   {
     name: "disabled",
     type: "boolean",

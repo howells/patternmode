@@ -79,7 +79,7 @@ const ToggleGroupItem = (
     <BaseToggle
       ref={ref}
       render={render || ((toggleProps, state) => {
-        const { ref: _, ...buttonProps } = toggleProps;
+        const { ref: toggleRef, ...buttonProps } = toggleProps;
         return (
           <Button
             {...buttonProps}
@@ -91,6 +91,7 @@ const ToggleGroupItem = (
             iconStrokeWidth={finalIconStrokeWidth}
             fullWidth={fullWidth}
             rounded={rounded}
+            render={<button type="button" ref={toggleRef} />}
           >
             {renderContent()}
           </Button>

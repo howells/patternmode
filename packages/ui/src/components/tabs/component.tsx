@@ -83,14 +83,15 @@ const TabsTrigger = (
     return tabSize;
   };
 
-  // For solid variant, use Button component with render prop to get selected state
+  // For solid variant, use Button but ensure proper ref forwarding for Base UI measurements
   if (variant === "solid") {
     return (
       <BaseTabs.Tab
         ref={forwardedRef}
         {...props}
         render={(tabProps, state) => {
-          const { ref: _, ...buttonProps } = tabProps;
+          // CRITICAL: Extract ref and forward it properly to the button element
+          const { ref: tabRef, className: tabClassName, ...buttonProps } = tabProps;
           return (
             <Button
               {...buttonProps}
@@ -99,9 +100,12 @@ const TabsTrigger = (
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               iconStrokeWidth={iconStrokeWidth}
+              // Forward Base UI's ref to the actual button element so it can measure it
+              render={<button type="button" ref={tabRef} />}
               disabled={state.disabled}
               className={cx(
                 "relative z-10",
+                tabClassName,
                 className,
               )}
             >
