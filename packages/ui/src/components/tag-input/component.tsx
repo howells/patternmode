@@ -1,11 +1,11 @@
 "use client";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
-import { config } from "../../lib/config";
-import { focusRing } from "../../lib/focus-styles";
+import { defaultConfig } from "../../config/default-config";
+import { focusRing } from "../../presentation/focus-ring";
 import { DropdownItem } from "../dropdown-item/component";
 import { Tag } from "../tag/component";
 
@@ -187,7 +187,7 @@ const defaultValue: string[] = [];
 /**
  * Default icon stroke width.
  */
-const defaultIconStrokeWidth = config.getIconStrokeWidth();
+const defaultIconStrokeWidth = defaultConfig.components.iconStrokeWidth;
 
 /**
  * A sophisticated multi-select tag input component with search, filtering, and tag creation capabilities.

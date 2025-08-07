@@ -1,19 +1,19 @@
 import type { VariantProps } from "tailwind-variants";
-import type { Size } from "../../lib/component-config-types";
-import type { IconComponent } from "../../lib/icon-utils";
+import type { Size } from "../../constants/sizes";
+import type { IconComponent } from "../icon/types";
 import type { IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
-import { renderIcon } from "../../lib/icon-utils";
+import { defaultConfig } from "../../config/default-config";
+import { Icon } from "../icon/component";
 import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";
-import { getIconContainerSize, getLoaderSize, isSmallIconButton } from "./utils";
+import { getIconContainerSize, getIconSize, getLoaderSize, isSmallIconButton } from "./utils";
 import { buttonVariants } from "./variants";
 // Simple anchor fallback for environments without Next.js
 const Link = ({ href, children, ...props }: any) => <a href={href} {...props}>{children}</a>;
@@ -132,7 +132,7 @@ const Button = ({
   icon,
   leftIcon: LeftIcon,
   rightIcon: RightIcon,
-  iconStrokeWidth = config.getIconStrokeWidth(),
+  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
   children,
   fullWidth,
   textAlign,
@@ -174,7 +174,7 @@ const Button = ({
       ? "onDarkButton"
       : "onLightButton";
 
-  // Icon sizing is now handled by the Icon component via renderIcon
+  // Icon sizing is handled by the Icon component
 
   // When loading, Loader replaces leftIcon, and we show loadingText or original children
   const effectiveChildren = isLoading && loadingText ? loadingText : children;
@@ -212,7 +212,13 @@ const Button = ({
       && !isLoading
       && !kbd
     ) {
-      return renderIcon(effectiveLeftIconProp, size, iconStrokeWidth);
+      return (
+        <Icon
+          icon={effectiveLeftIconProp}
+          size={getIconSize(size)}
+          strokeWidth={iconStrokeWidth}
+        />
+      );
     }
 
     // For icon-only buttons in loading state, render centered loader
@@ -337,12 +343,13 @@ const Button = ({
                         : "opacity-0 pointer-events-none",
                     )}
                   >
-                    {effectiveLeftIcon
-                      && renderIcon(
-                        effectiveLeftIcon,
-                        size,
-                        iconStrokeWidth,
-                      )}
+                    {effectiveLeftIcon && (
+                      <Icon
+                        icon={effectiveLeftIcon}
+                        size={getIconSize(size)}
+                        strokeWidth={iconStrokeWidth}
+                      />
+                    )}
                   </div>
                 )}
               </div>
@@ -377,7 +384,7 @@ const Button = ({
                       : "opacity-100",
                   )}
                 >
-                  {renderIcon(RightIcon, size, iconStrokeWidth)}
+                  <Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />
                 </span>
               )}
               {kbd && (
@@ -429,12 +436,13 @@ const Button = ({
                       !isLoading ? "opacity-100" : "opacity-0",
                     )}
                   >
-                    {effectiveLeftIcon
-                      && renderIcon(
-                        effectiveLeftIcon,
-                        size,
-                        iconStrokeWidth,
-                      )}
+                    {effectiveLeftIcon && (
+                      <Icon
+                        icon={effectiveLeftIcon}
+                        size={getIconSize(size)}
+                        strokeWidth={iconStrokeWidth}
+                      />
+                    )}
                   </div>
                 )}
               </div>
@@ -458,7 +466,7 @@ const Button = ({
                     : "opacity-100",
                 )}
               >
-                {renderIcon(RightIcon, size, iconStrokeWidth)}
+                {<Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />}
               </span>
             )}
           </span>
@@ -499,12 +507,13 @@ const Button = ({
                       !isLoading ? "opacity-100" : "opacity-0",
                     )}
                   >
-                    {effectiveLeftIcon
-                      && renderIcon(
-                        effectiveLeftIcon,
-                        size,
-                        iconStrokeWidth,
-                      )}
+                    {effectiveLeftIcon && (
+                      <Icon
+                        icon={effectiveLeftIcon}
+                        size={getIconSize(size)}
+                        strokeWidth={iconStrokeWidth}
+                      />
+                    )}
                   </div>
                 )}
               </div>
@@ -527,7 +536,7 @@ const Button = ({
                     : "opacity-100",
                 )}
               >
-                {renderIcon(RightIcon, size, iconStrokeWidth)}
+                {<Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />}
               </span>
             )}
           </span>
@@ -568,7 +577,7 @@ const Button = ({
                   )}
                 >
                   {effectiveLeftIcon
-                    && renderIcon(effectiveLeftIcon, size, iconStrokeWidth)}
+                    && <Icon icon={effectiveLeftIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />}
                 </div>
               )}
             </div>

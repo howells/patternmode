@@ -1,4 +1,4 @@
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { Search, X } from "lucide-react";
 import * as React from "react";
 import { Button } from "../button/component";

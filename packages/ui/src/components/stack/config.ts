@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Layout } from "lucide-react";
 import { HStack, Stack, VStack } from "./component";
 import { AlignmentExample, CustomSpacingExample, DefaultExample, HelperComponentsExample, HorizontalExample, ResponsiveExample, WithPaddingExample, WrappingExample } from "./examples";

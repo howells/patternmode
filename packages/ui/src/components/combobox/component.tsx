@@ -1,16 +1,15 @@
 "use client";
 
 import type { ComboboxOption, ComboboxProps } from "./types";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
 
 import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
-import { hasErrorInput } from "../../lib/focus-styles";
-import { renderIcon } from "../../lib/icon-utils";
+import { defaultConfig } from "../../config/default-config";
+import { hasErrorInput } from "../../presentation/has-error-input";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
 import { Loader } from "../loader/component";
@@ -179,7 +178,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
   className,
   size = "base",
   searchDebounce = 300,
-  iconStrokeWidth = config.getIconStrokeWidth(),
+  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
   getItemValue = (item: T) => item.value,
   getItemLabel = (item: T) => item.label,
   getItemIcon,
@@ -415,7 +414,11 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
               )}
         </div>
         <span className="text-zinc-400 dark:text-zinc-500">
-          {renderIcon(ChevronsUpDown, size, config.getIconStrokeWidth())}
+          <Icon
+            icon={ChevronsUpDown}
+            size={size}
+            strokeWidth={defaultConfig.components.iconStrokeWidth}
+          />
         </span>
       </button>
 

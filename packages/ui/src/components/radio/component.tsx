@@ -10,7 +10,7 @@ import type {
 } from "./types";
 import { Radio as BaseRadio } from "@base-ui-components/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import {
   radioCardVariants,

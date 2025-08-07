@@ -1,6 +1,6 @@
 "use client";
 
-import type { IconComponent } from "../../lib/icon-utils";
+import type { IconComponent } from "../icon/types";
 import React from "react";
 import { DatePicker } from "./component";
 

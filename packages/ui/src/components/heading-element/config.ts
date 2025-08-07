@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Heading } from "lucide-react";
 import { HeadingElement } from "./component";
 import { AllLevelsExample, DefaultExample, WithCustomClassExample } from "./examples";

@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { MoreHorizontal } from "lucide-react";
 import { ButtonGroup } from "./component";
 import {

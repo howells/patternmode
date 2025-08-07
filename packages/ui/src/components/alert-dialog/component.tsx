@@ -12,7 +12,7 @@ import type {
 } from "./types";
 
 import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import * as React from "react";
 import { Button } from "../button/component";

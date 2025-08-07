@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { FileText } from "lucide-react";
 import { Form, FormControl, FormDescription, FormError, FormField, FormItem, FormLabel } from "./component";
 import { DefaultExample, HorizontalLayoutExample, HTML5ValidationExample, RegistrationFormExample } from "./examples";

@@ -3,7 +3,7 @@ import type { useRender } from "@base-ui-components/react/use-render";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import type { selectTriggerVariants } from "./variants";
 
 /**

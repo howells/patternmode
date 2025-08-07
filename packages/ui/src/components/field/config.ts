@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Square } from "lucide-react";
 import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "./component";
 import { CompleteFieldExample, DefaultExample, WithDescriptionExample, WithErrorExample } from "./examples";

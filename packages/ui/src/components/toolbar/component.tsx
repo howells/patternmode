@@ -10,7 +10,7 @@ import type {
 } from "./types";
 
 import { Toolbar as BaseToolbar } from "@base-ui-components/react/toolbar";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { toolbarVariants } from "./variants";
 
 /**

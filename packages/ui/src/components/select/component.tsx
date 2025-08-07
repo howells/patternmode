@@ -11,12 +11,12 @@ import type {
   SelectTriggerProps,
 } from "./types";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import * as React from "react";
-import { config } from "../../lib/config";
-import { hasErrorInput } from "../../lib/focus-styles";
+import { defaultConfig } from "../../config/default-config";
+import { hasErrorInput } from "../../presentation/has-error-input";
 import { Button } from "../button/component";
 import { Icon } from "../icon/component";
 import { selectItemVariants, selectPopoverVariants } from "./variants";
@@ -99,7 +99,7 @@ const SelectScrollDownButton = ({ ref, className, ...props }: SelectScrollDownBu
     <Icon
       icon={ChevronDown}
       size="sm"
-      strokeWidth={config.getIconStrokeWidth()}
+      strokeWidth={defaultConfig.components.iconStrokeWidth}
       aria-hidden="true"
     />
   </BaseSelect.ScrollDownArrow>

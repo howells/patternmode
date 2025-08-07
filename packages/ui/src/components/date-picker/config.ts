@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Calendar } from "lucide-react";
 import { DatePicker } from "./component";
 import {

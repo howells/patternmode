@@ -2,8 +2,8 @@
 
 import type { ComponentId } from "@patternmode/ui/components/registry";
 import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
-import type { Size } from "@patternmode/ui/lib/component-config-types";
-import type { GapValue } from "@patternmode/ui/lib/spacing-utils";
+import type { Size } from "@patternmode/ui/constants/sizes";
+import type { GapValue } from "@patternmode/ui/presentation/spacing-utils";
 
 import { Button } from "@patternmode/ui/components/button";
 import { Card } from "@patternmode/ui/components/card";
@@ -19,7 +19,7 @@ import { SortableList } from "@patternmode/ui/components/sortable-list";
 import { Stack } from "@patternmode/ui/components/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/ui/components/toolbar";
-import { sizes } from "@patternmode/ui/lib/component-config-types";
+import { SIZES as sizes } from "@patternmode/ui/constants/sizes";
 import { MoreHorizontal, Plus, Rows3, Settings2, Trash2 } from "lucide-react";
 import { parseAsJson, useQueryState } from "nuqs";
 import React, { useMemo, useState } from "react";

@@ -3,8 +3,8 @@
 import type { ButtonProps } from "./component";
 import { Save } from "lucide-react";
 import React from "react";
-import { sizes } from "../../lib/component-config-types";
-import { componentVariants } from "../../lib/variants";
+import { SIZES as sizes } from "../../constants/sizes";
+import { componentVariants } from "../../constants/variants";
 import { Button } from "./component";
 
 export function ButtonPreview(props: ButtonProps) {

@@ -1,10 +1,11 @@
 // Use Base UI components directly to avoid cross-component dependencies
 import { Radio } from "@base-ui-components/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
-import { focusInput, focusRing } from "../../lib/focus-styles";
+import { focusInput } from "../../presentation/focus-input";
+import { focusRing } from "../../presentation/focus-ring";
 
 type RadioCardGroupProps = React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & {
   ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null>;

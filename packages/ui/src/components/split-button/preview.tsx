@@ -1,11 +1,11 @@
 "use client";
 
-import type { Size } from "../../lib/component-config-types";
-import type { ButtonVariant } from "../../lib/variants";
+import type { Size } from "../../constants/sizes";
+import type { ButtonVariant } from "../../constants/variants";
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import React from "react";
-import { sizes } from "../../lib/component-config-types";
-import { componentVariants } from "../../lib/variants";
+import { SIZES as sizes } from "../../constants/sizes";
+import { componentVariants } from "../../constants/variants";
 import { Icon } from "../icon/component";
 import { SplitButton } from "./component";
 

@@ -1,4 +1,4 @@
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 export type HeadingElementProps = {
   /**

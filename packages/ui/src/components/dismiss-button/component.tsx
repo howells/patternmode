@@ -1,11 +1,11 @@
 import type { DismissButtonProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { X } from "lucide-react";
 
 import React from "react";
-import { config } from "../../lib/config";
-import { iconUtils } from "../../lib/icon-sizing";
+import { defaultConfig } from "../../config/default-config";
+import { Icon } from "../icon/component";
 import { dismissButtonVariants } from "./variants";
 
 // Map dismiss button sizes to icon sizes (direct 1:1 mapping)
@@ -20,11 +20,10 @@ const dismissButtonToIconSizeMap = {
  * Close button component for dismissing modals, alerts, and temporary content.
  */
 const DismissButton = (
-  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove", ...props }: DismissButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
+  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = defaultConfig.components.iconStrokeWidth, size = "base", className, "aria-label": ariaLabel = "Remove", ...props }: DismissButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> },
 ) => {
   // Get appropriate icon size for dismiss button size (matching badge icon sizing)
   const iconSize = dismissButtonToIconSizeMap[size];
-  const iconSizeClass = iconUtils.getIconSize(iconSize);
 
   return (
     <button
@@ -36,10 +35,10 @@ const DismissButton = (
       aria-label={ariaLabel}
       {...props}
     >
-      <IconComponent
-        className={cx(iconSizeClass, "shrink-0")}
+      <Icon
+        icon={IconComponent}
+        size={iconSize}
         strokeWidth={iconStrokeWidth}
-        aria-hidden="true"
       />
     </button>
   );

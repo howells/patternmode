@@ -1,6 +1,6 @@
 import type { CalloutProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";

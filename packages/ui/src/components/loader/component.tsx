@@ -1,5 +1,5 @@
 import type { LoaderProps } from "./types";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { Loader2 } from "lucide-react";
 import React from "react";

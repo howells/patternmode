@@ -1,10 +1,10 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
-import { config } from "../../lib/config";
-import { iconUtils } from "../../lib/icon-sizing";
+import { defaultConfig } from "../../config/default-config";
+import { Icon } from "../icon/component";
 import { Avatar } from "../avatar/component";
 import { DismissButton } from "../dismiss-button/component";
 
@@ -101,7 +101,7 @@ type TagProps = {
  * Label component for categorizing and tagging content with removable options.
  */
 const Tag = (
-  { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, icon, leftIcon, iconStrokeWidth = config.getIconStrokeWidth(), avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps,
+  { ref: forwardedRef, render = <span />, label, value, count, countClassName, dismissible = false, onDismiss, icon, leftIcon, iconStrokeWidth = defaultConfig.components.iconStrokeWidth, avatar, className, dismissAriaLabel = "Remove", ...props }: TagProps,
 ) => {
   // Prioritize icon prop over leftIcon prop
   const effectiveIcon = icon || leftIcon;
@@ -132,10 +132,11 @@ const Tag = (
           />
         )}
         {effectiveIcon && !avatar && (
-          React.createElement(effectiveIcon, {
-            className: cx(iconUtils.getIconSize("xs"), "shrink-0"),
-            strokeWidth: iconStrokeWidth,
-          })
+          <Icon
+            icon={effectiveIcon}
+            size="xs"
+            strokeWidth={iconStrokeWidth}
+          />
         )}
         {label && (
           <>

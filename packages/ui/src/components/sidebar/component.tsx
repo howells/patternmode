@@ -1,7 +1,7 @@
 "use client";
 
-import type { IconComponent } from "../../lib/icon-utils";
-import { cx } from "@patternmode/ui/cx";
+import type { IconComponent } from "../icon/types";
+import { cx } from "../../utils/cx";
 import { ArrowRight, ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import Link from "next/link";

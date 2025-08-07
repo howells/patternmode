@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { List } from "lucide-react";
 import { FieldArray } from "./component";
 import { ContactListExample, CustomRenderExample, FAQBuilderExample, ProductVariantsExample } from "./examples";
@@ -12,7 +12,7 @@ export const fieldArrayConfig: ComponentConfig = {
   description: "Generic field array component for managing dynamic lists of structured data with configurable schemas.",
   importStatement: "import { FieldArray } from \"@patternmode/ui/field-array\";",
   component: FieldArray,
-  props: fieldArrayPreviewProps,
+  previewProps: fieldArrayPreviewProps,
   components: [
     {
       name: "FieldArray",

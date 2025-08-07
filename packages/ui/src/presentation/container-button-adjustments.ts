@@ -1,4 +1,4 @@
-import type { Size } from "./component-config-types";
+import type { Size } from "../constants/sizes";
 
 /**
  * Centralized Container Button Adjustments

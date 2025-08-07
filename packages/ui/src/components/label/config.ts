@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Tag } from "lucide-react";
 import { Label } from "./component";
 import { BasicExample, CustomStyledExample, DisabledExample, RequiredExample } from "./examples";

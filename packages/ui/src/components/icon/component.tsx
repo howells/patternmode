@@ -2,9 +2,10 @@
 
 import type { IconProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
+import type { IconSize } from "./types";
 import React from "react";
-import { config } from "../../lib/config";
+import { defaultConfig } from "../../config/default-config";
 import { iconVariants } from "./variants";
 
 function FallbackIcon({
@@ -12,7 +13,7 @@ function FallbackIcon({
   size,
 }: {
   className?: string;
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  size?: IconSize;
 }) {
   const sizeClasses = iconVariants({ size });
 
@@ -38,7 +39,7 @@ function SafeDynamicIcon({
   fallbackIcon,
 }: {
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  size?: IconSize;
   strokeWidth?: number;
   className?: string;
   fallbackIcon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
@@ -78,7 +79,7 @@ function Icon({
   className,
   fallbackIcon,
 }: IconProps) {
-  const finalStrokeWidth = strokeWidth ?? config.getIconStrokeWidth();
+  const finalStrokeWidth = strokeWidth ?? defaultConfig.components.iconStrokeWidth;
   // Handle case where IconComponent is undefined
   if (!IconComponent) {
     const FallbackIconComponent = fallbackIcon;
@@ -141,76 +142,3 @@ function Icon({
 Icon.displayName = "Icon";
 
 export { Icon };
-
-/**
- * Hook to get appropriate icon size based on component size.
- */
-export function useIconSize(
-  componentSize?: string,
-): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
-  switch (componentSize) {
-    case "xs":
-    case "icon-xs":
-      return "xs";
-    case "sm":
-    case "icon-sm":
-    case "button-sm":
-      return "sm";
-    case "lg":
-    case "icon-lg":
-    case "button-lg":
-      return "lg";
-    case "xl":
-    case "2xl":
-      return "xl";
-    case "3xl":
-      return "2xl";
-    default:
-      return "base";
-  }
-}
-
-/**
- * Utility to get icon size for a given context (non-hook version).
- */
-export function getIconSizeForContext(
-  componentSize?: string,
-): "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" {
-  switch (componentSize) {
-    case "xs":
-    case "icon-xs":
-      return "xs";
-    case "sm":
-    case "icon-sm":
-    case "button-sm":
-      return "sm";
-    case "lg":
-    case "icon-lg":
-    case "button-lg":
-      return "lg";
-    case "xl":
-    case "2xl":
-      return "xl";
-    case "3xl":
-      return "2xl";
-    default:
-      return "base";
-  }
-}
-
-/**
- * Utility to create icon with automatic sizing based on context.
- */
-export function createIconWithSize(
-  IconComponent: React.ComponentType<{
-    className?: string;
-    strokeWidth?: number;
-  }>,
-  contextSize?: string,
-) {
-  const iconSize = getIconSizeForContext(contextSize);
-
-  return function AutoSizedIcon(props: Omit<IconProps, "icon" | "size">) {
-    return <Icon icon={IconComponent} size={iconSize} {...props} />;
-  };
-}

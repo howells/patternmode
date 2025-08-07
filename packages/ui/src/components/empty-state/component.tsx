@@ -1,6 +1,6 @@
 import type { EmptyStateProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
 import { Button } from "../button/component";

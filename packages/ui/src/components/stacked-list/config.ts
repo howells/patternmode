@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { List } from "lucide-react";
 import { StackedList, StackedListContent, StackedListEmpty, StackedListHeader, StackedListItem } from "./component";
 import { DefaultExample, EmptyStateExample, InCardExample, InteractiveExample, SimpleListExample, WithIconsExample } from "./examples";

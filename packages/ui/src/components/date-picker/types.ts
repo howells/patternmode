@@ -2,8 +2,8 @@ import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import type { Locale } from "date-fns";
 import type React from "react";
-import type { Size } from "../../lib/component-config-types";
-import type { IconComponent } from "../../lib/icon-utils";
+import type { Size } from "../../constants/sizes";
+import type { IconComponent } from "../icon/types";
 import type { Button } from "../button/component";
 
 export type TimeSegmentProps = {

@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { ChevronsUpDown } from "lucide-react";
 import { SelectNative } from "./component";
 import { DefaultExample, DisabledExample, ErrorStateExample, MultipleExample, WithGroupsExample, WithLabelExample } from "./examples";

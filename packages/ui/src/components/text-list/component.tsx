@@ -1,6 +1,6 @@
 import type { TextListIndicatorProps, TextListItemProps, TextListProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { Icon } from "../icon/component";
 import { indicatorVariants, listItemVariants, listVariants } from "./variants";

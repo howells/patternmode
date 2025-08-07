@@ -4,7 +4,7 @@ import type { z } from "zod";
 
 import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import * as React from "react";
 

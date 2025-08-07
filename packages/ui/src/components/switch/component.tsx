@@ -1,7 +1,7 @@
 import type { SwitchProps } from "./types";
 import { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { switchVariants } from "./variants";
 

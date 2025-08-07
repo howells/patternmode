@@ -17,7 +17,7 @@ import {
 } from "@patternmode/ui/components/sidebar";
 import { HStack, Stack } from "@patternmode/ui/components/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "@patternmode/ui/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { List, Rows3 } from "lucide-react";
 import { motion } from "motion/react";

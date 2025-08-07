@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Package } from "lucide-react";
 import { IconContainer } from "./component";
 import { CenteredExample, CustomColorsExample, DefaultExample, ExtraLargeExample, LargeSizeExample, SemanticVariantsExample, SizeVariantsExample, WithCustomColorExample, WithVariantExample } from "./examples";

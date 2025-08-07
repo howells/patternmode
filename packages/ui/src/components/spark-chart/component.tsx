@@ -2,8 +2,8 @@
 
 import type { AxisDomain } from "recharts/types/util/types";
 
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
-import { cx } from "@patternmode/ui/cx";
+import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
+import { cx } from "../../utils/cx";
 
 import React from "react";
 
@@ -18,12 +18,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  AvailableChartColors,
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
-} from "../../lib/chartUtils";
+import { AvailableChartColors } from "../../charts/constants/chart-colors";
+import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
+import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
 
 // #region SparkChart
 

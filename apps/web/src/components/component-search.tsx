@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentConfig } from "@patternmode/ui/lib/component-config-types";
+import type { ComponentConfig } from "@patternmode/ui/types/component-types";
 
 import { Button } from "@patternmode/ui/components/button";
 import {
@@ -13,7 +13,7 @@ import { Input } from "@patternmode/ui/components/input";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
 import { Text } from "@patternmode/ui/components/text";
-import { cx } from "@patternmode/ui/lib/utils";
+import { cx } from "@patternmode/ui/utils/cx";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";

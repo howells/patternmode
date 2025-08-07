@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 type SkeletonProps = {
   /**

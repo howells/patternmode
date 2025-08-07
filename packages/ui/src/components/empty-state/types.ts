@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 
 export type EmptyStateProps = {
   /**

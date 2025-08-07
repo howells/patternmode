@@ -1,4 +1,5 @@
-import type { ComponentConfig, PropMetadata } from "@patternmode/ui/lib/component-config-types";
+import type { ComponentConfig } from "@patternmode/ui/types/component-types";
+import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import { getPreviewProps } from "@patternmode/ui/components/registry";
 
@@ -21,7 +22,7 @@ export function getPrimaryComponent(config: ComponentConfig): string {
 /**
  * Extract all available props from a config using static registry.
  */
-export async function getConfigProps(config: ComponentConfig): Promise<PropMetadata[]> {
+export async function getConfigProps(config: ComponentConfig): Promise<PreviewProps[]> {
   // First try to get props from static registry
   const registryProps = await getPreviewProps(config.id);
   if (registryProps.length > 0) {
@@ -30,13 +31,13 @@ export async function getConfigProps(config: ComponentConfig): Promise<PropMetad
   }
 
   // Fallback: If config has direct props, return them
-  if (config.props && config.props.length > 0) {
-    return config.props;
+  if (config.previewProps && config.previewProps.length > 0) {
+    return config.previewProps;
   }
 
   // For multi-component families, collect props from all components
   if (config.components) {
-    const allProps: PropMetadata[] = [];
+    const allProps: PreviewProps[] = [];
 
     config.components.forEach((componentDef) => {
       if (componentDef.props) {
@@ -66,7 +67,7 @@ export async function getDefaultProps(config: ComponentConfig): Promise<Record<s
   const props = await getConfigProps(config);
   const defaultProps: Record<string, unknown> = {};
 
-  props.forEach((prop: PropMetadata) => {
+  props.forEach((prop: PreviewProps) => {
     // Check for standard defaultValue
     if (prop.defaultValue !== undefined) {
       defaultProps[prop.name] = prop.defaultValue;
@@ -85,7 +86,7 @@ export async function getDefaultProps(config: ComponentConfig): Promise<Record<s
   });
 
   // Add default children if the component supports it
-  const childrenProp = props.find((prop: PropMetadata) => prop.name === "children");
+  const childrenProp = props.find((prop: PreviewProps) => prop.name === "children");
   if (childrenProp && childrenProp.defaultValue !== undefined) {
     defaultProps.children = childrenProp.defaultValue;
   }

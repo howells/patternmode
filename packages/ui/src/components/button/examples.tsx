@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { iconRegistry } from "../../lib/icon-registry";
+import { iconRegistry } from "../../icons/icon-registry";
 import { HStack, Stack } from "../stack/component";
 import { Button } from "./component";
 

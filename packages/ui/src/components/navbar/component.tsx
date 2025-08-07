@@ -1,6 +1,6 @@
 "use client";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { LayoutGroup, motion } from "motion/react";
 import Link from "next/link";
 

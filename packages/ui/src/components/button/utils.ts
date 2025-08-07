@@ -1,5 +1,26 @@
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import type { IconButtonSize } from "./types";
+
+/**
+ * Maps button sizes to appropriate icon sizes.
+ * Used for determining the correct Icon component size based on button size.
+ */
+export const getIconSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | "base" | "lg" => {
+  const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base" | "lg"> = {
+    // Text button sizes
+    "xs": "xs",
+    "sm": "xs",
+    "base": "sm",
+    "lg": "base",
+    // Icon button sizes
+    "icon-xs": "xs",
+    "icon-sm": "xs",
+    "icon": "sm",
+    "icon-lg": "base",
+  };
+
+  return sizeMap[buttonSize] || "sm";
+};
 
 /**
  * Maps button sizes to appropriate loader sizes.

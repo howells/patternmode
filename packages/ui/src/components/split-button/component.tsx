@@ -1,7 +1,7 @@
 "use client";
 
 import type { SplitButtonProps } from "./types";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { ChevronDown } from "lucide-react";
 import React from "react";

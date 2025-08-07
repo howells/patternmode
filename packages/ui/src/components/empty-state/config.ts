@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { FileX } from "lucide-react";
 import { EmptyState } from "./component";
 import { DefaultExample, LargeSizeExample, MinimalExample, WithBothActionsExample } from "./examples";

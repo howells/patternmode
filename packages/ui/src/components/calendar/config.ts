@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "./component";
 import {

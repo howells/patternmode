@@ -9,8 +9,8 @@ export const iconVariants = tv({
       "base": "size-4",
       "lg": "size-5",
       "xl": "size-6",
-      "2xl": "size-8",
-      "3xl": "size-12",
+      "2xl": "size-7",
+      "3xl": "size-8",
     },
   },
   defaultVariants: {

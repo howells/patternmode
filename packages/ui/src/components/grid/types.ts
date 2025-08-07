@@ -1,6 +1,6 @@
 import type React from "react";
-import type { ResponsiveValue } from "../../lib/responsive-utils";
-import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import type { ResponsiveValue } from "../../presentation/responsive-utils";
+import type { ResponsiveSpacing, SpacingValue } from "../../presentation/spacing-utils";
 
 /**
  * Props for the Grid component.

@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
-import { hasErrorInput } from "../../lib/focus-styles";
-import { formControlElementVariants } from "../../lib/form-control-variants";
+import { hasErrorInput } from "../../presentation/has-error-input";
+import { formControlElementVariants } from "../../constants/form-control-variants";
 
 export const selectNativeStyles = tv({
   extend: formControlElementVariants,

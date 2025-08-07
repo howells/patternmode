@@ -1,6 +1,6 @@
 "use client";
 
-import type { GlobalSemanticVariant, TailwindColor } from "@patternmode/ui/lib/variants";
+import type { GlobalSemanticVariant, TailwindColor } from "@patternmode/ui/constants/variants";
 import type { LucideIcon } from "lucide-react";
 
 import { Badge } from "@patternmode/ui/components/badge";

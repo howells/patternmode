@@ -8,6 +8,9 @@ import type { iconVariants } from "./variants";
  */
 export type IconComponent = React.ComponentType<{ className?: string; strokeWidth?: number }>;
 
+// Icon-specific sizes allow larger display options than general control sizes
+export type IconSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+
 export type IconProps = {
   /**
    * The Lucide icon component to render.
@@ -16,11 +19,9 @@ export type IconProps = {
   icon: IconComponent;
   /**
    * Visual size of the icon affecting its dimensions.
-   * Xs (12px) for very small contexts, sm (14px) for small buttons,
-   * base (16px) default size, lg (20px) for larger contexts,
-   * xl (24px) for headers, 2xl (32px) for display, 3xl (48px) for hero sections.
+   * Uses the standard Size type (xs, sm, base, lg) for consistency across all components.
    */
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  size?: IconSize;
   /**
    * Custom stroke width for the icon lines.
    * When not specified, uses the global configuration default.

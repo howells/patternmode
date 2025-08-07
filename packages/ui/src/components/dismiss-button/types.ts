@@ -19,7 +19,7 @@ export type DismissButtonProps = {
   }>;
   /**
    * Icon stroke width.
-   * @default config.getIconStrokeWidth()
+   * @default defaultConfig.components.iconStrokeWidth
    */
   "iconStrokeWidth"?: number;
   /**

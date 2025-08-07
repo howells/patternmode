@@ -3,7 +3,7 @@
 import type { Locale } from "date-fns";
 import type { DayPickerProps, Matcher } from "react-day-picker";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import {
   addYears,
   eachMonthOfInterval,
@@ -27,7 +27,7 @@ import {
   DayPicker,
   useDayPicker,
 } from "react-day-picker";
-import { focusRing } from "../../lib/focus-styles";
+import { focusRing } from "../../presentation/focus-ring";
 import { Button } from "../button/component";
 import {
   Select,

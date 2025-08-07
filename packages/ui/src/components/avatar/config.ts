@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage, AvatarWithFallback } from "./component";
 import {

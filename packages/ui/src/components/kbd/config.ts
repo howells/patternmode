@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Keyboard } from "lucide-react";
 import { Kbd } from "./component";
 import { CombinationExample, DefaultExample, SizesExample, VariantExample } from "./examples";

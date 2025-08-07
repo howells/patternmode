@@ -1,6 +1,6 @@
 import type { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import type * as React from "react";
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 
 export type TabsListVariant = "solid" | "line";
 

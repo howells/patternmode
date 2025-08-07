@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import { formControlElementVariants } from "../../lib/form-control-variants";
+import { formControlElementVariants } from "../../constants/form-control-variants";
 
 export const selectTriggerVariants = tv({
   extend: formControlElementVariants,

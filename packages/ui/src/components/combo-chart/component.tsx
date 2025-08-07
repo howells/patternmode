@@ -2,8 +2,8 @@
 
 import type { AxisDomain } from "recharts/types/util/types";
 
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
-import { cx } from "@patternmode/ui/cx";
+import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
+import { cx } from "../../utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { isEqual } from "es-toolkit";
 
@@ -23,14 +23,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  AvailableChartColors,
+import { AvailableChartColors } from "../../charts/constants/chart-colors";
 
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
-  hasOnlyOneValueForKey,
-} from "../../lib/chartUtils";
+import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
+import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
+import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
 
 // #region Shape
 

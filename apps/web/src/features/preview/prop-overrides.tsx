@@ -1,4 +1,4 @@
-import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import React from "react";
 
@@ -8,7 +8,7 @@ export type PropOverride = {
   componentId: string;
   propName: string;
   render: (props: {
-    prop: PropMetadata;
+    prop: PreviewProps;
     currentValue: unknown;
     onValueChange: (value: unknown) => void;
   }) => React.ReactNode;

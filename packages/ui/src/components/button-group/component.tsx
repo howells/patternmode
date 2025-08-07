@@ -1,9 +1,9 @@
 "use client";
 
 import type { ButtonGroupProps } from "./types";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import * as React from "react";
-import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../lib/spacing-utils";
+import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../presentation/spacing-utils";
 import { buttonGroupVariants } from "./variants";
 
 /**

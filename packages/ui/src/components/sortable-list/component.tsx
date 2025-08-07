@@ -18,7 +18,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { GripVertical } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
 import { Checkbox } from "../checkbox/component";

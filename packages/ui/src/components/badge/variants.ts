@@ -1,9 +1,10 @@
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { tv } from "tailwind-variants";
-import { borderRadiusVariants, extendedBorderRadiusVariants } from "../../lib/border-radius";
+import { borderRadiusVariants } from "../../presentation/border-radius-variants";
+import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
 import {
   getVariantClasses,
-} from "../../lib/variants";
+} from "../../constants/variants";
 
 // Badge variant configurations - generate dynamically for all supported colors
 const badgeVariantStyles = {

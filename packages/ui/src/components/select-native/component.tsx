@@ -1,10 +1,10 @@
 import type { SelectNativeProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
-import { renderIcon } from "../../lib/icon-utils";
+import { defaultConfig } from "../../config/default-config";
+import { Icon } from "../icon/component";
 import { selectNativeStyles } from "./variants";
 
 /**
@@ -30,7 +30,11 @@ const SelectNative = ({ ref: forwardedRef, className, hasError, size, ...props }
       )}
       >
         <span className="text-zinc-400 dark:text-zinc-500">
-          {renderIcon(ChevronsUpDown, size, config.getIconStrokeWidth())}
+          <Icon
+            icon={ChevronsUpDown}
+            size={size}
+            strokeWidth={defaultConfig.components.iconStrokeWidth}
+          />
         </span>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { ResponsiveValue } from "../../lib/responsive-utils";
-import type { GapValue, ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import type { ResponsiveValue } from "../../presentation/responsive-utils";
+import type { GapValue, ResponsiveSpacing, SpacingValue } from "../../presentation/spacing-utils";
 import type { stackVariants } from "./variants";
 
 /**

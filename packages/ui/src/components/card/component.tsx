@@ -1,10 +1,10 @@
-import type { ResponsiveSpacing, SpacingValue } from "../../lib/spacing-utils";
+import type { ResponsiveSpacing, SpacingValue } from "../../presentation/spacing-utils";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
-import { generateResponsiveSpacingClasses, getBaseSpacingValue, getPaddingClass } from "../../lib/spacing-utils";
+import { generateResponsiveSpacingClasses, getBaseSpacingValue, getPaddingClass } from "../../presentation/spacing-utils";
 import { Subheading } from "../subheading/component";
 import { cardVariants } from "./variants";
 

@@ -1,14 +1,14 @@
-import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import { Field, FieldLabel } from "@patternmode/ui/components/field";
 import { VStack } from "@patternmode/ui/components/stack";
 import { Tooltip } from "@patternmode/ui/components/tooltip";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "@patternmode/ui/utils/cx";
 import { HelpCircle } from "lucide-react";
 import React from "react";
 
 type PropFieldProps = {
-  prop: PropMetadata;
+  prop: PreviewProps;
   children: React.ReactNode;
   className?: string;
 };

@@ -1,6 +1,6 @@
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import type { GlobalSemanticVariant, TailwindColor } from "../../constants/variants";
 import type { dotVariants } from "./variants";
 
 // Dot-specific variant type (semantic + all Tailwind colors)

@@ -1,5 +1,5 @@
 import { Field } from "@base-ui-components/react/field";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
 

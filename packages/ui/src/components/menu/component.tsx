@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as BaseMenu } from "@base-ui-components/react/menu";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 
 import * as React from "react";

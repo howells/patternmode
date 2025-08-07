@@ -1,16 +1,16 @@
-import type { ComponentWithIconsProps } from "../../lib/icon-sizing";
+import type { IconComponent } from "../icon/types";
 import type { BadgeVariant } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { X } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
-import { getIconComponent } from "../../lib/icon-registry";
-import { iconUtils } from "../../lib/icon-sizing";
+import { defaultConfig } from "../../config/default-config";
+import { getIconComponent } from "../../icons/icon-registry";
+import { Icon } from "../icon/component";
 import {
   getColorClasses,
-} from "../../lib/variants";
+} from "../../constants/variants";
 import { DismissButton } from "../dismiss-button/component";
 import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 
@@ -63,18 +63,28 @@ type BadgeProps = {
    * Controls padding, text size, and overall dimensions.
    */
   size?: "xs" | "sm" | "base" | "lg";
-} & useRender.ComponentProps<"span"> & ComponentWithIconsProps;
+  /**
+   * Icon component to display on the left side.
+   */
+  leftIcon?: IconComponent | string;
+  /**
+   * Icon component to display on the right side.
+   */
+  rightIcon?: IconComponent | string;
+  /**
+   * Stroke width for icons (defaults to global config).
+   */
+  iconStrokeWidth?: number;
+} & useRender.ComponentProps<"span">;
 
 /**
  * Small status indicator component for labels, counts, and categorical information.
  */
 const Badge = (
-  { ref: forwardedRef, render = <span />, variant, size = "base", border, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = config.getIconStrokeWidth(), children, dismissible: _dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
+  { ref: forwardedRef, render = <span />, variant, size = "base", border, rounded, leftIcon: LeftIcon, rightIcon: RightIcon, iconStrokeWidth = defaultConfig.components.iconStrokeWidth, children, dismissible: _dismissible = false, onDismiss, dismissIcon: DismissIcon = X, statusDot, statusAnimated = false, className, ...otherProps }: BadgeProps & { ref?: React.RefObject<HTMLSpanElement | null> },
 ) => {
   // Get appropriate icon size for badge size
   const iconSize = badgeToIconSizeMap[size];
-  const iconSizeClass = iconUtils.getIconSize(iconSize);
-  const iconClassName = `${iconSizeClass} shrink-0`;
 
   // Use default variant when statusDot is true (unless custom color or variant provided)
   const effectiveVariant = variant;
@@ -110,12 +120,17 @@ const Badge = (
           />
         )}
         {hasLeftIcon && (
-          <LeftIconComponent className={iconClassName} strokeWidth={iconStrokeWidth} />
+          <Icon
+            icon={LeftIconComponent}
+            size={iconSize}
+            strokeWidth={iconStrokeWidth}
+          />
         )}
         {children}
         {hasRightIcon && (
-          <RightIconComponent
-            className={iconClassName}
+          <Icon
+            icon={RightIconComponent}
+            size={iconSize}
             strokeWidth={iconStrokeWidth}
           />
         )}

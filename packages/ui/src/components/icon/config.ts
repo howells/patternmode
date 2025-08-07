@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Star } from "lucide-react";
 import { Icon } from "./component";
 import {
@@ -15,7 +15,7 @@ export const iconConfig: ComponentConfig = {
   description: "Centralized icon system providing consistent sizing, styling, and error handling for Lucide React icons across all UI components. Features graceful fallbacks, dynamic icon loading support, and flexible sizing options.",
   category: "visual",
   icon: Star,
-  importStatement: `import { Icon, useIconSize, getIconSizeForContext, createIconWithSize } from "@patternmode/ui/icon";`,
+  importStatement: `import { Icon } from "@patternmode/ui/icon";`,
   examples: [
     {
       id: "default",

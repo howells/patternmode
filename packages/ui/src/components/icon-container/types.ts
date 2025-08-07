@@ -1,7 +1,8 @@
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import type { GlobalSemanticVariant, TailwindColor } from "../../constants/variants";
 import type { iconContainerVariants } from "./variants";
+import type { IconSize } from "../icon/types";
 
 export type IconContainerProps = {
   /**
@@ -13,7 +14,7 @@ export type IconContainerProps = {
    * Icon size within the container.
    * Controls the size of the icon itself, independent of container size.
    */
-  iconSize?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  iconSize?: IconSize;
   /**
    * Whether to center the container horizontally.
    * Adds margin auto for horizontal centering when true.

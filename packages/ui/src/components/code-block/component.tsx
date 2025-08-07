@@ -2,7 +2,7 @@
 
 import type { CodeBlockProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";

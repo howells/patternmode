@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { TrendingUp } from "lucide-react";
 import { SparkChart } from "./component";
 import { AreaExample, DefaultExample, LineExample, MultipleExample } from "./examples";

@@ -1,6 +1,6 @@
 "use client";
 
-import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import React from "react";
 
@@ -10,7 +10,7 @@ import { usePreview } from "./preview-context";
 
 type PreviewConfig = {
   componentName: string;
-  props: Record<string, PropMetadata>;
+  props: Record<string, PreviewProps>;
 };
 
 type PreviewControlsProps = {

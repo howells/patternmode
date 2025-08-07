@@ -1,7 +1,7 @@
 import type { SeparatorProps } from "./types";
 import { Separator as BaseSeparator } from "@base-ui-components/react/separator";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { separatorContainerVariants, separatorVariants } from "./variants";
 

@@ -3,11 +3,10 @@
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React, { use } from "react";
-import { config } from "../../lib/config";
+import { defaultConfig } from "../../config/default-config";
 import { Button } from "../button/component";
-import { getIconSizeForContext } from "../icon/component";
 import { ToggleGroupContext } from "./constants";
 import { toggleGroupVariants } from "./variants";
 
@@ -46,7 +45,7 @@ const ToggleGroupItem = (
     ...props
   }: ToggleGroupItemProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> },
 ) => {
-  const finalIconStrokeWidth = iconStrokeWidth ?? config.getIconStrokeWidth();
+  const finalIconStrokeWidth = iconStrokeWidth ?? defaultConfig.components.iconStrokeWidth;
   const context = use(ToggleGroupContext);
   const finalSize = size ?? context.size;
   const finalVariant = variant ?? context.variant;
@@ -68,8 +67,6 @@ const ToggleGroupItem = (
   // Determine if this is an icon-only button (no visible text content)
   const _isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
 
-  // Get appropriate icon size based on the toggle group size
-  const _iconSize = getIconSizeForContext(finalSize);
 
   const renderContent = () => {
     return children;

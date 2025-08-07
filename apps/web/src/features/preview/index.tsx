@@ -1,12 +1,12 @@
 "use client";
 
-import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+import type { PreviewProps as UiPreviewProp } from "@patternmode/ui/types/preview-props-type";
 
 import { Button } from "@patternmode/ui/components/button";
 import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@patternmode/ui/components/registry";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@patternmode/ui/components/sheet";
-import { cx } from "@patternmode/ui/lib/utils";
+import { cx } from "@patternmode/ui/utils/cx";
 import { Settings2 } from "lucide-react";
 import React from "react";
 
@@ -22,7 +22,7 @@ type PreviewProps = {
 
 export function Preview({ componentId, componentName, category }: PreviewProps) {
   // Get the preview component props metadata (it's an array, not an object)
-  const propsMetadataArray = PREVIEW_PROPS_REGISTRY[componentId] as PropMetadata[] | undefined;
+  const propsMetadataArray = PREVIEW_PROPS_REGISTRY[componentId] as UiPreviewProp[] | undefined;
   const PreviewComponent = PREVIEW_REGISTRY[componentId];
 
   if (!PreviewComponent) {
@@ -41,7 +41,7 @@ export function Preview({ componentId, componentName, category }: PreviewProps) 
       return undefined;
     }
 
-    const metadataObj: Record<string, PropMetadata> = {};
+    const metadataObj: Record<string, UiPreviewProp> = {};
     propsMetadataArray.forEach((prop) => {
       metadataObj[prop.name] = prop;
     });

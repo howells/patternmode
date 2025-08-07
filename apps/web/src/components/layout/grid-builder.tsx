@@ -1,6 +1,6 @@
 "use client";
 
-import type { SpacingValue } from "@patternmode/ui/lib/spacing-utils";
+import type { SpacingValue } from "@patternmode/ui/presentation/spacing-utils";
 
 import { Button } from "@patternmode/ui/components/button";
 import { Grid, GridCell } from "@patternmode/ui/components/grid";
@@ -77,7 +77,7 @@ export function GridBuilder() {
     const defaultProps: Record<string, unknown> = {};
 
     if (config) {
-      config.props.forEach((prop) => {
+      config.previewProps.forEach((prop) => {
         if (prop.defaultValue !== undefined) {
           defaultProps[prop.name] = prop.defaultValue;
         }

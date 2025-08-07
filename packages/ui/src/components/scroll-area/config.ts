@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { ScrollText } from "lucide-react";
 import { ScrollArea, ScrollBar } from "./component";
 import { BothDirectionsExample, CustomStyledExample, DefaultExample, HorizontalExample } from "./examples";

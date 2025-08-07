@@ -1,4 +1,4 @@
-import type { GlobalSemanticVariant, TailwindColor } from "../../lib/variants";
+import type { GlobalSemanticVariant, TailwindColor } from "../../constants/variants";
 
 /**
  * Badge variant type supporting both semantic variants and all Tailwind colors.

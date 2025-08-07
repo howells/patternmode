@@ -1,6 +1,6 @@
 "use client";
 
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import React from "react";
 import {
   Select,

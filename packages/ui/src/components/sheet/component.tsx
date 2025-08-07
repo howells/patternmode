@@ -1,17 +1,17 @@
 "use client";
 
 import { Dialog } from "@base-ui-components/react/dialog";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { X } from "lucide-react";
 
 import * as React from "react";
-import { config } from "../../lib/config";
-import { focusRing } from "../../lib/focus-styles";
-import { iconUtils } from "../../lib/icon-sizing";
+import { defaultConfig } from "../../config/default-config";
+import { focusRing } from "../../presentation/focus-ring";
+import { Icon } from "../icon/component";
 
 // Inline DismissButton functionality for Sheet
 const InlineSheetDismissButton = (
-  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = config.getIconStrokeWidth(), size = "base", className, "aria-label": ariaLabel = "Remove" }: {
+  { ref, onClick, icon: IconComponent = X, iconStrokeWidth = defaultConfig.components.iconStrokeWidth, size = "base", className, "aria-label": ariaLabel = "Remove" }: {
     "onClick"?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     "icon"?: React.ComponentType<{
       className?: string;
@@ -31,7 +31,6 @@ const InlineSheetDismissButton = (
   };
 
   const iconSize = iconSizeMap[size];
-  const iconSizeClass = iconUtils.getIconSize(iconSize);
 
   return (
     <button
@@ -55,10 +54,10 @@ const InlineSheetDismissButton = (
       )}
       aria-label={ariaLabel}
     >
-      <IconComponent
-        className={cx(iconSizeClass, "shrink-0")}
+      <Icon
+        icon={IconComponent}
+        size={iconSize}
         strokeWidth={iconStrokeWidth}
-        aria-hidden="true"
       />
     </button>
   );

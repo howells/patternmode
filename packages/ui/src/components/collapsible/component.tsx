@@ -1,5 +1,5 @@
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 import * as React from "react";

@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Grid3X3 } from "lucide-react";
 import { Grid, GridAuto, GridCell } from "./component";
 import { AutoGridExample, DashboardExample, DefaultExample, LayoutGridExample, ResponsiveExample, SpanningCellsExample } from "./examples";

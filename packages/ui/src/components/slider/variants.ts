@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import { focusRing } from "../../lib/focus-styles";
+import { focusRing } from "../../presentation/focus-ring";
 
 export const sliderVariants = tv({
   slots: {

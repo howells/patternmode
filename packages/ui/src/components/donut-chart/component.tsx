@@ -7,11 +7,10 @@
 
 "use client";
 
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
-import { cx } from "@patternmode/ui/cx";
+import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
+import { cx } from "../../utils/cx";
 
 import React from "react";
-
 import {
   Pie,
   PieChart as ReChartsDonutChart,
@@ -19,11 +18,9 @@ import {
   Sector,
   Tooltip,
 } from "recharts";
-import {
-  AvailableChartColors,
-  constructCategoryColors,
-  getColorClassName,
-} from "../../lib/chartUtils";
+import { AvailableChartColors } from "../../charts/constants/chart-colors";
+import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
 
 /**
  * Sums all values in a numeric array.

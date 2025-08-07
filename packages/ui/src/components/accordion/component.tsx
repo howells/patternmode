@@ -6,11 +6,12 @@ import type {
 } from "./types";
 
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
-import { cx } from "@patternmode/ui/cx";
-import { Plus } from "lucide-react";
 
+import { cx } from "../../utils/cx";
+import { defaultConfig } from "../../config/default-config";
+
+import { Plus } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 import {
@@ -62,7 +63,7 @@ const AccordionTrigger = ({
           )}
       <Plus
         className={accordionIconVariants()}
-        strokeWidth={config.getIconStrokeWidth()}
+        strokeWidth={defaultConfig.components.iconStrokeWidth}
         aria-hidden="true"
       />
     </BaseAccordion.Trigger>

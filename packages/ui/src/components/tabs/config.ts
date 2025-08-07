@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { Folders } from "lucide-react";
 import {
   Tabs as TabsComponent,

@@ -7,7 +7,7 @@
 
 "use client";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 
 import { Drawer as DrawerPrimitive } from "vaul";

@@ -2,17 +2,13 @@
 
 "use client";
 
-import type {
-  AvailableChartColorsKeys,
-} from "../../lib/chartUtils";
+import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import React from "react";
-import {
-  AvailableChartColors,
-  getColorClassName,
-} from "../../lib/chartUtils";
+import { AvailableChartColors } from "../../charts/constants/chart-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
 import { Tooltip } from "../tooltip/component";
 
 /**

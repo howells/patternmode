@@ -1,9 +1,13 @@
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";
-import type { AvailableChartColorsKeys } from "../../lib/chartUtils";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { AvailableChartColors, type AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
+import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
+import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -21,13 +25,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  AvailableChartColors,
-  constructCategoryColors,
-  getColorClassName,
-  getYAxisDomain,
-  hasOnlyOneValueForKey,
-} from "../../lib/chartUtils";
+
 
 // #region Legend
 

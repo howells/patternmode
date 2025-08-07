@@ -2,7 +2,7 @@ import type { Radio as BaseRadio } from "@base-ui-components/react/radio";
 import type { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import type { radioGroupVariants, radioVariants } from "./variants";
 
 export type RadioProps = React.ComponentPropsWithoutRef<typeof BaseRadio.Root>;

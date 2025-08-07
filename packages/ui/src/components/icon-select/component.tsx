@@ -1,12 +1,12 @@
 "use client";
 
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 
 import type { ComboboxOption } from "../combobox/types";
 
 import React from "react";
-import { config } from "../../lib/config";
-import { getIconComponent, iconNames } from "../../lib/icon-registry";
+import { defaultConfig } from "../../config/default-config";
+import { getIconComponent, iconNames } from "../../icons/icon-registry";
 import { Combobox } from "../combobox/component";
 
 // Icon data structure that extends ComboboxOption
@@ -190,7 +190,7 @@ export const IconSelect = ({
   size = "base",
   disabled = false,
   className,
-  iconStrokeWidth = config.getIconStrokeWidth(),
+  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
 }: IconSelectProps) => {
   // Function to render the icon for each item
   const getItemIcon = React.useCallback(
@@ -260,7 +260,7 @@ export function useIconSelect(initialValue?: string) {
         <SafeDynamicIcon
           name={value} // Use PascalCase name directly
           className={className}
-          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+          strokeWidth={strokeWidth || defaultConfig.components.iconStrokeWidth}
           {...props}
         />
       ),
@@ -297,7 +297,7 @@ export function getDynamicIconByName(name: string) {
         <SafeDynamicIcon
           name={name} // Use name directly (static registry handles PascalCase)
           className={className}
-          strokeWidth={strokeWidth || config.getIconStrokeWidth()}
+          strokeWidth={strokeWidth || defaultConfig.components.iconStrokeWidth}
           fallback={fallback}
           {...props}
         />

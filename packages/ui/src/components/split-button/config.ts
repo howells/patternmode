@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { ChevronDown } from "lucide-react";
 import { SplitButton } from "./component";
 import { ComplexMenuExample, DefaultExample, DisabledExample, LoadingExample, SizesExample, WithIconsExample } from "./examples";

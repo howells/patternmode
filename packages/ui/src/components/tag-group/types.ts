@@ -1,5 +1,5 @@
 import type React from "react";
-import type { GapValue, ResponsiveSpacing } from "../../lib/spacing-utils";
+import type { GapValue, ResponsiveSpacing } from "../../presentation/spacing-utils";
 
 export type TagGroupProps = {
   /**

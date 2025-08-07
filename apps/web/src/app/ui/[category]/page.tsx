@@ -70,11 +70,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         </HStack>
                         <Text>{component.description}</Text>
                         <Text>
-                          {component.examples.length}
+                          {component.examples?.length ?? 0}
                           {" "}
                           examples
-                          {component.api && " • API reference"}
-                          {component.accessibility && " • Accessible"}
+                          {"api" in component && (component as any).api && " • API reference"}
+                          {"accessibility" in component && (component as any).accessibility && " • Accessible"}
                         </Text>
                       </VStack>
                     </Card>

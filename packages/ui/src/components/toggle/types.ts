@@ -2,7 +2,7 @@ import type { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import type { useRender } from "@base-ui-components/react/use-render";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import type { ButtonProps } from "../button/component";
 import type { toggleVariants } from "./variants";
 

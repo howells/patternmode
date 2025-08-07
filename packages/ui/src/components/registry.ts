@@ -1,6 +1,7 @@
 import type React from "react";
 
-import type { ComponentConfig, PropMetadata } from "../lib/component-config-types";
+import type { ComponentConfig } from "../types/component-types";
+import type { PreviewProps } from "../types/preview-props-type";
 
 // Import all component configs
 import { accordionConfig } from "./accordion/config";
@@ -484,7 +485,7 @@ export const PREVIEW_PROPS_REGISTRY = {
   "toolbar": toolbarPreviewProps,
   "tooltip": tooltipPreviewProps,
   "tracker": trackerPreviewProps,
-} as const satisfies Record<string, PropMetadata[]>;
+} as const satisfies Record<string, PreviewProps[]>;
 
 // Component metadata registry
 export const COMPONENT_METADATA_REGISTRY = {
@@ -631,7 +632,7 @@ export function getPreviewComponent(id: string): React.ComponentType<any> | unde
   return fallbackComponent;
 }
 
-export function getPreviewProps(id: string): PropMetadata[] {
+export function getPreviewProps(id: string): PreviewProps[] {
   // First try to get props from the preview props registry
   const previewProps = PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
   if (previewProps) {
@@ -640,7 +641,7 @@ export function getPreviewProps(id: string): PropMetadata[] {
 
   // Fallback to config props
   const config = getComponentConfig(id);
-  return config?.props || [];
+  return config?.previewProps || [];
 }
 
 export function getComponentMetadata(id: string): { title: string; description: string } | undefined {

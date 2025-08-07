@@ -8,7 +8,7 @@
 
 import type { DividerProps } from "./types";
 
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 import React from "react";
 import { dividerLineVariants, dividerVariants } from "./variants";
 

@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "../../lib/component-config-types";
+import type { ComponentConfig } from "../../types/component-types";
 import { List } from "lucide-react";
 import { TextList as ListComponent, TextListIndicator, TextListItem } from "./component";
 import { DefaultExample, NestedExample, OrderedExample, PlainVariantExample, WithIconsExample } from "./examples";

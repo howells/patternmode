@@ -4,19 +4,19 @@
   "description": "A comprehensive UI component library built with React, Tailwind CSS, and Base UI. Features accessible, customizable components with TypeScript support, modern design patterns, and excellent developer experience.",
   "author": {
     "name": "Daniel Howells",
-    "email": "daniel@patternmode.com",
-    "url": "https://github.com/danielhowells"
+    "email": "daniel@howellsstudio.com",
+    "url": "https://github.com/howells"
   },
   "type": "module",
   "license": "MIT",
   "homepage": "https://patternmode.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternmode/patternmode.git",
+    "url": "https://github.com/howells/patternmode.git",
     "directory": "packages/ui"
   },
   "bugs": {
-    "url": "https://github.com/patternmode/patternmode/issues"
+    "url": "https://github.com/howells/patternmode/issues"
   },
   "keywords": [
     "react",
@@ -79,10 +79,40 @@
       "default": "./src/components/*/preview.tsx"
     },
     "./styles/globals.css": "./src/styles/globals.css",
-    "./lib/*": {
-      "types": "./src/lib/*.ts",
-      "import": "./src/lib/*.ts",
-      "default": "./src/lib/*.ts"
+    "./constants/*": {
+      "types": "./src/constants/*.ts",
+      "import": "./src/constants/*.ts",
+      "default": "./src/constants/*.ts"
+    },
+    "./presentation/*": {
+      "types": "./src/presentation/*.ts",
+      "import": "./src/presentation/*.ts",
+      "default": "./src/presentation/*.ts"
+    },
+    "./icons/*": {
+      "types": "./src/icons/*.ts",
+      "import": "./src/icons/*.ts",
+      "default": "./src/icons/*.ts"
+    },
+    "./config/*": {
+      "types": "./src/config/*.ts",
+      "import": "./src/config/*.ts",
+      "default": "./src/config/*.ts"
+    },
+    "./utils/spacing-utils": {
+      "types": "./src/presentation/spacing-utils.ts",
+      "import": "./src/presentation/spacing-utils.ts",
+      "default": "./src/presentation/spacing-utils.ts"
+    },
+    "./types/*": {
+      "types": "./src/types/*.ts",
+      "import": "./src/types/*.ts",
+      "default": "./src/types/*.ts"
+    },
+    "./utils/*": {
+      "types": "./src/utils/*.ts",
+      "import": "./src/utils/*.ts",
+      "default": "./src/utils/*.ts"
     },
     "./utils": {
       "types": "./src/utils.ts",

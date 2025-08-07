@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { indicatorVariants, listItemVariants, listVariants } from "./variants";
+import type { IconSize } from "../icon/types";
 
 /**
  * Props for the TextList component.
@@ -67,7 +68,7 @@ export type TextListIndicatorProps = {
    * The size of the icon indicator when using the icon prop.
    * Controls both width and height of the rendered icon.
    */
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  size?: IconSize;
   /**
    * The visual style variant that should match the parent List component.
    * 'marker' hides the indicator (for traditional lists), 'plain' shows it.

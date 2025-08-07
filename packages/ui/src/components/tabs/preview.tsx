@@ -1,8 +1,8 @@
 "use client";
 
-import type { Size } from "../../lib/component-config-types";
+import type { Size } from "../../constants/sizes";
 import React from "react";
-import { sizes } from "../../lib/component-config-types";
+import { SIZES as sizes } from "../../constants/sizes";
 import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";

@@ -2,20 +2,20 @@
 
 import type { InputProps } from "./types";
 import { Input as BaseInput } from "@base-ui-components/react/input";
-import { cx } from "@patternmode/ui/cx";
+import { cx } from "../../utils/cx";
 
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
-import { config } from "../../lib/config";
-import { focusRing } from "../../lib/focus-styles";
-import { formControlContainerVariants } from "../../lib/form-control-variants";
+import { defaultConfig } from "../../config/default-config";
+import { focusRing } from "../../presentation/focus-ring";
+import { formControlContainerVariants } from "../../constants/form-control-variants";
 import { inputElementStyles } from "./variants";
 
 /**
  * Single-line text input field with validation support and various styling options.
  */
 const Input = (
-  { ref: forwardedRef, className, inputClassName, hasError, enableStepper: _enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = config.getIconStrokeWidth(), minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
+  { ref: forwardedRef, className, inputClassName, hasError, enableStepper: _enableStepper = true, size = "base", type, prefix, suffix, prefixText, prefixIcon: PrefixIcon, suffixText, suffixIcon: SuffixIcon, prefixStyling = true, suffixStyling = true, iconStrokeWidth = defaultConfig.components.iconStrokeWidth, minimal, unstyled, ...props }: InputProps & { ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null> },
 ) => {
   const [typeState, setTypeState] = React.useState(type);
 
