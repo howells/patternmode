@@ -2,7 +2,6 @@
 tests/
 scripts/
 *.test.*
-*.spec.*
 playwright*
 vitest.config.ts
 eslint.config.mjs

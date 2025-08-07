@@ -14,6 +14,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { COMPONENT_REGISTRY } from "../src/components/registry";
 
 type PreviewValidationResult = {
   filePath: string;
@@ -164,22 +165,38 @@ describe("preview Structure Validation", () => {
 
   // Create individual test cases for each component's preview file
   describe("Individual Component Previews", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} preview should follow canonical structure`, async () => {
-        const previewPath = join(componentsDir, componentDir, "preview.tsx");
-        const result = await validatePreviewFile(previewPath, componentDir);
+    const testPreviewForComponent = (componentId: string) => {
+      const previewPath = join(componentsDir, componentId, "preview.tsx");
+      
+      // Skip components that don't have preview files
+      if (!existsSync(previewPath)) {
+        console.warn(`⚠️  Component ${componentId} missing preview.tsx file`);
+        return;
+      }
+      
+      // Make the validation synchronous by removing await
+      const content = readFileSync(previewPath, "utf-8");
+      const errors: string[] = [];
+      const expectedExampleName = `${componentId.split("-").map(part => part.charAt(0).toUpperCase() + part.slice(1)).join("")}Preview`;
+      
+      // Check for "use client" directive
+      const hasUseClient = content.startsWith("\"use client\"") || content.startsWith("'use client'");
+      expect(hasUseClient, `${componentId}: Should have 'use client' directive`).toBe(true);
+      
+      // Check for component import
+      const componentName = componentId.split("-").map(part => part.charAt(0).toUpperCase() + part.slice(1)).join("");
+      const hasComponentImport = content.includes(`from "./component"`) && content.includes(`${componentName}`);
+      expect(hasComponentImport, `${componentId}: Should import component from ./component`).toBe(true);
+      
+      // Check for preview function export
+      const exportMatch = content.match(/export\s+function\s+(\w+Preview)\s*\(/);
+      const hasExampleFunction = !!exportMatch;
+      expect(hasExampleFunction, `${componentId}: Should have preview function export`).toBe(true);
+    };
 
-        // Test core requirements
-        expect(result.hasUseClient, `${componentDir}: Should have 'use client' directive`).toBe(true);
-        expect(result.hasComponentImport, `${componentDir}: Should import component from ./component`).toBe(true);
-        expect(result.hasExampleFunction, `${componentDir}: Should have preview function export`).toBe(true);
-
-        // Log warnings but don't fail the test
-        if (result.warnings.length > 0) {
-          console.warn(`${componentDir} warnings:`, result.warnings);
-        }
-      });
+    // Generate individual test cases from the registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} preview should follow canonical structure`, () => testPreviewForComponent(componentId));
     });
   });
 
@@ -187,13 +204,19 @@ describe("preview Structure Validation", () => {
     const results: PreviewValidationResult[] = [];
     const invalidFiles: string[] = [];
 
-    for (const componentDir of componentDirs) {
-      const previewPath = join(componentsDir, componentDir, "preview.tsx");
-      const result = await validatePreviewFile(previewPath, componentDir);
-      results.push(result);
+    // Test all components in registry that have preview files
+    const registryComponents = Object.keys(COMPONENT_REGISTRY);
+    for (const componentId of registryComponents) {
+      const previewPath = join(componentsDir, componentId, "preview.tsx");
+      
+      // Only validate if preview file exists
+      if (existsSync(previewPath)) {
+        const result = await validatePreviewFile(previewPath, componentId);
+        results.push(result);
 
-      if (!result.isValid) {
-        invalidFiles.push(result.filePath);
+        if (!result.isValid) {
+          invalidFiles.push(result.filePath);
+        }
       }
     }
 

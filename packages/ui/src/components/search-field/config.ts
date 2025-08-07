@@ -12,6 +12,13 @@ export const searchFieldConfig: ComponentConfig = {
   icon: Search,
   importStatement: `import { SearchField } from "@patternmode/ui/search-field";`,
   component: SearchField,
+  components: [
+    {
+      name: "SearchField",
+      description: "Main search input component with dropdown results",
+      component: SearchField,
+    },
+  ],
   examples: [
     {
       id: "default",

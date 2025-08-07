@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
+const { camelCase, pascalCase } = require("es-toolkit");
 const fs = require("node:fs");
 const path = require("node:path");
-const { camelCase, pascalCase } = require("es-toolkit");
+
 const { scanComponents } = require("../../../packages/ui/scripts/generate-registry.cjs");
 
 const PAGES_DIR = path.join(__dirname, "../src/app/ui/components");
 
 // Template for component pages
-const PAGE_TEMPLATE = `import { Separator } from "@patternmode/ui/components/separator";
-import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONENT_ID}}/config";
+const PAGE_TEMPLATE = `import { {{COMPONENT_CONFIG_NAME}} } from "@patternmode/ui/components/{{COMPONENT_ID}}/config";
+import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

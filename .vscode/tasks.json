@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run UI Component Tests",
+      "type": "shell", 
+      "command": "pnpm test:e2e",
+      "options": {
+        "cwd": "${workspaceFolder}/packages/ui"
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run UI Component Tests (UI)",
+      "type": "shell",
+      "command": "pnpm test:e2e:ui", 
+      "options": {
+        "cwd": "${workspaceFolder}/packages/ui"
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always", 
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}

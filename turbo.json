@@ -22,7 +22,7 @@
     },
     "test": {
       "dependsOn": ["^test", "typecheck"],
-      "inputs": ["src/**", "tests/**", "**/*.test.*", "**/*.spec.*", "vitest.config.*", "package.json"]
+      "inputs": ["src/**", "tests/**", "**/*.test.*", "vitest.config.*", "package.json"]
     },
     "test:ui": {
       "dependsOn": ["^test:ui"],
@@ -31,12 +31,12 @@
     },
     "test:run": {
       "dependsOn": ["^test:run", "typecheck"],
-      "inputs": ["src/**", "tests/**", "**/*.test.*", "**/*.spec.*", "vitest.config.*", "package.json"]
+      "inputs": ["src/**", "tests/**", "**/*.test.*", "vitest.config.*", "package.json"]
     },
     "test:e2e": {
       "dependsOn": ["^build"],
       "cache": false,
-      "inputs": ["src/**", "tests/**", "**/*.spec.*", "playwright.config.*", "package.json"]
+      "inputs": ["src/**", "tests/**", "**/*.test.*", "playwright.config.*", "package.json"]
     },
     "clean": {
       "cache": false

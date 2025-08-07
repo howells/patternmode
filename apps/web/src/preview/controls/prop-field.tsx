@@ -6,7 +6,7 @@ import { Tooltip } from "@patternmode/ui/components/tooltip";
 import { HelpCircle } from "lucide-react";
 import React from "react";
 
-import { cx } from "../../lib/utils";
+import { cx } from "@/lib/utils/tailwind";
 
 type PropFieldProps = {
   prop: PropMetadata;

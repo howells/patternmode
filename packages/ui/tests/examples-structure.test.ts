@@ -155,40 +155,27 @@ describe("examples Structure Validation", () => {
     expect(exampleFiles.length).toBeGreaterThan(0);
   });
 
-  // Create individual test cases for each component's examples file
+  // Individual test cases for each component's examples file
   describe("Individual Component Examples", () => {
-    // We'll populate this dynamically
-    let dynamicTests: Array<{ filePath: string; componentId: string }> = [];
-
-    it("should set up individual component example tests", async () => {
+    const testExamplesForComponent = async (componentId: string) => {
       const componentsDir = path.join(process.cwd(), "src/components");
-      dynamicTests = await findExampleFiles(componentsDir);
-      expect(dynamicTests.length).toBeGreaterThan(0);
+      const filePath = path.join(componentsDir, componentId, "examples.tsx");
+      
+      const result = await validateExampleFile(filePath, componentId);
+
+      expect(result.hasUseClient, `${componentId}: Should have 'use client' directive`).toBe(true);
+      expect(result.exampleComponents.length, `${componentId}: Should have at least one example component`).toBeGreaterThan(0);
+      expect(result.missingInFile.length, `${componentId}: Should not have missing examples referenced in config`).toBe(0);
+
+      if (result.warnings.length > 0) {
+        console.warn(`⚠️  ${componentId} warnings:`, result.warnings.join(', '));
+      }
+    };
+
+    // Generate individual test cases from the registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} examples should be valid`, () => testExamplesForComponent(componentId));
     });
-
-    // Create individual test cases for each component's examples
-    for (let i = 0; i < 100; i++) { // Pre-allocate test slots
-      it(`component examples ${i} should be valid`, async () => {
-        // This will be skipped if no examples file exists at this index
-        if (!dynamicTests || i >= dynamicTests.length) {
-          it.skip("No examples file at this index");
-          return;
-        }
-
-        const { filePath, componentId } = dynamicTests[i];
-        const result = await validateExampleFile(filePath, componentId);
-
-        // Test core requirements
-        expect(result.hasUseClient, `${componentId}: Should have 'use client' directive`).toBe(true);
-        expect(result.exampleComponents.length, `${componentId}: Should have at least one example component`).toBeGreaterThan(0);
-        expect(result.missingInFile.length, `${componentId}: Should not have missing examples referenced in config`).toBe(0);
-
-        // Log warnings but don't fail the test
-        if (result.warnings.length > 0) {
-          console.warn(`${componentId} warnings:`, result.warnings);
-        }
-      });
-    }
   });
 
   it("should validate all examples.tsx files structure", async () => {

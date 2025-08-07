@@ -1,15 +1,14 @@
 "use client";
 
-import { Plus, Settings, X } from "lucide-react";
-import dynamic from "next/dynamic";
-import React, { useMemo, useState } from "react";
-
 import { Button } from "@patternmode/ui/components/button";
 import { Callout } from "@patternmode/ui/components/callout";
 import { Card } from "@patternmode/ui/components/card";
 import { Icon } from "@patternmode/ui/components/icon";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
+import { Plus, Settings, X } from "lucide-react";
+import dynamic from "next/dynamic";
+import React, { useMemo, useState } from "react";
 
 import { PreviewProvider } from "../../preview/preview-context";
 import { PropsEditorPopover } from "./props-editor-popover";

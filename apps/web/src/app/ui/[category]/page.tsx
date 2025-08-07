@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-
 import type { CategoryKey } from "@patternmode/ui/components/registry";
 
 import { Badge } from "@patternmode/ui/components/badge";
@@ -15,6 +12,8 @@ import {
 import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { Text } from "@patternmode/ui/components/text";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type CategoryPageProps = {
   params: Promise<{

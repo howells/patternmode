@@ -1,111 +1,42 @@
-import React from "react";
+import { componentRegistry } from "@patternmode/ui/components/registry";
 
-import type { ComponentConfig, ComponentExample } from "./component-configs";
-
-/**
- * Helper to create component examples with consistent structure
- */
-export function createExample(
-  id: string,
-  title: string,
-  description: string,
-  component: React.ComponentType,
-): ComponentExample {
-  return {
-    id,
-    title,
-    description,
-    code: "", // Empty code for now
-    preview: React.createElement(component),
-  };
+export function getComponentConfig(componentId: string) {
+  return componentRegistry[componentId];
 }
 
-/**
- * Helper to create API properties with consistent structure
- */
-export function createAPIProperty(
-  name: string,
-  type: string,
-  description: string,
-  options: {
-    default?: string;
-    required?: boolean;
-  } = {},
-) {
-  return {
-    name,
-    type,
-    description,
-    default: options.default,
-    required: options.required || false,
-  };
+export function getAllComponentConfigs() {
+  return Object.values(componentRegistry);
 }
 
-/**
- * Helper to create keyboard shortcuts
- */
-export function createKeyboardShortcut(key: string, description: string) {
-  return {
-    key,
-    description,
-  };
+export function getComponentsByCategory(category: string) {
+  return Object.values(componentRegistry).filter(
+    config => config.category === category,
+  );
 }
 
-/**
- * Template for basic component configuration
- */
 export function createComponentConfig(
   id: string,
   name: string,
   description: string,
-  category: "ui" | "inputs" | "forms" | "charts",
-  options: Partial<
-    Omit<ComponentConfig, "id" | "name" | "description" | "category">
-  > = {},
-): ComponentConfig {
+  category: string,
+  options: {
+    examples?: Array<{
+      id: string;
+      title: string;
+      description: string;
+      code?: string;
+      preview?: React.ReactNode;
+      component?: React.ComponentType;
+    }>;
+  } = {},
+) {
   return {
     id,
     name,
     description,
     category,
-    badge: options.badge,
-    importStatement:
-      options.importStatement
-      || `import { ${name} } from "@/components/${category}/${id}";`,
     examples: options.examples || [],
-    installation: options.installation,
-    api: options.api,
-    preview: options.preview,
-    componentId: options.componentId || name,
-    accessibility: options.accessibility,
-    sections: options.sections,
+    components: [],
+    badge: undefined,
   };
-}
-
-/**
- * Validation helper to ensure configuration is complete
- */
-export function validateConfig(config: ComponentConfig): string[] {
-  const errors: string[] = [];
-
-  if (!config.id) {
-    errors.push("Missing id");
-  }
-  if (!config.name) {
-    errors.push("Missing name");
-  }
-  if (!config.description) {
-    errors.push("Missing description");
-  }
-  if (!config.category) {
-    errors.push("Missing category");
-  }
-  if (!config.importStatement) {
-    errors.push("Missing importStatement");
-  }
-  if (!config.examples || config.examples.length === 0) {
-    errors.push("Missing examples");
-  }
-
-  return errors;
 }

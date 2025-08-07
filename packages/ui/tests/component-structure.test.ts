@@ -317,79 +317,69 @@ describe("component Structure & Requirements", () => {
     });
   });
 
-  describe("typeScript Requirements", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} should have TypeScript prop types defined`, () => {
-        const hasProps = hasTypeScriptProps(componentDir);
-        expect(hasProps, `Component ${componentDir} should have TypeScript prop types (type/interface definitions)`).toBe(true);
+  describe("TypeScript Requirements", () => {
+    // Create individual test cases for each component from registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} should have TypeScript prop types defined`, () => {
+        expect(hasTypeScriptProps(componentId)).toBe(true);
       });
     });
   });
 
-  describe("jSDoc Requirements", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} should have concise JSDoc description (≤140 chars)`, () => {
-        const description = getJSDocDescription(componentDir);
-
+  describe("JSDoc Requirements", () => {
+    // Create individual test cases for each component from registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} should have concise JSDoc description (≤140 chars)`, () => {
+        const description = getJSDocDescription(componentId);
         if (description) {
-          expect(description.length, `Component ${componentDir} JSDoc description should be ≤140 characters, got ${description.length}: "${description}"`).toBeLessThanOrEqual(140);
-          expect(description.length, `Component ${componentDir} JSDoc description should be at least 10 characters`).toBeGreaterThanOrEqual(10);
-        }
-        else {
-          // JSDoc is optional if component info is in config, but warn about missing descriptions
-          console.warn(`Component ${componentDir} has no JSDoc description - consider adding a brief component description`);
+          expect(description.length, `Component ${componentId} JSDoc description should be ≤140 characters, got ${description.length}: "${description}"`).toBeLessThanOrEqual(140);
+          expect(description.length, `Component ${componentId} JSDoc description should be at least 10 characters`).toBeGreaterThanOrEqual(10);
+        } else {
+          console.warn(`Component ${componentId} has no JSDoc description - consider adding a brief component description`);
         }
       });
     });
   });
 
-  describe("component Structure", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} should export main component correctly`, () => {
+  describe("Component Structure", () => {
+    // Create individual test cases for each component from registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} should export main component correctly`, () => {
         const componentsDir = join(process.cwd(), "src", "components");
-        const componentFilePath = join(componentsDir, componentDir, "component.tsx");
-
-        expect(existsSync(componentFilePath), `Component file ${componentDir}/component.tsx should exist`).toBe(true);
-
-        const hasExport = hasCorrectExport(componentDir);
-        expect(hasExport, `Component ${componentDir} should export its main component`).toBe(true);
+        const componentFilePath = join(componentsDir, componentId, "component.tsx");
+        expect(existsSync(componentFilePath), `Component file ${componentId}/component.tsx should exist`).toBe(true);
+        const hasExport = hasCorrectExport(componentId);
+        expect(hasExport, `Component ${componentId} should export its main component`).toBe(true);
       });
     });
   });
 
-  describe("testId Requirements", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} should have static data-testid matching component name`, () => {
-        const testIdInfo = hasTestId(componentDir);
-
+  describe("TestId Requirements", () => {
+    // Create individual test cases for each component from registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} should have static data-testid matching component name`, () => {
+        const testIdInfo = hasTestId(componentId);
+        
         if (!testIdInfo.hasTestId) {
-          console.warn(`❌ Component ${componentDir} missing data-testid - should add: data-testid="${componentDir}"`);
-        }
-        else {
-          // Check if main component has the expected testid pattern
-          const expectedTestId = componentDir;
+          console.warn(`❌ Component ${componentId} missing data-testid - should add: data-testid="${componentId}"`);
+        } else {
+          const expectedTestId = componentId;
           const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
-
+          
           if (hasCorrectTestId) {
-            console.log(`✅ Component ${componentDir} has correct testid: "${testIdInfo.testIdPattern}"`);
-          }
-          else {
+            console.log(`✅ Component ${componentId} has correct testid: "${testIdInfo.testIdPattern}"`);
+          } else {
             const countText = testIdInfo.testIdCount > 1 ? ` (${testIdInfo.testIdCount} total)` : "";
-            console.warn(`⚠️  Component ${componentDir} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"${countText}`);
+            console.warn(`⚠️  Component ${componentId} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"${countText}`);
           }
         }
 
-        // Hard requirement: Every component must have correct data-testid
-        expect(testIdInfo.hasTestId, `Component ${componentDir} must have data-testid attribute. Add: data-testid="${componentDir}"`).toBe(true);
-
+        expect(testIdInfo.hasTestId, `Component ${componentId} must have data-testid attribute. Add: data-testid="${componentId}"`).toBe(true);
+        
         if (testIdInfo.hasTestId) {
-          const expectedTestId = componentDir;
+          const expectedTestId = componentId;
           const hasCorrectTestId = testIdInfo.testIdPattern === expectedTestId;
-          expect(hasCorrectTestId, `Component ${componentDir} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"`).toBe(true);
+          expect(hasCorrectTestId, `Component ${componentId} has testid "${testIdInfo.testIdPattern}" but should be "${expectedTestId}"`).toBe(true);
         }
       });
     });

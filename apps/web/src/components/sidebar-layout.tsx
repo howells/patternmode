@@ -27,9 +27,9 @@ import React, { createContext, useContext, useState } from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
+import { cx } from "@/lib/utils/tailwind";
 
 import { useSidebarView } from "../hooks/use-sidebar-view";
-import { cx } from "../lib/utils";
 import { ComponentSearch } from "./component-search";
 
 // Local component for sidebar group titles with badges

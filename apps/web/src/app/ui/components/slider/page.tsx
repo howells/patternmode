@@ -1,5 +1,5 @@
-import { Separator } from "@patternmode/ui/components/separator";
 import { sliderConfig } from "@patternmode/ui/components/slider/config";
+import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${sliderConfig.name} | Patternmode`,
     description: sliderConfig.description,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${sliderConfig.name} | Patternmode`,
     description: sliderConfig.description,
   },

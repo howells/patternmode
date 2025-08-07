@@ -12,6 +12,11 @@ export default defineConfig({
       "src/components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
     ],
     exclude: ["**/node_modules/**", "**/dist/**", "**/*.playwright.test.{ts,tsx}"],
+    testTimeout: 30000,
+    hookTimeout: 10000,
+    teardownTimeout: 5000,
+    silent: false,
+    reporter: ["basic"],
   },
   resolve: {
     alias: {

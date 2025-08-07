@@ -1,6 +1,6 @@
-import React from "react";
-
 import type { PropMetadata } from "@patternmode/ui/lib/component-config-types";
+
+import React from "react";
 
 import { AVATAR_IMAGES, AvatarSelect } from "./controls/avatar-select";
 

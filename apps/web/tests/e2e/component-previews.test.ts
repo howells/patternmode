@@ -1,8 +1,7 @@
 import type { Page } from "@playwright/test";
 
-import { expect, test } from "@playwright/test";
-
 import { COMPONENT_LIST } from "@patternmode/ui/components/registry";
+import { expect, test } from "@playwright/test";
 
 // Helper function to test a single component page
 async function testComponentPage(
@@ -122,8 +121,8 @@ async function testComponentPage(
     // Try to check if the component itself has appropriate width classes
     const hasWidthClass = await previewElement.evaluate((el) => {
       const classes = el.className;
-      return classes.includes('w-full') || classes.includes('max-w-') || classes.includes('min-w-') ||
-             classes.includes('w-') || el.style.width || (el instanceof HTMLElement && el.offsetWidth > 0);
+      return classes.includes("w-full") || classes.includes("max-w-") || classes.includes("min-w-")
+        || classes.includes("w-") || el.style.width || (el instanceof HTMLElement && el.offsetWidth > 0);
     });
 
     if (!hasWidthClass) {
@@ -136,26 +135,26 @@ async function testComponentPage(
   expect(previewBox?.height || 0).toBeGreaterThan(0);
 
   // Special checks for chart components - ensure they have visual content
-  const isChartComponent = componentName.includes('chart') || componentName.includes('Chart');
+  const isChartComponent = componentName.includes("chart") || componentName.includes("Chart");
   if (isChartComponent) {
     // Charts should have SVG content rendered
-    const svgElements = await page.locator('svg').count();
+    const svgElements = await page.locator("svg").count();
     if (svgElements === 0) {
       console.error(`❌ ${componentName}: Chart component has no SVG elements - chart may not be rendering`);
       expect(svgElements).toBeGreaterThan(0);
     }
 
     // Charts should have actual visual elements (paths, rects, circles, etc.)
-    const chartElements = await page.locator('svg path, svg rect, svg circle, svg line').count();
+    const chartElements = await page.locator("svg path, svg rect, svg circle, svg line").count();
     if (chartElements === 0) {
       console.error(`❌ ${componentName}: Chart SVG exists but has no visual elements (paths, rects, circles, lines)`);
     }
     expect(chartElements).toBeGreaterThan(0);
 
     // ResponsiveContainer should have proper dimensions
-    const responsiveContainer = await page.locator('[data-testid*="chart"] .recharts-responsive-container').count();
+    const responsiveContainer = await page.locator("[data-testid*=\"chart\"] .recharts-responsive-container").count();
     if (responsiveContainer > 0) {
-      const containerBox = await page.locator('[data-testid*="chart"] .recharts-responsive-container').first().boundingBox();
+      const containerBox = await page.locator("[data-testid*=\"chart\"] .recharts-responsive-container").first().boundingBox();
       if (!containerBox || containerBox.width === 0 || containerBox.height === 0) {
         console.error(`❌ ${componentName}: ResponsiveContainer exists but has no dimensions (${containerBox?.width || 0}x${containerBox?.height || 0})`);
       }

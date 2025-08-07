@@ -203,7 +203,9 @@
     "**/*.{test,spec}.{js,ts,jsx,tsx}"
   ],
   "playwright.include": [
-    "**/*.playwright.test.{js,ts,jsx,tsx}"
+    "**/*.playwright.test.{js,ts,jsx,tsx}",
+    "packages/ui/src/components/**/*.playwright.test.{ts,tsx}",
+    "apps/web/tests/**/*.playwright.test.{ts,tsx}"
   ],
   "vitest.exclude": [
     "**/node_modules/**",
@@ -232,6 +234,34 @@
   "playwright.env": {
     "NODE_ENV": "test"
   },
-  "playwright.configFile": "apps/web/playwright.config.ts",
-  "testing.automaticallyOpenTestResults": "openOnTestStart"
+  "playwright.reuseBrowser": true,
+  "playwright.showTrace": false,
+  "testing.automaticallyOpenTestResults": "openOnTestStart",
+
+  // Configure multiple test configurations
+  "testing.testConfigurations": [
+    {
+      "name": "UI Components (Playwright CT)", 
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/playwright",
+      "args": ["test", "--config=playwright-ct.config.ts"],
+      "cwd": "${workspaceFolder}/packages/ui",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
+      "name": "Web App (Playwright)",
+      "type": "playwright", 
+      "configFile": "apps/web/playwright.config.ts",
+      "cwd": "apps/web"
+    },
+    {
+      "name": "UI Components (Vitest)",
+      "type": "vitest",
+      "configFile": "packages/ui/vitest.config.ts", 
+      "cwd": "packages/ui"
+    }
+  ]
 }

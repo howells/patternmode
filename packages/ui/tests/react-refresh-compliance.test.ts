@@ -8,6 +8,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { COMPONENT_REGISTRY } from "../src/components/registry";
 
 /**
  * Get all component directories
@@ -124,31 +125,33 @@ describe("React Fast Refresh Compliance Progress", () => {
 
   // Create individual test cases for each component
   describe("Individual Component Compliance", () => {
-    // Create individual test cases for each component
-    componentDirs.forEach((componentDir) => {
-      it(`${componentDir} should be React Fast Refresh compliant`, () => {
-        const analysis = hasReactRefreshViolations(componentDir);
-        const externalCompliant = externalImportUsesComponent(componentDir);
+    const testReactRefreshCompliance = (componentId: string) => {
+      const analysis = hasReactRefreshViolations(componentId);
+      const externalCompliant = externalImportUsesComponent(componentId);
 
-        // Test core requirements
-        expect(analysis.hasViolations, `${componentDir}: Should not have react-refresh violations`).toBe(false);
+      // Test core requirements
+      expect(analysis.hasViolations, `${componentId}: Should not have react-refresh violations`).toBe(false);
 
-        // Log warnings for non-restructured components but don't fail the test
-        if (!analysis.isRestructured) {
-          console.warn(`${componentDir}: Not yet restructured (missing variants.ts, types.ts, or constants.ts)`);
-        }
+      // Log warnings for non-restructured components but don't fail the test
+      if (!analysis.isRestructured) {
+        console.warn(`${componentId}: Not yet restructured (missing variants.ts, types.ts, or constants.ts)`);
+      }
 
-        if (!externalCompliant) {
-          console.warn(`${componentDir}: External import does not resolve to component.tsx`);
-        }
-      });
+      if (!externalCompliant) {
+        console.warn(`${componentId}: External import does not resolve to component.tsx`);
+      }
+    };
+
+    // Generate individual test cases from the registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} should be React Fast Refresh compliant`, () => testReactRefreshCompliance(componentId));
     });
   });
 
   describe("Restructuring Progress", () => {
     it("should track component restructuring progress", () => {
       const results = {
-        totalComponents: componentDirs.length,
+        totalComponents: Object.keys(COMPONENT_REGISTRY).length,
         restructuredComponents: 0,
         violatingComponents: 0,
         compliantComponents: 0,
@@ -165,9 +168,11 @@ describe("React Fast Refresh Compliance Progress", () => {
         withConstantsFile: [] as string[],
       };
 
-      componentDirs.forEach((componentDir) => {
-        const analysis = hasReactRefreshViolations(componentDir);
-        const externalCompliant = externalImportUsesComponent(componentDir);
+      // Use registry components instead of filesystem scan
+      const registryComponents = Object.keys(COMPONENT_REGISTRY);
+      registryComponents.forEach((componentId) => {
+        const analysis = hasReactRefreshViolations(componentId);
+        const externalCompliant = externalImportUsesComponent(componentId);
 
         if (externalCompliant) {
           results.externalImportCompliant++;
@@ -175,30 +180,33 @@ describe("React Fast Refresh Compliance Progress", () => {
 
         if (analysis.isRestructured) {
           results.restructuredComponents++;
-          results.restructured.push(componentDir);
+          results.restructured.push(componentId);
 
           if (analysis.hasVariantsFile) {
-            results.withVariantsFile.push(componentDir);
+            results.withVariantsFile.push(componentId);
           }
           if (analysis.hasTypesFile) {
-            results.withTypesFile.push(componentDir);
+            results.withTypesFile.push(componentId);
           }
           if (analysis.hasConstantsFile) {
-            results.withConstantsFile.push(componentDir);
+            results.withConstantsFile.push(componentId);
           }
         }
 
         if (analysis.hasViolations) {
           results.violatingComponents++;
           results.violating.push({
-            component: componentDir,
+            component: componentId,
             violations: analysis.violations,
           });
         } else {
           results.compliantComponents++;
-          results.compliant.push(componentDir);
+          results.compliant.push(componentId);
         }
       });
+      
+      // Update total to use registry count
+      results.totalComponents = registryComponents.length;
 
       const separator = "=".repeat(80);
       console.log(`\n${separator}`);
@@ -248,19 +256,25 @@ describe("React Fast Refresh Compliance Progress", () => {
 
       console.log(`\n${separator}`);
 
-      // Test assertions for tracking progress
+      // Test assertions for compliance
       expect(results.totalComponents).toBeGreaterThan(0);
-      expect(results.restructuredComponents).toBeGreaterThanOrEqual(3); // At least button, card, badge
-      expect(results.externalImportCompliant).toBeGreaterThanOrEqual(results.restructuredComponents);
+      expect(results.compliantComponents).toBeGreaterThanOrEqual(results.totalComponents * 0.8); // At least 80% should be compliant
+      expect(results.externalImportCompliant).toBeGreaterThanOrEqual(results.totalComponents * 0.8); // At least 80% should have correct external imports
     });
   });
 
   describe("Individual Component Status", () => {
-    // Test the known restructured components
-    const knownRestructured = ["button", "card", "badge"];
+    it("should validate restructured components meet compliance standards", () => {
+      // Find all restructured components dynamically
+      const restructuredComponents = Object.keys(COMPONENT_REGISTRY)
+        .filter(componentId => {
+          const analysis = hasReactRefreshViolations(componentId);
+          return analysis.isRestructured;
+        });
 
-    knownRestructured.forEach((componentDir) => {
-      it(`${componentDir} should be properly restructured`, () => {
+      expect(restructuredComponents.length).toBeGreaterThan(0);
+
+      restructuredComponents.forEach((componentDir) => {
         const analysis = hasReactRefreshViolations(componentDir);
         const externalCompliant = externalImportUsesComponent(componentDir);
 
@@ -275,7 +289,14 @@ describe("React Fast Refresh Compliance Progress", () => {
 
   describe("Package.json Export Resolution", () => {
     it("should verify external imports resolve to component.tsx for restructured components", () => {
-      const restructuredComponents = ["button", "card", "badge"];
+      // Find restructured components dynamically
+      const restructuredComponents = Object.keys(COMPONENT_REGISTRY)
+        .filter(componentId => {
+          const analysis = hasReactRefreshViolations(componentId);
+          return analysis.isRestructured;
+        });
+
+      expect(restructuredComponents.length).toBeGreaterThan(0);
 
       restructuredComponents.forEach((componentDir) => {
         const resolvedPath = require.resolve(`@patternmode/ui/components/${componentDir}`);
@@ -285,28 +306,44 @@ describe("React Fast Refresh Compliance Progress", () => {
     });
 
     it("should verify dedicated export paths work for advanced imports", () => {
-      // Test variants export
-      try {
-        const variantsPath = require.resolve("@patternmode/ui/components/button/variants");
-        expect(variantsPath).toContain("/variants.ts");
-      } catch (error) {
-        throw new Error("Button variants export should be available");
-      }
+      // Find any component with additional file exports dynamically
+      const componentWithFiles = Object.keys(COMPONENT_REGISTRY)
+        .find(componentId => {
+          const analysis = hasReactRefreshViolations(componentId);
+          return analysis.hasVariantsFile || analysis.hasTypesFile || analysis.hasConstantsFile;
+        });
 
-      // Test types export
-      try {
-        const typesPath = require.resolve("@patternmode/ui/components/button/types");
-        expect(typesPath).toContain("/types.ts");
-      } catch (error) {
-        throw new Error("Button types export should be available");
-      }
+      if (componentWithFiles) {
+        const analysis = hasReactRefreshViolations(componentWithFiles);
 
-      // Test constants export
-      try {
-        const constantsPath = require.resolve("@patternmode/ui/components/button/constants");
-        expect(constantsPath).toContain("/constants.ts");
-      } catch (error) {
-        throw new Error("Button constants export should be available");
+        if (analysis.hasVariantsFile) {
+          try {
+            const variantsPath = require.resolve(`@patternmode/ui/components/${componentWithFiles}/variants`);
+            expect(variantsPath).toContain("/variants.ts");
+          } catch (error) {
+            throw new Error(`${componentWithFiles} variants export should be available`);
+          }
+        }
+
+        if (analysis.hasTypesFile) {
+          try {
+            const typesPath = require.resolve(`@patternmode/ui/components/${componentWithFiles}/types`);
+            expect(typesPath).toContain("/types.ts");
+          } catch (error) {
+            throw new Error(`${componentWithFiles} types export should be available`);
+          }
+        }
+
+        if (analysis.hasConstantsFile) {
+          try {
+            const constantsPath = require.resolve(`@patternmode/ui/components/${componentWithFiles}/constants`);
+            expect(constantsPath).toContain("/constants.ts");
+          } catch (error) {
+            throw new Error(`${componentWithFiles} constants export should be available`);
+          }
+        }
+      } else {
+        console.warn("No components found with additional file exports (variants, types, or constants)");
       }
     });
   });

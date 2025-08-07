@@ -10,9 +10,16 @@ export const fieldArrayConfig: ComponentConfig = {
   category: "forms",
   icon: List,
   description: "Generic field array component for managing dynamic lists of structured data with configurable schemas.",
-  importStatement: "import { FieldArray } from \"@patternmode/ui\";",
+  importStatement: "import { FieldArray } from \"@patternmode/ui/field-array\";",
   component: FieldArray,
   props: fieldArrayPreviewProps,
+  components: [
+    {
+      name: "FieldArray",
+      description: "Main field array component for managing dynamic data lists",
+      component: FieldArray,
+    },
+  ],
   examples: [
     {
       id: "contact-list",

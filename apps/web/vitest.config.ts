@@ -9,7 +9,7 @@ export default defineConfig({
     include: [
       "src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
       "tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
-      "src/components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
+      "src/components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
     ],
     exclude: ["**/node_modules/**", "**/e2e/**", "**/dist/**", "**/.next/**"],
   },

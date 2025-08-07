@@ -5,7 +5,6 @@ import type { IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { MoreHorizontal } from "lucide-react";
-import Link from "next/link";
 
 import React from "react";
 import { config } from "../../lib/config";
@@ -16,6 +15,8 @@ import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";
 import { getIconContainerSize, getLoaderSize, isSmallIconButton } from "./utils";
 import { buttonVariants } from "./variants";
+// Simple anchor fallback for environments without Next.js
+const Link = ({ href, children, ...props }: any) => <a href={href} {...props}>{children}</a>;
 
 type ButtonProps = {
   /**

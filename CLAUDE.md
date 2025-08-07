@@ -243,6 +243,13 @@ import { Card } from "@patternmode/ui/components/card";
 import { Button, Card } from "@patternmode/ui";
 ```
 
+**MANDATORY: NO barrel files (index.ts/index.tsx files) anywhere in the codebase**
+
+- **NEVER create index.ts or index.tsx files that re-export components**
+- **Barrel files cause performance issues and complicate dependency tracking**
+- **Each component should be imported directly from its component.tsx file**
+- **Package exports handle module resolution without barrel files**
+
 ### 4. Focus Styling
 **ALWAYS use the standardized focus utilities:**
 

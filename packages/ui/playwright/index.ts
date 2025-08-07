@@ -5,14 +5,14 @@ import { beforeMount, afterMount } from '@playwright/experimental-ct-react/hooks
 
 // Import Tailwind 4 styles for testing
 import './styles.css';
-import "./typography.css"
-import "./globals.css"
+import '../src/styles/typography.css';
+import '../src/styles/globals.css';
 
-beforeMount(async ({ App }) => {
+beforeMount(async () => {
   // Add any global setup here
   console.log('Mounting component for testing...');
 });
 
-afterMount(async ({ App }) => {
+afterMount(async () => {
   // Add any cleanup here if needed
 });

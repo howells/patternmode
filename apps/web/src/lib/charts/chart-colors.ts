@@ -1,3 +1,9 @@
+/**
+ * Chart Color Definitions and Utilities
+ *
+ * Centralized color palette and color-related utilities specifically for charts.
+ */
+
 export type ColorUtility = "bg" | "stroke" | "fill" | "text";
 
 export const chartColors = {
@@ -90,31 +96,3 @@ export const getColorClassName = (
   };
   return chartColors[color]?.[type] ?? fallbackColor[type];
 };
-
-export const getYAxisDomain = (
-  autoMinValue: boolean,
-  minValue: number | undefined,
-  maxValue: number | undefined,
-) => {
-  const minDomain = autoMinValue ? "auto" : minValue ?? 0;
-  const maxDomain = maxValue ?? "auto";
-  return [minDomain, maxDomain];
-};
-
-export function hasOnlyOneValueForKey(
-  array: any[],
-  keyToCheck: string,
-): boolean {
-  const val: any[] = [];
-
-  for (const obj of array) {
-    if (Object.hasOwn(obj, keyToCheck)) {
-      val.push(obj[keyToCheck]);
-      if (val.length > 1) {
-        return false;
-      }
-    }
-  }
-
-  return true;
-}

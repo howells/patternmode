@@ -2,17 +2,6 @@
 
 import type { LucideIcon } from "lucide-react";
 
-import {
-  Box,
-  CheckCircle,
-  Database,
-  ExternalLink,
-  FormInput,
-  MessageSquare,
-  Package,
-} from "lucide-react";
-import Link from "next/link";
-
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
 import { Callout } from "@patternmode/ui/components/callout";
@@ -25,18 +14,28 @@ import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { Code, Text } from "@patternmode/ui/components/text";
 import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/components/text-list";
-
-import type { GlobalSemanticVariant, TailwindColor } from "../lib/variants";
+import {
+  Box,
+  CheckCircle,
+  Database,
+  ExternalLink,
+  FormInput,
+  MessageSquare,
+  Package,
+} from "lucide-react";
+import Link from "next/link";
 
 import { PageHeader } from "../components/page-header";
+
+import type { SemanticVariant, TailwindColor } from "@/lib/variants/variant-types";
 
 type CategoryCardProps = {
   icon: LucideIcon;
   title: string;
   description: string;
   items: string[];
-  variant?: GlobalSemanticVariant;
-  color?: GlobalSemanticVariant | TailwindColor;
+  variant?: SemanticVariant;
+  color?: SemanticVariant | TailwindColor;
   headerBorder?: boolean;
   useHorizontalLayout?: boolean;
 };

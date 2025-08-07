@@ -35,11 +35,11 @@ export default defineConfig({
     },
   ],
 
-  // Run your local dev server before starting the tests
+  // Run your local dev server before starting the tests  
   webServer: {
-    command: "pnpm dev",
+    command: "next dev --port 3000 --turbo",
     url: "http://localhost:3000",
-    reuseExistingServer: true,
-    cwd: "../..",
+    reuseExistingServer: !process.env.CI,
+    timeout: 180 * 1000,
   },
 });

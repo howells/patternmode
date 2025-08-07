@@ -225,41 +225,58 @@ describe("component Config Validation", () => {
     expect(configFiles.length).toBeGreaterThan(0);
   });
 
-  // Create individual test cases for each component config
+  // Individual test cases for each component config
   describe("Individual Component Configs", () => {
-    // We'll populate this dynamically
-    let dynamicTests: Array<{ configPath: string; componentId: string }> = [];
-
-    it("should set up individual component tests", async () => {
+    const testComponentConfig = async (componentId: string) => {
       const componentsDir = path.join(process.cwd(), "src/components");
-      dynamicTests = await findComponentConfigFiles(componentsDir);
-      expect(dynamicTests.length).toBeGreaterThan(0);
+      const configPath = path.join(componentsDir, componentId, "config.ts");
+      
+      const result = await validateComponentConfigFile(configPath, componentId);
+
+      // Test core requirements with detailed error messages
+      expect(result.hasValidStructure, 
+        `${componentId}: Invalid config structure. Errors: ${result.errors.join(', ')}`
+      ).toBe(true);
+      
+      expect(result.hasRequiredFields, 
+        `${componentId}: Missing required fields. Errors: ${result.errors.join(', ')}`
+      ).toBe(true);
+      
+      expect(result.hasValidCategory, 
+        `${componentId}: Invalid category "${result.config?.category}". Must be one of: ${VALID_CATEGORIES.join(', ')}`
+      ).toBe(true);
+      
+      expect(result.examplesAlignment.hasValidExamples, 
+        `${componentId}: No examples defined in config`
+      ).toBe(true);
+
+      expect(result.componentsAlignment.hasValidComponents,
+        `${componentId}: No components defined in config`
+      ).toBe(true);
+
+      // Log warnings but don't fail the test
+      if (result.warnings.length > 0) {
+        console.warn(`⚠️  ${componentId} warnings:`, result.warnings.join(', '));
+      }
+
+      // Verify import statement format
+      if (result.config?.importStatement) {
+        expect(result.config.importStatement).toMatch(
+          new RegExp(`@patternmode/ui.*${componentId}`),
+          `${componentId}: Import statement should reference @patternmode/ui and component name`
+        );
+      }
+
+      // Verify component is in registry
+      expect(COMPONENT_REGISTRY[componentId], 
+        `${componentId}: Component not found in registry`
+      ).toBeDefined();
+    };
+
+    // Generate individual test cases from the registry
+    Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+      it(`${componentId} config should be valid`, () => testComponentConfig(componentId));
     });
-
-    // Create individual test cases for each component
-    for (let i = 0; i < 100; i++) { // Pre-allocate test slots
-      it(`component config ${i} should be valid`, async () => {
-        // This will be skipped if no config exists at this index
-        if (!dynamicTests || i >= dynamicTests.length) {
-          it.skip("No config at this index");
-          return;
-        }
-
-        const { configPath, componentId } = dynamicTests[i];
-        const result = await validateComponentConfigFile(configPath, componentId);
-
-        // Test core requirements
-        expect(result.hasValidStructure, `${componentId}: Should have valid config structure`).toBe(true);
-        expect(result.hasRequiredFields, `${componentId}: Should have required fields`).toBe(true);
-        expect(result.hasValidCategory, `${componentId}: Should have valid category`).toBe(true);
-        expect(result.examplesAlignment.hasValidExamples, `${componentId}: Should have examples`).toBe(true);
-
-        // Log warnings but don't fail the test
-        if (result.warnings.length > 0) {
-          console.warn(`${componentId} warnings:`, result.warnings);
-        }
-      });
-    }
   });
 
   it("should validate all config.ts files structure", async () => {
@@ -433,9 +450,10 @@ describe("component Config Validation", () => {
   });
 
   it("should validate specific config file patterns", async () => {
-    // Test a known good config (button)
-    const buttonConfigPath = path.join(process.cwd(), "src/components/button/config.ts");
-    const result = await validateComponentConfigFile(buttonConfigPath, "button");
+    // Test using the first component from the registry instead of hardcoding
+    const firstComponentId = Object.keys(COMPONENT_REGISTRY)[0];
+    const configPath = path.join(process.cwd(), `src/components/${firstComponentId}/config.ts`);
+    const result = await validateComponentConfigFile(configPath, firstComponentId);
 
     expect(result.isValid).toBe(true);
     expect(result.hasValidStructure).toBe(true);

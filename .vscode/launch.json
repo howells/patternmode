@@ -26,6 +26,26 @@
       "env": {
         "NODE_ENV": "test"
       }
+    },
+    {
+      "name": "Debug UI Component Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/playwright",
+      "args": ["test", "--config=packages/ui/playwright-ct.config.ts"],
+      "cwd": "${workspaceFolder}/packages/ui",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug Specific Component Test",
+      "type": "node", 
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/playwright",
+      "args": ["test", "--config=packages/ui/playwright-ct.config.ts", "${relativeFile}"],
+      "cwd": "${workspaceFolder}/packages/ui",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

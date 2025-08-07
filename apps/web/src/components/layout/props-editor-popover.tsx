@@ -1,11 +1,11 @@
 "use client";
 
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
+import { getComponentConfig } from "@patternmode/ui/components/registry";
 import React from "react";
 
 import { PreviewProvider, usePreview } from "@/preview/preview-context";
 import { PreviewControls } from "@/preview/preview-controls";
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
-import { getComponentConfig } from "@patternmode/ui/components/registry";
 
 type CellData = {
   componentId: string;

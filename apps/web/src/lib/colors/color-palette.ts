@@ -1,3 +1,9 @@
+/**
+ * Color Palette Definition
+ *
+ * Static color array containing the complete color palette used across the application.
+ */
+
 export const colors = [
   "#FF6900", // Orange
   "#FCB900", // Yellow
@@ -71,54 +77,3 @@ export const colors = [
   "#483D8B", // Dark Slate Blue
   "#696969", // Dim Gray
 ];
-
-/**
- * Generates a simple hash from a string value.
- * This is a basic hashing function and should not be used for cryptographic purposes.
- * @param {string} value - The string to hash.
- * @returns {number} A non-negative integer hash value.
- */
-export function customHash(value: string) {
-  let hash = 0;
-
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash << 5) + value.charCodeAt(i);
-    hash = hash & hash;
-  }
-
-  return Math.abs(hash);
-}
-
-/**
- * Gets an index for an array based on a hash of the input string value.
- * Useful for consistently picking an element from an array based on a string.
- * @param {string} value - The string to hash for index generation.
- * @param {number} arrayLength - The length of the array for which to generate an index.
- * @returns {number} An index within the bounds of the array (0 to arrayLength - 1).
- */
-export function getColor(value: string, arrayLength: number) {
-  const hashValue = customHash(value);
-  const index = hashValue % arrayLength;
-  return index;
-}
-
-/**
- * Selects a color from the predefined `colors` array based on a hash of the input string.
- * This provides a deterministic way to assign a color to a string.
- * @param {string} value - The string for which to get a color.
- * @returns {string} A hex color string from the `colors` array.
- */
-export function getColorFromName(value: string) {
-  const index = getColor(value, colors.length);
-
-  return colors[index];
-}
-
-/**
- * Selects a random color from the predefined `colors` array.
- * @returns {string} A randomly selected hex color string from the `colors` array.
- */
-export function getRandomColor() {
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex];
-}

@@ -1,6 +1,12 @@
+/**
+ * Component Configuration Types
+ *
+ * TypeScript type definitions for component documentation and configuration system.
+ */
+
 import type React from "react";
 
-import type { PreviewConfig } from "./preview";
+import type { PreviewConfig } from "../preview/preview-types";
 
 // Base types for component documentation
 export type ComponentExample = {

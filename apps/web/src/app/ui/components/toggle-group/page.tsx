@@ -1,5 +1,5 @@
-import { Separator } from "@patternmode/ui/components/separator";
 import { toggleGroupConfig } from "@patternmode/ui/components/toggle-group/config";
+import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -11,10 +11,10 @@ export const metadata = {
   openGraph: {
     title: `${toggleGroupConfig.name} | Patternmode`,
     description: toggleGroupConfig.description,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${toggleGroupConfig.name} | Patternmode`,
     description: toggleGroupConfig.description,
   },

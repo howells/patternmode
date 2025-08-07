@@ -1,3 +1,5 @@
+import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
+import { Separator } from "@patternmode/ui/components/separator";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -5,8 +7,6 @@ import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { createComponentConfig } from "@/lib/config-helpers";
 import { Preview } from "@/preview";
-import { COMPONENT_LIST, componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
-import { Separator } from "@patternmode/ui/components/separator";
 
 type ComponentPageProps = {
   params: Promise<{
