@@ -13,10 +13,10 @@ export const textareaStyles = tv({
      * Size variant determining height and text size.
      */
     size: {
-      xs: "min-h-control-xs px-2 py-1.5",
-      sm: "min-h-control-sm px-2.5 py-2",
-      base: "min-h-control-base px-3 py-2",
-      lg: "min-h-control-lg px-4 py-2.5",
+      xs: "min-h-control-xs px-2 py-1.5 text-xs leading-relaxed",
+      sm: "min-h-control-sm px-2.5 py-2 text-sm leading-relaxed",
+      base: "min-h-control-base px-3 py-2 text-base leading-relaxed",
+      lg: "min-h-control-lg px-4 py-2.5 text-lg leading-relaxed",
     },
     /**
      * Width variant
