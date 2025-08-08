@@ -108,12 +108,6 @@ async function validateExampleFile(filePath: string, componentId: string): Promi
     errors.push(`Config references missing examples: ${missingInFile.join(", ")}`);
   }
 
-  // Check for TypeScript usage (props interfaces/types)
-  const hasTypeScript = /interface\s+\w+Props/.test(content) || /type\s+\w+Props\s*=/.test(content);
-  if (!hasTypeScript && exampleComponents.length > 0) {
-    warnings.push("Consider using TypeScript prop types for better examples");
-  }
-
   // Check for proper JSDoc on example components
   const hasJSDocExamples = /\/\*\*[\s\S]*?\*\/\s*export\s+(?:const|function)\s+\w*Example/.test(content);
   if (!hasJSDocExamples && exampleComponents.length > 0) {
@@ -160,7 +154,7 @@ describe("examples Structure Validation", () => {
     const testExamplesForComponent = async (componentId: string) => {
       const componentsDir = path.join(process.cwd(), "src/components");
       const filePath = path.join(componentsDir, componentId, "examples.tsx");
-      
+
       const result = await validateExampleFile(filePath, componentId);
 
       expect(result.hasUseClient, `${componentId}: Should have 'use client' directive`).toBe(true);

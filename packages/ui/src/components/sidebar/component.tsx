@@ -579,13 +579,17 @@ export const SidebarItem = function SidebarItem(
         >
           <Button
             href={href}
-            variant={"inverse-ghost"}
+            variant={"minimal"}
             size="icon-sm"
             icon={icon}
             leftIcon={LeftIcon}
             rightIcon={href ? ArrowRight : undefined}
             showRightIconOnHover={!!href}
             onClick={handleClick}
+            className={cx(current && "bg-white dark:bg-zinc-800")}
+            data-current={current}
+            aria-current={current ? "page" : undefined}
+            render={href ? <Link href={href} /> : undefined}
             {...props}
           />
         </Tooltip>
@@ -597,7 +601,7 @@ export const SidebarItem = function SidebarItem(
   const buttonElement = (
     <Button
       href={href}
-      variant={"inverse-ghost"}
+      variant={"minimal"}
       icon={icon}
       leftIcon={LeftIcon}
       rightIcon={href ? ArrowRight : undefined}
@@ -607,6 +611,10 @@ export const SidebarItem = function SidebarItem(
       size={isCollapsed ? "icon-sm" : "sm"}
       textAlign={isCollapsed ? "center" : "left"}
       ref={ref}
+      className={cx(current && "bg-white dark:bg-zinc-800")}
+      data-current={current}
+      aria-current={current ? "page" : undefined}
+      render={href ? <Link href={href} /> : undefined}
       {...props}
     >
       {wrappedChildren}
