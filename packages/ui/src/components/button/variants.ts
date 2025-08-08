@@ -25,7 +25,7 @@ export const buttonVariants = tv({
       true: extendedBorderRadiusVariants.full,
     },
     size: {
-      "2xs": `h-control-2xs px-1.5 text-[var(--text-2xs)] has-[>svg]:px-1 ${borderRadiusVariants.xs}`,
+      "2xs": `h-control-2xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
       "xs": `h-control-xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
       "sm": `h-control-sm px-2.5 text-sm has-[>svg]:px-2 ${borderRadiusVariants.sm}`,
       "base": `h-control-base px-3 text-sm has-[>svg]:px-2.5 ${borderRadiusVariants.base}`,
