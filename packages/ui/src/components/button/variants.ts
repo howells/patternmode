@@ -7,7 +7,7 @@ import { buttonVariants as buttonVariantNames } from "./types";
 
 export const buttonVariants = tv({
   base: [
-    // base (remove hardcoded rounded-md - will be handled by size variants)
+    // base
     "relative inline-flex items-center whitespace-nowrap text-sm outline-hidden",
     // cursor - explicit hand pointer for all interactive buttons
     "cursor-pointer",
@@ -26,19 +26,20 @@ export const buttonVariants = tv({
       true: extendedBorderRadiusVariants.full,
     },
     size: {
-      "2xs": `h-control-2xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
-      "xs": `h-control-xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
-      "sm": `h-control-sm px-2.5 text-sm has-[>svg]:px-2 ${borderRadiusVariants.sm}`,
-      "base": `h-control-base px-3 text-sm has-[>svg]:px-2.5 ${borderRadiusVariants.base}`,
-      "lg": `h-control-lg px-4 text-sm has-[>svg]:px-3 ${borderRadiusVariants.lg}`,
-      "icon-xs": `size-control-xs ${borderRadiusVariants.xs}`,
+      "2xs": `h-control-2xs px-2 text-xs has-[>svg]:px-1.5`,
+      "xs": `h-control-xs px-2 text-xs has-[>svg]:px-1.5`,
+      "sm": `h-control-sm px-2.5 text-sm has-[>svg]:px-2`,
+      "base": `h-control-base px-3 text-sm has-[>svg]:px-2.5`,
+      "lg": `h-control-lg px-4 text-sm has-[>svg]:px-3`,
+      "icon-xs": `size-control-xs`,
       // no dedicated icon-2xs; icon-xs covers the smallest square icon button
-      "icon-sm": `size-control-sm ${borderRadiusVariants.sm}`,
-      "icon": `size-control-base ${borderRadiusVariants.base}`,
-      "icon-lg": `size-control-lg ${borderRadiusVariants.lg}`,
+      "icon-sm": `size-control-sm`,
+      "icon": `size-control-base`,
+      "icon-lg": `size-control-lg`,
     },
   },
   compoundVariants: [
+    // Gap variants
     {
       size: "2xs",
       variant: [...buttonVariantNames],
@@ -63,6 +64,52 @@ export const buttonVariants = tv({
       size: "lg",
       variant: [...buttonVariantNames],
       class: "gap-2.5",
+    },
+    // Border radius variants (when not rounded)
+    {
+      size: "2xs",
+      rounded: false,
+      class: borderRadiusVariants.xs,
+    },
+    {
+      size: "xs",
+      rounded: false,
+      class: borderRadiusVariants.xs,
+    },
+    {
+      size: "sm",
+      rounded: false,
+      class: borderRadiusVariants.sm,
+    },
+    {
+      size: "base",
+      rounded: false,
+      class: borderRadiusVariants.base,
+    },
+    {
+      size: "lg",
+      rounded: false,
+      class: borderRadiusVariants.lg,
+    },
+    {
+      size: "icon-xs",
+      rounded: false,
+      class: borderRadiusVariants.xs,
+    },
+    {
+      size: "icon-sm",
+      rounded: false,
+      class: borderRadiusVariants.sm,
+    },
+    {
+      size: "icon",
+      rounded: false,
+      class: borderRadiusVariants.base,
+    },
+    {
+      size: "icon-lg",
+      rounded: false,
+      class: borderRadiusVariants.lg,
     },
   ],
   defaultVariants: {
