@@ -1,7 +1,6 @@
 import type { CodeProps, StrongProps, TextLinkProps, TextProps } from "./types";
 
 import { cx } from "../../utils/cx";
-import Link from "next/link";
 import { textVariants } from "./variants";
 
 /**
@@ -21,20 +20,15 @@ export const Text = ({ className, size, ...props }: TextProps) => {
 /**
  * Text link component for navigation within text content.
  */
-export const TextLink = ({
-  className,
-  ...props
-}: TextLinkProps) => {
-  return (
-    <Link
-      {...props}
-      className={cx(
-        className,
-        "text-current underline decoration-current/50 data-hover:decoration-current",
-      )}
-    />
-  );
-};
+export const TextLink = ({ className, ...props }: TextLinkProps) => (
+  <a
+    {...props}
+    className={cx(
+      className,
+      "text-current underline decoration-current/50 data-hover:decoration-current",
+    )}
+  />
+);
 
 /**
  * Strong text component for emphasis within text content.

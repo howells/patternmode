@@ -2,6 +2,7 @@
 
 import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Underline } from "lucide-react";
 import React from "react";
+import { SIZES } from "../../constants/sizes";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 
 export type ToggleGroupPreviewProps = {
@@ -103,7 +104,7 @@ export const toggleGroupPreviewProps = [
     name: "size",
     type: "select",
     description: "Toggle group size variant - affects padding and text size of the toggle items.",
-    options: ["sm", "base", "lg"],
+    options: SIZES,
     defaultValue: "base",
   },
   {

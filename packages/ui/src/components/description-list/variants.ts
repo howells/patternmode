@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const descriptionListVariants = tv({
-  base: "grid grid-cols-1 text-base sm:text-sm",
+  base: "grid grid-cols-1 gap-x-2 text-base sm:text-sm",
   variants: {
     columns: {
       default: "sm:[grid-template-columns:min(50%,--spacing(80))_auto]",
@@ -16,11 +16,16 @@ export const descriptionListVariants = tv({
       true: "[&>dt]:border-t [&>dt]:border-zinc-950/5 dark:[&>dt]:border-white/5 [&>dd]:sm:border-t [&>dd]:sm:border-zinc-950/5 dark:[&>dd]:sm:border-white/5 [&>dt:first-child]:border-none [&>dd:nth-child(2)]:sm:border-none",
       false: "[&_dt]:border-0 [&_dd]:sm:border-0",
     },
+    truncateTerms: {
+      true: "[&>dt]:min-w-0 [&>dt]:truncate",
+      false: "",
+    },
   },
   defaultVariants: {
     columns: "default",
     size: "base",
     border: true,
+    truncateTerms: false,
   },
 });
 

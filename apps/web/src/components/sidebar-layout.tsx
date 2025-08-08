@@ -175,6 +175,7 @@ function SidebarContent() {
                               current={isCurrentComponent(component.id)}
                               isCollapsed={isCollapsed}
                               leftIcon={component.icon}
+                              render={<Link href={`/ui/components/${component.id}`} />}
                             >
                               {component.name}
                             </SidebarItem>
@@ -196,6 +197,7 @@ function SidebarContent() {
                         current={isCurrentComponent(component.id)}
                         isCollapsed={isCollapsed}
                         leftIcon={component.icon}
+                        render={<Link href={`/ui/components/${component.id}`} />}
                       >
                         {component.name}
                       </SidebarItem>

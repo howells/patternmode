@@ -3,7 +3,7 @@ import type React from "react";
 import { cx } from "../../utils/cx";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
-import Link from "next/link";
+// Framework-agnostic: do not import Next.js here
 import { Button } from "../button/component";
 
 type PaginationProps = {
@@ -83,7 +83,7 @@ export const PaginationPrevious = ({
 
   return (
     <Button
-      render={<Link href={href} aria-label="Previous page" />}
+      href={href}
       variant="secondary"
       leftIcon={ChevronLeft}
       className={className}
@@ -137,7 +137,7 @@ export const PaginationNext = ({
 
   return (
     <Button
-      render={<Link href={href} aria-label="Next page" />}
+      href={href}
       variant="secondary"
       rightIcon={ChevronRight}
       className={className}
@@ -211,7 +211,7 @@ export const PaginationPage = ({
   return (
     <li>
       <Button
-        render={<Link href={href} aria-label={`Page ${children}`} />}
+        href={href}
         variant="ghost"
         className={cx("min-w-10", className)}
       >

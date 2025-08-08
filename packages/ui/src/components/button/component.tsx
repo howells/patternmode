@@ -15,8 +15,7 @@ import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
 import { Loader } from "../loader/component";
 import { getIconContainerSize, getIconSize, getLoaderSize, isSmallIconButton } from "./utils";
 import { buttonVariants } from "./variants";
-// Simple anchor fallback for environments without Next.js
-const Link = ({ href, children, ...props }: any) => <a href={href} {...props}>{children}</a>;
+// Link component is provided via LinkProvider; fallback is a plain anchor.
 
 type ButtonProps = {
   /**
@@ -141,7 +140,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   // Automatically set render prop based on href
-  const effectiveRender = render || (href ? <Link href={href} /> : <button type="button" />);
+  const effectiveRender = render || (href ? <a href={href} /> : <button type="button" />);
 
   const hasChildren = children != null && children !== "";
 

@@ -32,6 +32,12 @@ export type DescriptionListProps = {
    * Whether to render borders between rows. Defaults to `true`.
    */
   border?: boolean;
+  /**
+   * Truncate long term labels (dt) when horizontal space is limited.
+   * Applies Tailwind's truncate utilities to the term column.
+   * Defaults to `false`.
+   */
+  truncateTerms?: boolean;
 } & React.ComponentPropsWithoutRef<"dl">;
 
 export type DescriptionTermProps = {

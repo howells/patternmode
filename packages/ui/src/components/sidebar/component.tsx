@@ -4,10 +4,11 @@ import type { IconComponent } from "../icon/types";
 import { cx } from "../../utils/cx";
 import { ArrowRight, ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
-import Link from "next/link";
+// Framework-agnostic: avoid importing Next.js here
 
 import * as React from "react";
 import { useId, useState } from "react";
+import type { useRender } from "@base-ui-components/react/use-render";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";
@@ -53,7 +54,7 @@ function SidebarTitle({
 
   if (href) {
     return (
-      <Link
+      <a
         href={href}
         className={cx(
           baseClasses,
@@ -62,7 +63,7 @@ function SidebarTitle({
         {...props}
       >
         {children}
-      </Link>
+      </a>
     );
   }
 
@@ -374,7 +375,7 @@ export function SidebarGroup({
       <span className="relative block px-2">
         {href
           ? (
-              <Link
+              <a
                 href={href}
                 className={cx(
                   "relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium outline-hidden transition-all duration-100 ease-in-out",
@@ -385,7 +386,7 @@ export function SidebarGroup({
                 )}
               >
                 <GroupIcon className="size-4" strokeWidth={1.5} />
-              </Link>
+              </a>
             )
           : (
               <div
@@ -519,6 +520,7 @@ type SidebarItemProps = {
 } & Omit<React.ComponentPropsWithoutRef<"button">, "className"> & {
   className?: string;
   ref?: React.RefObject<HTMLButtonElement | null>;
+  render?: useRender.RenderProp<Record<string, unknown>>;
 };
 
 /**
@@ -589,7 +591,6 @@ export const SidebarItem = function SidebarItem(
             className={cx(current && "bg-white dark:bg-zinc-800")}
             data-current={current}
             aria-current={current ? "page" : undefined}
-            render={href ? <Link href={href} /> : undefined}
             {...props}
           />
         </Tooltip>
@@ -614,7 +615,6 @@ export const SidebarItem = function SidebarItem(
       className={cx(current && "bg-white dark:bg-zinc-800")}
       data-current={current}
       aria-current={current ? "page" : undefined}
-      render={href ? <Link href={href} /> : undefined}
       {...props}
     >
       {wrappedChildren}

@@ -9,8 +9,8 @@ export type Size = typeof SIZES[number];
  * Human-readable labels for sizes
  */
 export const SIZE_LABELS: Record<Size, string> = {
-  xs: "Extra Small",
-  sm: "Small", 
+  xs: "X Small",
+  sm: "Small",
   base: "Base",
   lg: "Large",
 } as const;

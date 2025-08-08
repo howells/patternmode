@@ -15,7 +15,7 @@ type PropFieldProps = {
 
 export function PropField({ prop, children, className }: PropFieldProps) {
   return (
-    <DescriptionList size="xs" className="items-center sm:[grid-template-columns:1fr_2fr]">
+    <DescriptionList size="xs" truncateTerms>
       <DescriptionTerm className="text-xs flex items-center self-center space-x-1">
         <span className="truncate">{prop.name}</span>
         {prop.description && (

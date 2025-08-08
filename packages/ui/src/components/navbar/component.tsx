@@ -2,7 +2,7 @@
 
 import { cx } from "../../utils/cx";
 import { LayoutGroup, motion } from "motion/react";
-import Link from "next/link";
+// Framework-agnostic: do not import Next.js here
 
 import React, { useId } from "react";
 import { Button } from "../button/component";
@@ -89,6 +89,8 @@ export function NavbarSpacer({ className, ...props }: NavbarSpacerProps) {
   );
 }
 
+import type { useRender } from "@base-ui-components/react/use-render";
+
 type NavbarItemProps = {
   /**
    * Reference to the button element.
@@ -111,6 +113,7 @@ type NavbarItemProps = {
    * URL to navigate to when clicked. Enables Next.js Link integration.
    */
   href?: string;
+  render?: useRender.RenderProp<Record<string, unknown>>;
   [key: string]: any;
 };
 
@@ -123,6 +126,7 @@ export const NavbarItem = function NavbarItem({
   className,
   children,
   href,
+  render,
   ...props
 }: NavbarItemProps) {
   const classes = cx(
@@ -149,7 +153,8 @@ export const NavbarItem = function NavbarItem({
         variant="minimal"
         className={classes}
         data-current={current ? "true" : undefined}
-        render={href ? <Link href={href} /> : undefined}
+        href={href}
+        render={render}
         {...props}
       >
         {children}

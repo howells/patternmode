@@ -27,5 +27,11 @@ export function DescriptionListPreview(props: DescriptionListProps) {
 // Preview props for prop explorer
 export const descriptionListPreviewProps = [
   // Note: DescriptionList component uses standard HTML dl attributes
-  // No specific configurable props beyond standard HTML attributes
+  // Expose library-specific helpers below
+  {
+    name: "truncateTerms",
+    type: "boolean",
+    description: "Truncate long term labels when space is limited.",
+    defaultValue: false,
+  },
 ];

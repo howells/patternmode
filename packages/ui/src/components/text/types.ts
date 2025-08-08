@@ -1,4 +1,3 @@
-import type Link from "next/link";
 
 /**
  * Text size variant controlling font size.
@@ -14,6 +13,6 @@ export type TextProps = {
   size?: TextSize;
 } & React.ComponentPropsWithoutRef<"p">;
 
-export type TextLinkProps = React.ComponentPropsWithoutRef<typeof Link>;
+export type TextLinkProps = React.ComponentPropsWithoutRef<"a">;
 export type StrongProps = React.ComponentPropsWithoutRef<"strong">;
 export type CodeProps = React.ComponentPropsWithoutRef<"code">;
