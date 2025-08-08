@@ -8,9 +8,7 @@ export const tabsVariants = tv({
     root: "relative",
     list: [
       // base
-      "relative flex",
-      // border
-      "border-b border-zinc-200 dark:border-zinc-700",
+      "relative",
     ],
     tab: [
       // base
@@ -41,13 +39,14 @@ export const tabsVariants = tv({
   variants: {
     variant: {
       line: {
-        list: "border-b border-zinc-200 dark:border-zinc-700",
+        // Full-width, block-level list with bottom border
+        list: "flex w-full border-b border-zinc-200 dark:border-zinc-700",
         tab: "border-b-2 border-transparent data-[selected]:border-zinc-900 data-[selected]:text-zinc-900 dark:data-[selected]:border-zinc-50 dark:data-[selected]:text-zinc-50",
       },
       solid: {
         list: [
           // base
-          "flex gap-px border p-0.5",
+          "inline-flex items-stretch border p-0.5",
           // colors
           "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700",
         ],
@@ -59,7 +58,7 @@ export const tabsVariants = tv({
           // hover
           "hover:bg-zinc-100 dark:hover:bg-zinc-700",
           // selected
-          "data-[selected]:bg-zinc-100 data-[selected]:text-zinc-900 dark:data-[selected]:bg-zinc-700 dark:data-[selected]:text-zinc-100",
+          "data-[selected]:bg-transparent data-[selected]:text-zinc-900 dark:data-[selected]:bg-transparent dark:data-[selected]:text-zinc-100",
           // disabled
           "disabled:pointer-events-none disabled:opacity-50",
           // focus
@@ -69,7 +68,7 @@ export const tabsVariants = tv({
         indicator: [
           // base - grey block indicator that follows the tab
           "absolute transition-all duration-200 ease-in-out delay-75",
-          "bottom-0.5 left-0.5 h-[calc(100%-4px)] w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] z-0",
+          "bottom-0.5 left-0.5 h-[calc(100%-4px)] w-[var(--active-tab-width)] translate-x-[calc(var(--active-tab-left)-1px)] z-0",
           "bg-zinc-100 dark:bg-zinc-700",
           // rounded corners to match the container
           "rounded-[calc(theme(borderRadius.lg)-2px)]",
@@ -108,12 +107,12 @@ export const tabsVariants = tv({
       size: "xs",
       class: {
         list: [
-          `gap-x-0 p-0.5 ${borderRadiusVariants.xs}`, // Remove gap, very compact for xs
+            `gap-x-0 p-0.5 ${borderRadiusVariants.xs}`,
           // Use centralized button adjustments
           ...containerButtonAdjustments.xs,
         ],
         indicator: [
-          "rounded-[calc(theme(borderRadius.xs)-2px)]",
+              "rounded-[calc(theme(borderRadius.sm)-2px)]",
         ],
       },
     },
@@ -122,12 +121,12 @@ export const tabsVariants = tv({
       size: "sm",
       class: {
         list: [
-          `gap-x-0 p-0.5 ${borderRadiusVariants.sm}`, // Remove gap, keep compact for sm
+            `gap-x-0 p-0.5 ${borderRadiusVariants.sm}`,
           // Use centralized button adjustments
           ...containerButtonAdjustments.sm,
         ],
         indicator: [
-          "rounded-[calc(theme(borderRadius.sm)-2px)]",
+              "rounded-[calc(theme(borderRadius.DEFAULT)-2px)]",
         ],
       },
     },
@@ -136,12 +135,12 @@ export const tabsVariants = tv({
       size: "base",
       class: {
         list: [
-          `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`, // Remove gap, use padding
+          `gap-x-0 p-0.5 ${borderRadiusVariants.base}`,
           // Use centralized button adjustments
           ...containerButtonAdjustments.base,
         ],
         indicator: [
-          "rounded-[calc(theme(borderRadius.lg)-2px)]",
+          "rounded-[calc(theme(borderRadius.md)-2px)]",
         ],
       },
     },
@@ -150,7 +149,7 @@ export const tabsVariants = tv({
       size: "lg",
       class: {
         list: [
-          `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`, // Remove gap, larger container for lg
+            `gap-x-0 p-0.5 ${borderRadiusVariants.lg}`,
           // Use centralized button adjustments
           ...containerButtonAdjustments.lg,
         ],
