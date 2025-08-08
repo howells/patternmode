@@ -3,6 +3,7 @@ import { componentVariants } from "../../constants/variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
 import { focusRing } from "../../presentation/focus-ring";
+import { buttonVariants as buttonVariantNames } from "./types";
 
 export const buttonVariants = tv({
   base: [
@@ -40,27 +41,27 @@ export const buttonVariants = tv({
   compoundVariants: [
     {
       size: "2xs",
-      variant: ["primary", "secondary", "outline", "ghost"],
+      variant: [...buttonVariantNames],
       class: "gap-1",
     },
     {
       size: "xs",
-      variant: ["primary", "secondary", "outline", "ghost"],
+      variant: [...buttonVariantNames],
       class: "gap-1",
     },
     {
       size: "sm",
-      variant: ["primary", "secondary", "outline", "ghost"],
+      variant: [...buttonVariantNames],
       class: "gap-1.5",
     },
     {
       size: "base",
-      variant: ["primary", "secondary", "outline", "ghost"],
+      variant: [...buttonVariantNames],
       class: "gap-2",
     },
     {
       size: "lg",
-      variant: ["primary", "secondary", "outline", "ghost"],
+      variant: [...buttonVariantNames],
       class: "gap-2.5",
     },
   ],

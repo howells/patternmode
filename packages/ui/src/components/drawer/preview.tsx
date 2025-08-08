@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
+import type { ButtonVariant } from "../../constants/variants";
 import { Button } from "../button/component";
+import { buttonVariants } from "../button/types";
 import {
   Drawer,
   DrawerClose,
@@ -33,7 +35,7 @@ export type DrawerPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the drawer trigger button.
    */
-  triggerVariant?: "primary" | "secondary" | "outline" | "outline-dashed" | "ghost" | "inverse-ghost" | "link" | "minimal";
+  triggerVariant?: ButtonVariant;
   /**
    * Content complexity level.
    * Determines how much content is displayed in the drawer.
@@ -175,7 +177,7 @@ export const drawerPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the drawer trigger button.",
-    options: ["primary", "secondary", "outline", "outline-dashed", "ghost", "inverse-ghost", "link", "minimal"],
+    options: [...buttonVariants],
     defaultValue: "primary",
   },
   {

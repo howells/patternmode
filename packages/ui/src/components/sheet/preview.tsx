@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import type { ButtonVariant } from "../../constants/variants";
 import { Button } from "../button/component";
 import { DismissButton } from "../dismiss-button/component";
+import { buttonVariants } from "../button/types";
 import {
   Sheet,
   SheetClose,
@@ -39,7 +41,7 @@ export type SheetPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the sheet trigger button.
    */
-  triggerVariant?: "primary" | "outline" | "ghost";
+  triggerVariant?: ButtonVariant;
   /**
    * Content complexity level.
    * Determines how much content is displayed in the sheet.
@@ -199,7 +201,7 @@ export const sheetPreviewProps = [
     name: "triggerVariant",
     type: "select",
     description: "Trigger button variant - controls the styling of the sheet trigger button.",
-    options: ["primary", "outline", "ghost"],
+    options: [...buttonVariants],
     defaultValue: "primary",
   },
   {

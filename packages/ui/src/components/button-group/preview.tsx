@@ -4,6 +4,7 @@ import type { ButtonGroupProps } from "./types";
 import * as React from "react";
 import { Button } from "../button/component";
 import { ButtonGroup } from "./component";
+import { buttonVariants } from "../button/types";
 
 export function ButtonGroupPreview({
   children,
@@ -28,7 +29,7 @@ export const buttonGroupPreviewProps = [
     name: "variant",
     type: "select",
     description: "Visual style variant inherited by all child buttons.",
-    options: ["default", "primary", "secondary", "outline", "ghost", "destructive"],
+    options: ["default", ...buttonVariants],
     defaultValue: "default",
   },
   {
