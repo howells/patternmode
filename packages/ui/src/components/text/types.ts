@@ -1,14 +1,15 @@
+import type { Size } from "../../constants/sizes";
 
 /**
  * Text size variant controlling font size.
- * Follows a consistent scale from extra small to extra large.
+ * Uses the global size scale.
  */
-export type TextSize = "2xs" | "xs" | "sm" | "base" | "lg" | "xl";
+export type TextSize = Size;
 
 export type TextProps = {
   /**
    * Text size variant controlling font size.
-   * Follows a consistent scale from extra small to extra large.
+   * Uses the global size scale.
    */
   size?: TextSize;
 } & React.ComponentPropsWithoutRef<"p">;

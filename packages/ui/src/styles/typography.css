@@ -145,6 +145,55 @@
   }
 
   /* Prose size variants */
+
+  .prose-base {
+    font-size: var(--text-base);
+  }
+
+  .prose-base :where(p):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-base);
+  }
+
+  .prose-base :where(h1):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-xl);
+  }
+
+  .prose-base :where(h2):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-lg);
+  }
+
+  .prose-base :where(h3):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-base);
+  }
+
+  .prose-base :where(h4):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-sm);
+  }
+
+  .prose-xs {
+    font-size: var(--text-xs);
+  }
+
+  .prose-xs :where(p):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-xs);
+  }
+
+  .prose-xs :where(h1):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-base);
+  }
+
+  .prose-xs :where(h2):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-sm);
+  }
+
+  .prose-xs :where(h3):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-xs);
+  }
+
+  .prose-xs :where(h4):not(:where([class~="not-prose"] *)) {
+    font-size: var(--text-xs);
+  }
+
   .prose-sm {
     font-size: var(--text-sm);
   }

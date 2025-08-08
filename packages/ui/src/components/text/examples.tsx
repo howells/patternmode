@@ -13,12 +13,10 @@ export const BasicExample = () => (
 
 export const SizesExample = () => (
   <div className="space-y-2">
-    <Text size="2xs">Extra extra small text (2xs) - 11px</Text>
-    <Text size="xs">Extra small text (xs) - 12px</Text>
-    <Text size="sm">Small text (sm) - 14px</Text>
-    <Text size="base">Base text (base) - 16px</Text>
-    <Text size="lg">Large text (lg) - 18px</Text>
-    <Text size="xl">Extra large text (xl) - 20px</Text>
+    <Text size="xs">Extra small text (xs)</Text>
+    <Text size="sm">Small text (sm)</Text>
+    <Text size="base">Base text (base)</Text>
+    <Text size="lg">Large text (lg)</Text>
   </div>
 );
 

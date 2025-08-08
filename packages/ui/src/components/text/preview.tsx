@@ -1,6 +1,7 @@
 "use client";
 
 import type { TextProps } from "./types";
+import { SIZES } from "../../constants/sizes";
 import React from "react";
 import { Text } from "./component";
 
@@ -24,7 +25,7 @@ export const textPreviewProps = [
     name: "size",
     type: "select",
     description: "Text size variant controlling font size.",
-    options: ["2xs", "xs", "sm", "base", "lg", "xl"],
+    options: SIZES,
     defaultValue: "sm",
   },
 ];

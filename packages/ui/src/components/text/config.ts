@@ -27,7 +27,7 @@ export const textConfig: ComponentConfig = {
     {
       id: "sizes",
       title: "Sizes",
-      description: "Different text sizes from 2xs to xl",
+      description: "Different text sizes from xs to lg",
       component: SizesExample,
     },
     {
