@@ -28,6 +28,8 @@ export const ThemeToggle = ({
   // Map theme toggle size to icon size
   const getIconSize = (size: ThemeToggleProps["size"]) => {
     switch (size) {
+      case "2xs":
+        return "xs" as const;
       case "xs":
         return "sm" as const;
       case "sm":
@@ -48,7 +50,7 @@ export const ThemeToggle = ({
     if (isLoading) {
       return (
         <Loader
-          size={size}
+          size={size === "2xs" ? "xs" : size}
           aria-label="Loading theme toggle"
         />
       );

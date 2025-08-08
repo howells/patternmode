@@ -3,6 +3,7 @@
 import type { LoaderProps } from "./types";
 
 import React from "react";
+import { SIZES } from "../../constants/sizes";
 import { Loader } from "./component";
 
 export function LoaderPreview(props: LoaderProps) {
@@ -15,7 +16,7 @@ export const loaderPreviewProps = [
     name: "size",
     type: "select",
     description: "The size variant of the loader icon.",
-    options: ["xs", "sm", "base", "lg", "xl"],
+    options: [...SIZES, "xl"],
     defaultValue: "base",
   },
   {

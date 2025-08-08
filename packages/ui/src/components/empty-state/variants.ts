@@ -9,6 +9,7 @@ export const emptyStateVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "gap-1.5 py-4 px-2",
       xs: "gap-2 py-6 px-3",
       sm: "gap-3 py-8 px-4",
       base: "gap-4 py-12 px-6",
@@ -28,6 +29,7 @@ export const emptyStateActionsVariants = tv({
   base: "flex flex-col items-center",
   variants: {
     size: {
+      "2xs": "gap-1 mt-1",
       xs: "gap-1 mt-1",
       sm: "gap-2 mt-2",
       base: "gap-3 mt-4",

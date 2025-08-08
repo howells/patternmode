@@ -4,6 +4,7 @@ import type { InputProps } from "./types";
 import { Lock, Mail, Search, User } from "lucide-react";
 import React from "react";
 import { Input } from "./component";
+import { SIZES } from "../../constants/sizes";
 
 export function InputPreview(props: InputProps) {
   return <Input placeholder="Enter text..." className="w-full max-w-96" {...props} />;
@@ -28,7 +29,7 @@ export const inputPreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["sm", "base", "lg"],
+    options: SIZES,
     defaultValue: "base",
   },
   {

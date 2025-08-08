@@ -76,6 +76,10 @@ export const tabsVariants = tv({
       },
     },
     size: {
+      "2xs": {
+        list: "gap-x-1.5",
+        tab: "",
+      },
       xs: {
         list: "gap-x-2", // very tight spacing for line variant
         tab: "", // very small height and text size for line variant only
@@ -102,6 +106,20 @@ export const tabsVariants = tv({
   },
   compoundVariants: [
     // Size adjustments for solid variant - override gap with padding
+    {
+      variant: "solid",
+      size: "2xs",
+      class: {
+        list: [
+          `gap-x-0 p-0.5 ${borderRadiusVariants.xs}`,
+          // Use centralized button adjustments
+          ...containerButtonAdjustments.xs,
+        ],
+        indicator: [
+          "rounded-[calc(theme(borderRadius.sm)-2px)]",
+        ],
+      },
+    },
     {
       variant: "solid",
       size: "xs",

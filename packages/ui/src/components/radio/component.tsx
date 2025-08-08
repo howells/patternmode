@@ -120,7 +120,7 @@ export const RadioCard = (
 ) => (
   <BaseRadio.Root
     ref={ref}
-    className={cx(radioCardVariants({ size }), className)}
+    className={cx(radioCardVariants({ size: size === "2xs" ? "xs" : size }), className)}
     nativeButton={true}
     {...props}
   >

@@ -4,6 +4,7 @@ import type { IconProps } from "./types";
 import { Camera } from "lucide-react";
 import React from "react";
 import { Icon } from "./component";
+import { SIZES } from "../../constants/sizes";
 
 export function IconPreview(props: IconProps) {
   const { icon, fallbackIcon, ...otherProps } = props;
@@ -39,7 +40,7 @@ export const iconPreviewProps = [
     name: "size",
     type: "select",
     description: "Visual size of the icon affecting its dimensions.",
-    options: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl"],
+    options: [...SIZES, "xl", "2xl", "3xl"],
     defaultValue: "base",
   },
   {

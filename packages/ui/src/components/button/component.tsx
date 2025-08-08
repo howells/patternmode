@@ -249,7 +249,7 @@ const Button = ({
 
     // Determine layout class
     const layoutClassName = cx(
-      "flex items-center w-full transition-all duration-150 ease-in-out",
+      "flex items-center w-full transition-colors duration-150 ease-in-out",
       // For icon-only buttons, center everything
       isSmallIconButton(size)
         ? "justify-center"

@@ -25,17 +25,24 @@ export const buttonVariants = tv({
       true: extendedBorderRadiusVariants.full,
     },
     size: {
+      "2xs": `h-control-2xs px-1.5 text-[var(--text-2xs)] has-[>svg]:px-1 ${borderRadiusVariants.xs}`,
       "xs": `h-control-xs px-2 text-xs has-[>svg]:px-1.5 ${borderRadiusVariants.xs}`,
       "sm": `h-control-sm px-2.5 text-sm has-[>svg]:px-2 ${borderRadiusVariants.sm}`,
       "base": `h-control-base px-3 text-sm has-[>svg]:px-2.5 ${borderRadiusVariants.base}`,
       "lg": `h-control-lg px-4 text-sm has-[>svg]:px-3 ${borderRadiusVariants.lg}`,
       "icon-xs": `size-control-xs ${borderRadiusVariants.xs}`,
+      // no dedicated icon-2xs; icon-xs covers the smallest square icon button
       "icon-sm": `size-control-sm ${borderRadiusVariants.sm}`,
       "icon": `size-control-base ${borderRadiusVariants.base}`,
       "icon-lg": `size-control-lg ${borderRadiusVariants.lg}`,
     },
   },
   compoundVariants: [
+    {
+      size: "2xs",
+      variant: ["primary", "secondary", "outline", "ghost"],
+      class: "gap-1",
+    },
     {
       size: "xs",
       variant: ["primary", "secondary", "outline", "ghost"],

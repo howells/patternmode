@@ -10,6 +10,7 @@
   --avatar-radius: 0.5rem;
 
   /* Control height system using hardcoded values (theme() directive causes dev server issues) */
+  --control-height-2xs: 1.75rem; /* 28px - aligns with tighter compact controls */
   --control-height-xs: 2rem; /* 32px - matches h-8/w-8 */
   --control-height-sm: 2.25rem; /* 36px - matches h-9/w-9 */
   --control-height-base: 2.5rem; /* 40px - matches h-10/w-10 */
@@ -20,6 +21,9 @@
 @layer utilities {
   .h-control-xs {
     height: var(--control-height-xs);
+  }
+  .h-control-2xs {
+    height: var(--control-height-2xs);
   }
   .h-control-sm {
     height: var(--control-height-sm);
@@ -34,6 +38,10 @@
   .size-control-xs {
     width: var(--control-height-xs);
     height: var(--control-height-xs);
+  }
+  .size-control-2xs {
+    width: var(--control-height-2xs);
+    height: var(--control-height-2xs);
   }
   .size-control-sm {
     width: var(--control-height-sm);

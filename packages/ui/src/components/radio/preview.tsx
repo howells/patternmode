@@ -1,5 +1,7 @@
 "use client";
 
+import { SIZES } from "../../constants/sizes";
+
 import type { RadioOptionProps } from "./types";
 import React from "react";
 import { RadioGroup, RadioOption } from "./component";
@@ -42,7 +44,7 @@ export const radioPreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting radio button and text sizing.",
-    options: ["xs", "sm", "base", "lg"],
+    options: SIZES,
     defaultValue: "base",
   },
 ];

@@ -9,6 +9,7 @@ export const inputContainerStyles = tv({
   base: "relative flex items-stretch w-full border transition",
   variants: {
     size: {
+      "2xs": borderRadiusVariants.xs,
       xs: borderRadiusVariants.xs,
       sm: borderRadiusVariants.sm,
       base: borderRadiusVariants.base,
@@ -34,6 +35,7 @@ export const inputElementStyles = tv({
   ],
   variants: {
     size: {
+      "2xs": ["py-0.5 text-[11px] leading-tight"],
       xs: ["py-0.5 text-xs leading-tight"],
       sm: ["py-1 text-sm"],
       base: ["py-1.5 text-sm"],
@@ -69,6 +71,11 @@ export const inputStyles = tv({
   ],
   variants: {
     size: {
+      "2xs": [
+        `h-control-2xs text-[11px] ${borderRadiusVariants.xs}`,
+        // file styles for 2xs
+        "file:-my-1 file:-ml-1 file:px-1 file:py-0.5 file:[margin-inline-end:0.25rem]",
+      ],
       xs: [
         `h-control-xs text-xs leading-tight ${borderRadiusVariants.xs}`,
         // file styles for xs

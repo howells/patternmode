@@ -32,7 +32,7 @@ const SelectNative = ({ ref: forwardedRef, className, hasError, size, ...props }
         <span className="text-zinc-400 dark:text-zinc-500">
           <Icon
             icon={ChevronsUpDown}
-            size={size}
+            size={size === "2xs" ? "xs" : size}
             strokeWidth={defaultConfig.components.iconStrokeWidth}
           />
         </span>

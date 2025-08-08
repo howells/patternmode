@@ -7,6 +7,7 @@ export const descriptionListVariants = tv({
       default: "sm:[grid-template-columns:min(50%,--spacing(80))_auto]",
     },
     size: {
+      "2xs": "[&>dt]:py-0.5 [&>dd]:py-0.5",
       xs: "[&>dt]:py-1 [&>dd]:py-1",
       sm: "[&>dt]:py-2 [&>dd]:py-2",
       base: "[&>dt]:py-3 [&>dd]:py-3",

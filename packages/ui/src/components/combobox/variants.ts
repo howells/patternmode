@@ -6,6 +6,7 @@ export const comboboxVariants = tv({
   base: ["relative w-full"],
   variants: {
     size: {
+      "2xs": "",
       xs: "",
       sm: "",
       base: "",
@@ -39,6 +40,7 @@ export const comboboxListVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "text-[11px] rounded-sm",
       xs: "text-xs rounded-sm",
       sm: "text-sm rounded",
       base: "text-sm rounded-md",
@@ -63,6 +65,7 @@ export const comboboxItemVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "text-[11px] py-0.5 px-1.5",
       xs: "text-xs py-1 px-2",
       sm: "text-sm py-1.5 px-2.5",
       base: "text-sm py-2 px-3",

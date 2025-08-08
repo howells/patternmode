@@ -28,6 +28,7 @@ export const themeToggleVariants = tv({
       false: borderRadiusVariants.base,
     },
     size: {
+      "2xs": "size-control-2xs",
       xs: "size-control-xs",
       sm: "size-control-sm",
       base: "size-control-base",

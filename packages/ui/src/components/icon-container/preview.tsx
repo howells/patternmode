@@ -4,6 +4,7 @@ import type { IconContainerProps } from "./types";
 import { Calendar } from "lucide-react";
 import React from "react";
 import { IconContainer } from "./component";
+import { SIZES } from "../../constants/sizes";
 
 export function IconContainerPreview(props: IconContainerProps) {
   return <IconContainer icon={Calendar} {...props} />;
@@ -42,7 +43,7 @@ export const iconContainerPreviewProps = [
     name: "iconSize",
     type: "select",
     description: "Icon size within the container.",
-    options: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl"],
+    options: [...SIZES, "xl", "2xl", "3xl"],
     defaultValue: "base",
   },
   {

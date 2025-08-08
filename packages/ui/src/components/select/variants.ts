@@ -19,6 +19,7 @@ export const selectTriggerVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "h-control-2xs",
       xs: "h-control-xs",
       sm: "h-control-sm",
       base: "h-control-base",
@@ -48,6 +49,7 @@ export const selectPopoverVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "text-[11px] rounded-sm",
       xs: "text-xs rounded-sm",
       sm: "text-sm rounded",
       base: "text-sm rounded-md",
@@ -72,6 +74,7 @@ export const selectItemVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "text-[11px] py-0.5 px-1.5",
       xs: "text-xs py-1 px-2",
       sm: "text-sm py-1.5 px-2.5",
       base: "text-sm py-2 px-3",

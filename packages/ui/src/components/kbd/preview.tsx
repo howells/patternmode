@@ -3,6 +3,7 @@
 import type { KbdProps } from "./types";
 import React from "react";
 import { Kbd } from "./component";
+import { SIZES } from "../../constants/sizes";
 
 export function KbdPreview(props: KbdProps) {
   return (
@@ -47,7 +48,7 @@ export const kbdPreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["xs", "sm", "base", "lg"],
+    options: SIZES,
     defaultValue: "sm",
   },
 ];

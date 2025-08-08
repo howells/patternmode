@@ -20,6 +20,7 @@ export const formControlContainerVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": `h-control-2xs ${borderRadiusVariants.xs}`,
       xs: `h-control-xs ${borderRadiusVariants.xs}`,
       sm: `h-control-sm ${borderRadiusVariants.sm}`,
       base: `h-control-base ${borderRadiusVariants.base}`,
@@ -50,6 +51,7 @@ export const formControlElementVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "text-xs leading-tight",
       xs: "text-xs leading-tight",
       sm: "text-sm",
       base: "text-sm",
@@ -73,6 +75,11 @@ export const formControlElementVariants = tv({
     // Standalone sizing includes border radius and height
     {
       variant: "standalone",
+      size: "2xs",
+      class: `h-control-2xs px-1.5 ${borderRadiusVariants.xs}`,
+    },
+    {
+      variant: "standalone",
       size: "xs",
       class: `h-control-xs px-2 ${borderRadiusVariants.xs}`,
     },
@@ -92,6 +99,11 @@ export const formControlElementVariants = tv({
       class: `h-control-lg px-4 ${borderRadiusVariants.lg}`,
     },
     // Contained sizing includes padding only (height handled by container)
+    {
+      variant: "contained",
+      size: "2xs",
+      class: "py-0.5 px-1.5",
+    },
     {
       variant: "contained",
       size: "xs",

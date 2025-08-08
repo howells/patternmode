@@ -34,6 +34,7 @@ export const toggleVariants = tv({
       ],
     },
     size: {
+      "2xs": `h-6 min-w-6 px-1 text-[11px] ${borderRadiusVariants.xs}`,
       xs: `h-7 min-w-7 px-1 text-xs ${borderRadiusVariants.xs}`,
       sm: `h-8 min-w-8 px-1.5 text-xs ${borderRadiusVariants.sm}`,
       base: `h-9 min-w-9 px-2 text-sm ${borderRadiusVariants.base}`,

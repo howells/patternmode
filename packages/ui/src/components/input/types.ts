@@ -92,7 +92,7 @@ export type InputProps = {
    * Size variant of the input.
    * Controls height, text size, and overall dimensions of the input field.
    */
-  size?: "xs" | "sm" | "base" | "lg";
+  size?: "2xs" | "xs" | "sm" | "base" | "lg";
 
   /**
    * Whether to display error styling for form validation.

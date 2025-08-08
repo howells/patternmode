@@ -8,6 +8,7 @@ import type { IconButtonSize } from "./types";
 export const getIconSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | "base" | "lg" => {
   const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base" | "lg"> = {
     // Text button sizes
+    "2xs": "xs",
     "xs": "xs",
     "sm": "xs",
     "base": "sm",
@@ -29,6 +30,7 @@ export const getIconSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | "b
 export const getLoaderSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | "base" => {
   const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base"> = {
     // Text button sizes
+    "2xs": "xs",
     "xs": "xs",
     "sm": "xs",
     "base": "sm",
@@ -50,6 +52,7 @@ export const getLoaderSize = (buttonSize: Size | IconButtonSize): "xs" | "sm" | 
 export const getIconContainerSize = (buttonSize: Size | IconButtonSize): string => {
   const sizeMap: Record<Size | IconButtonSize, string> = {
     // Text button sizes
+    "2xs": "size-2.5",
     "xs": "size-3",
     "sm": "size-3.5",
     "base": "size-3.5",

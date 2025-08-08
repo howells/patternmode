@@ -20,6 +20,7 @@ export const selectNativeStyles = tv({
      * Size variant determining height and text size.
      */
     size: {
+      "2xs": "pl-1.5 pr-7",
       xs: "pl-2 pr-8",
       sm: "pl-2.5 pr-9",
       base: "pl-3 pr-10",
@@ -34,6 +35,11 @@ export const selectNativeStyles = tv({
   },
   compoundVariants: [
     // Override the inherited padding from formControlElementVariants
+    {
+      variant: "standalone",
+      size: "2xs",
+      class: "h-control-2xs pl-1.5 pr-7 rounded-sm",
+    },
     {
       variant: "standalone",
       size: "xs",

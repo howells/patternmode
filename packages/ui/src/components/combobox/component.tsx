@@ -45,7 +45,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
   defaultRenderItem: (item: T, index: number) => React.ReactNode;
   highlightedIndex: number;
   selectedItem: T | null;
-  size: "xs" | "sm" | "base" | "lg";
+  size: "2xs" | "xs" | "sm" | "base" | "lg";
   iconStrokeWidth: number;
   isFetchingNextPage: boolean;
   hasNextPage: boolean | undefined;
@@ -54,6 +54,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
   // Calculate item height based on size
   const itemHeight = React.useMemo(() => {
     switch (size) {
+      case "2xs": return 22; // very compact row height
       case "xs": return 24; // py-1 px-2 with text-xs leading-tight (12px text + 8px padding)
       case "sm": return 28; // py-1 px-2.5 with text-sm (14px text + 8px padding + line height)
       case "lg": return 40; // py-2 px-4 with text-base (16px text + 16px padding + line height)
@@ -422,7 +423,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
         <span className="text-zinc-400 dark:text-zinc-500">
           <Icon
             icon={ChevronsUpDown}
-            size={size}
+            size={size === "2xs" ? "xs" : size}
             strokeWidth={defaultConfig.components.iconStrokeWidth}
           />
         </span>
@@ -486,7 +487,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           {(!isMounted) ? (
             // Render a stable placeholder on SSR and initial client render
             <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
-              <Loader size="sm" />
+          <Loader size={size === "2xs" ? "xs" : "sm"} />
               <span className="ml-2 text-sm text-zinc-500">Loading...</span>
             </div>
           ) : (
@@ -494,7 +495,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
               {/* Loading State */}
               {isLoading && (
                 <div className="flex items-center justify-center py-4" data-testid="combobox-loading">
-                  <Loader size="sm" />
+                  <Loader size={size === "2xs" ? "xs" : "sm"} />
                   <span className="ml-2 text-sm text-zinc-500">Loading...</span>
                 </div>
               )}

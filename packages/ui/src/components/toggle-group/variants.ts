@@ -45,6 +45,13 @@ export const toggleGroupVariants = tv({
       },
     },
     size: {
+      "2xs": {
+        root: [
+          `gap-0.5 p-0.5 ${borderRadiusVariants.xs}`,
+          ...containerButtonAdjustments.xs,
+        ],
+        item: `h-3.5 px-1 text-[11px] ${borderRadiusVariants.xs}`,
+      },
       xs: {
         root: [
           `gap-0.5 p-0.5 ${borderRadiusVariants.xs}`,

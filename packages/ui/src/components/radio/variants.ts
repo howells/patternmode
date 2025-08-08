@@ -26,6 +26,10 @@ export const radioVariants = tv({
   },
   variants: {
     size: {
+      "2xs": {
+        circle: `size-2.5 ${borderRadiusVariants.xs}`,
+        dot: "size-1",
+      },
       xs: {
         circle: `size-3 ${borderRadiusVariants.xs}`,
         dot: "size-1",
@@ -77,6 +81,7 @@ export const radioLabelVariants = tv({
   ],
   variants: {
     size: {
+      "2xs": "gap-1 text-[11px]",
       xs: "gap-1 text-xs",
       sm: "gap-1.5 text-xs",
       base: "gap-2 text-sm",

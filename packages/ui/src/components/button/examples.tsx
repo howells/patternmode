@@ -87,6 +87,7 @@ export const LoadingExample = () => <Button isLoading>Loading...</Button>;
 // Different sizes
 export const SizesExample = () => (
   <div className="flex items-center gap-2">
+    <Button size="2xs">2X Small</Button>
     <Button size="xs">Extra Small</Button>
     <Button size="sm">Small</Button>
     <Button size="base">Base</Button>

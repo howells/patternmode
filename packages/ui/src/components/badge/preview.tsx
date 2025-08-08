@@ -1,5 +1,7 @@
 "use client";
 
+import { SIZES } from "../../constants/sizes";
+
 import type { BadgeProps } from "./component";
 import { AlertCircle, Check, Star, X } from "lucide-react";
 import React from "react";
@@ -67,7 +69,7 @@ export const badgePreviewProps = [
     name: "size",
     type: "select",
     description: "Size variant affecting padding and text size.",
-    options: ["xs", "sm", "base", "lg"],
+    options: SIZES,
     defaultValue: "base",
   },
   {

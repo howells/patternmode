@@ -13,5 +13,5 @@ export type SelectNativeProps = Omit<React.InputHTMLAttributes<HTMLSelectElement
    * Size variant of the select input.
    * Controls height and padding of the select element.
    */
-  size?: "xs" | "sm" | "base" | "lg";
+  size?: "2xs" | "xs" | "sm" | "base" | "lg";
 };
