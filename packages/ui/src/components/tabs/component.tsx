@@ -4,8 +4,8 @@ import type { Size } from "../../constants/sizes";
 import type { TabsContentProps, TabsListProps, TabsListVariant, TabsProps, TabsTriggerProps } from "./types";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 
-import { cx } from "../../utils/cx";
 import React from "react";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { tabsVariants } from "./variants";
 

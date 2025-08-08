@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, use } from "react";
 
 // Generic link props that most router Link components can accept
 export type GenericLinkProps = {
@@ -34,15 +34,13 @@ export function getLinkComponent(): LinkComponent {
 
 export function LinkProvider({ component, children }: { component: LinkComponent; children: React.ReactNode }) {
   return (
-    <LinkContext.Provider value={component}>
+    <LinkContext value={component}>
       {children}
-    </LinkContext.Provider>
+    </LinkContext>
   );
 }
 
 export function useLinkComponent(): LinkComponent {
-  const ctx = useContext(LinkContext);
+  const ctx = use(LinkContext);
   return ctx ?? getLinkComponent();
 }
-
-

@@ -4,11 +4,11 @@ import type { IconComponent } from "../icon/types";
 import type { IconButtonSize } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "../../utils/cx";
-
 import { MoreHorizontal } from "lucide-react";
+
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { Kbd } from "../kbd/component";
 import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
@@ -465,7 +465,7 @@ const Button = ({
                     : "opacity-100",
                 )}
               >
-                {<Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />}
+                <Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />
               </span>
             )}
           </span>
@@ -535,7 +535,7 @@ const Button = ({
                     : "opacity-100",
                 )}
               >
-                {<Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />}
+                <Icon icon={RightIcon} size={getIconSize(size)} strokeWidth={iconStrokeWidth} />
               </span>
             )}
           </span>

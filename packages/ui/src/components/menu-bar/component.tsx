@@ -3,9 +3,9 @@
  */
 
 import { Menubar as BaseMenubar } from "@base-ui-components/react/menubar";
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
+import { cx } from "../../utils/cx";
 import {
   Menu,
   MenuContent,

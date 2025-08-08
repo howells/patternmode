@@ -1,10 +1,10 @@
 import type { TextareaAutosizeProps, TextareaHeightChangeMeta } from "react-textarea-autosize";
 import type { TextareaPreviewProps } from "./preview";
-import { cx } from "../../utils/cx";
 import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { focusInput } from "../../presentation/focus-input";
 import { hasErrorInput } from "../../presentation/has-error-input";
+import { cx } from "../../utils/cx";
 import { textareaStyles } from "./variants";
 
 type TextareaProps = TextareaPreviewProps & {

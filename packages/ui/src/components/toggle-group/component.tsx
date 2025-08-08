@@ -3,9 +3,9 @@
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import { cx } from "../../utils/cx";
 import React, { use } from "react";
 import { defaultConfig } from "../../config/default-config";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { ToggleGroupContext } from "./constants";
 import { toggleGroupVariants } from "./variants";
@@ -66,7 +66,6 @@ const ToggleGroupItem = (
 
   // Determine if this is an icon-only button (no visible text content)
   const _isIconOnly = !hasVisibleText && (hasLeftIcon || hasRightIcon);
-
 
   const renderContent = () => {
     return children;

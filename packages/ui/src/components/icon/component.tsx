@@ -1,11 +1,10 @@
 "use client";
 
-import type { IconProps } from "./types";
+import type { IconProps, IconSize } from "./types";
 
-import { cx } from "../../utils/cx";
-import type { IconSize } from "./types";
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
+import { cx } from "../../utils/cx";
 import { iconVariants } from "./variants";
 
 function FallbackIcon({

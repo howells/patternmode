@@ -13,7 +13,7 @@ const DescriptionList = ({ className, columns, termWidth, valueWidth = "1fr", si
       data-testid="description-list"
       className={cx(
         descriptionListVariants({ columns: columns ? undefined : "default", size, border, truncateTerms }),
-        className
+        className,
       )}
       style={columns || termWidth ? { gridTemplateColumns: columns ?? `${termWidth ?? "auto"} ${valueWidth}` } : undefined}
     />

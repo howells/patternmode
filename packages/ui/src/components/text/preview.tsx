@@ -1,8 +1,8 @@
 "use client";
 
 import type { TextProps } from "./types";
-import { SIZES } from "../../constants/sizes";
 import React from "react";
+import { SIZES } from "../../constants/sizes";
 import { Text } from "./component";
 
 export function TextPreview(props: TextProps) {

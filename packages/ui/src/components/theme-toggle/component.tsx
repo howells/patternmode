@@ -2,9 +2,9 @@
 
 import type { ThemeToggleProps } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "../../utils/cx";
 import { Moon, Sun } from "lucide-react";
 import React from "react";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { Loader } from "../loader/component";
 import { themeToggleVariants } from "./variants";

@@ -2,13 +2,13 @@
 
 import type { InputProps } from "./types";
 import { Input as BaseInput } from "@base-ui-components/react/input";
-import { cx } from "../../utils/cx";
-
 import { Eye, EyeOff, Search } from "lucide-react";
+
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
-import { focusRing } from "../../presentation/focus-ring";
 import { formControlContainerVariants } from "../../constants/form-control-variants";
+import { focusRing } from "../../presentation/focus-ring";
+import { cx } from "../../utils/cx";
 import { inputElementStyles } from "./variants";
 
 /**

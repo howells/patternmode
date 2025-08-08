@@ -1,7 +1,7 @@
 import type { ProgressCircleProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import React from "react";
+import { cx } from "../../utils/cx";
 import {
   clampValue,
   defaultValueFormatter,

@@ -1,14 +1,14 @@
 "use client";
 
+import type { useRender } from "@base-ui-components/react/use-render";
 import type { IconComponent } from "../icon/types";
-import { cx } from "../../utils/cx";
 import { ArrowRight, ChevronDown, ChevronUp, Circle, CircleSmall, PanelLeft, PanelLeftDashed } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 // Framework-agnostic: avoid importing Next.js here
 
 import * as React from "react";
 import { useId, useState } from "react";
-import type { useRender } from "@base-ui-components/react/use-render";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";
@@ -581,7 +581,7 @@ export const SidebarItem = function SidebarItem(
         >
           <Button
             href={href}
-            variant={"minimal"}
+            variant="minimal"
             size="icon-sm"
             icon={icon}
             leftIcon={LeftIcon}
@@ -602,7 +602,7 @@ export const SidebarItem = function SidebarItem(
   const buttonElement = (
     <Button
       href={href}
-      variant={"minimal"}
+      variant="minimal"
       icon={icon}
       leftIcon={LeftIcon}
       rightIcon={href ? ArrowRight : undefined}

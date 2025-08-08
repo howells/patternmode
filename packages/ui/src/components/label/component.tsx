@@ -1,7 +1,7 @@
 import { Field } from "@base-ui-components/react/field";
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
+import { cx } from "../../utils/cx";
 
 /**
  * Props for the Label component.

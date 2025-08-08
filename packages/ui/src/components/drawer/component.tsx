@@ -7,10 +7,10 @@
 
 "use client";
 
-import { cx } from "../../utils/cx";
 import React from "react";
-
 import { Drawer as DrawerPrimitive } from "vaul";
+
+import { cx } from "../../utils/cx";
 
 /**
  * Root drawer component.

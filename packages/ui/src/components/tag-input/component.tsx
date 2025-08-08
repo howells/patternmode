@@ -1,11 +1,11 @@
 "use client";
 
-import { cx } from "../../utils/cx";
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
 import { defaultConfig } from "../../config/default-config";
 import { focusRing } from "../../presentation/focus-ring";
+import { cx } from "../../utils/cx";
 import { DropdownItem } from "../dropdown-item/component";
 import { Tag } from "../tag/component";
 

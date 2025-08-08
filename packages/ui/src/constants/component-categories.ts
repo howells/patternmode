@@ -3,7 +3,7 @@
  */
 export const COMPONENT_CATEGORIES = [
   "display",
-  "controls", 
+  "controls",
   "layout",
   "overlay",
   "visual",

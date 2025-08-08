@@ -1,6 +1,6 @@
 /**
  * General focus ring styling for interactive elements.
- * 
+ *
  * Provides consistent outline-based focus styling for buttons and other
  * interactive components. Uses outline instead of ring for better accessibility.
  */

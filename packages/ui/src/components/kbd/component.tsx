@@ -2,8 +2,8 @@
 
 import type { KbdProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import React from "react";
+import { cx } from "../../utils/cx";
 import { kbdVariants } from "./variants";
 
 /**

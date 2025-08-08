@@ -1,9 +1,9 @@
 import type { CheckboxProps } from "./types";
 
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
+import { cx } from "../../utils/cx";
 import { checkboxIndicatorVariants, checkboxVariants } from "./variants";
 
 /**

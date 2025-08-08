@@ -6,7 +6,7 @@ import { CategoryBar } from "./component";
 
 // Default category bar
 export const DefaultExample = () => (
-  <CategoryBar values={[40, 30, 20, 10]} className="w-full max-w-96"/>
+  <CategoryBar values={[40, 30, 20, 10]} className="w-full max-w-96" />
 );
 
 // Category bar with marker
@@ -29,7 +29,7 @@ export const NoLabelsExample = () => (
 
 // Uneven distribution
 export const UnevenDistributionExample = () => (
-  <CategoryBar values={[60, 15, 15, 10]} className="w-full max-w-96"/>
+  <CategoryBar values={[60, 15, 15, 10]} className="w-full max-w-96" />
 );
 
 // Many categories
@@ -37,14 +37,14 @@ export const ManyCategoriesExample = () => (
   <CategoryBar values={[20, 18, 16, 14, 12, 10, 8, 2]}className="w-full max-w-96" />
 );
 
-
 // Budget allocation
 export const BudgetAllocationExample = () => (
   <div className="space-y-2 w-full max-w-96">
     <h3 className="text-sm font-medium">Budget Allocation</h3>
     <CategoryBar
       values={[35, 25, 20, 15, 5]}
-      colors={["blue", "emerald", "violet", "amber", "gray"]}className="w-full max-w-96"
+      colors={["blue", "emerald", "violet", "amber", "gray"]}
+      className="w-full max-w-96"
     />
     <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
       <span>Marketing (35%)</span>
@@ -63,7 +63,8 @@ export const SurveyResultsExample = () => (
     <CategoryBar
       values={[45, 30, 15, 7, 3]}
       colors={["emerald", "lime", "amber", "amber", "pink"]}
-      showLabels={false}className="w-full max-w-96"
+      showLabels={false}
+      className="w-full max-w-96"
     />
     <div className="grid grid-cols-5 gap-1 text-xs text-center">
       <span className="text-emerald-600">Excellent</span>
@@ -104,7 +105,8 @@ export const BinaryExample = () => (
       <CategoryBar
         values={[85, 15]}
         colors={["emerald", "pink"]}
-        showLabels={false}className="w-full max-w-96"
+        showLabels={false}
+        className="w-full max-w-96"
       />
       <div className="flex justify-between text-xs mt-1">
         <span className="text-emerald-600">Success: 85%</span>

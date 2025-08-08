@@ -1,6 +1,6 @@
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
+import { cx } from "../../utils/cx";
 
 type TableRootProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.RefObject<HTMLDivElement | null>;

@@ -2,12 +2,12 @@
 
 import type { CodeBlockProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
-
 import oneLight from "react-syntax-highlighter/dist/esm/styles/prism/one-light";
+
+import { cx } from "../../utils/cx";
 import { CopyButton } from "../copy-button/component";
 import { codeBlockHeaderVariants, codeBlockLanguageLabelVariants, codeBlockVariants } from "./variants";
 

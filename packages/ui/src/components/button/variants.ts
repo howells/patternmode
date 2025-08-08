@@ -1,8 +1,8 @@
 import { tv } from "tailwind-variants";
+import { componentVariants } from "../../constants/variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
 import { focusRing } from "../../presentation/focus-ring";
-import { componentVariants } from "../../constants/variants";
 
 export const buttonVariants = tv({
   base: [
@@ -73,26 +73,26 @@ export const createButtonStyleVariants = (
   base: buttonVariants.base,
   variants: {
     // Map button variants to toggle states
-    primary: [
+    "primary": [
       ...componentVariants.button.primary,
       // Add pressed state using the specified variant
       `data-[pressed]:${componentVariants.button[pressedVariant].join(
         " data-[pressed]:",
       )}`,
     ],
-    secondary: [
+    "secondary": [
       ...componentVariants.button.secondary,
       `data-[pressed]:${componentVariants.button[pressedVariant].join(
         " data-[pressed]:",
       )}`,
     ],
-    outline: [
+    "outline": [
       ...componentVariants.button.outline,
       `data-[pressed]:${componentVariants.button[pressedVariant].join(
         " data-[pressed]:",
       )}`,
     ],
-    ghost: [
+    "ghost": [
       ...componentVariants.button.ghost,
       `data-[pressed]:${componentVariants.button[pressedVariant].join(
         " data-[pressed]:",
@@ -104,7 +104,7 @@ export const createButtonStyleVariants = (
         " data-[pressed]:",
       )}`,
     ],
-    destructive: [
+    "destructive": [
       ...componentVariants.button.destructive,
       // When destructive is pressed, make it even more intense
       "data-[pressed]:bg-red-700 data-[pressed]:hover:bg-red-800 dark:data-[pressed]:bg-red-600 dark:data-[pressed]:hover:bg-red-700",

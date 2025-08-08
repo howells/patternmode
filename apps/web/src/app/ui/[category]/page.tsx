@@ -21,6 +21,14 @@ type CategoryPageProps = {
   }>;
 };
 
+// Type guard to safely read optional boolean flags without `any`
+const hasBooleanProp = <K extends string>(
+  objectValue: object,
+  key: K,
+): objectValue is Record<K, boolean> => {
+  return Object.prototype.hasOwnProperty.call(objectValue, key);
+};
+
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
 
@@ -73,8 +81,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                           {component.examples?.length ?? 0}
                           {" "}
                           examples
-                          {"api" in component && (component as any).api && " • API reference"}
-                          {"accessibility" in component && (component as any).accessibility && " • Accessible"}
+                          {hasBooleanProp(component, "api") && component.api && " • API reference"}
+                          {hasBooleanProp(component, "accessibility") && component.accessibility && " • Accessible"}
                         </Text>
                       </VStack>
                     </Card>

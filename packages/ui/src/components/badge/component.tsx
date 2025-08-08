@@ -1,17 +1,17 @@
 import type { IconComponent } from "../icon/types";
 import type { BadgeVariant } from "./types";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "../../utils/cx";
-
 import { X } from "lucide-react";
+
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
-import { getIconComponent } from "../../icons/icon-registry";
-import { Icon } from "../icon/component";
 import {
   getColorClasses,
 } from "../../constants/variants";
+import { getIconComponent } from "../../icons/icon-registry";
+import { cx } from "../../utils/cx";
 import { DismissButton } from "../dismiss-button/component";
+import { Icon } from "../icon/component";
 import { badgeToIconSizeMap, badgeVariants, dotIndicatorVariants } from "./variants";
 
 type BadgeProps = {

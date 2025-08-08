@@ -7,7 +7,7 @@ import { Toggle } from "./component";
 
 export function TogglePreview(props: ToggleProps) {
   // Remove controlled props to make it interactive
-  const { pressed, ...interactiveProps } = props;
+  const { pressed: _pressed, ...interactiveProps } = props;
 
   return (
     <Toggle {...interactiveProps}>
@@ -45,7 +45,6 @@ export const togglePreviewProps = [
     options: ["sm", "default", "lg"],
     defaultValue: "default",
   },
-
 
   {
     name: "disabled",

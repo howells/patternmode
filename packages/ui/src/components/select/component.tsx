@@ -11,12 +11,12 @@ import type {
   SelectTriggerProps,
 } from "./types";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
-import { cx } from "../../utils/cx";
-
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
+
 import * as React from "react";
 import { defaultConfig } from "../../config/default-config";
 import { hasErrorInput } from "../../presentation/has-error-input";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { Icon } from "../icon/component";
 import { selectItemVariants, selectPopoverVariants } from "./variants";

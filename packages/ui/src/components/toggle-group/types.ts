@@ -4,8 +4,8 @@ import type { useRender } from "@base-ui-components/react/use-render";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { Size } from "../../constants/sizes";
-import type { IconComponent } from "../icon/types";
 import type { ButtonProps } from "../button/component";
+import type { IconComponent } from "../icon/types";
 import type { toggleGroupVariants } from "./variants";
 
 export type ToggleGroupProps = {

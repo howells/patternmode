@@ -3,8 +3,8 @@
 import type { MeterProps } from "./types";
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
 
-import { cx } from "../../utils/cx";
 import * as React from "react";
+import { cx } from "../../utils/cx";
 import { meterVariants } from "./variants";
 
 /**

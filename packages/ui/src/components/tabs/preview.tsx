@@ -3,7 +3,6 @@
 import type { Size } from "../../constants/sizes";
 import React from "react";
 import { SIZES as sizes } from "../../constants/sizes";
-import { Button } from "../button/component";
 import { Text } from "../text/component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
@@ -34,18 +33,17 @@ export function TabsPreview({
   variant = "line",
   hideDivider = false,
   size = "base",
-  defaultValue = "tab1"
+  defaultValue = "tab1",
 }: TabsPreviewProps = {}) {
   return (
     <div className="max-w-2xl w-full">
       <Tabs defaultValue={defaultValue}>
 
-          <TabsList variant={variant} hideDivider={hideDivider} size={size}>
-            <TabsTrigger value="tab1">Overview</TabsTrigger>
-            <TabsTrigger value="tab2">Analytics</TabsTrigger>
-            <TabsTrigger value="tab3">Reports</TabsTrigger>
-          </TabsList>
-
+        <TabsList variant={variant} hideDivider={hideDivider} size={size}>
+          <TabsTrigger value="tab1">Overview</TabsTrigger>
+          <TabsTrigger value="tab2">Analytics</TabsTrigger>
+          <TabsTrigger value="tab3">Reports</TabsTrigger>
+        </TabsList>
 
         <TabsContent value="tab1" className="py-4">
           <Text>

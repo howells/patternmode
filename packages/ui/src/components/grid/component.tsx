@@ -2,10 +2,10 @@
 
 import type { ResponsiveValue } from "../../presentation/responsive-utils";
 import type { GridAutoProps, GridCellProps, GridProps } from "./types";
-import { cx } from "../../utils/cx";
 import React from "react";
 import { createResponsiveClasses } from "../../presentation/responsive-utils";
 import { generateResponsiveSpacingClasses, getBaseSpacingValue, getGapClass } from "../../presentation/spacing-utils";
+import { cx } from "../../utils/cx";
 import { gridCellVariants, gridVariants } from "./variants";
 
 // Generate responsive grid styles using shared utilities

@@ -1,10 +1,10 @@
 import type { DismissButtonProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import { X } from "lucide-react";
-
 import React from "react";
+
 import { defaultConfig } from "../../config/default-config";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { dismissButtonVariants } from "./variants";
 

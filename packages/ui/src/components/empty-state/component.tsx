@@ -1,8 +1,8 @@
 import type { EmptyStateProps } from "./types";
 
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { Heading } from "../heading/component";
 import { IconContainer } from "../icon-container/component";

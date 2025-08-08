@@ -1,15 +1,15 @@
 "use client";
 
 import type { ComboboxOption, ComboboxProps } from "./types";
-import { cx } from "../../utils/cx";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
-
 import { Check, ChevronsUpDown } from "lucide-react";
+
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
 import { hasErrorInput } from "../../presentation/has-error-input";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
 import { Loader } from "../loader/component";

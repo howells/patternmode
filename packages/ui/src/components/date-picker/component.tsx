@@ -14,16 +14,16 @@ import type {
   TriggerProps,
 } from "./types";
 import { Time } from "@internationalized/date";
-import { cx } from "../../utils/cx";
 import { useDateSegment, useTimeField } from "@react-aria/datepicker";
 import { useTimeFieldState } from "@react-stately/datepicker";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
-
 import { Calendar } from "lucide-react";
+
 import * as React from "react";
-import { focusRing } from "../../presentation/focus-ring";
 import { focusInput } from "../../presentation/focus-input";
+import { focusRing } from "../../presentation/focus-ring";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 import { Calendar as CalendarPrimitive } from "../calendar/component";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover/component";

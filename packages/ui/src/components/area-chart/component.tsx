@@ -1,16 +1,9 @@
 "use client";
 
 import type { AxisDomain } from "recharts/types/util/types";
-import { cx } from "../../utils/cx";
+import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { AvailableChartColors, type AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
-import { getColorClassName } from "../../charts/utils/get-color-class-name";
-import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
-import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
-import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import React from "react";
 import {
   Area,
@@ -25,7 +18,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { AvailableChartColors } from "../../charts/constants/chart-colors";
+import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+import { getColorClassName } from "../../charts/utils/get-color-class-name";
 
+import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
+
+import { cx } from "../../utils/cx";
+import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
 
 // #region Legend
 

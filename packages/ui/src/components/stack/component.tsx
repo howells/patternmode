@@ -1,7 +1,6 @@
 "use client";
 
 import type { StackProps } from "./types";
-import { cx } from "../../utils/cx";
 import * as React from "react";
 import { createResponsiveClasses, getResponsiveBase } from "../../presentation/responsive-utils";
 import {
@@ -10,6 +9,7 @@ import {
   getGapClass,
   getPaddingClass,
 } from "../../presentation/spacing-utils";
+import { cx } from "../../utils/cx";
 import { stackVariants } from "./variants";
 
 /**

@@ -9,10 +9,10 @@ import type {
 } from "./types";
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "../../utils/cx";
-
 import { ChevronRight, MoreHorizontal } from "lucide-react";
+
 import * as React from "react";
+import { cx } from "../../utils/cx";
 import { breadcrumbVariants } from "./variants";
 
 /**

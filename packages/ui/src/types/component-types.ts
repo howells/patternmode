@@ -1,7 +1,7 @@
 import type React from "react";
 import type { IconComponent } from "../components/icon/types";
-import type { PreviewProps } from "./preview-props-type";
 import type { ComponentCategory } from "../constants/component-categories";
+import type { PreviewProps } from "./preview-props-type";
 
 /**
  * Complete example definition with component and metadata

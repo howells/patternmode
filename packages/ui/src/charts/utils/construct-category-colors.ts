@@ -6,8 +6,8 @@ export const constructCategoryColors = (
 ): Map<string, AvailableChartColorsKeys> => {
   return new Map(
     categories.map((category, index) => [
-      category, 
-      colors[index % colors.length]
-    ])
+      category,
+      colors[index % colors.length],
+    ]),
   );
 };

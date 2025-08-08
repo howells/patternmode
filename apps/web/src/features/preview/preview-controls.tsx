@@ -20,7 +20,7 @@ type PreviewControlsProps = {
 };
 
 export function PreviewControls({ config }: PreviewControlsProps) {
-  const { props, updateProp, resetProps } = usePreview();
+  const { props, updateProp, resetProps: _resetProps } = usePreview();
 
   if (!config) {
     return null;

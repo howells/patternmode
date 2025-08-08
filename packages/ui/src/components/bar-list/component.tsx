@@ -1,8 +1,8 @@
 "use client";
 
-import { cx } from "../../utils/cx";
 import React from "react";
 import { focusRing } from "../../presentation/focus-ring";
+import { cx } from "../../utils/cx";
 
 type Bar<T> = T & {
   /**

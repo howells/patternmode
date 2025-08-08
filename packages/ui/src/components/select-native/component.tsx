@@ -1,9 +1,9 @@
 import type { SelectNativeProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { defaultConfig } from "../../config/default-config";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { selectNativeStyles } from "./variants";
 

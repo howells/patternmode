@@ -1,7 +1,7 @@
 import type React from "react";
 
-import { cx } from "../../utils/cx";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { cx } from "../../utils/cx";
 
 // Framework-agnostic: do not import Next.js here
 import { Button } from "../button/component";

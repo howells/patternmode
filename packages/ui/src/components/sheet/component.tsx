@@ -1,12 +1,12 @@
 "use client";
 
 import { Dialog } from "@base-ui-components/react/dialog";
-import { cx } from "../../utils/cx";
 import { X } from "lucide-react";
-
 import * as React from "react";
+
 import { defaultConfig } from "../../config/default-config";
 import { focusRing } from "../../presentation/focus-ring";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 
 // Inline DismissButton functionality for Sheet

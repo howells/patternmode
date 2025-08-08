@@ -1,6 +1,6 @@
 /**
  * Input focus styling for form controls.
- * 
+ *
  * Provides consistent focus ring and border styling for input elements.
  * Includes both light and dark mode variants.
  */

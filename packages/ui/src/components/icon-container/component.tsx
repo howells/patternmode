@@ -1,8 +1,8 @@
 import type { IconContainerProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import React from "react";
 import { getColorClasses } from "../../constants/variants";
+import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
 import { iconContainerVariants } from "./variants";
 

@@ -1,10 +1,10 @@
 "use client";
 
 import type { BaseToastOptions, Position, ToastData, ToastPromiseOptions, ToastType } from "./types";
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
 import { toast as sonnerToast, Toaster } from "sonner";
+import { cx } from "../../utils/cx";
 import { toastVariants } from "./variants";
 
 type SonnerToastOptions = {

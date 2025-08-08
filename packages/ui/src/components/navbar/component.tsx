@@ -1,10 +1,12 @@
 "use client";
 
-import { cx } from "../../utils/cx";
+import type { useRender } from "@base-ui-components/react/use-render";
 import { LayoutGroup, motion } from "motion/react";
 // Framework-agnostic: do not import Next.js here
 
 import React, { useId } from "react";
+import { cx } from "../../utils/cx";
+
 import { Button } from "../button/component";
 
 type NavbarProps = {
@@ -88,8 +90,6 @@ export function NavbarSpacer({ className, ...props }: NavbarSpacerProps) {
     />
   );
 }
-
-import type { useRender } from "@base-ui-components/react/use-render";
 
 type NavbarItemProps = {
   /**

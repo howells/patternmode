@@ -8,8 +8,8 @@
 
 import type { DividerProps } from "./types";
 
-import { cx } from "../../utils/cx";
 import React from "react";
+import { cx } from "../../utils/cx";
 import { dividerLineVariants, dividerVariants } from "./variants";
 
 /**

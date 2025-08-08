@@ -3,8 +3,8 @@ import type { Size } from "../../constants/sizes";
 
 import type { ButtonProps } from "../button/component";
 import { Popover as BasePopover } from "@base-ui-components/react/popover";
-import { cx } from "../../utils/cx";
 import React from "react";
+import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
 
 type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;

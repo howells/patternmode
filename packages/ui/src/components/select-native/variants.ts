@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
-import { hasErrorInput } from "../../presentation/has-error-input";
 import { formControlElementVariants } from "../../constants/form-control-variants";
+import { hasErrorInput } from "../../presentation/has-error-input";
 
 export const selectNativeStyles = tv({
   extend: formControlElementVariants,

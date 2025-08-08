@@ -1,8 +1,8 @@
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { GlobalSemanticVariant, TailwindColor } from "../../constants/variants";
-import type { iconContainerVariants } from "./variants";
 import type { IconSize } from "../icon/types";
+import type { iconContainerVariants } from "./variants";
 
 export type IconContainerProps = {
   /**

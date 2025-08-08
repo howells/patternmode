@@ -4,11 +4,11 @@
 
 import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
 
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
 import { AvailableChartColors } from "../../charts/constants/chart-colors";
 import { getColorClassName } from "../../charts/utils/get-color-class-name";
+import { cx } from "../../utils/cx";
 import { Tooltip } from "../tooltip/component";
 
 /**

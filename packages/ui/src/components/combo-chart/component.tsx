@@ -3,13 +3,12 @@
 import type { AxisDomain } from "recharts/types/util/types";
 
 import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colors";
-import { cx } from "../../utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { isEqual } from "es-toolkit";
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import React from "react";
+
 import {
   Bar,
   CartesianGrid,
@@ -24,10 +23,11 @@ import {
   YAxis,
 } from "recharts";
 import { AvailableChartColors } from "../../charts/constants/chart-colors";
-
 import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
+
 import { getColorClassName } from "../../charts/utils/get-color-class-name";
 import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
+import { cx } from "../../utils/cx";
 import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
 
 // #region Shape

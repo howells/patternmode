@@ -7,6 +7,6 @@ export function hasOnlyOneValueForKey(
   const values = array
     .filter(obj => Object.hasOwn(obj, keyToCheck))
     .map(obj => obj[keyToCheck]);
-  
+
   return uniq(values).length <= 1;
 }

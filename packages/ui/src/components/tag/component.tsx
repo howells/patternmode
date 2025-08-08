@@ -1,12 +1,12 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { cx } from "../../utils/cx";
-
 import React from "react";
+
 import { defaultConfig } from "../../config/default-config";
-import { Icon } from "../icon/component";
+import { cx } from "../../utils/cx";
 import { Avatar } from "../avatar/component";
 import { DismissButton } from "../dismiss-button/component";
+import { Icon } from "../icon/component";
 
 /**
  * Get padding classes based on avatar and dismissible state.

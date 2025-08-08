@@ -1,8 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { indicatorVariants, listItemVariants, listVariants } from "./variants";
 import type { IconSize } from "../icon/types";
+import type { indicatorVariants, listItemVariants, listVariants } from "./variants";
 
 /**
  * Props for the TextList component.
