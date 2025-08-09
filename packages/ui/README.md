@@ -180,37 +180,83 @@ MIT © Daniel Howells
 
 ### Linking to Another Project for Local Development
 
-To work on this UI library while using it in another project on the same machine with **live updates** use pnpm's file system linking:
+To use this UI library in another project on your local machine with **live updates**, you have several options:
 
-#### Step 1: Link the UI Package
+#### Option 1: File Protocol (Recommended)
 
-From the patternmode repository root:
+The simplest and most reliable approach is using the `file:` protocol in your project's `package.json`:
 
+```json
+{
+  "dependencies": {
+    "@patternmode/ui": "file:../patternmode/packages/ui"
+  }
+}
+```
+
+Then run:
 ```bash
-cd packages/ui
+pnpm install
+```
+
+This creates a symlink to your local patternmode UI package. Any changes you make to files in `packages/ui/src/` will be immediately reflected in your project.
+
+#### Option 2: pnpm Global Link
+
+If you prefer using pnpm's global linking:
+
+**Step 1:** From the patternmode UI package:
+```bash
+cd ~/Sites/patternmode/packages/ui
 pnpm link --global
 ```
 
-#### Step 2: Link from Your Other Project
-
-In your separate project that wants to consume `@patternmode/ui`:
-
+**Step 2:** In your consuming project:
 ```bash
+cd ~/Sites/your-project
 pnpm link --global @patternmode/ui
 ```
 
-#### That's it!
+**Note:** If you encounter "Symlink path is the same as the target path" errors, use Option 1 instead.
 
-Now when you make changes to any TypeScript files in `packages/ui/src/`, they will be immediately reflected in your consuming project. No build step required - your bundler (Next.js, Vite, etc.) will compile the TypeScript source files directly.
+#### Option 3: pnpm Workspace (For Monorepos)
 
-#### Unlinking
+If your consuming project uses pnpm workspaces, create a `pnpm-workspace.yaml`:
 
-When you're done with development:
+```yaml
+packages:
+  - '.'
+  - '../patternmode/packages/ui'
+```
 
-```bash
-# From your consuming project
-pnpm unlink @patternmode/ui
-pnpm install @patternmode/ui
+Then in your project's `package.json`:
+```json
+{
+  "dependencies": {
+    "@patternmode/ui": "workspace:*"
+  }
+}
+```
+
+Run `pnpm install` to link.
+
+### Using the Components
+
+After linking, import components directly:
+
+```tsx
+import { Button } from "@patternmode/ui/components/button";
+import { Card } from "@patternmode/ui/components/card";
+```
+
+### Tailwind CSS Configuration
+
+Ensure your project is configured for Tailwind CSS 4:
+
+```css
+/* Your project's global CSS file */
+@import "tailwindcss";
+@import "@patternmode/ui/styles/globals.css";
 ```
 
 ### Notes
@@ -219,3 +265,4 @@ pnpm install @patternmode/ui
 - Your consuming project's bundler handles the TypeScript compilation
 - Make sure both projects use compatible TypeScript configurations
 - If you encounter module resolution issues, restart your development server
+- The `file:` protocol approach (Option 1) is generally the most reliable for local development
