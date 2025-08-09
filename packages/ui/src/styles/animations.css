@@ -18,6 +18,7 @@
   --animate-dialog-content-show: dialogContentShow 150ms var(--ease-out);
   --animate-sheet-slide-left-and-fade: sheetSlideLeftAndFade 150ms var(--ease-out);
   --animate-sheet-slide-right-and-fade: sheetSlideRightAndFade 150ms var(--ease-in);
+  --animate-shimmer: shimmer 2s infinite;
 
   @keyframes hide {
     from {
@@ -118,6 +119,11 @@
     }
     to {
       opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  @keyframes shimmer {
+    to {
       transform: translateX(100%);
     }
   }

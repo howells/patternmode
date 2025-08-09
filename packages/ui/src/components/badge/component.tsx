@@ -174,3 +174,5 @@ const Badge = (
 Badge.displayName = "Badge";
 
 export { Badge, type BadgeProps };
+export { badgeVariants } from "./variants";
+export type { BadgeVariant } from "./types";

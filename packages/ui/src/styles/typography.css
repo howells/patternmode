@@ -5,7 +5,7 @@
   --font-mono: "SFMono-Regular", "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", monospace;
 
   /* Custom sizes that don't match Tailwind defaults */
-  --text-sm: 0.8125rem; /* 13px - custom (Tailwind's is 14px) */
+ /* --text-sm: 0.8125rem; /* 13px - custom (Tailwind's is 14px) */
   --text-2xs: 0.6875rem; /* 11px - custom (not in Tailwind) */
 }
 

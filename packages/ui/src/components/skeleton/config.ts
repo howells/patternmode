@@ -1,7 +1,14 @@
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "../../lib/component-config-types";
 import { Square } from "lucide-react";
 import { Skeleton } from "./component";
-import { ArticleExample, CardExample, DefaultExample, ListExample } from "./examples";
+import { 
+  ArticleExample, 
+  CardExample, 
+  DefaultExample, 
+  ListExample,
+  ShimmerExample,
+  RoundedVariantsExample
+} from "./examples";
 
 export const skeletonConfig: ComponentConfig = {
   id: "skeleton",
@@ -9,13 +16,19 @@ export const skeletonConfig: ComponentConfig = {
   description: "Loading placeholder component with pulse animation for indicating content that is being loaded.",
   category: "feedback",
   icon: Square,
-  importStatement: `import { Skeleton } from "@patternmode/ui/skeleton";`,
+  importStatement: `import { Skeleton } from "@patternmode/ui/components/skeleton";`,
   examples: [
     {
       id: "default",
       title: "Default",
       description: "Basic skeleton with avatar and text placeholders",
       component: DefaultExample,
+    },
+    {
+      id: "shimmer",
+      title: "Shimmer",
+      description: "Skeleton with shimmer animation effect",
+      component: ShimmerExample,
     },
     {
       id: "card",
@@ -34,6 +47,12 @@ export const skeletonConfig: ComponentConfig = {
       title: "Article",
       description: "Skeleton for article content with image and text",
       component: ArticleExample,
+    },
+    {
+      id: "rounded-variants",
+      title: "Rounded Variants",
+      description: "Different border radius options for skeleton elements",
+      component: RoundedVariantsExample,
     },
   ],
   components: [

@@ -232,8 +232,8 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
         };
 
         // Generate a stable key from item content or use a combination of stable fields
-        const itemKey = (item as any).id
-          ? (item as any).id
+        const itemKey = "id" in item && item.id
+          ? String(item.id)
           : `${JSON.stringify(item)}-${index}`;
 
         // Use custom render function if provided

@@ -59,7 +59,7 @@ export const ButtonGroup = ({
     }
 
     // Only apply props to Button components
-    if ((child.type as any)?.displayName === "Button") {
+    if (child.type && typeof child.type === "function" && (child.type as { displayName?: string })?.displayName === "Button") {
       const newProps: Record<string, unknown> = {};
       const childProps = child.props as Record<string, unknown>;
 

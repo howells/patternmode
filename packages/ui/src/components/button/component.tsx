@@ -16,6 +16,13 @@ import { Loader } from "../loader/component";
 import { getIconContainerSize, getIconSize, getLoaderSize, isSmallIconButton } from "./utils";
 import { buttonVariants } from "./variants";
 // Link component is provided via LinkProvider; fallback is a plain anchor.
+type LinkProps = {
+  href: string;
+  children: React.ReactNode;
+  [key: string]: unknown;
+};
+
+const Link = ({ href, children, ...props }: LinkProps) => <a href={href} {...props}>{children}</a>;
 
 type ButtonProps = {
   /**
