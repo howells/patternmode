@@ -94,14 +94,23 @@ type ButtonProps = {
   /**
    * Custom element to render (defaults to button tag).
    * Enables semantic flexibility while maintaining styling.
-   * When href is provided, this is automatically set to Link.
+   *
+   * @example
+   * // With Next.js Link
+   * <Button
+   *   variant="primary"
+   *   render={props => <Link href="/dashboard" {...props}>Dashboard</Link>}
+   * />
+   *
+   * @example
+   * // With custom component
+   * <Button
+   *   variant="outline"
+   *   render={props => <CustomButton {...props}>Custom</CustomButton>}
+   * />
    */
   render?: useRender.RenderProp<Record<string, unknown>>;
-  /**
-   * URL to navigate to when clicked.
-   * When provided, the button automatically renders as a Link.
-   */
-  href?: string;
+
   /**
    * Whether to show the left icon only on hover.
    * When true, the left icon has opacity-0 normally and opacity-100 on hover.
@@ -125,7 +134,6 @@ type ButtonProps = {
 const Button = ({
   ref: forwardedRef,
   render,
-  href,
   showLeftIconOnHover = false,
   showRightIconOnHover = false,
   isLoading = false,
@@ -133,7 +141,7 @@ const Button = ({
   className,
   disabled,
   variant,
-  size,
+  size = "base",
   rounded,
   icon,
   leftIcon: LeftIcon,
@@ -146,8 +154,8 @@ const Button = ({
   kbdPlatform = "auto",
   ...props
 }: ButtonProps) => {
-  // Automatically set render prop based on href
-  const effectiveRender = render || (href ? <a href={href} /> : <button type="button" />);
+  // Use render prop or default to button
+  const effectiveRender = render || <button type="button" />;
 
   const hasChildren = children != null && children !== "";
 

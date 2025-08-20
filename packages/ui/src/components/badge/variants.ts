@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 import {
   getVariantClasses,
+  buttonSpecificVariants,
 } from "../../constants/variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
@@ -18,6 +19,14 @@ const badgeVariantStyles = {
   critical: getVariantClasses("critical"),
   positive: getVariantClasses("positive"),
   negative: getVariantClasses("negative"),
+  // Button-like variants (adapted for badges - no hover states)
+  ...Object.fromEntries(
+    Object.entries(buttonSpecificVariants).map(([key, classes]) => [
+      key,
+      // Filter out hover states and other interactive styles for badges
+      classes.filter(cls => !cls.includes('hover:') && !cls.includes('active:') && !cls.includes('disabled:') && !cls.includes('data-['))
+    ])
+  ),
   // All Tailwind colors
   slate: getVariantClasses("slate"),
   gray: getVariantClasses("gray"),

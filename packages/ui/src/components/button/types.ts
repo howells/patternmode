@@ -19,3 +19,9 @@ export const buttonVariants = [
   "link",
   "minimal",
 ] as const;
+
+/**
+ * Button variant type.
+ * Extracted from buttonVariants array for reuse in other components.
+ */
+export type ButtonVariant = (typeof buttonVariants)[number];

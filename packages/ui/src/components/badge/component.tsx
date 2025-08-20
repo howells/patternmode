@@ -55,7 +55,23 @@ type BadgeProps = {
   }>;
   /**
    * Visual style variant of the badge.
-   * Controls color scheme and supports semantic variants plus all Tailwind colors.
+   * Controls color scheme and supports semantic variants, all Tailwind colors, and button-like variants.
+   *
+   * @example
+   * // Semantic variants
+   * <Badge variant="success">Success</Badge>
+   * <Badge variant="error">Error</Badge>
+   *
+   * @example
+   * // Tailwind colors
+   * <Badge variant="blue">Blue</Badge>
+   * <Badge variant="emerald">Emerald</Badge>
+   *
+   * @example
+   * // Button-like variants (for consistent styling)
+   * <Badge variant="secondary">Secondary</Badge>
+   * <Badge variant="outline">Outline</Badge>
+   * <Badge variant="destructive">Destructive</Badge>
    */
   variant?: BadgeVariant;
   /**
@@ -106,15 +122,27 @@ const Badge = (
     // Use statusAnimated prop directly since statusDot is just boolean
     const shouldAnimate = statusAnimated;
 
+    // Handle button-like variants for status dot color
+    const getStatusDotColor = (): "default" | "neutral" | "success" | "info" | "warning" | "error" | "critical" | "positive" | "negative" | "slate" | "gray" | "zinc" | "stone" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" => {
+      if (!effectiveVariant) return "default";
+
+      // Map button-like variants to semantic variants for status dot
+      if (effectiveVariant === "destructive") return "error";
+      if (["secondary", "outline", "outline-dashed", "ghost", "inverse-ghost", "minimal"].includes(effectiveVariant)) return "neutral";
+      if (["primary", "link"].includes(effectiveVariant)) return "default";
+
+      return effectiveVariant as any;
+    };
+
     return (
       <>
         {hasStatusDot && (
           <span
             className={cx(
               dotIndicatorVariants({ size: statusDotSize, animated: shouldAnimate }),
-              getColorClasses(effectiveVariant || "default").bgSolid,
+              getColorClasses(getStatusDotColor()).bgSolid,
               // Add dynamic before: color for animation
-              shouldAnimate && `before:bg-${getColorClasses(effectiveVariant || "default").color}-500`,
+              shouldAnimate && `before:bg-${getColorClasses(getStatusDotColor()).color}-500`,
             )}
             aria-hidden="true"
           />
@@ -155,7 +183,7 @@ const Badge = (
 
   const defaultProps: useRender.ElementProps<"span"> & { "data-testid": string } = {
     "className": cx(
-      badgeVariants({ variant: effectiveVariant, size, border, rounded }),
+      badgeVariants({ variant: effectiveVariant as any, size, border, rounded }),
       className,
     ),
     "children": renderBadgeContent(),

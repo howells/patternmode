@@ -472,7 +472,7 @@ export type ExtendedVariant<T extends Record<string, unknown>> = T & {
  * This is the recommended approach for components that need color variants
  */
 export function getColorClasses(
-  variant: GlobalSemanticVariant | TailwindColor,
+  variant: SemanticVariant | TailwindColor,
 ) {
   // Semantic variant to color mapping
   const semanticColorMap: Record<GlobalSemanticVariant, TailwindColor> = {
