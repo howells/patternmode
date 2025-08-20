@@ -1,22 +1,27 @@
-import React, { createContext, use } from "react";
+import type React from "react";
+import { createContext, use } from "react";
 
 // Generic link props that most router Link components can accept
 export type GenericLinkProps = {
-  href: string;
-  children?: React.ReactNode;
-  className?: string;
-  target?: string;
-  rel?: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
-  [key: string]: unknown;
+	href: string;
+	children?: React.ReactNode;
+	className?: string;
+	target?: string;
+	rel?: string;
+	onClick?: React.MouseEventHandler<HTMLElement>;
+	[key: string]: unknown;
 };
 
 export type LinkComponent = React.ComponentType<GenericLinkProps>;
 
-const FallbackAnchor: LinkComponent = ({ href, children, ...rest }: GenericLinkProps) => (
-  <a href={href} {...rest}>
-    {children}
-  </a>
+const FallbackAnchor: LinkComponent = ({
+	href,
+	children,
+	...rest
+}: GenericLinkProps) => (
+	<a href={href} {...rest}>
+		{children}
+	</a>
 );
 
 const LinkContext = createContext<LinkComponent | null>(null);
@@ -25,22 +30,24 @@ const LinkContext = createContext<LinkComponent | null>(null);
 let registeredLinkComponent: LinkComponent | null = null;
 
 export function setLinkComponent(component: LinkComponent) {
-  registeredLinkComponent = component;
+	registeredLinkComponent = component;
 }
 
 export function getLinkComponent(): LinkComponent {
-  return registeredLinkComponent ?? FallbackAnchor;
+	return registeredLinkComponent ?? FallbackAnchor;
 }
 
-export function LinkProvider({ component, children }: { component: LinkComponent; children: React.ReactNode }) {
-  return (
-    <LinkContext value={component}>
-      {children}
-    </LinkContext>
-  );
+export function LinkProvider({
+	component,
+	children,
+}: {
+	component: LinkComponent;
+	children: React.ReactNode;
+}) {
+	return <LinkContext value={component}>{children}</LinkContext>;
 }
 
 export function useLinkComponent(): LinkComponent {
-  const ctx = use(LinkContext);
-  return ctx ?? getLinkComponent();
+	const ctx = use(LinkContext);
+	return ctx ?? getLinkComponent();
 }

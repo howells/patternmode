@@ -1,60 +1,13 @@
 {
-
-  // Disable all formatting completely
   "prettier.enable": false,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.formatOnType": false,
-  "editor.formatOnPaste": false,
-
-  // Silent ALL stylistic rules in IDE, but still auto fix them (expanded)
-  "eslint.rules.customizations": [
-    { "rule": "style/*", "severity": "off", "fixable": true },
-    { "rule": "@stylistic/*", "severity": "off", "fixable": true },
-    { "rule": "format/*", "severity": "off", "fixable": true },
-    { "rule": "*-indent", "severity": "off", "fixable": true },
-    { "rule": "*-spacing", "severity": "off", "fixable": true },
-    { "rule": "*-spaces", "severity": "off", "fixable": true },
-    { "rule": "*-order", "severity": "off", "fixable": true },
-    { "rule": "*-dangle", "severity": "off", "fixable": true },
-    { "rule": "*-newline", "severity": "off", "fixable": true },
-    { "rule": "*quotes", "severity": "off", "fixable": true },
-    { "rule": "*semi", "severity": "off", "fixable": true },
-    { "rule": "perfectionist/*", "severity": "off", "fixable": true },
-    { "rule": "antfu/*", "severity": "off", "fixable": true }
-  ],
-
-  // Enable eslint for all supported languages
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "html",
-    "markdown",
-    "json",
-    "jsonc",
-    "yaml",
-    "toml",
-    "xml",
-    "gql",
-    "graphql",
-    "astro",
-    "svelte",
-    "css",
-    "less",
-    "scss",
-    "pcss",
-    "postcss"
-  ],
+  "editor.formatOnPaste": true,
   "intelephense.environment.phpVersion": "8.3",
   "terminal.integrated.env.osx": {},
-
   "files.associations": {
     "*.css": "tailwindcss"
   },
-
-  // Hide build artifacts from file explorer
   "files.exclude": {
     "**/dist": true,
     "**/*.js": {
@@ -68,7 +21,6 @@
   "workbench.editor.customLabels.patterns": {
     "**/app/**/page.tsx": "${dirname} [Page]",
     "**/app/**/layout.tsx": "${dirname} [Layout]",
-
     "**/components/**/component.tsx": "${dirname} [Component]",
     "**/components/**/examples.tsx": "${dirname} [Examples]",
     "**/components/**/preview.tsx": "${dirname} [Preview]",
@@ -79,10 +31,8 @@
     "**/components/**/*.stories.tsx": "${dirname} [Stories]",
     "**/components/**/*.playwright.test.tsx": "${dirname} [Test]"
   },
-
-  // TypeScript configuration for pnpm workspace
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.tsdk": "./node_modules/.pnpm/typescript@5.9.2/node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.updateImportsOnFileMove.enabled": "never",
@@ -116,8 +66,6 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
   "typescript.format.insertSpaceAfterTypeAssertion": false,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
-
-  // Problem visualization
   "problems.decorations.enabled": true,
   "explorer.decorations.colors": true,
   "explorer.decorations.badges": true,
@@ -128,21 +76,11 @@
     "editorWarning.foreground": "#ffbe33",
     "editorInfo.foreground": "#33adff"
   },
-
-  // Make ESLint run constantly in the background
-  "eslint.run": "onType",
-  "eslint.lintTask.enable": true,
-  "eslint.debug": true,
-  "eslint.trace.server": "verbose",
-  "eslint.format.enable": true,
-
-  // Enable ESLint auto-fix on save
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.organizeImports": "never",
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
-
-  // Disable ALL competing extensions and formatters
   "sortImports.on-save": false,
   "typescriptHero.imports.organizeOnSave": false,
   "autoimport.autoComplete": false,
@@ -151,15 +89,11 @@
   "editor.codeActionsOnSaveTimeout": 3000,
   "blocksort.enable": false,
   "vscode-scss-formatter.enable": false,
-
-  // Cursor-specific settings to disable built-in formatters
   "cursor.formatOnSave": false,
   "cursor.quickFix.enable": false,
   "cursor.autoFormat": false,
   "cursor.codeActions.organizeImports": false,
   "cursor.typescript.format": false,
-
-  // Disable TypeScript language server formatting entirely
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "next.typescript.plugin.enable": false,
   "editor.quickSuggestions": {
@@ -167,17 +101,6 @@
     "comments": false,
     "strings": false
   },
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "vue",
-    "markdown"
-  ],
-
-  // Increase error visibility in editor
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
@@ -195,8 +118,6 @@
   "cSpell.words": [
     "patternmode"
   ],
-
-  // Test configuration
   "vitest.enable": true,
   "vitest.commandLine": "pnpm test",
   "vitest.include": [
@@ -220,32 +141,27 @@
   "testing.openTesting": "openOnTestStart",
   "testing.autoRun.delay": 1000,
   "testing.autoRun.mode": "test-src-file",
-
-  // Ensure both test runners are properly configured
   "testing.autoDiscover": true,
-
-  // Configure both test runners
   "testing.testExplorer.addToEditorContextMenu": true,
   "testing.testExplorer.gutterDecoration": true,
   "testing.testExplorer.onReload": "retire",
   "testing.testExplorer.onStart": "reset",
-
-  // Playwright specific settings
   "playwright.env": {
     "NODE_ENV": "test"
   },
   "playwright.reuseBrowser": true,
   "playwright.showTrace": false,
   "testing.automaticallyOpenTestResults": "openOnTestStart",
-
-  // Configure multiple test configurations
   "testing.testConfigurations": [
     {
-      "name": "UI Components (Playwright CT)", 
+      "name": "UI Components (Playwright CT)",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/playwright",
-      "args": ["test", "--config=playwright-ct.config.ts"],
+      "args": [
+        "test",
+        "--config=playwright-ct.config.ts"
+      ],
       "cwd": "${workspaceFolder}/packages/ui",
       "env": {
         "NODE_ENV": "test"
@@ -253,15 +169,41 @@
     },
     {
       "name": "Web App (Playwright)",
-      "type": "playwright", 
+      "type": "playwright",
       "configFile": "apps/web/playwright.config.ts",
       "cwd": "apps/web"
     },
     {
       "name": "UI Components (Vitest)",
       "type": "vitest",
-      "configFile": "packages/ui/vitest.config.ts", 
+      "configFile": "packages/ui/vitest.config.ts",
       "cwd": "packages/ui"
     }
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[graphql]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "emmet.showExpandedAbbreviation": "never"
 }

@@ -7,11 +7,11 @@ import type { Size } from "../../constants/sizes";
 export type TextSize = Size;
 
 export type TextProps = {
-  /**
-   * Text size variant controlling font size.
-   * Uses the global size scale.
-   */
-  size?: TextSize;
+	/**
+	 * Text size variant controlling font size.
+	 * Uses the global size scale.
+	 */
+	size?: TextSize;
 } & React.ComponentPropsWithoutRef<"p">;
 
 export type TextLinkProps = React.ComponentPropsWithoutRef<"a">;

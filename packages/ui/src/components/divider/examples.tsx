@@ -1,36 +1,31 @@
 "use client";
 
-import React from "react";
 import { Divider } from "./component";
 
 // Default divider
-export const DefaultExample = () => (
-  <Divider />
-);
+export const DefaultExample = () => <Divider />;
 
 // With text
-export const WithTextExample = () => (
-  <Divider>or</Divider>
-);
+export const WithTextExample = () => <Divider>or</Divider>;
 
 // Vertical divider
 export const VerticalExample = () => (
-  <div className="flex items-center h-8">
-    <span>Left content</span>
-    <Divider orientation="vertical" />
-    <span>Right content</span>
-  </div>
+	<div className="flex items-center h-8">
+		<span>Left content</span>
+		<Divider orientation="vertical" />
+		<span>Right content</span>
+	</div>
 );
 
 // Different spacing
 export const SpacingExample = () => (
-  <div>
-    <div>Content</div>
-    <Divider spacing="sm">Small spacing</Divider>
-    <div>Content</div>
-    <Divider spacing="md">Medium spacing</Divider>
-    <div>Content</div>
-    <Divider spacing="lg">Large spacing</Divider>
-    <div>Content</div>
-  </div>
+	<div>
+		<div>Content</div>
+		<Divider spacing="sm">Small spacing</Divider>
+		<div>Content</div>
+		<Divider spacing="md">Medium spacing</Divider>
+		<div>Content</div>
+		<Divider spacing="lg">Large spacing</Divider>
+		<div>Content</div>
+	</div>
 );

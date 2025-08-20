@@ -9,4 +9,9 @@ export const buttonSizeOptions: Size[] = ["2xs", "xs", "sm", "base", "lg"];
 /**
  * Array of all icon button size options for use in configs and other places.
  */
-export const iconButtonSizeOptions: IconButtonSize[] = ["icon-xs", "icon-sm", "icon", "icon-lg"];
+export const iconButtonSizeOptions: IconButtonSize[] = [
+	"icon-xs",
+	"icon-sm",
+	"icon",
+	"icon-lg",
+];

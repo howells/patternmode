@@ -1,32 +1,31 @@
 "use client";
 
-import React from "react";
 import { CodeBlock } from "./component";
 
 // Default code block
 export const DefaultExample = () => (
-  <CodeBlock>
-    {`const greeting = "Hello, World!";
+	<CodeBlock>
+		{`const greeting = "Hello, World!";
 console.log(greeting);`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // JavaScript code
 export const JavascriptExample = () => (
-  <CodeBlock language="javascript">
-    {`function calculateSum(a, b) {
+	<CodeBlock language="javascript">
+		{`function calculateSum(a, b) {
   return a + b;
 }
 
 const result = calculateSum(5, 3);
 console.log(result);`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // CSS code
 export const CssExample = () => (
-  <CodeBlock language="css">
-    {`.button {
+	<CodeBlock language="css">
+		{`.button {
   background-color: #3b82f6;
   color: white;
   padding: 0.5rem 1rem;
@@ -38,13 +37,13 @@ export const CssExample = () => (
 .button:hover {
   background-color: #2563eb;
 }`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // JSON configuration
 export const JsonExample = () => (
-  <CodeBlock language="json">
-    {`{
+	<CodeBlock language="json">
+		{`{
   "name": "my-project",
   "version": "1.0.0",
   "dependencies": {
@@ -52,24 +51,24 @@ export const JsonExample = () => (
     "typescript": "^4.9.0"
   }
 }`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // Bash commands
 export const BashExample = () => (
-  <CodeBlock language="bash">
-    {`npm install
+	<CodeBlock language="bash">
+		{`npm install
 npm run dev
 
 # Start the development server
 npm start`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // TypeScript with types
 export const TypescriptExample = () => (
-  <CodeBlock language="typescript">
-    {`interface User {
+	<CodeBlock language="typescript">
+		{`interface User {
   id: number;
   name: string;
   email: string;
@@ -82,13 +81,13 @@ function getUserById(id: number): User | undefined {
 
 const user = getUserById(123);
 console.log(user?.name);`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // React component
 export const ReactComponentExample = () => (
-  <CodeBlock language="tsx">
-    {`import React, { useState } from 'react';
+	<CodeBlock language="tsx">
+		{`import React, { useState } from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -117,13 +116,13 @@ export function Button({
     </button>
   );
 }`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // Python code
 export const PythonExample = () => (
-  <CodeBlock language="python">
-    {`def fibonacci(n):
+	<CodeBlock language="python">
+		{`def fibonacci(n):
     """Generate Fibonacci sequence up to n terms."""
     if n <= 0:
         return []
@@ -139,13 +138,13 @@ export const PythonExample = () => (
 # Generate first 10 Fibonacci numbers
 result = fibonacci(10)
 print(f"Fibonacci sequence: {result}")`}
-  </CodeBlock>
+	</CodeBlock>
 );
 
 // HTML markup
 export const HtmlExample = () => (
-  <CodeBlock language="html">
-    {`<!DOCTYPE html>
+	<CodeBlock language="html">
+		{`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -168,5 +167,5 @@ export const HtmlExample = () => (
     </main>
 </body>
 </html>`}
-  </CodeBlock>
+	</CodeBlock>
 );

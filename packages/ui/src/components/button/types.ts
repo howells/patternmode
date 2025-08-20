@@ -9,15 +9,15 @@ export type IconButtonSize = "icon-xs" | "icon-sm" | "icon" | "icon-lg";
  * All available visual styles for buttons.
  */
 export const buttonVariants = [
-  "primary",
-  "secondary",
-  "outline",
-  "outline-dashed",
-  "ghost",
-  "destructive",
-  "inverse-ghost",
-  "link",
-  "minimal",
+	"primary",
+	"secondary",
+	"outline",
+	"outline-dashed",
+	"ghost",
+	"destructive",
+	"inverse-ghost",
+	"link",
+	"minimal",
 ] as const;
 
 /**

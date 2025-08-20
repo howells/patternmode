@@ -1,33 +1,36 @@
-import type { TextListIndicatorProps, TextListItemProps, TextListProps } from "./types";
-
-import React from "react";
+import type React from "react";
 import { cx } from "../../utils/cx";
 import { Icon } from "../icon/component";
+import type {
+	TextListIndicatorProps,
+	TextListItemProps,
+	TextListProps,
+} from "./types";
 import { indicatorVariants, listItemVariants, listVariants } from "./variants";
 
 /**
  * List component with customizable styling and semantic markup options.
  */
 export const TextList = ({
-  as = "ul",
-  variant,
-  align,
-  unstyled,
-  className,
-  children,
-  ...props
+	as = "ul",
+	variant,
+	align,
+	unstyled,
+	className,
+	children,
+	...props
 }: TextListProps) => {
-  const Component: React.ElementType = as || "ul";
+	const Component: React.ElementType = as || "ul";
 
-  return (
-    <Component
-      data-testid="text-list"
-      className={cx(!unstyled && listVariants({ variant, align }), className)}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
+	return (
+		<Component
+			data-testid="text-list"
+			className={cx(!unstyled && listVariants({ variant, align }), className)}
+			{...props}
+		>
+			{children}
+		</Component>
+	);
 };
 
 /**
@@ -36,24 +39,24 @@ export const TextList = ({
  * @component
  */
 export function TextListItem({
-  variant,
-  align,
-  unstyled,
-  className,
-  children,
-  ...props
+	variant,
+	align,
+	unstyled,
+	className,
+	children,
+	...props
 }: TextListItemProps) {
-  return (
-    <li
-      className={cx(
-        !unstyled && listItemVariants({ variant, align }),
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </li>
-  );
+	return (
+		<li
+			className={cx(
+				!unstyled && listItemVariants({ variant, align }),
+				className,
+			)}
+			{...props}
+		>
+			{children}
+		</li>
+	);
 }
 
 /**
@@ -65,20 +68,20 @@ export function TextListItem({
  * @component
  */
 export function TextListIndicator({
-  icon: IconComponent,
-  size = "base",
-  variant,
-  unstyled,
-  className,
-  children,
-  ...props
+	icon: IconComponent,
+	size = "base",
+	variant,
+	unstyled,
+	className,
+	children,
+	...props
 }: TextListIndicatorProps) {
-  return (
-    <span
-      className={cx(!unstyled && indicatorVariants({ variant }), className)}
-      {...props}
-    >
-      {IconComponent ? <Icon icon={IconComponent} size={size} /> : children}
-    </span>
-  );
+	return (
+		<span
+			className={cx(!unstyled && indicatorVariants({ variant }), className)}
+			{...props}
+		>
+			{IconComponent ? <Icon icon={IconComponent} size={size} /> : children}
+		</span>
+	);
 }

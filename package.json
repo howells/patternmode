@@ -28,12 +28,14 @@
     "release": "turbo build && changeset publish"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
     "@changesets/cli": "^2.29.6",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "glob": "^11.0.0",
+    "glob": "^11.0.3",
     "knip": "^5.62.0",
-    "turbo": "^2.5.6"
+    "turbo": "^2.5.6",
+    "ultracite": "^5.2.4"
   },
   "dependencies": {
     "es-toolkit": "^1.39.10",

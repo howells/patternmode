@@ -1,181 +1,181 @@
 "use client";
 
-import type { ComboboxOption } from "./types";
 import React from "react";
 import { Combobox } from "./component";
+import type { ComboboxOption } from "./types";
 
 // Sample data
 type FruitOption = {
-  color: string;
+	color: string;
 } & ComboboxOption;
 
 const fruits: FruitOption[] = [
-  { id: "1", label: "Apple", value: "apple", color: "red" },
-  { id: "2", label: "Banana", value: "banana", color: "yellow" },
-  { id: "3", label: "Cherry", value: "cherry", color: "red" },
-  { id: "4", label: "Date", value: "date", color: "brown" },
-  { id: "5", label: "Elderberry", value: "elderberry", color: "purple" },
-  { id: "6", label: "Fig", value: "fig", color: "purple" },
-  { id: "7", label: "Grape", value: "grape", color: "green" },
-  { id: "8", label: "Honeydew", value: "honeydew", color: "green" },
+	{ id: "1", label: "Apple", value: "apple", color: "red" },
+	{ id: "2", label: "Banana", value: "banana", color: "yellow" },
+	{ id: "3", label: "Cherry", value: "cherry", color: "red" },
+	{ id: "4", label: "Date", value: "date", color: "brown" },
+	{ id: "5", label: "Elderberry", value: "elderberry", color: "purple" },
+	{ id: "6", label: "Fig", value: "fig", color: "purple" },
+	{ id: "7", label: "Grape", value: "grape", color: "green" },
+	{ id: "8", label: "Honeydew", value: "honeydew", color: "green" },
 ];
 
 // Mock async function to simulate data fetching
 async function fetchFruits({ search }: { search?: string }) {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
+	// Simulate network delay
+	await new Promise((resolve) => setTimeout(resolve, 500));
 
-  const filtered = search
-    ? fruits.filter(fruit =>
-        fruit.label.toLowerCase().includes(search.toLowerCase()),
-      )
-    : fruits;
+	const filtered = search
+		? fruits.filter((fruit) =>
+				fruit.label.toLowerCase().includes(search.toLowerCase()),
+			)
+		: fruits;
 
-  return {
-    data: filtered,
-    hasNextPage: false,
-  };
+	return {
+		data: filtered,
+		hasNextPage: false,
+	};
 }
 
 export function DefaultExample() {
-  const [value, setValue] = React.useState<string>();
+	const [value, setValue] = React.useState<string>();
 
-  return (
-    <div className="w-64">
-      <Combobox
-        options={fruits}
-        value={value}
-        onValueChange={setValue}
-        placeholder="Choose a fruit..."
-      />
-    </div>
-  );
+	return (
+		<div className="w-64">
+			<Combobox
+				options={fruits}
+				value={value}
+				onValueChange={setValue}
+				placeholder="Choose a fruit..."
+			/>
+		</div>
+	);
 }
 
 export function AsyncExample() {
-  const [value, setValue] = React.useState<string>();
+	const [value, setValue] = React.useState<string>();
 
-  return (
-    <div className="w-64">
-      <Combobox<FruitOption>
-        fetchData={fetchFruits}
-        queryKey={["fruits"]}
-        value={value}
-        onValueChange={setValue}
-        placeholder="Search fruits..."
-        searchPlaceholder="Type to search..."
-      />
-    </div>
-  );
+	return (
+		<div className="w-64">
+			<Combobox<FruitOption>
+				fetchData={fetchFruits}
+				queryKey={["fruits"]}
+				value={value}
+				onValueChange={setValue}
+				placeholder="Search fruits..."
+				searchPlaceholder="Type to search..."
+			/>
+		</div>
+	);
 }
 
 export function CustomRenderingExample() {
-  const [value, setValue] = React.useState<string>();
+	const [value, setValue] = React.useState<string>();
 
-  return (
-    <div className="w-64">
-      <Combobox<FruitOption>
-        options={fruits}
-        value={value}
-        onValueChange={setValue}
-        placeholder="Choose a fruit..."
-        renderItem={item => (
-          <div className="flex items-center gap-2 py-2 px-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: item.color }}
-            />
-            <span>{item.label}</span>
-          </div>
-        )}
-      />
-    </div>
-  );
+	return (
+		<div className="w-64">
+			<Combobox<FruitOption>
+				options={fruits}
+				value={value}
+				onValueChange={setValue}
+				placeholder="Choose a fruit..."
+				renderItem={(item) => (
+					<div className="flex items-center gap-2 py-2 px-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+						<div
+							className="w-3 h-3 rounded-full"
+							style={{ backgroundColor: item.color }}
+						/>
+						<span>{item.label}</span>
+					</div>
+				)}
+			/>
+		</div>
+	);
 }
 
 export function SizesExample() {
-  const [xsValue, setXsValue] = React.useState<string>();
-  const [smValue, setSmValue] = React.useState<string>();
-  const [baseValue, setBaseValue] = React.useState<string>();
-  const [lgValue, setLgValue] = React.useState<string>();
+	const [xsValue, setXsValue] = React.useState<string>();
+	const [smValue, setSmValue] = React.useState<string>();
+	const [baseValue, setBaseValue] = React.useState<string>();
+	const [lgValue, setLgValue] = React.useState<string>();
 
-  return (
-    <div className="space-y-4">
-      <div className="w-44">
-        <label className="block text-xs font-medium mb-1">Extra Small</label>
-        <Combobox
-          size="xs"
-          options={fruits}
-          value={xsValue}
-          onValueChange={setXsValue}
-          placeholder="Extra small combobox"
-        />
-      </div>
+	return (
+		<div className="space-y-4">
+			<div className="w-44">
+				<label className="block text-xs font-medium mb-1">Extra Small</label>
+				<Combobox
+					size="xs"
+					options={fruits}
+					value={xsValue}
+					onValueChange={setXsValue}
+					placeholder="Extra small combobox"
+				/>
+			</div>
 
-      <div className="w-48">
-        <label className="block text-xs font-medium mb-1">Small</label>
-        <Combobox
-          size="sm"
-          options={fruits}
-          value={smValue}
-          onValueChange={setSmValue}
-          placeholder="Small combobox"
-        />
-      </div>
+			<div className="w-48">
+				<label className="block text-xs font-medium mb-1">Small</label>
+				<Combobox
+					size="sm"
+					options={fruits}
+					value={smValue}
+					onValueChange={setSmValue}
+					placeholder="Small combobox"
+				/>
+			</div>
 
-      <div className="w-56">
-        <label className="block text-sm font-medium mb-1">Base (Default)</label>
-        <Combobox
-          size="base"
-          options={fruits}
-          value={baseValue}
-          onValueChange={setBaseValue}
-          placeholder="Base combobox"
-        />
-      </div>
+			<div className="w-56">
+				<label className="block text-sm font-medium mb-1">Base (Default)</label>
+				<Combobox
+					size="base"
+					options={fruits}
+					value={baseValue}
+					onValueChange={setBaseValue}
+					placeholder="Base combobox"
+				/>
+			</div>
 
-      <div className="w-64">
-        <label className="block text-base font-medium mb-1">Large</label>
-        <Combobox
-          size="lg"
-          options={fruits}
-          value={lgValue}
-          onValueChange={setLgValue}
-          placeholder="Large combobox"
-        />
-      </div>
-    </div>
-  );
+			<div className="w-64">
+				<label className="block text-base font-medium mb-1">Large</label>
+				<Combobox
+					size="lg"
+					options={fruits}
+					value={lgValue}
+					onValueChange={setLgValue}
+					placeholder="Large combobox"
+				/>
+			</div>
+		</div>
+	);
 }
 
 export function ErrorExample() {
-  const [value, setValue] = React.useState<string>();
+	const [value, setValue] = React.useState<string>();
 
-  return (
-    <div className="w-64">
-      <Combobox
-        options={fruits}
-        value={value}
-        onValueChange={setValue}
-        placeholder="Choose a fruit..."
-        hasError={true}
-      />
-    </div>
-  );
+	return (
+		<div className="w-64">
+			<Combobox
+				options={fruits}
+				value={value}
+				onValueChange={setValue}
+				placeholder="Choose a fruit..."
+				hasError={true}
+			/>
+		</div>
+	);
 }
 
 export function DisabledExample() {
-  const [value, setValue] = React.useState<string>("apple");
+	const [value, setValue] = React.useState<string>("apple");
 
-  return (
-    <div className="w-64">
-      <Combobox
-        options={fruits}
-        value={value}
-        onValueChange={setValue}
-        placeholder="Choose a fruit..."
-        disabled={true}
-      />
-    </div>
-  );
+	return (
+		<div className="w-64">
+			<Combobox
+				options={fruits}
+				value={value}
+				onValueChange={setValue}
+				placeholder="Choose a fruit..."
+				disabled={true}
+			/>
+		</div>
+	);
 }

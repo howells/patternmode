@@ -1,51 +1,54 @@
 "use client";
 
 import type { BreadcrumbsProps } from "./component";
-import React from "react";
 import {
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  Breadcrumbs,
-  BreadcrumbSeparator,
-
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+	Breadcrumbs,
 } from "./component";
 
 export function BreadcrumbsPreview(props: BreadcrumbsProps) {
-  return (
-    <Breadcrumbs {...props}>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/products">Products</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/products/electronics">Electronics</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/products/electronics/smartphones">Smartphones</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>iPhone 15 Pro</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumbs>
-  );
+	return (
+		<Breadcrumbs {...props}>
+			<BreadcrumbList>
+				<BreadcrumbItem>
+					<BreadcrumbLink href="/">Home</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbLink href="/products">Products</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbLink href="/products/electronics">
+						Electronics
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbLink href="/products/electronics/smartphones">
+						Smartphones
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbPage>iPhone 15 Pro</BreadcrumbPage>
+				</BreadcrumbItem>
+			</BreadcrumbList>
+		</Breadcrumbs>
+	);
 }
 
 // Preview props for prop explorer
 export const breadcrumbsPreviewProps = [
-  {
-    name: "aria-label",
-    type: "string",
-    description: "Accessible label for screen readers describing the breadcrumb navigation.",
-    defaultValue: "breadcrumb",
-  },
+	{
+		name: "aria-label",
+		type: "string",
+		description:
+			"Accessible label for screen readers describing the breadcrumb navigation.",
+		defaultValue: "breadcrumb",
+	},
 ];

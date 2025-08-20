@@ -1,59 +1,67 @@
 "use client";
 
-import type { ToggleProps } from "./types";
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
-
-import React from "react";
+import type React from "react";
 import { cx } from "../../utils/cx";
 import { Button } from "../button/component";
+import type { ToggleProps } from "./types";
 import { toggleVariants } from "./variants";
 
 /**
  * A two-state button component that toggles between pressed (on) and unpressed (off) states.
  */
 const Toggle = ({
-  ref,
-  className,
-  variant,
-  size,
-  children,
-  render,
-  leftIcon,
-  rightIcon,
-  icon,
-  fullWidth,
-  rounded,
-  ...props
-}: ToggleProps & { ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null> }) => {
-  return (
-    <BaseToggle
-      data-testid="toggle"
-      ref={ref}
-      render={render || ((toggleProps, state) => {
-        const { ref: toggleRef, ...buttonProps } = toggleProps;
-        return (
-          <Button
-            {...buttonProps}
-            variant={state.pressed ? "secondary" : "ghost"}
-            size={size}
-            leftIcon={leftIcon}
-            rightIcon={rightIcon}
-            icon={icon}
-            fullWidth={fullWidth}
-            rounded={rounded}
-            render={<button type="button" ref={toggleRef} />}
-            className={cx(
-              toggleVariants({ variant, size }),
-              className,
-            )}
-          >
-            {children}
-          </Button>
-        );
-      })}
-      {...props}
-    />
-  );
+	ref,
+	className,
+	variant,
+	size,
+	children,
+	render,
+	leftIcon,
+	rightIcon,
+	icon,
+	fullWidth,
+	rounded,
+	...props
+}: ToggleProps & {
+	ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null>;
+}) => {
+	return (
+		<BaseToggle
+			data-testid="toggle"
+			ref={ref}
+			render={
+				render ||
+				((toggleProps, state) => {
+					const { ref: toggleRef, ...buttonProps } = toggleProps;
+					return (
+						<Button
+							{...buttonProps}
+							variant={state.pressed ? "secondary" : "ghost"}
+							size={size}
+							leftIcon={leftIcon}
+							rightIcon={rightIcon}
+							icon={icon}
+							fullWidth={fullWidth}
+							rounded={rounded}
+							render={(props) => (
+								<button
+									type="button"
+									{...props}
+									// @ts-expect-error - Base UI Toggle ref type conflict with React 19
+									ref={toggleRef}
+								/>
+							)}
+							className={cx(toggleVariants({ variant, size }), className)}
+						>
+							{children}
+						</Button>
+					);
+				})
+			}
+			{...props}
+		/>
+	);
 };
 
 Toggle.displayName = "Toggle";

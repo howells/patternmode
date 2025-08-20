@@ -1,109 +1,114 @@
-import type { ComponentConfig } from "../../types/component-types";
 import { Eye } from "lucide-react";
+import type { ComponentConfig } from "../../types/component-types";
 import {
-  PreviewCard,
-  PreviewCardArrow,
-  PreviewCardBody,
-  PreviewCardContent,
-  PreviewCardDescription,
-  PreviewCardFooter,
-  PreviewCardHeader,
-  PreviewCardHeading,
-  PreviewCardImage,
-  PreviewCardPortal,
-  PreviewCardPositioner,
-  PreviewCardTrigger,
+	PreviewCard,
+	PreviewCardArrow,
+	PreviewCardBody,
+	PreviewCardContent,
+	PreviewCardDescription,
+	PreviewCardFooter,
+	PreviewCardHeader,
+	PreviewCardHeading,
+	PreviewCardImage,
+	PreviewCardPortal,
+	PreviewCardPositioner,
+	PreviewCardTrigger,
 } from "./component";
-import { DefaultExample, UserProfileExample, WithImageExample } from "./examples";
+import {
+	DefaultExample,
+	UserProfileExample,
+	WithImageExample,
+} from "./examples";
 
 export const previewCardConfig: ComponentConfig = {
-  id: "preview-card",
-  name: "Preview Card",
-  description: "A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
-  category: "media",
-  icon: Eye,
-  importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardHeading, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
-  examples: [
-    {
-      id: "default",
-      title: "Default",
-      description: "Basic preview card with title and description",
-      component: DefaultExample,
-    },
-    {
-      id: "with-image",
-      title: "With Image",
-      description: "Preview card with header image and arrow",
-      component: WithImageExample,
-    },
-    {
-      id: "user-profile",
-      title: "User Profile",
-      description: "Preview card for user profile information",
-      component: UserProfileExample,
-    },
-  ],
-  components: [
-    {
-      name: "Preview Card",
-      description: "Root container for hover-triggered content previews.",
-      component: PreviewCard,
-      primary: true,
-    },
-    {
-      name: "Preview Card Trigger",
-      description: "Interactive element that shows preview on hover.",
-      component: PreviewCardTrigger,
-    },
-    {
-      name: "Preview Card Content",
-      description: "Main content container with positioning.",
-      component: PreviewCardContent,
-    },
-    {
-      name: "Preview Card Arrow",
-      description: "Visual arrow pointing to trigger element.",
-      component: PreviewCardArrow,
-    },
-    {
-      name: "Preview Card Image",
-      description: "Header image with consistent aspect ratio.",
-      component: PreviewCardImage,
-    },
-    {
-      name: "Preview Card Header",
-      description: "Container for title and description.",
-      component: PreviewCardHeader,
-    },
-    {
-      name: "Preview Card Heading",
-      description: "Heading component with prominent typography.",
-      component: PreviewCardHeading,
-    },
-    {
-      name: "Preview Card Description",
-      description: "Description text with muted styling.",
-      component: PreviewCardDescription,
-    },
-    {
-      name: "Preview Card Body",
-      description: "Main content area between header and footer.",
-      component: PreviewCardBody,
-    },
-    {
-      name: "Preview Card Footer",
-      description: "Footer section for actions and metadata.",
-      component: PreviewCardFooter,
-    },
-    {
-      name: "Preview Card Portal",
-      description: "Portal for rendering outside DOM tree.",
-      component: PreviewCardPortal,
-    },
-    {
-      name: "Preview Card Positioner",
-      description: "Smart positioning with collision detection.",
-      component: PreviewCardPositioner,
-    },
-  ],
+	id: "preview-card",
+	name: "Preview Card",
+	description:
+		"A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
+	category: "media",
+	icon: Eye,
+	importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardHeading, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
+	examples: [
+		{
+			id: "default",
+			title: "Default",
+			description: "Basic preview card with title and description",
+			component: DefaultExample,
+		},
+		{
+			id: "with-image",
+			title: "With Image",
+			description: "Preview card with header image and arrow",
+			component: WithImageExample,
+		},
+		{
+			id: "user-profile",
+			title: "User Profile",
+			description: "Preview card for user profile information",
+			component: UserProfileExample,
+		},
+	],
+	components: [
+		{
+			name: "Preview Card",
+			description: "Root container for hover-triggered content previews.",
+			component: PreviewCard,
+			primary: true,
+		},
+		{
+			name: "Preview Card Trigger",
+			description: "Interactive element that shows preview on hover.",
+			component: PreviewCardTrigger,
+		},
+		{
+			name: "Preview Card Content",
+			description: "Main content container with positioning.",
+			component: PreviewCardContent,
+		},
+		{
+			name: "Preview Card Arrow",
+			description: "Visual arrow pointing to trigger element.",
+			component: PreviewCardArrow,
+		},
+		{
+			name: "Preview Card Image",
+			description: "Header image with consistent aspect ratio.",
+			component: PreviewCardImage,
+		},
+		{
+			name: "Preview Card Header",
+			description: "Container for title and description.",
+			component: PreviewCardHeader,
+		},
+		{
+			name: "Preview Card Heading",
+			description: "Heading component with prominent typography.",
+			component: PreviewCardHeading,
+		},
+		{
+			name: "Preview Card Description",
+			description: "Description text with muted styling.",
+			component: PreviewCardDescription,
+		},
+		{
+			name: "Preview Card Body",
+			description: "Main content area between header and footer.",
+			component: PreviewCardBody,
+		},
+		{
+			name: "Preview Card Footer",
+			description: "Footer section for actions and metadata.",
+			component: PreviewCardFooter,
+		},
+		{
+			name: "Preview Card Portal",
+			description: "Portal for rendering outside DOM tree.",
+			component: PreviewCardPortal,
+		},
+		{
+			name: "Preview Card Positioner",
+			description: "Smart positioning with collision detection.",
+			component: PreviewCardPositioner,
+		},
+	],
 };

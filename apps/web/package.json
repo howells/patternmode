@@ -7,7 +7,7 @@
     "generate:pages": "node scripts/generate-pages.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "biome check src --write",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
     "test:e2e": "timeout 180s playwright test || true",
@@ -25,9 +25,9 @@
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.7.0",
     "@patternmode/ui": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.11",
-    "@tanstack/react-query": "^5.84.1",
-    "@tanstack/react-query-devtools": "^5.84.1",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "motion": "^12.23.12",
@@ -35,15 +35,13 @@
     "next-themes": "^0.4.6",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^2.1.0",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
-    "@patternmode/eslint-config": "workspace:*",
-    "@playwright/test": "^1.54.2",
-    "@types/node": "^24.2.0",
-    "@types/react": "19.1.9",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
-    "eslint": "^9.32.0",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }

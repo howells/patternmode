@@ -6,18 +6,16 @@ import type { Size } from "../../constants/sizes";
 import type { switchVariants } from "./variants";
 
 export type SwitchProps = {
-  /**
-   * Optional label text displayed next to the switch.
-   * When provided, the switch and label are wrapped in a container for proper spacing.
-   */
-  label?: string;
-  /**
-   * The size variant of the switch component.
-   * Controls both the switch track and thumb dimensions.
-   * @default "base"
-   */
-  size?: Size;
-} & Omit<
-      React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>,
-      "children"
-    > & VariantProps<typeof switchVariants>;
+	/**
+	 * Optional label text displayed next to the switch.
+	 * When provided, the switch and label are wrapped in a container for proper spacing.
+	 */
+	label?: string;
+	/**
+	 * The size variant of the switch component.
+	 * Controls both the switch track and thumb dimensions.
+	 * @default "base"
+	 */
+	size?: Size;
+} & Omit<React.ComponentPropsWithoutRef<typeof BaseSwitch.Root>, "children"> &
+	VariantProps<typeof switchVariants>;

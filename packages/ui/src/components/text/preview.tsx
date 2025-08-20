@@ -1,31 +1,32 @@
 "use client";
 
-import type { TextProps } from "./types";
-import React from "react";
 import { SIZES } from "../../constants/sizes";
 import { Text } from "./component";
+import type { TextProps } from "./types";
 
 export function TextPreview(props: TextProps) {
-  return (
-    <Text {...props}>
-      {props.children || "This is a text component that demonstrates typography and inherits its styling from the parent or props."}
-    </Text>
-  );
+	return (
+		<Text {...props}>
+			{props.children ||
+				"This is a text component that demonstrates typography and inherits its styling from the parent or props."}
+		</Text>
+	);
 }
 
 // Preview props for prop explorer
 export const textPreviewProps = [
-  {
-    name: "children",
-    type: "string",
-    description: "Text content to display.",
-    defaultValue: "This is a text component that demonstrates typography and inherits its styling from the parent or props.",
-  },
-  {
-    name: "size",
-    type: "select",
-    description: "Text size variant controlling font size.",
-    options: SIZES,
-    defaultValue: "sm",
-  },
+	{
+		name: "children",
+		type: "string",
+		description: "Text content to display.",
+		defaultValue:
+			"This is a text component that demonstrates typography and inherits its styling from the parent or props.",
+	},
+	{
+		name: "size",
+		type: "select",
+		description: "Text size variant controlling font size.",
+		options: SIZES,
+		defaultValue: "sm",
+	},
 ];

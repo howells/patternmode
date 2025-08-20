@@ -2,10 +2,17 @@ import type { Accordion as BaseAccordion } from "@base-ui-components/react/accor
 import type React from "react";
 import type { AccordionPreviewProps } from "./preview";
 
-export type AccordionProps = AccordionPreviewProps & React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
+export type AccordionProps = AccordionPreviewProps &
+	React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
 
-export type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof BaseAccordion.Trigger>;
+export type AccordionTriggerProps = React.ComponentPropsWithoutRef<
+	typeof BaseAccordion.Trigger
+>;
 
-export type AccordionContentProps = React.ComponentPropsWithoutRef<typeof BaseAccordion.Panel>;
+export type AccordionContentProps = React.ComponentPropsWithoutRef<
+	typeof BaseAccordion.Panel
+>;
 
-export type AccordionItemProps = React.ComponentPropsWithoutRef<typeof BaseAccordion.Item>;
+export type AccordionItemProps = React.ComponentPropsWithoutRef<
+	typeof BaseAccordion.Item
+>;
