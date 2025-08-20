@@ -82,11 +82,21 @@ const generateLiveCode = (
 
   const propsString = propsArray.length > 0 ? ` ${propsArray.join(" ")}` : "";
 
-  if (children && children !== "") {
-    return `<${componentName}${propsString}>\n  ${children}\n</${componentName}>`;
+  // List of void elements that cannot have children
+  const voidElements = new Set([
+    'input', 'img', 'br', 'hr', 'area', 'base', 'col', 'embed',
+    'link', 'meta', 'param', 'source', 'track', 'wbr'
+  ]);
+
+  // Check if the component is a void element
+  const isVoidElement = voidElements.has(componentName.toLowerCase());
+
+  // For void elements, always use self-closing syntax
+  if (isVoidElement || !children || children === "") {
+    return `<${componentName}${propsString} />`;
   }
   else {
-    return `<${componentName}${propsString} />`;
+    return `<${componentName}${propsString}>\n  ${children}\n</${componentName}>`;
   }
 };
 
@@ -162,7 +172,17 @@ export function PreviewDisplay({
     try {
       const ComponentWithProps = Component as React.ComponentType<Record<string, unknown> & { children?: React.ReactNode }>;
 
-      const componentElement = props.children !== undefined
+      // List of void elements that cannot have children
+      const voidElements = new Set([
+        'input', 'img', 'br', 'hr', 'area', 'base', 'col', 'embed',
+        'link', 'meta', 'param', 'source', 'track', 'wbr'
+      ]);
+
+      // Check if the component is a void element by checking the component name
+      const isVoidElement = voidElements.has(componentId.toLowerCase());
+
+      // For void elements, never pass children
+      const componentElement = (props.children !== undefined && !isVoidElement)
         ? <ComponentWithProps {...processedProps}>{String(props.children)}</ComponentWithProps>
         : <ComponentWithProps {...processedProps} />;
 

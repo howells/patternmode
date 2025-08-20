@@ -118,32 +118,55 @@ export function EditableCell({
     return finalProps;
   }, [cellData]);
 
-  // Render component if one is assigned to this cell
-  const renderComponent = () => {
+  // Component wrapper that handles prop spreading safely for void elements
+  const ComponentWrapper = useMemo(() => {
     if (!cellData || !DynamicComponent) {
       return null;
     }
 
-    try {
-      // Create a wrapper component that handles prop spreading safely
-      const ComponentWrapper = ({
-        props,
-      }: {
-        props: Record<string, unknown>;
-      }) => {
-        const { children, ...otherProps } = props;
+    return ({
+      props,
+    }: {
+      props: Record<string, unknown>;
+    }) => {
+      const { children, ...otherProps } = props;
 
-        if (children !== undefined) {
-          return React.createElement(
-            DynamicComponent,
-            otherProps,
-            String(children),
-          );
-        }
+      // List of void elements that cannot have children
+      const voidElements = new Set([
+        'input', 'img', 'br', 'hr', 'area', 'base', 'col', 'embed',
+        'link', 'meta', 'param', 'source', 'track', 'wbr'
+      ]);
 
+      // Check if the component is a void element by checking the component name
+      // This is a heuristic since we're dealing with dynamic components
+      const componentName = cellData?.componentId?.toLowerCase();
+      const isVoidElement = componentName && voidElements.has(componentName);
+
+      // For void elements, never pass children
+      if (isVoidElement) {
         return React.createElement(DynamicComponent, otherProps);
-      };
+      }
 
+      // For non-void elements, pass children if they exist
+      if (children !== undefined) {
+        return React.createElement(
+          DynamicComponent,
+          otherProps,
+          String(children),
+        );
+      }
+
+      return React.createElement(DynamicComponent, otherProps);
+    };
+  }, [cellData, DynamicComponent]);
+
+  // Render component if one is assigned to this cell
+  const renderComponent = () => {
+    if (!cellData || !DynamicComponent || !ComponentWrapper) {
+      return null;
+    }
+
+    try {
       return (
         <Stack className="w-full">
           <PreviewProvider defaultProps={cellData.props}>
