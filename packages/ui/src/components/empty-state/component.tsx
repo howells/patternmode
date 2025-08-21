@@ -1,4 +1,4 @@
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import { Heading } from "../heading/component";
 import { IconContainer } from "../icon-container/component";

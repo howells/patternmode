@@ -1,7 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import type { DropdownItemProps } from "./types";
 import { dropdownItemVariants } from "./variants";

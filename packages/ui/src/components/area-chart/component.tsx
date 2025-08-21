@@ -24,8 +24,8 @@ import { getColorClassName } from "../../charts/utils/get-color-class-name";
 
 import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
 
-import { cx } from "../../utils/cx";
-import { hasOnlyOneValueForKey } from "../../utils/has-only-one-value-for-key";
+import { cx } from "@patternmode/core/utils/cx";
+import { hasOnlyOneValueForKey } from "@patternmode/core/utils/has-only-one-value-for-key";
 
 // #region Legend
 

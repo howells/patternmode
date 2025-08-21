@@ -1,6 +1,6 @@
 "use client";
 
-import { iconRegistry } from "../../icons/icon-registry";
+import { iconRegistry } from "@patternmode/icons/icon-registry";
 import { HStack, Stack } from "../stack/component";
 import { Button } from "./component";
 

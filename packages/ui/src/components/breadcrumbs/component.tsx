@@ -1,7 +1,7 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type {
 	BreadcrumbEllipsisProps,
 	BreadcrumbItemProps,

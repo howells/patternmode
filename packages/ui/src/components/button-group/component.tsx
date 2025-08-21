@@ -5,8 +5,8 @@ import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getGapClass,
-} from "../../presentation/spacing-utils";
-import { cx } from "../../utils/cx";
+} from "@patternmode/styles/presentation/spacing-utils";
+import { cx } from "@patternmode/core/utils/cx";
 import type { ButtonGroupProps } from "./types";
 import { buttonGroupVariants } from "./variants";
 

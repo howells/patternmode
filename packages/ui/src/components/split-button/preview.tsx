@@ -2,8 +2,8 @@
 
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import type React from "react";
-import type { Size } from "../../constants/sizes";
-import { SIZES as sizes } from "../../constants/sizes";
+import type { Size } from "@patternmode/styles/constants/sizes";
+import { SIZES as sizes } from "@patternmode/styles/constants/sizes";
 import type { ButtonVariant } from "../../constants/variants";
 import { componentVariants } from "../../constants/variants";
 import { Icon } from "../icon/component";

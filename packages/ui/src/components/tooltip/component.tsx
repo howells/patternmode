@@ -2,7 +2,7 @@
 
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 import type React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type { TooltipProps } from "./types";
 import { tooltipVariants } from "./variants";
 

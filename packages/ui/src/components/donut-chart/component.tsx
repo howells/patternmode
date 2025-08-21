@@ -19,7 +19,7 @@ import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colo
 import { AvailableChartColors } from "../../charts/constants/chart-colors";
 import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
 import { getColorClassName } from "../../charts/utils/get-color-class-name";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 /**
  * Sums all values in a numeric array.

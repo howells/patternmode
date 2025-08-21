@@ -1,9 +1,9 @@
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
-import { defaultConfig } from "../../config/default-config";
+import { defaultConfig } from "@patternmode/core/config/default-config";
 import { hasErrorInput } from "../../presentation/has-error-input";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import { Icon } from "../icon/component";
 import type {

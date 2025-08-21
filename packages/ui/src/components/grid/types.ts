@@ -3,7 +3,7 @@ import type { ResponsiveValue } from "../../presentation/responsive-utils";
 import type {
 	ResponsiveSpacing,
 	SpacingValue,
-} from "../../presentation/spacing-utils";
+} from "@patternmode/styles/presentation/spacing-utils";
 
 /**
  * Props for the Grid component.

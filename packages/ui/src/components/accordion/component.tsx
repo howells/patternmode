@@ -1,7 +1,7 @@
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
 import { Plus } from "lucide-react";
-import { defaultConfig } from "../../config/default-config";
-import { cx } from "../../utils/cx";
+import { defaultConfig } from "@patternmode/core/config/default-config";
+import { cx } from "@patternmode/core/utils/cx";
 import { Subheading } from "../subheading/component";
 import { Text } from "../text/component";
 import type {

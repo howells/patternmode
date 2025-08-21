@@ -1,7 +1,7 @@
 "use client";
 
 import { Lock, Mail, Search, User } from "lucide-react";
-import { SIZES } from "../../constants/sizes";
+import { SIZES } from "@patternmode/styles/constants/sizes";
 import { Input } from "./component";
 import type { InputProps } from "./types";
 

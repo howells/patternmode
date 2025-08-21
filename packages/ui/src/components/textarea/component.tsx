@@ -6,7 +6,7 @@ import type {
 import TextareaAutosize from "react-textarea-autosize";
 import { focusInput } from "../../presentation/focus-input";
 import { hasErrorInput } from "../../presentation/has-error-input";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type { TextareaPreviewProps } from "./preview";
 import { textareaStyles } from "./variants";
 

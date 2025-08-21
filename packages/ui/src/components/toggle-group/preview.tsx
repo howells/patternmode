@@ -8,7 +8,7 @@ import {
 	Italic,
 	Underline,
 } from "lucide-react";
-import { SIZES } from "../../constants/sizes";
+import { SIZES } from "@patternmode/styles/constants/sizes";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 
 export type ToggleGroupPreviewProps = {

@@ -2,7 +2,7 @@ import type { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import type { Size } from "../../constants/sizes";
+import type { Size } from "@patternmode/styles/constants/sizes";
 import type { switchVariants } from "./variants";
 
 export type SwitchProps = {

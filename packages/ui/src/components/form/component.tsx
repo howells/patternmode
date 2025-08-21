@@ -5,7 +5,7 @@ import { Form as BaseForm } from "@base-ui-components/react/form";
 import * as React from "react";
 import type { z } from "zod";
 
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 /**
  * Props for the Form component.

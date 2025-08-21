@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, Check, Star, X } from "lucide-react";
-import { SIZES } from "../../constants/sizes";
+import { SIZES } from "@patternmode/styles/constants/sizes";
 import type { BadgeProps } from "./component";
 import { Badge } from "./component";
 

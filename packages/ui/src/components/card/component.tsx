@@ -4,14 +4,14 @@ import type React from "react";
 import type {
 	ResponsiveSpacing,
 	SpacingValue,
-} from "../../presentation/spacing-utils";
+} from "@patternmode/styles/presentation/spacing-utils";
 
 import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getPaddingClass,
-} from "../../presentation/spacing-utils";
-import { cx } from "../../utils/cx";
+} from "@patternmode/styles/presentation/spacing-utils";
+import { cx } from "@patternmode/core/utils/cx";
 import { Subheading } from "../subheading/component";
 import { cardVariants } from "./variants";
 

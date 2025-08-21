@@ -10,7 +10,7 @@
 import type React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 /**
  * Root drawer component.

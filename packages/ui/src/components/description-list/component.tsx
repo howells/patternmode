@@ -1,4 +1,4 @@
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type {
 	DescriptionDetailsProps,
 	DescriptionListProps,

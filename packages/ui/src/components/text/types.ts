@@ -1,4 +1,4 @@
-import type { Size } from "../../constants/sizes";
+import type { Size } from "@patternmode/styles/constants/sizes";
 
 /**
  * Text size variant controlling font size.

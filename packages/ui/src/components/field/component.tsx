@@ -1,7 +1,7 @@
 import { Field as BaseField } from "@base-ui-components/react/field";
 import type * as React from "react";
 
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Input } from "../input/component";
 import { Text } from "../text/component";
 

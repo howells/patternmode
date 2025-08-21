@@ -4,9 +4,9 @@ import { Dialog } from "@base-ui-components/react/dialog";
 import { X } from "lucide-react";
 import type * as React from "react";
 
-import { defaultConfig } from "../../config/default-config";
-import { focusRing } from "../../presentation/focus-ring";
-import { cx } from "../../utils/cx";
+import { defaultConfig } from "@patternmode/core/config/default-config";
+import { focusRing } from "@patternmode/styles/presentation/focus-ring";
+import { cx } from "@patternmode/core/utils/cx";
 import { Icon } from "../icon/component";
 
 // Inline DismissButton functionality for Sheet

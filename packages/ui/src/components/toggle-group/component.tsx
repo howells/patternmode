@@ -3,8 +3,8 @@
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import React, { use } from "react";
-import { defaultConfig } from "../../config/default-config";
-import { cx } from "../../utils/cx";
+import { defaultConfig } from "@patternmode/core/config/default-config";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import { ToggleGroupContext } from "./constants";
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
@@ -112,7 +112,6 @@ const ToggleGroupItem = ({
 								<button
 									type="button"
 									{...props}
-									// @ts-expect-error - Base UI ToggleGroup ref type conflict with React 19
 									ref={toggleRef}
 								/>
 							)}

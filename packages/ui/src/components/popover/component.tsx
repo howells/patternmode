@@ -1,8 +1,8 @@
 import { Popover as BasePopover } from "@base-ui-components/react/popover";
 import type { useRender } from "@base-ui-components/react/use-render";
 import type React from "react";
-import type { Size } from "../../constants/sizes";
-import { cx } from "../../utils/cx";
+import type { Size } from "@patternmode/styles/constants/sizes";
+import { cx } from "@patternmode/core/utils/cx";
 import type { ButtonProps } from "../button/component";
 import { Button } from "../button/component";
 

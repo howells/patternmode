@@ -2,7 +2,7 @@
 
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import type React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import type { ToggleProps } from "./types";
 import { toggleVariants } from "./variants";
@@ -48,7 +48,6 @@ const Toggle = ({
 								<button
 									type="button"
 									{...props}
-									// @ts-expect-error - Base UI Toggle ref type conflict with React 19
 									ref={toggleRef}
 								/>
 							)}

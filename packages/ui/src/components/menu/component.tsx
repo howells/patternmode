@@ -4,7 +4,7 @@ import { Menu as BaseMenu } from "@base-ui-components/react/menu";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
 
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Icon as IconComponent } from "../icon/component";
 
 /**

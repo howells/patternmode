@@ -22,8 +22,8 @@ import * as React from "react";
 import type { DayPickerProps, Matcher } from "react-day-picker";
 import { DayPicker, useDayPicker } from "react-day-picker";
 
-import { focusRing } from "../../presentation/focus-ring";
-import { cx } from "../../utils/cx";
+import { focusRing } from "@patternmode/styles/presentation/focus-ring";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import {
 	Select,

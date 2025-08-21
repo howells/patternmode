@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 
 import { ProgressCircle } from "./component";
 import {

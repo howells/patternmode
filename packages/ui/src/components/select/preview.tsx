@@ -1,6 +1,6 @@
 "use client";
 
-import type { Size } from "../../constants/sizes";
+import type { Size } from "@patternmode/styles/constants/sizes";
 import {
 	Select,
 	SelectContent,

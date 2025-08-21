@@ -1,0 +1,57 @@
+{
+  "name": "@patternmode/core",
+  "version": "0.1.0",
+  "description": "Core utilities and configurations for PatternMode UI components",
+  "type": "module",
+  "exports": {
+    "./utils/cx": {
+      "types": "./src/utils/cx.ts",
+      "import": "./src/utils/cx.ts",
+      "default": "./src/utils/cx.ts"
+    },
+    "./utils/has-only-one-value-for-key": {
+      "types": "./src/utils/has-only-one-value-for-key.ts",
+      "import": "./src/utils/has-only-one-value-for-key.ts",
+      "default": "./src/utils/has-only-one-value-for-key.ts"
+    },
+    "./config/default-config": {
+      "types": "./src/config/default-config.ts",
+      "import": "./src/config/default-config.ts",
+      "default": "./src/config/default-config.ts"
+    },
+    "./types/component-types": {
+      "types": "./src/types/component-types.ts",
+      "import": "./src/types/component-types.ts",
+      "default": "./src/types/component-types.ts"
+    },
+    "./types/preview-props-type": {
+      "types": "./src/types/preview-props-type.ts",
+      "import": "./src/types/preview-props-type.ts",
+      "default": "./src/types/preview-props-type.ts"
+    },
+    "./types/icon-types": {
+      "types": "./src/types/icon-types.ts",
+      "import": "./src/types/icon-types.ts",
+      "default": "./src/types/icon-types.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
+  "dependencies": {
+    "@patternmode/styles": "workspace:*",
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

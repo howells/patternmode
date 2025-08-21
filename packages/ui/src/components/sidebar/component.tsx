@@ -16,7 +16,7 @@ import type { IconComponent } from "../icon/types";
 
 import * as React from "react";
 import { useId, useState } from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import { ScrollArea } from "../scroll-area/component";
 import { Separator } from "../separator/component";

@@ -1,5 +1,5 @@
 import { BarChart as BarChartIcon } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { BarChart } from "./component";
 import {
 	CustomColorsExample,

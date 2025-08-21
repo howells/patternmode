@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { SearchField } from "./component";
 import { DefaultExample, GroupedExample, WithItemsExample } from "./examples";
 

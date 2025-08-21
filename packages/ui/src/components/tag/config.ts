@@ -1,5 +1,5 @@
 import { Tag } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 
 import { Tag as TagComponent } from "./component";
 import {

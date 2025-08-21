@@ -1,5 +1,5 @@
 import type React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Icon } from "../icon/component";
 import type {
 	TextListIndicatorProps,

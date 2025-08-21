@@ -38,10 +38,6 @@
         "!playwright/**"
       ]
     },
-    "packages/eslint-config": {
-      "entry": ["rules/**/*.mjs"],
-      "project": ["**/*.{js,mjs}"]
-    },
     "packages/tsconfig": {
       "entry": ["base.json"],
       "project": ["*.json"]

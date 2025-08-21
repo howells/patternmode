@@ -19,7 +19,7 @@ import { AvailableChartColors } from "../../charts/constants/chart-colors";
 import { constructCategoryColors } from "../../charts/utils/construct-category-colors";
 import { getColorClassName } from "../../charts/utils/get-color-class-name";
 import { getYAxisDomain } from "../../charts/utils/get-y-axis-domain";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 // #region SparkChart
 

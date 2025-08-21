@@ -1,5 +1,5 @@
 import { Layout } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { HStack, Stack, VStack } from "./component";
 import {
 	AlignmentExample,

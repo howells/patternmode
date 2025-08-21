@@ -10,8 +10,8 @@ import {
 	getBaseSpacingValue,
 	getGapClass,
 	getPaddingClass,
-} from "../../presentation/spacing-utils";
-import { cx } from "../../utils/cx";
+} from "@patternmode/styles/presentation/spacing-utils";
+import { cx } from "@patternmode/core/utils/cx";
 import type { StackProps } from "./types";
 import { stackVariants } from "./variants";
 

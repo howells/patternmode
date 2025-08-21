@@ -9,7 +9,6 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@patternmode/web",
-    "@patternmode/eslint-config",
     "@patternmode/tsconfig"
   ]
 }

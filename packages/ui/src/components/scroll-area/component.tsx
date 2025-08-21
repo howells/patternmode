@@ -1,7 +1,7 @@
 import { ScrollArea as BaseScrollArea } from "@base-ui-components/react/scroll-area";
 import type * as React from "react";
 
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 /**
  * Props for the ScrollArea component.

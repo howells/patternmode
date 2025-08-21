@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
-import { focusRing } from "../../presentation/focus-ring";
+import { focusRing } from "@patternmode/styles/presentation/focus-ring";
 
 export const toolbarVariants = tv({
 	slots: {

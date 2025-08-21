@@ -7,7 +7,7 @@ import type { AvailableChartColorsKeys } from "../../charts/constants/chart-colo
 
 import { AvailableChartColors } from "../../charts/constants/chart-colors";
 import { getColorClassName } from "../../charts/utils/get-color-class-name";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Tooltip } from "../tooltip/component";
 
 /**

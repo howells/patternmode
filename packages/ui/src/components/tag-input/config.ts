@@ -1,5 +1,5 @@
 import { Tags } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { TagInput } from "./component";
 import {
 	ComplexExample,

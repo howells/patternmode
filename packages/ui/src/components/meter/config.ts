@@ -1,5 +1,5 @@
 import { Activity } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Meter } from "./component";
 import {
 	CustomFormattingExample,

@@ -2,7 +2,7 @@ import type React from "react";
 import type {
 	GapValue,
 	ResponsiveSpacing,
-} from "../../presentation/spacing-utils";
+} from "@patternmode/styles/presentation/spacing-utils";
 import type { ButtonProps } from "../button/component";
 
 export type ButtonGroupProps = {

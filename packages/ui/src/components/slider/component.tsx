@@ -2,7 +2,7 @@
 
 import { Slider as BaseSlider } from "@base-ui-components/react/slider";
 import type * as React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type { SliderProps } from "./types";
 import { sliderVariants } from "./variants";
 

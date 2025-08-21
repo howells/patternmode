@@ -1,5 +1,5 @@
 import { Code } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { CodeBlock } from "./component";
 import {
 	BashExample,

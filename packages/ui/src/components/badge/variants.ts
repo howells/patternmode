@@ -9,7 +9,7 @@ import {
 } from "../../constants/variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 // Badge variant configurations - generate dynamically from central variant system
 const badgeVariantStyles: Record<string, ClassValue[]> = {

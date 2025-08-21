@@ -3,10 +3,10 @@
 import { Input as BaseInput } from "@base-ui-components/react/input";
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
-import { defaultConfig } from "../../config/default-config";
+import { defaultConfig } from "@patternmode/core/config/default-config";
 import { formControlContainerVariants } from "../../constants/form-control-variants";
-import { focusRing } from "../../presentation/focus-ring";
-import { cx } from "../../utils/cx";
+import { focusRing } from "@patternmode/styles/presentation/focus-ring";
+import { cx } from "@patternmode/core/utils/cx";
 import type { InputProps } from "./types";
 import { inputElementStyles } from "./variants";
 

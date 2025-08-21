@@ -2,8 +2,8 @@
 
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import React from "react";
-import type { Size } from "../../constants/sizes";
-import { cx } from "../../utils/cx";
+import type { Size } from "@patternmode/styles/constants/sizes";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import type {
 	TabsContentProps,
@@ -128,7 +128,6 @@ const TabsTrigger = ({
 							iconStrokeWidth={iconStrokeWidth}
 							// Forward Base UI's ref to the actual button element so it can measure it
 							render={(props) => (
-								// @ts-expect-error React version type conflict between Base UI and React
 								<button type="button" ref={tabRef} {...props} />
 							)}
 							disabled={state.disabled}
@@ -164,7 +163,6 @@ const TabsTrigger = ({
 						rightIcon={rightIcon}
 						iconStrokeWidth={iconStrokeWidth}
 						render={(props) => (
-							// @ts-expect-error React version type conflict between Base UI and React
 							<button type="button" ref={tabRef} {...props} />
 						)} // Forward Base UI's ref to the button element
 						disabled={state.disabled}

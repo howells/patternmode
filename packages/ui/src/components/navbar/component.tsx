@@ -6,7 +6,7 @@ import { LayoutGroup, motion } from "motion/react";
 
 import type React from "react";
 import { useId } from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 
 import { Button } from "../button/component";
 

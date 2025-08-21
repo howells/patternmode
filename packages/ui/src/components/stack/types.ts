@@ -5,7 +5,7 @@ import type {
 	GapValue,
 	ResponsiveSpacing,
 	SpacingValue,
-} from "../../presentation/spacing-utils";
+} from "@patternmode/styles/presentation/spacing-utils";
 import type { stackVariants } from "./variants";
 
 /**

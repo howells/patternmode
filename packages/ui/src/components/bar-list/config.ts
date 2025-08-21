@@ -1,5 +1,5 @@
 import { BarChart4 } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { BarList } from "./component";
 import {
 	AnimatedExample,

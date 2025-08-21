@@ -2,7 +2,7 @@
 
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
 import type * as React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type { MeterProps } from "./types";
 import { meterVariants } from "./variants";
 

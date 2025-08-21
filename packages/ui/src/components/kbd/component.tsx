@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type { KbdProps } from "./types";
 import { kbdVariants } from "./variants";
 

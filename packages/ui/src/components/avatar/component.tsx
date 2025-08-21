@@ -1,7 +1,7 @@
 import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
 import type * as React from "react";
 import { getColorFromName } from "../../presentation/colors";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { imageSizeMap } from "./constants";
 import type {
 	AvatarFallbackProps,

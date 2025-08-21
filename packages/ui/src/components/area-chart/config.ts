@@ -1,5 +1,5 @@
 import { BarChart } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { AreaChart } from "./component";
 import {
 	ConnectedNullsExample,

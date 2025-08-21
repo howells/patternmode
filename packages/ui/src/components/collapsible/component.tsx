@@ -1,7 +1,7 @@
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 
 /**
@@ -87,7 +87,6 @@ const CollapsibleTrigger = ({
 								<button
 									type="button"
 									{...props}
-									// @ts-expect-error - Base UI CollapsibleTrigger ref type conflict with React 19
 									ref={triggerRef}
 								/>
 							)}

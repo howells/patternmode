@@ -3,9 +3,9 @@
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
-import { defaultConfig } from "../../config/default-config";
-import { focusRing } from "../../presentation/focus-ring";
-import { cx } from "../../utils/cx";
+import { defaultConfig } from "@patternmode/core/config/default-config";
+import { focusRing } from "@patternmode/styles/presentation/focus-ring";
+import { cx } from "@patternmode/core/utils/cx";
 import { DropdownItem } from "../dropdown-item/component";
 import { Tag } from "../tag/component";
 

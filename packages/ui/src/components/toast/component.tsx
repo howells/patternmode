@@ -2,7 +2,7 @@
 
 import React from "react";
 import { toast as sonnerToast, Toaster } from "sonner";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type {
 	BaseToastOptions,
 	Position,

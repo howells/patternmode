@@ -1,5 +1,5 @@
 import { PieChart } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { DonutChart } from "./component";
 import {
 	CustomColorsExample,

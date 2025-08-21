@@ -1,5 +1,5 @@
 import { Type } from "lucide-react";
-import type { ComponentConfig } from "../../types/component-types";
+import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Code, Strong, Text, TextLink } from "./component";
 import {
 	BasicExample,

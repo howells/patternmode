@@ -1,7 +1,7 @@
 import { Radio as BaseRadio } from "@base-ui-components/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import React from "react";
-import { cx } from "../../utils/cx";
+import { cx } from "@patternmode/core/utils/cx";
 import type {
 	RadioCardOptionProps,
 	RadioCardProps,
