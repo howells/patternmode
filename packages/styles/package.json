@@ -1,99 +1,29 @@
 {
-  "name": "@patternmode/styles",
-  "version": "0.1.0",
-  "description": "Styling utilities and constants for PatternMode UI components",
-  "type": "module",
-  "exports": {
-    "./presentation/focus-ring": {
-      "types": "./src/presentation/focus-ring.ts",
-      "import": "./src/presentation/focus-ring.ts",
-      "default": "./src/presentation/focus-ring.ts"
-    },
-    "./presentation/focus-input": {
-      "types": "./src/presentation/focus-input.ts",
-      "import": "./src/presentation/focus-input.ts",
-      "default": "./src/presentation/focus-input.ts"
-    },
-    "./presentation/has-error-input": {
-      "types": "./src/presentation/has-error-input.ts",
-      "import": "./src/presentation/has-error-input.ts",
-      "default": "./src/presentation/has-error-input.ts"
-    },
-    "./presentation/spacing-utils": {
-      "types": "./src/presentation/spacing-utils.ts",
-      "import": "./src/presentation/spacing-utils.ts",
-      "default": "./src/presentation/spacing-utils.ts"
-    },
-    "./presentation/border-radius-variants": {
-      "types": "./src/presentation/border-radius-variants.ts",
-      "import": "./src/presentation/border-radius-variants.ts",
-      "default": "./src/presentation/border-radius-variants.ts"
-    },
-    "./presentation/border-radius-variants-with-full": {
-      "types": "./src/presentation/border-radius-variants-with-full.ts",
-      "import": "./src/presentation/border-radius-variants-with-full.ts",
-      "default": "./src/presentation/border-radius-variants-with-full.ts"
-    },
-    "./presentation/colors": {
-      "types": "./src/presentation/colors.ts",
-      "import": "./src/presentation/colors.ts",
-      "default": "./src/presentation/colors.ts"
-    },
-    "./presentation/breakpoints": {
-      "types": "./src/presentation/breakpoints.ts",
-      "import": "./src/presentation/breakpoints.ts",
-      "default": "./src/presentation/breakpoints.ts"
-    },
-    "./presentation/responsive-utils": {
-      "types": "./src/presentation/responsive-utils.ts",
-      "import": "./src/presentation/responsive-utils.ts",
-      "default": "./src/presentation/responsive-utils.ts"
-    },
-    "./presentation/container-button-adjustments": {
-      "types": "./src/presentation/container-button-adjustments.ts",
-      "import": "./src/presentation/container-button-adjustments.ts",
-      "default": "./src/presentation/container-button-adjustments.ts"
-    },
-    "./constants/sizes": {
-      "types": "./src/constants/sizes.ts",
-      "import": "./src/constants/sizes.ts",
-      "default": "./src/constants/sizes.ts"
-    },
-    "./constants/variants": {
-      "types": "./src/constants/variants.ts",
-      "import": "./src/constants/variants.ts",
-      "default": "./src/constants/variants.ts"
-    },
-    "./constants/component-categories": {
-      "types": "./src/constants/component-categories.ts",
-      "import": "./src/constants/component-categories.ts",
-      "default": "./src/constants/component-categories.ts"
-    },
-    "./constants/form-control-variants": {
-      "types": "./src/constants/form-control-variants.ts",
-      "import": "./src/constants/form-control-variants.ts",
-      "default": "./src/constants/form-control-variants.ts"
-    },
-    "./styles/globals.css": "./src/styles/globals.css",
-    "./styles/animations.css": "./src/styles/animations.css",
-    "./styles/typography.css": "./src/styles/typography.css"
-  },
-  "files": [
-    "src"
-  ],
-  "scripts": {
-    "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "lint": "biome check src --write"
-  },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "tailwind-variants": "^2.1.0"
-  },
-  "peerDependencies": {
-    "tailwindcss": "^4.1.12"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.2"
-  }
+	"name": "@patternmode/styles",
+	"version": "0.1.0",
+	"description": "Styling utilities and constants for PatternMode UI components",
+	"type": "module",
+	"exports": {
+		"./globals.css": "./src/globals.css",
+		"./animations.css": "./src/animations.css",
+		"./typography.css": "./src/typography.css"
+	},
+	"files": [
+		"src"
+	],
+	"scripts": {
+		"build": "tsc --noEmit",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check src --write"
+	},
+	"dependencies": {
+		"clsx": "^2.1.1",
+		"tailwind-variants": "^2.1.0"
+	},
+	"peerDependencies": {
+		"tailwindcss": "^4.1.12"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.2"
+	}
 }

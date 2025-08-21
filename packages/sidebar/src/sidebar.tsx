@@ -49,6 +49,7 @@ export function Sidebar({ children, className }: SidebarProps) {
 	return (
 		<div
 			className={cx(
+        "Sidebar",
 				"fixed inset-y-0 left-0 z-40",
 				"bg-white dark:bg-zinc-900",
 				"border-r border-zinc-200 dark:border-zinc-800",

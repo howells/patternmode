@@ -245,7 +245,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 	return (
 		<div className="flex h-screen bg-white dark:bg-zinc-900">
 			<Sidebar className="hidden lg:block">
-
+        <Logo/>
 			</Sidebar>
 			<MainContent>{children}</MainContent>
 		</div>

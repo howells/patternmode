@@ -25,8 +25,8 @@
 	"dependencies": {
 		"@icons-pack/react-simple-icons": "^13.7.0",
 		"@patternmode/ui": "workspace:*",
-		"@patternmode/styles": "workspace:*",
 		"@patternmode/sidebar": "workspace:*",
+		"@patternmode/styles": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.12",
 		"@tanstack/react-query": "^5.85.5",
 		"@tanstack/react-query-devtools": "^5.85.5",

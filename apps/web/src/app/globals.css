@@ -1,4 +1,6 @@
 @import "tailwindcss";
 
 @import "../../node_modules/@patternmode/styles/src/globals.css";
+
 @source '../../node_modules/@patternmode/ui/**/*.{ts,tsx}';
+@source '../../node_modules/@patternmode/sidebar/**/*.{ts,tsx}';
