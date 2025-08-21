@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface SidebarStore {
 	// State
-	state: "collapsed" | "open" | "pinned";
+	state: "collapsed" | "open" | "pinned" | "locked";
 	isHovering: boolean;
 	isMobile: boolean;
 	isExpanded: boolean;
@@ -13,11 +13,12 @@ interface SidebarStore {
 	get effectiveWidth(): string;
 
 	// Actions
-	setState: (state: "collapsed" | "open" | "pinned") => void;
+	setState: (state: "collapsed" | "open" | "pinned" | "locked") => void;
 	setHovering: (hovering: boolean) => void;
 	setMobile: (mobile: boolean) => void;
 	togglePin: () => void;
 	toggleOpen: () => void;
+	toggleLock: () => void;
 }
 
 export const useSidebar = create<SidebarStore>()(
@@ -44,7 +45,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering);
+						(state === "collapsed" && isHovering && state !== "locked");
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ state, isExpanded, shouldOffsetContent });
 			},
@@ -54,7 +55,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering);
+						(state === "collapsed" && isHovering && state !== "locked");
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ isHovering, isExpanded, shouldOffsetContent });
 			},
@@ -64,7 +65,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering);
+						(state === "collapsed" && isHovering && state !== "locked");
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ isMobile, isExpanded, shouldOffsetContent });
 			},
@@ -75,7 +76,7 @@ export const useSidebar = create<SidebarStore>()(
 					? newState === "open"
 					: newState === "pinned" ||
 						newState === "open" ||
-						(newState === "collapsed" && state.isHovering);
+						(newState === "collapsed" && state.isHovering && newState !== "locked");
 				const shouldOffsetContent = !state.isMobile && newState === "pinned";
 				return { state: newState, isExpanded, shouldOffsetContent };
 			}),
@@ -86,7 +87,18 @@ export const useSidebar = create<SidebarStore>()(
 					? newState === "open"
 					: newState === "pinned" ||
 						newState === "open" ||
-						(newState === "collapsed" && state.isHovering);
+						(newState === "collapsed" && state.isHovering && newState !== "locked");
+				const shouldOffsetContent = !state.isMobile && newState === "pinned";
+				return { state: newState, isExpanded, shouldOffsetContent };
+			}),
+
+			toggleLock: () => set((state) => {
+				const newState = state.state === "locked" ? "collapsed" : "locked";
+				const isExpanded = state.isMobile
+					? newState === "open"
+					: newState === "pinned" ||
+						newState === "open" ||
+						(newState === "collapsed" && state.isHovering && newState !== "locked");
 				const shouldOffsetContent = !state.isMobile && newState === "pinned";
 				return { state: newState, isExpanded, shouldOffsetContent };
 			}),
@@ -95,11 +107,16 @@ export const useSidebar = create<SidebarStore>()(
 			name: "sidebar-state",
 			partialize: (state) => ({
 				isPinned: state.state === "pinned",
-			}), // Only persist whether the sidebar is pinned
+				isLocked: state.state === "locked",
+			}), // Persist both pinned and locked states
 			onRehydrateStorage: () => (state) => {
-				// Restore the pinned state when rehydrating
-				if (state && state.isPinned) {
-					state.state = "pinned";
+				// Restore the pinned or locked state when rehydrating
+				if (state) {
+					if (state.isPinned) {
+						state.state = "pinned";
+					} else if (state.isLocked) {
+						state.state = "locked";
+					}
 					// Recalculate computed values
 					const isExpanded = !state.isMobile && state.state === "pinned";
 					const shouldOffsetContent = !state.isMobile && state.state === "pinned";

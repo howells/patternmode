@@ -1,11 +1,18 @@
 "use client";
 
 import { Button } from "@patternmode/ui/components/button";
+import {
+	Menu,
+	MenuContent,
+	MenuItem,
+	MenuTrigger,
+} from "@patternmode/ui/components/menu";
 import { cx } from "@patternmode/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Pin } from "lucide-react";
+import { Lock, Pin, Settings, X } from "lucide-react";
 import type React from "react";
 import { useEffect } from "react";
+import SidebarSettings from "./sidebar.settings";
 import { SidebarMobile } from "./sidebar-mobile";
 import { useSidebar } from "./sidebar-store";
 
@@ -15,13 +22,19 @@ interface SidebarProps {
 	expandOnHover?: boolean;
 }
 
-export function Sidebar({ children, className, expandOnHover = true }: SidebarProps) {
+export function Sidebar({
+	children,
+	className,
+	expandOnHover = true,
+}: SidebarProps) {
 	// Subscribe to specific state slices for optimal performance
 	const state = useSidebar((s) => s.state);
 	const isHovering = useSidebar((s) => s.isHovering);
 	const isMobile = useSidebar((s) => s.isMobile);
 	const isExpanded = useSidebar((s) => s.isExpanded);
 	const togglePin = useSidebar((s) => s.togglePin);
+	const toggleLock = useSidebar((s) => s.toggleLock);
+	const setState = useSidebar((s) => s.setState);
 	const setHovering = useSidebar((s) => s.setHovering);
 	const setMobile = useSidebar((s) => s.setMobile);
 
@@ -33,7 +46,7 @@ export function Sidebar({ children, className, expandOnHover = true }: SidebarPr
 	}, [width, setMobile]);
 
 	const handleMouseEnter = () => {
-		if (expandOnHover && state !== "pinned") {
+		if (expandOnHover && state !== "pinned" && state !== "locked") {
 			setHovering(true);
 		}
 	};
@@ -64,11 +77,12 @@ export function Sidebar({ children, className, expandOnHover = true }: SidebarPr
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			{isExpanded && (
-				<Button variant="ghost" size="icon-xs" className="absolute top-2 right-2" icon={Pin} onClick={() => togglePin()} />
-			)}
 			<div className="flex flex-col h-full">
 				{children}
+				{/* Sidebar Controls - positioned at bottom */}
+				<div className="mt-auto border-t p-2.5">
+					<SidebarSettings />
+				</div>
 			</div>
 		</nav>
 	);

@@ -4,7 +4,10 @@ import { Menu as BaseMenu } from "@base-ui-components/react/menu";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
+import { Button } from "../button/component";
+import type { ButtonProps } from "../button/types";
 import { Icon as IconComponent } from "../icon/component";
+import type { useRender } from "../utils/use-render";
 
 /**
  * Root container for contextual menu with hierarchical navigation and action items.
@@ -13,7 +16,90 @@ const Menu = (props: React.ComponentPropsWithoutRef<typeof BaseMenu.Root>) => (
 	<BaseMenu.Root data-testid="menu" {...props} />
 );
 
-const MenuTrigger = BaseMenu.Trigger;
+type MenuTriggerProps = {
+	/**
+	 * Reference to the trigger element.
+	 */
+	ref?: React.RefObject<React.ElementRef<typeof BasePopover.Trigger> | null>;
+	/**
+	 * Additional CSS classes for styling customization.
+	 */
+	className?: string;
+	/**
+	 * Custom element to render (defaults to Button).
+	 * Enables using custom components as the trigger.
+	 */
+	render?: useRender.RenderProp<Record<string, unknown>>;
+	/**
+	 * Button variant to use for the default render.
+	 */
+	variant?: ButtonProps["variant"];
+	/**
+	 * Button size to use for the default render.
+	 */
+	size?: Size;
+	/**
+	 * Icon component to display on the left side of the default Button render.
+	 */
+	leftIcon?: ButtonProps["leftIcon"];
+	/**
+	 * Icon component to display on the right side of the default Button render.
+	 */
+	rightIcon?: ButtonProps["rightIcon"];
+	/**
+	 * Icon component (proxy for leftIcon) for the default Button render.
+	 */
+	icon?: ButtonProps["icon"];
+	/**
+	 * Whether the button should take full width in the default render.
+	 */
+	fullWidth?: ButtonProps["fullWidth"];
+	/**
+	 * Whether the button should have rounded corners in the default render.
+	 */
+	rounded?: ButtonProps["rounded"];
+} & React.ComponentPropsWithoutRef<typeof BaseMenu.Trigger>;
+
+/**
+ * Trigger element that opens the popover when activated with proper focus states.
+ */
+const MenuTrigger = ({
+	ref,
+	className,
+	children,
+	render,
+	variant = "outline",
+	size,
+	leftIcon,
+	rightIcon,
+	icon,
+	fullWidth,
+	rounded,
+	...props
+}: MenuTriggerProps) => {
+	// Default to Button render unless custom render prop is provided
+	const defaultRender = (
+		<Button
+			variant={variant}
+			size={size}
+			leftIcon={leftIcon}
+			rightIcon={rightIcon}
+			icon={icon}
+			fullWidth={fullWidth}
+			rounded={rounded}
+			className={cx("cursor-pointer", className)}
+		>
+			{children}
+		</Button>
+	);
+
+	return (
+		<BaseMenu.Trigger ref={ref} render={render || defaultRender} {...props}>
+			{render ? children : undefined}
+		</BaseMenu.Trigger>
+	);
+};
+MenuTrigger.displayName = "MenuTrigger";
 
 const MenuGroup = BaseMenu.Group;
 
