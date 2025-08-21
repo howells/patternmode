@@ -15,7 +15,7 @@ interface SidebarProps {
 	expandOnHover?: boolean;
 }
 
-export function Sidebar({ children, className, expandOnHover = false }: SidebarProps) {
+export function Sidebar({ children, className, expandOnHover = true }: SidebarProps) {
 	// Subscribe to specific state slices for optimal performance
 	const state = useSidebar((s) => s.state);
 	const isHovering = useSidebar((s) => s.isHovering);

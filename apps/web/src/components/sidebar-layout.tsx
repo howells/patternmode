@@ -1,8 +1,13 @@
-// Sidebar Layout Component for Documentation
-
 "use client";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, useSidebar } from "@patternmode/sidebar";
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarHeader,
+	SidebarItem,
+	useSidebar,
+} from "@patternmode/sidebar";
 import { Button } from "@patternmode/ui/components/button";
 import {
 	CATEGORY_CONFIG,
@@ -16,15 +21,13 @@ import {
 	ToggleGroupItem,
 } from "@patternmode/ui/components/toggle-group";
 import { cx } from "@patternmode/ui/utils/cx";
-import { List, Rows3 } from "lucide-react";
+import { Layers, List, Rows3 } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import type React from "react";
-
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
-
 import { useSidebarView } from "../hooks/use-sidebar-view";
 import { ComponentSearch } from "./component-search";
 
@@ -49,7 +52,6 @@ function SidebarGroupTitle({
 type SidebarLayoutProps = {
 	children: React.ReactNode;
 };
-
 
 function MainContent({ children }: { children: React.ReactNode }) {
 	const isMobile = useSidebar((s) => s.isMobile);
@@ -101,12 +103,10 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 						<Logo />
 					</Button>
 				</SidebarHeader>
-        <SidebarContent>
-          Content
-        </SidebarContent>
-        <SidebarFooter>
-          Footer
-        </SidebarFooter>
+				<SidebarContent>
+					<SidebarItem icon={Layers}>Components</SidebarItem>
+				</SidebarContent>
+				<SidebarFooter>Footer</SidebarFooter>
 			</Sidebar>
 			<MainContent>{children}</MainContent>
 		</div>

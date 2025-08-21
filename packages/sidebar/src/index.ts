@@ -4,6 +4,7 @@ export { SidebarFooter } from "./sidebar.footer";
 export { SidebarGroup } from "./sidebar.group";
 export { SidebarGroupLabel } from "./sidebar.group.label";
 export { SidebarHeader } from "./sidebar.header";
+export { SidebarItem } from "./sidebar.item";
 export { SidebarSeparator } from "./sidebar.separator";
 export { SidebarMobile } from "./sidebar-mobile";
 export { useSidebar } from "./sidebar-store";
