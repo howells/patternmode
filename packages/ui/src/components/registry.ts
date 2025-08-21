@@ -452,7 +452,7 @@ export const PREVIEW_REGISTRY = {
 	toolbar: ToolbarPreview,
 	tooltip: TooltipPreview,
 	tracker: TrackerPreview,
-} as const satisfies Record<string, React.ComponentType<any>>;
+} as const satisfies Record<string, React.ComponentType<Record<string, unknown>>>;
 
 // Static preview props registry
 export const PREVIEW_PROPS_REGISTRY = {

@@ -1,55 +1,78 @@
 import { Button } from "@patternmode/ui/components/button";
-import {
-	Menu,
-	MenuContent,
-	MenuItem,
-	MenuTrigger,
-} from "@patternmode/ui/components/menu";
-import { Lock, Pin, Settings, X } from "lucide-react";
+
+import { Lock, Pin, X } from "lucide-react";
 import { useSidebar } from "./sidebar-store";
 
 const SidebarSettings = () => {
-  const isExpanded = useSidebar((s) => s.isExpanded);
-  const state = useSidebar((s) => s.state);
-  const togglePin = useSidebar((s) => s.togglePin);
-  const toggleLock = useSidebar((s) => s.toggleLock);
-  const setState = useSidebar((s) => s.setState);
+	const isExpanded = useSidebar((s) => s.isExpanded);
+	const state = useSidebar((s) => s.state);
+	const setState = useSidebar((s) => s.setState);
+
+	const getNextState = (current: "collapsed" | "open" | "pinned" | "locked") => {
+		switch (current) {
+			case "collapsed":
+				return "pinned";
+			case "pinned":
+				return "locked";
+			case "locked":
+				return "collapsed"; // unpin/collapse
+			case "open":
+			default:
+				return "pinned"; // treat open like pinned in desktop flow
+		}
+	};
+
+	const handleClick = () => {
+		const next = getNextState(state);
+		setState(next);
+	};
+
+	const currentIcon = (() => {
+		switch (state) {
+			case "pinned":
+				return Pin;
+			case "locked":
+				return Lock;
+			case "collapsed":
+				return X;
+			case "open":
+			default:
+				return Pin; // represent open as pinned visually
+		}
+	})();
+
+	const currentLabel = (() => {
+		switch (state) {
+			case "pinned":
+				return "Sidebar: Pinned";
+			case "locked":
+				return "Sidebar: Locked";
+			case "collapsed":
+				return "Sidebar: Collapsed";
+			case "open":
+			default:
+				return "Sidebar: Pinned"; // open maps to pinned semantics
+		}
+	})();
+
+	const handleKeyDown: React.KeyboardEventHandler<HTMLButtonElement> = (e) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			handleClick();
+		}
+	};
 
 	return (
-		<Menu>
-			<MenuTrigger
-				variant="ghost"
-				size={isExpanded ? "base" : "icon"}
-				icon={Settings}
-			>
-				{isExpanded ? "Sidebar Options" : ""}
-			</MenuTrigger>
-			<MenuContent align="end" sideOffset={4}>
-				<MenuItem
-					icon={Pin}
-					onClick={togglePin}
-					className={state === "pinned" ? "bg-zinc-100 dark:bg-zinc-800" : ""}
-				>
-					{state === "pinned" ? "Unpin Sidebar" : "Pin Sidebar"}
-				</MenuItem>
-				<MenuItem
-					icon={Lock}
-					onClick={toggleLock}
-					className={state === "locked" ? "bg-zinc-100 dark:bg-zinc-800" : ""}
-				>
-					{state === "locked" ? "Unlock Sidebar" : "Lock Sidebar"}
-				</MenuItem>
-				<MenuItem
-					icon={X}
-					onClick={() => setState("collapsed")}
-					className={
-						state === "collapsed" ? "bg-zinc-100 dark:bg-zinc-800" : ""
-					}
-				>
-					Collapse Sidebar
-				</MenuItem>
-			</MenuContent>
-		</Menu>
+		<Button
+			variant="ghost"
+			size={isExpanded ? "base" : "icon"}
+			icon={currentIcon}
+			onClick={handleClick}
+			onKeyDown={handleKeyDown}
+			aria-label={`${currentLabel}. Click to cycle state.`}
+		>
+			{isExpanded ? currentLabel : ""}
+		</Button>
 	);
 };
 

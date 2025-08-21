@@ -4,50 +4,25 @@ import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
+	SidebarGroup,
 	SidebarHeader,
 	SidebarItem,
 	useSidebar,
 } from "@patternmode/sidebar";
 import { Button } from "@patternmode/ui/components/button";
-import {
-	CATEGORY_CONFIG,
-	getAllComponents,
-	getComponentsByCategory,
-} from "@patternmode/ui/components/registry";
+import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Separator } from "@patternmode/ui/components/separator";
-import { HStack, Stack } from "@patternmode/ui/components/stack";
-import {
-	ToggleGroup,
-	ToggleGroupItem,
-} from "@patternmode/ui/components/toggle-group";
+import { Stack, VStack } from "@patternmode/ui/components/stack";
 import { cx } from "@patternmode/ui/utils/cx";
-import { Layers, List, Rows3 } from "lucide-react";
+import { Layers } from "lucide-react";
 import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
 import type React from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
-import { useSidebarView } from "../hooks/use-sidebar-view";
 import { ComponentSearch } from "./component-search";
 
-// Local component for sidebar group titles with badges
-function SidebarGroupTitle({
-	children,
-	badge,
-	level = 1,
-}: {
-	children: React.ReactNode;
-	badge?: React.ReactNode;
-	level?: 1 | 2;
-}) {
-	return (
-		<HStack align="center" gap={2} className={level === 2 ? "opacity-70" : ""}>
-			{children}
-			{badge}
-		</HStack>
-	);
-}
+// SidebarGroupTitle helper removed (unused)
 
 type SidebarLayoutProps = {
 	children: React.ReactNode;
@@ -104,7 +79,17 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 					</Button>
 				</SidebarHeader>
 				<SidebarContent>
-					<SidebarItem icon={Layers}>Components</SidebarItem>
+					<SidebarGroup>
+						{getAllComponents().map((config) => (
+							<SidebarItem
+								key={config.id}
+								icon={config.icon}
+								render={<Link href={`/ui/components/${config.id}`} />}
+							>
+								{config.name}
+							</SidebarItem>
+						))}
+					</SidebarGroup>
 				</SidebarContent>
 				<SidebarFooter>Footer</SidebarFooter>
 			</Sidebar>
