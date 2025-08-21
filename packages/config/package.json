@@ -1,0 +1,36 @@
+{
+	"name": "@patternmode/config",
+	"version": "0.1.0",
+	"description": "Configuration for PatternMode UI components",
+	"files": [
+		"src"
+	],
+	"scripts": {
+		"build": "tsc --noEmit",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check src --write"
+	},
+	"type": "module",
+	"exports": {
+		"./form-control-variants": "./src/form-control-variants.ts",
+		"./sizes": "./src/sizes.ts",
+		"./component-categories": "./src/component-categories.ts",
+		"./variants": "./src/variants.ts",
+		"./border-radius-variants": "./src/border-radius-variants.ts",
+		"./border-radius-variants-with-full": "./src/border-radius-variants-with-full.ts",
+		"./breakpoints": "./src/breakpoints.ts",
+		"./colors": "./src/colors.ts",
+		"./default-config": "./src/default-config.ts",
+		"./component-types": "./src/component-types.ts"
+	},
+	"dependencies": {
+		"clsx": "^2.1.1",
+		"tailwind-variants": "^2.1.0"
+	},
+	"peerDependencies": {
+		"tailwindcss": "^4.1.12"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.2"
+	}
+}

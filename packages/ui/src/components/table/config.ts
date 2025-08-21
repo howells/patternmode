@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Table } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import {
 	TableBody,
 	TableCaption,

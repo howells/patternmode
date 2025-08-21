@@ -1,7 +1,7 @@
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
+import { cx } from "@patternmode/utils/cx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 
 /**
@@ -84,11 +84,7 @@ const CollapsibleTrigger = ({
 							size="icon-xs"
 							leftIcon={state.open ? OpenIcon : ClosedIcon}
 							render={(props) => (
-								<button
-									type="button"
-									{...props}
-									ref={triggerRef}
-								/>
+								<button type="button" {...props} ref={triggerRef} />
 							)}
 							{...buttonProps}
 						/>

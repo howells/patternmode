@@ -1,7 +1,7 @@
 "use client";
 
+import type { Size } from "@patternmode/config/sizes";
 import React from "react";
-import type { Size } from "@patternmode/styles/constants/sizes";
 import { Combobox } from "./component";
 
 export type ComboboxPreviewProps = {

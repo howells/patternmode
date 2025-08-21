@@ -1,7 +1,7 @@
 "use client";
 
+import { SIZES } from "@patternmode/config/sizes";
 import { Camera } from "lucide-react";
-import { SIZES } from "@patternmode/styles/constants/sizes";
 import { Icon } from "./component";
 import type { IconProps } from "./types";
 

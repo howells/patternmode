@@ -1,8 +1,8 @@
 "use client";
 
+import { cx } from "@patternmode/utils/cx";
+import { focusRing } from "@patternmode/utils/focus-ring";
 import React from "react";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
-import { cx } from "@patternmode/core/utils/cx";
 
 type Bar<T> = T & {
 	/**

@@ -1,17 +1,17 @@
 "use client";
 
-import type * as React from "react";
-import {
-	createResponsiveClasses,
-	getResponsiveBase,
-} from "../../presentation/responsive-utils";
+import { cx } from "@patternmode/utils/cx";
 import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getGapClass,
 	getPaddingClass,
-} from "@patternmode/styles/presentation/spacing-utils";
-import { cx } from "@patternmode/core/utils/cx";
+} from "@patternmode/utils/spacing";
+import type * as React from "react";
+import {
+	createResponsiveClasses,
+	getResponsiveBase,
+} from "../../presentation/responsive-utils";
 import type { StackProps } from "./types";
 import { stackVariants } from "./variants";
 

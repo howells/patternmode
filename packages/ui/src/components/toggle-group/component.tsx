@@ -2,9 +2,9 @@
 
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
 import React, { use } from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import { ToggleGroupContext } from "./constants";
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
@@ -109,11 +109,7 @@ const ToggleGroupItem = ({
 							fullWidth={fullWidth}
 							rounded={rounded}
 							render={(props) => (
-								<button
-									type="button"
-									{...props}
-									ref={toggleRef}
-								/>
+								<button type="button" {...props} ref={toggleRef} />
 							)}
 						>
 							{renderContent()}

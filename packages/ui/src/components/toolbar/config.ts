@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Wrench } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import {
 	Toolbar,
 	ToolbarButton,

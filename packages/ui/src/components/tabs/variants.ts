@@ -1,7 +1,7 @@
+import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { containerButtonAdjustments } from "../../presentation/container-button-adjustments";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
 
 export const tabsVariants = tv({
 	slots: {

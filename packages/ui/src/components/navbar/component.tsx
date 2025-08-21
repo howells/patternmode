@@ -2,11 +2,12 @@
 
 import type { useRender } from "@base-ui-components/react/use-render";
 import { LayoutGroup, motion } from "motion/react";
+
 // Framework-agnostic: do not import Next.js here
 
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import { useId } from "react";
-import { cx } from "@patternmode/core/utils/cx";
 
 import { Button } from "../button/component";
 
@@ -116,7 +117,6 @@ type NavbarItemProps = {
 	href?: string;
 	render?: useRender.RenderProp<Record<string, unknown>>;
 } & Record<string, unknown>;
-
 
 /**
  * Interactive navbar item with animated current page indicator and Next.js Link integration.

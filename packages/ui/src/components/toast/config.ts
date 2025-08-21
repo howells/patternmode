@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Bell } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { ToastProvider } from "./component";
 import {
 	ComplexPromiseExample,

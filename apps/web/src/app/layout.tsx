@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
-
 import { ToastProvider } from "@patternmode/ui/components/toast";
+import type { Metadata } from "next";
 
 import { NuqsProviderWrapper } from "../components/nuqs-provider";
 import { SidebarLayout } from "../components/sidebar-layout";
@@ -9,42 +8,38 @@ import { ReactQueryProvider } from "../providers/query-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Patternmode",
-  description: "Patternmode",
+	title: "Patternmode",
+	description: "Patternmode",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="en"
-      className="antialiased bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
-      suppressHydrationWarning
-    >
-      <head>
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-      </head>
-      <body>
-        <ReactQueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            <ToastProvider>
-              <NuqsProviderWrapper>
-                <div className="isolate">
-                  <SidebarLayout>{children}</SidebarLayout>
-                </div>
-              </NuqsProviderWrapper>
-            </ToastProvider>
-          </ThemeProvider>
-        </ReactQueryProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html
+			lang="en"
+			className="antialiased bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
+			suppressHydrationWarning
+		>
+			<head>
+				<link rel="preconnect" href="https://rsms.me/" />
+				<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+			</head>
+			<body>
+				<ReactQueryProvider>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						<ToastProvider>
+							<NuqsProviderWrapper>
+								<div className="isolate">
+									<SidebarLayout>{children}</SidebarLayout>
+								</div>
+							</NuqsProviderWrapper>
+						</ToastProvider>
+					</ThemeProvider>
+				</ReactQueryProvider>
+			</body>
+		</html>
+	);
 }

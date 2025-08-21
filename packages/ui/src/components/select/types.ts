@@ -1,9 +1,8 @@
 import type { Select as BaseSelect } from "@base-ui-components/react/select";
 import type { useRender } from "@base-ui-components/react/use-render";
+import type { Size } from "@patternmode/config/sizes";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
-
-import type { Size } from "@patternmode/styles/constants/sizes";
 import type { selectTriggerVariants } from "./variants";
 
 /**

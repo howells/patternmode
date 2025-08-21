@@ -1,9 +1,9 @@
-import type React from "react";
-import type { ResponsiveValue } from "../../presentation/responsive-utils";
 import type {
 	ResponsiveSpacing,
 	SpacingValue,
-} from "@patternmode/styles/presentation/spacing-utils";
+} from "@patternmode/utils/spacing";
+import type React from "react";
+import type { ResponsiveValue } from "../../presentation/responsive-utils";
 
 /**
  * Props for the Grid component.

@@ -1,11 +1,11 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
+import { defaultConfig } from "@patternmode/config/default-config";
+import type { Size } from "@patternmode/config/sizes";
+import { cx } from "@patternmode/utils/cx";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import type { VariantProps } from "tailwind-variants";
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import type { Size } from "@patternmode/styles/constants/sizes";
-import { cx } from "@patternmode/core/utils/cx";
 import { Icon } from "../icon/component";
 import type { IconComponent } from "../icon/types";
 import { Kbd } from "../kbd/component";

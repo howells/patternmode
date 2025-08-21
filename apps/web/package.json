@@ -1,48 +1,50 @@
 {
-  "name": "@patternmode/web",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "generate:pages": "node scripts/generate-pages.js",
-    "build": "next build",
-    "start": "next start",
-    "lint": "biome check src --write",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
-    "test:e2e": "timeout 180s playwright test || true",
-    "clean": "rm -rf .next"
-  },
-  "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.1",
-    "framer-motion": "^12.23.0",
-    "lucide-react": "^0.525.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "recharts": "^3.1.0",
-    "zod": "^4.0.0"
-  },
-  "dependencies": {
-    "@icons-pack/react-simple-icons": "^13.7.0",
-    "@patternmode/ui": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.12",
-    "@tanstack/react-query": "^5.85.5",
-    "@tanstack/react-query-devtools": "^5.85.5",
-    "@uidotdev/usehooks": "^2.4.1",
-    "clsx": "^2.1.1",
-    "motion": "^12.23.12",
-    "next": "^15.5.0",
-    "next-themes": "^0.4.6",
-    "tailwind-merge": "^3.3.1",
-    "tailwind-variants": "^2.1.0",
-    "tailwindcss": "^4.1.12"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0",
-    "@types/react": "19.1.10",
-    "@types/react-dom": "19.1.7",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
-  }
+	"name": "@patternmode/web",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"generate:pages": "node scripts/generate-pages.js",
+		"build": "next build",
+		"start": "next start",
+		"lint": "biome check src --write",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --passWithNoTests",
+		"test:e2e": "timeout 180s playwright test || true",
+		"clean": "rm -rf .next"
+	},
+	"peerDependencies": {
+		"@base-ui-components/react": "^1.0.0-beta.1",
+		"framer-motion": "^12.23.0",
+		"lucide-react": "^0.525.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"recharts": "^3.1.0",
+		"zod": "^4.0.0"
+	},
+	"dependencies": {
+		"@icons-pack/react-simple-icons": "^13.7.0",
+		"@patternmode/ui": "workspace:*",
+		"@patternmode/styles": "workspace:*",
+		"@patternmode/sidebar": "workspace:*",
+		"@tailwindcss/postcss": "^4.1.12",
+		"@tanstack/react-query": "^5.85.5",
+		"@tanstack/react-query-devtools": "^5.85.5",
+		"@uidotdev/usehooks": "^2.4.1",
+		"clsx": "^2.1.1",
+		"motion": "^12.23.12",
+		"next": "^15.5.0",
+		"next-themes": "^0.4.6",
+		"tailwind-merge": "^3.3.1",
+		"tailwind-variants": "^2.1.0",
+		"tailwindcss": "^4.1.12"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.55.0",
+		"@types/node": "^24.3.0",
+		"@types/react": "19.1.10",
+		"@types/react-dom": "19.1.7",
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
+	}
 }

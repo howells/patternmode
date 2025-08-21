@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Circle } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import {
 	Radio,
 	RadioCard,

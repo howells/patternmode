@@ -1,7 +1,7 @@
 "use client";
 
+import { SIZES } from "@patternmode/config/sizes";
 import { Calendar } from "lucide-react";
-import { SIZES } from "@patternmode/styles/constants/sizes";
 import { IconContainer } from "./component";
 import type { IconContainerProps } from "./types";
 

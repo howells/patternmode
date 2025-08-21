@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Keyboard } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Kbd } from "./component";
 import {
 	CombinationExample,

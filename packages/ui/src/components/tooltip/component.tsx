@@ -1,8 +1,8 @@
 "use client";
 
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import type { TooltipProps } from "./types";
 import { tooltipVariants } from "./variants";
 
@@ -68,7 +68,7 @@ const Tooltip = ({
 Tooltip.displayName = "Tooltip";
 
 // Arrow SVG component matching Base UI example
-function ArrowSvg(props: Omit<React.SVGProps<SVGSVGElement>, 'ref'>) {
+function ArrowSvg(props: Omit<React.SVGProps<SVGSVGElement>, "ref">) {
 	return (
 		<svg width="20" height="10" viewBox="0 0 20 10" fill="none" {...props}>
 			<title>Tooltip arrow</title>

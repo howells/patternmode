@@ -1,7 +1,7 @@
+import { cx } from "@patternmode/utils/cx";
+import type { SpacingValue } from "@patternmode/utils/spacing";
+import { getPaddingClass } from "@patternmode/utils/spacing";
 import type React from "react";
-import type { SpacingValue } from "@patternmode/styles/presentation/spacing-utils";
-import { getPaddingClass } from "@patternmode/styles/presentation/spacing-utils";
-import { cx } from "@patternmode/core/utils/cx";
 import { Grid, GridCell } from "../grid/component";
 import { HStack, Stack } from "../stack/component";
 import { Subheading } from "../subheading/component";

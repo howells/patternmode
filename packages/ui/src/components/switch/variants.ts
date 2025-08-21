@@ -1,6 +1,5 @@
+import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
-
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
 
 export const switchVariants = tv({
 	slots: {

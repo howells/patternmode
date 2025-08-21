@@ -1,8 +1,8 @@
 // Checkbox Group Component [v1.0.0]
 
 import { CheckboxGroup as BaseCheckboxGroup } from "@base-ui-components/react/checkbox-group";
+import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import { Checkbox } from "../checkbox/component";
 import type { CheckboxGroupItemProps, CheckboxGroupProps } from "./types";
 import {

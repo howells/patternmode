@@ -1,8 +1,8 @@
 "use client";
 
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import { cx } from "@patternmode/core/utils/cx";
 import type { IconProps, IconSize } from "./types";
 import { iconVariants } from "./variants";
 

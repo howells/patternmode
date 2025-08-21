@@ -1,13 +1,13 @@
 "use client";
 
-import type { ResponsiveValue } from "../../presentation/responsive-utils";
-import { createResponsiveClasses } from "../../presentation/responsive-utils";
+import { cx } from "@patternmode/utils/cx";
 import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getGapClass,
-} from "@patternmode/styles/presentation/spacing-utils";
-import { cx } from "@patternmode/core/utils/cx";
+} from "@patternmode/utils/spacing";
+import type { ResponsiveValue } from "../../presentation/responsive-utils";
+import { createResponsiveClasses } from "../../presentation/responsive-utils";
 import type { GridAutoProps, GridCellProps, GridProps } from "./types";
 import { gridCellVariants, gridVariants } from "./variants";
 

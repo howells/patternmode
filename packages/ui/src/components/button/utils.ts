@@ -1,4 +1,4 @@
-import type { Size } from "@patternmode/styles/constants/sizes";
+import type { Size } from "@patternmode/config/sizes";
 import type { IconButtonSize } from "./types";
 
 /**

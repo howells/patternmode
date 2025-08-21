@@ -1,7 +1,6 @@
 import { PreviewCard as BasePreviewCard } from "@base-ui-components/react/preview-card";
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-
-import { cx } from "@patternmode/core/utils/cx";
 
 type PreviewCardProps = React.ComponentPropsWithoutRef<
 	typeof BasePreviewCard.Root

@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/styles/constants/sizes";
+import { SIZES } from "@patternmode/config/sizes";
 import { Text } from "./component";
 import type { TextProps } from "./types";
 

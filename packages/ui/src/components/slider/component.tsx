@@ -1,8 +1,8 @@
 "use client";
 
 import { Slider as BaseSlider } from "@base-ui-components/react/slider";
+import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import type { SliderProps } from "./types";
 import { sliderVariants } from "./variants";
 

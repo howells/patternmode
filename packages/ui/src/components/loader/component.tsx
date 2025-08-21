@@ -1,6 +1,6 @@
+import { cx } from "@patternmode/utils/cx";
 import { Loader2 } from "lucide-react";
 import type React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import type { LoaderProps } from "./types";
 import { loaderVariants } from "./variants";
 

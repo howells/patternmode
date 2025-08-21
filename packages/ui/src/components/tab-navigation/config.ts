@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Navigation } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { TabNavigation, TabNavigationLink } from "./component";
 import {
 	ActiveExample,

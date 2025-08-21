@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { FileX } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { EmptyState } from "./component";
 import {
 	DefaultExample,

@@ -1,17 +1,16 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import type React from "react";
+import { cx } from "@patternmode/utils/cx";
 import type {
 	ResponsiveSpacing,
 	SpacingValue,
-} from "@patternmode/styles/presentation/spacing-utils";
-
+} from "@patternmode/utils/spacing";
 import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getPaddingClass,
-} from "@patternmode/styles/presentation/spacing-utils";
-import { cx } from "@patternmode/core/utils/cx";
+} from "@patternmode/utils/spacing";
+import type React from "react";
 import { Subheading } from "../subheading/component";
 import { cardVariants } from "./variants";
 

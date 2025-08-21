@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Grid3X3 } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Grid, GridAuto, GridCell } from "./component";
 import {
 	AutoGridExample,

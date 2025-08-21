@@ -17,9 +17,9 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { cx } from "@patternmode/utils/cx";
 import { GripVertical } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import { Checkbox } from "../checkbox/component";
 import type { SortableListItem, SortableListProps } from "./types";
 

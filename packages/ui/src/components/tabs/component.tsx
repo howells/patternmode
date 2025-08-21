@@ -1,9 +1,9 @@
 "use client";
 
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
+import type { Size } from "@patternmode/config/sizes";
+import { cx } from "@patternmode/utils/cx";
 import React from "react";
-import type { Size } from "@patternmode/styles/constants/sizes";
-import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import type {
 	TabsContentProps,
@@ -162,9 +162,7 @@ const TabsTrigger = ({
 						leftIcon={leftIcon}
 						rightIcon={rightIcon}
 						iconStrokeWidth={iconStrokeWidth}
-						render={(props) => (
-							<button type="button" ref={tabRef} {...props} />
-						)} // Forward Base UI's ref to the button element
+						render={(props) => <button type="button" ref={tabRef} {...props} />} // Forward Base UI's ref to the button element
 						disabled={state.disabled}
 						className={cx(tabClassName)}
 					>

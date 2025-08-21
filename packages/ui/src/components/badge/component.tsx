@@ -1,10 +1,10 @@
 import { useRender } from "@base-ui-components/react/use-render";
+import { defaultConfig } from "@patternmode/config/default-config";
+import { getIconComponent } from "@patternmode/icons/icon-registry";
+import { cx } from "@patternmode/utils/cx";
 import { X } from "lucide-react";
 import type React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
 import { getColorClasses, type TailwindColor } from "../../constants/variants";
-import { getIconComponent } from "@patternmode/icons/icon-registry";
-import { cx } from "@patternmode/core/utils/cx";
 import { DismissButton } from "../dismiss-button/component";
 import { Icon } from "../icon/component";
 import type { IconComponent } from "../icon/types";

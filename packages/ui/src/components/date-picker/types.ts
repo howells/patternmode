@@ -1,8 +1,8 @@
+import type { Size } from "@patternmode/config/sizes";
 import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import type { Locale } from "date-fns";
 import type React from "react";
-import type { Size } from "@patternmode/styles/constants/sizes";
 import type { Button } from "../button/component";
 import type { IconComponent } from "../icon/types";
 

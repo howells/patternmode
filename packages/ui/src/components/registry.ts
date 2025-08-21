@@ -12,14 +12,10 @@ import {
 	AlertDialogPreview,
 	alertDialogPreviewProps,
 } from "./alert-dialog/preview";
-import { areaChartConfig } from "./area-chart/config";
-import { AreaChartPreview, areaChartPreviewProps } from "./area-chart/preview";
 import { avatarConfig } from "./avatar/config";
 import { AvatarPreview, avatarPreviewProps } from "./avatar/preview";
 import { badgeConfig } from "./badge/config";
 import { BadgePreview, badgePreviewProps } from "./badge/preview";
-import { barChartConfig } from "./bar-chart/config";
-import { BarChartPreview, barChartPreviewProps } from "./bar-chart/preview";
 import { barListConfig } from "./bar-list/config";
 import { BarListPreview, barListPreviewProps } from "./bar-list/preview";
 import { breadcrumbsConfig } from "./breadcrumbs/config";
@@ -42,11 +38,7 @@ import { cardConfig } from "./card/config";
 import { CardPreview, cardPreviewProps } from "./card/preview";
 import { carouselConfig } from "./carousel/config";
 import { CarouselPreview, carouselPreviewProps } from "./carousel/preview";
-import { categoryBarConfig } from "./category-bar/config";
-import {
-	CategoryBarPreview,
-	categoryBarPreviewProps,
-} from "./category-bar/preview";
+
 import { checkboxConfig } from "./checkbox/config";
 import { CheckboxPreview, checkboxPreviewProps } from "./checkbox/preview";
 import { checkboxGroupConfig } from "./checkbox-group/config";
@@ -61,11 +53,6 @@ import {
 	CollapsiblePreview,
 	collapsiblePreviewProps,
 } from "./collapsible/preview";
-import { comboChartConfig } from "./combo-chart/config";
-import {
-	ComboChartPreview,
-	comboChartPreviewProps,
-} from "./combo-chart/preview";
 import { comboboxConfig } from "./combobox/config";
 import { ComboboxPreview, comboboxPreviewProps } from "./combobox/preview";
 import { contextMenuConfig } from "./context-menu/config";
@@ -97,11 +84,6 @@ import {
 } from "./dismiss-button/preview";
 import { dividerConfig } from "./divider/config";
 import { DividerPreview, dividerPreviewProps } from "./divider/preview";
-import { donutChartConfig } from "./donut-chart/config";
-import {
-	DonutChartPreview,
-	donutChartPreviewProps,
-} from "./donut-chart/preview";
 import { dotConfig } from "./dot/config";
 import { DotPreview, dotPreviewProps } from "./dot/preview";
 import { drawerConfig } from "./drawer/config";
@@ -154,8 +136,6 @@ import { kbdConfig } from "./kbd/config";
 import { KbdPreview, kbdPreviewProps } from "./kbd/preview";
 import { labelConfig } from "./label/config";
 import { LabelPreview, labelPreviewProps } from "./label/preview";
-import { lineChartConfig } from "./line-chart/config";
-import { LineChartPreview, lineChartPreviewProps } from "./line-chart/preview";
 import { loaderConfig } from "./loader/config";
 import { LoaderPreview, loaderPreviewProps } from "./loader/preview";
 import { menuConfig } from "./menu/config";
@@ -228,8 +208,6 @@ import { separatorConfig } from "./separator/config";
 import { SeparatorPreview, separatorPreviewProps } from "./separator/preview";
 import { sheetConfig } from "./sheet/config";
 import { SheetPreview, sheetPreviewProps } from "./sheet/preview";
-import { sidebarConfig } from "./sidebar/config";
-import { SidebarPreview, sidebarPreviewProps } from "./sidebar/preview";
 import { skeletonConfig } from "./skeleton/config";
 import { SkeletonPreview } from "./skeleton/preview";
 import { sliderConfig } from "./slider/config";
@@ -239,11 +217,6 @@ import {
 	SortableListPreview,
 	sortableListPreviewProps,
 } from "./sortable-list/preview";
-import { sparkChartConfig } from "./spark-chart/config";
-import {
-	SparkChartPreview,
-	sparkChartPreviewProps,
-} from "./spark-chart/preview";
 import { splitButtonConfig } from "./split-button/config";
 import {
 	SplitButtonPreview,
@@ -305,10 +278,8 @@ import { TrackerPreview, trackerPreviewProps } from "./tracker/preview";
 export const COMPONENT_REGISTRY = {
 	accordion: accordionConfig,
 	"alert-dialog": alertDialogConfig,
-	"area-chart": areaChartConfig,
 	avatar: avatarConfig,
 	badge: badgeConfig,
-	"bar-chart": barChartConfig,
 	"bar-list": barListConfig,
 	breadcrumbs: breadcrumbsConfig,
 	button: buttonConfig,
@@ -317,12 +288,10 @@ export const COMPONENT_REGISTRY = {
 	callout: calloutConfig,
 	card: cardConfig,
 	carousel: carouselConfig,
-	"category-bar": categoryBarConfig,
 	checkbox: checkboxConfig,
 	"checkbox-group": checkboxGroupConfig,
 	"code-block": codeBlockConfig,
 	collapsible: collapsibleConfig,
-	"combo-chart": comboChartConfig,
 	combobox: comboboxConfig,
 	"context-menu": contextMenuConfig,
 	"copy-button": copyButtonConfig,
@@ -331,7 +300,6 @@ export const COMPONENT_REGISTRY = {
 	dialog: dialogConfig,
 	"dismiss-button": dismissButtonConfig,
 	divider: dividerConfig,
-	"donut-chart": donutChartConfig,
 	dot: dotConfig,
 	drawer: drawerConfig,
 	"dropdown-item": dropdownItemConfig,
@@ -349,7 +317,6 @@ export const COMPONENT_REGISTRY = {
 	input: inputConfig,
 	kbd: kbdConfig,
 	label: labelConfig,
-	"line-chart": lineChartConfig,
 	loader: loaderConfig,
 	menu: menuConfig,
 	"menu-bar": menuBarConfig,
@@ -371,11 +338,9 @@ export const COMPONENT_REGISTRY = {
 	"select-native": selectNativeConfig,
 	separator: separatorConfig,
 	sheet: sheetConfig,
-	sidebar: sidebarConfig,
 	skeleton: skeletonConfig,
 	slider: sliderConfig,
 	"sortable-list": sortableListConfig,
-	"spark-chart": sparkChartConfig,
 	"split-button": splitButtonConfig,
 	stack: stackConfig,
 	"stacked-list": stackedListConfig,
@@ -403,10 +368,8 @@ export const COMPONENT_REGISTRY = {
 export const PREVIEW_REGISTRY = {
 	accordion: AccordionPreview,
 	"alert-dialog": AlertDialogPreview,
-	"area-chart": AreaChartPreview,
 	avatar: AvatarPreview,
 	badge: BadgePreview,
-	"bar-chart": BarChartPreview,
 	"bar-list": BarListPreview,
 	breadcrumbs: BreadcrumbsPreview,
 	button: ButtonPreview,
@@ -415,12 +378,10 @@ export const PREVIEW_REGISTRY = {
 	callout: CalloutPreview,
 	card: CardPreview,
 	carousel: CarouselPreview,
-	"category-bar": CategoryBarPreview,
 	checkbox: CheckboxPreview,
 	"checkbox-group": CheckboxGroupPreview,
 	"code-block": CodeBlockPreview,
 	collapsible: CollapsiblePreview,
-	"combo-chart": ComboChartPreview,
 	combobox: ComboboxPreview,
 	"context-menu": ContextMenuPreview,
 	"copy-button": CopyButtonPreview,
@@ -429,7 +390,6 @@ export const PREVIEW_REGISTRY = {
 	dialog: DialogPreview,
 	"dismiss-button": DismissButtonPreview,
 	divider: DividerPreview,
-	"donut-chart": DonutChartPreview,
 	dot: DotPreview,
 	drawer: DrawerPreview,
 	"dropdown-item": DropdownItemPreview,
@@ -447,7 +407,6 @@ export const PREVIEW_REGISTRY = {
 	input: InputPreview,
 	kbd: KbdPreview,
 	label: LabelPreview,
-	"line-chart": LineChartPreview,
 	loader: LoaderPreview,
 	menu: MenuPreview,
 	"menu-bar": MenuBarPreview,
@@ -469,11 +428,9 @@ export const PREVIEW_REGISTRY = {
 	"select-native": SelectNativePreview,
 	separator: SeparatorPreview,
 	sheet: SheetPreview,
-	sidebar: SidebarPreview,
 	skeleton: SkeletonPreview,
 	slider: SliderPreview,
 	"sortable-list": SortableListPreview,
-	"spark-chart": SparkChartPreview,
 	"split-button": SplitButtonPreview,
 	stack: StackPreview,
 	"stacked-list": StackedListPreview,
@@ -501,10 +458,8 @@ export const PREVIEW_REGISTRY = {
 export const PREVIEW_PROPS_REGISTRY = {
 	accordion: accordionPreviewProps,
 	"alert-dialog": alertDialogPreviewProps,
-	"area-chart": areaChartPreviewProps,
 	avatar: avatarPreviewProps,
 	badge: badgePreviewProps,
-	"bar-chart": barChartPreviewProps,
 	"bar-list": barListPreviewProps,
 	breadcrumbs: breadcrumbsPreviewProps,
 	button: buttonPreviewProps,
@@ -513,12 +468,10 @@ export const PREVIEW_PROPS_REGISTRY = {
 	callout: calloutPreviewProps,
 	card: cardPreviewProps,
 	carousel: carouselPreviewProps,
-	"category-bar": categoryBarPreviewProps,
 	checkbox: checkboxPreviewProps,
 	"checkbox-group": checkboxGroupPreviewProps,
 	"code-block": codeBlockPreviewProps,
 	collapsible: collapsiblePreviewProps,
-	"combo-chart": comboChartPreviewProps,
 	combobox: comboboxPreviewProps,
 	"context-menu": contextMenuPreviewProps,
 	"copy-button": copyButtonPreviewProps,
@@ -527,7 +480,6 @@ export const PREVIEW_PROPS_REGISTRY = {
 	dialog: dialogPreviewProps,
 	"dismiss-button": dismissButtonPreviewProps,
 	divider: dividerPreviewProps,
-	"donut-chart": donutChartPreviewProps,
 	dot: dotPreviewProps,
 	drawer: drawerPreviewProps,
 	"dropdown-item": dropdownItemPreviewProps,
@@ -545,7 +497,6 @@ export const PREVIEW_PROPS_REGISTRY = {
 	input: inputPreviewProps,
 	kbd: kbdPreviewProps,
 	label: labelPreviewProps,
-	"line-chart": lineChartPreviewProps,
 	loader: loaderPreviewProps,
 	menu: menuPreviewProps,
 	"menu-bar": menuBarPreviewProps,
@@ -567,11 +518,9 @@ export const PREVIEW_PROPS_REGISTRY = {
 	"select-native": selectNativePreviewProps,
 	separator: separatorPreviewProps,
 	sheet: sheetPreviewProps,
-	sidebar: sidebarPreviewProps,
 	skeleton: [],
 	slider: sliderPreviewProps,
 	"sortable-list": sortableListPreviewProps,
-	"spark-chart": sparkChartPreviewProps,
 	"split-button": splitButtonPreviewProps,
 	stack: stackPreviewProps,
 	"stacked-list": stackedListPreviewProps,
@@ -604,16 +553,10 @@ export const COMPONENT_METADATA_REGISTRY = {
 		title: alertDialogConfig.name,
 		description: alertDialogConfig.description,
 	},
-	"area-chart": {
-		title: areaChartConfig.name,
-		description: areaChartConfig.description,
-	},
+
 	avatar: { title: avatarConfig.name, description: avatarConfig.description },
 	badge: { title: badgeConfig.name, description: badgeConfig.description },
-	"bar-chart": {
-		title: barChartConfig.name,
-		description: barChartConfig.description,
-	},
+
 	"bar-list": {
 		title: barListConfig.name,
 		description: barListConfig.description,
@@ -640,10 +583,7 @@ export const COMPONENT_METADATA_REGISTRY = {
 		title: carouselConfig.name,
 		description: carouselConfig.description,
 	},
-	"category-bar": {
-		title: categoryBarConfig.name,
-		description: categoryBarConfig.description,
-	},
+
 	checkbox: {
 		title: checkboxConfig.name,
 		description: checkboxConfig.description,
@@ -660,10 +600,7 @@ export const COMPONENT_METADATA_REGISTRY = {
 		title: collapsibleConfig.name,
 		description: collapsibleConfig.description,
 	},
-	"combo-chart": {
-		title: comboChartConfig.name,
-		description: comboChartConfig.description,
-	},
+
 	combobox: {
 		title: comboboxConfig.name,
 		description: comboboxConfig.description,
@@ -693,10 +630,7 @@ export const COMPONENT_METADATA_REGISTRY = {
 		title: dividerConfig.name,
 		description: dividerConfig.description,
 	},
-	"donut-chart": {
-		title: donutChartConfig.name,
-		description: donutChartConfig.description,
-	},
+
 	dot: { title: dotConfig.name, description: dotConfig.description },
 	drawer: { title: drawerConfig.name, description: drawerConfig.description },
 	"dropdown-item": {
@@ -738,10 +672,7 @@ export const COMPONENT_METADATA_REGISTRY = {
 	input: { title: inputConfig.name, description: inputConfig.description },
 	kbd: { title: kbdConfig.name, description: kbdConfig.description },
 	label: { title: labelConfig.name, description: labelConfig.description },
-	"line-chart": {
-		title: lineChartConfig.name,
-		description: lineChartConfig.description,
-	},
+
 	loader: { title: loaderConfig.name, description: loaderConfig.description },
 	menu: { title: menuConfig.name, description: menuConfig.description },
 	"menu-bar": {
@@ -805,10 +736,6 @@ export const COMPONENT_METADATA_REGISTRY = {
 		description: separatorConfig.description,
 	},
 	sheet: { title: sheetConfig.name, description: sheetConfig.description },
-	sidebar: {
-		title: sidebarConfig.name,
-		description: sidebarConfig.description,
-	},
 	skeleton: {
 		title: skeletonConfig.name,
 		description: skeletonConfig.description,
@@ -818,10 +745,7 @@ export const COMPONENT_METADATA_REGISTRY = {
 		title: sortableListConfig.name,
 		description: sortableListConfig.description,
 	},
-	"spark-chart": {
-		title: sparkChartConfig.name,
-		description: sparkChartConfig.description,
-	},
+
 	"split-button": {
 		title: splitButtonConfig.name,
 		description: splitButtonConfig.description,

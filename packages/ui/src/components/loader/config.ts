@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Loader2 } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Loader } from "./component";
 import {
 	CenteredExample,

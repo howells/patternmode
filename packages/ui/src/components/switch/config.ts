@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ToggleRight } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Switch } from "./component";
 import {
 	CheckedExample,

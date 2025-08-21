@@ -1,7 +1,7 @@
 "use client";
 
+import { SIZES } from "@patternmode/config/sizes";
 import React from "react";
-import { SIZES } from "@patternmode/styles/constants/sizes";
 import { RadioGroup, RadioOption } from "./component";
 import type { RadioOptionProps } from "./types";
 

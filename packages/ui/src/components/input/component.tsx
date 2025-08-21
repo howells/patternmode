@@ -1,12 +1,12 @@
 "use client";
 
 import { Input as BaseInput } from "@base-ui-components/react/input";
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
+import { focusRing } from "@patternmode/utils/focus-ring";
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
 import { formControlContainerVariants } from "../../constants/form-control-variants";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
-import { cx } from "@patternmode/core/utils/cx";
 import type { InputProps } from "./types";
 import { inputElementStyles } from "./variants";
 

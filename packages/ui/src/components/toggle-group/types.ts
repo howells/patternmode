@@ -1,9 +1,9 @@
 import type { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import type { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
 import type { useRender } from "@base-ui-components/react/use-render";
+import type { Size } from "@patternmode/config/sizes";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { Size } from "@patternmode/styles/constants/sizes";
 import type { ButtonProps } from "../button/component";
 import type { IconComponent } from "../icon/types";
 import type { toggleGroupVariants } from "./variants";

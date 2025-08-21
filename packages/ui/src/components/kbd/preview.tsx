@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/styles/constants/sizes";
+import { SIZES } from "@patternmode/config/sizes";
 import { Kbd } from "./component";
 import type { KbdProps } from "./types";
 

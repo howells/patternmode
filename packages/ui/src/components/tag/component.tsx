@@ -1,9 +1,8 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import { cx } from "@patternmode/core/utils/cx";
 import { Avatar } from "../avatar/component";
 import { DismissButton } from "../dismiss-button/component";
 import { Icon } from "../icon/component";

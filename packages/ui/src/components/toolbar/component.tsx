@@ -1,7 +1,7 @@
 "use client";
 
 import { Toolbar as BaseToolbar } from "@base-ui-components/react/toolbar";
-import { cx } from "@patternmode/core/utils/cx";
+import { cx } from "@patternmode/utils/cx";
 import type {
 	ToolbarButtonProps,
 	ToolbarGroupProps,

@@ -6,8 +6,8 @@
  * Built with tailwind-variants for consistent styling and theming.
  */
 
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import type { DividerProps } from "./types";
 import { dividerLineVariants, dividerVariants } from "./variants";
 

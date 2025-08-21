@@ -1,11 +1,11 @@
 "use client";
 
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
+import { focusRing } from "@patternmode/utils/focus-ring";
 import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
-import { cx } from "@patternmode/core/utils/cx";
 import { DropdownItem } from "../dropdown-item/component";
 import { Tag } from "../tag/component";
 

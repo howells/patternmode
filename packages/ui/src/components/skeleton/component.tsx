@@ -1,6 +1,6 @@
+import { focusRing } from "@patternmode/utils/focus-ring";
 import type React from "react";
 import { tv } from "tailwind-variants";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
 
 const skeletonVariants = tv({
 	base: [

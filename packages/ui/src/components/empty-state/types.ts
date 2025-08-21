@@ -1,5 +1,5 @@
+import type { Size } from "@patternmode/config/sizes";
 import type React from "react";
-import type { Size } from "@patternmode/styles/constants/sizes";
 
 export type EmptyStateProps = {
 	/**

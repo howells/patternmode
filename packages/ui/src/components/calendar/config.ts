@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Calendar as CalendarIcon } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Calendar } from "./component";
 import {
 	CompactExample,

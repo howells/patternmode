@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Star } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Icon } from "./component";
 import {
 	CustomStrokeExample,

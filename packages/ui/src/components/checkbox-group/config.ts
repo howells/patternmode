@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { CheckSquare } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { CheckboxGroup, CheckboxGroupItem } from "./component";
 import {
 	ControlledExample,

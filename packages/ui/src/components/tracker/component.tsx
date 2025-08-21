@@ -1,8 +1,7 @@
 "use client";
 
+import { cx } from "@patternmode/utils/cx";
 import React from "react";
-
-import { cx } from "@patternmode/core/utils/cx";
 import {
 	PreviewCard,
 	PreviewCardContent,

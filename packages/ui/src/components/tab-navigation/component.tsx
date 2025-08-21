@@ -1,8 +1,7 @@
 import { NavigationMenu } from "@base-ui-components/react/navigation-menu";
+import { cx } from "@patternmode/utils/cx";
+import { focusRing } from "@patternmode/utils/focus-ring";
 import type React from "react";
-
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
-import { cx } from "@patternmode/core/utils/cx";
 
 type TabNavigationProps = Omit<
 	React.ComponentPropsWithoutRef<typeof NavigationMenu.Root>,

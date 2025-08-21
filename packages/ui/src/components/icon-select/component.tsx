@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
-import type { Size } from "@patternmode/styles/constants/sizes";
+import { defaultConfig } from "@patternmode/config/default-config";
+import type { Size } from "@patternmode/config/sizes";
 import { getIconComponent, iconNames } from "@patternmode/icons/icon-registry";
+import React from "react";
 import { Combobox } from "../combobox/component";
 import type { ComboboxOption } from "../combobox/types";
 

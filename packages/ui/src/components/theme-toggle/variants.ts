@@ -1,8 +1,8 @@
+import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
 import { componentVariants } from "../../constants/variants";
 import { borderRadiusVariants } from "../../presentation/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
-import { focusRing } from "@patternmode/styles/presentation/focus-ring";
 
 export const themeToggleVariants = tv({
 	base: [

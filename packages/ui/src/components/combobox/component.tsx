@@ -1,13 +1,13 @@
 "use client";
 
+import { defaultConfig } from "@patternmode/config/default-config";
+import { cx } from "@patternmode/utils/cx";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
 import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
-import { defaultConfig } from "@patternmode/core/config/default-config";
 import { hasErrorInput } from "../../presentation/has-error-input";
-import { cx } from "@patternmode/core/utils/cx";
 import { Icon } from "../icon/component";
 import { Input } from "../input/component";
 import { Loader } from "../loader/component";

@@ -1,8 +1,8 @@
 "use client";
 
+import { cx } from "@patternmode/utils/cx";
 import React from "react";
 import { toast as sonnerToast, Toaster } from "sonner";
-import { cx } from "@patternmode/core/utils/cx";
 import type {
 	BaseToastOptions,
 	Position,

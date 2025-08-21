@@ -1,8 +1,5 @@
+import type { GapValue, ResponsiveSpacing } from "@patternmode/utils/spacing";
 import type React from "react";
-import type {
-	GapValue,
-	ResponsiveSpacing,
-} from "@patternmode/styles/presentation/spacing-utils";
 
 export type TagGroupProps = {
 	/**

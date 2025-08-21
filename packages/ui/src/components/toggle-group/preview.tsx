@@ -1,5 +1,6 @@
 "use client";
 
+import { SIZES } from "@patternmode/config/sizes";
 import {
 	AlignCenter,
 	AlignLeft,
@@ -8,7 +9,6 @@ import {
 	Italic,
 	Underline,
 } from "lucide-react";
-import { SIZES } from "@patternmode/styles/constants/sizes";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 
 export type ToggleGroupPreviewProps = {

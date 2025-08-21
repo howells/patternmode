@@ -1,8 +1,8 @@
 "use client";
 
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
+import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import { Button } from "../button/component";
 import type { ToggleProps } from "./types";
 import { toggleVariants } from "./variants";
@@ -45,11 +45,7 @@ const Toggle = ({
 							fullWidth={fullWidth}
 							rounded={rounded}
 							render={(props) => (
-								<button
-									type="button"
-									{...props}
-									ref={toggleRef}
-								/>
+								<button type="button" {...props} ref={toggleRef} />
 							)}
 							className={cx(toggleVariants({ variant, size }), className)}
 						>

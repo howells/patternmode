@@ -1,3 +1,4 @@
 @import "tailwindcss";
 
-@import "@patternmode/ui/styles/globals.css";
+@import "../../node_modules/@patternmode/styles/src/globals.css";
+@source '../../node_modules/@patternmode/ui/**/*.{ts,tsx}';

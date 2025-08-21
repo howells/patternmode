@@ -1,8 +1,8 @@
 // Meter Component [v1.0.0] - Base UI Implementation
 
 import { Meter as BaseMeter } from "@base-ui-components/react/meter";
+import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
-import { cx } from "@patternmode/core/utils/cx";
 import type { MeterProps } from "./types";
 import { meterVariants } from "./variants";
 

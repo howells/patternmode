@@ -1,5 +1,5 @@
+import type { Size } from "@patternmode/config/sizes";
 import type React from "react";
-import type { Size } from "@patternmode/styles/constants/sizes";
 import type { ButtonVariant } from "../../constants/variants";
 import type { MenuContent } from "../menu/component";
 

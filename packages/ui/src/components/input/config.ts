@@ -1,5 +1,5 @@
+import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Type } from "lucide-react";
-import type { ComponentConfig } from "@patternmode/core/types/component-types";
 import { Input } from "./component";
 import {
 	DefaultExample,
