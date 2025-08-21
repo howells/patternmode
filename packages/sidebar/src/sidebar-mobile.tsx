@@ -27,7 +27,7 @@ export function SidebarMobile({ children }: SidebarMobileProps) {
 				<BaseDialog.Popup
 					className={cx(
 						"fixed inset-y-0 left-0 z-50",
-						"w-[--sidebar-open-width] max-w-xs",
+						"w-[var(--sidebar-open-width)] max-w-xs",
 						"bg-white dark:bg-zinc-900",
 						"border-r border-zinc-200 dark:border-zinc-800",
 						"transition-transform duration-200 ease-out",

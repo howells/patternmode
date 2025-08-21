@@ -219,8 +219,8 @@ function MainContent({ children }: { children: React.ReactNode }) {
 				isMobile
 					? "ml-0"
 					: isExpanded
-						? "ml-[--sidebar-open-width]"
-						: "ml-[--sidebar-collapsed-width]",
+						? "ml-[var(--sidebar-open-width)]"
+						: "ml-[var(--sidebar-collapsed-width)]",
 			)}
 		>
 			<Stack direction="vertical" gap={0} className="min-h-0 flex-1">

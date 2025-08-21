@@ -55,8 +55,8 @@ export function Sidebar({ children, className }: SidebarProps) {
 				"border-r border-zinc-200 dark:border-zinc-800",
 				"transition-[width] duration-200 ease-out",
 				isExpanded
-					? "w-[--sidebar-open-width]"
-					: "w-[--sidebar-collapsed-width]",
+					? "w-[var(--sidebar-open-width)]"
+					: "w-[var(--sidebar-collapsed-width)]",
 				className,
 			)}
 			data-sidebar-state={state}
