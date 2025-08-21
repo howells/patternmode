@@ -1,7 +1,9 @@
 "use client";
 
+import { Button } from "@patternmode/ui/components/button";
 import { cx } from "@patternmode/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { Pin } from "lucide-react";
 import type React from "react";
 import { useEffect } from "react";
 import { SidebarMobile } from "./sidebar-mobile";
@@ -10,27 +12,18 @@ import { useSidebar } from "./sidebar-store";
 interface SidebarProps {
 	children: React.ReactNode;
 	className?: string;
+	expandOnHover?: boolean;
 }
 
-export function Sidebar({ children, className }: SidebarProps) {
+export function Sidebar({ children, className, expandOnHover = false }: SidebarProps) {
 	// Subscribe to specific state slices for optimal performance
 	const state = useSidebar((s) => s.state);
 	const isHovering = useSidebar((s) => s.isHovering);
 	const isMobile = useSidebar((s) => s.isMobile);
 	const isExpanded = useSidebar((s) => s.isExpanded);
+	const togglePin = useSidebar((s) => s.togglePin);
 	const setHovering = useSidebar((s) => s.setHovering);
 	const setMobile = useSidebar((s) => s.setMobile);
-
-	// Force re-render when isHovering changes to trigger isExpanded recalculation
-	useEffect(() => {
-		console.log('isHovering changed:', isHovering);
-	}, [isHovering]);
-
-	// Debug logging
-	console.log('Sidebar render:', { state, isHovering, isMobile, isExpanded });
-
-	// Ensure isHovering is used for reactivity (used in isExpanded computed property)
-	void isHovering;
 
 	// Set mobile state on mount and resize
 	const { width } = useWindowSize();
@@ -39,47 +32,26 @@ export function Sidebar({ children, className }: SidebarProps) {
 		setMobile(mobile);
 	}, [width, setMobile]);
 
-	// Update document data attribute for CSS styling
-	useEffect(() => {
-		document.documentElement.setAttribute("data-sidebar-state", state);
-		document.documentElement.setAttribute(
-			"data-sidebar-expanded",
-			String(isExpanded),
-		);
-
-		return () => {
-			document.documentElement.removeAttribute("data-sidebar-state");
-			document.documentElement.removeAttribute("data-sidebar-expanded");
-		};
-	}, [state, isExpanded]);
-
-  const handleMouseEnter = () => {
-		console.log('Mouse enter - current state:', state);
-		if (state !== "pinned") {
-			console.log('Setting hovering to true');
+	const handleMouseEnter = () => {
+		if (expandOnHover && state !== "pinned") {
 			setHovering(true);
-		} else {
-			console.log('Not setting hovering (pinned state)');
 		}
 	};
 
 	const handleMouseLeave = () => {
-		console.log('Mouse leave - setting hovering to false');
-		setHovering(false);
+		if (expandOnHover) {
+			setHovering(false);
+		}
 	};
-
-
 
 	if (isMobile) {
 		return <SidebarMobile>{children}</SidebarMobile>;
 	}
 
-
-
 	return (
 		<nav
 			className={cx(
-        "Sidebar",
+				"Sidebar",
 				"fixed inset-y-0 left-0 z-40",
 				"bg-white dark:bg-zinc-900",
 				"border-r border-zinc-200 dark:border-zinc-800",
@@ -89,11 +61,12 @@ export function Sidebar({ children, className }: SidebarProps) {
 					: "w-[var(--sidebar-collapsed-width)]",
 				className,
 			)}
-			data-sidebar-state={state}
-			data-sidebar-expanded={isExpanded}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
+			{isExpanded && (
+				<Button variant="ghost" size="icon-xs" className="absolute top-2 right-2" icon={Pin} onClick={() => togglePin()} />
+			)}
 			{children}
 		</nav>
 	);

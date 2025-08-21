@@ -15,7 +15,7 @@
 	--control-height-lg: 3rem; /* 48px - matches h-12/w-12 */
 
 	/* Sidebar system */
-	--sidebar-collapsed-width: 3rem; /* 48px - collapsed state */
+	--sidebar-collapsed-width: 3.75rem; /* 60px - collapsed state */
 	--sidebar-open-width: 16rem; /* 256px - expanded state */
 }
 

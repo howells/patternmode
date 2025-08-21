@@ -2,7 +2,8 @@
 
 "use client";
 
-import { Sidebar, useSidebar } from "@patternmode/sidebar";
+import { Sidebar, SidebarHeader, useSidebar } from "@patternmode/sidebar";
+import { Button } from "@patternmode/ui/components/button";
 import {
 	CATEGORY_CONFIG,
 	getAllComponents,
@@ -209,18 +210,26 @@ function SidebarContent() {
 }
 
 function MainContent({ children }: { children: React.ReactNode }) {
-	const isExpanded = useSidebar((s) => s.isExpanded);
 	const isMobile = useSidebar((s) => s.isMobile);
+	const shouldOffsetContent = useSidebar((s) => s.shouldOffsetContent);
+
+	function getMainContentMargin() {
+		if (isMobile) {
+			return "ml-0";
+		}
+
+		if (shouldOffsetContent) {
+			return "ml-[var(--sidebar-open-width)]";
+		}
+
+		return "ml-[var(--sidebar-collapsed-width)]";
+	}
 
 	return (
 		<div
 			className={cx(
 				"flex-1 flex flex-col transition-[margin-left] duration-200 ease-out",
-				isMobile
-					? "ml-0"
-					: isExpanded
-						? "ml-[var(--sidebar-open-width)]"
-						: "ml-[var(--sidebar-collapsed-width)]",
+				getMainContentMargin(),
 			)}
 		>
 			<Stack direction="vertical" gap={0} className="min-h-0 flex-1">
@@ -245,7 +254,11 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 	return (
 		<div className="flex h-screen bg-white dark:bg-zinc-900">
 			<Sidebar className="hidden lg:block">
-        <Logo/>
+				<SidebarHeader>
+					<Button render={<Link href="/" />} variant="ghost" size="icon">
+						<Logo />
+					</Button>
+				</SidebarHeader>
 			</Sidebar>
 			<MainContent>{children}</MainContent>
 		</div>
