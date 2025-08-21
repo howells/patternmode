@@ -5,11 +5,11 @@ interface SidebarStore {
   state: 'collapsed' | 'open' | 'pinned';
   isHovering: boolean;
   isMobile: boolean;
-  
+  isExpanded: boolean;
+
   // Computed getters
-  get isExpanded(): boolean;
   get effectiveWidth(): string;
-  
+
   // Actions
   setState: (state: 'collapsed' | 'open' | 'pinned') => void;
   setHovering: (hovering: boolean) => void;
@@ -23,32 +23,53 @@ export const useSidebar = create<SidebarStore>((set, get) => ({
   state: 'collapsed',
   isHovering: false,
   isMobile: false,
-  
+  isExpanded: false,
+
   // Computed values using getters
-  get isExpanded() {
-    const { state, isHovering, isMobile } = get();
-    if (isMobile) {
-      return state === 'open';
-    }
-    return state === 'pinned' || (state === 'open' && isHovering);
-  },
-  
+
   get effectiveWidth() {
-    return get().isExpanded 
-      ? 'var(--sidebar-open-width)' 
+    return get().isExpanded
+      ? 'var(--sidebar-open-width)'
       : 'var(--sidebar-collapsed-width)';
   },
-  
+
   // Actions
-  setState: (state) => set({ state }),
-  setHovering: (isHovering) => set({ isHovering }),
-  setMobile: (isMobile) => set({ isMobile }),
-  
-  togglePin: () => set((state) => ({
-    state: state.state === 'pinned' ? 'collapsed' : 'pinned'
-  })),
-  
-  toggleOpen: () => set((state) => ({
-    state: state.state === 'open' ? 'collapsed' : 'open'
-  })),
+  setState: (state) => {
+    const { isHovering, isMobile } = get();
+    const isExpanded = isMobile
+      ? state === 'open'
+      : state === 'pinned' || state === 'open' || (state === 'collapsed' && isHovering);
+    set({ state, isExpanded });
+  },
+  setHovering: (isHovering) => {
+    const { state, isMobile } = get();
+    const isExpanded = isMobile
+      ? state === 'open'
+      : state === 'pinned' || state === 'open' || (state === 'collapsed' && isHovering);
+    console.log('setHovering calculation:', { state, isHovering, isMobile, isExpanded });
+    set({ isHovering, isExpanded });
+  },
+  setMobile: (isMobile) => {
+    const { state, isHovering } = get();
+    const isExpanded = isMobile
+      ? state === 'open'
+      : state === 'pinned' || state === 'open' || (state === 'collapsed' && isHovering);
+    set({ isMobile, isExpanded });
+  },
+
+  togglePin: () => set((state) => {
+    const newState = state.state === 'pinned' ? 'collapsed' : 'pinned';
+    const isExpanded = state.isMobile
+      ? newState === 'open'
+      : newState === 'pinned' || newState === 'open' || (newState === 'collapsed' && state.isHovering);
+    return { state: newState, isExpanded };
+  }),
+
+  toggleOpen: () => set((state) => {
+    const newState = state.state === 'open' ? 'collapsed' : 'open';
+    const isExpanded = state.isMobile
+      ? newState === 'open'
+      : newState === 'pinned' || newState === 'open' || (newState === 'collapsed' && state.isHovering);
+    return { state: newState, isExpanded };
+  }),
 }));
