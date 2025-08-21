@@ -1,4 +1,9 @@
 export { Sidebar } from "./sidebar";
+export { SidebarContent } from "./sidebar.content";
+export { SidebarFooter } from "./sidebar.footer";
+export { SidebarGroup } from "./sidebar.group";
+export { SidebarGroupLabel } from "./sidebar.group.label";
 export { SidebarHeader } from "./sidebar.header";
+export { SidebarSeparator } from "./sidebar.separator";
 export { SidebarMobile } from "./sidebar-mobile";
 export { useSidebar } from "./sidebar-store";

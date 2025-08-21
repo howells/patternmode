@@ -67,7 +67,9 @@ export function Sidebar({ children, className, expandOnHover = false }: SidebarP
 			{isExpanded && (
 				<Button variant="ghost" size="icon-xs" className="absolute top-2 right-2" icon={Pin} onClick={() => togglePin()} />
 			)}
-			{children}
+			<div className="flex flex-col h-full">
+				{children}
+			</div>
 		</nav>
 	);
 }

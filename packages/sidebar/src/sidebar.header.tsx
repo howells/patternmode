@@ -3,5 +3,5 @@ interface SidebarHeaderProps {
 }
 
 export const SidebarHeader = ({ children }: SidebarHeaderProps) => {
-	return <div className="p-2.5">{children}</div>;
+	return <div className="flex-shrink-0 p-2.5">{children}</div>;
 };
