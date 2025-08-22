@@ -43,7 +43,7 @@ importers:
   apps/web:
     dependencies:
       '@base-ui-components/react':
-        specifier: ^1.0.0-beta.1
+        specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.10)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@icons-pack/react-simple-icons':
         specifier: ^13.7.0

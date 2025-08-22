@@ -9,7 +9,7 @@ import {
 } from "@patternmode/ui/components/menu";
 import { cx } from "@patternmode/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Lock, Pin, Settings, X } from "lucide-react";
+import { Settings } from "lucide-react";
 import type React from "react";
 import { useEffect } from "react";
 import SidebarSettings from "./sidebar.settings";

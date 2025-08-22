@@ -39,7 +39,7 @@ const _Link = ({ href, children, ...props }: LinkProps) => (
  */
 const Button = ({
 	ref: forwardedRef,
-	render,
+	render = <button />,
 	showLeftIconOnHover = false,
 	showRightIconOnHover = false,
 	isLoading = false,
@@ -60,8 +60,6 @@ const Button = ({
 	kbdPlatform = "auto",
 	...props
 }: ButtonProps) => {
-	// Use render prop or default to button
-	const effectiveRender = render || <button type="button" />;
 
 	const hasChildren = children != null && children !== "";
 
@@ -558,8 +556,8 @@ const Button = ({
 	};
 
 	const element = useRender({
-		render: effectiveRender,
-		ref: forwardedRef,
+		render,
+		ref: forwardedRef ?? undefined,
 		props: mergeProps<"button">(defaultProps, props),
 	});
 

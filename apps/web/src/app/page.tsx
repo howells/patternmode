@@ -15,15 +15,15 @@ import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import { Code, Text } from "@patternmode/ui/components/text";
 import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/components/text-list";
-import {
-  Box,
-  CheckCircle,
-  Database,
-  ExternalLink,
-  FormInput,
-  MessageSquare,
-  Package,
-} from "lucide-react";
+// Temporarily removed lucide-react icons due to compatibility issues
+// import {
+//   Box,
+//   CheckCircle,
+//   Database,
+//   FormInput,
+//   MessageSquare,
+//   Package,
+// } from "lucide-react";
 import Link from "next/link";
 
 import { PageHeader } from "../components/page-header";
@@ -95,9 +95,12 @@ function CategoryCard({
   );
 }
 
+// Temporarily using a placeholder icon function until lucide-react issues are resolved
+const PlaceholderIcon = () => <div className="w-6 h-6 bg-gray-300 rounded">📦</div>;
+
 const componentCategories = [
   {
-    icon: Box,
+    icon: PlaceholderIcon as any,
     title: "UI Components",
     description: "Essential building blocks",
     items: [
@@ -111,7 +114,7 @@ const componentCategories = [
     useHorizontalLayout: true,
   },
   {
-    icon: FormInput,
+    icon: PlaceholderIcon as any,
     title: "Form Components",
     description: "Complete form toolkit",
     items: [
@@ -125,7 +128,7 @@ const componentCategories = [
     useHorizontalLayout: true,
   },
   {
-    icon: Database,
+    icon: PlaceholderIcon as any,
     title: "Data Display",
     description: "Data visualization tools",
     items: [
@@ -139,7 +142,7 @@ const componentCategories = [
     useHorizontalLayout: true,
   },
   {
-    icon: MessageSquare,
+    icon: PlaceholderIcon as any,
     title: "Feedback",
     description: "User communication",
     items: [
@@ -189,20 +192,20 @@ export default function Home() {
             <CardContent>
               <TextList align="center">
                 <TextListItem>
-                  <TextListIndicator icon={CheckCircle} />
+                  <TextListIndicator />
                   Node.js 18.0.0 or higher
                 </TextListItem>
                 <TextListItem>
-                  <TextListIndicator icon={CheckCircle} />
+                  <TextListIndicator />
                   pnpm package manager (recommended)
                 </TextListItem>
                 <TextListItem>
-                  <TextListIndicator icon={CheckCircle} />
+                  <TextListIndicator />
                   A React 19+ project
                   (Next.js, Vite, Create React App, etc.)
                 </TextListItem>
                 <TextListItem>
-                  <TextListIndicator icon={CheckCircle} />
+                  <TextListIndicator />
                   Tailwind CSS v4+ for styling
                 </TextListItem>
               </TextList>
@@ -283,7 +286,6 @@ pnpm add next@^14.0.0`}
                   <Callout
                     title="Why These Dependencies?"
                     variant="default"
-                    icon={Package}
                   >
                     These are peer dependencies that prevent version conflicts
                     and allow your app to control the versions of these core
@@ -370,9 +372,9 @@ export default {
                   </Text>
                   <CodeBlock language="tsx">
                     {`// Import from your copied components
-import { Button } from '@patternmode/ui
-import { Card, CardContent } from '@patternmode/ui
-import { Heading } from '@patternmode/ui
+import { Button } from '@patternmode/button';
+import { Card, CardContent } from '@patternmode/ui/components/card';
+import { Heading } from '@patternmode/ui/components/heading';
 
 function App() {
   return (
@@ -391,7 +393,6 @@ function App() {
                   <Callout
                     variant="warning"
                     title="Don't Forget Dependencies"
-                    icon={ExternalLink}
                   >
                     Make sure to also copy the required utility files like
                     {" "}
@@ -415,7 +416,7 @@ function App() {
             components and start building!
           </Text>
           <HStack gap={4} className="mt-4">
-            <Button render={<Link href="/ui" />} rightIcon={ExternalLink}>
+            <Button render={<Link href="/ui" />}>
               Browse Components
             </Button>
           </HStack>

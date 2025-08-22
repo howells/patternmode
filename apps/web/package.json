@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack",
+		"dev": "next dev",
 		"generate:pages": "node scripts/generate-pages.js",
 		"build": "next build",
 		"start": "next start",
@@ -14,7 +14,7 @@
 		"clean": "rm -rf .next"
 	},
 	"peerDependencies": {
-		"@base-ui-components/react": "^1.0.0-beta.1",
+		"@base-ui-components/react": "^1.0.0-beta.2",
 		"framer-motion": "^12.23.0",
 		"lucide-react": "^0.525.0",
 		"react": "^19.0.0",

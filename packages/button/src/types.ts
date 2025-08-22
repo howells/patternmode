@@ -2,6 +2,7 @@ import type { Size } from "@patternmode/config/sizes";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { IconComponent } from "@patternmode/icon/types";
+import { useRender } from "@base-ui-components/react/use-render";
 
 /**
  * Icon-only button size options.
@@ -119,25 +120,5 @@ export type ButtonProps = {
 	 * Show right icon only on hover.
 	 */
 	showRightIconOnHover?: boolean;
-	/**
-	 * Custom element to render (defaults to button tag).
-	 * Enables semantic flexibility while maintaining styling.
-	 */
-	render?: React.ComponentType<any>;
-	/**
-	 * Additional CSS classes for styling customization.
-	 * Merged with component classes using cx utility.
-	 */
-	className?: string;
-	/**
-	 * Button content.
-	 * Text, elements, or components to display inside the button.
-	 */
-	children?: React.ReactNode;
-	/**
-	 * Reference to the underlying DOM element.
-	 * For accessing the underlying DOM element.
-	 */
-	ref?: React.RefObject<HTMLButtonElement | null>;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> &
+} & useRender.ComponentProps<"button"> &
 	VariantProps<any>;
