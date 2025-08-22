@@ -23,7 +23,7 @@ import {
 import * as React from "react";
 import type { DayPickerProps, Matcher } from "react-day-picker";
 import { DayPicker, useDayPicker } from "react-day-picker";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import {
 	Select,
 	SelectContent,

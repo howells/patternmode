@@ -1,4 +1,4 @@
-import { SIZE_LABELS } from "../constants/sizes";
+import { SIZE_LABELS } from "@patternmode/constants/sizes";
 
 export const defaultConfig = {
 	components: {

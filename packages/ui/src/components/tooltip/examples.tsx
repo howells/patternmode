@@ -3,7 +3,7 @@
 import { HelpCircle, Info, Settings } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Tooltip } from "./component";
 
 export function DefaultExample() {

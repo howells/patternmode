@@ -5,7 +5,7 @@ import type {
 } from "@patternmode/utils/spacing";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { ResponsiveValue } from "../../presentation/responsive-utils";
+import type { ResponsiveValue } from "@patternmode/utils/responsive-utils";
 import type { stackVariants } from "./variants";
 
 /**

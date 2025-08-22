@@ -2,7 +2,7 @@ import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/contex
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
-import { Icon as IconComponent } from "../icon/component";
+import { Icon as IconComponent } from "@patternmode/icon";
 
 type ContextMenuProps = {
 	/**

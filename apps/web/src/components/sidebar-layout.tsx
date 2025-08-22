@@ -9,7 +9,7 @@ import {
 	SidebarItem,
 	useSidebar,
 } from "@patternmode/sidebar";
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Separator } from "@patternmode/ui/components/separator";
 import { Stack, VStack } from "@patternmode/ui/components/stack";

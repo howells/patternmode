@@ -1,5 +1,5 @@
 import { cx } from "@patternmode/utils/cx";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Heading } from "../heading/component";
 import { IconContainer } from "../icon-container/component";
 import { Subheading } from "../subheading/component";

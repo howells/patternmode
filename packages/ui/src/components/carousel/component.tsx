@@ -5,7 +5,7 @@ import type { UseEmblaCarouselType } from "embla-carousel-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import * as React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 
 /**
  * Embla Carousel API instance type.

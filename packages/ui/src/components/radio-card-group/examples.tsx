@@ -2,7 +2,7 @@
 
 import { Rocket, Truck, Zap } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { RadioCardGroup, RadioCardIndicator, RadioCardItem } from "./component";
 
 // Pre-imported icons from lucide-react

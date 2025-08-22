@@ -6,12 +6,12 @@ import { cx } from "@patternmode/utils/cx";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import type { VariantProps } from "tailwind-variants";
-import { Icon } from "../icon/component";
-import type { IconComponent } from "../icon/types";
-import { Kbd } from "../kbd/component";
-import { useButtonKeyboardShortcut } from "../kbd/use-keyboard-shortcut";
-import { Loader } from "../loader/component";
-import type { IconButtonSize } from "./types";
+import { Icon } from "@patternmode/icon";
+import type { IconComponent } from "@patternmode/icon/types";
+import { Kbd } from "@patternmode/kbd";
+import { useButtonKeyboardShortcut } from "@patternmode/kbd/use-keyboard-shortcut";
+import { Loader } from "@patternmode/loader";
+import type { ButtonProps, IconButtonSize } from "./types";
 import {
 	getIconContainerSize,
 	getIconSize,
@@ -33,120 +33,6 @@ const _Link = ({ href, children, ...props }: LinkProps) => (
 	</a>
 );
 
-type ButtonProps = {
-	/**
-	 * Whether the button is in a loading state.
-	 * Shows spinner and disables interactions when true.
-	 */
-	isLoading?: boolean;
-	/**
-	 * Text to display when loading (defaults to children).
-	 * Only shown when isLoading is true.
-	 */
-	loadingText?: string;
-	/**
-	 * Icon component (proxy for leftIcon).
-	 * This is essentially an alias for leftIcon, useful for single-icon buttons.
-	 * Takes precedence over leftIcon when both are provided.
-	 */
-	icon?: IconComponent;
-	/**
-	 * Icon component to display on the left side.
-	 * Used for icon-text combinations.
-	 */
-	leftIcon?: IconComponent;
-	/**
-	 * Icon component to display on the right side.
-	 * Not shown on icon-only button sizes.
-	 */
-	rightIcon?: IconComponent;
-	/**
-	 * Stroke width for icons (defaults to config value).
-	 * Controls the thickness of icon strokes.
-	 */
-	iconStrokeWidth?: number;
-	/**
-	 * Whether the button should take full width.
-	 * When true, button expands to container width.
-	 */
-	fullWidth?: boolean;
-	/**
-	 * Text alignment within the button.
-	 * Controls horizontal text positioning.
-	 */
-	textAlign?: "left" | "center" | "right";
-	/**
-	 * Keyboard shortcut to display.
-	 * Can be a single key or array of keys for combinations.
-	 */
-	kbd?: string | string[];
-	/**
-	 * Platform for keyboard shortcut display.
-	 * Auto-detects platform when set to "auto".
-	 */
-	kbdPlatform?: "mac" | "pc" | "auto";
-	/**
-	 * Visual style variant of the button.
-	 * Controls color scheme and visual emphasis.
-	 */
-	variant?:
-		| "primary"
-		| "secondary"
-		| "outline"
-		| "outline-dashed"
-		| "ghost"
-		| "destructive"
-		| "inverse-ghost"
-		| "link"
-		| "minimal";
-	/**
-	 * Size variant of the button.
-	 * Icon sizes are for icon-only buttons without text.
-	 */
-	size?: Size | IconButtonSize;
-	/**
-	 * Whether to use full border radius for rounded appearance.
-	 * Creates pill-shaped buttons when true.
-	 */
-	rounded?: boolean;
-
-	/**
-	 * Custom element to render (defaults to button tag).
-	 * Enables semantic flexibility while maintaining styling.
-	 *
-	 * @example
-	 * // With Next.js Link
-	 * <Button
-	 *   variant="primary"
-	 *   render={props => <Link href="/dashboard" {...props}>Dashboard</Link>}
-	 * />
-	 *
-	 * @example
-	 * // With custom component
-	 * <Button
-	 *   variant="outline"
-	 *   render={props => <CustomButton {...props}>Custom</CustomButton>}
-	 * />
-	 */
-	render?: useRender.RenderProp<Record<string, unknown>>;
-
-	/**
-	 * Whether to show the left icon only on hover.
-	 * When true, the left icon has opacity-0 normally and opacity-100 on hover.
-	 */
-	showLeftIconOnHover?: boolean;
-	/**
-	 * Whether to show the right icon only on hover.
-	 * When true, the right icon has opacity-0 normally and opacity-100 on hover.
-	 */
-	showRightIconOnHover?: boolean;
-	/**
-	 * Ref to the button element.
-	 * For accessing the underlying DOM element.
-	 */
-	ref?: React.RefObject<HTMLButtonElement | null>;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> &
-	VariantProps<typeof buttonVariants>;
 
 /**
  * Interactive button component with multiple variants and states for user actions.

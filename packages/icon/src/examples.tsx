@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
-import { Stack } from "../stack/component";
+import { Stack } from "@patternmode/stack";
 import { Icon } from "./component";
 
 // Basic icons
@@ -33,23 +33,14 @@ export const SizesExample = () => {
 export const WithBackgroundExample = () => {
 	return (
 		<Stack direction="horizontal" align="center" gap={2}>
-			<Stack
-				direction="horizontal"
-				align="center"
-				gap={2}
-				className="p-3 border rounded"
-			>
+			<Stack direction="horizontal" align="center" gap={2} className="p-3 border rounded">
 				<Icon icon={User} />
 				<span>Profile</span>
 			</Stack>
 
-			<Stack
-				direction="horizontal"
-				align="center"
-				className="p-3 border rounded"
-			>
+			<div className="flex items-center p-3 border rounded">
 				<Icon icon={Heart} className="text-red-500" />
-			</Stack>
+			</div>
 
 			<Stack direction="horizontal" align="center" gap={1}>
 				<Icon icon={Star} className="text-yellow-500" size="sm" />
@@ -66,23 +57,23 @@ export const WithBackgroundExample = () => {
 
 export function CustomStrokeExample() {
 	return (
-		<div className="flex items-center gap-4">
+		<Stack direction="horizontal" align="center" gap={4}>
 			<Icon icon={Star} strokeWidth={1} />
 			<Icon icon={Star} strokeWidth={1.5} />
 			<Icon icon={Star} strokeWidth={2} />
 			<Icon icon={Star} strokeWidth={2.5} />
-		</div>
+		</Stack>
 	);
 }
 
 export function LayoutExample() {
 	return (
 		<div className="space-y-4">
-			{/* Flex with gap */}
-			<div className="flex items-center gap-2 p-3 border rounded">
+			{/* Stack with gap */}
+			<Stack direction="horizontal" align="center" gap={2} className="p-3 border rounded">
 				<Icon icon={Search} />
-				<span>Search with flex gap</span>
-			</div>
+				<span>Search with stack gap</span>
+			</Stack>
 
 			{/* Manual margin */}
 			<div className="flex items-center p-3 border rounded">
@@ -91,16 +82,16 @@ export function LayoutExample() {
 			</div>
 
 			{/* Different gap sizes */}
-			<div className="space-y-2">
-				<div className="flex items-center gap-1">
+			<Stack gap={2}>
+				<Stack direction="horizontal" align="center" gap={1}>
 					<Icon icon={Star} size="sm" />
 					<span className="text-sm">Small gap</span>
-				</div>
-				<div className="flex items-center gap-3">
+				</Stack>
+				<Stack direction="horizontal" align="center" gap={3}>
 					<Icon icon={Heart} />
 					<span>Large gap</span>
-				</div>
-			</div>
+				</Stack>
+			</Stack>
 		</div>
 	);
 }

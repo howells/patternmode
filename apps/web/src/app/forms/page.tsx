@@ -7,7 +7,7 @@ import type { Switch as BaseSwitch } from "@base-ui-components/react/switch";
 import type { LucideIcon } from "lucide-react";
 
 // UI Component imports
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
 import { Divider } from "@patternmode/ui/components/divider";

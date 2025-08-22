@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import type { FormProps } from "./component";
 import { Form, FormControl, FormField } from "./component";
 

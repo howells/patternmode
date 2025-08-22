@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { loaderConfig } from "@patternmode/ui/components/loader/config";
+import { loaderConfig } from "@patternmode/loader/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

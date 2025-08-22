@@ -3,7 +3,7 @@
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import type { ToggleProps } from "./types";
 import { toggleVariants } from "./variants";
 

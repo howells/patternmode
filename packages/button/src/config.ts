@@ -7,8 +7,6 @@ import {
 	DisabledExample,
 	FullWidthExample,
 	GhostExample,
-	IconPropExample,
-	IconsOnHoverExample,
 	KeyboardShortcutsExample,
 	LinkExample,
 	LoadingExample,
@@ -20,7 +18,6 @@ import {
 	SecondaryExample,
 	SizesExample,
 	TextAlignExample,
-	WithIconsExample,
 } from "./examples";
 
 export const buttonConfig: ComponentConfig = {
@@ -31,7 +28,7 @@ export const buttonConfig: ComponentConfig = {
 	category: "controls",
 	featured: true,
 	icon: Square,
-	importStatement: `import { Button } from "@patternmode/ui/button";`,
+	importStatement: `import { Button } from "@patternmode/button";`,
 	examples: [
 		{
 			id: "primary",
@@ -80,24 +77,6 @@ export const buttonConfig: ComponentConfig = {
 			title: "Button as Link",
 			description: "Button that renders as a link using href prop",
 			component: ButtonAsLinkExample,
-		},
-		{
-			id: "icons-on-hover",
-			title: "Icons on Hover",
-			description: "Show left or right icons only on hover",
-			component: IconsOnHoverExample,
-		},
-		{
-			id: "with-icons",
-			title: "With Icons",
-			description: "Button with left and right icons",
-			component: WithIconsExample,
-		},
-		{
-			id: "icon-prop",
-			title: "Icon Prop",
-			description: "Button using icon prop for single icons",
-			component: IconPropExample,
 		},
 		{
 			id: "loading",

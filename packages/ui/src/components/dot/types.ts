@@ -3,7 +3,7 @@ import type { VariantProps } from "tailwind-variants";
 import type {
 	GlobalSemanticVariant,
 	TailwindColor,
-} from "../../constants/variants";
+} from "@patternmode/constants/variants";
 import type { dotVariants } from "./variants";
 
 // Dot-specific variant type (semantic + all Tailwind colors)

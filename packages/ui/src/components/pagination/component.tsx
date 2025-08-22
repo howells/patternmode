@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import type React from "react";
 
 // Framework-agnostic: do not import Next.js here
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 
 type PaginationProps = {
 	/**

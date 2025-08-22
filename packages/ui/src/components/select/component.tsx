@@ -3,9 +3,9 @@ import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
-import { hasErrorInput } from "../../presentation/has-error-input";
-import { Button } from "../button/component";
-import { Icon } from "../icon/component";
+import { hasErrorInput } from "@patternmode/utils/has-error-input";
+import { Button } from "@patternmode/button";
+import { Icon } from "@patternmode/icon";
 import type {
 	SelectArrowProps,
 	SelectBackdropProps,

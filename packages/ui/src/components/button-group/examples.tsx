@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { ButtonGroup } from "./component";
 
 export const DefaultExample = () => {

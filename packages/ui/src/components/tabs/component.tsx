@@ -4,7 +4,7 @@ import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
 import React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import type {
 	TabsContentProps,
 	TabsListProps,

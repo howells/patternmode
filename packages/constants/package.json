@@ -1,0 +1,78 @@
+{
+	"name": "@patternmode/constants",
+	"version": "0.1.0",
+	"description": "Shared constants and component variants for UI components",
+	"author": {
+		"name": "Daniel Howells",
+		"email": "daniel@howellsstudio.com",
+		"url": "https://github.com/howells"
+	},
+	"type": "module",
+	"license": "MIT",
+	"homepage": "https://patternmode.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/howells/patternmode.git",
+		"directory": "packages/constants"
+	},
+	"bugs": {
+		"url": "https://github.com/howells/patternmode/issues"
+	},
+	"keywords": [
+		"ui",
+		"constants",
+		"variants",
+		"design-tokens",
+		"styling",
+		"tailwind"
+	],
+	"sideEffects": false,
+	"exports": {
+		"./variants": {
+			"types": "./src/variants.ts",
+			"import": "./src/variants.ts",
+			"default": "./src/variants.ts"
+		},
+		"./component-categories": {
+			"types": "./src/component-categories.ts",
+			"import": "./src/component-categories.ts",
+			"default": "./src/component-categories.ts"
+		},
+		"./form-control-variants": {
+			"types": "./src/form-control-variants.ts",
+			"import": "./src/form-control-variants.ts",
+			"default": "./src/form-control-variants.ts"
+		},
+		"./sizes": {
+			"types": "./src/sizes.ts",
+			"import": "./src/sizes.ts",
+			"default": "./src/sizes.ts"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"src"
+	],
+	"engines": {
+		"node": ">=18.0.0",
+		"npm": ">=8.0.0"
+	},
+	"scripts": {
+		"build": "tsc --noEmit",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check src --write"
+	},
+	"dependencies": {
+		"@patternmode/utils": "workspace:*",
+		"clsx": "^2.1.1",
+		"tailwind-variants": "^2.1.0"
+	},
+	"devDependencies": {
+		"@types/node": "^24.3.0",
+		"typescript": "^5.9.2"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	}
+}

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Avatar } from "../avatar/component";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
 import { Fieldset } from "../fieldset/component";
 import { Grid, GridCell } from "../grid/component";

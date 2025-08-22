@@ -1,11 +1,6 @@
 "use client";
 
-import { iconRegistry } from "@patternmode/icons/icon-registry";
-import { HStack, Stack } from "../stack/component";
 import { Button } from "./component";
-
-// Pre-imported icons from registry
-const { ArrowRight, Plus } = iconRegistry;
 
 // Primary button
 export const PrimaryExample = () => <Button>Click me</Button>;
@@ -46,53 +41,12 @@ export const ButtonAsLinkExample = () => (
 		>
 			Go to Avatar docs
 		</Button>
-		<Button
-			variant="outline"
-			render={(props) => <a href="https://example.com" {...props} />}
-			rightIcon={ArrowRight}
-			showRightIconOnHover
-		>
-			External Link
-		</Button>
 	</div>
 );
 
-// Show icons on hover
-export const IconsOnHoverExample = () => (
-	<div className="flex items-center gap-2">
-		<Button leftIcon={Plus} showLeftIconOnHover>
-			Hover to see left icon
-		</Button>
-		<Button rightIcon={ArrowRight} showRightIconOnHover>
-			Hover to see right icon
-		</Button>
-		<Button
-			render={(props) => <a href="/ui/components/button" {...props} />}
-			rightIcon={ArrowRight}
-			showRightIconOnHover
-			variant="secondary"
-		>
-			Link with hover arrow
-		</Button>
-	</div>
-);
+// Simple button examples without icons
 
-// With icons
-export const WithIconsExample = () => (
-	<Button leftIcon={Plus} rightIcon={ArrowRight}>
-		With Icons
-	</Button>
-);
 
-// Icon prop (useful for single-icon buttons)
-export const IconPropExample = () => (
-	<div className="flex items-center gap-2">
-		<Button icon={Plus}>Add Item</Button>
-		<Button size="icon" icon={Plus} />
-		<Button size="icon-sm" icon={Plus} />
-		<Button size="icon-xs" icon={Plus} />
-	</div>
-);
 
 // Loading state
 export const LoadingExample = () => <Button isLoading>Loading...</Button>;
@@ -105,10 +59,6 @@ export const SizesExample = () => (
 		<Button size="sm">Small</Button>
 		<Button size="base">Base</Button>
 		<Button size="lg">Large</Button>
-		<Button size="icon-xs" icon={Plus} />
-		<Button size="icon-sm" icon={Plus} />
-		<Button size="icon" icon={Plus} />
-		<Button size="icon-lg" icon={Plus} />
 	</div>
 );
 
@@ -122,12 +72,7 @@ export const DisabledExample = () => <Button disabled>Disabled</Button>;
 
 // Rounded button
 export const RoundedExample = () => (
-	<div className="flex items-center gap-2">
-		<Button rounded>Rounded</Button>
-		<Button rounded size="icon">
-			<Plus />
-		</Button>
-	</div>
+	<Button rounded>Rounded</Button>
 );
 
 // Loading with text
@@ -139,25 +84,20 @@ export const LoadingWithTextExample = () => (
 
 // Text alignment
 export const TextAlignExample = () => (
-	<HStack gap={2}>
+	<div className="flex gap-2">
 		<Button fullWidth textAlign="left">
 			Left Aligned
 		</Button>
 		<Button fullWidth textAlign="center">
 			Center Aligned
 		</Button>
-	</HStack>
+	</div>
 );
 
 // Keyboard shortcuts
 export const KeyboardShortcutsExample = () => (
-	<Stack
-		direction={{
-			default: "vertical",
-			lg: "horizontal",
-		}}
-	>
-		<Button kbd={["mod", "K"]} leftIcon={Plus}>
+	<div className="flex flex-col gap-2">
+		<Button kbd={["mod", "K"]}>
 			Search
 		</Button>
 		<Button variant="secondary" kbd="Enter">
@@ -169,9 +109,8 @@ export const KeyboardShortcutsExample = () => (
 		<Button
 			variant="outline"
 			kbd={["mod", "shift", "P"]}
-			rightIcon={ArrowRight}
 		>
 			Command Palette
 		</Button>
-	</Stack>
+	</div>
 );

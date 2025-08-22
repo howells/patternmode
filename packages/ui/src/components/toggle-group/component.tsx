@@ -5,7 +5,7 @@ import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle
 import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import React, { use } from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { ToggleGroupContext } from "./constants";
 import type { ToggleGroupItemProps, ToggleGroupProps } from "./types";
 import { toggleGroupVariants } from "./variants";

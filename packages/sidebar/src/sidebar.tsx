@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import {
 	Menu,
 	MenuContent,

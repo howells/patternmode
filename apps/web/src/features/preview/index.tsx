@@ -2,7 +2,7 @@
 
 import type { PreviewProps as UiPreviewProp } from "@patternmode/ui/types/preview-props-type";
 
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@patternmode/ui/components/registry";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { HStack } from "@patternmode/ui/components/stack";

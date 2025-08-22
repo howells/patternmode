@@ -1,8 +1,8 @@
 import {
 	Button,
 	type ButtonProps,
-} from "@patternmode/ui/components/button";
-import type { buttonVariants } from "@patternmode/ui/components/button/types";
+} from "@patternmode/button";
+import type { buttonVariants } from "@patternmode/button/types";
 import { useSidebar } from "./sidebar-store";
 
 export const SidebarItem = ({ children, icon, ...props }: ButtonProps) => {

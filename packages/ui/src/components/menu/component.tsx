@@ -1,13 +1,14 @@
 "use client";
 
 import { Menu as BaseMenu } from "@base-ui-components/react/menu";
+import { Popover as BasePopover } from "@base-ui-components/react/popover";
+import { useRender } from "@base-ui-components/react/use-render";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
-import { Button } from "../button/component";
-import type { ButtonProps } from "../button/types";
-import { Icon as IconComponent } from "../icon/component";
-import type { useRender } from "../utils/use-render";
+import { Button, type ButtonProps } from "@patternmode/button";
+import { Icon as IconComponent } from "@patternmode/icon";
+import type { Size } from "@patternmode/config/sizes";
 
 /**
  * Root container for contextual menu with hierarchical navigation and action items.

@@ -11,7 +11,7 @@ import type * as React from "react";
 import {
 	createResponsiveClasses,
 	getResponsiveBase,
-} from "../../presentation/responsive-utils";
+} from "@patternmode/utils/responsive-utils";
 import type { StackProps } from "./types";
 import { stackVariants } from "./variants";
 

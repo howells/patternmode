@@ -3,7 +3,7 @@
 import { cx } from "@patternmode/utils/cx";
 import { ChevronDown } from "lucide-react";
 import type React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Menu, MenuContent, MenuTrigger } from "../menu/component";
 import { Separator } from "../separator/component";
 import type { SplitButtonProps } from "./types";

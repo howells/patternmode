@@ -3,8 +3,8 @@ import type { useRender } from "@base-ui-components/react/use-render";
 import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import type { ButtonProps } from "../button/component";
-import { Button } from "../button/component";
+import type { ButtonProps } from "@patternmode/button";
+import { Button } from "@patternmode/button";
 
 type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;
 

@@ -2,7 +2,7 @@
 
 import { Code, MapPin, Palette, User } from "lucide-react";
 import React from "react";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 import { Tag } from "../tag/component";
 import type { TagOption } from "./component";
 import { TagInput, useTagInput } from "./component";

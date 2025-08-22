@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "../button/component";
-import { buttonVariants } from "../button/types";
+import { Button } from "@patternmode/button";
+import { buttonVariants } from "@patternmode/button/types";
 import { ButtonGroup } from "./component";
 import type { ButtonGroupProps } from "./types";
 

@@ -5,7 +5,7 @@ import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import { Avatar } from "../avatar/component";
 import { DismissButton } from "../dismiss-button/component";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 
 /**
  * Get padding classes based on avatar and dismissible state.

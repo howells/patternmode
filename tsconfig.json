@@ -1,5 +1,15 @@
 {
+  "extends": "./packages/tsconfig/base.json",
   "compilerOptions": {
-    "strictNullChecks": true
-  }
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next",
+    "packages/stack",
+    "packages/icon"
+  ]
 }

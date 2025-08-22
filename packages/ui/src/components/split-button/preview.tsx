@@ -4,9 +4,9 @@ import type { Size } from "@patternmode/config/sizes";
 import { SIZES as sizes } from "@patternmode/config/sizes";
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import type React from "react";
-import type { ButtonVariant } from "../../constants/variants";
-import { componentVariants } from "../../constants/variants";
-import { Icon } from "../icon/component";
+import type { ButtonVariant } from "@patternmode/constants/variants";
+import { componentVariants } from "@patternmode/constants/variants";
+import { Icon } from "@patternmode/icon";
 import { SplitButton } from "./component";
 
 export type SplitButtonPreviewProps = {

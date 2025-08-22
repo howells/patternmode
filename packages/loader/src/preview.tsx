@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { SIZES } from "@patternmode/constants/sizes";
 import { Loader } from "./component";
 import type { LoaderProps } from "./types";
 

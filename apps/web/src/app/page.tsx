@@ -4,7 +4,7 @@ import type { GlobalSemanticVariant, TailwindColor } from "@patternmode/ui/const
 import type { LucideIcon } from "lucide-react";
 
 import { Badge } from "@patternmode/ui/components/badge";
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { Callout } from "@patternmode/ui/components/callout";
 import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
 import { CodeBlock } from "@patternmode/ui/components/code-block";

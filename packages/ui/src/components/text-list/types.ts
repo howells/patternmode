@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { IconSize } from "../icon/types";
+import type { IconSize } from "@patternmode/icon/types";
 import type {
 	indicatorVariants,
 	listItemVariants,

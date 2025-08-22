@@ -5,13 +5,18 @@
 	"type": "module",
 	"exports": {
 		"./border-radius-variants": "./src/border-radius-variants.ts",
+		"./border-radius-variants-with-full": "./src/border-radius-variants-with-full.ts",
+		"./breakpoints": "./src/breakpoints.ts",
+		"./colors": "./src/colors.ts",
 		"./focus-input": "./src/focus-input.ts",
 		"./has-error-input": "./src/has-error-input.ts",
 		"./focus-ring": "./src/focus-ring.ts",
 		"./spacing": "./src/spacing.ts",
+		"./spacing-utils": "./src/spacing-utils.ts",
 		"./cx": "./src/cx.ts",
 		"./container-button-adjustments": "./src/container-button-adjustments.ts",
-		"./responsive-utils": "./src/responsive-utils.ts"
+		"./responsive-utils": "./src/responsive-utils.ts",
+		"./types": "./src/types.ts"
 	},
 	"files": [
 		"src"
@@ -22,7 +27,6 @@
 		"lint": "biome check src --write"
 	},
 	"dependencies": {
-		"@patternmode/config": "workspace:*",
 		"clsx": "^2.1.1",
 		"tailwind-merge": "^3.3.1",
 		"tailwind-variants": "^2.1.0"

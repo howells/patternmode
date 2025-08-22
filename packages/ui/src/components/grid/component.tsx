@@ -6,8 +6,8 @@ import {
 	getBaseSpacingValue,
 	getGapClass,
 } from "@patternmode/utils/spacing";
-import type { ResponsiveValue } from "../../presentation/responsive-utils";
-import { createResponsiveClasses } from "../../presentation/responsive-utils";
+import type { ResponsiveValue } from "@patternmode/utils/responsive-utils";
+import { createResponsiveClasses } from "@patternmode/utils/responsive-utils";
 import type { GridAutoProps, GridCellProps, GridProps } from "./types";
 import { gridCellVariants, gridVariants } from "./variants";
 

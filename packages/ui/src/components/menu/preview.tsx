@@ -1,8 +1,8 @@
 "use client";
 
-import type { ButtonProps } from "../button/component";
-import { Button } from "../button/component";
-import { buttonVariants } from "../button/types";
+import type { ButtonProps } from "@patternmode/button";
+import { Button } from "@patternmode/button";
+import { buttonVariants } from "@patternmode/button/types";
 import {
 	Menu,
 	MenuContent,

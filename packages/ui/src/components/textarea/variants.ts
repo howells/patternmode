@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import { formControlElementVariants } from "../../constants/form-control-variants";
+import { formControlElementVariants } from "@patternmode/constants/form-control-variants";
 
 export const textareaStyles = tv({
 	extend: formControlElementVariants,

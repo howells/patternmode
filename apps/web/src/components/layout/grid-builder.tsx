@@ -2,7 +2,7 @@
 
 import type { SpacingValue } from "@patternmode/ui/presentation/spacing-utils";
 
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { Grid, GridCell } from "@patternmode/ui/components/grid";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";

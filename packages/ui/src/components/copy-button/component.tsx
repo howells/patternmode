@@ -2,7 +2,7 @@
 
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import type { CopyButtonProps } from "./types";
 
 /**

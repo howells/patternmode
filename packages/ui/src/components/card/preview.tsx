@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { ButtonGroup } from "../button-group/component";
 import { Text } from "../text/component";
 import type { CardProps } from "./component";

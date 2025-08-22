@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { ButtonGroup } from "../button-group/component";
 import { VStack } from "../stack/component";
 import { Code, Text } from "../text/component";

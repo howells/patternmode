@@ -9,7 +9,7 @@ import {
 	Settings,
 	Trash,
 } from "lucide-react";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 import {
 	MenuBar,
 	MenuBarContent,

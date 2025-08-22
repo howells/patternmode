@@ -1,4 +1,4 @@
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 
 import { Lock, Pin, X } from "lucide-react";
 import { useSidebar } from "./sidebar-store";

@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import { Callout } from "@patternmode/ui/components/callout";
 import { Card } from "@patternmode/ui/components/card";
-import { Icon } from "@patternmode/ui/components/icon";
+import { Icon } from "@patternmode/icon";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/ui/components/stack";
 import { Plus, Settings, X } from "lucide-react";

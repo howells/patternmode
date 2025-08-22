@@ -5,8 +5,8 @@ import type {
 	TextareaHeightChangeMeta,
 } from "react-textarea-autosize";
 import TextareaAutosize from "react-textarea-autosize";
-import { focusInput } from "../../presentation/focus-input";
-import { hasErrorInput } from "../../presentation/has-error-input";
+import { focusInput } from "@patternmode/utils/focus-input";
+import { hasErrorInput } from "@patternmode/utils/has-error-input";
 import type { TextareaPreviewProps } from "./preview";
 import { textareaStyles } from "./variants";
 

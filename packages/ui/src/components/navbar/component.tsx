@@ -9,7 +9,7 @@ import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import { useId } from "react";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 
 type NavbarProps = {
 	/**

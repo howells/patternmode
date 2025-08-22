@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { kbdConfig } from "@patternmode/ui/components/kbd/config";
+import { kbdConfig } from "@patternmode/kbd/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "incremental": true,
     "jsx": "preserve",
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
       "@/*": [

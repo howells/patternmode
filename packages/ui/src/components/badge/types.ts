@@ -1,8 +1,8 @@
 import type {
 	GlobalSemanticVariant,
 	TailwindColor,
-} from "../../constants/variants";
-import type { ButtonVariant } from "../button/types";
+} from "@patternmode/constants/variants";
+import type { ButtonVariant } from "@patternmode/button/types";
 
 /**
  * Badge variant type supporting both semantic variants, all Tailwind colors, and button-like variants.

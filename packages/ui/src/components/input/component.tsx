@@ -6,7 +6,7 @@ import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { Eye, EyeOff, Search } from "lucide-react";
 import React from "react";
-import { formControlContainerVariants } from "../../constants/form-control-variants";
+import { formControlContainerVariants } from "@patternmode/constants/form-control-variants";
 import type { InputProps } from "./types";
 import { inputElementStyles } from "./variants";
 

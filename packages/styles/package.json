@@ -12,9 +12,8 @@
 		"src"
 	],
 	"scripts": {
-		"build": "tsc --noEmit",
-		"typecheck": "tsc --noEmit",
-		"lint": "biome check src --write"
+		"typecheck": "echo 'No TypeScript files to check in styles package'",
+		"lint": "echo 'No linting needed for CSS-only package'"
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",

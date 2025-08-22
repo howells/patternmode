@@ -3,7 +3,7 @@
 import { cx } from "@patternmode/utils/cx";
 import { GripVertical, Plus } from "lucide-react";
 import type React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
 import { DismissButton } from "../dismiss-button/component";
 import { Input } from "../input/component";

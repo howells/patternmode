@@ -1,4 +1,4 @@
-import type { Size } from "@patternmode/config/sizes";
+import type { Size } from "./types";
 
 /**
  * Centralized Container Button Adjustments

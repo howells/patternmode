@@ -3,7 +3,7 @@ import type {
 	ResponsiveSpacing,
 } from "@patternmode/utils/spacing";
 import type React from "react";
-import type { ButtonProps } from "../button/component";
+import type { ButtonProps } from "@patternmode/button";
 
 export type ButtonGroupProps = {
 	/**

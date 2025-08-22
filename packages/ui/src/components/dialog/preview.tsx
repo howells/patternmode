@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Text } from "../text/component";
 import {
 	Dialog,

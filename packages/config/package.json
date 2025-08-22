@@ -12,7 +12,6 @@
 	},
 	"type": "module",
 	"exports": {
-		"./form-control-variants": "./src/form-control-variants.ts",
 		"./sizes": "./src/sizes.ts",
 		"./component-categories": "./src/component-categories.ts",
 		"./variants": "./src/variants.ts",
@@ -24,6 +23,7 @@
 		"./component-types": "./src/component-types.ts"
 	},
 	"dependencies": {
+		"@patternmode/constants": "workspace:*",
 		"clsx": "^2.1.1",
 		"tailwind-variants": "^2.1.0"
 	},

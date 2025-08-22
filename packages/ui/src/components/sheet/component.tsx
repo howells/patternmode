@@ -6,7 +6,7 @@ import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { X } from "lucide-react";
 import type * as React from "react";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 
 // Inline DismissButton functionality for Sheet
 const InlineSheetDismissButton = ({

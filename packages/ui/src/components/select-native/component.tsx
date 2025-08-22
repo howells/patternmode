@@ -2,7 +2,7 @@ import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import { ChevronsUpDown } from "lucide-react";
 import type React from "react";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 import type { SelectNativeProps } from "./types";
 import { selectNativeStyles } from "./variants";
 

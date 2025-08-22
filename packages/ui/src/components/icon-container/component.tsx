@@ -1,6 +1,6 @@
 import { cx } from "@patternmode/utils/cx";
-import { getColorClasses } from "../../constants/variants";
-import { Icon } from "../icon/component";
+import { getColorClasses } from "@patternmode/constants/variants";
+import { Icon } from "@patternmode/icon";
 import type { IconContainerProps } from "./types";
 import { iconContainerVariants } from "./variants";
 

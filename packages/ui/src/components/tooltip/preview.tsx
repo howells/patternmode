@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Tooltip } from "./component";
 import type { TooltipProps } from "./types";
 

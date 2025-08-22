@@ -23,8 +23,8 @@ import {
 	BreadcrumbsPreview,
 	breadcrumbsPreviewProps,
 } from "./breadcrumbs/preview";
-import { buttonConfig } from "./button/config";
-import { ButtonPreview, buttonPreviewProps } from "./button/preview";
+import { buttonConfig } from "@patternmode/button/config";
+import { ButtonPreview, buttonPreviewProps } from "@patternmode/button/preview";
 import { buttonGroupConfig } from "./button-group/config";
 import {
 	ButtonGroupPreview,
@@ -118,8 +118,8 @@ import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
 } from "./heading-element/preview";
-import { iconConfig } from "./icon/config";
-import { IconPreview, iconPreviewProps } from "./icon/preview";
+import { iconConfig } from "@patternmode/icon/config";
+import { IconPreview, iconPreviewProps } from "@patternmode/icon/preview";
 import { iconContainerConfig } from "./icon-container/config";
 import {
 	IconContainerPreview,
@@ -132,12 +132,12 @@ import {
 } from "./icon-select/preview";
 import { inputConfig } from "./input/config";
 import { InputPreview, inputPreviewProps } from "./input/preview";
-import { kbdConfig } from "./kbd/config";
-import { KbdPreview, kbdPreviewProps } from "./kbd/preview";
+import { kbdConfig } from "@patternmode/kbd/config";
+import { KbdPreview, kbdPreviewProps } from "@patternmode/kbd/preview";
 import { labelConfig } from "./label/config";
 import { LabelPreview, labelPreviewProps } from "./label/preview";
-import { loaderConfig } from "./loader/config";
-import { LoaderPreview, loaderPreviewProps } from "./loader/preview";
+import { loaderConfig } from "@patternmode/loader/config";
+import { LoaderPreview, loaderPreviewProps } from "@patternmode/loader/preview";
 import { menuConfig } from "./menu/config";
 import { MenuPreview, menuPreviewProps } from "./menu/preview";
 import { menuBarConfig } from "./menu-bar/config";
@@ -452,7 +452,7 @@ export const PREVIEW_REGISTRY = {
 	toolbar: ToolbarPreview,
 	tooltip: TooltipPreview,
 	tracker: TrackerPreview,
-} as const satisfies Record<string, React.ComponentType<Record<string, unknown>>>;
+} as const satisfies Record<string, React.ComponentType<any>>;
 
 // Static preview props registry
 export const PREVIEW_PROPS_REGISTRY = {

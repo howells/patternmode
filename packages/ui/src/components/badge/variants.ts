@@ -7,9 +7,9 @@ import {
 	getVariantClasses,
 	globalSemanticVariants,
 	tailwindColorVariants,
-} from "../../constants/variants";
-import { borderRadiusVariants } from "../../presentation/border-radius-variants";
-import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "../../presentation/border-radius-variants-with-full";
+} from "@patternmode/constants/variants";
+import { borderRadiusVariants } from "@patternmode/utils/border-radius-variants";
+import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "@patternmode/utils/border-radius-variants-with-full";
 
 // Badge variant configurations - generate dynamically from central variant system
 const badgeVariantStyles: Record<string, ClassValue[]> = {

@@ -2,7 +2,7 @@
 
 import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import type { DropdownItemProps } from "./types";
 import { dropdownItemVariants } from "./variants";
 

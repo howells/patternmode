@@ -3,8 +3,8 @@ import type { VariantProps } from "tailwind-variants";
 import type {
 	GlobalSemanticVariant,
 	TailwindColor,
-} from "../../constants/variants";
-import type { IconSize } from "../icon/types";
+} from "@patternmode/constants/variants";
+import type { IconSize } from "@patternmode/icon/types";
 import type { iconContainerVariants } from "./variants";
 
 export type IconContainerProps = {

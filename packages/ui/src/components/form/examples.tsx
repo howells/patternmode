@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Textarea } from "../textarea/component";
 import { Form, FormControl, FormField } from "./component";
 

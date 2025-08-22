@@ -2,7 +2,7 @@
 
 import type { ComponentConfig } from "@patternmode/ui/types/component-types";
 
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 import {
   Dialog,
   DialogContent,

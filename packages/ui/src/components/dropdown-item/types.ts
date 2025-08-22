@@ -1,5 +1,5 @@
 import type { VariantProps } from "tailwind-variants";
-import type { ButtonProps } from "../button/component";
+import type { ButtonProps } from "@patternmode/button";
 import type { dropdownItemVariants } from "./variants";
 
 export type DropdownItemProps = {

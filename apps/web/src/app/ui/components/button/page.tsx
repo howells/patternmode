@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { buttonConfig } from "@patternmode/ui/components/button/config";
+import { buttonConfig } from "@patternmode/button/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

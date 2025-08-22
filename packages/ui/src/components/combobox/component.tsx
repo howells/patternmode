@@ -7,10 +7,10 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCombobox } from "downshift";
 import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
-import { hasErrorInput } from "../../presentation/has-error-input";
-import { Icon } from "../icon/component";
+import { hasErrorInput } from "@patternmode/utils/has-error-input";
+import { Icon } from "@patternmode/icon";
 import { Input } from "../input/component";
-import { Loader } from "../loader/component";
+import { Loader } from "@patternmode/loader";
 import type { ComboboxOption, ComboboxProps } from "./types";
 import {
 	comboboxItemVariants,
@@ -216,6 +216,39 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 	}, []);
 
 	// Fetch data with React Query infinite query (only if fetchData is provided)
+	// Use a default empty state during SSR to avoid hydration mismatches
+	let queryResult;
+	try {
+		queryResult = useInfiniteQuery({
+			queryKey: [...queryKey, debouncedSearch],
+			queryFn: async ({ pageParam = 0, signal }) => {
+				if (!fetchData) {
+					return { data: [], hasNextPage: false };
+				}
+				return fetchData({
+					search: debouncedSearch,
+					pageParam,
+					signal,
+				});
+			},
+			enabled: !!fetchData && isMounted,
+			staleTime: 5 * 60 * 1000, // 5 minutes
+			refetchOnWindowFocus: false, // Prevent refetch on window focus
+			getNextPageParam: (lastPage) => lastPage.nextCursor,
+			initialPageParam: 0,
+		});
+	} catch (error) {
+		// If QueryClient is not available (e.g., during SSR), provide fallback
+		queryResult = {
+			data: undefined,
+			isLoading: false,
+			error: null,
+			fetchNextPage: () => Promise.resolve(),
+			isFetchingNextPage: false,
+			hasNextPage: false,
+		};
+	}
+
 	const {
 		data: infiniteData,
 		isLoading,
@@ -223,24 +256,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 		fetchNextPage,
 		isFetchingNextPage,
 		hasNextPage,
-	} = useInfiniteQuery({
-		queryKey: [...queryKey, debouncedSearch],
-		queryFn: async ({ pageParam = 0, signal }) => {
-			if (!fetchData) {
-				return { data: [], hasNextPage: false };
-			}
-			return fetchData({
-				search: debouncedSearch,
-				pageParam,
-				signal,
-			});
-		},
-		enabled: !!fetchData,
-		staleTime: 5 * 60 * 1000, // 5 minutes
-		refetchOnWindowFocus: false, // Prevent refetch on window focus
-		getNextPageParam: (lastPage) => lastPage.nextCursor,
-		initialPageParam: 0,
-	});
+	} = queryResult;
 
 	// Use either static options or fetched data (flattened from infinite query pages)
 	const allItems: T[] = React.useMemo(() => {

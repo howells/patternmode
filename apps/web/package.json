@@ -24,6 +24,10 @@
 	},
 	"dependencies": {
 		"@icons-pack/react-simple-icons": "^13.7.0",
+		"@patternmode/button": "workspace:*",
+		"@patternmode/icon": "workspace:*",
+		"@patternmode/kbd": "workspace:*",
+		"@patternmode/loader": "workspace:*",
 		"@patternmode/ui": "workspace:*",
 		"@patternmode/sidebar": "workspace:*",
 		"@patternmode/styles": "workspace:*",

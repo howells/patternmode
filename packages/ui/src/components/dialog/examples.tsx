@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "../button/component";
+import { Button } from "@patternmode/button";
 import { Input } from "../input/component";
 import { Text } from "../text/component";
 import {

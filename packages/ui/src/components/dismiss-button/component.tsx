@@ -2,7 +2,7 @@ import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import { X } from "lucide-react";
 import type React from "react";
-import { Icon } from "../icon/component";
+import { Icon } from "@patternmode/icon";
 import type { DismissButtonProps } from "./types";
 import { dismissButtonVariants } from "./variants";
 

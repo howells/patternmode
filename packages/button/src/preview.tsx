@@ -3,7 +3,7 @@
 import { SIZES as sizes } from "@patternmode/config/sizes";
 import { Save } from "lucide-react";
 import React from "react";
-import { componentVariants } from "../../constants/variants";
+import { componentVariants } from "@patternmode/constants/variants";
 import type { ButtonProps } from "./component";
 import { Button } from "./component";
 

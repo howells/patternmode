@@ -3,7 +3,7 @@
 import { useMediaQuery } from "@uidotdev/usehooks";
 import React from "react";
 
-import { MEDIA_QUERIES } from "../../presentation/breakpoints";
+import { MEDIA_QUERIES } from "@patternmode/utils/breakpoints";
 // Mobile drawer (Vaul)
 import {
 	Drawer,

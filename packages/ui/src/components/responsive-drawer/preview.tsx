@@ -1,8 +1,8 @@
 "use client";
 
-import type { ButtonVariant } from "../../constants/variants";
-import { Button } from "../button/component";
-import { buttonVariants } from "../button/types";
+import type { ButtonVariant } from "@patternmode/constants/variants";
+import { Button } from "@patternmode/button";
+import { buttonVariants } from "@patternmode/button/types";
 import {
 	ResponsiveDrawer,
 	ResponsiveDrawerClose,
