@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "../stack/component";
+import { Stack } from "@patternmode/stack";
 import {
 	Avatar,
 	AvatarFallback,

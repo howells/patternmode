@@ -28,6 +28,8 @@
 		"@patternmode/icon": "workspace:*",
 		"@patternmode/kbd": "workspace:*",
 		"@patternmode/loader": "workspace:*",
+		"@patternmode/stack": "workspace:*",
+		"@patternmode/text": "workspace:*",
 		"@patternmode/ui": "workspace:*",
 		"@patternmode/sidebar": "workspace:*",
 		"@patternmode/styles": "workspace:*",

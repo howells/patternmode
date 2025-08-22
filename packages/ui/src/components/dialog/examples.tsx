@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@patternmode/button";
 import { Input } from "../input/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import {
 	Dialog,
 	DialogClose,

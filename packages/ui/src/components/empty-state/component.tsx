@@ -3,7 +3,7 @@ import { Button } from "@patternmode/button";
 import { Heading } from "../heading/component";
 import { IconContainer } from "../icon-container/component";
 import { Subheading } from "../subheading/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import type { EmptyStateProps } from "./types";
 import {
 	emptyStateActionsVariants,

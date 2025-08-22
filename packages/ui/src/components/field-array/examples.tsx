@@ -15,7 +15,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../select/component";
-import { HStack, Stack, VStack } from "../stack/component";
+import { HStack, Stack, VStack } from "@patternmode/stack";
 import { Textarea } from "../textarea/component";
 import type { FieldSchema } from "./component";
 import { FieldArray } from "./component";

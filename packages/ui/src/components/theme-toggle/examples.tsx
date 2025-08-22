@@ -1,7 +1,7 @@
 "use client";
 
+import { Stack } from "@patternmode/stack";
 import React from "react";
-import { Stack } from "../stack/component";
 import { ThemeToggle } from "./component";
 
 export const DefaultExample = () => {

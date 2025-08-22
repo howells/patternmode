@@ -2,7 +2,7 @@
 
 import type { Size } from "@patternmode/config/sizes";
 import { SIZES as sizes } from "@patternmode/config/sizes";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
 export type TabsPreviewProps = {

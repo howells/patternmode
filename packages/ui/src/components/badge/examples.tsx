@@ -1,5 +1,6 @@
 "use client";
 
+import { Stack } from "@patternmode/stack";
 import {
 	AlertCircle,
 	ArrowRight,
@@ -8,7 +9,6 @@ import {
 	Star,
 	Trash2,
 } from "lucide-react";
-import { Stack } from "../stack/component";
 import { Badge } from "./component";
 
 // Default badge

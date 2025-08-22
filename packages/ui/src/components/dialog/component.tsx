@@ -3,7 +3,7 @@ import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import type React from "react";
 import { Subheading } from "../subheading/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 
 type _DialogProps = {
 	/**

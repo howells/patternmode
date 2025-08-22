@@ -11,9 +11,9 @@ import { CodeBlock } from "@patternmode/ui/components/code-block";
 import { Grid, GridCell } from "@patternmode/ui/components/grid";
 import { Heading } from "@patternmode/ui/components/heading";
 import { IconContainer } from "@patternmode/ui/components/icon-container";
-import { HStack, Stack, VStack } from "@patternmode/ui/components/stack";
+import { HStack, Stack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
-import { Code, Text } from "@patternmode/ui/components/text";
+import { Code, Text } from "@patternmode/text";
 import { TextList, TextListIndicator, TextListItem } from "@patternmode/ui/components/text-list";
 // Temporarily removed lucide-react icons due to compatibility issues
 // import {

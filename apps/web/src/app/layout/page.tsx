@@ -22,7 +22,7 @@ import {
 } from "@patternmode/ui/components/select";
 import { SortableList } from "@patternmode/ui/components/sortable-list";
 import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
-import { Stack } from "@patternmode/ui/components/stack";
+import { Stack } from "@patternmode/stack";
 import {
 	ToggleGroup,
 	ToggleGroupItem,

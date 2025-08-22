@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@patternmode/button";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import {
 	Dialog,
 	DialogClose,

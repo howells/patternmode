@@ -1,35 +1,27 @@
 "use client";
 
 import { cx } from "@patternmode/utils/cx";
+import {
+	generateResponsiveSpacingClasses,
+	getBaseSpacingValue,
+	getGapClass,
+	getPaddingClass,
+} from "@patternmode/utils/spacing";
 import type * as React from "react";
-import type { GapValue, SpacingValue, StackProps } from "./types";
+import {
+	createResponsiveClasses,
+	getResponsiveBase,
+} from "@patternmode/utils/responsive-utils";
+import type { StackProps } from "./types";
 import { stackVariants } from "./variants";
 
 /**
- * Utility function to get gap class string from a gap value.
- */
-const getGapClass = (value: GapValue): string => {
-	if (value >= 0) {
-		return `gap-${value}`;
-	}
-	// Handle negative values
-	return `gap-0`; // Negative spacing handled by compound variants
-};
-
-/**
- * Utility function to get padding class string from a spacing value.
- */
-const getPaddingClass = (value: SpacingValue): string => {
-	return `p-${value}`;
-};
-
-/**
- * Layout component for vertical or horizontal stacking with configurable spacing.
+ * Layout component for vertical or horizontal stacking with configurable spacing and responsive direction.
  */
 const Stack = ({
 	ref,
 	direction = "vertical",
-	gap = 4,
+	gap,
 	padding,
 	align,
 	justify,
@@ -39,12 +31,27 @@ const Stack = ({
 	children,
 	...props
 }: StackProps & { ref?: React.RefObject<HTMLElement | null> }) => {
-	// Generate base classes
-	const gapClass = getGapClass(gap);
-	const paddingClass = padding !== undefined ? getPaddingClass(padding) : "";
+	// Get base values for non-responsive cases
+	const baseGapValue = getBaseSpacingValue(gap) ?? 4;
+	const basePadding = getBaseSpacingValue(padding);
+	const baseDirection = getResponsiveBase(direction, "vertical");
+
+	// Generate responsive classes using shared utilities
+	const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);
+	const responsivePaddingClasses = generateResponsiveSpacingClasses(
+		"padding",
+		padding,
+	);
+	const responsiveDirectionClasses =
+		createResponsiveClasses.direction(direction);
+
+	// Get base classes for fallback
+	const baseGapClass = getGapClass(baseGapValue);
+	const basePaddingClass =
+		basePadding !== undefined ? getPaddingClass(basePadding) : "";
 
 	const generatedClasses = stackVariants({
-		direction,
+		direction: baseDirection as "vertical" | "horizontal",
 		align,
 		justify,
 		wrap,
@@ -55,8 +62,11 @@ const Stack = ({
 			ref={ref}
 			className={cx(
 				generatedClasses,
-				gapClass,
-				paddingClass,
+				baseGapClass,
+				basePaddingClass,
+				responsiveDirectionClasses,
+				responsiveGapClasses,
+				responsivePaddingClasses,
 				className,
 			)}
 			data-testid="stack"

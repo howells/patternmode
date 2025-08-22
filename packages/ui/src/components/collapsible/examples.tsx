@@ -3,8 +3,8 @@
 import React from "react";
 import { Button } from "@patternmode/button";
 import { ButtonGroup } from "../button-group/component";
-import { VStack } from "../stack/component";
-import { Code, Text } from "../text/component";
+import { VStack } from "@patternmode/stack";
+import { Code, Text } from "@patternmode/text";
 import { TextList, TextListItem } from "../text-list/component";
 import {
 	Collapsible,

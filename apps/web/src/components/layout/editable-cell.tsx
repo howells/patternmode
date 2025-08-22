@@ -5,7 +5,7 @@ import { Callout } from "@patternmode/ui/components/callout";
 import { Card } from "@patternmode/ui/components/card";
 import { Icon } from "@patternmode/icon";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
-import { Stack } from "@patternmode/ui/components/stack";
+import { Stack } from "@patternmode/stack";
 import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";

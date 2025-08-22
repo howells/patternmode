@@ -1,40 +1,44 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@patternmode/button";
-import { Stack } from "../stack/component";
+import { Stack } from "@patternmode/stack";
+import { useId, useState } from "react";
 import { Switch } from "./component";
 
 export const DefaultExample = () => {
+	const id = useId();
 	return (
 		<Stack direction="horizontal" align="center" gap={2}>
-			<Switch id="airplane-mode" />
-			<label htmlFor="airplane-mode">Airplane Mode</label>
+			<Switch id={id} />
+			<label htmlFor={id}>Airplane Mode</label>
 		</Stack>
 	);
 };
 
 export const CheckedExample = () => {
+	const id = useId();
 	return (
 		<Stack direction="horizontal" align="center" gap={2}>
-			<Switch id="notifications" defaultChecked />
-			<label htmlFor="notifications">Enable notifications</label>
+			<Switch id={id} defaultChecked />
+			<label htmlFor={id}>Enable notifications</label>
 		</Stack>
 	);
 };
 
 export const DisabledExample = () => {
+	const id1 = useId();
+	const id2 = useId();
 	return (
 		<Stack gap={4}>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="disabled-off" disabled />
-				<label htmlFor="disabled-off" className="text-zinc-500">
+				<Switch id={id1} disabled />
+				<label htmlFor={id1} className="text-zinc-500">
 					Disabled (off)
 				</label>
 			</Stack>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="disabled-on" defaultChecked disabled />
-				<label htmlFor="disabled-on" className="text-zinc-500">
+				<Switch id={id2} defaultChecked disabled />
+				<label htmlFor={id2} className="text-zinc-500">
 					Disabled (on)
 				</label>
 			</Stack>
@@ -43,29 +47,36 @@ export const DisabledExample = () => {
 };
 
 export const SizesExample = () => {
+	const id1 = useId();
+	const id2 = useId();
+	const id3 = useId();
+	const id4 = useId();
 	return (
 		<Stack gap={4}>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="xs" size="xs" />
-				<label htmlFor="xs">Extra small switch</label>
+				<Switch id={id1} size="xs" />
+				<label htmlFor={id1}>Extra small switch</label>
 			</Stack>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="sm" size="sm" />
-				<label htmlFor="sm">Small switch</label>
+				<Switch id={id2} size="sm" />
+				<label htmlFor={id2}>Small switch</label>
 			</Stack>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="base" size="base" />
-				<label htmlFor="base">Base switch</label>
+				<Switch id={id3} size="base" />
+				<label htmlFor={id3}>Base switch</label>
 			</Stack>
 			<Stack direction="horizontal" align="center" gap={2}>
-				<Switch id="lg" size="lg" />
-				<label htmlFor="lg">Large switch</label>
+				<Switch id={id4} size="lg" />
+				<label htmlFor={id4}>Large switch</label>
 			</Stack>
 		</Stack>
 	);
 };
 
 export const FormExample = () => {
+	const id1 = useId();
+	const id2 = useId();
+	const id3 = useId();
 	return (
 		<form>
 			<Stack gap={4}>
@@ -73,22 +84,22 @@ export const FormExample = () => {
 					<h3 className="text-lg font-medium">Email Preferences</h3>
 					<Stack gap={3}>
 						<Stack direction="horizontal" align="center" justify="between">
-							<label htmlFor="marketing" className="text-sm font-medium">
+							<label htmlFor={id1} className="text-sm font-medium">
 								Marketing emails
 							</label>
-							<Switch id="marketing" />
+							<Switch id={id1} />
 						</Stack>
 						<Stack direction="horizontal" align="center" justify="between">
-							<label htmlFor="security" className="text-sm font-medium">
+							<label htmlFor={id2} className="text-sm font-medium">
 								Security alerts
 							</label>
-							<Switch id="security" defaultChecked />
+							<Switch id={id2} defaultChecked />
 						</Stack>
 						<Stack direction="horizontal" align="center" justify="between">
-							<label htmlFor="updates" className="text-sm font-medium">
+							<label htmlFor={id3} className="text-sm font-medium">
 								Product updates
 							</label>
-							<Switch id="updates" />
+							<Switch id={id3} />
 						</Stack>
 					</Stack>
 				</Stack>

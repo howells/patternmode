@@ -17,7 +17,7 @@ export const textConfig: ComponentConfig = {
 	category: "display",
 	featured: true,
 	icon: Type,
-	importStatement: `import { Text, TextLink, Strong, Code } from "@patternmode/ui/text";`,
+	importStatement: `import { Text, TextLink, Strong, Code } from "@patternmode/text";`,
 	examples: [
 		{
 			id: "basic",

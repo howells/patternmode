@@ -3,7 +3,7 @@ import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import { Plus } from "lucide-react";
 import { Subheading } from "../subheading/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import type {
 	AccordionContentProps,
 	AccordionItemProps,

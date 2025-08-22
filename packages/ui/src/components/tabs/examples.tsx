@@ -2,7 +2,7 @@
 
 import { BarChart3, FileText, Settings, Users } from "lucide-react";
 import type React from "react";
-import { VStack } from "../stack/component";
+import { VStack } from "@patternmode/stack";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
 
 const TabTextContent = ({ children }: { children?: React.ReactNode }) => {

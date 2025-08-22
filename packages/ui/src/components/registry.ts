@@ -1,11 +1,19 @@
+import { buttonConfig } from "@patternmode/button/config";
+import { ButtonPreview, buttonPreviewProps } from "@patternmode/button/preview";
+import { iconConfig } from "@patternmode/icon/config";
+import { IconPreview, iconPreviewProps } from "@patternmode/icon/preview";
+import { kbdConfig } from "@patternmode/kbd/config";
+import { KbdPreview, kbdPreviewProps } from "@patternmode/kbd/preview";
+import { loaderConfig } from "@patternmode/loader/config";
+import { LoaderPreview, loaderPreviewProps } from "@patternmode/loader/preview";
+import { stackConfig } from "@patternmode/stack/config";
+import { StackPreview, stackPreviewProps } from "@patternmode/stack/preview";
+import { textConfig } from "@patternmode/text/config";
+import { TextPreview, textPreviewProps } from "@patternmode/text/preview";
 import type React from "react";
-
 import type { ComponentConfig } from "../types/component-types";
 import type { PreviewProps } from "../types/preview-props-type";
-
-// Import all component configs
 import { accordionConfig } from "./accordion/config";
-// Import all preview components and props
 import { AccordionPreview, accordionPreviewProps } from "./accordion/preview";
 import { alertDialogConfig } from "./alert-dialog/config";
 import {
@@ -23,8 +31,6 @@ import {
 	BreadcrumbsPreview,
 	breadcrumbsPreviewProps,
 } from "./breadcrumbs/preview";
-import { buttonConfig } from "@patternmode/button/config";
-import { ButtonPreview, buttonPreviewProps } from "@patternmode/button/preview";
 import { buttonGroupConfig } from "./button-group/config";
 import {
 	ButtonGroupPreview,
@@ -38,7 +44,6 @@ import { cardConfig } from "./card/config";
 import { CardPreview, cardPreviewProps } from "./card/preview";
 import { carouselConfig } from "./carousel/config";
 import { CarouselPreview, carouselPreviewProps } from "./carousel/preview";
-
 import { checkboxConfig } from "./checkbox/config";
 import { CheckboxPreview, checkboxPreviewProps } from "./checkbox/preview";
 import { checkboxGroupConfig } from "./checkbox-group/config";
@@ -118,8 +123,6 @@ import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
 } from "./heading-element/preview";
-import { iconConfig } from "@patternmode/icon/config";
-import { IconPreview, iconPreviewProps } from "@patternmode/icon/preview";
 import { iconContainerConfig } from "./icon-container/config";
 import {
 	IconContainerPreview,
@@ -132,12 +135,8 @@ import {
 } from "./icon-select/preview";
 import { inputConfig } from "./input/config";
 import { InputPreview, inputPreviewProps } from "./input/preview";
-import { kbdConfig } from "@patternmode/kbd/config";
-import { KbdPreview, kbdPreviewProps } from "@patternmode/kbd/preview";
 import { labelConfig } from "./label/config";
 import { LabelPreview, labelPreviewProps } from "./label/preview";
-import { loaderConfig } from "@patternmode/loader/config";
-import { LoaderPreview, loaderPreviewProps } from "@patternmode/loader/preview";
 import { menuConfig } from "./menu/config";
 import { MenuPreview, menuPreviewProps } from "./menu/preview";
 import { menuBarConfig } from "./menu-bar/config";
@@ -222,8 +221,6 @@ import {
 	SplitButtonPreview,
 	splitButtonPreviewProps,
 } from "./split-button/preview";
-import { stackConfig } from "./stack/config";
-import { StackPreview, stackPreviewProps } from "./stack/preview";
 import { stackedListConfig } from "./stacked-list/config";
 import {
 	StackedListPreview,
@@ -251,8 +248,6 @@ import { tagGroupConfig } from "./tag-group/config";
 import { TagGroupPreview, tagGroupPreviewProps } from "./tag-group/preview";
 import { tagInputConfig } from "./tag-input/config";
 import { TagInputPreview, tagInputPreviewProps } from "./tag-input/preview";
-import { textConfig } from "./text/config";
-import { TextPreview, textPreviewProps } from "./text/preview";
 import { textListConfig } from "./text-list/config";
 import { TextListPreview, textListPreviewProps } from "./text-list/preview";
 import { textareaConfig } from "./textarea/config";

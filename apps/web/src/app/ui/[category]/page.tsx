@@ -9,9 +9,9 @@ import {
   getCategoryInfo,
   getComponentsByCategory,
 } from "@patternmode/ui/components/registry";
-import { HStack, VStack } from "@patternmode/ui/components/stack";
+import { HStack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
-import { Text } from "@patternmode/ui/components/text";
+import { Text } from "@patternmode/text";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

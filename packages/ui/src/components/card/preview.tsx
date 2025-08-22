@@ -2,7 +2,7 @@
 
 import { Button } from "@patternmode/button";
 import { ButtonGroup } from "../button-group/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import type { CardProps } from "./component";
 import {
 	Card,

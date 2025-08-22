@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "../badge/component";
-import { Text } from "../text/component";
+import { Text } from "@patternmode/text";
 import { TextList, TextListItem } from "../text-list/component";
 
 import {

@@ -1,5 +1,11 @@
+import type {
+	GapValue,
+	ResponsiveSpacing,
+	SpacingValue,
+} from "@patternmode/utils/spacing";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
+import type { ResponsiveValue } from "@patternmode/utils/responsive-utils";
 import type { stackVariants } from "./variants";
 
 /**
@@ -7,45 +13,22 @@ import type { stackVariants } from "./variants";
  */
 export type StackDirection = "vertical" | "horizontal";
 
-/**
- * Standard spacing values using 4px grid scale.
- */
-export type SpacingValue =
-	| 0
-	| 1
-	| 2
-	| 3
-	| 4
-	| 5
-	| 6
-	| 8
-	| 10
-	| 12
-	| 16
-	| 20
-	| 24;
-
-/**
- * Gap values including negative spacing for overlapping elements.
- */
-export type GapValue = SpacingValue | -6 | -5 | -4 | -3 | -2 | -1;
-
 export type StackProps = {
 	/**
-	 * The direction of the stack.
+	 * The direction of the stack - can be responsive.
 	 * Controls whether children are arranged vertically or horizontally.
 	 */
-	direction?: StackDirection;
+	direction?: ResponsiveValue<StackDirection>;
 	/**
-	 * Gap between items (4px grid scale).
+	 * Gap between items (4px grid scale) - can be responsive.
 	 * Supports values from 0-24 using the 4px grid system, plus negative values for overlapping.
 	 */
-	gap?: GapValue;
+	gap?: ResponsiveSpacing<GapValue>;
 	/**
-	 * Padding around the stack (4px grid scale).
+	 * Padding around the stack (4px grid scale) - can be responsive.
 	 * Adds internal spacing around all stack content using the 4px grid system.
 	 */
-	padding?: SpacingValue;
+	padding?: ResponsiveSpacing<SpacingValue>;
 	/**
 	 * How to align items along the cross axis.
 	 * Controls alignment perpendicular to the stack direction.

@@ -12,7 +12,7 @@ import {
 import { Button } from "@patternmode/button";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Separator } from "@patternmode/ui/components/separator";
-import { Stack, VStack } from "@patternmode/ui/components/stack";
+import { Stack, VStack } from "@patternmode/stack";
 import { cx } from "@patternmode/ui/utils/cx";
 import { Layers } from "lucide-react";
 import Link from "next/link";

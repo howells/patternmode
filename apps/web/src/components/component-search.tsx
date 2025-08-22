@@ -11,8 +11,8 @@ import {
 } from "@patternmode/ui/components/dialog";
 import { Input } from "@patternmode/ui/components/input";
 import { getAllComponents } from "@patternmode/ui/components/registry";
-import { Stack } from "@patternmode/ui/components/stack";
-import { Text } from "@patternmode/ui/components/text";
+import { Stack } from "@patternmode/stack";
+import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/ui/utils/cx";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";

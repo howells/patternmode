@@ -1,7 +1,7 @@
 {
-	"name": "@patternmode/stack",
+	"name": "@patternmode/text",
 	"version": "0.1.0",
-	"description": "Flexible layout components for arranging content in vertical or horizontal stacks",
+	"description": "Typography components with consistent text styling and semantic meaning",
 	"author": {
 		"name": "Daniel Howells",
 		"email": "daniel@howellsstudio.com",
@@ -13,21 +13,22 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/howells/patternmode.git",
-		"directory": "packages/stack"
+		"directory": "packages/text"
 	},
 	"bugs": {
 		"url": "https://github.com/howells/patternmode/issues"
 	},
 	"keywords": [
 		"react",
-		"stack",
-		"layout",
-		"flexbox",
-		"spacing",
+		"text",
+		"typography",
 		"ui",
 		"components",
+		"tailwind",
+		"tailwindcss",
 		"typescript",
-		"responsive"
+		"accessibility",
+		"a11y"
 	],
 	"sideEffects": false,
 	"exports": {
@@ -89,7 +90,9 @@
 	"dependencies": {
 		"@patternmode/config": "workspace:*",
 		"@patternmode/utils": "workspace:*",
+		"clsx": "^2.1.1",
 		"lucide-react": "^0.525.0",
+		"tailwind-merge": "^3.3.1",
 		"tailwind-variants": "^2.1.0"
 	},
 	"devDependencies": {

@@ -2,7 +2,7 @@
 
 import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
-import { VStack } from "@patternmode/ui/components/stack";
+import { VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/ui/components/subheading";
 import React from "react";
 
