@@ -419,6 +419,9 @@ importers:
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
+      '@react-aria/interactions':
+        specifier: ^3.25.4
+        version: 3.25.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@uidotdev/usehooks':
         specifier: ^2.4.1
         version: 2.4.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)

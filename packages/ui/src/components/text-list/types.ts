@@ -1,7 +1,7 @@
+import type { IconSize } from "@patternmode/icon/types";
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
-import type { IconSize } from "@patternmode/icon/types";
 import type {
 	indicatorVariants,
 	listItemVariants,
@@ -35,6 +35,17 @@ export type TextListProps = {
 	 * When true, only user-provided className styles are applied.
 	 */
 	unstyled?: boolean;
+	/**
+	 * Optional icon component to use as a custom bullet for all list items.
+	 * Accepts Lucide icons or any component supporting `className` and `strokeWidth`.
+	 */
+	icon?:
+		| React.ComponentType<{ className?: string; strokeWidth?: number }>
+		| LucideIcon;
+	/**
+	 * Size to render the custom icon bullets when `icon` is provided.
+	 */
+	iconSize?: IconSize;
 } & React.HTMLAttributes<HTMLUListElement> &
 	VariantProps<typeof listVariants>;
 
@@ -57,6 +68,11 @@ export type TextListItemProps = {
 	 * When true, only user-provided className styles are applied.
 	 */
 	unstyled?: boolean;
+	/**
+	 * Optional heading text to display above the main content of the list item.
+	 * Renders as a semantic heading element for better accessibility.
+	 */
+	heading?: string;
 } & React.HTMLAttributes<HTMLLIElement> &
 	VariantProps<typeof listItemVariants>;
 

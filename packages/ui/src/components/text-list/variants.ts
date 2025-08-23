@@ -1,17 +1,16 @@
 import { tv } from "tailwind-variants";
 
 export const listVariants = tv({
-	base: "list-none space-y-1",
+	base: "space-y-1 text-sm",
 	variants: {
 		variant: {
-			marker:
-				"list-disc list-inside marker:text-zinc-400 dark:marker:text-zinc-500",
-			plain: "",
+			marker: "list-none pl-0",
+			plain: "list-none pl-0",
 		},
 		align: {
-			start: "items-start",
-			center: "items-center",
-			end: "items-end",
+			start: "text-left",
+			center: "text-center",
+			end: "text-right",
 		},
 	},
 	defaultVariants: {
@@ -21,16 +20,16 @@ export const listVariants = tv({
 });
 
 export const listItemVariants = tv({
-	base: "text-zinc-700 dark:text-zinc-300",
+	base: "text-zinc-700 dark:text-zinc-300 relative pl-6",
 	variants: {
 		variant: {
 			marker: "",
-			plain: "flex gap-2",
+			plain: "",
 		},
 		align: {
-			start: "items-start",
-			center: "items-center",
-			end: "items-end",
+			start: "text-left",
+			center: "text-center",
+			end: "text-right",
 		},
 	},
 	defaultVariants: {
@@ -43,8 +42,8 @@ export const indicatorVariants = tv({
 	base: "shrink-0",
 	variants: {
 		variant: {
-			marker: "hidden",
-			plain: "block",
+			marker: "absolute left-0 top-1",
+			plain: "absolute left-0 top-1",
 		},
 	},
 	defaultVariants: {
