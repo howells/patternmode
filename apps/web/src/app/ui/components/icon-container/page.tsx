@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { iconContainerConfig } from "@patternmode/ui/components/icon-container/config";
+import { iconContainerConfig } from "@patternmode/icon-container/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

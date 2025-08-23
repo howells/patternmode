@@ -14,7 +14,7 @@ import { Separator } from "@patternmode/separator";
 import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/ui/components/field";
 import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/ui/components/form";
 import { Grid, GridCell } from "@patternmode/grid";
-import { IconContainer } from "@patternmode/ui/components/icon-container";
+import { IconContainer } from "@patternmode/icon-container";
 import { Input } from "@patternmode/ui/components/input";
 import { NumberField } from "@patternmode/ui/components/number-field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";

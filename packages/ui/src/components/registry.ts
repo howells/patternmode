@@ -121,11 +121,8 @@ import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
 } from "./heading-element/preview";
-import { iconContainerConfig } from "./icon-container/config";
-import {
-	IconContainerPreview,
-	iconContainerPreviewProps,
-} from "./icon-container/preview";
+import { iconContainerConfig } from "@patternmode/icon-container/config";
+import { IconContainerPreview, iconContainerPreviewProps } from "@patternmode/icon-container/preview";
 import { iconSelectConfig } from "./icon-select/config";
 import {
 	IconSelectPreview,
