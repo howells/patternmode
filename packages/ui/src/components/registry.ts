@@ -87,8 +87,6 @@ import {
 	DismissButtonPreview,
 	dismissButtonPreviewProps,
 } from "./dismiss-button/preview";
-import { dividerConfig } from "./divider/config";
-import { DividerPreview, dividerPreviewProps } from "./divider/preview";
 import { dotConfig } from "./dot/config";
 import { DotPreview, dotPreviewProps } from "./dot/preview";
 import { drawerConfig } from "./drawer/config";
@@ -291,7 +289,6 @@ export const COMPONENT_REGISTRY = {
 	"description-list": descriptionListConfig,
 	dialog: dialogConfig,
 	"dismiss-button": dismissButtonConfig,
-	divider: dividerConfig,
 	dot: dotConfig,
 	drawer: drawerConfig,
 	"dropdown-item": dropdownItemConfig,
@@ -381,7 +378,6 @@ export const PREVIEW_REGISTRY = {
 	"description-list": DescriptionListPreview,
 	dialog: DialogPreview,
 	"dismiss-button": DismissButtonPreview,
-	divider: DividerPreview,
 	dot: DotPreview,
 	drawer: DrawerPreview,
 	"dropdown-item": DropdownItemPreview,
@@ -471,7 +467,6 @@ export const PREVIEW_PROPS_REGISTRY = {
 	"description-list": descriptionListPreviewProps,
 	dialog: dialogPreviewProps,
 	"dismiss-button": dismissButtonPreviewProps,
-	divider: dividerPreviewProps,
 	dot: dotPreviewProps,
 	drawer: drawerPreviewProps,
 	"dropdown-item": dropdownItemPreviewProps,
@@ -617,10 +612,6 @@ export const COMPONENT_METADATA_REGISTRY = {
 	"dismiss-button": {
 		title: dismissButtonConfig.name,
 		description: dismissButtonConfig.description,
-	},
-	divider: {
-		title: dividerConfig.name,
-		description: dividerConfig.description,
 	},
 
 	dot: { title: dotConfig.name, description: dotConfig.description },

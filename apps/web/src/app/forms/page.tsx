@@ -10,7 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import { Button } from "@patternmode/button";
 import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
-import { Divider } from "@patternmode/ui/components/divider";
+import { Separator } from "@patternmode/separator";
 import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/ui/components/field";
 import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/ui/components/form";
 import { Grid, GridCell } from "@patternmode/grid";
@@ -756,7 +756,7 @@ export default function FormsPage() {
                   </GridCell>
                 </Grid>
 
-                <Divider />
+                <Separator />
 
                 <VStack gap={4}>
                   <Field name="newsletter">
