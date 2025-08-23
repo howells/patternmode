@@ -5,7 +5,7 @@ import { GripVertical, Plus } from "lucide-react";
 import type React from "react";
 import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
-import { DismissButton } from "../dismiss-button/component";
+import { DismissButton } from "@patternmode/dismiss-button";
 import { Input } from "../input/component";
 import {
 	Select,

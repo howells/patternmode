@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { dismissButtonConfig } from "@patternmode/ui/components/dismiss-button/config";
+import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

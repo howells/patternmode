@@ -82,11 +82,11 @@ import {
 } from "./description-list/preview";
 import { dialogConfig } from "./dialog/config";
 import { DialogPreview, dialogPreviewProps } from "./dialog/preview";
-import { dismissButtonConfig } from "./dismiss-button/config";
+import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
 import {
 	DismissButtonPreview,
 	dismissButtonPreviewProps,
-} from "./dismiss-button/preview";
+} from "@patternmode/dismiss-button/preview";
 import { dotConfig } from "@patternmode/dot/config";
 import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "./drawer/config";

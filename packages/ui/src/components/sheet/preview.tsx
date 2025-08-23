@@ -3,7 +3,7 @@
 import type { ButtonVariant } from "@patternmode/constants/variants";
 import { Button } from "@patternmode/button";
 import { buttonVariants } from "@patternmode/button/types";
-import { DismissButton } from "../dismiss-button/component";
+import { DismissButton } from "@patternmode/dismiss-button";
 import {
 	Sheet,
 	SheetClose,

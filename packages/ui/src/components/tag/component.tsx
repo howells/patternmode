@@ -4,7 +4,7 @@ import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import { Avatar } from "../avatar/component";
-import { DismissButton } from "../dismiss-button/component";
+import { DismissButton } from "@patternmode/dismiss-button";
 import { Icon } from "@patternmode/icon";
 
 /**
