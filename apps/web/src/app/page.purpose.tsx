@@ -1,23 +1,20 @@
 "use client";
 
-import { TextList, TextListItem } from "@patternmode/ui/components/text-list";
-import { Check, CircleHelp } from "lucide-react";
+import { FeatureItem } from "@patternmode/feature-item";
+import { Grid } from "@patternmode/ui/components/grid";
+import { Check } from "lucide-react";
 
 export const Purpose = () => {
 	return (
-		<>
-			<TextList icon={Check} iconSize="sm">
-				<TextListItem heading="Why?">
-					Patternmode is a very opinionated component library based on the best
-					bits of Base UI, Shadcn UI, Tailwind, and more.
-				</TextListItem>
-			</TextList>
-			<TextList>
-				<TextListItem heading="Why?">
-					Patternmode is a very opinionated component library based on the best
-					bits of Base UI, Shadcn UI, Tailwind, and more.
-				</TextListItem>
-			</TextList>
-		</>
+		<Grid columns={2} className="mt-6">
+			<FeatureItem icon={Check} heading="Why?">
+				Patternmode is a very opinionated component library based on the best
+				bits of Base UI, Shadcn UI, Tailwind, and more.
+			</FeatureItem>
+			<FeatureItem heading="Why?">
+				Patternmode is a very opinionated component library based on the best
+				bits of Base UI, Shadcn UI, Tailwind, and more.
+			</FeatureItem>
+		</Grid>
 	);
 };

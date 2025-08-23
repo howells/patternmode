@@ -4,7 +4,7 @@ export const listVariants = tv({
 	base: "space-y-1 text-sm",
 	variants: {
 		variant: {
-			marker: "list-none pl-0",
+			marker: "list-disc pl-5",
 			plain: "list-none pl-0",
 		},
 		align: {
@@ -20,7 +20,7 @@ export const listVariants = tv({
 });
 
 export const listItemVariants = tv({
-	base: "relative",
+	base: "text-zinc-700 dark:text-zinc-300 relative",
 	variants: {
 		variant: {
 			marker: "",
@@ -31,32 +31,22 @@ export const listItemVariants = tv({
 			center: "text-center",
 			end: "text-right",
 		},
-		withHeading: {
-			true: "text-zinc-600 dark:text-zinc-300",
-			false: "text-zinc-900 dark:text-zinc-100",
-		},
 	},
 	defaultVariants: {
 		variant: "marker",
 		align: "start",
-		withHeading: false,
 	},
 });
 
 export const indicatorVariants = tv({
-	base: "shrink-0 absolute",
+	base: "shrink-0 absolute left-0 top-1",
 	variants: {
 		variant: {
 			marker: "",
 			plain: "",
 		},
-		withIcon: {
-			true: "-left-6 top-0.5",
-			false: "-left-4.5 top-1.5",
-		},
 	},
 	defaultVariants: {
 		variant: "marker",
-		withIcon: false,
 	},
 });

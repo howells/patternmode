@@ -1,20 +1,12 @@
 "use client";
 
-import { Icon } from "@patternmode/icon";
-import type { IconComponent, IconSize } from "@patternmode/icon/types";
 import { cx } from "@patternmode/utils/cx";
 import { createContext, useContext } from "react";
-import type {
-	TextListIndicatorProps,
-	TextListItemProps,
-	TextListProps,
-} from "./types";
-import { indicatorVariants, listItemVariants, listVariants } from "./variants";
+import type { TextListIndicatorProps, TextListItemProps, TextListProps } from "./types";
+import { listItemVariants, listVariants } from "./variants";
 
-type TextListContextValue = {
-	icon?: IconComponent;
-	iconSize?: IconSize;
-};
+// Simplified context (no icon/heading)
+type TextListContextValue = Record<string, never>;
 
 const TextListContext = createContext<TextListContextValue | null>(null);
 
@@ -28,14 +20,12 @@ export const TextList = ({
 	unstyled,
 	className,
 	children,
-	icon,
-	iconSize,
 	...props
 }: TextListProps) => {
 	const Component: React.ElementType = as || "ul";
 
 	return (
-		<TextListContext.Provider value={{ icon, iconSize }}>
+		<TextListContext.Provider value={{}}>
 			<Component
 				data-testid="text-list"
 				className={cx(!unstyled && listVariants({ variant, align }), className)}
@@ -58,64 +48,23 @@ export function TextListItem({
 	unstyled,
 	className,
 	children,
-	heading,
 	...props
 }: TextListItemProps) {
-	const ctx = useContext(TextListContext);
+	useContext(TextListContext);
 
 	return (
 		<li
-			className={cx(
-				!unstyled &&
-					listItemVariants({ variant, align, withHeading: Boolean(heading) }),
-				className,
-			)}
+			className={cx(!unstyled && listItemVariants({ variant, align }), className)}
 			{...props}
 		>
-			<TextListIndicator
-				icon={ctx?.icon}
-				size={ctx?.iconSize ?? ("base" as IconSize)}
-				variant={variant}
-			/>
-			{heading && (
-				<h4 className="text-zinc-900 dark:text-zinc-100 font-medium">
-					{heading}
-				</h4>
-			)}
 			{children}
 		</li>
 	);
 }
 
 /**
- * Custom indicator component for list items with icon or custom content support.
+ * TextListIndicator has been removed in the simplified TextList.
  */
-export function TextListIndicator({
-	icon: IconComponent,
-	size = "base",
-	variant,
-	unstyled,
-	className,
-	children,
-	...props
-}: TextListIndicatorProps) {
-	return (
-		<span
-			className={cx(
-				!unstyled &&
-					indicatorVariants({
-						variant,
-						withIcon: Boolean(IconComponent),
-					}),
-				className,
-			)}
-			{...props}
-		>
-			{IconComponent ? (
-				<Icon icon={IconComponent} size={size} />
-			) : (
-				<span className="block size-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500" />
-			)}
-		</span>
-	);
+export function TextListIndicator(_: TextListIndicatorProps) {
+	return null;
 }
