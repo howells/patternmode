@@ -45,7 +45,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering && state !== "locked");
+						(state === "collapsed" && isHovering);
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ state, isExpanded, shouldOffsetContent });
 			},
@@ -55,7 +55,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering && state !== "locked");
+						(state === "collapsed" && isHovering);
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ isHovering, isExpanded, shouldOffsetContent });
 			},
@@ -65,7 +65,7 @@ export const useSidebar = create<SidebarStore>()(
 					? state === "open"
 					: state === "pinned" ||
 						state === "open" ||
-						(state === "collapsed" && isHovering && state !== "locked");
+						(state === "collapsed" && isHovering);
 				const shouldOffsetContent = !isMobile && state === "pinned";
 				set({ isMobile, isExpanded, shouldOffsetContent });
 			},
@@ -74,9 +74,7 @@ export const useSidebar = create<SidebarStore>()(
 				const newState = state.state === "pinned" ? "collapsed" : "pinned";
 				const isExpanded = state.isMobile
 					? newState === "open"
-					: newState === "pinned" ||
-						newState === "open" ||
-						(newState === "collapsed" && state.isHovering && newState !== "locked");
+					: newState === "pinned" || newState === "open";
 				const shouldOffsetContent = !state.isMobile && newState === "pinned";
 				return { state: newState, isExpanded, shouldOffsetContent };
 			}),
@@ -85,9 +83,7 @@ export const useSidebar = create<SidebarStore>()(
 				const newState = state.state === "open" ? "collapsed" : "open";
 				const isExpanded = state.isMobile
 					? newState === "open"
-					: newState === "pinned" ||
-						newState === "open" ||
-						(newState === "collapsed" && state.isHovering && newState !== "locked");
+					: newState === "pinned" || newState === "open";
 				const shouldOffsetContent = !state.isMobile && newState === "pinned";
 				return { state: newState, isExpanded, shouldOffsetContent };
 			}),
@@ -96,9 +92,7 @@ export const useSidebar = create<SidebarStore>()(
 				const newState = state.state === "locked" ? "collapsed" : "locked";
 				const isExpanded = state.isMobile
 					? newState === "open"
-					: newState === "pinned" ||
-						newState === "open" ||
-						(newState === "collapsed" && state.isHovering && newState !== "locked");
+					: newState === "pinned" || newState === "open";
 				const shouldOffsetContent = !state.isMobile && newState === "pinned";
 				return { state: newState, isExpanded, shouldOffsetContent };
 			}),
@@ -109,12 +103,13 @@ export const useSidebar = create<SidebarStore>()(
 				isPinned: state.state === "pinned",
 				isLocked: state.state === "locked",
 			}), // Persist both pinned and locked states
-			onRehydrateStorage: () => (state) => {
+			onRehydrateStorage: () => (state, error) => {
 				// Restore the pinned or locked state when rehydrating
-				if (state) {
-					if (state.isPinned) {
+				if (state && !error) {
+					const persistedState = state as any;
+					if (persistedState.isPinned) {
 						state.state = "pinned";
-					} else if (state.isLocked) {
+					} else if (persistedState.isLocked) {
 						state.state = "locked";
 					}
 					// Recalculate computed values

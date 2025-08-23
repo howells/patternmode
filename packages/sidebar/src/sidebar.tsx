@@ -1,15 +1,7 @@
 "use client";
 
-import { Button } from "@patternmode/button";
-import {
-	Menu,
-	MenuContent,
-	MenuItem,
-	MenuTrigger,
-} from "@patternmode/ui/components/menu";
 import { cx } from "@patternmode/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Settings } from "lucide-react";
 import type React from "react";
 import { useEffect } from "react";
 import SidebarSettings from "./sidebar.settings";
