@@ -1,6 +1,5 @@
 import { Button } from "@patternmode/button";
-
-// Removed lucide-react import due to icon compatibility issues
+import { Lock, PanelLeftClose, PanelLeftOpen, Pin } from "lucide-react";
 import { useSidebar } from "./sidebar-store";
 
 const SidebarSettings = () => {
@@ -50,16 +49,30 @@ const SidebarSettings = () => {
 		}
 	};
 
+	const CurrentIcon = (() => {
+		switch (state) {
+			case "pinned":
+				return Pin;
+			case "locked":
+				return Lock;
+			case "open":
+				return PanelLeftOpen;
+			case "collapsed":
+			default:
+				return PanelLeftClose;
+		}
+	})();
+
 	return (
-	<Button
-	variant="ghost"
-	size={isExpanded ? "base" : "icon"}
-	onClick={handleClick}
-	onKeyDown={handleKeyDown}
-	aria-label={`${currentLabel}. Click to cycle state.`}
-	>
-	 {isExpanded ? currentLabel : "Settings"}
-	</Button>
+		<Button
+			data-testid="sidebar"
+			variant="ghost"
+			size="icon"
+			icon={CurrentIcon}
+			onClick={handleClick}
+			onKeyDown={handleKeyDown}
+			aria-label={`${currentLabel}. Click to cycle state.`}
+		/>
 	);
 };
 

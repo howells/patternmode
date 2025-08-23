@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import SidebarSettings from "./sidebar.settings";
 import { SidebarMobile } from "./sidebar-mobile";
 import { useSidebar } from "./sidebar-store";
+import { SidebarOverlay } from "./sidebar.overlay";
 
 interface SidebarProps {
 	children: React.ReactNode;
@@ -54,7 +55,8 @@ export function Sidebar({
 	}
 
 	return (
-		<nav
+		<>
+			<nav
 			className={cx(
 				"Sidebar",
 				"fixed inset-y-0 left-0 z-40",
@@ -76,6 +78,8 @@ export function Sidebar({
 					<SidebarSettings />
 				</div>
 			</div>
-		</nav>
+			</nav>
+			<SidebarOverlay />
+		</>
 	);
 }
