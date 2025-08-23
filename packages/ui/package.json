@@ -177,6 +177,7 @@
 		"@patternmode/loader": "workspace:*",
 		"@patternmode/constants": "workspace:*",
 		"@patternmode/stack": "workspace:*",
+    "@patternmode/grid": "workspace:*",
     "@patternmode/text": "workspace:*",
     "@patternmode/tooltip": "workspace:*",
 		"@dnd-kit/core": "^6.3.1",

@@ -1,7 +1,7 @@
 "use client";
 
 import { FeatureItem } from "@patternmode/feature-item";
-import { Grid } from "@patternmode/ui/components/grid";
+import { Grid } from "@patternmode/grid";
 import { Check } from "lucide-react";
 
 export const Purpose = () => {

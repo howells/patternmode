@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { gridConfig } from "@patternmode/ui/components/grid/config";
+import { gridConfig } from "@patternmode/grid/config";
 import { Separator } from "@patternmode/ui/components/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

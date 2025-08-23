@@ -5,7 +5,7 @@ import { Avatar } from "../avatar/component";
 import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
 import { Fieldset } from "../fieldset/component";
-import { Grid, GridCell } from "../grid/component";
+import { Grid, GridCell } from "@patternmode/grid";
 import { Input } from "../input/component";
 import { ScrollArea } from "../scroll-area/component";
 import {

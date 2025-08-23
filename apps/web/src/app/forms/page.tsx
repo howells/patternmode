@@ -13,7 +13,7 @@ import { Checkbox } from "@patternmode/ui/components/checkbox";
 import { Divider } from "@patternmode/ui/components/divider";
 import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/ui/components/field";
 import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/ui/components/form";
-import { Grid, GridCell } from "@patternmode/ui/components/grid";
+import { Grid, GridCell } from "@patternmode/grid";
 import { IconContainer } from "@patternmode/ui/components/icon-container";
 import { Input } from "@patternmode/ui/components/input";
 import { NumberField } from "@patternmode/ui/components/number-field";

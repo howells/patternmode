@@ -2,7 +2,7 @@ import type { CategoryKey } from "@patternmode/ui/components/registry";
 
 import { Badge } from "@patternmode/ui/components/badge";
 import { Card } from "@patternmode/ui/components/card";
-import { Grid, GridCell } from "@patternmode/ui/components/grid";
+import { Grid, GridCell } from "@patternmode/grid";
 import { Heading } from "@patternmode/ui/components/heading";
 import {
   CATEGORY_CONFIG,
