@@ -3,7 +3,8 @@
 import { cx } from "@patternmode/utils/cx";
 import { useWindowSize } from "@uidotdev/usehooks";
 import type React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useHover } from "@react-aria/interactions";
 import SidebarSettings from "./sidebar.settings";
 import { SidebarMobile } from "./sidebar-mobile";
 import { useSidebar } from "./sidebar-store";
@@ -38,17 +39,38 @@ export function Sidebar({
 		setMobile(mobile);
 	}, [width, setMobile]);
 
-	const handleMouseEnter = () => {
-		if (expandOnHover && state !== "pinned" && state !== "locked") {
-			setHovering(true);
-		}
-	};
+	// Hover intent with delays to avoid accidental triggers
+	const openDelay = 200; // ms
+	const closeDelay = 150; // ms
+	const openTimeout = useRef<number | null>(null);
+	const closeTimeout = useRef<number | null>(null);
 
-	const handleMouseLeave = () => {
-		if (expandOnHover) {
-			setHovering(false);
-		}
-	};
+	useEffect(() => {
+		return () => {
+			if (openTimeout.current) window.clearTimeout(openTimeout.current);
+			if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+		};
+	}, []);
+
+	const isHoverDisabled =
+		!expandOnHover || state === "pinned" || state === "locked";
+	const { hoverProps } = useHover({
+		isDisabled: isHoverDisabled,
+		onHoverStart: () => {
+			if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+			if (openTimeout.current) window.clearTimeout(openTimeout.current);
+			openTimeout.current = window.setTimeout(() => {
+				setHovering(true);
+			}, openDelay);
+		},
+		onHoverEnd: () => {
+			if (openTimeout.current) window.clearTimeout(openTimeout.current);
+			if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+			closeTimeout.current = window.setTimeout(() => {
+				setHovering(false);
+			}, closeDelay);
+		},
+	});
 
 	if (isMobile) {
 		return <SidebarMobile>{children}</SidebarMobile>;
@@ -68,8 +90,9 @@ export function Sidebar({
 					: "w-[var(--sidebar-collapsed-width)]",
 				className,
 			)}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
+			data-testid="sidebar"
+			aria-expanded={isExpanded}
+			{...hoverProps}
 		>
 			<div className="flex flex-col h-full">
 				{children}
