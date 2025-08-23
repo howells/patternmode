@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, FileText, UserPlus } from "lucide-react";
-import { Avatar } from "../avatar/component";
+import { Avatar } from "@patternmode/avatar";
 import { Badge } from "@patternmode/badge";
 import { Button } from "@patternmode/button";
 import { Card } from "../card/component";

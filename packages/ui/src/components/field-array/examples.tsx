@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Avatar } from "../avatar/component";
+import { Avatar } from "@patternmode/avatar";
 import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
 import { Fieldset } from "../fieldset/component";

@@ -7,7 +7,7 @@ import { useCombobox } from "downshift";
 import { Check } from "lucide-react";
 import * as React from "react";
 import { DropdownItem } from "../dropdown-item/component";
-import { Tag } from "../tag/component";
+import { Tag } from "@patternmode/tag";
 
 /**
  * Tag option interface for TagInput.
