@@ -20,8 +20,8 @@ import {
 	AlertDialogPreview,
 	alertDialogPreviewProps,
 } from "./alert-dialog/preview";
-import { avatarConfig } from "./avatar/config";
-import { AvatarPreview, avatarPreviewProps } from "./avatar/preview";
+import { avatarConfig } from "@patternmode/avatar/config";
+import { AvatarPreview, avatarPreviewProps } from "@patternmode/avatar/preview";
 import { badgeConfig } from "@patternmode/badge/config";
 import { BadgePreview, badgePreviewProps } from "@patternmode/badge/preview";
 import { barListConfig } from "./bar-list/config";
@@ -234,10 +234,10 @@ import { tableConfig } from "./table/config";
 import { TablePreview, tablePreviewProps } from "./table/preview";
 import { tabsConfig } from "./tabs/config";
 import { TabsPreview, tabsPreviewProps } from "./tabs/preview";
-import { tagConfig } from "./tag/config";
-import { TagPreview, tagPreviewProps } from "./tag/preview";
-import { tagGroupConfig } from "./tag-group/config";
-import { TagGroupPreview, tagGroupPreviewProps } from "./tag-group/preview";
+import { tagConfig } from "@patternmode/tag/config";
+import { TagPreview, tagPreviewProps } from "@patternmode/tag/preview";
+import { tagGroupConfig } from "@patternmode/tag-group/config";
+import { TagGroupPreview, tagGroupPreviewProps } from "@patternmode/tag-group/preview";
 import { tagInputConfig } from "./tag-input/config";
 import { TagInputPreview, tagInputPreviewProps } from "./tag-input/preview";
 import { textListConfig } from "@patternmode/text-list/config";

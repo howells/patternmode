@@ -1,0 +1,26 @@
+{
+  "name": "@patternmode/tag",
+  "version": "0.1.0",
+  "description": "Label component for categorizing and tagging content with removable options",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    "./package.json": "./package.json"
+  },
+  "files": ["src"],
+  "scripts": { "build": "tsc --noEmit", "typecheck": "tsc --noEmit", "lint": "biome check src --write" },
+  "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0", "@base-ui-components/react": "^1.0.0-beta.2" },
+  "dependencies": {
+    "@patternmode/config": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/icon": "workspace:*",
+    "@patternmode/dismiss-button": "workspace:*",
+    "@patternmode/avatar": "workspace:*"
+  }
+}
+
