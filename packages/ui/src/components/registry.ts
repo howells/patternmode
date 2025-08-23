@@ -91,11 +91,8 @@ import { dotConfig } from "@patternmode/dot/config";
 import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "./drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "./drawer/preview";
-import { dropdownItemConfig } from "./dropdown-item/config";
-import {
-	DropdownItemPreview,
-	dropdownItemPreviewProps,
-} from "./dropdown-item/preview";
+import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
+import { DropdownItemPreview, dropdownItemPreviewProps } from "@patternmode/dropdown-item/preview";
 import { emptyStateConfig } from "./empty-state/config";
 import {
 	EmptyStatePreview,
@@ -238,8 +235,8 @@ import { tagConfig } from "@patternmode/tag/config";
 import { TagPreview, tagPreviewProps } from "@patternmode/tag/preview";
 import { tagGroupConfig } from "@patternmode/tag-group/config";
 import { TagGroupPreview, tagGroupPreviewProps } from "@patternmode/tag-group/preview";
-import { tagInputConfig } from "./tag-input/config";
-import { TagInputPreview, tagInputPreviewProps } from "./tag-input/preview";
+import { tagInputConfig } from "@patternmode/tag-input/config";
+import { TagInputPreview, tagInputPreviewProps } from "@patternmode/tag-input/preview";
 import { textListConfig } from "@patternmode/text-list/config";
 import { TextListPreview, textListPreviewProps } from "@patternmode/text-list/preview";
 import { textareaConfig } from "./textarea/config";

@@ -21,7 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@patternmode/ui/components/slider";
 import { HStack, VStack } from "@patternmode/stack";
 import { Switch } from "@patternmode/ui/components/switch";
-import { TagInput } from "@patternmode/ui/components/tag-input";
+import { TagInput } from "@patternmode/tag-input";
 import { Text } from "@patternmode/text";
 import { Textarea } from "@patternmode/ui/components/textarea";
 import { Clipboard, Factory, Mail, MapPin, Package, Phone, Settings, Star, TrendingUp, User } from "lucide-react";

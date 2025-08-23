@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { tagInputConfig } from "@patternmode/ui/components/tag-input/config";
+import { tagInputConfig } from "@patternmode/tag-input/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

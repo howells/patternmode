@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { dropdownItemConfig } from "@patternmode/ui/components/dropdown-item/config";
+import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

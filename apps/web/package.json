@@ -48,6 +48,8 @@
     "@patternmode/avatar": "workspace:*",
     "@patternmode/tag": "workspace:*",
     "@patternmode/tag-group": "workspace:*",
+    "@patternmode/dropdown-item": "workspace:*",
+    "@patternmode/tag-input": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.12",
 		"@tanstack/react-query": "^5.85.5",
 		"@tanstack/react-query-devtools": "^5.85.5",
