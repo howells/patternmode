@@ -20,7 +20,7 @@ export const listVariants = tv({
 });
 
 export const listItemVariants = tv({
-	base: "text-zinc-700 dark:text-zinc-300 relative pl-6",
+	base: "relative",
 	variants: {
 		variant: {
 			marker: "",
@@ -31,22 +31,32 @@ export const listItemVariants = tv({
 			center: "text-center",
 			end: "text-right",
 		},
-	},
-	defaultVariants: {
-		variant: "marker",
-		align: "start",
-	},
-});
-
-export const indicatorVariants = tv({
-	base: "shrink-0",
-	variants: {
-		variant: {
-			marker: "absolute left-0 top-1",
-			plain: "absolute left-0 top-1",
+		withHeading: {
+			true: "text-zinc-600 dark:text-zinc-300",
+			false: "text-zinc-900 dark:text-zinc-100",
 		},
 	},
 	defaultVariants: {
 		variant: "marker",
+		align: "start",
+		withHeading: false,
+	},
+});
+
+export const indicatorVariants = tv({
+	base: "shrink-0 absolute",
+	variants: {
+		variant: {
+			marker: "",
+			plain: "",
+		},
+		withIcon: {
+			true: "-left-6 top-0.5",
+			false: "-left-4.5 top-1.5",
+		},
+	},
+	defaultVariants: {
+		variant: "marker",
+		withIcon: false,
 	},
 });

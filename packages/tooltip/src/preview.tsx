@@ -1,30 +1,75 @@
 "use client";
 
-import { ComponentPreview } from "@patternmode/config/component-preview";
-import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
-import { DefaultExample, PositionsExample, VariantsExample, SizesExample, ArrowExample, RichContentExample, ControlledExample, DelayExample, IconButtonsExample, AlignmentExample } from "./examples";
+import type { TooltipProps } from "./types";
+import { Tooltip } from "./component";
+import { Button } from "@patternmode/button";
 
-export const TooltipPreview = (props: PreviewProps) => (
-  <ComponentPreview
-    {...props}
-    examples={{
-      default: DefaultExample,
-      positions: PositionsExample,
-      variants: VariantsExample,
-      sizes: SizesExample,
-      "no-arrow": ArrowExample,
-      "rich-content": RichContentExample,
-      controlled: ControlledExample,
-      delay: DelayExample,
-      "icon-tooltip": IconButtonsExample,
-      alignment: AlignmentExample,
-    }}
-  />
-);
+export function TooltipPreview(props: TooltipProps) {
+  return (
+    <Tooltip content={props.content ?? "Tooltip content"} {...props}>
+      {props.children ?? <Button variant="outline">Hover me</Button>}
+    </Tooltip>
+  );
+}
 
-export const tooltipPreviewProps: PreviewProps = {
-  componentId: "tooltip",
-  componentName: "Tooltip",
-  category: "overlay",
-};
-
+// Preview props for prop explorer
+export const tooltipPreviewProps = [
+  {
+    name: "content",
+    type: "string",
+    description: "Tooltip content text.",
+    defaultValue: "Tooltip content",
+  },
+  {
+    name: "side",
+    type: "select",
+    description: "Preferred side for tooltip placement.",
+    options: ["top", "right", "bottom", "left"],
+    defaultValue: "top",
+  },
+  {
+    name: "align",
+    type: "select",
+    description: "Alignment relative to the trigger.",
+    options: ["start", "center", "end"],
+    defaultValue: "center",
+  },
+  {
+    name: "showArrow",
+    type: "boolean",
+    description: "Whether to show the arrow.",
+    defaultValue: true,
+  },
+  {
+    name: "variant",
+    type: "select",
+    description: "Visual variant.",
+    options: ["default", "inverse"],
+    defaultValue: "default",
+  },
+  {
+    name: "size",
+    type: "select",
+    description: "Size variant.",
+    options: ["sm", "default", "lg"],
+    defaultValue: "default",
+  },
+  {
+    name: "delayDuration",
+    type: "number",
+    description: "Delay before showing tooltip (ms).",
+    defaultValue: 150,
+  },
+  {
+    name: "sideOffset",
+    type: "number",
+    description: "Distance from the trigger (px).",
+    defaultValue: 10,
+  },
+  {
+    name: "alignOffset",
+    type: "number",
+    description: "Offset for alignment positioning (px).",
+    defaultValue: 0,
+  },
+];

@@ -65,7 +65,11 @@ export function TextListItem({
 
 	return (
 		<li
-			className={cx(!unstyled && listItemVariants({ variant, align }), className)}
+			className={cx(
+				!unstyled &&
+					listItemVariants({ variant, align, withHeading: Boolean(heading) }),
+				className,
+			)}
 			{...props}
 		>
 			<TextListIndicator
@@ -74,7 +78,7 @@ export function TextListItem({
 				variant={variant}
 			/>
 			{heading && (
-				<h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+				<h4 className="text-zinc-900 dark:text-zinc-100 font-medium">
 					{heading}
 				</h4>
 			)}
@@ -97,7 +101,14 @@ export function TextListIndicator({
 }: TextListIndicatorProps) {
 	return (
 		<span
-			className={cx(!unstyled && indicatorVariants({ variant }), className)}
+			className={cx(
+				!unstyled &&
+					indicatorVariants({
+						variant,
+						withIcon: Boolean(IconComponent),
+					}),
+				className,
+			)}
 			{...props}
 		>
 			{IconComponent ? (
