@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { labelConfig } from "@patternmode/ui/components/label/config";
+import { labelConfig } from "@patternmode/label/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

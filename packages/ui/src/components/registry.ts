@@ -135,8 +135,8 @@ import {
 } from "./icon-select/preview";
 import { inputConfig } from "./input/config";
 import { InputPreview, inputPreviewProps } from "./input/preview";
-import { labelConfig } from "./label/config";
-import { LabelPreview, labelPreviewProps } from "./label/preview";
+import { labelConfig } from "@patternmode/label/config";
+import { LabelPreview, labelPreviewProps } from "@patternmode/label/preview";
 import { menuConfig } from "./menu/config";
 import { MenuPreview, menuPreviewProps } from "./menu/preview";
 import { menuBarConfig } from "./menu-bar/config";
