@@ -51,6 +51,9 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../../packages/button
+      '@patternmode/feature-item':
+        specifier: workspace:*
+        version: link:../../packages/feature-item
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../../packages/icon
@@ -250,6 +253,40 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
+
+  packages/feature-item:
+    dependencies:
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/utils':
+        specifier: workspace:*
+        version: link:../utils
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: '>=0.525.0 <1'
+        version: 0.525.0(react@19.1.1)
+      react:
+        specifier: ^19.0.0
+        version: 19.1.1
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.1.1(react@19.1.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.1.10
+        version: 19.1.10
+      '@types/react-dom':
+        specifier: ^19.1.7
+        version: 19.1.7(@types/react@19.1.10)
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.3.0)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(yaml@2.8.0)
 
   packages/icon:
     dependencies:
