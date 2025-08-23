@@ -2,7 +2,7 @@
 
 import { Badge } from "@patternmode/badge";
 import { Text } from "@patternmode/text";
-import { TextList, TextListItem } from "../text-list/component";
+import { TextList, TextListItem } from "@patternmode/text-list";
 
 import {
 	Accordion,
