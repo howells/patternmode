@@ -2,7 +2,7 @@ import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/ui/components/description-list";
 import { Icon } from "@patternmode/icon";
-import { Tooltip } from "@patternmode/ui/components/tooltip";
+import { Tooltip } from "@patternmode/tooltip";
 import { cx } from "@patternmode/ui/utils/cx";
 import { HelpCircle } from "lucide-react";
 import React from "react";

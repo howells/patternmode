@@ -3,7 +3,7 @@ import {
 	type ButtonProps,
 } from "@patternmode/button";
 import type { buttonVariants } from "@patternmode/button/types";
-import { Tooltip } from "@patternmode/ui/components/tooltip";
+import { Tooltip } from "@patternmode/tooltip";
 import { useSidebar } from "./sidebar-store";
 
 export const SidebarItem = ({ children, icon, ...props }: ButtonProps) => {

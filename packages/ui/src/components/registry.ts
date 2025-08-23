@@ -265,8 +265,8 @@ import {
 } from "./toggle-group/preview";
 import { toolbarConfig } from "./toolbar/config";
 import { ToolbarPreview, toolbarPreviewProps } from "./toolbar/preview";
-import { tooltipConfig } from "./tooltip/config";
-import { TooltipPreview, tooltipPreviewProps } from "./tooltip/preview";
+import { tooltipConfig } from "@patternmode/tooltip/config";
+import { TooltipPreview, tooltipPreviewProps } from "@patternmode/tooltip/preview";
 import { trackerConfig } from "./tracker/config";
 import { TrackerPreview, trackerPreviewProps } from "./tracker/preview";
 

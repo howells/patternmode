@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/ui/components/separator";
-import { tooltipConfig } from "@patternmode/ui/components/tooltip/config";
+import { tooltipConfig } from "@patternmode/tooltip/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
