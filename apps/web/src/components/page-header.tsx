@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "@patternmode/ui/components/badge";
+import { Badge } from "@patternmode/badge";
 import { Heading } from "@patternmode/heading";
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";

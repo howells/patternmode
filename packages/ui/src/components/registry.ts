@@ -22,8 +22,8 @@ import {
 } from "./alert-dialog/preview";
 import { avatarConfig } from "./avatar/config";
 import { AvatarPreview, avatarPreviewProps } from "./avatar/preview";
-import { badgeConfig } from "./badge/config";
-import { BadgePreview, badgePreviewProps } from "./badge/preview";
+import { badgeConfig } from "@patternmode/badge/config";
+import { BadgePreview, badgePreviewProps } from "@patternmode/badge/preview";
 import { barListConfig } from "./bar-list/config";
 import { BarListPreview, barListPreviewProps } from "./bar-list/preview";
 import { breadcrumbsConfig } from "./breadcrumbs/config";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "../badge/component";
+import { Badge } from "@patternmode/badge";
 import {
 	Table,
 	TableBody,

@@ -1,6 +1,6 @@
 import type { CategoryKey } from "@patternmode/ui/components/registry";
 
-import { Badge } from "@patternmode/ui/components/badge";
+import { Badge } from "@patternmode/badge";
 import { Card } from "@patternmode/ui/components/card";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Heading } from "@patternmode/heading";
