@@ -87,8 +87,8 @@ import {
 	DismissButtonPreview,
 	dismissButtonPreviewProps,
 } from "./dismiss-button/preview";
-import { dotConfig } from "./dot/config";
-import { DotPreview, dotPreviewProps } from "./dot/preview";
+import { dotConfig } from "@patternmode/dot/config";
+import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "./drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "./drawer/preview";
 import { dropdownItemConfig } from "./dropdown-item/config";

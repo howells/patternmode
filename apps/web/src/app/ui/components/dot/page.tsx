@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { dotConfig } from "@patternmode/ui/components/dot/config";
+import { dotConfig } from "@patternmode/dot/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

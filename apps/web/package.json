@@ -42,6 +42,7 @@
     "@patternmode/label": "workspace:*",
     "@patternmode/icon-container": "workspace:*",
     "@patternmode/badge": "workspace:*",
+    "@patternmode/dot": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.12",
 		"@tanstack/react-query": "^5.85.5",
 		"@tanstack/react-query-devtools": "^5.85.5",
