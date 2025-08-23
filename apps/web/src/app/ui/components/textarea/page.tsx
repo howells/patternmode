@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Separator } from "@patternmode/ui/components/separator";
+import { Separator } from "@patternmode/separator";
 import { textareaConfig } from "@patternmode/ui/components/textarea/config";
 
 import { ComponentExamples } from "@/components/component-examples";

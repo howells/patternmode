@@ -22,7 +22,7 @@
 		"recharts": "^3.1.0",
 		"zod": "^4.0.0"
 	},
-	"dependencies": {
+  "dependencies": {
 		"@icons-pack/react-simple-icons": "^13.7.0",
 		"@patternmode/button": "workspace:*",
 		"@patternmode/icon": "workspace:*",
@@ -35,7 +35,10 @@
 		"@patternmode/styles": "workspace:*",
 		"@patternmode/utils": "workspace:*",
 		"@patternmode/feature-item": "workspace:*",
-		"@patternmode/grid": "workspace:*",
+    "@patternmode/grid": "workspace:*",
+    "@patternmode/separator": "workspace:*",
+    "@patternmode/heading": "workspace:*",
+    "@patternmode/subheading": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.12",
 		"@tanstack/react-query": "^5.85.5",
 		"@tanstack/react-query-devtools": "^5.85.5",

@@ -3,7 +3,7 @@
 import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
 import { VStack } from "@patternmode/stack";
-import { Subheading } from "@patternmode/ui/components/subheading";
+import { Subheading } from "@patternmode/subheading";
 import React from "react";
 
 import { ControlFactory } from "./controls/control-factory";

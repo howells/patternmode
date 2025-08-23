@@ -1,4 +1,4 @@
-import { Separator } from "@patternmode/ui/components/separator";
+import { Separator } from "@patternmode/separator";
 import { cx } from "@patternmode/utils/cx";
 
 export const SidebarSeparator = ({

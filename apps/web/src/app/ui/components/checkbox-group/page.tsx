@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { checkboxGroupConfig } from "@patternmode/ui/components/checkbox-group/config";
-import { Separator } from "@patternmode/ui/components/separator";
+import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

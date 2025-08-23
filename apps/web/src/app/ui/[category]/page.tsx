@@ -3,14 +3,14 @@ import type { CategoryKey } from "@patternmode/ui/components/registry";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Card } from "@patternmode/ui/components/card";
 import { Grid, GridCell } from "@patternmode/grid";
-import { Heading } from "@patternmode/ui/components/heading";
+import { Heading } from "@patternmode/heading";
 import {
   CATEGORY_CONFIG,
   getCategoryInfo,
   getComponentsByCategory,
 } from "@patternmode/ui/components/registry";
 import { HStack, VStack } from "@patternmode/stack";
-import { Subheading } from "@patternmode/ui/components/subheading";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 import Link from "next/link";
 import { notFound } from "next/navigation";

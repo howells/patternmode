@@ -4,7 +4,7 @@ import { getPaddingClass } from "@patternmode/utils/spacing";
 import type React from "react";
 import { Grid, GridCell } from "@patternmode/grid";
 import { HStack, Stack } from "@patternmode/stack";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 
 // Individual list item - following Vercel's Entity pattern

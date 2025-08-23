@@ -6,7 +6,7 @@ import { Button } from "@patternmode/button";
 import { Grid, GridCell } from "@patternmode/grid";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/stack";
-import { Subheading } from "@patternmode/ui/components/subheading";
+import { Subheading } from "@patternmode/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/ui/components/toggle-group";
 import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";

@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import type React from "react";
 import { Button } from "@patternmode/button";
 import { Menu, MenuContent, MenuTrigger } from "../menu/component";
-import { Separator } from "../separator/component";
+import { Separator } from "@patternmode/separator";
 import type { SplitButtonProps } from "./types";
 import { splitButtonVariants } from "./variants";
 

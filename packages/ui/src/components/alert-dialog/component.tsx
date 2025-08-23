@@ -2,7 +2,7 @@ import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-
 import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
 import { Button } from "@patternmode/button";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 import type {
 	AlertDialogActionProps,

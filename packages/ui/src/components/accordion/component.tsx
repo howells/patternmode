@@ -2,7 +2,7 @@ import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion"
 import { defaultConfig } from "@patternmode/config/default-config";
 import { cx } from "@patternmode/utils/cx";
 import { Plus } from "lucide-react";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 import type {
 	AccordionContentProps,

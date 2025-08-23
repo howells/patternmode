@@ -11,7 +11,7 @@ import {
 	getPaddingClass,
 } from "@patternmode/utils/spacing";
 import type React from "react";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { cardVariants } from "./variants";
 
 type CardProps = {

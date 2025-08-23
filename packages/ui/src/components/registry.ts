@@ -116,8 +116,8 @@ import { formConfig } from "./form/config";
 import { FormPreview, formPreviewProps } from "./form/preview";
 import { gridConfig } from "@patternmode/grid/config";
 import { GridPreview, gridPreviewProps } from "@patternmode/grid/preview";
-import { headingConfig } from "./heading/config";
-import { HeadingPreview, headingPreviewProps } from "./heading/preview";
+import { headingConfig } from "@patternmode/heading/config";
+import { HeadingPreview, headingPreviewProps } from "@patternmode/heading/preview";
 import { headingElementConfig } from "./heading-element/config";
 import {
 	HeadingElementPreview,
@@ -203,8 +203,8 @@ import {
 	SelectNativePreview,
 	selectNativePreviewProps,
 } from "./select-native/preview";
-import { separatorConfig } from "./separator/config";
-import { SeparatorPreview, separatorPreviewProps } from "./separator/preview";
+import { separatorConfig } from "@patternmode/separator/config";
+import { SeparatorPreview, separatorPreviewProps } from "@patternmode/separator/preview";
 import { sheetConfig } from "./sheet/config";
 import { SheetPreview, sheetPreviewProps } from "./sheet/preview";
 import { skeletonConfig } from "./skeleton/config";
@@ -226,11 +226,8 @@ import {
 	StackedListPreview,
 	stackedListPreviewProps,
 } from "./stacked-list/preview";
-import { subheadingConfig } from "./subheading/config";
-import {
-	SubheadingPreview,
-	subheadingPreviewProps,
-} from "./subheading/preview";
+import { subheadingConfig } from "@patternmode/subheading/config";
+import { SubheadingPreview, subheadingPreviewProps } from "@patternmode/subheading/preview";
 import { switchConfig } from "./switch/config";
 import { SwitchPreview, switchPreviewProps } from "./switch/preview";
 import { tabNavigationConfig } from "./tab-navigation/config";

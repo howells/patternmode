@@ -1,8 +1,8 @@
 import { cx } from "@patternmode/utils/cx";
 import { Button } from "@patternmode/button";
-import { Heading } from "../heading/component";
+import { Heading } from "@patternmode/heading";
 import { IconContainer } from "../icon-container/component";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 import type { EmptyStateProps } from "./types";
 import {

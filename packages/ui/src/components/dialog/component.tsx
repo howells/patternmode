@@ -2,7 +2,7 @@ import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import type React from "react";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 
 type _DialogProps = {

@@ -1,6 +1,6 @@
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { Subheading } from "../subheading/component";
+import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
 import type { CalloutProps } from "./types";
 import { calloutVariants } from "./variants";
