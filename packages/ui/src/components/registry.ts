@@ -120,11 +120,8 @@ import {
 } from "./heading-element/preview";
 import { iconContainerConfig } from "@patternmode/icon-container/config";
 import { IconContainerPreview, iconContainerPreviewProps } from "@patternmode/icon-container/preview";
-import { iconSelectConfig } from "./icon-select/config";
-import {
-	IconSelectPreview,
-	iconSelectPreviewProps,
-} from "./icon-select/preview";
+import { iconSelectConfig } from "@patternmode/icon-select/config";
+import { IconSelectPreview, iconSelectPreviewProps } from "@patternmode/icon-select/preview";
 import { inputConfig } from "./input/config";
 import { InputPreview, inputPreviewProps } from "./input/preview";
 import { labelConfig } from "@patternmode/label/config";

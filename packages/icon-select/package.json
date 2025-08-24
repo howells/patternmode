@@ -1,0 +1,45 @@
+{
+  "name": "@patternmode/icon-select",
+  "version": "0.1.0",
+  "description": "High-performance icon picker using static Lucide registry and virtualized combobox",
+  "author": { "name": "Daniel Howells", "email": "daniel@howellsstudio.com", "url": "https://github.com/howells" },
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://patternmode.com",
+  "repository": { "type": "git", "url": "https://github.com/howells/patternmode.git", "directory": "packages/icon-select" },
+  "bugs": { "url": "https://github.com/howells/patternmode/issues" },
+  "sideEffects": false,
+  "exports": {
+    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    "./package.json": "./package.json"
+  },
+  "files": ["src"],
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": ">=0.525.0 <1",
+    "@base-ui-components/react": "^1.0.0-beta.2"
+  },
+  "dependencies": {
+    "@patternmode/config": "workspace:*",
+    "@patternmode/icons": "workspace:*",
+    "@patternmode/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "typescript": "^5.9.2"
+  },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" }
+}
+

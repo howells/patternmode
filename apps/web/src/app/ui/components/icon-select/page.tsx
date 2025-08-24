@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { iconSelectConfig } from "@patternmode/ui/components/icon-select/config";
+import { iconSelectConfig } from "@patternmode/icon-select/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
