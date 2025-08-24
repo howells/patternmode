@@ -2,7 +2,7 @@
   "name": "patternmode",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.15.0",
   "description": "A comprehensive UI component library and design system",
   "author": "Daniel Howells",
   "license": "MIT",

@@ -1,6 +1,11 @@
 {
-  "extends": "@patternmode/tsconfig/react-library.json",
-  "compilerOptions": { "rootDir": "src", "outDir": "dist" },
-  "include": ["src"]
+	"extends": "../tsconfig/base.json",
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"],
+	"compilerOptions": {
+		"outDir": "dist",
+		"rootDir": "src",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx"
+	}
 }
-
