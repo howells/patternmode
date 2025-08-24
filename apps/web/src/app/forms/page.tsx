@@ -17,7 +17,7 @@ import { Grid, GridCell } from "@patternmode/grid";
 import { IconContainer } from "@patternmode/icon-container";
 import { Input } from "@patternmode/ui/components/input";
 import { NumberField } from "@patternmode/ui/components/number-field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { Slider } from "@patternmode/ui/components/slider";
 import { HStack, VStack } from "@patternmode/stack";
 import { Switch } from "@patternmode/ui/components/switch";

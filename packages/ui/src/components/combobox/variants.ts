@@ -1,10 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import {
-	selectItemVariants,
-	selectPopoverVariants,
-	selectTriggerVariants,
-} from "../select/variants";
+import { selectItemVariants, selectPopoverVariants, selectTriggerVariants } from "@patternmode/select/variants";
 
 export const comboboxVariants = tv({
 	base: ["relative w-full"],

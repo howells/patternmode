@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { selectNativeConfig } from "@patternmode/ui/components/select-native/config";
+import { selectNativeConfig } from "@patternmode/select-native/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

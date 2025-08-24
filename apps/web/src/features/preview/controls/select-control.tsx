@@ -1,5 +1,5 @@
 import { FieldControl } from "@patternmode/ui/components/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/ui/components/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import React from "react";
 
 import type { PropControlProps } from "./types";

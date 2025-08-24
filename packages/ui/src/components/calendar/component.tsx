@@ -24,13 +24,7 @@ import * as React from "react";
 import type { DayPickerProps, Matcher } from "react-day-picker";
 import { DayPicker, useDayPicker } from "react-day-picker";
 import { Button } from "@patternmode/button";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "../select/component";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 
 const DropdownCaption = ({
 	calendarMonth,

@@ -1,0 +1,54 @@
+{
+  "name": "@patternmode/select",
+  "version": "0.1.0",
+  "description": "Accessible Select components built on Base UI with Patternmode styling",
+  "author": { "name": "Daniel Howells", "email": "daniel@howellsstudio.com", "url": "https://github.com/howells" },
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://patternmode.com",
+  "repository": { "type": "git", "url": "https://github.com/howells/patternmode.git", "directory": "packages/select" },
+  "bugs": { "url": "https://github.com/howells/patternmode/issues" },
+  "keywords": ["react", "select", "dropdown", "base-ui", "typescript"],
+  "sideEffects": false,
+  "exports": {
+    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./types": { "types": "./src/types.ts", "import": "./src/types.ts", "default": "./src/types.ts" },
+    "./variants": { "types": "./src/variants.ts", "import": "./src/variants.ts", "default": "./src/variants.ts" },
+    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    "./package.json": "./package.json"
+  },
+  "files": ["src"],
+  "engines": { "node": ">=18.0.0", "npm": ">=8.0.0" },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write",
+    "test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": ">=0.525.0 <1",
+    "@base-ui-components/react": "^1.0.0-beta.2"
+  },
+  "dependencies": {
+    "@patternmode/button": "workspace:*",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/icon": "workspace:*",
+    "@patternmode/constants": "workspace:*",
+    "tailwind-variants": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" }
+}
+

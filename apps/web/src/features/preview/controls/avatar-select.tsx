@@ -1,5 +1,5 @@
 import { Avatar } from "@patternmode/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@patternmode/ui/components/select";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@patternmode/select";
 import Image from "next/image";
 import React from "react";
 

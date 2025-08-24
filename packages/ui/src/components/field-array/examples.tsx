@@ -8,13 +8,7 @@ import { Fieldset } from "../fieldset/component";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Input } from "../input/component";
 import { ScrollArea } from "../scroll-area/component";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "../select/component";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { HStack, Stack, VStack } from "@patternmode/stack";
 import { Textarea } from "../textarea/component";
 import type { FieldSchema } from "./component";

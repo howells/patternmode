@@ -13,13 +13,7 @@ import {
 	COMPONENT_REGISTRY,
 	PREVIEW_REGISTRY,
 } from "@patternmode/ui/components/registry";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@patternmode/ui/components/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { SortableList } from "@patternmode/ui/components/sortable-list";
 import type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
 import { Stack } from "@patternmode/stack";

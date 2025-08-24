@@ -193,6 +193,8 @@
     "@patternmode/tag-group": "workspace:*",
     "@patternmode/dropdown-item": "workspace:*",
     "@patternmode/tag-input": "workspace:*",
+    "@patternmode/select": "workspace:*",
+    "@patternmode/select-native": "workspace:*",
 		"@dnd-kit/core": "^6.3.1",
 		"@dnd-kit/sortable": "^10.0.0",
 		"@dnd-kit/utilities": "^3.2.2",

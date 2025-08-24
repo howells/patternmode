@@ -7,13 +7,7 @@ import { Button } from "@patternmode/button";
 import { Checkbox } from "../checkbox/component";
 import { DismissButton } from "@patternmode/dismiss-button";
 import { Input } from "../input/component";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "../select/component";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { Textarea } from "../textarea/component";
 
 // Generic field schema definition

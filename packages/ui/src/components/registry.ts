@@ -188,13 +188,10 @@ import {
 	SearchFieldPreview,
 	searchFieldPreviewProps,
 } from "./search-field/preview";
-import { selectConfig } from "./select/config";
-import { SelectPreview, selectPreviewProps } from "./select/preview";
-import { selectNativeConfig } from "./select-native/config";
-import {
-	SelectNativePreview,
-	selectNativePreviewProps,
-} from "./select-native/preview";
+import { selectConfig } from "@patternmode/select/config";
+import { SelectPreview, selectPreviewProps } from "@patternmode/select/preview";
+import { selectNativeConfig } from "@patternmode/select-native/config";
+import { SelectNativePreview, selectNativePreviewProps } from "@patternmode/select-native/preview";
 import { separatorConfig } from "@patternmode/separator/config";
 import { SeparatorPreview, separatorPreviewProps } from "@patternmode/separator/preview";
 import { sheetConfig } from "./sheet/config";
