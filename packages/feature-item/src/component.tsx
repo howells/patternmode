@@ -25,7 +25,7 @@ export const FeatureItem = ({
 				{IconComponent ? (
 					<Icon
 						aria-hidden="true"
-						className="absolute -left-8 top-[0.2rem]"
+						className="absolute -left-7 top-[0.2rem]"
 						size={iconSize}
 						icon={IconComponent}
 					/>
