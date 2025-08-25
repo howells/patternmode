@@ -1,1 +1,1 @@
-export * from "@patternmode/ui/components/sheet";
+export * from "./component";

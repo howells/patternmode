@@ -1,4 +1,4 @@
-import { FieldControl } from "@patternmode/ui/components/field";
+import { FieldControl } from "@patternmode/field";
 import { Input } from "@patternmode/input";
 import { Textarea } from "@patternmode/textarea";
 import React from "react";

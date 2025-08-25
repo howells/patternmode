@@ -82,8 +82,6 @@ export function Sidebar({
 			className={cx(
 				"Sidebar",
 				"fixed inset-y-0 left-0 z-40",
-				"bg-white dark:bg-zinc-900",
-				"border-r border-zinc-200 dark:border-zinc-800",
 				"transition-[width] duration-200 ease-out",
 				isExpanded
 					? "w-[var(--sidebar-open-width)]"

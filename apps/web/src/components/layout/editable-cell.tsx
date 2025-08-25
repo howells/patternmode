@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@patternmode/button";
-import { Callout } from "@patternmode/ui/components/callout";
-import { Card } from "@patternmode/ui/components/card";
+import { Callout } from "@patternmode/callout";
+import { Card } from "@patternmode/card";
 import { Icon } from "@patternmode/icon";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/stack";

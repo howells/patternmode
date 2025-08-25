@@ -1,1 +1,1 @@
-export * from "@patternmode/ui/components/toolbar";
+export { Toolbar, ToolbarButton, ToolbarGroup, ToolbarInput, ToolbarLink, ToolbarRoot, ToolbarSeparator } from "./component";

@@ -6,9 +6,9 @@
     "composite": true,
     "outDir": "dist",
     "rootDir": "src",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "jsx": "react-jsx",
-    "incremental": true
+    "incremental": true,
+    "types": ["@playwright/experimental-ct-react"]
   }
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeToggle } from "@patternmode/ui/components/theme-toggle";
+import { ThemeToggle } from "@patternmode/theme-toggle";
 import { useTheme } from "next-themes";
 import React from "react";
 

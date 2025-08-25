@@ -1,4 +1,4 @@
-import { FieldControl } from "@patternmode/ui/components/field";
+import { FieldControl } from "@patternmode/field";
 import { IconSelect } from "@patternmode/icon-select";
 import { getIconComponent } from "@patternmode/icons/icon-registry";
 import React from "react";

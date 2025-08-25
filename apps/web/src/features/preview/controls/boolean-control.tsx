@@ -1,4 +1,4 @@
-import { FieldControl } from "@patternmode/ui/components/field";
+import { FieldControl } from "@patternmode/field";
 import { Switch } from "@patternmode/switch";
 import React from "react";
 

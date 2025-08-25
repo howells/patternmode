@@ -1,6 +1,6 @@
 "use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/ui/components/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import React from "react";
 

@@ -42,7 +42,7 @@
   "dependencies": {
     "@patternmode/ui": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "@patternmode/text": "workspace:*"
+    "@patternmode/text": "workspace:*",
+    "vaul": "^0.9.1"
   }
 }
-

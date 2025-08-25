@@ -1,6 +1,6 @@
 import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
 
-import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/ui/components/description-list";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/description-list";
 import { Icon } from "@patternmode/icon";
 import { Tooltip } from "@patternmode/tooltip";
 import { cx } from "@patternmode/ui/utils/cx";

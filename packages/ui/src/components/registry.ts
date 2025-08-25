@@ -268,21 +268,21 @@ import {
 	StackedListPreview,
 	stackedListPreviewProps,
 } from "@patternmode/stacked-list/preview";
-import { tabNavigationConfig } from "./tab-navigation/config";
+import { tabNavigationConfig } from "@patternmode/tab-navigation/config";
 import {
 	TabNavigationPreview,
 	tabNavigationPreviewProps,
-} from "./tab-navigation/preview";
-import { tableConfig } from "./table/config";
-import { TablePreview, tablePreviewProps } from "./table/preview";
-import { tabsConfig } from "./tabs/config";
-import { TabsPreview, tabsPreviewProps } from "./tabs/preview";
-import { themeToggleConfig } from "./theme-toggle/config";
-import { ThemeTogglePreview } from "./theme-toggle/preview";
-import { toastConfig } from "./toast/config";
-import { ToastPreview, toastPreviewProps } from "./toast/preview";
-import { toggleConfig } from "./toggle/config";
-import { TogglePreview, togglePreviewProps } from "./toggle/preview";
+} from "@patternmode/tab-navigation/preview";
+import { tableConfig } from "@patternmode/table/config";
+import { TablePreview, tablePreviewProps } from "@patternmode/table/preview";
+import { tabsConfig } from "@patternmode/tabs/config";
+import { TabsPreview, tabsPreviewProps } from "@patternmode/tabs/preview";
+import { themeToggleConfig } from "@patternmode/theme-toggle/config";
+import { ThemeTogglePreview } from "@patternmode/theme-toggle/preview";
+import { toastConfig } from "@patternmode/toast/config";
+import { ToastPreview, toastPreviewProps } from "@patternmode/toast/preview";
+import { toggleConfig } from "@patternmode/toggle/config";
+import { TogglePreview, togglePreviewProps } from "@patternmode/toggle/preview";
 import { toggleGroupConfig } from "@patternmode/toggle-group/config";
 import {
 	ToggleGroupPreview,

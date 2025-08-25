@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { tabsConfig } from "@patternmode/ui/components/tabs/config";
+import { tabsConfig } from "@patternmode/tabs/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

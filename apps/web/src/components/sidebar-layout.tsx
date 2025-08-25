@@ -52,7 +52,7 @@ function MainContent({ children }: { children: React.ReactNode }) {
 			)}
 		>
 			<Stack direction="vertical" gap={0} className="min-h-0 flex-1">
-				<header className="h-16 w-full px-6 bg-white dark:bg-zinc-900 border-b  dark:border-zinc-800 flex items-center justify-between">
+				<header className="h-16 w-full px-6 bg-white dark:bg-zinc-900 flex items-center justify-between">
 					<Link href="/" className="lg:hidden">
 						<Logo />
 					</Link>
@@ -72,7 +72,7 @@ function MainContent({ children }: { children: React.ReactNode }) {
 export function SidebarLayout({ children }: SidebarLayoutProps) {
 	return (
 		<div className="flex h-screen bg-white dark:bg-zinc-900">
-			<Sidebar className="hidden lg:block">
+			<Sidebar className="hidden lg:block bg-zinc-50">
 				<SidebarHeader>
 					<Button render={<Link href="/" />} variant="ghost" size="icon">
 						<Logo />

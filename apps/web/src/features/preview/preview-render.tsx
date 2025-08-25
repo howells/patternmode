@@ -1,9 +1,9 @@
 "use client";
 
-import { Callout } from "@patternmode/ui/components/callout";
-import { CodeBlock } from "@patternmode/ui/components/code-block";
+import { Callout } from "@patternmode/callout";
+import { CodeBlock } from "@patternmode/code-block";
 import { getPreviewComponent } from "@patternmode/ui/components/registry";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/ui/components/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/tabs";
 import React from "react";
 
 import { usePreview } from "./preview-context";

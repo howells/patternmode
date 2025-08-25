@@ -3,17 +3,12 @@
 import type { ComponentConfig } from "@patternmode/ui/types/component-types";
 
 import { Button } from "@patternmode/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@patternmode/ui/components/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@patternmode/dialog";
 import { Input } from "@patternmode/input";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";
-import { cx } from "@patternmode/ui/utils/cx";
+import { cx } from "@patternmode/utils/cx";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";

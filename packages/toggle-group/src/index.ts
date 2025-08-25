@@ -1,1 +1,1 @@
-export * from "@patternmode/ui/components/toggle-group";
+export { ToggleGroup, ToggleGroupItem } from "./component";

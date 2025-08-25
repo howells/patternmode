@@ -1,4 +1,4 @@
-import { ToastProvider } from "@patternmode/ui/components/toast";
+import { ToastProvider } from "@patternmode/toast";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 

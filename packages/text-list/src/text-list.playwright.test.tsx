@@ -7,4 +7,3 @@ test.describe("TextList", () => {
     await expect(c).toBeVisible();
   });
 });
-

@@ -8,17 +8,17 @@ import type { LucideIcon } from "lucide-react";
 
 // UI Component imports
 import { Button } from "@patternmode/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/ui/components/card";
+import { Card, CardContent, CardDescription, CardHeader, CardHeading } from "@patternmode/card";
 import { Checkbox } from "@patternmode/checkbox";
 import { Separator } from "@patternmode/separator";
-import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/ui/components/field";
-import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/ui/components/form";
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from "@patternmode/field";
+import { Form, FormControl, FormDescription, FormError, FormField, FormLabel } from "@patternmode/form";
 import { Grid, GridCell } from "@patternmode/grid";
 import { IconContainer } from "@patternmode/icon-container";
 import { Input } from "@patternmode/input";
 import { NumberField } from "@patternmode/number-field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
-import { Slider } from "@patternmode/ui/components/slider";
+import { Slider } from "@patternmode/slider";
 import { HStack, VStack } from "@patternmode/stack";
 import { Switch } from "@patternmode/switch";
 import { TagInput } from "@patternmode/tag-input";

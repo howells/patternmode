@@ -1,7 +1,7 @@
 "use client";
 
-import { Callout } from "@patternmode/ui/components/callout";
-import { Card, CardContent, CardHeader } from "@patternmode/ui/components/card";
+import { Callout } from "@patternmode/callout";
+import { Card, CardContent, CardHeader } from "@patternmode/card";
 import { getComponentConfig } from "@patternmode/ui/components/registry";
 import { Stack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";

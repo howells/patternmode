@@ -7,5 +7,4 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@patternmode/ui/components/dialog/component";
-} from "@patternmode/ui/components/dialog";
+} from "./component";

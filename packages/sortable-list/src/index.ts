@@ -1,2 +1,2 @@
-export * from "@patternmode/ui/components/sortable-list";
-export type { SortableListItem } from "@patternmode/ui/components/sortable-list/types";
+export { SortableList } from "./component";
+export type { SortableListItem } from "./types";

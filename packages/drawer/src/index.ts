@@ -5,6 +5,8 @@ export {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "@patternmode/ui/components/drawer";
+} from "./component";

@@ -4,9 +4,9 @@ import type { PreviewProps as UiPreviewProp } from "@patternmode/ui/types/previe
 
 import { Button } from "@patternmode/button";
 import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@patternmode/ui/components/registry";
-import { ScrollArea } from "@patternmode/ui/components/scroll-area";
+import { ScrollArea } from "@patternmode/scroll-area";
 import { HStack } from "@patternmode/stack";
-import { cx } from "@patternmode/ui/utils/cx";
+import { cx } from "@patternmode/utils/cx";
 import { Settings2 } from "lucide-react";
 import React from "react";
 

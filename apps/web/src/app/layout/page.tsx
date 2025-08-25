@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@patternmode/button";
-import { Card } from "@patternmode/ui/components/card";
+import { Card } from "@patternmode/card";
 import { Input } from "@patternmode/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
 import type { ComponentId } from "@patternmode/ui/components/registry";

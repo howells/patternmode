@@ -1,4 +1,4 @@
-import { FieldControl } from "@patternmode/ui/components/field";
+import { FieldControl } from "@patternmode/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import React from "react";
 

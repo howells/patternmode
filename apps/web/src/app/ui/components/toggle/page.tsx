@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { toggleConfig } from "@patternmode/ui/components/toggle/config";
+import { toggleConfig } from "@patternmode/toggle/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
