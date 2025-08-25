@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { comboboxConfig } from "@patternmode/ui/components/combobox/config";
+import { comboboxConfig } from "@patternmode/combobox/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

@@ -58,8 +58,8 @@ import {
 	CollapsiblePreview,
 	collapsiblePreviewProps,
 } from "./collapsible/preview";
-import { comboboxConfig } from "./combobox/config";
-import { ComboboxPreview, comboboxPreviewProps } from "./combobox/preview";
+import { comboboxConfig } from "@patternmode/combobox/config";
+import { ComboboxPreview, comboboxPreviewProps } from "@patternmode/combobox/preview";
 import { contextMenuConfig } from "./context-menu/config";
 import {
 	ContextMenuPreview,

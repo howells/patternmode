@@ -3,8 +3,8 @@
 import { defaultConfig } from "@patternmode/config/default-config";
 import type { Size } from "@patternmode/config/sizes";
 import { getIconComponent, iconNames } from "@patternmode/icons/icon-registry";
-import { Combobox } from "@patternmode/ui/components/combobox";
-import type { ComboboxOption } from "@patternmode/ui/components/combobox/types";
+import { Combobox } from "@patternmode/combobox";
+import type { ComboboxOption } from "@patternmode/combobox/types";
 import React from "react";
 
 type IconOption = { kebab: string; pascal: string } & ComboboxOption;
