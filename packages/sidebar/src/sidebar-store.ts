@@ -70,32 +70,26 @@ export const useSidebar = create<SidebarStore>()(
 				set({ isMobile, isExpanded, shouldOffsetContent });
 			},
 
-			togglePin: () => set((state) => {
-				const newState = state.state === "pinned" ? "collapsed" : "pinned";
-				const isExpanded = state.isMobile
-					? newState === "open"
-					: newState === "pinned" || newState === "open";
-				const shouldOffsetContent = !state.isMobile && newState === "pinned";
-				return { state: newState, isExpanded, shouldOffsetContent };
-			}),
+        togglePin: () => set((state) => {
+                const newState = state.state === "pinned" ? "collapsed" : "pinned" as const;
+                const isExpanded = state.isMobile ? false : newState === "pinned";
+                const shouldOffsetContent = !state.isMobile && newState === "pinned";
+                return { state: newState, isExpanded, shouldOffsetContent };
+        }),
 
-			toggleOpen: () => set((state) => {
-				const newState = state.state === "open" ? "collapsed" : "open";
-				const isExpanded = state.isMobile
-					? newState === "open"
-					: newState === "pinned" || newState === "open";
-				const shouldOffsetContent = !state.isMobile && newState === "pinned";
-				return { state: newState, isExpanded, shouldOffsetContent };
-			}),
+        toggleOpen: () => set((state) => {
+                const newState = state.state === "open" ? "collapsed" : "open" as const;
+                const isExpanded = newState === "open";
+                const shouldOffsetContent = false;
+                return { state: newState, isExpanded, shouldOffsetContent };
+        }),
 
-			toggleLock: () => set((state) => {
-				const newState = state.state === "locked" ? "collapsed" : "locked";
-				const isExpanded = state.isMobile
-					? newState === "open"
-					: newState === "pinned" || newState === "open";
-				const shouldOffsetContent = !state.isMobile && newState === "pinned";
-				return { state: newState, isExpanded, shouldOffsetContent };
-			}),
+        toggleLock: () => set((state) => {
+                const newState = state.state === "locked" ? "collapsed" : "locked" as const;
+                const isExpanded = false;
+                const shouldOffsetContent = false;
+                return { state: newState, isExpanded, shouldOffsetContent };
+        }),
 		}),
 		{
 			name: "sidebar-state",
