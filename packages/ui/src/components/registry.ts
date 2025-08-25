@@ -1,15 +1,113 @@
+import { avatarConfig } from "@patternmode/avatar/config";
+import { AvatarPreview, avatarPreviewProps } from "@patternmode/avatar/preview";
+import { badgeConfig } from "@patternmode/badge/config";
+import { BadgePreview, badgePreviewProps } from "@patternmode/badge/preview";
 import { buttonConfig } from "@patternmode/button/config";
 import { ButtonPreview, buttonPreviewProps } from "@patternmode/button/preview";
+import { checkboxConfig } from "@patternmode/checkbox/config";
+import {
+	CheckboxPreview,
+	checkboxPreviewProps,
+} from "@patternmode/checkbox/preview";
+import { comboboxConfig } from "@patternmode/combobox/config";
+import {
+	ComboboxPreview,
+	comboboxPreviewProps,
+} from "@patternmode/combobox/preview";
+import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
+import {
+	DismissButtonPreview,
+	dismissButtonPreviewProps,
+} from "@patternmode/dismiss-button/preview";
+import { dotConfig } from "@patternmode/dot/config";
+import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
+import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
+import {
+	DropdownItemPreview,
+	dropdownItemPreviewProps,
+} from "@patternmode/dropdown-item/preview";
+import { gridConfig } from "@patternmode/grid/config";
+import { GridPreview, gridPreviewProps } from "@patternmode/grid/preview";
+import { headingConfig } from "@patternmode/heading/config";
+import {
+	HeadingPreview,
+	headingPreviewProps,
+} from "@patternmode/heading/preview";
 import { iconConfig } from "@patternmode/icon/config";
 import { IconPreview, iconPreviewProps } from "@patternmode/icon/preview";
+import { iconContainerConfig } from "@patternmode/icon-container/config";
+import {
+	IconContainerPreview,
+	iconContainerPreviewProps,
+} from "@patternmode/icon-container/preview";
+import { iconSelectConfig } from "@patternmode/icon-select/config";
+import {
+	IconSelectPreview,
+	iconSelectPreviewProps,
+} from "@patternmode/icon-select/preview";
+import { inputConfig } from "@patternmode/input/config";
+import { InputPreview, inputPreviewProps } from "@patternmode/input/preview";
 import { kbdConfig } from "@patternmode/kbd/config";
 import { KbdPreview, kbdPreviewProps } from "@patternmode/kbd/preview";
+import { labelConfig } from "@patternmode/label/config";
+import { LabelPreview, labelPreviewProps } from "@patternmode/label/preview";
 import { loaderConfig } from "@patternmode/loader/config";
 import { LoaderPreview, loaderPreviewProps } from "@patternmode/loader/preview";
+import { numberFieldConfig } from "@patternmode/number-field/config";
+import {
+	NumberFieldPreview,
+	numberFieldPreviewProps,
+} from "@patternmode/number-field/preview";
+import { selectConfig } from "@patternmode/select/config";
+import { SelectPreview, selectPreviewProps } from "@patternmode/select/preview";
+import { selectNativeConfig } from "@patternmode/select-native/config";
+import {
+	SelectNativePreview,
+	selectNativePreviewProps,
+} from "@patternmode/select-native/preview";
+import { separatorConfig } from "@patternmode/separator/config";
+import {
+	SeparatorPreview,
+	separatorPreviewProps,
+} from "@patternmode/separator/preview";
 import { stackConfig } from "@patternmode/stack/config";
 import { StackPreview, stackPreviewProps } from "@patternmode/stack/preview";
+import { subheadingConfig } from "@patternmode/subheading/config";
+import {
+	SubheadingPreview,
+	subheadingPreviewProps,
+} from "@patternmode/subheading/preview";
+import { switchConfig } from "@patternmode/switch/config";
+import { SwitchPreview, switchPreviewProps } from "@patternmode/switch/preview";
+import { tagConfig } from "@patternmode/tag/config";
+import { TagPreview, tagPreviewProps } from "@patternmode/tag/preview";
+import { tagGroupConfig } from "@patternmode/tag-group/config";
+import {
+	TagGroupPreview,
+	tagGroupPreviewProps,
+} from "@patternmode/tag-group/preview";
+import { tagInputConfig } from "@patternmode/tag-input/config";
+import {
+	TagInputPreview,
+	tagInputPreviewProps,
+} from "@patternmode/tag-input/preview";
 import { textConfig } from "@patternmode/text/config";
 import { TextPreview, textPreviewProps } from "@patternmode/text/preview";
+import { textListConfig } from "@patternmode/text-list/config";
+import {
+	TextListPreview,
+	textListPreviewProps,
+} from "@patternmode/text-list/preview";
+import { textareaConfig } from "@patternmode/textarea/config";
+import {
+	TextareaPreview,
+	textareaPreviewProps,
+} from "@patternmode/textarea/preview";
+import { tooltipConfig } from "@patternmode/tooltip/config";
+import {
+	TooltipPreview,
+	tooltipPreviewProps,
+} from "@patternmode/tooltip/preview";
 import type React from "react";
 import type { ComponentConfig } from "../types/component-types";
 import type { PreviewProps } from "../types/preview-props-type";
@@ -20,10 +118,6 @@ import {
 	AlertDialogPreview,
 	alertDialogPreviewProps,
 } from "./alert-dialog/preview";
-import { avatarConfig } from "@patternmode/avatar/config";
-import { AvatarPreview, avatarPreviewProps } from "@patternmode/avatar/preview";
-import { badgeConfig } from "@patternmode/badge/config";
-import { BadgePreview, badgePreviewProps } from "@patternmode/badge/preview";
 import { barListConfig } from "./bar-list/config";
 import { BarListPreview, barListPreviewProps } from "./bar-list/preview";
 import { breadcrumbsConfig } from "./breadcrumbs/config";
@@ -44,8 +138,6 @@ import { cardConfig } from "./card/config";
 import { CardPreview, cardPreviewProps } from "./card/preview";
 import { carouselConfig } from "./carousel/config";
 import { CarouselPreview, carouselPreviewProps } from "./carousel/preview";
-import { checkboxConfig } from "./checkbox/config";
-import { CheckboxPreview, checkboxPreviewProps } from "./checkbox/preview";
 import { checkboxGroupConfig } from "./checkbox-group/config";
 import {
 	CheckboxGroupPreview,
@@ -58,8 +150,6 @@ import {
 	CollapsiblePreview,
 	collapsiblePreviewProps,
 } from "./collapsible/preview";
-import { comboboxConfig } from "@patternmode/combobox/config";
-import { ComboboxPreview, comboboxPreviewProps } from "@patternmode/combobox/preview";
 import { contextMenuConfig } from "./context-menu/config";
 import {
 	ContextMenuPreview,
@@ -82,17 +172,8 @@ import {
 } from "./description-list/preview";
 import { dialogConfig } from "./dialog/config";
 import { DialogPreview, dialogPreviewProps } from "./dialog/preview";
-import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
-import {
-	DismissButtonPreview,
-	dismissButtonPreviewProps,
-} from "@patternmode/dismiss-button/preview";
-import { dotConfig } from "@patternmode/dot/config";
-import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "./drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "./drawer/preview";
-import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
-import { DropdownItemPreview, dropdownItemPreviewProps } from "@patternmode/dropdown-item/preview";
 import { emptyStateConfig } from "./empty-state/config";
 import {
 	EmptyStatePreview,
@@ -109,23 +190,11 @@ import { fieldsetConfig } from "./fieldset/config";
 import { FieldsetPreview, fieldsetPreviewProps } from "./fieldset/preview";
 import { formConfig } from "./form/config";
 import { FormPreview, formPreviewProps } from "./form/preview";
-import { gridConfig } from "@patternmode/grid/config";
-import { GridPreview, gridPreviewProps } from "@patternmode/grid/preview";
-import { headingConfig } from "@patternmode/heading/config";
-import { HeadingPreview, headingPreviewProps } from "@patternmode/heading/preview";
 import { headingElementConfig } from "./heading-element/config";
 import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
 } from "./heading-element/preview";
-import { iconContainerConfig } from "@patternmode/icon-container/config";
-import { IconContainerPreview, iconContainerPreviewProps } from "@patternmode/icon-container/preview";
-import { iconSelectConfig } from "@patternmode/icon-select/config";
-import { IconSelectPreview, iconSelectPreviewProps } from "@patternmode/icon-select/preview";
-import { inputConfig } from "./input/config";
-import { InputPreview, inputPreviewProps } from "./input/preview";
-import { labelConfig } from "@patternmode/label/config";
-import { LabelPreview, labelPreviewProps } from "@patternmode/label/preview";
 import { menuConfig } from "./menu/config";
 import { MenuPreview, menuPreviewProps } from "./menu/preview";
 import { menuBarConfig } from "./menu-bar/config";
@@ -139,11 +208,6 @@ import {
 	NavigationMenuPreview,
 	navigationMenuPreviewProps,
 } from "./navigation-menu/preview";
-import { numberFieldConfig } from "./number-field/config";
-import {
-	NumberFieldPreview,
-	numberFieldPreviewProps,
-} from "./number-field/preview";
 import { paginationConfig } from "./pagination/config";
 import {
 	PaginationPreview,
@@ -163,8 +227,8 @@ import {
 	ProgressCirclePreview,
 	progressCirclePreviewProps,
 } from "./progress-circle/preview";
-import { radioConfig } from "./radio/config";
-import { RadioPreview, radioPreviewProps } from "./radio/preview";
+import { radioConfig } from "@patternmode/radio/config";
+import { RadioPreview, radioPreviewProps } from "@patternmode/radio/preview";
 import { radioCardGroupConfig } from "./radio-card-group/config";
 import {
 	RadioCardGroupPreview,
@@ -185,12 +249,6 @@ import {
 	SearchFieldPreview,
 	searchFieldPreviewProps,
 } from "./search-field/preview";
-import { selectConfig } from "@patternmode/select/config";
-import { SelectPreview, selectPreviewProps } from "@patternmode/select/preview";
-import { selectNativeConfig } from "@patternmode/select-native/config";
-import { SelectNativePreview, selectNativePreviewProps } from "@patternmode/select-native/preview";
-import { separatorConfig } from "@patternmode/separator/config";
-import { SeparatorPreview, separatorPreviewProps } from "@patternmode/separator/preview";
 import { sheetConfig } from "./sheet/config";
 import { SheetPreview, sheetPreviewProps } from "./sheet/preview";
 import { skeletonConfig } from "./skeleton/config";
@@ -212,10 +270,6 @@ import {
 	StackedListPreview,
 	stackedListPreviewProps,
 } from "./stacked-list/preview";
-import { subheadingConfig } from "@patternmode/subheading/config";
-import { SubheadingPreview, subheadingPreviewProps } from "@patternmode/subheading/preview";
-import { switchConfig } from "./switch/config";
-import { SwitchPreview, switchPreviewProps } from "./switch/preview";
 import { tabNavigationConfig } from "./tab-navigation/config";
 import {
 	TabNavigationPreview,
@@ -225,16 +279,6 @@ import { tableConfig } from "./table/config";
 import { TablePreview, tablePreviewProps } from "./table/preview";
 import { tabsConfig } from "./tabs/config";
 import { TabsPreview, tabsPreviewProps } from "./tabs/preview";
-import { tagConfig } from "@patternmode/tag/config";
-import { TagPreview, tagPreviewProps } from "@patternmode/tag/preview";
-import { tagGroupConfig } from "@patternmode/tag-group/config";
-import { TagGroupPreview, tagGroupPreviewProps } from "@patternmode/tag-group/preview";
-import { tagInputConfig } from "@patternmode/tag-input/config";
-import { TagInputPreview, tagInputPreviewProps } from "@patternmode/tag-input/preview";
-import { textListConfig } from "@patternmode/text-list/config";
-import { TextListPreview, textListPreviewProps } from "@patternmode/text-list/preview";
-import { textareaConfig } from "./textarea/config";
-import { TextareaPreview, textareaPreviewProps } from "./textarea/preview";
 import { themeToggleConfig } from "./theme-toggle/config";
 import { ThemeTogglePreview } from "./theme-toggle/preview";
 import { toastConfig } from "./toast/config";
@@ -248,10 +292,6 @@ import {
 } from "./toggle-group/preview";
 import { toolbarConfig } from "./toolbar/config";
 import { ToolbarPreview, toolbarPreviewProps } from "./toolbar/preview";
-import { tooltipConfig } from "@patternmode/tooltip/config";
-import { TooltipPreview, tooltipPreviewProps } from "@patternmode/tooltip/preview";
-import { trackerConfig } from "./tracker/config";
-import { TrackerPreview, trackerPreviewProps } from "./tracker/preview";
 
 export const COMPONENT_REGISTRY = {
 	accordion: accordionConfig,
@@ -338,7 +378,6 @@ export const COMPONENT_REGISTRY = {
 	"toggle-group": toggleGroupConfig,
 	toolbar: toolbarConfig,
 	tooltip: tooltipConfig,
-	tracker: trackerConfig,
 } as const satisfies Record<string, ComponentConfig>;
 
 // Static preview component registry
@@ -427,7 +466,6 @@ export const PREVIEW_REGISTRY = {
 	"toggle-group": ToggleGroupPreview,
 	toolbar: ToolbarPreview,
 	tooltip: TooltipPreview,
-	tracker: TrackerPreview,
 } as const satisfies Record<string, React.ComponentType<any>>;
 
 // Static preview props registry
@@ -515,7 +553,6 @@ export const PREVIEW_PROPS_REGISTRY = {
 	"toggle-group": toggleGroupPreviewProps,
 	toolbar: toolbarPreviewProps,
 	tooltip: tooltipPreviewProps,
-	tracker: trackerPreviewProps,
 } as const satisfies Record<string, PreviewProps[]>;
 
 // Component metadata registry
@@ -772,10 +809,6 @@ export const COMPONENT_METADATA_REGISTRY = {
 	tooltip: {
 		title: tooltipConfig.name,
 		description: tooltipConfig.description,
-	},
-	tracker: {
-		title: trackerConfig.name,
-		description: trackerConfig.description,
 	},
 } as const satisfies Record<string, { title: string; description: string }>;
 

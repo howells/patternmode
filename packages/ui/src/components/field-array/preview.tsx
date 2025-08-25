@@ -6,9 +6,9 @@ import {
 	DescriptionList,
 	DescriptionTerm,
 } from "../description-list/component";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 import { Subheading } from "@patternmode/subheading";
-import { Textarea } from "../textarea/component";
+import { Textarea } from "@patternmode/textarea";
 import type { FieldSchema } from "./component";
 import { FieldArray } from "./component";
 

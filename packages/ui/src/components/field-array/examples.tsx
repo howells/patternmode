@@ -3,14 +3,14 @@
 import React from "react";
 import { Avatar } from "@patternmode/avatar";
 import { Button } from "@patternmode/button";
-import { Checkbox } from "../checkbox/component";
+import { Checkbox } from "@patternmode/checkbox";
 import { Fieldset } from "../fieldset/component";
 import { Grid, GridCell } from "@patternmode/grid";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 import { ScrollArea } from "../scroll-area/component";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { HStack, Stack, VStack } from "@patternmode/stack";
-import { Textarea } from "../textarea/component";
+import { Textarea } from "@patternmode/textarea";
 import type { FieldSchema } from "./component";
 import { FieldArray } from "./component";
 

@@ -9,7 +9,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { hasErrorInput } from "@patternmode/utils/has-error-input";
 import { Icon } from "@patternmode/icon";
-import { Input } from "@patternmode/ui/components/input";
+import { Input } from "@patternmode/input";
 import { Loader } from "@patternmode/loader";
 import type { ComboboxOption, ComboboxProps } from "./types";
 import { comboboxItemVariants, comboboxListVariants, comboboxTriggerVariants, comboboxVariants } from "./variants";

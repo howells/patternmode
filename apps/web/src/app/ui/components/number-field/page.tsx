@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { numberFieldConfig } from "@patternmode/ui/components/number-field/config";
+import { numberFieldConfig } from "@patternmode/number-field/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

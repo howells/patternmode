@@ -5,7 +5,7 @@ import { cx } from "@patternmode/utils/cx";
 import { Search, X } from "lucide-react";
 import * as React from "react";
 import { EmptyState } from "../empty-state/component";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 
 export type SearchFieldItem = {
 	id: string;

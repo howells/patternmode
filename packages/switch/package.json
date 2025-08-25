@@ -1,0 +1,27 @@
+{
+  "name": "@patternmode/switch",
+  "version": "0.1.0",
+  "description": "Accessible toggle switch component",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    "./types": { "types": "./src/types.ts", "import": "./src/types.ts", "default": "./src/types.ts" },
+    "./variants": { "types": "./src/variants.ts", "import": "./src/variants.ts", "default": "./src/variants.ts" },
+    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    "./package.json": "./package.json"
+  },
+  "files": ["src"],
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@base-ui-components/react": "^1.0.0-beta.2"
+  },
+  "dependencies": {
+    "@patternmode/utils": "workspace:*"
+  }
+}
+

@@ -20,7 +20,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { cx } from "@patternmode/utils/cx";
 import { GripVertical } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { Checkbox } from "../checkbox/component";
+import { Checkbox } from "@patternmode/checkbox";
 import type { SortableListItem, SortableListProps } from "./types";
 
 /**

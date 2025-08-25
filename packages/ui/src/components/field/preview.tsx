@@ -2,7 +2,7 @@
 
 import type { Field as BaseField } from "@base-ui-components/react/field";
 import type React from "react";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 import { Field, FieldControl, FieldDescription, FieldLabel } from "./component";
 
 type FieldProps = React.ComponentPropsWithoutRef<typeof BaseField.Root>;

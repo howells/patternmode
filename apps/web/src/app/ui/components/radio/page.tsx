@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { radioConfig } from "@patternmode/ui/components/radio/config";
+import { radioConfig } from "@patternmode/radio/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

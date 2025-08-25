@@ -1,6 +1,6 @@
 import { FieldControl } from "@patternmode/ui/components/field";
-import { Input } from "@patternmode/ui/components/input";
-import { Textarea } from "@patternmode/ui/components/textarea";
+import { Input } from "@patternmode/input";
+import { Textarea } from "@patternmode/textarea";
 import React from "react";
 
 import type { PropControlProps } from "./types";

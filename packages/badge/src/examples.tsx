@@ -70,4 +70,3 @@ export const ComplexExample = () => (
     <Badge size="lg" variant="warning" leftIcon={AlertCircle} rounded>Requires Attention</Badge>
   </Stack>
 );
-

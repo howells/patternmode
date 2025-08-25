@@ -1,6 +1,9 @@
 {
-  "name": "@patternmode/tsconfig",
-  "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript configurations for the patternmode monorepo"
+	"name": "@repo/typescript-config",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	}
 }

@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@patternmode/ui/components/dialog";
-import { Input } from "@patternmode/ui/components/input";
+import { Input } from "@patternmode/input";
 import { getAllComponents } from "@patternmode/ui/components/registry";
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";

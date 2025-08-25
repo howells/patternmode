@@ -2,7 +2,7 @@
 
 import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/ui/components/card";
-import { Input } from "@patternmode/ui/components/input";
+import { Input } from "@patternmode/input";
 import {
 	Popover,
 	PopoverContent,

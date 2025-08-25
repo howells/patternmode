@@ -4,11 +4,11 @@ import { cx } from "@patternmode/utils/cx";
 import { GripVertical, Plus } from "lucide-react";
 import type React from "react";
 import { Button } from "@patternmode/button";
-import { Checkbox } from "../checkbox/component";
+import { Checkbox } from "@patternmode/checkbox";
 import { DismissButton } from "@patternmode/dismiss-button";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
-import { Textarea } from "../textarea/component";
+import { Textarea } from "@patternmode/textarea";
 
 // Generic field schema definition
 export type FieldSchema = {

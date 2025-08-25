@@ -1,5 +1,5 @@
 import { FieldControl } from "@patternmode/ui/components/field";
-import { NumberField } from "@patternmode/ui/components/number-field";
+import { NumberField } from "@patternmode/number-field";
 import { defaultConfig as uiConfig } from "@patternmode/ui/config/default-config";
 import React from "react";
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { checkboxConfig } from "@patternmode/ui/components/checkbox/config";
+import { checkboxConfig } from "@patternmode/checkbox/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

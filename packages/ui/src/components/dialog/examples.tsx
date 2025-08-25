@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@patternmode/button";
-import { Input } from "../input/component";
+import { Input } from "@patternmode/input";
 import { Text } from "@patternmode/text";
 import {
 	Dialog,

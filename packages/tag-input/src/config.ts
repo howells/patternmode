@@ -34,4 +34,3 @@ export const tagInputConfig: ComponentConfig = {
     { name: "Tag Input", description: "Multi-select tag input with search, filtering, and dynamic creation", component: TagInput },
   ],
 };
-
