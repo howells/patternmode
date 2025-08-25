@@ -1,4 +1,4 @@
-import type { PreviewProps } from "@patternmode/config/preview-props-type";
+import type { PreviewProps } from "@/types/preview-props";
 
 import { DescriptionDetails, DescriptionList, DescriptionTerm } from "@patternmode/description-list";
 import { Icon } from "@patternmode/icon";

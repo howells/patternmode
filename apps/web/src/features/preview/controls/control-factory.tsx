@@ -1,4 +1,4 @@
-import type { PreviewProps as PropMetadata } from "@patternmode/config/preview-props-type";
+import type { PreviewProps as PropMetadata } from "@/types/preview-props";
 
 import React from "react";
 

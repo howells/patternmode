@@ -166,9 +166,6 @@ type PopoverArrowProps = React.ComponentPropsWithoutRef<typeof BasePopover.Arrow
 const PopoverArrow = (props: PopoverArrowProps) => <BasePopover.Arrow {...props} />;
 PopoverArrow.displayName = "PopoverArrow";
 
-type PopoverAnchorProps = React.ComponentPropsWithoutRef<typeof BasePopover.Anchor>;
-const PopoverAnchor = (props: PopoverAnchorProps) => <BasePopover.Anchor {...props} />;
-PopoverAnchor.displayName = "PopoverAnchor";
 
 export type { PopoverProps };
 export {
@@ -182,6 +179,4 @@ export {
   PopoverClose,
   PopoverArrow,
   PopoverPositioner,
-  PopoverAnchor,
 };
-

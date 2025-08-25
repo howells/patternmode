@@ -7,7 +7,6 @@ import {
 	FAQBuilderExample,
 	ProductVariantsExample,
 } from "./examples";
-import { fieldArrayPreviewProps } from "./preview";
 
 export const fieldArrayConfig: ComponentConfig = {
 	id: "field-array",
@@ -18,7 +17,6 @@ export const fieldArrayConfig: ComponentConfig = {
 		"Generic field array component for managing dynamic lists of structured data with configurable schemas.",
 	importStatement: 'import { FieldArray } from "@patternmode/field-array";',
 	component: FieldArray,
-	previewProps: fieldArrayPreviewProps,
 	components: [
 		{
 			name: "FieldArray",

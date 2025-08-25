@@ -1,7 +1,6 @@
 import type React from "react";
 import type { ComponentCategory } from "./component-categories";
-import type { IconComponent } from "./icon-types";
-import type { PreviewProps } from "./preview-props-type";
+import type { IconComponent } from "@patternmode/icons";
 
 /**
  * Complete example definition with component and metadata
@@ -28,8 +27,6 @@ export type ComponentDefinition = {
 	primary?: boolean;
 	/** Custom description for this specific component */
 	description?: string;
-	/** Props specific to this component (optional) */
-	props?: PreviewProps[];
 };
 
 /**
@@ -60,9 +57,6 @@ export type ComponentConfig = {
 	// Component definitions (for single or multi-component families)
 	components?: ComponentDefinition[];
 
-	// Props that users can experiment with in preview components
-	previewProps?: PreviewProps[];
-
-	// Examples using the self-contained component system
-	examples?: ComponentExample[];
+    // Examples using the self-contained component system
+    examples?: ComponentExample[];
 };

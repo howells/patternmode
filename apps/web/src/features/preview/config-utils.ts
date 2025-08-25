@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
-import type { PreviewProps } from "@patternmode/config/preview-props-type";
+import type { PreviewProps } from "@/types/preview-props";
 
 import { getPreviewProps } from "@/registry/components";
 
@@ -28,11 +28,6 @@ export async function getConfigProps(config: ComponentConfig): Promise<PreviewPr
   if (registryProps.length > 0) {
     console.log(`Found preview props for ${config.id} from registry:`, registryProps.length, "props");
     return registryProps;
-  }
-
-  // Fallback: If config has direct props, return them
-  if (config.previewProps && config.previewProps.length > 0) {
-    return config.previewProps;
   }
 
   // For multi-component families, collect props from all components

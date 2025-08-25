@@ -37,13 +37,13 @@
     "lint": "biome check src --write"
   },
   "peerDependencies": {
+    "@base-ui-components/react": "^1.0.0-beta.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@base-ui-components/react": "^1.0.0-beta.2"
+    "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@patternmode/utils": "workspace:*",
     "@patternmode/text": "workspace:*",
-    "vaul": "^0.9.1"
+    "@patternmode/utils": "workspace:*",
+    "vaul": "^1.1.2"
   }
 }

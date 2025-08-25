@@ -11,23 +11,21 @@
 		"lint": "biome check src --write"
 	},
 	"type": "module",
-  "exports": {
-    "./sizes": "./src/sizes.ts",
-    "./component-categories": "./src/component-categories.ts",
-    "./component-types": "./src/component-types.ts",
-    "./preview-props-type": "./src/preview-props-type.ts",
-    "./icon-types": "./src/icon-types.ts"
-  },
+	"exports": {
+		"./sizes": "./src/sizes.ts",
+		"./component-categories": "./src/component-categories.ts",
+		"./component-types": "./src/component-types.ts"
+	},
 	"dependencies": {
 		"@patternmode/constants": "workspace:*",
 		"clsx": "^2.1.1",
-		"tailwind-variants": "^2.1.0"
+		"tailwind-variants": "^3.1.0"
 	},
 	"peerDependencies": {
 		"tailwindcss": "^4.1.12"
 	},
-  "devDependencies": {
-    "@patternmode/tsconfig": "workspace:*",
-    "typescript": "^5.9.2"
-  }
+	"devDependencies": {
+		"@patternmode/tsconfig": "workspace:*",
+		"typescript": "^5.9.2"
+	}
 }

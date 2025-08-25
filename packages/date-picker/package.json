@@ -40,5 +40,11 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@internationalized/date": "^3.6.0",
+    "@react-aria/datepicker": "^3.14.0",
+    "@react-stately/datepicker": "^3.11.0",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.541.0"
+  }
 }

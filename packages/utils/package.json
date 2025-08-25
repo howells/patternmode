@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "Utilities for PatternMode UI components",
 	"type": "module",
-  "exports": {
+	"exports": {
 		"./border-radius-variants": "./src/border-radius-variants.ts",
 		"./border-radius-variants-with-full": "./src/border-radius-variants-with-full.ts",
 		"./breakpoints": "./src/breakpoints.ts",
@@ -12,13 +12,11 @@
 		"./has-error-input": "./src/has-error-input.ts",
 		"./focus-ring": "./src/focus-ring.ts",
 		"./spacing": "./src/spacing.ts",
-    
 		"./cx": "./src/cx.ts",
 		"./container-button-adjustments": "./src/container-button-adjustments.ts",
 		"./responsive-utils": "./src/responsive-utils.ts",
-    
-  	"./progress": "./src/progress.ts"
-  },
+		"./progress": "./src/progress.ts"
+	},
 	"files": [
 		"src"
 	],
@@ -30,7 +28,7 @@
 	"dependencies": {
 		"clsx": "^2.1.1",
 		"tailwind-merge": "^3.3.1",
-		"tailwind-variants": "^2.1.0"
+		"tailwind-variants": "^3.1.0"
 	},
 	"peerDependencies": {
 		"tailwindcss": "^4.1.12"

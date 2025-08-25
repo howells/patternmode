@@ -2,4 +2,6 @@
 
 @import "../../node_modules/@patternmode/styles/src/globals.css";
 
+/* Include sources from the app and all workspace packages */
+@source '../**/*.{ts,tsx,mdx}';
 @source '../../packages/*/src/**/*.{ts,tsx}';

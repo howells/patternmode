@@ -2,27 +2,76 @@
   "name": "@patternmode/select-native",
   "version": "0.1.0",
   "description": "Styled native HTML select with Patternmode design",
-  "author": { "name": "Daniel Howells", "email": "daniel@howellsstudio.com", "url": "https://github.com/howells" },
+  "author": {
+    "name": "Daniel Howells",
+    "email": "daniel@howellsstudio.com",
+    "url": "https://github.com/howells"
+  },
   "type": "module",
   "license": "MIT",
   "homepage": "https://patternmode.com",
-  "repository": { "type": "git", "url": "https://github.com/howells/patternmode.git", "directory": "packages/select-native" },
-  "bugs": { "url": "https://github.com/howells/patternmode/issues" },
-  "keywords": ["react", "select", "native", "form", "typescript"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/howells/patternmode.git",
+    "directory": "packages/select-native"
+  },
+  "bugs": {
+    "url": "https://github.com/howells/patternmode/issues"
+  },
+  "keywords": [
+    "react",
+    "select",
+    "native",
+    "form",
+    "typescript"
+  ],
   "sideEffects": false,
   "types": "./src/index.ts",
   "exports": {
-    ".": { "types": "./src/index.ts", "import": "./src/index.ts", "default": "./src/index.ts" },
-    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
-    "./types": { "types": "./src/types.ts", "import": "./src/types.ts", "default": "./src/types.ts" },
-    "./variants": { "types": "./src/variants.ts", "import": "./src/variants.ts", "default": "./src/variants.ts" },
-    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
-    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
-    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./component": {
+      "types": "./src/component.tsx",
+      "import": "./src/component.tsx",
+      "default": "./src/component.tsx"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "import": "./src/types.ts",
+      "default": "./src/types.ts"
+    },
+    "./variants": {
+      "types": "./src/variants.ts",
+      "import": "./src/variants.ts",
+      "default": "./src/variants.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
+    "./preview": {
+      "types": "./src/preview.tsx",
+      "import": "./src/preview.tsx",
+      "default": "./src/preview.tsx"
+    },
+    "./examples": {
+      "types": "./src/examples.tsx",
+      "import": "./src/examples.tsx",
+      "default": "./src/examples.tsx"
+    },
     "./package.json": "./package.json"
   },
-  "files": ["src"],
-  "engines": { "node": ">=18.0.0", "npm": ">=8.0.0" },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "build": "tsc --noEmit",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
@@ -35,15 +84,18 @@
   },
   "dependencies": {
     "@patternmode/config": "workspace:*",
-    "@patternmode/utils": "workspace:*",
     "@patternmode/icon": "workspace:*",
-    "tailwind-variants": "^2.1.0"
+    "@patternmode/utils": "workspace:*",
+    "tailwind-variants": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "typescript": "^5.9.2"
   },
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" }
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

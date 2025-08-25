@@ -4,7 +4,7 @@ import type { SpacingValue } from "@/lib/spacing-utils";
 
 import { Button } from "@patternmode/button";
 import { Grid, GridCell } from "@patternmode/grid";
-import { getComponentConfig } from "@/registry/components";
+import { getComponentConfig, getPreviewProps as getPreviewPropsForId } from "@/registry/components";
 import { Stack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/toggle-group";
@@ -73,16 +73,14 @@ export function GridBuilder() {
 
   const addComponentToCell = (cellIndex: number, componentId: string) => {
     // Get component config and extract default props
-    const config = getComponentConfig(componentId);
+    const _config = getComponentConfig(componentId);
     const defaultProps: Record<string, unknown> = {};
-
-    if (config) {
-      config.previewProps.forEach((prop) => {
-        if (prop.defaultValue !== undefined) {
-          defaultProps[prop.name] = prop.defaultValue;
-        }
-      });
-    }
+    const previewProps = getPreviewPropsForId(componentId);
+    previewProps.forEach((prop) => {
+      if (prop.defaultValue !== undefined) {
+        defaultProps[prop.name] = prop.defaultValue;
+      }
+    });
 
     const newComponent: CellData = {
       componentId,

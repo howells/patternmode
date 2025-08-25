@@ -2,7 +2,6 @@ import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageSquare } from "lucide-react";
 import { Textarea } from "./component";
 import { DefaultExample, DisabledExample, FixedHeightExample, WithContentExample, WithErrorExample, WithHeightCallbackExample, WithRowConstraintsExample } from "./examples";
-import { textareaPreviewProps } from "./preview";
 
 export const textareaConfig: ComponentConfig = {
   id: "textarea",
@@ -12,7 +11,6 @@ export const textareaConfig: ComponentConfig = {
   featured: true,
   icon: MessageSquare,
   importStatement: `import { Textarea } from "@patternmode/textarea";`,
-  previewProps: textareaPreviewProps,
   examples: [
     { id: "default", title: "Default", description: "Basic textarea with default settings", component: DefaultExample },
     { id: "with-content", title: "With Content", description: "Textarea with pre-filled content", component: WithContentExample },

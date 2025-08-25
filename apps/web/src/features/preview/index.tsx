@@ -1,6 +1,6 @@
 "use client";
 
-import type { PreviewProps as UiPreviewProp } from "@patternmode/config/preview-props-type";
+import type { PreviewProps as UiPreviewProp } from "@/types/preview-props";
 
 import { Button } from "@patternmode/button";
 import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";

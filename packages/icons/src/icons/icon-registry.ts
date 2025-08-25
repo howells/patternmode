@@ -23,6 +23,9 @@ export type LucideIconComponent = React.ComponentType<{
 	[key: string]: any;
 }>;
 
+// Generic icon component contract used across the workspace
+export type IconComponent = LucideIconComponent;
+
 // Pre-generated list of all valid icon names (1822 icons)
 export const iconNames: string[] = [
 	"AArrowDown",

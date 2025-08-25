@@ -9,5 +9,4 @@ export {
   PopoverClose,
   PopoverArrow,
   PopoverPositioner,
-  PopoverAnchor,
 } from "./component";

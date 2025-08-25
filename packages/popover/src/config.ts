@@ -2,7 +2,6 @@ import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageSquare } from "lucide-react";
 import {
   Popover,
-  PopoverAnchor,
   PopoverArrow,
   PopoverBackdrop,
   PopoverClose,
@@ -41,6 +40,5 @@ export const popoverConfig: ComponentConfig = {
     { name: "Popover Backdrop", description: "Optional backdrop for modal behavior.", component: PopoverBackdrop },
     { name: "Popover Portal", description: "Portal for rendering outside DOM tree.", component: PopoverPortal },
     { name: "Popover Positioner", description: "Smart positioning with collision detection.", component: PopoverPositioner },
-    { name: "Popover Anchor", description: "Legacy alias for PopoverTrigger.", component: PopoverAnchor },
   ],
 };

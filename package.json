@@ -29,18 +29,18 @@
 		"release": "turbo build && changeset publish"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.2.0",
+		"@biomejs/biome": "^2.2.2",
 		"@changesets/cli": "^2.29.6",
 		"@playwright/experimental-ct-react": "^1.55.0",
-		"@types/react": "^19.1.10",
+		"@types/react": "^19.1.11",
 		"@types/react-dom": "^19.1.7",
 		"glob": "^11.0.3",
-		"knip": "^5.62.0",
+		"knip": "^5.63.0",
 		"turbo": "^2.5.6",
-		"ultracite": "^5.2.4"
+		"ultracite": "^5.2.5"
 	},
 	"dependencies": {
 		"es-toolkit": "^1.39.10",
-		"nuqs": "^2.4.3"
+		"nuqs": "^2.5.1"
 	}
 }

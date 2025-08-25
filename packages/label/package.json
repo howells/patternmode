@@ -15,19 +15,54 @@
     "url": "https://github.com/howells/patternmode.git",
     "directory": "packages/label"
   },
-  "bugs": { "url": "https://github.com/howells/patternmode/issues" },
-  "keywords": ["react", "label", "forms", "accessibility", "ui", "components", "typescript"],
+  "bugs": {
+    "url": "https://github.com/howells/patternmode/issues"
+  },
+  "keywords": [
+    "react",
+    "label",
+    "forms",
+    "accessibility",
+    "ui",
+    "components",
+    "typescript"
+  ],
   "sideEffects": false,
   "exports": {
-    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
-    "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
-    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
-    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
-    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" },
+    ".": {
+      "types": "./src/component.tsx",
+      "import": "./src/component.tsx",
+      "default": "./src/component.tsx"
+    },
+    "./component": {
+      "types": "./src/component.tsx",
+      "import": "./src/component.tsx",
+      "default": "./src/component.tsx"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
+    "./preview": {
+      "types": "./src/preview.tsx",
+      "import": "./src/preview.tsx",
+      "default": "./src/preview.tsx"
+    },
+    "./examples": {
+      "types": "./src/examples.tsx",
+      "import": "./src/examples.tsx",
+      "default": "./src/examples.tsx"
+    },
     "./package.json": "./package.json"
   },
-  "files": ["src"],
-  "engines": { "node": ">=18.0.0", "npm": ">=8.0.0" },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
@@ -37,9 +72,9 @@
   },
   "peerDependencies": {
     "@base-ui-components/react": "^1.0.0-beta.2",
+    "lucide-react": ">=0.525.0 <1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "lucide-react": ">=0.525.0 <1"
+    "react-dom": "^19.0.0"
   },
   "dependencies": {
     "@patternmode/config": "workspace:*",
@@ -49,10 +84,13 @@
     "@playwright/experimental-ct-react": "^1.55.0",
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" }
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

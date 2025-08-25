@@ -1,7 +1,7 @@
 import type React from "react";
 
 import type { ComponentConfig } from "@patternmode/config/component-types";
-import type { PreviewProps } from "@patternmode/config/preview-props-type";
+import type { PreviewProps } from "@/types/preview-props";
 
 // Import all component configs
 import { avatarConfig } from "@patternmode/avatar/config";
@@ -139,6 +139,7 @@ import { DialogPreview, dialogPreviewProps } from "@patternmode/dialog/preview";
 import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
 import { EmptyStatePreview, emptyStatePreviewProps } from "@patternmode/empty-state/preview";
 import { FieldPreview, fieldPreviewProps } from "@patternmode/field/preview";
+import { FieldArrayPreview, fieldArrayPreviewProps } from "@patternmode/field-array/preview";
 import { FieldsetPreview, fieldsetPreviewProps } from "@patternmode/fieldset/preview";
 import { FormPreview, formPreviewProps } from "@patternmode/form/preview";
 import { HeadingElementPreview, headingElementPreviewProps } from "@patternmode/heading-element/preview";
@@ -466,8 +467,7 @@ export function getPreviewProps(id: string): PreviewProps[] {
     id as keyof typeof PREVIEW_PROPS_REGISTRY
   ];
   if (previewProps) return previewProps;
-  const config = getComponentConfig(id);
-  return config?.previewProps || [];
+  return [];
 }
 
 // Category configuration for web app
@@ -500,4 +500,3 @@ export function getCategoryInfo(categoryKey: string) {
     description: category.description,
   };
 }
-
