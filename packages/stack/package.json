@@ -8,6 +8,7 @@
 		"url": "https://github.com/howells"
 	},
 	"type": "module",
+	"types": "./src/index.ts",
 	"license": "MIT",
 	"homepage": "https://patternmode.com",
 	"repository": {
@@ -31,42 +32,10 @@
 	],
 	"sideEffects": false,
 	"exports": {
-		".": {
-			"types": "./src/component.tsx",
-			"import": "./src/component.tsx",
-			"default": "./src/component.tsx"
-		},
-		"./component": {
-			"types": "./src/component.tsx",
-			"import": "./src/component.tsx",
-			"default": "./src/component.tsx"
-		},
-		"./variants": {
-			"types": "./src/variants.ts",
-			"import": "./src/variants.ts",
-			"default": "./src/variants.ts"
-		},
-		"./types": {
-			"types": "./src/types.ts",
-			"import": "./src/types.ts",
-			"default": "./src/types.ts"
-		},
-		"./config": {
-			"types": "./src/config.ts",
-			"import": "./src/config.ts",
-			"default": "./src/config.ts"
-		},
-		"./preview": {
-			"types": "./src/preview.tsx",
-			"import": "./src/preview.tsx",
-			"default": "./src/preview.tsx"
-		},
-		"./examples": {
-			"types": "./src/examples.tsx",
-			"import": "./src/examples.tsx",
-			"default": "./src/examples.tsx"
-		},
-		"./package.json": "./package.json"
+		".": { "types": "./src/index.ts", "import": "./src/index.ts", "default": "./src/index.ts" },
+		"./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+		"./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+		"./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" }
 	},
 	"files": [
 		"src"
@@ -77,6 +46,7 @@
 	},
 	"scripts": {
 		"build": "tsc --noEmit",
+		"types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check src --write",
 		"test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true",
@@ -93,6 +63,7 @@
     "tailwind-variants": "^2.1.0"
   },
 	"devDependencies": {
+		"@patternmode/tsconfig": "workspace:*",
 		"@playwright/experimental-ct-react": "^1.55.0",
 		"@playwright/test": "^1.55.0",
 		"@types/node": "^24.3.0",
