@@ -7,4 +7,3 @@ test.describe("Simple Switch Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

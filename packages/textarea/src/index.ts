@@ -1,3 +1,2 @@
-export { Textarea } from "./component";
 export type { TextareaProps } from "./component";
-
+export { Textarea } from "./component";

@@ -3,8 +3,8 @@
 import { ProgressBar } from "./component";
 import type { ProgressBarProps } from "./types";
 
-export function ProgressPreview(props: ProgressBarProps) {
-	return <ProgressBar value={75} showValue={true} {...props} />;
+export function ProgressPreview(props: Omit<ProgressBarProps, "value">) {
+    return <ProgressBar value={75} showValue={true} {...props} />;
 }
 
 // Preview props for prop explorer

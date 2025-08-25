@@ -3,6 +3,7 @@
 import type { Size } from "@patternmode/config/sizes";
 import React from "react";
 import { Combobox } from "./component";
+import type { ComboboxOption } from "./types";
 
 export type ComboboxPreviewProps = {
   dataType?: "frameworks" | "languages" | "countries" | "colors";
@@ -69,11 +70,14 @@ const dataConfigs = {
       { id: "8", label: "Cyan", value: "cyan", description: "#00FFFF" },
     ],
   },
-} as const;
+} satisfies Record<
+  "frameworks" | "languages" | "countries" | "colors",
+  { placeholder: string; searchPlaceholder: string; options: readonly ComboboxOption[] }
+>;
 
 export function ComboboxPreview({ dataType = "frameworks", optionCount = 8, showDescriptions = true, size = "base", defaultValue }: ComboboxPreviewProps = {}) {
   const config = dataConfigs[dataType];
-  const options = config.options.slice(0, optionCount);
+  const options: ComboboxOption[] = config.options.slice(0, optionCount) as ComboboxOption[];
   const [value, setValue] = React.useState<string>(defaultValue || "");
   React.useEffect(() => {
     setValue(defaultValue || "");
@@ -86,8 +90,11 @@ export function ComboboxPreview({ dataType = "frameworks", optionCount = 8, show
         searchPlaceholder={config.searchPlaceholder}
         size={size}
         value={value}
-        onValueChange={setValue}
-        getItemLabel={(opt) => (showDescriptions && (opt as any).description ? `${opt.label} — ${(opt as any).description}` : opt.label)}
+        onValueChange={(v) => setValue(v ?? "")}
+        getItemLabel={(opt) => {
+          const d = (opt as Record<string, unknown>).description;
+          return showDescriptions && typeof d === "string" ? `${opt.label} — ${d}` : opt.label;
+        }}
       />
     </div>
   );

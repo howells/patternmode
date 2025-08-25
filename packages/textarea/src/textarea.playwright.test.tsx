@@ -7,4 +7,3 @@ test.describe("Simple Textarea Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

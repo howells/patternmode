@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
 import { Button } from "@patternmode/button";
 import { ButtonGroup } from "@patternmode/button-group";
 import { VStack } from "@patternmode/stack";
 import { Code, Text } from "@patternmode/text";
 import { TextList, TextListItem } from "@patternmode/text-list";
+import React from "react";
 import {
 	Collapsible,
 	CollapsibleContent,

@@ -37,7 +37,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
 	fetchNextPage,
 }: {
 	items: T[];
-	parentRef: React.RefObject<HTMLDivElement>;
+	parentRef: React.RefObject<HTMLDivElement | null>;
 	getItemValue: (item: T) => string;
 	getItemLabel: (item: T) => string;
 	getItemIcon?: (item: T) => React.ReactNode;

@@ -2,16 +2,16 @@
 
 import { cx } from "@patternmode/utils/cx";
 import {
+	createResponsiveClasses,
+	getResponsiveBase,
+} from "@patternmode/utils/responsive-utils";
+import {
 	generateResponsiveSpacingClasses,
 	getBaseSpacingValue,
 	getGapClass,
 	getPaddingClass,
 } from "@patternmode/utils/spacing";
 import type * as React from "react";
-import {
-	createResponsiveClasses,
-	getResponsiveBase,
-} from "@patternmode/utils/responsive-utils";
 import type { StackProps } from "./types";
 import { stackVariants } from "./variants";
 

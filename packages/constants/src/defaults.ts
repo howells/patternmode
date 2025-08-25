@@ -1,2 +1,1 @@
 export const DEFAULT_ICON_STROKE_WIDTH = 1.5 as const;
-

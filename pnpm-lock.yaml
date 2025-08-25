@@ -741,6 +741,12 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -769,6 +775,12 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -884,6 +896,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/copy-button':
+        specifier: workspace:*
+        version: link:../copy-button
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -918,9 +933,21 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../button
+      '@patternmode/button-group':
+        specifier: workspace:*
+        version: link:../button-group
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/stack':
+        specifier: workspace:*
+        version: link:../stack
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
+      '@patternmode/text-list':
+        specifier: workspace:*
+        version: link:../text-list
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -943,9 +970,15 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../icon
+      '@patternmode/input':
+        specifier: workspace:*
+        version: link:../input
       '@patternmode/loader':
         specifier: workspace:*
         version: link:../loader
@@ -1095,9 +1128,21 @@ importers:
       '@internationalized/date':
         specifier: ^3.6.0
         version: 3.9.0
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
+      '@patternmode/calendar':
+        specifier: workspace:*
+        version: link:../calendar
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/popover':
+        specifier: workspace:*
+        version: link:../popover
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1527,9 +1572,15 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/textarea':
+        specifier: workspace:*
+        version: link:../textarea
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1542,6 +1593,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      zod:
+        specifier: ^4.0.0
+        version: 4.1.1
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1758,9 +1812,15 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/combobox':
+        specifier: workspace:*
+        version: link:../combobox
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/icons':
         specifier: workspace:*
         version: link:../icons
@@ -2298,6 +2358,9 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config

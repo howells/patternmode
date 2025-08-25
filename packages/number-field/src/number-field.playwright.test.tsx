@@ -7,4 +7,3 @@ test.describe("Simple NumberField Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

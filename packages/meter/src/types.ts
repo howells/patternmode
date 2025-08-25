@@ -1,6 +1,6 @@
 import type { Meter as BaseMeter } from "@base-ui-components/react/meter";
-import type React from "react";
 import type { GlobalSemanticVariant } from "@patternmode/constants/variants";
+import type React from "react";
 
 export type MeterProps = {
 	/**

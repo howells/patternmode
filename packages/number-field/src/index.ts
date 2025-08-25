@@ -1,9 +1,8 @@
 export {
-  NumberField,
-  NumberFieldInput,
-  NumberFieldGroup,
-  NumberFieldDecrement,
-  NumberFieldIncrement,
-  NumberFieldLabel,
+	NumberField,
+	NumberFieldDecrement,
+	NumberFieldGroup,
+	NumberFieldIncrement,
+	NumberFieldInput,
+	NumberFieldLabel,
 } from "./component";
-

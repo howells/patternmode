@@ -1,6 +1,6 @@
+import type { IconComponent } from "@patternmode/icons";
 import type React from "react";
 import type { ComponentCategory } from "./component-categories";
-import type { IconComponent } from "@patternmode/icons";
 
 /**
  * Complete example definition with component and metadata
@@ -20,7 +20,7 @@ export type ComponentExample = {
  */
 export type ComponentDefinition = {
 	/** The actual React component */
-    component: React.ComponentType<any>;
+	component: React.ComponentType<any>;
 	/** Display name for the component */
 	name: string;
 	/** Whether this is the primary component in the family */
@@ -52,11 +52,11 @@ export type ComponentConfig = {
 	importStatement: string;
 
 	// Primary component for automatic prop extraction (optional)
-    component?: React.ComponentType<any>;
+	component?: React.ComponentType<any>;
 
 	// Component definitions (for single or multi-component families)
 	components?: ComponentDefinition[];
 
-    // Examples using the self-contained component system
-    examples?: ComponentExample[];
+	// Examples using the self-contained component system
+	examples?: ComponentExample[];
 };

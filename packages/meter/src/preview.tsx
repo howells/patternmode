@@ -4,7 +4,7 @@ import { Meter } from "./component";
 import type { MeterProps } from "./types";
 
 export function MeterPreview(props: Omit<MeterProps, "value">) {
-    return <Meter value={65} {...props} />;
+	return <Meter value={65} {...props} />;
 }
 
 // Preview props for prop explorer

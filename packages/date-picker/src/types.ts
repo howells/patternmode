@@ -12,9 +12,9 @@ export type TimeSegmentProps = {
 } & { key?: React.Key };
 
 export type TimeInputProps = {
-	value?: TimeValue;
-	onChange?: (value: TimeValue) => void;
-	ref?: React.RefObject<HTMLDivElement | null>;
+    value?: TimeValue;
+    onChange?: (value: TimeValue | null) => void;
+    ref?: React.RefObject<HTMLDivElement | null>;
 } & Omit<AriaTimeFieldProps<TimeValue>, "value" | "onChange">;
 
 export type TriggerProps = {
@@ -147,7 +147,7 @@ export type CalendarProps = {
 	 */
 	translations?: Translations;
 } & React.ComponentPropsWithoutRef<
-	typeof import("../calendar/component").Calendar
+    typeof import("@patternmode/calendar").Calendar
 >;
 
 export type PickerProps = {
@@ -212,10 +212,10 @@ export type PickerProps = {
 	 */
 	icon?: IconComponent;
 } & Omit<
-	React.ComponentPropsWithoutRef<
-		typeof import("../calendar/component").Calendar
-	>,
-	"value" | "onValueChange"
+    React.ComponentPropsWithoutRef<
+        typeof import("@patternmode/calendar").Calendar
+    >,
+    "value" | "onValueChange"
 >;
 
 export type SingleDatePickerProps = {

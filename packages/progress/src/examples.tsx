@@ -54,16 +54,16 @@ export const CustomFormatterExample = () => {
 				max={10}
 				label="Processing files"
 				showValue
-				valueFormatter={(value, max) => `${value} of ${max} files`}
+            valueFormatter={(value: number | null, max: number) => `${value ?? 0} of ${max} files`}
 			/>
 			<ProgressBar
 				value={1024}
 				max={2048}
 				label="Upload progress"
 				showValue
-				valueFormatter={(value, max) =>
-					`${Math.round((value / max) * 100)}% (${value}/${max} MB)`
-				}
+            valueFormatter={(value: number | null, max: number) =>
+                `${Math.round(((value ?? 0) / max) * 100)}% (${value ?? 0}/${max} MB)`
+            }
 				variant="success"
 			/>
 		</div>
