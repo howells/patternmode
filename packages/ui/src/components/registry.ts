@@ -197,34 +197,34 @@ import { menuConfig } from "@patternmode/menu/config";
 import { MenuPreview, menuPreviewProps } from "@patternmode/menu/preview";
 import { menuBarConfig } from "@patternmode/menu-bar/config";
 import { MenuBarPreview, menuBarPreviewProps } from "@patternmode/menu-bar/preview";
-import { meterConfig } from "./meter/config";
-import { MeterPreview, meterPreviewProps } from "./meter/preview";
-import { navbarConfig } from "./navbar/config";
-import { NavbarPreview, navbarPreviewProps } from "./navbar/preview";
-import { navigationMenuConfig } from "./navigation-menu/config";
+import { meterConfig } from "@patternmode/meter/config";
+import { MeterPreview, meterPreviewProps } from "@patternmode/meter/preview";
+import { navbarConfig } from "@patternmode/navbar/config";
+import { NavbarPreview, navbarPreviewProps } from "@patternmode/navbar/preview";
+import { navigationMenuConfig } from "@patternmode/navigation-menu/config";
 import {
 	NavigationMenuPreview,
 	navigationMenuPreviewProps,
-} from "./navigation-menu/preview";
-import { paginationConfig } from "./pagination/config";
+} from "@patternmode/navigation-menu/preview";
+import { paginationConfig } from "@patternmode/pagination/config";
 import {
 	PaginationPreview,
 	paginationPreviewProps,
-} from "./pagination/preview";
+} from "@patternmode/pagination/preview";
 import { popoverConfig } from "@patternmode/popover/config";
 import { PopoverPreview, popoverPreviewProps } from "@patternmode/popover/preview";
-import { previewCardConfig } from "./preview-card/config";
+import { previewCardConfig } from "@patternmode/preview-card/config";
 import {
 	PreviewCardPreview,
 	previewCardPreviewProps,
-} from "./preview-card/preview";
-import { progressConfig } from "./progress/config";
-import { ProgressPreview, progressPreviewProps } from "./progress/preview";
-import { progressCircleConfig } from "./progress-circle/config";
+} from "@patternmode/preview-card/preview";
+import { progressConfig } from "@patternmode/progress/config";
+import { ProgressPreview, progressPreviewProps } from "@patternmode/progress/preview";
+import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import {
 	ProgressCirclePreview,
 	progressCirclePreviewProps,
-} from "./progress-circle/preview";
+} from "@patternmode/progress-circle/preview";
 import { radioConfig } from "@patternmode/radio/config";
 import { RadioPreview, radioPreviewProps } from "@patternmode/radio/preview";
 import { radioCardGroupConfig } from "./radio-card-group/config";

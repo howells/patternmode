@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { progressCircleConfig } from "@patternmode/ui/components/progress-circle/config";
+import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

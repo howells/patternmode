@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { navigationMenuConfig } from "@patternmode/ui/components/navigation-menu/config";
+import { navigationMenuConfig } from "@patternmode/navigation-menu/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

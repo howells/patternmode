@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { meterConfig } from "@patternmode/ui/components/meter/config";
+import { meterConfig } from "@patternmode/meter/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

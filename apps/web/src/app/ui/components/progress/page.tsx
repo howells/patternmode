@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { progressConfig } from "@patternmode/ui/components/progress/config";
+import { progressConfig } from "@patternmode/progress/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

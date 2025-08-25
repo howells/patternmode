@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { paginationConfig } from "@patternmode/ui/components/pagination/config";
+import { paginationConfig } from "@patternmode/pagination/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

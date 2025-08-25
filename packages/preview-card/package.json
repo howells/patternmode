@@ -1,0 +1,19 @@
+{
+  "name": "@patternmode/preview-card",
+  "version": "0.1.0",
+  "description": "Preview card component",
+  "type": "module",
+  "license": "MIT",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": { "types": "./src/index.ts", "import": "./src/index.ts", "default": "./src/index.ts" },
+    "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
+    "./preview": { "types": "./src/preview.tsx", "import": "./src/preview.tsx", "default": "./src/preview.tsx" },
+    "./examples": { "types": "./src/examples.tsx", "import": "./src/examples.tsx", "default": "./src/examples.tsx" }
+  },
+  "files": ["src"],
+  "scripts": {"build": "tsc --noEmit", "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist", "typecheck": "tsc --noEmit", "lint": "biome check src --write"},
+  "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" },
+  "dependencies": { "@patternmode/ui": "workspace:*" }
+}
+
