@@ -1,7 +1,5 @@
 "use client";
 
-import type { ButtonProps } from "@patternmode/button";
-import { Button } from "@patternmode/button";
 import {
   Menu,
   MenuContent,
@@ -18,7 +16,7 @@ export type MenuPreviewProps = {
    * Trigger button variant.
    * Controls the styling of the menu trigger button.
    */
-  triggerVariant?: ButtonProps["variant"];
+  triggerVariant?: string;
   /**
    * Whether to show submenu items.
    * Demonstrates nested menu functionality when enabled.
@@ -50,7 +48,7 @@ export function MenuPreview({
 }: MenuPreviewProps = {}) {
   return (
     <Menu>
-      <MenuTrigger render={<Button variant={triggerVariant} />}>
+      <MenuTrigger>
         Open Menu
       </MenuTrigger>
       <MenuContent>

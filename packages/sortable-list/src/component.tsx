@@ -20,7 +20,15 @@ import { CSS } from "@dnd-kit/utilities";
 import { cx } from "@patternmode/utils/cx";
 import { GripVertical } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { Checkbox } from "@patternmode/checkbox";
+const LocalCheckbox = ({ checked, onCheckedChange, disabled }: { checked: boolean; onCheckedChange: (checked: boolean) => void; disabled?: boolean }) => (
+  <input
+    type="checkbox"
+    className="h-4 w-4 accent-blue-600"
+    checked={checked}
+    onChange={(e) => onCheckedChange(e.target.checked)}
+    disabled={disabled}
+  />
+);
 import type { SortableListItem, SortableListProps } from "./types";
 
 /**
@@ -95,9 +103,9 @@ const SortableItem = ({
 
       {/* Checkbox */}
       {showCheckbox && (
-        <Checkbox
+        <LocalCheckbox
           checked={item.active || false}
-          onCheckedChange={(checked) => onToggle(item.id, checked as boolean)}
+          onCheckedChange={(checked: boolean) => onToggle(item.id, checked)}
           disabled={item.disabled}
         />
       )}
@@ -181,9 +189,9 @@ export const SortableList = ({
             )}
           >
             {showCheckbox && (
-              <Checkbox
+              <LocalCheckbox
                 checked={item.active || false}
-                onCheckedChange={(checked) => handleToggle(item.id, checked as boolean)}
+                onCheckedChange={(checked: boolean) => handleToggle(item.id, checked)}
                 disabled={item.disabled}
               />
             )}
@@ -215,4 +223,3 @@ export const SortableList = ({
 };
 
 SortableList.displayName = "SortableList";
-

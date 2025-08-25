@@ -1,8 +1,9 @@
+import type { Size } from "@patternmode/config/sizes";
 import type * as React from "react";
 
 export type AvatarProps = {
   src?: string | null;
-  size?: "xs" | "sm" | "base" | "lg";
+  size?: Size;
   square?: boolean;
   initials?: string;
   text?: string;

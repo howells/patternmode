@@ -1,24 +1,41 @@
 "use client";
 
+import { Field } from "@base-ui-components/react/field";
+import { Label } from "@patternmode/label";
 import React from "react";
 import { Checkbox } from "./component";
 
-export type CheckboxPreviewProps = { checked?: boolean | "indeterminate"; disabled?: boolean };
+export type CheckboxPreviewProps = {
+	checked?: boolean | "indeterminate";
+	disabled?: boolean;
+};
 
 export function CheckboxPreview({ checked, disabled }: CheckboxPreviewProps) {
-  const [state, setState] = React.useState<boolean | "indeterminate" | undefined>(checked);
-  return (
-    <div className="p-6">
-      <label className="flex items-center gap-2">
-        <Checkbox checked={state} disabled={disabled} onCheckedChange={(v: any) => setState(v as any)} />
-        <span className="text-sm">{String(state ?? "unchecked")}</span>
-      </label>
-    </div>
-  );
+	const [state, setState] = React.useState<
+		boolean | "indeterminate" | undefined
+	>(checked);
+	const id = React.useId();
+	return (
+		<Field.Root>
+			<Label htmlFor={id} className="flex items-center gap-2">
+				<Checkbox
+					id={id}
+					checked={state}
+					disabled={disabled}
+					onCheckedChange={(v: any) => setState(v as any)}
+				/>
+				{String(state ?? "unchecked")}
+			</Label>
+		</Field.Root>
+	);
 }
 
 export const checkboxPreviewProps = [
-  { name: "checked", type: "select", options: [true, false, "indeterminate"], defaultValue: false },
-  { name: "disabled", type: "boolean", defaultValue: false },
+	{
+		name: "checked",
+		type: "select",
+		options: [true, false, "indeterminate"],
+		defaultValue: false,
+	},
+	{ name: "disabled", type: "boolean", defaultValue: false },
 ];
-

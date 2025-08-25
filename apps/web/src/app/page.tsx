@@ -1,5 +1,4 @@
-
-
+import { Examples } from "./page.examples";
 import { Purpose } from "./page.purpose";
 
 export default function Home() {
@@ -11,6 +10,8 @@ export default function Home() {
 			</h1>
 
 			<Purpose />
+
+			<Examples />
 		</div>
 	);
 }

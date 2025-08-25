@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@patternmode/button";
-import { Input } from "@patternmode/input";
+// Use basic elements to avoid cross-package imports in examples
 import { Text } from "@patternmode/text";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./component";
 
 export const DefaultExample = () => (
   <Dialog>
-    <DialogTrigger render={<Button />}>Open Dialog</DialogTrigger>
+    <DialogTrigger render={<button type="button" className="px-3 py-2 border rounded" />}>Open Dialog</DialogTrigger>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Dialog Title</DialogTitle>
@@ -18,8 +17,8 @@ export const DefaultExample = () => (
       </DialogHeader>
       <Text>Dialog content goes here.</Text>
       <DialogFooter>
-        <DialogClose render={<Button variant="secondary" />}>Cancel</DialogClose>
-        <Button>Confirm</Button>
+        <DialogClose render={<button type="button" className="px-3 py-2 border rounded" />}>Cancel</DialogClose>
+        <button type="button" className="px-3 py-2 border rounded">Confirm</button>
       </DialogFooter>
     </DialogContent>
   </Dialog>
@@ -27,7 +26,7 @@ export const DefaultExample = () => (
 
 export const WithFormExample = () => (
   <Dialog>
-    <DialogTrigger render={<Button />}>Edit Profile</DialogTrigger>
+    <DialogTrigger render={<button type="button" className="px-3 py-2 border rounded" />}>Edit Profile</DialogTrigger>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Edit Profile</DialogTitle>
@@ -38,16 +37,16 @@ export const WithFormExample = () => (
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <label htmlFor="name" className="text-right">Name</label>
-          <Input id="name" defaultValue="John Doe" className="col-span-3" />
+          <input id="name" defaultValue="John Doe" className="col-span-3 border rounded px-2 py-1" />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <label htmlFor="email" className="text-right">Email</label>
-          <Input id="email" defaultValue="john@example.com" className="col-span-3" />
+          <input id="email" defaultValue="john@example.com" className="col-span-3 border rounded px-2 py-1" />
         </div>
       </div>
       <DialogFooter>
-        <DialogClose render={<Button variant="secondary" />}>Cancel</DialogClose>
-        <Button>Save changes</Button>
+        <DialogClose render={<button type="button" className="px-3 py-2 border rounded" />}>Cancel</DialogClose>
+        <button type="button" className="px-3 py-2 border rounded">Save changes</button>
       </DialogFooter>
     </DialogContent>
   </Dialog>
@@ -55,7 +54,7 @@ export const WithFormExample = () => (
 
 export const ConfirmationExample = () => (
   <Dialog>
-    <DialogTrigger render={<Button variant="destructive" />}>Delete Account</DialogTrigger>
+    <DialogTrigger render={<button type="button" className="px-3 py-2 border rounded" />}>Delete Account</DialogTrigger>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -64,8 +63,8 @@ export const ConfirmationExample = () => (
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <DialogClose render={<Button variant="secondary" />}>Cancel</DialogClose>
-        <Button variant="destructive">Delete Account</Button>
+        <DialogClose render={<button type="button" className="px-3 py-2 border rounded" />}>Cancel</DialogClose>
+        <button type="button" className="px-3 py-2 border rounded">Delete Account</button>
       </DialogFooter>
     </DialogContent>
   </Dialog>
@@ -75,7 +74,7 @@ export const ControlledExample = () => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button />}>Open Controlled Dialog</DialogTrigger>
+      <DialogTrigger render={<button type="button" className="px-3 py-2 border rounded" />}>Open Controlled Dialog</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Controlled Dialog</DialogTitle>
@@ -83,13 +82,12 @@ export const ControlledExample = () => {
         </DialogHeader>
         <div className="py-4">
           <p>Current state: {open ? "Open" : "Closed"}</p>
-          <Button onClick={() => setOpen(false)}>Close from inside</Button>
+          <button type="button" onClick={() => setOpen(false)} className="px-3 py-2 border rounded">Close from inside</button>
         </div>
         <DialogFooter>
-          <DialogClose render={<Button variant="secondary" />}>Close</DialogClose>
+          <DialogClose render={<button type="button" className="px-3 py-2 border rounded" />}>Close</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 };
-

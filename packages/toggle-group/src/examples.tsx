@@ -22,8 +22,6 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-
-import { Icon } from "@patternmode/icon";
 import { ToggleGroup, ToggleGroupItem } from "./component";
 
 export function DefaultExample() {
@@ -32,16 +30,16 @@ export function DefaultExample() {
   return (
     <ToggleGroup value={alignment} onValueChange={setAlignment}>
       <ToggleGroupItem value="left">
-        <Icon icon={AlignLeft} />
+        <AlignLeft className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="center">
-        <Icon icon={AlignCenter} />
+        <AlignCenter className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="right">
-        <Icon icon={AlignRight} />
+        <AlignRight className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="justify">
-        <Icon icon={AlignJustify} />
+        <AlignJustify className="size-4" />
       </ToggleGroupItem>
     </ToggleGroup>
   );
@@ -53,16 +51,16 @@ export function MultipleSelectionExample() {
   return (
     <ToggleGroup value={formatting} onValueChange={setFormatting}>
       <ToggleGroupItem value="bold">
-        <Icon icon={Bold} />
+        <Bold className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="italic">
-        <Icon icon={Italic} />
+        <Italic className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="underline">
-        <Icon icon={Underline} />
+        <Underline className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem value="strikethrough">
-        <Icon icon={Strikethrough} />
+        <Strikethrough className="size-4" />
       </ToggleGroupItem>
     </ToggleGroup>
   );
@@ -75,13 +73,13 @@ export function WithTextExample() {
     <ToggleGroup value={view} onValueChange={setView}>
       <ToggleGroupItem value="list">
         <div className="flex items-center gap-2">
-          <Icon icon={List} />
+          <List className="size-4" />
           <span>List</span>
         </div>
       </ToggleGroupItem>
       <ToggleGroupItem value="grid">
         <div className="flex items-center gap-2">
-          <Icon icon={Grid3X3} />
+          <Grid3X3 className="size-4" />
           <span>Grid</span>
         </div>
       </ToggleGroupItem>
@@ -102,13 +100,13 @@ export function VariantsExample() {
         </h4>
         <ToggleGroup variant="default" value={defaultValue} onValueChange={setDefaultValue}>
           <ToggleGroupItem value="chart1">
-            <Icon icon={BarChart3} />
+          <BarChart3 className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart2">
-            <Icon icon={PieChart} />
+            <PieChart className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart3">
-            <Icon icon={LineChart} />
+            <LineChart className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -119,13 +117,13 @@ export function VariantsExample() {
         </h4>
         <ToggleGroup variant="outline" value={outlineValue} onValueChange={setOutlineValue}>
           <ToggleGroupItem value="chart1">
-            <Icon icon={BarChart3} />
+            <BarChart3 className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart2">
-            <Icon icon={PieChart} />
+            <PieChart className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart3">
-            <Icon icon={LineChart} />
+            <LineChart className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -136,13 +134,13 @@ export function VariantsExample() {
         </h4>
         <ToggleGroup variant="ghost" value={ghostValue} onValueChange={setGhostValue}>
           <ToggleGroupItem value="chart1">
-            <Icon icon={BarChart3} />
+            <BarChart3 className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart2">
-            <Icon icon={PieChart} />
+            <PieChart className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="chart3">
-            <Icon icon={LineChart} />
+            <LineChart className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -163,13 +161,13 @@ export function SizesExample() {
         </h4>
         <ToggleGroup size="sm" value={smallValue} onValueChange={setSmallValue}>
           <ToggleGroupItem value="day">
-            <Icon icon={Calendar} size="sm" />
+            <Calendar className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="week">
-            <Icon icon={CalendarDays} size="sm" />
+            <CalendarDays className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="month">
-            <Icon icon={CalendarRange} size="sm" />
+            <CalendarRange className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -180,13 +178,13 @@ export function SizesExample() {
         </h4>
         <ToggleGroup size="base" value={defaultValue} onValueChange={setDefaultValue}>
           <ToggleGroupItem value="day">
-            <Icon icon={Calendar} />
+            <Calendar className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="week">
-            <Icon icon={CalendarDays} />
+            <CalendarDays className="size-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="month">
-            <Icon icon={CalendarRange} />
+            <CalendarRange className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -197,13 +195,13 @@ export function SizesExample() {
         </h4>
         <ToggleGroup size="lg" value={largeValue} onValueChange={setLargeValue}>
           <ToggleGroupItem value="day">
-            <Icon icon={Calendar} size="lg" />
+            <Calendar className="size-5" />
           </ToggleGroupItem>
           <ToggleGroupItem value="week">
-            <Icon icon={CalendarDays} size="lg" />
+            <CalendarDays className="size-5" />
           </ToggleGroupItem>
           <ToggleGroupItem value="month">
-            <Icon icon={CalendarRange} size="lg" />
+            <CalendarRange className="size-5" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -218,19 +216,19 @@ export function VerticalExample() {
     <ToggleGroup orientation="vertical" value={theme} onValueChange={setTheme}>
       <ToggleGroupItem value="light">
         <div className="flex items-center gap-2">
-          <Icon icon={Sun} />
+          <Sun className="size-4" />
           <span>Light</span>
         </div>
       </ToggleGroupItem>
       <ToggleGroupItem value="dark">
         <div className="flex items-center gap-2">
-          <Icon icon={Moon} />
+          <Moon className="size-4" />
           <span>Dark</span>
         </div>
       </ToggleGroupItem>
       <ToggleGroupItem value="system">
         <div className="flex items-center gap-2">
-          <Icon icon={Monitor} />
+          <Monitor className="size-4" />
           <span>System</span>
         </div>
       </ToggleGroupItem>
@@ -287,13 +285,13 @@ export function ButtonAlignmentExample() {
         <div className="flex items-center gap-3">
           <ToggleGroup size={size} value={alignment} onValueChange={setAlignment}>
             <ToggleGroupItem value="left">
-              <Icon icon={AlignLeft} />
+            <AlignLeft className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem value="center">
-              <Icon icon={AlignCenter} />
+            <AlignCenter className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem value="right">
-              <Icon icon={AlignRight} />
+            <AlignRight className="size-4" />
             </ToggleGroupItem>
           </ToggleGroup>
 
@@ -355,4 +353,3 @@ export function ButtonAlignmentExample() {
     </div>
   );
 }
-

@@ -1,14 +1,13 @@
 "use client";
 
-import { Button } from "@patternmode/button";
-import { Input } from "@patternmode/input";
+// Use basic HTML elements to avoid cross-package imports in examples
 import { Text } from "@patternmode/text";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "./component";
 
 export const DefaultExample = () => (
   <Drawer>
     <DrawerTrigger asChild>
-      <Button>Open Drawer</Button>
+      <button type="button" className="px-3 py-2 border rounded">Open Drawer</button>
     </DrawerTrigger>
     <DrawerContent>
       <DrawerHeader>
@@ -18,9 +17,9 @@ export const DefaultExample = () => (
       <Text>Drawer content goes here.</Text>
       <DrawerFooter>
         <DrawerClose asChild>
-          <Button variant="secondary">Close</Button>
+          <button type="button" className="px-3 py-2 border rounded">Close</button>
         </DrawerClose>
-        <Button>Confirm</Button>
+        <button type="button" className="px-3 py-2 border rounded">Confirm</button>
       </DrawerFooter>
     </DrawerContent>
   </Drawer>
@@ -29,7 +28,7 @@ export const DefaultExample = () => (
 export const FormExample = () => (
   <Drawer>
     <DrawerTrigger asChild>
-      <Button>Edit Profile</Button>
+      <button type="button" className="px-3 py-2 border rounded">Edit Profile</button>
     </DrawerTrigger>
     <DrawerContent>
       <DrawerHeader>
@@ -39,18 +38,18 @@ export const FormExample = () => (
       <div className="grid gap-4 p-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <label htmlFor="name" className="text-right">Name</label>
-          <Input id="name" defaultValue="John Doe" className="col-span-3" />
+          <input id="name" defaultValue="John Doe" className="col-span-3 border rounded px-2 py-1" />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <label htmlFor="email" className="text-right">Email</label>
-          <Input id="email" defaultValue="john@example.com" className="col-span-3" />
+          <input id="email" defaultValue="john@example.com" className="col-span-3 border rounded px-2 py-1" />
         </div>
       </div>
       <DrawerFooter>
         <DrawerClose asChild>
-          <Button variant="secondary">Cancel</Button>
+          <button type="button" className="px-3 py-2 border rounded">Cancel</button>
         </DrawerClose>
-        <Button>Save changes</Button>
+        <button type="button" className="px-3 py-2 border rounded">Save changes</button>
       </DrawerFooter>
     </DrawerContent>
   </Drawer>
@@ -59,7 +58,7 @@ export const FormExample = () => (
 export const SettingsExample = () => (
   <Drawer>
     <DrawerTrigger asChild>
-      <Button variant="secondary">Settings</Button>
+      <button type="button" className="px-3 py-2 border rounded">Settings</button>
     </DrawerTrigger>
     <DrawerContent>
       <DrawerHeader>
@@ -68,9 +67,9 @@ export const SettingsExample = () => (
       </DrawerHeader>
       <DrawerFooter>
         <DrawerClose asChild>
-          <Button variant="secondary">Close</Button>
+          <button type="button" className="px-3 py-2 border rounded">Close</button>
         </DrawerClose>
-        <Button>Apply</Button>
+        <button type="button" className="px-3 py-2 border rounded">Apply</button>
       </DrawerFooter>
     </DrawerContent>
   </Drawer>

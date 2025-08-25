@@ -1,13 +1,13 @@
 "use client";
 
+import type React from "react";
 import type { TooltipProps } from "./types";
 import { Tooltip } from "./component";
-import { Button } from "@patternmode/button";
 
-export function TooltipPreview(props: TooltipProps) {
+export function TooltipPreview({ content, children, ...rest }: Omit<TooltipProps, "content" | "children"> & { content?: string; children?: React.ReactElement }) {
   return (
-    <Tooltip content={props.content ?? "Tooltip content"} {...props}>
-      {props.children ?? <Button variant="outline">Hover me</Button>}
+    <Tooltip content={content ?? "Tooltip content"} {...rest}>
+      {children ?? <button type="button" className="px-3 py-2 border rounded">Hover me</button>}
     </Tooltip>
   );
 }

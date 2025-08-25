@@ -1,11 +1,9 @@
-import { Button } from "@patternmode/button";
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/utils/cx";
 import { Search, X } from "lucide-react";
 import * as React from "react";
-import { EmptyState } from "@patternmode/empty-state";
-import { Input } from "@patternmode/input";
+// Local minimal fallbacks to avoid cross-package coupling in this component
 
 export type SearchFieldItem = {
   id: string;
@@ -202,7 +200,7 @@ export const SearchField = ({
   return (
     <div className={cx("relative", className)} data-testid="search-field">
       <div className="relative">
-        <Input
+        <input
           ref={ref}
           type="search"
           placeholder={placeholder}
@@ -214,23 +212,21 @@ export const SearchField = ({
             searchValue.trim().length > 0 &&
             setIsOpen(true)
           }
-          prefixIcon={Search}
-          prefixStyling={false}
           autoFocus={autoFocus}
           disabled={disabled}
-          className={inputClassName}
+          className={cx("w-full rounded-md border px-8 py-2", inputClassName)}
         />
+        <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
 
         {showClearButton && searchValue && (
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
+            type="button"
             onClick={handleClear}
             className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-transparent"
             aria-label="Clear search"
           >
             <X className="h-4 w-4" />
-          </Button>
+          </button>
         )}
       </div>
 
@@ -250,13 +246,15 @@ export const SearchField = ({
               </Text>
             </div>
           ) : filteredItems.length === 0 ? (
-            <div className="p-4">
-              <EmptyState
-                title={emptyStateTitle}
-                description={emptyStateDescription}
-                variant="minimal"
-                size="sm"
-              />
+            <div className="p-4 text-center">
+              <Text size="sm" className="text-zinc-500 font-medium">
+                {emptyStateTitle}
+              </Text>
+              {emptyStateDescription && (
+                <Text size="sm" className="text-zinc-400">
+                  {emptyStateDescription}
+                </Text>
+              )}
             </div>
           ) : (
             <div className="py-2">
@@ -324,4 +322,3 @@ export const SearchField = ({
 };
 
 SearchField.displayName = "SearchField";
-

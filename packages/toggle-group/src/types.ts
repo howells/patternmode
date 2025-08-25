@@ -5,7 +5,7 @@ import type { Size } from "@patternmode/config/sizes";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { ButtonProps } from "@patternmode/button";
-import type { IconComponent } from "@patternmode/icon/types";
+type SimpleIconComponent = React.ComponentType<{ className?: string; strokeWidth?: number }>;
 import type { toggleGroupVariants } from "./variants";
 
 export type ToggleGroupProps = {
@@ -16,8 +16,8 @@ export type ToggleGroupProps = {
 
 export type ToggleGroupItemProps = {
   value: string;
-  leftIcon?: IconComponent;
-  rightIcon?: IconComponent;
+  leftIcon?: SimpleIconComponent;
+  rightIcon?: SimpleIconComponent;
   iconStrokeWidth?: number;
   variant?: VariantProps<typeof toggleGroupVariants>["variant"];
   size?: Size;
@@ -26,4 +26,3 @@ export type ToggleGroupItemProps = {
   fullWidth?: ButtonProps["fullWidth"];
   rounded?: ButtonProps["rounded"];
 } & React.ComponentPropsWithoutRef<typeof BaseToggle>;
-

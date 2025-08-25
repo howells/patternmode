@@ -49,29 +49,41 @@ export function CalendarPreview({
 	};
 
 	return (
-    <Calendar
-			{...(mode === "single" && {
-				mode: "single" as const,
-				selected: selected as Date | undefined,
-				onSelect: handleSelect,
-			})}
-			{...(mode === "multiple" && {
-				mode: "multiple" as const,
-				selected: selected as Date[] | undefined,
-				onSelect: handleSelect,
-			})}
-            {...(mode === "range" && {
-                mode: "range" as const,
-                selected: selected as { from: Date; to?: Date } | undefined,
-                onSelect: handleSelect,
-                required: false as const,
-            })}
-			enableYearNavigation={enableYearNavigation}
-			showToday={showToday}
-			showTodayButton={showTodayButton}
-			numberOfMonths={numberOfMonths}
-			className="rounded-md border"
-		/>
+    mode === "single" ? (
+      <Calendar
+        mode="single"
+        selected={selected as Date | undefined}
+        onSelect={(v) => handleSelect(v)}
+        enableYearNavigation={enableYearNavigation}
+        showToday={showToday}
+        showTodayButton={showTodayButton}
+        numberOfMonths={numberOfMonths}
+        className="rounded-md border"
+      />
+    ) : mode === "multiple" ? (
+      <Calendar
+        mode="multiple"
+        selected={selected as Date[] | undefined}
+        onSelect={(v) => handleSelect(v)}
+        enableYearNavigation={enableYearNavigation}
+        showToday={showToday}
+        showTodayButton={showTodayButton}
+        numberOfMonths={numberOfMonths}
+        className="rounded-md border"
+      />
+    ) : (
+      <Calendar
+        mode="range"
+        selected={selected as { from: Date; to?: Date } | undefined}
+        onSelect={(v) => handleSelect(v as any)}
+        required={false}
+        enableYearNavigation={enableYearNavigation}
+        showToday={showToday}
+        showTodayButton={showTodayButton}
+        numberOfMonths={numberOfMonths}
+        className="rounded-md border"
+      />
+    )
 	);
 }
 

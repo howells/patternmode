@@ -1,10 +1,12 @@
 "use client";
 
+import { sizes } from "@patternmode/config/sizes";
 import { Avatar } from "./component";
 import type { AvatarProps } from "./types";
 
+
 export function AvatarPreview(props: AvatarProps) {
-	return <Avatar {...props} />;
+	return <Avatar initials="PM" dynamicBackground {...props} />;
 }
 
 export const avatarPreviewProps = [
@@ -12,7 +14,7 @@ export const avatarPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "Avatar size.",
-		options: ["xs", "sm", "base", "lg"],
+		options: Object.keys(sizes),
 		defaultValue: "base",
 	},
 	{

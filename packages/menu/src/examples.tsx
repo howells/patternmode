@@ -2,7 +2,6 @@
 
 import { Clipboard, Copy, Plus } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@patternmode/button";
 import {
   Menu,
   MenuCheckboxItem,
@@ -21,7 +20,7 @@ import {
 export const DefaultExample = () => {
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>Open Menu</MenuTrigger>
+      <MenuTrigger>Open Menu</MenuTrigger>
       <MenuContent>
         <MenuItem>New File</MenuItem>
         <MenuItem>Open File</MenuItem>
@@ -36,7 +35,7 @@ export const DefaultExample = () => {
 export const WithIconsExample = () => {
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>Edit Menu</MenuTrigger>
+      <MenuTrigger>Edit Menu</MenuTrigger>
       <MenuContent>
         <MenuItem icon={Plus} shortcut="⌘N">
           New
@@ -58,7 +57,7 @@ export const WithCheckboxesExample = () => {
 
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>View Options</MenuTrigger>
+      <MenuTrigger>View Options</MenuTrigger>
       <MenuContent>
         <MenuLabel>Show/Hide</MenuLabel>
         <MenuCheckboxItem checked={showSidebar} onCheckedChange={setShowSidebar}>
@@ -79,7 +78,7 @@ export const WithRadioGroupExample = () => {
 
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>Theme</MenuTrigger>
+      <MenuTrigger>Theme</MenuTrigger>
       <MenuContent>
         <MenuLabel>Theme</MenuLabel>
         <MenuRadioGroup value={theme} onValueChange={setTheme}>
@@ -95,7 +94,7 @@ export const WithRadioGroupExample = () => {
 export const WithSubmenuExample = () => {
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>File Menu</MenuTrigger>
+      <MenuTrigger>File Menu</MenuTrigger>
       <MenuContent>
         <MenuItem>New File</MenuItem>
         <MenuItem>Open File</MenuItem>
@@ -136,7 +135,7 @@ export const ComplexMenuExample = () => {
 
   return (
     <Menu>
-      <MenuTrigger render={<Button />}>Settings</MenuTrigger>
+      <MenuTrigger>Settings</MenuTrigger>
       <MenuContent className="w-56">
         <MenuLabel>Preferences</MenuLabel>
 
@@ -175,4 +174,3 @@ export const ComplexMenuExample = () => {
     </Menu>
   );
 };
-

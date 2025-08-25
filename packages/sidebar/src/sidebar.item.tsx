@@ -3,7 +3,10 @@ import {
 	type ButtonProps,
 } from "@patternmode/button";
 import type { buttonVariants } from "@patternmode/button/types";
-import { Tooltip } from "@patternmode/tooltip";
+// Tooltip is optional; fall back to a title attribute if unavailable
+const TooltipShim = ({ content, children }: { content: React.ReactNode; children: React.ReactNode }) => (
+    <span title={typeof content === "string" ? content : undefined}>{children}</span>
+);
 import { useSidebar } from "./sidebar-store";
 
 export const SidebarItem = ({ children, icon, ...props }: ButtonProps) => {
@@ -26,18 +29,9 @@ export const SidebarItem = ({ children, icon, ...props }: ButtonProps) => {
 
 	const showTooltip = state === "locked" && !isExpanded;
 
-	return showTooltip ? (
-		<Tooltip
-			content={children}
-			side="right"
-			align="center"
-			sideOffset={6}
-			delayDuration={0}
-			skipDelayDuration={0}
-		>
-			{button}
-		</Tooltip>
-	) : (
-		button
-	);
+    return showTooltip ? (
+        <TooltipShim content={children}>{button}</TooltipShim>
+    ) : (
+        button
+    );
 };

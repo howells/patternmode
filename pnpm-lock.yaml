@@ -840,6 +840,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/label':
+        specifier: workspace:*
+        version: link:../label
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2031,9 +2034,15 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
@@ -2678,6 +2687,9 @@ importers:
       '@patternmode/separator':
         specifier: workspace:*
         version: link:../separator
+      '@patternmode/tooltip':
+        specifier: workspace:*
+        version: link:../tooltip
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2774,6 +2786,9 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../button
+      '@patternmode/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -3418,6 +3433,12 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils

@@ -5,7 +5,7 @@ export const cardVariants = tv({
     "relative w-full rounded-lg",
     "bg-white dark:bg-[#090E1A]",
     "border card-border",
-    "shadow-sm",
+    "shadow-xs",
   ].join(" "),
   variants: {
     variant: {
@@ -17,4 +17,3 @@ export const cardVariants = tv({
     },
   },
 });
-

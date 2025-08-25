@@ -6,8 +6,7 @@ import { useRender } from "@base-ui-components/react/use-render";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
-import { Button, type ButtonProps } from "@patternmode/button";
-import { Icon as IconComponent } from "@patternmode/icon";
+// Using a simple button fallback to avoid cross-package coupling
 import type { Size } from "@patternmode/config/sizes";
 
 /**
@@ -31,34 +30,6 @@ type MenuTriggerProps = {
    * Enables using custom components as the trigger.
    */
   render?: useRender.RenderProp<Record<string, unknown>>;
-  /**
-   * Button variant to use for the default render.
-   */
-  variant?: ButtonProps["variant"];
-  /**
-   * Button size to use for the default render.
-   */
-  size?: Size;
-  /**
-   * Icon component to display on the left side of the default Button render.
-   */
-  leftIcon?: ButtonProps["leftIcon"];
-  /**
-   * Icon component to display on the right side of the default Button render.
-   */
-  rightIcon?: ButtonProps["rightIcon"];
-  /**
-   * Icon component (proxy for leftIcon) for the default Button render.
-   */
-  icon?: ButtonProps["icon"];
-  /**
-   * Whether the button should take full width in the default render.
-   */
-  fullWidth?: ButtonProps["fullWidth"];
-  /**
-   * Whether the button should have rounded corners in the default render.
-   */
-  rounded?: ButtonProps["rounded"];
 } & React.ComponentPropsWithoutRef<typeof BaseMenu.Trigger>;
 
 /**
@@ -69,29 +40,13 @@ const MenuTrigger = ({
   className,
   children,
   render,
-  variant = "outline",
-  size,
-  leftIcon,
-  rightIcon,
-  icon,
-  fullWidth,
-  rounded,
   ...props
 }: MenuTriggerProps) => {
   // Default to Button render unless custom render prop is provided
   const defaultRender = (
-    <Button
-      variant={variant}
-      size={size}
-      leftIcon={leftIcon}
-      rightIcon={rightIcon}
-      icon={icon}
-      fullWidth={fullWidth}
-      rounded={rounded}
-      className={cx("cursor-pointer", className)}
-    >
+    <button type="button" className={cx("cursor-pointer inline-flex items-center gap-2 px-3 py-2 border rounded-md", className)}>
       {children}
-    </Button>
+    </button>
   );
 
   return (
@@ -138,7 +93,7 @@ const MenuSubmenuTrigger = ({
     {...props}
   >
     {children}
-    <IconComponent icon={ChevronRight} className="ml-auto" aria-hidden="true" />
+    <ChevronRight className="ml-auto" aria-hidden="true" />
   </BaseMenu.SubmenuTrigger>
 );
 MenuSubmenuTrigger.displayName = "MenuSubmenuTrigger";
@@ -301,10 +256,7 @@ const MenuItem = ({
   >
     {Icon && (
       <span className="absolute left-2 flex size-4 items-center justify-center">
-        <IconComponent
-          icon={Icon}
-          className="text-zinc-600 dark:text-zinc-400 group-data-disabled/MenuItem:text-zinc-400 dark:group-data-disabled/MenuItem:text-zinc-700"
-        />
+        <Icon className="text-zinc-600 dark:text-zinc-400 group-data-disabled/MenuItem:text-zinc-400 dark:group-data-disabled/MenuItem:text-zinc-700" />
       </span>
     )}
     {children}
@@ -362,7 +314,7 @@ const MenuCheckboxItem = ({
   >
     <span className="absolute left-2 flex size-4 items-center justify-center">
       <BaseMenu.CheckboxItemIndicator>
-        <IconComponent icon={Check} aria-hidden="true" className="size-full text-zinc-800 dark:text-zinc-200" />
+        <Check aria-hidden="true" className="size-full text-zinc-800 dark:text-zinc-200" />
       </BaseMenu.CheckboxItemIndicator>
     </span>
     {children}
@@ -420,10 +372,10 @@ const MenuRadioItem = ({
   >
     <span className="absolute left-2 flex size-4 items-center justify-center">
       <BaseMenu.RadioItemIndicator>
-        <IconComponent icon={CircleDot} aria-hidden="true" className="size-full text-blue-500 dark:text-blue-500" />
+        <CircleDot aria-hidden="true" className="size-full text-blue-500 dark:text-blue-500" />
       </BaseMenu.RadioItemIndicator>
       <span className="data-checked:hidden">
-        <IconComponent icon={Circle} aria-hidden="true" className="size-full text-zinc-300 dark:text-zinc-700" />
+        <Circle aria-hidden="true" className="size-full text-zinc-300 dark:text-zinc-700" />
       </span>
     </span>
     {children}
@@ -488,4 +440,3 @@ export {
   MenuSubmenuTrigger,
   MenuTrigger,
 };
-

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "@patternmode/button";
+// Use simple buttons to avoid cross-package imports for preview
 import { Text } from "@patternmode/text";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./component";
 
@@ -15,7 +15,7 @@ export function DialogPreview(props: DialogProps) {
   const { open: _omit, onOpenChange: _omit2, ...restProps } = props;
   return (
     <Dialog open={open} onOpenChange={setOpen} {...restProps}>
-      <DialogTrigger render={<Button />}>Open Dialog</DialogTrigger>
+      <DialogTrigger render={<button type="button" className="px-3 py-2 border rounded" />}>Open Dialog</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Dialog Title</DialogTitle>
@@ -25,8 +25,8 @@ export function DialogPreview(props: DialogProps) {
         </DialogHeader>
         <Text>Dialog content goes here.</Text>
         <DialogFooter>
-          <DialogClose render={<Button variant="secondary" />}>Cancel</DialogClose>
-          <Button>Confirm</Button>
+          <DialogClose render={<button type="button" className="px-3 py-2 border rounded" />}>Cancel</DialogClose>
+          <button type="button" className="px-3 py-2 border rounded">Confirm</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

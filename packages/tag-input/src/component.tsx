@@ -1,6 +1,5 @@
 "use client";
 
-import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { DropdownItem } from "@patternmode/dropdown-item";
 import { Tag } from "@patternmode/tag";
 import { cx } from "@patternmode/utils/cx";
@@ -70,7 +69,7 @@ const defaultCreateNewTag = (value: string): TagOption => {
 };
 
 const defaultValue: string[] = [];
-const defaultIconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH;
+const defaultIconStrokeWidth = 1.5;
 
 const TagInput = ({
 	options,
@@ -201,7 +200,7 @@ const TagInput = ({
 			<div
 				className={cx(
 					"flex items-center gap-2 rounded-md border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-950",
-					focusRing(),
+                    focusRing,
 					wrap ? "flex-wrap" : "overflow-x-auto",
 					isInputDisabled ? "opacity-60 cursor-not-allowed" : "",
 				)}

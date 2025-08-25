@@ -46,6 +46,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@patternmode/button": "workspace:*",
     "@patternmode/icon": "workspace:*",
+    "@patternmode/checkbox": "workspace:*",
     "@patternmode/stack": "workspace:*",
     "@patternmode/text": "workspace:*",
     "@patternmode/utils": "workspace:*",

@@ -27,10 +27,10 @@ export const sheetConfig: ComponentConfig = {
   icon: RectangleHorizontal,
   importStatement: `import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetBody, SheetFooter, SheetClose } from "@patternmode/sheet";`,
   examples: [
-    { id: "default", title: "Default", component: DefaultExample },
-    { id: "settings", title: "Settings", component: SettingsExample },
-    { id: "information", title: "Information", component: InformationExample },
-    { id: "contact-form", title: "Contact Form", component: ContactFormExample },
+    { id: "default", title: "Default", description: "Basic sheet with open/close controls", component: DefaultExample },
+    { id: "settings", title: "Settings", description: "Form-style panel for user preferences", component: SettingsExample },
+    { id: "information", title: "Information", description: "Read-only info panel with details", component: InformationExample },
+    { id: "contact-form", title: "Contact Form", description: "Side panel with contact form fields", component: ContactFormExample },
   ],
   components: [
     { name: "Sheet", description: "Root sheet container", component: Sheet, primary: true },

@@ -13,9 +13,15 @@ const Drawer = ({ ref: _ref, ...props }: React.ComponentPropsWithoutRef<typeof D
 );
 Drawer.displayName = "Drawer";
 
-const DrawerTrigger = DrawerPrimitive.Trigger;
+type DrawerTriggerProps = React.ComponentPropsWithoutRef<'button'> & { asChild?: boolean };
+const DrawerTrigger = ({ ref: _ref, ...props }: DrawerTriggerProps & { ref?: React.RefObject<any> }) => (
+  <DrawerPrimitive.Trigger {...props} />
+);
 const DrawerPortal = DrawerPrimitive.Portal;
-const DrawerClose = DrawerPrimitive.Close;
+type DrawerCloseProps = React.ComponentPropsWithoutRef<'button'> & { asChild?: boolean };
+const DrawerClose = ({ ref: _ref, ...props }: DrawerCloseProps & { ref?: React.RefObject<any> }) => (
+  <DrawerPrimitive.Close {...props} />
+);
 
 type DrawerOverlayProps = { className?: string } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>;
 const DrawerOverlay = ({ ref: _ref, className, ...props }: DrawerOverlayProps & { ref?: React.RefObject<React.ElementRef<typeof DrawerPrimitive.Overlay> | null> }) => (
@@ -86,4 +92,6 @@ export {
   DrawerTitle,
   type DrawerTitleProps,
   DrawerTrigger,
+  type DrawerTriggerProps,
+  type DrawerCloseProps,
 };
