@@ -1,4 +1,4 @@
-import { componentVariants } from "@patternmode/constants/variants";
+import { componentVariants } from "@patternmode/config/variants";
 import { borderRadiusVariants } from "@patternmode/utils/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "@patternmode/utils/border-radius-variants-with-full";
 import { focusRing } from "@patternmode/utils/focus-ring";

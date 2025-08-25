@@ -6,7 +6,7 @@ import {
 	globalSemanticVariants,
 	semanticVariants,
 	type TailwindColor,
-} from "@patternmode/constants/variants";
+} from "@patternmode/config/variants";
 import { Icon } from "@patternmode/icon";
 import type { IconComponent } from "@patternmode/icon/types";
 import { getIconComponent } from "@patternmode/icons";

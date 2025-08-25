@@ -13,4 +13,3 @@ export const dismissButtonVariants = tv({
   },
   defaultVariants: { size: "base" },
 });
-

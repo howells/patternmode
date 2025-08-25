@@ -3,7 +3,7 @@ import { cx } from "@patternmode/utils/cx";
 import { X } from "lucide-react";
 import type * as React from "react";
 import { Icon } from "@patternmode/icon";
-import { focusRing } from "@patternmode/utils/focus-ring";
+import { focusRing } from "@patternmode/config/styles";
 import { tv } from "tailwind-variants";
 
 export type DismissButtonProps = {

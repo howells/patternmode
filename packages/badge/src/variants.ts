@@ -7,7 +7,7 @@ import {
   getVariantClasses,
   globalSemanticVariants,
   tailwindColorVariants,
-} from "@patternmode/constants/variants";
+} from "@patternmode/config/variants";
 import { borderRadiusVariants } from "@patternmode/utils/border-radius-variants";
 import { borderRadiusVariantsWithFull as extendedBorderRadiusVariants } from "@patternmode/utils/border-radius-variants-with-full";
 

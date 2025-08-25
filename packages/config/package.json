@@ -14,7 +14,8 @@
   "exports": {
     "./sizes": "./src/sizes.ts",
     "./component-categories": "./src/component-categories.ts",
-    "./component-types": "./src/component-types.ts"
+    "./component-types": "./src/component-types.ts",
+    "./variants": "./src/variants.ts"
   },
   "dependencies": {
     "@patternmode/icons": "workspace:*",

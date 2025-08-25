@@ -3,7 +3,7 @@
 import type { ButtonProps } from "@patternmode/button";
 import { Button } from "@patternmode/button";
 import { sizes } from "@patternmode/config/sizes";
-import { componentVariants } from "@patternmode/constants/variants";
+import { componentVariants } from "@patternmode/config/variants";
 import { Save } from "lucide-react";
 import React from "react";
 
