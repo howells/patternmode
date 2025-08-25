@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { drawerConfig } from "@patternmode/ui/components/drawer/config";
+import { drawerConfig } from "@patternmode/drawer/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

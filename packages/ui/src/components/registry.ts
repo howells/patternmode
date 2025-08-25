@@ -118,18 +118,16 @@ import {
 	AlertDialogPreview,
 	alertDialogPreviewProps,
 } from "./alert-dialog/preview";
-import { barListConfig } from "./bar-list/config";
-import { BarListPreview, barListPreviewProps } from "./bar-list/preview";
 import { breadcrumbsConfig } from "./breadcrumbs/config";
 import {
 	BreadcrumbsPreview,
 	breadcrumbsPreviewProps,
 } from "./breadcrumbs/preview";
-import { buttonGroupConfig } from "./button-group/config";
+import { buttonGroupConfig } from "@patternmode/button-group/config";
 import {
 	ButtonGroupPreview,
 	buttonGroupPreviewProps,
-} from "./button-group/preview";
+} from "@patternmode/button-group/preview";
 import { calendarConfig } from "./calendar/config";
 import { CalendarPreview, calendarPreviewProps } from "./calendar/preview";
 import { calloutConfig } from "./callout/config";
@@ -170,10 +168,10 @@ import {
 	DescriptionListPreview,
 	descriptionListPreviewProps,
 } from "./description-list/preview";
-import { dialogConfig } from "./dialog/config";
-import { DialogPreview, dialogPreviewProps } from "./dialog/preview";
-import { drawerConfig } from "./drawer/config";
-import { DrawerPreview, drawerPreviewProps } from "./drawer/preview";
+import { dialogConfig } from "@patternmode/dialog/config";
+import { DialogPreview, dialogPreviewProps } from "@patternmode/dialog/preview";
+import { drawerConfig } from "@patternmode/drawer/config";
+import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
 import { emptyStateConfig } from "./empty-state/config";
 import {
 	EmptyStatePreview,
@@ -195,8 +193,8 @@ import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
 } from "./heading-element/preview";
-import { menuConfig } from "./menu/config";
-import { MenuPreview, menuPreviewProps } from "./menu/preview";
+import { menuConfig } from "@patternmode/menu/config";
+import { MenuPreview, menuPreviewProps } from "@patternmode/menu/preview";
 import { menuBarConfig } from "./menu-bar/config";
 import { MenuBarPreview, menuBarPreviewProps } from "./menu-bar/preview";
 import { meterConfig } from "./meter/config";
@@ -213,8 +211,8 @@ import {
 	PaginationPreview,
 	paginationPreviewProps,
 } from "./pagination/preview";
-import { popoverConfig } from "./popover/config";
-import { PopoverPreview, popoverPreviewProps } from "./popover/preview";
+import { popoverConfig } from "@patternmode/popover/config";
+import { PopoverPreview, popoverPreviewProps } from "@patternmode/popover/preview";
 import { previewCardConfig } from "./preview-card/config";
 import {
 	PreviewCardPreview,
@@ -244,22 +242,22 @@ import {
 	ScrollAreaPreview,
 	scrollAreaPreviewProps,
 } from "./scroll-area/preview";
-import { searchFieldConfig } from "./search-field/config";
+import { searchFieldConfig } from "@patternmode/search-field/config";
 import {
 	SearchFieldPreview,
 	searchFieldPreviewProps,
-} from "./search-field/preview";
-import { sheetConfig } from "./sheet/config";
-import { SheetPreview, sheetPreviewProps } from "./sheet/preview";
+} from "@patternmode/search-field/preview";
+import { sheetConfig } from "@patternmode/sheet/config";
+import { SheetPreview, sheetPreviewProps } from "@patternmode/sheet/preview";
 import { skeletonConfig } from "./skeleton/config";
 import { SkeletonPreview } from "./skeleton/preview";
 import { sliderConfig } from "./slider/config";
 import { SliderPreview, sliderPreviewProps } from "./slider/preview";
-import { sortableListConfig } from "./sortable-list/config";
+import { sortableListConfig } from "@patternmode/sortable-list/config";
 import {
 	SortableListPreview,
 	sortableListPreviewProps,
-} from "./sortable-list/preview";
+} from "@patternmode/sortable-list/preview";
 import { splitButtonConfig } from "./split-button/config";
 import {
 	SplitButtonPreview,
@@ -285,20 +283,19 @@ import { toastConfig } from "./toast/config";
 import { ToastPreview, toastPreviewProps } from "./toast/preview";
 import { toggleConfig } from "./toggle/config";
 import { TogglePreview, togglePreviewProps } from "./toggle/preview";
-import { toggleGroupConfig } from "./toggle-group/config";
+import { toggleGroupConfig } from "@patternmode/toggle-group/config";
 import {
 	ToggleGroupPreview,
 	toggleGroupPreviewProps,
-} from "./toggle-group/preview";
-import { toolbarConfig } from "./toolbar/config";
-import { ToolbarPreview, toolbarPreviewProps } from "./toolbar/preview";
+} from "@patternmode/toggle-group/preview";
+import { toolbarConfig } from "@patternmode/toolbar/config";
+import { ToolbarPreview, toolbarPreviewProps } from "@patternmode/toolbar/preview";
 
 export const COMPONENT_REGISTRY = {
 	accordion: accordionConfig,
 	"alert-dialog": alertDialogConfig,
 	avatar: avatarConfig,
 	badge: badgeConfig,
-	"bar-list": barListConfig,
 	breadcrumbs: breadcrumbsConfig,
 	button: buttonConfig,
 	"button-group": buttonGroupConfig,
@@ -386,7 +383,6 @@ export const PREVIEW_REGISTRY = {
 	"alert-dialog": AlertDialogPreview,
 	avatar: AvatarPreview,
 	badge: BadgePreview,
-	"bar-list": BarListPreview,
 	breadcrumbs: BreadcrumbsPreview,
 	button: ButtonPreview,
 	"button-group": ButtonGroupPreview,
@@ -474,7 +470,6 @@ export const PREVIEW_PROPS_REGISTRY = {
 	"alert-dialog": alertDialogPreviewProps,
 	avatar: avatarPreviewProps,
 	badge: badgePreviewProps,
-	"bar-list": barListPreviewProps,
 	breadcrumbs: breadcrumbsPreviewProps,
 	button: buttonPreviewProps,
 	"button-group": buttonGroupPreviewProps,
@@ -569,10 +564,6 @@ export const COMPONENT_METADATA_REGISTRY = {
 	avatar: { title: avatarConfig.name, description: avatarConfig.description },
 	badge: { title: badgeConfig.name, description: badgeConfig.description },
 
-	"bar-list": {
-		title: barListConfig.name,
-		description: barListConfig.description,
-	},
 	breadcrumbs: {
 		title: breadcrumbsConfig.name,
 		description: breadcrumbsConfig.description,

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { sheetConfig } from "@patternmode/ui/components/sheet/config";
+import { sheetConfig } from "@patternmode/sheet/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

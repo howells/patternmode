@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { popoverConfig } from "@patternmode/ui/components/popover/config";
+import { popoverConfig } from "@patternmode/popover/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { dialogConfig } from "@patternmode/ui/components/dialog/config";
+import { dialogConfig } from "@patternmode/dialog/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

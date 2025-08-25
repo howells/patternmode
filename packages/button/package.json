@@ -32,17 +32,22 @@
 		"base-ui"
 	],
 	"sideEffects": false,
-	"exports": {
-		".": {
-			"types": "./src/index.ts",
-			"import": "./src/index.ts",
-			"default": "./src/index.ts"
-		},
-		"./config": {
-			"types": "./src/config.ts",
-			"import": "./src/config.ts",
-			"default": "./src/config.ts"
-		},
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "import": "./src/types.ts",
+      "default": "./src/types.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
 		"./preview": {
 			"types": "./src/preview.tsx",
 			"import": "./src/preview.tsx",

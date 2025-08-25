@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { searchFieldConfig } from "@patternmode/ui/components/search-field/config";
+import { searchFieldConfig } from "@patternmode/search-field/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

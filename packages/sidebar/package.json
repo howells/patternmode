@@ -3,13 +3,28 @@
 	"version": "0.1.0",
 	"description": "Minimal sidebar component with state management for PatternMode applications",
 	"type": "module",
-	"exports": {
-		".": {
-			"types": "./src/index.ts",
-			"import": "./src/index.ts",
-			"default": "./src/index.ts"
-		}
-	},
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
+    "./preview": {
+      "types": "./src/preview.tsx",
+      "import": "./src/preview.tsx",
+      "default": "./src/preview.tsx"
+    },
+    "./examples": {
+      "types": "./src/examples.tsx",
+      "import": "./src/examples.tsx",
+      "default": "./src/examples.tsx"
+    }
+  },
 	"files": [
 		"src"
 	],
