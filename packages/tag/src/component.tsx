@@ -1,6 +1,6 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
 import { Avatar } from "@patternmode/avatar";
@@ -40,7 +40,7 @@ const Tag = ({
   onDismiss,
   icon,
   leftIcon,
-  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
   avatar,
   className,
   dismissAriaLabel = "Remove",
@@ -85,4 +85,3 @@ const Tag = ({
 Tag.displayName = "Tag";
 
 export { Tag, type TagProps };
-

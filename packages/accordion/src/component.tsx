@@ -1,5 +1,5 @@
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import { Plus } from "lucide-react";
 import { Subheading } from "@patternmode/subheading";
@@ -57,7 +57,7 @@ const AccordionTrigger = ({
 			)}
 			<Plus
 				className={accordionIconVariants()}
-				strokeWidth={defaultConfig.components.iconStrokeWidth}
+            strokeWidth={DEFAULT_ICON_STROKE_WIDTH}
 				aria-hidden="true"
 			/>
 		</BaseAccordion.Trigger>

@@ -1,5 +1,5 @@
 import { Select as BaseSelect } from "@base-ui-components/react/select";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
@@ -63,7 +63,7 @@ SelectScrollUpButton.displayName = "SelectScrollUpButton";
 
 const SelectScrollDownButton = ({ ref, className, ...props }: SelectScrollDownButtonProps & { ref?: React.RefObject<React.ElementRef<typeof BaseSelect.ScrollDownArrow> | null> }) => (
   <BaseSelect.ScrollDownArrow ref={ref} className={cx("flex cursor-default items-center justify-center py-1", className)} {...props}>
-    <Icon icon={ChevronDown} size="sm" strokeWidth={defaultConfig.components.iconStrokeWidth} aria-hidden="true" />
+    <Icon icon={ChevronDown} size="sm" strokeWidth={DEFAULT_ICON_STROKE_WIDTH} aria-hidden="true" />
   </BaseSelect.ScrollDownArrow>
 );
 SelectScrollDownButton.displayName = "SelectScrollDownButton";
@@ -185,4 +185,3 @@ export {
   SelectTrigger,
   SelectValue,
 };
-

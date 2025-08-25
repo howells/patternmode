@@ -1,5 +1,5 @@
 import { useRender } from "@base-ui-components/react/use-render";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import {
 	type GlobalSemanticVariant,
 	getColorClasses,
@@ -9,7 +9,7 @@ import {
 } from "@patternmode/constants/variants";
 import { Icon } from "@patternmode/icon";
 import type { IconComponent } from "@patternmode/icon/types";
-import { getIconComponent } from "@patternmode/icons/icon-registry";
+import { getIconComponent } from "@patternmode/icons";
 import { cx } from "@patternmode/utils/cx";
 import { X } from "lucide-react";
 import type * as React from "react";
@@ -48,7 +48,7 @@ const Badge = ({
 	rounded,
 	leftIcon: LeftIcon,
 	rightIcon: RightIcon,
-	iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+    iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	children,
 	dismissible: _dismissible = false,
 	onDismiss,

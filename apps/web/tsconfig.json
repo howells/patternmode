@@ -8,7 +8,8 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@patternmode/*": ["../../packages/*/src"]
     },
     "allowJs": true,
     "plugins": [

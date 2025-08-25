@@ -1,6 +1,6 @@
 "use client";
 
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { DropdownItem } from "@patternmode/dropdown-item";
 import { Tag } from "@patternmode/tag";
 import { cx } from "@patternmode/utils/cx";
@@ -70,7 +70,7 @@ const defaultCreateNewTag = (value: string): TagOption => {
 };
 
 const defaultValue: string[] = [];
-const defaultIconStrokeWidth = defaultConfig.components.iconStrokeWidth;
+const defaultIconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH;
 
 const TagInput = ({
 	options,

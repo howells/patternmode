@@ -43,11 +43,16 @@
 			"import": "./src/form-control-variants.ts",
 			"default": "./src/form-control-variants.ts"
 		},
-		"./sizes": {
-			"types": "./src/sizes.ts",
-			"import": "./src/sizes.ts",
-			"default": "./src/sizes.ts"
-		},
+    "./sizes": {
+      "types": "./src/sizes.ts",
+      "import": "./src/sizes.ts",
+      "default": "./src/sizes.ts"
+    },
+    "./defaults": {
+      "types": "./src/defaults.ts",
+      "import": "./src/defaults.ts",
+      "default": "./src/defaults.ts"
+    },
 		"./package.json": "./package.json"
 	},
 	"files": [

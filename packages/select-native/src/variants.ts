@@ -1,5 +1,4 @@
 import { tv } from "tailwind-variants";
-import { defaultConfig } from "@patternmode/config/default-config";
 
 export const selectNativeStyles = tv({
   base: [
@@ -19,4 +18,3 @@ export const selectNativeStyles = tv({
   },
   defaultVariants: { size: "base", hasError: false },
 });
-

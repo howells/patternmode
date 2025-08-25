@@ -1,7 +1,7 @@
 "use client";
 
 import { Input as BaseInput } from "@base-ui-components/react/input";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { Eye, EyeOff, Search } from "lucide-react";
@@ -26,7 +26,7 @@ const Input = ({
   suffixIcon: SuffixIcon,
   prefixStyling = true,
   suffixStyling = true,
-  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
   minimal,
   unstyled,
   ...props
@@ -121,4 +121,3 @@ const Input = ({
 Input.displayName = "Input";
 
 export { Input };
-

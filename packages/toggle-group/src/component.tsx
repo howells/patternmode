@@ -2,7 +2,7 @@
 
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
 import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import React, { use } from "react";
 import { Button } from "@patternmode/button";
@@ -63,8 +63,7 @@ const ToggleGroupItem = ({
 }: ToggleGroupItemProps & {
   ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null>;
 }) => {
-  const finalIconStrokeWidth =
-    iconStrokeWidth ?? defaultConfig.components.iconStrokeWidth;
+  const finalIconStrokeWidth = iconStrokeWidth ?? DEFAULT_ICON_STROKE_WIDTH;
   const context = use(ToggleGroupContext);
   const finalSize = size ?? context.size;
   const finalVariant = variant ?? context.variant;
@@ -118,4 +117,3 @@ ToggleGroupItem.displayName = "ToggleGroupItem";
 
 // Export the components
 export { ToggleGroup, ToggleGroupItem };
-

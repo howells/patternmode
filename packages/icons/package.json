@@ -4,6 +4,11 @@
   "description": "Icon registry and utilities for PatternMode UI components",
   "type": "module",
   "exports": {
+    ".": {
+      "types": "./src/icons/icon-registry.ts",
+      "import": "./src/icons/icon-registry.ts",
+      "default": "./src/icons/icon-registry.ts"
+    },
     "./icon-registry": {
       "types": "./src/icons/icon-registry.ts",
       "import": "./src/icons/icon-registry.ts",

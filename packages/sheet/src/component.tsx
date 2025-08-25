@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog } from "@base-ui-components/react/dialog";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { X } from "lucide-react";
@@ -13,7 +13,7 @@ const InlineSheetDismissButton = ({
   ref,
   onClick,
   icon: IconComponent = X,
-  iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
   size = "base",
   className,
   "aria-label": ariaLabel = "Remove",
@@ -296,4 +296,3 @@ export {
   SheetTrigger,
   type SheetTriggerProps,
 };
-

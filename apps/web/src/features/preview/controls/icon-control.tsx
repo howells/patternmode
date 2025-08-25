@@ -1,6 +1,6 @@
 import { FieldControl } from "@patternmode/field";
 import { IconSelect } from "@patternmode/icon-select";
-import { getIconComponent } from "@patternmode/icons/icon-registry";
+import { getIconComponent } from "@patternmode/icons";
 import React from "react";
 
 import type { PropControlProps } from "./types";

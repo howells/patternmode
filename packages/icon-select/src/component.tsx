@@ -1,8 +1,8 @@
 "use client";
 
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import type { Size } from "@patternmode/config/sizes";
-import { getIconComponent, iconNames } from "@patternmode/icons/icon-registry";
+import { getIconComponent, iconNames } from "@patternmode/icons";
 import { Combobox } from "@patternmode/combobox";
 import type { ComboboxOption } from "@patternmode/combobox/types";
 import React from "react";
@@ -71,7 +71,7 @@ export const IconSelect = ({
 	size = "base",
 	disabled = false,
 	className,
-	iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+    iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 }: IconSelectProps) => {
 	const options = React.useMemo<IconOption[]>(
 		() =>
@@ -139,7 +139,7 @@ export function useIconSelect(initialValue?: string) {
 				<SafeDynamicIcon
 					name={value}
 					className={className}
-					strokeWidth={strokeWidth || defaultConfig.components.iconStrokeWidth}
+                    strokeWidth={strokeWidth || DEFAULT_ICON_STROKE_WIDTH}
 					{...props}
 				/>
 			),
@@ -167,7 +167,7 @@ export function getDynamicIconByName(name: string) {
 				<SafeDynamicIcon
 					name={name}
 					className={className}
-					strokeWidth={strokeWidth || defaultConfig.components.iconStrokeWidth}
+                    strokeWidth={strokeWidth || DEFAULT_ICON_STROKE_WIDTH}
 					fallback={fallback}
 					{...props}
 				/>

@@ -1,6 +1,6 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
 import { MoreHorizontal } from "lucide-react";
@@ -52,7 +52,7 @@ const Button = ({
 	icon,
 	leftIcon: LeftIcon,
 	rightIcon: RightIcon,
-	iconStrokeWidth = defaultConfig.components.iconStrokeWidth,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	children,
 	fullWidth,
 	textAlign,

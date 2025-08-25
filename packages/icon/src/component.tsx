@@ -1,6 +1,6 @@
 "use client";
 
-import { defaultConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import type { IconProps, IconSize } from "./types";
@@ -78,7 +78,7 @@ function Icon({
 	fallbackIcon,
 }: IconProps) {
 	const finalStrokeWidth =
-		strokeWidth ?? defaultConfig.components.iconStrokeWidth;
+    strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH;
 	// Handle case where IconComponent is undefined
 	if (!IconComponent) {
 		const FallbackIconComponent = fallbackIcon;

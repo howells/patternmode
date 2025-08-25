@@ -1,6 +1,6 @@
 import { FieldControl } from "@patternmode/field";
 import { NumberField } from "@patternmode/number-field";
-import { defaultConfig as uiConfig } from "@patternmode/config/default-config";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import React from "react";
 
 import type { PropControlProps } from "./types";
@@ -9,7 +9,7 @@ export function NumberControl({ prop, currentValue, onValueChange }: PropControl
   // Handle default values that are function calls (like config.getIconStrokeWidth())
   let numericDefaultValue: number | undefined;
   if (prop.defaultValue === "config.getIconStrokeWidth()") {
-    numericDefaultValue = uiConfig.components.iconStrokeWidth;
+    numericDefaultValue = DEFAULT_ICON_STROKE_WIDTH;
   }
   else if (typeof prop.defaultValue === "number") {
     numericDefaultValue = prop.defaultValue;

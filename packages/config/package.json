@@ -14,7 +14,6 @@
   "exports": {
     "./sizes": "./src/sizes.ts",
     "./component-categories": "./src/component-categories.ts",
-    "./default-config": "./src/default-config.ts",
     "./component-types": "./src/component-types.ts",
     "./preview-props-type": "./src/preview-props-type.ts",
     "./icon-types": "./src/icon-types.ts"
