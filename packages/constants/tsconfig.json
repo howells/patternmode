@@ -8,6 +8,7 @@
     "dist"
   ],
   "compilerOptions": {
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "baseUrl": "."
   }
 }

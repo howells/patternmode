@@ -6,7 +6,6 @@ import Link from "next/link";
 export function GitHubLink() {
   return (
     <Button
-      href="https://github.com/howells/patternmode"
       variant="ghost"
       size="icon-sm"
       render={<Link href="https://github.com/howells/patternmode" target="_blank" rel="noopener noreferrer" />}

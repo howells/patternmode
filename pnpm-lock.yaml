@@ -857,6 +857,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      react-syntax-highlighter:
+        specifier: ^15.6.6
+        version: 15.6.6(react@19.1.1)
       tailwind-variants:
         specifier: ^3.1.0
         version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
@@ -864,6 +867,9 @@ importers:
       '@patternmode/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@types/react-syntax-highlighter':
+        specifier: ^15.5.13
+        version: 15.5.13
 
   packages/collapsible:
     dependencies:
@@ -1022,6 +1028,9 @@ importers:
 
   packages/copy-button:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -1140,6 +1149,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../icon
@@ -1552,6 +1564,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/stack':
         specifier: workspace:*
         version: link:../stack
@@ -2222,6 +2237,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/separator':
+        specifier: workspace:*
+        version: link:../separator
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2826,6 +2844,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/dismiss-button':
         specifier: workspace:*
         version: link:../dismiss-button
@@ -2850,6 +2871,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/tag':
+        specifier: workspace:*
+        version: link:../tag
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -4694,6 +4718,9 @@ packages:
     resolution: {integrity: sha512-i5ZzwYpqjmrKenzkoLM2Ibzt6mAsM7pxB6BCIouEVVmgiqaMj1TjaK7hnA36hbW5aZv20kx7Lw6hWzPWg0Rurw==}
     peerDependencies:
       '@types/react': ^19.0.0
+
+  '@types/react-syntax-highlighter@15.5.13':
+    resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
 
   '@types/react@19.1.11':
     resolution: {integrity: sha512-lr3jdBw/BGj49Eps7EvqlUaoeA0xpj3pc0RoJkHpYaCHkVK7i28dKyImLQb3JVlqs3aYSXf7qYuWOW/fgZnTXQ==}
@@ -7806,6 +7833,10 @@ snapshots:
   '@types/omelette@0.4.5': {}
 
   '@types/react-dom@19.1.7(@types/react@19.1.11)':
+    dependencies:
+      '@types/react': 19.1.11
+
+  '@types/react-syntax-highlighter@15.5.13':
     dependencies:
       '@types/react': 19.1.11
 

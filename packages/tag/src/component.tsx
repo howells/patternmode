@@ -84,4 +84,4 @@ const Tag = ({
 
 Tag.displayName = "Tag";
 
-export { Tag, type TagProps };
+export { Tag };

@@ -8,12 +8,12 @@
     "dist"
   ],
   "compilerOptions": {
-    "composite": true,
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "incremental": true,
     "types": [
       "@playwright/experimental-ct-react"
-    ]
+    ],
+    "baseUrl": "."
   }
 }

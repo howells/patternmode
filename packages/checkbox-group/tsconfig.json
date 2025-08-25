@@ -1,12 +1,7 @@
 {
   "extends": "../tsconfig/react-library.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@patternmode/*": [
-        "../*/src"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "**/*.ts",

@@ -2,25 +2,30 @@
 
 import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
+import type { Size } from "@patternmode/constants/sizes";
+import { SIZES as sizes } from "@patternmode/constants/sizes";
 import { Input } from "@patternmode/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
-import type { ComponentId } from "@/registry/components";
-import { COMPONENT_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
-import { SortableList } from "@patternmode/sortable-list";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@patternmode/select";
 import type { SortableListItem } from "@patternmode/sortable-list";
+import { SortableList } from "@patternmode/sortable-list";
 import { Stack } from "@patternmode/stack";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/toggle-group";
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/toolbar";
-import type { Size } from "@patternmode/constants/sizes";
-import { SIZES as sizes } from "@patternmode/constants/sizes";
-import type { GapValue } from "@/lib/spacing-utils";
 import { MoreHorizontal, Plus, Rows3, Settings2, Trash2 } from "lucide-react";
 import { parseAsJson, useQueryState } from "nuqs";
 import type React from "react";
 import { useMemo, useState } from "react";
-
 import { PageHeader } from "@/components/page-header";
+import type { GapValue } from "@/lib/spacing-utils";
+import type { ComponentId } from "@/registry/components";
+import { COMPONENT_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
 
 // Layout configuration type
 type LayoutConfig = {
@@ -255,7 +260,7 @@ function LayoutSection({
 							<Settings2 className="h-4 w-4" />
 							Components ({layout.components.length})
 						</PopoverTrigger>
-						<PopoverContent className="w-96 p-4" align="start">
+						<PopoverContent className="w-96 p-4">
 							<div className="mb-3">
 								<h3 className="text-sm font-medium">Select Components</h3>
 								<p className="text-xs text-zinc-500 mt-1">
@@ -265,7 +270,6 @@ function LayoutSection({
 									placeholder="Search components..."
 									value={componentSearch}
 									onChange={(e) => setComponentSearch(e.target.value)}
-									size="sm"
 									className="mt-2"
 								/>
 							</div>

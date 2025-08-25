@@ -30,14 +30,6 @@ const fixTsconfig = (dir) => {
   if (!fs.existsSync(tsconfigPath)) return;
   try {
     const ts = readJson(tsconfigPath);
-    if (typeof ts.extends === 'string' && ts.extends.startsWith('@patternmode/tsconfig/')) {
-      const file = ts.extends.split('/').pop();
-      if (dir.includes(`${path.sep}packages${path.sep}`)) {
-        ts.extends = `@patternmode/tsconfig/${file}`; // keep package form; adjust below if not resolvable
-      }
-      // As a fallback, set a relative path that always works
-      ts.extends = path.relative(dir, path.join(root, 'packages', 'tsconfig', file)).replace(/\\/g, '/');
-    }
     if (ts.compilerOptions) {
       if ('rootDir' in ts.compilerOptions) delete ts.compilerOptions.rootDir;
       if ('outDir' in ts.compilerOptions) delete ts.compilerOptions.outDir;

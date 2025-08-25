@@ -45,6 +45,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@patternmode/constants": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "@patternmode/icon": "workspace:*",

@@ -8,9 +8,9 @@
     "dist"
   ],
   "compilerOptions": {
-    "composite": true,
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "."
   }
 }

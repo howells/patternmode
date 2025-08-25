@@ -20,7 +20,7 @@ export type ComponentExample = {
  */
 export type ComponentDefinition = {
 	/** The actual React component */
-	component: React.ComponentType;
+    component: React.ComponentType<any>;
 	/** Display name for the component */
 	name: string;
 	/** Whether this is the primary component in the family */
@@ -52,7 +52,7 @@ export type ComponentConfig = {
 	importStatement: string;
 
 	// Primary component for automatic prop extraction (optional)
-	component?: React.ComponentType;
+    component?: React.ComponentType<any>;
 
 	// Component definitions (for single or multi-component families)
 	components?: ComponentDefinition[];
