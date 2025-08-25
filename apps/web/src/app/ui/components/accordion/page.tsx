@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { accordionConfig } from "@patternmode/ui/components/accordion/config";
+import { accordionConfig } from "@patternmode/accordion/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

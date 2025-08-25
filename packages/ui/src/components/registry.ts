@@ -111,31 +111,31 @@ import {
 import type React from "react";
 import type { ComponentConfig } from "../types/component-types";
 import type { PreviewProps } from "../types/preview-props-type";
-import { accordionConfig } from "./accordion/config";
-import { AccordionPreview, accordionPreviewProps } from "./accordion/preview";
-import { alertDialogConfig } from "./alert-dialog/config";
+import { accordionConfig } from "@patternmode/accordion/config";
+import { AccordionPreview, accordionPreviewProps } from "@patternmode/accordion/preview";
+import { alertDialogConfig } from "@patternmode/alert-dialog/config";
 import {
 	AlertDialogPreview,
 	alertDialogPreviewProps,
-} from "./alert-dialog/preview";
-import { breadcrumbsConfig } from "./breadcrumbs/config";
+} from "@patternmode/alert-dialog/preview";
+import { breadcrumbsConfig } from "@patternmode/breadcrumbs/config";
 import {
 	BreadcrumbsPreview,
 	breadcrumbsPreviewProps,
-} from "./breadcrumbs/preview";
+} from "@patternmode/breadcrumbs/preview";
 import { buttonGroupConfig } from "@patternmode/button-group/config";
 import {
 	ButtonGroupPreview,
 	buttonGroupPreviewProps,
 } from "@patternmode/button-group/preview";
-import { calendarConfig } from "./calendar/config";
-import { CalendarPreview, calendarPreviewProps } from "./calendar/preview";
-import { calloutConfig } from "./callout/config";
-import { CalloutPreview, calloutPreviewProps } from "./callout/preview";
-import { cardConfig } from "./card/config";
-import { CardPreview, cardPreviewProps } from "./card/preview";
-import { carouselConfig } from "./carousel/config";
-import { CarouselPreview, carouselPreviewProps } from "./carousel/preview";
+import { calendarConfig } from "@patternmode/calendar/config";
+import { CalendarPreview, calendarPreviewProps } from "@patternmode/calendar/preview";
+import { calloutConfig } from "@patternmode/callout/config";
+import { CalloutPreview, calloutPreviewProps } from "@patternmode/callout/preview";
+import { cardConfig } from "@patternmode/card/config";
+import { CardPreview, cardPreviewProps } from "@patternmode/card/preview";
+import { carouselConfig } from "@patternmode/carousel/config";
+import { CarouselPreview, carouselPreviewProps } from "@patternmode/carousel/preview";
 import { checkboxGroupConfig } from "./checkbox-group/config";
 import {
 	CheckboxGroupPreview,

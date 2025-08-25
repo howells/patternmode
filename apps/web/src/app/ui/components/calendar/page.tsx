@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { calendarConfig } from "@patternmode/ui/components/calendar/config";
+import { calendarConfig } from "@patternmode/calendar/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { cardConfig } from "@patternmode/ui/components/card/config";
+import { cardConfig } from "@patternmode/card/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { breadcrumbsConfig } from "@patternmode/ui/components/breadcrumbs/config";
+import { breadcrumbsConfig } from "@patternmode/breadcrumbs/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

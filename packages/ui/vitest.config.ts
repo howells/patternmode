@@ -16,7 +16,7 @@ export default defineConfig({
     hookTimeout: 10000,
     teardownTimeout: 5000,
     silent: false,
-    reporter: ["basic"],
+    reporters: ["basic"],
   },
   resolve: {
     alias: {

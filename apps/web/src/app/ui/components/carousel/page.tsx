@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { carouselConfig } from "@patternmode/ui/components/carousel/config";
+import { carouselConfig } from "@patternmode/carousel/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
