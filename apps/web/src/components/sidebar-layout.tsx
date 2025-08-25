@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@patternmode/button";
+import { Separator } from "@patternmode/separator";
 import {
 	Sidebar,
 	SidebarContent,
@@ -9,9 +11,6 @@ import {
 	SidebarItem,
 	useSidebar,
 } from "@patternmode/sidebar";
-import { Button } from "@patternmode/button";
-import { getAllComponents } from "@/registry/components";
-import { Separator } from "@patternmode/separator";
 import { Stack, VStack } from "@patternmode/stack";
 import { cx } from "@patternmode/utils/cx";
 import { Layers } from "lucide-react";
@@ -20,6 +19,7 @@ import type React from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
+import { getAllComponents } from "@/registry/components";
 import { ComponentSearch } from "./component-search";
 
 // SidebarGroupTitle helper removed (unused)
@@ -91,7 +91,6 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 						))}
 					</SidebarGroup>
 				</SidebarContent>
-				<SidebarFooter>Footer</SidebarFooter>
 			</Sidebar>
 			<MainContent>{children}</MainContent>
 		</div>

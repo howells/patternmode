@@ -1,95 +1,95 @@
 {
-	"name": "@patternmode/stack",
-	"version": "0.1.0",
-	"description": "Flexible layout components for arranging content in vertical or horizontal stacks",
-	"author": {
-		"name": "Daniel Howells",
-		"email": "daniel@howellsstudio.com",
-		"url": "https://github.com/howells"
-	},
-	"type": "module",
-	"types": "./src/index.ts",
-	"license": "MIT",
-	"homepage": "https://patternmode.com",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/howells/patternmode.git",
-		"directory": "packages/stack"
-	},
-	"bugs": {
-		"url": "https://github.com/howells/patternmode/issues"
-	},
-	"keywords": [
-		"react",
-		"stack",
-		"layout",
-		"flexbox",
-		"spacing",
-		"ui",
-		"components",
-		"typescript",
-		"responsive"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"types": "./src/index.ts",
-			"import": "./src/index.ts",
-			"default": "./src/index.ts"
-		},
-		"./config": {
-			"types": "./src/config.ts",
-			"import": "./src/config.ts",
-			"default": "./src/config.ts"
-		},
-		"./preview": {
-			"types": "./src/preview.tsx",
-			"import": "./src/preview.tsx",
-			"default": "./src/preview.tsx"
-		},
-		"./examples": {
-			"types": "./src/examples.tsx",
-			"import": "./src/examples.tsx",
-			"default": "./src/examples.tsx"
-		}
-	},
-	"files": [
-		"src"
-	],
-	"engines": {
-		"node": ">=18.0.0",
-		"npm": ">=8.0.0"
-	},
-	"scripts": {
-		"build": "tsc --noEmit",
-		"types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
-		"typecheck": "tsc --noEmit",
-		"lint": "biome check src --write",
-		"test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true",
-		"test:e2e": "NODE_ENV=test timeout 180s playwright test --config=playwright-ct.config.ts || true"
-	},
-	"peerDependencies": {
-		"lucide-react": ">=0.525.0 <1",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
-	},
-	"dependencies": {
-		"@patternmode/config": "workspace:*",
-		"@patternmode/utils": "workspace:*",
-		"tailwind-variants": "^3.1.0"
-	},
-	"devDependencies": {
-		"@patternmode/tsconfig": "workspace:*",
-		"@playwright/experimental-ct-react": "^1.55.0",
-		"@playwright/test": "^1.55.0",
-		"@types/node": "^24.3.0",
-		"@types/react": "^19.1.11",
-		"@types/react-dom": "^19.1.7",
-		"typescript": "^5.9.2",
-		"vitest": "^3.2.4"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org/"
-	}
+  "name": "@patternmode/stack",
+  "version": "0.1.0",
+  "description": "Flexible layout components for arranging content in vertical or horizontal stacks",
+  "author": {
+    "name": "Daniel Howells",
+    "email": "daniel@howellsstudio.com",
+    "url": "https://github.com/howells"
+  },
+  "type": "module",
+  "types": "./src/index.ts",
+  "license": "MIT",
+  "homepage": "https://patternmode.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/howells/patternmode.git",
+    "directory": "packages/stack"
+  },
+  "bugs": {
+    "url": "https://github.com/howells/patternmode/issues"
+  },
+  "keywords": [
+    "react",
+    "stack",
+    "layout",
+    "flexbox",
+    "spacing",
+    "ui",
+    "components",
+    "typescript",
+    "responsive"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
+    "./preview": {
+      "types": "./src/preview.tsx",
+      "import": "./src/preview.tsx",
+      "default": "./src/preview.tsx"
+    },
+    "./examples": {
+      "types": "./src/examples.tsx",
+      "import": "./src/examples.tsx",
+      "default": "./src/examples.tsx"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write",
+    "test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true",
+    "test:e2e": "NODE_ENV=test timeout 180s playwright test --config=playwright-ct.config.ts || true"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@patternmode/config": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "tailwind-variants": "^3.1.0",
+    "lucide-react": ">=0.525.0 <1"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
+    "@playwright/experimental-ct-react": "^1.55.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

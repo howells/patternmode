@@ -1,9 +1,7 @@
 {
-  "extends": "@patternmode/tsconfig/react-library.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist"
-  },
-  "include": ["src"]
+  "extends": "../tsconfig/react-library.json",
+  "compilerOptions": {},
+  "include": [
+    "src"
+  ]
 }
-

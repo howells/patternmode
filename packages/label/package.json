@@ -71,14 +71,14 @@
     "test:e2e": "NODE_ENV=test timeout 180s playwright test --config=playwright-ct.config.ts || true"
   },
   "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
-    "lucide-react": ">=0.525.0 <1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "dependencies": {
     "@patternmode/config": "workspace:*",
-    "@patternmode/utils": "workspace:*"
+    "@patternmode/utils": "workspace:*",
+    "@base-ui-components/react": "^1.0.0-beta.2",
+    "lucide-react": ">=0.525.0 <1"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "^1.55.0",

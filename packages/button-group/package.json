@@ -42,6 +42,12 @@
   },
   "dependencies": {
     "@patternmode/button": "workspace:*",
-    "@patternmode/utils": "workspace:*"
+    "@patternmode/utils": "workspace:*",
+    "lucide-react": ">=0.525.0 <1",
+    "tailwind-variants": "^3.1.0",
+    "@patternmode/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
   }
 }

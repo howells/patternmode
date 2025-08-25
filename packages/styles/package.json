@@ -1,28 +1,28 @@
 {
-	"name": "@patternmode/styles",
-	"version": "0.1.0",
-	"description": "Styling utilities and constants for PatternMode UI components",
-	"type": "module",
-	"exports": {
-		"./globals.css": "./src/globals.css",
-		"./animations.css": "./src/animations.css",
-		"./typography.css": "./src/typography.css"
-	},
-	"files": [
-		"src"
-	],
-	"scripts": {
-		"typecheck": "echo 'No TypeScript files to check in styles package'",
-		"lint": "echo 'No linting needed for CSS-only package'"
-	},
-	"dependencies": {
-		"clsx": "^2.1.1",
-		"tailwind-variants": "^3.1.0"
-	},
-	"peerDependencies": {
-		"tailwindcss": "^4.1.12"
-	},
-	"devDependencies": {
-		"typescript": "^5.9.2"
-	}
+  "name": "@patternmode/styles",
+  "version": "0.1.0",
+  "description": "Styling utilities and constants for PatternMode UI components",
+  "type": "module",
+  "exports": {
+    "./globals.css": "./src/globals.css",
+    "./animations.css": "./src/animations.css",
+    "./typography.css": "./src/typography.css"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "echo 'No TypeScript files to check in styles package'",
+    "lint": "echo 'No linting needed for CSS-only package'"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-variants": "^3.1.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.1.12"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
 }

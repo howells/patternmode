@@ -45,6 +45,11 @@
     "@patternmode/text": "workspace:*",
     "@patternmode/stack": "workspace:*",
     "@patternmode/input": "workspace:*",
-    "@patternmode/button": "workspace:*"
+    "@patternmode/button": "workspace:*",
+    "lucide-react": ">=0.525.0 <1",
+    "@patternmode/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
   }
 }

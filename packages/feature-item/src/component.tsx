@@ -20,12 +20,12 @@ export const FeatureItem = ({
 	...props
 }: FeatureItemProps) => {
 	return (
-		<div data-testid="feature-item" className={cx("relative pl-9", className)} {...props}>
-			<dt className="font-medium text-zinc-900 dark:text-zinc-100">
+		<div data-testid="feature-item" className={cx("relative text-sm", className)} {...props}>
+			<dt className="text-zinc-900 dark:text-zinc-100">
 				{IconComponent ? (
 					<Icon
 						aria-hidden="true"
-						className="absolute left-0 top-1 text-indigo-500 dark:text-indigo-400"
+						className="absolute -left-8 top-[0.2rem]"
 						size={iconSize}
 						icon={IconComponent}
 					/>

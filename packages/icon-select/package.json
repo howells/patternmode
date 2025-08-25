@@ -61,19 +61,20 @@
     "lint": "biome check src --write"
   },
   "peerDependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
-    "lucide-react": ">=0.525.0 <1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "dependencies": {
     "@patternmode/config": "workspace:*",
-    "@patternmode/icons": "workspace:*"
+    "@patternmode/icons": "workspace:*",
+    "@base-ui-components/react": "^1.0.0-beta.2",
+    "lucide-react": ">=0.525.0 <1"
   },
   "devDependencies": {
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "@patternmode/tsconfig": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

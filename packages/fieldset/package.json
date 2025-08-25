@@ -40,5 +40,15 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@base-ui-components/react": "^1.0.0-beta.2",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/field": "workspace:*",
+    "@patternmode/subheading": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "lucide-react": ">=0.525.0 <1"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
+  }
 }

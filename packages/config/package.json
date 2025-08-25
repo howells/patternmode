@@ -1,31 +1,32 @@
 {
-	"name": "@patternmode/config",
-	"version": "0.1.0",
-	"description": "Configuration for PatternMode UI components",
-	"files": [
-		"src"
-	],
-	"scripts": {
-		"build": "tsc --noEmit",
-		"typecheck": "tsc --noEmit",
-		"lint": "biome check src --write"
-	},
-	"type": "module",
-	"exports": {
-		"./sizes": "./src/sizes.ts",
-		"./component-categories": "./src/component-categories.ts",
-		"./component-types": "./src/component-types.ts"
-	},
-	"dependencies": {
-		"@patternmode/constants": "workspace:*",
-		"clsx": "^2.1.1",
-		"tailwind-variants": "^3.1.0"
-	},
-	"peerDependencies": {
-		"tailwindcss": "^4.1.12"
-	},
-	"devDependencies": {
-		"@patternmode/tsconfig": "workspace:*",
-		"typescript": "^5.9.2"
-	}
+  "name": "@patternmode/config",
+  "version": "0.1.0",
+  "description": "Configuration for PatternMode UI components",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
+  "type": "module",
+  "exports": {
+    "./sizes": "./src/sizes.ts",
+    "./component-categories": "./src/component-categories.ts",
+    "./component-types": "./src/component-types.ts"
+  },
+  "dependencies": {
+    "@patternmode/icons": "workspace:*",
+    "@patternmode/constants": "workspace:*",
+    "clsx": "^2.1.1",
+    "tailwind-variants": "^3.1.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.1.12"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
+    "typescript": "^5.9.2"
+  }
 }

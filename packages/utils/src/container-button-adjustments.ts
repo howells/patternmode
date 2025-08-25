@@ -1,4 +1,5 @@
-import type { Size } from "./types";
+// Local size type to avoid cross-package cycles
+export type Size = "2xs" | "xs" | "sm" | "base" | "lg";
 
 /**
  * Centralized Container Button Adjustments

@@ -40,5 +40,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lucide-react": ">=0.525.0 <1",
+    "tailwind-variants": "^3.1.0",
+    "@patternmode/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
+  }
 }

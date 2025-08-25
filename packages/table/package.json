@@ -40,5 +40,11 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
+  }
 }

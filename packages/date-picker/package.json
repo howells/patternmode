@@ -45,6 +45,12 @@
     "@react-aria/datepicker": "^3.14.0",
     "@react-stately/datepicker": "^3.11.0",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.541.0"
+    "lucide-react": "^0.541.0",
+    "tailwind-variants": "^3.1.0",
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
   }
 }
