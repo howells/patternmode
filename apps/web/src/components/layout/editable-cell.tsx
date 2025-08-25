@@ -4,7 +4,7 @@ import { Button } from "@patternmode/button";
 import { Callout } from "@patternmode/callout";
 import { Card } from "@patternmode/card";
 import { Icon } from "@patternmode/icon";
-import { getComponentConfig } from "@patternmode/ui/components/registry";
+import { getComponentConfig } from "@patternmode/catalog";
 import { Stack } from "@patternmode/stack";
 import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";

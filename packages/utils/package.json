@@ -17,7 +17,8 @@
 		"./container-button-adjustments": "./src/container-button-adjustments.ts",
 		"./responsive-utils": "./src/responsive-utils.ts",
 		"./types": "./src/types.ts",
-		"./has-only-one-value-for-key": "./src/has-only-one-value-for-key.ts"
+		"./has-only-one-value-for-key": "./src/has-only-one-value-for-key.ts",
+		"./progress": "./src/progress.ts"
 	},
 	"files": [
 		"src"

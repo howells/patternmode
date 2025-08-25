@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/context-menu";
-
+export * from "./component";

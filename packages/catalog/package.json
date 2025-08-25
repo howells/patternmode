@@ -1,0 +1,29 @@
+{
+  "name": "@patternmode/catalog",
+  "version": "0.1.0",
+  "description": "Component catalog: configs, previews, and preview props registry",
+  "type": "module",
+  "license": "MIT",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": ["src"],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

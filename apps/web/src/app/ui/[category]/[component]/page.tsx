@@ -1,4 +1,4 @@
-import { componentRegistry, getComponentConfig } from "@patternmode/ui/components/registry";
+import { componentRegistry, getComponentConfig } from "@patternmode/catalog";
 import { Separator } from "@patternmode/separator";
 import { notFound } from "next/navigation";
 import React from "react";

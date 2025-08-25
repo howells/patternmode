@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/copy-button";
-
+export * from "./component";

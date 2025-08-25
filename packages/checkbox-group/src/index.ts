@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/checkbox-group";
-
+export * from "./component";

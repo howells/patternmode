@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/alert-dialog";
-
+export * from "./component";

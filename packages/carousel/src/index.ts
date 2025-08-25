@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/carousel";
-
+export * from "./component";

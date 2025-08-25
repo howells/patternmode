@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/scroll-area";
-
+export * from "./component";

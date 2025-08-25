@@ -1,4 +1,4 @@
-import type { CategoryKey } from "@patternmode/ui/components/registry";
+import type { CategoryKey } from "@patternmode/catalog";
 
 import { Badge } from "@patternmode/badge";
 import { Card } from "@patternmode/card";
@@ -8,7 +8,7 @@ import {
   CATEGORY_CONFIG,
   getCategoryInfo,
   getComponentsByCategory,
-} from "@patternmode/ui/components/registry";
+} from "@patternmode/catalog";
 import { HStack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";

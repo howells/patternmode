@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/field-array";
-
+export * from "./component";

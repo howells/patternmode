@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/fieldset";
-
+export * from "./component";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/radio-card-group";
-
+export * from "./component";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/pagination";
-
+export * from "./component";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/progress-circle";
-
+export * from "./component";

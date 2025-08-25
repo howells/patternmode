@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/theme-toggle";
-
+export * from "./component";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/empty-state";
-
+export * from "./component";

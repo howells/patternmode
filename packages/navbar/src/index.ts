@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/navbar";
-
+export * from "./component";

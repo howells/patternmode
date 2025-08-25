@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/date-picker";
-
+export * from "./component";

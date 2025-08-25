@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/stacked-list";
-
+export * from "./component";

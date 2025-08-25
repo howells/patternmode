@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/description-list";
-
+export * from "./component";

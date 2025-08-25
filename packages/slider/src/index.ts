@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/slider";
-
+export * from "./component";

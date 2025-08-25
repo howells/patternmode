@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/tab-navigation";
-
+export * from "./component";

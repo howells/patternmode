@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/breadcrumbs";
-
+export * from "./component";

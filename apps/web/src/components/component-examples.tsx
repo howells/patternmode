@@ -2,7 +2,7 @@
 
 import { Callout } from "@patternmode/callout";
 import { Card, CardContent, CardHeader } from "@patternmode/card";
-import { getComponentConfig } from "@patternmode/ui/components/registry";
+import { getComponentConfig } from "@patternmode/catalog";
 import { Stack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";

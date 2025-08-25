@@ -2,7 +2,7 @@
 
 import { Callout } from "@patternmode/callout";
 import { CodeBlock } from "@patternmode/code-block";
-import { getPreviewComponent } from "@patternmode/ui/components/registry";
+import { getPreviewComponent } from "@patternmode/catalog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@patternmode/tabs";
 import React from "react";
 

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/accordion";
-
+export * from "./component";

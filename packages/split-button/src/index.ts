@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/split-button";
-
+export * from "./component";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/button-group/component";
-
+export * from "./component";

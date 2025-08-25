@@ -4,11 +4,11 @@ import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
 import { Input } from "@patternmode/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
-import type { ComponentId } from "@patternmode/ui/components/registry";
+import type { ComponentId } from "@patternmode/catalog";
 import {
 	COMPONENT_REGISTRY,
 	PREVIEW_REGISTRY,
-} from "@patternmode/ui/components/registry";
+} from "@patternmode/catalog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { SortableList } from "@patternmode/sortable-list";
 import type { SortableListItem } from "@patternmode/sortable-list";

@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/code-block";
-
+export * from "./component";

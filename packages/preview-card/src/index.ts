@@ -1,2 +1,1 @@
-export * from "@patternmode/ui/components/preview-card";
-
+export * from "./component";
