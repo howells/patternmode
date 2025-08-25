@@ -1593,13 +1593,13 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
-      zod:
-        specifier: ^4.0.0
-        version: 4.1.1
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      zod:
+        specifier: ^4.1.1
+        version: 4.1.1
 
   packages/grid:
     dependencies:

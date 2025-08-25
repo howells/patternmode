@@ -2,7 +2,7 @@
 
 import type { ButtonProps } from "@patternmode/button";
 import { Button } from "@patternmode/button";
-import { SIZES as sizes } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { componentVariants } from "@patternmode/constants/variants";
 import { Save } from "lucide-react";
 import React from "react";
@@ -50,7 +50,7 @@ export const buttonPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "Size variant affecting padding and text size.",
-		options: [...sizes, "icon-xs", "icon-sm", "icon", "icon-lg"],
+		options: [...Object.keys(sizes), "icon-xs", "icon-sm", "icon", "icon-lg"],
 		defaultValue: "base",
 	},
 	{

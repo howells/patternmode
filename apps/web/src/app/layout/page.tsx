@@ -3,7 +3,7 @@
 import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
 import type { Size } from "@patternmode/constants/sizes";
-import { SIZES as sizes } from "@patternmode/constants/sizes";
+import { sizes } from "@patternmode/constants/sizes";
 import { Input } from "@patternmode/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
 import {
@@ -205,7 +205,7 @@ function LayoutSection({
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								{sizes.map((size) => (
+								{Object.keys(sizes).map((size) => (
 									<SelectItem key={size} value={size}>
 										{size.toUpperCase()}
 									</SelectItem>

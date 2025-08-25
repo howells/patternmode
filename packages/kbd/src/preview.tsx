@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { Kbd } from "./component";
 import type { KbdProps } from "./types";
 
@@ -47,7 +47,7 @@ export const kbdPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "Size variant affecting padding and text size.",
-		options: SIZES,
+		options: Object.keys(sizes),
 		defaultValue: "sm",
 	},
 ];

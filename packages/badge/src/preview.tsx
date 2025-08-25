@@ -1,15 +1,15 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { AlertCircle, Check, Star, X } from "lucide-react";
 import type { BadgeProps } from "./component";
 import { Badge } from "./component";
 
 export function BadgePreview(props: BadgeProps) {
   const handleDismiss = props.dismissible ? () => console.warn("Badge dismissed") : undefined;
-  const { ref: _ref, ...badgeProps } = props as any;
+  const { ref: _ref, ...badgeProps } = props;
   return (
-    <Badge onDismiss={handleDismiss} {...(badgeProps as any)}>
+    <Badge onDismiss={handleDismiss} {...badgeProps}>
       {props.children || "Badge"}
     </Badge>
   );
@@ -26,7 +26,7 @@ export const badgePreviewProps = [
     ],
     defaultValue: "default",
   },
-  { name: "size", type: "select", description: "Size variant affecting padding and text size.", options: SIZES, defaultValue: "base" },
+  { name: "size", type: "select", description: "Size variant affecting padding and text size.", options: Object.keys(sizes), defaultValue: "base" },
   {
     name: "leftIcon", type: "select", description: "Left icon.",
     options: [{ label: "None", value: null }, { label: "Star", value: Star }, { label: "Check", value: Check }, { label: "Alert", value: AlertCircle }, { label: "X", value: X }],
@@ -43,4 +43,3 @@ export const badgePreviewProps = [
   { name: "statusAnimated", type: "boolean", description: "Animate status dot.", defaultValue: false },
   { name: "dismissible", type: "boolean", description: "Can be dismissed.", defaultValue: false },
 ];
-

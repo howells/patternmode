@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { Text } from "./component";
 import type { TextProps } from "./types";
 
@@ -26,7 +26,7 @@ export const textPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "Text size variant controlling font size.",
-		options: SIZES,
+		options: Object.keys(sizes),
 		defaultValue: "sm",
 	},
 ];

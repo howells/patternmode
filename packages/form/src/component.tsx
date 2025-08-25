@@ -4,7 +4,7 @@ import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
 import { cx } from "@patternmode/utils/cx";
 import * as React from "react";
-import type { z } from "zod";
+import type { ZodSchema } from "zod";
 
 /**
  * Props for the Form component.
@@ -14,7 +14,7 @@ type FormProps = {
 	 * Optional Zod schema for form validation.
 	 * When provided, enables type-safe validation with automatic error handling.
 	 */
-	schema?: z.ZodSchema;
+	schema?: ZodSchema;
 	/**
 	 * Callback for successful form submission with validated data.
 	 * Called only when validation passes (if schema provided) or form is valid.

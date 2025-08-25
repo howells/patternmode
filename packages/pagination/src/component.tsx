@@ -1,4 +1,5 @@
 import { cx } from "@patternmode/utils/cx";
+import type { ButtonProps } from "@patternmode/button/types";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import type React from "react";
 
@@ -44,10 +45,10 @@ type PaginationPreviousProps = {
 	 */
 	href?: string;
 	/**
-	 * Custom render function for the button element (e.g., Next.js Link).
-	 * Takes precedence over href when provided.
-	 */
-	render?: (props: Record<string, unknown>) => React.ReactElement;
+    * Custom render for the clickable element (e.g., Next.js Link).
+    * Takes precedence over href when provided.
+    */
+	render?: ButtonProps["render"];
 	/**
 	 * Additional CSS classes for styling customization.
 	 */
@@ -104,10 +105,10 @@ type PaginationNextProps = {
 	 */
 	href?: string;
 	/**
-	 * Custom render function for the button element (e.g., Next.js Link).
-	 * Takes precedence over href when provided.
-	 */
-	render?: (props: Record<string, unknown>) => React.ReactElement;
+    * Custom render for the clickable element (e.g., Next.js Link).
+    * Takes precedence over href when provided.
+    */
+	render?: ButtonProps["render"];
 	/**
 	 * Additional CSS classes for styling customization.
 	 */
@@ -185,10 +186,10 @@ type PaginationPageProps = {
 	 */
 	href?: string;
 	/**
-	 * Custom render function for the button element (e.g., Next.js Link).
-	 * Takes precedence over href when provided.
-	 */
-	render?: (props: Record<string, unknown>) => React.ReactElement;
+    * Custom render for the clickable element (e.g., Next.js Link).
+    * Takes precedence over href when provided.
+    */
+	render?: ButtonProps["render"];
 	/**
 	 * Additional CSS classes for styling customization.
 	 */

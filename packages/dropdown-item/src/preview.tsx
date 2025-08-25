@@ -2,7 +2,7 @@ import { User } from "lucide-react";
 import { DropdownItem } from "./component";
 import type { DropdownItemProps } from "./types";
 
-export function DropdownItemPreview(props: DropdownItemProps) {
+export function DropdownItemPreview(props: Omit<DropdownItemProps, "ref">) {
   const { ...restProps } = props;
   return (
     <div className="w-64 p-2">

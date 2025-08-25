@@ -14,7 +14,7 @@ export const dropdownItemConfig: ComponentConfig = {
   id: "dropdown-item",
   name: "Dropdown Item",
   description: "A consistent dropdown item extending Button for use in menus and selects.",
-  category: "primitives",
+  category: "controls",
   icon: undefined,
   importStatement: `import { DropdownItem } from "@patternmode/dropdown-item";`,
   examples: [

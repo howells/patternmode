@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import {
   AlignCenter,
   AlignLeft,
@@ -111,7 +111,7 @@ export const toggleGroupPreviewProps = [
     type: "select",
     description:
       "Toggle group size variant - affects padding and text size of the toggle items.",
-    options: SIZES,
+    options: Object.keys(sizes),
     defaultValue: "base",
   },
   {
@@ -130,4 +130,3 @@ export const toggleGroupPreviewProps = [
     defaultValue: true,
   },
 ];
-

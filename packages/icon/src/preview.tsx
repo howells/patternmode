@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { Camera } from "lucide-react";
 import { Icon } from "./component";
 import type { IconProps } from "./types";
@@ -33,7 +33,7 @@ export const iconPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "Visual size of the icon affecting its dimensions.",
-		options: [...SIZES, "xl", "2xl", "3xl"],
+		options: [...Object.keys(sizes), "xl", "2xl", "3xl"],
 		defaultValue: "base",
 	},
 	{

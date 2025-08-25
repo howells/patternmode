@@ -1,7 +1,7 @@
 "use client";
 
 import type { Size } from "@patternmode/config/sizes";
-import { SIZES as sizes } from "@patternmode/config/sizes";
+import { sizes } from "@patternmode/config/sizes";
 import { IconSelect, useIconSelect } from "./component";
 
 type IconSelectPreviewProps = { size?: Size };
@@ -18,6 +18,5 @@ export function IconSelectPreview({ size = "base" }: IconSelectPreviewProps) {
 }
 
 export const iconSelectPreviewProps = [
-  { name: "size", type: "select", description: "Size variant", options: sizes, defaultValue: "base" },
+  { name: "size", type: "select", description: "Size variant", options: Object.keys(sizes), defaultValue: "base" },
 ];
-

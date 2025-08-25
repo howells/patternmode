@@ -1,6 +1,6 @@
 "use client";
 
-import { SIZES } from "@patternmode/constants/sizes";
+import { sizes } from "@patternmode/constants/sizes";
 import { Loader } from "./component";
 import type { LoaderProps } from "./types";
 
@@ -14,7 +14,7 @@ export const loaderPreviewProps = [
 		name: "size",
 		type: "select",
 		description: "The size variant of the loader icon.",
-		options: [...SIZES, "xl"],
+		options: [...Object.keys(sizes), "xl"],
 		defaultValue: "base",
 	},
 	{

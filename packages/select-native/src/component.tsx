@@ -9,9 +9,13 @@ import type { SelectNativeProps } from "./types";
 import { selectNativeStyles } from "./variants";
 
 const SelectNative = ({ ref: forwardedRef, className, hasError, size, ...props }: SelectNativeProps & { ref?: React.RefObject<HTMLSelectElement | null> }) => {
+  // Map universal Size to the subset supported by styles
+  const mapStyleSize = (s?: Size): "xs" | "sm" | "base" | "lg" | undefined =>
+    s === undefined ? undefined : s === "2xs" ? "xs" : s;
+  const styleSize = mapStyleSize(size);
   return (
     <div className="relative">
-      <select ref={forwardedRef} className={cx(selectNativeStyles({ hasError, size }), className)} data-testid="select-native" {...props} />
+      <select ref={forwardedRef} className={cx(selectNativeStyles({ hasError, size: styleSize }), className)} data-testid="select-native" {...props} />
       <div className={cx("absolute inset-y-0 right-0 flex items-center pointer-events-none", size === "xs" && "pr-2.5", size === "sm" && "pr-3", size === "base" && "pr-3", size === "lg" && "pr-4")}> 
         <span className="text-zinc-400 dark:text-zinc-500">
           {(() => {

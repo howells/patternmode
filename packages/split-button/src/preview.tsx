@@ -1,12 +1,12 @@
 "use client";
 
 import type { Size } from "@patternmode/config/sizes";
-import { SIZES as sizes } from "@patternmode/config/sizes";
-import { Archive, Copy, Download, Save, Share } from "lucide-react";
-import type React from "react";
+import { sizes } from "@patternmode/config/sizes";
 import type { ButtonVariant } from "@patternmode/constants/variants";
 import { componentVariants } from "@patternmode/constants/variants";
 import { Icon } from "@patternmode/icon";
+import { Archive, Copy, Download, Save, Share } from "lucide-react";
+import type React from "react";
 import { SplitButton } from "./component";
 
 export type SplitButtonPreviewProps = {
@@ -134,9 +134,16 @@ export function SplitButtonPreview({
 						{showSeparators && index === Math.floor(menuItemCount / 2) && (
 							<div className="border-t  dark:border-zinc-700 my-1" />
 						)}
-						<div
-							className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+						<button
+							type="button"
+							className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
 							onClick={() => handleMenuAction(item.label)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									e.preventDefault();
+									handleMenuAction(item.label);
+								}
+							}}
 						>
 							{showIcons && (
 								<Icon
@@ -150,7 +157,7 @@ export function SplitButtonPreview({
 								/>
 							)}
 							{item.label}
-						</div>
+						</button>
 					</div>
 				);
 			})}
@@ -173,7 +180,7 @@ export const splitButtonPreviewProps = [
 		type: "select",
 		description:
 			"Button size variant - affects padding and text size of the split button.",
-		options: sizes,
+		options: Object.keys(sizes),
 		defaultValue: "base",
 	},
 	{
