@@ -50,3 +50,24 @@
   ```
 - **Barrel file**: Use `src/index.ts` to re-export the component and its types only.
 - **Publishing types**: Ensure `dist/` contains `.d.ts`. Use `exports` (and optional `types` field) to point to the public API types.
+
+### Canonical exports policy
+- **Root import**: `@patternmode/<pkg>` MUST resolve to `./src/index.ts` and expose only component(s) and public types.
+- **Docs-only subpaths (optional)**: expose `./config`, `./preview`, `./examples` for docs site. Do NOT expose other internals.
+- **No file extensions**: Rely on TS `module: ESNext` and `moduleResolution: Bundler` (in presets) so we never add `.js` to TS relative imports.
+
+### Consumer configuration
+- Next.js apps must transpile TS sources from workspace packages:
+  ```ts
+  // next.config.ts
+  import type { NextConfig } from "next";
+  const nextConfig: NextConfig = { transpilePackages: ["@patternmode/*"] };
+  export default nextConfig;
+  ```
+
+### Enforcement
+- Add a repo task to verify each package has:
+  - `src/index.ts` barrel exporting only public component(s) and types
+  - `exports` root -> `./src/index.ts`; only optional `./config`, `./preview`, `./examples`
+  - tsconfig extends `@patternmode/tsconfig/react-library.json`
+  - A `types` script emitting declarations

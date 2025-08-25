@@ -18,4 +18,3 @@ export const SizesExample = () => (
     <Avatar initials="LG" size="lg" />
   </div>
 );
-

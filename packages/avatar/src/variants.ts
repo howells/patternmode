@@ -8,4 +8,3 @@ export const avatarVariants = tv({
   },
   defaultVariants: { size: "base", square: false },
 });
-

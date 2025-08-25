@@ -1,0 +1,37 @@
+language javascript;
+
+// Disallow exporting from ./examples
+`export $what from $path` where {
+  $path <: "./examples",
+  register_diagnostic(
+    span = $path,
+    message = "Do not export from ./examples in package barrels"
+  )
+}
+
+// Disallow exporting from ./preview
+`export $what from $path` where {
+  $path <: "./preview",
+  register_diagnostic(
+    span = $path,
+    message = "Do not export from ./preview in package barrels"
+  )
+}
+
+// Disallow exporting from other relative paths except ./component and ./types
+`export $what from $path` where {
+  $path <: r"^\./(?!component|types)",
+  register_diagnostic(
+    span = $path,
+    message = "Barrels may only re-export from ./component and ./types"
+  )
+}
+
+// Also catch imports used to re-export later (discourage importing ./examples or ./preview)
+`import $what from $path` where {
+  $path <: r"^\./(examples|preview)$",
+  register_diagnostic(
+    span = $path,
+    message = "Do not import ./examples or ./preview in package barrels"
+  )
+}

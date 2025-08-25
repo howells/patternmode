@@ -4,4 +4,3 @@ export const imageSizeMap = {
   base: { width: 40, height: 40 },
   lg: { width: 56, height: 56 }
 } as const;
-

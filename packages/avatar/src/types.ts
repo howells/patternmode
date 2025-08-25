@@ -16,4 +16,3 @@ export type AvatarProps = {
 export type AvatarWithFallbackProps = React.ComponentPropsWithoutRef<"span">;
 export type AvatarImageProps = React.ComponentPropsWithoutRef<"img">;
 export type AvatarFallbackProps = React.ComponentPropsWithoutRef<"span">;
-

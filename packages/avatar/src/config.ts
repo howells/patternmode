@@ -18,4 +18,3 @@ export const avatarConfig: ComponentConfig = {
     { name: "Avatar", description: "User avatar with image or initials fallback", component: Avatar, primary: true }
   ],
 };
-
