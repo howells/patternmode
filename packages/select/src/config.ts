@@ -57,4 +57,3 @@ export const selectConfig: ComponentConfig = {
     { name: "SelectArrow", description: "Popup arrow", component: SelectArrow },
   ],
 };
-

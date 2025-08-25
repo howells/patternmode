@@ -1,10 +1,8 @@
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Button } from "@patternmode/button";
-import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
-import { Icon } from "@patternmode/icon";
 import { cx } from "@patternmode/utils/cx";
 import { hasErrorInput } from "@patternmode/utils/has-error-input";
-import { Check, ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import type * as React from "react";
 import type {
 	SelectArrowProps,
@@ -20,16 +18,19 @@ import type {
 } from "./types";
 import { selectItemVariants, selectPopoverVariants } from "./variants";
 
-const Select = ({
+// Root
+const Root = ({
 	...props
 }: React.ComponentPropsWithoutRef<typeof BaseSelect.Root>) => (
 	<BaseSelect.Root data-testid="select" {...props} />
 );
-Select.displayName = "Select";
-const SelectGroup = BaseSelect.Group;
-const SelectValue = BaseSelect.Value;
+Root.displayName = "Select";
+const Group = BaseSelect.Group;
+const Value = BaseSelect.Value;
+const Icon = BaseSelect.Icon;
 
-const SelectTrigger = ({
+// Trigger
+const Trigger = ({
 	ref,
 	className,
 	hasError,
@@ -53,7 +54,7 @@ const SelectTrigger = ({
 	return (
 		<BaseSelect.Trigger
 			ref={ref}
-			render={render || defaultRender}
+			render={render ?? defaultRender}
 			nativeButton={true}
 			{...props}
 		>
@@ -61,9 +62,10 @@ const SelectTrigger = ({
 		</BaseSelect.Trigger>
 	);
 };
-SelectTrigger.displayName = "SelectTrigger";
+Trigger.displayName = "SelectTrigger";
 
-const SelectScrollUpButton = ({
+// ScrollUpArrow
+const ScrollUpArrow = ({
 	ref,
 	className,
 	...props
@@ -79,13 +81,12 @@ const SelectScrollUpButton = ({
 			className,
 		)}
 		{...props}
-	>
-		<Icon icon={ChevronUp} size="sm" aria-hidden="true" />
-	</BaseSelect.ScrollUpArrow>
+	/>
 );
-SelectScrollUpButton.displayName = "SelectScrollUpButton";
+ScrollUpArrow.displayName = "ScrollUpArrow";
 
-const SelectScrollDownButton = ({
+// ScrollDownArrow
+const ScrollDownArrow = ({
 	ref,
 	className,
 	...props
@@ -101,18 +102,12 @@ const SelectScrollDownButton = ({
 			className,
 		)}
 		{...props}
-	>
-		<Icon
-			icon={ChevronDown}
-			size="sm"
-			strokeWidth={DEFAULT_ICON_STROKE_WIDTH}
-			aria-hidden="true"
-		/>
-	</BaseSelect.ScrollDownArrow>
+	/>
 );
-SelectScrollDownButton.displayName = "SelectScrollDownButton";
+ScrollDownArrow.displayName = "ScrollDownArrow";
 
-const SelectBackdrop = ({
+// Backdrop
+const Backdrop = ({
 	ref,
 	className,
 	...props
@@ -131,11 +126,12 @@ const SelectBackdrop = ({
 		{...props}
 	/>
 );
-SelectBackdrop.displayName = "SelectBackdrop";
+Backdrop.displayName = "SelectBackdrop";
 
-const SelectPortal = BaseSelect.Portal;
+const Portal = BaseSelect.Portal;
 
-const SelectPositioner = ({
+// Positioner
+const Positioner = ({
 	ref,
 	sideOffset = 8,
 	collisionPadding = 10,
@@ -152,9 +148,10 @@ const SelectPositioner = ({
 		{...props}
 	/>
 );
-SelectPositioner.displayName = "SelectPositioner";
+Positioner.displayName = "SelectPositioner";
 
-const SelectContent = ({
+// Popup
+const Popup = ({
 	ref,
 	className,
 	children,
@@ -168,40 +165,34 @@ const SelectContent = ({
 }: SelectContentProps & {
 	ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null>;
 }) => (
-	<SelectPortal>
-		<SelectPositioner
+	<Portal>
+		<Positioner
 			side={side}
 			align={align}
 			sideOffset={sideOffset}
 			collisionPadding={collisionPadding}
 			alignItemWithTrigger={alignItemWithTrigger}
 		>
-			<SelectScrollUpButton />
+			<ScrollUpArrow />
 			<BaseSelect.Popup
 				ref={ref}
 				className={cx(
 					selectPopoverVariants({ size }),
-					"w-[var(--anchor-width)]",
-					"data-[starting-style]:animate-in data-[ending-style]:animate-out",
-					"data-[starting-style]:fade-in data-[ending-style]:fade-out",
-					"data-[starting-style]:zoom-in-95 data-[ending-style]:zoom-out-95",
-					"data-[side=bottom]:data-[starting-style]:slide-in-from-top-2 data-[side=bottom]:data-[ending-style]:slide-out-to-top-2",
-					"data-[side=left]:data-[starting-style]:slide-in-from-right-2 data-[side=left]:data-[ending-style]:slide-out-to-right-2",
-					"data-[side=right]:data-[starting-style]:slide-in-from-left-2 data-[side=right]:data-[ending-style]:slide-out-to-left-2",
-					"data-[side=top]:data-[starting-style]:slide-in-from-bottom-2 data-[side=top]:data-[ending-style]:slide-out-to-bottom-2",
+					"min-w-[var(--anchor-width)]",
 					className,
 				)}
 				{...props}
 			>
-				<div className="p-1">{children}</div>
+				<div className="">{children}</div>
 			</BaseSelect.Popup>
-			<SelectScrollDownButton />
-		</SelectPositioner>
-	</SelectPortal>
+			<ScrollDownArrow />
+		</Positioner>
+	</Portal>
 );
-SelectContent.displayName = "SelectContent";
+Popup.displayName = "SelectContent";
 
-const SelectGroupLabel = ({
+// GroupLabel
+const GroupLabel = ({
 	ref,
 	className,
 	...props
@@ -218,9 +209,10 @@ const SelectGroupLabel = ({
 		{...props}
 	/>
 );
-SelectGroupLabel.displayName = "SelectGroupLabel";
+GroupLabel.displayName = "SelectGroupLabel";
 
-const SelectItem = ({
+// Item
+const Item = ({
 	ref,
 	className,
 	children,
@@ -239,23 +231,14 @@ const SelectItem = ({
 			)}
 			{...props}
 		>
-			<BaseSelect.ItemText className="flex-1 truncate">
-				{children}
-			</BaseSelect.ItemText>
-			<BaseSelect.ItemIndicator>
-				<Icon
-					icon={Check}
-					size={size}
-					className="text-zinc-800 dark:text-zinc-200"
-					aria-hidden="true"
-				/>
-			</BaseSelect.ItemIndicator>
+			{children}
 		</BaseSelect.Item>
 	);
 };
-SelectItem.displayName = "SelectItem";
+Item.displayName = "SelectItem";
 
-const SelectSeparator = ({
+// Separator
+const Separator = ({
 	ref,
 	className,
 	...props
@@ -268,9 +251,10 @@ const SelectSeparator = ({
 		{...props}
 	/>
 );
-SelectSeparator.displayName = "SelectSeparator";
+Separator.displayName = "SelectSeparator";
 
-const SelectArrow = ({
+// Arrow
+const Arrow = ({
 	ref,
 	className,
 	...props
@@ -289,6 +273,7 @@ const SelectArrow = ({
 		{...props}
 	>
 		<svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+			<title>Select arrow</title>
 			<path
 				d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
 				className="fill-white dark:fill-zinc-950"
@@ -304,7 +289,42 @@ const SelectArrow = ({
 		</svg>
 	</BaseSelect.Arrow>
 );
-SelectArrow.displayName = "SelectArrow";
+Arrow.displayName = "SelectArrow";
+// Compose a Base-UI-compatible API surface on Select
+const Select = Object.assign(Root, {
+	Root,
+	Trigger,
+	Value,
+	Icon,
+	Portal,
+	Positioner,
+	ScrollUpArrow,
+	Popup,
+	Item,
+	ItemText: BaseSelect.ItemText,
+	ItemIndicator: BaseSelect.ItemIndicator,
+	ScrollDownArrow,
+	Group,
+	GroupLabel,
+	Separator,
+	Backdrop,
+	Arrow,
+});
+
+// Backwards-compatible named exports
+const SelectTrigger = Trigger;
+const SelectValue = Value;
+const SelectPortal = Portal;
+const SelectPositioner = Positioner;
+const SelectContent = Popup;
+const SelectItem = Item;
+const SelectGroup = Group;
+const SelectGroupLabel = GroupLabel;
+const SelectSeparator = Separator;
+const SelectBackdrop = Backdrop;
+const SelectArrow = Arrow;
+const SelectScrollUpButton = ScrollUpArrow;
+const SelectScrollDownButton = ScrollDownArrow;
 
 export {
 	Select,
@@ -319,4 +339,6 @@ export {
 	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
+	SelectScrollUpButton,
+	SelectScrollDownButton,
 };

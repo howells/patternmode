@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 export const selectPopoverVariants = tv({
 	extend: formControlElementVariants,
 	slots: {
-		base: "z-50 min-w-[var(--anchor-width)] overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-popover-foreground shadow-md",
+		base: "z-50 min-w-[var(--anchor-width)] overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-popover-foreground shadow-md ",
 	},
 	variants: {
 		size: {
@@ -39,7 +39,7 @@ export const selectTriggerVariants = tv({
 	extend: formControlElementVariants,
 	base: [
 		"flex w-full items-center justify-between",
-		"rounded-md border bg-white dark:bg-zinc-950 dark:border-zinc-800",
+		"rounded-md border border-zinc-200 bg-white dark:bg-zinc-950 dark:border-zinc-800",
 	],
 	defaultVariants: { size: "base", variant: "standalone" },
 });
