@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { radioCardGroupConfig } from "@patternmode/ui/components/radio-card-group/config";
+import { radioCardGroupConfig } from "@patternmode/radio-card-group/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

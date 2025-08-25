@@ -227,21 +227,21 @@ import {
 } from "@patternmode/progress-circle/preview";
 import { radioConfig } from "@patternmode/radio/config";
 import { RadioPreview, radioPreviewProps } from "@patternmode/radio/preview";
-import { radioCardGroupConfig } from "./radio-card-group/config";
+import { radioCardGroupConfig } from "@patternmode/radio-card-group/config";
 import {
 	RadioCardGroupPreview,
 	radioCardGroupPreviewProps,
-} from "./radio-card-group/preview";
-import { responsiveDrawerConfig } from "./responsive-drawer/config";
+} from "@patternmode/radio-card-group/preview";
+import { responsiveDrawerConfig } from "@patternmode/responsive-drawer/config";
 import {
 	ResponsiveDrawerPreview,
 	responsiveDrawerPreviewProps,
-} from "./responsive-drawer/preview";
-import { scrollAreaConfig } from "./scroll-area/config";
+} from "@patternmode/responsive-drawer/preview";
+import { scrollAreaConfig } from "@patternmode/scroll-area/config";
 import {
 	ScrollAreaPreview,
 	scrollAreaPreviewProps,
-} from "./scroll-area/preview";
+} from "@patternmode/scroll-area/preview";
 import { searchFieldConfig } from "@patternmode/search-field/config";
 import {
 	SearchFieldPreview,
@@ -249,25 +249,25 @@ import {
 } from "@patternmode/search-field/preview";
 import { sheetConfig } from "@patternmode/sheet/config";
 import { SheetPreview, sheetPreviewProps } from "@patternmode/sheet/preview";
-import { skeletonConfig } from "./skeleton/config";
-import { SkeletonPreview } from "./skeleton/preview";
-import { sliderConfig } from "./slider/config";
-import { SliderPreview, sliderPreviewProps } from "./slider/preview";
+import { skeletonConfig } from "@patternmode/skeleton/config";
+import { SkeletonPreview } from "@patternmode/skeleton/preview";
+import { sliderConfig } from "@patternmode/slider/config";
+import { SliderPreview, sliderPreviewProps } from "@patternmode/slider/preview";
 import { sortableListConfig } from "@patternmode/sortable-list/config";
 import {
 	SortableListPreview,
 	sortableListPreviewProps,
 } from "@patternmode/sortable-list/preview";
-import { splitButtonConfig } from "./split-button/config";
+import { splitButtonConfig } from "@patternmode/split-button/config";
 import {
 	SplitButtonPreview,
 	splitButtonPreviewProps,
-} from "./split-button/preview";
-import { stackedListConfig } from "./stacked-list/config";
+} from "@patternmode/split-button/preview";
+import { stackedListConfig } from "@patternmode/stacked-list/config";
 import {
 	StackedListPreview,
 	stackedListPreviewProps,
-} from "./stacked-list/preview";
+} from "@patternmode/stacked-list/preview";
 import { tabNavigationConfig } from "./tab-navigation/config";
 import {
 	TabNavigationPreview,

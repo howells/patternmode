@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { responsiveDrawerConfig } from "@patternmode/ui/components/responsive-drawer/config";
+import { responsiveDrawerConfig } from "@patternmode/responsive-drawer/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

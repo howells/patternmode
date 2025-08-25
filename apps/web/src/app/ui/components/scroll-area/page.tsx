@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { scrollAreaConfig } from "@patternmode/ui/components/scroll-area/config";
+import { scrollAreaConfig } from "@patternmode/scroll-area/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

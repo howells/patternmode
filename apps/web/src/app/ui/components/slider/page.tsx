@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { sliderConfig } from "@patternmode/ui/components/slider/config";
+import { sliderConfig } from "@patternmode/slider/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";

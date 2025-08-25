@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Separator } from "@patternmode/separator";
-import { splitButtonConfig } from "@patternmode/ui/components/split-button/config";
+import { splitButtonConfig } from "@patternmode/split-button/config";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
