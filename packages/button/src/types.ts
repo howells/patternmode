@@ -1,8 +1,7 @@
+import type { useRender } from "@base-ui-components/react/use-render";
 import type { Size } from "@patternmode/config/sizes";
-import type React from "react";
-import type { VariantProps } from "tailwind-variants";
 import type { IconComponent } from "@patternmode/icon/types";
-import { useRender } from "@base-ui-components/react/use-render";
+import type { VariantProps } from "tailwind-variants";
 
 /**
  * Icon-only button size options.

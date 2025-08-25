@@ -1,11 +1,11 @@
 "use client";
 
+import type { ButtonProps } from "@patternmode/button";
+import { Button } from "@patternmode/button";
 import { SIZES as sizes } from "@patternmode/config/sizes";
+import { componentVariants } from "@patternmode/constants/variants";
 import { Save } from "lucide-react";
 import React from "react";
-import { componentVariants } from "@patternmode/constants/variants";
-import type { ButtonProps } from "./component";
-import { Button } from "./component";
 
 export function ButtonPreview(props: ButtonProps) {
 	const [isLoading, setIsLoading] = React.useState(false);

@@ -10,8 +10,8 @@ _The best of the React ecosystem, unified under Base UI primitives._
 ```
 src/components/[component-name]/
 ├── component.tsx        # Implementation with JSDoc-enhanced types
-├── config.ts  # Component specification + examples with imports
-├── index.tsx           # Export barrel
+├── config.ts            # Component specification + examples with imports
+├── index.ts             # Minimal barrel: export component and types only
 ├── examples.tsx        # Example components
 └── preview.tsx         # Preview component (optional)
 ```
@@ -59,6 +59,31 @@ export const Button = (props: ButtonProps) => {
 - Use `VariantProps<typeof variants>` for variant props
 - Extend `useRender.ComponentProps<"element">` for Base UI integration
 - Export component, variants, and prop types
+
+### TypeScript & Packaging (Kibo-aligned)
+
+- Per-package tsconfig: extend `@patternmode/tsconfig/react-library.json` in component packages.
+  ```json
+  {
+    "extends": "@patternmode/tsconfig/react-library.json",
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": { "@patternmode/*": ["../*/src"] }
+    },
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules"]
+  }
+  ```
+- Types-only build: emit declarations without JS for publish.
+  ```json
+  {
+    "scripts": {
+      "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist"
+    }
+  }
+  ```
+- Minimal barrel file `src/index.ts`: export only public component(s) and types; do not re-export internals, examples, or previews.
+- Publishing types: ensure `dist/` contains `.d.ts` and `exports` (and optional `types`) point to the public entries.
 
 ### Import Structure
 
