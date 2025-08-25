@@ -2227,6 +2227,9 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -2623,9 +2626,24 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/input':
+        specifier: workspace:*
+        version: link:../input
+      '@patternmode/label':
+        specifier: workspace:*
+        version: link:../label
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2870,9 +2888,33 @@ importers:
 
   packages/stacked-list:
     dependencies:
+      '@patternmode/avatar':
+        specifier: workspace:*
+        version: link:../avatar
+      '@patternmode/badge':
+        specifier: workspace:*
+        version: link:../badge
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
+      '@patternmode/card':
+        specifier: workspace:*
+        version: link:../card
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/grid':
+        specifier: workspace:*
+        version: link:../grid
+      '@patternmode/stack':
+        specifier: workspace:*
+        version: link:../stack
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils

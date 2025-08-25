@@ -87,7 +87,8 @@
     "@patternmode/icon": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "tailwind-variants": "^3.1.0",
-    "lucide-react": ">=0.525.0 <1"
+    "lucide-react": ">=0.525.0 <1",
+    "@patternmode/constants": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

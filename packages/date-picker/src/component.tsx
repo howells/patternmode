@@ -183,7 +183,6 @@ Trigger.displayName = "DatePicker.Trigger";
 
 const CalendarPopover = ({
 	ref: forwardedRef,
-	align,
 	className,
 	children,
 	...props
@@ -193,9 +192,6 @@ const CalendarPopover = ({
 	return (
 		<PopoverContent
 			ref={forwardedRef}
-			sideOffset={10}
-			side="bottom"
-			align={align}
 			className={cx(
 				// base
 				"w-fit text-sm",
@@ -475,10 +471,7 @@ const SingleDatePicker = ({
 				className={className}
 				hasError={hasError}
 				icon={_icon}
-				aria-required={props.required || props["aria-required"]}
-				aria-invalid={props["aria-invalid"]}
 				aria-label={props["aria-label"]}
-				aria-labelledby={props["aria-labelledby"]}
 			>
 				{formattedDate}
 			</Trigger>
@@ -520,7 +513,7 @@ const SingleDatePicker = ({
 										aria-label="Time"
 										onChange={onTimeChange}
 										isDisabled={!date}
-										value={time}
+										value={time ?? undefined}
 									/>
 								</div>
 							)}

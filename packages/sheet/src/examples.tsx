@@ -38,7 +38,7 @@ export function DefaultExample() {
           </div>
         </SheetBody>
         <SheetFooter>
-          <SheetClose asChild>
+          <SheetClose>
             <Button variant="primary">Save changes</Button>
           </SheetClose>
         </SheetFooter>
@@ -118,7 +118,7 @@ export function ContactFormExample() {
               <textarea id="message" className="w-full rounded border p-2" rows={4} />
             </div>
             <div className="flex justify-end gap-2">
-              <SheetClose asChild>
+              <SheetClose>
                 <Button variant="secondary">Cancel</Button>
               </SheetClose>
               <Button variant="primary" type="submit">Send</Button>
@@ -129,4 +129,3 @@ export function ContactFormExample() {
     </Sheet>
   );
 }
-

@@ -107,10 +107,14 @@ PopoverPositioner.displayName = "PopoverPositioner";
 type PopoverContentProps = {
   ref?: React.RefObject<React.ElementRef<typeof BasePopover.Popup> | null>;
   className?: string;
+  side?: "bottom" | "left" | "right" | "top";
+  align?: "start" | "center" | "end";
+  sideOffset?: number;
+  collisionPadding?: number;
 } & React.ComponentPropsWithoutRef<typeof BasePopover.Popup>;
 
-const PopoverContent = ({ ref, className, ...props }: PopoverContentProps) => (
-  <PopoverPositioner>
+const PopoverContent = ({ ref, className, side, align, sideOffset, collisionPadding, ...props }: PopoverContentProps) => (
+  <PopoverPositioner side={side} align={align} sideOffset={sideOffset} collisionPadding={collisionPadding}>
     <BasePopover.Popup
       ref={ref}
       className={cx(
