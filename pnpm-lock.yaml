@@ -2540,6 +2540,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../icon

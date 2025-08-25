@@ -1,7 +1,6 @@
 import type { Size } from "@patternmode/config/sizes";
 
-export type SelectNativeProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
+export type SelectNativeProps = Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> & {
   hasError?: boolean;
   size?: Size;
 };
-

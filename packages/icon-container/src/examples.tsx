@@ -18,7 +18,7 @@ export const LargeSizeExample = () => (
 );
 
 export const ExtraLargeExample = () => (
-  <IconContainer icon={Package} size="xl" iconSize={32} />
+  <IconContainer icon={Package} size="xl" iconSize="2xl" />
 );
 
 export const SemanticVariantsExample = () => (
@@ -51,4 +51,3 @@ export const SizeVariantsExample = () => (
 export const CenteredExample = () => (
   <IconContainer icon={Package} centered />
 );
-
