@@ -1,5 +1,5 @@
 import type { GlobalSemanticVariant, TailwindColor } from "@patternmode/constants/variants";
-import type { ButtonVariant } from "@patternmode/button/types";
+import { buttonSpecificVariants } from "@patternmode/constants/variants";
 
-export type BadgeVariant = GlobalSemanticVariant | TailwindColor | ButtonVariant;
-
+export type ButtonSpecificVariant = keyof typeof buttonSpecificVariants;
+export type BadgeVariant = GlobalSemanticVariant | TailwindColor | ButtonSpecificVariant;

@@ -4,8 +4,9 @@
   "description": "Single-line text input with prefix/suffix, sizes, and validation",
   "type": "module",
   "license": "MIT",
+  "types": "./src/index.ts",
   "exports": {
-    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    ".": { "types": "./src/index.ts", "import": "./src/index.ts", "default": "./src/index.ts" },
     "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
     "./types": { "types": "./src/types.ts", "import": "./src/types.ts", "default": "./src/types.ts" },
     "./variants": { "types": "./src/variants.ts", "import": "./src/variants.ts", "default": "./src/variants.ts" },
@@ -15,6 +16,12 @@
     "./package.json": "./package.json"
   },
   "files": ["src"],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -27,4 +34,3 @@
     "@patternmode/constants": "workspace:*"
   }
 }
-

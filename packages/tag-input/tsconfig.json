@@ -1,8 +1,12 @@
 {
-	"extends": "@patternmode/tsconfig/nextjs.json",
+	"extends": "@patternmode/tsconfig/react-library.json",
 	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": { "@patternmode/*": ["../*/src"] },
 		"rootDir": "src",
-		"outDir": "dist"
+		"outDir": "dist",
+		"jsx": "react-jsx"
 	},
-	"include": ["src"]
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules"]
 }

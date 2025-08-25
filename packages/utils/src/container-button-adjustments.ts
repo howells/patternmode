@@ -16,6 +16,7 @@ export function getContainerButtonHeightAdjustment(
 	containerSize: Size,
 ): string {
 	const adjustments = {
+		"2xs": "0.25rem", // 4px - smaller controls use less padding
 		xs: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
 		sm: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
 		base: "0.375rem", // 6px - accounts for p-0.5 (2px top + 2px bottom) + extra 2px
@@ -32,6 +33,7 @@ export function getContainerButtonBorderRadiusAdjustment(
 	containerSize: Size,
 ): string {
 	const adjustments = {
+		"2xs": "0.125rem", // 2px
 		xs: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
 		sm: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
 		base: "0.125rem", // 2px - accounts for p-0.5 (2px top + 2px bottom)
@@ -46,6 +48,7 @@ export function getContainerButtonBorderRadiusAdjustment(
  */
 export function getContainerBorderRadius(containerSize: Size): string {
 	const borderRadii = {
+		"2xs": "0.125rem", // 2px
 		xs: "0.125rem", // 2px
 		sm: "0.25rem", // 4px
 		base: "0.375rem", // 6px
@@ -95,6 +98,7 @@ export function getContainerButtonAdjustmentClasses(
  * Pre-computed CSS classes for each container size
  */
 export const containerButtonAdjustments = {
+	"2xs": getContainerButtonAdjustmentClasses("2xs"),
 	xs: getContainerButtonAdjustmentClasses("xs"),
 	sm: getContainerButtonAdjustmentClasses("sm"),
 	base: getContainerButtonAdjustmentClasses("base"),

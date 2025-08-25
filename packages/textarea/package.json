@@ -4,8 +4,9 @@
   "description": "Auto-resizing textarea with validation and size variants",
   "type": "module",
   "license": "MIT",
+  "types": "./src/index.ts",
   "exports": {
-    ".": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
+    ".": { "types": "./src/index.ts", "import": "./src/index.ts", "default": "./src/index.ts" },
     "./component": { "types": "./src/component.tsx", "import": "./src/component.tsx", "default": "./src/component.tsx" },
     "./variants": { "types": "./src/variants.ts", "import": "./src/variants.ts", "default": "./src/variants.ts" },
     "./config": { "types": "./src/config.ts", "import": "./src/config.ts", "default": "./src/config.ts" },
@@ -14,6 +15,12 @@
     "./package.json": "./package.json"
   },
   "files": ["src"],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
   "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" },
   "dependencies": {
     "@patternmode/config": "workspace:*",
@@ -21,4 +28,3 @@
     "react-textarea-autosize": "^8.5.9"
   }
 }
-

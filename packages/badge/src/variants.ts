@@ -87,4 +87,3 @@ export const dotIndicatorVariants = tv({
   },
   defaultVariants: { size: "default", animated: false },
 });
-
