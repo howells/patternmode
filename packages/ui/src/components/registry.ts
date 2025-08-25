@@ -136,67 +136,67 @@ import { cardConfig } from "@patternmode/card/config";
 import { CardPreview, cardPreviewProps } from "@patternmode/card/preview";
 import { carouselConfig } from "@patternmode/carousel/config";
 import { CarouselPreview, carouselPreviewProps } from "@patternmode/carousel/preview";
-import { checkboxGroupConfig } from "./checkbox-group/config";
+import { checkboxGroupConfig } from "@patternmode/checkbox-group/config";
 import {
 	CheckboxGroupPreview,
 	checkboxGroupPreviewProps,
-} from "./checkbox-group/preview";
-import { codeBlockConfig } from "./code-block/config";
-import { CodeBlockPreview, codeBlockPreviewProps } from "./code-block/preview";
-import { collapsibleConfig } from "./collapsible/config";
+} from "@patternmode/checkbox-group/preview";
+import { codeBlockConfig } from "@patternmode/code-block/config";
+import { CodeBlockPreview, codeBlockPreviewProps } from "@patternmode/code-block/preview";
+import { collapsibleConfig } from "@patternmode/collapsible/config";
 import {
 	CollapsiblePreview,
 	collapsiblePreviewProps,
-} from "./collapsible/preview";
-import { contextMenuConfig } from "./context-menu/config";
+} from "@patternmode/collapsible/preview";
+import { contextMenuConfig } from "@patternmode/context-menu/config";
 import {
 	ContextMenuPreview,
 	contextMenuPreviewProps,
-} from "./context-menu/preview";
-import { copyButtonConfig } from "./copy-button/config";
+} from "@patternmode/context-menu/preview";
+import { copyButtonConfig } from "@patternmode/copy-button/config";
 import {
 	CopyButtonPreview,
 	copyButtonPreviewProps,
-} from "./copy-button/preview";
-import { datePickerConfig } from "./date-picker/config";
+} from "@patternmode/copy-button/preview";
+import { datePickerConfig } from "@patternmode/date-picker/config";
 import {
 	DatePickerPreview,
 	datePickerPreviewProps,
-} from "./date-picker/preview";
-import { descriptionListConfig } from "./description-list/config";
+} from "@patternmode/date-picker/preview";
+import { descriptionListConfig } from "@patternmode/description-list/config";
 import {
 	DescriptionListPreview,
 	descriptionListPreviewProps,
-} from "./description-list/preview";
+} from "@patternmode/description-list/preview";
 import { dialogConfig } from "@patternmode/dialog/config";
 import { DialogPreview, dialogPreviewProps } from "@patternmode/dialog/preview";
 import { drawerConfig } from "@patternmode/drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
-import { emptyStateConfig } from "./empty-state/config";
+import { emptyStateConfig } from "@patternmode/empty-state/config";
 import {
 	EmptyStatePreview,
 	emptyStatePreviewProps,
-} from "./empty-state/preview";
-import { fieldConfig } from "./field/config";
-import { FieldPreview, fieldPreviewProps } from "./field/preview";
-import { fieldArrayConfig } from "./field-array/config";
+} from "@patternmode/empty-state/preview";
+import { fieldConfig } from "@patternmode/field/config";
+import { FieldPreview, fieldPreviewProps } from "@patternmode/field/preview";
+import { fieldArrayConfig } from "@patternmode/field-array/config";
 import {
 	FieldArrayPreview,
 	fieldArrayPreviewProps,
-} from "./field-array/preview";
-import { fieldsetConfig } from "./fieldset/config";
-import { FieldsetPreview, fieldsetPreviewProps } from "./fieldset/preview";
-import { formConfig } from "./form/config";
-import { FormPreview, formPreviewProps } from "./form/preview";
-import { headingElementConfig } from "./heading-element/config";
+} from "@patternmode/field-array/preview";
+import { fieldsetConfig } from "@patternmode/fieldset/config";
+import { FieldsetPreview, fieldsetPreviewProps } from "@patternmode/fieldset/preview";
+import { formConfig } from "@patternmode/form/config";
+import { FormPreview, formPreviewProps } from "@patternmode/form/preview";
+import { headingElementConfig } from "@patternmode/heading-element/config";
 import {
 	HeadingElementPreview,
 	headingElementPreviewProps,
-} from "./heading-element/preview";
+} from "@patternmode/heading-element/preview";
 import { menuConfig } from "@patternmode/menu/config";
 import { MenuPreview, menuPreviewProps } from "@patternmode/menu/preview";
-import { menuBarConfig } from "./menu-bar/config";
-import { MenuBarPreview, menuBarPreviewProps } from "./menu-bar/preview";
+import { menuBarConfig } from "@patternmode/menu-bar/config";
+import { MenuBarPreview, menuBarPreviewProps } from "@patternmode/menu-bar/preview";
 import { meterConfig } from "./meter/config";
 import { MeterPreview, meterPreviewProps } from "./meter/preview";
 import { navbarConfig } from "./navbar/config";

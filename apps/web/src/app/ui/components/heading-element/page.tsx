@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { headingElementConfig } from "@patternmode/ui/components/heading-element/config";
+import { headingElementConfig } from "@patternmode/heading-element/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

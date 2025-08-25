@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { contextMenuConfig } from "@patternmode/ui/components/context-menu/config";
+import { contextMenuConfig } from "@patternmode/context-menu/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

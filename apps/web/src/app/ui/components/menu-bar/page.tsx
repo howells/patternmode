@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { menuBarConfig } from "@patternmode/ui/components/menu-bar/config";
+import { menuBarConfig } from "@patternmode/menu-bar/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

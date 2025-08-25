@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { emptyStateConfig } from "@patternmode/ui/components/empty-state/config";
+import { emptyStateConfig } from "@patternmode/empty-state/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

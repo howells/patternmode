@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { fieldConfig } from "@patternmode/ui/components/field/config";
+import { fieldConfig } from "@patternmode/field/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

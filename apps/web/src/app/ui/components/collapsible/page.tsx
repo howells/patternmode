@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { collapsibleConfig } from "@patternmode/ui/components/collapsible/config";
+import { collapsibleConfig } from "@patternmode/collapsible/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

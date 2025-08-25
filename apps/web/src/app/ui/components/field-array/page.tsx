@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { fieldArrayConfig } from "@patternmode/ui/components/field-array/config";
+import { fieldArrayConfig } from "@patternmode/field-array/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

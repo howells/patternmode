@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { descriptionListConfig } from "@patternmode/ui/components/description-list/config";
+import { descriptionListConfig } from "@patternmode/description-list/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

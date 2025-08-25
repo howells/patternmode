@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { formConfig } from "@patternmode/ui/components/form/config";
+import { formConfig } from "@patternmode/form/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

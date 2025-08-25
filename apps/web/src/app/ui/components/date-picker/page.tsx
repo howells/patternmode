@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { datePickerConfig } from "@patternmode/ui/components/date-picker/config";
+import { datePickerConfig } from "@patternmode/date-picker/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";

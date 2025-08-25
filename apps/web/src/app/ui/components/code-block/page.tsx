@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { codeBlockConfig } from "@patternmode/ui/components/code-block/config";
+import { codeBlockConfig } from "@patternmode/code-block/config";
 import { Separator } from "@patternmode/separator";
 
 import { ComponentExamples } from "@/components/component-examples";
