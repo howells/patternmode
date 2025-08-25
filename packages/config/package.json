@@ -30,7 +30,8 @@
 	"peerDependencies": {
 		"tailwindcss": "^4.1.12"
 	},
-	"devDependencies": {
-		"typescript": "^5.9.2"
-	}
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
+    "typescript": "^5.9.2"
+  }
 }

@@ -67,10 +67,11 @@
 		"clsx": "^2.1.1",
 		"tailwind-variants": "^2.1.0"
 	},
-	"devDependencies": {
-		"@types/node": "^24.3.0",
-		"typescript": "^5.9.2"
-	},
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
