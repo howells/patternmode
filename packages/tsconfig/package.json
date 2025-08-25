@@ -1,9 +1,19 @@
 {
-	"name": "@repo/typescript-config",
+	"name": "@patternmode/tsconfig",
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"files": [
+		"base.json",
+		"nextjs.json",
+		"react-library.json"
+	],
+	"exports": {
+		"./base.json": "./base.json",
+		"./nextjs.json": "./nextjs.json",
+		"./react-library.json": "./react-library.json"
 	}
 }

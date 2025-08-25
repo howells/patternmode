@@ -1,5 +1,5 @@
 {
-	"extends": "@patternmode/tsconfig/react-library.json",
+	"extends": "@patternmode/tsconfig/nextjs.json",
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist"
