@@ -98,7 +98,7 @@ export const RadioOption = ({ ref, value, label, description, disabled, size = "
 RadioOption.displayName = "RadioOption";
 
 export const RadioCardOption = ({ ref, value, title, description, disabled, size = "base", showIndicator = true, ...props }: RadioCardOptionProps) => (
-  <BaseRadio.Root ref={ref as any} value={value} disabled={disabled} data-disabled={disabled ? "" : undefined} nativeButton className={radioCardVariants({ size })} {...props}>
+  <BaseRadio.Root ref={ref as any} value={value} disabled={disabled} data-disabled={disabled ? "" : undefined} nativeButton className={radioCardVariants({ size: size === "2xs" ? "xs" : size })} {...props}>
     <div className="flex items-start justify-between gap-3">
       <div className="flex flex-1 flex-col">
         <div className="font-medium">{title}</div>
@@ -109,4 +109,3 @@ export const RadioCardOption = ({ ref, value, title, description, disabled, size
   </BaseRadio.Root>
 );
 RadioCardOption.displayName = "RadioCardOption";
-

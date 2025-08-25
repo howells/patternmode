@@ -1,17 +1,14 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
 import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
-import type { Size } from "@patternmode/config/sizes";
-import { cx } from "@patternmode/utils/cx";
-import { MoreHorizontal } from "lucide-react";
-import React from "react";
-import type { VariantProps } from "tailwind-variants";
 import { Icon } from "@patternmode/icon";
-import type { IconComponent } from "@patternmode/icon/types";
 import { Kbd } from "@patternmode/kbd";
 import { useButtonKeyboardShortcut } from "@patternmode/kbd/use-keyboard-shortcut";
 import { Loader } from "@patternmode/loader";
-import type { ButtonProps, IconButtonSize } from "./types";
+import { cx } from "@patternmode/utils/cx";
+import { MoreHorizontal } from "lucide-react";
+import React from "react";
+import type { ButtonProps } from "./types";
 import {
 	getIconContainerSize,
 	getIconSize,
@@ -33,13 +30,12 @@ const _Link = ({ href, children, ...props }: LinkProps) => (
 	</a>
 );
 
-
 /**
  * Interactive button component with multiple variants and states for user actions.
  */
 const Button = ({
 	ref: forwardedRef,
-	render = <button />,
+	render = <button type="button" />,
 	showLeftIconOnHover = false,
 	showRightIconOnHover = false,
 	isLoading = false,
@@ -52,7 +48,7 @@ const Button = ({
 	icon,
 	leftIcon: LeftIcon,
 	rightIcon: RightIcon,
-  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
+	iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	children,
 	fullWidth,
 	textAlign,
@@ -60,7 +56,6 @@ const Button = ({
 	kbdPlatform = "auto",
 	...props
 }: ButtonProps) => {
-
 	const hasChildren = children != null && children !== "";
 
 	const isIconOnly = size?.includes("icon") ?? false;

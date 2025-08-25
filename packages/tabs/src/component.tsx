@@ -2,14 +2,26 @@
 
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 import { cx } from "@patternmode/utils/cx";
-import React from "react";
+import type React from "react";
 
 const Tabs = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof BaseTabs.Root>) => (
   <BaseTabs.Root className={cx("w-full", className)} {...props} />
 );
 
-const TabsList = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof BaseTabs.List>) => (
-  <BaseTabs.List className={cx("inline-flex items-center gap-1 rounded-md bg-zinc-100 p-1 dark:bg-zinc-900", className)} {...props} />
+type TabsListProps = React.ComponentPropsWithoutRef<typeof BaseTabs.List> & {
+  variant?: "solid" | "line";
+};
+
+const TabsList = ({ className, variant = "solid", ...props }: TabsListProps) => (
+  <BaseTabs.List
+    className={cx(
+      variant === "solid"
+        ? "inline-flex items-center gap-1 rounded-md bg-zinc-100 p-1 dark:bg-zinc-900"
+        : "inline-flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800",
+      className,
+    )}
+    {...props}
+  />
 );
 
 const TabsTrigger = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof BaseTabs.Tab>) => (
@@ -30,4 +42,3 @@ const TabsContent = ({ className, ...props }: React.ComponentPropsWithoutRef<typ
 );
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
-

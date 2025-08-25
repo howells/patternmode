@@ -1,4 +1,5 @@
 import type { Size } from "@patternmode/config/sizes";
+import type React from "react";
 
 export type InputProps = {
   className?: string;
@@ -18,5 +19,4 @@ export type InputProps = {
   iconStrokeWidth?: number;
   minimal?: boolean;
   unstyled?: boolean;
-} & React.InputHTMLAttributes<HTMLInputElement>;
-
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">;

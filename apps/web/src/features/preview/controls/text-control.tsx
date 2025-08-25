@@ -1,7 +1,6 @@
 import { FieldControl } from "@patternmode/field";
 import { Input } from "@patternmode/input";
 import { Textarea } from "@patternmode/textarea";
-import React from "react";
 
 import type { PropControlProps } from "./types";
 
@@ -11,10 +10,10 @@ export function TextControl({ prop, currentValue, onValueChange }: PropControlPr
   return (
     <FieldControl
       render={(controlProps) => {
-        const { children, ref, ...inputProps } = controlProps;
+        const { children: _children, ref: _ref, ...inputProps } = controlProps;
         return (
           <Input
-            {...inputProps}
+            {...(inputProps as Omit<React.ComponentProps<typeof Input>, "size">)}
             size="xs"
             value={stringValue}
             onChange={e => onValueChange(e.target.value)}
@@ -30,10 +29,10 @@ export function TextareaControl({ prop, currentValue, onValueChange }: PropContr
   return (
     <FieldControl
       render={(controlProps) => {
-        const { children, ref, ...inputProps } = controlProps;
+        const { children: _children, ref: _ref, ...inputProps } = controlProps;
         return (
           <Textarea
-            {...inputProps}
+            {...(inputProps as Omit<React.ComponentProps<typeof Textarea>, "size">)}
             size="xs"
             value={currentValue != null ? String(currentValue) : ""}
             onChange={e => onValueChange(e.target.value)}

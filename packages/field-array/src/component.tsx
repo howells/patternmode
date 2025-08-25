@@ -95,7 +95,7 @@ export type FieldArrayProps<T extends FieldArrayItem = FieldArrayItem> = {
 } & React.ComponentPropsWithoutRef<"div">;
 
 const EMPTY_COMPONENT_MAP = {};
-const EMPTY_OPTIONS_ARRAY: any[] = [];
+const EMPTY_OPTIONS_ARRAY: Array<{ label: string; value: string }> = [];
 
 /**
  * FieldArray component.
@@ -116,38 +116,38 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 }: FieldArrayProps<T>) {
 	// Default component map for built-in field types using proper UI components
 	const defaultComponentMap = {
-		input: ({ value, onChange, ...props }: any) => (
+    input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
 			<Input
 				value={value || ""}
-				onChange={(e) => onChange(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
 				{...props}
 			/>
 		),
-		textarea: ({ value, onChange, ...props }: any) => (
+    textarea: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Textarea>) => (
 			<Textarea
 				value={value || ""}
-				onChange={(e) => onChange(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
 				{...props}
 			/>
 		),
-		select: ({
-			value,
-			onChange,
-			options = EMPTY_OPTIONS_ARRAY,
-			placeholder,
-			...props
-		}: any) => (
-			<Select
-				value={value || ""}
-				onValueChange={onChange}
-				placeholder={placeholder}
-				{...props}
-			>
-				<SelectTrigger>
-					<SelectValue />
-				</SelectTrigger>
-				<SelectContent>
-					{options.map((option: any) => (
+    select: ({
+        value,
+        onChange,
+        options = EMPTY_OPTIONS_ARRAY,
+        placeholder,
+        ...props
+    }: {
+      value: string;
+      onChange: (v: string) => void;
+      options?: Array<{ label: string; value: string }>;
+      placeholder?: string;
+    } & React.ComponentProps<typeof Select>) => (
+            <Select value={value || ""} onValueChange={(v: unknown) => onChange(String(v))} {...props}>
+                <SelectTrigger>
+                    <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                    {options.map((option) => (
 						<SelectItem key={option.value} value={option.value}>
 							{option.label}
 						</SelectItem>
@@ -155,20 +155,23 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 				</SelectContent>
 			</Select>
 		),
-		checkbox: ({ value, onChange, ...props }: any) => (
-			<Checkbox checked={!!value} onCheckedChange={onChange} {...props} />
-		),
-		number: ({ value, onChange, ...props }: any) => (
+    checkbox: ({ value, onChange, ...props }: { value: boolean; onChange: (v: boolean) => void } & React.ComponentProps<typeof Checkbox>) => (
+        <Checkbox checked={!!value} onCheckedChange={(checked: boolean) => onChange(!!checked)} {...props} />
+    ),
+    number: ({ value, onChange, ...props }: { value: number; onChange: (v: number) => void } & React.ComponentProps<typeof Input>) => (
 			<Input
 				type="number"
 				value={value || ""}
-				onChange={(e) => onChange(Number(e.target.value) || 0)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(Number(e.target.value) || 0)}
 				{...props}
 			/>
 		),
-	};
+    } as const;
 
-	const effectiveComponentMap = { ...defaultComponentMap, ...componentMap };
+    const effectiveComponentMap: Record<string, React.ComponentType<any>> = {
+        ...defaultComponentMap,
+        ...componentMap,
+    };
 
 	const addItem = () => {
 		if (maxItems && items.length >= maxItems) {
@@ -213,7 +216,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 		value: unknown,
 		onChange: (value: unknown) => void,
 	) => {
-		const Component = effectiveComponentMap[field.type];
+    const Component = effectiveComponentMap[String(field.type)];
 
 		if (!Component) {
 			console.warn(

@@ -6,7 +6,7 @@ import { RadioCardOption, RadioGroup, RadioItem, RadioOption } from "./component
 export const DefaultExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("option1");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="flex items-center space-x-2">
         <RadioOption value="option1" label="Option 1" />
       </div>
@@ -17,7 +17,7 @@ export const DefaultExample = () => {
 export const SizesExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("medium");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="space-y-4">
         <RadioOption value="small" label="Small Radio" size="sm" />
         <RadioOption value="medium" label="Medium Radio" size="base" />
@@ -30,7 +30,7 @@ export const SizesExample = () => {
 export const WithDescriptionExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("pro");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="space-y-4">
         <RadioOption value="basic" label="Basic Plan" description="Perfect for individuals getting started" />
         <RadioOption value="pro" label="Pro Plan" description="Best for small teams and growing businesses" />
@@ -43,7 +43,7 @@ export const WithDescriptionExample = () => {
 export const DisabledExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("enabled");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="space-y-4">
         <RadioOption value="enabled" label="Enabled Option" description="This option is available" />
         <RadioOption value="disabled" label="Disabled Option" description="This option is not available" disabled />
@@ -55,7 +55,7 @@ export const DisabledExample = () => {
 export const CardStyleExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("professional");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="space-y-3">
         <RadioCardOption value="starter" title="Starter" description="Perfect for personal projects and small websites" />
         <RadioCardOption value="professional" title="Professional" description="Ideal for growing businesses and medium-scale applications" />
@@ -68,7 +68,7 @@ export const CardStyleExample = () => {
 export const CustomStructureExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("custom1");
   return (
-    <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
+    <RadioGroup value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <div className="space-y-4">
         <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-zinc-900 dark:text-zinc-50">
           <RadioItem value="custom1" size="base" />
@@ -88,4 +88,3 @@ export const CustomStructureExample = () => {
     </RadioGroup>
   );
 };
-

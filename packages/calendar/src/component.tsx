@@ -150,7 +150,7 @@ const DropdownCaption = ({
 				{showMonthDropdown ? (
 					<Select
 						value={getMonth(currentMonth).toString()}
-						onValueChange={handleMonthChange}
+                    onValueChange={(v: unknown) => handleMonthChange(String(v))}
 					>
 						<SelectTrigger size="sm" className="w-auto min-w-[100px]">
 							<SelectValue />
@@ -172,7 +172,7 @@ const DropdownCaption = ({
 				{showYearDropdown ? (
 					<Select
 						value={getYear(currentMonth).toString()}
-						onValueChange={handleYearChange}
+                    onValueChange={(v: unknown) => handleYearChange(String(v))}
 					>
 						<SelectTrigger size="sm" className="w-auto min-w-[70px]">
 							<SelectValue />

@@ -49,7 +49,7 @@ export function CalendarPreview({
 	};
 
 	return (
-		<Calendar
+    <Calendar
 			{...(mode === "single" && {
 				mode: "single" as const,
 				selected: selected as Date | undefined,
@@ -60,11 +60,12 @@ export function CalendarPreview({
 				selected: selected as Date[] | undefined,
 				onSelect: handleSelect,
 			})}
-			{...(mode === "range" && {
-				mode: "range" as const,
-				selected: selected as { from: Date; to?: Date } | undefined,
-				onSelect: handleSelect,
-			})}
+            {...(mode === "range" && {
+                mode: "range" as const,
+                selected: selected as { from: Date; to?: Date } | undefined,
+                onSelect: handleSelect,
+                required: false as const,
+            })}
 			enableYearNavigation={enableYearNavigation}
 			showToday={showToday}
 			showTodayButton={showTodayButton}

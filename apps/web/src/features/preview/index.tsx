@@ -6,10 +6,8 @@ import { HStack } from "@patternmode/stack";
 import { cx } from "@patternmode/utils/cx";
 import { Settings2 } from "lucide-react";
 import React from "react";
-import {
-	PREVIEW_PROPS_REGISTRY,
-	PREVIEW_REGISTRY,
-} from "@/registry/components";
+import type { ComponentId } from "@/registry/components";
+import { getPreviewProps } from "@/registry/components";
 import type { PreviewProps as UiPreviewProp } from "@/types/preview-props";
 
 import { PreviewProvider } from "./preview-context";
@@ -17,7 +15,7 @@ import { PreviewControls } from "./preview-controls";
 import { PreviewDisplay } from "./preview-render";
 
 type PreviewProps = {
-	componentId: string;
+	componentId: ComponentId;
 	componentName: string;
 	category: string;
 };
@@ -28,18 +26,9 @@ export function Preview({
 	category,
 }: PreviewProps) {
 	// Get the preview component props metadata (it's an array, not an object)
-	const propsMetadataArray = PREVIEW_PROPS_REGISTRY[componentId] as
+	const propsMetadataArray = getPreviewProps(componentId) as
 		| UiPreviewProp[]
 		| undefined;
-	const PreviewComponent = PREVIEW_REGISTRY[componentId];
-
-	if (!PreviewComponent) {
-		return (
-			<div className="p-4 text-center text-muted-foreground">
-				Preview not available for {componentId}
-			</div>
-		);
-	}
 
 	// Convert array to object keyed by prop name
 	const propsMetadata = React.useMemo(() => {

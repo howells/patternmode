@@ -4,7 +4,7 @@ import { Package } from "lucide-react";
 import { EmptyState } from "./component";
 import type { EmptyStateProps } from "./types";
 
-export function EmptyStatePreview(props: EmptyStateProps) {
+export function EmptyStatePreview(props: Omit<EmptyStateProps, "title">) {
 	return (
 		<EmptyState
 			icon={Package}

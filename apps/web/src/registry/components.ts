@@ -493,9 +493,9 @@ export const PREVIEW_REGISTRY = {
 	"toggle-group": ToggleGroupPreview,
 	toolbar: ToolbarPreview,
 	tooltip: TooltipPreview,
-} as const satisfies Record<string, React.ComponentType<any>>;
+} as const satisfies Record<ComponentId, React.ElementType>;
 
-export const PREVIEW_PROPS_REGISTRY = {
+export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
 	accordion: accordionPreviewProps,
 	"alert-dialog": alertDialogPreviewProps,
 	avatar: avatarPreviewProps,
@@ -573,12 +573,13 @@ export const PREVIEW_PROPS_REGISTRY = {
 	text: textPreviewProps,
 	"text-list": textListPreviewProps,
 	textarea: textareaPreviewProps,
+	"theme-toggle": [],
 	toast: toastPreviewProps,
 	toggle: togglePreviewProps,
 	"toggle-group": toggleGroupPreviewProps,
 	toolbar: toolbarPreviewProps,
 	tooltip: tooltipPreviewProps,
-} as const satisfies Record<string, PreviewProps[]>;
+};
 
 // Derive types automatically
 export type ComponentId = keyof typeof COMPONENT_REGISTRY;
@@ -600,11 +601,11 @@ export function getComponentsByCategory(category: string): ComponentConfig[] {
 
 export function getPreviewComponent(
 	id: string,
-): React.ComponentType<any> | undefined {
+): React.ElementType | undefined {
 	const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
 	if (previewComponent) return previewComponent;
 	const config = getComponentConfig(id);
-	let fallback: React.ComponentType<any> | undefined;
+	let fallback: React.ElementType | undefined;
 	if (config?.component) fallback = config.component;
 	else if (config?.components) {
 		const primary = config.components.find((c) => c.primary);

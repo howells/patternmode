@@ -44,7 +44,7 @@ const Toggle = ({
 							icon={icon}
 							fullWidth={fullWidth}
 							rounded={rounded}
-							render={(props) => (
+							render={(props: any) => (
 								<button type="button" {...props} ref={toggleRef} />
 							)}
 							className={cx(toggleVariants({ variant, size }), className)}

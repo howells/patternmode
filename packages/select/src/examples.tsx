@@ -41,7 +41,7 @@ export const MultipleSelectionExample = () => {
   const [values, setValues] = React.useState<string[]>([]);
   return (
     <div className="space-y-4">
-      <Select multiple value={values} onValueChange={setValues}>
+      <Select multiple value={values} onValueChange={(v: unknown) => setValues(v as string[])}>
         <SelectTrigger className="w-[280px]"><SelectValue>Select multiple fruits...</SelectValue></SelectTrigger>
         <SelectContent>
           <SelectItem value="apple">Apple</SelectItem>
@@ -61,7 +61,7 @@ export const ControlledExample = () => {
   const [value, setValue] = React.useState<string>("apple");
   return (
     <div className="space-y-4">
-      <Select value={value} onValueChange={setValue}>
+      <Select value={value} onValueChange={(v: unknown) => setValue(String(v))}>
         <SelectTrigger className="w-[200px]"><SelectValue /></SelectTrigger>
         <SelectContent>
           <SelectItem value="apple">Apple</SelectItem>
@@ -125,7 +125,7 @@ export const CustomRenderValueExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("");
   const selectedOption = options.find((opt) => opt.value === selectedValue);
   return (
-    <Select value={selectedValue} onValueChange={setSelectedValue}>
+    <Select value={selectedValue} onValueChange={(v: unknown) => setSelectedValue(String(v))}>
       <SelectTrigger className="w-[200px]">
         <SelectValue>
           {selectedOption ? (

@@ -103,17 +103,17 @@ export function FieldArrayPreview(props: FieldArrayPreviewProps) {
 
 	// Custom component map using your actual Patternmode components
 	const componentMap = {
-		input: ({ value, onChange, ...props }: any) => (
+    input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
 			<Input
 				value={value || ""}
-				onChange={(e) => onChange(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
 				{...props}
 			/>
 		),
-		textarea: ({ value, onChange, ...props }: any) => (
+    textarea: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Textarea>) => (
 			<Textarea
 				value={value || ""}
-				onChange={(e) => onChange(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
 				{...props}
 			/>
 		),

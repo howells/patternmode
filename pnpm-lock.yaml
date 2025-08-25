@@ -421,6 +421,15 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -446,9 +455,18 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -686,18 +704,30 @@ importers:
 
   packages/calendar:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/select':
+        specifier: workspace:*
+        version: link:../select
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       lucide-react:
         specifier: '>=0.525.0 <1'
         version: 0.541.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
+      react-day-picker:
+        specifier: ^9.5.0
+        version: 9.9.0(react@19.1.1)
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
@@ -761,12 +791,21 @@ importers:
 
   packages/carousel:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
+      '@patternmode/card':
+        specifier: workspace:*
+        version: link:../card
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
+      embla-carousel-react:
+        specifier: ^8.5.2
+        version: 8.6.0(react@19.1.1)
       lucide-react:
         specifier: '>=0.525.0 <1'
         version: 0.541.0(react@19.1.1)
@@ -1288,9 +1327,24 @@ importers:
 
   packages/empty-state:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/heading':
+        specifier: workspace:*
+        version: link:../heading
+      '@patternmode/icon-container':
+        specifier: workspace:*
+        version: link:../icon-container
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/text':
+        specifier: workspace:*
+        version: link:../text
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1378,9 +1432,48 @@ importers:
 
   packages/field-array:
     dependencies:
+      '@patternmode/avatar':
+        specifier: workspace:*
+        version: link:../avatar
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
+      '@patternmode/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/description-list':
+        specifier: workspace:*
+        version: link:../description-list
+      '@patternmode/dismiss-button':
+        specifier: workspace:*
+        version: link:../dismiss-button
+      '@patternmode/fieldset':
+        specifier: workspace:*
+        version: link:../fieldset
+      '@patternmode/grid':
+        specifier: workspace:*
+        version: link:../grid
+      '@patternmode/input':
+        specifier: workspace:*
+        version: link:../input
+      '@patternmode/scroll-area':
+        specifier: workspace:*
+        version: link:../scroll-area
+      '@patternmode/select':
+        specifier: workspace:*
+        version: link:../select
+      '@patternmode/stack':
+        specifier: workspace:*
+        version: link:../stack
+      '@patternmode/subheading':
+        specifier: workspace:*
+        version: link:../subheading
+      '@patternmode/textarea':
+        specifier: workspace:*
+        version: link:../textarea
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1909,6 +2002,12 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/menu':
+        specifier: workspace:*
+        version: link:../menu
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1934,6 +2033,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1959,6 +2061,9 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -1968,6 +2073,9 @@ importers:
       lucide-react:
         specifier: '>=0.525.0 <1'
         version: 0.541.0(react@19.1.1)
+      motion:
+        specifier: ^12.23.12
+        version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2031,6 +2139,9 @@ importers:
 
   packages/pagination:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -2209,12 +2320,27 @@ importers:
 
   packages/responsive-drawer:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/drawer':
+        specifier: workspace:*
+        version: link:../drawer
+      '@patternmode/sheet':
+        specifier: workspace:*
+        version: link:../sheet
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
+      '@uidotdev/usehooks':
+        specifier: ^2.4.1
+        version: 2.4.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       lucide-react:
         specifier: '>=0.525.0 <1'
         version: 0.541.0(react@19.1.1)
@@ -2595,9 +2721,24 @@ importers:
 
   packages/split-button:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/menu':
+        specifier: workspace:*
+        version: link:../menu
+      '@patternmode/separator':
+        specifier: workspace:*
+        version: link:../separator
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -3058,9 +3199,24 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
+      '@patternmode/loader':
+        specifier: workspace:*
+        version: link:../loader
+      '@patternmode/stack':
+        specifier: workspace:*
+        version: link:../stack
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -3083,6 +3239,9 @@ importers:
 
   packages/toast:
     dependencies:
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -3114,6 +3273,9 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config

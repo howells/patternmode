@@ -4,7 +4,7 @@ import React from "react";
 import { ThemeToggle } from "./component";
 import type { ThemeToggleProps } from "./types";
 
-export function ThemeTogglePreview(props: ThemeToggleProps) {
+export function ThemeTogglePreview(props: Omit<ThemeToggleProps, "onToggle">) {
 	const [theme, setTheme] = React.useState<"light" | "dark">(
 		props.theme || "light",
 	);

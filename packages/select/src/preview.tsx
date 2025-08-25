@@ -10,7 +10,7 @@ type SelectPreviewProps = {
   size?: Size;
   defaultValue?: string;
   value?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (value: unknown) => void;
 };
 
 export function SelectPreview(props: SelectPreviewProps) {
@@ -38,4 +38,3 @@ export const selectPreviewProps = [
   { name: "size", type: "select", options: ["xs", "sm", "base", "lg"], defaultValue: "base" },
   { name: "defaultValue", type: "string", defaultValue: "" },
 ];
-

@@ -43,7 +43,11 @@
   "dependencies": {
     "lucide-react": ">=0.525.0 <1",
     "@patternmode/utils": "workspace:*",
-    "@patternmode/config": "workspace:*"
+    "@patternmode/config": "workspace:*",
+    "@patternmode/button": "workspace:*",
+    "@patternmode/select": "workspace:*",
+    "date-fns": "^4.1.0",
+    "react-day-picker": "^9.5.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

@@ -1,7 +1,7 @@
 import { Avatar } from "@patternmode/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@patternmode/select";
 import Image from "next/image";
-import React from "react";
+
 
 export type AvatarOption = {
   value: string;
@@ -19,7 +19,7 @@ export function AvatarSelect({ value, onValueChange, options }: AvatarSelectProp
   const selectedOption = options.find(option => option.value === value);
 
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={(v) => onValueChange(String(v))}>
       <SelectTrigger size="xs" className="overflow-hidden">
         <div className="flex items-center gap-2 truncate w-full">
           {selectedOption
@@ -29,7 +29,7 @@ export function AvatarSelect({ value, onValueChange, options }: AvatarSelectProp
                     <Avatar
                       src={selectedOption.preview}
                       alt={selectedOption.label}
-                      size="2xs"
+                      size="xs"
                       ImageComponent={Image}
                     />
                   )}
