@@ -18,7 +18,7 @@ export const gridConfig: ComponentConfig = {
   category: "layout",
   featured: true,
   icon: Grid3X3,
-  importStatement: `import { Grid, GridCell, GridAuto } from "@patternmode/ui/grid";`,
+  importStatement: `import { Grid, GridCell, GridAuto } from "@patternmode/grid";`,
   examples: [
     {
       id: "default",

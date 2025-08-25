@@ -108,11 +108,12 @@ export default nextConfig;
 **Individual component imports only - NO barrel imports:**
 ```tsx
 // ✅ CORRECT
-import { Button } from "@patternmode/ui/components/button";
-import { Card } from "@patternmode/ui/components/card";
+import { Button } from "@patternmode/button";
+import { Card } from "@patternmode/card";
 
 // ❌ INCORRECT - Barrel imports not supported
-import { Button, Card } from "@patternmode/ui";
+import { Button } from "@patternmode/button";
+import { Card } from "@patternmode/card";
 ```
 
 ## Styling Conventions
@@ -197,6 +198,6 @@ const variants = tv({
 **NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
 ### Dynamic Imports
-**NEVER use direct dynamic imports like `await import("@patternmode/ui")`**
+**NEVER use direct dynamic imports of entire libraries**
 - Use Next.js `dynamic()` function instead
 - Static imports are preferred whenever possible

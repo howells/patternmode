@@ -10,7 +10,7 @@ export const headingConfig: ComponentConfig = {
   category: "typography",
   featured: true,
   icon: Type,
-  importStatement: `import { Heading } from "@patternmode/ui/heading";`,
+  importStatement: `import { Heading } from "@patternmode/heading";`,
   examples: [
     { id: "default", title: "Default", description: "Basic heading component", component: DefaultExample },
     { id: "levels", title: "Heading Levels", description: "All heading levels from h1 to h6", component: LevelsExample },

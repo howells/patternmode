@@ -26,7 +26,7 @@ export const progressConfig: ComponentConfig = {
 	category: "feedback",
 	featured: true,
 	icon: BarChart,
-	importStatement: `import { Progress, ProgressBar, ProgressIndicator, ProgressLabel, ProgressTrack, ProgressValue } from "@patternmode/ui/progress";`,
+	importStatement: `import { Progress, ProgressBar, ProgressIndicator, ProgressLabel, ProgressTrack, ProgressValue } from "@patternmode/progress";`,
 	examples: [
 		{
 			id: "default",

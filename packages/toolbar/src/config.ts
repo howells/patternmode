@@ -11,7 +11,7 @@ export const toolbarConfig: ComponentConfig = {
   category: "controls",
   icon: Wrench,
   importStatement:
-    `import { Toolbar, ToolbarButton, ToolbarGroup, ToolbarInput, ToolbarLink, ToolbarSeparator } from "@patternmode/ui/toolbar";`,
+    `import { Toolbar, ToolbarButton, ToolbarGroup, ToolbarInput, ToolbarLink, ToolbarSeparator } from "@patternmode/toolbar";`,
   examples: [
     { id: "default", title: "Default", description: "Basic toolbar with grouped buttons and separators", component: DefaultExample },
     { id: "text-formatting", title: "Text Formatting", description: "Text editor toolbar with formatting and alignment controls", component: TextFormattingExample },

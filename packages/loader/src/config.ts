@@ -17,7 +17,7 @@ export const loaderConfig: ComponentConfig = {
 	category: "feedback",
 	featured: true,
 	icon: Loader2,
-	importStatement: `import { Loader } from "@patternmode/ui/loader";`,
+	importStatement: `import { Loader } from "@patternmode/loader";`,
 	examples: [
 		{
 			id: "default",

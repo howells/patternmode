@@ -29,7 +29,7 @@ export const contextMenuConfig: ComponentConfig = {
 		"Right-click contextual menu component with hierarchical action items and keyboard shortcuts.",
 	category: "controls",
 	icon: MoreHorizontal,
-	importStatement: `import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from "@patternmode/ui/context-menu";`,
+	importStatement: `import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from "@patternmode/context-menu";`,
 	examples: [
 		{
 			id: "default",

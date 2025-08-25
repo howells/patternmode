@@ -21,7 +21,7 @@ export const paginationConfig: ComponentConfig = {
 		"A comprehensive pagination system for navigating through large datasets. Built with Next.js Link integration for client-side routing and proper accessibility support for screen readers.",
 	category: "navigation",
 	icon: ChevronLeft,
-	importStatement: `import { Pagination, PaginationPrevious, PaginationNext, PaginationList, PaginationPage, PaginationGap } from "@patternmode/ui/pagination";`,
+	importStatement: `import { Pagination, PaginationPrevious, PaginationNext, PaginationList, PaginationPage, PaginationGap } from "@patternmode/pagination";`,
 	examples: [
 		{
 			id: "default",

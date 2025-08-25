@@ -1,4 +1,4 @@
-import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
+import type { PreviewProps } from "@patternmode/config/preview-props-type";
 
 import React from "react";
 

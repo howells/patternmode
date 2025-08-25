@@ -17,7 +17,7 @@ export const splitButtonConfig: ComponentConfig = {
 		"Two-part button component that combines a primary action button with a dropdown menu trigger for providing additional related options.",
 	category: "controls",
 	icon: ChevronDown,
-	importStatement: `import { SplitButton } from "@patternmode/ui/split-button";`,
+	importStatement: `import { SplitButton } from "@patternmode/split-button";`,
 	examples: [
 		{
 			id: "default",

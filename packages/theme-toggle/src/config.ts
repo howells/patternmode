@@ -18,7 +18,7 @@ export const themeToggleConfig: ComponentConfig = {
 		"Toggle button for switching between light and dark themes with smooth animations.",
 	category: "controls",
 	icon: Palette,
-	importStatement: `import { ThemeToggle } from "@patternmode/ui/theme-toggle";`,
+	importStatement: `import { ThemeToggle } from "@patternmode/theme-toggle";`,
 	examples: [
 		{
 			id: "default",

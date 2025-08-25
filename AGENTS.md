@@ -19,7 +19,7 @@
 
 ## Code Style
 - **Types**: JSDoc on interfaces, `export const` components, `VariantProps<typeof variants>`
-- **Imports**: Individual component imports (`@patternmode/ui/components/button`)
+- **Imports**: Individual component imports (`@patternmode/button`)
 - **Minimal Barrel Files**: Each package must include `src/index.ts` that re-exports only the public component(s) and their types. Do not re-export internals, examples, or previews.
 - **TestID**: Every component needs `data-testid` matching directory name
 - **Focus**: Use `focusRing`/`focusInput` utilities from `@/lib/utils`

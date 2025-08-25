@@ -4,11 +4,8 @@ import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
 import { Input } from "@patternmode/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
-import type { ComponentId } from "@patternmode/catalog";
-import {
-	COMPONENT_REGISTRY,
-	PREVIEW_REGISTRY,
-} from "@patternmode/catalog";
+import type { ComponentId } from "@/registry/components";
+import { COMPONENT_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 import { SortableList } from "@patternmode/sortable-list";
 import type { SortableListItem } from "@patternmode/sortable-list";
@@ -17,7 +14,7 @@ import { ToggleGroup, ToggleGroupItem } from "@patternmode/toggle-group";
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/toolbar";
 import type { Size } from "@patternmode/constants/sizes";
 import { SIZES as sizes } from "@patternmode/constants/sizes";
-import type { GapValue } from "@patternmode/ui/presentation/spacing-utils";
+import type { GapValue } from "@/lib/spacing-utils";
 import { MoreHorizontal, Plus, Rows3, Settings2, Trash2 } from "lucide-react";
 import { parseAsJson, useQueryState } from "nuqs";
 import type React from "react";

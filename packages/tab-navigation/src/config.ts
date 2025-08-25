@@ -16,7 +16,7 @@ export const tabNavigationConfig: ComponentConfig = {
 		"A navigation component system built on Base UI NavigationMenu for creating tab-style navigation with active states and hover effects.",
 	category: "navigation",
 	icon: Navigation,
-	importStatement: `import { TabNavigation, TabNavigationLink } from "@patternmode/ui/tab-navigation";`,
+	importStatement: `import { TabNavigation, TabNavigationLink } from "@patternmode/tab-navigation";`,
 	examples: [
 		{
 			id: "default",

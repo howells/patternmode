@@ -9,7 +9,7 @@ export const subheadingConfig: ComponentConfig = {
   description: "Secondary heading component for section subtitles and supplementary titles.",
   category: "typography",
   icon: Type,
-  importStatement: `import { Subheading } from "@patternmode/ui/subheading";`,
+  importStatement: `import { Subheading } from "@patternmode/subheading";`,
   examples: [
     { id: "default", title: "Default", description: "Basic subheading component", component: DefaultExample },
     { id: "levels", title: "Heading Levels", description: "All subheading levels from h1 to h6", component: LevelsExample },

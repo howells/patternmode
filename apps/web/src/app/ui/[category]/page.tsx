@@ -1,14 +1,10 @@
-import type { CategoryKey } from "@patternmode/catalog";
+import type { CategoryKey } from "@/registry/components";
 
 import { Badge } from "@patternmode/badge";
 import { Card } from "@patternmode/card";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Heading } from "@patternmode/heading";
-import {
-  CATEGORY_CONFIG,
-  getCategoryInfo,
-  getComponentsByCategory,
-} from "@patternmode/catalog";
+import { CATEGORY_CONFIG, getCategoryInfo, getComponentsByCategory } from "@/registry/components";
 import { HStack, VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";

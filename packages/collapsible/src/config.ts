@@ -22,7 +22,7 @@ export const collapsibleConfig: ComponentConfig = {
 		"Container component with show/hide functionality for progressive disclosure. Based on Base UI's Collapsible with smooth height-based animations and proper accessibility support.",
 	category: "layout",
 	icon: ChevronDown,
-	importStatement: `import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@patternmode/ui/collapsible";`,
+	importStatement: `import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@patternmode/collapsible";`,
 	examples: [
 		{
 			id: "default",

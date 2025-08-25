@@ -24,7 +24,7 @@ export type DescriptionListProps = {
 	 */
 	valueWidth?: string;
 	/**
-	 * Controls vertical spacing for rows using the shared `Size` scale from `@patternmode/ui/constants/sizes`.
+ * Controls vertical spacing for rows using the shared `Size` scale from `@patternmode/constants/sizes`.
 	 * Defaults to `"base"`.
 	 */
 	size?: Size;

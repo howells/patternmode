@@ -19,7 +19,7 @@ export const descriptionListConfig: ComponentConfig = {
 		"Semantic components for creating accessible description lists with responsive grid layout.",
 	category: "display",
 	icon: List,
-	importStatement: `import { DescriptionList, DescriptionTerm, DescriptionDetails } from "@patternmode/ui/description-list";`,
+	importStatement: `import { DescriptionList, DescriptionTerm, DescriptionDetails } from "@patternmode/description-list";`,
 	examples: [
 		{
 			id: "default",

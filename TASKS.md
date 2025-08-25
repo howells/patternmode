@@ -76,10 +76,7 @@
   
 ### Multi-Package Strategy
 - [ ] **Split into focused packages**
-  - @patternmode/ui-core - Base components
-  - @patternmode/ui-charts - Data visualization
-  - @patternmode/ui-blocks - Pre-built compositions
-  - @patternmode/ui-icons - Extended icon set
+  - @patternmode/* packages for components and utilities
 
 ### Community & Ecosystem
 - [ ] **Create component playground** - Online editor for testing

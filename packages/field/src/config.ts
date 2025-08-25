@@ -22,7 +22,7 @@ export const fieldConfig: ComponentConfig = {
 	category: "forms",
 	featured: true,
 	icon: Square,
-	importStatement: `import { Field, FieldLabel, FieldControl, FieldDescription, FieldError } from "@patternmode/ui/field";`,
+	importStatement: `import { Field, FieldLabel, FieldControl, FieldDescription, FieldError } from "@patternmode/field";`,
 	examples: [
 		{
 			id: "default",

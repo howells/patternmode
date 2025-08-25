@@ -27,7 +27,9 @@
       "default": "./src/examples.tsx"
     }
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "build": "tsc --noEmit",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
@@ -40,8 +42,6 @@
     "@base-ui-components/react": "^1.0.0-beta.2"
   },
   "dependencies": {
-    "@patternmode/ui": "workspace:*",
     "@patternmode/utils": "workspace:*"
   }
 }
-

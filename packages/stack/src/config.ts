@@ -20,7 +20,7 @@ export const stackConfig: ComponentConfig = {
 	category: "layout",
 	featured: true,
 	icon: Layout,
-	importStatement: `import { Stack, VStack, HStack } from "@patternmode/ui/stack";`,
+	importStatement: `import { Stack, VStack, HStack } from "@patternmode/stack";`,
 	examples: [
 		{
 			id: "default",

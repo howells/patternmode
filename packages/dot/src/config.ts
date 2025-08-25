@@ -18,7 +18,7 @@ export const dotConfig: ComponentConfig = {
   description: "Small circular indicator component for status, notifications, or decorative purposes.",
   category: "visual",
   icon: Circle,
-  importStatement: `import { Dot } from "@patternmode/ui/dot";`,
+  importStatement: `import { Dot } from "@patternmode/dot";`,
   examples: [
     { id: "basic", title: "Basic", description: "Basic dots with different semantic variants", component: BasicExample },
     { id: "semantic-variants", title: "Semantic Variants", description: "Semantic status variants with labels", component: SemanticVariantsExample },

@@ -19,7 +19,7 @@ export const toastConfig: ComponentConfig = {
 	category: "feedback",
 	featured: true,
 	icon: Bell,
-	importStatement: `import { Toast, ToastProvider, useToast, useToastManager } from "@patternmode/ui/toast";`,
+	importStatement: `import { Toast, ToastProvider, useToast, useToastManager } from "@patternmode/toast";`,
 	examples: [
 		{
 			id: "default",

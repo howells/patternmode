@@ -1,9 +1,9 @@
 "use client";
 
-import type { PreviewProps as UiPreviewProp } from "@patternmode/ui/types/preview-props-type";
+import type { PreviewProps as UiPreviewProp } from "@patternmode/config/preview-props-type";
 
 import { Button } from "@patternmode/button";
-import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@patternmode/catalog";
+import { PREVIEW_PROPS_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
 import { ScrollArea } from "@patternmode/scroll-area";
 import { HStack } from "@patternmode/stack";
 import { cx } from "@patternmode/utils/cx";
@@ -81,7 +81,7 @@ export function Preview({ componentId, componentName, category }: PreviewProps) 
           <PreviewDisplay
             componentId={componentId}
             category={category}
-            componentPath={`@patternmode/ui/components/${componentId}`}
+            componentPath={`@patternmode/${componentId}`}
           />
         </div>
 

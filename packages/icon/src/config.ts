@@ -16,7 +16,7 @@ export const iconConfig: ComponentConfig = {
 		"Centralized icon system providing consistent sizing, styling, and error handling for Lucide React icons across all UI components. Features graceful fallbacks, dynamic icon loading support, and flexible sizing options.",
 	category: "visual",
 	icon: Star,
-	importStatement: `import { Icon } from "@patternmode/ui/icon";`,
+	importStatement: `import { Icon } from "@patternmode/icon";`,
 	examples: [
 		{
 			id: "default",

@@ -21,7 +21,7 @@ export const drawerConfig: ComponentConfig = {
   category: "overlay",
   icon: PanelRight,
   importStatement:
-    `import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@patternmode/ui/drawer";`,
+    `import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@patternmode/drawer";`,
   examples: [
     { id: "default", title: "Default", description: "Basic drawer with header, content, and footer", component: DefaultExample },
     { id: "form", title: "Form", description: "Drawer containing a form with input fields", component: FormExample },

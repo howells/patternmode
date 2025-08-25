@@ -20,7 +20,7 @@ export const badgeConfig: ComponentConfig = {
   category: "visual",
   featured: true,
   icon: Tag,
-  importStatement: `import { Badge } from "@patternmode/ui/badge";`,
+  importStatement: `import { Badge } from "@patternmode/badge";`,
   examples: [
     { id: "default", title: "Default", description: "Basic badge with default styling", component: DefaultExample },
     { id: "with-icons", title: "With Icons", description: "Badge with left and right icons", component: WithIconsExample },

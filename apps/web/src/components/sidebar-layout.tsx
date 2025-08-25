@@ -10,10 +10,10 @@ import {
 	useSidebar,
 } from "@patternmode/sidebar";
 import { Button } from "@patternmode/button";
-import { getAllComponents } from "@patternmode/catalog";
+import { getAllComponents } from "@/registry/components";
 import { Separator } from "@patternmode/separator";
 import { Stack, VStack } from "@patternmode/stack";
-import { cx } from "@patternmode/ui/utils/cx";
+import { cx } from "@patternmode/utils/cx";
 import { Layers } from "lucide-react";
 import Link from "next/link";
 import type React from "react";

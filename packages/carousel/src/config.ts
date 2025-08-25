@@ -25,7 +25,7 @@ export const carouselConfig: ComponentConfig = {
 		"Image and content carousel component with navigation controls and indicators built on Embla Carousel.",
 	category: "media",
 	icon: ChevronLeft,
-	importStatement: `import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@patternmode/ui/carousel";`,
+	importStatement: `import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@patternmode/carousel";`,
 	examples: [
 		{
 			id: "default",

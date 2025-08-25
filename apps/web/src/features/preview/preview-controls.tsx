@@ -1,6 +1,6 @@
 "use client";
 
-import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
+import type { PreviewProps } from "@patternmode/config/preview-props-type";
 
 import { VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";

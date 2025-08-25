@@ -46,7 +46,7 @@
 **Import Pattern:**
 ```tsx
 // ✅ CORRECT - Uses package exports
-import { Button } from "@patternmode/ui/components/button";
+import { Button } from "@patternmode/button";
 
 // ❌ INCORRECT - Uses TypeScript paths (causes CI failures)
 import { Button } from "../../packages/ui/src/components/button";
@@ -159,7 +159,7 @@ export const textareaConfig: ComponentConfig = {
   description: "Auto-resizing multi-line text input component...",
   category: "inputs",
   icon: MessageSquare,
-  importStatement: `import { Textarea } from "@patternmode/ui/textarea";`,
+  importStatement: `import { Textarea } from "@patternmode/textarea";`,
   examples: [
     {
       id: "default",
@@ -236,11 +236,12 @@ export const Button = (props: ButtonProps) => {
 
 ```tsx
 // ✅ CORRECT - Individual component imports
-import { Button } from "@patternmode/ui/components/button";
-import { Card } from "@patternmode/ui/components/card";
+import { Button } from "@patternmode/button";
+import { Card } from "@patternmode/card";
 
 // ❌ INCORRECT - Barrel imports not supported
-import { Button, Card } from "@patternmode/ui";
+import { Button } from "@patternmode/button";
+import { Card } from "@patternmode/card";
 ```
 
 **MANDATORY: NO barrel files (index.ts/index.tsx files) anywhere in the codebase**

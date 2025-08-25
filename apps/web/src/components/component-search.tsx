@@ -1,11 +1,11 @@
 "use client";
 
-import type { ComponentConfig } from "@patternmode/ui/types/component-types";
+import type { ComponentConfig } from "@patternmode/config/component-types";
 
 import { Button } from "@patternmode/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@patternmode/dialog";
 import { Input } from "@patternmode/input";
-import { getAllComponents } from "@patternmode/catalog";
+import { getAllComponents } from "@/registry/components";
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/utils/cx";

@@ -15,7 +15,7 @@ export const scrollAreaConfig: ComponentConfig = {
 		"Custom scrollable areas with styled scrollbars built on Base UI ScrollArea. Provides cross-browser consistent scrolling behavior with customizable appearance and smooth interactions.",
 	category: "layout",
 	icon: ScrollText,
-	importStatement: `import { ScrollArea, ScrollBar } from "@patternmode/ui/scroll-area";`,
+	importStatement: `import { ScrollArea, ScrollBar } from "@patternmode/scroll-area";`,
 	examples: [
 		{
 			id: "default",

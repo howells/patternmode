@@ -10,7 +10,7 @@ export const textListConfig: ComponentConfig = {
     "Flexible components for creating ordered and unordered lists with custom styling, indicators, and alignment options. Supports traditional bullet/number lists as well as custom icon-based lists for enhanced visual presentation.",
   category: "display",
   icon: List,
-  importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/ui/text-list";`,
+  importStatement: `import { List, ListItem, ListIndicator } from "@patternmode/text-list";`,
   examples: [
     { id: "default", title: "Default", description: "Basic unordered list with default marker styling", component: DefaultExample },
     { id: "ordered", title: "Ordered List", description: "Numbered list using the ol element", component: OrderedExample },

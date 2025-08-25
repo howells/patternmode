@@ -14,7 +14,7 @@ export const headingElementConfig: ComponentConfig = {
 		"Semantic heading element component with proper HTML heading structure (h1-h6).",
 	category: "typography",
 	icon: Heading,
-	importStatement: `import { HeadingElement } from "@patternmode/ui/heading-element";`,
+	importStatement: `import { HeadingElement } from "@patternmode/heading-element";`,
 	examples: [
 		{
 			id: "default",

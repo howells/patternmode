@@ -11,17 +11,14 @@
 		"lint": "biome check src --write"
 	},
 	"type": "module",
-	"exports": {
-		"./sizes": "./src/sizes.ts",
-		"./component-categories": "./src/component-categories.ts",
-		"./variants": "./src/variants.ts",
-		"./border-radius-variants": "./src/border-radius-variants.ts",
-		"./border-radius-variants-with-full": "./src/border-radius-variants-with-full.ts",
-		"./breakpoints": "./src/breakpoints.ts",
-		"./colors": "./src/colors.ts",
-		"./default-config": "./src/default-config.ts",
-		"./component-types": "./src/component-types.ts"
-	},
+  "exports": {
+    "./sizes": "./src/sizes.ts",
+    "./component-categories": "./src/component-categories.ts",
+    "./default-config": "./src/default-config.ts",
+    "./component-types": "./src/component-types.ts",
+    "./preview-props-type": "./src/preview-props-type.ts",
+    "./icon-types": "./src/icon-types.ts"
+  },
 	"dependencies": {
 		"@patternmode/constants": "workspace:*",
 		"clsx": "^2.1.1",

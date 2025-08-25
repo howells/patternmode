@@ -1,7 +1,7 @@
-import type { ComponentConfig } from "@patternmode/ui/types/component-types";
-import type { PreviewProps } from "@patternmode/ui/types/preview-props-type";
+import type { ComponentConfig } from "@patternmode/config/component-types";
+import type { PreviewProps } from "@patternmode/config/preview-props-type";
 
-import { getPreviewProps } from "@patternmode/catalog";
+import { getPreviewProps } from "@/registry/components";
 
 /**
  * Extract the primary component from a config.

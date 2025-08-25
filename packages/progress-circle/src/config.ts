@@ -21,7 +21,7 @@ export const progressCircleConfig: ComponentConfig = {
 		"Circular progress indicator for displaying completion status, loading states, and quantitative data visualization with customizable styling and animations.",
 	category: "feedback",
 	icon: Loader2,
-	importStatement: `import { ProgressCircle } from "@patternmode/ui/progress-circle";`,
+	importStatement: `import { ProgressCircle } from "@patternmode/progress-circle";`,
 	examples: [
 		{
 			id: "default",

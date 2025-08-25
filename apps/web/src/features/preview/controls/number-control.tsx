@@ -1,6 +1,6 @@
 import { FieldControl } from "@patternmode/field";
 import { NumberField } from "@patternmode/number-field";
-import { defaultConfig as uiConfig } from "@patternmode/ui/config/default-config";
+import { defaultConfig as uiConfig } from "@patternmode/config/default-config";
 import React from "react";
 
 import type { PropControlProps } from "./types";

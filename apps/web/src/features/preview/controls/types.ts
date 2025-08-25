@@ -1,4 +1,4 @@
-import type { PreviewProps as PropMetadata } from "@patternmode/ui/types/preview-props-type";
+import type { PreviewProps as PropMetadata } from "@patternmode/config/preview-props-type";
 
 export type PropControlProps = {
   prop: PropMetadata;

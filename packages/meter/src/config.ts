@@ -19,7 +19,7 @@ export const meterConfig: ComponentConfig = {
 		"A graphical meter component for displaying scalar values within a known range with visual progress indicators.",
 	category: "feedback",
 	icon: Activity,
-	importStatement: `import { Meter } from "@patternmode/ui/meter";`,
+	importStatement: `import { Meter } from "@patternmode/meter";`,
 	examples: [
 		{
 			id: "default",

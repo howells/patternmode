@@ -26,4 +26,3 @@ export const textareaConfig: ComponentConfig = {
     { name: "Textarea", description: "Multi-line text input component", component: Textarea },
   ],
 };
-

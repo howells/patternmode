@@ -24,7 +24,7 @@ export const formConfig: ComponentConfig = {
 	category: "forms",
 	featured: true,
 	icon: FileText,
-	importStatement: `import { Form, FormField, FormControl, FormLabel, FormDescription, FormError } from "@patternmode/ui/form";`,
+	importStatement: `import { Form, FormField, FormControl, FormLabel, FormDescription, FormError } from "@patternmode/form";`,
 	examples: [
 		{
 			id: "default",

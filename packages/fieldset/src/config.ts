@@ -15,7 +15,7 @@ export const fieldsetConfig: ComponentConfig = {
 		"Components for grouping related form fields with semantic HTML structure. Built on Base UI Fieldset using native fieldset elements for accessibility and proper form organization.",
 	category: "forms",
 	icon: Square,
-	importStatement: `import { Fieldset, FieldsetLegend } from "@patternmode/ui/fieldset";`,
+	importStatement: `import { Fieldset, FieldsetLegend } from "@patternmode/fieldset";`,
 	examples: [
 		{
 			id: "default",

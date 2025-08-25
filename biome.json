@@ -14,7 +14,6 @@
 	},
 	"linter": {
 		"enabled": true,
-		"plugins": ["./biome-plugins/canonical-exports.grit"],
 		"rules": {
 			"recommended": true,
 			"style": {

@@ -20,7 +20,7 @@ export const iconContainerConfig: ComponentConfig = {
     "Container component for icons with consistent padding and background styling. Provides semantic variants, custom colors, and multiple sizes for displaying icons with visual emphasis.",
   category: "visual",
   icon: Package,
-  importStatement: `import { IconContainer } from "@patternmode/ui/icon-container";`,
+  importStatement: `import { IconContainer } from "@patternmode/icon-container";`,
   examples: [
     { id: "default", title: "Default", description: "Basic icon container with default neutral styling", component: DefaultExample },
     { id: "with-variant", title: "With Variant", description: "Icon container with semantic success variant", component: WithVariantExample },

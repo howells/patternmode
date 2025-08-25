@@ -1,10 +1,10 @@
 "use client";
 
-import type { SpacingValue } from "@patternmode/ui/presentation/spacing-utils";
+import type { SpacingValue } from "@/lib/spacing-utils";
 
 import { Button } from "@patternmode/button";
 import { Grid, GridCell } from "@patternmode/grid";
-import { getComponentConfig } from "@patternmode/catalog";
+import { getComponentConfig } from "@/registry/components";
 import { Stack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/toggle-group";

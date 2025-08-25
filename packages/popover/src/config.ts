@@ -24,7 +24,7 @@ export const popoverConfig: ComponentConfig = {
   featured: true,
   icon: MessageSquare,
   importStatement:
-    `import { Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose, PopoverArrow, PopoverBackdrop, PopoverPortal, PopoverPositioner } from "@patternmode/ui/popover";`,
+    `import { Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose, PopoverArrow, PopoverBackdrop, PopoverPortal, PopoverPositioner } from "@patternmode/popover";`,
   examples: [
     { id: "default", title: "Default", description: "Basic popover with title and description", component: DefaultExample },
     { id: "with-arrow", title: "With Arrow", description: "Popover with arrow pointing to trigger", component: WithArrowExample },

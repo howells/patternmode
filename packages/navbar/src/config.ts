@@ -21,7 +21,7 @@ export const navbarConfig: ComponentConfig = {
 		"A flexible navigation bar component system for building application headers, toolbars, and navigation areas. Features animated current indicators, flexible layout options, and responsive design.",
 	category: "navigation",
 	icon: Navigation,
-	importStatement: `import { Navbar, NavbarSection, NavbarItem, NavbarLabel, NavbarDivider, NavbarSpacer } from "@patternmode/ui/navbar";`,
+	importStatement: `import { Navbar, NavbarSection, NavbarItem, NavbarLabel, NavbarDivider, NavbarSpacer } from "@patternmode/navbar";`,
 	examples: [
 		{
 			id: "default",

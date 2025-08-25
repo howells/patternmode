@@ -27,7 +27,7 @@ export const previewCardConfig: ComponentConfig = {
 		"A comprehensive preview card system for displaying rich content previews with hover interactions. Built on Base UI PreviewCard for creating link previews, content cards, and contextual information displays.",
 	category: "media",
 	icon: Eye,
-	importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardHeading, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/ui/preview-card";`,
+	importStatement: `import { PreviewCard, PreviewCardTrigger, PreviewCardContent, PreviewCardArrow, PreviewCardImage, PreviewCardHeader, PreviewCardHeading, PreviewCardDescription, PreviewCardBody, PreviewCardFooter } from "@patternmode/preview-card";`,
 	examples: [
 		{
 			id: "default",

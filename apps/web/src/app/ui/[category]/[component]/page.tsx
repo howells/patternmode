@@ -1,4 +1,4 @@
-import { componentRegistry, getComponentConfig } from "@patternmode/catalog";
+import { COMPONENT_REGISTRY, getComponentConfig } from "@/registry/components";
 import { Separator } from "@patternmode/separator";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -82,8 +82,8 @@ export async function generateStaticParams() {
 
   // Generate paths for all components in each category
   const COMPONENT_LIST: Record<string, string[]> = {};
-  Object.keys(componentRegistry).forEach((componentId) => {
-    const config = componentRegistry[componentId];
+  Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
+    const config = COMPONENT_REGISTRY[componentId];
     const category = config.category || "ui";
     if (!COMPONENT_LIST[category]) {
       COMPONENT_LIST[category] = [];

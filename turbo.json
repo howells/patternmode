@@ -5,7 +5,7 @@
   "globalDependencies": [".env.local"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "generate:pages"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
@@ -32,14 +32,6 @@
     "clean": {
       "cache": false
     },
-    "generate:pages": {
-      "dependsOn": ["^build"],
-      "cache": false,
-      "inputs": [
-        "packages/*/src/config.ts",
-        "apps/web/scripts/generate-pages.js"
-      ],
-      "outputs": ["apps/web/src/app/ui/components/**/page.tsx"]
-    }
+    
   }
 }

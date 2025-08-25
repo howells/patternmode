@@ -15,7 +15,7 @@ export const kbdConfig: ComponentConfig = {
 		"Keyboard shortcut display component for showing keyboard shortcuts and commands in a consistent, styled format. Supports platform detection and complex key combinations.",
 	category: "actions",
 	icon: Keyboard,
-	importStatement: `import { Kbd } from "@patternmode/ui/kbd";`,
+	importStatement: `import { Kbd } from "@patternmode/kbd";`,
 	examples: [
 		{
 			id: "default",

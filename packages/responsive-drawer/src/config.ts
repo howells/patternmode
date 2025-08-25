@@ -25,7 +25,7 @@ export const responsiveDrawerConfig: ComponentConfig = {
 		"Responsive drawer component that adapts behavior based on screen size. On mobile devices, it renders as a bottom drawer using Vaul library. On desktop, it displays as a side sheet using Base UI Dialog. Provides consistent API across both implementations.",
 	category: "overlay",
 	icon: PanelLeft,
-	importStatement: `import { ResponsiveDrawer, ResponsiveDrawerTrigger, ResponsiveDrawerContent, ResponsiveDrawerHeader, ResponsiveDrawerTitle, ResponsiveDrawerDescription, ResponsiveDrawerBody, ResponsiveDrawerFooter, ResponsiveDrawerClose } from "@patternmode/ui/responsive-drawer";`,
+	importStatement: `import { ResponsiveDrawer, ResponsiveDrawerTrigger, ResponsiveDrawerContent, ResponsiveDrawerHeader, ResponsiveDrawerTitle, ResponsiveDrawerDescription, ResponsiveDrawerBody, ResponsiveDrawerFooter, ResponsiveDrawerClose } from "@patternmode/responsive-drawer";`,
 	examples: [
 		{
 			id: "default",

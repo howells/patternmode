@@ -15,7 +15,7 @@ export const copyButtonConfig: ComponentConfig = {
 		"Button component for copying text content to the clipboard with visual feedback and customizable labels.",
 	category: "actions",
 	icon: Copy,
-	importStatement: `import { CopyButton } from "@patternmode/ui/copy-button";`,
+	importStatement: `import { CopyButton } from "@patternmode/copy-button";`,
 	examples: [
 		{
 			id: "default",

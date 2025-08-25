@@ -30,4 +30,3 @@ export const dropdownItemConfig: ComponentConfig = {
     { name: "Dropdown Item", description: "Menu option primitive", component: DropdownItem },
   ],
 };
-

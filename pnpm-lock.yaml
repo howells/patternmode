@@ -51,39 +51,114 @@ importers:
       '@icons-pack/react-simple-icons':
         specifier: ^13.7.0
         version: 13.7.0(react@19.1.1)
+      '@patternmode/accordion':
+        specifier: workspace:*
+        version: link:../../packages/accordion
+      '@patternmode/alert-dialog':
+        specifier: workspace:*
+        version: link:../../packages/alert-dialog
       '@patternmode/avatar':
         specifier: workspace:*
         version: link:../../packages/avatar
       '@patternmode/badge':
         specifier: workspace:*
         version: link:../../packages/badge
+      '@patternmode/breadcrumbs':
+        specifier: workspace:*
+        version: link:../../packages/breadcrumbs
       '@patternmode/button':
         specifier: workspace:*
         version: link:../../packages/button
+      '@patternmode/button-group':
+        specifier: workspace:*
+        version: link:../../packages/button-group
+      '@patternmode/calendar':
+        specifier: workspace:*
+        version: link:../../packages/calendar
+      '@patternmode/callout':
+        specifier: workspace:*
+        version: link:../../packages/callout
+      '@patternmode/card':
+        specifier: workspace:*
+        version: link:../../packages/card
+      '@patternmode/carousel':
+        specifier: workspace:*
+        version: link:../../packages/carousel
       '@patternmode/checkbox':
         specifier: workspace:*
         version: link:../../packages/checkbox
+      '@patternmode/checkbox-group':
+        specifier: workspace:*
+        version: link:../../packages/checkbox-group
+      '@patternmode/code-block':
+        specifier: workspace:*
+        version: link:../../packages/code-block
+      '@patternmode/collapsible':
+        specifier: workspace:*
+        version: link:../../packages/collapsible
       '@patternmode/combobox':
         specifier: workspace:*
         version: link:../../packages/combobox
+      '@patternmode/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../../packages/constants
+      '@patternmode/context-menu':
+        specifier: workspace:*
+        version: link:../../packages/context-menu
+      '@patternmode/copy-button':
+        specifier: workspace:*
+        version: link:../../packages/copy-button
+      '@patternmode/date-picker':
+        specifier: workspace:*
+        version: link:../../packages/date-picker
+      '@patternmode/description-list':
+        specifier: workspace:*
+        version: link:../../packages/description-list
+      '@patternmode/dialog':
+        specifier: workspace:*
+        version: link:../../packages/dialog
       '@patternmode/dismiss-button':
         specifier: workspace:*
         version: link:../../packages/dismiss-button
       '@patternmode/dot':
         specifier: workspace:*
         version: link:../../packages/dot
+      '@patternmode/drawer':
+        specifier: workspace:*
+        version: link:../../packages/drawer
       '@patternmode/dropdown-item':
         specifier: workspace:*
         version: link:../../packages/dropdown-item
+      '@patternmode/empty-state':
+        specifier: workspace:*
+        version: link:../../packages/empty-state
       '@patternmode/feature-item':
         specifier: workspace:*
         version: link:../../packages/feature-item
+      '@patternmode/field':
+        specifier: workspace:*
+        version: link:../../packages/field
+      '@patternmode/field-array':
+        specifier: workspace:*
+        version: link:../../packages/field-array
+      '@patternmode/fieldset':
+        specifier: workspace:*
+        version: link:../../packages/fieldset
+      '@patternmode/form':
+        specifier: workspace:*
+        version: link:../../packages/form
       '@patternmode/grid':
         specifier: workspace:*
         version: link:../../packages/grid
       '@patternmode/heading':
         specifier: workspace:*
         version: link:../../packages/heading
+      '@patternmode/heading-element':
+        specifier: workspace:*
+        version: link:../../packages/heading-element
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../../packages/icon
@@ -93,6 +168,9 @@ importers:
       '@patternmode/icon-select':
         specifier: workspace:*
         version: link:../../packages/icon-select
+      '@patternmode/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@patternmode/input':
         specifier: workspace:*
         version: link:../../packages/input
@@ -105,12 +183,54 @@ importers:
       '@patternmode/loader':
         specifier: workspace:*
         version: link:../../packages/loader
+      '@patternmode/menu':
+        specifier: workspace:*
+        version: link:../../packages/menu
+      '@patternmode/menu-bar':
+        specifier: workspace:*
+        version: link:../../packages/menu-bar
+      '@patternmode/meter':
+        specifier: workspace:*
+        version: link:../../packages/meter
+      '@patternmode/navbar':
+        specifier: workspace:*
+        version: link:../../packages/navbar
+      '@patternmode/navigation-menu':
+        specifier: workspace:*
+        version: link:../../packages/navigation-menu
       '@patternmode/number-field':
         specifier: workspace:*
         version: link:../../packages/number-field
+      '@patternmode/pagination':
+        specifier: workspace:*
+        version: link:../../packages/pagination
+      '@patternmode/popover':
+        specifier: workspace:*
+        version: link:../../packages/popover
+      '@patternmode/preview-card':
+        specifier: workspace:*
+        version: link:../../packages/preview-card
+      '@patternmode/progress':
+        specifier: workspace:*
+        version: link:../../packages/progress
+      '@patternmode/progress-circle':
+        specifier: workspace:*
+        version: link:../../packages/progress-circle
       '@patternmode/radio':
         specifier: workspace:*
         version: link:../../packages/radio
+      '@patternmode/radio-card-group':
+        specifier: workspace:*
+        version: link:../../packages/radio-card-group
+      '@patternmode/responsive-drawer':
+        specifier: workspace:*
+        version: link:../../packages/responsive-drawer
+      '@patternmode/scroll-area':
+        specifier: workspace:*
+        version: link:../../packages/scroll-area
+      '@patternmode/search-field':
+        specifier: workspace:*
+        version: link:../../packages/search-field
       '@patternmode/select':
         specifier: workspace:*
         version: link:../../packages/select
@@ -120,12 +240,30 @@ importers:
       '@patternmode/separator':
         specifier: workspace:*
         version: link:../../packages/separator
+      '@patternmode/sheet':
+        specifier: workspace:*
+        version: link:../../packages/sheet
       '@patternmode/sidebar':
         specifier: workspace:*
         version: link:../../packages/sidebar
+      '@patternmode/skeleton':
+        specifier: workspace:*
+        version: link:../../packages/skeleton
+      '@patternmode/slider':
+        specifier: workspace:*
+        version: link:../../packages/slider
+      '@patternmode/sortable-list':
+        specifier: workspace:*
+        version: link:../../packages/sortable-list
+      '@patternmode/split-button':
+        specifier: workspace:*
+        version: link:../../packages/split-button
       '@patternmode/stack':
         specifier: workspace:*
         version: link:../../packages/stack
+      '@patternmode/stacked-list':
+        specifier: workspace:*
+        version: link:../../packages/stacked-list
       '@patternmode/styles':
         specifier: workspace:*
         version: link:../../packages/styles
@@ -135,6 +273,15 @@ importers:
       '@patternmode/switch':
         specifier: workspace:*
         version: link:../../packages/switch
+      '@patternmode/tab-navigation':
+        specifier: workspace:*
+        version: link:../../packages/tab-navigation
+      '@patternmode/table':
+        specifier: workspace:*
+        version: link:../../packages/table
+      '@patternmode/tabs':
+        specifier: workspace:*
+        version: link:../../packages/tabs
       '@patternmode/tag':
         specifier: workspace:*
         version: link:../../packages/tag
@@ -153,9 +300,24 @@ importers:
       '@patternmode/textarea':
         specifier: workspace:*
         version: link:../../packages/textarea
-      '@patternmode/ui':
+      '@patternmode/theme-toggle':
         specifier: workspace:*
-        version: link:../../packages/ui
+        version: link:../../packages/theme-toggle
+      '@patternmode/toast':
+        specifier: workspace:*
+        version: link:../../packages/toast
+      '@patternmode/toggle':
+        specifier: workspace:*
+        version: link:../../packages/toggle
+      '@patternmode/toggle-group':
+        specifier: workspace:*
+        version: link:../../packages/toggle-group
+      '@patternmode/toolbar':
+        specifier: workspace:*
+        version: link:../../packages/toolbar
+      '@patternmode/tooltip':
+        specifier: workspace:*
+        version: link:../../packages/tooltip
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -174,6 +336,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      date-fns:
+        specifier: ^3.6.0
+        version: 3.6.0
+      embla-carousel-react:
+        specifier: ^8.5.2
+        version: 8.6.0(react@19.1.1)
       framer-motion:
         specifier: ^12.23.0
         version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -192,9 +360,15 @@ importers:
       react:
         specifier: ^19.0.0
         version: 19.1.1
+      react-day-picker:
+        specifier: ^9.5.0
+        version: 9.9.0(react@19.1.1)
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      react-syntax-highlighter:
+        specifier: ^15.5.0
+        version: 15.6.1(react@19.1.1)
       recharts:
         specifier: ^3.1.0
         version: 3.1.0(@types/react@19.1.10)(react-dom@19.1.1(react@19.1.1))(react-is@18.2.0)(react@19.1.1)(redux@5.0.1)
@@ -232,9 +406,6 @@ importers:
 
   packages/accordion:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -244,9 +415,6 @@ importers:
 
   packages/alert-dialog:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -348,9 +516,6 @@ importers:
 
   packages/breadcrumbs:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -430,9 +595,6 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../button
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -445,9 +607,6 @@ importers:
 
   packages/calendar:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -457,9 +616,6 @@ importers:
 
   packages/callout:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -469,9 +625,6 @@ importers:
 
   packages/card:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -481,9 +634,6 @@ importers:
 
   packages/carousel:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -525,9 +675,6 @@ importers:
 
   packages/checkbox-group:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -537,9 +684,6 @@ importers:
 
   packages/code-block:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -549,9 +693,6 @@ importers:
 
   packages/collapsible:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -657,9 +798,6 @@ importers:
 
   packages/context-menu:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -669,9 +807,6 @@ importers:
 
   packages/copy-button:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -681,9 +816,6 @@ importers:
 
   packages/date-picker:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -693,9 +825,6 @@ importers:
 
   packages/description-list:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -714,9 +843,6 @@ importers:
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -791,9 +917,6 @@ importers:
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -858,9 +981,6 @@ importers:
 
   packages/empty-state:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -904,9 +1024,6 @@ importers:
 
   packages/field:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -916,9 +1033,6 @@ importers:
 
   packages/field-array:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -928,9 +1042,6 @@ importers:
 
   packages/fieldset:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -940,9 +1051,6 @@ importers:
 
   packages/form:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1035,9 +1143,6 @@ importers:
 
   packages/heading-element:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1354,9 +1459,6 @@ importers:
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1369,9 +1471,6 @@ importers:
 
   packages/menu-bar:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1381,9 +1480,6 @@ importers:
 
   packages/meter:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1393,9 +1489,6 @@ importers:
 
   packages/navbar:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1405,9 +1498,6 @@ importers:
 
   packages/navigation-menu:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1435,9 +1525,6 @@ importers:
 
   packages/pagination:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1450,9 +1537,6 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.10)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1465,9 +1549,6 @@ importers:
 
   packages/preview-card:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1477,9 +1558,6 @@ importers:
 
   packages/progress:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1489,9 +1567,6 @@ importers:
 
   packages/progress-circle:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1519,9 +1594,6 @@ importers:
 
   packages/radio-card-group:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1531,9 +1603,6 @@ importers:
 
   packages/responsive-drawer:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1543,9 +1612,6 @@ importers:
 
   packages/scroll-area:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1567,9 +1633,6 @@ importers:
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1714,9 +1777,6 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.10)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1741,9 +1801,6 @@ importers:
       '@patternmode/separator':
         specifier: workspace:*
         version: link:../separator
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1775,9 +1832,6 @@ importers:
 
   packages/skeleton:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1787,9 +1841,6 @@ importers:
 
   packages/slider:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1811,9 +1862,6 @@ importers:
       '@patternmode/text':
         specifier: workspace:*
         version: link:../text
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1826,9 +1874,6 @@ importers:
 
   packages/split-button:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1884,9 +1929,6 @@ importers:
 
   packages/stacked-list:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1967,9 +2009,6 @@ importers:
 
   packages/tab-navigation:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1979,9 +2018,6 @@ importers:
 
   packages/table:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1991,9 +2027,6 @@ importers:
 
   packages/tabs:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2201,9 +2234,6 @@ importers:
 
   packages/theme-toggle:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2213,9 +2243,6 @@ importers:
 
   packages/toast:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2225,9 +2252,6 @@ importers:
 
   packages/toggle:
     dependencies:
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2243,9 +2267,6 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../button
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2261,9 +2282,6 @@ importers:
       '@patternmode/button':
         specifier: workspace:*
         version: link:../button
-      '@patternmode/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -4381,6 +4399,9 @@ packages:
 
   date-fns-jalali@4.1.0-0:
     resolution: {integrity: sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==}
+
+  date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
 
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
@@ -7562,6 +7583,8 @@ snapshots:
       whatwg-url: 14.2.0
 
   date-fns-jalali@4.1.0-0: {}
+
+  date-fns@3.6.0: {}
 
   date-fns@4.1.0: {}
 

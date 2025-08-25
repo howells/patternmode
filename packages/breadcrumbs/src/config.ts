@@ -27,7 +27,7 @@ export const breadcrumbsConfig: ComponentConfig = {
 	category: "navigation",
 	featured: true,
 	icon: ChevronRight,
-	importStatement: `import { Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "@patternmode/ui/breadcrumbs";`,
+	importStatement: `import { Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "@patternmode/breadcrumbs";`,
 	examples: [
 		{
 			id: "default",

@@ -1,5 +1,4 @@
 import { User } from "lucide-react";
-import React from "react";
 import { DropdownItem } from "./component";
 import type { DropdownItemProps } from "./types";
 
@@ -20,4 +19,3 @@ export const dropdownItemPreviewProps = [
   { name: "hint", type: "string", defaultValue: "" },
   { name: "variant", type: "select", options: ["default", "destructive"], defaultValue: "default" },
 ];
-

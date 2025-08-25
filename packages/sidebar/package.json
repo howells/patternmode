@@ -1,8 +1,8 @@
 {
-	"name": "@patternmode/sidebar",
-	"version": "0.1.0",
-	"description": "Minimal sidebar component with state management for PatternMode applications",
-	"type": "module",
+  "name": "@patternmode/sidebar",
+  "version": "0.1.0",
+  "description": "Minimal sidebar component with state management for PatternMode applications",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -25,21 +25,20 @@
       "default": "./src/examples.tsx"
     }
   },
-	"files": [
-		"src"
-	],
-	"scripts": {
-		"build": "tsc --noEmit",
-		"typecheck": "tsc --noEmit",
-		"lint": "biome check src --write"
-	},
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write"
+  },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.2",
     "@react-aria/interactions": "^3.25.4",
     "@patternmode/button": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "@patternmode/ui": "workspace:*",
     "@patternmode/separator": "workspace:*",
     "clsx": "^2.1.1",
     "zustand": "^5.0.2"
@@ -50,7 +49,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "lucide-react": ">=0.525.0 <1"
   },
-	"devDependencies": {
-		"typescript": "^5.9.2"
-	}
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
 }

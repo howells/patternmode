@@ -17,7 +17,7 @@ export const sliderConfig: ComponentConfig = {
 		"Range slider component for selecting numeric values within a specified range with full keyboard accessibility and customizable appearance.",
 	category: "controls",
 	icon: Minus,
-	importStatement: `import { Slider } from "@patternmode/ui/slider";`,
+	importStatement: `import { Slider } from "@patternmode/slider";`,
 	examples: [
 		{
 			id: "default",

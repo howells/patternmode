@@ -19,7 +19,7 @@ export const accordionConfig: ComponentConfig = {
 		"A vertically stacked set of interactive headings that each reveal a section of content.",
 	category: "layout",
 	icon: ChevronDown,
-	importStatement: `import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@patternmode/ui/accordion";`,
+	importStatement: `import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@patternmode/accordion";`,
 	examples: [
 		{
 			id: "default",

@@ -21,7 +21,7 @@ export const dialogConfig: ComponentConfig = {
   featured: true,
   icon: MessageSquare,
   importStatement:
-    `import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@patternmode/ui/dialog";`,
+    `import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@patternmode/dialog";`,
   examples: [
     { id: "default", title: "Default", description: "Basic dialog with header, content, and footer", component: DefaultExample },
     { id: "with-form", title: "With Form", description: "Dialog containing form inputs and controls", component: WithFormExample },

@@ -9,7 +9,7 @@ export const tagGroupConfig: ComponentConfig = {
   description: "Container for grouping tags with shared styling and consistent spacing. Child tags inherit props from the parent group.",
   category: "ui",
   icon: Tags,
-  importStatement: `import { TagGroup } from "@patternmode/ui/tag-group";`,
+  importStatement: `import { TagGroup } from "@patternmode/tag-group";`,
   examples: [
     { id: "default", title: "Default", description: "Basic tag group with default styling", component: DefaultExample },
     { id: "dismissible", title: "Dismissible Tags", description: "Tags that can be removed from the group", component: DismissibleExample },

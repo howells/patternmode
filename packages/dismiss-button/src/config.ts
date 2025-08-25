@@ -9,7 +9,7 @@ export const dismissButtonConfig: ComponentConfig = {
   description: "Close button component for dismissing modals, alerts, and temporary content.",
   category: "actions",
   icon: X,
-  importStatement: `import { DismissButton } from "@patternmode/ui/dismiss-button";`,
+  importStatement: `import { DismissButton } from "@patternmode/dismiss-button";`,
   examples: [
     { id: "default", title: "Default", description: "Basic dismiss button with default styling", component: DefaultExample },
     { id: "sizes", title: "Sizes", description: "Different button sizes (sm, base, lg)", component: SizesExample },

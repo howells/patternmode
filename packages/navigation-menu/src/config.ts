@@ -23,7 +23,7 @@ export const navigationMenuConfig: ComponentConfig = {
 		"A comprehensive navigation menu system built on Base UI NavigationMenu for creating dropdown navigation menus with smooth animations and accessibility.",
 	category: "navigation",
 	icon: Menu,
-	importStatement: `import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuItemLink, NavigationMenuViewport } from "@patternmode/ui/navigation-menu";`,
+	importStatement: `import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuItemLink, NavigationMenuViewport } from "@patternmode/navigation-menu";`,
 	examples: [
 		{
 			id: "default",

@@ -25,7 +25,7 @@ export const menuBarConfig: ComponentConfig = {
 		"A horizontal menu bar component system built on Base UI Menubar for creating application menu bars with dropdown menus. Provides desktop application-style menu navigation with keyboard support and proper accessibility.",
 	category: "navigation",
 	icon: Menu,
-	importStatement: `import { MenuBar, MenuBarMenu, MenuBarTrigger, MenuBarContent, MenuBarItem, MenuBarSeparator, MenuBarSubmenu, MenuBarSubmenuTrigger, MenuBarSubmenuContent } from "@patternmode/ui/menu-bar";`,
+	importStatement: `import { MenuBar, MenuBarMenu, MenuBarTrigger, MenuBarContent, MenuBarItem, MenuBarSeparator, MenuBarSubmenu, MenuBarSubmenuTrigger, MenuBarSubmenuContent } from "@patternmode/menu-bar";`,
 	examples: [
 		{
 			id: "default",

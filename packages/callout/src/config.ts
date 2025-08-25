@@ -11,7 +11,7 @@ export const calloutConfig: ComponentConfig = {
   category: "feedback",
   featured: true,
   icon: MessageSquare,
-  importStatement: `import { Callout } from "@patternmode/ui/callout";`,
+  importStatement: `import { Callout } from "@patternmode/callout";`,
   examples: [
     { id: "default", title: "Default", description: "Basic informational callout with title", component: DefaultExample },
     { id: "success", title: "Success", description: "Success callout with icon and green styling", component: SuccessExample },

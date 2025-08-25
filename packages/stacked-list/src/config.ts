@@ -23,7 +23,7 @@ export const stackedListConfig: ComponentConfig = {
 		"Comprehensive components for building structured lists with consistent styling, interactive states, and flexible layouts for displaying collections of related items.",
 	category: "display",
 	icon: List,
-	importStatement: `import { StackedList } from "@patternmode/ui/stacked-list";`,
+	importStatement: `import { StackedList } from "@patternmode/stacked-list";`,
 	examples: [
 		{
 			id: "default",
