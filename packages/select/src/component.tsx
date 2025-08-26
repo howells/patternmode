@@ -152,43 +152,47 @@ Positioner.displayName = "SelectPositioner";
 
 // Popup
 const Popup = ({
-	ref,
-	className,
-	children,
-	sideOffset = 8,
-	collisionPadding = 10,
-	side = "bottom",
-	align = "start",
-	alignItemWithTrigger = true,
-	size = "base",
-	...props
+    ref,
+    className,
+    children,
+    sideOffset = 8,
+    collisionPadding = 10,
+    side = "bottom",
+    align = "start",
+    alignItemWithTrigger = true,
+    size = "base",
+    ...props
 }: SelectContentProps & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null>;
-}) => (
-	<Portal>
-		<Positioner
-			side={side}
-			align={align}
-			sideOffset={sideOffset}
-			collisionPadding={collisionPadding}
-			alignItemWithTrigger={alignItemWithTrigger}
-		>
-			<ScrollUpArrow />
-			<BaseSelect.Popup
-				ref={ref}
-				className={cx(
-					selectPopoverVariants({ size }),
-					"min-w-[var(--anchor-width)]",
-					className,
-				)}
-				{...props}
-			>
-				<div className="">{children}</div>
-			</BaseSelect.Popup>
-			<ScrollDownArrow />
-		</Positioner>
-	</Portal>
-);
+    ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null>;
+}) => {
+    const { base } = selectPopoverVariants({ size });
+
+    return (
+        <Portal>
+            <Positioner
+                side={side}
+                align={align}
+                sideOffset={sideOffset}
+                collisionPadding={collisionPadding}
+                alignItemWithTrigger={alignItemWithTrigger}
+            >
+                <ScrollUpArrow />
+                <BaseSelect.Popup
+                    ref={ref}
+                    className={cx(
+                        base(),
+                        "min-w-[var(--anchor-width)]",
+                        className,
+                    )}
+                    {...props}
+                >
+                    <div className="">{children}</div>
+                </BaseSelect.Popup>
+                <ScrollDownArrow />
+            </Positioner>
+        </Portal>
+    );
+};
 Popup.displayName = "SelectContent";
 
 // GroupLabel

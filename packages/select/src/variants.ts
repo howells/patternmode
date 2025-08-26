@@ -2,9 +2,8 @@ import { formControlElementVariants } from "@patternmode/constants/form-control-
 import { tv } from "tailwind-variants";
 
 export const selectPopoverVariants = tv({
-	extend: formControlElementVariants,
 	slots: {
-		base: "z-50 min-w-[var(--anchor-width)] overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-popover-foreground shadow-md ",
+		base: "z-50 min-w-[var(--anchor-width)] max-h-[var(--available-height)] overflow-y-auto rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-popover-foreground",
 	},
 	variants: {
 		size: {
