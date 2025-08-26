@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-
 import { Card } from "@patternmode/card";
+import React from "react";
 import {
 	Carousel,
 	CarouselContent,
@@ -18,21 +17,21 @@ export const DefaultExample = () => (
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">1</span>
+						<span className="text-4xl ">1</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">2</span>
+						<span className="text-4xl ">2</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">3</span>
+						<span className="text-4xl ">3</span>
 					</div>
 				</Card>
 			</CarouselItem>
@@ -49,21 +48,21 @@ export const VerticalExample = () => (
 			<CarouselItem className="pt-1 md:basis-1/2">
 				<Card>
 					<div className="flex items-center justify-center p-6">
-						<span className="text-3xl font-semibold">1</span>
+						<span className="text-3xl ">1</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem className="pt-1 md:basis-1/2">
 				<Card>
 					<div className="flex items-center justify-center p-6">
-						<span className="text-3xl font-semibold">2</span>
+						<span className="text-3xl ">2</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem className="pt-1 md:basis-1/2">
 				<Card>
 					<div className="flex items-center justify-center p-6">
-						<span className="text-3xl font-semibold">3</span>
+						<span className="text-3xl ">3</span>
 					</div>
 				</Card>
 			</CarouselItem>
@@ -84,7 +83,7 @@ export const MultipleItemsExample = () => (
 				>
 					<Card>
 						<div className="flex aspect-square items-center justify-center p-6">
-							<span className="text-2xl font-semibold">{index + 1}</span>
+							<span className="text-2xl ">{index + 1}</span>
 						</div>
 					</Card>
 				</CarouselItem>
@@ -102,21 +101,21 @@ export const NoNavigationExample = () => (
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">1</span>
+						<span className="text-4xl ">1</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">2</span>
+						<span className="text-4xl ">2</span>
 					</div>
 				</Card>
 			</CarouselItem>
 			<CarouselItem>
 				<Card>
 					<div className="flex aspect-square items-center justify-center p-6">
-						<span className="text-4xl font-semibold">3</span>
+						<span className="text-4xl ">3</span>
 					</div>
 				</Card>
 			</CarouselItem>
@@ -233,7 +232,7 @@ export const AutoPlayExample = () => {
 					<CarouselItem key={`auto-play-${index}`}>
 						<Card>
 							<div className="flex aspect-square items-center justify-center p-6">
-								<span className="text-4xl font-semibold">{index + 1}</span>
+								<span className="text-4xl ">{index + 1}</span>
 							</div>
 						</Card>
 					</CarouselItem>
@@ -256,7 +255,7 @@ export const ResponsiveExample = () => (
 				>
 					<Card>
 						<div className="flex aspect-square items-center justify-center p-6">
-							<span className="text-2xl font-semibold">{index + 1}</span>
+							<span className="text-2xl ">{index + 1}</span>
 						</div>
 					</Card>
 				</CarouselItem>

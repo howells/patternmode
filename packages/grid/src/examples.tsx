@@ -272,19 +272,19 @@ export const DashboardExample = () => {
 		<Grid columns={4} gap={4} className="min-h-[250px]">
 			{/* Metrics */}
 			<GridCell className="bg-blue-100 dark:bg-blue-900 p-4 rounded text-center">
-				<div className="text-lg font-bold">1,234</div>
+				<div className="text-lg">1,234</div>
 				<div className="text-sm opacity-75">Users</div>
 			</GridCell>
 			<GridCell className="bg-green-100 dark:bg-green-900 p-4 rounded text-center">
-				<div className="text-lg font-bold">$12.3K</div>
+				<div className="text-lg">$12.3K</div>
 				<div className="text-sm opacity-75">Revenue</div>
 			</GridCell>
 			<GridCell className="bg-purple-100 dark:bg-purple-900 p-4 rounded text-center">
-				<div className="text-lg font-bold">98.5%</div>
+				<div className="text-lg">98.5%</div>
 				<div className="text-sm opacity-75">Uptime</div>
 			</GridCell>
 			<GridCell className="bg-orange-100 dark:bg-orange-900 p-4 rounded text-center">
-				<div className="text-lg font-bold">156</div>
+				<div className="text-lg">156</div>
 				<div className="text-sm opacity-75">Orders</div>
 			</GridCell>
 

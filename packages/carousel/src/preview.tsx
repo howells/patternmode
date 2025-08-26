@@ -71,7 +71,7 @@ export function CarouselPreview({
 					>
 						<Card>
 							<div className="flex aspect-square items-center justify-center p-6">
-								<span className="text-4xl font-semibold">{slide}</span>
+								<span className="text-4xl ">{slide}</span>
 							</div>
 						</Card>
 					</CarouselItem>

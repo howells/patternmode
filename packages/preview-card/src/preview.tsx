@@ -17,7 +17,7 @@ export function PreviewCardPreview(props: PreviewCardProps) {
 				<PreviewCardPositioner>
 					<PreviewCardContent>
 						<div className="p-4">
-							<h3 className="font-semibold">Preview Content</h3>
+							<h3 className="">Preview Content</h3>
 							<p className="text-sm text-zinc-600 dark:text-zinc-400">
 								This is the preview content that appears on hover.
 							</p>

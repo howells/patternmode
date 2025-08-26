@@ -304,7 +304,7 @@ const PreviewCardHeading = ({
 		ref={ref}
 		className={cx(
 			// base
-			"text-lg font-semibold leading-6 tracking-tight",
+			"text-lg  leading-6 tracking-tight",
 			// text color
 			"text-zinc-900 dark:text-zinc-50",
 			className,

@@ -1,10 +1,11 @@
 "use client";
 
+import { Button } from "@patternmode/button";
 import { Popover, PopoverArrow, PopoverBackdrop, PopoverClose, PopoverContent, PopoverDescription, PopoverPortal, PopoverTitle, PopoverTrigger } from "./component";
 
 export const DefaultExample = () => (
   <Popover>
-    <PopoverTrigger className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Click me</PopoverTrigger>
+    <PopoverTrigger render={<Button type="button" />}>Click me</PopoverTrigger>
     <PopoverContent>
       <PopoverTitle>Settings</PopoverTitle>
       <PopoverDescription>Adjust your account preferences and notification settings.</PopoverDescription>

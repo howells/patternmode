@@ -263,7 +263,7 @@ export const SearchField = ({
                   {groupByCategory && category && (
                     <Text
                       size="xs"
-                      className="font-semibold text-zinc-500 capitalize px-3 py-2"
+                      className=" text-zinc-500 capitalize px-3 py-2"
                     >
                       {category}
                     </Text>

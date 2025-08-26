@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@patternmode/button";
 import type { PopoverProps } from "./component";
 import {
 	Popover,
@@ -14,7 +15,7 @@ import {
 export function PopoverPreview(props: PopoverProps) {
 	return (
 		<Popover {...props}>
-			<PopoverTrigger className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+			<PopoverTrigger render={<Button type="button" />}>
 				Click me
 			</PopoverTrigger>
 			<PopoverPortal>

@@ -1,8 +1,8 @@
 import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
+import { Icon as IconComponent } from "@patternmode/icon";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
-import { Icon as IconComponent } from "@patternmode/icon";
 
 type ContextMenuProps = {
 	/**
@@ -140,7 +140,7 @@ const ContextMenuSubmenuTrigger = ({
 		ref={forwardedRef}
 		className={cx(
 			// base
-			"relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-1 outline-hidden transition-colors data-checked:font-semibold sm:text-sm",
+			"relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-1 outline-hidden transition-colors data-checked: sm:text-sm",
 			// text color
 			"text-zinc-900 dark:text-zinc-50",
 			// disabled
@@ -302,7 +302,7 @@ const ContextMenuCheckboxItem = ({
 		ref={forwardedRef}
 		className={cx(
 			// base
-			"relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pl-8 pr-1 outline-hidden transition-colors data-checked:font-semibold sm:text-sm",
+			"relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pl-8 pr-1 outline-hidden transition-colors data-checked: sm:text-sm",
 			// text color
 			"text-zinc-900 dark:text-zinc-50",
 			// disabled
@@ -361,7 +361,7 @@ const ContextMenuRadioItem = ({
 		ref={forwardedRef}
 		className={cx(
 			// base
-			"group/ContextMenuRadioItem relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pl-8 pr-1 outline-hidden transition-colors data-checked:font-semibold sm:text-sm",
+			"group/ContextMenuRadioItem relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pl-8 pr-1 outline-hidden transition-colors data-checked: sm:text-sm",
 			// text color
 			"text-zinc-900 dark:text-zinc-50",
 			// disabled

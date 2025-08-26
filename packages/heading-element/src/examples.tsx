@@ -21,7 +21,7 @@ export const AllLevelsExample = () => {
 
 export const WithCustomClassExample = () => {
 	return (
-		<HeadingElement level={2} className="text-blue-600 font-bold">
+		<HeadingElement level={2} className="text-blue-600">
 			Custom Styled Heading
 		</HeadingElement>
 	);

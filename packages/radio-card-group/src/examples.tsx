@@ -1,8 +1,8 @@
 "use client";
 
+import { Button } from "@patternmode/button";
 import { Rocket, Truck, Zap } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@patternmode/button";
 import { RadioCardGroup, RadioCardIndicator, RadioCardItem } from "./component";
 
 // Pre-imported icons from lucide-react
@@ -19,10 +19,10 @@ export const DefaultExample = () => {
 				<div className="flex items-start justify-between">
 					<div className="flex-1">
 						<div className="mb-2 flex items-center justify-between">
-							<div className="font-semibold text-zinc-900 dark:text-zinc-50">
+							<div className=" text-zinc-900 dark:text-zinc-50">
 								Starter
 							</div>
-							<div className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+							<div className="text-lg text-zinc-900 dark:text-zinc-50">
 								$9
 								<span className="text-sm font-normal text-zinc-500">/mo</span>
 							</div>
@@ -44,10 +44,10 @@ export const DefaultExample = () => {
 				<div className="flex items-start justify-between">
 					<div className="flex-1">
 						<div className="mb-2 flex items-center justify-between">
-							<div className="font-semibold text-zinc-900 dark:text-zinc-50">
+							<div className=" text-zinc-900 dark:text-zinc-50">
 								Professional
 							</div>
-							<div className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+							<div className="text-lg text-zinc-900 dark:text-zinc-50">
 								$29
 								<span className="text-sm font-normal text-zinc-500">/mo</span>
 							</div>

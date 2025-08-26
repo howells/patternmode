@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { Separator } from "@patternmode/separator";
+import React from "react";
 import { ScrollArea } from "./component";
 
 export const DefaultExample = () => {
@@ -35,7 +35,7 @@ export const HorizontalExample = () => {
 					<figure key={i} className="shrink-0">
 						<div className="overflow-hidden rounded-md">
 							<div
-								className="aspect-[3/4] h-fit w-fit bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-white font-semibold"
+								className="aspect-[3/4] h-fit w-fit bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-white "
 								style={{ width: 150, height: 200 }}
 							>
 								Photo {i + 1}
@@ -55,7 +55,7 @@ export const BothDirectionsExample = () => {
 	return (
 		<ScrollArea orientation="both" className="h-48 w-64 rounded-md border">
 			<div className="min-h-96 min-w-96 p-4 bg-gradient-to-br from-pink-100 to-blue-100">
-				<h3 className="font-semibold mb-4">Large Content Area</h3>
+				<h3 className=" mb-4">Large Content Area</h3>
 				<p className="mb-4">
 					This content area is larger than the container in both width and
 					height.
@@ -86,9 +86,7 @@ export const CustomStyledExample = () => {
 			thumbClassName="bg-blue-500 hover:bg-blue-600 dark:bg-blue-400 dark:hover:bg-blue-300"
 		>
 			<div className="p-4 space-y-4">
-				<h4 className="font-semibold text-blue-900 dark:text-blue-100">
-					Custom Scrollbar
-				</h4>
+				<h4 className=" text-blue-900 dark:text-blue-100">Custom Scrollbar</h4>
 				{Array.from({ length: 30 }).map((_, i) => (
 					<div key={i} className="p-3 bg-blue-50 dark:bg-blue-900 rounded-md">
 						<div className="font-medium text-blue-900 dark:text-blue-100">

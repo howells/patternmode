@@ -6,7 +6,7 @@ export const dropdownItemVariants = tv({
     "hover:bg-zinc-100 dark:hover:bg-zinc-900",
     "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
     "data-[selected]:bg-blue-50 data-[selected]:text-blue-900 dark:data-[selected]:bg-blue-900/20 dark:data-[selected]:text-blue-100",
-    "data-[selected]:font-semibold",
+    "data-[selected]:",
   ],
   variants: {
     variant: {
@@ -22,4 +22,3 @@ export const dropdownItemVariants = tv({
     variant: "default",
   },
 });
-

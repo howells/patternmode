@@ -7,7 +7,7 @@ export const accordionVariants = tv({
 export const accordionTriggerVariants = tv({
 	base: [
 		// base
-		"group flex flex-1 cursor-pointer items-center justify-between py-3 text-left font-medium",
+		"group flex flex-1 cursor-pointer items-center justify-between py-3 text-left",
 		// text color
 		"text-zinc-900 dark:text-zinc-50",
 		// disabled

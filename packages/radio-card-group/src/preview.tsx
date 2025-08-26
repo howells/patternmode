@@ -120,7 +120,7 @@ export function RadioCardGroupPreview({
 									</div>
 									{showPricing && (
 										<>
-											<div className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-3">
+											<div className="text-lg  text-zinc-900 dark:text-zinc-50 mb-3">
 												{option.price}
 											</div>
 											<ul className="space-y-1">

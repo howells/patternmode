@@ -1,5 +1,13 @@
 "use client";
 
+import { Button } from "@patternmode/button";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@patternmode/select";
 import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import type { Locale } from "date-fns";
@@ -23,8 +31,6 @@ import {
 import * as React from "react";
 import type { DayPickerProps, Matcher } from "react-day-picker";
 import { DayPicker, useDayPicker } from "react-day-picker";
-import { Button } from "@patternmode/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
 
 const DropdownCaption = ({
 	calendarMonth,
@@ -150,7 +156,7 @@ const DropdownCaption = ({
 				{showMonthDropdown ? (
 					<Select
 						value={getMonth(currentMonth).toString()}
-                    onValueChange={(v: unknown) => handleMonthChange(String(v))}
+						onValueChange={(v: unknown) => handleMonthChange(String(v))}
 					>
 						<SelectTrigger size="sm" className="w-auto min-w-[100px]">
 							<SelectValue />
@@ -172,7 +178,7 @@ const DropdownCaption = ({
 				{showYearDropdown ? (
 					<Select
 						value={getYear(currentMonth).toString()}
-                    onValueChange={(v: unknown) => handleYearChange(String(v))}
+						onValueChange={(v: unknown) => handleYearChange(String(v))}
 					>
 						<SelectTrigger size="sm" className="w-auto min-w-[70px]">
 							<SelectValue />
@@ -504,7 +510,7 @@ const Calendar = ({
 						"h-9 w-9 inline-flex items-center justify-center",
 						"text-sm font-normal text-gray-900 dark:text-gray-50",
 					),
-					today: cx(showToday && "bg-gray-100 dark:bg-gray-800 font-semibold"),
+					today: cx(showToday && "bg-gray-100 dark:bg-gray-800 "),
 					week_number: cx(
 						"h-9 w-9 p-0 font-normal text-sm",
 						"inline-flex items-center justify-center whitespace-nowrap rounded-md",

@@ -102,7 +102,7 @@ const CardHeading = ({
 		<h3
 			ref={ref}
 			className={cx(
-				"text-lg font-semibold leading-none tracking-tight text-zinc-950 dark:text-white",
+				"text-lg  leading-none tracking-tight text-zinc-950 dark:text-white",
 				className,
 			)}
 			{...props}

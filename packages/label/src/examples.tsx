@@ -29,7 +29,7 @@ export const DisabledExample = () => (
 
 export const CustomStyledExample = () => (
 	<div>
-		<Label className="text-lg font-semibold text-blue-600">
+		<Label className="text-lg  text-blue-600">
 			Important Field
 		</Label>
 		<input className="mt-2 w-full rounded border p-2" />
