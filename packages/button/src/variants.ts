@@ -118,6 +118,10 @@ export const buttonVariants = tv({
 	},
 });
 
+// Backwards-compatible alias: some types reference `buttonStyles`
+// Keep this in sync with `buttonVariants` to satisfy VariantProps<...> usage.
+export const buttonStyles = buttonVariants;
+
 /**
  * Creates button-style variants for other components that want to look like buttons
  * but maintain their own semantic behavior (like toggles, tabs, etc.).

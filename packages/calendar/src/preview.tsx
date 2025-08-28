@@ -48,42 +48,40 @@ export function CalendarPreview({
 		setSelected(value);
 	};
 
-	return (
-    mode === "single" ? (
-      <Calendar
-        mode="single"
-        selected={selected as Date | undefined}
-        onSelect={(v) => handleSelect(v)}
-        enableYearNavigation={enableYearNavigation}
-        showToday={showToday}
-        showTodayButton={showTodayButton}
-        numberOfMonths={numberOfMonths}
-        className="rounded-md border"
-      />
-    ) : mode === "multiple" ? (
-      <Calendar
-        mode="multiple"
-        selected={selected as Date[] | undefined}
-        onSelect={(v) => handleSelect(v)}
-        enableYearNavigation={enableYearNavigation}
-        showToday={showToday}
-        showTodayButton={showTodayButton}
-        numberOfMonths={numberOfMonths}
-        className="rounded-md border"
-      />
-    ) : (
-      <Calendar
-        mode="range"
-        selected={selected as { from: Date; to?: Date } | undefined}
-        onSelect={(v) => handleSelect(v as any)}
-        required={false}
-        enableYearNavigation={enableYearNavigation}
-        showToday={showToday}
-        showTodayButton={showTodayButton}
-        numberOfMonths={numberOfMonths}
-        className="rounded-md border"
-      />
-    )
+	return mode === "single" ? (
+		<Calendar
+			mode="single"
+			selected={selected as Date | undefined}
+			onSelect={(v) => handleSelect(v)}
+			enableYearNavigation={enableYearNavigation}
+			showToday={showToday}
+			showTodayButton={showTodayButton}
+			numberOfMonths={numberOfMonths}
+			className="rounded-md border"
+		/>
+	) : mode === "multiple" ? (
+		<Calendar
+			mode="multiple"
+			selected={selected as Date[] | undefined}
+			onSelect={(v) => handleSelect(v)}
+			enableYearNavigation={enableYearNavigation}
+			showToday={showToday}
+			showTodayButton={showTodayButton}
+			numberOfMonths={numberOfMonths}
+			className="rounded-md border"
+		/>
+	) : (
+		<Calendar
+			mode="range"
+			selected={selected as { from: Date; to?: Date } | undefined}
+			onSelect={(v) => handleSelect(v as any)}
+			required={false}
+			enableYearNavigation={enableYearNavigation}
+			showToday={showToday}
+			showTodayButton={showTodayButton}
+			numberOfMonths={numberOfMonths}
+			className="rounded-md border"
+		/>
 	);
 }
 

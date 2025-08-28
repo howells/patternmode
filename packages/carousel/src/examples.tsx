@@ -78,6 +78,7 @@ export const MultipleItemsExample = () => (
 		<CarouselContent className="-ml-1">
 			{Array.from({ length: 5 }).map((_, index) => (
 				<CarouselItem
+					// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 					key={`carousel-item-${index}`}
 					className="pl-1 md:basis-1/2 lg:basis-1/3"
 				>
@@ -211,7 +212,7 @@ export const TestimonialCarouselExample = () => (
 
 // Auto-play carousel (simulated with state)
 export const AutoPlayExample = () => {
-	const [api, setApi] = React.useState<any>();
+	const [api, setApi] = React.useState<unknown>();
 
 	React.useEffect(() => {
 		if (!api) {
@@ -229,7 +230,10 @@ export const AutoPlayExample = () => {
 		<Carousel setApi={setApi} className="w-full max-w-xs">
 			<CarouselContent>
 				{Array.from({ length: 5 }).map((_, index) => (
-					<CarouselItem key={`auto-play-${index}`}>
+					<CarouselItem
+						// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
+						key={`auto-play-${index}`}
+					>
 						<Card>
 							<div className="flex aspect-square items-center justify-center p-6">
 								<span className="text-4xl ">{index + 1}</span>
@@ -249,7 +253,9 @@ export const ResponsiveExample = () => (
 	<Carousel className="w-full">
 		<CarouselContent>
 			{Array.from({ length: 8 }).map((_, index) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 				<CarouselItem
+					// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 					key={`responsive-${index}`}
 					className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
 				>

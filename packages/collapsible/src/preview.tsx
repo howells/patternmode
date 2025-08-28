@@ -1,7 +1,7 @@
 "use client";
 
-import type React from "react";
 import { TextList, TextListItem } from "@patternmode/text-list";
+import type React from "react";
 import {
 	Collapsible,
 	CollapsibleContent,

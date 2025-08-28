@@ -1,11 +1,11 @@
 "use client";
 
-import { cx } from "@patternmode/utils/cx";
-import { ChevronDown } from "lucide-react";
-import type React from "react";
 import { Button } from "@patternmode/button";
 import { Menu, MenuContent, MenuTrigger } from "@patternmode/menu";
 import { Separator } from "@patternmode/separator";
+import { cx } from "@patternmode/utils/cx";
+import { ChevronDown } from "lucide-react";
+import type React from "react";
 import type { SplitButtonProps } from "./types";
 import { splitButtonVariants } from "./variants";
 

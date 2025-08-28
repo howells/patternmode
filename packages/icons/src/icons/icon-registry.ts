@@ -20,7 +20,7 @@ export type LucideIconComponent = React.ComponentType<{
 	className?: string;
 	strokeWidth?: number;
 	size?: number;
-	[key: string]: any;
+	[key: string]: unknown;
 }>;
 
 // Generic icon component contract used across the workspace
@@ -1855,13 +1855,15 @@ export const iconNames: string[] = [
 // Create the icon registry by mapping names to components
 export const iconRegistry: Record<string, LucideIconComponent> = {};
 
-// Populate the registry with all valid icon components
-iconNames.forEach((name) => {
-	const component = LucideIcons[name as keyof typeof LucideIcons];
-	if (component) {
-		iconRegistry[name] = component as LucideIconComponent;
-	}
-});
+// Populate the registry with all valid icon components without dynamic namespace access
+const lucideEntries = Object.entries(LucideIcons).filter(([key]) =>
+	iconNames.includes(key),
+);
+
+for (const [name, component] of lucideEntries) {
+	// Only register valid React components
+	iconRegistry[name] = component as unknown as LucideIconComponent;
+}
 
 // Export count for debugging
 export const iconCount = iconNames.length;

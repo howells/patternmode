@@ -20,7 +20,11 @@ export const FeatureItem = ({
 	...props
 }: FeatureItemProps) => {
 	return (
-		<div data-testid="feature-item" className={cx("relative text-sm", className)} {...props}>
+		<div
+			data-testid="feature-item"
+			className={cx("relative text-sm", className)}
+			{...props}
+		>
 			<dt className="text-zinc-900 dark:text-zinc-100">
 				{IconComponent ? (
 					<Icon

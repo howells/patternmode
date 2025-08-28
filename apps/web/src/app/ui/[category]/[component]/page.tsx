@@ -5,7 +5,8 @@ import React from "react";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
-import { PreviewDisplay } from "@/features/preview/preview-render";
+import { Preview } from "@/features/preview";
+export const dynamic = "force-dynamic";
 
 type ComponentPageProps = {
   params: Promise<{
@@ -63,8 +64,9 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
       />
 
       {/* Main Content - Use Preview */}
-      <PreviewDisplay
-        componentId={component}
+      <Preview
+        componentId={component as any}
+        componentName={config.name}
         category={category}
       />
 
@@ -83,7 +85,7 @@ export async function generateStaticParams() {
   // Generate paths for all components in each category
   const COMPONENT_LIST: Record<string, string[]> = {};
   Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
-    const config = COMPONENT_REGISTRY[componentId];
+    const config = COMPONENT_REGISTRY[componentId as keyof typeof COMPONENT_REGISTRY];
     const category = config.category || "ui";
     if (!COMPONENT_LIST[category]) {
       COMPONENT_LIST[category] = [];

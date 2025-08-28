@@ -540,11 +540,11 @@ export default function FormsPage() {
 																min={100}
 																max={1000000}
 																value={productData.quantity}
-																onChange={(value) =>
-																	setProductData((prev) => ({
-																		...prev,
-																		quantity: value,
-																	}))
+																	onValueChange={(value: number | null) =>
+																		setProductData((prev) => ({
+																			...prev,
+																			quantity: value ?? 0,
+																		}))
 																}
 																{...filteredProps}
 															/>
@@ -632,12 +632,12 @@ export default function FormsPage() {
 															max={10}
 															step={1}
 															showValue={true}
-															value={[qualityData.tensileStrength || 5]}
-															onValueChange={(values) =>
-																setQualityData((prev) => ({
-																	...prev,
-																	tensileStrength: values[0],
-																}))
+																value={[qualityData.tensileStrength || 5]}
+																onValueChange={(value) =>
+																	setQualityData((prev) => ({
+																		...prev,
+																		tensileStrength: (Array.isArray(value) ? value[0] : value) as number,
+																	}))
 															}
 														/>
 													);
@@ -670,12 +670,12 @@ export default function FormsPage() {
 															max={10}
 															step={1}
 															showValue={true}
-															value={[qualityData.corrosionResistance || 5]}
-															onValueChange={(values) =>
-																setQualityData((prev) => ({
-																	...prev,
-																	corrosionResistance: values[0],
-																}))
+																value={[qualityData.corrosionResistance || 5]}
+																onValueChange={(value) =>
+																	setQualityData((prev) => ({
+																		...prev,
+																		corrosionResistance: (Array.isArray(value) ? value[0] : value) as number,
+																	}))
 															}
 														/>
 													);
@@ -706,12 +706,12 @@ export default function FormsPage() {
 															max={10}
 															step={1}
 															showValue={true}
-															value={[qualityData.bendability || 5]}
-															onValueChange={(values) =>
-																setQualityData((prev) => ({
-																	...prev,
-																	bendability: values[0],
-																}))
+																value={[qualityData.bendability || 5]}
+																onValueChange={(value) =>
+																	setQualityData((prev) => ({
+																		...prev,
+																		bendability: (Array.isArray(value) ? value[0] : value) as number,
+																	}))
 															}
 														/>
 													);
@@ -738,7 +738,7 @@ export default function FormsPage() {
 																> | null>
 															}
 															checked={qualityData.qualityInspection}
-															onCheckedChange={(checked) =>
+																onCheckedChange={(checked: boolean) =>
 																setQualityData((prev) => ({
 																	...prev,
 																	qualityInspection: checked,
@@ -770,7 +770,7 @@ export default function FormsPage() {
 																> | null>
 															}
 															checked={qualityData.certificationRequired}
-															onCheckedChange={(checked) =>
+																onCheckedChange={(checked: boolean) =>
 																setQualityData((prev) => ({
 																	...prev,
 																	certificationRequired: checked,
@@ -853,7 +853,7 @@ export default function FormsPage() {
 														> | null>
 													}
 													checked={preferencesData.rushOrder}
-													onCheckedChange={(checked) =>
+															onCheckedChange={(checked: boolean) =>
 														setPreferencesData((prev) => ({
 															...prev,
 															rushOrder: checked,
@@ -943,7 +943,7 @@ export default function FormsPage() {
 															> | null>
 														}
 														checked={preferencesData.newsletter}
-														onCheckedChange={(checked) =>
+														onCheckedChange={(checked: boolean) =>
 															setPreferencesData((prev) => ({
 																...prev,
 																newsletter: checked,
@@ -969,7 +969,7 @@ export default function FormsPage() {
 											<FormControl>
 												<Checkbox
 													checked={preferencesData.terms}
-													onCheckedChange={(checked) =>
+														onCheckedChange={(checked: boolean) =>
 														setPreferencesData((prev) => ({
 															...prev,
 															terms: checked,

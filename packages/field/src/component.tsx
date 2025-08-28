@@ -1,8 +1,8 @@
 import { Field as BaseField } from "@base-ui-components/react/field";
-import { cx } from "@patternmode/utils/cx";
-import type * as React from "react";
 import { Input } from "@patternmode/input";
 import { Text } from "@patternmode/text";
+import { cx } from "@patternmode/utils/cx";
+import type * as React from "react";
 
 /**
  * Root field component for grouping form controls with labels and validation.

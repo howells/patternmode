@@ -90,7 +90,7 @@ const TagInput = ({
 	renderItem,
 	renderTag,
 	filterOptions = defaultFilterOptions,
-	onValidate = defaultValidateNewTag,
+	_onValidate = defaultValidateNewTag,
 	onCreate = defaultCreateNewTag,
 	wrap = true,
 }: TagInputProps) => {
@@ -152,7 +152,7 @@ const TagInput = ({
 		onInputValueChange: ({ inputValue }) => setInputValue(inputValue ?? ""),
 		onIsOpenChange: ({ isOpen }) => setIsOpen(isOpen),
 		itemToString: (item) => (item ? item.label : ""),
-		stateReducer: (state, actionAndChanges) => {
+		stateReducer: (_state, actionAndChanges) => {
 			const { changes, type } = actionAndChanges as any;
 			switch (type) {
 				case useCombobox.stateChangeTypes.InputBlur:
@@ -200,7 +200,7 @@ const TagInput = ({
 			<div
 				className={cx(
 					"flex items-center gap-2 rounded-md border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-950",
-                    focusRing,
+					focusRing,
 					wrap ? "flex-wrap" : "overflow-x-auto",
 					isInputDisabled ? "opacity-60 cursor-not-allowed" : "",
 				)}

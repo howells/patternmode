@@ -17,6 +17,15 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
   typedRoutes: false,
+  webpack: (config) => {
+    // Avoid wasm-based hashing path that can error on Node 22 in some setups
+    if (config.output) {
+      // Use a stable, non-wasm hash to sidestep WasmHash crash
+      // See: https://webpack.js.org/configuration/output/#outputhashfunction
+      (config.output as any).hashFunction = "sha256";
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

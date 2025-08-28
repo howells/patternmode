@@ -1,5 +1,4 @@
 import { useRender } from "@base-ui-components/react/use-render";
-import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import {
 	type GlobalSemanticVariant,
 	getColorClasses,
@@ -7,6 +6,7 @@ import {
 	semanticVariants,
 	type TailwindColor,
 } from "@patternmode/config/variants";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { Icon } from "@patternmode/icon";
 import type { IconComponent } from "@patternmode/icon/types";
 import { getIconComponent } from "@patternmode/icons";
@@ -48,7 +48,7 @@ const Badge = ({
 	rounded,
 	leftIcon: LeftIcon,
 	rightIcon: RightIcon,
-    iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
+	iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	children,
 	dismissible: _dismissible = false,
 	onDismiss,

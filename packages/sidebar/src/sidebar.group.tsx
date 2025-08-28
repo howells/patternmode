@@ -1,6 +1,9 @@
 import { cx } from "@patternmode/utils/cx";
 
-export const SidebarGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
+export const SidebarGroup = ({
+	className,
+	...props
+}: React.ComponentProps<"div">) => {
 	return (
 		<div
 			data-slot="sidebar-group"
@@ -9,4 +12,4 @@ export const SidebarGroup = ({ className, ...props }: React.ComponentProps<"div"
 			{...props}
 		/>
 	);
-}
+};

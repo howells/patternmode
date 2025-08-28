@@ -19,9 +19,7 @@ export const DefaultExample = () => {
 				<div className="flex items-start justify-between">
 					<div className="flex-1">
 						<div className="mb-2 flex items-center justify-between">
-							<div className=" text-zinc-900 dark:text-zinc-50">
-								Starter
-							</div>
+							<div className=" text-zinc-900 dark:text-zinc-50">Starter</div>
 							<div className="text-lg text-zinc-900 dark:text-zinc-50">
 								$9
 								<span className="text-sm font-normal text-zinc-500">/mo</span>

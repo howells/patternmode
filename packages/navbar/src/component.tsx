@@ -5,11 +5,10 @@ import { LayoutGroup, motion } from "motion/react";
 
 // Framework-agnostic: do not import Next.js here
 
+import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
 import { useId } from "react";
-
-import { Button } from "@patternmode/button";
 
 type NavbarProps = {
 	/**

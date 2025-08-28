@@ -7,36 +7,27 @@ import { Tooltip } from "./component";
 
 export function DefaultExample() {
 	return (
-		<Tooltip
-			content="This is a helpful tooltip"
-			children={<Button variant="outline">Hover me</Button>}
-		/>
+		<Tooltip content="This is a helpful tooltip">
+			<Button variant="outline">Hover me</Button>
+		</Tooltip>
 	);
 }
 
 export function PositionsExample() {
 	return (
 		<div className="flex gap-4 flex-wrap justify-center">
-			<Tooltip
-				content="Top tooltip"
-				side="top"
-				children={<Button variant="outline">Top</Button>}
-			/>
-			<Tooltip
-				content="Right tooltip"
-				side="right"
-				children={<Button variant="outline">Right</Button>}
-			/>
-			<Tooltip
-				content="Bottom tooltip"
-				side="bottom"
-				children={<Button variant="outline">Bottom</Button>}
-			/>
-			<Tooltip
-				content="Left tooltip"
-				side="left"
-				children={<Button variant="outline">Left</Button>}
-			/>
+			<Tooltip content="Top tooltip" side="top">
+				<Button variant="outline">Top</Button>
+			</Tooltip>
+			<Tooltip content="Right tooltip" side="right">
+				<Button variant="outline">Right</Button>
+			</Tooltip>
+			<Tooltip content="Bottom tooltip" side="bottom">
+				<Button variant="outline">Bottom</Button>
+			</Tooltip>
+			<Tooltip content="Left tooltip" side="left">
+				<Button variant="outline">Left</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -44,16 +35,15 @@ export function PositionsExample() {
 export function VariantsExample() {
 	return (
 		<div className="flex gap-4">
-			<Tooltip
-				content="Default tooltip with dark background"
-				variant="default"
-				children={<Button variant="outline">Default</Button>}
-			/>
+			<Tooltip content="Default tooltip with dark background" variant="default">
+				<Button variant="outline">Default</Button>
+			</Tooltip>
 			<Tooltip
 				content="Inverse tooltip with light background"
 				variant="inverse"
-				children={<Button variant="outline">Inverse</Button>}
-			/>
+			>
+				<Button variant="outline">Inverse</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -61,21 +51,15 @@ export function VariantsExample() {
 export function SizesExample() {
 	return (
 		<div className="flex gap-4">
-			<Tooltip
-				content="Small tooltip"
-				size="sm"
-				children={<Button variant="outline">Small</Button>}
-			/>
-			<Tooltip
-				content="Default size tooltip"
-				size="default"
-				children={<Button variant="outline">Default</Button>}
-			/>
-			<Tooltip
-				content="Large tooltip with more content space"
-				size="lg"
-				children={<Button variant="outline">Large</Button>}
-			/>
+			<Tooltip content="Small tooltip" size="sm">
+				<Button variant="outline">Small</Button>
+			</Tooltip>
+			<Tooltip content="Default size tooltip" size="default">
+				<Button variant="outline">Default</Button>
+			</Tooltip>
+			<Tooltip content="Large tooltip with more content space" size="lg">
+				<Button variant="outline">Large</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -83,16 +67,12 @@ export function SizesExample() {
 export function ArrowExample() {
 	return (
 		<div className="flex gap-4">
-			<Tooltip
-				content="Tooltip with arrow"
-				showArrow={true}
-				children={<Button variant="outline">With Arrow</Button>}
-			/>
-			<Tooltip
-				content="Tooltip without arrow"
-				showArrow={false}
-				children={<Button variant="outline">No Arrow</Button>}
-			/>
+			<Tooltip content="Tooltip with arrow" showArrow>
+				<Button variant="outline">With Arrow</Button>
+			</Tooltip>
+			<Tooltip content="Tooltip without arrow" showArrow={false}>
+				<Button variant="outline">No Arrow</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -110,8 +90,9 @@ export function RichContentExample() {
 					</div>
 				}
 				size="lg"
-				children={<Button variant="outline">Rich Content</Button>}
-			/>
+			>
+				<Button variant="outline">Rich Content</Button>
+			</Tooltip>
 			<Tooltip
 				content={
 					<div className="flex items-center gap-2">
@@ -123,8 +104,9 @@ export function RichContentExample() {
 					</div>
 				}
 				variant="inverse"
-				children={<Button variant="outline">With Icon</Button>}
-			/>
+			>
+				<Button variant="outline">With Icon</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -138,8 +120,9 @@ export function ControlledExample() {
 				content="This tooltip is controlled externally"
 				open={open}
 				onOpenChange={setOpen}
-				children={<Button variant="outline">Controlled Tooltip</Button>}
-			/>
+			>
+				<Button variant="outline">Controlled Tooltip</Button>
+			</Tooltip>
 			<Button onClick={() => setOpen(!open)} variant="secondary">
 				{open ? "Close" : "Open"} Tooltip
 			</Button>
@@ -150,21 +133,15 @@ export function ControlledExample() {
 export function DelayExample() {
 	return (
 		<div className="flex gap-4">
-			<Tooltip
-				content="Fast tooltip (0ms delay)"
-				delayDuration={0}
-				children={<Button variant="outline">No Delay</Button>}
-			/>
-			<Tooltip
-				content="Default tooltip (150ms delay)"
-				delayDuration={150}
-				children={<Button variant="outline">Default Delay</Button>}
-			/>
-			<Tooltip
-				content="Slow tooltip (500ms delay)"
-				delayDuration={500}
-				children={<Button variant="outline">Slow Delay</Button>}
-			/>
+			<Tooltip content="Fast tooltip (0ms delay)" delayDuration={0}>
+				<Button variant="outline">No Delay</Button>
+			</Tooltip>
+			<Tooltip content="Default tooltip (150ms delay)" delayDuration={150}>
+				<Button variant="outline">Default Delay</Button>
+			</Tooltip>
+			<Tooltip content="Slow tooltip (500ms delay)" delayDuration={500}>
+				<Button variant="outline">Slow Delay</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -172,34 +149,25 @@ export function DelayExample() {
 export function IconButtonsExample() {
 	return (
 		<div className="flex gap-4">
-			<Tooltip
-				content="Get help and documentation"
-				side="bottom"
-				children={
-					<Button variant="ghost" size="icon">
-						<HelpCircle size={16} />
-					</Button>
-				}
-			/>
-			<Tooltip
-				content="Important information about this feature"
-				side="bottom"
-				children={
-					<Button variant="ghost" size="icon">
-						<Info size={16} />
-					</Button>
-				}
-			/>
+			<Tooltip content="Get help and documentation" side="bottom">
+				<Button variant="ghost" size="icon">
+					<HelpCircle size={16} />
+				</Button>
+			</Tooltip>
+			<Tooltip content="Important information about this feature" side="bottom">
+				<Button variant="ghost" size="icon">
+					<Info size={16} />
+				</Button>
+			</Tooltip>
 			<Tooltip
 				content="This action requires caution"
 				side="bottom"
 				variant="inverse"
-				children={
-					<Button variant="ghost" size="icon">
-						<Settings size={16} />
-					</Button>
-				}
-			/>
+			>
+				<Button variant="ghost" size="icon">
+					<Settings size={16} />
+				</Button>
+			</Tooltip>
 		</div>
 	);
 }
@@ -210,47 +178,33 @@ export function AlignmentExample() {
 			<div>
 				<h4 className="text-sm font-medium mb-4">Bottom Side Alignment</h4>
 				<div className="flex gap-4 justify-center">
-					<Tooltip
-						content="Start aligned tooltip"
-						side="bottom"
-						align="start"
-						children={<Button variant="outline">Start</Button>}
-					/>
+					<Tooltip content="Start aligned tooltip" side="bottom" align="start">
+						<Button variant="outline">Start</Button>
+					</Tooltip>
 					<Tooltip
 						content="Center aligned tooltip"
 						side="bottom"
 						align="center"
-						children={<Button variant="outline">Center</Button>}
-					/>
-					<Tooltip
-						content="End aligned tooltip"
-						side="bottom"
-						align="end"
-						children={<Button variant="outline">End</Button>}
-					/>
+					>
+						<Button variant="outline">Center</Button>
+					</Tooltip>
+					<Tooltip content="End aligned tooltip" side="bottom" align="end">
+						<Button variant="outline">End</Button>
+					</Tooltip>
 				</div>
 			</div>
 			<div>
 				<h4 className="text-sm font-medium mb-4">Right Side Alignment</h4>
 				<div className="flex flex-col gap-4 items-start">
-					<Tooltip
-						content="Start aligned tooltip"
-						side="right"
-						align="start"
-						children={<Button variant="outline">Start</Button>}
-					/>
-					<Tooltip
-						content="Center aligned tooltip"
-						side="right"
-						align="center"
-						children={<Button variant="outline">Center</Button>}
-					/>
-					<Tooltip
-						content="End aligned tooltip"
-						side="right"
-						align="end"
-						children={<Button variant="outline">End</Button>}
-					/>
+					<Tooltip content="Start aligned tooltip" side="right" align="start">
+						<Button variant="outline">Start</Button>
+					</Tooltip>
+					<Tooltip content="Center aligned tooltip" side="right" align="center">
+						<Button variant="outline">Center</Button>
+					</Tooltip>
+					<Tooltip content="End aligned tooltip" side="right" align="end">
+						<Button variant="outline">End</Button>
+					</Tooltip>
 				</div>
 			</div>
 		</div>

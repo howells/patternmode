@@ -1,6 +1,10 @@
 import { cx } from "@patternmode/utils/cx";
+import {
+	clampValue,
+	defaultValueFormatter,
+	getProgressPercentage,
+} from "@patternmode/utils/progress";
 import type React from "react";
-import { clampValue, defaultValueFormatter, getProgressPercentage } from "@patternmode/utils/progress";
 import type { ProgressCircleProps } from "./types";
 import { progressCircleVariants } from "./variants";
 
@@ -71,7 +75,9 @@ const ProgressCircle = ({
 				height={radius * 2}
 				viewBox={`0 0 ${radius * 2} ${radius * 2}`}
 				className={cx(svg(), "w-full h-full")}
+				aria-hidden="true"
 			>
+				<title>Progress visualization</title>
 				{/* Background track */}
 				<circle
 					r={normalizedRadius}

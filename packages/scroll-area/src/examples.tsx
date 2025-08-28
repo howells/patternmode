@@ -32,6 +32,7 @@ export const HorizontalExample = () => {
 		>
 			<div className="flex w-max space-x-4 p-4">
 				{Array.from({ length: 10 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 					<figure key={i} className="shrink-0">
 						<div className="overflow-hidden rounded-md">
 							<div
@@ -63,6 +64,7 @@ export const BothDirectionsExample = () => {
 				<div className="grid grid-cols-6 gap-4">
 					{Array.from({ length: 24 }).map((_, i) => (
 						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 							key={i}
 							className="w-16 h-16 bg-zinc-200 rounded flex items-center justify-center text-sm"
 						>
@@ -88,6 +90,7 @@ export const CustomStyledExample = () => {
 			<div className="p-4 space-y-4">
 				<h4 className=" text-blue-900 dark:text-blue-100">Custom Scrollbar</h4>
 				{Array.from({ length: 30 }).map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: static demo items
 					<div key={i} className="p-3 bg-blue-50 dark:bg-blue-900 rounded-md">
 						<div className="font-medium text-blue-900 dark:text-blue-100">
 							Item {i + 1}

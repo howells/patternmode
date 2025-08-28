@@ -120,4 +120,4 @@ export type ButtonProps = {
 	 */
 	showRightIconOnHover?: boolean;
 } & useRender.ComponentProps<"button"> &
-	VariantProps<any>;
+	VariantProps<typeof import("./variants").buttonStyles>;

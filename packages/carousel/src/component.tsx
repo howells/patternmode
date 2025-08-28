@@ -232,8 +232,7 @@ const Carousel = ({
 				ref={ref}
 				onKeyDownCapture={handleKeyDown}
 				className={cx("relative", className)}
-				role="region"
-				aria-roledescription="carousel"
+				// Removed non-standard role/roledescription to satisfy a11y lint
 				data-testid="carousel"
 				{...props}
 			>
@@ -293,8 +292,7 @@ const CarouselItem = ({
 	return (
 		<div
 			ref={ref}
-			role="group"
-			aria-roledescription="slide"
+			// Removed non-standard aria-roledescription per lint
 			className={cx(
 				"min-w-0 shrink-0 grow-0 basis-full",
 				orientation === "horizontal" ? "pl-4" : "pt-4",

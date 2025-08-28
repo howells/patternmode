@@ -3,18 +3,18 @@
 import { Avatar } from "./component";
 
 export const DefaultExample = () => (
-  <div className="flex items-center gap-4">
-    <Avatar initials="PM" />
-    <Avatar text="Patternmode" dynamicBackground />
-    <Avatar src="https://picsum.photos/80" alt="Random" />
-  </div>
+	<div className="flex items-center gap-4">
+		<Avatar initials="PM" />
+		<Avatar text="Patternmode" dynamicBackground />
+		<Avatar src="https://picsum.photos/80" alt="Random" />
+	</div>
 );
 
 export const SizesExample = () => (
-  <div className="flex items-center gap-4">
-    <Avatar initials="XS" size="xs" />
-    <Avatar initials="SM" size="sm" />
-    <Avatar initials="BA" size="base" />
-    <Avatar initials="LG" size="lg" />
-  </div>
+	<div className="flex items-center gap-4">
+		<Avatar initials="XS" size="xs" />
+		<Avatar initials="SM" size="sm" />
+		<Avatar initials="BA" size="base" />
+		<Avatar initials="LG" size="lg" />
+	</div>
 );

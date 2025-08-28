@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@patternmode/icon";
 import {
 	ChevronRight,
 	Edit,
@@ -9,7 +10,6 @@ import {
 	Settings,
 	Trash,
 } from "lucide-react";
-import { Icon } from "@patternmode/icon";
 import {
 	MenuBar,
 	MenuBarContent,

@@ -1,7 +1,7 @@
 import type { Size } from "@patternmode/config/sizes";
-import type React from "react";
 import type { ButtonVariant } from "@patternmode/constants/variants";
 import type { MenuContent } from "@patternmode/menu";
+import type React from "react";
 
 export type SplitButtonVariant = ButtonVariant;
 

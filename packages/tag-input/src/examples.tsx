@@ -254,7 +254,7 @@ export const ComplexExample = () => {
 	return (
 		<div className="space-y-4">
 			<div className="space-y-2">
-				<label className="text-sm font-medium">Preferred Locations</label>
+				<div className="text-sm font-medium">Preferred Locations</div>
 				<TagInput
 					options={locations}
 					value={selectedLocations}

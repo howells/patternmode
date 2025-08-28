@@ -1,7 +1,7 @@
 import { Progress as BaseProgress } from "@base-ui-components/react/progress";
 import { cx } from "@patternmode/utils/cx";
-import type React from "react";
 import { defaultValueFormatter } from "@patternmode/utils/progress";
+import type React from "react";
 import type { ProgressBarProps } from "./types";
 import { progressVariants } from "./variants";
 

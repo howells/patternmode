@@ -46,8 +46,6 @@ export const ButtonAsLinkExample = () => (
 
 // Simple button examples without icons
 
-
-
 // Loading state
 export const LoadingExample = () => <Button isLoading>Loading...</Button>;
 
@@ -71,9 +69,7 @@ export const FullWidthExample = () => (
 export const DisabledExample = () => <Button disabled>Disabled</Button>;
 
 // Rounded button
-export const RoundedExample = () => (
-	<Button rounded>Rounded</Button>
-);
+export const RoundedExample = () => <Button rounded>Rounded</Button>;
 
 // Loading with text
 export const LoadingWithTextExample = () => (
@@ -97,19 +93,14 @@ export const TextAlignExample = () => (
 // Keyboard shortcuts
 export const KeyboardShortcutsExample = () => (
 	<div className="flex flex-col gap-2">
-		<Button kbd={["mod", "K"]}>
-			Search
-		</Button>
+		<Button kbd={["mod", "K"]}>Search</Button>
 		<Button variant="secondary" kbd="Enter">
 			Submit
 		</Button>
 		<Button variant="primary" kbd="Ent">
 			Button
 		</Button>
-		<Button
-			variant="outline"
-			kbd={["mod", "shift", "P"]}
-		>
+		<Button variant="outline" kbd={["mod", "shift", "P"]}>
 			Command Palette
 		</Button>
 	</div>

@@ -1,9 +1,6 @@
-import type {
-	GapValue,
-	ResponsiveSpacing,
-} from "@patternmode/utils/spacing";
-import type React from "react";
 import type { ButtonProps } from "@patternmode/button";
+import type { GapValue, ResponsiveSpacing } from "@patternmode/utils/spacing";
+import type React from "react";
 
 export type ButtonGroupProps = {
 	/**

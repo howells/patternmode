@@ -54,13 +54,13 @@ BreadcrumbItem.displayName = "BreadcrumbItem";
 const BreadcrumbLink = ({
 	ref,
 	className,
-	render = <a />,
+	render,
 	...props
 }: BreadcrumbLinkProps) => {
 	const { link } = breadcrumbVariants();
 
 	const element = useRender({
-		render,
+		render: render ?? "a",
 		ref,
 		props: mergeProps<"a">({ className: cx(link(), className) }, props),
 	});
@@ -77,8 +77,6 @@ const BreadcrumbPage = ({ ref, className, ...props }: BreadcrumbPageProps) => {
 	return (
 		<span
 			ref={ref}
-			role="link"
-			aria-disabled="true"
 			aria-current="page"
 			className={cx(page(), className)}
 			{...props}

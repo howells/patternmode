@@ -1,72 +1,107 @@
 "use client";
 
 import { Stack } from "@patternmode/stack";
-import { AlertCircle, ArrowRight, Check, Clock, Star, Trash2 } from "lucide-react";
+import {
+	AlertCircle,
+	ArrowRight,
+	Check,
+	Clock,
+	Star,
+	Trash2,
+} from "lucide-react";
 import { Badge } from "./component";
 
 export const DefaultExample = () => <Badge>Badge</Badge>;
 
 export const WithIconsExample = () => (
-  <Badge leftIcon={Check} rightIcon={ArrowRight} variant="success">Success</Badge>
+	<Badge leftIcon={Check} rightIcon={ArrowRight} variant="success">
+		Success
+	</Badge>
 );
 
 export const DismissExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge onDismiss={() => {}}>Removable</Badge>
-    <Badge variant="success" leftIcon={Check} onDismiss={() => {}}>Completed</Badge>
-    <Badge variant="error" onDismiss={() => {}} dismissIcon={Trash2}>Delete me</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge onDismiss={() => {}}>Removable</Badge>
+		<Badge variant="success" leftIcon={Check} onDismiss={() => {}}>
+			Completed
+		</Badge>
+		<Badge variant="error" onDismiss={() => {}} dismissIcon={Trash2}>
+			Delete me
+		</Badge>
+	</Stack>
 );
 
 export const VariantsExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge variant="default">Default</Badge>
-    <Badge variant="success">Success</Badge>
-    <Badge variant="warning">Warning</Badge>
-    <Badge variant="error">Error</Badge>
-    <Badge variant="info">Info</Badge>
-    <Badge variant="blue">Blue</Badge>
-    <Badge variant="purple">Purple</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge variant="default">Default</Badge>
+		<Badge variant="success">Success</Badge>
+		<Badge variant="warning">Warning</Badge>
+		<Badge variant="error">Error</Badge>
+		<Badge variant="info">Info</Badge>
+		<Badge variant="blue">Blue</Badge>
+		<Badge variant="purple">Purple</Badge>
+	</Stack>
 );
 
 export const SizesExample = () => (
-  <Stack direction="horizontal" align="center" gap={2}>
-    <Badge size="sm">Small</Badge>
-    <Badge size="base">Base</Badge>
-    <Badge size="lg">Large</Badge>
-  </Stack>
+	<Stack direction="horizontal" align="center" gap={2}>
+		<Badge size="sm">Small</Badge>
+		<Badge size="base">Base</Badge>
+		<Badge size="lg">Large</Badge>
+	</Stack>
 );
 
 export const RoundedExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge rounded>Pill Badge</Badge>
-    <Badge rounded variant="success" leftIcon={Check}>Approved</Badge>
-    <Badge rounded variant="warning" leftIcon={Clock}>Pending</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge rounded>Pill Badge</Badge>
+		<Badge rounded variant="success" leftIcon={Check}>
+			Approved
+		</Badge>
+		<Badge rounded variant="warning" leftIcon={Clock}>
+			Pending
+		</Badge>
+	</Stack>
 );
 
 export const BorderedExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge border>Bordered</Badge>
-    <Badge border variant="info" leftIcon={AlertCircle}>Information</Badge>
-    <Badge border rounded variant="success">Featured</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge border>Bordered</Badge>
+		<Badge border variant="info" leftIcon={AlertCircle}>
+			Information
+		</Badge>
+		<Badge border rounded variant="success">
+			Featured
+		</Badge>
+	</Stack>
 );
 
 export const StatusDotExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge statusDot variant="success">Online</Badge>
-    <Badge statusDot variant="warning">Away</Badge>
-    <Badge statusDot variant="error">Offline</Badge>
-    <Badge statusDot statusAnimated variant="info">Live</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge statusDot variant="success">
+			Online
+		</Badge>
+		<Badge statusDot variant="warning">
+			Away
+		</Badge>
+		<Badge statusDot variant="error">
+			Offline
+		</Badge>
+		<Badge statusDot statusAnimated variant="info">
+			Live
+		</Badge>
+	</Stack>
 );
 
 export const ComplexExample = () => (
-  <Stack direction="horizontal" wrap gap={2}>
-    <Badge variant="purple" leftIcon={Star} rounded border>Premium</Badge>
-    <Badge variant="success" statusDot statusAnimated onDismiss={() => {}}>Active Session</Badge>
-    <Badge size="lg" variant="warning" leftIcon={AlertCircle} rounded>Requires Attention</Badge>
-  </Stack>
+	<Stack direction="horizontal" wrap gap={2}>
+		<Badge variant="purple" leftIcon={Star} rounded border>
+			Premium
+		</Badge>
+		<Badge variant="success" statusDot statusAnimated onDismiss={() => {}}>
+			Active Session
+		</Badge>
+		<Badge size="lg" variant="warning" leftIcon={AlertCircle} rounded>
+			Requires Attention
+		</Badge>
+	</Stack>
 );

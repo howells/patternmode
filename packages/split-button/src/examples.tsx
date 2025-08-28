@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronDown, Code, Download, File, Image } from "lucide-react";
 import { MenuItem, MenuLabel, MenuSeparator } from "@patternmode/menu";
+import { ChevronDown, Code, Download, File, Image } from "lucide-react";
 import { SplitButton } from "./component";
 
 export function DefaultExample() {

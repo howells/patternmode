@@ -17,13 +17,13 @@ export function NumberFieldPreview({
 	const [value, setValue] = React.useState<number>(defaultValue);
 	return (
 		<div className="p-6">
-    <NumberField
-        value={value}
-        onValueChange={(v: number | null) => setValue(v ?? 0)}
-        disabled={disabled}
-        showSteppers={showSteppers}
-        label="Amount"
-    />
+			<NumberField
+				value={value}
+				onValueChange={(v: number | null) => setValue(v ?? 0)}
+				disabled={disabled}
+				showSteppers={showSteppers}
+				label="Amount"
+			/>
 		</div>
 	);
 }

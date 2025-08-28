@@ -1,9 +1,9 @@
 "use client";
 
 import { Toggle as BaseToggle } from "@base-ui-components/react/toggle";
+import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { Button } from "@patternmode/button";
 import type { ToggleProps } from "./types";
 import { toggleVariants } from "./variants";
 

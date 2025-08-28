@@ -36,47 +36,51 @@ export function SelectPreview(props: SelectPreviewProps) {
 			<SelectTrigger hasError={props.hasError}>
 				<SelectValue />
 			</SelectTrigger>
-				<SelectPortal>
-					<SelectContent sideOffset={8} align="start" alignItemWithTrigger={false}>
-							<SelectItem value="apple">
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-								<Select.ItemText>Apple</Select.ItemText>
-							</SelectItem>
-							<SelectItem value="banana">
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-								<Select.ItemText>Banana</Select.ItemText>
-							</SelectItem>
-							<SelectItem value="orange">
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-								<Select.ItemText>Orange</Select.ItemText>
-							</SelectItem>
-							<SelectSeparator />
-							<SelectItem value="grape">
-								<Select.ItemText>Grape</Select.ItemText>
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-							</SelectItem>
-							<SelectItem value="strawberry">
-								<Select.ItemText>Strawberry</Select.ItemText>
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-							</SelectItem>
-							<SelectItem value="pineapple">
-								<Select.ItemIndicator>
-									<Check className="size-3" />
-								</Select.ItemIndicator>
-								<Select.ItemText>Pineapple</Select.ItemText>
-							</SelectItem>
-					</SelectContent>
-				</SelectPortal>
+			<SelectPortal>
+				<SelectContent
+					sideOffset={8}
+					align="start"
+					alignItemWithTrigger={false}
+				>
+					<SelectItem value="apple">
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+						<Select.ItemText>Apple</Select.ItemText>
+					</SelectItem>
+					<SelectItem value="banana">
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+						<Select.ItemText>Banana</Select.ItemText>
+					</SelectItem>
+					<SelectItem value="orange">
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+						<Select.ItemText>Orange</Select.ItemText>
+					</SelectItem>
+					<SelectSeparator />
+					<SelectItem value="grape">
+						<Select.ItemText>Grape</Select.ItemText>
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+					</SelectItem>
+					<SelectItem value="strawberry">
+						<Select.ItemText>Strawberry</Select.ItemText>
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+					</SelectItem>
+					<SelectItem value="pineapple">
+						<Select.ItemIndicator>
+							<Check className="size-3" />
+						</Select.ItemIndicator>
+						<Select.ItemText>Pineapple</Select.ItemText>
+					</SelectItem>
+				</SelectContent>
+			</SelectPortal>
 		</Select>
 	);
 }

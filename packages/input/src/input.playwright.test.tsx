@@ -7,4 +7,3 @@ test.describe("Simple Input Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

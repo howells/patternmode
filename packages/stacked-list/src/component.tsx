@@ -1,11 +1,11 @@
-import { cx } from "@patternmode/utils/cx";
-import type { SpacingValue } from "@patternmode/utils/spacing";
-import { getPaddingClass } from "@patternmode/utils/spacing";
-import type React from "react";
 import { Grid, GridCell } from "@patternmode/grid";
 import { HStack, Stack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
+import { cx } from "@patternmode/utils/cx";
+import type { SpacingValue } from "@patternmode/utils/spacing";
+import { getPaddingClass } from "@patternmode/utils/spacing";
+import type React from "react";
 
 // Individual list item - following Vercel's Entity pattern
 type StackedListItemProps = {

@@ -1,6 +1,9 @@
 import { cx } from "@patternmode/utils/cx";
 
-export const SidebarFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
+export const SidebarFooter = ({
+	className,
+	...props
+}: React.ComponentProps<"div">) => {
 	return (
 		<div
 			data-slot="sidebar-footer"
@@ -9,4 +12,4 @@ export const SidebarFooter = ({ className, ...props }: React.ComponentProps<"div
 			{...props}
 		/>
 	);
-}
+};

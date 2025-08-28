@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import { NuqsProviderWrapper } from "../components/nuqs-provider";
+import { Suspense } from "react";
 import { SidebarLayout } from "../components/sidebar-layout";
 import { ThemeProvider } from "../components/theme-provider";
 import { ReactQueryProvider } from "../providers/query-provider";
@@ -101,7 +102,9 @@ export default function RootLayout({
 						<ToastProvider>
 							<NuqsProviderWrapper>
 								<div className="isolate">
-									<SidebarLayout>{children}</SidebarLayout>
+									<Suspense fallback={null}>
+										<SidebarLayout>{children}</SidebarLayout>
+									</Suspense>
 								</div>
 							</NuqsProviderWrapper>
 						</ToastProvider>

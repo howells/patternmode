@@ -49,7 +49,8 @@ export function ListExample() {
 	return (
 		<div className="space-y-4">
 			{[...Array.from({ length: 3 })].map((_, i) => (
-				<div key={i} className="flex items-center space-x-4">
+				// biome-ignore lint/suspicious/noArrayIndexKey: fixed-length demo list with no reordering
+				<div key={`item-${i}`} className="flex items-center space-x-4">
 					<Skeleton className="h-12 w-12" rounded="md" />
 					<div className="flex-1 space-y-2">
 						<Skeleton className="h-4 w-1/4" />

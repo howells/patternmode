@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
 import { Stack } from "@patternmode/stack";
+import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
 import { Icon } from "./component";
 
 // Basic icons
@@ -33,7 +33,12 @@ export const SizesExample = () => {
 export const WithBackgroundExample = () => {
 	return (
 		<Stack direction="horizontal" align="center" gap={2}>
-			<Stack direction="horizontal" align="center" gap={2} className="p-3 border rounded">
+			<Stack
+				direction="horizontal"
+				align="center"
+				gap={2}
+				className="p-3 border rounded"
+			>
 				<Icon icon={User} />
 				<span>Profile</span>
 			</Stack>
@@ -70,7 +75,12 @@ export function LayoutExample() {
 	return (
 		<div className="space-y-4">
 			{/* Stack with gap */}
-			<Stack direction="horizontal" align="center" gap={2} className="p-3 border rounded">
+			<Stack
+				direction="horizontal"
+				align="center"
+				gap={2}
+				className="p-3 border rounded"
+			>
 				<Icon icon={Search} />
 				<span>Search with stack gap</span>
 			</Stack>

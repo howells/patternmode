@@ -77,8 +77,7 @@ function Icon({
 	className,
 	fallbackIcon,
 }: IconProps) {
-	const finalStrokeWidth =
-    strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH;
+	const finalStrokeWidth = strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH;
 	// Handle case where IconComponent is undefined
 	if (!IconComponent) {
 		const FallbackIconComponent = fallbackIcon;

@@ -3,8 +3,6 @@
  */
 
 import { Menubar as BaseMenubar } from "@base-ui-components/react/menubar";
-import { cx } from "@patternmode/utils/cx";
-import type React from "react";
 import {
 	Menu,
 	MenuContent,
@@ -15,6 +13,8 @@ import {
 	MenuSubmenuTrigger,
 	MenuTrigger,
 } from "@patternmode/menu";
+import { cx } from "@patternmode/utils/cx";
+import type React from "react";
 
 /**
  * Props for the MenuBar component.

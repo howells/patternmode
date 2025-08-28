@@ -1,2 +1,1 @@
-declare module 'react-syntax-highlighter/dist/esm/styles/*';
-
+declare module "react-syntax-highlighter/dist/esm/styles/*";

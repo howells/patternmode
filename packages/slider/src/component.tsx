@@ -57,6 +57,7 @@ const Slider = ({
 							<BaseSlider.Indicator className={indicator()} />
 							{valueArray.map((_, index) => (
 								<BaseSlider.Thumb
+									// biome-ignore lint/suspicious/noArrayIndexKey: thumbs are positional and order is stable
 									key={`thumb-${index}`}
 									className={thumb()}
 									getAriaLabel={() =>
@@ -77,6 +78,7 @@ const Slider = ({
 									) : (
 										<div className="flex flex-col items-center gap-1">
 											{values.map((val, index) => (
+												// biome-ignore lint/suspicious/noArrayIndexKey: value badges are static for current values
 												<span key={`value-${index}`}>
 													{valueFormatter(val)}
 												</span>
@@ -105,6 +107,7 @@ const Slider = ({
 						<BaseSlider.Indicator className={indicator()} />
 						{valueArray.map((_, index) => (
 							<BaseSlider.Thumb
+								// biome-ignore lint/suspicious/noArrayIndexKey: thumbs are positional and order is stable
 								key={`thumb-${index}`}
 								className={thumb()}
 								getAriaLabel={() =>
@@ -125,6 +128,7 @@ const Slider = ({
 								) : (
 									<div className="flex justify-between w-full">
 										{values.map((val, index) => (
+											// biome-ignore lint/suspicious/noArrayIndexKey: value badges are static for current values
 											<span key={`value-${index}`}>{valueFormatter(val)}</span>
 										))}
 									</div>

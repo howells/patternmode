@@ -22,7 +22,7 @@ export function CheckboxPreview({ checked, disabled }: CheckboxPreviewProps) {
 					id={id}
 					checked={state}
 					disabled={disabled}
-					onCheckedChange={(v: any) => setState(v as any)}
+					onCheckedChange={(v: boolean | "indeterminate") => setState(v)}
 				/>
 				{String(state ?? "unchecked")}
 			</Label>

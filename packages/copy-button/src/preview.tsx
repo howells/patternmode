@@ -4,7 +4,7 @@ import { CopyButton } from "./component";
 import type { CopyButtonProps } from "./types";
 
 export function CopyButtonPreview(props: Omit<CopyButtonProps, "text">) {
-    return <CopyButton text="Hello, World!" {...props} />;
+	return <CopyButton text="Hello, World!" {...props} />;
 }
 
 // Preview props for prop explorer

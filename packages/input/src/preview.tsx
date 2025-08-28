@@ -29,7 +29,6 @@ export function InputPreview({
 			disabled={disabled}
 		/>
 	);
-
 }
 
 export const inputPreviewProps = [

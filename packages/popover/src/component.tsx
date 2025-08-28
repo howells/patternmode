@@ -163,11 +163,7 @@ type PopoverTitleProps = {
 const PopoverTitle = ({ ref, className, ...props }: PopoverTitleProps) => (
 	<BasePopover.Title
 		ref={ref}
-		render={
-			<h3
-				className={cx("text-lg  text-zinc-900 dark:text-zinc-50", className)}
-			/>
-		}
+		className={cx("text-lg  text-zinc-900 dark:text-zinc-50", className)}
 		{...props}
 	/>
 );
@@ -187,11 +183,7 @@ const PopoverDescription = ({
 }: PopoverDescriptionProps) => (
 	<BasePopover.Description
 		ref={ref}
-		render={
-			<p
-				className={cx("text-sm text-zinc-600 dark:text-zinc-400", className)}
-			/>
-		}
+		className={cx("text-sm text-zinc-600 dark:text-zinc-400", className)}
 		{...props}
 	/>
 );

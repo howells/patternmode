@@ -1,8 +1,8 @@
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
+import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type * as React from "react";
-import { Button } from "@patternmode/button";
 
 /**
  * Root container for collapsible content sections.

@@ -106,6 +106,7 @@ export const GridAuto = ({
 	return (
 		<Grid {...gridProps}>
 			{Array.from({ length: cellCount }, (_, index) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: static, non-reordered prototype grid
 				<GridCell key={`grid-cell-${index}`}>
 					{renderCell ? renderCell(index) : index + 1}
 				</GridCell>

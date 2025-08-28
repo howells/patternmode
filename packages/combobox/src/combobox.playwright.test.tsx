@@ -7,4 +7,3 @@ test.describe("Simple Combobox Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

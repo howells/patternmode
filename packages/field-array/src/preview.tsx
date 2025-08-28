@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
 	DescriptionDetails,
 	DescriptionList,
@@ -9,6 +8,7 @@ import {
 import { Input } from "@patternmode/input";
 import { Subheading } from "@patternmode/subheading";
 import { Textarea } from "@patternmode/textarea";
+import React from "react";
 import type { FieldSchema } from "./component";
 import { FieldArray } from "./component";
 
@@ -103,17 +103,33 @@ export function FieldArrayPreview(props: FieldArrayPreviewProps) {
 
 	// Custom component map using your actual Patternmode components
 	const componentMap = {
-    input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
+		input: ({
+			value,
+			onChange,
+			...props
+		}: { value: string; onChange: (v: string) => void } & React.ComponentProps<
+			typeof Input
+		>) => (
 			<Input
 				value={value || ""}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChange(e.target.value)
+				}
 				{...props}
 			/>
 		),
-    textarea: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Textarea>) => (
+		textarea: ({
+			value,
+			onChange,
+			...props
+		}: { value: string; onChange: (v: string) => void } & React.ComponentProps<
+			typeof Textarea
+		>) => (
 			<Textarea
 				value={value || ""}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
+				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+					onChange(e.target.value)
+				}
 				{...props}
 			/>
 		),

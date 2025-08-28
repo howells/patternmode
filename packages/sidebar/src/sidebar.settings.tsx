@@ -3,11 +3,13 @@ import { Lock, PanelLeftClose, PanelLeftOpen, Pin } from "lucide-react";
 import { useSidebar } from "./sidebar-store";
 
 const SidebarSettings = () => {
-	const isExpanded = useSidebar((s) => s.isExpanded);
+    const _isExpanded = useSidebar((s) => s.isExpanded);
 	const state = useSidebar((s) => s.state);
 	const setState = useSidebar((s) => s.setState);
 
-	const getNextState = (current: "collapsed" | "open" | "pinned" | "locked") => {
+	const getNextState = (
+		current: "collapsed" | "open" | "pinned" | "locked",
+	) => {
 		switch (current) {
 			case "collapsed":
 				return "pinned";
@@ -15,7 +17,6 @@ const SidebarSettings = () => {
 				return "locked";
 			case "locked":
 				return "collapsed"; // unpin/collapse
-			case "open":
 			default:
 				return "pinned"; // treat open like pinned in desktop flow
 		}
@@ -36,7 +37,6 @@ const SidebarSettings = () => {
 				return "Sidebar: Locked";
 			case "collapsed":
 				return "Sidebar: Collapsed";
-			case "open":
 			default:
 				return "Sidebar: Pinned"; // open maps to pinned semantics
 		}

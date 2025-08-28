@@ -7,4 +7,3 @@ test.describe("Simple Checkbox Test", () => {
 		await expect(component).toBeVisible();
 	});
 });
-

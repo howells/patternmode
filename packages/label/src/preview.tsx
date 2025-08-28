@@ -1,15 +1,17 @@
 "use client";
 
+import { useId } from "react";
 import type { LabelProps } from "./component";
 import { Label } from "./component";
 
 export function LabelPreview(props: LabelProps) {
+	const id = useId();
 	return (
 		<div>
-			<Label htmlFor="demo-input" {...props}>
+			<Label htmlFor={id} {...props}>
 				{props.children || "Demo Label"}
 			</Label>
-			<input id="demo-input" className="mt-2 w-full rounded border p-2" />
+			<input id={id} className="mt-2 w-full rounded border p-2" />
 		</div>
 	);
 }

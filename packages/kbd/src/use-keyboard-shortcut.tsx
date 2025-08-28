@@ -26,7 +26,7 @@
  * ```
  */
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 type UseKeyboardShortcutOptions = {
 	/**
@@ -60,7 +60,7 @@ export function useKeyboardShortcut(
 	const { preventDefault = true, enabled = true, target: _target } = options;
 
 	// Convert keys to platform-specific format
-	const normalizeKeys = (keyList: string[]) => {
+	const normalizeKeys = useCallback((keyList: string[]) => {
 		const isMac =
 			typeof window !== "undefined" &&
 			/Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -84,59 +84,62 @@ export function useKeyboardShortcut(
 					return key.toLowerCase();
 			}
 		});
-	};
+	}, []);
 
-	const handleKeyDown = (event: KeyboardEvent) => {
-		if (!enabled) {
-			return;
-		}
-
-		const normalizedKeys = normalizeKeys(keys);
-
-		// Check if all required keys are pressed
-		const modifierKeys = normalizedKeys.filter((key) =>
-			["ctrl", "alt", "shift", "meta"].includes(key),
-		);
-		const regularKeys = normalizedKeys.filter(
-			(key) => !["ctrl", "alt", "shift", "meta"].includes(key),
-		);
-
-		// Check modifiers
-		const modifiersMatch = modifierKeys.every((key) => {
-			switch (key) {
-				case "ctrl":
-					return event.ctrlKey;
-				case "alt":
-					return event.altKey;
-				case "shift":
-					return event.shiftKey;
-				case "meta":
-					return event.metaKey;
-				default:
-					return false;
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if (!enabled) {
+				return;
 			}
-		});
 
-		// Check regular keys
-		const regularKeysMatch = regularKeys.every((key) => {
-			return event.key.toLowerCase() === key;
-		});
+			const normalizedKeys = normalizeKeys(keys);
 
-		// Ensure no extra modifiers are pressed
-		const extraModifiers = [
-			event.ctrlKey && !normalizedKeys.includes("ctrl"),
-			event.altKey && !normalizedKeys.includes("alt"),
-			event.shiftKey && !normalizedKeys.includes("shift"),
-			event.metaKey && !normalizedKeys.includes("meta"),
-		].some(Boolean);
+			// Check if all required keys are pressed
+			const modifierKeys = normalizedKeys.filter((key) =>
+				["ctrl", "alt", "shift", "meta"].includes(key),
+			);
+			const regularKeys = normalizedKeys.filter(
+				(key) => !["ctrl", "alt", "shift", "meta"].includes(key),
+			);
 
-		if (modifiersMatch && regularKeysMatch && !extraModifiers) {
-			if (preventDefault) {
-				event.preventDefault();
+			// Check modifiers
+			const modifiersMatch = modifierKeys.every((key) => {
+				switch (key) {
+					case "ctrl":
+						return event.ctrlKey;
+					case "alt":
+						return event.altKey;
+					case "shift":
+						return event.shiftKey;
+					case "meta":
+						return event.metaKey;
+					default:
+						return false;
+				}
+			});
+
+			// Check regular keys
+			const regularKeysMatch = regularKeys.every((key) => {
+				return event.key.toLowerCase() === key;
+			});
+
+			// Ensure no extra modifiers are pressed
+			const extraModifiers = [
+				event.ctrlKey && !normalizedKeys.includes("ctrl"),
+				event.altKey && !normalizedKeys.includes("alt"),
+				event.shiftKey && !normalizedKeys.includes("shift"),
+				event.metaKey && !normalizedKeys.includes("meta"),
+			].some(Boolean);
+
+			if (modifiersMatch && regularKeysMatch && !extraModifiers) {
+				if (preventDefault) {
+					event.preventDefault();
+				}
+				callback();
 			}
-			callback();
-		}
-	};
+		},
+		[enabled, keys, callback, preventDefault, normalizeKeys],
+	);
 
 	// Use native event listener with proper cleanup
 	useEffect(() => {

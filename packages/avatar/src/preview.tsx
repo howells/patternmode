@@ -4,7 +4,6 @@ import { sizes } from "@patternmode/config/sizes";
 import { Avatar } from "./component";
 import type { AvatarProps } from "./types";
 
-
 export function AvatarPreview(props: AvatarProps) {
 	return <Avatar initials="PM" dynamicBackground {...props} />;
 }

@@ -1,9 +1,9 @@
-import { cx } from "@patternmode/utils/cx";
 import { Button } from "@patternmode/button";
 import { Heading } from "@patternmode/heading";
 import { IconContainer } from "@patternmode/icon-container";
 import { Subheading } from "@patternmode/subheading";
 import { Text } from "@patternmode/text";
+import { cx } from "@patternmode/utils/cx";
 import type { EmptyStateProps } from "./types";
 import {
 	emptyStateActionsVariants,
@@ -71,35 +71,48 @@ export const EmptyState = ({
 					})}
 				>
 					{/* Primary Action */}
-					{primaryAction && (
-						<Button
-							variant="primary"
-							size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
-							disabled={primaryAction.disabled}
-							onClick={primaryAction.onClick}
-							render={
-								primaryAction.href ? <a href={primaryAction.href} /> : undefined
-							}
-						>
-							{primaryAction.label}
-						</Button>
-					)}
+					{primaryAction &&
+						(primaryAction.href ? (
+							<a href={primaryAction.href} aria-label={primaryAction.label}>
+								<Button
+									variant="primary"
+									size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
+									disabled={primaryAction.disabled}
+								>
+									{primaryAction.label}
+								</Button>
+							</a>
+						) : (
+							<Button
+								variant="primary"
+								size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
+								disabled={primaryAction.disabled}
+								onClick={primaryAction.onClick}
+							>
+								{primaryAction.label}
+							</Button>
+						))}
 
 					{/* Secondary Action */}
-					{secondaryAction && (
-						<Button
-							variant="ghost"
-							size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
-							onClick={secondaryAction.onClick}
-							render={
-								secondaryAction.href ? (
-									<a href={secondaryAction.href} />
-								) : undefined
-							}
-						>
-							{secondaryAction.label}
-						</Button>
-					)}
+					{secondaryAction &&
+						(secondaryAction.href ? (
+							<a href={secondaryAction.href} aria-label={secondaryAction.label}>
+								<Button
+									variant="ghost"
+									size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
+								>
+									{secondaryAction.label}
+								</Button>
+							</a>
+						) : (
+							<Button
+								variant="ghost"
+								size={size === "sm" ? "sm" : size === "lg" ? "lg" : "base"}
+								onClick={secondaryAction.onClick}
+							>
+								{secondaryAction.label}
+							</Button>
+						))}
 				</div>
 			)}
 		</div>

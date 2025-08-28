@@ -4,7 +4,6 @@ import { Menu as BaseMenu } from "@base-ui-components/react/menu";
 import type { Popover as BasePopover } from "@base-ui-components/react/popover";
 import type { useRender } from "@base-ui-components/react/use-render";
 // Using a simple button fallback to avoid cross-package coupling
-import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";

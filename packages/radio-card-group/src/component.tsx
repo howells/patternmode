@@ -2,9 +2,9 @@
 import { Radio } from "@base-ui-components/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import { cx } from "@patternmode/utils/cx";
+import { focusInput } from "@patternmode/utils/focus-input";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import type React from "react";
-import { focusInput } from "@patternmode/utils/focus-input";
 
 type RadioCardGroupProps = React.ComponentPropsWithoutRef<
 	typeof BaseRadioGroup

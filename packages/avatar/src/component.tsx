@@ -59,7 +59,7 @@ const Avatar = ({
 					viewBox="0 0 100 100"
 					aria-hidden={alt ? undefined : "true"}
 				>
-					{alt && <title>{alt}</title>}
+					<title>{alt || displayText}</title>
 					<text
 						x="50%"
 						y="50%"

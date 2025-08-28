@@ -17,7 +17,7 @@ export function WithValueExample() {
 	return (
 		<div className="space-y-4">
 			<div>
-				<label className="text-sm font-medium">Volume: {value[0]}%</label>
+				<div className="text-sm font-medium">Volume: {value[0]}%</div>
 				<Slider
 					value={value}
 					onValueChange={(newValue) =>
@@ -38,7 +38,7 @@ export function CustomRangeExample() {
 	return (
 		<div className="space-y-4">
 			<div>
-				<label className="text-sm font-medium">Temperature: {value[0]}°C</label>
+				<div className="text-sm font-medium">Temperature: {value[0]}°C</div>
 				<Slider
 					value={value}
 					onValueChange={(newValue) =>

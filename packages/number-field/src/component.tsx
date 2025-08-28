@@ -147,7 +147,9 @@ const NumberFieldScrubCursor = ({
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			className="lucide lucide-move-horizontal"
+			aria-hidden="true"
 		>
+			<title>Scrub cursor</title>
 			<MoveHorizontal />
 		</svg>
 	</BaseNumberField.ScrubAreaCursor>
@@ -160,23 +162,23 @@ const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => (
 );
 
 type NumberFieldInputProps = {
-    size?: "xs" | "sm" | "base" | "lg";
-    className?: string;
+	size?: "xs" | "sm" | "base" | "lg";
+	className?: string;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>, "size">;
 const NumberFieldInput = React.forwardRef<
-    React.ElementRef<typeof BaseNumberField.Input>,
-    NumberFieldInputProps
+	React.ElementRef<typeof BaseNumberField.Input>,
+	NumberFieldInputProps
 >(({ size = "base", className, ...props }, ref) => (
-    <BaseNumberField.Input
-        ref={ref}
-        className={cx(
-            "flex h-9 w-32 items-center rounded-md border px-3 py-1 text-sm outline-hidden",
-            " dark:border-zinc-800",
-            focusRing,
-            className,
-        )}
-        {...props}
-    />
+	<BaseNumberField.Input
+		ref={ref}
+		className={cx(
+			"flex h-9 w-32 items-center rounded-md border px-3 py-1 text-sm outline-hidden",
+			" dark:border-zinc-800",
+			focusRing,
+			className,
+		)}
+		{...props}
+	/>
 ));
 NumberFieldInput.displayName = "NumberFieldInput";
 

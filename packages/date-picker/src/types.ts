@@ -1,10 +1,10 @@
+import type { Button } from "@patternmode/button";
 import type { Size } from "@patternmode/config/sizes";
+import type { IconComponent } from "@patternmode/icon/types";
 import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
 import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 import type { Locale } from "date-fns";
 import type React from "react";
-import type { Button } from "@patternmode/button";
-import type { IconComponent } from "@patternmode/icon/types";
 
 export type TimeSegmentProps = {
 	segment: DateSegment;
@@ -12,9 +12,9 @@ export type TimeSegmentProps = {
 } & { key?: React.Key };
 
 export type TimeInputProps = {
-    value?: TimeValue;
-    onChange?: (value: TimeValue | null) => void;
-    ref?: React.RefObject<HTMLDivElement | null>;
+	value?: TimeValue;
+	onChange?: (value: TimeValue | null) => void;
+	ref?: React.RefObject<HTMLDivElement | null>;
 } & Omit<AriaTimeFieldProps<TimeValue>, "value" | "onChange">;
 
 export type TriggerProps = {
@@ -147,7 +147,7 @@ export type CalendarProps = {
 	 */
 	translations?: Translations;
 } & React.ComponentPropsWithoutRef<
-    typeof import("@patternmode/calendar").Calendar
+	typeof import("@patternmode/calendar").Calendar
 >;
 
 export type PickerProps = {
@@ -212,10 +212,10 @@ export type PickerProps = {
 	 */
 	icon?: IconComponent;
 } & Omit<
-    React.ComponentPropsWithoutRef<
-        typeof import("@patternmode/calendar").Calendar
-    >,
-    "value" | "onValueChange"
+	React.ComponentPropsWithoutRef<
+		typeof import("@patternmode/calendar").Calendar
+	>,
+	"value" | "onValueChange"
 >;
 
 export type SingleDatePickerProps = {

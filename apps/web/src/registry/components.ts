@@ -322,6 +322,7 @@ import {
 } from "@patternmode/tooltip/preview";
 import type React from "react";
 import type { PreviewProps } from "@/types/preview-props";
+import { sidebarConfig } from "@patternmode/sidebar/config";
 
 export const COMPONENT_REGISTRY = {
 	accordion: accordionConfig,
@@ -406,7 +407,8 @@ export const COMPONENT_REGISTRY = {
 	toggle: toggleConfig,
 	"toggle-group": toggleGroupConfig,
 	toolbar: toolbarConfig,
-	tooltip: tooltipConfig,
+  tooltip: tooltipConfig,
+  sidebar: sidebarConfig,
 } as const satisfies Record<string, ComponentConfig>;
 
 export const PREVIEW_REGISTRY = {
@@ -492,7 +494,8 @@ export const PREVIEW_REGISTRY = {
 	toggle: TogglePreview,
 	"toggle-group": ToggleGroupPreview,
 	toolbar: ToolbarPreview,
-	tooltip: TooltipPreview,
+  tooltip: TooltipPreview,
+  sidebar: (() => null) as React.ElementType,
 } as const satisfies Record<ComponentId, React.ElementType>;
 
 export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
@@ -578,7 +581,8 @@ export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
 	toggle: togglePreviewProps,
 	"toggle-group": toggleGroupPreviewProps,
 	toolbar: toolbarPreviewProps,
-	tooltip: tooltipPreviewProps,
+  tooltip: tooltipPreviewProps,
+  sidebar: [],
 };
 
 // Derive types automatically

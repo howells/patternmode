@@ -115,12 +115,12 @@ const generateLiveCode = (
  */
 const createDynamicComponent = (componentId: string, _category?: string) => {
 	return React.lazy(async () => {
-		try {
-			const PreviewComponent = await getPreviewComponent(componentId);
+    try {
+        const PreviewComponent = await getPreviewComponent(componentId);
 
-			if (PreviewComponent) {
-				return { default: PreviewComponent };
-			}
+            if (PreviewComponent) {
+                return { default: PreviewComponent as React.ComponentType<any> };
+            }
 
 			// Fallback component for unsupported components
 			const FallbackComponent = function FallbackComponent() {
@@ -163,6 +163,29 @@ export function PreviewDisplay({
 	componentPath: _componentPath,
 }: PreviewDisplayProps) {
 	const { props } = usePreview();
+
+	const [mounted, setMounted] = React.useState(false);
+	React.useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	if (!mounted) {
+		return (
+			<div className="w-full">
+				<Tabs defaultValue="preview">
+					<TabsList variant="solid">
+						<TabsTrigger value="preview">Preview</TabsTrigger>
+						<TabsTrigger value="code">Code</TabsTrigger>
+					</TabsList>
+					<TabsContent value="preview" className="flex justify-center mt-6">
+						<div className="flex items-center justify-center p-8 text-zinc-500">
+							Loading preview...
+						</div>
+					</TabsContent>
+				</Tabs>
+			</div>
+		);
+	}
 
 	// Create dynamic component
 	const Component = React.useMemo(

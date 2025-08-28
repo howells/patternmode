@@ -37,7 +37,7 @@ export type BreadcrumbLinkProps = useRender.ComponentProps<"a"> & {
 	 * Supports custom elements like Next.js Link or React Router Link via the render prop pattern.
 	 * When provided, the custom element will receive all props and styling.
 	 */
-	render?: React.ReactElement;
+	render?: React.ReactElement | keyof JSX.IntrinsicElements;
 };
 
 export type BreadcrumbPageProps = React.ComponentProps<"span"> & {

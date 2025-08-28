@@ -1,1 +1,7 @@
-export { Tabs, TabsContent, TabsList, TabsTrigger, TabsIndicator } from "./component";
+export {
+	Tabs,
+	TabsContent,
+	TabsIndicator,
+	TabsList,
+	TabsTrigger,
+} from "./component";

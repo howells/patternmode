@@ -1,6 +1,9 @@
 import { cx } from "@patternmode/utils/cx";
 
-export const SidebarContent = ({ className, ...props }: React.ComponentProps<"div">) => {
+export const SidebarContent = ({
+	className,
+	...props
+}: React.ComponentProps<"div">) => {
 	return (
 		<div
 			data-slot="sidebar-content"

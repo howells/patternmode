@@ -1,11 +1,11 @@
 "use client";
 
 import { useRender } from "@base-ui-components/react/use-render";
+import { Icon } from "@patternmode/icon";
+import { Loader } from "@patternmode/loader";
 import { cx } from "@patternmode/utils/cx";
 import { Moon, Sun } from "lucide-react";
 import type React from "react";
-import { Icon } from "@patternmode/icon";
-import { Loader } from "@patternmode/loader";
 import type { ThemeToggleProps } from "./types";
 import { themeToggleVariants } from "./variants";
 

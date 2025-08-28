@@ -1,11 +1,11 @@
 "use client";
 
+import { CopyButton } from "@patternmode/copy-button";
 import { cx } from "@patternmode/utils/cx";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
 import oneLight from "react-syntax-highlighter/dist/esm/styles/prism/one-light";
-import { CopyButton } from "@patternmode/copy-button";
 import type { CodeBlockProps } from "./types";
 import {
 	codeBlockHeaderVariants,

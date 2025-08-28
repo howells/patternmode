@@ -1,14 +1,20 @@
 "use client";
 
-import { cx } from "@patternmode/utils/cx";
-import { GripVertical, Plus } from "lucide-react";
-import type React from "react";
 import { Button } from "@patternmode/button";
 import { Checkbox } from "@patternmode/checkbox";
 import { DismissButton } from "@patternmode/dismiss-button";
 import { Input } from "@patternmode/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@patternmode/select";
 import { Textarea } from "@patternmode/textarea";
+import { cx } from "@patternmode/utils/cx";
+import { GripVertical, Plus } from "lucide-react";
+import type React from "react";
 
 // Generic field schema definition
 export type FieldSchema = {
@@ -63,7 +69,7 @@ export type FieldArrayProps<T extends FieldArrayItem = FieldArrayItem> = {
 	/**
 	 * Custom component map for rendering different field types.
 	 */
-	componentMap?: Record<string, React.ComponentType<any>>;
+	componentMap?: Record<string, React.ComponentType<Record<string, unknown>>>;
 
 	/**
 	 * Custom render function for each item.
@@ -116,38 +122,58 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 }: FieldArrayProps<T>) {
 	// Default component map for built-in field types using proper UI components
 	const defaultComponentMap = {
-    input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
+		input: ({
+			value,
+			onChange,
+			...props
+		}: { value: string; onChange: (v: string) => void } & React.ComponentProps<
+			typeof Input
+		>) => (
 			<Input
 				value={value || ""}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChange(e.target.value)
+				}
 				{...props}
 			/>
 		),
-    textarea: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Textarea>) => (
+		textarea: ({
+			value,
+			onChange,
+			...props
+		}: { value: string; onChange: (v: string) => void } & React.ComponentProps<
+			typeof Textarea
+		>) => (
 			<Textarea
 				value={value || ""}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
+				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+					onChange(e.target.value)
+				}
 				{...props}
 			/>
 		),
-    select: ({
-        value,
-        onChange,
-        options = EMPTY_OPTIONS_ARRAY,
-        placeholder,
-        ...props
-    }: {
-      value: string;
-      onChange: (v: string) => void;
-      options?: Array<{ label: string; value: string }>;
-      placeholder?: string;
-    } & React.ComponentProps<typeof Select>) => (
-            <Select value={value || ""} onValueChange={(v: unknown) => onChange(String(v))} {...props}>
-                <SelectTrigger>
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    {options.map((option) => (
+		select: ({
+			value,
+			onChange,
+			options = EMPTY_OPTIONS_ARRAY,
+			placeholder,
+			...props
+		}: {
+			value: string;
+			onChange: (v: string) => void;
+			options?: Array<{ label: string; value: string }>;
+			placeholder?: string;
+		} & React.ComponentProps<typeof Select>) => (
+			<Select
+				value={value || ""}
+				onValueChange={(v: unknown) => onChange(String(v))}
+				{...props}
+			>
+				<SelectTrigger>
+					<SelectValue />
+				</SelectTrigger>
+				<SelectContent>
+					{options.map((option) => (
 						<SelectItem key={option.value} value={option.value}>
 							{option.label}
 						</SelectItem>
@@ -155,23 +181,45 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 				</SelectContent>
 			</Select>
 		),
-    checkbox: ({ value, onChange, ...props }: { value: boolean; onChange: (v: boolean) => void } & React.ComponentProps<typeof Checkbox>) => (
-        <Checkbox checked={!!value} onCheckedChange={(checked: boolean) => onChange(!!checked)} {...props} />
-    ),
-    number: ({ value, onChange, ...props }: { value: number; onChange: (v: number) => void } & React.ComponentProps<typeof Input>) => (
-			<Input
-				type="number"
-				value={value || ""}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(Number(e.target.value) || 0)}
+		checkbox: ({
+			value,
+			onChange,
+			...props
+		}: {
+			value: boolean;
+			onChange: (v: boolean) => void;
+		} & React.ComponentProps<typeof Checkbox>) => (
+			<Checkbox
+				checked={!!value}
+				onCheckedChange={(checked: boolean) => onChange(!!checked)}
 				{...props}
 			/>
 		),
-    } as const;
+		number: ({
+			value,
+			onChange,
+			...props
+		}: { value: number; onChange: (v: number) => void } & React.ComponentProps<
+			typeof Input
+		>) => (
+			<Input
+				type="number"
+				value={value || ""}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+					onChange(Number(e.target.value) || 0)
+				}
+				{...props}
+			/>
+		),
+	} as const;
 
-    const effectiveComponentMap: Record<string, React.ComponentType<any>> = {
-        ...defaultComponentMap,
-        ...componentMap,
-    };
+	const effectiveComponentMap: Record<
+		string,
+		React.ComponentType<Record<string, unknown>>
+	> = {
+		...defaultComponentMap,
+		...componentMap,
+	};
 
 	const addItem = () => {
 		if (maxItems && items.length >= maxItems) {
@@ -216,7 +264,7 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 		value: unknown,
 		onChange: (value: unknown) => void,
 	) => {
-    const Component = effectiveComponentMap[String(field.type)];
+		const Component = effectiveComponentMap[String(field.type)];
 
 		if (!Component) {
 			console.warn(
@@ -228,10 +276,10 @@ function FieldArray<T extends FieldArrayItem = FieldArrayItem>({
 		return (
 			<div className="space-y-1">
 				{field.label && (
-					<label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+					<div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
 						{field.label}
 						{field.required && <span className="text-red-500 ml-1">*</span>}
-					</label>
+					</div>
 				)}
 				<Component
 					value={value}

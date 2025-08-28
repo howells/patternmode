@@ -1,11 +1,10 @@
 export {
-  Radio,
-  RadioGroup,
-  RadioItem,
-  RadioIndicator,
-  RadioLabel,
-  RadioCard,
-  RadioCardOption,
+	Radio,
+	RadioCard,
+	RadioCardOption,
+	RadioGroup,
+	RadioIndicator,
+	RadioItem,
+	RadioLabel,
 } from "./component";
 export type * from "./types";
-

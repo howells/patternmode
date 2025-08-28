@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Avatar } from "@patternmode/avatar";
 import { Button } from "@patternmode/button";
 import { Checkbox } from "@patternmode/checkbox";
@@ -8,9 +7,16 @@ import { Fieldset } from "@patternmode/fieldset";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Input } from "@patternmode/input";
 import { ScrollArea } from "@patternmode/scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@patternmode/select";
 import { HStack, Stack, VStack } from "@patternmode/stack";
 import { Textarea } from "@patternmode/textarea";
+import React from "react";
 import type { FieldSchema } from "./component";
 import { FieldArray } from "./component";
 
@@ -68,10 +74,19 @@ export function ContactListExample() {
 					showItemLabels={true}
 					itemLabel="Contact"
 					componentMap={{
-                        input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
+						input: ({
+							value,
+							onChange,
+							...props
+						}: {
+							value: string;
+							onChange: (v: string) => void;
+						} & React.ComponentProps<typeof Input>) => (
 							<Input
 								value={value || ""}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									onChange(e.target.value)
+								}
 								{...props}
 							/>
 						),
@@ -128,17 +143,35 @@ export function FAQBuilderExample() {
 					showItemLabels={true}
 					itemLabel="FAQ"
 					componentMap={{
-                        input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
+						input: ({
+							value,
+							onChange,
+							...props
+						}: {
+							value: string;
+							onChange: (v: string) => void;
+						} & React.ComponentProps<typeof Input>) => (
 							<Input
 								value={value || ""}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									onChange(e.target.value)
+								}
 								{...props}
 							/>
 						),
-                        textarea: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Textarea>) => (
+						textarea: ({
+							value,
+							onChange,
+							...props
+						}: {
+							value: string;
+							onChange: (v: string) => void;
+						} & React.ComponentProps<typeof Textarea>) => (
 							<Textarea
 								value={value || ""}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+									onChange(e.target.value)
+								}
 								{...props}
 							/>
 						),
@@ -204,26 +237,53 @@ export function ProductVariantsExample() {
 					showItemLabels={true}
 					itemLabel="Variant"
 					componentMap={{
-                        input: ({ value, onChange, ...props }: { value: string; onChange: (v: string) => void } & React.ComponentProps<typeof Input>) => (
+						input: ({
+							value,
+							onChange,
+							...props
+						}: {
+							value: string;
+							onChange: (v: string) => void;
+						} & React.ComponentProps<typeof Input>) => (
 							<Input
 								value={value || ""}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									onChange(e.target.value)
+								}
 								{...props}
 							/>
 						),
-                        number: ({ value, onChange, ...props }: { value: number; onChange: (v: number) => void } & React.ComponentProps<typeof Input>) => (
+						number: ({
+							value,
+							onChange,
+							...props
+						}: {
+							value: number;
+							onChange: (v: number) => void;
+						} & React.ComponentProps<typeof Input>) => (
 							<Input
 								type="number"
 								value={value || ""}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(Number(e.target.value) || 0)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									onChange(Number(e.target.value) || 0)
+								}
 								{...props}
 							/>
 						),
-                        checkbox: ({ value, onChange, label, ...props }: { value: boolean; onChange: (v: boolean) => void; label?: string } & React.ComponentProps<typeof Checkbox>) => (
+						checkbox: ({
+							value,
+							onChange,
+							label,
+							...props
+						}: {
+							value: boolean;
+							onChange: (v: boolean) => void;
+							label?: string;
+						} & React.ComponentProps<typeof Checkbox>) => (
 							<HStack gap={2} align="center" className="cursor-pointer">
 								<Checkbox
 									checked={!!value}
-                                    onCheckedChange={(checked: boolean) => onChange(!!checked)}
+									onCheckedChange={(checked: boolean) => onChange(!!checked)}
 									{...props}
 								/>
 								<span className="text-sm">{label}</span>
@@ -288,25 +348,39 @@ export function CustomRenderExample() {
 					showItemLabels={true}
 					itemLabel="Member"
 					componentMap={{
-						input: ({ value, onChange, ...props }: any) => (
-							<Input
+						input: (props: Record<string, unknown>) => {
+							const { value, onChange, ...rest } = props as {
+								value?: string;
+								onChange?: (v: string) => void;
+							} & Record<string, unknown>;
+							return (
+								<Input
+									value={value || ""}
+									onChange={(e) => onChange?.(e.target.value)}
+									{...(rest as Record<string, unknown>)}
+								/>
+							);
+						},
+						select: ({
+							value,
+							onChange,
+							options = EMPTY_OPTIONS_ARRAY,
+							...props
+						}: {
+							value: string;
+							onChange: (v: string) => void;
+							options?: Array<{ label: string; value: string }>;
+						} & React.ComponentProps<typeof Select>) => (
+							<Select
 								value={value || ""}
-								onChange={(e) => onChange(e.target.value)}
+								onValueChange={(v: unknown) => onChange(String(v))}
 								{...props}
-							/>
-						),
-                        select: ({
-                            value,
-                            onChange,
-                            options = EMPTY_OPTIONS_ARRAY,
-                            ...props
-                        }: { value: string; onChange: (v: string) => void; options?: Array<{ label: string; value: string }> } & React.ComponentProps<typeof Select>) => (
-                            <Select value={value || ""} onValueChange={(v: unknown) => onChange(String(v))} {...props}>
+							>
 								<SelectTrigger>
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-                                {options.map((option) => (
+									{options.map((option) => (
 										<SelectItem key={option.value} value={option.value}>
 											{option.label}
 										</SelectItem>
@@ -351,18 +425,22 @@ export function CustomRenderExample() {
 							</HStack>
 
 							<Grid columns={{ sm: 1, md: 3 }} gap={4}>
-                    {teamSchema.map((field) => (
+								{teamSchema.map((field) => (
 									<GridCell key={field.key}>
 										<VStack gap={1}>
-											<label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+											<div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
 												{field.label}
-											</label>
+											</div>
 											{field.type === "select" ? (
 												<Select
-                                value={String((item as any)[field.key] || "")}
-                                onValueChange={(value: unknown) =>
-                                    updateItem({ [field.key]: String(value) })
-                                }
+													value={String(
+														((item as Record<string, unknown>)[
+															field.key
+														] as string) || "",
+													)}
+													onValueChange={(value: unknown) =>
+														updateItem({ [field.key]: String(value) })
+													}
 												>
 													<SelectTrigger>
 														<SelectValue />
@@ -380,10 +458,14 @@ export function CustomRenderExample() {
 												</Select>
 											) : (
 												<Input
-                                value={String((item as any)[field.key] || "")}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                    updateItem({ [field.key]: e.target.value })
-                                }
+													value={String(
+														((item as Record<string, unknown>)[
+															field.key
+														] as string) || "",
+													)}
+													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+														updateItem({ [field.key]: e.target.value })
+													}
 													placeholder={field.placeholder}
 												/>
 											)}

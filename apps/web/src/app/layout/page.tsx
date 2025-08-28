@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
 import type { Size } from "@patternmode/constants/sizes";
@@ -21,7 +23,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator } from "@patternmode/toolbar";
 import { MoreHorizontal, Plus, Rows3, Settings2, Trash2 } from "lucide-react";
 import { parseAsJson, useQueryState } from "nuqs";
 import type React from "react";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 import type { GapValue } from "@/lib/spacing-utils";
 import type { ComponentId } from "@/registry/components";
@@ -374,6 +376,7 @@ export default function LayoutBuilderPage() {
 	};
 
 	return (
+		<Suspense fallback={null}>
 		<div>
 			<PageHeader
 				title="Layout Builder"
@@ -410,5 +413,6 @@ export default function LayoutBuilderPage() {
 				)}
 			</div>
 		</div>
+		</Suspense>
 	);
 }

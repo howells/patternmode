@@ -47,7 +47,7 @@ function VirtualizedItemList<T extends ComboboxOption>({
 	highlightedIndex: number;
 	selectedItem: T | null;
 	size: "2xs" | "xs" | "sm" | "base" | "lg";
-    iconStrokeWidth: number;
+	iconStrokeWidth: number;
 	isFetchingNextPage: boolean;
 	hasNextPage: boolean | undefined;
 	fetchNextPage: () => void;
@@ -186,7 +186,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 	className,
 	size = "base",
 	searchDebounce = 300,
-    iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
+	iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	getItemValue = (item: T) => item.value,
 	getItemLabel = (item: T) => item.label,
 	getItemIcon,
@@ -395,7 +395,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
 					<Icon
 						icon={ChevronsUpDown}
 						size={size === "2xs" ? "xs" : size}
-                    strokeWidth={DEFAULT_ICON_STROKE_WIDTH}
+						strokeWidth={DEFAULT_ICON_STROKE_WIDTH}
 					/>
 				</span>
 			</button>

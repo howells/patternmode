@@ -1,7 +1,6 @@
-import { tv } from "tailwind-variants";
-
 import { focusInput } from "@patternmode/utils/focus-input";
 import { hasErrorInput } from "@patternmode/utils/has-error-input";
+import { tv } from "tailwind-variants";
 
 export const triggerStyles = tv({
 	base: [

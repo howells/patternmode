@@ -1,6 +1,10 @@
+import {
+	progressAnimationClasses,
+	progressLabelVariants,
+	progressValueVariants,
+	sharedProgressVariants,
+} from "@patternmode/utils/progress";
 import { tv } from "tailwind-variants";
-
-import { progressAnimationClasses, progressLabelVariants, progressValueVariants, sharedProgressVariants } from "@patternmode/utils/progress";
 
 /**
  * Tailwind variants for progress components.
