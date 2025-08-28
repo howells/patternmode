@@ -84,18 +84,18 @@
   },
   "dependencies": {
     "@patternmode/config": "workspace:*",
+    "@patternmode/constants": "workspace:*",
     "@patternmode/icon": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "tailwind-variants": "^3.1.0",
-    "lucide-react": ">=0.525.0 <1",
-    "@patternmode/constants": "workspace:*"
+    "lucide-react": "^0.542.0",
+    "tailwind-variants": "^3.1.0"
   },
   "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
-    "typescript": "^5.9.2",
-    "@patternmode/tsconfig": "workspace:*"
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.8",
+    "typescript": "^5.9.2"
   },
   "publishConfig": {
     "access": "public",

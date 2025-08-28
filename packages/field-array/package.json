@@ -44,6 +44,7 @@
     "@patternmode/avatar": "workspace:*",
     "@patternmode/button": "workspace:*",
     "@patternmode/checkbox": "workspace:*",
+    "@patternmode/config": "workspace:*",
     "@patternmode/description-list": "workspace:*",
     "@patternmode/dismiss-button": "workspace:*",
     "@patternmode/fieldset": "workspace:*",
@@ -54,9 +55,8 @@
     "@patternmode/stack": "workspace:*",
     "@patternmode/subheading": "workspace:*",
     "@patternmode/textarea": "workspace:*",
-    "lucide-react": ">=0.525.0 <1",
     "@patternmode/utils": "workspace:*",
-    "@patternmode/config": "workspace:*"
+    "lucide-react": "^0.542.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

@@ -41,14 +41,14 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "lucide-react": ">=0.525.0 <1",
-    "@patternmode/utils": "workspace:*",
-    "@patternmode/config": "workspace:*",
     "@patternmode/button": "workspace:*",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/constants": "workspace:*",
     "@patternmode/drawer": "workspace:*",
     "@patternmode/sheet": "workspace:*",
-    "@patternmode/constants": "workspace:*",
-    "@uidotdev/usehooks": "^2.4.1"
+    "@patternmode/utils": "workspace:*",
+    "@uidotdev/usehooks": "^2.4.1",
+    "lucide-react": "^0.542.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

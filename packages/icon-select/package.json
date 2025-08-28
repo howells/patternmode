@@ -65,18 +65,18 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@patternmode/config": "workspace:*",
-    "@patternmode/icons": "workspace:*",
     "@base-ui-components/react": "^1.0.0-beta.2",
-    "lucide-react": ">=0.525.0 <1",
+    "@patternmode/combobox": "workspace:*",
+    "@patternmode/config": "workspace:*",
     "@patternmode/constants": "workspace:*",
-    "@patternmode/combobox": "workspace:*"
+    "@patternmode/icons": "workspace:*",
+    "lucide-react": "^0.542.0"
   },
   "devDependencies": {
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
-    "typescript": "^5.9.2",
-    "@patternmode/tsconfig": "workspace:*"
+    "@patternmode/tsconfig": "workspace:*",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.8",
+    "typescript": "^5.9.2"
   },
   "publishConfig": {
     "access": "public",

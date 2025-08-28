@@ -42,17 +42,17 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.6.0",
+    "@patternmode/button": "workspace:*",
+    "@patternmode/calendar": "workspace:*",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/icon": "workspace:*",
+    "@patternmode/popover": "workspace:*",
+    "@patternmode/utils": "workspace:*",
     "@react-aria/datepicker": "^3.14.0",
     "@react-stately/datepicker": "^3.11.0",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.541.0",
-    "tailwind-variants": "^3.1.0",
-    "@patternmode/utils": "workspace:*",
-    "@patternmode/config": "workspace:*",
-    "@patternmode/button": "workspace:*",
-    "@patternmode/calendar": "workspace:*",
-    "@patternmode/popover": "workspace:*",
-    "@patternmode/icon": "workspace:*"
+    "lucide-react": "^0.542.0",
+    "tailwind-variants": "^3.1.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

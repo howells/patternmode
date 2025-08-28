@@ -45,13 +45,13 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@patternmode/button": "workspace:*",
-    "@patternmode/icon": "workspace:*",
     "@patternmode/checkbox": "workspace:*",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/icon": "workspace:*",
     "@patternmode/stack": "workspace:*",
     "@patternmode/text": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.541.0",
-    "@patternmode/config": "workspace:*"
+    "lucide-react": "^0.542.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

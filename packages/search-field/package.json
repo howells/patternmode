@@ -41,13 +41,13 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@patternmode/utils": "workspace:*",
-    "@patternmode/text": "workspace:*",
-    "@patternmode/stack": "workspace:*",
-    "@patternmode/input": "workspace:*",
     "@patternmode/button": "workspace:*",
-    "lucide-react": ">=0.525.0 <1",
-    "@patternmode/config": "workspace:*"
+    "@patternmode/config": "workspace:*",
+    "@patternmode/input": "workspace:*",
+    "@patternmode/stack": "workspace:*",
+    "@patternmode/text": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "lucide-react": "^0.542.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"
