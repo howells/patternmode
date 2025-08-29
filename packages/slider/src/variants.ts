@@ -37,7 +37,7 @@ export const sliderVariants = tv({
 		],
 		thumb: [
 			// base
-			"block size-4 shrink-0 rounded-full border shadow-sm",
+			"block size-4 shrink-0 rounded-full border",
 			// border color
 			"border-zinc-400 dark:border-zinc-500",
 			// background color

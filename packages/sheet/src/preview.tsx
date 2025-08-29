@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Button } from "@patternmode/button";
 import {
 	Sheet,
 	SheetBody,
@@ -16,9 +17,9 @@ import {
 export function SheetPreview() {
 	return (
 		<Sheet>
-			<SheetTrigger className="px-3 py-2 rounded border">
-				Open Sheet
-			</SheetTrigger>
+            <SheetTrigger>
+                <Button variant="outline" type="button">Open Sheet</Button>
+            </SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
 					<SheetTitle>Preview Sheet</SheetTitle>

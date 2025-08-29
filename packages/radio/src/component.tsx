@@ -162,49 +162,46 @@ export const RadioCard = ({
 RadioCard.displayName = "RadioCard";
 
 export const RadioOption = ({
-	ref,
-	value,
-	label,
-	description,
-	disabled,
-	size = "base",
-	...props
+  ref,
+  value,
+  label,
+  description,
+  disabled,
+  size = "base",
+  ...props
 }: RadioOptionProps) => {
-	const classes = React.useMemo(() => {
-		const labelClass = radioLabelVariants({ size });
-		const variants = radioVariants({ size, variant: "default" });
-		return {
-			label: labelClass,
-			circle: variants.circle(),
-			dot: variants.dot(),
-		};
-	}, [size]);
-	return (
-		<div className={cx(classes.label)}>
-			<BaseRadio.Root
-				ref={
-					ref as React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null>
-				}
-				value={value}
-				disabled={disabled}
-				data-disabled={disabled ? "" : undefined}
-				nativeButton
-				{...props}
-			>
-				<div className={classes.circle}>
-					<BaseRadio.Indicator className="absolute inset-0 flex items-center justify-center">
-						<div className={classes.dot} />
-					</BaseRadio.Indicator>
-				</div>
-			</BaseRadio.Root>
-			<div className="flex flex-col">
-				<span className="font-medium">{label}</span>
-				{description && (
-					<span className="text-sm text-zinc-500">{description}</span>
-				)}
-			</div>
-		</div>
-	);
+  const classes = React.useMemo(() => {
+    const labelClass = radioLabelVariants({ size });
+    const variants = radioVariants({ size, variant: "default" });
+    return {
+      root: cx("group inline-flex items-center gap-2", labelClass),
+      circle: variants.circle(),
+      dot: variants.dot(),
+    };
+  }, [size]);
+  return (
+    <BaseRadio.Root
+      ref={ref as React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null>}
+      value={value}
+      disabled={disabled}
+      data-disabled={disabled ? "" : undefined}
+      nativeButton
+      className={classes.root}
+      {...props}
+    >
+      <div className={classes.circle}>
+        <BaseRadio.Indicator className="absolute inset-0 flex items-center justify-center">
+          <div className={classes.dot} />
+        </BaseRadio.Indicator>
+      </div>
+      <div className="flex flex-col text-left">
+        <span className="font-medium">{label}</span>
+        {description && (
+          <span className="text-sm text-zinc-500">{description}</span>
+        )}
+      </div>
+    </BaseRadio.Root>
+  );
 };
 RadioOption.displayName = "RadioOption";
 

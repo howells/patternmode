@@ -6,7 +6,7 @@ import { ScrollArea } from "./component";
 export function ScrollAreaPreview(props: ScrollAreaProps) {
 	return (
 		<ScrollArea className="h-32 w-48 border rounded" {...props}>
-			<div className="p-4">
+			<div className="p-4 text-sm">
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 				<p>
 					Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

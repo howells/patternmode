@@ -173,7 +173,7 @@ const ContextMenuSubmenuContent = ({
 				ref={forwardedRef}
 				className={cx(
 					// base
-					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl shadow-black/[2.5%]",
+					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
 					// widths
 					"min-w-32",
 					// heights
@@ -217,7 +217,7 @@ const ContextMenuContent = ({
 				ref={forwardedRef}
 				className={cx(
 					// base
-					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl shadow-black/[2.5%]",
+					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
 					// widths
 					"min-w-48",
 					// heights

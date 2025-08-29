@@ -81,8 +81,7 @@ const Meter = ({
 						"relative h-1.5 w-full overflow-hidden rounded-full",
 						// background
 						track(),
-						// border
-						"shadow-[inset_0_0_0_1px] shadow-zinc-200/50 dark:shadow-zinc-800/50",
+						// border removed to avoid inner shadow
 					)}
 				>
 					<BaseMeter.Indicator

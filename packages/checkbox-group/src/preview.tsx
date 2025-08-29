@@ -14,9 +14,15 @@ type CheckboxGroupProps = React.ComponentPropsWithoutRef<
 export function CheckboxGroupPreview(props: CheckboxGroupProps) {
 	return (
 		<CheckboxGroup label="Select options" {...props}>
-			<CheckboxGroupItem value="option1">Option 1</CheckboxGroupItem>
-			<CheckboxGroupItem value="option2">Option 2</CheckboxGroupItem>
-			<CheckboxGroupItem value="option3">Option 3</CheckboxGroupItem>
+			<CheckboxGroupItem value="option1">
+				Receive weekly product updates, feature announcements, and tips
+			</CheckboxGroupItem>
+			<CheckboxGroupItem value="option2">
+				Enable advanced analytics to help improve performance and reliability
+			</CheckboxGroupItem>
+			<CheckboxGroupItem value="option3">
+				Participate in beta programs and early access to experimental features
+			</CheckboxGroupItem>
 		</CheckboxGroup>
 	);
 }

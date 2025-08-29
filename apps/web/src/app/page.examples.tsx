@@ -1,64 +1,85 @@
 "use client";
 
-import { AccordionPreview } from "@patternmode/accordion/preview";
-import { AlertDialogPreview } from "@patternmode/alert-dialog/preview";
-import { AvatarPreview } from "@patternmode/avatar/preview";
-import { BadgePreview } from "@patternmode/badge/preview";
-import { BreadcrumbsPreview } from "@patternmode/breadcrumbs/preview";
-import { ButtonPreview } from "@patternmode/button/preview";
 import { Card, CardContent, CardHeader, CardHeading } from "@patternmode/card";
-import { CheckboxPreview } from "@patternmode/checkbox/preview";
-import { DialogPreview } from "@patternmode/dialog/preview";
+import { COMPONENT_CATEGORIES } from "@patternmode/config/component-categories";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Heading } from "@patternmode/heading";
-import { InputPreview } from "@patternmode/input/preview";
-import { PaginationPreview } from "@patternmode/pagination/preview";
-import { PopoverPreview } from "@patternmode/popover/preview";
-import { ProgressPreview } from "@patternmode/progress/preview";
-import { SelectPreview } from "@patternmode/select/preview";
-import { SwitchPreview } from "@patternmode/switch/preview";
-import { TabsPreview } from "@patternmode/tabs/preview";
-import { TextareaPreview } from "@patternmode/textarea/preview";
-import { TogglePreview } from "@patternmode/toggle/preview";
-import { TooltipPreview } from "@patternmode/tooltip/preview";
+import { VStack } from "@patternmode/stack";
+import React from "react";
+import { COMPONENT_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
 
-const components = [
-	{ name: "Button", component: ButtonPreview },
-	{ name: "Input", component: InputPreview },
-	{ name: "Avatar", component: AvatarPreview },
-	{ name: "Badge", component: BadgePreview },
-	{ name: "Checkbox", component: CheckboxPreview },
-	{ name: "Select", component: SelectPreview },
-	{ name: "Toggle", component: TogglePreview },
-	{ name: "Progress", component: ProgressPreview },
-	{ name: "Alert Dialog", component: AlertDialogPreview },
-	{ name: "Dialog", component: DialogPreview },
-	{ name: "Popover", component: PopoverPreview },
-	{ name: "Tooltip", component: () => <TooltipPreview content="This is a tooltip"><button type="button" className="px-3 py-2 text-sm border rounded-md">Hover me</button></TooltipPreview> },
-	{ name: "Accordion", component: AccordionPreview },
-	{ name: "Tabs", component: TabsPreview },
-	{ name: "Breadcrumbs", component: BreadcrumbsPreview },
-	{ name: "Pagination", component: PaginationPreview },
-	{ name: "Switch", component: SwitchPreview },
-	{ name: "Textarea", component: TextareaPreview },
-];
+// Build a complete list of all components with previews from the registry
+// Exclude components that don't make sense in the grid (e.g., the layout's own sidebar)
+const components = Object.entries(PREVIEW_REGISTRY)
+	.filter(([id]) => id !== "sidebar")
+	.map(([id, Component]) => {
+		const cfg = COMPONENT_REGISTRY[id as keyof typeof COMPONENT_REGISTRY];
+		return {
+			id,
+			name: cfg?.name ?? id,
+			category: cfg?.category as
+				| (typeof COMPONENT_CATEGORIES)[number]
+				| undefined,
+			Component,
+		};
+	})
+	.filter((c) => !!c.category)
+	// Sort alphabetically by display name for stable ordering within categories
+	.sort((a, b) => a.name.localeCompare(b.name));
+
+class Boundary extends React.Component<
+	{ name: string; children: React.ReactNode },
+	{ error?: Error }
+> {
+	state: { error?: Error } = {};
+	static getDerivedStateFromError(error: Error) {
+		return { error };
+	}
+	render() {
+		if (this.state.error) {
+			return (
+				<div className="text-red-600 text-sm">Failed: {this.props.name}</div>
+			);
+		}
+		return this.props.children as React.ReactElement;
+	}
+}
 
 const Examples = () => {
 	return (
-		<Grid columns={{ sm: 2, md: 3, lg: 4 }} gap={6}>
-			{components.map(({ name, component: Component }) => (
-				<GridCell key={name}>
-					<Card fillHeight>
-						<CardHeader>
-							<CardHeading>{name}</CardHeading>
-						</CardHeader>
-						<CardContent className="flex items-center justify-center">
-							<Component />
-						</CardContent>
-					</Card>
-				</GridCell>
-			))}
-		</Grid>
+		<div className="space-y-10">
+			{COMPONENT_CATEGORIES.map((category) => {
+				const items = components.filter((c) => c.category === category);
+				if (items.length === 0) return null;
+				return (
+					<VStack key={category} gap={6}>
+						<Heading level={2}>
+							{category.charAt(0).toUpperCase() + category.slice(1)}
+						</Heading>
+						<Grid columns={{ sm: 2, md: 3, "2xl": 4 }} gap={6}>
+							{items.map(({ name, Component, id }) => (
+								<GridCell key={`${category}-${id}`}>
+									<Card fillHeight>
+										<CardHeader>
+											<CardHeading>{name}</CardHeading>
+										</CardHeader>
+										<CardContent className="flex items-center justify-center">
+											<Boundary name={name}>
+												{typeof Component === "string" ? (
+													React.createElement(Component, { key: id })
+												) : (
+													<Component key={id} />
+												)}
+											</Boundary>
+										</CardContent>
+									</Card>
+								</GridCell>
+							))}
+						</Grid>
+					</VStack>
+				);
+			})}
+		</div>
 	);
 };
 

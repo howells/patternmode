@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { Button } from "@patternmode/button";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -15,11 +16,13 @@ type ContextMenuProps = React.ComponentProps<typeof ContextMenu> & {
 
 export function ContextMenuPreview(props: ContextMenuProps) {
 	return (
-		<ContextMenu {...props}>
-			<ContextMenuTrigger className="p-4 border rounded-lg text-center cursor-pointer">
-				Right-click me
-			</ContextMenuTrigger>
-			<ContextMenuContent>
+        <ContextMenu {...props}>
+            <ContextMenuTrigger>
+                <Button variant="outline" type="button">
+                    Right‑click me
+                </Button>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
 				<ContextMenuItem>Copy</ContextMenuItem>
 				<ContextMenuItem>Paste</ContextMenuItem>
 				<ContextMenuItem>Delete</ContextMenuItem>

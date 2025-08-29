@@ -253,7 +253,7 @@ const NavigationMenuViewport = ({
 					// colors
 					"bg-white text-zinc-900",
 					// shadows & borders
-					"shadow-lg shadow-zinc-200 outline outline-1 outline-zinc-200",
+					"shadow-xl outline outline-1 outline-zinc-200",
 					// animations
 					"transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)]",
 					// states

@@ -59,11 +59,11 @@ const BreadcrumbLink = ({
 }: BreadcrumbLinkProps) => {
 	const { link } = breadcrumbVariants();
 
-	const element = useRender({
-		render: render ?? "a",
-		ref,
-		props: mergeProps<"a">({ className: cx(link(), className) }, props),
-	});
+    const element = useRender({
+        render: render ?? <a />,
+        ref,
+        props: mergeProps<"a">({ className: cx(link(), className) }, props),
+    });
 
 	return element;
 };

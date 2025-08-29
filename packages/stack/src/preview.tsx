@@ -1,16 +1,23 @@
 "use client";
 
+import { Card, CardContent } from "@patternmode/card";
 import { Stack } from "./component";
 import type { StackProps } from "./types";
 
 export function StackPreview(props: StackProps) {
-	return (
-		<Stack {...props}>
-			<div className="p-4 bg-blue-100 rounded">Item 1</div>
-			<div className="p-4 bg-green-100 rounded">Item 2</div>
-			<div className="p-4 bg-yellow-100 rounded">Item 3</div>
-		</Stack>
-	);
+  return (
+    <Stack {...props}>
+      <Card variant="dashed">
+        <CardContent>Card 1</CardContent>
+      </Card>
+      <Card variant="dashed">
+        <CardContent>Card 2</CardContent>
+      </Card>
+      <Card variant="dashed">
+        <CardContent>Card 3</CardContent>
+      </Card>
+    </Stack>
+  );
 }
 
 // Preview props for prop explorer

@@ -94,7 +94,7 @@ const SortableItem = ({
 				getSizeClasses(),
 				"hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
 				// Dragging state
-				isDragging && "opacity-50 shadow-lg z-50",
+				isDragging && "opacity-50 shadow-xl z-50",
 				// Disabled state
 				item.disabled && "opacity-50 cursor-not-allowed",
 			)}

@@ -47,7 +47,8 @@
 		"@patternmode/text": "workspace:*",
 		"@patternmode/utils": "workspace:*",
 		"lucide-react": "^0.542.0",
-		"tailwind-variants": "^3.1.0"
+		"tailwind-variants": "^3.1.0",
+		"@patternmode/heading-element": "workspace:*"
 	},
 	"devDependencies": {
 		"@patternmode/tsconfig": "workspace:*"

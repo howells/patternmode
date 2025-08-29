@@ -1,6 +1,6 @@
 "use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
+import { Popover, PopoverContent, PopoverPortal, PopoverTrigger } from "@patternmode/popover";
 import React from "react";
 import {
 	PreviewProvider,
@@ -51,11 +51,12 @@ export function PropsEditorPopover({
 		onUpdatePropsAction(newProps);
 	};
 
-	return (
-		<Popover open={isOpen} onOpenChange={onOpenChangeAction}>
-			<PopoverTrigger>{trigger}</PopoverTrigger>
-			<PopoverContent className="w-80">
-				<div className="space-y-4">
+    return (
+        <Popover open={isOpen} onOpenChange={onOpenChangeAction}>
+            <PopoverTrigger>{trigger}</PopoverTrigger>
+            <PopoverPortal>
+            <PopoverContent className="w-80">
+                <div className="space-y-4">
 					<div className="border-b  dark:border-zinc-700 pb-3">
 						<h3 className="font-semibold text-sm">{config.name} Props</h3>
 						<p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
@@ -70,10 +71,11 @@ export function PropsEditorPopover({
 						<PreviewControls config={previewConfig} />
 						<PropsUpdater onUpdate={handlePropsUpdate} />
 					</PreviewProvider>
-				</div>
-			</PopoverContent>
-		</Popover>
-	);
+                </div>
+            </PopoverContent>
+            </PopoverPortal>
+        </Popover>
+    );
 }
 
 // Helper component to watch for prop changes and update parent

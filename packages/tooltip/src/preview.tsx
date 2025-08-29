@@ -9,16 +9,12 @@ export function TooltipPreview({
 	children,
 	...rest
 }: Omit<TooltipProps, "content" | "children"> & {
-	content?: string;
-	children?: React.ReactElement;
+    content?: string;
+    children?: React.ReactNode;
 }) {
 	return (
 		<Tooltip content={content ?? "Tooltip content"} {...rest}>
-			{children ?? (
-				<button type="button" className="px-3 py-2 border rounded">
-					Hover me
-				</button>
-			)}
+			{children ?? "Hover me"}
 		</Tooltip>
 	);
 }

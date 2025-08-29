@@ -13,7 +13,7 @@ export const tagConfig: ComponentConfig = {
 	name: "Tag",
 	description:
 		"Label component for categorizing and tagging content with removable options.",
-	category: "ui",
+	category: "visual",
 	icon: LucideTag,
 	importStatement: `import { Tag } from "@patternmode/tag";`,
 	examples: [

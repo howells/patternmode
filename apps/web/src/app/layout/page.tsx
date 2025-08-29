@@ -7,7 +7,12 @@ import { Card } from "@patternmode/card";
 import type { Size } from "@patternmode/constants/sizes";
 import { sizes } from "@patternmode/constants/sizes";
 import { Input } from "@patternmode/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
+import {
+	Popover,
+	PopoverContent,
+	PopoverPortal,
+	PopoverTrigger,
+} from "@patternmode/popover";
 import {
 	Select,
 	SelectContent,
@@ -143,10 +148,7 @@ function LayoutSection({
 				size: layout.size,
 			};
 
-			// Only add children for non-void elements
-			if (!isVoidElement) {
-				props.children = `${componentId} preview`;
-			}
+			// Do not inject generic children into previews; each preview sets its own content.
 
 			// Cast to a more flexible component type to handle different prop shapes
 			const Component = PreviewComponent as React.ComponentType<
@@ -262,35 +264,37 @@ function LayoutSection({
 							<Settings2 className="h-4 w-4" />
 							Components ({layout.components.length})
 						</PopoverTrigger>
-						<PopoverContent className="w-96 p-4">
-							<div className="mb-3">
-								<h3 className="text-sm font-medium">Select Components</h3>
-								<p className="text-xs text-zinc-500 mt-1">
-									Choose and order components for this layout
-								</p>
-								<Input
-									placeholder="Search components..."
-									value={componentSearch}
-									onChange={(e) => setComponentSearch(e.target.value)}
-									className="mt-2"
-								/>
-							</div>
-							<div className="max-h-96 overflow-y-auto border border-zinc-200 dark:border-zinc-800 rounded-lg">
-								<SortableList
-									items={componentItems}
-									onChange={handleComponentsChange}
-									size="sm"
-								/>
-							</div>
-							<div className="mt-3 flex justify-end">
-								<Button
-									size="sm"
-									onClick={() => setComponentsPopoverOpen(false)}
-								>
-									Done
-								</Button>
-							</div>
-						</PopoverContent>
+						<PopoverPortal>
+							<PopoverContent className="w-96 p-4">
+								<div className="mb-3">
+									<h3 className="text-sm font-medium">Select Components</h3>
+									<p className="text-xs text-zinc-500 mt-1">
+										Choose and order components for this layout
+									</p>
+									<Input
+										placeholder="Search components..."
+										value={componentSearch}
+										onChange={(e) => setComponentSearch(e.target.value)}
+										className="mt-2"
+									/>
+								</div>
+								<div className="max-h-96 overflow-y-auto border border-zinc-200 dark:border-zinc-800 rounded-lg">
+									<SortableList
+										items={componentItems}
+										onChange={handleComponentsChange}
+										size="sm"
+									/>
+								</div>
+								<div className="mt-3 flex justify-end">
+									<Button
+										size="sm"
+										onClick={() => setComponentsPopoverOpen(false)}
+									>
+										Done
+									</Button>
+								</div>
+							</PopoverContent>
+						</PopoverPortal>
 					</Popover>
 				</ToolbarGroup>
 
@@ -377,42 +381,42 @@ export default function LayoutBuilderPage() {
 
 	return (
 		<Suspense fallback={null}>
-		<div>
-			<PageHeader
-				title="Layout Builder"
-				description="Create and configure multiple component layouts with Stack. Experiment with direction, spacing, and component selection."
-			/>
+			<div className="bg-zinc-50">
+				<PageHeader
+					title="Layout Builder"
+					description="Create and configure multiple component layouts with Stack. Experiment with direction, spacing, and component selection."
+				/>
 
-			<div className="p-8">
-				{/* Add Layout Button */}
-				<div className="mb-6">
-					<Button onClick={addLayout} leftIcon={Plus} variant="primary">
-						Add Layout
-					</Button>
+				<div className="p-8">
+					{/* Add Layout Button */}
+					<div className="mb-6">
+						<Button onClick={addLayout} leftIcon={Plus} variant="primary">
+							Add Layout
+						</Button>
+					</div>
+
+					{/* Layout Sections */}
+					<Stack gap={6}>
+						{layouts.map((layout) => (
+							<LayoutSection
+								key={layout.id}
+								layout={layout}
+								onUpdate={updateLayout}
+								onDelete={() => deleteLayout(layout.id)}
+							/>
+						))}
+					</Stack>
+
+					{/* Empty State */}
+					{layouts.length === 0 && (
+						<Card className="p-12 text-center">
+							<p className="text-zinc-500 mb-4">
+								No layouts yet. Click "Add Layout" to get started.
+							</p>
+						</Card>
+					)}
 				</div>
-
-				{/* Layout Sections */}
-				<Stack gap={6}>
-					{layouts.map((layout) => (
-						<LayoutSection
-							key={layout.id}
-							layout={layout}
-							onUpdate={updateLayout}
-							onDelete={() => deleteLayout(layout.id)}
-						/>
-					))}
-				</Stack>
-
-				{/* Empty State */}
-				{layouts.length === 0 && (
-					<Card className="p-12 text-center">
-						<p className="text-zinc-500 mb-4">
-							No layouts yet. Click "Add Layout" to get started.
-						</p>
-					</Card>
-				)}
 			</div>
-		</div>
 		</Suspense>
 	);
 }

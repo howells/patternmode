@@ -7,6 +7,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 	NavigationMenuTrigger,
+	NavigationMenuViewport,
 } from "./component";
 
 export type NavigationMenuPreviewProps = {
@@ -126,6 +127,7 @@ export function NavigationMenuPreview({
 					</NavigationMenuItem>
 				))}
 			</NavigationMenuList>
+			<NavigationMenuViewport />
 		</NavigationMenu>
 	);
 }

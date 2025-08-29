@@ -75,7 +75,7 @@ const RadioCardItem = ({
 			// background color
 			"bg-white dark:bg-zinc-950",
 			// border color
-			" dark:border-zinc-800",
+			"border-zinc-200 dark:border-zinc-800",
 			// checked
 			"data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
 			// disabled

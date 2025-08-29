@@ -17,7 +17,7 @@ export const buttonGroupConfig: ComponentConfig = {
 	name: "Button Group",
 	description:
 		"Container for grouping buttons with shared styling and consistent spacing. Child buttons inherit props from the parent group.",
-	category: "ui",
+	category: "controls",
 	icon: MoreHorizontal,
 	importStatement: `import { ButtonGroup } from "@patternmode/button-group";`,
 	examples: [

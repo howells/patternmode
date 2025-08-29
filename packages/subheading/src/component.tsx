@@ -34,7 +34,7 @@ export const Subheading = ({
 	return (
 		<HeadingElement
 			level={level}
-			className={cx(className, "m-0 text-sm font-semibold text-current")}
+			className={cx(className, "m-0 text-sm text-current font-medium")}
 			data-testid="subheading"
 			{...props}
 		/>

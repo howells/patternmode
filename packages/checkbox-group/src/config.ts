@@ -1,5 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { CheckSquare } from "lucide-react";
+import { createElement } from "react";
 import { CheckboxGroup, CheckboxGroupItem } from "./component";
 import {
 	ControlledExample,
@@ -10,6 +11,10 @@ import {
 	RequiredExample,
 	WithDefaultExample,
 } from "./examples";
+
+// Wrapper that satisfies ComponentType<Record<string, unknown>> without JSX (this is a .ts file)
+const CheckboxGroupItemPreview = () =>
+	createElement(CheckboxGroupItem, { value: "option" }, "Example option");
 
 export const checkboxGroupConfig: ComponentConfig = {
 	id: "checkbox-group",
@@ -71,7 +76,7 @@ export const checkboxGroupConfig: ComponentConfig = {
 			description: "Root container for managing multiple checkbox selections.",
 		},
 		{
-			component: CheckboxGroupItem,
+			component: CheckboxGroupItemPreview,
 			name: "Checkbox Group Item",
 			description: "Individual checkbox item within the group.",
 		},

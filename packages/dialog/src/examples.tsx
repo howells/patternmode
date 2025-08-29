@@ -27,14 +27,12 @@ export const DefaultExample = () => (
 			</DialogHeader>
 			<Text>Dialog content goes here.</Text>
 			<DialogFooter>
-				<DialogClose
-					render={<button type="button" className="px-3 py-2 border rounded" />}
-				>
-					Cancel
-				</DialogClose>
-				<button type="button" className="px-3 py-2 border rounded">
-					Confirm
-				</button>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+                Cancel
+            </DialogClose>
+            <Button type="button" variant="primary">
+                Confirm
+            </Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>
@@ -42,11 +40,9 @@ export const DefaultExample = () => (
 
 export const WithFormExample = () => (
 	<Dialog>
-		<DialogTrigger
-			render={<button type="button" className="px-3 py-2 border rounded" />}
-		>
-			Edit Profile
-		</DialogTrigger>
+        <DialogTrigger render={<Button type="button" variant="outline" />}>
+            Edit Profile
+        </DialogTrigger>
 		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Edit Profile</DialogTitle>
@@ -77,14 +73,12 @@ export const WithFormExample = () => (
 				</div>
 			</div>
 			<DialogFooter>
-				<DialogClose
-					render={<button type="button" className="px-3 py-2 border rounded" />}
-				>
-					Cancel
-				</DialogClose>
-				<button type="button" className="px-3 py-2 border rounded">
-					Save changes
-				</button>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+                Cancel
+            </DialogClose>
+            <Button type="button" variant="primary">
+                Save changes
+            </Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>
@@ -92,11 +86,9 @@ export const WithFormExample = () => (
 
 export const ConfirmationExample = () => (
 	<Dialog>
-		<DialogTrigger
-			render={<button type="button" className="px-3 py-2 border rounded" />}
-		>
-			Delete Account
-		</DialogTrigger>
+        <DialogTrigger render={<Button type="button" variant="outline" />}>
+            Delete Account
+        </DialogTrigger>
 		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -106,14 +98,12 @@ export const ConfirmationExample = () => (
 				</DialogDescription>
 			</DialogHeader>
 			<DialogFooter>
-				<DialogClose
-					render={<button type="button" className="px-3 py-2 border rounded" />}
-				>
-					Cancel
-				</DialogClose>
-				<button type="button" className="px-3 py-2 border rounded">
-					Delete Account
-				</button>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+                Cancel
+            </DialogClose>
+            <Button type="button" variant="destructive">
+                Delete Account
+            </Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>
@@ -123,11 +113,9 @@ export const ControlledExample = () => {
 	const [open, setOpen] = useState(false);
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger
-				render={<button type="button" className="px-3 py-2 border rounded" />}
-			>
-				Open Controlled Dialog
-			</DialogTrigger>
+        <DialogTrigger render={<Button type="button" variant="outline" />}>
+            Open Controlled Dialog
+        </DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Controlled Dialog</DialogTitle>
@@ -137,22 +125,14 @@ export const ControlledExample = () => {
 				</DialogHeader>
 				<div className="py-4">
 					<p>Current state: {open ? "Open" : "Closed"}</p>
-					<button
-						type="button"
-						onClick={() => setOpen(false)}
-						className="px-3 py-2 border rounded"
-					>
-						Close from inside
-					</button>
+                <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+                    Close from inside
+                </Button>
 				</div>
 				<DialogFooter>
-					<DialogClose
-						render={
-							<button type="button" className="px-3 py-2 border rounded" />
-						}
-					>
-						Close
-					</DialogClose>
+                <DialogClose render={<Button type="button" variant="outline" />}>
+                    Close
+                </DialogClose>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

@@ -86,7 +86,7 @@ const DrawerContent = ({
 				"fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-lg border",
 				"bg-white dark:bg-zinc-950",
 				" dark:border-zinc-800",
-				"shadow-lg",
+				"shadow-xl",
 				className,
 			)}
 			{...props}

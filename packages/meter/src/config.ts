@@ -1,6 +1,10 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Activity } from "lucide-react";
 import { Meter } from "./component";
+import React from "react";
+// Wrapper to satisfy generic ComponentType for docs/registry while providing a default value
+const MeterDocComponent: React.ComponentType<Record<string, unknown>> = (props) =>
+    React.createElement(Meter as React.ComponentType<any>, { value: 50, ...(props as any) });
 import {
 	CustomFormattingExample,
 	CustomRangeExample,
@@ -75,7 +79,7 @@ export const meterConfig: ComponentConfig = {
 			name: "Meter",
 			description:
 				"Graphical meter component for displaying scalar values within a range",
-			component: Meter,
+			component: MeterDocComponent,
 		},
 	],
 };

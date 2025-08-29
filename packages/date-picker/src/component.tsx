@@ -3,7 +3,12 @@
 import { Time } from "@internationalized/date";
 import { Button } from "@patternmode/button";
 import { Calendar as CalendarPrimitive } from "@patternmode/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@patternmode/popover";
+import {
+	Popover,
+	PopoverContent,
+	PopoverPortal,
+	PopoverTrigger,
+} from "@patternmode/popover";
 import { cx } from "@patternmode/utils/cx";
 import { focusInput } from "@patternmode/utils/focus-input";
 import { focusRing } from "@patternmode/utils/focus-ring";
@@ -147,31 +152,14 @@ const Trigger = ({
 			render={
 				<Button
 					ref={forwardedRef}
-					variant="outline"
 					size={size}
 					leftIcon={IconComponent}
 					textAlign="left"
-					className={cx(
-						"justify-start text-left",
-						// Size-based height classes to override Button's default sizing
-						size === "xs" && "h-control-xs",
-						size === "sm" && "h-control-sm",
-						size === "base" && "h-control-base",
-						size === "lg" && "h-control-lg",
-						hasError &&
-							"border-red-500 focus:border-red-500 focus:ring-red-500/20",
-						className,
-					)}
 					{...props}
 				/>
 			}
 		>
-			{children ||
-				(placeholder ? (
-					<span className="text-zinc-400 dark:text-zinc-600">
-						{placeholder}
-					</span>
-				) : null)}
+			{children || placeholder ? <span>{placeholder}</span> : null}
 		</PopoverTrigger>
 	);
 };
@@ -190,19 +178,21 @@ const CalendarPopover = ({
 	ref?: React.RefObject<React.ElementRef<typeof PopoverContent> | null>;
 }) => {
 	return (
-		<PopoverContent
-			ref={forwardedRef}
-			className={cx(
-				// base
-				"w-fit text-sm",
-				// widths
-				"max-w-[95vw]",
-				className,
-			)}
-			{...props}
-		>
-			{children}
-		</PopoverContent>
+		<PopoverPortal>
+			<PopoverContent
+				ref={forwardedRef}
+				className={cx(
+					// base
+					"w-fit text-sm",
+					// widths
+					"max-w-[95vw]",
+					className,
+				)}
+				{...props}
+			>
+				{children}
+			</PopoverContent>
+		</PopoverPortal>
 	);
 };
 

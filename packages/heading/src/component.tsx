@@ -33,7 +33,7 @@ export const Heading = ({ className, level = 1, ...props }: HeadingProps) => {
 			data-testid="heading"
 			className={cx(
 				className,
-				"m-0 font-semibold text-zinc-950 text-xl/8 dark:text-white",
+				"m-0 text-xl text-zinc-950 font-semibold dark:text-white",
 			)}
 			{...props}
 		/>

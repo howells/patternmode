@@ -3,43 +3,44 @@ import type React from "react";
 import { tv } from "tailwind-variants";
 
 const skeletonVariants = tv({
-	base: [
-		"animate-pulse",
-		"rounded-[--skeleton-radius]",
-		"bg-[--skeleton-bg]",
-		focusRing,
-	],
-	variants: {
-		variant: {
-			default:
-				"[--skeleton-bg:theme(--color-gray-200)] dark:[--skeleton-bg:theme(--color-gray-800)]",
-			shimmer: [
-				"[--skeleton-bg:theme(--color-gray-200)] dark:[--skeleton-bg:theme(--color-gray-800)]",
-				"relative",
-				"overflow-hidden",
-				"after:absolute",
-				"after:inset-0",
-				"after:-translate-x-full",
-				"after:animate-[shimmer_2s_infinite]",
-				"after:bg-gradient-to-r",
-				"after:from-transparent",
-				"after:via-white/10",
-				"after:to-transparent",
-			],
-		},
-		rounded: {
-			none: "[--skeleton-radius:0px]",
-			sm: "[--skeleton-radius:theme(--radius-sm)]",
-			md: "[--skeleton-radius:theme(--radius-md)]",
-			lg: "[--skeleton-radius:theme(--radius-lg)]",
-			xl: "[--skeleton-radius:theme(--radius-xl)]",
-			full: "[--skeleton-radius:9999px]",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-		rounded: "md",
-	},
+    base: [
+        // animation
+        "animate-pulse",
+        // radius + background
+        "rounded-md",
+        "bg-zinc-200 dark:bg-zinc-800",
+        // focus style
+        focusRing,
+    ],
+    variants: {
+        variant: {
+            default: "",
+            shimmer: [
+                "relative",
+                "overflow-hidden",
+                "after:absolute",
+                "after:inset-0",
+                "after:-translate-x-full",
+                "after:animate-[shimmer_2s_infinite]",
+                "after:bg-gradient-to-r",
+                "after:from-transparent",
+                "after:via-white/10",
+                "after:to-transparent",
+            ],
+        },
+        rounded: {
+            none: "rounded-none",
+            sm: "rounded-sm",
+            md: "rounded-md",
+            lg: "rounded-lg",
+            xl: "rounded-xl",
+            full: "rounded-full",
+        },
+    },
+    defaultVariants: {
+        variant: "default",
+        rounded: "md",
+    },
 });
 
 type SkeletonProps = {

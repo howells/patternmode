@@ -1,5 +1,6 @@
 import { mergeProps } from "@base-ui-components/react/merge-props";
 import { useRender } from "@base-ui-components/react/use-render";
+import { HeadingElement } from "@patternmode/heading-element";
 import { Subheading } from "@patternmode/subheading";
 import { cx } from "@patternmode/utils/cx";
 import type {
@@ -66,14 +67,14 @@ type CardHeaderProps = {
 const CardHeader = ({
 	ref,
 	className,
-	border = false,
+	border = true,
 	...props
 }: CardHeaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
 	<div
 		ref={ref}
 		className={cx(
 			"flex flex-col space-y-1.5 p-6",
-			border && "border-b border-zinc-200 dark:border-zinc-800 card-border",
+			border && "border-b border-zinc-200 dark:border-zinc-800",
 			className,
 		)}
 		{...props}
@@ -99,16 +100,16 @@ const CardHeading = ({
 		);
 	}
 	return (
-		<h3
+		<HeadingElement
 			ref={ref}
 			className={cx(
-				"text-lg  leading-none tracking-tight text-zinc-950 dark:text-white",
+				"text-lg leading-none tracking-tight text-zinc-950 dark:text-white",
 				className,
 			)}
 			{...props}
 		>
 			{children}
-		</h3>
+		</HeadingElement>
 	);
 };
 CardHeading.displayName = "CardHeading";
@@ -139,7 +140,7 @@ const CardContent = ({
 	className,
 	...props
 }: CardContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
-	<div ref={ref} className={cx("p-6", className)} {...props} />
+	<div ref={ref} className={cx("p-6 text-sm", className)} {...props} />
 );
 CardContent.displayName = "CardContent";
 
@@ -159,7 +160,7 @@ const CardFooter = ({
 			"flex items-center px-6 pb-6 rounded-b-lg",
 			"bg-zinc-50 dark:bg-zinc-900",
 			border ? "pt-6" : "pt-0",
-			border && "border-t card-border",
+			border && "border-t border-zinc-100 dark:border-zinc-800",
 			className,
 		)}
 		{...props}

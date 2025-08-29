@@ -1,6 +1,7 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageCircle } from "lucide-react";
 import { Tooltip } from "./component";
+import type React from "react";
 import {
 	AlignmentExample,
 	ArrowExample,
@@ -90,7 +91,7 @@ export const tooltipConfig: ComponentConfig = {
 			name: "Tooltip",
 			description:
 				"Contextual information popup displayed on hover or focus interactions.",
-			component: Tooltip,
+			component: Tooltip as unknown as React.ComponentType<Record<string, unknown>>,
 			primary: true,
 		},
 	],

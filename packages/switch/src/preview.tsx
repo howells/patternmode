@@ -5,20 +5,17 @@ import { Switch } from "./component";
 
 export type SwitchPreviewProps = { checked?: boolean; disabled?: boolean };
 
-export function SwitchPreview({
-	checked = false,
-	disabled = false,
-}: SwitchPreviewProps) {
-	const [on, setOn] = React.useState(checked);
-	return (
-		<div className="p-6">
-			<Switch
-				checked={on}
-				onCheckedChange={(v: any) => setOn(Boolean(v))}
-				disabled={disabled}
-			/>
-		</div>
-	);
+export function SwitchPreview({ checked = false, disabled = false }: SwitchPreviewProps) {
+    const [on, setOn] = React.useState(checked);
+    return (
+        <div className="p-6">
+            <Switch
+                checked={on}
+                onCheckedChange={(v: any) => setOn(Boolean(v))}
+                disabled={disabled}
+            />
+        </div>
+    );
 }
 
 export const switchPreviewProps = [

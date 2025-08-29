@@ -17,7 +17,7 @@ export const tagGroupConfig: ComponentConfig = {
 	name: "Tag Group",
 	description:
 		"Container for grouping tags with shared styling and consistent spacing. Child tags inherit props from the parent group.",
-	category: "ui",
+	category: "visual",
 	icon: Tags,
 	importStatement: `import { TagGroup } from "@patternmode/tag-group";`,
 	examples: [

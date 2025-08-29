@@ -105,7 +105,9 @@ const PopoverPositioner = ({
 	<BasePopover.Positioner
 		ref={ref}
 		className={cx(
-			"fixed inset-0 z-50 flex items-center justify-center",
+			// Let Base UI handle positioning relative to the trigger.
+			// Avoid full-viewport centering which misplaces the popup.
+			"z-50",
 			"data-[starting-style]:animate-in data-[ending-style]:animate-out",
 			className,
 		)}
@@ -141,14 +143,13 @@ const PopoverContent = ({
 		<BasePopover.Popup
 			ref={ref}
 			className={cx(
-				"z-50 w-72 rounded-md border bg-white dark:bg-[#090E1A] shadow-md outline-hidden",
-				"p-4",
+				"z-50 w-72 rounded-md border bg-white dark:bg-[#090E1A] shadow-2xl outline-hidden",
+
 				"transition-all duration-150",
 				"data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
 				"data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
 				className,
 			)}
-			tremor-id="tremor-raw"
 			{...props}
 		/>
 	</PopoverPositioner>

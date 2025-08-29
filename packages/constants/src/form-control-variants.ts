@@ -11,7 +11,7 @@ export const formControlContainerVariants = tv({
 	base: [
 		"relative flex w-full border transition",
 		// border color
-		" dark:border-zinc-800",
+		"border-zinc-200 dark:border-zinc-800",
 		// background color
 		"bg-white dark:bg-zinc-950",
 		// focus
@@ -60,7 +60,7 @@ export const formControlElementVariants = tv({
 			// For standalone form controls (full styling)
 			standalone: [
 				"border appearance-none",
-				" dark:border-zinc-800",
+				"border-zinc-200 dark:border-zinc-800",
 				"bg-white dark:bg-zinc-950",
 				focusInput,
 			],

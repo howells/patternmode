@@ -5,11 +5,11 @@ export const checkboxGroupVariants = tv({
 });
 
 export const checkboxGroupLabelVariants = tv({
-	base: "font-medium text-sm text-zinc-900 dark:text-zinc-50",
+	base: "pl-8 text-sm text-zinc-500 dark:text-zinc-400",
 });
 
 export const checkboxGroupItemVariants = tv({
-	base: "flex items-center gap-2 cursor-pointer",
+	base: "flex items-center gap-2 cursor-pointer relative",
 	variants: {
 		disabled: {
 			true: "cursor-not-allowed opacity-50",
@@ -22,5 +22,5 @@ export const checkboxGroupItemVariants = tv({
 });
 
 export const checkboxGroupItemTextVariants = tv({
-	base: "text-sm font-medium select-none",
+	base: "text-sm select-none pl-8",
 });

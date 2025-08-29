@@ -1,10 +1,11 @@
 import type React from "react";
+import type { useRender } from "@base-ui-components/react/use-render";
 import type { VariantProps } from "tailwind-variants";
 import type { tooltipVariants } from "./variants";
 
 export type TooltipProps = {
-	/** The element that triggers the tooltip when hovered or focused. */
-	children: React.ReactElement;
+	/** The content for the trigger (label/icon). */
+	children?: React.ReactNode;
 	/** Content to display in the tooltip popup. */
 	content: React.ReactNode;
 	/** Preferred side for tooltip placement. */
@@ -35,4 +36,6 @@ export type TooltipProps = {
 	onOpenChange?: (open: boolean) => void;
 	/** Click handler for the trigger element. */
 	onClick?: React.MouseEventHandler<HTMLElement>;
+	/** Custom render prop to control the trigger element. Defaults to Button. */
+	render?: useRender.RenderProp<Record<string, unknown>>;
 };

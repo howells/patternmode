@@ -1,68 +1,69 @@
 {
-  "name": "@patternmode/feature-item",
-  "version": "0.1.0",
-  "description": "Single media-style item with optional icon, heading, and body",
-  "author": {
-    "name": "Daniel Howells",
-    "email": "daniel@howellsstudio.com",
-    "url": "https://github.com/howells"
-  },
-  "type": "module",
-  "license": "MIT",
-  "homepage": "https://patternmode.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/howells/patternmode.git",
-    "directory": "packages/feature-item"
-  },
-  "bugs": {
-    "url": "https://github.com/howells/patternmode/issues"
-  },
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
-    },
-    "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
-    },
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "src"
-  ],
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
-  },
-  "scripts": {
-    "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "lint": "biome check src --write",
-    "test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "dependencies": {
-    "@patternmode/icon": "workspace:*",
-    "@patternmode/utils": "workspace:*",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.542.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.8",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  }
+	"name": "@patternmode/feature-item",
+	"version": "0.1.0",
+	"description": "Single media-style item with optional icon, heading, and body",
+	"author": {
+		"name": "Daniel Howells",
+		"email": "daniel@howellsstudio.com",
+		"url": "https://github.com/howells"
+	},
+	"type": "module",
+	"license": "MIT",
+	"homepage": "https://patternmode.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/howells/patternmode.git",
+		"directory": "packages/feature-item"
+	},
+	"bugs": {
+		"url": "https://github.com/howells/patternmode/issues"
+	},
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./src/component.tsx",
+			"import": "./src/component.tsx",
+			"default": "./src/component.tsx"
+		},
+		"./component": {
+			"types": "./src/component.tsx",
+			"import": "./src/component.tsx",
+			"default": "./src/component.tsx"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"src"
+	],
+	"engines": {
+		"node": ">=18.0.0",
+		"npm": ">=8.0.0"
+	},
+	"scripts": {
+		"build": "tsc --noEmit",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check src --write",
+		"test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"dependencies": {
+		"@patternmode/icon": "workspace:*",
+		"@patternmode/icon-container": "workspace:*",
+		"@patternmode/utils": "workspace:*",
+		"clsx": "^2.1.1",
+		"lucide-react": "^0.542.0"
+	},
+	"devDependencies": {
+		"@types/react": "^19.1.12",
+		"@types/react-dom": "^19.1.9",
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	}
 }

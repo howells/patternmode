@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 export const toastVariants = tv({
 	base: [
 		// base
-		"group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all",
+		"group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-xl transition-all",
 		// background
 		"bg-white dark:bg-zinc-950",
 		// border

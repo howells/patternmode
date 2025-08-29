@@ -17,6 +17,25 @@
 	/* Sidebar system */
 	--sidebar-collapsed-width: 3.75rem; /* 60px - collapsed state */
 	--sidebar-open-width: 16rem; /* 256px - expanded state */
+
+	/* Shadow scale */
+	--shadow-2xs: 0px 1px 0px rgba(17, 17, 26, 0.05);
+	--shadow-xs: 0px 1px 0px rgba(17, 17, 26, 0.025),
+                0px 0px 8px rgba(17, 17, 26, 0.05);
+	--shadow-sm: 0px 0px 16px rgba(17, 17, 26, 0.05);
+	--shadow-md: 0px 4px 16px rgba(17, 17, 26, 0.05),
+              0px 8px 32px rgba(17, 17, 26, 0.025);
+	--shadow-lg: 0px 4px 16px rgba(17, 17, 26, 0.05),
+                0px 8px 32px rgba(17, 17, 26, 0.025);
+	--shadow-xl: 0px 1px 0px rgba(17, 17, 26, 0.015),
+                0px 8px 24px rgba(17, 17, 26, 0.025),
+                0px 16px 48px rgba(17, 17, 26, 0.05);
+	--shadow-2xl: 0px 4px 16px rgba(17, 17, 26, 0.015),
+                0px 8px 24px rgba(17, 17, 26, 0.025),
+                0px 16px 56px rgba(17, 17, 26, 0.05);
+	--shadow-3xl: 0px 8px 24px rgba(17, 17, 26, 0.015),
+                0px 16px 56px rgba(17, 17, 26, 0.025),
+                0px 24px 80px rgba(17, 17, 26, 0.05);
 }
 
 /* Control sizing utilities */
@@ -57,12 +76,26 @@
 		width: var(--control-height-lg);
 		height: var(--control-height-lg);
 	}
+
+	/* Shadow utilities for non-core sizes */
+	.shadow-2xs {
+		box-shadow: var(--shadow-2xs);
+	}
+	.shadow-xs {
+		box-shadow: var(--shadow-xs);
+	}
+	.shadow-md {
+		box-shadow: var(--shadow-md);
+	}
+	.shadow-3xl {
+		box-shadow: var(--shadow-3xl);
+	}
 }
 
 /* Set default border colors */
 @layer base {
 	* {
-		border-color: var(--color-zinc-200);
+		border-color: var(--color-zinc-100);
 	}
 	.dark * {
 		border-color: var(--color-zinc-800);

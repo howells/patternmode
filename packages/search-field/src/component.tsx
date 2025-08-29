@@ -236,7 +236,7 @@ export const SearchField = ({
 					className={cx(
 						"absolute top-full left-0 right-0 z-50 mt-1",
 						"bg-white dark:bg-zinc-900 border  dark:border-zinc-800",
-						"rounded-md shadow-lg max-h-96 overflow-y-auto",
+						"rounded-md shadow-xl max-h-96 overflow-y-auto",
 						dropdownClassName,
 					)}
 				>

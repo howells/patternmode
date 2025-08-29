@@ -19,7 +19,7 @@ export function PropField({ prop, children, className }: PropFieldProps) {
       <DescriptionTerm className="text-xs flex items-center self-center space-x-1">
         <span className="truncate">{prop.name}</span>
         {prop.description && (
-          <Tooltip content={prop.description}>
+          <Tooltip content={prop.description} render={<span className="inline-flex" />}>
             <Icon size="xs" icon={HelpCircle} />
           </Tooltip>
         )}

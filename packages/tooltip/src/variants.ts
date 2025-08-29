@@ -4,7 +4,7 @@ export const tooltipVariants = tv({
 	slots: {
 		popup: [
 			// base
-			"origin-[var(--transform-origin)] flex flex-col rounded-md px-2 py-1 text-sm shadow-lg z-50",
+			"origin-[var(--transform-origin)] flex flex-col rounded-md px-2 py-1 text-sm shadow-xl z-50",
 			// colors
 			"bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900",
 			// transitions

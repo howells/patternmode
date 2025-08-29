@@ -55,7 +55,7 @@ export const defaultValueFormatter = (
 };
 
 export const progressLabelVariants = tv({
-	base: ["text-xs font-medium leading-none", "text-zinc-900 dark:text-zinc-50"],
+    base: ["text-xs font-medium leading-none", "text-zinc-900 dark:text-zinc-50"],
 });
 
 export const progressValueVariants = tv({
@@ -63,6 +63,19 @@ export const progressValueVariants = tv({
 });
 
 export const progressAnimationClasses = {
-	enabled: "transform-gpu transition-all duration-300 ease-in-out",
-	disabled: "",
+    enabled: "transform-gpu transition-all duration-300 ease-in-out",
+    disabled: "",
 } as const;
+
+/**
+ * Tailwind 4 Class Detection:
+ * The circular progress component applies stroke color classes dynamically
+ * via tailwind-variants. To ensure Tailwind includes these utilities, we
+ * enumerate them here.
+ *
+ * stroke-blue-200 stroke-blue-500 dark:stroke-blue-500 dark:stroke-blue-500/30
+ * stroke-zinc-200 stroke-zinc-500 dark:stroke-zinc-500 dark:stroke-zinc-500/40
+ * stroke-yellow-200 stroke-yellow-500 dark:stroke-yellow-500 dark:stroke-yellow-500/30
+ * stroke-red-200 stroke-red-500 dark:stroke-red-500 dark:stroke-red-500/30
+ * stroke-emerald-200 stroke-emerald-500 dark:stroke-emerald-500 dark:stroke-emerald-500/30
+ */

@@ -152,7 +152,7 @@ const PreviewCardContent = ({
 					ref={ref}
 					className={cx(
 						// base
-						"z-50 w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg border shadow-lg",
+						"z-50 w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg border shadow-xl",
 						// border color
 						" dark:border-zinc-800",
 						// background color

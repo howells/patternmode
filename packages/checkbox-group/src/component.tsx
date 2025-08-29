@@ -4,6 +4,7 @@ import { CheckboxGroup as BaseCheckboxGroup } from "@base-ui-components/react/ch
 import { Checkbox } from "@patternmode/checkbox";
 import { cx } from "@patternmode/utils/cx";
 import type * as React from "react";
+import { useId } from "react";
 import type { CheckboxGroupItemProps, CheckboxGroupProps } from "./types";
 import {
 	checkboxGroupItemTextVariants,
@@ -55,21 +56,26 @@ const CheckboxGroupItem = ({
 	...props
 }: CheckboxGroupItemProps & {
 	ref?: React.RefObject<HTMLLabelElement | null>;
-}) => (
-	<label
-		ref={ref}
-		className={cx(checkboxGroupItemVariants({ disabled }), className)}
-		{...props}
-	>
-		<Checkbox
-			name={name}
-			value={value}
-			disabled={disabled}
-			className="size-4"
-		/>
-		<span className={checkboxGroupItemTextVariants()}>{children}</span>
-	</label>
-);
+}) => {
+	const checkboxId = useId();
+	return (
+		<label
+			ref={ref}
+			htmlFor={checkboxId}
+			className={cx(checkboxGroupItemVariants({ disabled }), className)}
+			{...props}
+		>
+			<Checkbox
+				id={checkboxId}
+				name={name}
+				value={value}
+				disabled={disabled}
+				className="size-4 absolute left-0 top-0"
+			/>
+			<span className={checkboxGroupItemTextVariants()}>{children}</span>
+		</label>
+	);
+};
 CheckboxGroupItem.displayName = "CheckboxGroupItem";
 
 export { CheckboxGroup, CheckboxGroupItem };

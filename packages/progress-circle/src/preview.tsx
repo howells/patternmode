@@ -3,8 +3,25 @@
 import { ProgressCircle } from "./component";
 import type { ProgressCircleProps } from "./types";
 
-export function ProgressCirclePreview(props: ProgressCircleProps) {
-	return <ProgressCircle {...props} />;
+// Show a sensible, visible default in previews
+export function ProgressCirclePreview({
+  value = 66,
+  max = 100,
+  size = "md",
+  showValue = true,
+  label = "Progress",
+  ...rest
+}: ProgressCircleProps) {
+  return (
+    <ProgressCircle
+      value={value}
+      max={max}
+      size={size}
+      showValue={showValue}
+      label={label}
+      {...rest}
+    />
+  );
 }
 
 // Preview props for prop explorer

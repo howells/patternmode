@@ -79,29 +79,29 @@ const ProgressCircle = ({
 			>
 				<title>Progress visualization</title>
 				{/* Background track */}
-				<circle
-					r={normalizedRadius}
-					cx={radius}
-					cy={radius}
-					strokeWidth={strokeWidth}
-					fill="transparent"
-					strokeLinecap="round"
-					className={track()}
-				/>
+                <circle
+                    r={normalizedRadius}
+                    cx={radius}
+                    cy={radius}
+                    strokeWidth={strokeWidth}
+                    fill="transparent"
+                    strokeLinecap="round"
+                    className={cx("stroke-zinc-200 dark:stroke-zinc-800", track())}
+                />
 				{/* Progress indicator */}
 				{safeValue !== null && safeValue >= 0 && (
-					<circle
-						r={normalizedRadius}
-						cx={radius}
-						cy={radius}
-						strokeWidth={strokeWidth}
-						strokeDasharray={`${circumference} ${circumference}`}
-						strokeDashoffset={offset}
-						fill="transparent"
-						strokeLinecap="round"
-						className={indicator()}
-					/>
-				)}
+                    <circle
+                        r={normalizedRadius}
+                        cx={radius}
+                        cy={radius}
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={`${circumference} ${circumference}`}
+                        strokeDashoffset={offset}
+                        fill="transparent"
+                        strokeLinecap="round"
+                        className={cx("stroke-blue-500 dark:stroke-blue-500", indicator())}
+                    />
+                )}
 			</svg>
 
 			{/* Content area */}

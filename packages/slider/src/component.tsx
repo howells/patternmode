@@ -30,18 +30,15 @@ const Slider = ({
 		value: _valueClass,
 	} = sliderVariants();
 
-	// Ensure we always have a proper value to avoid hydration mismatches
-	const currentValue = value ?? defaultValue ?? [0];
-	const valueArray = Array.isArray(currentValue)
-		? currentValue
-		: [currentValue];
+	// Determine current values for rendering thumbs
+	const renderValue = value ?? defaultValue ?? [0];
+	const valueArray = Array.isArray(renderValue) ? renderValue : [renderValue];
 
-	// Clean props to pass to BaseSlider - ensure value is never undefined
-	const sliderProps = {
-		...props,
-		value: currentValue,
-		defaultValue: defaultValue ?? [0],
-	};
+	// Pass controlled or uncontrolled props appropriately
+	const sliderProps =
+		value !== undefined
+			? ({ ...props, value } as const)
+			: ({ ...props, defaultValue: defaultValue ?? [0] } as const);
 
 	if (props.orientation === "vertical") {
 		return (

@@ -1,8 +1,10 @@
 "use client";
 
 import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
+import type { useRender } from "@base-ui-components/react/use-render";
+import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
-import type React from "react";
+import React from "react";
 import type { TooltipProps } from "./types";
 import { tooltipVariants } from "./variants";
 
@@ -26,11 +28,16 @@ const Tooltip = ({
 	alignOffset = 0,
 	variant,
 	size,
+	render,
 	...props
 }: TooltipProps & {
 	ref?: React.RefObject<React.ElementRef<typeof BaseTooltip.Popup> | null>;
 }) => {
 	const { popup, arrow } = tooltipVariants({ variant, size });
+
+	const defaultRender: useRender.RenderProp<Record<string, unknown>> = (
+		<Button className="cursor-pointer" />
+	);
 
 	return (
 		<BaseTooltip.Root
@@ -39,7 +46,9 @@ const Tooltip = ({
 			onOpenChange={onOpenChange}
 			{...props}
 		>
-			<BaseTooltip.Trigger onClick={onClick}>{children}</BaseTooltip.Trigger>
+			<BaseTooltip.Trigger onClick={onClick} render={(render || defaultRender) as any}>
+				{children}
+			</BaseTooltip.Trigger>
 			<BaseTooltip.Portal>
 				<BaseTooltip.Positioner
 					side={side}

@@ -37,16 +37,12 @@ export function DialogPreview(props: DialogProps) {
 				</DialogHeader>
 				<Text>Dialog content goes here.</Text>
 				<DialogFooter>
-					<DialogClose
-						render={
-							<button type="button" className="px-3 py-2 border rounded" />
-						}
-					>
-						Cancel
-					</DialogClose>
-					<button type="button" className="px-3 py-2 border rounded">
-						Confirm
-					</button>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+                Cancel
+            </DialogClose>
+            <Button type="button" variant="primary">
+                Confirm
+            </Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

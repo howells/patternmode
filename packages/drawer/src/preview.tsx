@@ -1,6 +1,6 @@
 "use client";
 
-// Use a simple button to avoid cross-package coupling
+import { Button } from "@patternmode/button";
 import { Text } from "@patternmode/text";
 import React from "react";
 import {
@@ -18,9 +18,7 @@ export function DrawerPreview() {
 	return (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<button type="button" className="px-3 py-2 border rounded">
-					Open Drawer
-				</button>
+				<Button variant="outline" type="button">Open Drawer</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
@@ -30,13 +28,9 @@ export function DrawerPreview() {
 				<Text>Content</Text>
 				<DrawerFooter>
 					<DrawerClose asChild>
-						<button type="button" className="px-3 py-2 border rounded">
-							Close
-						</button>
+						<Button variant="outline" type="button">Close</Button>
 					</DrawerClose>
-					<button type="button" className="px-3 py-2 border rounded">
-						Save
-					</button>
+					<Button variant="primary" type="button">Save</Button>
 				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>

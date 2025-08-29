@@ -33,11 +33,11 @@
 		"@changesets/cli": "^2.29.6",
 		"@playwright/experimental-ct-react": "^1.55.0",
 		"@types/react": "^19.1.12",
-		"@types/react-dom": "^19.1.8",
+		"@types/react-dom": "^19.1.9",
 		"glob": "^11.0.3",
 		"knip": "^5.63.0",
 		"turbo": "^2.5.6",
-		"ultracite": "^5.2.5"
+		"ultracite": "^5.2.10"
 	},
 	"dependencies": {
 		"es-toolkit": "^1.39.10",

@@ -3,7 +3,7 @@
 import { Menu as BaseMenu } from "@base-ui-components/react/menu";
 import type { Popover as BasePopover } from "@base-ui-components/react/popover";
 import type { useRender } from "@base-ui-components/react/use-render";
-// Using a simple button fallback to avoid cross-package coupling
+import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
@@ -42,23 +42,15 @@ const MenuTrigger = ({
 	...props
 }: MenuTriggerProps) => {
 	// Default to Button render unless custom render prop is provided
-	const defaultRender = (
-		<button
-			type="button"
-			className={cx(
-				"cursor-pointer inline-flex items-center gap-2 px-3 py-2 border rounded-md",
-				className,
-			)}
-		>
-			{children}
-		</button>
-	);
+    const defaultRender = (
+        <Button className={cx("cursor-pointer inline-flex items-center gap-2", className)} />
+    );
 
-	return (
-		<BaseMenu.Trigger ref={ref} render={render || defaultRender} {...props}>
-			{render ? children : undefined}
-		</BaseMenu.Trigger>
-	);
+    return (
+        <BaseMenu.Trigger ref={ref} render={render || defaultRender} {...props}>
+            {children}
+        </BaseMenu.Trigger>
+    );
 };
 MenuTrigger.displayName = "MenuTrigger";
 
@@ -122,7 +114,7 @@ const MenuSubmenuContent = ({
 				ref={forwardedRef}
 				className={cx(
 					// base
-					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl shadow-black/[2.5%]",
+					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
 					// widths
 					"min-w-32",
 					// heights
@@ -189,7 +181,7 @@ const MenuContent = ({
 				ref={forwardedRef}
 				className={cx(
 					// base
-					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl shadow-black/[2.5%]",
+					"relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
 					// widths
 					"min-w-48",
 					// heights

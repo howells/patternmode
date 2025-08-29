@@ -6,9 +6,15 @@ import type { TextListProps } from "./types";
 export function TextListPreview(props: TextListProps) {
 	return (
 		<TextList {...props}>
-			<TextListItem>First line of copy</TextListItem>
-			<TextListItem>Second line of copy</TextListItem>
-			<TextListItem>Third line of copy</TextListItem>
+			<TextListItem>
+				A concise example that wraps naturally on smaller screens.
+			</TextListItem>
+			<TextListItem>
+				Briefly describe a step or provide helpful context.
+			</TextListItem>
+			<TextListItem>
+				Keep items clear and scannable with minimal detail.
+			</TextListItem>
 		</TextList>
 	);
 }
