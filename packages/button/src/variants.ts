@@ -31,12 +31,11 @@ export const buttonVariants = tv({
 			sm: `h-control-sm px-2.5 text-sm has-[>svg]:px-2`,
 			base: `h-control-base px-3 text-sm has-[>svg]:px-2.5`,
 			lg: `h-control-lg px-4 text-sm has-[>svg]:px-3`,
-			"icon-2xs": `size-control-2xs`,
-			"icon-xs": `size-control-xs`,
-			// no dedicated icon-2xs; icon-xs covers the smallest square icon button
-			"icon-sm": `size-control-sm`,
-			icon: `size-control-base`,
-			"icon-lg": `size-control-lg`,
+			"icon-2xs": `size-control-2xs p-0 shrink-0`,
+			"icon-xs": `size-control-xs p-0 shrink-0`,
+			"icon-sm": `size-control-sm p-0 shrink-0`,
+			icon: `size-control-base p-0 shrink-0`,
+			"icon-lg": `size-control-lg p-0 shrink-0`,
 		},
 	},
 	compoundVariants: [
