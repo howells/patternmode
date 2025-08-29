@@ -68,7 +68,9 @@
     "lint": "biome check src --write"
   },
   "dependencies": {
+    "@patternmode/icons": "workspace:*",
     "@patternmode/utils": "workspace:*",
+    "lucide-react": "^0.542.0",
     "clsx": "^2.1.1",
     "tailwind-variants": "^3.1.0"
   },

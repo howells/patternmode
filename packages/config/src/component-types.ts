@@ -1,6 +1,6 @@
 import type { IconComponent } from "@patternmode/icons";
 import type React from "react";
-import type { ComponentCategory } from "./component-categories";
+import type { ComponentCategory } from "@patternmode/constants/component-categories";
 
 /**
  * Complete example definition with component and metadata

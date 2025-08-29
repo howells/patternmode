@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardHeading } from "@patternmode/card";
-import { COMPONENT_CATEGORIES } from "@patternmode/config/component-categories";
+import { COMPONENT_CATEGORIES, type ComponentCategory } from "@patternmode/constants/component-categories";
 import { Grid, GridCell } from "@patternmode/grid";
 import { Heading } from "@patternmode/heading";
 import { VStack } from "@patternmode/stack";
@@ -14,15 +14,13 @@ const components = Object.entries(PREVIEW_REGISTRY)
 	.filter(([id]) => id !== "sidebar")
 	.map(([id, Component]) => {
 		const cfg = COMPONENT_REGISTRY[id as keyof typeof COMPONENT_REGISTRY];
-		return {
-			id,
-			name: cfg?.name ?? id,
-			category: cfg?.category as
-				| (typeof COMPONENT_CATEGORIES)[number]
-				| undefined,
-			Component,
-		};
-	})
+    return {
+        id,
+        name: cfg?.name ?? id,
+        category: cfg?.category as ComponentCategory | undefined,
+        Component,
+    };
+  })
 	.filter((c) => !!c.category)
 	// Sort alphabetically by display name for stable ordering within categories
 	.sort((a, b) => a.name.localeCompare(b.name));
@@ -48,18 +46,18 @@ class Boundary extends React.Component<
 const Examples = () => {
 	return (
 		<div className="space-y-10">
-			{COMPONENT_CATEGORIES.map((category) => {
-				const items = components.filter((c) => c.category === category);
-				if (items.length === 0) return null;
-				return (
-					<VStack key={category} gap={6}>
-						<Heading level={2}>
-							{category.charAt(0).toUpperCase() + category.slice(1)}
-						</Heading>
-						<Grid columns={{ sm: 2, md: 3, "2xl": 4 }} gap={6}>
-							{items.map(({ name, Component, id }) => (
-								<GridCell key={`${category}-${id}`}>
-									<Card fillHeight>
+    {COMPONENT_CATEGORIES.map((category) => {
+        const items = components.filter((c) => c.category === category.key);
+        if (items.length === 0) return null;
+        return (
+            <VStack key={category.key} gap={6}>
+                <Heading level={2}>
+                    {category.label}
+                </Heading>
+                <Grid columns={{ sm: 2, md: 3, "2xl": 4 }} gap={6}>
+                    {items.map(({ name, Component, id }) => (
+                        <GridCell key={`${category.key}-${id}`}>
+                            <Card fillHeight>
 										<CardHeader>
 											<CardHeading>{name}</CardHeading>
 										</CardHeader>
