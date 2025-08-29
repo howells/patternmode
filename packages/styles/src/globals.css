@@ -19,23 +19,14 @@
 	--sidebar-open-width: 16rem; /* 256px - expanded state */
 
 	/* Shadow scale */
-	--shadow-2xs: 0px 1px 0px rgba(17, 17, 26, 0.05);
-	--shadow-xs: 0px 1px 0px rgba(17, 17, 26, 0.025),
-                0px 0px 8px rgba(17, 17, 26, 0.05);
-	--shadow-sm: 0px 0px 16px rgba(17, 17, 26, 0.05);
-	--shadow-md: 0px 4px 16px rgba(17, 17, 26, 0.05),
-              0px 8px 32px rgba(17, 17, 26, 0.025);
-	--shadow-lg: 0px 4px 16px rgba(17, 17, 26, 0.05),
-                0px 8px 32px rgba(17, 17, 26, 0.025);
-	--shadow-xl: 0px 1px 0px rgba(17, 17, 26, 0.015),
-                0px 8px 24px rgba(17, 17, 26, 0.025),
-                0px 16px 48px rgba(17, 17, 26, 0.05);
-	--shadow-2xl: 0px 4px 16px rgba(17, 17, 26, 0.015),
-                0px 8px 24px rgba(17, 17, 26, 0.025),
-                0px 16px 56px rgba(17, 17, 26, 0.05);
-	--shadow-3xl: 0px 8px 24px rgba(17, 17, 26, 0.015),
-                0px 16px 56px rgba(17, 17, 26, 0.025),
-                0px 24px 80px rgba(17, 17, 26, 0.05);
+	--shadow-2xs: rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
+	--shadow-xs: rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 8px -8px;
+	--shadow-sm: rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px;
+	--shadow-md: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px 0px;
+	--shadow-lg: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px -4px, rgba(0, 0, 0, 0.06) 0px 16px 24px -8px;
+	--shadow-xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
+	--shadow-2xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
+	--shadow-3xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
 }
 
 /* Control sizing utilities */
@@ -90,6 +81,7 @@
 	.shadow-3xl {
 		box-shadow: var(--shadow-3xl);
 	}
+
 }
 
 /* Set default border colors */
