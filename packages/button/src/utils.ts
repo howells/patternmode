@@ -16,6 +16,7 @@ export const getIconSize = (
 		base: "sm",
 		lg: "base",
 		// Icon button sizes
+		"icon-2xs": "xs",
 		"icon-xs": "xs",
 		"icon-sm": "xs",
 		icon: "sm",
@@ -40,6 +41,7 @@ export const getLoaderSize = (
 		base: "sm",
 		lg: "base",
 		// Icon button sizes
+		"icon-2xs": "xs",
 		"icon-xs": "xs",
 		"icon-sm": "xs",
 		icon: "sm",
@@ -64,6 +66,7 @@ export const getIconContainerSize = (
 		base: "size-3.5",
 		lg: "size-4",
 		// Icon button sizes
+		"icon-2xs": "size-2.5",
 		"icon-xs": "size-3",
 		"icon-sm": "size-3.5",
 		icon: "size-3.5",
@@ -81,6 +84,7 @@ export const isSmallIconButton = (
 	buttonSize: Size | IconButtonSize,
 ): boolean => {
 	return (
+		buttonSize === "icon-2xs" ||
 		buttonSize === "icon-xs" ||
 		buttonSize === "icon-sm" ||
 		buttonSize === "icon"

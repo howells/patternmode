@@ -2195,9 +2195,18 @@ importers:
       '@base-ui-components/react':
         specifier: ^1.0.0-beta.2
         version: 1.0.0-beta.2(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/constants':
+        specifier: workspace:*
+        version: link:../constants
+      '@patternmode/input':
+        specifier: workspace:*
+        version: link:../input
       '@patternmode/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2210,6 +2219,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      tailwind-variants:
+        specifier: ^3.1.0
+        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*

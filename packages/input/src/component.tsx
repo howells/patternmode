@@ -29,6 +29,7 @@ const Input = ({
 	iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
 	minimal,
 	unstyled,
+	externalRef,
 	...props
 }: InputProps & {
 	ref?: React.RefObject<React.ElementRef<typeof BaseInput> | null>;
@@ -36,6 +37,27 @@ const Input = ({
 	const [typeState, setTypeState] = React.useState(type);
 	const isPassword = type === "password";
 	const isSearch = type === "search";
+
+	const setInputRef = (node: React.ElementRef<typeof BaseInput> | null) => {
+		// Assign to the component's forwarded ref (object ref only)
+		if (forwardedRef && typeof forwardedRef !== "function") {
+			(
+				forwardedRef as React.MutableRefObject<React.ElementRef<
+					typeof BaseInput
+				> | null>
+			).current = node;
+		}
+		// Assign to external ref consumers (e.g., Base NumberField render-prop)
+		if (externalRef) {
+			if (typeof externalRef === "function") {
+				externalRef((node as unknown as HTMLInputElement) ?? null);
+			} else {
+				(
+					externalRef as React.MutableRefObject<HTMLInputElement | null>
+				).current = (node as unknown as HTMLInputElement) ?? null;
+			}
+		}
+	};
 
 	const iconSize = {
 		"size-3": size === "xs",
@@ -165,7 +187,7 @@ const Input = ({
 	const containerClassName = cx(
 		formControlContainerVariants({ size, hasError }),
 		minimal && "bg-transparent border-transparent shadow-none",
-		unstyled && "border-0 bg-transparent shadow-none", // fully unstyled
+		unstyled && "border-0 bg-transparent shadow-none",
 		className,
 	);
 
@@ -186,7 +208,7 @@ const Input = ({
 				</div>
 			)}
 			<BaseInput
-				ref={forwardedRef}
+				ref={setInputRef}
 				className={cx(inputElementStyles({ size }), leftPadding, rightPadding)}
 				data-testid="input"
 				type={typeState}

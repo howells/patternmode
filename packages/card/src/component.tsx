@@ -74,7 +74,7 @@ const CardHeader = ({
 		ref={ref}
 		className={cx(
 			"flex flex-col space-y-1.5 p-6",
-			border && "border-b border-zinc-200 dark:border-zinc-800",
+			border && "border-b border-zinc-950/5 dark:border-zinc-800",
 			className,
 		)}
 		{...props}

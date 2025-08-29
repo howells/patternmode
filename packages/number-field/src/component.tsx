@@ -1,8 +1,18 @@
 import { NumberField as BaseNumberField } from "@base-ui-components/react/number-field";
+import { Button } from "@patternmode/button";
+import type { Size } from "@patternmode/constants/sizes";
+import { Input } from "@patternmode/input";
 import { cx } from "@patternmode/utils/cx";
-import { focusRing } from "@patternmode/utils/focus-ring";
 import { Minus, MoveHorizontal, Plus } from "lucide-react";
 import * as React from "react";
+
+const ICON_SIZE_BY_TEXT_SIZE = {
+	"2xs": "icon-2xs",
+	xs: "icon-xs",
+	sm: "icon-sm",
+	base: "icon",
+	lg: "icon-lg",
+} as const;
 
 type NumberFieldProps = {
 	label?: string;
@@ -10,7 +20,7 @@ type NumberFieldProps = {
 	showScrubArea?: boolean;
 	showSteppers?: boolean;
 	fullWidth?: boolean;
-	size?: "xs" | "sm" | "base" | "lg";
+	size?: Size;
 	className?: string;
 	inputClassName?: string;
 } & React.ComponentPropsWithoutRef<typeof BaseNumberField.Root>;
@@ -162,7 +172,7 @@ const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => (
 );
 
 type NumberFieldInputProps = {
-	size?: "xs" | "sm" | "base" | "lg";
+	size?: Size;
 	className?: string;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseNumberField.Input>, "size">;
 const NumberFieldInput = React.forwardRef<
@@ -171,19 +181,21 @@ const NumberFieldInput = React.forwardRef<
 >(({ size = "base", className, ...props }, ref) => (
 	<BaseNumberField.Input
 		ref={ref}
-		className={cx(
-			"flex h-9 w-32 items-center rounded-md border px-3 py-1 text-sm outline-hidden",
-			" dark:border-zinc-800",
-			focusRing,
-			className,
-		)}
 		{...props}
+		render={({ className: renderClassName, ref, ...renderProps }) => (
+			<Input
+				className={cx(renderClassName, className)}
+				size={size}
+				externalRef={ref}
+				{...renderProps}
+			/>
+		)}
 	/>
 ));
 NumberFieldInput.displayName = "NumberFieldInput";
 
 type NumberFieldButtonProps = {
-	size?: "xs" | "sm" | "base" | "lg";
+	size?: Size;
 } & React.ComponentPropsWithoutRef<"button">;
 
 const NumberFieldDecrement = ({
@@ -192,14 +204,16 @@ const NumberFieldDecrement = ({
 }: NumberFieldButtonProps) => (
 	<BaseNumberField.Decrement
 		{...props}
-		className={cx(
-			"inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm text-zinc-700 dark:text-zinc-200",
-			" dark:border-zinc-800",
-			focusRing,
+		render={({ className, ref, ...props }) => (
+			<Button
+				ref={ref}
+				className={cx(className)}
+				size={ICON_SIZE_BY_TEXT_SIZE[size]}
+				icon={Minus}
+				{...props}
+			/>
 		)}
-	>
-		<Minus className={size === "lg" ? "size-5" : "size-4"} />
-	</BaseNumberField.Decrement>
+	></BaseNumberField.Decrement>
 );
 NumberFieldDecrement.displayName = "NumberFieldDecrement";
 
@@ -209,14 +223,16 @@ const NumberFieldIncrement = ({
 }: NumberFieldButtonProps) => (
 	<BaseNumberField.Increment
 		{...props}
-		className={cx(
-			"inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm text-zinc-700 dark:text-zinc-200",
-			" dark:border-zinc-800",
-			focusRing,
+		render={({ className, ref, ...props }) => (
+			<Button
+				ref={ref}
+				className={cx(className)}
+				size={ICON_SIZE_BY_TEXT_SIZE[size]}
+				icon={Plus}
+				{...props}
+			/>
 		)}
-	>
-		<Plus className={size === "lg" ? "size-5" : "size-4"} />
-	</BaseNumberField.Increment>
+	></BaseNumberField.Increment>
 );
 NumberFieldIncrement.displayName = "NumberFieldIncrement";
 

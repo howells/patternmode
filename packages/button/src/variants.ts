@@ -31,6 +31,7 @@ export const buttonVariants = tv({
 			sm: `h-control-sm px-2.5 text-sm has-[>svg]:px-2`,
 			base: `h-control-base px-3 text-sm has-[>svg]:px-2.5`,
 			lg: `h-control-lg px-4 text-sm has-[>svg]:px-3`,
+			"icon-2xs": `size-control-2xs`,
 			"icon-xs": `size-control-xs`,
 			// no dedicated icon-2xs; icon-xs covers the smallest square icon button
 			"icon-sm": `size-control-sm`,
@@ -90,6 +91,11 @@ export const buttonVariants = tv({
 			size: "lg",
 			rounded: false,
 			class: borderRadiusVariants.lg,
+		},
+		{
+			size: "icon-2xs",
+			rounded: false,
+			class: borderRadiusVariants.xs,
 		},
 		{
 			size: "icon-xs",

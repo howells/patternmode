@@ -1,22 +1,23 @@
 "use client";
 
+import { cx } from "@patternmode/utils/cx";
 import type { StackedListProps } from "./component";
 import { StackedList, StackedListItem } from "./component";
 
 export function StackedListPreview(props: StackedListProps) {
 	return (
-		<StackedList {...props}>
+		<StackedList {...props} className={cx("w-full")}>
 			<StackedListItem>
-				<div className="font-medium">John Doe</div>
-				<div className="text-sm text-gray-500">john@example.com</div>
+				<div>John Doe</div>
+				<div className="text-zinc-500">john@example.com</div>
 			</StackedListItem>
 			<StackedListItem>
-				<div className="font-medium">Jane Smith</div>
-				<div className="text-sm text-gray-500">jane@example.com</div>
+				<div>Jane Smith</div>
+				<div className="text-zinc-500">jane@example.com</div>
 			</StackedListItem>
 			<StackedListItem>
-				<div className="font-medium">Bob Johnson</div>
-				<div className="text-sm text-gray-500">bob@example.com</div>
+				<div>Bob Johnson</div>
+				<div className="text-zinc-500">bob@example.com</div>
 			</StackedListItem>
 		</StackedList>
 	);

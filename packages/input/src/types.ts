@@ -25,4 +25,8 @@ export type InputProps = {
 	iconStrokeWidth?: number;
 	minimal?: boolean;
 	unstyled?: boolean;
+	/**
+	 * Optional external ref to the underlying input element (for render-prop integrations)
+	 */
+	externalRef?: React.ForwardedRef<HTMLInputElement>;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">;

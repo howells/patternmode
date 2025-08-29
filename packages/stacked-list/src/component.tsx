@@ -193,16 +193,13 @@ const StackedListContent = ({
 			className={cx("min-w-0", fill && "flex-1", className)}
 			{...props}
 		>
-			<Text
-				size="sm"
-				className="truncate font-medium text-zinc-900 dark:text-zinc-50"
-			>
+			<Text size="sm" className="truncate text-zinc-900 dark:text-zinc-50">
 				{title}
 			</Text>
 			{description && (
 				<Text
 					size="sm"
-					className="mt-1 truncate text-zinc-600 dark:text-zinc-400"
+					className="mt-1 truncate text-zinc-500 dark:text-zinc-400"
 				>
 					{description}
 				</Text>

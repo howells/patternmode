@@ -7,7 +7,12 @@ import type { VariantProps } from "tailwind-variants";
  * Icon-only button size options.
  * Controls both width and height for square icon buttons.
  */
-export type IconButtonSize = "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+export type IconButtonSize =
+	| "icon-2xs"
+	| "icon-xs"
+	| "icon-sm"
+	| "icon"
+	| "icon-lg";
 
 /**
  * Button variant options.
