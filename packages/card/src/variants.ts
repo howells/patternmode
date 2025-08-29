@@ -1,19 +1,19 @@
+import { borderRing } from "@patternmode/utils/border-ring";
+import { borderRingDashed } from "@patternmode/utils/border-ring-dashed";
 import { tv } from "tailwind-variants";
-import { borderRing } from "../../utils/src/border-ring";
 
 export const cardVariants = tv({
-	base: [
-		...borderRing,
-		"relative w-full rounded-xl",
-		"bg-white dark:bg-[#090E1A]",
-	].join(" "),
+	base: ["relative w-full rounded-xl"].join(" "),
 	variants: {
 		variant: {
-			default: "",
-			dashed: "border border-dashed bg-transparent",
+			default: [...borderRing, "bg-white dark:bg-[#090E1A]"].join(" "),
+			dashed: [...borderRingDashed, "bg-transparent"].join(" "),
 		},
 		fillHeight: {
 			true: "h-full",
 		},
+	},
+	defaultVariants: {
+		variant: "default",
 	},
 });
