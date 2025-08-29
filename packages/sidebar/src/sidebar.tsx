@@ -23,9 +23,10 @@ export function Sidebar({
 }: SidebarProps) {
 	// Subscribe to specific state slices for optimal performance
 	const state = useSidebar((s) => s.state);
-	const _isHovering = useSidebar((s) => s.isHovering);
-	const isMobile = useSidebar((s) => s.isMobile);
-	const isExpanded = useSidebar((s) => s.isExpanded);
+    const _isHovering = useSidebar((s) => s.isHovering);
+    const isMobile = useSidebar((s) => s.isMobile);
+    const isExpanded = useSidebar((s) => s.isExpanded);
+    const isHydrated = useSidebar((s) => s.isHydrated);
 	const _togglePin = useSidebar((s) => s.togglePin);
 	const _toggleLock = useSidebar((s) => s.toggleLock);
 	const _setState = useSidebar((s) => s.setState);
@@ -52,8 +53,8 @@ export function Sidebar({
 		};
 	}, []);
 
-	const isHoverDisabled =
-		!expandOnHover || state === "pinned" || state === "locked";
+    const isHoverDisabled =
+        !isHydrated || !expandOnHover || state === "pinned" || state === "locked";
 	const { hoverProps } = useHover({
 		isDisabled: isHoverDisabled,
 		onHoverStart: () => {

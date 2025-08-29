@@ -7,7 +7,8 @@ interface SidebarStore {
 	isHovering: boolean;
 	isMobile: boolean;
 	isExpanded: boolean;
-	shouldOffsetContent: boolean;
+    shouldOffsetContent: boolean;
+    isHydrated: boolean;
 
 	// Computed getters
 	get effectiveWidth(): string;
@@ -22,14 +23,15 @@ interface SidebarStore {
 }
 
 export const useSidebar = create<SidebarStore>()(
-	persist(
-		(set, get) => ({
+    persist(
+        (set, get) => ({
 			// Initial state
 			state: "collapsed",
 			isHovering: false,
 			isMobile: false,
-			isExpanded: false,
-			shouldOffsetContent: false,
+            isExpanded: false,
+            shouldOffsetContent: false,
+            isHydrated: false,
 
 			// Computed values using getters
 			get effectiveWidth() {
@@ -96,30 +98,45 @@ export const useSidebar = create<SidebarStore>()(
 					const shouldOffsetContent = false;
 					return { state: newState, isExpanded, shouldOffsetContent };
 				}),
-		}),
-		{
-			name: "sidebar-state",
-			partialize: (state) => ({
-				isPinned: state.state === "pinned",
-				isLocked: state.state === "locked",
-			}), // Persist both pinned and locked states
-			onRehydrateStorage: () => (state, error) => {
-				// Restore the pinned or locked state when rehydrating
-                if (state && !error) {
-                    const persistedState = state as Partial<SidebarStore> & { isPinned?: boolean; isLocked?: boolean };
-                    if (persistedState.isPinned) {
-						state.state = "pinned";
-					} else if (persistedState.isLocked) {
-						state.state = "locked";
-					}
-					// Recalculate computed values
-					const isExpanded = !state.isMobile && state.state === "pinned";
-					const shouldOffsetContent =
-						!state.isMobile && state.state === "pinned";
-					state.isExpanded = isExpanded;
-					state.shouldOffsetContent = shouldOffsetContent;
-				}
-			},
-		},
-	),
+        }),
+        {
+            name: "sidebar-state",
+            // Persist only the user's choice: pinned or locked
+            partialize: (state) => ({
+                isPinned: state.state === "pinned",
+                isLocked: state.state === "locked",
+            }),
+            // On hydration, derive runtime state and flags from the booleans
+            merge: (persisted, current) => {
+                const p = persisted as Partial<SidebarStore> & {
+                    isPinned?: boolean;
+                    isLocked?: boolean;
+                };
+                let nextState: SidebarStore["state"] = current.state;
+                if (p.isPinned) nextState = "pinned";
+                else if (p.isLocked) nextState = "locked";
+                else nextState = "collapsed";
+
+                // On hydration we never restore ephemeral "open"; only pinned/locked/collapsed
+                const isExpanded = current.isMobile
+                    ? false
+                    : nextState === "pinned" ||
+                      (nextState === "collapsed" && current.isHovering);
+                const shouldOffsetContent = !current.isMobile && nextState === "pinned";
+
+                return {
+                    ...current,
+                    state: nextState,
+                    isExpanded,
+                    shouldOffsetContent,
+                } satisfies SidebarStore;
+            },
+            onRehydrateStorage: () => (state) => {
+                // Mark hydration complete to prevent premature hover-expansion
+                if (state) {
+                    state.isHydrated = true;
+                }
+            },
+        },
+    ),
 );

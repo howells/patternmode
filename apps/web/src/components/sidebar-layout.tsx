@@ -13,13 +13,12 @@ import {
 } from "@patternmode/sidebar";
 import { Stack, VStack } from "@patternmode/stack";
 import { cx } from "@patternmode/utils/cx";
-import { Layers } from "lucide-react";
 import Link from "next/link";
 import type React from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
-import { getAllComponents } from "@/registry/components";
+import { COMPONENT_CATEGORIES } from "@patternmode/constants/component-categories";
 import { ComponentSearch } from "./component-search";
 
 // SidebarGroupTitle helper removed (unused)
@@ -80,13 +79,9 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
 				</SidebarHeader>
 				<SidebarContent>
 					<SidebarGroup>
-						{getAllComponents().map((config) => (
-							<SidebarItem
-								key={config.id}
-								icon={config.icon}
-								render={<Link href={`/ui/components/${config.id}`} />}
-							>
-								{config.name}
+						{COMPONENT_CATEGORIES.map((cat) => (
+							<SidebarItem key={cat.key} icon={cat.icon}>
+								{cat.label}
 							</SidebarItem>
 						))}
 					</SidebarGroup>
