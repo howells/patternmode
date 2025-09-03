@@ -9,41 +9,41 @@ import type { CopyButtonProps } from "./types";
  * Button component for copying text content to the clipboard with visual feedback.
  */
 export const CopyButton = ({
-	ref,
-	text,
-	copyLabel = "Copy",
-	copiedLabel = "Copied",
-	copyIcon: CopyIcon = Copy,
-	copiedIcon: CopiedIcon = Check,
-	className,
-	...props
+  ref,
+  text,
+  copyLabel = "Copy",
+  copiedLabel = "Copied",
+  copyIcon: CopyIcon = Copy,
+  copiedIcon: CopiedIcon = Check,
+  className,
+  ...props
 }: CopyButtonProps) => {
-	const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-	const copyToClipboard = async () => {
-		try {
-			await navigator.clipboard.writeText(text);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		} catch (err) {
-			console.error("Failed to copy text: ", err);
-		}
-	};
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (_err) {
+      /* noop */
+    }
+  };
 
-	return (
-		<Button
-			ref={ref}
-			variant="ghost"
-			size="sm"
-			onClick={copyToClipboard}
-			leftIcon={copied ? CopiedIcon : CopyIcon}
-			className={className}
-			data-testid="copy-button"
-			{...props}
-		>
-			{copied ? copiedLabel : copyLabel}
-		</Button>
-	);
+  return (
+    <Button
+      className={className}
+      data-testid="copy-button"
+      leftIcon={copied ? CopiedIcon : CopyIcon}
+      onClick={copyToClipboard}
+      ref={ref}
+      size="sm"
+      variant="ghost"
+      {...props}
+    >
+      {copied ? copiedLabel : copyLabel}
+    </Button>
+  );
 };
 
 CopyButton.displayName = "CopyButton";

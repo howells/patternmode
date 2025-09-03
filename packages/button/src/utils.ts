@@ -6,24 +6,24 @@ import type { IconButtonSize } from "./types";
  * Used for determining the correct Icon component size based on button size.
  */
 export const getIconSize = (
-	buttonSize: Size | IconButtonSize,
+  buttonSize: Size | IconButtonSize
 ): "xs" | "sm" | "base" | "lg" => {
-	const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base" | "lg"> = {
-		// Text button sizes
-		"2xs": "xs",
-		xs: "xs",
-		sm: "xs",
-		base: "sm",
-		lg: "base",
-		// Icon button sizes
-		"icon-2xs": "xs",
-		"icon-xs": "xs",
-		"icon-sm": "xs",
-		icon: "sm",
-		"icon-lg": "base",
-	};
+  const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base" | "lg"> = {
+    // Text button sizes
+    "2xs": "xs",
+    xs: "xs",
+    sm: "xs",
+    base: "sm",
+    lg: "base",
+    // Icon button sizes
+    "icon-2xs": "xs",
+    "icon-xs": "xs",
+    "icon-sm": "xs",
+    icon: "sm",
+    "icon-lg": "base",
+  };
 
-	return sizeMap[buttonSize] || "sm";
+  return sizeMap[buttonSize] || "sm";
 };
 
 /**
@@ -31,24 +31,24 @@ export const getIconSize = (
  * Used for determining the correct Loader component size based on button size.
  */
 export const getLoaderSize = (
-	buttonSize: Size | IconButtonSize,
+  buttonSize: Size | IconButtonSize
 ): "xs" | "sm" | "base" => {
-	const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base"> = {
-		// Text button sizes
-		"2xs": "xs",
-		xs: "xs",
-		sm: "xs",
-		base: "sm",
-		lg: "base",
-		// Icon button sizes
-		"icon-2xs": "xs",
-		"icon-xs": "xs",
-		"icon-sm": "xs",
-		icon: "sm",
-		"icon-lg": "base",
-	};
+  const sizeMap: Record<Size | IconButtonSize, "xs" | "sm" | "base"> = {
+    // Text button sizes
+    "2xs": "xs",
+    xs: "xs",
+    sm: "xs",
+    base: "sm",
+    lg: "base",
+    // Icon button sizes
+    "icon-2xs": "xs",
+    "icon-xs": "xs",
+    "icon-sm": "xs",
+    icon: "sm",
+    "icon-lg": "base",
+  };
 
-	return sizeMap[buttonSize] || "sm";
+  return sizeMap[buttonSize] || "sm";
 };
 
 /**
@@ -56,24 +56,24 @@ export const getLoaderSize = (
  * Used for determining the correct container size for icons and loaders.
  */
 export const getIconContainerSize = (
-	buttonSize: Size | IconButtonSize,
+  buttonSize: Size | IconButtonSize
 ): string => {
-	const sizeMap: Record<Size | IconButtonSize, string> = {
-		// Text button sizes
-		"2xs": "size-2.5",
-		xs: "size-3",
-		sm: "size-3.5",
-		base: "size-3.5",
-		lg: "size-4",
-		// Icon button sizes
-		"icon-2xs": "size-2.5",
-		"icon-xs": "size-3",
-		"icon-sm": "size-3.5",
-		icon: "size-3.5",
-		"icon-lg": "size-4",
-	};
+  const sizeMap: Record<Size | IconButtonSize, string> = {
+    // Text button sizes
+    "2xs": "size-2.5",
+    xs: "size-3",
+    sm: "size-3.5",
+    base: "size-3.5",
+    lg: "size-4",
+    // Icon button sizes
+    "icon-2xs": "size-2.5",
+    "icon-xs": "size-3",
+    "icon-sm": "size-3.5",
+    icon: "size-3.5",
+    "icon-lg": "size-4",
+  };
 
-	return sizeMap[buttonSize] || "size-3.5";
+  return sizeMap[buttonSize] || "size-3.5";
 };
 
 /**
@@ -81,12 +81,12 @@ export const getIconContainerSize = (
  * Used for layout decisions in the button component.
  */
 export const isSmallIconButton = (
-	buttonSize: Size | IconButtonSize,
+  buttonSize: Size | IconButtonSize
 ): boolean => {
-	return (
-		buttonSize === "icon-2xs" ||
-		buttonSize === "icon-xs" ||
-		buttonSize === "icon-sm" ||
-		buttonSize === "icon"
-	);
+  return (
+    buttonSize === "icon-2xs" ||
+    buttonSize === "icon-xs" ||
+    buttonSize === "icon-sm" ||
+    buttonSize === "icon"
+  );
 };

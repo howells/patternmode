@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { sliderConfig } from "@patternmode/slider/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SliderPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={sliderConfig.name}
-        description={sliderConfig.description}
         badge={sliderConfig.badge}
+        description={sliderConfig.description}
+        title={sliderConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={sliderConfig.category}
         componentId="slider"
         componentName={sliderConfig.name}
-        category={sliderConfig.category}
       />
 
       <Separator />

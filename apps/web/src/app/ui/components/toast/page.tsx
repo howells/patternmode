@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { toastConfig } from "@patternmode/toast/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ToastPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={toastConfig.name}
-        description={toastConfig.description}
         badge={toastConfig.badge}
+        description={toastConfig.description}
+        title={toastConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={toastConfig.category}
         componentId="toast"
         componentName={toastConfig.name}
-        category={toastConfig.category}
       />
 
       <Separator />

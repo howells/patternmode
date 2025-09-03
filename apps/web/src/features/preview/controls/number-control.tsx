@@ -1,20 +1,25 @@
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { FieldControl } from "@patternmode/field";
 import { NumberField } from "@patternmode/number-field";
-import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import React from "react";
 
 import type { PropControlProps } from "./types";
 
-export function NumberControl({ prop, currentValue, onValueChange }: PropControlProps) {
+export function NumberControl({
+  prop,
+  currentValue,
+  onValueChange,
+}: PropControlProps) {
   // Handle default values that are function calls (like config.getIconStrokeWidth())
   let numericDefaultValue: number | undefined;
   if (prop.defaultValue === "config.getIconStrokeWidth()") {
     numericDefaultValue = DEFAULT_ICON_STROKE_WIDTH;
-  }
-  else if (typeof prop.defaultValue === "number") {
+  } else if (typeof prop.defaultValue === "number") {
     numericDefaultValue = prop.defaultValue;
-  }
-  else if (typeof prop.defaultValue === "string" && !Number.isNaN(Number(prop.defaultValue))) {
+  } else if (
+    typeof prop.defaultValue === "string" &&
+    !Number.isNaN(Number(prop.defaultValue))
+  ) {
     numericDefaultValue = Number(prop.defaultValue);
   }
 
@@ -34,13 +39,15 @@ export function NumberControl({ prop, currentValue, onValueChange }: PropControl
     <FieldControl
       render={() => (
         <NumberField
+          fullWidth
+          max={prop.max}
+          min={prop.min}
+          onValueChange={(value) => onValueChange(value)}
+          placeholder={
+            numericDefaultValue != null ? String(numericDefaultValue) : ""
+          }
           size="xs"
           value={finalValue}
-          onValueChange={value => onValueChange(value)}
-          placeholder={numericDefaultValue != null ? String(numericDefaultValue) : ""}
-          min={prop.min}
-          max={prop.max}
-          fullWidth
         />
       )}
     />

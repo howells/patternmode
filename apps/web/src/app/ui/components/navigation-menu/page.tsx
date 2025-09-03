@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { navigationMenuConfig } from "@patternmode/navigation-menu/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function NavigationMenuPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={navigationMenuConfig.name}
-        description={navigationMenuConfig.description}
         badge={navigationMenuConfig.badge}
+        description={navigationMenuConfig.description}
+        title={navigationMenuConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={navigationMenuConfig.category}
         componentId="navigation-menu"
         componentName={navigationMenuConfig.name}
-        category={navigationMenuConfig.category}
       />
 
       <Separator />

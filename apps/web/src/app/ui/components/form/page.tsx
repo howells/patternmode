@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { formConfig } from "@patternmode/form/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function FormPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={formConfig.name}
-        description={formConfig.description}
         badge={formConfig.badge}
+        description={formConfig.description}
+        title={formConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={formConfig.category}
         componentId="form"
         componentName={formConfig.name}
-        category={formConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { subheadingConfig } from "@patternmode/subheading/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SubheadingPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={subheadingConfig.name}
-        description={subheadingConfig.description}
         badge={subheadingConfig.badge}
+        description={subheadingConfig.description}
+        title={subheadingConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={subheadingConfig.category}
         componentId="subheading"
         componentName={subheadingConfig.name}
-        category={subheadingConfig.category}
       />
 
       <Separator />

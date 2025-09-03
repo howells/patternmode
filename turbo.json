@@ -12,7 +12,12 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "inputs": ["$TURBO_DEFAULT$", ".env.local", "src/styles/**/*.css", "packages/ui/src/styles/**/*.css"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env.local",
+        "src/styles/**/*.css",
+        "packages/ui/src/styles/**/*.css"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -22,16 +27,27 @@
     },
     "test": {
       "dependsOn": ["^test", "typecheck"],
-      "inputs": ["src/**", "tests/**", "**/*.test.*", "vitest.config.*", "package.json"]
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "**/*.test.*",
+        "vitest.config.*",
+        "package.json"
+      ]
     },
     "test:e2e": {
       "dependsOn": ["^build"],
       "cache": false,
-      "inputs": ["src/**", "tests/**", "**/*.test.*", "playwright.config.*", "package.json"]
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "**/*.test.*",
+        "playwright.config.*",
+        "package.json"
+      ]
     },
     "clean": {
       "cache": false
-    },
-    
+    }
   }
 }

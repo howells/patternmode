@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { tagGroupConfig } from "@patternmode/tag-group/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TagGroupPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={tagGroupConfig.name}
-        description={tagGroupConfig.description}
         badge={tagGroupConfig.badge}
+        description={tagGroupConfig.description}
+        title={tagGroupConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={tagGroupConfig.category}
         componentId="tag-group"
         componentName={tagGroupConfig.name}
-        category={tagGroupConfig.category}
       />
 
       <Separator />

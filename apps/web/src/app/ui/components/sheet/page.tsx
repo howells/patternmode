@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { sheetConfig } from "@patternmode/sheet/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SheetPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={sheetConfig.name}
-        description={sheetConfig.description}
         badge={sheetConfig.badge}
+        description={sheetConfig.description}
+        title={sheetConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={sheetConfig.category}
         componentId="sheet"
         componentName={sheetConfig.name}
-        category={sheetConfig.category}
       />
 
       <Separator />

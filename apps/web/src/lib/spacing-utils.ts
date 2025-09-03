@@ -84,11 +84,17 @@ export const spacingVariants = tv({
 
 export const generateResponsiveSpacingClasses = (
   property: "padding" | "gap",
-  value: ResponsiveSpacing<SpacingValue | GapValue> | undefined,
+  value: ResponsiveSpacing<SpacingValue | GapValue> | undefined
 ): string => {
   if (!value || typeof value !== "object") return "";
   const classes: string[] = [];
-  const breakpoints = { sm: "sm:", md: "md:", lg: "lg:", xl: "xl:", "2xl": "2xl:" };
+  const breakpoints = {
+    sm: "sm:",
+    md: "md:",
+    lg: "lg:",
+    xl: "xl:",
+    "2xl": "2xl:",
+  };
   Object.entries(value).forEach(([breakpoint, val]) => {
     if (val === undefined) return;
     const prefix = (breakpoints as Record<string, string>)[breakpoint] || "";
@@ -98,12 +104,19 @@ export const generateResponsiveSpacingClasses = (
   return classes.join(" ");
 };
 
-export const getBaseSpacingValue = <T>(value: ResponsiveSpacing<T> | undefined): T | undefined => {
-  if (value === undefined || value === null) return undefined;
+export const getBaseSpacingValue = <T>(
+  value: ResponsiveSpacing<T> | undefined
+): T | undefined => {
+  if (value === undefined || value === null) return;
   if (typeof value === "object") {
-    const responsiveObj = value as { sm?: T; md?: T; lg?: T; xl?: T; "2xl"?: T };
+    const responsiveObj = value as {
+      sm?: T;
+      md?: T;
+      lg?: T;
+      xl?: T;
+      "2xl"?: T;
+    };
     return responsiveObj.sm;
   }
   return value as T;
 };
-

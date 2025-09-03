@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { tooltipConfig } from "@patternmode/tooltip/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TooltipPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={tooltipConfig.name}
-        description={tooltipConfig.description}
         badge={tooltipConfig.badge}
+        description={tooltipConfig.description}
+        title={tooltipConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={tooltipConfig.category}
         componentId="tooltip"
         componentName={tooltipConfig.name}
-        category={tooltipConfig.category}
       />
 
       <Separator />

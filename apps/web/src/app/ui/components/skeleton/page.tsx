@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { skeletonConfig } from "@patternmode/skeleton/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SkeletonPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={skeletonConfig.name}
-        description={skeletonConfig.description}
         badge={skeletonConfig.badge}
+        description={skeletonConfig.description}
+        title={skeletonConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={skeletonConfig.category}
         componentId="skeleton"
         componentName={skeletonConfig.name}
-        category={skeletonConfig.category}
       />
 
       <Separator />

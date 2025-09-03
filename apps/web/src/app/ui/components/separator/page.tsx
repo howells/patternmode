@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { separatorConfig } from "@patternmode/separator/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SeparatorPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={separatorConfig.name}
-        description={separatorConfig.description}
         badge={separatorConfig.badge}
+        description={separatorConfig.description}
+        title={separatorConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={separatorConfig.category}
         componentId="separator"
         componentName={separatorConfig.name}
-        category={separatorConfig.category}
       />
 
       <Separator />

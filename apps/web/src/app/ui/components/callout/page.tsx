@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { calloutConfig } from "@patternmode/callout/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CalloutPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={calloutConfig.name}
-        description={calloutConfig.description}
         badge={calloutConfig.badge}
+        description={calloutConfig.description}
+        title={calloutConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={calloutConfig.category}
         componentId="callout"
         componentName={calloutConfig.name}
-        category={calloutConfig.category}
       />
 
       <Separator />

@@ -115,14 +115,10 @@
   "editor.renderLineHighlight": "all",
   "editor.matchBrackets": "always",
   "editor.renderWhitespace": "boundary",
-  "cSpell.words": [
-    "patternmode"
-  ],
+  "cSpell.words": ["patternmode"],
   "vitest.enable": true,
   "vitest.commandLine": "pnpm test",
-  "vitest.include": [
-    "**/*.{test,spec}.{js,ts,jsx,tsx}"
-  ],
+  "vitest.include": ["**/*.{test,spec}.{js,ts,jsx,tsx}"],
   "playwright.include": [
     "**/*.playwright.test.{js,ts,jsx,tsx}",
     "packages/ui/src/components/**/*.playwright.test.{ts,tsx}",
@@ -158,10 +154,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/playwright",
-      "args": [
-        "test",
-        "--config=playwright-ct.config.ts"
-      ],
+      "args": ["test", "--config=playwright-ct.config.ts"],
       "cwd": "${workspaceFolder}/packages/ui",
       "env": {
         "NODE_ENV": "test"

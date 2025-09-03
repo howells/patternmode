@@ -7,11 +7,17 @@ export const DefaultExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("");
   return (
     <div className="w-full max-w-96 space-y-4">
-      <IconSelect value={selectedIcon} onValueChange={setSelectedIcon} placeholder="Choose an icon..." />
+      <IconSelect
+        onValueChange={setSelectedIcon}
+        placeholder="Choose an icon..."
+        value={selectedIcon}
+      />
       {selectedIcon && (
         <div className="flex items-center gap-2 text-sm text-zinc-600">
           <span>Selected:</span>
-          <code className="bg-zinc-100 px-2 py-1 rounded text-xs">{selectedIcon}</code>
+          <code className="rounded bg-zinc-100 px-2 py-1 text-xs">
+            {selectedIcon}
+          </code>
         </div>
       )}
     </div>
@@ -22,10 +28,16 @@ export const WithValueExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("Camera");
   return (
     <div className="w-full max-w-96 space-y-4">
-      <IconSelect value={selectedIcon} onValueChange={setSelectedIcon} placeholder="Choose an icon..." />
+      <IconSelect
+        onValueChange={setSelectedIcon}
+        placeholder="Choose an icon..."
+        value={selectedIcon}
+      />
       <div className="flex items-center gap-2 text-sm text-zinc-600">
         <span>Selected:</span>
-        <code className="bg-zinc-100 px-2 py-1 rounded text-xs">{selectedIcon}</code>
+        <code className="rounded bg-zinc-100 px-2 py-1 text-xs">
+          {selectedIcon}
+        </code>
       </div>
     </div>
   );
@@ -35,11 +47,17 @@ export const CustomPlaceholderExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("");
   return (
     <div className="w-full max-w-96 space-y-4">
-      <IconSelect value={selectedIcon} onValueChange={setSelectedIcon} placeholder="Select a button icon..." />
+      <IconSelect
+        onValueChange={setSelectedIcon}
+        placeholder="Select a button icon..."
+        value={selectedIcon}
+      />
       {selectedIcon && (
         <div className="flex items-center gap-2 text-sm text-zinc-600">
           <span>Selected:</span>
-          <code className="bg-zinc-100 px-2 py-1 rounded text-xs">{selectedIcon}</code>
+          <code className="rounded bg-zinc-100 px-2 py-1 text-xs">
+            {selectedIcon}
+          </code>
         </div>
       )}
     </div>
@@ -48,7 +66,11 @@ export const CustomPlaceholderExample = () => {
 
 export const DisabledExample = () => (
   <div className="w-full max-w-96">
-    <IconSelect value="Settings" disabled={true} placeholder="This is disabled..." />
+    <IconSelect
+      disabled={true}
+      placeholder="This is disabled..."
+      value="Settings"
+    />
   </div>
 );
 
@@ -56,16 +78,22 @@ export const HookExample = () => {
   const { value, setValue, DynamicIconComponent } = useIconSelect("Heart");
   return (
     <div className="w-full max-w-96 space-y-4">
-      <IconSelect value={value} onValueChange={setValue} placeholder="Choose an icon..." />
+      <IconSelect
+        onValueChange={setValue}
+        placeholder="Choose an icon..."
+        value={value}
+      />
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm text-zinc-600">
           <span>Selected:</span>
-          <code className="bg-zinc-100 px-2 py-1 rounded text-xs">{value || "None"}</code>
+          <code className="rounded bg-zinc-100 px-2 py-1 text-xs">
+            {value || "None"}
+          </code>
         </div>
         {DynamicIconComponent && (
-          <div className="flex items-center gap-2 p-3 bg-zinc-50 rounded-lg">
+          <div className="flex items-center gap-2 rounded-lg bg-zinc-50 p-3">
             <span className="text-sm text-zinc-600">Rendered icon:</span>
-            <DynamicIconComponent className="w-6 h-6 text-blue-500" />
+            <DynamicIconComponent className="h-6 w-6 text-blue-500" />
           </div>
         )}
       </div>
@@ -81,20 +109,40 @@ export const SizesExample = () => {
   return (
     <div className="w-full max-w-96 space-y-4">
       <div className="w-44">
-        <label className="block text-xs font-medium mb-1">Extra Small</label>
-        <IconSelect size="xs" value={xsValue} onValueChange={setXsValue} placeholder="Extra small icon select" />
+        <label className="mb-1 block font-medium text-xs">Extra Small</label>
+        <IconSelect
+          onValueChange={setXsValue}
+          placeholder="Extra small icon select"
+          size="xs"
+          value={xsValue}
+        />
       </div>
       <div className="w-48">
-        <label className="block text-xs font-medium mb-1">Small</label>
-        <IconSelect size="sm" value={smValue} onValueChange={setSmValue} placeholder="Small icon select" />
+        <label className="mb-1 block font-medium text-xs">Small</label>
+        <IconSelect
+          onValueChange={setSmValue}
+          placeholder="Small icon select"
+          size="sm"
+          value={smValue}
+        />
       </div>
       <div className="w-56">
-        <label className="block text-sm font-medium mb-1">Base (Default)</label>
-        <IconSelect size="base" value={baseValue} onValueChange={setBaseValue} placeholder="Base icon select" />
+        <label className="mb-1 block font-medium text-sm">Base (Default)</label>
+        <IconSelect
+          onValueChange={setBaseValue}
+          placeholder="Base icon select"
+          size="base"
+          value={baseValue}
+        />
       </div>
       <div className="w-64">
-        <label className="block text-base font-medium mb-1">Large</label>
-        <IconSelect size="lg" value={lgValue} onValueChange={setLgValue} placeholder="Large icon select" />
+        <label className="mb-1 block font-medium text-base">Large</label>
+        <IconSelect
+          onValueChange={setLgValue}
+          placeholder="Large icon select"
+          size="lg"
+          value={lgValue}
+        />
       </div>
     </div>
   );
@@ -107,27 +155,30 @@ export const DynamicIconExample = () => {
   const BellIcon = getDynamicIconByName("Bell");
   return (
     <div className="w-full max-w-96 space-y-4">
-      <IconSelect value={iconName} onValueChange={setIconName} placeholder="Choose an icon to render..." />
+      <IconSelect
+        onValueChange={setIconName}
+        placeholder="Choose an icon to render..."
+        value={iconName}
+      />
       <div className="space-y-3">
         <div className="text-sm text-zinc-600">Dynamic icon rendering:</div>
-        <div className="flex items-center gap-4 p-4 bg-zinc-50 rounded-lg">
+        <div className="flex items-center gap-4 rounded-lg bg-zinc-50 p-4">
           <div className="flex items-center gap-2">
             <span className="text-sm text-zinc-500">Current:</span>
             {(() => {
               const CurrentIcon = getDynamicIconByName(iconName);
-              return <CurrentIcon className="w-6 h-6 text-blue-500" />;
+              return <CurrentIcon className="h-6 w-6 text-blue-500" />;
             })()}
           </div>
-          <div className="w-px h-6 bg-zinc-300" />
+          <div className="h-6 w-px bg-zinc-300" />
           <div className="flex items-center gap-2">
             <span className="text-sm text-zinc-500">Static examples:</span>
-            <StarIcon className="w-5 h-5 text-yellow-500" />
-            <HeartIcon className="w-5 h-5 text-red-500" />
-            <BellIcon className="w-5 h-5 text-green-500" />
+            <StarIcon className="h-5 w-5 text-yellow-500" />
+            <HeartIcon className="h-5 w-5 text-red-500" />
+            <BellIcon className="h-5 w-5 text-green-500" />
           </div>
         </div>
       </div>
     </div>
   );
 };
-

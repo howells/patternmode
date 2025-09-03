@@ -5,54 +5,60 @@ import { EmptyState } from "./component";
 
 // Default empty state
 export const DefaultExample = () => (
-	<EmptyState
-		title="No projects found"
-		description="Get started by creating your first project. It only takes a few minutes to set up."
-		icon={FolderOpen}
-		primaryAction={{
-			label: "Create Project",
-			onClick: () => console.log("Create clicked"),
-		}}
-	/>
+  <EmptyState
+    description="Get started by creating your first project. It only takes a few minutes to set up."
+    icon={FolderOpen}
+    primaryAction={{
+      label: "Create Project",
+      onClick: () => {
+        /* noop */
+      },
+    }}
+    title="No projects found"
+  />
 );
 
 // Minimal variant
 export const MinimalExample = () => (
-	<EmptyState
-		variant="minimal"
-		title="Nothing here"
-		description="This space is waiting for content."
-		icon={Inbox}
-	/>
+  <EmptyState
+    description="This space is waiting for content."
+    icon={Inbox}
+    title="Nothing here"
+    variant="minimal"
+  />
 );
 
 // With both actions
 export const WithBothActionsExample = () => (
-	<EmptyState
-		title="No data available"
-		description="Connect your data source to see insights and analytics here."
-		icon={Database}
-		primaryAction={{
-			label: "Connect Data",
-			onClick: () => console.log("Connect clicked"),
-		}}
-		secondaryAction={{
-			label: "View Documentation",
-			href: "/docs",
-		}}
-	/>
+  <EmptyState
+    description="Connect your data source to see insights and analytics here."
+    icon={Database}
+    primaryAction={{
+      label: "Connect Data",
+      onClick: () => {
+        /* noop */
+      },
+    }}
+    secondaryAction={{
+      label: "View Documentation",
+      href: "/docs",
+    }}
+    title="No data available"
+  />
 );
 
 // Large size
 export const LargeSizeExample = () => (
-	<EmptyState
-		size="lg"
-		title="Welcome to your dashboard"
-		description="This is where you'll see all your important metrics and data once you get started."
-		icon={BarChart3}
-		primaryAction={{
-			label: "Get Started",
-			onClick: () => console.log("Get started clicked"),
-		}}
-	/>
+  <EmptyState
+    description="This is where you'll see all your important metrics and data once you get started."
+    icon={BarChart3}
+    primaryAction={{
+      label: "Get Started",
+      onClick: () => {
+        /* noop */
+      },
+    }}
+    size="lg"
+    title="Welcome to your dashboard"
+  />
 );

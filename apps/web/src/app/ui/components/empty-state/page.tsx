@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { emptyStateConfig } from "@patternmode/empty-state/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function EmptyStatePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={emptyStateConfig.name}
-        description={emptyStateConfig.description}
         badge={emptyStateConfig.badge}
+        description={emptyStateConfig.description}
+        title={emptyStateConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={emptyStateConfig.category}
         componentId="empty-state"
         componentName={emptyStateConfig.name}
-        category={emptyStateConfig.category}
       />
 
       <Separator />

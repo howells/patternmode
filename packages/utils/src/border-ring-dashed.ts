@@ -10,14 +10,14 @@
  * Respects the element's border radius via rounded-inherit.
  */
 export const borderRingDashed = [
-	// establish positioning context
-	"relative",
-	// outer dashed ring (subtle dark)
-	"before:content-[''] before:absolute before:inset-[-1px] before:rounded-[inherit] before:pointer-events-none",
-	"before:border before:border-dashed",
-	"before:border-[color-mix(in_oklab,var(--color-zinc-950)_12%,transparent)]",
-	// inner dashed ring (light)
-	"after:content-[''] after:absolute after:inset-0 after:rounded-[inherit] after:pointer-events-none",
-	"after:border after:border-dashed",
-	"after:border-[var(--color-zinc-50)]",
+  // establish positioning context
+  "relative",
+  // outer dashed ring (subtle dark)
+  "before:content-[''] before:absolute before:inset-[-1px] before:rounded-[inherit] before:pointer-events-none",
+  "before:border before:border-dashed",
+  "before:border-[color-mix(in_oklab,var(--color-zinc-950)_12%,transparent)]",
+  // inner dashed ring (light)
+  "after:content-[''] after:absolute after:inset-0 after:rounded-[inherit] after:pointer-events-none",
+  "after:border after:border-dashed",
+  "after:border-[var(--color-zinc-50)]",
 ];

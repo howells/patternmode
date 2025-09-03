@@ -1,25 +1,25 @@
 "use client";
 
 import {
-	Toolbar,
-	ToolbarButton,
-	ToolbarGroup,
-	ToolbarInput,
-	ToolbarLink,
-	ToolbarSeparator,
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  ToolbarInput,
+  ToolbarLink,
+  ToolbarSeparator,
 } from "./component";
 
 export const DefaultExample = () => (
-	<Toolbar>
-		<ToolbarGroup>
-			<ToolbarButton>Bold</ToolbarButton>
-			<ToolbarButton>Italic</ToolbarButton>
-			<ToolbarButton>Underline</ToolbarButton>
-			<ToolbarSeparator />
-			<ToolbarLink href="#">Link</ToolbarLink>
-		</ToolbarGroup>
-		<ToolbarInput placeholder="Search..." />
-	</Toolbar>
+  <Toolbar>
+    <ToolbarGroup>
+      <ToolbarButton>Bold</ToolbarButton>
+      <ToolbarButton>Italic</ToolbarButton>
+      <ToolbarButton>Underline</ToolbarButton>
+      <ToolbarSeparator />
+      <ToolbarLink href="#">Link</ToolbarLink>
+    </ToolbarGroup>
+    <ToolbarInput placeholder="Search..." />
+  </Toolbar>
 );
 
 export const TextFormattingExample = DefaultExample;

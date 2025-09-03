@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { gridConfig } from "@patternmode/grid/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function GridPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={gridConfig.name}
-        description={gridConfig.description}
         badge={gridConfig.badge}
+        description={gridConfig.description}
+        title={gridConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={gridConfig.category}
         componentId="grid"
         componentName={gridConfig.name}
-        category={gridConfig.category}
       />
 
       <Separator />

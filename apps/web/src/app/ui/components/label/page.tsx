@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { labelConfig } from "@patternmode/label/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function LabelPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={labelConfig.name}
-        description={labelConfig.description}
         badge={labelConfig.badge}
+        description={labelConfig.description}
+        title={labelConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={labelConfig.category}
         componentId="label"
         componentName={labelConfig.name}
-        category={labelConfig.category}
       />
 
       <Separator />

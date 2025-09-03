@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { textConfig } from "@patternmode/text/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TextPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={textConfig.name}
-        description={textConfig.description}
         badge={textConfig.badge}
+        description={textConfig.description}
+        title={textConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={textConfig.category}
         componentId="text"
         componentName={textConfig.name}
-        category={textConfig.category}
       />
 
       <Separator />

@@ -14,9 +14,7 @@ type PreviewContextValue = {
   resetProps: () => void;
 };
 
-const PreviewContext = createContext<PreviewContextValue | null>(
-  null,
-);
+const PreviewContext = createContext<PreviewContextValue | null>(null);
 
 type PreviewProviderProps = {
   children: ReactNode;
@@ -35,7 +33,7 @@ export function PreviewProvider({
   }, [defaultProps]);
 
   const updateProp = (key: string, value: unknown) => {
-    setProps(prev => ({
+    setProps((prev) => ({
       ...prev,
       [key]: value,
     }));
@@ -55,9 +53,7 @@ export function PreviewProvider({
 export function usePreview() {
   const context = useContext(PreviewContext);
   if (!context) {
-    throw new Error(
-      "usePreview must be used within a PreviewProvider",
-    );
+    throw new Error("usePreview must be used within a PreviewProvider");
   }
   return context;
 }

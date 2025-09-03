@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { breadcrumbsConfig } from "@patternmode/breadcrumbs/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function BreadcrumbsPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={breadcrumbsConfig.name}
-        description={breadcrumbsConfig.description}
         badge={breadcrumbsConfig.badge}
+        description={breadcrumbsConfig.description}
+        title={breadcrumbsConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={breadcrumbsConfig.category}
         componentId="breadcrumbs"
         componentName={breadcrumbsConfig.name}
-        category={breadcrumbsConfig.category}
       />
 
       <Separator />

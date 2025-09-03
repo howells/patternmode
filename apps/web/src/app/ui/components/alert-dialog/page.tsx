@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { alertDialogConfig } from "@patternmode/alert-dialog/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function AlertDialogPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={alertDialogConfig.name}
-        description={alertDialogConfig.description}
         badge={alertDialogConfig.badge}
+        description={alertDialogConfig.description}
+        title={alertDialogConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={alertDialogConfig.category}
         componentId="alert-dialog"
         componentName={alertDialogConfig.name}
-        category={alertDialogConfig.category}
       />
 
       <Separator />

@@ -1,19 +1,12 @@
 {
   "extends": "../tsconfig/base.json",
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "incremental": true,
-    "types": [
-      "@playwright/experimental-ct-react"
-    ],
+    "types": ["@playwright/experimental-ct-react"],
     "baseUrl": "."
   }
 }

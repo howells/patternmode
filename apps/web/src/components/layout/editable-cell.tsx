@@ -4,11 +4,11 @@ import { Button } from "@patternmode/button";
 import { Callout } from "@patternmode/callout";
 import { Card } from "@patternmode/card";
 import { Icon } from "@patternmode/icon";
-import { getComponentConfig } from "@/registry/components";
 import { Stack } from "@patternmode/stack";
 import { Plus, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useMemo, useState } from "react";
+import { getComponentConfig } from "@/registry/components";
 
 import { PreviewProvider } from "../../features/preview/preview-context";
 import { PropsEditorPopover } from "./props-editor-popover";
@@ -20,14 +20,20 @@ function getDynamicIcon(iconName: string) {
   }
 
   try {
-    return dynamic(() => import("lucide-react").then(mod => ({
-      default: mod[iconName as keyof typeof mod] as React.ComponentType<{ className?: string; strokeWidth?: number }>,
-    })), {
-      loading: () => null,
-      ssr: false,
-    });
-  }
-  catch {
+    return dynamic(
+      () =>
+        import("lucide-react").then((mod) => ({
+          default: mod[iconName as keyof typeof mod] as React.ComponentType<{
+            className?: string;
+            strokeWidth?: number;
+          }>,
+        })),
+      {
+        loading: () => null,
+        ssr: false,
+      }
+    );
+  } catch {
     return null;
   }
 }
@@ -73,8 +79,8 @@ export function EditableCell({
     // Simple placeholder component to fix broken dynamic imports
     return () => (
       <Callout
-        variant="warning"
         title="Dynamic component loading temporarily disabled"
+        variant="warning"
       >
         {cellData.componentId}
       </Callout>
@@ -98,8 +104,7 @@ export function EditableCell({
         if (iconComponent) {
           finalProps[key] = iconComponent;
         }
-      }
-      else if (isIconProp && value === "") {
+      } else if (isIconProp && value === "") {
         // Remove empty icon props
         delete finalProps[key];
       }
@@ -109,8 +114,7 @@ export function EditableCell({
     Object.entries(finalProps).forEach(([key, value]) => {
       if (value === "true") {
         finalProps[key] = true;
-      }
-      else if (value === "false") {
+      } else if (value === "false") {
         finalProps[key] = false;
       }
     });
@@ -120,21 +124,29 @@ export function EditableCell({
 
   // Component wrapper that handles prop spreading safely for void elements
   const ComponentWrapper = useMemo(() => {
-    if (!cellData || !DynamicComponent) {
+    if (!(cellData && DynamicComponent)) {
       return null;
     }
 
-    return ({
-      props,
-    }: {
-      props: Record<string, unknown>;
-    }) => {
+    return ({ props }: { props: Record<string, unknown> }) => {
       const { children, ...otherProps } = props;
 
       // List of void elements that cannot have children
       const voidElements = new Set([
-        'input', 'img', 'br', 'hr', 'area', 'base', 'col', 'embed',
-        'link', 'meta', 'param', 'source', 'track', 'wbr'
+        "input",
+        "img",
+        "br",
+        "hr",
+        "area",
+        "base",
+        "col",
+        "embed",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
       ]);
 
       // Check if the component is a void element by checking the component name
@@ -152,7 +164,7 @@ export function EditableCell({
         return React.createElement(
           DynamicComponent,
           otherProps,
-          String(children),
+          String(children)
         );
       }
 
@@ -162,7 +174,7 @@ export function EditableCell({
 
   // Render component if one is assigned to this cell
   const renderComponent = () => {
-    if (!cellData || !DynamicComponent || !ComponentWrapper) {
+    if (!(cellData && DynamicComponent && ComponentWrapper)) {
       return null;
     }
 
@@ -174,11 +186,10 @@ export function EditableCell({
           </PreviewProvider>
         </Stack>
       );
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error rendering component:", error);
       return (
-        <Callout variant="error" title="Error rendering component">
+        <Callout title="Error rendering component" variant="error">
           Failed to render component
         </Callout>
       );
@@ -192,31 +203,29 @@ export function EditableCell({
         <div className="h-full w-full">{renderComponent()}</div>
 
         {/* Controls overlay */}
-        <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute top-1 right-1 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
           <PropsEditorPopover
+            cellData={cellData}
             isOpen={showPropsEditor}
             onOpenChangeAction={setShowPropsEditor}
-            cellData={cellData}
             onUpdatePropsAction={onUpdateProps}
-            trigger={(
+            trigger={
               <Button
+                leftIcon={Settings}
+                onClick={() => setShowPropsEditor(true)}
+                rounded
                 size="icon-sm"
                 variant="secondary"
-                rounded
-                onClick={() => setShowPropsEditor(true)}
-                leftIcon={Settings}
-              >
-              </Button>
-            )}
+              />
+            }
           />
           <Button
+            leftIcon={X}
+            onClick={onRemoveComponent}
+            rounded
             size="icon-sm"
             variant="destructive"
-            rounded
-            onClick={onRemoveComponent}
-            leftIcon={X}
-          >
-          </Button>
+          />
         </div>
       </div>
     );
@@ -225,17 +234,17 @@ export function EditableCell({
   // Empty cell
   return (
     <Card
-      variant="dashed"
-      className="min-h-[80px] w-full flex items-center justify-center group cursor-pointer"
+      className="group flex min-h-[80px] w-full cursor-pointer items-center justify-center"
       onClick={onAddComponent}
+      variant="dashed"
     >
       <div className="flex flex-col items-center gap-2 text-zinc-500 dark:text-zinc-400">
         <Icon
+          className="transition-colors group-hover:text-zinc-600 dark:group-hover:text-zinc-300"
           icon={Plus}
           size="xl"
-          className="group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors"
         />
-        <span className="text-sm font-medium group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+        <span className="font-medium text-sm transition-colors group-hover:text-zinc-600 dark:group-hover:text-zinc-300">
           Add Component
         </span>
       </div>

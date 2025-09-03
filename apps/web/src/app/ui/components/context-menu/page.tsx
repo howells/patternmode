@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { contextMenuConfig } from "@patternmode/context-menu/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ContextMenuPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={contextMenuConfig.name}
-        description={contextMenuConfig.description}
         badge={contextMenuConfig.badge}
+        description={contextMenuConfig.description}
+        title={contextMenuConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={contextMenuConfig.category}
         componentId="context-menu"
         componentName={contextMenuConfig.name}
-        category={contextMenuConfig.category}
       />
 
       <Separator />

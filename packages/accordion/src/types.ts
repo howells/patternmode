@@ -3,16 +3,16 @@ import type React from "react";
 import type { AccordionPreviewProps } from "./preview";
 
 export type AccordionProps = AccordionPreviewProps &
-	React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
+  React.ComponentPropsWithoutRef<typeof BaseAccordion.Root>;
 
 export type AccordionTriggerProps = React.ComponentPropsWithoutRef<
-	typeof BaseAccordion.Trigger
+  typeof BaseAccordion.Trigger
 >;
 
 export type AccordionContentProps = React.ComponentPropsWithoutRef<
-	typeof BaseAccordion.Panel
+  typeof BaseAccordion.Panel
 >;
 
 export type AccordionItemProps = React.ComponentPropsWithoutRef<
-	typeof BaseAccordion.Item
+  typeof BaseAccordion.Item
 >;

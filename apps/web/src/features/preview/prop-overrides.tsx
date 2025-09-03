@@ -1,6 +1,5 @@
+import type React from "react";
 import type { PreviewProps } from "@/types/preview-props";
-
-import React from "react";
 
 import { AVATAR_IMAGES, AvatarSelect } from "./controls/avatar-select";
 
@@ -24,9 +23,9 @@ export const PROP_OVERRIDES: PropOverride[] = [
     propName: "src",
     render: ({ currentValue, onValueChange }) => (
       <AvatarSelect
-        value={currentValue != null ? String(currentValue) : ""}
         onValueChange={onValueChange}
         options={AVATAR_IMAGES}
+        value={currentValue != null ? String(currentValue) : ""}
       />
     ),
   },
@@ -60,12 +59,16 @@ export const PROP_OVERRIDES: PropOverride[] = [
 /**
  * Get prop override for a specific component and prop
  */
-export function getPropOverride(componentId: string, propName: string): PropOverride | undefined {
+export function getPropOverride(
+  componentId: string,
+  propName: string
+): PropOverride | undefined {
   return PROP_OVERRIDES.find(
-    override => override.componentId === componentId && override.propName === propName,
+    (override) =>
+      override.componentId === componentId && override.propName === propName
   );
 }
 
+export type { AvatarOption } from "./controls/avatar-select";
 // Re-export components for external use
 export { AVATAR_IMAGES, AvatarSelect } from "./controls/avatar-select";
-export type { AvatarOption } from "./controls/avatar-select";

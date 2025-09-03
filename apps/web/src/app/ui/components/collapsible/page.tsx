@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { collapsibleConfig } from "@patternmode/collapsible/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CollapsiblePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={collapsibleConfig.name}
-        description={collapsibleConfig.description}
         badge={collapsibleConfig.badge}
+        description={collapsibleConfig.description}
+        title={collapsibleConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={collapsibleConfig.category}
         componentId="collapsible"
         componentName={collapsibleConfig.name}
-        category={collapsibleConfig.category}
       />
 
       <Separator />

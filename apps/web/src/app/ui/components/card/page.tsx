@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { cardConfig } from "@patternmode/card/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CardPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={cardConfig.name}
-        description={cardConfig.description}
         badge={cardConfig.badge}
+        description={cardConfig.description}
+        title={cardConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={cardConfig.category}
         componentId="card"
         componentName={cardConfig.name}
-        category={cardConfig.category}
       />
 
       <Separator />

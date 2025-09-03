@@ -1,11 +1,10 @@
-import { COMPONENT_REGISTRY, getComponentConfig } from "@/registry/components";
 import { Separator } from "@patternmode/separator";
 import { notFound } from "next/navigation";
 import React from "react";
-
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
 import { Preview } from "@/features/preview";
+import { COMPONENT_REGISTRY, getComponentConfig } from "@/registry/components";
 export const dynamic = "force-dynamic";
 
 type ComponentPageProps = {
@@ -44,11 +43,11 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   const _serializableConfig = {
     ...config,
     icon: undefined, // Remove icon to avoid serialization issues
-    components: config.components?.map(comp => ({
+    components: config.components?.map((comp) => ({
       ...comp,
       component: undefined, // Remove component references
     })),
-    examples: config.examples?.map(example => ({
+    examples: config.examples?.map((example) => ({
       ...example,
       component: undefined, // Remove component functions
     })),
@@ -58,16 +57,16 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
     <div>
       {/* Header */}
       <PageHeader
-        title={config.name}
-        description={config.description}
         badge={config.badge}
+        description={config.description}
+        title={config.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={category}
         componentId={component as any}
         componentName={config.name}
-        category={category}
       />
 
       <Separator />
@@ -85,7 +84,8 @@ export async function generateStaticParams() {
   // Generate paths for all components in each category
   const COMPONENT_LIST: Record<string, string[]> = {};
   Object.keys(COMPONENT_REGISTRY).forEach((componentId) => {
-    const config = COMPONENT_REGISTRY[componentId as keyof typeof COMPONENT_REGISTRY];
+    const config =
+      COMPONENT_REGISTRY[componentId as keyof typeof COMPONENT_REGISTRY];
     const category = config.category || "ui";
     if (!COMPONENT_LIST[category]) {
       COMPONENT_LIST[category] = [];

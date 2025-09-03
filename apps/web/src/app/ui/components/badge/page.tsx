@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { badgeConfig } from "@patternmode/badge/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function BadgePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={badgeConfig.name}
-        description={badgeConfig.description}
         badge={badgeConfig.badge}
+        description={badgeConfig.description}
+        title={badgeConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={badgeConfig.category}
         componentId="badge"
         componentName={badgeConfig.name}
-        category={badgeConfig.category}
       />
 
       <Separator />

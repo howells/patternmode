@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { dialogConfig } from "@patternmode/dialog/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DialogPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={dialogConfig.name}
-        description={dialogConfig.description}
         badge={dialogConfig.badge}
+        description={dialogConfig.description}
+        title={dialogConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={dialogConfig.category}
         componentId="dialog"
         componentName={dialogConfig.name}
-        category={dialogConfig.category}
       />
 
       <Separator />

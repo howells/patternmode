@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { toggleConfig } from "@patternmode/toggle/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TogglePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={toggleConfig.name}
-        description={toggleConfig.description}
         badge={toggleConfig.badge}
+        description={toggleConfig.description}
+        title={toggleConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={toggleConfig.category}
         componentId="toggle"
         componentName={toggleConfig.name}
-        category={toggleConfig.category}
       />
 
       <Separator />

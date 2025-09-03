@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { checkboxConfig } from "@patternmode/checkbox/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CheckboxPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={checkboxConfig.name}
-        description={checkboxConfig.description}
         badge={checkboxConfig.badge}
+        description={checkboxConfig.description}
+        title={checkboxConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={checkboxConfig.category}
         componentId="checkbox"
         componentName={checkboxConfig.name}
-        category={checkboxConfig.category}
       />
 
       <Separator />

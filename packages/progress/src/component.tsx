@@ -9,11 +9,11 @@ import { progressVariants } from "./variants";
  * Root progress component built on Base UI's Progress primitive.
  */
 const Progress = (
-	props: React.ComponentPropsWithoutRef<typeof BaseProgress.Root>,
+  props: React.ComponentPropsWithoutRef<typeof BaseProgress.Root>
 ) => (
-	<BaseProgress.Root data-testid="progress" {...props}>
-		{props.children}
-	</BaseProgress.Root>
+  <BaseProgress.Root data-testid="progress" {...props}>
+    {props.children}
+  </BaseProgress.Root>
 );
 Progress.displayName = "Progress";
 
@@ -21,25 +21,25 @@ Progress.displayName = "Progress";
  * Progress track component containing the background rail.
  */
 const ProgressTrack = ({
-	ref: _ref,
-	className,
-	variant,
-	animated,
-	...props
+  ref: _ref,
+  className,
+  variant,
+  animated,
+  ...props
 }: React.ComponentPropsWithoutRef<typeof BaseProgress.Track> & {
-	variant?: "default" | "neutral" | "warning" | "error" | "success";
-	animated?: boolean;
+  variant?: "default" | "neutral" | "warning" | "error" | "success";
+  animated?: boolean;
 } & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Track> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Track> | null>;
 }) => {
-	const { track } = progressVariants({ variant, animated });
-	return (
-		<BaseProgress.Track
-			ref={_ref}
-			className={cx(track(), className)}
-			{...props}
-		/>
-	);
+  const { track } = progressVariants({ variant, animated });
+  return (
+    <BaseProgress.Track
+      className={cx(track(), className)}
+      ref={_ref}
+      {...props}
+    />
+  );
 };
 ProgressTrack.displayName = "ProgressTrack";
 
@@ -47,25 +47,25 @@ ProgressTrack.displayName = "ProgressTrack";
  * Visual indicator showing progress completion.
  */
 const ProgressIndicator = ({
-	ref: _ref,
-	className,
-	variant,
-	animated,
-	...props
+  ref: _ref,
+  className,
+  variant,
+  animated,
+  ...props
 }: React.ComponentPropsWithoutRef<typeof BaseProgress.Indicator> & {
-	variant?: "default" | "neutral" | "warning" | "error" | "success";
-	animated?: boolean;
+  variant?: "default" | "neutral" | "warning" | "error" | "success";
+  animated?: boolean;
 } & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Indicator> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Indicator> | null>;
 }) => {
-	const { indicator } = progressVariants({ variant, animated });
-	return (
-		<BaseProgress.Indicator
-			ref={_ref}
-			className={cx(indicator(), className)}
-			{...props}
-		/>
-	);
+  const { indicator } = progressVariants({ variant, animated });
+  return (
+    <BaseProgress.Indicator
+      className={cx(indicator(), className)}
+      ref={_ref}
+      {...props}
+    />
+  );
 };
 ProgressIndicator.displayName = "ProgressIndicator";
 
@@ -73,25 +73,25 @@ ProgressIndicator.displayName = "ProgressIndicator";
  * Accessible label for the progress bar.
  */
 const ProgressLabel = ({
-	ref,
-	className,
-	variant,
-	animated,
-	...props
+  ref,
+  className,
+  variant,
+  animated,
+  ...props
 }: React.ComponentPropsWithoutRef<typeof BaseProgress.Label> & {
-	variant?: "default" | "neutral" | "warning" | "error" | "success";
-	animated?: boolean;
+  variant?: "default" | "neutral" | "warning" | "error" | "success";
+  animated?: boolean;
 } & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Label> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Label> | null>;
 }) => {
-	const { label } = progressVariants({ variant, animated });
-	return (
-		<BaseProgress.Label
-			ref={ref}
-			className={cx(label(), className)}
-			{...props}
-		/>
-	);
+  const { label } = progressVariants({ variant, animated });
+  return (
+    <BaseProgress.Label
+      className={cx(label(), className)}
+      ref={ref}
+      {...props}
+    />
+  );
 };
 ProgressLabel.displayName = "ProgressLabel";
 
@@ -99,25 +99,25 @@ ProgressLabel.displayName = "ProgressLabel";
  * Displays the current progress value.
  */
 const ProgressValue = ({
-	ref,
-	className,
-	variant,
-	animated,
-	...props
+  ref,
+  className,
+  variant,
+  animated,
+  ...props
 }: React.ComponentPropsWithoutRef<typeof BaseProgress.Value> & {
-	variant?: "default" | "neutral" | "warning" | "error" | "success";
-	animated?: boolean;
+  variant?: "default" | "neutral" | "warning" | "error" | "success";
+  animated?: boolean;
 } & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Value> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Value> | null>;
 }) => {
-	const { value } = progressVariants({ variant, animated });
-	return (
-		<BaseProgress.Value
-			ref={ref}
-			className={cx(value(), className)}
-			{...props}
-		/>
-	);
+  const { value } = progressVariants({ variant, animated });
+  return (
+    <BaseProgress.Value
+      className={cx(value(), className)}
+      ref={ref}
+      {...props}
+    />
+  );
 };
 ProgressValue.displayName = "ProgressValue";
 
@@ -125,52 +125,52 @@ ProgressValue.displayName = "ProgressValue";
  * Complete progress bar with all components composed together.
  */
 const ProgressBar = ({
-	ref: _ref,
-	value = 0,
-	max = 100,
-	label,
-	showValue = false,
-	valueFormatter,
-	showAnimation = false,
-	variant = "default",
-	className,
-	...props
+  ref: _ref,
+  value = 0,
+  max = 100,
+  label,
+  showValue = false,
+  valueFormatter,
+  showAnimation = false,
+  variant = "default",
+  className,
+  ...props
 }: ProgressBarProps & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseProgress.Root> | null>;
 }) => {
-	const { root } = progressVariants({ variant, animated: showAnimation });
-	const formatValue = valueFormatter || defaultValueFormatter;
+  const { root } = progressVariants({ variant, animated: showAnimation });
+  const formatValue = valueFormatter || defaultValueFormatter;
 
-	return (
-		<Progress
-			value={value}
-			max={max}
-			className={cx(root(), className)}
-			{...props}
-		>
-			{label && (
-				<ProgressLabel variant={variant} animated={showAnimation}>
-					{label}
-				</ProgressLabel>
-			)}
-			<ProgressTrack variant={variant} animated={showAnimation}>
-				<ProgressIndicator variant={variant} animated={showAnimation} />
-			</ProgressTrack>
-			{showValue && (
-				<ProgressValue variant={variant} animated={showAnimation}>
-					{(_formattedValue, val) => formatValue(val, max)}
-				</ProgressValue>
-			)}
-		</Progress>
-	);
+  return (
+    <Progress
+      className={cx(root(), className)}
+      max={max}
+      value={value}
+      {...props}
+    >
+      {label && (
+        <ProgressLabel animated={showAnimation} variant={variant}>
+          {label}
+        </ProgressLabel>
+      )}
+      <ProgressTrack animated={showAnimation} variant={variant}>
+        <ProgressIndicator animated={showAnimation} variant={variant} />
+      </ProgressTrack>
+      {showValue && (
+        <ProgressValue animated={showAnimation} variant={variant}>
+          {(_formattedValue, val) => formatValue(val, max)}
+        </ProgressValue>
+      )}
+    </Progress>
+  );
 };
 ProgressBar.displayName = "ProgressBar";
 
 export {
-	Progress,
-	ProgressBar,
-	ProgressIndicator,
-	ProgressLabel,
-	ProgressTrack,
-	ProgressValue,
+  Progress,
+  ProgressBar,
+  ProgressIndicator,
+  ProgressLabel,
+  ProgressTrack,
+  ProgressValue,
 };

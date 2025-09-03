@@ -1,15 +1,17 @@
 "use client";
 
-import type { SpacingValue } from "@/lib/spacing-utils";
-
 import { Button } from "@patternmode/button";
 import { Grid, GridCell } from "@patternmode/grid";
-import { getComponentConfig, getPreviewProps as getPreviewPropsForId } from "@/registry/components";
 import { Stack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import { ToggleGroup, ToggleGroupItem } from "@patternmode/toggle-group";
 import { Grid as GridIcon, List } from "lucide-react";
 import React, { useState } from "react";
+import type { SpacingValue } from "@/lib/spacing-utils";
+import {
+  getComponentConfig,
+  getPreviewProps as getPreviewPropsForId,
+} from "@/registry/components";
 
 import { ComponentSearch } from "../component-search";
 import { EditableCell } from "./editable-cell";
@@ -68,7 +70,7 @@ export function GridBuilder() {
   const [gridRows, _setGridRows] = useState(1);
   const [showComponentSearch, setShowComponentSearch] = useState(false);
   const [selectedCellIndex, setSelectedCellIndex] = useState<number | null>(
-    null,
+    null
   );
 
   const addComponentToCell = (cellIndex: number, componentId: string) => {
@@ -89,17 +91,16 @@ export function GridBuilder() {
 
     if (layoutMode === "grid") {
       const cellKey = `cell-${cellIndex}`;
-      setGridState(prev => ({
+      setGridState((prev) => ({
         ...prev,
         cells: {
           ...prev.cells,
           [cellKey]: newComponent,
         },
       }));
-    }
-    else {
+    } else {
       // For stack mode, insert at the specified index
-      setStackState(prev => ({
+      setStackState((prev) => ({
         ...prev,
         items: [
           ...prev.items.slice(0, cellIndex),
@@ -115,11 +116,11 @@ export function GridBuilder() {
 
   const updateCellProps = (
     cellIndex: number,
-    props: Record<string, unknown>,
+    props: Record<string, unknown>
   ) => {
     if (layoutMode === "grid") {
       const cellKey = `cell-${cellIndex}`;
-      setGridState(prev => ({
+      setGridState((prev) => ({
         ...prev,
         cells: {
           ...prev.cells,
@@ -129,12 +130,11 @@ export function GridBuilder() {
           },
         },
       }));
-    }
-    else {
-      setStackState(prev => ({
+    } else {
+      setStackState((prev) => ({
         ...prev,
         items: prev.items.map((item, index) =>
-          index === cellIndex ? { ...item, props } : item,
+          index === cellIndex ? { ...item, props } : item
         ),
       }));
     }
@@ -148,9 +148,8 @@ export function GridBuilder() {
         delete newCells[cellKey];
         return { ...prev, cells: newCells };
       });
-    }
-    else {
-      setStackState(prev => ({
+    } else {
+      setStackState((prev) => ({
         ...prev,
         items: prev.items.filter((_, index) => index !== cellIndex),
       }));
@@ -171,11 +170,11 @@ export function GridBuilder() {
     return (
       <GridCell key={index}>
         <EditableCell
-          cellIndex={index}
           cellData={cellData}
+          cellIndex={index}
           onAddComponent={() => handleCellClick(index)}
-          onUpdateProps={props => updateCellProps(index, props)}
           onRemoveComponent={() => removeCellComponent(index)}
+          onUpdateProps={(props) => updateCellProps(index, props)}
         />
       </GridCell>
     );
@@ -187,84 +186,80 @@ export function GridBuilder() {
       <div className="flex items-center justify-between">
         <Subheading level={2}>Layout Builder</Subheading>
         <ToggleGroup
-          value={[layoutMode]}
-          size="lg"
           onValueChange={(value) => {
             if (value.length > 0) {
               setLayoutMode(value[0] as LayoutMode);
             }
           }}
+          size="lg"
+          value={[layoutMode]}
         >
-          <ToggleGroupItem value="grid" leftIcon={GridIcon}>
+          <ToggleGroupItem leftIcon={GridIcon} value="grid">
             Grid
           </ToggleGroupItem>
-          <ToggleGroupItem value="stack" leftIcon={List}>
+          <ToggleGroupItem leftIcon={List} value="stack">
             Stack
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
 
       {/* Layout Preview */}
-      {layoutMode === "grid"
-        ? (
-            <Grid
-              columns={gridState.columns}
-              gap={gridState.gap}
-              minHeight={gridState.minHeight}
-            >
-              {cells}
-            </Grid>
-          )
-        : (
-            <Stack
-              direction={stackState.direction}
-              gap={
-                stackState.gap as
-                | 0
-                | 1
-                | 2
-                | 3
-                | 4
-                | 5
-                | 6
-                | 8
-                | 10
-                | 12
-                | 16
-                | 20
-                | 24
-              }
-              align={stackState.align}
-              justify={stackState.justify}
-              className="min-h-[200px] border-2 border-dashed  dark:border-zinc-600 rounded-lg p-4"
-            >
-              {stackState.items.map((item, index) => (
-                <Stack key={index}>
-                  <EditableCell
-                    cellIndex={index}
-                    cellData={item}
-                    onAddComponent={() => handleCellClick(index)}
-                    onUpdateProps={props => updateCellProps(index, props)}
-                    onRemoveComponent={() => removeCellComponent(index)}
-                  />
-                </Stack>
-              ))}
-
-              {/* Add item button for stack */}
-              <Button
-                variant="outline-dashed"
-                className="min-h-[80px]"
-                onClick={() => handleCellClick(stackState.items.length)}
-              >
-                Add Component
-              </Button>
+      {layoutMode === "grid" ? (
+        <Grid
+          columns={gridState.columns}
+          gap={gridState.gap}
+          minHeight={gridState.minHeight}
+        >
+          {cells}
+        </Grid>
+      ) : (
+        <Stack
+          align={stackState.align}
+          className="min-h-[200px] rounded-lg border-2 border-dashed p-4 dark:border-zinc-600"
+          direction={stackState.direction}
+          gap={
+            stackState.gap as
+              | 0
+              | 1
+              | 2
+              | 3
+              | 4
+              | 5
+              | 6
+              | 8
+              | 10
+              | 12
+              | 16
+              | 20
+              | 24
+          }
+          justify={stackState.justify}
+        >
+          {stackState.items.map((item, index) => (
+            <Stack key={index}>
+              <EditableCell
+                cellData={item}
+                cellIndex={index}
+                onAddComponent={() => handleCellClick(index)}
+                onRemoveComponent={() => removeCellComponent(index)}
+                onUpdateProps={(props) => updateCellProps(index, props)}
+              />
             </Stack>
-          )}
+          ))}
+
+          {/* Add item button for stack */}
+          <Button
+            className="min-h-[80px]"
+            onClick={() => handleCellClick(stackState.items.length)}
+            variant="outline-dashed"
+          >
+            Add Component
+          </Button>
+        </Stack>
+      )}
 
       {/* Component Search */}
       <ComponentSearch
-        placeholder="Search components..."
-        open={showComponentSearch}
         onOpenChange={(open) => {
           setShowComponentSearch(open);
           if (!open) {
@@ -276,6 +271,8 @@ export function GridBuilder() {
             addComponentToCell(selectedCellIndex, component.id);
           }
         }}
+        open={showComponentSearch}
+        placeholder="Search components..."
       />
     </div>
   );

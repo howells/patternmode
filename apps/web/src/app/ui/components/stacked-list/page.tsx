@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { stackedListConfig } from "@patternmode/stacked-list/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function StackedListPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={stackedListConfig.name}
-        description={stackedListConfig.description}
         badge={stackedListConfig.badge}
+        description={stackedListConfig.description}
+        title={stackedListConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={stackedListConfig.category}
         componentId="stacked-list"
         componentName={stackedListConfig.name}
-        category={stackedListConfig.category}
       />
 
       <Separator />

@@ -12,7 +12,16 @@ type ThemeToggleWrapperProps = {
   /**
    * Visual variant for the toggle button.
    */
-  variant?: "primary" | "secondary" | "outline" | "outline-dashed" | "ghost" | "destructive" | "inverse-ghost" | "link" | "minimal";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "outline-dashed"
+    | "ghost"
+    | "destructive"
+    | "inverse-ghost"
+    | "link"
+    | "minimal";
   /**
    * Whether to use rounded/pill shape.
    */
@@ -44,13 +53,13 @@ export function ThemeToggleWrapper({
   if (!mounted) {
     return (
       <ThemeToggle
-        theme="light" // fallback while loading
-        onToggle={() => {}}
+        className={className} // fallback while loading
         isLoading={true}
-        size={size}
-        variant={variant}
+        onToggle={() => {}}
         rounded={rounded}
-        className={className}
+        size={size}
+        theme="light"
+        variant={variant}
       />
     );
   }
@@ -60,12 +69,12 @@ export function ThemeToggleWrapper({
 
   return (
     <ThemeToggle
-      theme={currentTheme}
-      onToggle={() => setTheme(otherTheme)}
-      size={size}
-      variant={variant}
-      rounded={rounded}
       className={className}
+      onToggle={() => setTheme(otherTheme)}
+      rounded={rounded}
+      size={size}
+      theme={currentTheme}
+      variant={variant}
     />
   );
 }

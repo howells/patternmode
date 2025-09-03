@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { meterConfig } from "@patternmode/meter/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function MeterPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={meterConfig.name}
-        description={meterConfig.description}
         badge={meterConfig.badge}
+        description={meterConfig.description}
+        title={meterConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={meterConfig.category}
         componentId="meter"
         componentName={meterConfig.name}
-        category={meterConfig.category}
       />
 
       <Separator />

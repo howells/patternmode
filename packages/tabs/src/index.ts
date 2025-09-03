@@ -1,7 +1,7 @@
 export {
-	Tabs,
-	TabsContent,
-	TabsIndicator,
-	TabsList,
-	TabsTrigger,
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
 } from "./component";

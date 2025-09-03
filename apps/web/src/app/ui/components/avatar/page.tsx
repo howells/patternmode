@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { avatarConfig } from "@patternmode/avatar/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function AvatarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={avatarConfig.name}
-        description={avatarConfig.description}
         badge={avatarConfig.badge}
+        description={avatarConfig.description}
+        title={avatarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={avatarConfig.category}
         componentId="avatar"
         componentName={avatarConfig.name}
-        category={avatarConfig.category}
       />
 
       <Separator />

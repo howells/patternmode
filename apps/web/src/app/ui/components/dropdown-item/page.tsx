@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DropdownItemPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={dropdownItemConfig.name}
-        description={dropdownItemConfig.description}
         badge={dropdownItemConfig.badge}
+        description={dropdownItemConfig.description}
+        title={dropdownItemConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={dropdownItemConfig.category}
         componentId="dropdown-item"
         componentName={dropdownItemConfig.name}
-        category={dropdownItemConfig.category}
       />
 
       <Separator />

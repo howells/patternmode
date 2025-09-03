@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "Run UI Component Tests",
-      "type": "shell", 
+      "type": "shell",
       "command": "pnpm test:e2e",
       "options": {
         "cwd": "${workspaceFolder}/packages/ui"
@@ -19,14 +19,14 @@
     {
       "label": "Run UI Component Tests (UI)",
       "type": "shell",
-      "command": "pnpm test:e2e:ui", 
+      "command": "pnpm test:e2e:ui",
       "options": {
         "cwd": "${workspaceFolder}/packages/ui"
       },
       "group": "test",
       "presentation": {
         "echo": true,
-        "reveal": "always", 
+        "reveal": "always",
         "focus": false,
         "panel": "shared"
       }

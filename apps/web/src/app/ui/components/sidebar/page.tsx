@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { sidebarConfig } from "@patternmode/sidebar/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SidebarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={sidebarConfig.name}
-        description={sidebarConfig.description}
         badge={sidebarConfig.badge}
+        description={sidebarConfig.description}
+        title={sidebarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={sidebarConfig.category}
         componentId="sidebar"
         componentName={sidebarConfig.name}
-        category={sidebarConfig.category}
       />
 
       <Separator />

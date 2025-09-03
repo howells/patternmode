@@ -65,14 +65,16 @@ export function ReactQueryProvider({
   showDevtools = true,
 }: ReactQueryProviderProps) {
   const [queryClient] = React.useState(
-    () => client || new QueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: 5 * 60 * 1000,
-          gcTime: 10 * 60 * 1000,
+    () =>
+      client ||
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 5 * 60 * 1000,
+            gcTime: 10 * 60 * 1000,
+          },
         },
-      },
-    }),
+      })
   );
 
   return (
@@ -81,8 +83,8 @@ export function ReactQueryProvider({
       {/* eslint-disable-next-line node/no-process-env */}
       {showDevtools && process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools
-          initialIsOpen={false}
           buttonPosition="bottom-right"
+          initialIsOpen={false}
         />
       )}
     </QueryClientProvider>

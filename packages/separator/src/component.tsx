@@ -8,54 +8,54 @@ import { separatorContainerVariants, separatorVariants } from "./variants";
  * A visual separator component built on Base UI's Separator primitive for content division.
  */
 const Separator = ({
-	ref,
-	className,
-	orientation = "horizontal",
-	variant,
-	size,
-	children,
-	spacing,
-	...props
+  ref,
+  className,
+  orientation = "horizontal",
+  variant,
+  size,
+  children,
+  spacing,
+  ...props
 }: SeparatorProps & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseSeparator> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseSeparator> | null>;
 }) => {
-	// If children are provided, render as a container with text label
-	if (children) {
-		return (
-			<div
-				className={cx(
-					separatorContainerVariants({ orientation, spacing }),
-					className,
-				)}
-			>
-				<BaseSeparator
-					ref={ref}
-					orientation={orientation}
-					className={cx(separatorVariants({ orientation, variant, size }))}
-					{...props}
-				/>
-				<div className="whitespace-nowrap text-inherit">{children}</div>
-				<BaseSeparator
-					orientation={orientation}
-					className={cx(separatorVariants({ orientation, variant, size }))}
-				/>
-			</div>
-		);
-	}
+  // If children are provided, render as a container with text label
+  if (children) {
+    return (
+      <div
+        className={cx(
+          separatorContainerVariants({ orientation, spacing }),
+          className
+        )}
+      >
+        <BaseSeparator
+          className={cx(separatorVariants({ orientation, variant, size }))}
+          orientation={orientation}
+          ref={ref}
+          {...props}
+        />
+        <div className="whitespace-nowrap text-inherit">{children}</div>
+        <BaseSeparator
+          className={cx(separatorVariants({ orientation, variant, size }))}
+          orientation={orientation}
+        />
+      </div>
+    );
+  }
 
-	// Default separator without text
-	return (
-		<BaseSeparator
-			ref={ref}
-			orientation={orientation}
-			className={cx(
-				separatorVariants({ orientation, variant, size }),
-				className,
-			)}
-			data-testid="separator"
-			{...props}
-		/>
-	);
+  // Default separator without text
+  return (
+    <BaseSeparator
+      className={cx(
+        separatorVariants({ orientation, variant, size }),
+        className
+      )}
+      data-testid="separator"
+      orientation={orientation}
+      ref={ref}
+      {...props}
+    />
+  );
 };
 
 Separator.displayName = "Separator";

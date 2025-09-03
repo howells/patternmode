@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { selectNativeConfig } from "@patternmode/select-native/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SelectNativePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={selectNativeConfig.name}
-        description={selectNativeConfig.description}
         badge={selectNativeConfig.badge}
+        description={selectNativeConfig.description}
+        title={selectNativeConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={selectNativeConfig.category}
         componentId="select-native"
         componentName={selectNativeConfig.name}
-        category={selectNativeConfig.category}
       />
 
       <Separator />

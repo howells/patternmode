@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { popoverConfig } from "@patternmode/popover/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function PopoverPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={popoverConfig.name}
-        description={popoverConfig.description}
         badge={popoverConfig.badge}
+        description={popoverConfig.description}
+        title={popoverConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={popoverConfig.category}
         componentId="popover"
         componentName={popoverConfig.name}
-        category={popoverConfig.category}
       />
 
       <Separator />

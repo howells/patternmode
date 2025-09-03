@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { descriptionListConfig } from "@patternmode/description-list/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DescriptionListPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={descriptionListConfig.name}
-        description={descriptionListConfig.description}
         badge={descriptionListConfig.badge}
+        description={descriptionListConfig.description}
+        title={descriptionListConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={descriptionListConfig.category}
         componentId="description-list"
         componentName={descriptionListConfig.name}
-        category={descriptionListConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { inputConfig } from "@patternmode/input/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function InputPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={inputConfig.name}
-        description={inputConfig.description}
         badge={inputConfig.badge}
+        description={inputConfig.description}
+        title={inputConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={inputConfig.category}
         componentId="input"
         componentName={inputConfig.name}
-        category={inputConfig.category}
       />
 
       <Separator />

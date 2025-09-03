@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { radioConfig } from "@patternmode/radio/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function RadioPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={radioConfig.name}
-        description={radioConfig.description}
         badge={radioConfig.badge}
+        description={radioConfig.description}
+        title={radioConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={radioConfig.category}
         componentId="radio"
         componentName={radioConfig.name}
-        category={radioConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { textareaConfig } from "@patternmode/textarea/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TextareaPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={textareaConfig.name}
-        description={textareaConfig.description}
         badge={textareaConfig.badge}
+        description={textareaConfig.description}
+        title={textareaConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={textareaConfig.category}
         componentId="textarea"
         componentName={textareaConfig.name}
-        category={textareaConfig.category}
       />
 
       <Separator />

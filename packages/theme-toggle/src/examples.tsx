@@ -5,135 +5,141 @@ import React from "react";
 import { ThemeToggle } from "./component";
 
 export const DefaultExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-	return (
-		<ThemeToggle
-			theme={theme}
-			onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-		/>
-	);
+  return (
+    <ThemeToggle
+      onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+      theme={theme}
+    />
+  );
 };
 
 export const SizesExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-	return (
-		<Stack direction="horizontal" align="center" gap={4}>
-			<ThemeToggle
-				size="xs"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				size="sm"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				size="base"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				size="lg"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-		</Stack>
-	);
+  return (
+    <Stack align="center" direction="horizontal" gap={4}>
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        size="xs"
+        theme={theme}
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        size="sm"
+        theme={theme}
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        size="base"
+        theme={theme}
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        size="lg"
+        theme={theme}
+      />
+    </Stack>
+  );
 };
 
 export const VariantsExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-	return (
-		<Stack direction="horizontal" align="center" gap={4}>
-			<ThemeToggle
-				variant="primary"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				variant="secondary"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				variant="outline"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				variant="ghost"
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-		</Stack>
-	);
+  return (
+    <Stack align="center" direction="horizontal" gap={4}>
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+        variant="primary"
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+        variant="secondary"
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+        variant="outline"
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+        variant="ghost"
+      />
+    </Stack>
+  );
 };
 
 export const RoundedExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-	return (
-		<Stack direction="horizontal" align="center" gap={4}>
-			<ThemeToggle
-				rounded={false}
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-			<ThemeToggle
-				rounded={true}
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-		</Stack>
-	);
+  return (
+    <Stack align="center" direction="horizontal" gap={4}>
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        rounded={false}
+        theme={theme}
+      />
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        rounded={true}
+        theme={theme}
+      />
+    </Stack>
+  );
 };
 
 export const LoadingExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
-	const [isLoading, setIsLoading] = React.useState(false);
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-	const handleToggle = () => {
-		setIsLoading(true);
-		// Simulate async theme change
-		setTimeout(() => {
-			setTheme(theme === "light" ? "dark" : "light");
-			setIsLoading(false);
-		}, 1500);
-	};
+  const handleToggle = () => {
+    setIsLoading(true);
+    // Simulate async theme change
+    setTimeout(() => {
+      setTheme(theme === "light" ? "dark" : "light");
+      setIsLoading(false);
+    }, 1500);
+  };
 
-	return (
-		<ThemeToggle theme={theme} onToggle={handleToggle} isLoading={isLoading} />
-	);
+  return (
+    <ThemeToggle isLoading={isLoading} onToggle={handleToggle} theme={theme} />
+  );
 };
 
 export const DarkThemeExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("dark");
+  const [theme, setTheme] = React.useState<"light" | "dark">("dark");
 
-	return (
-		<div className="p-4 bg-zinc-900 rounded-md">
-			<ThemeToggle
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-			/>
-		</div>
-	);
+  return (
+    <div className="rounded-md bg-zinc-900 p-4">
+      <ThemeToggle
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+      />
+    </div>
+  );
 };
 
 export const DisabledExample = () => {
-	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-	return (
-		<Stack direction="horizontal" align="center" gap={4}>
-			<ThemeToggle
-				theme={theme}
-				onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
-				disabled
-			/>
-			<ThemeToggle theme="dark" onToggle={() => {}} disabled />
-		</Stack>
-	);
+  return (
+    <Stack align="center" direction="horizontal" gap={4}>
+      <ThemeToggle
+        disabled
+        onToggle={() => setTheme(theme === "light" ? "dark" : "light")}
+        theme={theme}
+      />
+      <ThemeToggle
+        disabled
+        onToggle={() => {
+          /* noop */
+        }}
+        theme="dark"
+      />
+    </Stack>
+  );
 };

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { tabNavigationConfig } from "@patternmode/tab-navigation/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TabNavigationPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={tabNavigationConfig.name}
-        description={tabNavigationConfig.description}
         badge={tabNavigationConfig.badge}
+        description={tabNavigationConfig.description}
+        title={tabNavigationConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={tabNavigationConfig.category}
         componentId="tab-navigation"
         componentName={tabNavigationConfig.name}
-        category={tabNavigationConfig.category}
       />
 
       <Separator />

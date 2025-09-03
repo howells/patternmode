@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { scrollAreaConfig } from "@patternmode/scroll-area/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ScrollAreaPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={scrollAreaConfig.name}
-        description={scrollAreaConfig.description}
         badge={scrollAreaConfig.badge}
+        description={scrollAreaConfig.description}
+        title={scrollAreaConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={scrollAreaConfig.category}
         componentId="scroll-area"
         componentName={scrollAreaConfig.name}
-        category={scrollAreaConfig.category}
       />
 
       <Separator />

@@ -1,5 +1,11 @@
 import { FieldControl } from "@patternmode/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@patternmode/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@patternmode/select";
 import React from "react";
 
 import type { PropControlProps } from "./types";
@@ -33,7 +39,11 @@ function getStringOptions(prop: PropControlProps["prop"]): string[] {
   });
 }
 
-export function SelectControl({ prop, currentValue, onValueChange }: PropControlProps) {
+export function SelectControl({
+  prop,
+  currentValue,
+  onValueChange,
+}: PropControlProps) {
   if (prop.type !== "select" || !prop.options) {
     return null;
   }
@@ -44,8 +54,8 @@ export function SelectControl({ prop, currentValue, onValueChange }: PropControl
     <FieldControl
       render={() => (
         <Select
+          onValueChange={(value) => onValueChange(value)}
           value={currentValue != null ? String(currentValue) : ""}
-          onValueChange={value => onValueChange(value)}
         >
           <SelectTrigger size="xs">
             <SelectValue />

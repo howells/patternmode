@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DismissButtonPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={dismissButtonConfig.name}
-        description={dismissButtonConfig.description}
         badge={dismissButtonConfig.badge}
+        description={dismissButtonConfig.description}
+        title={dismissButtonConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={dismissButtonConfig.category}
         componentId="dismiss-button"
         componentName={dismissButtonConfig.name}
-        category={dismissButtonConfig.category}
       />
 
       <Separator />

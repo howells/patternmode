@@ -16,10 +16,10 @@ export function LabelPreview(props: LabelProps) {
         render={({ ref, ...controlProps }) => (
           <input
             {...controlProps}
-            id={id}
-            ref={ref as React.Ref<HTMLInputElement>}
             className="mt-2 w-full rounded border p-2"
+            id={id}
             placeholder="Type here"
+            ref={ref as React.Ref<HTMLInputElement>}
           />
         )}
       />
@@ -28,28 +28,28 @@ export function LabelPreview(props: LabelProps) {
 }
 
 export const labelPreviewProps = [
-	{
-		name: "children",
-		type: "string",
-		description: "Label text content.",
-		defaultValue: "Demo Label",
-	},
-	{
-		name: "disabled",
-		type: "boolean",
-		description: "Whether the label should appear disabled.",
-		defaultValue: false,
-	},
-	{
-		name: "htmlFor",
-		type: "string",
-		description: "ID of the form control this label is associated with.",
-		defaultValue: "demo-input",
-	},
-	{
-		name: "className",
-		type: "string",
-		description: "Additional CSS classes for custom styling.",
-		defaultValue: "",
-	},
+  {
+    name: "children",
+    type: "string",
+    description: "Label text content.",
+    defaultValue: "Demo Label",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    description: "Whether the label should appear disabled.",
+    defaultValue: false,
+  },
+  {
+    name: "htmlFor",
+    type: "string",
+    description: "ID of the form control this label is associated with.",
+    defaultValue: "demo-input",
+  },
+  {
+    name: "className",
+    type: "string",
+    description: "Additional CSS classes for custom styling.",
+    defaultValue: "",
+  },
 ];

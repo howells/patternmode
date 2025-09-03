@@ -5,91 +5,117 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	--avatar-radius: 0.5rem;
+  --avatar-radius: 0.5rem;
 
-	/* Control height system using hardcoded values (theme() directive causes dev server issues) */
-	--control-height-2xs: 1.75rem; /* 28px - aligns with tighter compact controls */
-	--control-height-xs: 2rem; /* 32px - matches h-8/w-8 */
-	--control-height-sm: 2.25rem; /* 36px - matches h-9/w-9 */
-	--control-height-base: 2.5rem; /* 40px - matches h-10/w-10 */
-	--control-height-lg: 3rem; /* 48px - matches h-12/w-12 */
+  /* Control height system using hardcoded values (theme() directive causes dev server issues) */
+  --control-height-2xs: 1.75rem; /* 28px - aligns with tighter compact controls */
+  --control-height-xs: 2rem; /* 32px - matches h-8/w-8 */
+  --control-height-sm: 2.25rem; /* 36px - matches h-9/w-9 */
+  --control-height-base: 2.5rem; /* 40px - matches h-10/w-10 */
+  --control-height-lg: 3rem; /* 48px - matches h-12/w-12 */
 
-	/* Sidebar system */
-	--sidebar-collapsed-width: 3.75rem; /* 60px - collapsed state */
-	--sidebar-open-width: 16rem; /* 256px - expanded state */
+  /* Sidebar system */
+  --sidebar-collapsed-width: 3.75rem; /* 60px - collapsed state */
+  --sidebar-open-width: 16rem; /* 256px - expanded state */
 
-	/* Shadow scale */
-	--shadow-2xs: rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
-	--shadow-xs: rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 8px -8px;
-	--shadow-sm: rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px;
-	--shadow-md: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px 0px;
-	--shadow-lg: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px -4px, rgba(0, 0, 0, 0.06) 0px 16px 24px -8px;
-	--shadow-xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
-	--shadow-2xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
-	--shadow-3xl: rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(0, 0, 0, 0.06) 0px 24px 32px -8px;
+  /* Shadow scale */
+  --shadow-2xs: rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
+  --shadow-xs:
+    rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 8px -8px;
+  --shadow-sm:
+    rgba(0, 0, 0, 0.04) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px;
+  --shadow-md:
+    rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px 0px;
+  --shadow-lg:
+    rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 8px -4px, rgba(
+      0,
+      0,
+      0,
+      0.06
+    ) 0px 16px 24px -8px;
+  --shadow-xl:
+    rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(
+      0,
+      0,
+      0,
+      0.06
+    ) 0px 24px 32px -8px;
+  --shadow-2xl:
+    rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(
+      0,
+      0,
+      0,
+      0.06
+    ) 0px 24px 32px -8px;
+  --shadow-3xl:
+    rgba(0, 0, 0, 0.02) 0px 1px 1px 0px, rgba(0, 0, 0, 0.04) 0px 8px 16px -4px, rgba(
+      0,
+      0,
+      0,
+      0.06
+    ) 0px 24px 32px -8px;
 }
 
 /* Control sizing utilities */
 @layer utilities {
-	.h-control-xs {
-		height: var(--control-height-xs);
-	}
-	.h-control-2xs {
-		height: var(--control-height-2xs);
-	}
-	.h-control-sm {
-		height: var(--control-height-sm);
-	}
-	.h-control-base {
-		height: var(--control-height-base);
-	}
-	.h-control-lg {
-		height: var(--control-height-lg);
-	}
+  .h-control-xs {
+    height: var(--control-height-xs);
+  }
+  .h-control-2xs {
+    height: var(--control-height-2xs);
+  }
+  .h-control-sm {
+    height: var(--control-height-sm);
+  }
+  .h-control-base {
+    height: var(--control-height-base);
+  }
+  .h-control-lg {
+    height: var(--control-height-lg);
+  }
 
-	.size-control-xs {
-		width: var(--control-height-xs);
-		height: var(--control-height-xs);
-	}
-	.size-control-2xs {
-		width: var(--control-height-2xs);
-		height: var(--control-height-2xs);
-	}
-	.size-control-sm {
-		width: var(--control-height-sm);
-		height: var(--control-height-sm);
-	}
-	.size-control-base {
-		width: var(--control-height-base);
-		height: var(--control-height-base);
-	}
-	.size-control-lg {
-		width: var(--control-height-lg);
-		height: var(--control-height-lg);
-	}
+  .size-control-xs {
+    width: var(--control-height-xs);
+    height: var(--control-height-xs);
+  }
+  .size-control-2xs {
+    width: var(--control-height-2xs);
+    height: var(--control-height-2xs);
+  }
+  .size-control-sm {
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+  }
+  .size-control-base {
+    width: var(--control-height-base);
+    height: var(--control-height-base);
+  }
+  .size-control-lg {
+    width: var(--control-height-lg);
+    height: var(--control-height-lg);
+  }
 
-	/* Shadow utilities for non-core sizes */
-	.shadow-2xs {
-		box-shadow: var(--shadow-2xs);
-	}
-	.shadow-xs {
-		box-shadow: var(--shadow-xs);
-	}
-	.shadow-md {
-		box-shadow: var(--shadow-md);
-	}
-	.shadow-3xl {
-		box-shadow: var(--shadow-3xl);
-	}
-
+  /* Shadow utilities for non-core sizes */
+  .shadow-2xs {
+    box-shadow: var(--shadow-2xs);
+  }
+  .shadow-xs {
+    box-shadow: var(--shadow-xs);
+  }
+  .shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+  .shadow-3xl {
+    box-shadow: var(--shadow-3xl);
+  }
 }
 
 /* Set default border colors */
 @layer base {
-	* {
-		border-color: var(--color-zinc-100);
-	}
-	.dark * {
-		border-color: var(--color-zinc-800);
-	}
+  * {
+    border-color: var(--color-zinc-100);
+  }
+  .dark * {
+    border-color: var(--color-zinc-800);
+  }
 }

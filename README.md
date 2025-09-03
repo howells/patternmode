@@ -4,6 +4,64 @@ A comprehensive UI component library and design system.
 
 > Alpha note: During the alpha, packages are intended to be consumed directly from source (JIT TypeScript) rather than from npm. The steps below show how to wire your app so `@patternmode/*` resolves to your local filesystem.
 
+## Using `@patternmode/heading` in Next.js (local dev)
+
+If your app lives alongside this repo (for example at `~/Sites/danielhowells` with this repo at `~/Sites/patternmode`), follow these steps to import `@patternmode/heading` cleanly in Next.js 15 (Turbopack):
+
+1) Add local dependencies with `link:` and point at actual package folders (not the repo root):
+
+```jsonc
+// your-app/package.json
+{
+  "dependencies": {
+    "@patternmode/heading": "link:../patternmode/packages/heading",
+    "@patternmode/utils": "link:../patternmode/packages/utils",
+    "@patternmode/config": "link:../patternmode/packages/config"
+  }
+}
+```
+
+2) Enable transpilation of Patternmode packages and allow following external dirs (Turbopack):
+
+```ts
+// your-app/next.config.ts
+import type { NextConfig } from "next";
+import path from "node:path";
+
+const nextConfig: NextConfig = {
+  transpilePackages: [
+    "@patternmode/heading",
+    "@patternmode/utils",
+    "@patternmode/config",
+  ],
+  experimental: { externalDir: true },
+  // Optional but helpful when your app and this repo are siblings
+  turbopack: { root: path.join(__dirname, "..") },
+};
+
+export default nextConfig;
+```
+
+3) Do not add `tsconfig.json` path aliases to `../patternmode` for `@patternmode/*`. Let Node resolve via `node_modules` (the `link:` symlinks).
+
+4) Use the component:
+
+```tsx
+// your-app/src/components/SiteHeading.tsx
+import { Heading } from "@patternmode/heading";
+
+export default function SiteHeading({ children }: { children: React.ReactNode }) {
+  return <Heading>{children}</Heading>; // defaults to <h1>
+}
+```
+
+### Known pitfalls (and fixes)
+
+- Don’t alias `@patternmode/heading` to the repo root (e.g. `../patternmode`). Always link to `../patternmode/packages/heading`.
+- Don’t use `file:` for local Patternmode packages. Prefer `link:` so workspace-style internal deps (declared as `workspace:*`) continue to resolve.
+- Remove custom `.d.ts` shims that redefine the package API; they can mask the real types.
+- Ensure React 19 in your app to satisfy peer dependencies.
+
 ## Local Alpha Integration (no npm)
 
 Two supported approaches to use local source without publishing.
@@ -97,4 +155,3 @@ At the repo root:
 - `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`.
 
 See `AGENTS.md` for full conventions and architecture notes.
-

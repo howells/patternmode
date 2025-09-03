@@ -12,4 +12,4 @@ export function SeparatorPreview() {
   );
 }
 
-export const separatorPreviewProps = [];
+export const separatorPreviewProps: readonly unknown[] = [];

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { textListConfig } from "@patternmode/text-list/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TextListPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={textListConfig.name}
-        description={textListConfig.description}
         badge={textListConfig.badge}
+        description={textListConfig.description}
+        title={textListConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={textListConfig.category}
         componentId="text-list"
         componentName={textListConfig.name}
-        category={textListConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { checkboxGroupConfig } from "@patternmode/checkbox-group/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CheckboxGroupPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={checkboxGroupConfig.name}
-        description={checkboxGroupConfig.description}
         badge={checkboxGroupConfig.badge}
+        description={checkboxGroupConfig.description}
+        title={checkboxGroupConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={checkboxGroupConfig.category}
         componentId="checkbox-group"
         componentName={checkboxGroupConfig.name}
-        category={checkboxGroupConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { kbdConfig } from "@patternmode/kbd/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function KbdPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={kbdConfig.name}
-        description={kbdConfig.description}
         badge={kbdConfig.badge}
+        description={kbdConfig.description}
+        title={kbdConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={kbdConfig.category}
         componentId="kbd"
         componentName={kbdConfig.name}
-        category={kbdConfig.category}
       />
 
       <Separator />

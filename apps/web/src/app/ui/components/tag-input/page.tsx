@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { tagInputConfig } from "@patternmode/tag-input/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TagInputPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={tagInputConfig.name}
-        description={tagInputConfig.description}
         badge={tagInputConfig.badge}
+        description={tagInputConfig.description}
+        title={tagInputConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={tagInputConfig.category}
         componentId="tag-input"
         componentName={tagInputConfig.name}
-        category={tagInputConfig.category}
       />
 
       <Separator />

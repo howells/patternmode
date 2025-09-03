@@ -1,9 +1,5 @@
+import type React from "react";
 import type { PreviewProps as PropMetadata } from "@/types/preview-props";
-
-import React from "react";
-
-import type { PropControlProps } from "./types";
-
 import { getPropOverride } from "../prop-overrides";
 import {
   BooleanControl,
@@ -14,6 +10,7 @@ import {
   TextareaControl,
   TextControl,
 } from "./index";
+import type { PropControlProps } from "./types";
 
 type ControlFactoryProps = {
   prop: PropMetadata;
@@ -22,7 +19,12 @@ type ControlFactoryProps = {
   componentName?: string;
 };
 
-export function ControlFactory({ prop, currentValue, onValueChange, componentName }: ControlFactoryProps) {
+export function ControlFactory({
+  prop,
+  currentValue,
+  onValueChange,
+  componentName,
+}: ControlFactoryProps) {
   const controlProps: PropControlProps = {
     prop,
     currentValue,
@@ -38,7 +40,13 @@ export function ControlFactory({ prop, currentValue, onValueChange, componentNam
   }
 
   // Auto-detect icon props by name and use IconSelect
-  if (prop.type === "icon" || prop.name === "icon" || prop.name.includes("Icon") || prop.name.endsWith("icon") || prop.name === "fallbackIcon") {
+  if (
+    prop.type === "icon" ||
+    prop.name === "icon" ||
+    prop.name.includes("Icon") ||
+    prop.name.endsWith("icon") ||
+    prop.name === "fallbackIcon"
+  ) {
     return <IconControl {...controlProps} />;
   }
 

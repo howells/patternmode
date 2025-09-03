@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { loaderConfig } from "@patternmode/loader/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function LoaderPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={loaderConfig.name}
-        description={loaderConfig.description}
         badge={loaderConfig.badge}
+        description={loaderConfig.description}
+        title={loaderConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={loaderConfig.category}
         componentId="loader"
         componentName={loaderConfig.name}
-        category={loaderConfig.category}
       />
 
       <Separator />

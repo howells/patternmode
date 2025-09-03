@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { responsiveDrawerConfig } from "@patternmode/responsive-drawer/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ResponsiveDrawerPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={responsiveDrawerConfig.name}
-        description={responsiveDrawerConfig.description}
         badge={responsiveDrawerConfig.badge}
+        description={responsiveDrawerConfig.description}
+        title={responsiveDrawerConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={responsiveDrawerConfig.category}
         componentId="responsive-drawer"
         componentName={responsiveDrawerConfig.name}
-        category={responsiveDrawerConfig.category}
       />
 
       <Separator />

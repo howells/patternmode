@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { headingElementConfig } from "@patternmode/heading-element/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function HeadingElementPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={headingElementConfig.name}
-        description={headingElementConfig.description}
         badge={headingElementConfig.badge}
+        description={headingElementConfig.description}
+        title={headingElementConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={headingElementConfig.category}
         componentId="heading-element"
         componentName={headingElementConfig.name}
-        category={headingElementConfig.category}
       />
 
       <Separator />

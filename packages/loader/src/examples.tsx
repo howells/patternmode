@@ -3,43 +3,43 @@
 import { Loader } from "./component";
 
 export const DefaultExample = () => {
-	return <Loader aria-label="Loading" />;
+  return <Loader aria-label="Loading" />;
 };
 
 export const SizesExample = () => {
-	return (
-		<div className="flex items-center gap-4">
-			<Loader size="xs" aria-label="Loading" />
-			<Loader size="sm" aria-label="Loading" />
-			<Loader size="base" aria-label="Loading" />
-			<Loader size="lg" aria-label="Loading" />
-			<Loader size="xl" aria-label="Loading" />
-		</div>
-	);
+  return (
+    <div className="flex items-center gap-4">
+      <Loader aria-label="Loading" size="xs" />
+      <Loader aria-label="Loading" size="sm" />
+      <Loader aria-label="Loading" size="base" />
+      <Loader aria-label="Loading" size="lg" />
+      <Loader aria-label="Loading" size="xl" />
+    </div>
+  );
 };
 
 export const WithLabelExample = () => {
-	return <Loader label="Loading content..." />;
+  return <Loader label="Loading content..." />;
 };
 
 export const InButtonExample = () => {
-	return (
-		<button
-			type="button"
-			disabled
-			className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md opacity-50 cursor-not-allowed"
-		>
-			<Loader size="sm" aria-label="Submitting" />
-			<span>Submitting...</span>
-		</button>
-	);
+  return (
+    <button
+      className="flex cursor-not-allowed items-center gap-2 rounded-md bg-blue-500 px-4 py-2 text-white opacity-50"
+      disabled
+      type="button"
+    >
+      <Loader aria-label="Submitting" size="sm" />
+      <span>Submitting...</span>
+    </button>
+  );
 };
 
 export const CenteredExample = () => {
-	return (
-		<div className="text-center py-8">
-			<Loader size="lg" aria-label="Loading content" />
-			<p className="mt-2 text-zinc-600">Please wait...</p>
-		</div>
-	);
+  return (
+    <div className="py-8 text-center">
+      <Loader aria-label="Loading content" size="lg" />
+      <p className="mt-2 text-zinc-600">Please wait...</p>
+    </div>
+  );
 };

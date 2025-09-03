@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { tableConfig } from "@patternmode/table/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function TablePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={tableConfig.name}
-        description={tableConfig.description}
         badge={tableConfig.badge}
+        description={tableConfig.description}
+        title={tableConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={tableConfig.category}
         componentId="table"
         componentName={tableConfig.name}
-        category={tableConfig.category}
       />
 
       <Separator />

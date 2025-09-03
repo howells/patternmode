@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { copyButtonConfig } from "@patternmode/copy-button/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CopyButtonPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={copyButtonConfig.name}
-        description={copyButtonConfig.description}
         badge={copyButtonConfig.badge}
+        description={copyButtonConfig.description}
+        title={copyButtonConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={copyButtonConfig.category}
         componentId="copy-button"
         componentName={copyButtonConfig.name}
-        category={copyButtonConfig.category}
       />
 
       <Separator />

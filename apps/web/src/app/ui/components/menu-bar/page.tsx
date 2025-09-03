@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { menuBarConfig } from "@patternmode/menu-bar/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function MenuBarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={menuBarConfig.name}
-        description={menuBarConfig.description}
         badge={menuBarConfig.badge}
+        description={menuBarConfig.description}
+        title={menuBarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={menuBarConfig.category}
         componentId="menu-bar"
         componentName={menuBarConfig.name}
-        category={menuBarConfig.category}
       />
 
       <Separator />

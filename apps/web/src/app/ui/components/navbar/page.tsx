@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { navbarConfig } from "@patternmode/navbar/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function NavbarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={navbarConfig.name}
-        description={navbarConfig.description}
         badge={navbarConfig.badge}
+        description={navbarConfig.description}
+        title={navbarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={navbarConfig.category}
         componentId="navbar"
         componentName={navbarConfig.name}
-        category={navbarConfig.category}
       />
 
       <Separator />

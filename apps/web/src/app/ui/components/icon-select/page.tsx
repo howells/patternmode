@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { iconSelectConfig } from "@patternmode/icon-select/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function IconSelectPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={iconSelectConfig.name}
-        description={iconSelectConfig.description}
         badge={iconSelectConfig.badge}
+        description={iconSelectConfig.description}
+        title={iconSelectConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={iconSelectConfig.category}
         componentId="icon-select"
         componentName={iconSelectConfig.name}
-        category={iconSelectConfig.category}
       />
 
       <Separator />

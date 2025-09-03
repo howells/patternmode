@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
 import { RadioGroup, RadioOption } from "./component";
 
 export type RadioPreviewProps = { defaultValue?: string; disabled?: boolean };
 
-export function RadioPreview({ defaultValue = "a", disabled = false }: RadioPreviewProps) {
+export function RadioPreview({
+  defaultValue = "a",
+  disabled = false,
+}: RadioPreviewProps) {
   return (
     <div className="p-4">
       <RadioGroup defaultValue={defaultValue}>
         <div className="space-y-2">
-          <RadioOption value="a" label="Option A" disabled={disabled} />
-          <RadioOption value="b" label="Option B" disabled={disabled} />
+          <RadioOption disabled={disabled} label="Option A" value="a" />
+          <RadioOption disabled={disabled} label="Option B" value="b" />
         </div>
       </RadioGroup>
     </div>
@@ -19,6 +21,6 @@ export function RadioPreview({ defaultValue = "a", disabled = false }: RadioPrev
 }
 
 export const radioPreviewProps = [
-	{ name: "defaultValue", type: "string", defaultValue: "a" },
-	{ name: "disabled", type: "boolean", defaultValue: false },
+  { name: "defaultValue", type: "string", defaultValue: "a" },
+  { name: "disabled", type: "boolean", defaultValue: false },
 ];

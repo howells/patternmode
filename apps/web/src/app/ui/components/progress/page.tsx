@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { progressConfig } from "@patternmode/progress/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ProgressPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={progressConfig.name}
-        description={progressConfig.description}
         badge={progressConfig.badge}
+        description={progressConfig.description}
+        title={progressConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={progressConfig.category}
         componentId="progress"
         componentName={progressConfig.name}
-        category={progressConfig.category}
       />
 
       <Separator />

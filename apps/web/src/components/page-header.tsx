@@ -13,8 +13,8 @@ type PageHeaderProps = {
 
 export function PageHeader({ title, description, badge }: PageHeaderProps) {
   return (
-    <Stack gap={2} padding={6} className="border-b">
-      <Stack direction="horizontal" align="center" gap={3}>
+    <Stack className="border-b" gap={2} padding={6}>
+      <Stack align="center" direction="horizontal" gap={3}>
         <Heading level={1}>{title}</Heading>
         {badge && <Badge variant="neutral">{badge}</Badge>}
       </Stack>

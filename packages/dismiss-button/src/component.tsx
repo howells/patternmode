@@ -7,42 +7,42 @@ import type { DismissButtonProps } from "./types";
 import { dismissButtonVariants } from "./variants";
 
 const dismissButtonToIconSizeMap = {
-	xs: "xs",
-	sm: "sm",
-	base: "base",
-	lg: "lg",
+  xs: "xs",
+  sm: "sm",
+  base: "base",
+  lg: "lg",
 } as const;
 
 const DismissButton = ({
-	ref,
-	onClick,
-	icon: IconComponent = X,
-	iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
-	size = "base",
-	className,
-	"aria-label": ariaLabel = "Remove",
-	...props
+  ref,
+  onClick,
+  icon: IconComponent = X,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
+  size = "base",
+  className,
+  "aria-label": ariaLabel = "Remove",
+  ...props
 }: DismissButtonProps & {
-	ref?: React.RefObject<HTMLButtonElement | null>;
+  ref?: React.RefObject<HTMLButtonElement | null>;
 }) => {
-	const iconSize = dismissButtonToIconSizeMap[size];
-	return (
-		<button
-			ref={ref}
-			type="button"
-			onClick={onClick}
-			data-testid="dismiss-button"
-			className={cx(dismissButtonVariants({ size }), className)}
-			aria-label={ariaLabel}
-			{...props}
-		>
-			<Icon
-				icon={IconComponent}
-				size={iconSize}
-				strokeWidth={iconStrokeWidth}
-			/>
-		</button>
-	);
+  const iconSize = dismissButtonToIconSizeMap[size];
+  return (
+    <button
+      aria-label={ariaLabel}
+      className={cx(dismissButtonVariants({ size }), className)}
+      data-testid="dismiss-button"
+      onClick={onClick}
+      ref={ref}
+      type="button"
+      {...props}
+    >
+      <Icon
+        icon={IconComponent}
+        size={iconSize}
+        strokeWidth={iconStrokeWidth}
+      />
+    </button>
+  );
 };
 
 DismissButton.displayName = "DismissButton";

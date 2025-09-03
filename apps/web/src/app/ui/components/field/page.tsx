@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { fieldConfig } from "@patternmode/field/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function FieldPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={fieldConfig.name}
-        description={fieldConfig.description}
         badge={fieldConfig.badge}
+        description={fieldConfig.description}
+        title={fieldConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={fieldConfig.category}
         componentId="field"
         componentName={fieldConfig.name}
-        category={fieldConfig.category}
       />
 
       <Separator />

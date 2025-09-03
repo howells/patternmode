@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { datePickerConfig } from "@patternmode/date-picker/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DatePickerPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={datePickerConfig.name}
-        description={datePickerConfig.description}
         badge={datePickerConfig.badge}
+        description={datePickerConfig.description}
+        title={datePickerConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={datePickerConfig.category}
         componentId="date-picker"
         componentName={datePickerConfig.name}
-        category={datePickerConfig.category}
       />
 
       <Separator />

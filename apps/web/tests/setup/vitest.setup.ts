@@ -6,16 +6,18 @@ beforeEach(() => {
 });
 
 // Mock Next.js router if needed
-globalThis.ResizeObserver = globalThis.ResizeObserver
-  || class ResizeObserver {
+globalThis.ResizeObserver =
+  globalThis.ResizeObserver ||
+  class ResizeObserver {
     observe() {}
     unobserve() {}
     disconnect() {}
   };
 
 // Mock IntersectionObserver for component testing
-globalThis.IntersectionObserver = globalThis.IntersectionObserver
-  || class IntersectionObserver {
+globalThis.IntersectionObserver =
+  globalThis.IntersectionObserver ||
+  class IntersectionObserver {
     constructor() {}
     observe() {}
     unobserve() {}
@@ -23,5 +25,7 @@ globalThis.IntersectionObserver = globalThis.IntersectionObserver
     root = null;
     rootMargin = "";
     thresholds = [];
-    takeRecords() { return []; }
+    takeRecords() {
+      return [];
+    }
   };

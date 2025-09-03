@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { numberFieldConfig } from "@patternmode/number-field/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function NumberFieldPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={numberFieldConfig.name}
-        description={numberFieldConfig.description}
         badge={numberFieldConfig.badge}
+        description={numberFieldConfig.description}
+        title={numberFieldConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={numberFieldConfig.category}
         componentId="number-field"
         componentName={numberFieldConfig.name}
-        category={numberFieldConfig.category}
       />
 
       <Separator />

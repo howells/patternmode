@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { calendarConfig } from "@patternmode/calendar/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CalendarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={calendarConfig.name}
-        description={calendarConfig.description}
         badge={calendarConfig.badge}
+        description={calendarConfig.description}
+        title={calendarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={calendarConfig.category}
         componentId="calendar"
         componentName={calendarConfig.name}
-        category={calendarConfig.category}
       />
 
       <Separator />

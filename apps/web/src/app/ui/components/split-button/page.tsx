@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { splitButtonConfig } from "@patternmode/split-button/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SplitButtonPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={splitButtonConfig.name}
-        description={splitButtonConfig.description}
         badge={splitButtonConfig.badge}
+        description={splitButtonConfig.description}
+        title={splitButtonConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={splitButtonConfig.category}
         componentId="split-button"
         componentName={splitButtonConfig.name}
-        category={splitButtonConfig.category}
       />
 
       <Separator />

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { codeBlockConfig } from "@patternmode/code-block/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function CodeBlockPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={codeBlockConfig.name}
-        description={codeBlockConfig.description}
         badge={codeBlockConfig.badge}
+        description={codeBlockConfig.description}
+        title={codeBlockConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={codeBlockConfig.category}
         componentId="code-block"
         componentName={codeBlockConfig.name}
-        category={codeBlockConfig.category}
       />
 
       <Separator />

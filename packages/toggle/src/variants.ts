@@ -3,46 +3,46 @@ import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
 
 export const toggleVariants = tv({
-	base: [
-		// base
-		"group inline-flex h-9 min-w-9 items-center justify-center gap-2 border px-2 text-sm font-medium transition-all duration-100 ease-in-out",
-		// border
-		"border-zinc-200 dark:border-zinc-800",
-		// text color
-		"text-zinc-700 dark:text-zinc-300",
-		// background color
-		"bg-white dark:bg-zinc-950",
-		// hover color
-		"hover:bg-zinc-50 dark:hover:bg-zinc-900/60",
-		// disabled
-		"disabled:pointer-events-none disabled:text-zinc-400 dark:disabled:text-zinc-600",
-		// pressed state
-		"data-[pressed]:bg-zinc-100 data-[pressed]:text-zinc-900 dark:data-[pressed]:bg-zinc-800 dark:data-[pressed]:text-zinc-50",
-		// focus
-		focusRing,
-	],
-	variants: {
-		variant: {
-			default: "",
-			outline: [
-				"border-2",
-				"data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
-			],
-			ghost: [
-				"border-zinc-200 dark:border-zinc-800",
-				"hover:border-zinc-300 dark:hover:border-zinc-700",
-			],
-		},
-		size: {
-			"2xs": `h-6 min-w-6 px-1 text-[11px] ${borderRadiusVariants.xs}`,
-			xs: `h-7 min-w-7 px-1 text-xs ${borderRadiusVariants.xs}`,
-			sm: `h-8 min-w-8 px-1.5 text-xs ${borderRadiusVariants.sm}`,
-			base: `h-9 min-w-9 px-2 text-sm ${borderRadiusVariants.base}`,
-			lg: `h-10 min-w-10 px-3 text-base ${borderRadiusVariants.lg}`,
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "base",
-	},
+  base: [
+    // base
+    "group inline-flex h-9 min-w-9 items-center justify-center gap-2 border px-2 font-medium text-sm transition-all duration-100 ease-in-out",
+    // border
+    "border-zinc-200 dark:border-zinc-800",
+    // text color
+    "text-zinc-700 dark:text-zinc-300",
+    // background color
+    "bg-white dark:bg-zinc-950",
+    // hover color
+    "hover:bg-zinc-50 dark:hover:bg-zinc-900/60",
+    // disabled
+    "disabled:pointer-events-none disabled:text-zinc-400 dark:disabled:text-zinc-600",
+    // pressed state
+    "data-[pressed]:bg-zinc-100 data-[pressed]:text-zinc-900 dark:data-[pressed]:bg-zinc-800 dark:data-[pressed]:text-zinc-50",
+    // focus
+    focusRing,
+  ],
+  variants: {
+    variant: {
+      default: "",
+      outline: [
+        "border-2",
+        "data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
+      ],
+      ghost: [
+        "border-zinc-200 dark:border-zinc-800",
+        "hover:border-zinc-300 dark:hover:border-zinc-700",
+      ],
+    },
+    size: {
+      "2xs": `h-6 min-w-6 px-1 text-[11px] ${borderRadiusVariants.xs}`,
+      xs: `h-7 min-w-7 px-1 text-xs ${borderRadiusVariants.xs}`,
+      sm: `h-8 min-w-8 px-1.5 text-xs ${borderRadiusVariants.sm}`,
+      base: `h-9 min-w-9 px-2 text-sm ${borderRadiusVariants.base}`,
+      lg: `h-10 min-w-10 px-3 text-base ${borderRadiusVariants.lg}`,
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "base",
+  },
 });

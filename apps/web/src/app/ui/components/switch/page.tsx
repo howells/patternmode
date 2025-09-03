@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { switchConfig } from "@patternmode/switch/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SwitchPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={switchConfig.name}
-        description={switchConfig.description}
         badge={switchConfig.badge}
+        description={switchConfig.description}
+        title={switchConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={switchConfig.category}
         componentId="switch"
         componentName={switchConfig.name}
-        category={switchConfig.category}
       />
 
       <Separator />

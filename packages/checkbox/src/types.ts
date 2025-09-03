@@ -1,6 +1,6 @@
 export type CheckboxProps = {
-	className?: string;
-	checked?: boolean | "indeterminate";
+  className?: string;
+  checked?: boolean | "indeterminate";
 } & React.ComponentPropsWithoutRef<
-	typeof import("@base-ui-components/react/checkbox").Checkbox.Root
+  typeof import("@base-ui-components/react/checkbox").Checkbox.Root
 >;

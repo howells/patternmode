@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { iconContainerConfig } from "@patternmode/icon-container/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function IconContainerPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={iconContainerConfig.name}
-        description={iconContainerConfig.description}
         badge={iconContainerConfig.badge}
+        description={iconContainerConfig.description}
+        title={iconContainerConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={iconContainerConfig.category}
         componentId="icon-container"
         componentName={iconContainerConfig.name}
-        category={iconContainerConfig.category}
       />
 
       <Separator />

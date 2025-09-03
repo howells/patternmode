@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { paginationConfig } from "@patternmode/pagination/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function PaginationPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={paginationConfig.name}
-        description={paginationConfig.description}
         badge={paginationConfig.badge}
+        description={paginationConfig.description}
+        title={paginationConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={paginationConfig.category}
         componentId="pagination"
         componentName={paginationConfig.name}
-        category={paginationConfig.category}
       />
 
       <Separator />

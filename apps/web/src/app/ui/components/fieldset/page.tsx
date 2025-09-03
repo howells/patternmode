@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { fieldsetConfig } from "@patternmode/fieldset/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function FieldsetPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={fieldsetConfig.name}
-        description={fieldsetConfig.description}
         badge={fieldsetConfig.badge}
+        description={fieldsetConfig.description}
+        title={fieldsetConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={fieldsetConfig.category}
         componentId="fieldset"
         componentName={fieldsetConfig.name}
-        category={fieldsetConfig.category}
       />
 
       <Separator />

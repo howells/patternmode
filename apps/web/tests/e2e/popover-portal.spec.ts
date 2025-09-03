@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test("no Popover.Portal error and popovers open", async ({ page }) => {
   const consoleErrors: string[] = [];
@@ -15,10 +15,11 @@ test("no Popover.Portal error and popovers open", async ({ page }) => {
   // Open the Date Picker preview popover to ensure it also works
   await page.goto("/ui/components/date-picker");
   await page.getByRole("button", { name: /select a date/i }).click();
-  await expect(page.getByRole("dialog").or(page.locator("[data-testid=popover]"))).toBeVisible();
+  await expect(
+    page.getByRole("dialog").or(page.locator("[data-testid=popover]"))
+  ).toBeVisible();
 
   // Assert no Base UI portal errors surfaced in console
   const joined = consoleErrors.join("\n");
   expect(joined).not.toMatch(/<Popover\.Portal> is missing/i);
 });
-

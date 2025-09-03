@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { toggleGroupConfig } from "@patternmode/toggle-group/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ToggleGroupPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={toggleGroupConfig.name}
-        description={toggleGroupConfig.description}
         badge={toggleGroupConfig.badge}
+        description={toggleGroupConfig.description}
+        title={toggleGroupConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={toggleGroupConfig.category}
         componentId="toggle-group"
         componentName={toggleGroupConfig.name}
-        category={toggleGroupConfig.category}
       />
 
       <Separator />

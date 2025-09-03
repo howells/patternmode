@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { drawerConfig } from "@patternmode/drawer/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DrawerPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={drawerConfig.name}
-        description={drawerConfig.description}
         badge={drawerConfig.badge}
+        description={drawerConfig.description}
+        title={drawerConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={drawerConfig.category}
         componentId="drawer"
         componentName={drawerConfig.name}
-        category={drawerConfig.category}
       />
 
       <Separator />

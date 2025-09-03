@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { searchFieldConfig } from "@patternmode/search-field/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SearchFieldPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={searchFieldConfig.name}
-        description={searchFieldConfig.description}
         badge={searchFieldConfig.badge}
+        description={searchFieldConfig.description}
+        title={searchFieldConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={searchFieldConfig.category}
         componentId="search-field"
         componentName={searchFieldConfig.name}
-        category={searchFieldConfig.category}
       />
 
       <Separator />

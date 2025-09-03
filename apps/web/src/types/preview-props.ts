@@ -11,4 +11,3 @@ export type PreviewProps = {
   min?: number;
   max?: number;
 };
-

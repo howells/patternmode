@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { toolbarConfig } from "@patternmode/toolbar/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ToolbarPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={toolbarConfig.name}
-        description={toolbarConfig.description}
         badge={toolbarConfig.badge}
+        description={toolbarConfig.description}
+        title={toolbarConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={toolbarConfig.category}
         componentId="toolbar"
         componentName={toolbarConfig.name}
-        category={toolbarConfig.category}
       />
 
       <Separator />

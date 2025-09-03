@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { sortableListConfig } from "@patternmode/sortable-list/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SortableListPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={sortableListConfig.name}
-        description={sortableListConfig.description}
         badge={sortableListConfig.badge}
+        description={sortableListConfig.description}
+        title={sortableListConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={sortableListConfig.category}
         componentId="sortable-list"
         componentName={sortableListConfig.name}
-        category={sortableListConfig.category}
       />
 
       <Separator />

@@ -35,7 +35,7 @@ export default defineConfig({
     },
   ],
 
-  // Run your local dev server before starting the tests  
+  // Run your local dev server before starting the tests
   webServer: {
     command: "pnpm next dev --port 3500 --turbo",
     url: "http://localhost:3500",

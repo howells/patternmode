@@ -39,10 +39,14 @@
     },
     {
       "name": "Debug Specific Component Test",
-      "type": "node", 
+      "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/playwright",
-      "args": ["test", "--config=packages/ui/playwright-ct.config.ts", "${relativeFile}"],
+      "args": [
+        "test",
+        "--config=packages/ui/playwright-ct.config.ts",
+        "${relativeFile}"
+      ],
       "cwd": "${workspaceFolder}/packages/ui",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

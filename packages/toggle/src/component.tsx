@@ -11,52 +11,52 @@ import { toggleVariants } from "./variants";
  * A two-state button component that toggles between pressed (on) and unpressed (off) states.
  */
 const Toggle = ({
-	ref,
-	className,
-	variant,
-	size,
-	children,
-	render,
-	leftIcon,
-	rightIcon,
-	icon,
-	fullWidth,
-	rounded,
-	...props
+  ref,
+  className,
+  variant,
+  size,
+  children,
+  render,
+  leftIcon,
+  rightIcon,
+  icon,
+  fullWidth,
+  rounded,
+  ...props
 }: ToggleProps & {
-	ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null>;
+  ref?: React.RefObject<React.ElementRef<typeof BaseToggle> | null>;
 }) => {
-	return (
-		<BaseToggle
-			data-testid="toggle"
-			ref={ref}
-			render={
-				render ||
-				((toggleProps, state) => {
-					const { ref: toggleRef, ...buttonProps } = toggleProps;
-					return (
-						<Button
-							{...buttonProps}
-							variant={state.pressed ? "secondary" : "ghost"}
-							size={size}
-							leftIcon={leftIcon}
-							rightIcon={rightIcon}
-							icon={icon}
-							fullWidth={fullWidth}
-							rounded={rounded}
-							render={(props: any) => (
-								<button type="button" {...props} ref={toggleRef} />
-							)}
-							className={cx(toggleVariants({ variant, size }), className)}
-						>
-							{children}
-						</Button>
-					);
-				})
-			}
-			{...props}
-		/>
-	);
+  return (
+    <BaseToggle
+      data-testid="toggle"
+      ref={ref}
+      render={
+        render ||
+        ((toggleProps, state) => {
+          const { ref: toggleRef, ...buttonProps } = toggleProps;
+          return (
+            <Button
+              {...buttonProps}
+              className={cx(toggleVariants({ variant, size }), className)}
+              fullWidth={fullWidth}
+              icon={icon}
+              leftIcon={leftIcon}
+              render={(
+                renderProps: React.ButtonHTMLAttributes<HTMLButtonElement>
+              ) => <button type="button" {...renderProps} ref={toggleRef} />}
+              rightIcon={rightIcon}
+              rounded={rounded}
+              size={size}
+              variant={state.pressed ? "secondary" : "ghost"}
+            >
+              {children}
+            </Button>
+          );
+        })
+      }
+      {...props}
+    />
+  );
 };
 
 Toggle.displayName = "Toggle";

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { dotConfig } from "@patternmode/dot/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function DotPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={dotConfig.name}
-        description={dotConfig.description}
         badge={dotConfig.badge}
+        description={dotConfig.description}
+        title={dotConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={dotConfig.category}
         componentId="dot"
         componentName={dotConfig.name}
-        category={dotConfig.category}
       />
 
       <Separator />

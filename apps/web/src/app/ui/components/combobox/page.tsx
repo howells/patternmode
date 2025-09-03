@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { comboboxConfig } from "@patternmode/combobox/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ComboboxPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={comboboxConfig.name}
-        description={comboboxConfig.description}
         badge={comboboxConfig.badge}
+        description={comboboxConfig.description}
+        title={comboboxConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={comboboxConfig.category}
         componentId="combobox"
         componentName={comboboxConfig.name}
-        category={comboboxConfig.category}
       />
 
       <Separator />

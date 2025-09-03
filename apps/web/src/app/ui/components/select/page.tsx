@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { selectConfig } from "@patternmode/select/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function SelectPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={selectConfig.name}
-        description={selectConfig.description}
         badge={selectConfig.badge}
+        description={selectConfig.description}
+        title={selectConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={selectConfig.category}
         componentId="select"
         componentName={selectConfig.name}
-        category={selectConfig.category}
       />
 
       <Separator />

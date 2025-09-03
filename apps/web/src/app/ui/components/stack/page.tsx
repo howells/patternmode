@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { Separator } from "@patternmode/separator";
 import { stackConfig } from "@patternmode/stack/config";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function StackPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={stackConfig.name}
-        description={stackConfig.description}
         badge={stackConfig.badge}
+        description={stackConfig.description}
+        title={stackConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={stackConfig.category}
         componentId="stack"
         componentName={stackConfig.name}
-        category={stackConfig.category}
       />
 
       <Separator />

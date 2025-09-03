@@ -6,36 +6,36 @@ import React from "react";
 import { Checkbox } from "./component";
 
 export type CheckboxPreviewProps = {
-	checked?: boolean | "indeterminate";
-	disabled?: boolean;
+  checked?: boolean | "indeterminate";
+  disabled?: boolean;
 };
 
 export function CheckboxPreview({ checked, disabled }: CheckboxPreviewProps) {
-	const [state, setState] = React.useState<
-		boolean | "indeterminate" | undefined
-	>(checked);
-	const id = React.useId();
-	return (
-		<Field.Root>
-			<Label htmlFor={id} className="flex items-center gap-2">
-				<Checkbox
-					id={id}
-					checked={state}
-					disabled={disabled}
-					onCheckedChange={(v: boolean | "indeterminate") => setState(v)}
-				/>
-				{String(state ?? "unchecked")}
-			</Label>
-		</Field.Root>
-	);
+  const [state, setState] = React.useState<
+    boolean | "indeterminate" | undefined
+  >(checked);
+  const id = React.useId();
+  return (
+    <Field.Root>
+      <Label className="flex items-center gap-2" htmlFor={id}>
+        <Checkbox
+          checked={state}
+          disabled={disabled}
+          id={id}
+          onCheckedChange={(v: boolean | "indeterminate") => setState(v)}
+        />
+        {String(state ?? "unchecked")}
+      </Label>
+    </Field.Root>
+  );
 }
 
 export const checkboxPreviewProps = [
-	{
-		name: "checked",
-		type: "select",
-		options: [true, false, "indeterminate"],
-		defaultValue: false,
-	},
-	{ name: "disabled", type: "boolean", defaultValue: false },
+  {
+    name: "checked",
+    type: "select",
+    options: [true, false, "indeterminate"],
+    defaultValue: false,
+  },
+  { name: "disabled", type: "boolean", defaultValue: false },
 ];

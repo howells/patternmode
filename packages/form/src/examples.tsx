@@ -7,142 +7,142 @@ import { Form, FormControl, FormField } from "./component";
 
 // Basic form with Zod validation
 export const DefaultExample = () => {
-	const formSchema = z.object({
-		name: z.string().min(1, "Name is required"),
-		email: z.string().email("Please enter a valid email"),
-		message: z.string().min(10, "Message must be at least 10 characters"),
-	});
+  const formSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Please enter a valid email"),
+    message: z.string().min(10, "Message must be at least 10 characters"),
+  });
 
-	const handleSubmit = async (data: Record<string, unknown>) => {
-		console.log("Form submitted:", data);
-	};
+  const handleSubmit = async (_data: Record<string, unknown>) => {
+    /* noop */
+  };
 
-	return (
-		<Form schema={formSchema} onValidSubmit={handleSubmit}>
-			<FormField name="name" label="Full Name" required>
-				<FormControl placeholder="Enter your name" />
-			</FormField>
+  return (
+    <Form onValidSubmit={handleSubmit} schema={formSchema}>
+      <FormField label="Full Name" name="name" required>
+        <FormControl placeholder="Enter your name" />
+      </FormField>
 
-			<FormField
-				name="email"
-				label="Email Address"
-				required
-				description="We'll never share your email."
-			>
-				<FormControl type="email" placeholder="Enter your email" />
-			</FormField>
+      <FormField
+        description="We'll never share your email."
+        label="Email Address"
+        name="email"
+        required
+      >
+        <FormControl placeholder="Enter your email" type="email" />
+      </FormField>
 
-			<FormField name="message" label="Message" required>
-				<Textarea name="message" placeholder="Enter your message..." />
-			</FormField>
+      <FormField label="Message" name="message" required>
+        <Textarea name="message" placeholder="Enter your message..." />
+      </FormField>
 
-			<Button type="submit" className="w-full">
-				Submit Form
-			</Button>
-		</Form>
-	);
+      <Button className="w-full" type="submit">
+        Submit Form
+      </Button>
+    </Form>
+  );
 };
 
 // Native HTML5 validation
 export const HTML5ValidationExample = () => {
-	const handleSubmit = async (data: Record<string, unknown>) => {
-		console.log("Form submitted:", data);
-	};
+  const handleSubmit = async (_data: Record<string, unknown>) => {
+    /* noop */
+  };
 
-	return (
-		<Form onValidSubmit={handleSubmit}>
-			<FormField name="website" label="Website" required>
-				<FormControl
-					type="url"
-					placeholder="https://example.com"
-					pattern="https?://.*"
-				/>
-			</FormField>
+  return (
+    <Form onValidSubmit={handleSubmit}>
+      <FormField label="Website" name="website" required>
+        <FormControl
+          pattern="https?://.*"
+          placeholder="https://example.com"
+          type="url"
+        />
+      </FormField>
 
-			<FormField name="phone" label="Phone">
-				<FormControl
-					type="tel"
-					placeholder="(555) 123-4567"
-					pattern="[0-9\s\-\(\)]+"
-				/>
-			</FormField>
+      <FormField label="Phone" name="phone">
+        <FormControl
+          pattern="[0-9\s\-\(\)]+"
+          placeholder="(555) 123-4567"
+          type="tel"
+        />
+      </FormField>
 
-			<Button type="submit" className="w-full">
-				Submit
-			</Button>
-		</Form>
-	);
+      <Button className="w-full" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
 };
 
 // Registration form with custom layout
 export const RegistrationFormExample = () => {
-	const registrationSchema = z.object({
-		firstName: z.string().min(1, "First name is required"),
-		lastName: z.string().min(1, "Last name is required"),
-		email: z.string().email("Invalid email address"),
-		password: z.string().min(8, "Password must be at least 8 characters"),
-	});
+  const registrationSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+  });
 
-	const handleRegistration = async (data: Record<string, unknown>) => {
-		console.log("Registration data:", data);
-	};
+  const handleRegistration = (/* data: Record<string, unknown> */) => {
+    /* noop */
+  };
 
-	return (
-		<Form schema={registrationSchema} onValidSubmit={handleRegistration}>
-			<div className="grid grid-cols-2 gap-4">
-				<FormField name="firstName" label="First Name" required>
-					<FormControl placeholder="First name" />
-				</FormField>
-				<FormField name="lastName" label="Last Name" required>
-					<FormControl placeholder="Last name" />
-				</FormField>
-			</div>
+  return (
+    <Form onValidSubmit={handleRegistration} schema={registrationSchema}>
+      <div className="grid grid-cols-2 gap-4">
+        <FormField label="First Name" name="firstName" required>
+          <FormControl placeholder="First name" />
+        </FormField>
+        <FormField label="Last Name" name="lastName" required>
+          <FormControl placeholder="Last name" />
+        </FormField>
+      </div>
 
-			<FormField name="email" label="Email" required>
-				<FormControl type="email" placeholder="your@email.com" />
-			</FormField>
+      <FormField label="Email" name="email" required>
+        <FormControl placeholder="your@email.com" type="email" />
+      </FormField>
 
-			<FormField
-				name="password"
-				label="Password"
-				description="Must be at least 8 characters"
-				required
-			>
-				<FormControl type="password" placeholder="Enter password" />
-			</FormField>
+      <FormField
+        description="Must be at least 8 characters"
+        label="Password"
+        name="password"
+        required
+      >
+        <FormControl placeholder="Enter password" type="password" />
+      </FormField>
 
-			<Button type="submit" className="w-full">
-				Create Account
-			</Button>
-		</Form>
-	);
+      <Button className="w-full" type="submit">
+        Create Account
+      </Button>
+    </Form>
+  );
 };
 
 // Horizontal layout form (for checkboxes)
 export const HorizontalLayoutExample = () => {
-	return (
-		<Form>
-			<FormField
-				name="newsletter"
-				label="Subscribe to newsletter"
-				description="Receive updates about new features"
-				orientation="horizontal"
-			>
-				<FormControl type="checkbox" />
-			</FormField>
+  return (
+    <Form>
+      <FormField
+        description="Receive updates about new features"
+        label="Subscribe to newsletter"
+        name="newsletter"
+        orientation="horizontal"
+      >
+        <FormControl type="checkbox" />
+      </FormField>
 
-			<FormField
-				name="terms"
-				label="I agree to the terms and conditions"
-				orientation="horizontal"
-				required
-			>
-				<FormControl type="checkbox" />
-			</FormField>
+      <FormField
+        label="I agree to the terms and conditions"
+        name="terms"
+        orientation="horizontal"
+        required
+      >
+        <FormControl type="checkbox" />
+      </FormField>
 
-			<Button type="submit" className="w-full">
-				Continue
-			</Button>
-		</Form>
-	);
+      <Button className="w-full" type="submit">
+        Continue
+      </Button>
+    </Form>
+  );
 };

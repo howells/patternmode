@@ -1,10 +1,9 @@
 "use client";
 
-import type { PreviewProps } from "@/types/preview-props";
-
 import { VStack } from "@patternmode/stack";
 import { Subheading } from "@patternmode/subheading";
 import React from "react";
+import type { PreviewProps } from "@/types/preview-props";
 
 import { ControlFactory } from "./controls/control-factory";
 import { PropField } from "./controls/prop-field";
@@ -34,15 +33,12 @@ export function PreviewControls({ config }: PreviewControlsProps) {
 
       <div className="space-y-3">
         {propEntries.map(([propKey, metadata]) => (
-          <PropField
-            key={propKey}
-            prop={metadata}
-          >
+          <PropField key={propKey} prop={metadata}>
             <ControlFactory
-              prop={metadata}
-              currentValue={props[propKey]}
-              onValueChange={value => updateProp(propKey, value)}
               componentName={config.componentName}
+              currentValue={props[propKey]}
+              onValueChange={(value) => updateProp(propKey, value)}
+              prop={metadata}
             />
           </PropField>
         ))}

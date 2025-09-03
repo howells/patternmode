@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { radioCardGroupConfig } from "@patternmode/radio-card-group/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function RadioCardGroupPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={radioCardGroupConfig.name}
-        description={radioCardGroupConfig.description}
         badge={radioCardGroupConfig.badge}
+        description={radioCardGroupConfig.description}
+        title={radioCardGroupConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={radioCardGroupConfig.category}
         componentId="radio-card-group"
         componentName={radioCardGroupConfig.name}
-        category={radioCardGroupConfig.category}
       />
 
       <Separator />

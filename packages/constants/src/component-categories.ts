@@ -1,19 +1,19 @@
 import type { IconComponent } from "@patternmode/icons";
 import {
-  Monitor,
-  SlidersHorizontal,
-  LayoutGrid,
-  Layers,
-  Palette,
-  MousePointerClick,
-  Film,
-  Type as TypeIcon,
-  Compass,
-  PieChart,
   AlertCircle,
-  FormInput,
+  Compass,
   Database,
+  Film,
+  FormInput,
   Keyboard,
+  Layers,
+  LayoutGrid,
+  Monitor,
+  MousePointerClick,
+  Palette,
+  PieChart,
+  SlidersHorizontal,
+  Type as TypeIcon,
   Wrench,
 } from "lucide-react";
 
@@ -54,15 +54,13 @@ export const COMPONENT_CATEGORIES = [
   {
     key: "controls",
     label: "Controls",
-    description:
-      "Interactive elements that trigger actions or change state.",
+    description: "Interactive elements that trigger actions or change state.",
     icon: SlidersHorizontal,
   },
   {
     key: "layout",
     label: "Layout",
-    description:
-      "Structural primitives for spacing, grids, and composition.",
+    description: "Structural primitives for spacing, grids, and composition.",
     icon: LayoutGrid,
   },
   {
@@ -75,15 +73,13 @@ export const COMPONENT_CATEGORIES = [
   {
     key: "visual",
     label: "Visual",
-    description:
-      "Decorative elements such as badges, tags, and avatars.",
+    description: "Decorative elements such as badges, tags, and avatars.",
     icon: Palette,
   },
   {
     key: "actions",
     label: "Actions",
-    description:
-      "Action helpers and affordances for user interactions.",
+    description: "Action helpers and affordances for user interactions.",
     icon: MousePointerClick,
   },
   {
@@ -102,15 +98,13 @@ export const COMPONENT_CATEGORIES = [
   {
     key: "navigation",
     label: "Navigation",
-    description:
-      "Menus, navigation bars, breadcrumbs, and related patterns.",
+    description: "Menus, navigation bars, breadcrumbs, and related patterns.",
     icon: Compass,
   },
   {
     key: "charts",
     label: "Charts",
-    description:
-      "Data visualization primitives and chart components.",
+    description: "Data visualization primitives and chart components.",
     icon: PieChart,
   },
   {
@@ -123,29 +117,25 @@ export const COMPONENT_CATEGORIES = [
   {
     key: "forms",
     label: "Forms",
-    description:
-      "Form composition, fields, and validation structures.",
+    description: "Form composition, fields, and validation structures.",
     icon: FormInput,
   },
   {
     key: "data",
     label: "Data",
-    description:
-      "Data presentation such as tables, lists, and metrics.",
+    description: "Data presentation such as tables, lists, and metrics.",
     icon: Database,
   },
   {
     key: "inputs",
     label: "Inputs",
-    description:
-      "Input fields and entry components for capturing data.",
+    description: "Input fields and entry components for capturing data.",
     icon: Keyboard,
   },
   {
     key: "utility",
     label: "Utility",
-    description:
-      "Utility primitives and helpers used across components.",
+    description: "Utility primitives and helpers used across components.",
     icon: Wrench,
   },
 ] as const satisfies readonly CategoryDef[];
@@ -154,4 +144,3 @@ export const COMPONENT_CATEGORIES = [
  * String union of valid category keys (e.g., "display", "controls").
  */
 export type ComponentCategory = (typeof COMPONENT_CATEGORIES)[number]["key"];
-

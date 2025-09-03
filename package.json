@@ -1,46 +1,47 @@
 {
-	"name": "patternmode",
-	"version": "0.1.0",
-	"private": true,
-	"packageManager": "pnpm@10.15.0",
-	"description": "A comprehensive UI component library and design system",
-	"author": "Daniel Howells",
-	"license": "MIT",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
-	"engines": {
-		"node": ">=18.0.0",
-		"pnpm": ">=8.0.0"
-	},
-	"scripts": {
-		"build": "turbo build",
-		"dev": "turbo dev",
-		"lint": "turbo lint",
-		"typecheck": "turbo typecheck",
-		"validate:packages": "node scripts/validate-packages.mjs",
-		"test": "turbo test",
-		"test:e2e": "turbo test:e2e",
-		"clean": "turbo clean",
-		"knip": "knip --no-progress",
-		"changeset": "changeset",
-		"version-packages": "changeset version",
-		"release": "turbo build && changeset publish"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.2.2",
-		"@changesets/cli": "^2.29.6",
-		"@playwright/experimental-ct-react": "^1.55.0",
-		"@types/react": "^19.1.12",
-		"@types/react-dom": "^19.1.9",
-		"glob": "^11.0.3",
-		"knip": "^5.63.0",
-		"turbo": "^2.5.6",
-		"ultracite": "^5.3.2"
-	},
-	"dependencies": {
-		"es-toolkit": "^1.39.10",
-		"nuqs": "^2.5.2"
-	}
+  "name": "patternmode",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "description": "A comprehensive UI component library and design system",
+  "author": "Daniel Howells",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "validate:packages": "node scripts/validate-packages.mjs",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "clean": "turbo clean",
+    "knip": "knip --no-progress",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
+    "@changesets/cli": "^2.29.6",
+    "@playwright/experimental-ct-react": "^1.55.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "knip": "^5.63.0",
+    "turbo": "^2.5.6",
+    "ultracite": "^5.3.2"
+  },
+  "dependencies": {
+    "es-toolkit": "^1.39.10",
+    "nuqs": "^2.5.2"
+  }
 }

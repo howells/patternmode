@@ -1,12 +1,12 @@
 import { accordionConfig } from "@patternmode/accordion/config";
 import {
-	AccordionPreview,
-	accordionPreviewProps,
+  AccordionPreview,
+  accordionPreviewProps,
 } from "@patternmode/accordion/preview";
 import { alertDialogConfig } from "@patternmode/alert-dialog/config";
 import {
-	AlertDialogPreview,
-	alertDialogPreviewProps,
+  AlertDialogPreview,
+  alertDialogPreviewProps,
 } from "@patternmode/alert-dialog/preview";
 // Import all component configs
 import { avatarConfig } from "@patternmode/avatar/config";
@@ -16,85 +16,85 @@ import { badgeConfig } from "@patternmode/badge/config";
 import { BadgePreview, badgePreviewProps } from "@patternmode/badge/preview";
 import { breadcrumbsConfig } from "@patternmode/breadcrumbs/config";
 import {
-	BreadcrumbsPreview,
-	breadcrumbsPreviewProps,
+  BreadcrumbsPreview,
+  breadcrumbsPreviewProps,
 } from "@patternmode/breadcrumbs/preview";
 import { buttonConfig } from "@patternmode/button/config";
 import { ButtonPreview, buttonPreviewProps } from "@patternmode/button/preview";
 import { buttonGroupConfig } from "@patternmode/button-group/config";
 import {
-	ButtonGroupPreview,
-	buttonGroupPreviewProps,
+  ButtonGroupPreview,
+  buttonGroupPreviewProps,
 } from "@patternmode/button-group/preview";
 import { calendarConfig } from "@patternmode/calendar/config";
 import {
-	CalendarPreview,
-	calendarPreviewProps,
+  CalendarPreview,
+  calendarPreviewProps,
 } from "@patternmode/calendar/preview";
 import { calloutConfig } from "@patternmode/callout/config";
 import {
-	CalloutPreview,
-	calloutPreviewProps,
+  CalloutPreview,
+  calloutPreviewProps,
 } from "@patternmode/callout/preview";
 import { cardConfig } from "@patternmode/card/config";
 import { CardPreview, cardPreviewProps } from "@patternmode/card/preview";
 import { carouselConfig } from "@patternmode/carousel/config";
 import {
-	CarouselPreview,
-	carouselPreviewProps,
+  CarouselPreview,
+  carouselPreviewProps,
 } from "@patternmode/carousel/preview";
 import { checkboxConfig } from "@patternmode/checkbox/config";
 import {
-	CheckboxPreview,
-	checkboxPreviewProps,
+  CheckboxPreview,
+  checkboxPreviewProps,
 } from "@patternmode/checkbox/preview";
 import { checkboxGroupConfig } from "@patternmode/checkbox-group/config";
 import {
-	CheckboxGroupPreview,
-	checkboxGroupPreviewProps,
+  CheckboxGroupPreview,
+  checkboxGroupPreviewProps,
 } from "@patternmode/checkbox-group/preview";
 import { codeBlockConfig } from "@patternmode/code-block/config";
 import {
-	CodeBlockPreview,
-	codeBlockPreviewProps,
+  CodeBlockPreview,
+  codeBlockPreviewProps,
 } from "@patternmode/code-block/preview";
 import { collapsibleConfig } from "@patternmode/collapsible/config";
 import {
-	CollapsiblePreview,
-	collapsiblePreviewProps,
+  CollapsiblePreview,
+  collapsiblePreviewProps,
 } from "@patternmode/collapsible/preview";
 import { comboboxConfig } from "@patternmode/combobox/config";
 import {
-	ComboboxPreview,
-	comboboxPreviewProps,
+  ComboboxPreview,
+  comboboxPreviewProps,
 } from "@patternmode/combobox/preview";
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { contextMenuConfig } from "@patternmode/context-menu/config";
 import {
-	ContextMenuPreview,
-	contextMenuPreviewProps,
+  ContextMenuPreview,
+  contextMenuPreviewProps,
 } from "@patternmode/context-menu/preview";
 import { copyButtonConfig } from "@patternmode/copy-button/config";
 import {
-	CopyButtonPreview,
-	copyButtonPreviewProps,
+  CopyButtonPreview,
+  copyButtonPreviewProps,
 } from "@patternmode/copy-button/preview";
 import { datePickerConfig } from "@patternmode/date-picker/config";
 import {
-	DatePickerPreview,
-	datePickerPreviewProps,
+  DatePickerPreview,
+  datePickerPreviewProps,
 } from "@patternmode/date-picker/preview";
 import { descriptionListConfig } from "@patternmode/description-list/config";
 import {
-	DescriptionListPreview,
-	descriptionListPreviewProps,
+  DescriptionListPreview,
+  descriptionListPreviewProps,
 } from "@patternmode/description-list/preview";
 import { dialogConfig } from "@patternmode/dialog/config";
 import { DialogPreview, dialogPreviewProps } from "@patternmode/dialog/preview";
 import { dismissButtonConfig } from "@patternmode/dismiss-button/config";
 import {
-	DismissButtonPreview,
-	dismissButtonPreviewProps,
+  DismissButtonPreview,
+  dismissButtonPreviewProps,
 } from "@patternmode/dismiss-button/preview";
 import { dotConfig } from "@patternmode/dot/config";
 import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
@@ -102,25 +102,25 @@ import { drawerConfig } from "@patternmode/drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
 import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
 import {
-	DropdownItemPreview,
-	dropdownItemPreviewProps,
+  DropdownItemPreview,
+  dropdownItemPreviewProps,
 } from "@patternmode/dropdown-item/preview";
 import { emptyStateConfig } from "@patternmode/empty-state/config";
 import {
-	EmptyStatePreview,
-	emptyStatePreviewProps,
+  EmptyStatePreview,
+  emptyStatePreviewProps,
 } from "@patternmode/empty-state/preview";
 import { fieldConfig } from "@patternmode/field/config";
 import { FieldPreview, fieldPreviewProps } from "@patternmode/field/preview";
 import { fieldArrayConfig } from "@patternmode/field-array/config";
 import {
-	FieldArrayPreview,
-	fieldArrayPreviewProps,
+  FieldArrayPreview,
+  fieldArrayPreviewProps,
 } from "@patternmode/field-array/preview";
 import { fieldsetConfig } from "@patternmode/fieldset/config";
 import {
-	FieldsetPreview,
-	fieldsetPreviewProps,
+  FieldsetPreview,
+  fieldsetPreviewProps,
 } from "@patternmode/fieldset/preview";
 import { formConfig } from "@patternmode/form/config";
 import { FormPreview, formPreviewProps } from "@patternmode/form/preview";
@@ -128,25 +128,25 @@ import { gridConfig } from "@patternmode/grid/config";
 import { GridPreview, gridPreviewProps } from "@patternmode/grid/preview";
 import { headingConfig } from "@patternmode/heading/config";
 import {
-	HeadingPreview,
-	headingPreviewProps,
+  HeadingPreview,
+  headingPreviewProps,
 } from "@patternmode/heading/preview";
 import { headingElementConfig } from "@patternmode/heading-element/config";
 import {
-	HeadingElementPreview,
-	headingElementPreviewProps,
+  HeadingElementPreview,
+  headingElementPreviewProps,
 } from "@patternmode/heading-element/preview";
 import { iconConfig } from "@patternmode/icon/config";
 import { IconPreview, iconPreviewProps } from "@patternmode/icon/preview";
 import { iconContainerConfig } from "@patternmode/icon-container/config";
 import {
-	IconContainerPreview,
-	iconContainerPreviewProps,
+  IconContainerPreview,
+  iconContainerPreviewProps,
 } from "@patternmode/icon-container/preview";
 import { iconSelectConfig } from "@patternmode/icon-select/config";
 import {
-	IconSelectPreview,
-	iconSelectPreviewProps,
+  IconSelectPreview,
+  iconSelectPreviewProps,
 } from "@patternmode/icon-select/preview";
 import { inputConfig } from "@patternmode/input/config";
 import { InputPreview, inputPreviewProps } from "@patternmode/input/preview";
@@ -160,8 +160,8 @@ import { menuConfig } from "@patternmode/menu/config";
 import { MenuPreview, menuPreviewProps } from "@patternmode/menu/preview";
 import { menuBarConfig } from "@patternmode/menu-bar/config";
 import {
-	MenuBarPreview,
-	menuBarPreviewProps,
+  MenuBarPreview,
+  menuBarPreviewProps,
 } from "@patternmode/menu-bar/preview";
 import { meterConfig } from "@patternmode/meter/config";
 import { MeterPreview, meterPreviewProps } from "@patternmode/meter/preview";
@@ -169,107 +169,108 @@ import { navbarConfig } from "@patternmode/navbar/config";
 import { NavbarPreview, navbarPreviewProps } from "@patternmode/navbar/preview";
 import { navigationMenuConfig } from "@patternmode/navigation-menu/config";
 import {
-	NavigationMenuPreview,
-	navigationMenuPreviewProps,
+  NavigationMenuPreview,
+  navigationMenuPreviewProps,
 } from "@patternmode/navigation-menu/preview";
 import { numberFieldConfig } from "@patternmode/number-field/config";
 import {
-	NumberFieldPreview,
-	numberFieldPreviewProps,
+  NumberFieldPreview,
+  numberFieldPreviewProps,
 } from "@patternmode/number-field/preview";
 import { paginationConfig } from "@patternmode/pagination/config";
 import {
-	PaginationPreview,
-	paginationPreviewProps,
+  PaginationPreview,
+  paginationPreviewProps,
 } from "@patternmode/pagination/preview";
 import { popoverConfig } from "@patternmode/popover/config";
 import {
-	PopoverPreview,
-	popoverPreviewProps,
+  PopoverPreview,
+  popoverPreviewProps,
 } from "@patternmode/popover/preview";
 import { previewCardConfig } from "@patternmode/preview-card/config";
 import {
-	PreviewCardPreview,
-	previewCardPreviewProps,
+  PreviewCardPreview,
+  previewCardPreviewProps,
 } from "@patternmode/preview-card/preview";
 import { progressConfig } from "@patternmode/progress/config";
 import {
-	ProgressPreview,
-	progressPreviewProps,
+  ProgressPreview,
+  progressPreviewProps,
 } from "@patternmode/progress/preview";
 import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import {
-	ProgressCirclePreview,
-	progressCirclePreviewProps,
+  ProgressCirclePreview,
+  progressCirclePreviewProps,
 } from "@patternmode/progress-circle/preview";
 import { radioConfig } from "@patternmode/radio/config";
 import { RadioPreview, radioPreviewProps } from "@patternmode/radio/preview";
 import { radioCardGroupConfig } from "@patternmode/radio-card-group/config";
 import {
-	RadioCardGroupPreview,
-	radioCardGroupPreviewProps,
+  RadioCardGroupPreview,
+  radioCardGroupPreviewProps,
 } from "@patternmode/radio-card-group/preview";
 import { responsiveDrawerConfig } from "@patternmode/responsive-drawer/config";
 import {
-	ResponsiveDrawerPreview,
-	responsiveDrawerPreviewProps,
+  ResponsiveDrawerPreview,
+  responsiveDrawerPreviewProps,
 } from "@patternmode/responsive-drawer/preview";
 import { scrollAreaConfig } from "@patternmode/scroll-area/config";
 import {
-	ScrollAreaPreview,
-	scrollAreaPreviewProps,
+  ScrollAreaPreview,
+  scrollAreaPreviewProps,
 } from "@patternmode/scroll-area/preview";
 import { searchFieldConfig } from "@patternmode/search-field/config";
 import {
-	SearchFieldPreview,
-	searchFieldPreviewProps,
+  SearchFieldPreview,
+  searchFieldPreviewProps,
 } from "@patternmode/search-field/preview";
 import { selectConfig } from "@patternmode/select/config";
 import { SelectPreview, selectPreviewProps } from "@patternmode/select/preview";
 import { selectNativeConfig } from "@patternmode/select-native/config";
 import {
-	SelectNativePreview,
-	selectNativePreviewProps,
+  SelectNativePreview,
+  selectNativePreviewProps,
 } from "@patternmode/select-native/preview";
 import { separatorConfig } from "@patternmode/separator/config";
 import {
-	SeparatorPreview,
-	separatorPreviewProps,
+  SeparatorPreview,
+  separatorPreviewProps,
 } from "@patternmode/separator/preview";
 import { sheetConfig } from "@patternmode/sheet/config";
 import { SheetPreview, sheetPreviewProps } from "@patternmode/sheet/preview";
+import { sidebarConfig } from "@patternmode/sidebar/config";
 import { skeletonConfig } from "@patternmode/skeleton/config";
 import { SkeletonPreview } from "@patternmode/skeleton/preview";
 import { sliderConfig } from "@patternmode/slider/config";
 import { SliderPreview, sliderPreviewProps } from "@patternmode/slider/preview";
 import { sortableListConfig } from "@patternmode/sortable-list/config";
 import {
-	SortableListPreview,
-	sortableListPreviewProps,
+  SortableListPreview,
+  sortableListPreviewProps,
 } from "@patternmode/sortable-list/preview";
 import { splitButtonConfig } from "@patternmode/split-button/config";
 import {
-	SplitButtonPreview,
-	splitButtonPreviewProps,
+  SplitButtonPreview,
+  splitButtonPreviewProps,
 } from "@patternmode/split-button/preview";
 import { stackConfig } from "@patternmode/stack/config";
 import { StackPreview, stackPreviewProps } from "@patternmode/stack/preview";
 import { stackedListConfig } from "@patternmode/stacked-list/config";
 import {
-	StackedListPreview,
-	stackedListPreviewProps,
+  StackedListPreview,
+  stackedListPreviewProps,
 } from "@patternmode/stacked-list/preview";
 import { subheadingConfig } from "@patternmode/subheading/config";
 import {
-	SubheadingPreview,
-	subheadingPreviewProps,
+  SubheadingPreview,
+  subheadingPreviewProps,
 } from "@patternmode/subheading/preview";
 import { switchConfig } from "@patternmode/switch/config";
 import { SwitchPreview, switchPreviewProps } from "@patternmode/switch/preview";
 import { tabNavigationConfig } from "@patternmode/tab-navigation/config";
 import {
-	TabNavigationPreview,
-	tabNavigationPreviewProps,
+  TabNavigationPreview,
+  tabNavigationPreviewProps,
 } from "@patternmode/tab-navigation/preview";
 import { tableConfig } from "@patternmode/table/config";
 import { TablePreview, tablePreviewProps } from "@patternmode/table/preview";
@@ -279,25 +280,25 @@ import { tagConfig } from "@patternmode/tag/config";
 import { TagPreview, tagPreviewProps } from "@patternmode/tag/preview";
 import { tagGroupConfig } from "@patternmode/tag-group/config";
 import {
-	TagGroupPreview,
-	tagGroupPreviewProps,
+  TagGroupPreview,
+  tagGroupPreviewProps,
 } from "@patternmode/tag-group/preview";
 import { tagInputConfig } from "@patternmode/tag-input/config";
 import {
-	TagInputPreview,
-	tagInputPreviewProps,
+  TagInputPreview,
+  tagInputPreviewProps,
 } from "@patternmode/tag-input/preview";
 import { textConfig } from "@patternmode/text/config";
 import { TextPreview, textPreviewProps } from "@patternmode/text/preview";
 import { textListConfig } from "@patternmode/text-list/config";
 import {
-	TextListPreview,
-	textListPreviewProps,
+  TextListPreview,
+  textListPreviewProps,
 } from "@patternmode/text-list/preview";
 import { textareaConfig } from "@patternmode/textarea/config";
 import {
-	TextareaPreview,
-	textareaPreviewProps,
+  TextareaPreview,
+  textareaPreviewProps,
 } from "@patternmode/textarea/preview";
 import { themeToggleConfig } from "@patternmode/theme-toggle/config";
 import { ThemeTogglePreview } from "@patternmode/theme-toggle/preview";
@@ -307,280 +308,279 @@ import { toggleConfig } from "@patternmode/toggle/config";
 import { TogglePreview, togglePreviewProps } from "@patternmode/toggle/preview";
 import { toggleGroupConfig } from "@patternmode/toggle-group/config";
 import {
-	ToggleGroupPreview,
-	toggleGroupPreviewProps,
+  ToggleGroupPreview,
+  toggleGroupPreviewProps,
 } from "@patternmode/toggle-group/preview";
 import { toolbarConfig } from "@patternmode/toolbar/config";
 import {
-	ToolbarPreview,
-	toolbarPreviewProps,
+  ToolbarPreview,
+  toolbarPreviewProps,
 } from "@patternmode/toolbar/preview";
 import { tooltipConfig } from "@patternmode/tooltip/config";
 import {
-	TooltipPreview,
-	tooltipPreviewProps,
+  TooltipPreview,
+  tooltipPreviewProps,
 } from "@patternmode/tooltip/preview";
 import type React from "react";
 import type { PreviewProps } from "@/types/preview-props";
-import { sidebarConfig } from "@patternmode/sidebar/config";
 
 export const COMPONENT_REGISTRY = {
-	accordion: accordionConfig,
-	"alert-dialog": alertDialogConfig,
-	avatar: avatarConfig,
-	badge: badgeConfig,
-	breadcrumbs: breadcrumbsConfig,
-	button: buttonConfig,
-	"button-group": buttonGroupConfig,
-	calendar: calendarConfig,
-	callout: calloutConfig,
-	card: cardConfig,
-	carousel: carouselConfig,
-	checkbox: checkboxConfig,
-	"checkbox-group": checkboxGroupConfig,
-	"code-block": codeBlockConfig,
-	collapsible: collapsibleConfig,
-	combobox: comboboxConfig,
-	"context-menu": contextMenuConfig,
-	"copy-button": copyButtonConfig,
-	"date-picker": datePickerConfig,
-	"description-list": descriptionListConfig,
-	dialog: dialogConfig,
-	"dismiss-button": dismissButtonConfig,
-	dot: dotConfig,
-	drawer: drawerConfig,
-	"dropdown-item": dropdownItemConfig,
-	"empty-state": emptyStateConfig,
-	field: fieldConfig,
-	"field-array": fieldArrayConfig,
-	fieldset: fieldsetConfig,
-	form: formConfig,
-	grid: gridConfig,
-	heading: headingConfig,
-	"heading-element": headingElementConfig,
-	icon: iconConfig,
-	"icon-container": iconContainerConfig,
-	"icon-select": iconSelectConfig,
-	input: inputConfig,
-	kbd: kbdConfig,
-	label: labelConfig,
-	loader: loaderConfig,
-	menu: menuConfig,
-	"menu-bar": menuBarConfig,
-	meter: meterConfig,
-	navbar: navbarConfig,
-	"navigation-menu": navigationMenuConfig,
-	"number-field": numberFieldConfig,
-	pagination: paginationConfig,
-	popover: popoverConfig,
-	"preview-card": previewCardConfig,
-	progress: progressConfig,
-	"progress-circle": progressCircleConfig,
-	radio: radioConfig,
-	"radio-card-group": radioCardGroupConfig,
-	"responsive-drawer": responsiveDrawerConfig,
-	"scroll-area": scrollAreaConfig,
-	"search-field": searchFieldConfig,
-	select: selectConfig,
-	"select-native": selectNativeConfig,
-	separator: separatorConfig,
-	sheet: sheetConfig,
-	skeleton: skeletonConfig,
-	slider: sliderConfig,
-	"sortable-list": sortableListConfig,
-	"split-button": splitButtonConfig,
-	stack: stackConfig,
-	"stacked-list": stackedListConfig,
-	subheading: subheadingConfig,
-	switch: switchConfig,
-	"tab-navigation": tabNavigationConfig,
-	table: tableConfig,
-	tabs: tabsConfig,
-	tag: tagConfig,
-	"tag-group": tagGroupConfig,
-	"tag-input": tagInputConfig,
-	text: textConfig,
-	"text-list": textListConfig,
-	textarea: textareaConfig,
-	"theme-toggle": themeToggleConfig,
-	toast: toastConfig,
-	toggle: toggleConfig,
-	"toggle-group": toggleGroupConfig,
-	toolbar: toolbarConfig,
+  accordion: accordionConfig,
+  "alert-dialog": alertDialogConfig,
+  avatar: avatarConfig,
+  badge: badgeConfig,
+  breadcrumbs: breadcrumbsConfig,
+  button: buttonConfig,
+  "button-group": buttonGroupConfig,
+  calendar: calendarConfig,
+  callout: calloutConfig,
+  card: cardConfig,
+  carousel: carouselConfig,
+  checkbox: checkboxConfig,
+  "checkbox-group": checkboxGroupConfig,
+  "code-block": codeBlockConfig,
+  collapsible: collapsibleConfig,
+  combobox: comboboxConfig,
+  "context-menu": contextMenuConfig,
+  "copy-button": copyButtonConfig,
+  "date-picker": datePickerConfig,
+  "description-list": descriptionListConfig,
+  dialog: dialogConfig,
+  "dismiss-button": dismissButtonConfig,
+  dot: dotConfig,
+  drawer: drawerConfig,
+  "dropdown-item": dropdownItemConfig,
+  "empty-state": emptyStateConfig,
+  field: fieldConfig,
+  "field-array": fieldArrayConfig,
+  fieldset: fieldsetConfig,
+  form: formConfig,
+  grid: gridConfig,
+  heading: headingConfig,
+  "heading-element": headingElementConfig,
+  icon: iconConfig,
+  "icon-container": iconContainerConfig,
+  "icon-select": iconSelectConfig,
+  input: inputConfig,
+  kbd: kbdConfig,
+  label: labelConfig,
+  loader: loaderConfig,
+  menu: menuConfig,
+  "menu-bar": menuBarConfig,
+  meter: meterConfig,
+  navbar: navbarConfig,
+  "navigation-menu": navigationMenuConfig,
+  "number-field": numberFieldConfig,
+  pagination: paginationConfig,
+  popover: popoverConfig,
+  "preview-card": previewCardConfig,
+  progress: progressConfig,
+  "progress-circle": progressCircleConfig,
+  radio: radioConfig,
+  "radio-card-group": radioCardGroupConfig,
+  "responsive-drawer": responsiveDrawerConfig,
+  "scroll-area": scrollAreaConfig,
+  "search-field": searchFieldConfig,
+  select: selectConfig,
+  "select-native": selectNativeConfig,
+  separator: separatorConfig,
+  sheet: sheetConfig,
+  skeleton: skeletonConfig,
+  slider: sliderConfig,
+  "sortable-list": sortableListConfig,
+  "split-button": splitButtonConfig,
+  stack: stackConfig,
+  "stacked-list": stackedListConfig,
+  subheading: subheadingConfig,
+  switch: switchConfig,
+  "tab-navigation": tabNavigationConfig,
+  table: tableConfig,
+  tabs: tabsConfig,
+  tag: tagConfig,
+  "tag-group": tagGroupConfig,
+  "tag-input": tagInputConfig,
+  text: textConfig,
+  "text-list": textListConfig,
+  textarea: textareaConfig,
+  "theme-toggle": themeToggleConfig,
+  toast: toastConfig,
+  toggle: toggleConfig,
+  "toggle-group": toggleGroupConfig,
+  toolbar: toolbarConfig,
   tooltip: tooltipConfig,
   sidebar: sidebarConfig,
 } as const satisfies Record<string, ComponentConfig>;
 
 export const PREVIEW_REGISTRY = {
-	accordion: AccordionPreview,
-	"alert-dialog": AlertDialogPreview,
-	avatar: AvatarPreview,
-	badge: BadgePreview,
-	breadcrumbs: BreadcrumbsPreview,
-	button: ButtonPreview,
-	"button-group": ButtonGroupPreview,
-	calendar: CalendarPreview,
-	callout: CalloutPreview,
-	card: CardPreview,
-	carousel: CarouselPreview,
-	checkbox: CheckboxPreview,
-	"checkbox-group": CheckboxGroupPreview,
-	"code-block": CodeBlockPreview,
-	collapsible: CollapsiblePreview,
-	combobox: ComboboxPreview,
-	"context-menu": ContextMenuPreview,
-	"copy-button": CopyButtonPreview,
-	"date-picker": DatePickerPreview,
-	"description-list": DescriptionListPreview,
-	dialog: DialogPreview,
-	"dismiss-button": DismissButtonPreview,
-	dot: DotPreview,
-	drawer: DrawerPreview,
-	"dropdown-item": DropdownItemPreview,
-	"empty-state": EmptyStatePreview,
-	field: FieldPreview,
-	"field-array": FieldArrayPreview,
-	fieldset: FieldsetPreview,
-	form: FormPreview,
-	grid: GridPreview,
-	heading: HeadingPreview,
-	"heading-element": HeadingElementPreview,
-	icon: IconPreview,
-	"icon-container": IconContainerPreview,
-	"icon-select": IconSelectPreview,
-	input: InputPreview,
-	kbd: KbdPreview,
-	label: LabelPreview,
-	loader: LoaderPreview,
-	menu: MenuPreview,
-	"menu-bar": MenuBarPreview,
-	meter: MeterPreview,
-	navbar: NavbarPreview,
-	"navigation-menu": NavigationMenuPreview,
-	"number-field": NumberFieldPreview,
-	pagination: PaginationPreview,
-	popover: PopoverPreview,
-	"preview-card": PreviewCardPreview,
-	progress: ProgressPreview,
-	"progress-circle": ProgressCirclePreview,
-	radio: RadioPreview,
-	"radio-card-group": RadioCardGroupPreview,
-	"responsive-drawer": ResponsiveDrawerPreview,
-	"scroll-area": ScrollAreaPreview,
-	"search-field": SearchFieldPreview,
-	select: SelectPreview,
-	"select-native": SelectNativePreview,
-	separator: SeparatorPreview,
-	sheet: SheetPreview,
-	skeleton: SkeletonPreview,
-	slider: SliderPreview,
-	"sortable-list": SortableListPreview,
-	"split-button": SplitButtonPreview,
-	stack: StackPreview,
-	"stacked-list": StackedListPreview,
-	subheading: SubheadingPreview,
-	switch: SwitchPreview,
-	"tab-navigation": TabNavigationPreview,
-	table: TablePreview,
-	tabs: TabsPreview,
-	tag: TagPreview,
-	"tag-group": TagGroupPreview,
-	"tag-input": TagInputPreview,
-	text: TextPreview,
-	"text-list": TextListPreview,
-	textarea: TextareaPreview,
-	"theme-toggle": ThemeTogglePreview,
-	toast: ToastPreview,
-	toggle: TogglePreview,
-	"toggle-group": ToggleGroupPreview,
-	toolbar: ToolbarPreview,
+  accordion: AccordionPreview,
+  "alert-dialog": AlertDialogPreview,
+  avatar: AvatarPreview,
+  badge: BadgePreview,
+  breadcrumbs: BreadcrumbsPreview,
+  button: ButtonPreview,
+  "button-group": ButtonGroupPreview,
+  calendar: CalendarPreview,
+  callout: CalloutPreview,
+  card: CardPreview,
+  carousel: CarouselPreview,
+  checkbox: CheckboxPreview,
+  "checkbox-group": CheckboxGroupPreview,
+  "code-block": CodeBlockPreview,
+  collapsible: CollapsiblePreview,
+  combobox: ComboboxPreview,
+  "context-menu": ContextMenuPreview,
+  "copy-button": CopyButtonPreview,
+  "date-picker": DatePickerPreview,
+  "description-list": DescriptionListPreview,
+  dialog: DialogPreview,
+  "dismiss-button": DismissButtonPreview,
+  dot: DotPreview,
+  drawer: DrawerPreview,
+  "dropdown-item": DropdownItemPreview,
+  "empty-state": EmptyStatePreview,
+  field: FieldPreview,
+  "field-array": FieldArrayPreview,
+  fieldset: FieldsetPreview,
+  form: FormPreview,
+  grid: GridPreview,
+  heading: HeadingPreview,
+  "heading-element": HeadingElementPreview,
+  icon: IconPreview,
+  "icon-container": IconContainerPreview,
+  "icon-select": IconSelectPreview,
+  input: InputPreview,
+  kbd: KbdPreview,
+  label: LabelPreview,
+  loader: LoaderPreview,
+  menu: MenuPreview,
+  "menu-bar": MenuBarPreview,
+  meter: MeterPreview,
+  navbar: NavbarPreview,
+  "navigation-menu": NavigationMenuPreview,
+  "number-field": NumberFieldPreview,
+  pagination: PaginationPreview,
+  popover: PopoverPreview,
+  "preview-card": PreviewCardPreview,
+  progress: ProgressPreview,
+  "progress-circle": ProgressCirclePreview,
+  radio: RadioPreview,
+  "radio-card-group": RadioCardGroupPreview,
+  "responsive-drawer": ResponsiveDrawerPreview,
+  "scroll-area": ScrollAreaPreview,
+  "search-field": SearchFieldPreview,
+  select: SelectPreview,
+  "select-native": SelectNativePreview,
+  separator: SeparatorPreview,
+  sheet: SheetPreview,
+  skeleton: SkeletonPreview,
+  slider: SliderPreview,
+  "sortable-list": SortableListPreview,
+  "split-button": SplitButtonPreview,
+  stack: StackPreview,
+  "stacked-list": StackedListPreview,
+  subheading: SubheadingPreview,
+  switch: SwitchPreview,
+  "tab-navigation": TabNavigationPreview,
+  table: TablePreview,
+  tabs: TabsPreview,
+  tag: TagPreview,
+  "tag-group": TagGroupPreview,
+  "tag-input": TagInputPreview,
+  text: TextPreview,
+  "text-list": TextListPreview,
+  textarea: TextareaPreview,
+  "theme-toggle": ThemeTogglePreview,
+  toast: ToastPreview,
+  toggle: TogglePreview,
+  "toggle-group": ToggleGroupPreview,
+  toolbar: ToolbarPreview,
   tooltip: TooltipPreview,
   sidebar: (() => null) as React.ElementType,
 } as const satisfies Record<ComponentId, React.ElementType>;
 
 export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
-	accordion: accordionPreviewProps,
-	"alert-dialog": alertDialogPreviewProps,
-	avatar: avatarPreviewProps,
-	badge: badgePreviewProps,
-	breadcrumbs: breadcrumbsPreviewProps,
-	button: buttonPreviewProps,
-	"button-group": buttonGroupPreviewProps,
-	calendar: calendarPreviewProps,
-	callout: calloutPreviewProps,
-	card: cardPreviewProps,
-	carousel: carouselPreviewProps,
-	checkbox: checkboxPreviewProps,
-	"checkbox-group": checkboxGroupPreviewProps,
-	"code-block": codeBlockPreviewProps,
-	collapsible: collapsiblePreviewProps,
-	combobox: comboboxPreviewProps,
-	"context-menu": contextMenuPreviewProps,
-	"copy-button": copyButtonPreviewProps,
-	"date-picker": datePickerPreviewProps,
-	"description-list": descriptionListPreviewProps,
-	dialog: dialogPreviewProps,
-	"dismiss-button": dismissButtonPreviewProps,
-	dot: dotPreviewProps,
-	drawer: drawerPreviewProps,
-	"dropdown-item": dropdownItemPreviewProps,
-	"empty-state": emptyStatePreviewProps,
-	field: fieldPreviewProps,
-	"field-array": fieldArrayPreviewProps,
-	fieldset: fieldsetPreviewProps,
-	form: formPreviewProps,
-	grid: gridPreviewProps,
-	heading: headingPreviewProps,
-	"heading-element": headingElementPreviewProps,
-	icon: iconPreviewProps,
-	"icon-container": iconContainerPreviewProps,
-	"icon-select": iconSelectPreviewProps,
-	input: inputPreviewProps,
-	kbd: kbdPreviewProps,
-	label: labelPreviewProps,
-	loader: loaderPreviewProps,
-	menu: menuPreviewProps,
-	"menu-bar": menuBarPreviewProps,
-	meter: meterPreviewProps,
-	navbar: navbarPreviewProps,
-	"navigation-menu": navigationMenuPreviewProps,
-	"number-field": numberFieldPreviewProps,
-	pagination: paginationPreviewProps,
-	popover: popoverPreviewProps,
-	"preview-card": previewCardPreviewProps,
-	progress: progressPreviewProps,
-	"progress-circle": progressCirclePreviewProps,
-	radio: radioPreviewProps,
-	"radio-card-group": radioCardGroupPreviewProps,
-	"responsive-drawer": responsiveDrawerPreviewProps,
-	"scroll-area": scrollAreaPreviewProps,
-	"search-field": searchFieldPreviewProps,
-	select: selectPreviewProps,
-	"select-native": selectNativePreviewProps,
-	separator: separatorPreviewProps,
-	sheet: sheetPreviewProps,
-	skeleton: [],
-	slider: sliderPreviewProps,
-	"sortable-list": sortableListPreviewProps,
-	"split-button": splitButtonPreviewProps,
-	stack: stackPreviewProps,
-	"stacked-list": stackedListPreviewProps,
-	subheading: subheadingPreviewProps,
-	switch: switchPreviewProps,
-	"tab-navigation": tabNavigationPreviewProps,
-	table: tablePreviewProps,
-	tabs: tabsPreviewProps,
-	tag: tagPreviewProps,
-	"tag-group": tagGroupPreviewProps,
-	"tag-input": tagInputPreviewProps,
-	text: textPreviewProps,
-	"text-list": textListPreviewProps,
-	textarea: textareaPreviewProps,
-	"theme-toggle": [],
-	toast: toastPreviewProps,
-	toggle: togglePreviewProps,
-	"toggle-group": toggleGroupPreviewProps,
-	toolbar: toolbarPreviewProps,
+  accordion: accordionPreviewProps,
+  "alert-dialog": alertDialogPreviewProps,
+  avatar: avatarPreviewProps,
+  badge: badgePreviewProps,
+  breadcrumbs: breadcrumbsPreviewProps,
+  button: buttonPreviewProps,
+  "button-group": buttonGroupPreviewProps,
+  calendar: calendarPreviewProps,
+  callout: calloutPreviewProps,
+  card: cardPreviewProps,
+  carousel: carouselPreviewProps,
+  checkbox: checkboxPreviewProps,
+  "checkbox-group": checkboxGroupPreviewProps,
+  "code-block": codeBlockPreviewProps,
+  collapsible: collapsiblePreviewProps,
+  combobox: comboboxPreviewProps,
+  "context-menu": contextMenuPreviewProps,
+  "copy-button": copyButtonPreviewProps,
+  "date-picker": datePickerPreviewProps,
+  "description-list": descriptionListPreviewProps,
+  dialog: dialogPreviewProps,
+  "dismiss-button": dismissButtonPreviewProps,
+  dot: dotPreviewProps,
+  drawer: drawerPreviewProps,
+  "dropdown-item": dropdownItemPreviewProps,
+  "empty-state": emptyStatePreviewProps,
+  field: fieldPreviewProps,
+  "field-array": fieldArrayPreviewProps,
+  fieldset: fieldsetPreviewProps,
+  form: formPreviewProps,
+  grid: gridPreviewProps,
+  heading: headingPreviewProps,
+  "heading-element": headingElementPreviewProps,
+  icon: iconPreviewProps,
+  "icon-container": iconContainerPreviewProps,
+  "icon-select": iconSelectPreviewProps,
+  input: inputPreviewProps,
+  kbd: kbdPreviewProps,
+  label: labelPreviewProps,
+  loader: loaderPreviewProps,
+  menu: menuPreviewProps,
+  "menu-bar": menuBarPreviewProps,
+  meter: meterPreviewProps,
+  navbar: navbarPreviewProps,
+  "navigation-menu": navigationMenuPreviewProps,
+  "number-field": numberFieldPreviewProps,
+  pagination: paginationPreviewProps,
+  popover: popoverPreviewProps,
+  "preview-card": previewCardPreviewProps,
+  progress: progressPreviewProps,
+  "progress-circle": progressCirclePreviewProps,
+  radio: radioPreviewProps,
+  "radio-card-group": radioCardGroupPreviewProps,
+  "responsive-drawer": responsiveDrawerPreviewProps,
+  "scroll-area": scrollAreaPreviewProps,
+  "search-field": searchFieldPreviewProps,
+  select: selectPreviewProps,
+  "select-native": selectNativePreviewProps,
+  separator: separatorPreviewProps,
+  sheet: sheetPreviewProps,
+  skeleton: [],
+  slider: sliderPreviewProps,
+  "sortable-list": sortableListPreviewProps,
+  "split-button": splitButtonPreviewProps,
+  stack: stackPreviewProps,
+  "stacked-list": stackedListPreviewProps,
+  subheading: subheadingPreviewProps,
+  switch: switchPreviewProps,
+  "tab-navigation": tabNavigationPreviewProps,
+  table: tablePreviewProps,
+  tabs: tabsPreviewProps,
+  tag: tagPreviewProps,
+  "tag-group": tagGroupPreviewProps,
+  "tag-input": tagInputPreviewProps,
+  text: textPreviewProps,
+  "text-list": textListPreviewProps,
+  textarea: textareaPreviewProps,
+  "theme-toggle": [],
+  toast: toastPreviewProps,
+  toggle: togglePreviewProps,
+  "toggle-group": toggleGroupPreviewProps,
+  toolbar: toolbarPreviewProps,
   tooltip: tooltipPreviewProps,
   sidebar: [],
 };
@@ -590,136 +590,134 @@ export type ComponentId = keyof typeof COMPONENT_REGISTRY;
 
 // Helper functions
 export function getComponentConfig(id: string): ComponentConfig | undefined {
-	return COMPONENT_REGISTRY[id as ComponentId];
+  return COMPONENT_REGISTRY[id as ComponentId];
 }
 
 export function getAllComponents(): ComponentConfig[] {
-	return Object.values(COMPONENT_REGISTRY);
+  return Object.values(COMPONENT_REGISTRY);
 }
 
 export function getComponentsByCategory(category: string): ComponentConfig[] {
-	return Object.values(COMPONENT_REGISTRY).filter(
-		(config) => config.category === category,
-	);
+  return Object.values(COMPONENT_REGISTRY).filter(
+    (config) => config.category === category
+  );
 }
 
-export function getPreviewComponent(
-	id: string,
-): React.ElementType | undefined {
-	const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
-	if (previewComponent) return previewComponent;
-	const config = getComponentConfig(id);
-	let fallback: React.ElementType | undefined;
-	if (config?.component) fallback = config.component;
-	else if (config?.components) {
-		const primary = config.components.find((c) => c.primary);
-		fallback = primary?.component || config.components[0]?.component;
-	}
-	return fallback;
+export function getPreviewComponent(id: string): React.ElementType | undefined {
+  const previewComponent = PREVIEW_REGISTRY[id as ComponentId];
+  if (previewComponent) return previewComponent;
+  const config = getComponentConfig(id);
+  let fallback: React.ElementType | undefined;
+  if (config?.component) fallback = config.component;
+  else if (config?.components) {
+    const primary = config.components.find((c) => c.primary);
+    fallback = primary?.component || config.components[0]?.component;
+  }
+  return fallback;
 }
 
 export function getPreviewProps(id: string): PreviewProps[] {
-	const previewProps =
-		PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
-	if (previewProps) return previewProps;
-	return [];
+  const previewProps =
+    PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
+  if (previewProps) return previewProps;
+  return [];
 }
 
 // Category configuration for web app
 export const CATEGORY_CONFIG = [
-	{
-		key: "display",
-		name: "Display & Content",
-		description: "Components for displaying and organizing content",
-	},
-	{
-		key: "controls",
-		name: "Interactive Controls",
-		description: "User interaction and input components",
-	},
-	{
-		key: "layout",
-		name: "Layout & Structure",
-		description: "Components for page structure and spacing",
-	},
-	{
-		key: "overlay",
-		name: "Overlays & Modals",
-		description: "Components that appear over content",
-	},
-	{
-		key: "visual",
-		name: "Visual Elements",
-		description: "Small visual indicators and decorative elements",
-	},
-	{
-		key: "actions",
-		name: "Actions & Commands",
-		description: "Components that trigger actions or display commands",
-	},
-	{
-		key: "media",
-		name: "Media & Rich Content",
-		description: "Components for rich media and complex content display",
-	},
-	{
-		key: "typography",
-		name: "Typography",
-		description: "Text and typography components",
-	},
-	{
-		key: "navigation",
-		name: "Navigation",
-		description: "Navigation and wayfinding components",
-	},
-	{
-		key: "charts",
-		name: "Charts",
-		description:
-			"Data visualization components for displaying metrics and analytics",
-	},
-	{
-		key: "feedback",
-		name: "Feedback",
-		description:
-			"Status indicators, notifications, and user feedback components",
-	},
-	{
-		key: "forms",
-		name: "Forms",
-		description:
-			"Form layouts and validation components for complex data entry",
-	},
-	{
-		key: "data",
-		name: "Data",
-		description: "Components for displaying and organizing structured data",
-	},
-	{
-		key: "ui",
-		name: "UI",
-		description: "Core user interface components for building applications",
-	},
-	{
-		key: "inputs",
-		name: "Inputs",
-		description:
-			"Form inputs and interactive controls for user data collection",
-	},
-	{
-		key: "utility",
-		name: "Utility",
-		description: "Helper components and tools for enhanced functionality",
-	},
+  {
+    key: "display",
+    name: "Display & Content",
+    description: "Components for displaying and organizing content",
+  },
+  {
+    key: "controls",
+    name: "Interactive Controls",
+    description: "User interaction and input components",
+  },
+  {
+    key: "layout",
+    name: "Layout & Structure",
+    description: "Components for page structure and spacing",
+  },
+  {
+    key: "overlay",
+    name: "Overlays & Modals",
+    description: "Components that appear over content",
+  },
+  {
+    key: "visual",
+    name: "Visual Elements",
+    description: "Small visual indicators and decorative elements",
+  },
+  {
+    key: "actions",
+    name: "Actions & Commands",
+    description: "Components that trigger actions or display commands",
+  },
+  {
+    key: "media",
+    name: "Media & Rich Content",
+    description: "Components for rich media and complex content display",
+  },
+  {
+    key: "typography",
+    name: "Typography",
+    description: "Text and typography components",
+  },
+  {
+    key: "navigation",
+    name: "Navigation",
+    description: "Navigation and wayfinding components",
+  },
+  {
+    key: "charts",
+    name: "Charts",
+    description:
+      "Data visualization components for displaying metrics and analytics",
+  },
+  {
+    key: "feedback",
+    name: "Feedback",
+    description:
+      "Status indicators, notifications, and user feedback components",
+  },
+  {
+    key: "forms",
+    name: "Forms",
+    description:
+      "Form layouts and validation components for complex data entry",
+  },
+  {
+    key: "data",
+    name: "Data",
+    description: "Components for displaying and organizing structured data",
+  },
+  {
+    key: "ui",
+    name: "UI",
+    description: "Core user interface components for building applications",
+  },
+  {
+    key: "inputs",
+    name: "Inputs",
+    description:
+      "Form inputs and interactive controls for user data collection",
+  },
+  {
+    key: "utility",
+    name: "Utility",
+    description: "Helper components and tools for enhanced functionality",
+  },
 ] as const;
 
 export type CategoryKey = (typeof CATEGORY_CONFIG)[number]["key"];
 
 export function getCategoryInfo(categoryKey: string) {
-	const category = CATEGORY_CONFIG.find((c) => c.key === categoryKey);
-	if (!category) return null;
-	return {
-		title: `${category.name} Components`,
-		description: category.description,
-	};
+  const category = CATEGORY_CONFIG.find((c) => c.key === categoryKey);
+  if (!category) return null;
+  return {
+    title: `${category.name} Components`,
+    description: category.description,
+  };
 }

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { previewCardConfig } from "@patternmode/preview-card/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function PreviewCardPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={previewCardConfig.name}
-        description={previewCardConfig.description}
         badge={previewCardConfig.badge}
+        description={previewCardConfig.description}
+        title={previewCardConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={previewCardConfig.category}
         componentId="preview-card"
         componentName={previewCardConfig.name}
-        category={previewCardConfig.category}
       />
 
       <Separator />

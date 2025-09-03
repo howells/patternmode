@@ -2,9 +2,7 @@
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "workspaces": {
     ".": {
-      "entry": [
-        "turbo.json"
-      ],
+      "entry": ["turbo.json"],
       "project": [
         "*.{js,ts,tsx,mjs}",
         "!node_modules/**",
@@ -28,9 +26,7 @@
       ]
     },
     "packages/ui": {
-      "entry": [
-        "tests/**/*.test.{ts,tsx}"
-      ],
+      "entry": ["tests/**/*.test.{ts,tsx}"],
       "project": [
         "src/**/*.{ts,tsx}",
         "tests/**/*.{ts,tsx}",
@@ -43,14 +39,8 @@
       "project": ["*.json"]
     }
   },
-  "ignoreDependencies": [
-    "eslint",
-    "eslint-config-next",
-    "playwright"
-  ],
-  "ignoreBinaries": [
-    "tsx"
-  ],
+  "ignoreDependencies": ["eslint", "eslint-config-next", "playwright"],
+  "ignoreBinaries": ["tsx"],
   "ignore": [
     "**/*.d.ts",
     "**/node_modules/**",

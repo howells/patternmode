@@ -6,9 +6,7 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
+      "@/*": ["./src/*"],
       "@patternmode/*": ["../../packages/*/src"]
     },
     "allowJs": true,
@@ -19,13 +17,6 @@
     ],
     "noEmit": true
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "src/**/*", "tests/**/*"],
+  "exclude": ["node_modules"]
 }

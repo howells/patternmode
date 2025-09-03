@@ -1,11 +1,11 @@
+export type { AvatarOption } from "./avatar-select";
+export { AVATAR_IMAGES, AvatarSelect } from "./avatar-select";
 export { BooleanControl } from "./boolean-control";
 export { ControlFactory } from "./control-factory";
 export { DateControl } from "./date-control";
 export { IconControl } from "./icon-control";
-export { AVATAR_IMAGES, AvatarSelect } from "./avatar-select";
 export { NumberControl } from "./number-control";
 export { PropField } from "./prop-field";
 export { SelectControl } from "./select-control";
 export { TextareaControl, TextControl } from "./text-control";
-export type { AvatarOption } from "./avatar-select";
 export type { PropControlProps } from "./types";

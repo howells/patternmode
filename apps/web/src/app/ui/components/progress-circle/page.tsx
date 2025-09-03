@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function ProgressCirclePage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={progressCircleConfig.name}
-        description={progressCircleConfig.description}
         badge={progressCircleConfig.badge}
+        description={progressCircleConfig.description}
+        title={progressCircleConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={progressCircleConfig.category}
         componentId="progress-circle"
         componentName={progressCircleConfig.name}
-        category={progressCircleConfig.category}
       />
 
       <Separator />

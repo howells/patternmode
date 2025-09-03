@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-
 import { iconConfig } from "@patternmode/icon/config";
 import { Separator } from "@patternmode/separator";
+import type { Metadata } from "next";
 
 import { ComponentExamples } from "@/components/component-examples";
 import { PageHeader } from "@/components/page-header";
@@ -27,16 +26,16 @@ export default function IconPage() {
     <div>
       {/* Header */}
       <PageHeader
-        title={iconConfig.name}
-        description={iconConfig.description}
         badge={iconConfig.badge}
+        description={iconConfig.description}
+        title={iconConfig.name}
       />
 
       {/* Main Content - Use Preview */}
       <Preview
+        category={iconConfig.category}
         componentId="icon"
         componentName={iconConfig.name}
-        category={iconConfig.category}
       />
 
       <Separator />

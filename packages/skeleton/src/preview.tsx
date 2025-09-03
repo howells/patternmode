@@ -6,7 +6,7 @@ import { Skeleton } from "./component";
 // Always render a visible skeleton state for preview consistency
 export function SkeletonPreview(props: SkeletonProps) {
   return (
-    <div className="space-y-4 w-full max-w-[320px]">
+    <div className="w-full max-w-[320px] space-y-4">
       <Skeleton className="h-20 w-full" {...props} />
       <div className="flex items-center gap-4">
         <Skeleton className="h-12 w-12" rounded="full" {...props} />
