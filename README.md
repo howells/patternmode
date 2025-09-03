@@ -62,6 +62,42 @@ export default function SiteHeading({ children }: { children: React.ReactNode })
 - Remove custom `.d.ts` shims that redefine the package API; they can mask the real types.
 - Ensure React 19 in your app to satisfy peer dependencies.
 
+## Local Registry (pretend publish) with Verdaccio
+
+If you want to consume Patternmode as if it were published to npm—while still developing locally—use the built‑in Verdaccio scripts. This gives you versioned installs, npx for the CLI, and a closer “real world” flow.
+
+1) Start a local registry in the Patternmode repo:
+
+```
+pnpm registry:start
+```
+
+2) Tell your app to resolve the @patternmode scope from your local registry. In the consumer app (e.g., `~/Sites/danielhowells`):
+
+```
+echo "@patternmode:registry=http://localhost:4873" >> .npmrc
+```
+
+3) “Publish” Patternmode packages to the local registry (from the Patternmode repo):
+
+```
+pnpm registry:publish
+# Optional: publish the CLI too
+pnpm registry:publish:cli
+```
+
+4) Install and use from your app just like real npm:
+
+```
+pnpm add @patternmode/text @patternmode/grid @patternmode/heading
+npx @patternmode/cli add text grid heading --mode registry
+```
+
+Notes
+- Tailwind sources: our generator prefers `node_modules` when packages are installed from a registry and falls back to the sibling repo when linked.
+- Transpilation: packages ship TypeScript sources during alpha; keep `transpilePackages` in `next.config.ts` until we publish built JS.
+
+
 ## Local Alpha Integration (no npm)
 
 Two supported approaches to use local source without publishing.

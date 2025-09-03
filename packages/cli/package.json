@@ -1,0 +1,27 @@
+{
+  "name": "@patternmode/cli",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Patternmode local-integration helper CLI",
+  "type": "module",
+  "bin": {
+    "patternmode": "bin/patternmode.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/howells/patternmode.git",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "files": [
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
