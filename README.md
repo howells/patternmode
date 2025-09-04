@@ -62,40 +62,61 @@ export default function SiteHeading({ children }: { children: React.ReactNode })
 - Remove custom `.d.ts` shims that redefine the package API; they can mask the real types.
 - Ensure React 19 in your app to satisfy peer dependencies.
 
-## Local Registry (pretend publish) with Verdaccio
+## Local Development via yalc (instant updates)
 
-If you want to consume Patternmode as if it were published to npm—while still developing locally—use the built‑in Verdaccio scripts. This gives you versioned installs, npx for the CLI, and a closer “real world” flow.
+For development across separate repos without publishing to npm, use `yalc`. It pushes your local package files directly into the consuming app’s `node_modules` and updates them on change.
 
-1) Start a local registry in the Patternmode repo:
+### Producer: Patternmode repo
 
-```
-pnpm registry:start
-```
+Scripts provided at the repo root:
 
-2) Tell your app to resolve the @patternmode scope from your local registry. In the consumer app (e.g., `~/Sites/danielhowells`):
+```bash
+# Publish all packages to the local yalc store (one-time per boot)
+pnpm yalc:publish
 
-```
-echo "@patternmode:registry=http://localhost:4873" >> .npmrc
-```
+# Publish a subset (set env PKG as a pnpm filter)
+PKG='@patternmode/{button,utils,styles}' pnpm yalc:publish:filter
 
-3) “Publish” Patternmode packages to the local registry (from the Patternmode repo):
+# Live push on change for all packages
+pnpm yalc:watch
 
-```
-pnpm registry:publish
-# Optional: publish the CLI too
-pnpm registry:publish:cli
+# Live push for a subset
+PKG='@patternmode/{button,utils}' pnpm yalc:watch:filter
 ```
 
-4) Install and use from your app just like real npm:
+Keep the watch command running while you edit files under `packages/*/src`.
 
-```
-pnpm add @patternmode/text @patternmode/grid @patternmode/heading
-npx @patternmode/cli add text grid heading --mode registry
+### Consumer: Your app repo
+
+1) Add Patternmode packages via yalc and install:
+
+```bash
+yalc add @patternmode/button @patternmode/styles
+pnpm install
 ```
 
-Notes
-- Tailwind sources: our generator prefers `node_modules` when packages are installed from a registry and falls back to the sibling repo when linked.
-- Transpilation: packages ship TypeScript sources during alpha; keep `transpilePackages` in `next.config.ts` until we publish built JS.
+2) Next.js (or your bundler) must transpile TS from `@patternmode/*`:
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+const nextConfig: NextConfig = { transpilePackages: ["@patternmode/*"] };
+export default nextConfig;
+```
+
+3) Import normally:
+
+```tsx
+import { Button } from "@patternmode/button";
+import "@patternmode/styles/globals.css";
+```
+
+4) Run your app’s dev server. Edits in Patternmode are pushed instantly by `yalc` and reflected on refresh.
+
+### Maintenance
+- Stop using yalc later with: `yalc remove @patternmode/* && pnpm install`.
+- If things look stale: rerun `yalc add …` then `pnpm install`.
+- No version bumps, no registry logins, no republish cycles required.
 
 
 ## Local Alpha Integration (no npm)

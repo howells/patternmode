@@ -20,9 +20,10 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "registry:start": "verdaccio -c .verdaccio/config.yaml",
-    "registry:publish": "pnpm -r -F '@patternmode/*' publish --registry http://localhost:4873 --no-git-checks",
-    "registry:publish:cli": "pnpm -F @patternmode/cli publish --registry http://localhost:4873 --no-git-checks",
+    "yalc:publish": "pnpm -r -F '@patternmode/*' exec yalc publish --private",
+    "yalc:publish:filter": "pnpm -r -F ${PKG} exec yalc publish --private",
+    "yalc:watch": "pnpm -r -F '@patternmode/*' exec yalc watch --push",
+    "yalc:watch:filter": "pnpm -r -F ${PKG} exec yalc watch --push",
     "validate:packages": "node scripts/validate-packages.mjs",
     "test": "turbo test",
     "test:e2e": "turbo test:e2e",
@@ -42,8 +43,8 @@
     "husky": "^9.1.7",
     "knip": "^5.63.0",
     "turbo": "^2.5.6",
-    "verdaccio": "^6.0.0",
-    "ultracite": "^5.3.2"
+    "ultracite": "^5.3.2",
+    "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
     "es-toolkit": "^1.39.10",

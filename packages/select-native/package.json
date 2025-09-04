@@ -98,7 +98,6 @@
     "typescript": "^5.9.2"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   }
 }
