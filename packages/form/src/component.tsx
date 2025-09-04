@@ -4,7 +4,15 @@ import { Field as BaseField } from "@base-ui-components/react/field";
 import { Form as BaseForm } from "@base-ui-components/react/form";
 import { cx } from "@patternmode/utils/cx";
 import React, { useState } from "react";
-import type { ZodTypeAny } from "zod";
+
+// Minimal structural typing for a Zod-like schema to avoid forcing a zod peer dep
+type ZodishResult =
+  | { success: true; data: Record<string, unknown> }
+  | {
+      success: false;
+      error: { flatten: () => { fieldErrors: Record<string, string[]> } };
+    };
+type Zodish = { safeParse: (data: Record<string, unknown>) => ZodishResult };
 
 /**
  * Props for the Form component.
@@ -14,7 +22,7 @@ type FormProps = {
    * Optional Zod schema for form validation.
    * When provided, enables type-safe validation with automatic error handling.
    */
-  schema?: unknown;
+  schema?: Zodish;
   /**
    * Callback for successful form submission with validated data.
    * Called only when validation passes (if schema provided) or form is valid.
@@ -57,7 +65,7 @@ const Form = ({
 
     // Validate with Zod if schema provided
     if (schema) {
-      const result = (schema as ZodTypeAny).safeParse(data);
+      const result = schema.safeParse(data);
 
       if (!result.success) {
         setErrors(result.error.flatten().fieldErrors);

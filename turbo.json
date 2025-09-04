@@ -15,9 +15,12 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env.local",
-        "src/styles/**/*.css",
-        "packages/ui/src/styles/**/*.css"
+        "src/styles/**/*.css"
       ]
+    },
+    "yalc": {
+      "cache": false,
+      "persistent": true
     },
     "lint": {
       "dependsOn": ["^lint"]

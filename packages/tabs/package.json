@@ -41,9 +41,9 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
-    "@patternmode/utils": "workspace:*",
-    "@patternmode/config": "workspace:*"
+    "@base-ui-components/react": "1.0.0-beta.3",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/utils": "workspace:*"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

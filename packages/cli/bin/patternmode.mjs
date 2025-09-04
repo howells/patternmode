@@ -153,31 +153,61 @@ async function collectWorkspaceDeps(patternmodeRoot, startFolders) {
   return [...result];
 }
 
-/** Collect non-Patternmode runtime deps (e.g., lucide-react) with versions. */
-async function collectExternalDeps(patternmodeRoot, folders) {
-  const versions = new Map();
+/** Check and report missing peer dependencies expected by selected packages. */
+async function reportMissingPeers(patternmodeRoot, appPkg, folders) {
+  const requiredPeers = new Map();
   for (const folder of folders) {
     const pkgPath = path.join(patternmodeRoot, 'packages', folder, 'package.json');
     const pkg = await readJson(pkgPath).catch(() => null);
     if (!pkg) continue;
-    const ext = Object.assign({}, pkg.dependencies || {}, pkg.peerDependencies || {});
-    for (const [name, ver] of Object.entries(ext)) {
+    const peers = pkg.peerDependencies || {};
+    const peerMeta = pkg.peerDependenciesMeta || {};
+    for (const [name, range] of Object.entries(peers)) {
+      if (peerMeta[name]?.optional) continue;
       if (!name.startsWith('@patternmode/')) {
-        versions.set(name, ver);
+        requiredPeers.set(name, range);
       }
     }
   }
-  return versions;
+  const have = new Set(Object.keys(appPkg.dependencies || {}).concat(Object.keys(appPkg.devDependencies || {})));
+  const missing = [];
+  for (const [name, range] of requiredPeers) {
+    if (!have.has(name)) missing.push(`${name}@"${range}"`);
+  }
+  if (missing.length) {
+    stdout(`\n[patternmode] Missing peer deps in your app: ${missing.join(', ')}\n`);
+    stdout(`[patternmode] Install them if you haven't already (e.g., pnpm add ${missing.join(' ')})\n`);
+  }
 }
 
 async function run() {
   const argv = process.argv.slice(2);
   const [cmd, ...rest] = argv;
   if (!cmd || cmd === '--help' || cmd === '-h') {
-    stdout(`\nPatternmode CLI\n\nUsage:\n  patternmode add <components...> [--app <path>] [--pm <path>]\n\nExamples:\n  patternmode add text grid heading\n  patternmode add card carousel --app ../my-app\n\nFlags:\n  --app   Path to consumer app (default: cwd)\n  --pm    Path to Patternmode repo (default: sibling ../patternmode)\n\n`);
+    stdout(`\nPatternmode CLI\n\nUsage:\n  patternmode add <components...> [--app <path>] [--pm <path>]\n  patternmode install                [--app <path>] [--pm <path>]\n  patternmode configure:transpile    [--app <path>]\n\nExamples:\n  patternmode add text grid heading\n  patternmode add card carousel --app ../my-app\n  patternmode install --app ../my-app\n  patternmode configure:transpile --app ../my-app\n\nFlags:\n  --app   Path to consumer app (default: cwd)\n  --pm    Path to Patternmode repo (default: sibling ../patternmode)\n\n`);
     process.exit(0);
   }
-  if (cmd !== 'add') {
+  if (cmd === 'configure:transpile') {
+    let appRoot = process.cwd();
+    for (let i = 0; i < rest.length; i++) {
+      const t = rest[i];
+      if (t === '--app') { appRoot = path.resolve(rest[++i]); }
+    }
+    const scopeDir = path.join(appRoot, 'node_modules', '@patternmode');
+    const names = [];
+    try {
+      const entries = await fs.readdir(scopeDir, { withFileTypes: true });
+      for (const e of entries) {
+        if (!e.isDirectory()) continue;
+        const pkgPath = path.join(scopeDir, e.name, 'package.json');
+        try { await fs.stat(pkgPath); names.push(`@patternmode/${e.name}`); } catch {}
+      }
+    } catch {}
+    await ensureTranspilePackages(appRoot, names);
+    stdout(`Configured transpilePackages with ${names.length} @patternmode packages.\n`);
+    process.exit(0);
+  }
+  if (cmd !== 'add' && cmd !== 'install') {
     stderr(`Unknown command: ${cmd}\n`);
     process.exit(1);
   }
@@ -192,17 +222,23 @@ async function run() {
     if (t === '--mode') { mode = String(rest[++i] || 'link'); continue; }
     tokens.push(t);
   }
-  if (!tokens.length) {
+  if (cmd === 'add' && !tokens.length) {
     stderr('No components specified.\n');
     process.exit(1);
   }
 
   const pmRoot = await resolvePatternmodeDir(appRoot);
   const packagesRoot = path.join(pmRoot, 'packages');
-  const requestedFolders = tokens.map(toPackageFolder).filter(Boolean);
-  if (!requestedFolders.length) {
-    stderr('No valid components resolved.\n');
-    process.exit(1);
+  let requestedFolders = [];
+  if (cmd === 'install') {
+    const entries = await fs.readdir(packagesRoot, { withFileTypes: true });
+    requestedFolders = entries.filter(e => e.isDirectory()).map(e => e.name);
+  } else {
+    requestedFolders = tokens.map(toPackageFolder).filter(Boolean);
+    if (!requestedFolders.length) {
+      stderr('No valid components resolved.\n');
+      process.exit(1);
+    }
   }
 
   const allFolders = await collectWorkspaceDeps(pmRoot, requestedFolders);
@@ -222,16 +258,12 @@ async function run() {
     }
   }
 
-  const ext = await collectExternalDeps(pmRoot, allFolders);
-  for (const [name, ver] of ext) {
-    appPkg.dependencies ||= {};
-    if (!appPkg.dependencies[name]) appPkg.dependencies[name] = ver;
-  }
   await writeJson(appPkgPath, appPkg);
 
   const names = allFolders.map((f) => `@patternmode/${f}`);
   await ensureTranspilePackages(appRoot, names);
   await ensureTailwindSources(appRoot, packagesRoot, allFolders);
+  await reportMissingPeers(pmRoot, appPkg, allFolders);
 
   stdout(`\nAdded packages: ${names.join(', ')}\n`);
   stdout('Updated next.config.ts transpilePackages and Tailwind @source.\n');

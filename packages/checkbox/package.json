@@ -60,7 +60,7 @@
     "@patternmode/tsconfig": "workspace:*"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
+    "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/config": "workspace:*",
     "@patternmode/label": "workspace:*",
     "@patternmode/utils": "workspace:*",

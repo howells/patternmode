@@ -23,7 +23,7 @@
 
 **Package Structure:**
 ```json
-// packages/ui/package.json - JIT Package
+// packages/<component>/package.json - JIT Package (example)
 {
   "exports": {
     "./components/*": {
@@ -49,7 +49,7 @@
 import { Button } from "@patternmode/button";
 
 // ❌ INCORRECT - Uses TypeScript paths (causes CI failures)
-import { Button } from "../../packages/ui/src/components/button";
+import { Button } from "../../packages/button/src";
 ```
 
 ## Tailwind CSS 4 (CRITICAL)
@@ -272,7 +272,7 @@ const variants = tv({
 
 ## Component Registry Purpose
 
-**`@packages/ui/src/components/registry.ts` serves as the central component system hub:**
+**`packages/<component>/src/*` are consumed directly during development:**
 
 - **Component Discovery**: Centralizes all component configs and preview components for the documentation site
 - **Static Lookups**: Enables fast component/preview retrieval without filesystem scanning

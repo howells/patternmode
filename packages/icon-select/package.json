@@ -65,7 +65,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
+    "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/combobox": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/constants": "workspace:*",

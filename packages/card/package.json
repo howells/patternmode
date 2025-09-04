@@ -41,14 +41,14 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-beta.2",
+    "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/config": "workspace:*",
+    "@patternmode/heading-element": "workspace:*",
     "@patternmode/subheading": "workspace:*",
     "@patternmode/text": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "lucide-react": "^0.542.0",
-    "tailwind-variants": "^3.1.0",
-    "@patternmode/heading-element": "workspace:*"
+    "tailwind-variants": "^3.1.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

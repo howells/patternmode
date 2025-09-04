@@ -25,15 +25,7 @@
         "postcss.config.mjs"
       ]
     },
-    "packages/ui": {
-      "entry": ["tests/**/*.test.{ts,tsx}"],
-      "project": [
-        "src/**/*.{ts,tsx}",
-        "tests/**/*.{ts,tsx}",
-        "vitest.config.ts",
-        "!playwright/**"
-      ]
-    },
+    
     "packages/tsconfig": {
       "entry": ["base.json"],
       "project": ["*.json"]
