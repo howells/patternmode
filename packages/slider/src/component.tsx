@@ -2,7 +2,7 @@
 
 import { Slider as BaseSlider } from "@base-ui-components/react/slider";
 import { cx } from "@patternmode/utils/cx";
-import type * as React from "react";
+import * as React from "react";
 import type { SliderProps } from "./types";
 import { sliderVariants } from "./variants";
 
@@ -43,6 +43,13 @@ const Slider = ({
           number,
         ]);
 
+  // Controlled vs uncontrolled internal state (Base UI expects arrays)
+  const isControlled = value !== undefined;
+  const [internal, setInternal] = React.useState<number[]>(
+    toArray(defaultValue ?? 0)
+  );
+  const currentArray = isControlled ? toArray(value!) : internal;
+
   // Determine current values for rendering thumbs
   const renderValue = value ?? defaultValue ?? [0];
   const valueArray = Array.isArray(renderValue) ? renderValue : [renderValue];
@@ -57,10 +64,57 @@ const Slider = ({
   };
 
   // Pass controlled or uncontrolled props appropriately (Base UI expects arrays)
-  const sliderProps =
-    value !== undefined
-      ? ({ ...props, value: toArray(value) } as const)
-      : ({ ...props, defaultValue: toArray(defaultValue ?? 0) } as const);
+  const sliderProps = { ...props, value: currentArray } as const;
+
+  const updateValue = (next: number[]) => {
+    const sorted = next.length === 2 ? [...next].sort((a, b) => a - b) : next;
+    if (!isControlled) setInternal(sorted);
+    onValueChange?.(toUnion(sorted));
+  };
+
+  const commitValue = (vals: number[]) => {
+    const sorted = vals.length === 2 ? [...vals].sort((a, b) => a - b) : vals;
+    onValueCommit?.(toUnion(sorted));
+  };
+
+  // Click-on-track support: jump nearest thumb to clicked position
+  const hitRef = React.useRef<HTMLDivElement>(null);
+  const handlePointerDown: React.PointerEventHandler<HTMLDivElement> = (e) => {
+    if ((props as { disabled?: boolean }).disabled) return;
+    const el = hitRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const horizontal = props.orientation !== "vertical";
+    const min = (props as { min?: number }).min ?? 0;
+    const max = (props as { max?: number }).max ?? 100;
+    const step = (props as { step?: number }).step ?? 1;
+
+    let ratio = 0;
+    if (horizontal) ratio = (e.clientX - rect.left) / rect.width;
+    else ratio = 1 - (e.clientY - rect.top) / rect.height;
+    ratio = Math.min(1, Math.max(0, ratio));
+    const raw = min + ratio * (max - min);
+    const snapped = Math.min(
+      max,
+      Math.max(min, min + Math.round((raw - min) / step) * step)
+    );
+
+    const curr = currentArray;
+    const next =
+      curr.length === 2
+        ? (() => {
+            const d0 = Math.abs(curr[0] - snapped);
+            const d1 = Math.abs(curr[1] - snapped);
+            const idx = d0 <= d1 ? 0 : 1;
+            const arr = [...curr];
+            arr[idx] = snapped;
+            return arr;
+          })()
+        : [snapped];
+
+    updateValue(next);
+    commitValue(next);
+  };
 
   if (props.orientation === "vertical") {
     return (
@@ -73,7 +127,11 @@ const Slider = ({
           onValueChange={(vals: number[]) => onValueChange?.(toUnion(vals))}
           onValueCommitted={(vals: number[]) => onValueCommit?.(toUnion(vals))}
         >
-          <BaseSlider.Control className={control()}>
+          <BaseSlider.Control
+            className={control()}
+            onPointerDown={handlePointerDown}
+            ref={hitRef}
+          >
             <BaseSlider.Track className={track()}>
               <BaseSlider.Indicator className={indicator()} />
               {valueArray.map((val, index) => (
@@ -118,10 +176,14 @@ const Slider = ({
         data-testid="slider"
         ref={forwardedRef as React.RefObject<HTMLDivElement>}
         {...sliderProps}
-        onValueChange={(vals: number[]) => onValueChange?.(toUnion(vals))}
-        onValueCommitted={(vals: number[]) => onValueCommit?.(toUnion(vals))}
+        onValueChange={(vals: number[]) => updateValue(vals)}
+        onValueCommitted={(vals: number[]) => commitValue(vals)}
       >
-        <BaseSlider.Control className={control()}>
+        <BaseSlider.Control
+          className={control()}
+          onPointerDown={handlePointerDown}
+          ref={hitRef}
+        >
           <BaseSlider.Track className={track()}>
             <BaseSlider.Indicator className={indicator()} />
             {valueArray.map((val, index) => (

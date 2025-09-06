@@ -16,8 +16,8 @@ export const sliderVariants = tv({
       // base
       "relative flex h-full w-full items-center",
       // orientation
-      "data-[orientation='horizontal']:w-full",
-      "data-[orientation='vertical']:h-full data-[orientation='vertical']:flex-col",
+      "data-[orientation='horizontal']:w-full data-[orientation='horizontal']:py-3",
+      "data-[orientation='vertical']:h-full data-[orientation='vertical']:flex-col data-[orientation='vertical']:px-3",
     ],
     track: [
       // base: very thin neutral track
