@@ -17,6 +17,8 @@ const Slider = ({
   valueFormatter = (v) => v.toString(),
   value,
   defaultValue,
+  onValueChange,
+  onValueCommit,
   ...props
 }: SliderProps & {
   ref?: React.RefObject<React.ElementRef<typeof BaseSlider.Root> | null>;
@@ -29,6 +31,17 @@ const Slider = ({
     thumb,
     value: _valueClass,
   } = sliderVariants({ accent: (props as { accent?: boolean }).accent });
+
+  // Helpers to normalize value
+  const toArray = (v: number | [number, number]) =>
+    (Array.isArray(v) ? v : [v]) as number[];
+  const toUnion = (arr: number[]): number | [number, number] =>
+    arr.length === 1
+      ? arr[0]
+      : ([Math.min(arr[0], arr[1]), Math.max(arr[0], arr[1])] as [
+          number,
+          number,
+        ]);
 
   // Determine current values for rendering thumbs
   const renderValue = value ?? defaultValue ?? [0];
@@ -43,11 +56,11 @@ const Slider = ({
     return `Slider thumb ${index + 1}`;
   };
 
-  // Pass controlled or uncontrolled props appropriately
+  // Pass controlled or uncontrolled props appropriately (Base UI expects arrays)
   const sliderProps =
     value !== undefined
-      ? ({ ...props, value } as const)
-      : ({ ...props, defaultValue: defaultValue ?? [0] } as const);
+      ? ({ ...props, value: toArray(value) } as const)
+      : ({ ...props, defaultValue: toArray(defaultValue ?? 0) } as const);
 
   if (props.orientation === "vertical") {
     return (
@@ -57,6 +70,8 @@ const Slider = ({
           data-testid="slider"
           ref={forwardedRef as React.RefObject<HTMLDivElement>}
           {...sliderProps}
+          onValueChange={(vals: number[]) => onValueChange?.(toUnion(vals))}
+          onValueCommitted={(vals: number[]) => onValueCommit?.(toUnion(vals))}
         >
           <BaseSlider.Control className={control()}>
             <BaseSlider.Track className={track()}>
@@ -103,6 +118,8 @@ const Slider = ({
         data-testid="slider"
         ref={forwardedRef as React.RefObject<HTMLDivElement>}
         {...sliderProps}
+        onValueChange={(vals: number[]) => onValueChange?.(toUnion(vals))}
+        onValueCommitted={(vals: number[]) => onValueCommit?.(toUnion(vals))}
       >
         <BaseSlider.Control className={control()}>
           <BaseSlider.Track className={track()}>

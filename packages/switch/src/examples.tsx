@@ -5,9 +5,7 @@ import { Switch } from "./component";
 
 export const SwitchExample = () => {
   const [on, setOn] = React.useState(false);
-  return (
-    <Switch checked={on} onCheckedChange={(v: boolean) => setOn(Boolean(v))} />
-  );
+  return <Switch checked={on} onChange={setOn} />;
 };
 
 export const LabeledSwitchExample = () => <Switch label="Enable feature" />;

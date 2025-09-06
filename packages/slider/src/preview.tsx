@@ -6,7 +6,7 @@ import type { SliderProps } from "./types";
 export function SliderPreview(props: SliderProps) {
   return (
     <div className="w-full space-y-4">
-      <Slider defaultValue={[50]} max={100} min={0} step={1} {...props} />
+      <Slider defaultValue={50} max={100} min={0} step={1} {...props} />
     </div>
   );
 }
@@ -15,10 +15,9 @@ export function SliderPreview(props: SliderProps) {
 export const sliderPreviewProps = [
   {
     name: "defaultValue",
-    type: "number[]",
-    description:
-      "Default value(s) of the slider. Pass a single-element array for single value, or [min, max] for a range.",
-    defaultValue: [50],
+    type: "number | [number, number]",
+    description: "Default value (number) or range as [min, max].",
+    defaultValue: 50,
   },
   {
     name: "min",

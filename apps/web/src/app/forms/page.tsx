@@ -640,7 +640,7 @@ export default function FormsPage() {
                               }
                               showValue={true}
                               step={1}
-                              value={[qualityData.tensileStrength || 5]}
+                              value={qualityData.tensileStrength || 5}
                             />
                           );
                         }}
@@ -680,7 +680,7 @@ export default function FormsPage() {
                               }
                               showValue={true}
                               step={1}
-                              value={[qualityData.corrosionResistance || 5]}
+                              value={qualityData.corrosionResistance || 5}
                             />
                           );
                         }}
@@ -718,7 +718,7 @@ export default function FormsPage() {
                               }
                               showValue={true}
                               step={1}
-                              value={[qualityData.bendability || 5]}
+                              value={qualityData.bendability || 5}
                             />
                           );
                         }}

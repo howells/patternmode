@@ -4,6 +4,8 @@ import type { VariantProps } from "tailwind-variants";
 
 import type { sliderVariants } from "./variants";
 
+export type SliderValue = number | [number, number];
+
 export type SliderProps = {
   /**
    * Aria label for the slider thumb for accessibility.
@@ -21,5 +23,31 @@ export type SliderProps = {
    * When using a range (two thumbs), this function is applied to each value.
    */
   valueFormatter?: (value: number) => string;
-} & Omit<React.ComponentPropsWithoutRef<typeof BaseSlider.Root>, "children"> &
+
+  /**
+   * Controlled value. Pass a single number, or a tuple [min, max] for ranges.
+   */
+  value?: SliderValue;
+  /**
+   * Uncontrolled initial value. Single number or [min, max] for ranges.
+   */
+  defaultValue?: SliderValue;
+  /**
+   * Fires continuously while the value changes (dragging/keyboard).
+   */
+  onValueChange?: (value: SliderValue) => void;
+  /**
+   * Fires when interaction ends (pointer up/commit).
+   */
+  onValueCommit?: (value: SliderValue) => void;
+
+  /** Standard constraints and state. */
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+} & Omit<
+  React.ComponentPropsWithoutRef<typeof BaseSlider.Root>,
+  "children" | "value" | "defaultValue" | "onValueChange" | "onValueCommit"
+> &
   VariantProps<typeof sliderVariants>;

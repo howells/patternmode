@@ -12,11 +12,7 @@ export function SwitchPreview({
   const [on, setOn] = React.useState(checked);
   return (
     <div className="p-6">
-      <Switch
-        checked={on}
-        disabled={disabled}
-        onCheckedChange={(v: boolean) => setOn(Boolean(v))}
-      />
+      <Switch checked={on} disabled={disabled} onChange={setOn} />
     </div>
   );
 }
