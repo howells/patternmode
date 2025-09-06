@@ -79,10 +79,19 @@ const Slider = ({
 
   // Click-on-track support: jump nearest thumb to clicked position
   const hitRef = React.useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = React.useState(false);
   const handlePointerDown: React.PointerEventHandler<HTMLDivElement> = (e) => {
     if ((props as { disabled?: boolean }).disabled) return;
+    if (
+      e.target instanceof Element &&
+      e.target.closest('[data-thumb="true"]')
+    ) {
+      // Let thumb drags be handled natively by the slider
+      return;
+    }
     const el = hitRef.current;
     if (!el) return;
+    setDragging(true);
     const rect = el.getBoundingClientRect();
     const horizontal = props.orientation !== "vertical";
     const min = (props as { min?: number }).min ?? 0;
@@ -129,16 +138,27 @@ const Slider = ({
         >
           <BaseSlider.Control
             className={control()}
+            onPointerCancel={() => setDragging(false)}
             onPointerDown={handlePointerDown}
+            onPointerUp={() => setDragging(false)}
             ref={hitRef}
           >
             <BaseSlider.Track className={track()}>
               <BaseSlider.Indicator className={indicator()} />
               {valueArray.map((val, index) => (
                 <BaseSlider.Thumb
-                  className={thumb()}
+                  className={cx(
+                    thumb(),
+                    dragging
+                      ? "scale-105 transform duration-0"
+                      : "transform transition-transform duration-200 ease-out"
+                  )}
+                  data-thumb="true"
                   getAriaLabel={() => getThumbAriaLabel(index)}
                   key={`thumb-${index}-${String(val)}`}
+                  onPointerCancel={() => setDragging(false)}
+                  onPointerDown={() => setDragging(true)}
+                  onPointerUp={() => setDragging(false)}
                 />
               ))}
             </BaseSlider.Track>
@@ -181,16 +201,27 @@ const Slider = ({
       >
         <BaseSlider.Control
           className={control()}
+          onPointerCancel={() => setDragging(false)}
           onPointerDown={handlePointerDown}
+          onPointerUp={() => setDragging(false)}
           ref={hitRef}
         >
           <BaseSlider.Track className={track()}>
             <BaseSlider.Indicator className={indicator()} />
             {valueArray.map((val, index) => (
               <BaseSlider.Thumb
-                className={thumb()}
+                className={cx(
+                  thumb(),
+                  dragging
+                    ? "scale-105 transform duration-0"
+                    : "transform transition-transform duration-200 ease-out"
+                )}
+                data-thumb="true"
                 getAriaLabel={() => getThumbAriaLabel(index)}
                 key={`thumb-${index}-${String(val)}`}
+                onPointerCancel={() => setDragging(false)}
+                onPointerDown={() => setDragging(true)}
+                onPointerUp={() => setDragging(false)}
               />
             ))}
           </BaseSlider.Track>
