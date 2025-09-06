@@ -2,7 +2,7 @@
 
 import { cx } from "@patternmode/utils/cx";
 import { useHover } from "@react-aria/interactions";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { useWindowSize } from "usehooks-ts";
 import type React from "react";
 import { useEffect, useRef } from "react";
 import { SidebarOverlay } from "./sidebar.overlay";

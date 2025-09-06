@@ -25,7 +25,7 @@ import {
 } from "@patternmode/sheet";
 
 import { MEDIA_QUERIES } from "@patternmode/utils/breakpoints";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "usehooks-ts";
 import React from "react";
 
 type ResponsiveDrawerProps = {
@@ -47,6 +47,7 @@ type ResponsiveDrawerProps = {
    */
   onOpenChange?: (open: boolean) => void;
 };
+
 
 type ResponsiveDrawerTriggerProps = {
   /**
@@ -294,9 +295,10 @@ const ResponsiveDrawerTitle: React.FC<ResponsiveDrawerTitleProps> = ({
 /**
  * Responsive drawer description providing additional context.
  */
-const ResponsiveDrawerDescription: React.FC<
-  ResponsiveDrawerDescriptionProps
-> = ({ children, ...props }) => {
+const ResponsiveDrawerDescription: React.FC<ResponsiveDrawerDescriptionProps> = ({
+  children,
+  ...props
+}) => {
   const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   if (isMobile) {

@@ -39,37 +39,35 @@ const Switch = ({
       className={cx(root(), className)}
       data-testid="switch"
       disabled={disabled}
-      id={id}
+      // do not put id on the button; reserve it for the internal input
       ref={forwardedRef}
       role="switch"
       {...(isControlled ? { checked: current } : { defaultChecked: internal })}
       onCheckedChange={(next: boolean) => setNext(Boolean(next))}
       {...rest}
     >
+      {/* Full-area, invisible checkbox to participate in native label activation.
+          - Captures clicks when wrapped by a <label> or when clicking anywhere on the control
+          - Stays out of the tab order to keep a single focus target (the switch button)
+          - Synced with controlled/uncontrolled state */}
+      <input
+        aria-hidden="true"
+        checked={current}
+        className="absolute inset-0 cursor-pointer opacity-0"
+        disabled={disabled}
+        id={id}
+        name={name}
+        onChange={(e) => setNext(e.target.checked)}
+        tabIndex={-1}
+        type="checkbox"
+      />
       <BaseSwitch.Thumb className={cx(thumb())} />
     </BaseSwitch.Root>
   );
 
-  // Render a hidden input for htmlFor label support and form integration
-  // Clicking <label htmlFor={id}> toggles the input, which we mirror to the switch
-  const hiddenInput = id ? (
-    <input
-      aria-hidden="true"
-      checked={current}
-      className="sr-only"
-      disabled={disabled}
-      id={id}
-      name={name}
-      onChange={(e) => setNext(e.target.checked)}
-      tabIndex={-1}
-      type="checkbox"
-    />
-  ) : null;
-
   if (label) {
     return (
       <div className="flex items-center space-x-2">
-        {hiddenInput}
         {switchNode}
         <span className="text-sm text-zinc-900 dark:text-zinc-100">
           {label}
@@ -78,12 +76,7 @@ const Switch = ({
     );
   }
 
-  return (
-    <>
-      {hiddenInput}
-      {switchNode}
-    </>
-  );
+  return switchNode;
 };
 
 Switch.displayName = "Switch";
