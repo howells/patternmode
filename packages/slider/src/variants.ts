@@ -20,27 +20,27 @@ export const sliderVariants = tv({
       "data-[orientation='vertical']:h-full data-[orientation='vertical']:flex-col",
     ],
     track: [
-      // base
-      "relative grow rounded-full bg-zinc-200 dark:bg-zinc-800",
+      // base: very thin neutral track
+      "relative grow rounded-full bg-zinc-300 dark:bg-zinc-700",
       // orientation
-      "data-[orientation='horizontal']:h-1.5 data-[orientation='horizontal']:w-full",
-      "data-[orientation='vertical']:h-full data-[orientation='vertical']:w-1.5",
+      "data-[orientation='horizontal']:h-px data-[orientation='horizontal']:w-full",
+      "data-[orientation='vertical']:h-full data-[orientation='vertical']:w-px",
     ],
     indicator: [
-      // base
-      "absolute rounded-full bg-blue-500 dark:bg-blue-500",
+      // base: will be colored by variant
+      "absolute rounded-full",
       // orientation
       "data-[orientation='horizontal']:h-full",
       "data-[orientation='vertical']:w-full",
-      // disabled
+      // disabled override stays neutral
       "data-[disabled]:bg-zinc-300 dark:data-[disabled]:bg-zinc-700",
     ],
     thumb: [
-      // base
-      "block size-4 shrink-0 rounded-full border",
-      // border color
-      "border-zinc-400 dark:border-zinc-500",
-      // background color
+      // base: circular handle with blue outline
+      "block size-5 shrink-0 rounded-full border",
+      // border color → blue ring
+      "border-blue-600 dark:border-blue-500",
+      // background color (white center)
       "bg-white dark:bg-white",
       // disabled
       "data-[disabled]:pointer-events-none data-[disabled]:bg-zinc-200 dark:data-[disabled]:border-zinc-800 dark:data-[disabled]:bg-zinc-600",
@@ -54,5 +54,19 @@ export const sliderVariants = tv({
       // spacing
       "mb-2",
     ],
+  },
+  variants: {
+    // Controls whether the selected range fill uses accent color or stays neutral
+    accent: {
+      true: {
+        indicator: "bg-blue-600 dark:bg-blue-500",
+      },
+      false: {
+        indicator: "bg-zinc-300 dark:bg-zinc-700",
+      },
+    },
+  },
+  defaultVariants: {
+    accent: true,
   },
 });

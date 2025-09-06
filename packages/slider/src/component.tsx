@@ -28,11 +28,20 @@ const Slider = ({
     indicator,
     thumb,
     value: _valueClass,
-  } = sliderVariants();
+  } = sliderVariants({ accent: (props as { accent?: boolean }).accent });
 
   // Determine current values for rendering thumbs
   const renderValue = value ?? defaultValue ?? [0];
   const valueArray = Array.isArray(renderValue) ? renderValue : [renderValue];
+
+  // Accessible default labels for a 2-thumb range when a custom label isn't provided
+  const getThumbAriaLabel = (index: number) => {
+    if (ariaLabelThumb) return ariaLabelThumb;
+    if (valueArray.length === 2) {
+      return index === 0 ? "Minimum value" : "Maximum value";
+    }
+    return `Slider thumb ${index + 1}`;
+  };
 
   // Pass controlled or uncontrolled props appropriately
   const sliderProps =
@@ -55,10 +64,8 @@ const Slider = ({
               {valueArray.map((val, index) => (
                 <BaseSlider.Thumb
                   className={thumb()}
-                  getAriaLabel={() =>
-                    ariaLabelThumb || `Slider thumb ${index + 1}`
-                  }
-                  key={`thumb-${String(val)}`}
+                  getAriaLabel={() => getThumbAriaLabel(index)}
+                  key={`thumb-${index}-${String(val)}`}
                 />
               ))}
             </BaseSlider.Track>
@@ -73,8 +80,8 @@ const Slider = ({
                     </div>
                   ) : (
                     <div className="flex flex-col items-center gap-1">
-                      {values.map((val) => (
-                        <span key={`value-${String(val)}`}>
+                      {values.map((val, i) => (
+                        <span key={`value-${i}-${String(val)}`}>
                           {valueFormatter(val)}
                         </span>
                       ))}
@@ -103,10 +110,8 @@ const Slider = ({
             {valueArray.map((val, index) => (
               <BaseSlider.Thumb
                 className={thumb()}
-                getAriaLabel={() =>
-                  ariaLabelThumb || `Slider thumb ${index + 1}`
-                }
-                key={`thumb-${String(val)}`}
+                getAriaLabel={() => getThumbAriaLabel(index)}
+                key={`thumb-${index}-${String(val)}`}
               />
             ))}
           </BaseSlider.Track>
@@ -121,8 +126,8 @@ const Slider = ({
                   </div>
                 ) : (
                   <div className="flex w-full justify-between">
-                    {values.map((val) => (
-                      <span key={`value-${String(val)}`}>
+                    {values.map((val, i) => (
+                      <span key={`value-${i}-${String(val)}`}>
                         {valueFormatter(val)}
                       </span>
                     ))}

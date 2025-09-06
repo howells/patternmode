@@ -2,7 +2,7 @@
   "extends": "../tsconfig/react-library.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "react-jsx"
+    "paths": { "@patternmode/*": ["../*/src"] }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

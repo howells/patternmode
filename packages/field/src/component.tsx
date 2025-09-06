@@ -74,10 +74,7 @@ const FieldControl = ({ className, render, ...props }: FieldControlProps) => (
     render={
       render ||
       (({ ref, ...controlProps }) => (
-        <Input
-          {...controlProps}
-          ref={ref as React.RefObject<HTMLInputElement>}
-        />
+        <Input {...controlProps} externalRef={ref} />
       ))
     }
     {...props}

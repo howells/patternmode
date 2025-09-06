@@ -18,6 +18,7 @@ export type SliderProps = {
   /**
    * Function to format the displayed value when showValue is true.
    * Allows custom formatting like currency, percentages, or units.
+   * When using a range (two thumbs), this function is applied to each value.
    */
   valueFormatter?: (value: number) => string;
 } & Omit<React.ComponentPropsWithoutRef<typeof BaseSlider.Root>, "children"> &

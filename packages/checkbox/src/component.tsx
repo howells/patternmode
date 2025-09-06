@@ -8,6 +8,7 @@ const Checkbox = ({
   ref: forwardedRef,
   className,
   checked,
+  onCheckedChange,
   ...props
 }: CheckboxProps & {
   ref?: React.RefObject<React.ElementRef<typeof BaseCheckbox.Root> | null>;
@@ -21,10 +22,14 @@ const Checkbox = ({
     checked: checked === "indeterminate" ? false : checked,
     indeterminate: checked === "indeterminate",
   };
+  const handleChange = (next: boolean) => {
+    onCheckedChange?.(next);
+  };
   return (
     <BaseCheckbox.Root
       ref={forwardedRef}
       {...baseUIProps}
+      onCheckedChange={handleChange}
       className={cx(checkboxVariants(), className)}
       data-testid="checkbox"
     >

@@ -15,9 +15,10 @@ export function SliderPreview(props: SliderProps) {
 export const sliderPreviewProps = [
   {
     name: "defaultValue",
-    type: "number",
-    description: "Default value of the slider (single value).",
-    defaultValue: 50,
+    type: "number[]",
+    description:
+      "Default value(s) of the slider. Pass a single-element array for single value, or [min, max] for a range.",
+    defaultValue: [50],
   },
   {
     name: "min",
@@ -61,5 +62,12 @@ export const sliderPreviewProps = [
     type: "string",
     description: "Aria label for the slider thumb for accessibility.",
     defaultValue: "Volume control",
+  },
+  {
+    name: "accent",
+    type: "boolean",
+    description:
+      "Use accent color for the selected range fill (blue) instead of neutral.",
+    defaultValue: true,
   },
 ];

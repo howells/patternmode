@@ -1,6 +1,5 @@
 "use client";
 
-import type { BreadcrumbsProps } from "./component";
 import {
   BreadcrumbItem,
   BreadcrumbLink,
@@ -9,6 +8,7 @@ import {
   BreadcrumbSeparator,
   Breadcrumbs,
 } from "./component";
+import type { BreadcrumbsProps } from "./types";
 
 export function BreadcrumbsPreview(props: BreadcrumbsProps) {
   return (

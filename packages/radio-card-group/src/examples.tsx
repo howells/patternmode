@@ -181,10 +181,7 @@ export const DisabledExample = () => {
   const [value, setValue] = useState("available1");
 
   return (
-    <RadioCardGroup
-      onValueChange={(v) => setValue(v as string)}
-      value={value}
-    >
+    <RadioCardGroup onValueChange={(v) => setValue(v as string)} value={value}>
       <RadioCardItem value="available1">
         <div className="flex items-start justify-between">
           <div className="flex-1">

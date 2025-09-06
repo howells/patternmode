@@ -79,6 +79,7 @@
     "tailwind-variants": "^3.1.0"
   },
   "devDependencies": {
+    "@patternmode/card": "workspace:*",
     "@patternmode/tsconfig": "workspace:*",
     "@playwright/experimental-ct-react": "^1.55.0",
     "@playwright/test": "^1.55.0",

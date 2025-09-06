@@ -1,11 +1,9 @@
 {
-  "extends": "../tsconfig/base.json",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
+  "extends": "../tsconfig/react-library.json",
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx",
-    "incremental": true,
-    "baseUrl": "."
-  }
+    "baseUrl": ".",
+    "paths": { "@patternmode/*": ["../*/src"] }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
