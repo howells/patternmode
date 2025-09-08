@@ -1,6 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardHeading } from "@patternmode/card";
+import { Card, CardContent, CardFooter, CardHeader, CardHeading } from "@patternmode/card";
+import { Button } from "@patternmode/button";
 import {
   COMPONENT_CATEGORIES,
   type ComponentCategory,
@@ -10,6 +11,13 @@ import { Heading } from "@patternmode/heading";
 import { VStack } from "@patternmode/stack";
 import React from "react";
 import { COMPONENT_REGISTRY, PREVIEW_REGISTRY } from "@/registry/components";
+import {
+  ResponsiveDrawer,
+  ResponsiveDrawerContent,
+  ResponsiveDrawerHeader,
+  ResponsiveDrawerTitle,
+  ResponsiveDrawerTrigger,
+} from "@patternmode/responsive-drawer";
 
 // Build a complete list of all components with previews from the registry
 // Exclude components that don't make sense in the grid (e.g., the layout's own sidebar)
@@ -70,10 +78,35 @@ const Examples = () => {
                           <Component key={id} />
                         )}
                       </Boundary>
-                    </CardContent>
-                  </Card>
-                </GridCell>
-              ))}
+                  </CardContent>
+                  <CardFooter className="justify-end" border>
+                    <ResponsiveDrawer>
+                      <ResponsiveDrawerTrigger
+                        render={
+                          <Button size="sm" variant="outline" type="button">
+                            View Details
+                          </Button>
+                        }
+                      />
+                      <ResponsiveDrawerContent>
+                        <ResponsiveDrawerHeader>
+                          <ResponsiveDrawerTitle>{name}</ResponsiveDrawerTitle>
+                        </ResponsiveDrawerHeader>
+                        <div className="p-4">
+                          <Boundary name={`${name}-drawer`}>
+                            {typeof Component === "string" ? (
+                              React.createElement(Component, { key: id })
+                            ) : (
+                              <Component key={`${id}-drawer`} />
+                            )}
+                          </Boundary>
+                        </div>
+                      </ResponsiveDrawerContent>
+                    </ResponsiveDrawer>
+                  </CardFooter>
+                </Card>
+              </GridCell>
+            ))}
             </Grid>
           </VStack>
         );

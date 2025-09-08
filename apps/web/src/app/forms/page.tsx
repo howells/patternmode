@@ -739,7 +739,7 @@ export default function FormsPage() {
                           render={({ ref, ...props }) => (
                             <Checkbox
                               checked={qualityData.qualityInspection}
-                              onCheckedChange={(checked: boolean) =>
+                              onChange={(checked: boolean) =>
                                 setQualityData((prev) => ({
                                   ...prev,
                                   qualityInspection: checked,
@@ -771,7 +771,7 @@ export default function FormsPage() {
                           render={({ ref, ...props }) => (
                             <Checkbox
                               checked={qualityData.certificationRequired}
-                              onCheckedChange={(checked: boolean) =>
+                              onChange={(checked: boolean) =>
                                 setQualityData((prev) => ({
                                   ...prev,
                                   certificationRequired: checked,
@@ -851,23 +851,26 @@ export default function FormsPage() {
                 <Field name="rushOrder">
                   <HStack align="center" gap={3}>
                     <FieldControl
-                      render={({ ref, ...props }) => (
-                        <Switch
-                          checked={preferencesData.rushOrder}
-                          onCheckedChange={(checked: boolean) =>
-                            setPreferencesData((prev) => ({
-                              ...prev,
-                              rushOrder: checked,
-                            }))
-                          }
-                          ref={
-                            ref as React.RefObject<React.ElementRef<
-                              typeof BaseSwitch.Root
-                            > | null>
-                          }
-                          {...props}
-                        />
-                      )}
+                      render={({ ref, ...props }) => {
+                        const { onChange: _ignore, ...rest } = props as any;
+                        return (
+                          <Switch
+                            checked={preferencesData.rushOrder}
+                            onChange={(checked: boolean) =>
+                              setPreferencesData((prev) => ({
+                                ...prev,
+                                rushOrder: checked,
+                              }))
+                            }
+                            ref={
+                              ref as React.RefObject<React.ElementRef<
+                                typeof BaseSwitch.Root
+                              > | null>
+                            }
+                            {...rest}
+                          />
+                        );
+                      }}
                     />
                     <VStack gap={1}>
                       <FieldLabel>Rush Order</FieldLabel>
@@ -944,7 +947,7 @@ export default function FormsPage() {
                         render={({ ref, ...props }) => (
                           <Switch
                             checked={preferencesData.newsletter}
-                            onCheckedChange={(checked: boolean) =>
+                            onChange={(checked: boolean) =>
                               setPreferencesData((prev) => ({
                                 ...prev,
                                 newsletter: checked,
@@ -975,10 +978,10 @@ export default function FormsPage() {
                       <FormControl>
                         <Checkbox
                           checked={preferencesData.terms}
-                          onCheckedChange={(checked: boolean) =>
+                          onCheckedChange={(value: boolean | "indeterminate") =>
                             setPreferencesData((prev) => ({
                               ...prev,
-                              terms: checked,
+                              terms: Boolean(value),
                             }))
                           }
                         />

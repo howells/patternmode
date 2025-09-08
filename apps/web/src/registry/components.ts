@@ -197,6 +197,11 @@ import {
   ProgressPreview,
   progressPreviewProps,
 } from "@patternmode/progress/preview";
+import { progressStepsConfig } from "@patternmode/progress-steps/config";
+import {
+  ProgressStepsPreview,
+  progressStepsPreviewProps,
+} from "@patternmode/progress-steps/preview";
 import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import {
   ProgressCirclePreview,
@@ -375,6 +380,7 @@ export const COMPONENT_REGISTRY = {
   popover: popoverConfig,
   "preview-card": previewCardConfig,
   progress: progressConfig,
+  "progress-steps": progressStepsConfig,
   "progress-circle": progressCircleConfig,
   radio: radioConfig,
   "radio-card-group": radioCardGroupConfig,
@@ -462,6 +468,7 @@ export const PREVIEW_REGISTRY = {
   popover: PopoverPreview,
   "preview-card": PreviewCardPreview,
   progress: ProgressPreview,
+  "progress-steps": ProgressStepsPreview,
   "progress-circle": ProgressCirclePreview,
   radio: RadioPreview,
   "radio-card-group": RadioCardGroupPreview,
@@ -549,6 +556,7 @@ export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
   popover: popoverPreviewProps,
   "preview-card": previewCardPreviewProps,
   progress: progressPreviewProps,
+  "progress-steps": progressStepsPreviewProps,
   "progress-circle": progressCirclePreviewProps,
   radio: radioPreviewProps,
   "radio-card-group": radioCardGroupPreviewProps,

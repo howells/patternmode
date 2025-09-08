@@ -12,7 +12,7 @@ export function BooleanControl({
       render={() => (
         <Switch
           checked={currentValue === true}
-          onCheckedChange={(checked: boolean) => onValueChange(checked)}
+          onChange={(checked: boolean) => onValueChange(checked)}
           size="xs"
         />
       )}

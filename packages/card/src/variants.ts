@@ -3,7 +3,7 @@ import { borderRingDashed } from "@patternmode/utils/border-ring-dashed";
 import { tv } from "tailwind-variants";
 
 export const cardVariants = tv({
-  base: ["relative w-full rounded-xl"].join(" "),
+  base: ["relative flex w-full flex-col rounded-xl"].join(" "),
   variants: {
     variant: {
       default: [...borderRing, "bg-white dark:bg-[#090E1A]"].join(" "),

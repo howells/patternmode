@@ -156,7 +156,7 @@ const CardFooter = ({
 }: CardFooterProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
   <div
     className={cx(
-      "flex items-center rounded-b-lg px-6 pb-6",
+      "mt-auto flex items-center rounded-b-lg px-6 pb-6",
       "bg-zinc-50 dark:bg-zinc-900",
       border ? "pt-6" : "pt-0",
       border && "border-zinc-100 border-t dark:border-zinc-800",
