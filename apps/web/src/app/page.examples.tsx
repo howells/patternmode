@@ -18,6 +18,47 @@ import {
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
 } from "@patternmode/responsive-drawer";
+import type { ComponentId } from "@/registry/components";
+import { getPreviewProps } from "@/registry/components";
+import type { PreviewProps as UiPreviewProp } from "@/types/preview-props";
+import { PreviewControls } from "@/features/preview/preview-controls";
+import { PreviewProvider, usePreview } from "@/features/preview/preview-context";
+
+function DrawerPreview({
+  id,
+  name,
+  Component,
+}: {
+  id: ComponentId;
+  name: string;
+  Component: React.ElementType;
+}) {
+  const propsArray = (getPreviewProps(id) as UiPreviewProp[]) || [];
+  const propsMeta = Object.fromEntries(propsArray.map((p) => [p.name, p]));
+  const defaultProps = Object.fromEntries(
+    propsArray
+      .filter((p) => p.defaultValue !== undefined)
+      .map((p) => [p.name, p.defaultValue as unknown])
+  );
+
+  function Live() {
+    const { props } = usePreview();
+    return <Component {...(props as Record<string, unknown>)} />;
+  }
+
+  return (
+    <PreviewProvider defaultProps={defaultProps}>
+      <div className="space-y-6">
+        <div className="min-w-0">
+          <Live />
+        </div>
+        <div>
+          <PreviewControls config={{ componentName: name, props: propsMeta }} />
+        </div>
+      </div>
+    </PreviewProvider>
+  );
+}
 
 // Build a complete list of all components with previews from the registry
 // Exclude components that don't make sense in the grid (e.g., the layout's own sidebar)
@@ -94,11 +135,11 @@ const Examples = () => {
                         </ResponsiveDrawerHeader>
                         <div className="p-4">
                           <Boundary name={`${name}-drawer`}>
-                            {typeof Component === "string" ? (
-                              React.createElement(Component, { key: id })
-                            ) : (
-                              <Component key={`${id}-drawer`} />
-                            )}
+                            <DrawerPreview
+                              Component={Component as React.ElementType}
+                              id={id as ComponentId}
+                              name={name}
+                            />
                           </Boundary>
                         </div>
                       </ResponsiveDrawerContent>
