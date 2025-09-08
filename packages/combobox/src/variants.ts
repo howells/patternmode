@@ -21,7 +21,7 @@ export const comboboxTriggerVariants = tv({
 export const comboboxListVariants = tv({
   extend: selectPopoverVariants,
   base: [
-    "absolute z-50 mt-1 w-full",
+    "absolute z-60 mt-1 w-full",
     "max-h-60 overflow-auto",
     "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
   ],

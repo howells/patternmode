@@ -1,7 +1,7 @@
 {
   "name": "@patternmode/combobox",
   "version": "0.1.0",
-  "description": "Searchable dropdown (combobox) with Downshift, virtualized list, and optional async fetching",
+  "description": "Searchable dropdown (combobox) built on Base UI with optional async fetching and virtualization",
   "author": {
     "name": "Daniel Howells",
     "email": "daniel@howellsstudio.com",
@@ -75,6 +75,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/config": "workspace:*",
     "@patternmode/constants": "workspace:*",
     "@patternmode/icon": "workspace:*",
@@ -82,9 +83,6 @@
     "@patternmode/loader": "workspace:*",
     "@patternmode/select": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "@tanstack/react-query": "^5.86.0",
-    "@tanstack/react-virtual": "^3.13.12",
-    "downshift": "^9.0.10",
     "lucide-react": "^0.542.0",
     "tailwind-variants": "^3.1.0"
   },
