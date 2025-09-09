@@ -80,5 +80,32 @@ export const TableCaption = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"caption">) => (
-  <caption className={cx("mt-4 text-sm text-zinc-500", className)} {...props} />
+  <caption
+    className={cx(
+      // position and spacing (render below the table, outside the grid rows)
+      "caption-bottom mt-3",
+      // typography
+      "text-center text-sm text-zinc-500 dark:text-zinc-400",
+      className
+    )}
+    {...props}
+  />
+);
+
+/**
+ * Optional caption element meant to be rendered completely outside the table element.
+ * Useful when you want a label below (or above) the table without affecting table layout.
+ */
+export const TableCaptionText = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) => (
+  <div
+    className={cx(
+      "mt-3 text-center text-sm text-zinc-500 dark:text-zinc-400",
+      className
+    )}
+    data-testid="table-caption"
+    {...props}
+  />
 );

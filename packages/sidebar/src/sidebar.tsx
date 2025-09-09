@@ -91,7 +91,9 @@ export function Sidebar({
         )}
         data-testid="sidebar"
         // Do not set aria-expanded on nav; apply hover props without aria-expanded
-        {...Object.fromEntries(Object.entries(hoverProps).filter(([k]) => k !== "aria-expanded"))}
+        {...Object.fromEntries(
+          Object.entries(hoverProps).filter(([k]) => k !== "aria-expanded")
+        )}
       >
         <div className="flex h-full flex-col">
           {children}

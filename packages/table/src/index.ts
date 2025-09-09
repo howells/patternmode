@@ -2,6 +2,7 @@ export {
   Table,
   TableBody,
   TableCaption,
+  TableCaptionText,
   TableCell,
   TableFooter,
   TableHead,
