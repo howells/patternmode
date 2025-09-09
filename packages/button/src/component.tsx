@@ -57,9 +57,9 @@ const Button = ({
   ...restProps
 }: ButtonProps) => {
   // Strip unsupported Radix-style slot prop that may be injected upstream.
-  const { asChild: _ignoreAsChild, ...props } = (
-    restProps as { asChild?: unknown } & typeof restProps
-  );
+  const { asChild: _ignoreAsChild, ...props } = restProps as {
+    asChild?: unknown;
+  } & typeof restProps;
 
   const hasChildren = children != null && children !== "";
 

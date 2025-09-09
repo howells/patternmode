@@ -76,13 +76,17 @@ const CollapsibleTrigger = ({
         className={cx("group")}
         ref={ref}
         {...props}
-        render={(props, state) => {
+        render={(props, toggleState) => {
           const { ref: triggerRef, ...buttonProps } = props;
           return (
             <Button
-              leftIcon={state.open ? OpenIcon : ClosedIcon}
+              leftIcon={toggleState.open ? OpenIcon : ClosedIcon}
               render={(props) => (
-                <button type="button" {...props} ref={triggerRef} />
+                <button
+                  type="button"
+                  {...props}
+                  ref={triggerRef as React.Ref<HTMLButtonElement>}
+                />
               )}
               size="icon-xs"
               variant="ghost"

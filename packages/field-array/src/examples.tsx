@@ -263,25 +263,20 @@ export function ProductVariantsExample() {
                 {...props}
               />
             ),
-            checkbox: ({
-              value,
-              onChange,
-              label,
-              ...props
-            }: {
-              value: boolean;
-              onChange: (v: boolean) => void;
-              label?: string;
-            } & React.ComponentProps<typeof Checkbox>) => (
-              <HStack align="center" className="cursor-pointer" gap={2}>
-                <Checkbox
-                  checked={!!value}
-                  onCheckedChange={(checked: boolean) => onChange(!!checked)}
-                  {...props}
-                />
-                <span className="text-sm">{label}</span>
-              </HStack>
-            ),
+            checkbox: (rawProps: any) => {
+              const { value, onChange, label, ...props } = (rawProps ||
+                {}) as any;
+              return (
+                <HStack align="center" className="cursor-pointer" gap={2}>
+                  <Checkbox
+                    checked={!!value}
+                    onCheckedChange={(v: unknown) => onChange(!!v)}
+                    {...props}
+                  />
+                  <span className="text-sm">{label}</span>
+                </HStack>
+              );
+            },
           }}
           itemLabel="Variant"
           items={variants}

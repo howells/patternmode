@@ -86,11 +86,11 @@ const TagInput = ({
   dropdownClassName,
   tagClassName,
   maxHeight = 200,
-  iconStrokeWidth = defaultIconStrokeWidth,
+  iconStrokeWidth: _iconStrokeWidth = defaultIconStrokeWidth,
   renderItem,
   renderTag,
   filterOptions = defaultFilterOptions,
-  _onValidate = defaultValidateNewTag,
+  onValidate: _onValidate = defaultValidateNewTag,
   onCreate = defaultCreateNewTag,
   wrap = true,
 }: TagInputProps) => {
@@ -149,8 +149,9 @@ const TagInput = ({
     items: getFilteredOptions,
     inputValue,
     isOpen,
-    onInputValueChange: ({ inputValue }) => setInputValue(inputValue ?? ""),
-    onIsOpenChange: ({ isOpen }) => setIsOpen(isOpen),
+    onInputValueChange: ({ inputValue: nextInputValue }) =>
+      setInputValue(nextInputValue ?? ""),
+    onIsOpenChange: ({ isOpen: nextOpen }) => setIsOpen(nextOpen),
     itemToString: (item) => (item ? item.label : ""),
     stateReducer: (_state, actionAndChanges) => {
       const { changes, type } = actionAndChanges as any;

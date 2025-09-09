@@ -61,7 +61,7 @@ export const SearchField = ({
   className,
   inputClassName,
   dropdownClassName,
-  _autoFocus = false,
+  autoFocus: _autoFocus = false,
   disabled = false,
   loading = false,
   selectedIndex = 0,

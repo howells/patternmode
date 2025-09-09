@@ -220,7 +220,9 @@ export const TestimonialCarouselExample = () => (
 
 // Auto-play carousel (simulated with state)
 export const AutoPlayExample = () => {
-  const [api, setApi] = React.useState<unknown>();
+  const [api, setApi] = React.useState<
+    import("./component").CarouselApi | null
+  >(null);
 
   React.useEffect(() => {
     if (!api) {

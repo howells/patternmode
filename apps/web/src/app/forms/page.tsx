@@ -944,7 +944,7 @@ export default function FormsPage() {
                   <Field name="newsletter">
                     <HStack align="center" gap={3}>
                       <FieldControl
-                        render={({ ref, ...props }) => (
+                        render={({ ref, onChange: _ignore, ...props }) => (
                           <Switch
                             checked={preferencesData.newsletter}
                             onChange={(checked: boolean) =>

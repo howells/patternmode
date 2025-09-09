@@ -2,19 +2,19 @@
 
 import { cx } from "@patternmode/utils/cx";
 import { useHover } from "@react-aria/interactions";
-import { useWindowSize } from "usehooks-ts";
 import type React from "react";
 import { useEffect, useRef } from "react";
+import { useWindowSize } from "usehooks-ts";
 import { SidebarOverlay } from "./sidebar.overlay";
 import SidebarSettings from "./sidebar.settings";
 import { SidebarMobile } from "./sidebar-mobile";
 import { useSidebar } from "./sidebar-store";
 
-interface SidebarProps {
+type SidebarProps = {
   children: React.ReactNode;
   className?: string;
   expandOnHover?: boolean;
-}
+};
 
 export function Sidebar({
   children,
@@ -80,7 +80,6 @@ export function Sidebar({
   return (
     <>
       <nav
-        aria-expanded={isExpanded}
         className={cx(
           "Sidebar",
           "fixed inset-y-0 left-0 z-40",
@@ -91,10 +90,8 @@ export function Sidebar({
           className
         )}
         data-testid="sidebar"
-        // Remove aria-expanded from nav to satisfy a11y rule
-        {...Object.fromEntries(
-          Object.entries(hoverProps).filter(([k]) => k !== "aria-expanded")
-        )}
+        // Do not set aria-expanded on nav; apply hover props without aria-expanded
+        {...Object.fromEntries(Object.entries(hoverProps).filter(([k]) => k !== "aria-expanded"))}
       >
         <div className="flex h-full flex-col">
           {children}

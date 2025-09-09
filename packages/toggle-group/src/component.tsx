@@ -98,7 +98,11 @@ const ToggleGroupItem = ({
               iconStrokeWidth={finalIconStrokeWidth}
               leftIcon={LeftIcon}
               render={(renderProps) => (
-                <button type="button" {...renderProps} ref={toggleRef} />
+                <button
+                  type="button"
+                  {...renderProps}
+                  ref={toggleRef as React.Ref<HTMLButtonElement>}
+                />
               )}
               rightIcon={RightIcon}
               rounded={rounded}

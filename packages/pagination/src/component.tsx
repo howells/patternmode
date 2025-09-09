@@ -90,7 +90,15 @@ export const PaginationPrevious = ({
     <Button
       className={className}
       leftIcon={ChevronLeft}
-      render={render || ((props) => <a href={href} {...props} />)}
+      render={
+        render ||
+        ((props) => (
+          <a
+            href={href}
+            {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          />
+        ))
+      }
       variant="secondary"
     >
       <span className="sr-only sm:not-sr-only">{children}</span>
@@ -149,7 +157,15 @@ export const PaginationNext = ({
   return (
     <Button
       className={className}
-      render={render || ((props) => <a href={href} {...props} />)}
+      render={
+        render ||
+        ((props) => (
+          <a
+            href={href}
+            {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          />
+        ))
+      }
       rightIcon={ChevronRight}
       variant="secondary"
     >
@@ -232,7 +248,15 @@ export const PaginationPage = ({
     <li>
       <Button
         className={cx("min-w-10", className)}
-        render={render || ((props) => <a href={href} {...props} />)}
+        render={
+          render ||
+          ((props) => (
+            <a
+              href={href}
+              {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+            />
+          ))
+        }
         variant="ghost"
       >
         {children}

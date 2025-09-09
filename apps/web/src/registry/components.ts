@@ -505,7 +505,7 @@ export const PREVIEW_REGISTRY = {
   sidebar: (() => null) as React.ElementType,
 } as const satisfies Record<ComponentId, React.ElementType>;
 
-export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, PreviewProps[]> = {
+export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, ReadonlyArray<unknown>> = {
   accordion: accordionPreviewProps,
   "alert-dialog": alertDialogPreviewProps,
   avatar: avatarPreviewProps,
@@ -627,7 +627,7 @@ export function getPreviewComponent(id: string): React.ElementType | undefined {
 export function getPreviewProps(id: string): PreviewProps[] {
   const previewProps =
     PREVIEW_PROPS_REGISTRY[id as keyof typeof PREVIEW_PROPS_REGISTRY];
-  if (previewProps) return previewProps;
+  if (previewProps) return previewProps as PreviewProps[];
   return [];
 }
 

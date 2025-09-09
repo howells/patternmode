@@ -37,7 +37,9 @@
     "knip": "knip --no-progress",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo build && changeset publish"
+    "release": "turbo build && changeset publish",
+    "check:aschild": "node scripts/check-aschild.mjs",
+    "ci:verify": "pnpm -w typecheck && pnpm -w lint && pnpm -w check:aschild"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",

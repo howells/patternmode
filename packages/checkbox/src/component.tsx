@@ -29,9 +29,9 @@ const Checkbox = ({
     <BaseCheckbox.Root
       ref={forwardedRef}
       {...baseUIProps}
-      onCheckedChange={handleChange}
       className={cx(checkboxVariants(), className)}
       data-testid="checkbox"
+      onCheckedChange={handleChange}
     >
       <BaseCheckbox.Indicator className={checkboxIndicatorVariants()}>
         {checked === "indeterminate" ? (

@@ -127,7 +127,7 @@ const SortableItem = ({
       {/* Checkbox */}
       {showCheckbox && (
         <LocalCheckbox
-          checked={item.active}
+          checked={!!item.active}
           disabled={item.disabled}
           onCheckedChange={(checked: boolean) => onToggle(item.id, checked)}
         />
@@ -226,7 +226,7 @@ export const SortableList = ({
           >
             {showCheckbox && (
               <LocalCheckbox
-                checked={item.active}
+                checked={!!item.active}
                 disabled={item.disabled}
                 onCheckedChange={(checked: boolean) =>
                   handleToggle(item.id, checked)

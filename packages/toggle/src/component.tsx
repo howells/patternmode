@@ -43,7 +43,13 @@ const Toggle = ({
               leftIcon={leftIcon}
               render={(
                 renderProps: React.ButtonHTMLAttributes<HTMLButtonElement>
-              ) => <button type="button" {...renderProps} ref={toggleRef} />}
+              ) => (
+                <button
+                  type="button"
+                  {...renderProps}
+                  ref={toggleRef as React.Ref<HTMLButtonElement>}
+                />
+              )}
               rightIcon={rightIcon}
               rounded={rounded}
               size={size}
