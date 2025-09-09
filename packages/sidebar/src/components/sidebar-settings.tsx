@@ -1,8 +1,15 @@
+"use client";
+
 import { Button } from "@patternmode/button";
 import { Lock, PanelLeftClose, PanelLeftOpen, Pin } from "lucide-react";
-import { useSidebar } from "./sidebar-store";
+import React from "react";
+import { useSidebar } from "../sidebar-store";
+import type { SidebarSettingsProps } from "../types";
 
-const SidebarSettings = () => {
+const SidebarSettings = React.forwardRef<
+  HTMLButtonElement,
+  SidebarSettingsProps
+>(({ className, ...props }, ref) => {
   const _isExpanded = useSidebar((s) => s.isExpanded);
   const state = useSidebar((s) => s.state);
   const setState = useSidebar((s) => s.setState);
@@ -10,6 +17,7 @@ const SidebarSettings = () => {
   const getNextState = (
     current: "collapsed" | "open" | "pinned" | "locked"
   ) => {
+    // biome-ignore lint/nursery/noUnnecessaryConditions: Switch is necessary for state transitions
     switch (current) {
       case "collapsed":
         return "pinned";
@@ -17,8 +25,10 @@ const SidebarSettings = () => {
         return "locked";
       case "locked":
         return "collapsed"; // unpin/collapse
-      default:
+      case "open":
         return "pinned"; // treat open like pinned in desktop flow
+      default:
+        return "collapsed";
     }
   };
 
@@ -26,8 +36,6 @@ const SidebarSettings = () => {
     const next = getNextState(state);
     setState(next);
   };
-
-  // Removed currentIcon function - using text-only button for now
 
   const currentLabel = (() => {
     switch (state) {
@@ -65,14 +73,19 @@ const SidebarSettings = () => {
   return (
     <Button
       aria-label={`${currentLabel}. Click to cycle state.`}
+      className={className}
       data-testid="sidebar"
       icon={CurrentIcon}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      ref={ref}
       size="icon"
       variant="ghost"
+      {...props}
     />
   );
-};
+});
+
+SidebarSettings.displayName = "SidebarSettings";
 
 export default SidebarSettings;

@@ -95,8 +95,11 @@ export const IconSelect = ({
     [iconStrokeWidth]
   );
   const handleValueChange = React.useCallback(
-    (newValue: string | undefined) => {
-      onValueChange?.(newValue || "");
+    (newValue: string | string[] | undefined) => {
+      const next = Array.isArray(newValue)
+        ? (newValue[0] ?? "")
+        : newValue ?? "";
+      onValueChange?.(next);
     },
     [onValueChange]
   );

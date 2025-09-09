@@ -3,8 +3,8 @@
 import { Combobox as BaseCombobox } from "@base-ui-components/react/combobox";
 import type { Size } from "@patternmode/constants/sizes";
 import { cx } from "@patternmode/utils/cx";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import React from "react";
-import { comboboxListVariants } from "../variants";
 
 /**
  * Combobox popup container component.
@@ -15,12 +15,12 @@ const ComboboxPopup = React.forwardRef<
     size?: Size;
   }
 >(({ className, size = "base", ...props }, ref) => {
-  const { base } = comboboxListVariants({ size });
+  const surface = floatingSurfaceVariants({ density: "compact", width: "anchor" }).base();
 
   return (
     <BaseCombobox.Popup
       className={cx(
-        base(),
+        surface,
         "min-w-[var(--anchor-width)] max-w-[var(--available-width)]",
         className
       )}

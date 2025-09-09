@@ -1,6 +1,8 @@
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
+import { floatingItemVariants } from "@patternmode/utils/floating-item";
 import { hasErrorInput } from "@patternmode/utils/has-error-input";
 import { ChevronsUpDown } from "lucide-react";
 import type * as React from "react";
@@ -16,7 +18,7 @@ import type {
   SelectSeparatorProps,
   SelectTriggerProps,
 } from "./types";
-import { selectItemVariants, selectPopoverVariants } from "./variants";
+import { selectPopoverVariants } from "./variants";
 
 // Root
 const Root = ({
@@ -165,7 +167,7 @@ const Popup = ({
 }: SelectContentProps & {
   ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null>;
 }) => {
-  const { base } = selectPopoverVariants({ size });
+  const surface = floatingSurfaceVariants({ density: "compact", width: "anchor" }).base();
 
   return (
     <Portal>
@@ -178,7 +180,7 @@ const Popup = ({
       >
         <ScrollUpArrow />
         <BaseSelect.Popup
-          className={cx(base(), "min-w-[var(--anchor-width)]", className)}
+          className={cx(surface, "min-w-[var(--anchor-width)]", className)}
           ref={ref}
           {...props}
         >
@@ -224,7 +226,7 @@ const Item = ({
   return (
     <BaseSelect.Item
       className={cx(
-        selectItemVariants({ size }),
+        floatingItemVariants({ size: size === "xs" ? "xs" : size }),
         "data-[disabled]:pointer-events-none data-[disabled]:text-zinc-400 data-[disabled]:hover:bg-none dark:data-[disabled]:text-zinc-600",
         className
       )}

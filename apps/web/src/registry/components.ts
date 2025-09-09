@@ -100,11 +100,6 @@ import { dotConfig } from "@patternmode/dot/config";
 import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "@patternmode/drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
-import { dropdownItemConfig } from "@patternmode/dropdown-item/config";
-import {
-  DropdownItemPreview,
-  dropdownItemPreviewProps,
-} from "@patternmode/dropdown-item/preview";
 import { emptyStateConfig } from "@patternmode/empty-state/config";
 import {
   EmptyStatePreview,
@@ -354,7 +349,6 @@ export const COMPONENT_REGISTRY = {
   "dismiss-button": dismissButtonConfig,
   dot: dotConfig,
   drawer: drawerConfig,
-  "dropdown-item": dropdownItemConfig,
   "empty-state": emptyStateConfig,
   field: fieldConfig,
   "field-array": fieldArrayConfig,
@@ -442,7 +436,6 @@ export const PREVIEW_REGISTRY = {
   "dismiss-button": DismissButtonPreview,
   dot: DotPreview,
   drawer: DrawerPreview,
-  "dropdown-item": DropdownItemPreview,
   "empty-state": EmptyStatePreview,
   field: FieldPreview,
   "field-array": FieldArrayPreview,
@@ -530,7 +523,6 @@ export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, ReadonlyArray<unknown>>
   "dismiss-button": dismissButtonPreviewProps,
   dot: dotPreviewProps,
   drawer: drawerPreviewProps,
-  "dropdown-item": dropdownItemPreviewProps,
   "empty-state": emptyStatePreviewProps,
   field: fieldPreviewProps,
   "field-array": fieldArrayPreviewProps,

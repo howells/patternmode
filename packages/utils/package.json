@@ -17,7 +17,9 @@
     "./responsive-utils": "./src/responsive-utils.ts",
     "./progress": "./src/progress.ts",
     "./border-ring": "./src/border-ring.ts",
-    "./border-ring-dashed": "./src/border-ring-dashed.ts"
+    "./border-ring-dashed": "./src/border-ring-dashed.ts",
+    "./floating-surface": "./src/floating-surface.ts"
+    ,"./floating-item": "./src/floating-item.ts"
   },
   "files": [
     "src"

@@ -3,6 +3,7 @@
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/utils/cx";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { Search, X } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -240,8 +241,8 @@ export const SearchField = ({
         <div
           className={cx(
             "absolute top-full right-0 left-0 z-50 mt-1",
-            "border bg-white dark:border-zinc-800 dark:bg-zinc-900",
-            "max-h-96 overflow-y-auto rounded-md shadow-xl",
+            floatingSurfaceVariants({ density: "compact", width: "auto", clamp: "none" }).base(),
+            "max-h-96 overflow-y-auto",
             dropdownClassName
           )}
         >

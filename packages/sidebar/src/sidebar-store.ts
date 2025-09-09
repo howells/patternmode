@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface SidebarStore {
+type SidebarStore = {
   // State
   state: "collapsed" | "open" | "pinned" | "locked";
   isHovering: boolean;
@@ -9,6 +9,7 @@ interface SidebarStore {
   isExpanded: boolean;
   shouldOffsetContent: boolean;
   isHydrated: boolean;
+  openItems: Record<string, boolean>;
 
   // Computed getters
   get effectiveWidth(): string;
@@ -20,7 +21,9 @@ interface SidebarStore {
   togglePin: () => void;
   toggleOpen: () => void;
   toggleLock: () => void;
-}
+  toggleItem: (id: string) => void;
+  setItemOpen: (id: string, open: boolean) => void;
+};
 
 export const useSidebar = create<SidebarStore>()(
   persist(
@@ -32,6 +35,7 @@ export const useSidebar = create<SidebarStore>()(
       isExpanded: false,
       shouldOffsetContent: false,
       isHydrated: false,
+      openItems: {},
 
       // Computed values using getters
       get effectiveWidth() {
@@ -98,6 +102,12 @@ export const useSidebar = create<SidebarStore>()(
           const shouldOffsetContent = false;
           return { state: newState, isExpanded, shouldOffsetContent };
         }),
+      toggleItem: (id) =>
+        set((state) => ({
+          openItems: { ...state.openItems, [id]: !state.openItems[id] },
+        })),
+      setItemOpen: (id, open) =>
+        set((state) => ({ openItems: { ...state.openItems, [id]: open } })),
     }),
     {
       name: "sidebar-state",
@@ -105,6 +115,7 @@ export const useSidebar = create<SidebarStore>()(
       partialize: (state) => ({
         isPinned: state.state === "pinned",
         isLocked: state.state === "locked",
+        openItems: state.openItems,
       }),
       // On hydration, derive runtime state and flags from the booleans
       merge: (persisted, current) => {
@@ -129,6 +140,7 @@ export const useSidebar = create<SidebarStore>()(
           state: nextState,
           isExpanded,
           shouldOffsetContent,
+          openItems: (p as any).openItems || {},
         } satisfies SidebarStore;
       },
       onRehydrateStorage: () => (state) => {

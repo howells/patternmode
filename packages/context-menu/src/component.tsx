@@ -1,6 +1,8 @@
 import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
 import { Icon as IconComponent } from "@patternmode/icon";
 import { cx } from "@patternmode/utils/cx";
+import { floatingItemVariants } from "@patternmode/utils/floating-item";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
 
@@ -138,16 +140,8 @@ const ContextMenuSubmenuTrigger = ({
 }) => (
   <BaseContextMenu.SubmenuTrigger
     className={cx(
-      // base
-      "data-checked: relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-1 pl-2 outline-hidden transition-colors sm:text-sm",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // disabled
-      "data-disabled:pointer-events-none data-disabled:text-zinc-400 data-disabled:hover:bg-none dark:data-disabled:text-zinc-600",
-      // focus
-      "focus-visible:bg-zinc-100 data-[popup-open]:bg-zinc-100 dark:data-[popup-open]:bg-zinc-900 dark:focus-visible:bg-zinc-900",
-      // hover
-      "data-highlighted:bg-zinc-100 dark:data-highlighted:bg-zinc-900",
+      floatingItemVariants({ size: "sm" }),
+      "pr-1 pl-2 data-[popup-open]:bg-zinc-100 dark:data-[popup-open]:bg-zinc-800",
       className
     )}
     ref={forwardedRef}
@@ -171,22 +165,10 @@ const ContextMenuSubmenuContent = ({
     <BaseContextMenu.Positioner collisionPadding={8} sideOffset={8}>
       <BaseContextMenu.Popup
         className={cx(
-          // base
-          "relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
-          // widths
-          "min-w-32",
-          // heights
+          floatingSurfaceVariants({ density: "compact", width: "sm", clamp: "none" }).base(),
+          "relative will-change-[transform,opacity]",
           "max-h-[var(--context-menu-available-height)]",
-          // background color
-          "bg-white dark:bg-zinc-950",
-          // text color
-          "text-zinc-900 dark:text-zinc-50",
-          // border color
-          "dark:border-zinc-800",
-          // transition
-          "will-change-[transform,opacity]",
-          "data-[starting-style]:animate-hide",
-          "data-[ending-style]:animate-hide",
+          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}
@@ -215,22 +197,10 @@ const ContextMenuContent = ({
     >
       <BaseContextMenu.Popup
         className={cx(
-          // base
-          "relative z-50 overflow-hidden rounded-md border p-1 shadow-xl",
-          // widths
-          "min-w-48",
-          // heights
+          floatingSurfaceVariants({ density: "compact", width: "md", clamp: "none" }).base(),
+          "relative will-change-[transform,opacity]",
           "max-h-[var(--context-menu-available-height)]",
-          // background color
-          "bg-white dark:bg-zinc-950",
-          // text color
-          "text-zinc-900 dark:text-zinc-50",
-          // border color
-          "dark:border-zinc-800",
-          // transition
-          "will-change-[transform,opacity]",
-          "data-[starting-style]:animate-hide",
-          "data-[ending-style]:animate-hide",
+          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}
@@ -253,16 +223,8 @@ const ContextMenuItem = ({
 }: ContextMenuItemProps) => (
   <BaseContextMenu.Item
     className={cx(
-      // base
-      "group/ContextMenuItem relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pr-1 pl-2 outline-hidden transition-colors sm:text-sm",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // disabled
-      "data-disabled:pointer-events-none data-disabled:text-zinc-400 data-disabled:hover:bg-none dark:data-disabled:text-zinc-600",
-      // focus
-      "focus-visible:bg-zinc-100 dark:focus-visible:bg-zinc-900",
-      // hover
-      "data-highlighted:bg-zinc-100 dark:data-highlighted:bg-zinc-900",
+      floatingItemVariants({ size: "sm" }),
+      "pr-1 pl-2",
       className
     )}
     ref={forwardedRef}
@@ -301,16 +263,8 @@ const ContextMenuCheckboxItem = ({
   <BaseContextMenu.CheckboxItem
     checked={checked}
     className={cx(
-      // base
-      "data-checked: relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pr-1 pl-8 outline-hidden transition-colors sm:text-sm",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // disabled
-      "data-disabled:pointer-events-none data-disabled:text-zinc-400 data-disabled:hover:bg-none dark:data-disabled:text-zinc-600",
-      // focus
-      "focus-visible:bg-zinc-100 dark:focus-visible:bg-zinc-900",
-      // hover
-      "data-highlighted:bg-zinc-100 dark:data-highlighted:bg-zinc-900",
+      floatingItemVariants({ size: "sm" }),
+      "gap-x-2 pr-1 pl-8",
       className
     )}
     ref={forwardedRef}
@@ -359,16 +313,8 @@ const ContextMenuRadioItem = ({
 }: ContextMenuRadioItemProps) => (
   <BaseContextMenu.RadioItem
     className={cx(
-      // base
-      "group/ContextMenuRadioItem data-checked: relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm py-1.5 pr-1 pl-8 outline-hidden transition-colors sm:text-sm",
-      // text color
-      "text-zinc-900 dark:text-zinc-50",
-      // disabled
-      "data-disabled:pointer-events-none data-disabled:text-zinc-400 data-disabled:hover:bg-none dark:data-disabled:text-zinc-600",
-      // focus
-      "focus-visible:bg-zinc-100 dark:focus-visible:bg-zinc-900",
-      // hover
-      "data-highlighted:bg-zinc-100 dark:data-highlighted:bg-zinc-900",
+      floatingItemVariants({ size: "sm" }),
+      "gap-x-2 pr-1 pl-8",
       className
     )}
     ref={forwardedRef}

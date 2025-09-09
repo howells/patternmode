@@ -141,9 +141,6 @@ importers:
       '@patternmode/drawer':
         specifier: workspace:*
         version: link:../../packages/drawer
-      '@patternmode/dropdown-item':
-        specifier: workspace:*
-        version: link:../../packages/dropdown-item
       '@patternmode/empty-state':
         specifier: workspace:*
         version: link:../../packages/empty-state
@@ -1190,9 +1187,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.20.5
         version: 8.21.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2844,6 +2838,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      tailwind-variants:
+        specifier: ^3.1.0
+        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.1.1)
@@ -3304,12 +3301,15 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
-      '@patternmode/dropdown-item':
+      '@patternmode/constants':
         specifier: workspace:*
-        version: link:../dropdown-item
+        version: link:../constants
       '@patternmode/icon':
         specifier: workspace:*
         version: link:../icon
+      '@patternmode/input':
+        specifier: workspace:*
+        version: link:../input
       '@patternmode/stack':
         specifier: workspace:*
         version: link:../stack

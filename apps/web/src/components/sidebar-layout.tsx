@@ -80,7 +80,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
         <SidebarContent>
           <SidebarGroup>
             {COMPONENT_CATEGORIES.map((cat) => (
-              <SidebarItem icon={cat.icon} key={cat.key}>
+              <SidebarItem icon={cat.icon} id={cat.key} key={cat.key}>
                 {cat.label}
               </SidebarItem>
             ))}

@@ -39,7 +39,9 @@
     "version-packages": "changeset version",
     "release": "turbo build && changeset publish",
     "check:aschild": "node scripts/check-aschild.mjs",
-    "ci:verify": "pnpm -w typecheck && pnpm -w lint && pnpm -w check:aschild"
+    "check:dropdown-surfaces": "node scripts/check-dropdown-shadows.mjs",
+    "ci:verify": "pnpm -w typecheck && pnpm -w lint && pnpm -w check:aschild",
+    "ci:verify:overlays": "pnpm -w run check:dropdown-surfaces"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",

@@ -6,6 +6,7 @@ import { Icon } from "@patternmode/icon";
 import { Input } from "@patternmode/input";
 import { Tag } from "@patternmode/tag";
 import { cx } from "@patternmode/utils/cx";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { Check, X } from "lucide-react";
 import * as React from "react";
@@ -234,7 +235,6 @@ const TagInput = ({
         {/* Combobox for Adding Tags */}
         <BaseCombobox.Root
           items={getFilteredOptions.map((opt) => opt.value)}
-          value={[]} // Always empty since we manage selections separately
           onValueChange={(next) => {
             const selectedValue = Array.isArray(next) ? next[next.length - 1] : next;
             if (selectedValue) {
@@ -273,8 +273,9 @@ const TagInput = ({
             <BaseCombobox.Positioner>
               <BaseCombobox.Popup
                 className={cx(
-                  "mt-2 w-full rounded-md border border-zinc-200 bg-white p-1 shadow-lg dark:border-zinc-800 dark:bg-zinc-950",
-                  "max-h-64 overflow-y-auto isolate", // Create proper stacking context per Base UI recommendations
+                  floatingSurfaceVariants({ density: "compact", width: "auto" }).base(),
+                  "mt-2 w-full isolate max-h-64 overflow-y-auto",
+                  // Create proper stacking context per Base UI recommendations
                   "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
                   dropdownClassName
                 )}

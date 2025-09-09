@@ -197,6 +197,23 @@ const variants = tv({
 ### Development Server
 **NEVER attempt to start the Next.js development server** - Always ask the user to run or restart it.
 
+### Build & Development Commands
+
+**Web App (Next.js):**
+- **Development**: `pnpm dev` - Starts Next.js with turbopack
+- **Build**: `pnpm build` - Builds the Next.js application
+- **Type Check**: `pnpm typecheck` - Runs TypeScript type checking
+- **Lint**: `pnpm lint` - Runs ESLint across the workspace
+
+**Component Packages:**
+- **Type Check**: `pnpm typecheck` - Runs TypeScript type checking
+- **Lint**: `pnpm lint` - Runs Biome linting and formatting
+
+**Workspace:**
+- **Build All**: `pnpm build` - Builds all packages with turbo
+- **Type Check All**: `pnpm typecheck` - Type checks all packages
+- **Lint All**: `pnpm lint` - Lints all packages
+
 ### Dynamic Imports
 **NEVER use direct dynamic imports of entire libraries**
 - Use Next.js `dynamic()` function instead

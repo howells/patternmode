@@ -79,8 +79,9 @@
   "dependencies": {
     "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/config": "workspace:*",
-    "@patternmode/dropdown-item": "workspace:*",
+    "@patternmode/constants": "workspace:*",
     "@patternmode/icon": "workspace:*",
+    "@patternmode/input": "workspace:*",
     "@patternmode/stack": "workspace:*",
     "@patternmode/tag": "workspace:*",
     "@patternmode/utils": "workspace:*",

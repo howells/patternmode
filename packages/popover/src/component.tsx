@@ -6,6 +6,7 @@ import type { ButtonProps } from "@patternmode/button";
 import { Button } from "@patternmode/button";
 import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import type React from "react";
 
 type PopoverProps = React.ComponentPropsWithoutRef<typeof BasePopover.Root>;
@@ -143,9 +144,8 @@ const PopoverContent = ({
     >
       <BasePopover.Popup
         className={cx(
-          "z-50 w-72 rounded-md border bg-white shadow-2xl outline-hidden dark:bg-[#090E1A]",
-
-          "transition-all duration-150",
+          floatingSurfaceVariants({ density: "compact", width: "auto" }).base(),
+          "w-72 outline-hidden transition-all duration-150",
           "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
           "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
           className

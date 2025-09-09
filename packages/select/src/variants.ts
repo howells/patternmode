@@ -1,9 +1,14 @@
 import { formControlElementVariants } from "@patternmode/constants/form-control-variants";
+import { floatingItemVariants } from "@patternmode/utils/floating-item";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { tv } from "tailwind-variants";
 
 export const selectPopoverVariants = tv({
   slots: {
-    base: "z-50 max-h-[var(--available-height)] min-w-[var(--anchor-width)] overflow-y-auto rounded-md border border-zinc-200 bg-white text-popover-foreground dark:border-zinc-800 dark:bg-zinc-950",
+    base: [
+      floatingSurfaceVariants({ width: "anchor" }).base(),
+      "max-h-[var(--available-height)]",
+    ].join(" "),
   },
   variants: {
     size: {
@@ -16,13 +21,7 @@ export const selectPopoverVariants = tv({
 });
 
 export const selectItemVariants = tv({
-  base: [
-    "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
-    "bg-white dark:bg-zinc-950",
-    "hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-100",
-    "focus:bg-zinc-100 focus:text-zinc-900 dark:focus:bg-zinc-800 dark:focus:text-zinc-100",
-    "data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-100",
-  ],
+  base: floatingItemVariants().split(" "),
   variants: {
     size: {
       xs: "px-2 py-1 text-xs",

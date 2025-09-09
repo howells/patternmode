@@ -1,5 +1,6 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui-components/react/navigation-menu";
 import { cx } from "@patternmode/utils/cx";
+import { floatingArrowBorderDark, floatingArrowBorderLight, floatingArrowFill, floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { ChevronDown } from "lucide-react";
 import type React from "react";
 
@@ -248,20 +249,13 @@ const NavigationMenuViewport = ({
     >
       <BaseNavigationMenu.Popup
         className={cx(
-          // layout
+          floatingSurfaceVariants({ density: "comfy", width: "auto" }).base(),
+          // override radius to lg for mega menus
           "relative h-[var(--popup-height)] w-max origin-[var(--transform-origin)] rounded-lg",
-          // colors
-          "bg-white text-zinc-900",
-          // shadows & borders
-          "shadow-xl outline outline-1 outline-zinc-200",
-          // animations
+          // remove default md radius from helper and keep transitions
           "transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          // states
           "data-[ending-style]:scale-90 data-[starting-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:duration-150",
-          // responsive
-          "xs:w-[var(--popup-width)] min-[500px]:w-[var(--popup-width)]",
-          // dark mode
-          "dark:-outline-offset-1 dark:shadow-none dark:outline-zinc-300"
+          "xs:w-[var(--popup-width)] min-[500px]:w-[var(--popup-width)]"
         )}
       >
         <BaseNavigationMenu.Arrow
@@ -283,11 +277,11 @@ const NavigationMenuViewport = ({
           >
             <title>Menu arrow</title>
             <path
-              className="fill-white"
+              className={floatingArrowFill}
               d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
             />
             <path
-              className="fill-zinc-200 dark:fill-none"
+              className={cx(floatingArrowBorderLight, floatingArrowBorderDark)}
               d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
             />
             <path
