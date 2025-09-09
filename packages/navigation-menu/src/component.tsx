@@ -1,6 +1,11 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui-components/react/navigation-menu";
 import { cx } from "@patternmode/utils/cx";
-import { floatingArrowBorderDark, floatingArrowBorderLight, floatingArrowFill, floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
+import {
+  floatingArrowBorderDark,
+  floatingArrowBorderLight,
+  floatingArrowFill,
+  floatingSurfaceVariants,
+} from "@patternmode/utils/floating-surface";
 import { ChevronDown } from "lucide-react";
 import type React from "react";
 

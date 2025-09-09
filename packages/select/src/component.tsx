@@ -1,8 +1,8 @@
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
-import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { floatingItemVariants } from "@patternmode/utils/floating-item";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { hasErrorInput } from "@patternmode/utils/has-error-input";
 import { ChevronsUpDown } from "lucide-react";
 import type * as React from "react";
@@ -167,7 +167,10 @@ const Popup = ({
 }: SelectContentProps & {
   ref?: React.RefObject<React.ElementRef<typeof BaseSelect.Popup> | null>;
 }) => {
-  const surface = floatingSurfaceVariants({ density: "compact", width: "anchor" }).base();
+  const surface = floatingSurfaceVariants({
+    density: "compact",
+    width: "anchor",
+  }).base();
 
   return (
     <Portal>

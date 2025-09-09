@@ -8,8 +8,7 @@ import { tv } from "tailwind-variants";
  */
 export const floatingSurfaceVariants = tv({
   slots: {
-    base:
-      "z-50 overflow-hidden rounded-md border border-zinc-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-950",
+    base: "z-50 overflow-hidden rounded-md border border-zinc-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-950",
   },
   variants: {
     /**
@@ -52,4 +51,3 @@ export const floatingSurfaceVariants = tv({
 export const floatingArrowFill = "fill-white dark:fill-zinc-950";
 export const floatingArrowBorderLight = "fill-zinc-200";
 export const floatingArrowBorderDark = "dark:fill-zinc-700";
-

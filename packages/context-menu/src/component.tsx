@@ -165,10 +165,14 @@ const ContextMenuSubmenuContent = ({
     <BaseContextMenu.Positioner collisionPadding={8} sideOffset={8}>
       <BaseContextMenu.Popup
         className={cx(
-          floatingSurfaceVariants({ density: "compact", width: "sm", clamp: "none" }).base(),
+          floatingSurfaceVariants({
+            density: "compact",
+            width: "sm",
+            clamp: "none",
+          }).base(),
           "relative will-change-[transform,opacity]",
           "max-h-[var(--context-menu-available-height)]",
-          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
+          "data-[ending-style]:animate-hide data-[starting-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}
@@ -197,10 +201,14 @@ const ContextMenuContent = ({
     >
       <BaseContextMenu.Popup
         className={cx(
-          floatingSurfaceVariants({ density: "compact", width: "md", clamp: "none" }).base(),
+          floatingSurfaceVariants({
+            density: "compact",
+            width: "md",
+            clamp: "none",
+          }).base(),
           "relative will-change-[transform,opacity]",
           "max-h-[var(--context-menu-available-height)]",
-          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
+          "data-[ending-style]:animate-hide data-[starting-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}
@@ -222,11 +230,7 @@ const ContextMenuItem = ({
   ...props
 }: ContextMenuItemProps) => (
   <BaseContextMenu.Item
-    className={cx(
-      floatingItemVariants({ size: "sm" }),
-      "pr-1 pl-2",
-      className
-    )}
+    className={cx(floatingItemVariants({ size: "sm" }), "pr-1 pl-2", className)}
     ref={forwardedRef}
     tremor-id="tremor-raw"
     {...props}

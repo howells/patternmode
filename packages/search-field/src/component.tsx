@@ -241,7 +241,11 @@ export const SearchField = ({
         <div
           className={cx(
             "absolute top-full right-0 left-0 z-50 mt-1",
-            floatingSurfaceVariants({ density: "compact", width: "auto", clamp: "none" }).base(),
+            floatingSurfaceVariants({
+              density: "compact",
+              width: "auto",
+              clamp: "none",
+            }).base(),
             "max-h-96 overflow-y-auto",
             dropdownClassName
           )}
