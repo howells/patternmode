@@ -19,7 +19,7 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
       render,
       isActive,
       className,
-      size = "base",
+      size = "sm",
       onClick,
       items,
       ...props
@@ -81,28 +81,25 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
 
     return (
       <div className="flex w-full flex-col">
-        <div className="flex items-stretch gap-1">
+        <div className="flex items-center gap-1">
           {mainButton}
           {hasChildren ? (
             <Button
               aria-controls={panelId}
               aria-expanded={open}
               aria-label={open ? "Collapse" : "Expand"}
+              icon={open ? ChevronDown : ChevronRight}
               onClick={() => setOpen((v) => !v)}
-              size="icon"
+              size="icon-xs"
               variant="ghost"
-            >
-              {open ? (
-                <ChevronDown className="size-4" />
-              ) : (
-                <ChevronRight className="size-4" />
-              )}
-            </Button>
+            />
           ) : null}
         </div>
         {hasChildren && open ? (
-          <div aria-live="polite" className="mt-1 space-y-1 pl-6" id={panelId}>
+          <div aria-live="polite" className="relative" id={panelId}>
             {items}
+
+            <div className="absolute inset-y-4 left-4 w-px bg-zinc-200 dark:bg-zinc-800" />
           </div>
         ) : null}
       </div>

@@ -121,16 +121,18 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
           className={cx(
             sidebarVariants({ size, state }),
             // When hovering in collapsed state, expand width visually
-            state === "collapsed" && isExpanded && "w-[var(--sidebar-open-width)]",
+            state === "collapsed" &&
+              isExpanded &&
+              "w-[var(--sidebar-open-width)]",
             className,
             // Force white surface when expanded, overriding any external bg class
             isExpanded && "bg-white dark:bg-zinc-900"
           )}
           data-testid="sidebar"
-          ref={ref}
-          // Do not set aria-expanded on nav; apply hover props without aria-expanded
           onMouseEnter={onMouseEnter}
+          // Do not set aria-expanded on nav; apply hover props without aria-expanded
           onMouseLeave={onMouseLeave}
+          ref={ref}
           {...props}
         >
           <div className="flex h-full flex-col">

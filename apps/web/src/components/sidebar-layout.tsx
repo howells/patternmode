@@ -18,6 +18,7 @@ import type React from "react";
 import { GitHubLink } from "@/components/github-link";
 import Logo from "@/components/logo";
 import { ThemeToggleWrapper } from "@/components/theme-toggle-wrapper";
+import { getComponentsByCategory } from "@/registry/components";
 import { ComponentSearch } from "./component-search";
 
 // SidebarGroupTitle helper removed (unused)
@@ -78,11 +79,34 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            {COMPONENT_CATEGORIES.map((cat) => (
-              <SidebarItem icon={cat.icon} id={cat.key} key={cat.key}>
-                {cat.label}
-              </SidebarItem>
-            ))}
+            {COMPONENT_CATEGORIES.map((cat) => {
+              const components = getComponentsByCategory(cat.key);
+              const childItems = components.map((component) => (
+                <SidebarItem
+                  className={cx("pl-8 text-zinc-500")}
+                  id={`${cat.key}-${component.id}`}
+                  key={component.id}
+                  render={
+                    <Link href={`/ui/${component.category}/${component.id}`} />
+                  }
+                  size="sm"
+                >
+                  {component.name}
+                </SidebarItem>
+              ));
+
+              return (
+                <SidebarItem
+                  icon={cat.icon}
+                  id={cat.key}
+                  items={childItems}
+                  key={cat.key}
+                  size="sm"
+                >
+                  {cat.label}
+                </SidebarItem>
+              );
+            })}
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
