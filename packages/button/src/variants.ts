@@ -48,17 +48,17 @@ export const buttonVariants = tv({
     {
       size: "xs",
       variant: [...buttonVariantNames],
-      class: "gap-1",
+      class: "gap-1.5",
     },
     {
       size: "sm",
       variant: [...buttonVariantNames],
-      class: "gap-1.5",
+      class: "gap-2",
     },
     {
       size: "base",
       variant: [...buttonVariantNames],
-      class: "gap-2",
+      class: "gap-2.5",
     },
     {
       size: "lg",
