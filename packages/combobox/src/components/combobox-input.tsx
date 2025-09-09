@@ -24,9 +24,7 @@ const ComboboxInput = React.forwardRef<
       render ||
       (({ className: inputClassName, ref: inputRef, ...renderProps }) => (
         <Input
-          className={cx(
-            inputClassName
-          )}
+          className={cx(inputClassName)}
           externalRef={inputRef as React.RefObject<HTMLInputElement>}
           minimal
           {...renderProps}

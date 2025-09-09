@@ -32,22 +32,22 @@ const useProcessedProps = (props: Record<string, unknown>) => {
     const finalProps: Record<string, unknown> = { ...props };
 
     // Clean up empty string values for icon props
-    Object.entries(finalProps).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(finalProps)) {
       const isIconProp = key === "icon" || key.endsWith("Icon");
 
       if (isIconProp && value === "") {
         delete finalProps[key];
       }
-    });
+    }
 
     // Convert string booleans to actual booleans
-    Object.entries(finalProps).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(finalProps)) {
       if (value === "true") {
         finalProps[key] = true;
       } else if (value === "false") {
         finalProps[key] = false;
       }
-    });
+    }
 
     return finalProps;
   }, [props]);
@@ -132,12 +132,7 @@ const createDynamicComponent = (componentId: string, _category?: string) => {
       };
 
       return { default: FallbackComponent };
-    } catch (error) {
-      console.error(
-        `Failed to load preview component for ${componentId}:`,
-        error
-      );
-
+    } catch (_error) {
       // Error fallback component
       const ErrorComponent = function ErrorComponent() {
         return (
@@ -163,6 +158,15 @@ export function PreviewDisplay({
 }: PreviewDisplayProps) {
   const { props } = usePreview();
 
+  // Process props for the component at the top level to avoid conditional hook calls
+  const processedProps = useProcessedProps(props);
+
+  // Create dynamic component - must be called before any conditional returns
+  const Component = React.useMemo(
+    () => createDynamicComponent(componentId, category),
+    [componentId, category]
+  );
+
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => {
     setMounted(true);
@@ -185,15 +189,6 @@ export function PreviewDisplay({
       </div>
     );
   }
-
-  // Create dynamic component
-  const Component = React.useMemo(
-    () => createDynamicComponent(componentId, category),
-    [componentId, category]
-  );
-
-  // Process props for the component
-  const processedProps = useProcessedProps(props);
 
   // Render component with error handling
   const renderComponent = () => {
@@ -247,8 +242,7 @@ export function PreviewDisplay({
           {componentElement}
         </React.Suspense>
       );
-    } catch (renderError) {
-      console.error("Error rendering component:", renderError);
+    } catch (_renderError) {
       return (
         <Callout title="Error rendering component" variant="error">
           Failed to render {componentId}

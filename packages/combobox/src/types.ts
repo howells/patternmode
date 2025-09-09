@@ -1,3 +1,4 @@
+import type { Size } from "@patternmode/config/sizes";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { comboboxVariants } from "./variants";
@@ -28,6 +29,7 @@ export type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   disabled?: boolean;
   hasError?: boolean;
   className?: string;
+  size?: Size;
   searchDebounce?: number;
   iconStrokeWidth?: number;
   getItemValue?: (item: T) => string;
@@ -37,8 +39,7 @@ export type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   selectOnFocus?: boolean;
   clearSearchOnSelect?: boolean;
   multiple?: boolean;
-} & VariantProps<typeof comboboxVariants> &
-  React.ComponentPropsWithoutRef<"div">;
+} & React.ComponentPropsWithoutRef<"div">;
 
 export type ComboboxMultiOption = ComboboxOption;
 

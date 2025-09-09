@@ -19,21 +19,18 @@ export const comboboxTriggerVariants = tv({
 });
 
 export const comboboxListVariants = tv({
-  extend: selectPopoverVariants,
-  base: [
-    "isolate max-h-[var(--available-height)] overflow-y-auto rounded-md border border-zinc-200 bg-white text-popover-foreground dark:border-zinc-800 dark:bg-zinc-950",
-    "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
-  ],
+  slots: {
+    base: "z-50 max-h-[var(--available-height)] min-w-[var(--anchor-width)] overflow-y-auto rounded-md border border-zinc-200 bg-white text-popover-foreground dark:border-zinc-800 dark:bg-zinc-950",
+  },
   variants: {
     size: {
-      "2xs": "rounded-sm text-[11px]",
-      xs: "rounded-sm text-xs",
-      sm: "rounded text-sm",
-      base: "rounded-md text-sm",
-      lg: "rounded-lg text-base",
+      "2xs": "w-[--anchor-width]",
+      xs: "w-[--anchor-width]",
+      sm: "w-[--anchor-width]",
+      base: "w-[--anchor-width]",
+      lg: "w-[--anchor-width]",
     },
   },
-  defaultVariants: { size: "base" },
 });
 
 export const comboboxItemVariants = tv({

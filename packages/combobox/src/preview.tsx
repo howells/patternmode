@@ -274,58 +274,42 @@ export function ComboboxPreview({
 
   const effectiveVariant = multiSelect ? "multi" : variant;
 
-  return (
-    <div className="p-6">
-      {effectiveVariant === "multi" ? (
-        <Combobox
-          disabled={disabled}
-          emptyMessage={emptyMessage}
-          getItemIcon={getItemIcon}
-          getItemLabel={getItemLabel}
-          hasError={hasError}
-          iconStrokeWidth={iconStrokeWidth}
-          multiple
-          onValuesChange={setMultiValues}
-          options={options}
-          placeholder={placeholder || config.placeholder}
-          searchDebounce={searchDebounce}
-          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
-          size={size}
-          value={multiValues}
-        />
-      ) : (
-        <Combobox
-          clearSearchOnSelect={clearSearchOnSelect}
-          disabled={disabled}
-          emptyMessage={emptyMessage}
-          getItemIcon={getItemIcon}
-          getItemLabel={getItemLabel}
-          hasError={hasError}
-          iconStrokeWidth={iconStrokeWidth}
-          onValueChange={(v: string | string[] | undefined) =>
-            setSingleValue(Array.isArray(v) ? (v[0] ?? "") : (v ?? ""))
-          }
-          options={options}
-          placeholder={placeholder || config.placeholder}
-          searchDebounce={searchDebounce}
-          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
-          size={size}
-          value={singleValue}
-        />
-      )}
-
-      {/* Debug Info */}
-      <div className="mt-4 rounded-md bg-zinc-50 p-3 text-sm dark:bg-zinc-900">
-        <div className="font-medium text-zinc-700 dark:text-zinc-300">
-          Current Selection:
-        </div>
-        <div className="text-zinc-600 dark:text-zinc-400">
-          {effectiveVariant === "multi"
-            ? `[${multiValues.join(", ")}] (${multiValues.length} selected)`
-            : singleValue || "(none)"}
-        </div>
-      </div>
-    </div>
+  return effectiveVariant === "multi" ? (
+    <Combobox
+      disabled={disabled}
+      emptyMessage={emptyMessage}
+      getItemIcon={getItemIcon}
+      getItemLabel={getItemLabel}
+      hasError={hasError}
+      iconStrokeWidth={iconStrokeWidth}
+      multiple
+      onValuesChange={setMultiValues}
+      options={options}
+      placeholder={placeholder || config.placeholder}
+      searchDebounce={searchDebounce}
+      searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
+      size={size}
+      value={multiValues}
+    />
+  ) : (
+    <Combobox
+      clearSearchOnSelect={clearSearchOnSelect}
+      disabled={disabled}
+      emptyMessage={emptyMessage}
+      getItemIcon={getItemIcon}
+      getItemLabel={getItemLabel}
+      hasError={hasError}
+      iconStrokeWidth={iconStrokeWidth}
+      onValueChange={(v: string | string[] | undefined) =>
+        setSingleValue(Array.isArray(v) ? (v[0] ?? "") : (v ?? ""))
+      }
+      options={options}
+      placeholder={placeholder || config.placeholder}
+      searchDebounce={searchDebounce}
+      searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
+      size={size}
+      value={singleValue}
+    />
   );
 }
 

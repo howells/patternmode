@@ -181,7 +181,6 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
               );
             }}
           </ComboboxValue>
-          <ComboboxIcon iconStrokeWidth={iconStrokeWidth} />
         </ComboboxTrigger>
 
         <ComboboxPortal>

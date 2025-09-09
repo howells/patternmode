@@ -1,9 +1,12 @@
 "use client";
 
 import { Combobox as BaseCombobox } from "@base-ui-components/react/combobox";
+import { Button } from "@patternmode/button";
+import type { Size } from "@patternmode/config/sizes";
 import { cx } from "@patternmode/utils/cx";
+import { hasErrorInput } from "@patternmode/utils/has-error-input";
+import { ChevronsUpDown } from "lucide-react";
 import React from "react";
-import { comboboxTriggerVariants } from "../variants";
 
 /**
  * Combobox trigger button component.
@@ -11,23 +14,31 @@ import { comboboxTriggerVariants } from "../variants";
 const ComboboxTrigger = React.forwardRef<
   React.ElementRef<typeof BaseCombobox.Trigger>,
   React.ComponentPropsWithoutRef<typeof BaseCombobox.Trigger> & {
-    size?: "2xs" | "xs" | "sm" | "base" | "lg";
+    hasError?: boolean;
+    size?: Size;
   }
->(({ className, size = "base", children, ...props }, ref) => (
-  <BaseCombobox.Trigger
-    className={cx(
-      comboboxTriggerVariants({ size }),
-      "flex h-10 min-w-[12rem] items-center justify-between gap-3 bg-[canvas] pr-3 pl-3.5",
-      "hover:bg-zinc-100 data-[popup-open]:bg-zinc-100",
-      className
-    )}
-    data-testid="combobox-trigger"
-    ref={ref}
-    {...props}
-  >
-    {children}
-  </BaseCombobox.Trigger>
-));
+>(({ className, hasError, size = "base", children, render, ...props }, ref) => {
+  const defaultRender = (
+    <Button
+      className={cx("justify-between", hasError && hasErrorInput, className)}
+      fullWidth
+      rightIcon={ChevronsUpDown}
+      size={size}
+      variant="outline"
+    />
+  );
+
+  return (
+    <BaseCombobox.Trigger
+      nativeButton={true}
+      ref={ref}
+      render={render ?? defaultRender}
+      {...props}
+    >
+      {children}
+    </BaseCombobox.Trigger>
+  );
+});
 ComboboxTrigger.displayName = "ComboboxTrigger";
 
 export { ComboboxTrigger };
