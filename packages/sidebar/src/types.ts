@@ -1,4 +1,5 @@
 import type { Size } from "@patternmode/config/sizes";
+import type { ButtonProps } from "@patternmode/button/types";
 import type * as React from "react";
 
 export type SidebarState = "collapsed" | "open" | "pinned" | "locked";
@@ -53,13 +54,13 @@ export type SidebarItemProps = {
     | React.ReactNode
     | (new (props: { className?: string; strokeWidth?: number }) => any)
     | ((props: { className?: string; strokeWidth?: number }) => any);
-  href?: string;
   isActive?: boolean;
   onClick?: () => void;
   className?: string;
   size?: Size;
   items?: React.ReactNode;
-} & React.ComponentPropsWithoutRef<"button">;
+  render?: ButtonProps["render"];
+} & Omit<React.ComponentPropsWithoutRef<"button">, "children">;
 
 export type SidebarSeparatorProps = React.ComponentProps<
   typeof import("@patternmode/separator").Separator
