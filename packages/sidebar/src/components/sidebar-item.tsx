@@ -19,7 +19,7 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
       render,
       isActive,
       className,
-      size = "sm",
+      size = "base",
       onClick,
       items,
       ...props
@@ -27,7 +27,27 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
     ref
   ) => {
     const isExpanded = useSidebar((s) => s.isExpanded);
-    const buttonSize: Size | IconButtonSize = isExpanded ? size : "icon";
+    // Map text sizes to their icon-only counterparts so collapsed icons
+    // match the visual size of the expanded variant (e.g., sm ↔ icon-sm).
+    const toIconSize = (s: Size | IconButtonSize): IconButtonSize => {
+      switch (s) {
+        case "2xs":
+          return "icon-2xs";
+        case "xs":
+          return "icon-xs";
+        case "sm":
+          return "icon-sm";
+        case "base":
+          return "icon";
+        case "lg":
+          return "icon-lg";
+        default:
+          return String(s).startsWith("icon") ? (s as IconButtonSize) : "icon";
+      }
+    };
+    const buttonSize: Size | IconButtonSize = isExpanded
+      ? size
+      : toIconSize(size);
     const [open, setOpen] = React.useState(false);
 
     const mainButton = (

@@ -1,5 +1,5 @@
-import type { Size } from "@patternmode/config/sizes";
 import type { ButtonProps } from "@patternmode/button/types";
+import type { Size } from "@patternmode/config/sizes";
 import type * as React from "react";
 
 export type SidebarState = "collapsed" | "open" | "pinned" | "locked";
@@ -52,7 +52,10 @@ export type SidebarItemProps = {
   children: React.ReactNode;
   icon?:
     | React.ReactNode
-    | (new (props: { className?: string; strokeWidth?: number }) => any)
+    | (new (props: {
+        className?: string;
+        strokeWidth?: number;
+      }) => any)
     | ((props: { className?: string; strokeWidth?: number }) => any);
   isActive?: boolean;
   onClick?: () => void;

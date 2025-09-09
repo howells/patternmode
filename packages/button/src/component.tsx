@@ -125,7 +125,9 @@ const Button = ({
       return children;
     }
 
-    // For icon-only buttons with leftIcon, render the icon directly without loading states
+    // For icon-only buttons with leftIcon, render the icon within the same
+    // sized container used by text buttons so visual size matches the
+    // corresponding non-icon variant (e.g., icon-sm == sm).
     if (
       isIconButton &&
       effectiveLeftIconProp != null &&
@@ -134,11 +136,15 @@ const Button = ({
       !kbd
     ) {
       return (
-        <Icon
-          icon={effectiveLeftIconProp}
-          size={getIconSize(size)}
-          strokeWidth={iconStrokeWidth}
-        />
+        <span
+          className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
+        >
+          <Icon
+            icon={effectiveLeftIconProp}
+            size={getIconSize(size)}
+            strokeWidth={iconStrokeWidth}
+          />
+        </span>
       );
     }
 
