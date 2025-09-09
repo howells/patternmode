@@ -32,18 +32,30 @@ export const DefaultExample = () => {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-            <SidebarItem id="ex1-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex1-search" icon={<Search />}>Search</SidebarItem>
-            <SidebarItem id="ex1-inbox" icon={<Inbox />}>Inbox</SidebarItem>
-            <SidebarItem id="ex1-cal" icon={<Calendar />}>Calendar</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex1-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Search />} id="ex1-search">
+              Search
+            </SidebarItem>
+            <SidebarItem icon={<Inbox />} id="ex1-inbox">
+              Inbox
+            </SidebarItem>
+            <SidebarItem icon={<Calendar />} id="ex1-cal">
+              Calendar
+            </SidebarItem>
           </SidebarGroup>
 
           <SidebarSeparator />
 
           <SidebarGroup>
             <SidebarGroupLabel>Account</SidebarGroupLabel>
-            <SidebarItem id="ex1-profile" icon={<User />}>Profile</SidebarItem>
-            <SidebarItem id="ex1-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<User />} id="ex1-profile">
+              Profile
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex1-settings">
+              Settings
+            </SidebarItem>
           </SidebarGroup>
         </SidebarContent>
 
@@ -71,18 +83,30 @@ export const CollapsedExample = () => {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-            <SidebarItem id="ex2-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex2-search" icon={<Search />}>Search</SidebarItem>
-            <SidebarItem id="ex2-inbox" icon={<Inbox />}>Inbox</SidebarItem>
-            <SidebarItem id="ex2-cal" icon={<Calendar />}>Calendar</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex2-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Search />} id="ex2-search">
+              Search
+            </SidebarItem>
+            <SidebarItem icon={<Inbox />} id="ex2-inbox">
+              Inbox
+            </SidebarItem>
+            <SidebarItem icon={<Calendar />} id="ex2-cal">
+              Calendar
+            </SidebarItem>
           </SidebarGroup>
 
           <SidebarSeparator />
 
           <SidebarGroup>
             <SidebarGroupLabel>Account</SidebarGroupLabel>
-            <SidebarItem id="ex2-profile" icon={<User />}>Profile</SidebarItem>
-            <SidebarItem id="ex2-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<User />} id="ex2-profile">
+              Profile
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex2-settings">
+              Settings
+            </SidebarItem>
           </SidebarGroup>
         </SidebarContent>
 
@@ -110,18 +134,30 @@ export const PinnedExample = () => {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-            <SidebarItem id="ex3-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex3-search" icon={<Search />}>Search</SidebarItem>
-            <SidebarItem id="ex3-inbox" icon={<Inbox />}>Inbox</SidebarItem>
-            <SidebarItem id="ex3-cal" icon={<Calendar />}>Calendar</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex3-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Search />} id="ex3-search">
+              Search
+            </SidebarItem>
+            <SidebarItem icon={<Inbox />} id="ex3-inbox">
+              Inbox
+            </SidebarItem>
+            <SidebarItem icon={<Calendar />} id="ex3-cal">
+              Calendar
+            </SidebarItem>
           </SidebarGroup>
 
           <SidebarSeparator />
 
           <SidebarGroup>
             <SidebarGroupLabel>Account</SidebarGroupLabel>
-            <SidebarItem id="ex3-profile" icon={<User />}>Profile</SidebarItem>
-            <SidebarItem id="ex3-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<User />} id="ex3-profile">
+              Profile
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex3-settings">
+              Settings
+            </SidebarItem>
           </SidebarGroup>
         </SidebarContent>
 
@@ -152,16 +188,16 @@ export const WithActiveStatesExample = () => {
           <SidebarGroup>
             <SidebarGroupLabel>Analytics</SidebarGroupLabel>
             <SidebarItem
-              id="analytics"
               icon={<BarChart3 />}
+              id="analytics"
               isActive={activeItem === "analytics"}
               onClick={() => setActiveItem("analytics")}
             >
               Analytics
             </SidebarItem>
             <SidebarItem
-              id="reports"
               icon={<FileText />}
+              id="reports"
               isActive={activeItem === "reports"}
               onClick={() => setActiveItem("reports")}
             >
@@ -174,16 +210,16 @@ export const WithActiveStatesExample = () => {
           <SidebarGroup>
             <SidebarGroupLabel>Communication</SidebarGroupLabel>
             <SidebarItem
-              id="messages"
               icon={<MessageSquare />}
+              id="messages"
               isActive={activeItem === "messages"}
               onClick={() => setActiveItem("messages")}
             >
               Messages
             </SidebarItem>
             <SidebarItem
-              id="inbox"
               icon={<Inbox />}
+              id="inbox"
               isActive={activeItem === "inbox"}
               onClick={() => setActiveItem("inbox")}
             >
@@ -215,8 +251,12 @@ export const SizesExample = () => {
             <h2 className="font-semibold text-sm">Small</h2>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarItem id="ex-size-sm-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex-size-sm-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex-size-sm-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex-size-sm-settings">
+              Settings
+            </SidebarItem>
           </SidebarContent>
         </Sidebar>
       </div>
@@ -227,8 +267,12 @@ export const SizesExample = () => {
             <h2 className="font-semibold text-lg">Base</h2>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarItem id="ex-size-base-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex-size-base-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex-size-base-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex-size-base-settings">
+              Settings
+            </SidebarItem>
           </SidebarContent>
         </Sidebar>
       </div>
@@ -239,8 +283,12 @@ export const SizesExample = () => {
             <h2 className="font-semibold text-xl">Large</h2>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarItem id="ex-size-lg-home" icon={<Home />}>Home</SidebarItem>
-            <SidebarItem id="ex-size-lg-settings" icon={<Settings />}>Settings</SidebarItem>
+            <SidebarItem icon={<Home />} id="ex-size-lg-home">
+              Home
+            </SidebarItem>
+            <SidebarItem icon={<Settings />} id="ex-size-lg-settings">
+              Settings
+            </SidebarItem>
           </SidebarContent>
         </Sidebar>
       </div>

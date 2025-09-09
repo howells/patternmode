@@ -110,21 +110,8 @@ export const sidebarGroupLabelVariants = tv({
 });
 
 export const sidebarItemVariants = tv({
-  base: [
-    "flex w-full items-center gap-2 rounded-md px-2 py-1.5 font-medium text-sm",
-    "transition-colors duration-200 ease-out",
-    "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-    "focus-visible:ring-2 focus-visible:ring-zinc-200 dark:focus-visible:ring-zinc-800",
-    "text-zinc-700 dark:text-zinc-300",
-  ],
+  base: [],
   variants: {
-    size: {
-      "2xs": "gap-1.5 px-1.5 py-1 text-xs",
-      xs: "gap-1.5 px-1.5 py-1 text-xs",
-      sm: "gap-2 px-2 py-1.5 text-sm",
-      base: "gap-2 px-2 py-1.5 text-sm",
-      lg: "gap-2.5 px-2.5 py-2 text-base",
-    },
     isActive: {
       true: "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100",
       false: "",
@@ -135,7 +122,6 @@ export const sidebarItemVariants = tv({
     },
   },
   defaultVariants: {
-    size: "base",
     isActive: false,
     isExpanded: true,
   },

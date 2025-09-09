@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@patternmode/button";
+import type { IconButtonSize } from "@patternmode/button/types";
+import type { Size } from "@patternmode/config/sizes";
 import { Tooltip } from "@patternmode/tooltip";
 import { cx } from "@patternmode/utils/cx";
 import React from "react";
@@ -23,26 +25,28 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
     ref
   ) => {
     const isExpanded = useSidebar((s) => s.isExpanded);
-    const buttonSize = isExpanded ? "base" : "icon";
+    const buttonSize: Size | IconButtonSize = isExpanded ? "base" : "icon";
     const trigger = (
       <Button
         aria-label={
-          !isExpanded && typeof children === "string"
-            ? (children as string)
-            : undefined
+          !isExpanded && typeof children === "string" ? children : undefined
         }
-        className={cx(
-          sidebarItemVariants({ size, isActive, isExpanded }),
-          className
-        )}
+        className={cx(sidebarItemVariants({ isActive, isExpanded }), className)}
         data-sidebar="item"
         data-slot="sidebar-item"
         data-testid="sidebar-item"
-        icon={icon as any}
+        icon={
+          icon != null
+            ? (icon as React.ComponentType<{
+                className?: string;
+                strokeWidth?: number;
+              }>)
+            : undefined
+        }
         onClick={onClick}
         ref={ref}
         render={render}
-        size={buttonSize as any}
+        size={buttonSize}
         variant="ghost"
         {...props}
       >

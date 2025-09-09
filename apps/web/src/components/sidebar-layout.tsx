@@ -6,13 +6,12 @@ import { Separator } from "@patternmode/separator";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarItem,
   useSidebar,
 } from "@patternmode/sidebar";
-import { Stack, VStack } from "@patternmode/stack";
+import { Stack } from "@patternmode/stack";
 import { cx } from "@patternmode/utils/cx";
 import Link from "next/link";
 import type React from "react";

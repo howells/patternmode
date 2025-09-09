@@ -122,7 +122,9 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
             sidebarVariants({ size, state }),
             // When hovering in collapsed state, expand width visually
             state === "collapsed" && isExpanded && "w-[var(--sidebar-open-width)]",
-            className
+            className,
+            // Force white surface when expanded, overriding any external bg class
+            isExpanded && "bg-white dark:bg-zinc-900"
           )}
           data-testid="sidebar"
           ref={ref}
