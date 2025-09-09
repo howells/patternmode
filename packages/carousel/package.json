@@ -45,7 +45,7 @@
     "@patternmode/card": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "embla-carousel-react": "^8.5.2",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.542.0"
   },
   "devDependencies": {
