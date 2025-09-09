@@ -1,7 +1,8 @@
 "use client";
 
 // react import not needed here
-import { Combobox } from "./component";
+import { Combobox } from "./components";
+import type { ComboboxOption } from "./types";
 
 export const DefaultExample = () => {
   const options = [
@@ -53,13 +54,13 @@ export const CustomRenderingExample = () => {
     <Combobox
       options={colors}
       placeholder="Select a color..."
-      renderItem={(item) => (
+      renderItem={(item: ComboboxOption) => (
         <div className="flex items-center gap-2">
           <div
             className="h-4 w-4 rounded-full"
             style={{ backgroundColor: (item as any).color }}
           />
-          {(item as any).label}
+          {item.label}
         </div>
       )}
     />

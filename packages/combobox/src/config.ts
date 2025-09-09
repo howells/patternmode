@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ChevronsUpDown } from "lucide-react";
-import { Combobox } from "./component";
+import { Combobox } from "./components";
 import {
   AsyncExample,
   CustomRenderingExample,

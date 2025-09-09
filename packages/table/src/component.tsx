@@ -83,7 +83,7 @@ export const TableCaption = ({
   <caption
     className={cx(
       // position and spacing (render below the table, outside the grid rows)
-      "caption-bottom mt-3",
+      "mt-3 caption-bottom",
       // typography
       "text-center text-sm text-zinc-500 dark:text-zinc-400",
       className

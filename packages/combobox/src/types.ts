@@ -19,8 +19,9 @@ export type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   options?: T[];
   fetchData?: ComboboxFetchFunction<T>;
   queryKey?: (string | number)[];
-  value?: string;
-  onValueChange?: (value: string | undefined) => void;
+  value?: string | string[];
+  onValueChange?: (value: string | string[] | undefined) => void;
+  onValuesChange?: (values: string[]) => void;
   placeholder?: string;
   searchPlaceholder?: string;
   emptyMessage?: string;
@@ -35,12 +36,15 @@ export type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   renderItem?: (item: T, index: number) => React.ReactNode;
   selectOnFocus?: boolean;
   clearSearchOnSelect?: boolean;
+  multiple?: boolean;
 } & VariantProps<typeof comboboxVariants> &
   React.ComponentPropsWithoutRef<"div">;
 
 export type ComboboxMultiOption = ComboboxOption;
 
-export type ComboboxMultiProps<T extends ComboboxMultiOption = ComboboxMultiOption> = {
+export type ComboboxMultiProps<
+  T extends ComboboxMultiOption = ComboboxMultiOption,
+> = {
   options: T[];
   values: string[];
   onValuesChange: (values: string[]) => void;

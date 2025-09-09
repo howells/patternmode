@@ -1,9 +1,9 @@
 "use client";
 
 import type { Size } from "@patternmode/config/sizes";
-import { Heart, Star, Zap, Code, Globe, Palette } from "lucide-react";
+import { Code, Globe, Heart, Palette, Star, Zap } from "lucide-react";
 import React from "react";
-import { Combobox, ComboboxMulti } from "./component";
+import { Combobox } from "./components";
 import type { ComboboxOption } from "./types";
 
 export type ComboboxPreviewProps = {
@@ -237,8 +237,10 @@ export function ComboboxPreview({
   ) as ComboboxOption[];
 
   // Single select state
-  const [singleValue, setSingleValue] = React.useState<string>(defaultValue || "");
-  
+  const [singleValue, setSingleValue] = React.useState<string>(
+    defaultValue || ""
+  );
+
   // Multi select state
   const [multiValues, setMultiValues] = React.useState<string[]>([]);
 
@@ -246,58 +248,69 @@ export function ComboboxPreview({
     setSingleValue(defaultValue || "");
   }, [defaultValue]);
 
-  const getItemLabel = React.useCallback((opt: ComboboxOption) => {
-    const d = (opt as Record<string, unknown>).description;
-    return showDescriptions && typeof d === "string"
-      ? `${opt.label} — ${d}`
-      : opt.label;
-  }, [showDescriptions]);
+  const getItemLabel = React.useCallback(
+    (opt: ComboboxOption) => {
+      const d = (opt as Record<string, unknown>).description;
+      return showDescriptions && typeof d === "string"
+        ? `${opt.label} — ${d}`
+        : opt.label;
+    },
+    [showDescriptions]
+  );
 
-  const getItemIcon = React.useCallback((opt: ComboboxOption) => {
-    if (!showIcons) return undefined;
-    const IconComponent = iconMap[opt.value as keyof typeof iconMap];
-    return IconComponent ? React.createElement(IconComponent, { 
-      className: "size-4",
-      strokeWidth: iconStrokeWidth 
-    }) : undefined;
-  }, [showIcons, iconStrokeWidth]);
+  const getItemIcon = React.useCallback(
+    (opt: ComboboxOption) => {
+      if (!showIcons) return;
+      const IconComponent = iconMap[opt.value as keyof typeof iconMap];
+      return IconComponent
+        ? React.createElement(IconComponent, {
+            className: "size-4",
+            strokeWidth: iconStrokeWidth,
+          })
+        : undefined;
+    },
+    [showIcons, iconStrokeWidth]
+  );
 
   const effectiveVariant = multiSelect ? "multi" : variant;
 
   return (
     <div className="p-6">
       {effectiveVariant === "multi" ? (
-        <ComboboxMulti
-          options={options}
-          values={multiValues}
-          onValuesChange={setMultiValues}
-          placeholder={placeholder || config.placeholder}
-          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
-          emptyMessage={emptyMessage}
+        <Combobox
           disabled={disabled}
-          hasError={hasError}
-          size={size}
-          searchDebounce={searchDebounce}
-          iconStrokeWidth={iconStrokeWidth}
-          getItemLabel={getItemLabel}
+          emptyMessage={emptyMessage}
           getItemIcon={getItemIcon}
+          getItemLabel={getItemLabel}
+          hasError={hasError}
+          iconStrokeWidth={iconStrokeWidth}
+          multiple
+          onValuesChange={setMultiValues}
+          options={options}
+          placeholder={placeholder || config.placeholder}
+          searchDebounce={searchDebounce}
+          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
+          size={size}
+          value={multiValues}
         />
       ) : (
         <Combobox
-          options={options}
-          value={singleValue}
-          onValueChange={(v) => setSingleValue(v ?? "")}
-          placeholder={placeholder || config.placeholder}
-          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
-          emptyMessage={emptyMessage}
-          disabled={disabled}
-          hasError={hasError}
-          size={size}
-          searchDebounce={searchDebounce}
-          iconStrokeWidth={iconStrokeWidth}
           clearSearchOnSelect={clearSearchOnSelect}
-          getItemLabel={getItemLabel}
+          disabled={disabled}
+          emptyMessage={emptyMessage}
           getItemIcon={getItemIcon}
+          getItemLabel={getItemLabel}
+          hasError={hasError}
+          iconStrokeWidth={iconStrokeWidth}
+          onValueChange={(v: string | string[] | undefined) =>
+            setSingleValue(Array.isArray(v) ? (v[0] ?? "") : (v ?? ""))
+          }
+          options={options}
+          placeholder={placeholder || config.placeholder}
+          searchDebounce={searchDebounce}
+          searchPlaceholder={searchPlaceholder || config.searchPlaceholder}
+          size={size}
+          value={singleValue}
         />
       )}
 
@@ -307,10 +320,9 @@ export function ComboboxPreview({
           Current Selection:
         </div>
         <div className="text-zinc-600 dark:text-zinc-400">
-          {effectiveVariant === "multi" 
+          {effectiveVariant === "multi"
             ? `[${multiValues.join(", ")}] (${multiValues.length} selected)`
-            : singleValue || "(none)"
-          }
+            : singleValue || "(none)"}
         </div>
       </div>
     </div>
