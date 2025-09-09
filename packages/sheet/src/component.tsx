@@ -143,7 +143,7 @@ const SheetOverlay = ({
     <Dialog.Backdrop
       className={cx(
         // base
-        "fixed inset-0 z-50 overflow-y-auto",
+        "fixed inset-0 isolate overflow-y-auto",
         // background color
         "bg-black/30",
         // transition
@@ -183,7 +183,7 @@ const SheetContent = ({
       <Dialog.Popup
         className={cx(
           // base
-          "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-xl focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
+          "fixed inset-y-2 isolate mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-xl focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
           // border color
           "dark:border-zinc-900",
           // background color

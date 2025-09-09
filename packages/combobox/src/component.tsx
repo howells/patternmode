@@ -2,12 +2,13 @@
 
 import { Combobox as BaseCombobox } from "@base-ui-components/react/combobox";
 import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
+import { Icon } from "@patternmode/icon";
 import { Input } from "@patternmode/input";
 import { Loader } from "@patternmode/loader";
 import { cx } from "@patternmode/utils/cx";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Check } from "lucide-react";
 import React from "react";
-import type { ComboboxOption, ComboboxProps } from "./types";
+import type { ComboboxMultiProps, ComboboxOption, ComboboxProps } from "./types";
 import {
   comboboxItemVariants,
   comboboxListVariants,
@@ -15,6 +16,244 @@ import {
   comboboxVariants,
 } from "./variants";
 
+// Individual Base UI Component Exports with patternmode styling
+
+/**
+ * Root combobox container component.
+ */
+const ComboboxRoot = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Root>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Root>
+>(({ className, ...props }, ref) => (
+  <BaseCombobox.Root
+    ref={ref}
+    className={cx(comboboxVariants(), className)}
+    {...props}
+  />
+));
+ComboboxRoot.displayName = "ComboboxRoot";
+
+/**
+ * Combobox trigger button component.
+ */
+const ComboboxTrigger = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Trigger>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Trigger> & {
+    size?: "2xs" | "xs" | "sm" | "base" | "lg";
+  }
+>(({ className, size = "base", children, ...props }, ref) => (
+  <BaseCombobox.Trigger
+    ref={ref}
+    className={cx(
+      comboboxTriggerVariants({ size }),
+      "flex h-10 min-w-[12rem] items-center justify-between gap-3 bg-[canvas] pr-3 pl-3.5",
+      "hover:bg-zinc-100 data-[popup-open]:bg-zinc-100",
+      className
+    )}
+    data-testid="combobox-trigger"
+    {...props}
+  >
+    {children}
+  </BaseCombobox.Trigger>
+));
+ComboboxTrigger.displayName = "ComboboxTrigger";
+
+/**
+ * Combobox value display component.
+ */
+const ComboboxValue = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Value>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Value>
+>(({ className, ...props }, ref) => (
+  <BaseCombobox.Value
+    ref={ref}
+    className={cx("flex min-w-0 items-center gap-2", className)}
+    {...props}
+  />
+));
+ComboboxValue.displayName = "ComboboxValue";
+
+/**
+ * Combobox icon component with render prop for custom icons.
+ */
+const ComboboxIcon = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Icon>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Icon> & {
+    render?: (props: { className?: string }) => React.ReactNode;
+    iconStrokeWidth?: number;
+  }
+>(({ className, render, iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH, ...props }, ref) => (
+  <BaseCombobox.Icon
+    ref={ref}
+    className={cx("flex", className)}
+    {...props}
+  >
+    {render ? (
+      render({ className: "size-4" })
+    ) : (
+      <Icon
+        icon={ChevronsUpDown}
+        size="sm"
+        strokeWidth={iconStrokeWidth}
+        className="size-4"
+      />
+    )}
+  </BaseCombobox.Icon>
+));
+ComboboxIcon.displayName = "ComboboxIcon";
+
+/**
+ * Combobox portal component for rendering popup in different DOM location.
+ */
+const ComboboxPortal = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Portal>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Portal>
+>(({ container, ...props }, ref) => (
+  <BaseCombobox.Portal
+    ref={ref}
+    container={container} // Let Base UI handle default to body
+    {...props}
+  />
+));
+ComboboxPortal.displayName = "ComboboxPortal";
+
+/**
+ * Combobox positioner component for popup positioning.
+ */
+const ComboboxPositioner = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Positioner>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Positioner>
+>(({ className, sideOffset = 4, align = "start", ...props }, ref) => (
+  <BaseCombobox.Positioner
+    ref={ref}
+    className={className}
+    sideOffset={sideOffset}
+    align={align}
+    {...props}
+  />
+));
+ComboboxPositioner.displayName = "ComboboxPositioner";
+
+/**
+ * Combobox popup container component.
+ */
+const ComboboxPopup = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Popup>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Popup> & {
+    size?: "2xs" | "xs" | "sm" | "base" | "lg";
+  }
+>(({ className, size = "base", ...props }, ref) => (
+  <BaseCombobox.Popup
+    ref={ref}
+    className={cx(
+      comboboxListVariants({ size }),
+      "w-[var(--anchor-width)] max-h-[min(var(--available-height),23rem)] max-w-[var(--available-width)]",
+      className
+    )}
+    data-testid="combobox-popup"
+    {...props}
+  />
+));
+ComboboxPopup.displayName = "ComboboxPopup";
+
+/**
+ * Combobox input component with render prop support.
+ */
+const ComboboxInput = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Input>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Input> & {
+    size?: "2xs" | "xs" | "sm" | "base" | "lg";
+    render?: (props: {
+      className?: string;
+      ref?: React.RefObject<HTMLInputElement>;
+      [key: string]: any;
+    }) => React.ReactNode;
+  }
+>(({ className, size = "base", render, ...props }, ref) => (
+  <BaseCombobox.Input
+    ref={ref}
+    render={render || (({ className: inputClassName, ref: inputRef, ...renderProps }) => (
+      <Input
+        className={cx(
+          "w-full border-0 shadow-none ring-0 focus:ring-0 focus:border-0 focus:shadow-none bg-transparent px-0",
+          inputClassName
+        )}
+        externalRef={inputRef as React.RefObject<HTMLInputElement>}
+        size={size}
+        minimal
+        {...renderProps}
+      />
+    ))}
+    className={className}
+    {...props}
+  />
+));
+ComboboxInput.displayName = "ComboboxInput";
+
+/**
+ * Combobox list component for items container.
+ */
+const ComboboxList = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.List>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.List>
+>(({ className, ...props }, ref) => (
+  <BaseCombobox.List
+    ref={ref}
+    className={className}
+    {...props}
+  />
+));
+ComboboxList.displayName = "ComboboxList";
+
+/**
+ * Combobox item component with styling variants.
+ */
+const ComboboxItem = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.Item>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Item> & {
+    size?: "2xs" | "xs" | "sm" | "base" | "lg";
+  }
+>(({ className, size = "base", ...props }, ref) => (
+  <BaseCombobox.Item
+    ref={ref}
+    className={cx(
+      comboboxItemVariants({ size }),
+      className
+    )}
+    {...props}
+  />
+));
+ComboboxItem.displayName = "ComboboxItem";
+
+/**
+ * Combobox item indicator component (checkmark for selected items).
+ */
+const ComboboxItemIndicator = React.forwardRef<
+  React.ElementRef<typeof BaseCombobox.ItemIndicator>,
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.ItemIndicator> & {
+    render?: (props: { className?: string }) => React.ReactNode;
+  }
+>(({ className, render, ...props }, ref) => (
+  <BaseCombobox.ItemIndicator
+    ref={ref}
+    className={cx("absolute right-2 flex size-3.5 items-center justify-center", className)}
+    {...props}
+  >
+    {render ? (
+      render({ className: "size-3.5" })
+    ) : (
+      <Icon
+        icon={Check}
+        size="xs"
+        strokeWidth={2.5}
+        className="size-3.5"
+      />
+    )}
+  </BaseCombobox.ItemIndicator>
+));
+ComboboxItemIndicator.displayName = "ComboboxItemIndicator";
+
+// Compound Combobox Component (existing implementation)
 const Combobox = <T extends ComboboxOption = ComboboxOption>({
   options,
   fetchData,
@@ -127,7 +366,7 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
       className={cx(comboboxVariants({ size }), className)}
       data-testid="combobox"
     >
-      <BaseCombobox.Root
+      <ComboboxRoot
         // Provide values to Base UI. We manage filtering externally via `items` and `filter`.
         filter={(val: unknown, input: string) => {
           const it = valueToItem.get(String(val));
@@ -146,16 +385,10 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
           if (clearSearchOnSelect) setInputValue("");
         }}
         value={value}
+        disabled={disabled}
       >
-        <BaseCombobox.Trigger
-          className={cx(
-            comboboxTriggerVariants({ size }),
-            "flex h-10 min-w-[12rem] items-center justify-between gap-3 bg-[canvas] pr-3 pl-3.5",
-            "hover:bg-zinc-100 data-[popup-open]:bg-zinc-100"
-          )}
-          data-testid="combobox-trigger"
-        >
-          <BaseCombobox.Value>
+        <ComboboxTrigger size={size}>
+          <ComboboxValue>
             {(selected) => {
               const it = selected
                 ? valueToItem.get(String(selected))
@@ -173,50 +406,26 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
                 </div>
               );
             }}
-          </BaseCombobox.Value>
-          <BaseCombobox.Icon className="flex">
-            <ChevronsUpDown className="size-4" />
-          </BaseCombobox.Icon>
-        </BaseCombobox.Trigger>
+          </ComboboxValue>
+          <ComboboxIcon iconStrokeWidth={iconStrokeWidth} />
+        </ComboboxTrigger>
 
-        <BaseCombobox.Portal>
-          <BaseCombobox.Positioner>
-            <BaseCombobox.Popup
-              className={cx(
-                comboboxListVariants({ size }),
-                "max-h-[min(24rem,var(--available-height))] max-w-[var(--available-width)] origin-[var(--transform-origin)] [--input-container-height:3rem]",
-                "rounded-lg bg-[canvas] text-zinc-900 shadow-lg shadow-zinc-200 outline-1 outline-zinc-200",
-                "transition-[transform,scale,opacity] data-[ending-style]:scale-90 data-[starting-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
-                "dark:-outline-offset-1 dark:shadow-none dark:outline-zinc-300"
-              )}
-              data-testid="combobox-dropdown"
-            >
-              <div className="h-[var(--input-container-height)] w-80 p-2">
-                <BaseCombobox.Input
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup size={size}>
+              <div className="border-b border-zinc-200 p-3 dark:border-zinc-800">
+                <ComboboxInput
                   onChange={(e) =>
                     setInputValue((e.target as HTMLInputElement).value)
                   }
                   placeholder={searchPlaceholder || placeholder}
-                  render={({ className, ref, ...renderProps }) => (
-                    <Input
-                      className={cx(
-                        "h-10 w-full rounded-md border border-zinc-200 pl-3.5 text-base",
-                        "focus:-outline-offset-1 focus:outline focus:outline-2 focus:outline-blue-800",
-                        className
-                      )}
-                      externalRef={
-                        ref as unknown as React.RefObject<HTMLInputElement>
-                      }
-                      size={size}
-                      {...renderProps}
-                    />
-                  )}
+                  size={size}
                   value={inputValue}
                 />
               </div>
 
               <div
-                className="max-h-[min(calc(24rem-var(--input-container-height)),calc(var(--available-height)-var(--input-container-height)))] scroll-py-2 overflow-y-auto overscroll-contain py-2 empty:p-0"
+                className="max-h-[calc(24rem-4rem)] overflow-y-auto p-1"
                 data-testid="combobox-options"
                 onScroll={() => {
                   const el = scrollRef.current;
@@ -250,44 +459,33 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
                     )}
                     {!(isLoading || error) && items.length > 0 && (
                       <>
-                        <BaseCombobox.List>
+                        <ComboboxList>
                           {(val: string, index: number) => {
                             const item = valueToItem.get(val) as T | undefined;
                             if (!item) return null;
+                            
+                            if (renderItem) {
+                              return renderItem(item, index);
+                            }
+
                             return (
-                              <BaseCombobox.Item
-                                className={cx(
-                                  "grid cursor-default select-none grid-cols-[0.75rem_1fr] items-center gap-2 py-2 pr-8 pl-4 text-base leading-4 outline-none",
-                                  "data-[highlighted]:relative data-[highlighted]:z-0 data-[highlighted]:text-zinc-50",
-                                  "data-[highlighted]:before:absolute data-[highlighted]:before:inset-x-2 data-[highlighted]:before:inset-y-0 data-[highlighted]:before:z-[-1] data-[highlighted]:before:rounded-sm data-[highlighted]:before:bg-zinc-900"
-                                )}
+                              <ComboboxItem
                                 index={index}
                                 key={val}
                                 value={val}
+                                size={size}
                               >
-                                <BaseCombobox.ItemIndicator className="col-start-1">
-                                  {/* small checkmark */}
-                                  <svg
-                                    aria-hidden="true"
-                                    className="size-3"
-                                    fill="currentColor"
-                                    height="10"
-                                    viewBox="0 0 10 10"
-                                    width="10"
-                                  >
-                                    <path d="M9.1603 1.12218C9.50684 1.34873 9.60427 1.81354 9.37792 2.16038L5.13603 8.66012C5.01614 8.8438 4.82192 8.96576 4.60451 8.99384C4.3871 9.02194 4.1683 8.95335 4.00574 8.80615L1.24664 6.30769C0.939709 6.02975 0.916013 5.55541 1.19372 5.24822C1.47142 4.94102 1.94536 4.91731 2.2523 5.19524L4.36085 7.10461L8.12299 1.33999C8.34934 0.993152 8.81376 0.895638 9.1603 1.12218Z" />
-                                  </svg>
-                                </BaseCombobox.ItemIndicator>
-                                <div className="col-start-2 flex min-w-0 items-center gap-2">
+                                <div className="flex min-w-0 items-center gap-2">
                                   {getItemIcon?.(item)}
                                   <span className="truncate">
                                     {getItemLabel(item)}
                                   </span>
                                 </div>
-                              </BaseCombobox.Item>
+                                <ComboboxItemIndicator />
+                              </ComboboxItem>
                             );
                           }}
-                        </BaseCombobox.List>
+                        </ComboboxList>
                         {isFetchingNextPage && (
                           <div
                             className="flex items-center justify-center py-2"
@@ -322,14 +520,172 @@ const Combobox = <T extends ComboboxOption = ComboboxOption>({
                   </div>
                 )}
               </div>
-            </BaseCombobox.Popup>
-          </BaseCombobox.Positioner>
-        </BaseCombobox.Portal>
-      </BaseCombobox.Root>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>
     </div>
   );
 };
 
 Combobox.displayName = "Combobox";
 
-export { Combobox };
+// Multi-select combobox built on Base UI, exposing a checkbox list selection
+const ComboboxMulti = <T extends ComboboxOption = ComboboxOption>({
+  options,
+  values,
+  onValuesChange,
+  placeholder = "Select",
+  searchPlaceholder = "Search...",
+  disabled = false,
+  hasError = false,
+  className,
+  searchDebounce = 300,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
+  getItemValue = (item: T) => item.value,
+  getItemLabel = (item: T) => item.label,
+  getItemIcon,
+  size = "base",
+}: ComboboxMultiProps<T>) => {
+  const [inputValue, setInputValue] = React.useState("");
+  const [debouncedSearch, setDebouncedSearch] = React.useState("");
+
+  React.useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(inputValue), searchDebounce);
+    return () => clearTimeout(t);
+  }, [inputValue, searchDebounce]);
+
+  const items = React.useMemo(() => {
+    if (!debouncedSearch.trim()) return options;
+    const q = debouncedSearch.toLowerCase();
+    return options.filter((i) => getItemLabel(i).toLowerCase().includes(q));
+  }, [options, debouncedSearch, getItemLabel]);
+
+  // Map for quick lookups
+  const valueToItem = React.useMemo(() => {
+    const m = new Map<string, T>();
+    for (const it of options) m.set(getItemValue(it), it);
+    return m;
+  }, [options, getItemValue]);
+
+  return (
+    <div className={cx(comboboxVariants({ size }), className)} data-testid="combobox-multi">
+      <ComboboxRoot
+        items={options.map((it) => getItemValue(it))}
+        value={values}
+        onValueChange={(next) => {
+          const arr = Array.isArray(next) ? (next as string[]) : [String(next)];
+          onValuesChange(arr);
+        }}
+        selectionBehavior="toggle"
+        filter={(val: unknown, input: string) => {
+          const it = valueToItem.get(String(val));
+          if (!it) return false;
+          return getItemLabel(it).toLowerCase().includes(input.toLowerCase());
+        }}
+        disabled={disabled}
+      >
+        <ComboboxTrigger
+          className={cx(
+            hasError && "outline outline-1 outline-red-500"
+          )}
+          size={size}
+        >
+          <ComboboxValue>
+            {(selected) => {
+              const sel = Array.isArray(selected)
+                ? (selected as string[])
+                : selected
+                ? [String(selected)]
+                : [];
+              if (sel.length === 0) {
+                return (
+                  <span className="truncate text-zinc-500 dark:text-zinc-500">
+                    {placeholder}
+                  </span>
+                );
+              }
+              return (
+                <span className="truncate">{sel.length} selected</span>
+              );
+            }}
+          </ComboboxValue>
+          <ComboboxIcon iconStrokeWidth={iconStrokeWidth} />
+        </ComboboxTrigger>
+
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup size={size}>
+              <div className="border-b border-zinc-200 p-3 dark:border-zinc-800">
+                <ComboboxInput
+                  onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+                  placeholder={searchPlaceholder || placeholder}
+                  size={size}
+                  value={inputValue}
+                />
+              </div>
+
+              <div className="max-h-[calc(24rem-4rem)] overflow-y-auto p-1">
+                <ComboboxList>
+                  {(val: string, index: number) => {
+                    const item = valueToItem.get(val) as T | undefined;
+                    if (!item) return null;
+                    const isSelected = values.includes(val);
+                    return (
+                      <ComboboxItem
+                        index={index}
+                        key={val}
+                        value={val}
+                        size={size}
+                      >
+                        <div className="flex min-w-0 items-center gap-2">
+                          {getItemIcon?.(item)}
+                          <span className="truncate">{getItemLabel(item)}</span>
+                          {isSelected && <span className="sr-only">selected</span>}
+                        </div>
+                        <ComboboxItemIndicator />
+                      </ComboboxItem>
+                    );
+                  }}
+                </ComboboxList>
+              </div>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>
+    </div>
+  );
+};
+
+ComboboxMulti.displayName = "ComboboxMulti";
+
+// Attach individual components to the main Combobox for compound component pattern
+Object.assign(Combobox, {
+  Root: ComboboxRoot,
+  Trigger: ComboboxTrigger,
+  Value: ComboboxValue,
+  Icon: ComboboxIcon,
+  Portal: ComboboxPortal,
+  Positioner: ComboboxPositioner,
+  Popup: ComboboxPopup,
+  Input: ComboboxInput,
+  List: ComboboxList,
+  Item: ComboboxItem,
+  ItemIndicator: ComboboxItemIndicator,
+});
+
+export { 
+  Combobox, 
+  ComboboxMulti,
+  ComboboxRoot,
+  ComboboxTrigger,
+  ComboboxValue,
+  ComboboxIcon,
+  ComboboxPortal,
+  ComboboxPositioner,
+  ComboboxPopup,
+  ComboboxInput,
+  ComboboxList,
+  ComboboxItem,
+  ComboboxItemIndicator,
+};

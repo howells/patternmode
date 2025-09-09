@@ -1,11 +1,13 @@
 "use client";
 
-import { DropdownItem } from "@patternmode/dropdown-item";
+import { Combobox as BaseCombobox } from "@base-ui-components/react/combobox";
+import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
+import { Icon } from "@patternmode/icon";
+import { Input } from "@patternmode/input";
 import { Tag } from "@patternmode/tag";
 import { cx } from "@patternmode/utils/cx";
 import { focusRing } from "@patternmode/utils/focus-ring";
-import { useCombobox } from "downshift";
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import * as React from "react";
 
 export type TagOption = {
@@ -42,6 +44,8 @@ export type TagInputProps = {
   onValidate?: (value: string) => boolean;
   onCreate?: (value: string) => TagOption;
   wrap?: boolean;
+  size?: "2xs" | "xs" | "sm" | "base" | "lg";
+  clearable?: boolean;
 };
 
 const defaultFilterOptions = (
@@ -69,7 +73,6 @@ const defaultCreateNewTag = (value: string): TagOption => {
 };
 
 const defaultValue: string[] = [];
-const defaultIconStrokeWidth = 1.5;
 
 const TagInput = ({
   options,
@@ -86,13 +89,15 @@ const TagInput = ({
   dropdownClassName,
   tagClassName,
   maxHeight = 200,
-  iconStrokeWidth: _iconStrokeWidth = defaultIconStrokeWidth,
+  iconStrokeWidth = DEFAULT_ICON_STROKE_WIDTH,
   renderItem,
   renderTag,
   filterOptions = defaultFilterOptions,
-  onValidate: _onValidate = defaultValidateNewTag,
+  onValidate = defaultValidateNewTag,
   onCreate = defaultCreateNewTag,
   wrap = true,
+  size = "base",
+  clearable = true,
 }: TagInputProps) => {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isOpen, setIsOpen] = React.useState(false);
@@ -116,9 +121,11 @@ const TagInput = ({
     const optionsList = availableOptions.filter(
       (opt) => !selectedValues.has(opt.value)
     );
+    
     if (
       allowCreate &&
       inputValue.trim().length > 0 &&
+      onValidate(inputValue) &&
       !options.some(
         (o) =>
           o.label.toLowerCase() === lowerInput ||
@@ -134,89 +141,68 @@ const TagInput = ({
     availableOptions,
     inputValue,
     onCreate,
+    onValidate,
     options,
     selectedValues,
   ]);
 
-  const {
-    isOpen: comboboxIsOpen,
-    getMenuProps,
-    getInputProps,
-    getItemProps,
-    highlightedIndex,
-    openMenu,
-  } = useCombobox({
-    items: getFilteredOptions,
-    inputValue,
-    isOpen,
-    onInputValueChange: ({ inputValue: nextInputValue }) =>
-      setInputValue(nextInputValue ?? ""),
-    onIsOpenChange: ({ isOpen: nextOpen }) => setIsOpen(nextOpen),
-    itemToString: (item) => (item ? item.label : ""),
-    stateReducer: (_state, actionAndChanges) => {
-      const { changes, type } = actionAndChanges as any;
-      switch (type) {
-        case useCombobox.stateChangeTypes.InputBlur:
-          return { ...changes, isOpen: false };
-        default:
-          return changes;
-      }
-    },
-  });
-
-  const handleSelect = (option: TagOption) => {
-    if (option.disabled) return;
-    const newValues = new Set(value);
-    if (selectedValues.has(option.value)) newValues.delete(option.value);
-    else newValues.add(option.value);
-    onValueChange?.(Array.from(newValues));
-  };
-
-  const canAddMore =
-    typeof maxTags === "number" ? value.length < maxTags : true;
+  const canAddMore = typeof maxTags === "number" ? value.length < maxTags : true;
   const isInputDisabled = disabled || !canAddMore;
 
-  const renderDropdownItem = (option: TagOption, index: number) => {
-    const isHighlighted = index === highlightedIndex;
-    const isSelected = selectedValues.has(option.value);
-    if (renderItem) return renderItem(option, isHighlighted, isSelected);
-    const LeftIcon = option.icon;
-    return (
-      <DropdownItem
-        highlighted={isHighlighted}
-        key={option.value}
-        leftIcon={LeftIcon}
-        onClick={() => handleSelect(option)}
-        onMouseDown={(e) => e.preventDefault()}
-        rightIcon={isSelected ? Check : undefined}
-        selected={isSelected}
-      >
-        {option.label}
-      </DropdownItem>
+  const handleSelect = (selectedValue: string) => {
+    const option = [...availableOptions, ...getFilteredOptions].find(
+      (opt) => opt.value === selectedValue
     );
+    if (!option || option.disabled) return;
+
+    const newValues = new Set(value);
+    if (selectedValues.has(option.value)) {
+      newValues.delete(option.value);
+    } else {
+      newValues.add(option.value);
+    }
+    onValueChange?.(Array.from(newValues));
+    setInputValue(""); // Clear input after selection
   };
+
+  const handleRemoveTag = (valueToRemove: string) => {
+    onValueChange?.(value.filter((v) => v !== valueToRemove));
+  };
+
+  const handleClearAll = () => {
+    onValueChange?.([]);
+  };
+
+  const valueToItem = React.useMemo(() => {
+    const m = new Map<string, TagOption>();
+    for (const it of getFilteredOptions) m.set(it.value, it);
+    return m;
+  }, [getFilteredOptions]);
 
   return (
     <div className={cx("w-full", className)} data-testid="tag-input">
       <div
         className={cx(
           "flex items-center gap-2 rounded-md border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-950",
-          focusRing,
+          "focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500",
           wrap ? "flex-wrap" : "overflow-x-auto",
           isInputDisabled ? "cursor-not-allowed opacity-60" : ""
         )}
       >
+        {/* Selected Tags */}
         {value.map((val) => {
           const option = options.find((o) => o.value === val);
           if (!option) return null;
-          const onRemove = () =>
-            onValueChange?.(value.filter((v) => v !== val));
-          if (renderTag)
+          const onRemove = () => handleRemoveTag(val);
+          
+          if (renderTag) {
             return (
               <React.Fragment key={val}>
                 {renderTag(option, onRemove)}
               </React.Fragment>
             );
+          }
+          
           return (
             <Tag
               className={tagClassName}
@@ -227,40 +213,150 @@ const TagInput = ({
             />
           );
         })}
-        <input
-          {...getInputProps({
-            onFocus: openMenu,
-            disabled: isInputDisabled,
-            placeholder: value.length > 0 ? selectedPlaceholder : placeholder,
-            className: cx(
-              "min-w-[8ch] flex-1 bg-transparent outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500",
-              inputClassName
-            ),
-          })}
-        />
-      </div>
-      <ul
-        {...getMenuProps({
-          className: cx(
-            "mt-2 max-h-64 w-full overflow-y-auto rounded-md border border-zinc-200 bg-white p-1 shadow-sm dark:border-zinc-800 dark:bg-zinc-950",
-            dropdownClassName
-          ),
-          style: { maxHeight },
-        })}
-      >
-        {comboboxIsOpen && getFilteredOptions.length === 0 && (
-          <li className="p-2 text-sm text-zinc-500">{emptyMessage}</li>
+
+        {/* Clear All Button */}
+        {clearable && value.length > 0 && (
+          <button
+            type="button"
+            onClick={handleClearAll}
+            className={cx(
+              "flex h-6 w-6 items-center justify-center rounded-full",
+              "text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-400",
+              "transition-colors duration-150",
+              focusRing
+            )}
+            aria-label="Clear all tags"
+          >
+            <Icon icon={X} size="xs" strokeWidth={iconStrokeWidth} />
+          </button>
         )}
-        {comboboxIsOpen &&
-          getFilteredOptions.map((option, index) => (
-            <li key={option.value} {...getItemProps({ item: option, index })}>
-              {renderDropdownItem(option, index)}
-            </li>
-          ))}
-      </ul>
+
+        {/* Combobox for Adding Tags */}
+        <BaseCombobox.Root
+          items={getFilteredOptions.map((opt) => opt.value)}
+          value={[]} // Always empty since we manage selections separately
+          onValueChange={(next) => {
+            const selectedValue = Array.isArray(next) ? next[next.length - 1] : next;
+            if (selectedValue) {
+              handleSelect(String(selectedValue));
+            }
+          }}
+          filter={(val: unknown, input: string) => {
+            const it = valueToItem.get(String(val));
+            if (!it) return false;
+            return it.label.toLowerCase().includes(input.toLowerCase());
+          }}
+          onOpenChange={setIsOpen}
+          disabled={isInputDisabled}
+        >
+          <BaseCombobox.Input
+            value={inputValue}
+            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+            placeholder={value.length > 0 ? selectedPlaceholder : placeholder}
+            render={({ className: inputClass, ref: inputRef, ...inputProps }) => (
+              <Input
+                className={cx(
+                  "min-w-[8ch] flex-1 border-none bg-transparent shadow-none focus:ring-0",
+                  inputClassName,
+                  inputClass
+                )}
+                externalRef={inputRef as React.RefObject<HTMLInputElement>}
+                size={size}
+                disabled={isInputDisabled}
+                minimal
+                {...inputProps}
+              />
+            )}
+          />
+
+          <BaseCombobox.Portal>
+            <BaseCombobox.Positioner>
+              <BaseCombobox.Popup
+                className={cx(
+                  "mt-2 w-full rounded-md border border-zinc-200 bg-white p-1 shadow-lg dark:border-zinc-800 dark:bg-zinc-950",
+                  "max-h-64 overflow-y-auto isolate", // Create proper stacking context per Base UI recommendations
+                  "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
+                  dropdownClassName
+                )}
+                style={{ maxHeight }}
+                data-testid="tag-input-dropdown"
+              >
+                {isOpen && getFilteredOptions.length === 0 && (
+                  <div className="p-2 text-sm text-zinc-500">{emptyMessage}</div>
+                )}
+                
+                {isOpen && getFilteredOptions.length > 0 && (
+                  <BaseCombobox.List>
+                    {(val: string, index: number) => {
+                      const option = valueToItem.get(val);
+                      if (!option) return null;
+
+                      const isSelected = selectedValues.has(option.value);
+                      
+                      if (renderItem) {
+                        return (
+                          <BaseCombobox.Item
+                            key={val}
+                            index={index}
+                            value={val}
+                            className="outline-none"
+                          >
+                            {renderItem(option, false, isSelected)}
+                          </BaseCombobox.Item>
+                        );
+                      }
+
+                      const OptionIcon = option.icon;
+                      
+                      return (
+                        <BaseCombobox.Item
+                          key={val}
+                          index={index}
+                          value={val}
+                          className={cx(
+                            "grid cursor-pointer select-none grid-cols-[0.75rem_1fr_1rem] items-center gap-2",
+                            "rounded-md px-2 py-1.5 text-sm outline-none",
+                            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
+                            "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
+                            option.disabled && "cursor-not-allowed opacity-50"
+                          )}
+                          disabled={option.disabled}
+                        >
+                          <div className="col-start-1">
+                            {isSelected && (
+                              <Icon 
+                                icon={Check} 
+                                size="xs" 
+                                strokeWidth={iconStrokeWidth}
+                                className="text-blue-600 dark:text-blue-400" 
+                              />
+                            )}
+                          </div>
+                          <div className="col-start-2 flex min-w-0 items-center gap-2">
+                            {OptionIcon && (
+                              <Icon 
+                                icon={OptionIcon} 
+                                size="xs" 
+                                strokeWidth={iconStrokeWidth}
+                              />
+                            )}
+                            <span className="truncate">{option.label}</span>
+                          </div>
+                        </BaseCombobox.Item>
+                      );
+                    }}
+                  </BaseCombobox.List>
+                )}
+              </BaseCombobox.Popup>
+            </BaseCombobox.Positioner>
+          </BaseCombobox.Portal>
+        </BaseCombobox.Root>
+      </div>
     </div>
   );
 };
+
+TagInput.displayName = "TagInput";
 
 export { TagInput };
 

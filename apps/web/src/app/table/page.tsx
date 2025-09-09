@@ -1,7 +1,15 @@
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@patternmode/table";
 import { Heading } from "@patternmode/heading";
-import { Text } from "@patternmode/text";
 import { Stack } from "@patternmode/stack";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@patternmode/table";
+import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/utils/cx";
 
 export const metadata = { title: "Table Demo" };
@@ -29,15 +37,17 @@ export default function TableDemoPage() {
   ] as const;
 
   return (
-    <main className={cx("mx-auto w-full max-w-4xl p-6 bg-white dark:bg-zinc-950")}>
+    <main
+      className={cx("mx-auto w-full max-w-4xl bg-white p-6 dark:bg-zinc-950")}
+    >
       <Stack gap={2}>
         <Heading level={1}>Table</Heading>
-        <Text size="sm" className="text-zinc-600 dark:text-zinc-400">
+        <Text className="text-zinc-600 dark:text-zinc-400" size="sm">
           Demo of @patternmode/table primitives rendered at /table.
         </Text>
       </Stack>
 
-      <Stack gap={2} className="mt-6">
+      <Stack className="mt-6" gap={2}>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -63,14 +73,13 @@ export default function TableDemoPage() {
                 <TableCell className="font-medium" colSpan={3}>
                   Total
                 </TableCell>
-                <TableCell className="text-right">{rows.length} members</TableCell>
+                <TableCell className="text-right">
+                  {rows.length} members
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>
         </div>
-        <Text size="sm" className="mt-1 text-center text-zinc-500 dark:text-zinc-400">
-          Team directory
-        </Text>
       </Stack>
     </main>
   );

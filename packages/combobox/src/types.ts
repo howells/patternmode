@@ -37,3 +37,22 @@ export type ComboboxProps<T extends ComboboxOption = ComboboxOption> = {
   clearSearchOnSelect?: boolean;
 } & VariantProps<typeof comboboxVariants> &
   React.ComponentPropsWithoutRef<"div">;
+
+export type ComboboxMultiOption = ComboboxOption;
+
+export type ComboboxMultiProps<T extends ComboboxMultiOption = ComboboxMultiOption> = {
+  options: T[];
+  values: string[];
+  onValuesChange: (values: string[]) => void;
+  placeholder?: string;
+  searchPlaceholder?: string;
+  disabled?: boolean;
+  hasError?: boolean;
+  className?: string;
+  searchDebounce?: number;
+  iconStrokeWidth?: number;
+  getItemValue?: (item: T) => string;
+  getItemLabel?: (item: T) => string;
+  getItemIcon?: (item: T) => React.ReactNode;
+} & VariantProps<typeof comboboxVariants> &
+  React.ComponentPropsWithoutRef<"div">;

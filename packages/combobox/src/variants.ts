@@ -21,8 +21,7 @@ export const comboboxTriggerVariants = tv({
 export const comboboxListVariants = tv({
   extend: selectPopoverVariants,
   base: [
-    "absolute z-60 mt-1 w-full",
-    "max-h-60 overflow-auto",
+    "max-h-[var(--available-height)] overflow-y-auto rounded-md border border-zinc-200 bg-white text-popover-foreground isolate dark:border-zinc-800 dark:bg-zinc-950",
     "scrollbar-thin scrollbar-track-zinc-100 scrollbar-thumb-zinc-300 dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-600",
   ],
   variants: {
@@ -40,17 +39,19 @@ export const comboboxListVariants = tv({
 export const comboboxItemVariants = tv({
   extend: selectItemVariants,
   base: [
-    "data-[selected]: flex cursor-pointer select-none items-center justify-between outline-none transition-colors",
-    "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
-    "data-[highlighted]:bg-zinc-100 dark:data-[highlighted]:bg-zinc-800",
+    "relative flex w-full cursor-default select-none items-center rounded-sm outline-none",
+    "bg-white dark:bg-zinc-950",
+    "hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-100",
+    "focus:bg-zinc-100 focus:text-zinc-900 dark:focus:bg-zinc-800 dark:focus:text-zinc-100",
+    "data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900 dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-100",
   ],
   variants: {
     size: {
-      "2xs": "px-1.5 py-0.5 text-[11px]",
+      "2xs": "px-2 py-1 text-xs",
       xs: "px-2 py-1 text-xs",
-      sm: "px-2.5 py-1.5 text-sm",
-      base: "px-3 py-2 text-sm",
-      lg: "px-4 py-2.5 text-base",
+      sm: "px-2 py-1.5 text-sm",
+      base: "px-2 py-1.5 text-sm",
+      lg: "px-3 py-2 text-base",
     },
   },
   defaultVariants: { size: "base" },

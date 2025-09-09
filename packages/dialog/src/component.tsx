@@ -56,7 +56,7 @@ const DialogOverlay = ({
   return (
     <BaseDialog.Backdrop
       className={cx(
-        "fixed inset-0 z-50",
+        "fixed inset-0 isolate",
         "bg-black/70",
         "transition-all duration-150",
         "data-[starting-style]:opacity-0",
@@ -80,7 +80,7 @@ const DialogContent = ({
       <DialogOverlay />
       <BaseDialog.Popup
         className={cx(
-          "-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-[95vw] max-w-lg overflow-y-auto rounded-md border p-6 shadow-xl",
+          "-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 isolate max-h-[90vh] w-[95vw] max-w-lg overflow-y-auto rounded-md border p-6 shadow-xl",
           "dark:border-zinc-900",
           "bg-white dark:bg-[#090E1A]",
           "transition-all duration-150",

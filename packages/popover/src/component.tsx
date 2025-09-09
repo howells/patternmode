@@ -134,25 +134,27 @@ const PopoverContent = ({
   collisionPadding,
   ...props
 }: PopoverContentProps) => (
-  <PopoverPositioner
-    align={align}
-    collisionPadding={collisionPadding}
-    side={side}
-    sideOffset={sideOffset}
-  >
-    <BasePopover.Popup
-      className={cx(
-        "z-50 w-72 rounded-md border bg-white shadow-2xl outline-hidden dark:bg-[#090E1A]",
+  <PopoverPortal>
+    <PopoverPositioner
+      align={align}
+      collisionPadding={collisionPadding}
+      side={side}
+      sideOffset={sideOffset}
+    >
+      <BasePopover.Popup
+        className={cx(
+          "z-50 w-72 rounded-md border bg-white shadow-2xl outline-hidden dark:bg-[#090E1A]",
 
-        "transition-all duration-150",
-        "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
-        "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  </PopoverPositioner>
+          "transition-all duration-150",
+          "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
+          "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    </PopoverPositioner>
+  </PopoverPortal>
 );
 PopoverContent.displayName = "PopoverContent";
 

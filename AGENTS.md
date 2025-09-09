@@ -10,6 +10,9 @@
 - **Test E2E**: `pnpm test:e2e` (Playwright tests)
 - **Single Test**: `pnpm vitest run path/to/test.spec.ts`
 
+### Important: Do Not Run Build/Dev
+- Do not run `pnpm dev`, `pnpm build`, `next dev`, or `next build` from the agent. The maintainer runs these locally. Use `pnpm typecheck`, `pnpm lint`, and tests for validation instead.
+
 ## Architecture
 - **JIT TypeScript**: NO compilation - all .ts/.tsx files executed directly
 - **NO .js files**: Everything must be TypeScript

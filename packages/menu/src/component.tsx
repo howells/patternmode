@@ -42,11 +42,7 @@ const MenuTrigger = ({
   ...props
 }: MenuTriggerProps) => {
   // Default to Button render unless custom render prop is provided
-  const defaultRender = (
-    <Button
-      className={cx("inline-flex cursor-pointer items-center gap-2", className)}
-    />
-  );
+  const defaultRender = <Button />;
 
   return (
     <BaseMenu.Trigger ref={ref} render={render || defaultRender} {...props}>

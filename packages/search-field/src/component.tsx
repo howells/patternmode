@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@patternmode/stack";
 import { Text } from "@patternmode/text";
 import { cx } from "@patternmode/utils/cx";
