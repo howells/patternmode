@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@patternmode/card";
-import { Stack } from "./component";
+import { Stack } from "./components/stack";
 import type { StackProps } from "./types";
 
 export function StackPreview(props: StackProps) {

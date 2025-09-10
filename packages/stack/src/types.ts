@@ -13,6 +13,28 @@ import type { stackVariants } from "./variants";
  */
 export type StackDirection = "vertical" | "horizontal";
 
+/**
+ * Props passed to render prop children functions.
+ */
+export type StackRenderProps = {
+  /**
+   * The computed CSS classes applied to the stack container.
+   */
+  className: string;
+  /**
+   * The resolved direction (non-responsive base value).
+   */
+  direction: StackDirection;
+  /**
+   * The resolved gap value (non-responsive base value).
+   */
+  gap: number;
+  /**
+   * The resolved padding value (non-responsive base value).
+   */
+  padding: number | undefined;
+};
+
 export type StackProps = {
   /**
    * The direction of the stack - can be responsive.
@@ -52,7 +74,8 @@ export type StackProps = {
   /**
    * Stack content.
    * The child elements to be arranged in the stack layout.
+   * Can be React nodes or a render prop function that receives layout information.
    */
-  children: React.ReactNode;
+  children: React.ReactNode | ((props: StackRenderProps) => React.ReactNode);
 } & React.HTMLAttributes<HTMLElement> &
   Omit<VariantProps<typeof stackVariants>, "gap" | "padding" | "direction">;

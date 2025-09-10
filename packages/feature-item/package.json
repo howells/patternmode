@@ -54,7 +54,7 @@
     "@patternmode/icon-container": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.542.0"
+    "lucide-react": "^0.543.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.12",

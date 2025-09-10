@@ -1,14 +1,12 @@
 "use client";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "./component";
+import { NavigationMenu } from "./components/navigation-menu";
+import { NavigationMenuContent } from "./components/navigation-menu-content";
+import { NavigationMenuItem } from "./components/navigation-menu-item";
+import { NavigationMenuLink } from "./components/navigation-menu-link";
+import { NavigationMenuList } from "./components/navigation-menu-list";
+import { NavigationMenuTrigger } from "./components/navigation-menu-trigger";
+import { NavigationMenuViewport } from "./components/navigation-menu-viewport";
 
 export type NavigationMenuPreviewProps = {
   /**
@@ -32,6 +30,10 @@ export type NavigationMenuPreviewProps = {
    */
   contentLayout?: "simple" | "grid" | "list";
 };
+
+// Constants for menu item count options
+// biome-ignore lint/style/noMagicNumbers: These are configuration constants with clear meaning
+const MENU_ITEM_COUNT_OPTIONS = [2, 3, 4] as const;
 
 export function NavigationMenuPreview({
   orientation = "horizontal",
@@ -147,7 +149,7 @@ export const navigationMenuPreviewProps = [
     type: "select",
     description:
       "Number of menu items to display - controls how many top-level menu items are shown.",
-    options: [2, 3, 4],
+    options: MENU_ITEM_COUNT_OPTIONS,
     defaultValue: 3,
   },
   {

@@ -44,9 +44,9 @@
     "@patternmode/config": "workspace:*",
     "@patternmode/copy-button": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.542.0",
+    "lucide-react": "^0.543.0",
     "react-syntax-highlighter": "^15.6.6",
-    "tailwind-variants": "^3.1.0"
+    "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*",

@@ -86,7 +86,7 @@
     "@patternmode/tag": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "downshift": "^9.0.10",
-    "lucide-react": "^0.542.0"
+    "lucide-react": "^0.543.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*",

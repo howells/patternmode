@@ -44,9 +44,9 @@
     "@patternmode/button": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.542.0",
+    "lucide-react": "^0.543.0",
     "sonner": "^2.0.7",
-    "tailwind-variants": "^3.1.0"
+    "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

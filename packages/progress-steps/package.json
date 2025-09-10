@@ -27,7 +27,9 @@
       "default": "./src/examples.tsx"
     }
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "build": "tsc --noEmit",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
@@ -43,8 +45,8 @@
     "@patternmode/constants": "workspace:*",
     "@patternmode/dot": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.542.0",
-    "tailwind-variants": "^3.1.0"
+    "lucide-react": "^0.543.0",
+    "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

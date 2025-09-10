@@ -18,8 +18,8 @@
     "./progress": "./src/progress.ts",
     "./border-ring": "./src/border-ring.ts",
     "./border-ring-dashed": "./src/border-ring-dashed.ts",
-    "./floating-surface": "./src/floating-surface.ts"
-    ,"./floating-item": "./src/floating-item.ts"
+    "./floating-surface": "./src/floating-surface.ts",
+    "./floating-item": "./src/floating-item.ts"
   },
   "files": [
     "src"
@@ -32,7 +32,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.3.1",
-    "tailwind-variants": "^3.1.0"
+    "tailwind-variants": "^3.1.1"
   },
   "peerDependencies": {
     "tailwindcss": "^4.1.12"

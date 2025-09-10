@@ -49,7 +49,7 @@
     "@patternmode/text": "workspace:*",
     "@patternmode/text-list": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.542.0"
+    "lucide-react": "^0.543.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

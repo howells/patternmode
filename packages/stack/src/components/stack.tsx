@@ -12,8 +12,8 @@ import {
   getPaddingClass,
 } from "@patternmode/utils/spacing";
 import type * as React from "react";
-import type { StackProps } from "./types";
-import { stackVariants } from "./variants";
+import type { StackProps, StackRenderProps } from "../types";
+import { stackVariants } from "../variants";
 
 /**
  * Layout component for vertical or horizontal stacking with configurable spacing and responsive direction.
@@ -58,22 +58,32 @@ const Stack = ({
     wrap,
   });
 
+  // Support render props pattern
+  const computedClasses = cx(
+    generatedClasses,
+    baseGapClass,
+    basePaddingClass,
+    responsiveDirectionClasses,
+    responsiveGapClasses,
+    responsivePaddingClasses,
+    className
+  );
+
+  const renderProps: StackRenderProps = {
+    className: computedClasses,
+    direction: baseDirection,
+    gap: baseGapValue,
+    padding: basePadding,
+  };
+
   return (
     <Component
-      className={cx(
-        generatedClasses,
-        baseGapClass,
-        basePaddingClass,
-        responsiveDirectionClasses,
-        responsiveGapClasses,
-        responsivePaddingClasses,
-        className
-      )}
+      className={computedClasses}
       data-testid="stack"
       ref={ref}
       {...props}
     >
-      {children}
+      {typeof children === "function" ? children(renderProps) : children}
     </Component>
   );
 };
@@ -85,10 +95,16 @@ Stack.displayName = "Stack";
  */
 const VStack = ({
   ref,
+  children,
   ...props
 }: Omit<StackProps, "direction"> & {
   ref?: React.RefObject<HTMLElement | null>;
-}) => <Stack direction="vertical" ref={ref} {...props} />;
+  children?: React.ReactNode | ((props: StackRenderProps) => React.ReactNode);
+}) => (
+  <Stack direction="vertical" ref={ref} {...props}>
+    {children}
+  </Stack>
+);
 VStack.displayName = "VStack";
 
 /**
@@ -96,10 +112,17 @@ VStack.displayName = "VStack";
  */
 const HStack = ({
   ref,
+  children,
   ...props
 }: Omit<StackProps, "direction"> & {
   ref?: React.RefObject<HTMLElement | null>;
-}) => <Stack direction="horizontal" ref={ref} {...props} />;
+  children?: React.ReactNode | ((props: StackRenderProps) => React.ReactNode);
+}) => (
+  <Stack direction="horizontal" ref={ref} {...props}>
+    {children}
+  </Stack>
+);
 HStack.displayName = "HStack";
 
 export { HStack, Stack, VStack };
+export type { StackRenderProps } from "../types";

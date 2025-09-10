@@ -76,7 +76,7 @@
   "dependencies": {
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.542.0"
+    "lucide-react": "^0.543.0"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "^1.55.0",

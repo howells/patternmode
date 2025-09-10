@@ -12,15 +12,15 @@ importers:
         specifier: ^1.39.10
         version: 1.39.10
       nuqs:
-        specifier: ^2.5.2
-        version: 2.5.2(next@15.5.2(@babel/core@7.28.3)(@playwright/test@1.55.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+        specifier: ^2.6.0
+        version: 2.6.0(next@15.5.2(@babel/core@7.28.3)(@playwright/test@1.55.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.2.2
-        version: 2.2.2
+        specifier: ^2.2.4
+        version: 2.2.4
       '@changesets/cli':
-        specifier: ^2.29.6
-        version: 2.29.6(@types/node@24.3.1)
+        specifier: ^2.29.7
+        version: 2.29.7(@types/node@24.3.1)
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
         version: 1.55.0(@types/node@24.3.1)(jiti@2.5.1)(lightningcss@1.30.1)(vite@7.1.3(@types/node@24.3.1)(jiti@2.5.1)(lightningcss@1.30.1)(yaml@2.8.0))(yaml@2.8.0)
@@ -43,8 +43,8 @@ importers:
         specifier: ^2.5.6
         version: 2.5.6
       ultracite:
-        specifier: ^5.3.3
-        version: 5.3.3(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(typescript@5.9.2)(yaml@2.8.0)
+        specifier: ^5.3.4
+        version: 5.3.4(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(typescript@5.9.2)(yaml@2.8.0)
       yalc:
         specifier: ^1.0.0-pre.53
         version: 1.0.0-pre.53
@@ -340,14 +340,14 @@ importers:
         specifier: ^3.11.0
         version: 3.15.1(react@19.1.1)
       '@tailwindcss/postcss':
-        specifier: ^4.1.12
-        version: 4.1.12
+        specifier: ^4.1.13
+        version: 4.1.13
       '@tanstack/react-query':
-        specifier: ^5.86.0
-        version: 5.86.0(react@19.1.1)
+        specifier: ^5.87.4
+        version: 5.87.4(react@19.1.1)
       '@tanstack/react-query-devtools':
-        specifier: ^5.86.0
-        version: 5.86.0(@tanstack/react-query@5.86.0(react@19.1.1))(react@19.1.1)
+        specifier: ^5.87.4
+        version: 5.87.4(@tanstack/react-query@5.87.4(react@19.1.1))(react@19.1.1)
       '@tanstack/react-table':
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -364,8 +364,8 @@ importers:
         specifier: ^12.23.0
         version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       motion:
         specifier: ^12.23.12
         version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -394,11 +394,11 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
       tailwindcss:
-        specifier: ^4.1.12
-        version: 4.1.12
+        specifier: ^4.1.13
+        version: 4.1.13
       usehooks-ts:
         specifier: ^3.1.0
         version: 3.1.1(react@19.1.1)
@@ -446,8 +446,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -455,8 +455,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -483,8 +483,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -492,8 +492,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -511,8 +511,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -520,8 +520,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -554,8 +554,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -563,8 +563,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -603,8 +603,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -612,8 +612,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -646,8 +646,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -658,8 +658,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -698,8 +698,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -707,8 +707,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -732,8 +732,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -763,8 +763,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -772,8 +772,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -800,8 +800,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -809,8 +809,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -834,8 +834,8 @@ importers:
         specifier: ^8.6.0
         version: 8.6.0(react@19.1.1)
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -862,8 +862,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -871,8 +871,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -893,8 +893,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -902,8 +902,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -923,8 +923,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -935,8 +935,8 @@ importers:
         specifier: ^15.6.6
         version: 15.6.6(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -972,8 +972,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1012,8 +1012,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1021,8 +1021,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1049,11 +1049,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
       tailwindcss:
         specifier: ^4.1.12
-        version: 4.1.12
+        version: 4.1.13
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1074,11 +1074,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1105,8 +1105,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1130,8 +1130,8 @@ importers:
         specifier: workspace:*
         version: link:../config
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1139,8 +1139,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1234,8 +1234,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1243,8 +1243,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1259,8 +1259,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1268,8 +1268,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1296,8 +1296,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1324,8 +1324,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1333,8 +1333,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1352,8 +1352,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1361,8 +1361,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1383,8 +1383,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1401,58 +1401,6 @@ importers:
       '@patternmode/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
-
-  packages/dropdown-item:
-    dependencies:
-      '@base-ui-components/react':
-        specifier: 1.0.0-beta.3
-        version: 1.0.0-beta.3(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      '@patternmode/button':
-        specifier: workspace:*
-        version: link:../button
-      '@patternmode/config':
-        specifier: workspace:*
-        version: link:../config
-      '@patternmode/utils':
-        specifier: workspace:*
-        version: link:../utils
-      lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
-      react:
-        specifier: ^19.0.0
-        version: 19.1.1
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.1.1(react@19.1.1)
-      tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
-    devDependencies:
-      '@patternmode/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      '@playwright/experimental-ct-react':
-        specifier: ^1.55.0
-        version: 1.55.0(@types/node@24.3.1)(jiti@2.5.1)(lightningcss@1.30.1)(vite@7.1.3(@types/node@24.3.1)(jiti@2.5.1)(lightningcss@1.30.1)(yaml@2.8.0))(yaml@2.8.0)
-      '@playwright/test':
-        specifier: ^1.55.0
-        version: 1.55.0
-      '@types/node':
-        specifier: ^24.3.1
-        version: 24.3.1
-      '@types/react':
-        specifier: ^19.1.12
-        version: 19.1.12
-      '@types/react-dom':
-        specifier: ^19.1.9
-        version: 19.1.9(@types/react@19.1.12)
-      typescript:
-        specifier: ^5.9.2
-        version: 5.9.2
-      vitest:
-        specifier: ^3.2.4
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(yaml@2.8.0)
 
   packages/empty-state:
     dependencies:
@@ -1478,8 +1426,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1487,8 +1435,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1509,8 +1457,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1549,8 +1497,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1610,8 +1558,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1641,8 +1589,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1672,8 +1620,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1697,8 +1645,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1706,8 +1654,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/card':
         specifier: workspace:*
@@ -1743,8 +1691,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1783,8 +1731,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1814,8 +1762,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1823,8 +1771,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -1863,8 +1811,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1872,8 +1820,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -1915,8 +1863,8 @@ importers:
         specifier: workspace:*
         version: link:../icons
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1940,8 +1888,8 @@ importers:
   packages/icons:
     dependencies:
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
     devDependencies:
       typescript:
         specifier: ^5.9.2
@@ -1962,8 +1910,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1971,8 +1919,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -1990,8 +1938,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -1999,8 +1947,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -2036,8 +1984,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2082,8 +2030,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2091,8 +2039,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -2137,8 +2085,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2168,8 +2116,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2196,8 +2144,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2205,8 +2153,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2227,8 +2175,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       motion:
         specifier: ^12.23.12
         version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -2248,6 +2196,9 @@ importers:
       '@base-ui-components/react':
         specifier: 1.0.0-beta.3
         version: 1.0.0-beta.3(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@patternmode/button':
+        specifier: workspace:*
+        version: link:../button
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
@@ -2255,8 +2206,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2289,8 +2240,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2298,8 +2249,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2317,8 +2268,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2345,8 +2296,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2370,8 +2321,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2395,8 +2346,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2404,8 +2355,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2420,8 +2371,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2429,8 +2380,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2451,8 +2402,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2460,8 +2411,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2479,8 +2430,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2488,8 +2439,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2510,8 +2461,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2544,8 +2495,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2575,8 +2526,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2609,8 +2560,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2643,8 +2594,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2652,8 +2603,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2689,8 +2640,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2698,8 +2649,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2729,8 +2680,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2738,8 +2689,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -2790,8 +2741,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2814,6 +2765,9 @@ importers:
       '@patternmode/config':
         specifier: workspace:*
         version: link:../config
+      '@patternmode/icon':
+        specifier: workspace:*
+        version: link:../icon
       '@patternmode/separator':
         specifier: workspace:*
         version: link:../separator
@@ -2830,8 +2784,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2839,8 +2793,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.1.1)
@@ -2861,8 +2815,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2870,8 +2824,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2889,8 +2843,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       motion:
         specifier: ^12.23.12
         version: 12.23.12(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -2901,8 +2855,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -2941,8 +2895,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2978,8 +2932,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -2987,8 +2941,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3003,8 +2957,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3012,8 +2966,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/card':
         specifier: workspace:*
@@ -3076,8 +3030,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3095,11 +3049,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
       tailwindcss:
         specifier: ^4.1.12
-        version: 4.1.12
+        version: 4.1.13
     devDependencies:
       typescript:
         specifier: ^5.9.2
@@ -3114,8 +3068,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3163,8 +3117,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3182,8 +3136,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3260,8 +3214,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3281,8 +3235,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3290,8 +3244,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
 
   packages/tag-input:
     dependencies:
@@ -3323,8 +3277,8 @@ importers:
         specifier: ^9.0.10
         version: 9.0.10(react@19.1.1)
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3369,8 +3323,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3381,8 +3335,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -3415,8 +3369,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3424,8 +3378,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -3440,8 +3394,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3452,8 +3406,8 @@ importers:
         specifier: ^8.5.9
         version: 8.5.9(@types/react@19.1.12)(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3486,8 +3440,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3495,8 +3449,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3514,8 +3468,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3526,8 +3480,8 @@ importers:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3548,8 +3502,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3557,8 +3511,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3585,8 +3539,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3594,8 +3548,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3616,8 +3570,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3625,8 +3579,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@patternmode/tsconfig':
         specifier: workspace:*
@@ -3650,8 +3604,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.542.0
-        version: 0.542.0(react@19.1.1)
+        specifier: ^0.543.0
+        version: 0.543.0(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -3659,8 +3613,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
     devDependencies:
       '@playwright/experimental-ct-react':
         specifier: ^1.55.0
@@ -3695,11 +3649,11 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       tailwind-variants:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12)
+        specifier: ^3.1.1
+        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13)
       tailwindcss:
         specifier: ^4.1.12
-        version: 4.1.12
+        version: 4.1.13
     devDependencies:
       typescript:
         specifier: ^5.9.2
@@ -3793,6 +3747,10 @@ packages:
     resolution: {integrity: sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/runtime@7.28.4':
+    resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
     engines: {node: '>=6.9.0'}
@@ -3826,61 +3784,61 @@ packages:
       '@types/react':
         optional: true
 
-  '@biomejs/biome@2.2.2':
-    resolution: {integrity: sha512-j1omAiQWCkhuLgwpMKisNKnsM6W8Xtt1l0WZmqY/dFj8QPNkIoTvk4tSsi40FaAAkBE1PU0AFG2RWFBWenAn+w==}
+  '@biomejs/biome@2.2.4':
+    resolution: {integrity: sha512-TBHU5bUy/Ok6m8c0y3pZiuO/BZoY/OcGxoLlrfQof5s8ISVwbVBdFINPQZyFfKwil8XibYWb7JMwnT8wT4WVPg==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.2.2':
-    resolution: {integrity: sha512-6ePfbCeCPryWu0CXlzsWNZgVz/kBEvHiPyNpmViSt6A2eoDf4kXs3YnwQPzGjy8oBgQulrHcLnJL0nkCh80mlQ==}
+  '@biomejs/cli-darwin-arm64@2.2.4':
+    resolution: {integrity: sha512-RJe2uiyaloN4hne4d2+qVj3d3gFJFbmrr5PYtkkjei1O9c+BjGXgpUPVbi8Pl8syumhzJjFsSIYkcLt2VlVLMA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.2.2':
-    resolution: {integrity: sha512-Tn4JmVO+rXsbRslml7FvKaNrlgUeJot++FkvYIhl1OkslVCofAtS35MPlBMhXgKWF9RNr9cwHanrPTUUXcYGag==}
+  '@biomejs/cli-darwin-x64@2.2.4':
+    resolution: {integrity: sha512-cFsdB4ePanVWfTnPVaUX+yr8qV8ifxjBKMkZwN7gKb20qXPxd/PmwqUH8mY5wnM9+U0QwM76CxFyBRJhC9tQwg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.2.2':
-    resolution: {integrity: sha512-/MhYg+Bd6renn6i1ylGFL5snYUn/Ct7zoGVKhxnro3bwekiZYE8Kl39BSb0MeuqM+72sThkQv4TnNubU9njQRw==}
+  '@biomejs/cli-linux-arm64-musl@2.2.4':
+    resolution: {integrity: sha512-7TNPkMQEWfjvJDaZRSkDCPT/2r5ESFPKx+TEev+I2BXDGIjfCZk2+b88FOhnJNHtksbOZv8ZWnxrA5gyTYhSsQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-arm64@2.2.2':
-    resolution: {integrity: sha512-JfrK3gdmWWTh2J5tq/rcWCOsImVyzUnOS2fkjhiYKCQ+v8PqM+du5cfB7G1kXas+7KQeKSWALv18iQqdtIMvzw==}
+  '@biomejs/cli-linux-arm64@2.2.4':
+    resolution: {integrity: sha512-M/Iz48p4NAzMXOuH+tsn5BvG/Jb07KOMTdSVwJpicmhN309BeEyRyQX+n1XDF0JVSlu28+hiTQ2L4rZPvu7nMw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64-musl@2.2.2':
-    resolution: {integrity: sha512-ZCLXcZvjZKSiRY/cFANKg+z6Fhsf9MHOzj+NrDQcM+LbqYRT97LyCLWy2AS+W2vP+i89RyRM+kbGpUzbRTYWig==}
+  '@biomejs/cli-linux-x64-musl@2.2.4':
+    resolution: {integrity: sha512-m41nFDS0ksXK2gwXL6W6yZTYPMH0LughqbsxInSKetoH6morVj43szqKx79Iudkp8WRT5SxSh7qVb8KCUiewGg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64@2.2.2':
-    resolution: {integrity: sha512-Ogb+77edO5LEP/xbNicACOWVLt8mgC+E1wmpUakr+O4nKwLt9vXe74YNuT3T1dUBxC/SnrVmlzZFC7kQJEfquQ==}
+  '@biomejs/cli-linux-x64@2.2.4':
+    resolution: {integrity: sha512-orr3nnf2Dpb2ssl6aihQtvcKtLySLta4E2UcXdp7+RTa7mfJjBgIsbS0B9GC8gVu0hjOu021aU8b3/I1tn+pVQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-win32-arm64@2.2.2':
-    resolution: {integrity: sha512-wBe2wItayw1zvtXysmHJQoQqXlTzHSpQRyPpJKiNIR21HzH/CrZRDFic1C1jDdp+zAPtqhNExa0owKMbNwW9cQ==}
+  '@biomejs/cli-win32-arm64@2.2.4':
+    resolution: {integrity: sha512-NXnfTeKHDFUWfxAefa57DiGmu9VyKi0cDqFpdI+1hJWQjGJhJutHPX0b5m+eXvTKOaf+brU+P0JrQAZMb5yYaQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.2.2':
-    resolution: {integrity: sha512-DAuHhHekGfiGb6lCcsT4UyxQmVwQiBCBUMwVra/dcOSs9q8OhfaZgey51MlekT3p8UwRqtXQfFuEJBhJNdLZwg==}
+  '@biomejs/cli-win32-x64@2.2.4':
+    resolution: {integrity: sha512-3Y4V4zVRarVh/B/eSHczR4LYoSVyv3Dfuvm3cWs5w/HScccS0+Wt/lHOcDTRYeHjQmMYVC3rIRWqyN2EI52+zg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
 
-  '@changesets/apply-release-plan@7.0.12':
-    resolution: {integrity: sha512-EaET7As5CeuhTzvXTQCRZeBUcisoYPDDcXvgTE/2jmmypKp0RC7LxKj/yzqeh/1qFTZI7oDGFcL1PHRuQuketQ==}
+  '@changesets/apply-release-plan@7.0.13':
+    resolution: {integrity: sha512-BIW7bofD2yAWoE8H4V40FikC+1nNFEKBisMECccS16W1rt6qqhNTBDmIw5HaqmMgtLNz9e7oiALiEUuKrQ4oHg==}
 
   '@changesets/assemble-release-plan@6.0.9':
     resolution: {integrity: sha512-tPgeeqCHIwNo8sypKlS3gOPmsS3wP0zHt67JDuL20P4QcXiw/O4Hl7oXiuLnP9yg+rXLQ2sScdV1Kkzde61iSQ==}
@@ -3888,8 +3846,8 @@ packages:
   '@changesets/changelog-git@0.2.1':
     resolution: {integrity: sha512-x/xEleCFLH28c3bQeQIyeZf8lFXyDFVn1SgcBiR2Tw/r4IAWlk1fzxCEZ6NxQAjF2Nwtczoen3OA2qR+UawQ8Q==}
 
-  '@changesets/cli@2.29.6':
-    resolution: {integrity: sha512-6qCcVsIG1KQLhpQ5zE8N0PckIx4+9QlHK3z6/lwKnw7Tir71Bjw8BeOZaxA/4Jt00pcgCnCSWZnyuZf5Il05QQ==}
+  '@changesets/cli@2.29.7':
+    resolution: {integrity: sha512-R7RqWoaksyyKXbKXBTbT4REdy22yH81mcFK6sWtqSanxUCbUi9Uf+6aqxZtDQouIqPdem2W56CdxXgsxdq7FLQ==}
     hasBin: true
 
   '@changesets/config@3.1.1':
@@ -4962,65 +4920,65 @@ packages:
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
-  '@tailwindcss/node@4.1.12':
-    resolution: {integrity: sha512-3hm9brwvQkZFe++SBt+oLjo4OLDtkvlE8q2WalaD/7QWaeM7KEJbAiY/LJZUaCs7Xa8aUu4xy3uoyX4q54UVdQ==}
+  '@tailwindcss/node@4.1.13':
+    resolution: {integrity: sha512-eq3ouolC1oEFOAvOMOBAmfCIqZBJuvWvvYWh5h5iOYfe1HFC6+GZ6EIL0JdM3/niGRJmnrOc+8gl9/HGUaaptw==}
 
-  '@tailwindcss/oxide-android-arm64@4.1.12':
-    resolution: {integrity: sha512-oNY5pq+1gc4T6QVTsZKwZaGpBb2N1H1fsc1GD4o7yinFySqIuRZ2E4NvGasWc6PhYJwGK2+5YT1f9Tp80zUQZQ==}
+  '@tailwindcss/oxide-android-arm64@4.1.13':
+    resolution: {integrity: sha512-BrpTrVYyejbgGo57yc8ieE+D6VT9GOgnNdmh5Sac6+t0m+v+sKQevpFVpwX3pBrM2qKrQwJ0c5eDbtjouY/+ew==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
 
-  '@tailwindcss/oxide-darwin-arm64@4.1.12':
-    resolution: {integrity: sha512-cq1qmq2HEtDV9HvZlTtrj671mCdGB93bVY6J29mwCyaMYCP/JaUBXxrQQQm7Qn33AXXASPUb2HFZlWiiHWFytw==}
+  '@tailwindcss/oxide-darwin-arm64@4.1.13':
+    resolution: {integrity: sha512-YP+Jksc4U0KHcu76UhRDHq9bx4qtBftp9ShK/7UGfq0wpaP96YVnnjFnj3ZFrUAjc5iECzODl/Ts0AN7ZPOANQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@tailwindcss/oxide-darwin-x64@4.1.12':
-    resolution: {integrity: sha512-6UCsIeFUcBfpangqlXay9Ffty9XhFH1QuUFn0WV83W8lGdX8cD5/+2ONLluALJD5+yJ7k8mVtwy3zMZmzEfbLg==}
+  '@tailwindcss/oxide-darwin-x64@4.1.13':
+    resolution: {integrity: sha512-aAJ3bbwrn/PQHDxCto9sxwQfT30PzyYJFG0u/BWZGeVXi5Hx6uuUOQEI2Fa43qvmUjTRQNZnGqe9t0Zntexeuw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@tailwindcss/oxide-freebsd-x64@4.1.12':
-    resolution: {integrity: sha512-JOH/f7j6+nYXIrHobRYCtoArJdMJh5zy5lr0FV0Qu47MID/vqJAY3r/OElPzx1C/wdT1uS7cPq+xdYYelny1ww==}
+  '@tailwindcss/oxide-freebsd-x64@4.1.13':
+    resolution: {integrity: sha512-Wt8KvASHwSXhKE/dJLCCWcTSVmBj3xhVhp/aF3RpAhGeZ3sVo7+NTfgiN8Vey/Fi8prRClDs6/f0KXPDTZE6nQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
 
-  '@tailwindcss/oxide-linux-arm-gnueabihf@4.1.12':
-    resolution: {integrity: sha512-v4Ghvi9AU1SYgGr3/j38PD8PEe6bRfTnNSUE3YCMIRrrNigCFtHZ2TCm8142X8fcSqHBZBceDx+JlFJEfNg5zQ==}
+  '@tailwindcss/oxide-linux-arm-gnueabihf@4.1.13':
+    resolution: {integrity: sha512-mbVbcAsW3Gkm2MGwA93eLtWrwajz91aXZCNSkGTx/R5eb6KpKD5q8Ueckkh9YNboU8RH7jiv+ol/I7ZyQ9H7Bw==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-arm64-gnu@4.1.12':
-    resolution: {integrity: sha512-YP5s1LmetL9UsvVAKusHSyPlzSRqYyRB0f+Kl/xcYQSPLEw/BvGfxzbH+ihUciePDjiXwHh+p+qbSP3SlJw+6g==}
+  '@tailwindcss/oxide-linux-arm64-gnu@4.1.13':
+    resolution: {integrity: sha512-wdtfkmpXiwej/yoAkrCP2DNzRXCALq9NVLgLELgLim1QpSfhQM5+ZxQQF8fkOiEpuNoKLp4nKZ6RC4kmeFH0HQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-arm64-musl@4.1.12':
-    resolution: {integrity: sha512-V8pAM3s8gsrXcCv6kCHSuwyb/gPsd863iT+v1PGXC4fSL/OJqsKhfK//v8P+w9ThKIoqNbEnsZqNy+WDnwQqCA==}
+  '@tailwindcss/oxide-linux-arm64-musl@4.1.13':
+    resolution: {integrity: sha512-hZQrmtLdhyqzXHB7mkXfq0IYbxegaqTmfa1p9MBj72WPoDD3oNOh1Lnxf6xZLY9C3OV6qiCYkO1i/LrzEdW2mg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-x64-gnu@4.1.12':
-    resolution: {integrity: sha512-xYfqYLjvm2UQ3TZggTGrwxjYaLB62b1Wiysw/YE3Yqbh86sOMoTn0feF98PonP7LtjsWOWcXEbGqDL7zv0uW8Q==}
+  '@tailwindcss/oxide-linux-x64-gnu@4.1.13':
+    resolution: {integrity: sha512-uaZTYWxSXyMWDJZNY1Ul7XkJTCBRFZ5Fo6wtjrgBKzZLoJNrG+WderJwAjPzuNZOnmdrVg260DKwXCFtJ/hWRQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-x64-musl@4.1.12':
-    resolution: {integrity: sha512-ha0pHPamN+fWZY7GCzz5rKunlv9L5R8kdh+YNvP5awe3LtuXb5nRi/H27GeL2U+TdhDOptU7T6Is7mdwh5Ar3A==}
+  '@tailwindcss/oxide-linux-x64-musl@4.1.13':
+    resolution: {integrity: sha512-oXiPj5mi4Hdn50v5RdnuuIms0PVPI/EG4fxAfFiIKQh5TgQgX7oSuDWntHW7WNIi/yVLAiS+CRGW4RkoGSSgVQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@tailwindcss/oxide-wasm32-wasi@4.1.12':
-    resolution: {integrity: sha512-4tSyu3dW+ktzdEpuk6g49KdEangu3eCYoqPhWNsZgUhyegEda3M9rG0/j1GV/JjVVsj+lG7jWAyrTlLzd/WEBg==}
+  '@tailwindcss/oxide-wasm32-wasi@4.1.13':
+    resolution: {integrity: sha512-+LC2nNtPovtrDwBc/nqnIKYh/W2+R69FA0hgoeOn64BdCX522u19ryLh3Vf3F8W49XBcMIxSe665kwy21FkhvA==}
     engines: {node: '>=14.0.0'}
     cpu: [wasm32]
     bundledDependencies:
@@ -5031,39 +4989,39 @@ packages:
       - '@emnapi/wasi-threads'
       - tslib
 
-  '@tailwindcss/oxide-win32-arm64-msvc@4.1.12':
-    resolution: {integrity: sha512-iGLyD/cVP724+FGtMWslhcFyg4xyYyM+5F4hGvKA7eifPkXHRAUDFaimu53fpNg9X8dfP75pXx/zFt/jlNF+lg==}
+  '@tailwindcss/oxide-win32-arm64-msvc@4.1.13':
+    resolution: {integrity: sha512-dziTNeQXtoQ2KBXmrjCxsuPk3F3CQ/yb7ZNZNA+UkNTeiTGgfeh+gH5Pi7mRncVgcPD2xgHvkFCh/MhZWSgyQg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@tailwindcss/oxide-win32-x64-msvc@4.1.12':
-    resolution: {integrity: sha512-NKIh5rzw6CpEodv/++r0hGLlfgT/gFN+5WNdZtvh6wpU2BpGNgdjvj6H2oFc8nCM839QM1YOhjpgbAONUb4IxA==}
+  '@tailwindcss/oxide-win32-x64-msvc@4.1.13':
+    resolution: {integrity: sha512-3+LKesjXydTkHk5zXX01b5KMzLV1xl2mcktBJkje7rhFUpUlYJy7IMOLqjIRQncLTa1WZZiFY/foAeB5nmaiTw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@tailwindcss/oxide@4.1.12':
-    resolution: {integrity: sha512-gM5EoKHW/ukmlEtphNwaGx45fGoEmP10v51t9unv55voWh6WrOL19hfuIdo2FjxIaZzw776/BUQg7Pck++cIVw==}
+  '@tailwindcss/oxide@4.1.13':
+    resolution: {integrity: sha512-CPgsM1IpGRa880sMbYmG1s4xhAy3xEt1QULgTJGQmZUeNgXFR7s1YxYygmJyBGtou4SyEosGAGEeYqY7R53bIA==}
     engines: {node: '>= 10'}
 
-  '@tailwindcss/postcss@4.1.12':
-    resolution: {integrity: sha512-5PpLYhCAwf9SJEeIsSmCDLgyVfdBhdBpzX1OJ87anT9IVR0Z9pjM0FNixCAUAHGnMBGB8K99SwAheXrT0Kh6QQ==}
+  '@tailwindcss/postcss@4.1.13':
+    resolution: {integrity: sha512-HLgx6YSFKJT7rJqh9oJs/TkBFhxuMOfUKSBEPYwV+t78POOBsdQ7crhZLzwcH3T0UyUuOzU/GK5pk5eKr3wCiQ==}
 
-  '@tanstack/query-core@5.86.0':
-    resolution: {integrity: sha512-Y6ibQm6BXbw6w1p3a5LrPn8Ae64M0dx7hGmnhrm9P+XAkCCKXOwZN0J5Z1wK/0RdNHtR9o+sWHDXd4veNI60tQ==}
+  '@tanstack/query-core@5.87.4':
+    resolution: {integrity: sha512-uNsg6zMxraEPDVO2Bn+F3/ctHi+Zsk+MMpcN8h6P7ozqD088F6mFY5TfGM7zuyIrL7HKpDyu6QHfLWiDxh3cuw==}
 
-  '@tanstack/query-devtools@5.86.0':
-    resolution: {integrity: sha512-/JDw9BP80eambEK/EsDMGAcsL2VFT+8F5KCOwierjPU7QP8Wt1GT32yJpn3qOinBM8/zS3Jy36+F0GiyJp411A==}
+  '@tanstack/query-devtools@5.87.3':
+    resolution: {integrity: sha512-LkzxzSr2HS1ALHTgDmJH5eGAVsSQiuwz//VhFW5OqNk0OQ+Fsqba0Tsf+NzWRtXYvpgUqwQr4b2zdFZwxHcGvg==}
 
-  '@tanstack/react-query-devtools@5.86.0':
-    resolution: {integrity: sha512-+50IcXI+54qHx3IDccbTala4tkToKxa0WKqP4XWlTnP1mQNfHO3dJj8wwnzpG50os69kpSbnU8C98Q/i8b6lyA==}
+  '@tanstack/react-query-devtools@5.87.4':
+    resolution: {integrity: sha512-JYcnVJBBW1DCPyNGM0S2CyrLpe6KFiL2gpYd/k9tAp62Du7+Y27zkzd+dKFyxpFadYaTxsx4kUA7YvnkMLVUoQ==}
     peerDependencies:
-      '@tanstack/react-query': ^5.86.0
+      '@tanstack/react-query': ^5.87.4
       react: ^18 || ^19
 
-  '@tanstack/react-query@5.86.0':
-    resolution: {integrity: sha512-jgS/v0oSJkGHucv9zxOS8rL7mjATh1XO3K4eqAV4WMpAly8okcBrGi1YxRZN5S4B59F54x9JFjWrK5vMAvJYqA==}
+  '@tanstack/react-query@5.87.4':
+    resolution: {integrity: sha512-T5GT/1ZaNsUXf5I3RhcYuT17I4CPlbZgyLxc/ZGv7ciS6esytlbjb3DgUFO6c8JWYMDpdjSWInyGZUErgzqhcA==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -5078,8 +5036,8 @@ packages:
     resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
     engines: {node: '>=12'}
 
-  '@trpc/server@11.5.0':
-    resolution: {integrity: sha512-0IBtkmUCeO2ycn4K45/cqsujnlCQrSvkCo7lFDpg3kGMIPiLyLRciID5IiS7prEjRjeITa+od2aaHTIwONApVw==}
+  '@trpc/server@11.5.1':
+    resolution: {integrity: sha512-KIDzHRS5m8U1ncPwjgtOtPWK9lNO0kYL7b+lnvKXRqowSAQIEC/z6y7g/dkt4Aqv3DKI/STLydt2/afrP1QrxQ==}
     peerDependencies:
       typescript: '>=5.7.2'
 
@@ -5922,13 +5880,16 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.542.0:
-    resolution: {integrity: sha512-w3hD8/SQB7+lzU2r4VdFyzzOzKnUjTZIF/MQJGSSvni7Llewni4vuViRppfRAa2guOsY5k4jZyxw/i9DQHv+dw==}
+  lucide-react@0.543.0:
+    resolution: {integrity: sha512-fpVfuOQO0V3HBaOA1stIiP/A2fPCXHIleRZL16Mx3HmjTYwNSbimhnFBygs2CAfU1geexMX5ItUcWBGUaqw5CA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+
+  magic-string@0.30.19:
+    resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
 
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -6043,8 +6004,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  nuqs@2.5.2:
-    resolution: {integrity: sha512-vzKeoYlMRmNYPWECdn53Nmh/jM+r/iSezEin342EVXPogT6KzALwdnYbZxASE5vTdXRUtOymtPkgsarLipKetg==}
+  nuqs@2.6.0:
+    resolution: {integrity: sha512-EvIKBvfJeyL8n6lxfebxoAbkHJutNsxmy1oo4noFUYNUESbnecxWxgnxXoa0/4fYiFwdEuyMQx1Z9rV0h4bnkg==}
     peerDependencies:
       '@remix-run/react': '>=2'
       '@tanstack/react-router': ^1
@@ -6064,8 +6025,8 @@ packages:
       react-router-dom:
         optional: true
 
-  nwsapi@2.2.21:
-    resolution: {integrity: sha512-o6nIY3qwiSXl7/LuOU0Dmuctd34Yay0yeuZRLFmDPrrdHpXKFndPj3hM+YEPVHYC5fx2otBx4Ilc/gyYSAUaIA==}
+  nwsapi@2.2.22:
+    resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
 
   nypm@0.6.1:
     resolution: {integrity: sha512-hlacBiRiv1k9hZFiphPUkfSQ/ZfQzZDzC+8z0wL3lvDAOUu/2NnChkKuMoMjNur/9OpKuz2QsIeiPVN0xM5Q0w==}
@@ -6470,8 +6431,8 @@ packages:
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
 
-  tailwind-variants@3.1.0:
-    resolution: {integrity: sha512-ieiYaEfUr+sNhw/k++dosmZfVA4VIG5bV+G1eGdJSC4FcflqQv0iSIlOLj/RbzRuTu/VrIiNSlwh1esBM3BXUg==}
+  tailwind-variants@3.1.1:
+    resolution: {integrity: sha512-ftLXe3krnqkMHsuBTEmaVUXYovXtPyTK7ckEfDRXS8PBZx0bAUas+A0jYxuKA5b8qg++wvQ3d2MQ7l/xeZxbZQ==}
     engines: {node: '>=16.x', pnpm: '>=7.x'}
     peerDependencies:
       tailwind-merge: '>=3.0.0'
@@ -6480,11 +6441,11 @@ packages:
       tailwind-merge:
         optional: true
 
-  tailwindcss@4.1.12:
-    resolution: {integrity: sha512-DzFtxOi+7NsFf7DBtI3BJsynR+0Yp6etH+nRPTbpWnS2pZBaSksv/JGctNwSWzbFjp0vxSqknaUylseZqMDGrA==}
+  tailwindcss@4.1.13:
+    resolution: {integrity: sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==}
 
-  tapable@2.2.2:
-    resolution: {integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==}
+  tapable@2.2.3:
+    resolution: {integrity: sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg==}
     engines: {node: '>=6'}
 
   tar@7.4.3:
@@ -6509,6 +6470,10 @@ packages:
 
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
+    engines: {node: '>=12.0.0'}
+
+  tinyglobby@0.2.15:
+    resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
 
   tinypool@1.1.1:
@@ -6601,8 +6566,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultracite@5.3.3:
-    resolution: {integrity: sha512-neOYojEG4We1SKEmRbwHqXcMBDev4A1m3fNHBHTAEeARs4N38Xi4LmMFfzGHWq/VbRfJRuMZwkvHiotWt0zKow==}
+  ultracite@5.3.4:
+    resolution: {integrity: sha512-N8n4O2rxv8IA9iX/xb2MBNCjgLQBHMiwMg8YJEzCn+vzRI0Z33ZRAFurZfbP/SDwE/5N0wRYgZHzBt/xczaomg==}
     hasBin: true
 
   undici-types@7.10.0:
@@ -7041,6 +7006,8 @@ snapshots:
 
   '@babel/runtime@7.28.3': {}
 
+  '@babel/runtime@7.28.4': {}
+
   '@babel/template@7.27.2':
     dependencies:
       '@babel/code-frame': 7.27.1
@@ -7089,42 +7056,42 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.12
 
-  '@biomejs/biome@2.2.2':
+  '@biomejs/biome@2.2.4':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.2.2
-      '@biomejs/cli-darwin-x64': 2.2.2
-      '@biomejs/cli-linux-arm64': 2.2.2
-      '@biomejs/cli-linux-arm64-musl': 2.2.2
-      '@biomejs/cli-linux-x64': 2.2.2
-      '@biomejs/cli-linux-x64-musl': 2.2.2
-      '@biomejs/cli-win32-arm64': 2.2.2
-      '@biomejs/cli-win32-x64': 2.2.2
+      '@biomejs/cli-darwin-arm64': 2.2.4
+      '@biomejs/cli-darwin-x64': 2.2.4
+      '@biomejs/cli-linux-arm64': 2.2.4
+      '@biomejs/cli-linux-arm64-musl': 2.2.4
+      '@biomejs/cli-linux-x64': 2.2.4
+      '@biomejs/cli-linux-x64-musl': 2.2.4
+      '@biomejs/cli-win32-arm64': 2.2.4
+      '@biomejs/cli-win32-x64': 2.2.4
 
-  '@biomejs/cli-darwin-arm64@2.2.2':
+  '@biomejs/cli-darwin-arm64@2.2.4':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.2.2':
+  '@biomejs/cli-darwin-x64@2.2.4':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.2.2':
+  '@biomejs/cli-linux-arm64-musl@2.2.4':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.2.2':
+  '@biomejs/cli-linux-arm64@2.2.4':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.2.2':
+  '@biomejs/cli-linux-x64-musl@2.2.4':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.2.2':
+  '@biomejs/cli-linux-x64@2.2.4':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.2.2':
+  '@biomejs/cli-win32-arm64@2.2.4':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.2.2':
+  '@biomejs/cli-win32-x64@2.2.4':
     optional: true
 
-  '@changesets/apply-release-plan@7.0.12':
+  '@changesets/apply-release-plan@7.0.13':
     dependencies:
       '@changesets/config': 3.1.1
       '@changesets/get-version-range-type': 0.4.0
@@ -7153,9 +7120,9 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/cli@2.29.6(@types/node@24.3.1)':
+  '@changesets/cli@2.29.7(@types/node@24.3.1)':
     dependencies:
-      '@changesets/apply-release-plan': 7.0.12
+      '@changesets/apply-release-plan': 7.0.13
       '@changesets/assemble-release-plan': 6.0.9
       '@changesets/changelog-git': 0.2.1
       '@changesets/config': 3.1.1
@@ -7627,14 +7594,14 @@ snapshots:
 
   '@manypkg/find-root@1.1.0':
     dependencies:
-      '@babel/runtime': 7.28.3
+      '@babel/runtime': 7.28.4
       '@types/node': 12.20.55
       find-up: 4.1.0
       fs-extra: 8.1.0
 
   '@manypkg/get-packages@1.1.3':
     dependencies:
-      '@babel/runtime': 7.28.3
+      '@babel/runtime': 7.28.4
       '@changesets/types': 4.1.0
       '@manypkg/find-root': 1.1.0
       fs-extra: 8.1.0
@@ -8191,91 +8158,91 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tailwindcss/node@4.1.12':
+  '@tailwindcss/node@4.1.13':
     dependencies:
       '@jridgewell/remapping': 2.3.5
       enhanced-resolve: 5.18.3
       jiti: 2.5.1
       lightningcss: 1.30.1
-      magic-string: 0.30.17
+      magic-string: 0.30.19
       source-map-js: 1.2.1
-      tailwindcss: 4.1.12
+      tailwindcss: 4.1.13
 
-  '@tailwindcss/oxide-android-arm64@4.1.12':
+  '@tailwindcss/oxide-android-arm64@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-darwin-arm64@4.1.12':
+  '@tailwindcss/oxide-darwin-arm64@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-darwin-x64@4.1.12':
+  '@tailwindcss/oxide-darwin-x64@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-freebsd-x64@4.1.12':
+  '@tailwindcss/oxide-freebsd-x64@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm-gnueabihf@4.1.12':
+  '@tailwindcss/oxide-linux-arm-gnueabihf@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm64-gnu@4.1.12':
+  '@tailwindcss/oxide-linux-arm64-gnu@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm64-musl@4.1.12':
+  '@tailwindcss/oxide-linux-arm64-musl@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-linux-x64-gnu@4.1.12':
+  '@tailwindcss/oxide-linux-x64-gnu@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-linux-x64-musl@4.1.12':
+  '@tailwindcss/oxide-linux-x64-musl@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-wasm32-wasi@4.1.12':
+  '@tailwindcss/oxide-wasm32-wasi@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-win32-arm64-msvc@4.1.12':
+  '@tailwindcss/oxide-win32-arm64-msvc@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide-win32-x64-msvc@4.1.12':
+  '@tailwindcss/oxide-win32-x64-msvc@4.1.13':
     optional: true
 
-  '@tailwindcss/oxide@4.1.12':
+  '@tailwindcss/oxide@4.1.13':
     dependencies:
       detect-libc: 2.0.4
       tar: 7.4.3
     optionalDependencies:
-      '@tailwindcss/oxide-android-arm64': 4.1.12
-      '@tailwindcss/oxide-darwin-arm64': 4.1.12
-      '@tailwindcss/oxide-darwin-x64': 4.1.12
-      '@tailwindcss/oxide-freebsd-x64': 4.1.12
-      '@tailwindcss/oxide-linux-arm-gnueabihf': 4.1.12
-      '@tailwindcss/oxide-linux-arm64-gnu': 4.1.12
-      '@tailwindcss/oxide-linux-arm64-musl': 4.1.12
-      '@tailwindcss/oxide-linux-x64-gnu': 4.1.12
-      '@tailwindcss/oxide-linux-x64-musl': 4.1.12
-      '@tailwindcss/oxide-wasm32-wasi': 4.1.12
-      '@tailwindcss/oxide-win32-arm64-msvc': 4.1.12
-      '@tailwindcss/oxide-win32-x64-msvc': 4.1.12
+      '@tailwindcss/oxide-android-arm64': 4.1.13
+      '@tailwindcss/oxide-darwin-arm64': 4.1.13
+      '@tailwindcss/oxide-darwin-x64': 4.1.13
+      '@tailwindcss/oxide-freebsd-x64': 4.1.13
+      '@tailwindcss/oxide-linux-arm-gnueabihf': 4.1.13
+      '@tailwindcss/oxide-linux-arm64-gnu': 4.1.13
+      '@tailwindcss/oxide-linux-arm64-musl': 4.1.13
+      '@tailwindcss/oxide-linux-x64-gnu': 4.1.13
+      '@tailwindcss/oxide-linux-x64-musl': 4.1.13
+      '@tailwindcss/oxide-wasm32-wasi': 4.1.13
+      '@tailwindcss/oxide-win32-arm64-msvc': 4.1.13
+      '@tailwindcss/oxide-win32-x64-msvc': 4.1.13
 
-  '@tailwindcss/postcss@4.1.12':
+  '@tailwindcss/postcss@4.1.13':
     dependencies:
       '@alloc/quick-lru': 5.2.0
-      '@tailwindcss/node': 4.1.12
-      '@tailwindcss/oxide': 4.1.12
+      '@tailwindcss/node': 4.1.13
+      '@tailwindcss/oxide': 4.1.13
       postcss: 8.5.6
-      tailwindcss: 4.1.12
+      tailwindcss: 4.1.13
 
-  '@tanstack/query-core@5.86.0': {}
+  '@tanstack/query-core@5.87.4': {}
 
-  '@tanstack/query-devtools@5.86.0': {}
+  '@tanstack/query-devtools@5.87.3': {}
 
-  '@tanstack/react-query-devtools@5.86.0(@tanstack/react-query@5.86.0(react@19.1.1))(react@19.1.1)':
+  '@tanstack/react-query-devtools@5.87.4(@tanstack/react-query@5.87.4(react@19.1.1))(react@19.1.1)':
     dependencies:
-      '@tanstack/query-devtools': 5.86.0
-      '@tanstack/react-query': 5.86.0(react@19.1.1)
+      '@tanstack/query-devtools': 5.87.3
+      '@tanstack/react-query': 5.87.4(react@19.1.1)
       react: 19.1.1
 
-  '@tanstack/react-query@5.86.0(react@19.1.1)':
+  '@tanstack/react-query@5.87.4(react@19.1.1)':
     dependencies:
-      '@tanstack/query-core': 5.86.0
+      '@tanstack/query-core': 5.87.4
       react: 19.1.1
 
   '@tanstack/react-table@8.21.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
@@ -8286,7 +8253,7 @@ snapshots:
 
   '@tanstack/table-core@8.21.3': {}
 
-  '@trpc/server@11.5.0(typescript@5.9.2)':
+  '@trpc/server@11.5.1(typescript@5.9.2)':
     dependencies:
       typescript: 5.9.2
 
@@ -8439,7 +8406,7 @@ snapshots:
       flatted: 3.3.3
       pathe: 2.0.3
       sirv: 3.0.2
-      tinyglobby: 0.2.14
+      tinyglobby: 0.2.15
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(yaml@2.8.0)
     optional: true
@@ -8696,7 +8663,7 @@ snapshots:
   enhanced-resolve@5.18.3:
     dependencies:
       graceful-fs: 4.2.11
-      tapable: 2.2.2
+      tapable: 2.2.3
 
   enquirer@2.4.1:
     dependencies:
@@ -9007,7 +8974,7 @@ snapshots:
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
-      nwsapi: 2.2.21
+      nwsapi: 2.2.22
       parse5: 7.3.0
       rrweb-cssom: 0.8.0
       saxes: 6.0.0
@@ -9127,11 +9094,15 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.542.0(react@19.1.1):
+  lucide-react@0.543.0(react@19.1.1):
     dependencies:
       react: 19.1.1
 
   magic-string@0.30.17:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+
+  magic-string@0.30.19:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -9229,14 +9200,14 @@ snapshots:
       npm-bundled: 1.1.2
       npm-normalize-package-bin: 1.0.1
 
-  nuqs@2.5.2(next@15.5.2(@babel/core@7.28.3)(@playwright/test@1.55.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1):
+  nuqs@2.6.0(next@15.5.2(@babel/core@7.28.3)(@playwright/test@1.55.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1):
     dependencies:
       '@standard-schema/spec': 1.0.0
       react: 19.1.1
     optionalDependencies:
       next: 15.5.2(@babel/core@7.28.3)(@playwright/test@1.55.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
 
-  nwsapi@2.2.21:
+  nwsapi@2.2.22:
     optional: true
 
   nypm@0.6.1:
@@ -9681,15 +9652,15 @@ snapshots:
 
   tailwind-merge@3.3.1: {}
 
-  tailwind-variants@3.1.0(tailwind-merge@3.3.1)(tailwindcss@4.1.12):
+  tailwind-variants@3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.13):
     dependencies:
-      tailwindcss: 4.1.12
+      tailwindcss: 4.1.13
     optionalDependencies:
       tailwind-merge: 3.3.1
 
-  tailwindcss@4.1.12: {}
+  tailwindcss@4.1.13: {}
 
-  tapable@2.2.2: {}
+  tapable@2.2.3: {}
 
   tar@7.4.3:
     dependencies:
@@ -9714,6 +9685,12 @@ snapshots:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
+
+  tinyglobby@0.2.15:
+    dependencies:
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+    optional: true
 
   tinypool@1.1.1: {}
 
@@ -9748,7 +9725,7 @@ snapshots:
 
   trpc-cli@0.10.2(typescript@5.9.2):
     dependencies:
-      '@trpc/server': 11.5.0(typescript@5.9.2)
+      '@trpc/server': 11.5.1(typescript@5.9.2)
       '@types/omelette': 0.4.5
       commander: 14.0.0
       picocolors: 1.1.1
@@ -9788,7 +9765,7 @@ snapshots:
 
   typescript@5.9.2: {}
 
-  ultracite@5.3.3(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(typescript@5.9.2)(yaml@2.8.0):
+  ultracite@5.3.4(@types/debug@4.1.12)(@types/node@24.3.1)(@vitest/ui@3.2.4)(jiti@2.5.1)(jsdom@26.1.0)(lightningcss@1.30.1)(typescript@5.9.2)(yaml@2.8.0):
     dependencies:
       '@clack/prompts': 0.11.0
       deepmerge: 4.3.1

@@ -1,15 +1,13 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Menu } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuItemLink,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "./component";
+import { NavigationMenu } from "./components/navigation-menu";
+import { NavigationMenuContent } from "./components/navigation-menu-content";
+import { NavigationMenuItem } from "./components/navigation-menu-item";
+import { NavigationMenuItemLink } from "./components/navigation-menu-item-link";
+import { NavigationMenuLink } from "./components/navigation-menu-link";
+import { NavigationMenuList } from "./components/navigation-menu-list";
+import { NavigationMenuTrigger } from "./components/navigation-menu-trigger";
+import { NavigationMenuViewport } from "./components/navigation-menu-viewport";
 import {
   DefaultExample,
   MixedLinksExample,

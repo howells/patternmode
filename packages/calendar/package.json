@@ -46,7 +46,7 @@
     "@patternmode/select": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.542.0",
+    "lucide-react": "^0.543.0",
     "react-day-picker": "^9.9.0"
   },
   "devDependencies": {
