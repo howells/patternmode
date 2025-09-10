@@ -129,9 +129,9 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
             isExpanded && "bg-white dark:bg-zinc-900"
           )}
           data-testid="sidebar"
-          onMouseEnter={onMouseEnter}
+          onPointerEnter={onMouseEnter}
           // Do not set aria-expanded on nav; apply hover props without aria-expanded
-          onMouseLeave={onMouseLeave}
+          onPointerLeave={onMouseLeave}
           ref={ref}
           {...props}
         >

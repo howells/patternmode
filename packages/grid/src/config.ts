@@ -1,13 +1,19 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Grid3X3 } from "lucide-react";
-import { Grid, GridAuto, GridCell } from "./component";
+import { Grid } from "./components/grid";
+import { GridCell } from "./components/grid-cell";
 import {
-  AutoGridExample,
+  AutoFlowExample,
   DashboardExample,
+  DebugExample,
   DefaultExample,
+  EndPositionsExample,
+  FullViewportExample,
   LayoutGridExample,
   ResponsiveExample,
   SpanningCellsExample,
+  TemplateAreasExample,
+  ViewportHeightExample,
 } from "./examples";
 
 export const gridConfig: ComponentConfig = {
@@ -18,7 +24,7 @@ export const gridConfig: ComponentConfig = {
   category: "layout",
   featured: true,
   icon: Grid3X3,
-  importStatement: `import { Grid, GridCell, GridAuto } from "@patternmode/grid";`,
+  importStatement: `import { Grid, GridCell } from "@patternmode/grid";`,
   examples: [
     {
       id: "default",
@@ -39,10 +45,41 @@ export const gridConfig: ComponentConfig = {
       component: SpanningCellsExample,
     },
     {
-      id: "auto-grid",
-      title: "Auto Grid",
-      description: "Automatically generated grid with custom cell content",
-      component: AutoGridExample,
+      id: "end-positions",
+      title: "End Positions",
+      description: "Using colEnd and rowEnd for precise positioning",
+      component: EndPositionsExample,
+    },
+    {
+      id: "template-areas",
+      title: "Template Areas",
+      description: "Semantic layouts using named grid areas",
+      component: TemplateAreasExample,
+    },
+    {
+      id: "auto-flow",
+      title: "Auto Flow",
+      description: "Different grid auto-flow behaviors (row, column, dense)",
+      component: AutoFlowExample,
+    },
+    {
+      id: "debug",
+      title: "Debug Mode",
+      description: "Visualize grid cell boundaries with debug backgrounds",
+      component: DebugExample,
+    },
+    {
+      id: "viewport-fill",
+      title: "Full Viewport",
+      description:
+        "Grid that fills the entire viewport using dynamic viewport height",
+      component: FullViewportExample,
+    },
+    {
+      id: "viewport-height",
+      title: "Viewport Height",
+      description: "Grid that fills viewport height with responsive width",
+      component: ViewportHeightExample,
     },
     {
       id: "layout-grid",
@@ -70,11 +107,6 @@ export const gridConfig: ComponentConfig = {
       name: "Grid Cell",
       description: "Grid cell component for positioning content within a grid",
       component: GridCell,
-    },
-    {
-      name: "Grid Auto",
-      description: "Auto-generating grid component for rapid prototyping",
-      component: GridAuto,
     },
   ],
 };

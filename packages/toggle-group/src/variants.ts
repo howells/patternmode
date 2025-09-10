@@ -1,5 +1,6 @@
 import { borderRadiusVariants } from "@patternmode/utils/border-radius-variants";
 import { containerButtonAdjustments } from "@patternmode/utils/container-button-adjustments";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
 
@@ -7,9 +8,9 @@ export const toggleGroupVariants = tv({
   slots: {
     root: [
       // base
-      "flex gap-px border p-0.5",
-      // colors
-      "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900",
+      "flex gap-px p-0.5",
+      // shared surface (static context): white with thin border, no shadow
+      floatingSurfaceVariants({ density: "none", context: "static" }).base(),
     ],
     item: [
       // base
@@ -32,11 +33,11 @@ export const toggleGroupVariants = tv({
   variants: {
     variant: {
       default: {
-        root: "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900",
+        root: "",
         item: "",
       },
       outline: {
-        root: "border-zinc-200 bg-white dark:border-zinc-600 dark:bg-zinc-900",
+        root: "",
         item: "border border-transparent data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
       },
       ghost: {

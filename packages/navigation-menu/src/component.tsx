@@ -1,5 +1,6 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui-components/react/navigation-menu";
 import { cx } from "@patternmode/utils/cx";
+import { floatingItemVariants } from "@patternmode/utils/floating-item";
 import {
   floatingArrowBorderDark,
   floatingArrowBorderLight,
@@ -115,7 +116,8 @@ const NavigationMenuContent = ({
   <BaseNavigationMenu.Content
     className={cx(
       // layout
-      "h-full p-4",
+      // Use tighter padding to match other floating surfaces (e.g., Select)
+      "h-full p-1",
       // animations
       "transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)]",
       // states
@@ -151,14 +153,10 @@ const NavigationMenuLink = ({
 }: NavigationMenuLinkProps) => (
   <BaseNavigationMenu.Link
     className={cx(
-      // layout
-      "block rounded-md px-3 py-3",
-      // typography
-      "text-inherit text-sm no-underline",
-      // interactions
-      "hover:bg-zinc-100",
-      // focus
-      "focus-visible:-outline-offset-1 focus-visible:relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800",
+      // shared floating item sizing/states
+      floatingItemVariants({ size: "base" }),
+      // ensure link spans full width and keeps link semantics
+      "block no-underline",
       className
     )}
     ref={ref}
@@ -254,7 +252,8 @@ const NavigationMenuViewport = ({
     >
       <BaseNavigationMenu.Popup
         className={cx(
-          floatingSurfaceVariants({ density: "comfy", width: "auto" }).base(),
+          // Match other floating surfaces: compact density
+          floatingSurfaceVariants({ density: "compact", width: "auto" }).base(),
           // override radius to lg for mega menus
           "relative h-[var(--popup-height)] w-max origin-[var(--transform-origin)] rounded-lg",
           // remove default md radius from helper and keep transitions

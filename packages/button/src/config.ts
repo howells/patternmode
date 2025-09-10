@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { Button } from "./component";
+import { Button } from "./components/button";
 import {
   ButtonAsLinkExample,
   DestructiveExample,
@@ -130,7 +130,8 @@ export const buttonConfig: ComponentConfig = {
   components: [
     {
       name: "Button",
-      description: "Interactive button component for user actions",
+      description:
+        "Interactive button component for user actions (supports keyboard shortcuts automatically)",
       component: Button,
     },
   ],

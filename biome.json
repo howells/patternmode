@@ -4,26 +4,12 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "suspicious": {
-        "noArrayIndexKey": "off",
-        "noExplicitAny": "off"
-      },
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "off"
-      },
       "performance": {
         "noBarrelFile": "off",
         "noNamespaceImport": "off"
       },
       "style": {
-        "noNestedTernary": "off",
-        "noMagicNumbers": "off",
-        "useBlockStatements": "off",
-        "noNonNullAssertion": "off",
         "noExportedImports": "off"
-      },
-      "nursery": {
-        "useMaxParams": "off"
       }
     }
   }

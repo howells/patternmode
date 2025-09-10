@@ -7,6 +7,8 @@ import type React from "react";
 
 /**
  * Props for the Grid component.
+ *
+ * @public
  */
 export type GridProps = {
   /**
@@ -35,6 +37,27 @@ export type GridProps = {
    */
   minHeight?: "none" | "sm" | "md" | "lg" | "xl";
   /**
+   * Viewport sizing variants for full-screen layouts.
+   * 'fill' uses dynamic viewport height (h-dvh) for mobile compatibility.
+   * 'height' only constrains height, 'width' only constrains width.
+   */
+  viewport?: "none" | "fill" | "height" | "width";
+  /**
+   * Named grid areas for semantic layouts.
+   * Define areas like "header header" "sidebar main" "footer footer"
+   */
+  templateAreas?: ResponsiveValue<string>;
+  /**
+   * Grid auto-flow direction: "row", "column", or "dense".
+   * Controls how items are placed in the grid.
+   */
+  autoFlow?: ResponsiveValue<"row" | "column" | "dense">;
+  /**
+   * Enable debug mode to visualize grid cell boundaries.
+   * Adds red background and borders to all grid cells for layout debugging.
+   */
+  debug?: boolean;
+  /**
    * Additional CSS classes for styling customization.
    */
   className?: string;
@@ -42,6 +65,8 @@ export type GridProps = {
 
 /**
  * Props for the GridCell component.
+ *
+ * @public
  */
 export type GridCellProps = {
   /**
@@ -65,6 +90,21 @@ export type GridCellProps = {
    */
   rowStart?: number;
   /**
+   * Ending column position (1-based).
+   * Specifies where the column span ends.
+   */
+  colEnd?: number;
+  /**
+   * Ending row position (1-based).
+   * Specifies where the row span ends.
+   */
+  rowEnd?: number;
+  /**
+   * Named grid area for semantic layouts.
+   * References an area defined in the parent Grid's templateAreas.
+   */
+  area?: string;
+  /**
    * Cell content.
    * Any React content to display within the grid cell.
    */
@@ -74,19 +114,3 @@ export type GridCellProps = {
    */
   className?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
-
-/**
- * Props for the GridAuto component.
- */
-export type GridAutoProps = {
-  /**
-   * Number of cells to automatically generate.
-   * Creates this many grid cells with auto-generated content.
-   */
-  cellCount?: number;
-  /**
-   * Custom renderer function for cell content.
-   * Function that receives the cell index and returns content for that cell.
-   */
-  renderCell?: (index: number) => React.ReactNode;
-} & Omit<GridProps, "children">;

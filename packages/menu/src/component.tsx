@@ -5,8 +5,8 @@ import type { Popover as BasePopover } from "@base-ui-components/react/popover";
 import type { useRender } from "@base-ui-components/react/use-render";
 import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
-import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { floatingItemVariants } from "@patternmode/utils/floating-item";
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { Check, ChevronRight, Circle, CircleDot } from "lucide-react";
 import type * as React from "react";
 
@@ -104,10 +104,14 @@ const MenuSubmenuContent = ({
     <BaseMenu.Positioner collisionPadding={8} sideOffset={8}>
       <BaseMenu.Popup
         className={cx(
-          floatingSurfaceVariants({ density: "compact", width: "sm", clamp: "none" }).base(),
+          floatingSurfaceVariants({
+            density: "compact",
+            width: "sm",
+            clamp: "none",
+          }).base(),
           "relative will-change-[transform,opacity]",
           "max-h-[var(--menu-available-height)]",
-          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
+          "data-[ending-style]:animate-hide data-[starting-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}
@@ -159,10 +163,14 @@ const MenuContent = ({
     >
       <BaseMenu.Popup
         className={cx(
-          floatingSurfaceVariants({ density: "compact", width: "md", clamp: "none" }).base(),
+          floatingSurfaceVariants({
+            density: "compact",
+            width: "md",
+            clamp: "none",
+          }).base(),
           "relative will-change-[transform,opacity]",
           "max-h-[var(--menu-available-height)]",
-          "data-[starting-style]:animate-hide data-[ending-style]:animate-hide",
+          "data-[ending-style]:animate-hide data-[starting-style]:animate-hide",
           "data-[side=bottom]:animate-slide-down-and-fade data-[side=left]:animate-slide-left-and-fade data-[side=right]:animate-slide-right-and-fade data-[side=top]:animate-slide-up-and-fade",
           className
         )}

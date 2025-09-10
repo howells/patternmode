@@ -1,6 +1,7 @@
 "use client";
 
-import { Grid, GridAuto, GridCell } from "./component";
+import { Grid } from "./components/grid";
+import { GridCell } from "./components/grid-cell";
 
 // Basic grid example
 export const DefaultExample = () => {
@@ -211,19 +212,88 @@ export const SpanningCellsExample = () => {
   );
 };
 
-// Auto-generated grid
-export const AutoGridExample = () => {
+// Full viewport grid example
+export const FullViewportExample = () => {
   return (
-    <GridAuto
-      cellCount={10}
-      columns={5}
-      gap={4}
-      renderCell={(index) => (
-        <div className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
-          Cell {index + 1}
-        </div>
-      )}
-    />
+    <div className="space-y-4">
+      <h4 className="font-medium text-sm">Full Viewport Grid</h4>
+      <p className="text-xs text-zinc-600">
+        Grid that fills the entire viewport using h-dvh for mobile compatibility
+      </p>
+      <Grid columns={3} gap={4} viewport="fill">
+        <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Full Viewport</div>
+            <div className="text-xs opacity-75">Column 1</div>
+          </div>
+        </GridCell>
+        <GridCell className="rounded bg-green-100 p-4 text-center dark:bg-green-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Height & Width</div>
+            <div className="text-xs opacity-75">Column 2</div>
+          </div>
+        </GridCell>
+        <GridCell className="rounded bg-purple-100 p-4 text-center dark:bg-purple-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Dynamic Viewport</div>
+            <div className="text-xs opacity-75">Column 3</div>
+          </div>
+        </GridCell>
+      </Grid>
+    </div>
+  );
+};
+
+// Viewport height only example
+export const ViewportHeightExample = () => {
+  return (
+    <div className="space-y-4">
+      <h4 className="font-medium text-sm">Viewport Height Only</h4>
+      <p className="text-xs text-zinc-600">
+        Grid fills viewport height but maintains responsive width
+      </p>
+      <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap={4} viewport="height">
+        <GridCell className="rounded bg-red-100 p-4 text-center dark:bg-red-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Viewport Height</div>
+            <div className="text-xs opacity-75">Responsive Width</div>
+          </div>
+        </GridCell>
+        <GridCell className="rounded bg-yellow-100 p-4 text-center dark:bg-yellow-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Full Height</div>
+            <div className="text-xs opacity-75">Auto Width</div>
+          </div>
+        </GridCell>
+        <GridCell className="rounded bg-indigo-100 p-4 text-center dark:bg-indigo-900">
+          <div className="flex h-full flex-col justify-center">
+            <div>Dynamic Viewport</div>
+            <div className="text-xs opacity-75">Mobile Compatible</div>
+          </div>
+        </GridCell>
+      </Grid>
+    </div>
+  );
+};
+
+// Debug mode example
+export const DebugExample = () => {
+  return (
+    <div className="space-y-4">
+      <h4 className="font-medium text-sm">Debug Mode</h4>
+      <p className="text-xs text-zinc-600">
+        Enable debug mode to visualize grid cell boundaries with red backgrounds
+        and borders
+      </p>
+      <Grid columns={3} debug gap={4}>
+        <GridCell>Cell 1</GridCell>
+        <GridCell>Cell 2</GridCell>
+        <GridCell>Cell 3</GridCell>
+        <GridCell>Cell 4</GridCell>
+        <GridCell>Cell 5</GridCell>
+        <GridCell>Cell 6</GridCell>
+      </Grid>
+    </div>
   );
 };
 
@@ -303,6 +373,151 @@ export const DashboardExample = () => {
         rowSpan={2}
       >
         Recent Activity
+      </GridCell>
+    </Grid>
+  );
+};
+
+// Template areas example
+export const TemplateAreasExample = () => {
+  return (
+    <Grid
+      className="min-h-[300px]"
+      gap={4}
+      templateAreas={`
+        "header header header"
+        "sidebar main main"
+        "sidebar footer footer"
+      `}
+    >
+      <GridCell
+        area="header"
+        className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+      >
+        Header
+      </GridCell>
+      <GridCell
+        area="sidebar"
+        className="rounded bg-green-100 p-4 text-center dark:bg-green-900"
+      >
+        Sidebar
+      </GridCell>
+      <GridCell
+        area="main"
+        className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-800"
+      >
+        Main Content
+      </GridCell>
+      <GridCell
+        area="footer"
+        className="rounded bg-purple-100 p-4 text-center dark:bg-purple-900"
+      >
+        Footer
+      </GridCell>
+    </Grid>
+  );
+};
+
+// Auto-flow example
+export const AutoFlowExample = () => {
+  return (
+    <div className="space-y-4">
+      <h4 className="font-medium text-sm">Grid Flow Row (default)</h4>
+      <Grid autoFlow="row" className="min-h-[200px]" columns={3} gap={4}>
+        {Array.from({ length: 6 }, (_, i) => (
+          <GridCell
+            className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+            key={i}
+          >
+            {i + 1}
+          </GridCell>
+        ))}
+      </Grid>
+
+      <h4 className="font-medium text-sm">Grid Flow Column</h4>
+      <Grid autoFlow="column" className="min-h-[200px]" columns={3} gap={4}>
+        {Array.from({ length: 6 }, (_, i) => (
+          <GridCell
+            className="rounded bg-green-100 p-4 text-center dark:bg-green-900"
+            key={i}
+          >
+            {i + 1}
+          </GridCell>
+        ))}
+      </Grid>
+
+      <h4 className="font-medium text-sm">Grid Flow Dense</h4>
+      <Grid autoFlow="dense" className="min-h-[200px]" columns={3} gap={4}>
+        <GridCell
+          className="rounded bg-red-100 p-4 text-center dark:bg-red-900"
+          colSpan={2}
+        >
+          Wide 1
+        </GridCell>
+        <GridCell className="rounded bg-orange-100 p-4 text-center dark:bg-orange-900">
+          Narrow 1
+        </GridCell>
+        <GridCell className="rounded bg-yellow-100 p-4 text-center dark:bg-yellow-900">
+          Narrow 2
+        </GridCell>
+        <GridCell
+          className="rounded bg-red-100 p-4 text-center dark:bg-red-900"
+          colSpan={2}
+        >
+          Wide 2
+        </GridCell>
+      </Grid>
+    </div>
+  );
+};
+
+// End positions example
+export const EndPositionsExample = () => {
+  return (
+    <Grid className="min-h-[300px]" columns={6} gap={4} rows={4}>
+      <GridCell
+        className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+        colEnd={3}
+        colStart={1}
+        rowEnd={3}
+        rowStart={1}
+      >
+        Top Left
+        <br />
+        (1-2, 1-2)
+      </GridCell>
+      <GridCell
+        className="rounded bg-green-100 p-4 text-center dark:bg-green-900"
+        colEnd={7}
+        colStart={4}
+        rowEnd={2}
+        rowStart={1}
+      >
+        Top Right
+        <br />
+        (4-6, 1-1)
+      </GridCell>
+      <GridCell
+        className="rounded bg-purple-100 p-4 text-center dark:bg-purple-900"
+        colEnd={4}
+        colStart={1}
+        rowEnd={5}
+        rowStart={3}
+      >
+        Bottom Left
+        <br />
+        (1-3, 3-4)
+      </GridCell>
+      <GridCell
+        className="rounded bg-orange-100 p-4 text-center dark:bg-orange-900"
+        colEnd={7}
+        colStart={5}
+        rowEnd={5}
+        rowStart={2}
+      >
+        Bottom Right
+        <br />
+        (5-6, 2-4)
       </GridCell>
     </Grid>
   );

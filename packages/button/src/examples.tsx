@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "./component";
+import { Button } from "./components/button";
 
 // Primary button
 export const PrimaryExample = () => <Button>Click me</Button>;
@@ -32,11 +32,13 @@ export const LinkExample = () => <Button variant="link">Link</Button>;
 // Button as Link (using render prop)
 export const ButtonAsLinkExample = () => (
   <div className="flex items-center gap-2">
-    <Button render={(props) => <a href="/ui/components/button" {...props} />}>
+    <Button
+      render={(props: any) => <a href="/ui/components/button" {...props} />}
+    >
       Go to Button docs
     </Button>
     <Button
-      render={(props) => <a href="/ui/components/avatar" {...props} />}
+      render={(props: any) => <a href="/ui/components/avatar" {...props} />}
       variant="secondary"
     >
       Go to Avatar docs

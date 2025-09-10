@@ -8,9 +8,17 @@ import { tv } from "tailwind-variants";
  */
 export const floatingSurfaceVariants = tv({
   slots: {
-    base: "z-50 overflow-hidden rounded-md border border-zinc-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-950",
+    // Core surface: white (static) or dark equivalent, thin border, no shadow
+    base: "rounded-md border border-zinc-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-950",
   },
   variants: {
+    /**
+     * Context determines layering/stitching classes for floating vs static usage.
+     */
+    context: {
+      floating: "z-50 overflow-hidden",
+      static: "",
+    },
     /**
      * Controls padding applied to the surface container.
      */
@@ -38,6 +46,7 @@ export const floatingSurfaceVariants = tv({
     },
   },
   defaultVariants: {
+    context: "floating",
     density: "compact",
     width: "auto",
     clamp: "viewport",

@@ -11,9 +11,21 @@ export const gridVariants = tv({
       lg: "min-h-[300px]",
       xl: "min-h-[400px]",
     },
+    viewport: {
+      none: "",
+      fill: "h-dvh w-screen", // Dynamic viewport height for mobile, full width
+      height: "h-dvh", // Only height, keep width responsive
+      width: "w-screen", // Only width, keep height auto
+    },
+    debug: {
+      false: "",
+      true: "[&>*]:border [&>*]:border-red-200 [&>*]:bg-red-50 [&>*]:dark:border-red-800 [&>*]:dark:bg-red-950",
+    },
   },
   defaultVariants: {
     minHeight: "none",
+    viewport: "none",
+    debug: false,
   },
 });
 

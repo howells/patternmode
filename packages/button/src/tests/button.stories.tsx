@@ -1,4 +1,4 @@
-import { Button } from "./component";
+import { Button } from "../components/button";
 
 export const TestButton = () => <Button variant="primary">Test Button</Button>;
 

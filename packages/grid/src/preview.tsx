@@ -1,7 +1,8 @@
 "use client";
 
 import { Card, CardContent } from "@patternmode/card";
-import { Grid, GridCell } from "./component";
+import { Grid } from "./components/grid";
+import { GridCell } from "./components/grid-cell";
 import type { GridProps } from "./types";
 
 export function GridPreview(props: GridProps) {
