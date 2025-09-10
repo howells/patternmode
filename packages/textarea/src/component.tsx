@@ -39,7 +39,7 @@ const Textarea = ({
     textareaStyles({ size, fullWidth }),
     "outline-hidden transition-colors",
     "text-zinc-900 dark:text-zinc-50",
-    " dark:border-zinc-800",
+    "dark:border-zinc-800",
     "bg-white dark:bg-zinc-950",
     "placeholder-zinc-400 dark:placeholder-zinc-500",
     "disabled: disabled:bg-zinc-100 disabled:text-zinc-300",

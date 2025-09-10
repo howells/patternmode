@@ -6,7 +6,7 @@ export const sidebarVariants = tv({
     "fixed inset-y-0 left-0 z-40",
     "transition-[width] duration-200 ease-out",
     "bg-white dark:bg-zinc-900",
-    "border-zinc-200 border-r dark:border-zinc-800",
+    "border-zinc-100 border-r dark:border-zinc-800",
   ],
   variants: {
     size: {

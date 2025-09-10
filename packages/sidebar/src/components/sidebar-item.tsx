@@ -116,7 +116,11 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
           ) : null}
         </div>
         {hasChildren && open ? (
-          <div aria-live="polite" className="relative" id={panelId}>
+          <div
+            aria-live="polite"
+            className="[&>*]:before:-translate-x-1/2 [&>*]:before:-translate-y-1/2 relative [&>*]:relative [&>*]:before:absolute [&>*]:before:top-1/2 [&>*]:before:left-4 [&>*]:before:z-10 [&>*]:before:h-2 [&>*]:before:w-2 [&>*]:before:rounded-full [&>*]:before:border [&>*]:before:border-zinc-300 [&>*]:before:bg-white [&>*]:before:content-[''] dark:[&>*]:before:border-zinc-600 dark:[&>*]:before:bg-zinc-900"
+            id={panelId}
+          >
             {items}
 
             <div className="absolute inset-y-4 left-4 w-px bg-zinc-200 dark:bg-zinc-800" />
