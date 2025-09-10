@@ -158,13 +158,21 @@ const Button = ({
       <span className="sr-only">{effectiveChildren}</span>
     );
 
+    // biome-ignore lint/style/noNestedTernary: Layout class determination based on multiple conditions
+    let layoutClass = "justify-start gap-x-2";
+    if (isSmallIconButton(size)) {
+      layoutClass = "justify-center";
+    } else if (
+      fullWidth &&
+      textAlign === "center" &&
+      (hasLeftIcon || isLoading)
+    ) {
+      layoutClass = "justify-between";
+    }
+
     const layoutClassName = cx(
       "flex items-center w-full transition-colors duration-150 ease-in-out",
-      isSmallIconButton(size)
-        ? "justify-center"
-        : fullWidth && textAlign === "center" && (hasLeftIcon || isLoading)
-          ? "justify-between"
-          : "justify-start gap-x-2"
+      layoutClass
     );
 
     // Handle different layout scenarios
@@ -189,11 +197,15 @@ const Button = ({
   ) => {
     // Handle simple cases
     if (!(hasLeftIcon || hasRightIcon || isLoading || kbd)) {
-      if (isIconButton && hasChildren) return iconButtonChildren;
+      if (isIconButton && hasChildren) {
+        return iconButtonChildren;
+      }
       return effectiveShouldShowChildren ? effectiveChildren : null;
     }
 
-    if (isIconButton && isLoading) return null;
+    if (isIconButton && isLoading) {
+      return null;
+    }
 
     // Handle kbd-only case
     if (!(hasLeftIcon || hasRightIcon || isLoading) && kbd) {
@@ -249,11 +261,16 @@ const Button = ({
                 <div
                   className={cx(
                     "absolute inset-0 flex items-center justify-center transition-opacity duration-150 ease-in-out",
-                    isLoading
-                      ? "pointer-events-none opacity-0"
-                      : showLeftIconOnHover
-                        ? "opacity-0 group-hover/button:opacity-100"
-                        : "opacity-100"
+                    // biome-ignore lint/style/noNestedTernary: Conditional opacity states for loading/icon hover
+                    (() => {
+                      if (isLoading) {
+                        return "pointer-events-none opacity-0";
+                      }
+                      if (showLeftIconOnHover) {
+                        return "opacity-0 group-hover/button:opacity-100";
+                      }
+                      return "opacity-100";
+                    })()
                   )}
                 >
                   {effectiveLeftIcon && (
@@ -322,7 +339,9 @@ const Button = ({
     layoutClassName: string,
     iconButtonChildren: React.ReactNode
   ) => {
-    if (isIconButton && isLoading) return null;
+    if (isIconButton && isLoading) {
+      return null;
+    }
 
     return (
       <span className={layoutClassName}>
@@ -391,7 +410,9 @@ const Button = ({
   };
 
   const renderRightIconLayout = (iconButtonChildren: React.ReactNode) => {
-    if (isIconButton && isLoading) return null;
+    if (isIconButton && isLoading) {
+      return null;
+    }
 
     return (
       <span className="flex w-full items-center gap-x-2 transition-all duration-150 ease-in-out">
@@ -461,7 +482,9 @@ const Button = ({
     layoutClassName: string,
     iconButtonChildren: React.ReactNode
   ) => {
-    if (isIconButton && isLoading) return null;
+    if (isIconButton && isLoading) {
+      return null;
+    }
 
     return (
       <span className={layoutClassName}>
@@ -508,26 +531,37 @@ const Button = ({
     );
   };
 
+  // biome-ignore lint/style/noNestedTernary: Complex conditional logic for button layout
+  // Derive flex justification from textAlign and fullWidth
+  let justifyClass = "justify-center";
+  if (fullWidth) {
+    if (textAlign === "left") {
+      justifyClass = "justify-start";
+    } else if (textAlign === "right") {
+      justifyClass = "justify-end";
+    } else if (textAlign === "center") {
+      justifyClass = "justify-center";
+    }
+  }
+
+  // Derive text alignment - only when not using fullWidth center (which has its own layout)
+  let textAlignClass = "text-center";
+  if (fullWidth && textAlign === "center") {
+    textAlignClass = "text-center";
+  } else if (textAlign === "left") {
+    textAlignClass = "text-left";
+  } else if (textAlign === "right") {
+    textAlignClass = "text-right";
+  }
+
   const defaultProps: useRender.ElementProps<"button"> = {
     className: cx(
       buttonVariants({ variant, size, rounded }),
       fullWidth && "w-full max-w-[95vw]",
       // Add group class when using hover effects for icons
       (showLeftIconOnHover || showRightIconOnHover) && "group/button",
-      // Derive flex justification from textAlign and fullWidth
-      fullWidth && textAlign === "left"
-        ? "justify-start"
-        : fullWidth && textAlign === "right"
-          ? "justify-end"
-          : fullWidth && textAlign === "center"
-            ? "justify-center"
-            : "justify-center", // default justify for non-fullWidth or no textAlign
-      // Derive text alignment - only when not using fullWidth center (which has its own layout)
-      !(fullWidth && textAlign === "center") && textAlign === "left"
-        ? "text-left"
-        : !(fullWidth && textAlign === "center") && textAlign === "right"
-          ? "text-right"
-          : "text-center", // default text alignment
+      justifyClass,
+      textAlignClass,
       className
     ),
     disabled: disabled || isLoading,
