@@ -2,8 +2,8 @@
 
 import { sizes } from "@patternmode/config/sizes";
 import { AlertCircle, Check, Star, X } from "lucide-react";
-import type { BadgeProps } from "./component";
-import { Badge } from "./component";
+import type { BadgeProps } from "./components/badge";
+import { Badge } from "./components/badge";
 
 export function BadgePreview(props: BadgeProps) {
   const handleDismiss = props.dismissible

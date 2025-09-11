@@ -9,7 +9,7 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
-import { Badge } from "./component";
+import { Badge } from "./components/badge";
 
 export const DefaultExample = () => <Badge>Badge</Badge>;
 

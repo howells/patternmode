@@ -1,17 +1,15 @@
 "use client";
 
-import {
-  PreviewCard,
-  PreviewCardArrow,
-  PreviewCardBody,
-  PreviewCardContent,
-  PreviewCardDescription,
-  PreviewCardFooter,
-  PreviewCardHeader,
-  PreviewCardHeading,
-  PreviewCardImage,
-  PreviewCardTrigger,
-} from "./component";
+import { PreviewCard } from "./components/preview-card";
+import { PreviewCardArrow } from "./components/preview-card-arrow";
+import { PreviewCardBody } from "./components/preview-card-body";
+import { PreviewCardContent } from "./components/preview-card-content";
+import { PreviewCardDescription } from "./components/preview-card-description";
+import { PreviewCardFooter } from "./components/preview-card-footer";
+import { PreviewCardHeader } from "./components/preview-card-header";
+import { PreviewCardHeading } from "./components/preview-card-heading";
+import { PreviewCardImage } from "./components/preview-card-image";
+import { PreviewCardTrigger } from "./components/preview-card-trigger";
 
 export const DefaultExample = () => {
   return (

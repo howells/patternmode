@@ -41,6 +41,7 @@ const badgeVariantsDefinition = {
   variants: {
     variant: badgeVariantStyles,
     size: {
+      "2xs": "px-1 py-0.5 text-xs",
       xs: "px-1.5 py-0.5 text-xs",
       sm: "px-2 py-0.5 text-xs",
       base: "px-2 py-1 text-sm",
@@ -67,22 +68,27 @@ export const badgeVariants = tv({
   ),
   ...badgeVariantsDefinition,
   compoundVariants: [
+    { size: "2xs", class: "has-[button]:pr-0.5" },
     { size: "xs", class: "has-[button]:pr-0.5" },
     { size: "sm", class: "has-[button]:pr-1" },
     { size: "base", class: "has-[button]:pr-1" },
     { size: "lg", class: "has-[button]:pr-1.5" },
+    { rounded: true, size: "2xs", class: "px-1.5" },
     { rounded: true, size: "xs", class: "px-2" },
     { rounded: true, size: "sm", class: "px-2.5" },
     { rounded: true, size: "base", class: "px-3" },
     { rounded: true, size: "lg", class: "px-3.5" },
+    { rounded: true, size: "2xs", class: "has-[button]:pr-1" },
     { rounded: true, size: "xs", class: "has-[button]:pr-1" },
     { rounded: true, size: "sm", class: "has-[button]:pr-1.5" },
     { rounded: true, size: "base", class: "has-[button]:pr-1.5" },
     { rounded: true, size: "lg", class: "has-[button]:pr-2" },
+    { rounded: true, size: "2xs", class: "has-[svg:first-child]:pl-1.5" },
     { rounded: true, size: "xs", class: "has-[svg:first-child]:pl-1.5" },
     { rounded: true, size: "sm", class: "has-[svg:first-child]:pl-2" },
     { rounded: true, size: "base", class: "has-[svg:first-child]:pl-2.5" },
     { rounded: true, size: "lg", class: "has-[svg:first-child]:pl-3" },
+    { rounded: true, size: "2xs", class: "has-[svg:last-child]:pr-1.5" },
     { rounded: true, size: "xs", class: "has-[svg:last-child]:pr-1.5" },
     { rounded: true, size: "sm", class: "has-[svg:last-child]:pr-2" },
     { rounded: true, size: "base", class: "has-[svg:last-child]:pr-2.5" },
@@ -91,6 +97,7 @@ export const badgeVariants = tv({
 });
 
 export const badgeToIconSizeMap = {
+  "2xs": "xs",
   xs: "xs",
   sm: "xs",
   base: "sm",

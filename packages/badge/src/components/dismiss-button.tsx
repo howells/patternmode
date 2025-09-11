@@ -1,3 +1,4 @@
+import type { Size } from "@patternmode/config/sizes";
 import { DEFAULT_ICON_STROKE_WIDTH } from "@patternmode/constants/defaults";
 import { Icon } from "@patternmode/icon";
 import { cx } from "@patternmode/utils/cx";
@@ -10,7 +11,7 @@ export type DismissButtonProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   icon?: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   iconStrokeWidth?: number;
-  size?: "xs" | "sm" | "base" | "lg";
+  size?: Size;
   "aria-label"?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -22,12 +23,19 @@ const dismissButtonVariants = tv({
     focusRing,
   ],
   variants: {
-    size: { xs: "size-3.5", sm: "size-4", base: "size-5", lg: "size-6" },
+    size: {
+      "2xs": "size-3",
+      xs: "size-3.5",
+      sm: "size-4",
+      base: "size-5",
+      lg: "size-6",
+    },
   },
   defaultVariants: { size: "base" },
 });
 
 const dismissButtonToIconSizeMap = {
+  "2xs": "xs",
   xs: "xs",
   sm: "sm",
   base: "base",

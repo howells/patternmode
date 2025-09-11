@@ -1,13 +1,11 @@
 "use client";
 
-import type { PreviewCardProps } from "./component";
-import {
-  PreviewCard,
-  PreviewCardContent,
-  PreviewCardPortal,
-  PreviewCardPositioner,
-  PreviewCardTrigger,
-} from "./component";
+import type { PreviewCardProps } from "./components/preview-card";
+import { PreviewCard } from "./components/preview-card";
+import { PreviewCardContent } from "./components/preview-card-content";
+import { PreviewCardPortal } from "./components/preview-card-portal";
+import { PreviewCardPositioner } from "./components/preview-card-positioner";
+import { PreviewCardTrigger } from "./components/preview-card-trigger";
 
 export function PreviewCardPreview(props: PreviewCardProps) {
   return (

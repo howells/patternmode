@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Tag } from "lucide-react";
-import { Badge } from "./component";
+import { Badge } from "./components/badge";
 import {
   BorderedExample,
   ComplexExample,

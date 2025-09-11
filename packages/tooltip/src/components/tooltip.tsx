@@ -40,10 +40,6 @@ const Tooltip = ({
 }) => {
   const { popup, arrow } = tooltipVariants({ variant, size });
 
-  const defaultRender: React.ReactElement<Record<string, unknown>> = (
-    <Button className="cursor-pointer" />
-  );
-
   return (
     <TooltipRoot
       defaultOpen={defaultOpen}
@@ -51,9 +47,11 @@ const Tooltip = ({
       open={open}
       {...props}
     >
-      <TooltipTrigger onClick={onClick} render={render || defaultRender}>
-        {children}
-      </TooltipTrigger>
+      {typeof render === "function" ? (
+        <TooltipTrigger onClick={onClick} render={render} />
+      ) : (
+        <TooltipTrigger onClick={onClick}>{children}</TooltipTrigger>
+      )}
       <TooltipPortal>
         <TooltipPositioner
           align={align}

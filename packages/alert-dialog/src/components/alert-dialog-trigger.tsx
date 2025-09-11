@@ -6,7 +6,7 @@ import type React from "react";
 
 /**
  * Button-styled trigger for AlertDialog that accepts all `@patternmode/button` props.
- * Renders the Base UI Trigger via the Button's `render` prop to avoid nested buttons.
+ * Uses Base UI Trigger's render prop to render a Button, avoiding nested buttons.
  */
 export const AlertDialogTrigger = ({
   ref,
@@ -15,13 +15,16 @@ export const AlertDialogTrigger = ({
   ...props
 }: ButtonProps &
   React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & {
-    ref?: React.RefObject<React.ElementRef<typeof BaseAlertDialog.Trigger> | null>;
+    ref?: React.RefObject<React.ElementRef<
+      typeof BaseAlertDialog.Trigger
+    > | null>;
   }) => (
-  <Button
-    className={className}
-    render={<BaseAlertDialog.Trigger ref={ref} />}
-    {...props}
-  >
-    {children}
-  </Button>
+  <BaseAlertDialog.Trigger
+    ref={ref}
+    render={
+      <Button className={className} {...props}>
+        {children}
+      </Button>
+    }
+  />
 );
