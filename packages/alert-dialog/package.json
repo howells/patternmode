@@ -11,6 +11,66 @@
       "import": "./src/index.ts",
       "default": "./src/index.ts"
     },
+    "./component": {
+      "types": "./src/component.tsx",
+      "import": "./src/component.tsx",
+      "default": "./src/component.tsx"
+    },
+    "./root": {
+      "types": "./src/components/alert-dialog-root.tsx",
+      "import": "./src/components/alert-dialog-root.tsx",
+      "default": "./src/components/alert-dialog-root.tsx"
+    },
+    "./trigger": {
+      "types": "./src/components/alert-dialog-trigger.tsx",
+      "import": "./src/components/alert-dialog-trigger.tsx",
+      "default": "./src/components/alert-dialog-trigger.tsx"
+    },
+    "./portal": {
+      "types": "./src/components/alert-dialog-portal.tsx",
+      "import": "./src/components/alert-dialog-portal.tsx",
+      "default": "./src/components/alert-dialog-portal.tsx"
+    },
+    "./backdrop": {
+      "types": "./src/components/alert-dialog-backdrop.tsx",
+      "import": "./src/components/alert-dialog-backdrop.tsx",
+      "default": "./src/components/alert-dialog-backdrop.tsx"
+    },
+    "./content": {
+      "types": "./src/components/alert-dialog-content.tsx",
+      "import": "./src/components/alert-dialog-content.tsx",
+      "default": "./src/components/alert-dialog-content.tsx"
+    },
+    "./header": {
+      "types": "./src/components/alert-dialog-header.tsx",
+      "import": "./src/components/alert-dialog-header.tsx",
+      "default": "./src/components/alert-dialog-header.tsx"
+    },
+    "./footer": {
+      "types": "./src/components/alert-dialog-footer.tsx",
+      "import": "./src/components/alert-dialog-footer.tsx",
+      "default": "./src/components/alert-dialog-footer.tsx"
+    },
+    "./title": {
+      "types": "./src/components/alert-dialog-title.tsx",
+      "import": "./src/components/alert-dialog-title.tsx",
+      "default": "./src/components/alert-dialog-title.tsx"
+    },
+    "./description": {
+      "types": "./src/components/alert-dialog-description.tsx",
+      "import": "./src/components/alert-dialog-description.tsx",
+      "default": "./src/components/alert-dialog-description.tsx"
+    },
+    "./action": {
+      "types": "./src/components/alert-dialog-action.tsx",
+      "import": "./src/components/alert-dialog-action.tsx",
+      "default": "./src/components/alert-dialog-action.tsx"
+    },
+    "./cancel": {
+      "types": "./src/components/alert-dialog-cancel.tsx",
+      "import": "./src/components/alert-dialog-cancel.tsx",
+      "default": "./src/components/alert-dialog-cancel.tsx"
+    },
     "./config": {
       "types": "./src/config.ts",
       "import": "./src/config.ts",
