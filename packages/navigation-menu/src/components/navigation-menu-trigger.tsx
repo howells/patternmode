@@ -3,6 +3,8 @@ import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import { ChevronDown } from "lucide-react";
 import type React from "react";
+import { useNavigationMenuContext } from "../context";
+import { navigationMenuTriggerVariants } from "../variants";
 
 type NavigationMenuTriggerProps = {
   /**
@@ -45,23 +47,29 @@ export const NavigationMenuTrigger = ({
   className,
   children,
   ...props
-}: NavigationMenuTriggerProps) => (
-  <BaseNavigationMenu.Trigger
-    // Use PatternMode Button via render={} for consistent styling and a11y
-    className={cx(
-      // Only keep minimal layout adjustments; Button handles the rest
-      "inline-flex items-center gap-1.5",
-      className
-    )}
-    ref={ref}
-    render={<Button size="base" variant="ghost" />}
-    {...props}
-  >
-    {children}
-    <BaseNavigationMenu.Icon className="transition-transform duration-200 ease-in-out data-[popup-open]:rotate-180">
-      <ChevronDown className="h-3 w-3" />
-    </BaseNavigationMenu.Icon>
-  </BaseNavigationMenu.Trigger>
-);
+}: NavigationMenuTriggerProps) => {
+  const { rounded = false, ring = false } = useNavigationMenuContext();
+
+  return (
+    <BaseNavigationMenu.Trigger
+      // Use PatternMode Button via render={} for consistent styling and a11y
+      className={cx(
+        // Apply navigation menu trigger variants for ring styling
+        navigationMenuTriggerVariants({ rounded, ring }),
+        // Keep minimal layout adjustments; Button handles the rest
+        "inline-flex items-center gap-1.5",
+        className
+      )}
+      ref={ref}
+      render={<Button rounded={rounded} size="base" variant="ghost" />}
+      {...props}
+    >
+      {children}
+      <BaseNavigationMenu.Icon className="transition-transform duration-200 ease-in-out data-[popup-open]:rotate-180">
+        <ChevronDown className="h-3 w-3" />
+      </BaseNavigationMenu.Icon>
+    </BaseNavigationMenu.Trigger>
+  );
+};
 
 NavigationMenuTrigger.displayName = "NavigationMenuTrigger";

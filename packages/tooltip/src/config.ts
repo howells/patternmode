@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageCircle } from "lucide-react";
 import type React from "react";
-import { Tooltip } from "./component";
+import { Tooltip } from "./components/tooltip";
 import {
   AlignmentExample,
   ArrowExample,

@@ -19,7 +19,8 @@
     "./border-ring": "./src/border-ring.ts",
     "./border-ring-dashed": "./src/border-ring-dashed.ts",
     "./floating-surface": "./src/floating-surface.ts",
-    "./floating-item": "./src/floating-item.ts"
+    "./floating-item": "./src/floating-item.ts",
+    "./component-ring": "./src/component-ring.ts"
   },
   "files": [
     "src"

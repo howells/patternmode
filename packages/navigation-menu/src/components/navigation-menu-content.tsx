@@ -1,6 +1,8 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui-components/react/navigation-menu";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
+import { useNavigationMenuContext } from "../context";
+import { navigationMenuContentVariants } from "../variants";
 
 type NavigationMenuContentProps = {
   /**
@@ -19,9 +21,9 @@ type NavigationMenuContentProps = {
  * Navigation menu content component for dropdown content containers.
  *
  * The content component provides the styled container for navigation menu dropdown
- * content. It includes PatternMode's compact spacing and smooth fade animations
- * when opening and closing. This component automatically handles the layout and
- * positioning within the popup structure.
+ * content. It uses the shared floating surface styling with compact density for
+ * consistent spacing and smooth fade animations when opening and closing.
+ * This component automatically handles the layout and positioning within the popup structure.
  *
  * @example
  * ```tsx
@@ -37,21 +39,20 @@ export const NavigationMenuContent = ({
   ref,
   className,
   ...props
-}: NavigationMenuContentProps) => (
-  <BaseNavigationMenu.Content
-    className={cx(
-      // layout
-      // Use tighter padding to match other floating surfaces (e.g., Select)
-      "h-full p-1",
-      // animations
-      "transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)]",
-      // states
-      "data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
-      className
-    )}
-    ref={ref}
-    {...props}
-  />
-);
+}: NavigationMenuContentProps) => {
+  const { rounded = false, ring = false } = useNavigationMenuContext();
+
+  return (
+    <BaseNavigationMenu.Content
+      className={cx(
+        // Use navigation menu content variants for rounded and ring styling
+        navigationMenuContentVariants({ rounded, ring }),
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
+  );
+};
 
 NavigationMenuContent.displayName = "NavigationMenuContent";

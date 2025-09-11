@@ -131,3 +131,126 @@ export const MixedLinksExample = () => {
     </NavigationMenu>
   );
 };
+
+export const RoundedExample = () => {
+  return (
+    <NavigationMenu rounded>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2">
+              <NavigationMenuLink href="#product1">
+                Product 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product2">
+                Product 2
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product3">
+                Product 3
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2">
+              <NavigationMenuLink href="#service1">
+                Service 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#service2">
+                Service 2
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuItemLink href="#about">About</NavigationMenuItemLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+
+export const RingExample = () => {
+  return (
+    <NavigationMenu ring>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2 p-4">
+              <NavigationMenuLink href="#product1">
+                Product 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product2">
+                Product 2
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product3">
+                Product 3
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2 p-4">
+              <NavigationMenuLink href="#service1">
+                Service 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#service2">
+                Service 2
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuItemLink href="#about">About</NavigationMenuItemLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+
+export const RoundedRingExample = () => {
+  return (
+    <NavigationMenu ring rounded>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2">
+              <NavigationMenuLink href="#product1">
+                Product 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product2">
+                Product 2
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#product3">
+                Product 3
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="space-y-2">
+              <NavigationMenuLink href="#service1">
+                Service 1
+              </NavigationMenuLink>
+              <NavigationMenuLink href="#service2">
+                Service 2
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuItemLink href="#about">About</NavigationMenuItemLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};

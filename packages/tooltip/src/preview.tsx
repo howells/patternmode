@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { Tooltip } from "./component";
+import { Tooltip } from "./components/tooltip";
 import type { TooltipProps } from "./types";
 
 export function TooltipPreview({

@@ -33,14 +33,44 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/tooltip.tsx",
+      "import": "./src/components/tooltip.tsx",
+      "default": "./src/components/tooltip.tsx"
+    },
+    "./root": {
+      "types": "./src/components/tooltip-root.tsx",
+      "import": "./src/components/tooltip-root.tsx",
+      "default": "./src/components/tooltip-root.tsx"
+    },
+    "./trigger": {
+      "types": "./src/components/tooltip-trigger.tsx",
+      "import": "./src/components/tooltip-trigger.tsx",
+      "default": "./src/components/tooltip-trigger.tsx"
+    },
+    "./portal": {
+      "types": "./src/components/tooltip-portal.tsx",
+      "import": "./src/components/tooltip-portal.tsx",
+      "default": "./src/components/tooltip-portal.tsx"
+    },
+    "./positioner": {
+      "types": "./src/components/tooltip-positioner.tsx",
+      "import": "./src/components/tooltip-positioner.tsx",
+      "default": "./src/components/tooltip-positioner.tsx"
+    },
+    "./popup": {
+      "types": "./src/components/tooltip-popup.tsx",
+      "import": "./src/components/tooltip-popup.tsx",
+      "default": "./src/components/tooltip-popup.tsx"
+    },
+    "./arrow": {
+      "types": "./src/components/tooltip-arrow.tsx",
+      "import": "./src/components/tooltip-arrow.tsx",
+      "default": "./src/components/tooltip-arrow.tsx"
     },
     "./variants": {
       "types": "./src/variants.ts",

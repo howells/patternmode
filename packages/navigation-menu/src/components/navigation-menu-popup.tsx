@@ -7,6 +7,8 @@ import {
   floatingSurfaceVariants,
 } from "@patternmode/utils/floating-surface";
 import type React from "react";
+import { useNavigationMenuContext } from "../context";
+import { navigationMenuPopupVariants } from "../variants";
 
 /**
  * Styled popup container matching PatternMode floating surfaces.
@@ -29,19 +31,22 @@ import type React from "react";
 export const NavigationMenuPopup = ({
   className,
   ...props
-}: NavigationMenuPopupProps) => (
-  <BaseNavigationMenu.Popup
-    className={cx(
-      floatingSurfaceVariants({ density: "compact", width: "auto" }).base(),
-      "relative h-[var(--popup-height)] w-max origin-[var(--transform-origin)] rounded-lg",
-      "transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)]",
-      "data-[ending-style]:scale-90 data-[starting-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:duration-150",
-      "xs:w-[var(--popup-width)] min-[500px]:w-[var(--popup-width)]",
-      className
-    )}
-    {...props}
-  />
-);
+}: NavigationMenuPopupProps) => {
+  const { rounded = false, ring = false } = useNavigationMenuContext();
+
+  return (
+    <BaseNavigationMenu.Popup
+      className={cx(
+        // Use navigation menu popup variants for consistent styling
+        navigationMenuPopupVariants({ rounded, ring }),
+        // Apply floating surface with proper density and width
+        floatingSurfaceVariants({ density: "compact", width: "auto" }).base(),
+        className
+      )}
+      {...props}
+    />
+  );
+};
 
 export type NavigationMenuPopupProps = React.ComponentPropsWithoutRef<
   typeof BaseNavigationMenu.Popup

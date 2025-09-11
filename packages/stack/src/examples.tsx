@@ -70,3 +70,11 @@ export const WrappingExample = () => (
     <div style={{ width: "200px" }}>Long Item 4</div>
   </Stack>
 );
+
+export const RenderPropExample = () => (
+  <Stack gap={4} render={<a className="block" href="#" />}>
+    <div>Link Item 1</div>
+    <div>Link Item 2</div>
+    <div>Link Item 3</div>
+  </Stack>
+);

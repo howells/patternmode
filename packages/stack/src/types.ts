@@ -72,6 +72,11 @@ export type StackProps = {
    */
   as?: React.ElementType;
   /**
+   * Custom element to render instead of the default.
+   * When provided, the Stack will clone this element with layout classes applied.
+   */
+  render?: React.JSX.Element;
+  /**
    * Stack content.
    * The child elements to be arranged in the stack layout.
    * Can be React nodes or a render prop function that receives layout information.

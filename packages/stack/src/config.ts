@@ -7,6 +7,7 @@ import {
   DefaultExample,
   HelperComponentsExample,
   HorizontalExample,
+  RenderPropExample,
   ResponsiveExample,
   WithPaddingExample,
   WrappingExample,
@@ -69,6 +70,12 @@ export const stackConfig: ComponentConfig = {
       title: "Wrapping",
       description: "Items wrapping to multiple lines",
       component: WrappingExample,
+    },
+    {
+      id: "render-prop",
+      title: "Render Prop",
+      description: "Using custom elements with the render prop",
+      component: RenderPropExample,
     },
   ],
   components: [

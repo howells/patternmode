@@ -17,3 +17,8 @@ export { NavigationMenuPortal } from "./components/navigation-menu-portal";
 export { NavigationMenuPositioner } from "./components/navigation-menu-positioner";
 export { NavigationMenuTrigger } from "./components/navigation-menu-trigger";
 export { NavigationMenuViewport } from "./components/navigation-menu-viewport";
+export {
+  type NavigationMenuContext,
+  NavigationMenuProvider,
+  useNavigationMenuContext,
+} from "./context";
