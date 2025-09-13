@@ -1,6 +1,8 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { RadioCardGroup, RadioCardIndicator, RadioCardItem } from "./component";
+import { RadioCard } from "./components/radio-card";
+import { RadioCardIndicator } from "./components/radio-card-indicator";
+import { RadioCards } from "./components/radio-cards";
 import {
   ControlledExample,
   DefaultExample,
@@ -9,14 +11,14 @@ import {
   ShippingExample,
 } from "./examples";
 
-export const radioCardGroupConfig: ComponentConfig = {
-  id: "radio-card-group",
-  name: "Radio Card Group",
+export const radioCardsConfig: ComponentConfig = {
+  id: "radio-cards",
+  name: "Radio Cards",
   description:
     "A radio group component that presents options as prominent, selectable cards with enhanced visual design. Ideal for presenting choices that benefit from additional visual space, such as pricing plans, feature comparisons, or options that need rich content like descriptions, icons, or pricing information.",
   category: "controls",
   icon: Square,
-  importStatement: `import { RadioCardGroup, RadioCardItem, RadioCardIndicator } from "@patternmode/radio-card-group";`,
+  importStatement: `import { RadioCards, RadioCard, RadioCardIndicator } from "@patternmode/radio-cards";`,
   examples: [
     {
       id: "default",
@@ -51,15 +53,15 @@ export const radioCardGroupConfig: ComponentConfig = {
   ],
   components: [
     {
-      name: "Radio Card Group",
+      name: "Radio Cards",
       description: "Root container for radio card options with grid layout.",
-      component: RadioCardGroup,
+      component: RadioCards,
       primary: true,
     },
     {
-      name: "Radio Card Item",
-      description: "Individual selectable card item with enhanced styling.",
-      component: RadioCardItem,
+      name: "Radio Card",
+      description: "Individual selectable card with enhanced styling.",
+      component: RadioCard,
     },
     {
       name: "Radio Card Indicator",

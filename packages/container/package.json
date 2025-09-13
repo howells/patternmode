@@ -1,0 +1,72 @@
+{
+  "name": "@patternmode/container",
+  "version": "0.1.0",
+  "description": "Responsive content container with sensible Tailwind defaults and size mapping",
+  "type": "module",
+  "license": "MIT",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "import": "./src/types.ts",
+      "default": "./src/types.ts"
+    },
+    "./variants": {
+      "types": "./src/variants.ts",
+      "import": "./src/variants.ts",
+      "default": "./src/variants.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "import": "./src/config.ts",
+      "default": "./src/config.ts"
+    },
+    "./preview": {
+      "types": "./src/preview.tsx",
+      "import": "./src/preview.tsx",
+      "default": "./src/preview.tsx"
+    },
+    "./examples": {
+      "types": "./src/examples.tsx",
+      "import": "./src/examples.tsx",
+      "default": "./src/examples.tsx"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly --declaration --declarationMap --noEmit false --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src --write",
+    "test": "timeout 90s vitest run --reporter=basic --testTimeout=30000 --no-watch --passWithNoTests || true"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@base-ui-components/react": "1.0.0-beta.3",
+    "@patternmode/config": "workspace:*",
+    "@patternmode/constants": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "lucide-react": "^0.543.0",
+    "tailwind-variants": "^3.1.1"
+  },
+  "devDependencies": {
+    "@patternmode/tsconfig": "workspace:*",
+    "@types/react": "^19.1.12",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -2,7 +2,8 @@
 
 import type React from "react";
 
-import { CheckboxGroup, CheckboxGroupItem } from "./component";
+import { CheckboxGroup } from "./components/checkbox-group";
+import { CheckboxGroupItem } from "./components/checkbox-group-item";
 
 type CheckboxGroupProps = React.ComponentPropsWithoutRef<
   typeof CheckboxGroup

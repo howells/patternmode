@@ -8,13 +8,29 @@ _The best of the React ecosystem, unified under Base UI primitives._
 
 ### File Structure
 ```
-src/components/[component-name]/
-├── component.tsx        # Implementation with JSDoc-enhanced types
-├── config.ts            # Component specification + examples with imports
-├── index.ts             # Minimal barrel: export component and types only
-├── examples.tsx        # Example components
-└── preview.tsx         # Preview component (optional)
+packages/[component-package]/
+├── src/
+│   ├── components/          # Individual component files (no barrel files)
+│   │   ├── [component].tsx  # Main component implementation
+│   │   ├── [sub-component].tsx  # Sub-components (optional)
+│   │   └── index.ts         # Component folder exports
+│   ├── config.ts            # Component specification + examples with imports
+│   ├── examples.tsx         # Example components
+│   ├── preview.tsx          # Preview component (optional)
+│   ├── index.ts             # Package barrel: export components and types only
+│   ├── types.ts             # TypeScript type definitions
+│   └── variants.ts          # Tailwind CSS variants (optional)
+└── package.json             # Package configuration
 ```
+
+### Components Folder Architecture (MANDATORY)
+
+**CRITICAL: All component packages MUST follow this structure**
+
+- **Individual Component Files**: Each component gets its own `.tsx` file in `src/components/`
+- **No Barrel Files in Components**: The `src/components/index.ts` only exports components from individual files
+- **Package Barrel File**: `src/index.ts` re-exports from the components folder
+- **Consistent Naming**: Component file names match component names (e.g., `checkbox.tsx` for `Checkbox` component)
 
 ### Component Implementation Requirements
 

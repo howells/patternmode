@@ -192,23 +192,23 @@ import {
   ProgressPreview,
   progressPreviewProps,
 } from "@patternmode/progress/preview";
-import { progressStepsConfig } from "@patternmode/progress-steps/config";
-import {
-  ProgressStepsPreview,
-  progressStepsPreviewProps,
-} from "@patternmode/progress-steps/preview";
 import { progressCircleConfig } from "@patternmode/progress-circle/config";
 import {
   ProgressCirclePreview,
   progressCirclePreviewProps,
 } from "@patternmode/progress-circle/preview";
+import { progressStepsConfig } from "@patternmode/progress-steps/config";
+import {
+  ProgressStepsPreview,
+  progressStepsPreviewProps,
+} from "@patternmode/progress-steps/preview";
 import { radioConfig } from "@patternmode/radio/config";
 import { RadioPreview, radioPreviewProps } from "@patternmode/radio/preview";
-import { radioCardGroupConfig } from "@patternmode/radio-card-group/config";
+import { radioCardsConfig } from "@patternmode/radio-cards/config";
 import {
-  RadioCardGroupPreview,
-  radioCardGroupPreviewProps,
-} from "@patternmode/radio-card-group/preview";
+  RadioCardsPreview,
+  radioCardsPreviewProps,
+} from "@patternmode/radio-cards/preview";
 import { responsiveDrawerConfig } from "@patternmode/responsive-drawer/config";
 import {
   ResponsiveDrawerPreview,
@@ -377,7 +377,7 @@ export const COMPONENT_REGISTRY = {
   "progress-steps": progressStepsConfig,
   "progress-circle": progressCircleConfig,
   radio: radioConfig,
-  "radio-card-group": radioCardGroupConfig,
+  "radio-cards": radioCardsConfig,
   "responsive-drawer": responsiveDrawerConfig,
   "scroll-area": scrollAreaConfig,
   "search-field": searchFieldConfig,
@@ -498,7 +498,10 @@ export const PREVIEW_REGISTRY = {
   sidebar: (() => null) as React.ElementType,
 } as const satisfies Record<ComponentId, React.ElementType>;
 
-export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, ReadonlyArray<unknown>> = {
+export const PREVIEW_PROPS_REGISTRY: Record<
+  ComponentId,
+  ReadonlyArray<unknown>
+> = {
   accordion: accordionPreviewProps,
   "alert-dialog": alertDialogPreviewProps,
   avatar: avatarPreviewProps,
@@ -551,7 +554,7 @@ export const PREVIEW_PROPS_REGISTRY: Record<ComponentId, ReadonlyArray<unknown>>
   "progress-steps": progressStepsPreviewProps,
   "progress-circle": progressCirclePreviewProps,
   radio: radioPreviewProps,
-  "radio-card-group": radioCardGroupPreviewProps,
+  "radio-cards": radioCardsPreviewProps,
   "responsive-drawer": responsiveDrawerPreviewProps,
   "scroll-area": scrollAreaPreviewProps,
   "search-field": searchFieldPreviewProps,

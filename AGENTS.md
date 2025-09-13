@@ -23,7 +23,8 @@
 ## Code Style
 - **Types**: JSDoc on interfaces, `export const` components, `VariantProps<typeof variants>`
 - **Imports**: Individual component imports (`@patternmode/button`)
-- **Minimal Barrel Files**: Each package must include `src/index.ts` that re-exports only the public component(s) and their types. Do not re-export internals, examples, or previews.
+- **Components Folder Architecture**: Each package must organize components in a `src/components/` folder with individual component files. No barrel files within `components/` subfolder.
+- **Package Barrel File**: Each package must include `src/index.ts` that re-exports only the public component(s) and their types. Do not re-export internals, examples, or previews.
 - **TestID**: Every component needs `data-testid` matching directory name
 - **Focus**: Use `focusRing`/`focusInput` utilities from `@/lib/utils`
 - **Children**: Let inherit from HTML props (don't declare explicitly)
@@ -51,7 +52,8 @@
     }
   }
   ```
-- **Barrel file**: Use `src/index.ts` to re-export the component and its types only.
+- **Package Barrel file**: Use `src/index.ts` to re-export the component(s) and their types only.
+- **Components folder**: Organize components in `src/components/` with individual component files. No barrel files within `components/` subfolder.
 - **Publishing types**: Ensure `dist/` contains `.d.ts`. Use `exports` (and optional `types` field) to point to the public API types.
 
 ### Canonical exports policy

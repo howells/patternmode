@@ -1,3 +1,4 @@
+import { floatingSurfaceVariants } from "@patternmode/utils/floating-surface";
 import { tv } from "tailwind-variants";
 
 /**
@@ -5,17 +6,19 @@ import { tv } from "tailwind-variants";
  */
 export const previewCardVariants = tv({
   slots: {
-    // Trigger element with link-like styling
+    // Trigger element with minimal styling to preserve user intent
     trigger:
-      "inline-flex items-center gap-1 text-blue-600 no-underline decoration-1 decoration-blue-600/60 underline-offset-2 outline-none transition-all duration-200 ease-out hover:underline hover:decoration-blue-600 focus-visible:rounded-sm focus-visible:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 data-[popup-open]:underline data-[popup-open]:decoration-blue-600 data-[popup-open]:focus-visible:no-underline dark:text-blue-400 dark:decoration-blue-400/60 dark:data-[popup-open]:decoration-blue-400 dark:hover:decoration-blue-400",
+      "outline-none focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2",
 
     // Positioner for smart positioning
     positioner:
       "z-50 data-[ending-style]:animate-out data-[starting-style]:animate-in",
 
     // Main content container with floating surface styling
-    content:
-      "w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg border-zinc-200 bg-white shadow-xl transition-[transform,scale,opacity] duration-200 ease-out data-[ending-style]:scale-90 data-[starting-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:border-zinc-800 dark:bg-zinc-950",
+    content: [
+      floatingSurfaceVariants({ context: "floating" }).base(),
+      "w-80 max-w-sm origin-[var(--transform-origin)] overflow-hidden rounded-lg shadow-xl transition-[transform,scale,opacity] duration-200 ease-out data-[ending-style]:scale-90 data-[starting-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
+    ],
 
     // Arrow with floating surface styling
     arrow:
@@ -91,5 +94,5 @@ export const arrowSvgPaths = {
 export const arrowFillClasses = {
   main: "fill-white dark:fill-zinc-950",
   border1: "fill-zinc-200 dark:fill-zinc-700",
-  border2: "fill-zinc-300 dark:fill-zinc-600",
+  border2: "fill-zinc-200 dark:fill-zinc-700",
 };

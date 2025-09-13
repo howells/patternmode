@@ -1,5 +1,6 @@
 "use client";
 
+import { useRender } from "@base-ui-components/react/use-render";
 import { Button } from "@patternmode/button";
 import { cx } from "@patternmode/utils/cx";
 import type React from "react";
@@ -36,9 +37,57 @@ const Tooltip = ({
   render,
   ...props
 }: TooltipProps & {
-  ref?: React.RefObject<React.ElementRef<typeof TooltipPopup> | null>;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }) => {
   const { popup, arrow } = tooltipVariants({ variant, size });
+
+  // Handle different render prop patterns
+  if (typeof render === "function") {
+    // Render prop function pattern (for AlertDialogTrigger composition)
+    return (
+      <TooltipRoot
+        defaultOpen={defaultOpen}
+        onOpenChange={onOpenChange}
+        open={open}
+        {...props}
+      >
+        <TooltipTrigger onClick={onClick} render={render} />
+        <TooltipPortal>
+          <TooltipPositioner
+            align={align}
+            alignOffset={alignOffset}
+            side={side}
+            sideOffset={sideOffset}
+          >
+            <TooltipPopup
+              className={cx(popup(), className)}
+              data-testid="tooltip"
+              ref={forwardedRef}
+            >
+              {content}
+              {showArrow && (
+                <TooltipArrow className={arrow()}>
+                  <ArrowSvg />
+                </TooltipArrow>
+              )}
+            </TooltipPopup>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </TooltipRoot>
+    );
+  }
+
+  // Default trigger element
+  const defaultTriggerElement = <Button size="icon-sm" variant="ghost" />;
+
+  // Use render prop element if provided, otherwise use default
+  const triggerElement = useRender({
+    render: render || defaultTriggerElement,
+    props: {
+      children,
+      onClick,
+    },
+  });
 
   return (
     <TooltipRoot
@@ -47,11 +96,7 @@ const Tooltip = ({
       open={open}
       {...props}
     >
-      {typeof render === "function" ? (
-        <TooltipTrigger onClick={onClick} render={render} />
-      ) : (
-        <TooltipTrigger onClick={onClick}>{children}</TooltipTrigger>
-      )}
+      <TooltipTrigger onClick={onClick}>{triggerElement}</TooltipTrigger>
       <TooltipPortal>
         <TooltipPositioner
           align={align}

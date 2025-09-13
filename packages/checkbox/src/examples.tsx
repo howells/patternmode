@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "./component";
+import { Checkbox } from "./components/checkbox";
 
 export const DefaultExample = () => <Checkbox />;
 export const CheckedExample = () => <Checkbox checked />;

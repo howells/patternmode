@@ -22,7 +22,12 @@ export const TooltipTrigger = ({
    * call Base UI's Trigger with a function and let you render the element,
    * merging the provided trigger props into your element.
    */
-  render?: (triggerProps: React.HTMLProps<HTMLElement>) => React.ReactNode;
+  render?:
+    | ((
+        triggerProps: React.HTMLProps<HTMLElement>,
+        state: { open: boolean }
+      ) => React.ReactElement)
+    | React.ReactElement;
   className?: string;
 }) => {
   // If a render function is provided, delegate element creation to the caller
@@ -30,11 +35,22 @@ export const TooltipTrigger = ({
     return (
       <BaseTooltip.Trigger
         {...props}
-        render={(triggerProps) =>
-          render({ ...triggerProps, className: cx(className, triggerProps.className) })
+        render={(triggerProps, state) =>
+          render(
+            {
+              ...triggerProps,
+              className: cx(className, triggerProps.className),
+            },
+            state as { open: boolean }
+          )
         }
       />
     );
+  }
+
+  // If a React element is provided, pass it directly to Base UI
+  if (render) {
+    return <BaseTooltip.Trigger {...props} render={render} />;
   }
 
   // Default behavior: pass an element via render so Base UI owns the element

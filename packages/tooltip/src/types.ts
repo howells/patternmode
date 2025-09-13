@@ -1,3 +1,4 @@
+import type { useRender } from "@base-ui-components/react/use-render";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { tooltipVariants } from "./variants";
@@ -35,6 +36,15 @@ export type TooltipProps = {
   onOpenChange?: (open: boolean) => void;
   /** Click handler for the trigger element. */
   onClick?: React.MouseEventHandler<HTMLElement>;
-  /** Custom trigger element to render. Defaults to a Button. */
-  render?: React.ReactElement<Record<string, unknown>>;
-};
+  /**
+   * Custom trigger element or render function.
+   * Can be a React element (like Button) or a render function for composition.
+   */
+  render?:
+    | React.ReactElement
+    | ((
+        triggerProps: React.HTMLProps<HTMLElement>,
+        state: { open: boolean }
+      ) => React.ReactElement);
+} & Omit<useRender.ComponentProps<"button">, "render"> &
+  VariantProps<typeof tooltipVariants>;

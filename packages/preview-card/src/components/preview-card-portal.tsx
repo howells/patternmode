@@ -1,9 +1,7 @@
 "use client";
 
 import { PreviewCard as BasePreviewCard } from "@base-ui-components/react/preview-card";
-import { cx } from "@patternmode/utils/cx";
 import type React from "react";
-import { previewCardVariants } from "../variants";
 
 type PreviewCardPortalProps = React.ComponentPropsWithoutRef<
   typeof BasePreviewCard.Portal

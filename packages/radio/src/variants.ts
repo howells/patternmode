@@ -1,4 +1,3 @@
-import { borderRadiusVariants } from "@patternmode/utils/border-radius-variants";
 import { focusRing } from "@patternmode/utils/focus-ring";
 import { tv } from "tailwind-variants";
 
@@ -20,11 +19,11 @@ export const radioVariants = tv({
   },
   variants: {
     size: {
-      "2xs": { circle: `size-2.5 ${borderRadiusVariants.xs}`, dot: "size-1" },
-      xs: { circle: `size-3 ${borderRadiusVariants.xs}`, dot: "size-1" },
-      sm: { circle: `size-3.5 ${borderRadiusVariants.sm}`, dot: "size-1.5" },
-      base: { circle: `size-4 ${borderRadiusVariants.base}`, dot: "size-2" },
-      lg: { circle: `size-5 ${borderRadiusVariants.lg}`, dot: "size-2.5" },
+      "2xs": { circle: "size-2.5 rounded-full", dot: "size-1" },
+      xs: { circle: "size-3 rounded-full", dot: "size-1" },
+      sm: { circle: "size-3.5 rounded-full", dot: "size-1.5" },
+      base: { circle: "size-4 rounded-full", dot: "size-2" },
+      lg: { circle: "size-5 rounded-full", dot: "size-2.5" },
     },
     variant: {
       default: {
@@ -55,28 +54,6 @@ export const radioLabelVariants = tv({
       sm: "gap-1.5 text-xs",
       base: "gap-2 text-sm",
       lg: "gap-2.5 text-base",
-    },
-  },
-  defaultVariants: { size: "base" },
-});
-
-export const radioCardVariants = tv({
-  base: [
-    "group relative w-full cursor-pointer border p-4 text-left transition",
-    "bg-white dark:bg-zinc-950",
-    "dark:border-zinc-800",
-    "data-[checked]:border-blue-500 dark:data-[checked]:border-blue-500",
-    "data-[disabled]:border-zinc-100 dark:data-[disabled]:border-zinc-800",
-    "data-[disabled]:bg-zinc-50 data-[disabled]:shadow-none dark:data-[disabled]:bg-zinc-900",
-    "data-[disabled]:cursor-not-allowed",
-    "focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2",
-  ],
-  variants: {
-    size: {
-      xs: `p-2 ${borderRadiusVariants.xs}`,
-      sm: `p-3 ${borderRadiusVariants.sm}`,
-      base: `p-4 ${borderRadiusVariants.base}`,
-      lg: `p-5 ${borderRadiusVariants.lg}`,
     },
   },
   defaultVariants: { size: "base" },

@@ -3,7 +3,7 @@
 import { Field } from "@base-ui-components/react/field";
 import { Label } from "@patternmode/label";
 import React from "react";
-import { Checkbox } from "./component";
+import { Checkbox } from "./components/checkbox";
 
 export type CheckboxPreviewProps = {
   checked?: boolean | "indeterminate";

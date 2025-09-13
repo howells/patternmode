@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { RadioCardGroup, RadioCardItem } from "./component";
+import { RadioCard } from "./components/radio-card";
+import { RadioCards } from "./components/radio-cards";
 
 type Props = {
   orientation?: "vertical" | "horizontal";
@@ -9,7 +10,7 @@ type Props = {
 };
 
 // Minimal, straightforward preview: three simple options
-export function RadioCardGroupPreview({
+export function RadioCardsPreview({
   orientation = "vertical",
   defaultValue = "pro",
 }: Props = {}) {
@@ -27,26 +28,26 @@ export function RadioCardGroupPreview({
   const [value, setValue] = React.useState<string>(defaultValue);
 
   return (
-    <RadioCardGroup
+    <RadioCards
       className={layoutClass}
       onValueChange={(v) => setValue(String(v))}
       value={value}
     >
       {items.map((item) => (
-        <RadioCardItem key={item.value} value={item.value}>
+        <RadioCard key={item.value} value={item.value}>
           <div className="font-medium text-sm text-zinc-900 dark:text-zinc-50">
             {item.label}
           </div>
           <div className="text-sm text-zinc-600 dark:text-zinc-400">
             Choose the {item.label.toLowerCase()} option
           </div>
-        </RadioCardItem>
+        </RadioCard>
       ))}
-    </RadioCardGroup>
+    </RadioCards>
   );
 }
 
-export const radioCardGroupPreviewProps = [
+export const radioCardsPreviewProps = [
   {
     name: "orientation",
     type: "select",

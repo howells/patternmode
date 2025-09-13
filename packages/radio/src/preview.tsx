@@ -1,6 +1,7 @@
 "use client";
 
-import { RadioGroup, RadioOption } from "./component";
+import { Radio as BaseRadio } from "@base-ui-components/react/radio";
+import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 
 export type RadioPreviewProps = { defaultValue?: string; disabled?: boolean };
 
@@ -10,12 +11,16 @@ export function RadioPreview({
 }: RadioPreviewProps) {
   return (
     <div className="p-4">
-      <RadioGroup defaultValue={defaultValue}>
+      <BaseRadioGroup defaultValue={defaultValue}>
         <div className="space-y-2">
-          <RadioOption disabled={disabled} label="Option A" value="a" />
-          <RadioOption disabled={disabled} label="Option B" value="b" />
+          <BaseRadio.Root disabled={disabled} nativeButton value="a">
+            Option A
+          </BaseRadio.Root>
+          <BaseRadio.Root disabled={disabled} nativeButton value="b">
+            Option B
+          </BaseRadio.Root>
         </div>
-      </RadioGroup>
+      </BaseRadioGroup>
     </div>
   );
 }

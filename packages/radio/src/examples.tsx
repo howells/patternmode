@@ -1,134 +1,123 @@
 "use client";
 
+import { Radio as BaseRadio } from "@base-ui-components/react/radio";
+import { RadioGroup as BaseRadioGroup } from "@base-ui-components/react/radio-group";
 import React from "react";
-import {
-  RadioCardOption,
-  RadioGroup,
-  RadioItem,
-  RadioOption,
-} from "./component";
 
 export const DefaultExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("option1");
   return (
-    <RadioGroup
+    <BaseRadioGroup
       onValueChange={(v: unknown) => setSelectedValue(String(v))}
       value={selectedValue}
     >
       <div className="flex items-center space-x-2">
-        <RadioOption label="Option 1" value="option1" />
+        <BaseRadio.Root nativeButton value="option1">
+          Option 1
+        </BaseRadio.Root>
       </div>
-    </RadioGroup>
+    </BaseRadioGroup>
   );
 };
 
 export const SizesExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("medium");
   return (
-    <RadioGroup
+    <BaseRadioGroup
       onValueChange={(v: unknown) => setSelectedValue(String(v))}
       value={selectedValue}
     >
       <div className="space-y-4">
-        <RadioOption label="Small Radio" size="sm" value="small" />
-        <RadioOption label="Medium Radio" size="base" value="medium" />
-        <RadioOption label="Large Radio" size="lg" value="large" />
+        <BaseRadio.Root nativeButton value="small">
+          Small Radio
+        </BaseRadio.Root>
+        <BaseRadio.Root nativeButton value="medium">
+          Medium Radio
+        </BaseRadio.Root>
+        <BaseRadio.Root nativeButton value="large">
+          Large Radio
+        </BaseRadio.Root>
       </div>
-    </RadioGroup>
+    </BaseRadioGroup>
   );
 };
 
 export const WithDescriptionExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("pro");
   return (
-    <RadioGroup
+    <BaseRadioGroup
       onValueChange={(v: unknown) => setSelectedValue(String(v))}
       value={selectedValue}
     >
       <div className="space-y-4">
-        <RadioOption
-          description="Perfect for individuals getting started"
-          label="Basic Plan"
-          value="basic"
-        />
-        <RadioOption
-          description="Best for small teams and growing businesses"
-          label="Pro Plan"
-          value="pro"
-        />
-        <RadioOption
-          description="Advanced features for large organizations"
-          label="Enterprise Plan"
-          value="enterprise"
-        />
+        <BaseRadio.Root nativeButton value="basic">
+          <div className="flex flex-col text-left">
+            <span className="font-medium">Basic Plan</span>
+            <span className="text-sm text-zinc-500">
+              Perfect for individuals getting started
+            </span>
+          </div>
+        </BaseRadio.Root>
+        <BaseRadio.Root nativeButton value="pro">
+          <div className="flex flex-col text-left">
+            <span className="font-medium">Pro Plan</span>
+            <span className="text-sm text-zinc-500">
+              Best for small teams and growing businesses
+            </span>
+          </div>
+        </BaseRadio.Root>
+        <BaseRadio.Root nativeButton value="enterprise">
+          <div className="flex flex-col text-left">
+            <span className="font-medium">Enterprise Plan</span>
+            <span className="text-sm text-zinc-500">
+              Advanced features for large organizations
+            </span>
+          </div>
+        </BaseRadio.Root>
       </div>
-    </RadioGroup>
+    </BaseRadioGroup>
   );
 };
 
 export const DisabledExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("enabled");
   return (
-    <RadioGroup
+    <BaseRadioGroup
       onValueChange={(v: unknown) => setSelectedValue(String(v))}
       value={selectedValue}
     >
       <div className="space-y-4">
-        <RadioOption
-          description="This option is available"
-          label="Enabled Option"
-          value="enabled"
-        />
-        <RadioOption
-          description="This option is not available"
-          disabled
-          label="Disabled Option"
-          value="disabled"
-        />
+        <BaseRadio.Root nativeButton value="enabled">
+          <div className="flex flex-col text-left">
+            <span className="font-medium">Enabled Option</span>
+            <span className="text-sm text-zinc-500">
+              This option is available
+            </span>
+          </div>
+        </BaseRadio.Root>
+        <BaseRadio.Root disabled nativeButton value="disabled">
+          <div className="flex flex-col text-left">
+            <span className="font-medium">Disabled Option</span>
+            <span className="text-sm text-zinc-500">
+              This option is not available
+            </span>
+          </div>
+        </BaseRadio.Root>
       </div>
-    </RadioGroup>
-  );
-};
-
-export const CardStyleExample = () => {
-  const [selectedValue, setSelectedValue] =
-    React.useState<string>("professional");
-  return (
-    <RadioGroup
-      onValueChange={(v: unknown) => setSelectedValue(String(v))}
-      value={selectedValue}
-    >
-      <div className="space-y-3">
-        <RadioCardOption
-          description="Perfect for personal projects and small websites"
-          title="Starter"
-          value="starter"
-        />
-        <RadioCardOption
-          description="Ideal for growing businesses and medium-scale applications"
-          title="Professional"
-          value="professional"
-        />
-        <RadioCardOption
-          description="Advanced features for large-scale applications"
-          title="Enterprise"
-          value="enterprise"
-        />
-      </div>
-    </RadioGroup>
+    </BaseRadioGroup>
   );
 };
 
 export const CustomStructureExample = () => {
   const [selectedValue, setSelectedValue] = React.useState<string>("custom1");
   return (
-    <RadioGroup
+    <BaseRadioGroup
       onValueChange={(v: unknown) => setSelectedValue(String(v))}
       value={selectedValue}
     >
       <div className="space-y-4">
         <div className="flex cursor-pointer items-center gap-2 font-medium text-sm text-zinc-900 dark:text-zinc-50">
-          <RadioItem size="base" value="custom1" />
+          <BaseRadio.Root nativeButton value="custom1" />
           <div className="flex flex-col">
             <span className="font-medium">Custom Radio 1</span>
             <span className="text-sm text-zinc-500">
@@ -137,7 +126,7 @@ export const CustomStructureExample = () => {
           </div>
         </div>
         <div className="flex cursor-pointer items-center gap-2 font-medium text-sm text-zinc-900 dark:text-zinc-50">
-          <RadioItem size="base" value="custom2" />
+          <BaseRadio.Root nativeButton value="custom2" />
           <div className="flex flex-col">
             <span className="font-medium">Custom Radio 2</span>
             <span className="text-sm text-zinc-500">
@@ -146,6 +135,6 @@ export const CustomStructureExample = () => {
           </div>
         </div>
       </div>
-    </RadioGroup>
+    </BaseRadioGroup>
   );
 };

@@ -34,28 +34,10 @@ export type RadioLabelProps = {
     ref?: React.RefObject<HTMLLabelElement | null>;
   };
 
-export type RadioCardProps = {
-  size?: Size;
-  children?: React.ReactNode;
-  indicator?: React.ReactNode;
-  showIndicator?: boolean;
-} & React.ComponentPropsWithoutRef<typeof BaseRadio.Root> & {
-    ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null>;
-  };
-
 export type RadioOptionProps = {
   value: string;
   label: React.ReactNode;
   description?: React.ReactNode;
   disabled?: boolean;
   size?: Size;
-} & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> };
-
-export type RadioCardOptionProps = {
-  value: string;
-  title: React.ReactNode;
-  description?: React.ReactNode;
-  disabled?: boolean;
-  size?: Size;
-  showIndicator?: boolean;
 } & { ref?: React.RefObject<React.ElementRef<typeof BaseRadio.Root> | null> };

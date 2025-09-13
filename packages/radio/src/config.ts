@@ -1,17 +1,7 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Circle } from "lucide-react";
+import { Radio } from "./components/radio";
 import {
-  Radio,
-  RadioCard,
-  RadioCardOption,
-  RadioGroup,
-  RadioIndicator,
-  RadioItem,
-  RadioLabel,
-  RadioOption,
-} from "./component";
-import {
-  CardStyleExample,
   CustomStructureExample,
   DefaultExample,
   DisabledExample,
@@ -26,7 +16,7 @@ export const radioConfig: ComponentConfig = {
     "Radio button input for single selections within a group of options.",
   category: "controls",
   icon: Circle,
-  importStatement: `import { Radio, RadioGroup, RadioItem, RadioOption, RadioLabel, RadioCard, RadioCardOption, RadioIndicator } from "@patternmode/radio";`,
+  importStatement: `import { Radio } from "@patternmode/radio";`,
   examples: [
     {
       id: "default",
@@ -53,12 +43,6 @@ export const radioConfig: ComponentConfig = {
       component: DisabledExample,
     },
     {
-      id: "card-style",
-      title: "Card Style",
-      description: "Card-style options",
-      component: CardStyleExample,
-    },
-    {
       id: "custom-structure",
       title: "Custom Structure",
       description: "Compose with primitives",
@@ -68,40 +52,9 @@ export const radioConfig: ComponentConfig = {
   components: [
     {
       name: "Radio",
-      description: "Root radio",
+      description: "Radio button primitive (Base UI)",
       component: Radio,
       primary: true,
-    },
-    {
-      name: "Radio Group",
-      description: "Group for radios",
-      component: RadioGroup,
-    },
-    { name: "Radio Item", description: "Styled radio", component: RadioItem },
-    {
-      name: "Radio Option",
-      description: "Label + description option",
-      component: RadioOption,
-    },
-    {
-      name: "Radio Label",
-      description: "Label element",
-      component: RadioLabel,
-    },
-    {
-      name: "Radio Card",
-      description: "Card-style radio",
-      component: RadioCard,
-    },
-    {
-      name: "Radio Card Option",
-      description: "Complete card option",
-      component: RadioCardOption,
-    },
-    {
-      name: "Radio Indicator",
-      description: "Indicator dot/circle",
-      component: RadioIndicator,
     },
   ],
 };

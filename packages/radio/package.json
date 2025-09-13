@@ -4,17 +4,11 @@
   "description": "Radio buttons and groups (Base UI based)",
   "type": "module",
   "license": "MIT",
-  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/radio.tsx",
+      "import": "./src/components/radio.tsx",
+      "default": "./src/components/radio.tsx"
     },
     "./types": {
       "types": "./src/types.ts",

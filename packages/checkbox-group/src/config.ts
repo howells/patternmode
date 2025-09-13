@@ -1,7 +1,8 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { CheckSquare } from "lucide-react";
 import { createElement } from "react";
-import { CheckboxGroup, CheckboxGroupItem } from "./component";
+import { CheckboxGroup } from "./components/checkbox-group";
+import { CheckboxGroupItem } from "./components/checkbox-group-item";
 import {
   ControlledExample,
   DefaultExample,
