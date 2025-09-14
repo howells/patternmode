@@ -8,8 +8,12 @@ export const Radio = ({
   children,
   indicatorClassName,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseRadio.Root> & { indicatorClassName?: string }) => {
-  const hasCustomRender = Object.prototype.hasOwnProperty.call(props, "render") && (props as any).render != null;
+}: React.ComponentPropsWithoutRef<typeof BaseRadio.Root> & {
+  indicatorClassName?: string;
+}) => {
+  const propsAsRecord = props as Record<string, unknown>;
+  const renderProp = propsAsRecord.render;
+  const hasCustomRender = Object.hasOwn(props, "render") && renderProp != null;
   return (
     <BaseRadio.Root
       {...props}
@@ -27,11 +31,12 @@ export const Radio = ({
       )}
       data-testid="radio"
     >
+      {children}
       {hasCustomRender ? (
         <span
           className={cx(
-            "absolute inline-flex size-4 items-center justify-center rounded-full border-2",
-            "right-3 top-1/2 -translate-y-1/2",
+            "pointer-events-none absolute z-10 inline-flex size-4 items-center justify-center rounded-full border-2",
+            "-translate-y-1/2 top-1/2 right-3",
             "border-zinc-300 bg-white dark:border-zinc-600 dark:bg-zinc-950",
             "group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
             indicatorClassName
@@ -46,7 +51,6 @@ export const Radio = ({
           <span className="block size-2 rounded-full bg-white dark:bg-zinc-50" />
         </BaseRadio.Indicator>
       )}
-      {children}
     </BaseRadio.Root>
   );
 };

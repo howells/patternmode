@@ -1,5 +1,5 @@
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
-import { Checkbox } from "@patternmode/checkbox";
+import { Checkbox, CheckboxIndicator } from "@patternmode/checkbox";
 import { InputCard, type InputCardProps } from "@patternmode/input-card";
 import { cx } from "@patternmode/utils/cx";
 import { selectionRing } from "@patternmode/utils/focus-ring";
@@ -129,7 +129,8 @@ const CheckboxCard = ({
         <InputCard
           className={cx(isSelected && selectionRing, className)}
           disabled={disabled}
-          showInput={false}
+          input={<CheckboxIndicator />}
+          showInput={showIndicator}
           {...cardProps}
         >
           {children}
@@ -137,7 +138,6 @@ const CheckboxCard = ({
       }
       required={required}
       value={value}
-      indicatorClassName="right-3 top-1/2 -translate-y-1/2"
     />
   );
 };

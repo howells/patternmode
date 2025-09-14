@@ -47,10 +47,11 @@ const Checkbox = ({
       data-testid="checkbox"
       onCheckedChange={handleChange}
     >
+      {typeof (props as any).render === "object" ? (props as any).render : null}
       {hasCustomRender ? (
         <span
           className={cx(
-            "absolute inline-flex size-4 items-center justify-center rounded border transition-colors",
+            "pointer-events-none absolute inline-flex size-4 items-center justify-center rounded border transition-colors z-10",
             "right-3 top-1/2 -translate-y-1/2",
             "border-zinc-300 bg-white text-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-900",
             "group-data-[checked]:bg-zinc-900 dark:group-data-[checked]:bg-zinc-50",

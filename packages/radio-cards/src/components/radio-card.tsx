@@ -1,4 +1,4 @@
-import { Radio } from "@patternmode/radio";
+import { Radio, RadioIndicator } from "@patternmode/radio";
 import type { InputCardProps } from "@patternmode/input-card";
 import { InputCard } from "@patternmode/input-card";
 import { cx } from "@patternmode/utils/cx";
@@ -88,12 +88,12 @@ const RadioCard = ({
       disabled={disabled}
       name={name}
       nativeButton={false}
-      indicatorClassName="right-3 top-1/2 -translate-y-1/2"
       render={
         <InputCard
           className={cx(className)}
           disabled={disabled}
-          showInput={false}
+          input={<RadioIndicator />}
+          showInput={finalShowIndicator}
           {...cardProps}
         >
           {children}
