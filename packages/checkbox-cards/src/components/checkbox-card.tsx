@@ -1,4 +1,5 @@
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
+import { Checkbox } from "@patternmode/checkbox";
 import { InputCard, type InputCardProps } from "@patternmode/input-card";
 import { cx } from "@patternmode/utils/cx";
 import { selectionRing } from "@patternmode/utils/focus-ring";
@@ -107,24 +108,28 @@ const CheckboxCard = ({
   // Check if this card is selected
   const isSelected = selectedValues.includes(value);
 
+  const handleChange = React.useCallback(
+    (v: boolean | "indeterminate") => {
+      // Adapt Checkbox onCheckedChange signature to card's expected callback
+      onCheckedChange?.(Boolean(v), { reason: "none" } as any);
+    },
+    [onCheckedChange]
+  );
+
   return (
-    <BaseCheckbox.Root
+    <Checkbox
+      className={className ? `group ${className}` : "group"}
       checked={checked}
       disabled={disabled}
       name={name}
       nativeButton={false}
-      onCheckedChange={onCheckedChange}
-      ref={ref}
+      onCheckedChange={handleChange}
+      ref={ref as any}
       render={
         <InputCard
-          className={cx(
-            // Apply selection ring when this checkbox is checked
-            isSelected && selectionRing,
-            className
-          )}
+          className={cx(isSelected && selectionRing, className)}
           disabled={disabled}
-          input={<CheckboxCardIndicator />}
-          showInput={showIndicator}
+          showInput={false}
           {...cardProps}
         >
           {children}
@@ -132,6 +137,7 @@ const CheckboxCard = ({
       }
       required={required}
       value={value}
+      indicatorClassName="right-3 top-1/2 -translate-y-1/2"
     />
   );
 };

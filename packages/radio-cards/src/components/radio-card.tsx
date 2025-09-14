@@ -1,8 +1,7 @@
-import { Radio } from "@base-ui-components/react/radio";
+import { Radio } from "@patternmode/radio";
 import type { InputCardProps } from "@patternmode/input-card";
 import { InputCard } from "@patternmode/input-card";
 import { cx } from "@patternmode/utils/cx";
-import { selectionRing } from "@patternmode/utils/focus-ring";
 import React from "react";
 import { RadioCardsContext } from "../context";
 import { RadioCardIndicator } from "./radio-card-indicator";
@@ -45,10 +44,10 @@ type RadioCardProps = {
    */
   required?: boolean;
 } & Omit<
-  React.ComponentPropsWithoutRef<typeof Radio.Root>,
+  React.ComponentPropsWithoutRef<any>,
   "value" | "disabled" | "className" | "name" | "required"
 > & {
-    ref?: React.RefObject<React.ElementRef<typeof Radio.Root> | null>;
+    ref?: React.RefObject<HTMLElement | null>;
   } & Omit<InputCardProps, "input" | "showInput" | "children" | "className">;
 
 /**
@@ -57,7 +56,6 @@ type RadioCardProps = {
  * Each RadioCard spans 1 column in the parent Grid layout.
  */
 const RadioCard = ({
-  ref,
   className,
   children,
   showIndicator,
@@ -85,22 +83,17 @@ const RadioCard = ({
   } = props;
 
   return (
-    <Radio.Root
+    <Radio
       className={className ? `group ${className}` : "group"}
       disabled={disabled}
       name={name}
       nativeButton={false}
-      ref={ref}
+      indicatorClassName="right-3 top-1/2 -translate-y-1/2"
       render={
         <InputCard
-          className={cx(
-            className,
-            // Apply selection ring when this radio is selected
-            isSelected && selectionRing
-          )}
+          className={cx(className)}
           disabled={disabled}
-          input={<RadioCardIndicator />}
-          showInput={finalShowIndicator}
+          showInput={false}
           {...cardProps}
         >
           {children}

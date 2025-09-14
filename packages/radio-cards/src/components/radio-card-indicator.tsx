@@ -1,7 +1,7 @@
-import type React from "react";
-import { Radio as BaseRadio } from "@base-ui-components/react/radio";
-import { radioVariants } from "@patternmode/radio/variants";
+import type { Radio as BaseRadio } from "@base-ui-components/react/radio";
+import { RadioIndicator } from "@patternmode/radio";
 import { cx } from "@patternmode/utils/cx";
+import type React from "react";
 
 /**
  * Visual indicator for radio card selection state with circular design.
@@ -11,20 +11,20 @@ const RadioCardIndicator = ({
   ref,
   className,
   ...props
-}: React.ComponentProps<typeof BaseRadio.Indicator>) => {
-  const variants = radioVariants({ size: "base", variant: "card" });
-  return (
-    <div className={cx(variants.circle(), className)}>
-      <BaseRadio.Indicator
-        className="absolute inset-0 flex items-center justify-center"
-        ref={ref}
-        {...props}
-      >
-        <div className={variants.dot()} />
-      </BaseRadio.Indicator>
-    </div>
-  );
-};
+}: React.ComponentProps<typeof BaseRadio.Indicator>) => (
+  <div
+    aria-hidden="true"
+    className={cx(
+      "group relative inline-flex size-4 items-center justify-center rounded-full border-2",
+      "border-zinc-300 bg-white text-zinc-50 dark:border-zinc-600 dark:bg-zinc-950",
+      "group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
+      className
+    )}
+    role="presentation"
+  >
+    <RadioIndicator ref={ref} {...props} />
+  </div>
+);
 RadioCardIndicator.displayName = "RadioCardIndicator";
 
 export { RadioCardIndicator };
