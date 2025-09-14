@@ -5,16 +5,16 @@ import { floatingItemVariants } from "@patternmode/utils/floating-item";
 import type React from "react";
 
 type NavigationMenuLinkProps = {
-  /**
-   * Reference to the link element.
-   */
-  ref?: React.RefObject<React.ElementRef<
-    typeof BaseNavigationMenu.Link
-  > | null>;
-  /**
-   * Additional CSS classes for styling customization.
-   */
-  className?: string;
+	/**
+	 * Reference to the link element.
+	 */
+	ref?: React.RefObject<React.ElementRef<
+		typeof BaseNavigationMenu.Link
+	> | null>;
+	/**
+	 * Additional CSS classes for styling customization.
+	 */
+	className?: string;
 } & React.ComponentPropsWithoutRef<typeof BaseNavigationMenu.Link>;
 
 /**
@@ -38,22 +38,22 @@ type NavigationMenuLinkProps = {
  * ```
  */
 export const NavigationMenuLink = ({
-  ref,
-  className,
-  ...props
+	ref,
+	className,
+	...props
 }: NavigationMenuLinkProps) => (
-  <BaseNavigationMenu.Link
-    // Use PatternMode Button for consistent link styles in dropdown content
-    className={cx(
-      floatingItemVariants({ size: "base" }),
-      // make sure it doesn't cause line breaks in top-level layout
-      "inline-flex no-underline",
-      className
-    )}
-    ref={ref}
-    render={<Button size="sm" variant="ghost" />}
-    {...props}
-  />
+	<BaseNavigationMenu.Link
+		// Use PatternMode Button for consistent link styles in dropdown content
+		className={cx(
+			floatingItemVariants({ size: "base" }),
+			// make sure it doesn't cause line breaks in top-level layout
+			"inline-flex no-underline",
+			className,
+		)}
+		ref={ref}
+		render={<Button size="sm" variant="ghost" />}
+		{...props}
+	/>
 );
 
 NavigationMenuLink.displayName = "NavigationMenuLink";
