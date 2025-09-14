@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
+  // Silence multiple-lockfile warning by pinning the monorepo root
+  outputFileTracingRoot: path.join(__dirname, "../../.."),
   transpilePackages: ["@patternmode/*"],
   images: {
     remotePatterns: [
