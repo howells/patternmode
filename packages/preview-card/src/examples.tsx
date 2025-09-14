@@ -14,7 +14,7 @@ import { PreviewCardTrigger } from "./components/preview-card-trigger";
 export const DefaultExample = () => {
   return (
     <PreviewCard>
-      <PreviewCardTrigger className="text-blue-600 hover:underline">
+      <PreviewCardTrigger className="text-zinc-600 hover:underline">
         Hover for preview
       </PreviewCardTrigger>
       <PreviewCardContent>
@@ -32,7 +32,7 @@ export const DefaultExample = () => {
 export const WithImageExample = () => {
   return (
     <PreviewCard>
-      <PreviewCardTrigger className="text-blue-600 hover:underline">
+      <PreviewCardTrigger className="text-zinc-600 hover:underline">
         Read the full article
       </PreviewCardTrigger>
       <PreviewCardContent align="start" side="top">
@@ -56,7 +56,7 @@ export const WithImageExample = () => {
         <PreviewCardFooter>
           <span className="text-xs text-zinc-500">TechBlog.com</span>
           <button
-            className="text-blue-600 text-xs hover:underline"
+            className="text-zinc-600 text-xs hover:underline"
             type="button"
           >
             Read more
@@ -70,7 +70,7 @@ export const WithImageExample = () => {
 export const UserProfileExample = () => {
   return (
     <PreviewCard>
-      <PreviewCardTrigger className="cursor-pointer text-blue-600 hover:underline">
+      <PreviewCardTrigger className="cursor-pointer text-zinc-600 hover:underline">
         @johndoe
       </PreviewCardTrigger>
       <PreviewCardContent>
@@ -102,7 +102,7 @@ export const UserProfileExample = () => {
         <PreviewCardFooter>
           <span className="text-xs text-zinc-500">Joined March 2022</span>
           <button
-            className="rounded bg-blue-500 px-2 py-1 text-white text-xs hover:bg-blue-600"
+            className="rounded bg-zinc-500 px-2 py-1 text-white text-xs hover:bg-zinc-600"
             type="button"
           >
             Follow

@@ -46,7 +46,7 @@ export const WithArrowExample = () => (
           Cancel
         </PopoverClose>
         <button
-          className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
+          className="rounded bg-zinc-500 px-3 py-1 text-sm text-white hover:bg-zinc-600"
           type="button"
         >
           Learn More

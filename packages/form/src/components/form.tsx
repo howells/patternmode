@@ -135,7 +135,7 @@ const FormControl = ({
         "bg-white dark:bg-zinc-800",
         "text-zinc-900 dark:text-zinc-50",
         "placeholder:text-zinc-500 dark:placeholder:text-zinc-400",
-        "focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
+        "focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "data-invalid:border-red-500 data-invalid:focus:border-red-500 data-invalid:focus:ring-red-500/20",
         className

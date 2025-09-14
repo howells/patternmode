@@ -8,15 +8,15 @@ A comprehensive UI component library and design system.
 
 If your app lives alongside this repo (for example at `~/Sites/danielhowells` with this repo at `~/Sites/patternmode`), follow these steps to import `@patternmode/heading` cleanly in Next.js 15 (Turbopack):
 
-1) Add local dependencies with `link:` and point at actual package folders (not the repo root):
+1) Add local dependencies with the `workspace:` protocol (recommended when using a single meta‑workspace):
 
 ```jsonc
 // your-app/package.json
 {
   "dependencies": {
-    "@patternmode/heading": "link:../patternmode/packages/heading",
-    "@patternmode/utils": "link:../patternmode/packages/utils",
-    "@patternmode/config": "link:../patternmode/packages/config"
+    "@patternmode/heading": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/config": "workspace:*"
   }
 }
 ```
@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-3) Do not add `tsconfig.json` path aliases to `../patternmode` for `@patternmode/*`. Let Node resolve via `node_modules` (the `link:` symlinks).
+3) Do not add `tsconfig.json` path aliases to `../patternmode` for `@patternmode/*`. Let Node resolve via `node_modules` (workspace packages).
 
 4) Use the component:
 
@@ -58,7 +58,7 @@ export default function SiteHeading({ children }: { children: React.ReactNode })
 ### Known pitfalls (and fixes)
 
 - Don’t alias `@patternmode/heading` to the repo root (e.g. `../patternmode`). Always link to `../patternmode/packages/heading`.
-- Don’t use `file:` for local Patternmode packages. Prefer `link:` so workspace-style internal deps (declared as `workspace:*`) continue to resolve.
+- Don’t use `file:` for local Patternmode packages. Prefer `workspace:*` so internal workspace deps continue to resolve.
 - Remove custom `.d.ts` shims that redefine the package API; they can mask the real types.
 - Ensure React 19 in your app to satisfy peer dependencies.
 

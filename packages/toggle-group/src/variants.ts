@@ -38,7 +38,7 @@ export const toggleGroupVariants = tv({
       },
       outline: {
         root: "",
-        item: "border border-transparent data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
+        item: "border border-transparent data-[pressed]:border-zinc-500 dark:data-[pressed]:border-zinc-400",
       },
       ghost: {
         root: "border-transparent bg-transparent",

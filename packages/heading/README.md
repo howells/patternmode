@@ -2,32 +2,24 @@
 
 Heading component with semantic levels and consistent typography.
 
-> Alpha note: Patternmode packages are consumed from source (TypeScript) during local development. Use pnpm’s `link:` protocol and let Next.js transpile these packages.
+> Alpha note: In this stack, Patternmode packages are consumed via pnpm’s `workspace:` protocol and transpiled by Next.js. Prefer `workspace:*` over `link:`.
 
-## Install (local, sibling repos)
+## Install (workspace)
 
-Assuming your app is at `~/Sites/danielhowells` and Patternmode is at `~/Sites/patternmode`:
-
-Add the packages to your app’s `package.json` (use the actual package folders, not the repo root):
+If this package lives in the same pnpm workspace as your app, add dependencies using the workspace protocol:
 
 ```jsonc
 // your-app/package.json
 {
   "dependencies": {
-    "@patternmode/heading": "link:../patternmode/packages/heading",
-    "@patternmode/utils": "link:../patternmode/packages/utils",
-    "@patternmode/config": "link:../patternmode/packages/config"
+    "@patternmode/heading": "workspace:*",
+    "@patternmode/utils": "workspace:*",
+    "@patternmode/config": "workspace:*"
   }
 }
 ```
 
-Then install in your app:
-
-```bash
-pnpm install
-```
-
-Why utils and config too? This package depends on them and they’re authored in the same monorepo. Linking them explicitly avoids resolution issues when consuming from another repo.
+Then run `pnpm install` in your workspace root.
 
 ## Next.js configuration (Turbopack)
 
@@ -53,7 +45,7 @@ export default nextConfig;
 ```
 
 Notes
-- Do not add tsconfig path aliases like `"@patternmode/heading": ["../patternmode"]`. Let Node resolve via `node_modules` (the `link:` symlinks).
+- Do not add tsconfig path aliases like `"@patternmode/heading": ["../patternmode"]`. Let Node resolve via `node_modules` (workspace-installed packages).
 - Restart the dev server after changing Next config.
 
 ## Usage
@@ -86,8 +78,7 @@ Accessibility
   - Ensure you linked the package folder (`packages/heading`), not the repo root.
   - Ensure `experimental.externalDir` is `true` and `transpilePackages` includes `@patternmode/heading`, `@patternmode/utils`, and `@patternmode/config`.
   - Remove custom `.d.ts` shims that redefine the package API.
-- Types or build errors when using `file:` instead of `link:`:
-  - Use `link:` so internal `workspace:*` dependencies in Patternmode resolve correctly across repos.
+If you develop across sibling repos (outside a single workspace), you may use `link:` locally, but this stack standardizes on `workspace:*`.
 
 ## Requirements
 - React `^19`

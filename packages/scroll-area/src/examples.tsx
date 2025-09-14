@@ -35,7 +35,7 @@ export const HorizontalExample = () => {
           <figure className="shrink-0" key={id}>
             <div className="overflow-hidden rounded-md">
               <div
-                className="flex aspect-[3/4] h-fit w-fit items-center justify-center bg-gradient-to-br from-blue-400 to-purple-600 text-white"
+                className="flex aspect-[3/4] h-fit w-fit items-center justify-center bg-gradient-to-br from-zinc-400 to-purple-600 text-white"
                 style={{ width: 150, height: 200 }}
               >
                 Photo {id}
@@ -54,7 +54,7 @@ export const HorizontalExample = () => {
 export const BothDirectionsExample = () => {
   return (
     <ScrollArea className="h-48 w-64 rounded-md border" orientation="both">
-      <div className="min-h-96 min-w-96 bg-gradient-to-br from-pink-100 to-blue-100 p-4">
+      <div className="min-h-96 min-w-96 bg-gradient-to-br from-pink-100 to-zinc-100 p-4">
         <h3 className="mb-4">Large Content Area</h3>
         <p className="mb-4">
           This content area is larger than the container in both width and
@@ -82,17 +82,17 @@ export const CustomStyledExample = () => {
   return (
     <ScrollArea
       className="h-64 w-72 rounded-md border"
-      scrollbarClassName="w-4 bg-blue-50 dark:bg-blue-950"
-      thumbClassName="bg-blue-500 hover:bg-blue-600 dark:bg-blue-400 dark:hover:bg-blue-300"
+      scrollbarClassName="w-4 bg-zinc-50 dark:bg-zinc-950"
+      thumbClassName="bg-zinc-500 hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300"
     >
       <div className="space-y-4 p-4">
-        <h4 className="text-blue-900 dark:text-blue-100">Custom Scrollbar</h4>
+        <h4 className="text-zinc-900 dark:text-zinc-100">Custom Scrollbar</h4>
         {Array.from({ length: 30 }, (_, i) => i + 1).map((id) => (
-          <div className="rounded-md bg-blue-50 p-3 dark:bg-blue-900" key={id}>
-            <div className="font-medium text-blue-900 dark:text-blue-100">
+          <div className="rounded-md bg-zinc-50 p-3 dark:bg-zinc-900" key={id}>
+            <div className="font-medium text-zinc-900 dark:text-zinc-100">
               Item {id}
             </div>
-            <div className="text-blue-700 text-sm dark:text-blue-300">
+            <div className="text-zinc-700 text-sm dark:text-zinc-300">
               This item demonstrates custom scrollbar styling with blue theme
               colors.
             </div>

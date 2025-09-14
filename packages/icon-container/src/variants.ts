@@ -10,7 +10,7 @@ export const iconContainerVariants = tv({
       xl: "h-16 w-16",
     },
     variant: {
-      default: "bg-blue-100 dark:bg-blue-900/20",
+      default: "bg-zinc-100 dark:bg-zinc-900/20",
       neutral: "bg-zinc-100 dark:bg-zinc-900/20",
       success: "bg-emerald-100 dark:bg-emerald-900/20",
       info: "bg-sky-100 dark:bg-sky-900/20",

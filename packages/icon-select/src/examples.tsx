@@ -93,7 +93,7 @@ export const HookExample = () => {
         {DynamicIconComponent && (
           <div className="flex items-center gap-2 rounded-lg bg-zinc-50 p-3">
             <span className="text-sm text-zinc-600">Rendered icon:</span>
-            <DynamicIconComponent className="h-6 w-6 text-blue-500" />
+            <DynamicIconComponent className="h-6 w-6 text-zinc-500" />
           </div>
         )}
       </div>
@@ -167,7 +167,7 @@ export const DynamicIconExample = () => {
             <span className="text-sm text-zinc-500">Current:</span>
             {(() => {
               const CurrentIcon = getDynamicIconByName(iconName);
-              return <CurrentIcon className="h-6 w-6 text-blue-500" />;
+              return <CurrentIcon className="h-6 w-6 text-zinc-500" />;
             })()}
           </div>
           <div className="h-6 w-px bg-zinc-300" />

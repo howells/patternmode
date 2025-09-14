@@ -13,7 +13,7 @@ export const accordionTriggerVariants = tv({
     // disabled
     "data-[disabled]:cursor-default data-[disabled]:text-zinc-400 dark:data-[disabled]:text-zinc-600",
     // focus
-    "focus-visible:z-10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset",
+    "focus-visible:z-10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-inset",
   ],
 });
 

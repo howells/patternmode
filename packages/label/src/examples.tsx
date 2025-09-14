@@ -41,7 +41,7 @@ export const CustomStyledExample = () => {
   const id = useId();
   return (
     <div>
-      <Label className="text-blue-600 text-lg" htmlFor={id}>
+      <Label className="text-zinc-600 text-lg" htmlFor={id}>
         Important Field
       </Label>
       <input className="mt-2 w-full rounded border p-2" id={id} />

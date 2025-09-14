@@ -318,7 +318,7 @@ export function ButtonAlignmentExample() {
           <button
             className={(() => {
               const base =
-                "rounded bg-blue-500 px-3 py-2 text-white transition-colors hover:bg-blue-600";
+                "rounded bg-zinc-500 px-3 py-2 text-white transition-colors hover:bg-zinc-600";
               if (size === "xs") {
                 return `${base} h-8 text-xs`;
               }
@@ -341,7 +341,7 @@ export function ButtonAlignmentExample() {
         <button
           className={`rounded px-2 py-1 text-xs ${
             size === "xs"
-              ? "bg-blue-500 text-white"
+              ? "bg-zinc-500 text-white"
               : "bg-zinc-100 hover:bg-zinc-200"
           }`}
           onClick={() => setSize("xs")}
@@ -352,7 +352,7 @@ export function ButtonAlignmentExample() {
         <button
           className={`rounded px-2 py-1 text-xs ${
             size === "sm"
-              ? "bg-blue-500 text-white"
+              ? "bg-zinc-500 text-white"
               : "bg-zinc-100 hover:bg-zinc-200"
           }`}
           onClick={() => setSize("sm")}
@@ -363,7 +363,7 @@ export function ButtonAlignmentExample() {
         <button
           className={`rounded px-2 py-1 text-xs ${
             size === "base"
-              ? "bg-blue-500 text-white"
+              ? "bg-zinc-500 text-white"
               : "bg-zinc-100 hover:bg-zinc-200"
           }`}
           onClick={() => setSize("base")}
@@ -374,7 +374,7 @@ export function ButtonAlignmentExample() {
         <button
           className={`rounded px-2 py-1 text-xs ${
             size === "lg"
-              ? "bg-blue-500 text-white"
+              ? "bg-zinc-500 text-white"
               : "bg-zinc-100 hover:bg-zinc-200"
           }`}
           onClick={() => setSize("lg")}
