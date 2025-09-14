@@ -35,8 +35,8 @@ export const floatingItemVariants = tv({
         "data-[highlighted]:bg-red-50 dark:data-[highlighted]:bg-red-900/20",
       ],
       selected: [
-        "data-[selected]:bg-blue-50 data-[selected]:text-blue-900",
-        "dark:data-[selected]:bg-blue-900/20 dark:data-[selected]:text-blue-100",
+        "data-[selected]:bg-zinc-50 data-[selected]:text-zinc-900",
+        "dark:data-[selected]:bg-zinc-900/20 dark:data-[selected]:text-zinc-100",
       ],
     },
   },

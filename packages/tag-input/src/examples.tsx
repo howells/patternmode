@@ -186,7 +186,7 @@ export const CustomTagRenderingExample = () => {
               .map((n) => n[0])
               .join(""),
           }}
-          className="bg-blue-50 text-blue-700 ring-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:ring-blue-800"
+          className="bg-zinc-50 text-zinc-700 ring-zinc-200 dark:bg-zinc-950 dark:text-zinc-300 dark:ring-zinc-800"
           dismissible
           key={option.value}
           onDismiss={onRemove}
@@ -226,7 +226,7 @@ export const WithHookExample = () => {
       />
       <div className="flex flex-wrap gap-2">
         <button
-          className="rounded-full bg-blue-100 px-3 py-1 text-blue-700 text-xs hover:bg-blue-200"
+          className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-700 text-xs hover:bg-zinc-200"
           disabled={tagInput.hasTag("javascript")}
           onClick={() => tagInput.addTag("javascript")}
           type="button"
@@ -234,7 +234,7 @@ export const WithHookExample = () => {
           + JavaScript
         </button>
         <button
-          className="rounded-full bg-blue-100 px-3 py-1 text-blue-700 text-xs hover:bg-blue-200"
+          className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-700 text-xs hover:bg-zinc-200"
           disabled={tagInput.hasTag("python")}
           onClick={() => tagInput.addTag("python")}
           type="button"

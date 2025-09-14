@@ -95,7 +95,7 @@ export const ControlledExample = () => {
       </Select>
       <div className="flex gap-2">
         <button
-          className="rounded bg-blue-100 px-3 py-1 text-sm hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800"
+          className="rounded bg-zinc-100 px-3 py-1 text-sm hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"
           onClick={() => setValue("banana")}
           type="button"
         >

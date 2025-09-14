@@ -7,22 +7,22 @@ import { GridCell } from "./components/grid-cell";
 export const DefaultExample = () => {
   return (
     <Grid columns={6} gap={4}>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         1
       </GridCell>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         2
       </GridCell>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         3
       </GridCell>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         4
       </GridCell>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         5
       </GridCell>
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         6
       </GridCell>
     </Grid>
@@ -78,22 +78,22 @@ export const ResponsiveExample = () => {
           3 cols default → 2 cols on large screens
         </p>
         <Grid columns={{ default: 3, lg: 2 }} gap={4}>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             A
           </GridCell>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             B
           </GridCell>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             C
           </GridCell>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             D
           </GridCell>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             E
           </GridCell>
-          <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+          <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
             F
           </GridCell>
         </Grid>
@@ -221,7 +221,7 @@ export const FullViewportExample = () => {
         Grid that fills the entire viewport using h-dvh for mobile compatibility
       </p>
       <Grid columns={3} gap={4} viewport="fill">
-        <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+        <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
           <div className="flex h-full flex-col justify-center">
             <div>Full Viewport</div>
             <div className="text-xs opacity-75">Column 1</div>
@@ -303,7 +303,7 @@ export const LayoutGridExample = () => {
     <Grid className="min-h-[300px]" columns={12} gap={2}>
       {/* Header */}
       <GridCell
-        className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+        className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900"
         colSpan={12}
       >
         Header
@@ -341,7 +341,7 @@ export const DashboardExample = () => {
   return (
     <Grid className="min-h-[250px]" columns={4} gap={4}>
       {/* Metrics */}
-      <GridCell className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900">
+      <GridCell className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900">
         <div className="text-lg">1,234</div>
         <div className="text-sm opacity-75">Users</div>
       </GridCell>
@@ -392,7 +392,7 @@ export const TemplateAreasExample = () => {
     >
       <GridCell
         area="header"
-        className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+        className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900"
       >
         Header
       </GridCell>
@@ -426,7 +426,7 @@ export const AutoFlowExample = () => {
       <Grid autoFlow="row" className="min-h-[200px]" columns={3} gap={4}>
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
           <GridCell
-            className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+            className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900"
             key={id}
           >
             {id}
@@ -476,7 +476,7 @@ export const EndPositionsExample = () => {
   return (
     <Grid className="min-h-[300px]" columns={6} gap={4} rows={4}>
       <GridCell
-        className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
+        className="rounded bg-zinc-100 p-4 text-center dark:bg-zinc-900"
         colEnd={3}
         colStart={1}
         rowEnd={3}

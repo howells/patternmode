@@ -77,7 +77,7 @@ export const MixedContentExample = () => (
       </AccordionTrigger>
       <AccordionContent>
         <div className="space-y-3">
-          <Text className="font-medium text-blue-600">
+          <Text className="font-medium text-zinc-600">
             This content uses components that manage their own styling.
           </Text>
           <Text className="text-green-700" size="sm">

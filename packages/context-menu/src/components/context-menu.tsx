@@ -261,7 +261,7 @@ const ContextMenuRadioItem = ({
       <BaseContextMenu.RadioItemIndicator>
         <IconComponent
           aria-hidden="true"
-          className="size-full text-blue-500 dark:text-blue-500"
+          className="size-full text-zinc-500 dark:text-zinc-500"
           icon={CircleDot}
         />
       </BaseContextMenu.RadioItemIndicator>

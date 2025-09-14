@@ -3,8 +3,8 @@ import { tv } from "tailwind-variants";
 // Meter-specific color mappings that work well for progress indicators
 const meterColorMap = {
   default: {
-    track: "bg-blue-200 dark:bg-blue-500/30",
-    indicator: "bg-blue-500 dark:bg-blue-500",
+    track: "bg-zinc-200 dark:bg-zinc-500/30",
+    indicator: "bg-zinc-500 dark:bg-zinc-500",
   },
   neutral: {
     track: "bg-zinc-200 dark:bg-zinc-500/40",

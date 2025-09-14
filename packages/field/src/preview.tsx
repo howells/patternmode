@@ -18,7 +18,7 @@ export function FieldPreview(props: FieldProps) {
               // simple, neutral input styling for the preview
               "w-full rounded-md border px-3 py-2 text-sm outline-hidden" +
               "bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50" +
-              "border-zinc-300 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-800"
+              "border-zinc-300 focus:ring-2 focus:ring-zinc-500/20 dark:border-zinc-800"
             }
             placeholder="Enter your email"
             ref={ref as React.Ref<HTMLInputElement>}

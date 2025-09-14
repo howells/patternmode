@@ -13,10 +13,9 @@ export const LocalCheckbox = ({
 }) => (
   <input
     checked={checked}
-    className="h-4 w-4 accent-blue-600"
+    className="h-4 w-4 accent-zinc-600"
     disabled={disabled}
     onChange={(e) => onCheckedChange(e.target.checked)}
     type="checkbox"
   />
 );
-

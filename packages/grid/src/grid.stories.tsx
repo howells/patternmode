@@ -5,7 +5,7 @@ export const TestGrid = () => <Grid>Test Grid</Grid>;
 
 export const TestViewportGrid = () => (
   <Grid columns={2} gap={4} viewport="fill">
-    <GridCell className="bg-blue-100 p-4">Viewport Fill Test</GridCell>
+    <GridCell className="bg-zinc-100 p-4">Viewport Fill Test</GridCell>
     <GridCell className="bg-green-100 p-4">Column 2</GridCell>
   </Grid>
 );
@@ -34,7 +34,7 @@ export const TestDebugGrid = () => (
 
 export const TestDynamicClasses = () => (
   <Grid columns={6} gap={4}>
-    <GridCell className="bg-blue-100 p-4" colSpan={2}>
+    <GridCell className="bg-zinc-100 p-4" colSpan={2}>
       Span 2 cols (col-span-2)
     </GridCell>
     <GridCell className="bg-green-100 p-4" colEnd={7} colStart={4}>

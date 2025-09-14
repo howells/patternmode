@@ -26,7 +26,7 @@ export const toggleVariants = tv({
       default: "",
       outline: [
         "border-2",
-        "data-[pressed]:border-blue-500 dark:data-[pressed]:border-blue-400",
+        "data-[pressed]:border-zinc-500 dark:data-[pressed]:border-zinc-400",
       ],
       ghost: [
         "border-zinc-200 dark:border-zinc-800",

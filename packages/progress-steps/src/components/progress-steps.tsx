@@ -115,7 +115,7 @@ const ProgressSteps = ({
                     <span
                       aria-current={state === "active" ? "step" : undefined}
                       className={cx(
-                        state === "active" && "text-blue-700 dark:text-blue-300"
+                        state === "active" && "text-zinc-700 dark:text-zinc-300"
                       )}
                     >
                       {step.title}
@@ -162,7 +162,7 @@ const ProgressSteps = ({
                   <span
                     aria-current={state === "active" ? "step" : undefined}
                     className={cx(
-                      state === "active" && "text-blue-700 dark:text-blue-300"
+                      state === "active" && "text-zinc-700 dark:text-zinc-300"
                     )}
                   >
                     {step.title}

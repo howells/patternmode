@@ -66,7 +66,7 @@ export const SortableList = ({
             {showCheckbox && (
               <input
                 checked={!!item.active}
-                className="h-4 w-4 accent-blue-600"
+                className="h-4 w-4 accent-zinc-600"
                 disabled={item.disabled}
                 onChange={(e) => handleToggle(item.id, e.target.checked)}
                 type="checkbox"
@@ -100,4 +100,3 @@ export const SortableList = ({
 };
 
 SortableList.displayName = "SortableList";
-

@@ -38,7 +38,7 @@ export const SemanticElementsExample = () => (
 
 export const ColorInheritanceExample = () => (
   <div className="space-y-4">
-    <div className="text-blue-600">
+    <div className="text-zinc-600">
       <Text>This text inherits blue color from its parent</Text>
     </div>
     <div className="text-green-700">

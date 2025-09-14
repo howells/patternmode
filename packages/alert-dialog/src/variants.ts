@@ -4,7 +4,7 @@ export const alertDialogTriggerVariants = tv({
   base: [
     "inline-flex h-10 items-center justify-center rounded-md border bg-white px-4 py-2 font-medium text-sm transition-colors",
     "hover:bg-zinc-50 hover:text-zinc-900",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
     "dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
   ],

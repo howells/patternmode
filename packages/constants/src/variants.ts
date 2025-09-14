@@ -89,16 +89,16 @@ export type TailwindShade =
 export const globalSemanticVariants = {
   default: {
     light: {
-      bg: "bg-blue-50",
-      text: "text-blue-900",
-      border: "border-blue-500/30",
-      ring: "ring-blue-500/30",
+      bg: "bg-zinc-50",
+      text: "text-zinc-900",
+      border: "border-zinc-500/30",
+      ring: "ring-zinc-500/30",
     },
     dark: {
-      bg: "dark:bg-blue-400/10",
-      text: "dark:text-blue-400",
-      border: "dark:border-blue-400/30",
-      ring: "dark:ring-blue-400/30",
+      bg: "dark:bg-zinc-400/10",
+      text: "dark:text-zinc-400",
+      border: "dark:border-zinc-400/30",
+      ring: "dark:ring-zinc-400/30",
     },
   },
   neutral: {

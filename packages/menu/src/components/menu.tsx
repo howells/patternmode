@@ -281,7 +281,7 @@ const MenuRadioItem = ({
     <span className="absolute left-2 flex size-4 items-center justify-center">
       <CircleDot
         aria-hidden="true"
-        className="size-full text-blue-500 dark:text-blue-500"
+        className="size-full text-zinc-500 dark:text-zinc-500"
       />
       <span className="data-checked:hidden">
         <Circle

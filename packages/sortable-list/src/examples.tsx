@@ -164,7 +164,7 @@ export const FormFieldsExample = () => {
         <SortableList items={items} onChange={setItems} />
       </div>
       <button
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+        className="mt-4 rounded-md bg-zinc-500 px-4 py-2 text-white transition-colors hover:bg-zinc-600"
         onClick={handleSave}
         type="button"
       >

@@ -2,10 +2,10 @@ import { tv } from "tailwind-variants";
 
 export const sharedProgressVariants = {
   default: {
-    light: "blue-500",
-    lightBg: "blue-200",
-    dark: "blue-500",
-    darkBg: "blue-500/30",
+    light: "zinc-500",
+    lightBg: "zinc-200",
+    dark: "zinc-500",
+    darkBg: "zinc-500/30",
   },
   neutral: {
     light: "zinc-500",
@@ -78,7 +78,7 @@ export const progressAnimationClasses = {
  * via tailwind-variants. To ensure Tailwind includes these utilities, we
  * enumerate them here.
  *
- * stroke-blue-200 stroke-blue-500 dark:stroke-blue-500 dark:stroke-blue-500/30
+* stroke-zinc-200 stroke-zinc-500 dark:stroke-zinc-500 dark:stroke-zinc-500/30
  * stroke-zinc-200 stroke-zinc-500 dark:stroke-zinc-500 dark:stroke-zinc-500/40
  * stroke-yellow-200 stroke-yellow-500 dark:stroke-yellow-500 dark:stroke-yellow-500/30
  * stroke-red-200 stroke-red-500 dark:stroke-red-500 dark:stroke-red-500/30

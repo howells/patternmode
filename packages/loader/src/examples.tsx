@@ -25,7 +25,7 @@ export const WithLabelExample = () => {
 export const InButtonExample = () => {
   return (
     <button
-      className="flex cursor-not-allowed items-center gap-2 rounded-md bg-blue-500 px-4 py-2 text-white opacity-50"
+      className="flex cursor-not-allowed items-center gap-2 rounded-md bg-zinc-500 px-4 py-2 text-white opacity-50"
       disabled
       type="button"
     >

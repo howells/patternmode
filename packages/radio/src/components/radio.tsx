@@ -24,7 +24,7 @@ export const Radio = ({
           : [
               "inline-flex items-center justify-center",
               "size-4 rounded-full border-2 border-zinc-300 bg-white text-zinc-50 dark:border-zinc-600 dark:bg-zinc-950",
-              "data-[checked]:border-transparent data-[checked]:bg-blue-500",
+              "data-[checked]:border-transparent data-[checked]:bg-zinc-500",
               focusRing,
             ],
         className
@@ -38,7 +38,7 @@ export const Radio = ({
             "pointer-events-none absolute z-10 inline-flex size-4 items-center justify-center rounded-full border-2",
             "-translate-y-1/2 top-1/2 right-3",
             "border-zinc-300 bg-white dark:border-zinc-600 dark:bg-zinc-950",
-            "group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
+            "group-data-[checked]:border-transparent group-data-[checked]:bg-zinc-500",
             indicatorClassName
           )}
         >

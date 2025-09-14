@@ -8,7 +8,7 @@ export const previewCardVariants = tv({
   slots: {
     // Trigger element with minimal styling to preserve user intent
     trigger:
-      "outline-none focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2",
+      "outline-none focus-visible:outline-2 focus-visible:outline-zinc-500 focus-visible:outline-offset-2",
 
     // Positioner for smart positioning
     positioner:

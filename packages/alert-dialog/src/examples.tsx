@@ -108,7 +108,7 @@ export const CustomStyledExample = () => (
     </AlertDialogTrigger>
     <AlertDialogContent className="max-w-md">
       <AlertDialogHeader>
-        <AlertDialogTitle className="text-blue-600">
+        <AlertDialogTitle className="text-zinc-600">
           Custom Styled Dialog
         </AlertDialogTitle>
         <AlertDialogDescription className="text-zinc-500">
@@ -118,7 +118,7 @@ export const CustomStyledExample = () => (
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel className="text-zinc-600">Cancel</AlertDialogCancel>
-        <AlertDialogAction className="bg-blue-600 hover:bg-blue-700">
+        <AlertDialogAction className="bg-zinc-600 hover:bg-zinc-700">
           Proceed
         </AlertDialogAction>
       </AlertDialogFooter>

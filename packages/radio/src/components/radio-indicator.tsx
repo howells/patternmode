@@ -21,7 +21,7 @@ export const RadioIndicator = ({
       "inline-flex size-4 items-center justify-center rounded-full border-2",
       "border-zinc-300 bg-white dark:border-zinc-600 dark:bg-zinc-950",
       // selected state
-      "group-data-[checked]:border-transparent group-data-[checked]:bg-blue-500",
+      "group-data-[checked]:border-transparent group-data-[checked]:bg-zinc-500",
       wrapperClassName
     )}
   >

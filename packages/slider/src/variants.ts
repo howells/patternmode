@@ -39,7 +39,7 @@ export const sliderVariants = tv({
       // base: circular handle with blue outline
       "relative block size-5 shrink-0 rounded-full border",
       // border color → blue ring
-      "border-blue-600 dark:border-blue-500",
+      "border-zinc-600 dark:border-zinc-500",
       // background color (white center)
       "bg-white dark:bg-white",
       // disabled
@@ -59,7 +59,7 @@ export const sliderVariants = tv({
     // Controls whether the selected range fill uses accent color or stays neutral
     accent: {
       true: {
-        indicator: "bg-blue-600 dark:bg-blue-500",
+        indicator: "bg-zinc-600 dark:bg-zinc-500",
       },
       false: {
         indicator: "bg-zinc-300 dark:bg-zinc-700",

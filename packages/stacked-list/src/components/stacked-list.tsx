@@ -69,10 +69,10 @@ const StackedListItem = ({
         isInteractive && [
           "cursor-pointer transition-colors",
           "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
-          "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset",
+          "focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-inset",
         ],
         // Active state
-        active && "bg-blue-50 dark:bg-blue-950/50"
+        active && "bg-zinc-50 dark:bg-zinc-950/50"
       )}
       gap={4}
     >

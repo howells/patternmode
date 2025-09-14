@@ -46,8 +46,8 @@ export const TabNavigationLink = ({
           // border hover
           "group-hover: dark:group-hover:border-zinc-400",
           // selected
-          "group-data-active:border-blue-500 group-data-active:text-blue-500",
-          "dark:group-data-active:border-blue-500 dark:group-data-active:text-blue-500",
+          "group-data-active:border-zinc-500 group-data-active:text-zinc-500",
+          "dark:group-data-active:border-zinc-500 dark:group-data-active:text-zinc-500",
           // disabled
           disabled
             ? "pointer-events-none text-zinc-300 dark:text-zinc-700"

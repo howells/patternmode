@@ -38,7 +38,7 @@ const InlineSheetDismissButton = ({
         size === "lg" && "size-6",
         "text-zinc-500 dark:text-zinc-400",
         "hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
-        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
+        "focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900",
         className
       )}
       onClick={onClick}
