@@ -43,7 +43,7 @@ type CategoryDef = {
   icon: IconComponent;
 };
 
-export const COMPONENT_CATEGORIES = [
+export const COMPONENT_CATEGORIES: readonly CategoryDef[] = [
   {
     key: "display",
     label: "Display",
@@ -138,7 +138,7 @@ export const COMPONENT_CATEGORIES = [
     description: "Utility primitives and helpers used across components.",
     icon: Wrench,
   },
-] as const satisfies readonly CategoryDef[];
+];
 
 /**
  * String union of valid category keys (e.g., "display", "controls").

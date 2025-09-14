@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { getDynamicIconByName, IconSelect, useIconSelect } from "./component";
+import { getDynamicIconByName, IconSelect, useIconSelect } from ".";
 
 export const DefaultExample = () => {
   const [selectedIcon, setSelectedIcon] = React.useState<string>("");

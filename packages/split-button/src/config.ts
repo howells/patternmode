@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ChevronDown } from "lucide-react";
-import { SplitButton } from "./component";
+import { SplitButton } from ".";
 import {
   ComplexMenuExample,
   DefaultExample,

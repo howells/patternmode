@@ -1,2 +1,5 @@
-export type { SearchFieldItem, SearchFieldProps } from "./component";
-export { SearchField } from "./component";
+export type {
+  SearchFieldItem,
+  SearchFieldProps,
+} from "./components/search-field";
+export { SearchField } from "./components/search-field";

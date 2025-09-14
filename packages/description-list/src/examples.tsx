@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionTerm,
-} from "./component";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from ".";
 
 export const DefaultExample = () => (
   <DescriptionList className="w-full max-w-lg">

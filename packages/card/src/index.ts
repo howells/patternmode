@@ -1,16 +1,12 @@
-export type {
-  CardContentProps,
-  CardDescriptionProps,
-  CardFooterProps,
-  CardHeaderProps,
-  CardHeadingProps,
-  CardProps,
-} from "./component";
-export {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardHeading,
-} from "./component";
+export type { CardContentProps } from "./components/card-content";
+export { CardContent } from "./components/card-content";
+export type { CardDescriptionProps } from "./components/card-description";
+export { CardDescription } from "./components/card-description";
+export type { CardFooterProps } from "./components/card-footer";
+export { CardFooter } from "./components/card-footer";
+export type { CardHeaderProps } from "./components/card-header";
+export { CardHeader } from "./components/card-header";
+export type { CardHeadingProps } from "./components/card-heading";
+export { CardHeading } from "./components/card-heading";
+export type { CardProps } from "./components/card-root";
+export { Card } from "./components/card-root";

@@ -1,6 +1,6 @@
 "use client";
 
-import { DismissButton } from "./component";
+import { DismissButton } from ".";
 import type { DismissButtonProps } from "./types";
 
 export function DismissButtonPreview(props: DismissButtonProps) {

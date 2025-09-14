@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SortableList } from "./component";
+import { SortableList } from ".";
 import type { SortableListItem } from "./types";
 
 // Default example with all features

@@ -1,6 +1,19 @@
 "use client";
 
-import { TabNavigation, TabNavigationLink } from "./component";
+import { TabNavigation, TabNavigationLink } from ".";
+
+const TAB_COUNT_3 = 3 as const;
+const TAB_COUNT_4 = 4 as const;
+const TAB_COUNT_5 = 5 as const;
+const TAB_COUNT_6 = 6 as const;
+const TAB_COUNT_OPTIONS = [
+  TAB_COUNT_3,
+  TAB_COUNT_4,
+  TAB_COUNT_5,
+  TAB_COUNT_6,
+] as const;
+const DISABLED_TAB_INDEX = 4 as const;
+const DISABLED_THRESHOLD = 5 as const;
 
 const tabItems = [
   { href: "#overview", label: "Overview", disabled: false },
@@ -41,8 +54,8 @@ export function TabNavigationPreview({
 }: TabNavigationPreviewProps = {}) {
   let displayedTabs = tabItems.slice(0, tabCount);
 
-  if (showDisabledTab && tabCount < 5) {
-    displayedTabs = [...displayedTabs, tabItems[4]];
+  if (showDisabledTab && tabCount < DISABLED_THRESHOLD) {
+    displayedTabs = [...displayedTabs, tabItems[DISABLED_TAB_INDEX]];
   }
 
   return (
@@ -90,8 +103,8 @@ export const tabNavigationPreviewProps = [
     type: "select",
     description:
       "Number of tabs to display - controls how many navigation tabs are shown.",
-    options: [3, 4, 5, 6],
-    defaultValue: 4,
+    options: [...TAB_COUNT_OPTIONS],
+    defaultValue: TAB_COUNT_4,
   },
   {
     name: "showIcons",

@@ -1,7 +1,7 @@
 "use client";
 
-import type { SkeletonProps } from "./component";
-import { Skeleton } from "./component";
+import type { SkeletonProps } from ".";
+import { Skeleton } from ".";
 
 // Always render a visible skeleton state for preview consistency
 export function SkeletonPreview(props: SkeletonProps) {

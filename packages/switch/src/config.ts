@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
-import { Switch } from "./component";
+import { Switch } from ".";
 import { LabeledSwitchExample, SizesExample, SwitchExample } from "./examples";
 
 export const switchConfig: ComponentConfig = {

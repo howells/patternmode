@@ -1,6 +1,6 @@
 "use client";
 
-import { TextList, TextListItem } from "./component";
+import { TextList, TextListItem } from ".";
 import type { TextListProps } from "./types";
 
 export function TextListPreview(props: TextListProps) {

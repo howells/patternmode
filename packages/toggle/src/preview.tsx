@@ -1,7 +1,7 @@
 "use client";
 
 import { Bold, Italic, Strikethrough, Underline } from "lucide-react";
-import { Toggle } from "./component";
+import { Toggle } from ".";
 import type { ToggleProps } from "./types";
 
 export function TogglePreview(props: ToggleProps) {

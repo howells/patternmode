@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressSteps } from "./component";
+import { ProgressSteps } from "./components/progress-steps";
 import type { ProgressStepsProps } from "./types";
 
 export function ProgressStepsPreview(props: ProgressStepsProps) {

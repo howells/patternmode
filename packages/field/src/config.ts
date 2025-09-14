@@ -6,7 +6,7 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from "./component";
+} from ".";
 import {
   CompleteFieldExample,
   DefaultExample,

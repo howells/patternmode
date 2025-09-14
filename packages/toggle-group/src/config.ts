@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ToggleLeft } from "lucide-react";
-import { ToggleGroup, ToggleGroupItem } from "./component";
+import { ToggleGroup, ToggleGroupItem } from "./components/toggle-group";
 import {
   ButtonAlignmentExample,
   ControlledExample,

@@ -10,7 +10,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./component";
+} from "./components/select";
 
 export const DefaultExample = () => (
   <Select>

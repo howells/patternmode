@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressCircle } from "./component";
+import { ProgressCircle } from ".";
 import type { ProgressCircleProps } from "./types";
 
 // Show a sensible, visible default in previews

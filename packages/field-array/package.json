@@ -56,7 +56,7 @@
     "@patternmode/subheading": "workspace:*",
     "@patternmode/textarea": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

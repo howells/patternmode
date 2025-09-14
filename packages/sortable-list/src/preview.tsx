@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SortableList } from "./component";
+import { SortableList } from ".";
 import type { SortableListItem, SortableListProps } from "./types";
 
 export function SortableListPreview(props: Partial<SortableListProps>) {

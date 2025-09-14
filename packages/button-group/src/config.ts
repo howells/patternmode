@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MoreHorizontal } from "lucide-react";
-import { ButtonGroup } from "./component";
+import { ButtonGroup } from ".";
 import {
   AlignmentExample,
   CustomGapExample,

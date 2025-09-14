@@ -1,7 +1,7 @@
 "use client";
 
 import { sizes } from "@patternmode/config/sizes";
-import { Avatar } from "./component";
+import { Avatar } from ".";
 import type { AvatarProps } from "./types";
 
 export function AvatarPreview(props: AvatarProps) {

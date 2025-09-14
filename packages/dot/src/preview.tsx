@@ -1,6 +1,6 @@
 "use client";
 
-import { Dot } from "./component";
+import { Dot } from ".";
 import type { DotProps } from "./types";
 
 export function DotPreview(props: DotProps) {

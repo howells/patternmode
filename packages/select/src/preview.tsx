@@ -10,7 +10,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./component";
+} from "./components/select";
 
 type SelectPreviewProps = {
   placeholder?: string;

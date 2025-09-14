@@ -7,7 +7,7 @@ import {
   NavbarLabel,
   NavbarSection,
   NavbarSpacer,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => {
   return (

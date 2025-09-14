@@ -1,6 +1,6 @@
 "use client";
 
-import { Textarea } from "./component";
+import { Textarea } from "./components/textarea";
 
 export type TextareaPreviewProps = {
   placeholder?: string;

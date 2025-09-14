@@ -1,7 +1,7 @@
 "use client";
 
 import { sizes } from "@patternmode/constants/sizes";
-import { Loader } from "./component";
+import { Loader } from ".";
 import type { LoaderProps } from "./types";
 
 export function LoaderPreview(props: LoaderProps) {

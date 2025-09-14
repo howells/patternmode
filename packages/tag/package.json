@@ -6,14 +6,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/tag.tsx",
+      "import": "./src/components/tag.tsx",
+      "default": "./src/components/tag.tsx"
     },
     "./config": {
       "types": "./src/config.ts",
@@ -52,6 +52,6 @@
     "@patternmode/dismiss-button": "workspace:*",
     "@patternmode/icon": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   }
 }

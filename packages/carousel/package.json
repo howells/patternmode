@@ -46,7 +46,7 @@
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
     "embla-carousel-react": "^8.6.0",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

@@ -44,7 +44,7 @@
     "@patternmode/config": "workspace:*",
     "@patternmode/copy-button": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0",
+    "lucide-react": "^0.544.0",
     "react-syntax-highlighter": "^15.6.6",
     "tailwind-variants": "^3.1.1"
   },

@@ -1,2 +1,2 @@
-export { Container } from "./component";
+export { Container } from "./components/container";
 export type { ContainerProps } from "./types";

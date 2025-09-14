@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => (
   <Dialog>

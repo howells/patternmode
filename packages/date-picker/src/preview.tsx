@@ -2,7 +2,7 @@
 
 import type { IconComponent } from "@patternmode/icon/types";
 import type React from "react";
-import { DatePicker } from "./component";
+import { DatePicker } from ".";
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker> & {
   placeholder?: string;

@@ -8,4 +8,4 @@ export {
   TableHead,
   TableHeader,
   TableRow,
-} from "./component";
+} from "./components/table";

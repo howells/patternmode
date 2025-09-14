@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Minus } from "lucide-react";
-import { Separator } from "./component";
+import { Separator } from ".";
 import {
   ContentSectionsExample,
   DefaultExample,

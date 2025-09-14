@@ -14,7 +14,7 @@ import {
   MenuSubmenuContent,
   MenuSubmenuTrigger,
   MenuTrigger,
-} from "./component";
+} from ".";
 import {
   ComplexMenuExample,
   DefaultExample,

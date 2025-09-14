@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./component";
+} from ".";
 
 export function TablePreview() {
   return (

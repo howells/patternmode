@@ -12,9 +12,9 @@
       "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/switch.tsx",
+      "import": "./src/components/switch.tsx",
+      "default": "./src/components/switch.tsx"
     },
     "./types": {
       "types": "./src/types.ts",

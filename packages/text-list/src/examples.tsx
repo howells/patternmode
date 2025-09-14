@@ -1,6 +1,6 @@
 "use client";
 
-import { TextList, TextListItem } from "./component";
+import { TextList, TextListItem } from ".";
 
 export const DefaultExample = () => (
   <TextList>

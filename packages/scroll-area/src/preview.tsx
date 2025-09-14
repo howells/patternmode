@@ -1,7 +1,7 @@
 "use client";
 
-import type { ScrollAreaProps } from "./component";
-import { ScrollArea } from "./component";
+import type { ScrollAreaProps } from ".";
+import { ScrollArea } from ".";
 
 export function ScrollAreaPreview(props: ScrollAreaProps) {
   return (

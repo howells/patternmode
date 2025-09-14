@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Tag } from "lucide-react";
-import { Label } from "./component";
+import { Label } from "./components/label";
 import {
   BasicExample,
   CustomStyledExample,

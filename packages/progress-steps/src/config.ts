@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ListOrdered } from "lucide-react";
-import { ProgressSteps } from "./component";
+import { ProgressSteps } from "./components/progress-steps";
 import {
   ExplicitStateExample,
   HorizontalExample,

@@ -1,8 +1,8 @@
 "use client";
 
 import { Field, FieldControl, FieldLabel } from "@patternmode/field";
-import type { FieldsetProps } from "./component";
-import { Fieldset, FieldsetLegend } from "./component";
+import type { FieldsetProps } from ".";
+import { Fieldset, FieldsetLegend } from ".";
 
 export function FieldsetPreview(props: FieldsetProps) {
   return (

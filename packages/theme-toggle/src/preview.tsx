@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ThemeToggle } from "./component";
+import { ThemeToggle } from ".";
 import type { ThemeToggleProps } from "./types";
 
 export function ThemeTogglePreview(

@@ -2,7 +2,7 @@
 
 import { CalendarDays, Clock } from "lucide-react";
 import React from "react";
-import { DatePicker } from "./component";
+import { DatePicker } from ".";
 
 export const DefaultExample = () => <DatePicker placeholder="Select a date" />;
 

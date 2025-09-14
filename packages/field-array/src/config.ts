@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { List } from "lucide-react";
-import { FieldArray } from "./component";
+import { FieldArray } from ".";
 import {
   ContactListExample,
   CustomRenderExample,

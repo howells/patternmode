@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
-import { NumberField } from "./component";
+import { NumberField } from ".";
 import {
   DefaultExample,
   DisabledExample,

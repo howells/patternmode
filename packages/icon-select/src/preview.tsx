@@ -2,7 +2,7 @@
 
 import type { Size } from "@patternmode/config/sizes";
 import { sizes } from "@patternmode/config/sizes";
-import { IconSelect, useIconSelect } from "./component";
+import { IconSelect, useIconSelect } from ".";
 
 type IconSelectPreviewProps = { size?: Size };
 

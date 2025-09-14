@@ -7,7 +7,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./component";
+} from ".";
 
 export type CarouselPreviewProps = {
   /**
@@ -37,8 +37,15 @@ export type CarouselPreviewProps = {
   maxWidth?: "xs" | "sm" | "md" | "lg";
 };
 
+const THREE = 3 as const;
+const FOUR = 4 as const;
+const FIVE = 5 as const;
+const SIX = 6 as const;
+const SLIDE_COUNTS = [THREE, FOUR, FIVE, SIX] as const;
+const DEFAULT_SLIDE_COUNT = THREE;
+
 export function CarouselPreview({
-  slideCount = 3,
+  slideCount = DEFAULT_SLIDE_COUNT,
   orientation = "horizontal",
   loop = false,
   showNavigation = true,
@@ -94,8 +101,8 @@ export const carouselPreviewProps = [
     type: "select",
     description:
       "Number of slides to display - controls how many carousel items are shown.",
-    options: [3, 4, 5, 6],
-    defaultValue: 3,
+    options: SLIDE_COUNTS.map((n: number) => n),
+    defaultValue: DEFAULT_SLIDE_COUNT,
   },
   {
     name: "orientation",

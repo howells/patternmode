@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from ".";
 
 type TabsPreviewProps = {
   variant?: "solid" | "line";

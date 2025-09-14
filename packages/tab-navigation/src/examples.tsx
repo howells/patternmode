@@ -1,6 +1,6 @@
 "use client";
 
-import { TabNavigation, TabNavigationLink } from "./component";
+import { TabNavigation, TabNavigationLink } from ".";
 
 export const DefaultExample = () => {
   return (

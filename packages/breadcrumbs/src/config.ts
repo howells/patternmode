@@ -8,7 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from "./component";
+} from ".";
 import {
   CustomSeparatorExample,
   DeepNavigationExample,

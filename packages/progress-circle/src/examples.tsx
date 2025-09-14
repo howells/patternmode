@@ -2,7 +2,7 @@
 
 import { Check, Clock, Zap } from "lucide-react";
 
-import { ProgressCircle } from "./component";
+import { ProgressCircle } from ".";
 
 export const DefaultExample = () => {
   return <ProgressCircle value={75} />;

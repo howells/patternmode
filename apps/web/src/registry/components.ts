@@ -100,11 +100,6 @@ import { dotConfig } from "@patternmode/dot/config";
 import { DotPreview, dotPreviewProps } from "@patternmode/dot/preview";
 import { drawerConfig } from "@patternmode/drawer/config";
 import { DrawerPreview, drawerPreviewProps } from "@patternmode/drawer/preview";
-import { emptyStateConfig } from "@patternmode/empty-state/config";
-import {
-  EmptyStatePreview,
-  emptyStatePreviewProps,
-} from "@patternmode/empty-state/preview";
 import { fieldConfig } from "@patternmode/field/config";
 import { FieldPreview, fieldPreviewProps } from "@patternmode/field/preview";
 import { fieldArrayConfig } from "@patternmode/field-array/config";
@@ -349,7 +344,6 @@ export const COMPONENT_REGISTRY = {
   "dismiss-button": dismissButtonConfig,
   dot: dotConfig,
   drawer: drawerConfig,
-  "empty-state": emptyStateConfig,
   field: fieldConfig,
   "field-array": fieldArrayConfig,
   fieldset: fieldsetConfig,
@@ -436,7 +430,6 @@ export const PREVIEW_REGISTRY = {
   "dismiss-button": DismissButtonPreview,
   dot: DotPreview,
   drawer: DrawerPreview,
-  "empty-state": EmptyStatePreview,
   field: FieldPreview,
   "field-array": FieldArrayPreview,
   fieldset: FieldsetPreview,
@@ -464,7 +457,7 @@ export const PREVIEW_REGISTRY = {
   "progress-steps": ProgressStepsPreview,
   "progress-circle": ProgressCirclePreview,
   radio: RadioPreview,
-  "radio-card-group": RadioCardGroupPreview,
+  "radio-cards": RadioCardsPreview,
   "responsive-drawer": ResponsiveDrawerPreview,
   "scroll-area": ScrollAreaPreview,
   "search-field": SearchFieldPreview,
@@ -526,7 +519,6 @@ export const PREVIEW_PROPS_REGISTRY: Record<
   "dismiss-button": dismissButtonPreviewProps,
   dot: dotPreviewProps,
   drawer: drawerPreviewProps,
-  "empty-state": emptyStatePreviewProps,
   field: fieldPreviewProps,
   "field-array": fieldArrayPreviewProps,
   fieldset: fieldsetPreviewProps,

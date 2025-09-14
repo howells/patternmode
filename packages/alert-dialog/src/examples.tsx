@@ -11,7 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./component";
+} from ".";
 
 // Default alert dialog
 export const DefaultExample = () => (

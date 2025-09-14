@@ -11,6 +11,8 @@ import {
 import type { GridProps } from "../types";
 import { gridVariants } from "../variants";
 
+const DEFAULT_GAP = 4;
+
 // Generate responsive grid styles using shared utilities
 const generateResponsiveGridStyles = (
   columns: ResponsiveValue<number> | undefined,
@@ -26,28 +28,27 @@ const generateResponsiveGridStyles = (
 const generateAutoFlowClasses = (
   autoFlow: ResponsiveValue<"row" | "column" | "dense"> | undefined
 ): string => {
-  if (!autoFlow) return "";
+  if (!autoFlow) {
+    return "";
+  }
+
+  const toClass = (val: "row" | "column" | "dense") =>
+    val === "dense" ? "grid-flow-dense" : `grid-flow-${val}`;
 
   if (typeof autoFlow === "string") {
-    return autoFlow === "dense" ? "grid-flow-dense" : `grid-flow-${autoFlow}`;
+    return toClass(autoFlow);
   }
 
-  // Handle responsive values
   const classes: string[] = [];
   if (autoFlow.default) {
-    classes.push(
-      autoFlow.default === "dense"
-        ? "grid-flow-dense"
-        : `grid-flow-${autoFlow.default}`
-    );
+    classes.push(toClass(autoFlow.default));
   }
   for (const [breakpoint, value] of Object.entries(autoFlow)) {
-    if (breakpoint !== "default" && value) {
-      const prefix = breakpoint === "sm" ? "" : `${breakpoint}:`;
-      classes.push(
-        `${prefix}${value === "dense" ? "grid-flow-dense" : `grid-flow-${value}`}`
-      );
+    if (breakpoint === "default" || !value) {
+      continue;
     }
+    const prefix = breakpoint === "sm" ? "" : `${breakpoint}:`;
+    classes.push(`${prefix}${toClass(value)}`);
   }
 
   return classes.join(" ");
@@ -181,7 +182,7 @@ export const Grid = ({
   const autoFlowClasses = generateAutoFlowClasses(autoFlow);
 
   // Get base gap value for non-responsive case
-  const baseGap = getBaseSpacingValue(gap) ?? 4;
+  const baseGap = getBaseSpacingValue(gap) ?? DEFAULT_GAP;
 
   // Generate responsive gap classes
   const responsiveGapClasses = generateResponsiveSpacingClasses("gap", gap);

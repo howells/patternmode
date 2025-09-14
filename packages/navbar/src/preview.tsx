@@ -1,7 +1,7 @@
 "use client";
 
-import type { NavbarProps } from "./component";
-import { Navbar, NavbarItem, NavbarLabel, NavbarSection } from "./component";
+import type { NavbarProps } from ".";
+import { Navbar, NavbarItem, NavbarLabel, NavbarSection } from ".";
 
 export function NavbarPreview(props: NavbarProps) {
   return (

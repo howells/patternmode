@@ -1,7 +1,7 @@
 "use client";
 
 import { sizes } from "@patternmode/config/sizes";
-import { Text } from "./component";
+import { Text } from ".";
 import type { TextProps } from "./types";
 
 export function TextPreview(props: TextProps) {

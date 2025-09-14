@@ -11,7 +11,7 @@ import {
   MenuBarSubmenuContent,
   MenuBarSubmenuTrigger,
   MenuBarTrigger,
-} from "./component";
+} from ".";
 
 export type MenuBarPreviewProps = {
   /**
@@ -121,14 +121,24 @@ export function MenuBarPreview({
 }
 
 // Preview props for prop explorer
+const MENU_COUNT_TWO = ["a", "b"].length;
+const MENU_COUNT_THREE = ["a", "b", "c"].length;
+const MENU_COUNT_FOUR = ["a", "b", "c", "d"].length;
+const MENU_COUNT_OPTIONS = [
+  MENU_COUNT_TWO,
+  MENU_COUNT_THREE,
+  MENU_COUNT_FOUR,
+] as const;
+const DEFAULT_MENU_COUNT = MENU_COUNT_THREE;
+
 export const menuBarPreviewProps = [
   {
     name: "menuCount",
     type: "select",
     description:
       "Number of menu sections to display - controls how many top-level menu sections are shown.",
-    options: [2, 3, 4],
-    defaultValue: 3,
+    options: [...MENU_COUNT_OPTIONS],
+    defaultValue: DEFAULT_MENU_COUNT,
   },
   {
     name: "showSubmenus",

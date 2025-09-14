@@ -1,4 +1,4 @@
-import { Separator } from "./component";
+import { Separator } from ".";
 
 export const TestSeparator = () => (
   <div>

@@ -15,7 +15,7 @@ import {
   MenuSubmenuContent,
   MenuSubmenuTrigger,
   MenuTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => {
   return (

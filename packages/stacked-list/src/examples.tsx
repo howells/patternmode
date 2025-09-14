@@ -5,7 +5,7 @@ import { Badge } from "@patternmode/badge";
 import { Button } from "@patternmode/button";
 import { Card } from "@patternmode/card";
 import { Calendar, FileText, UserPlus } from "lucide-react";
-import { StackedList } from "./component";
+import { StackedList } from ".";
 
 export function DefaultExample() {
   return (

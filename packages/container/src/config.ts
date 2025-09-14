@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { Container } from "./component";
+import { Container } from ".";
 import { BasicExample, FluidExample, SizesExample } from "./examples";
 
 export const containerConfig: ComponentConfig = {

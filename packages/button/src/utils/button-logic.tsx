@@ -23,6 +23,55 @@ export type ButtonState = {
   effectiveShouldShowChildren: boolean;
 };
 
+const getBaseFlags = (
+  children: React.ReactNode,
+  size: ButtonProps["size"] | undefined
+) => {
+  const hasChildren = children != null && children !== "";
+  const isIconOnly = size?.includes("icon") ?? false;
+  return { hasChildren, isIconOnly, isIconButton: isIconOnly };
+};
+
+const getIconsState = (
+  isIconOnly: boolean,
+  icon: ButtonProps["icon"],
+  leftIcon: ButtonProps["leftIcon"],
+  rightIcon: ButtonProps["rightIcon"]
+) => {
+  const effectiveLeftIconProp = icon || leftIcon;
+  const hasLeftIcon =
+    effectiveLeftIconProp != null ||
+    (isIconOnly && effectiveLeftIconProp == null);
+  const effectiveLeftIcon =
+    effectiveLeftIconProp ||
+    (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : undefined);
+  const hasRightIcon = rightIcon != null && !isIconOnly;
+  return {
+    effectiveLeftIconProp,
+    hasLeftIcon,
+    effectiveLeftIcon,
+    hasRightIcon,
+  };
+};
+
+const getKbdState = (
+  kbd: ButtonProps["kbd"],
+  variant: ButtonProps["variant"]
+) => {
+  let kbdKeys: string[] | undefined;
+  if (Array.isArray(kbd)) {
+    kbdKeys = kbd;
+  } else if (kbd) {
+    kbdKeys = [kbd];
+  }
+  const hasKeyboardShortcuts = kbdKeys != null;
+  const isDarkVariant = variant === "primary" || variant === "destructive";
+  const kbdVariant: "onDarkButton" | "onLightButton" = isDarkVariant
+    ? "onDarkButton"
+    : "onLightButton";
+  return { kbdKeys, hasKeyboardShortcuts, kbdVariant };
+};
+
 /**
  * Calculates all the complex state variables for a button
  */
@@ -48,35 +97,22 @@ export const calculateButtonState = ({
   | "kbd"
   | "variant"
 >): ButtonState => {
-  const hasChildren = children != null && children !== "";
-  const isIconOnly = size?.includes("icon") ?? false;
-
-  // Prioritize icon prop over leftIcon prop
-  const effectiveLeftIconProp = icon || leftIcon;
-  const hasLeftIcon =
-    effectiveLeftIconProp != null ||
-    (isIconOnly && effectiveLeftIconProp == null);
-  const effectiveLeftIcon =
-    effectiveLeftIconProp ||
-    (isIconOnly && effectiveLeftIconProp == null ? MoreHorizontal : undefined);
-  const hasRightIcon = rightIcon != null && !isIconOnly;
+  const { hasChildren, isIconOnly, isIconButton } = getBaseFlags(
+    children,
+    size
+  );
+  const {
+    effectiveLeftIconProp,
+    hasLeftIcon,
+    effectiveLeftIcon,
+    hasRightIcon,
+  } = getIconsState(isIconOnly, icon, leftIcon, rightIcon);
   const shouldShowChildren = hasChildren && !isIconOnly;
-  const isIconButton = isIconOnly;
-
-  // Check if children is a complex element (custom layout)
   const hasCustomLayout = React.isValidElement(children);
-
-  // Handle keyboard shortcuts conditionally
-  const kbdKeys = kbd ? (Array.isArray(kbd) ? kbd : [kbd]) : undefined;
-  const hasKeyboardShortcuts = kbdKeys != null;
-
-  // Determine kbd variant based on button variant
-  const kbdVariant =
-    variant === "primary" || variant === "destructive"
-      ? "onDarkButton"
-      : "onLightButton";
-
-  // When loading, Loader replaces leftIcon, and we show loadingText or original children
+  const { kbdKeys, hasKeyboardShortcuts, kbdVariant } = getKbdState(
+    kbd,
+    variant
+  );
   const effectiveChildren = isLoading && loadingText ? loadingText : children;
   const effectiveShouldShowChildren = shouldShowChildren;
 

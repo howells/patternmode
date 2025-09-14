@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ScrollText } from "lucide-react";
-import { ScrollArea, ScrollBar } from "./component";
+import { ScrollArea, ScrollBar } from ".";
 import {
   BothDirectionsExample,
   CustomStyledExample,

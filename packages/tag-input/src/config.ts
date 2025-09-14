@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Tags } from "lucide-react";
-import { TagInput } from "./component";
+import { TagInput } from ".";
 import {
   ComplexExample,
   CustomTagRenderingExample,

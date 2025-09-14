@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Tag as LucideTag } from "lucide-react";
-import { Tag } from "./component";
+import { Tag } from ".";
 import {
   DefaultExample,
   DismissibleExample,

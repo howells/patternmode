@@ -9,7 +9,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./component";
+} from ".";
 
 // Default accordion
 export const DefaultExample = () => (

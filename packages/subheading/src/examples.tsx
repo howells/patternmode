@@ -1,6 +1,6 @@
 "use client";
 
-import { Subheading } from "./component";
+import { Subheading } from ".";
 
 export function DefaultExample() {
   return <Subheading level={2}>Section Subheading</Subheading>;

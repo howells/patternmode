@@ -7,7 +7,6 @@ import type { ButtonProps } from "../types";
 import { getIconContainerSize, getIconSize, getLoaderSize } from "../utils";
 import { getButtonLayoutClass } from "../utils/button-utils";
 import {
-  type LayoutRendererProps,
   renderCenterLayout,
   renderDefaultLayout,
   renderNormalWidthLayout,
@@ -80,6 +79,34 @@ export const ButtonContentRenderer: React.FC<ButtonContentRendererProps> = ({
   const effectiveChildren = isLoading && loadingText ? loadingText : children;
   const effectiveShouldShowChildren = shouldShowChildren;
 
+  const renderIconOnly = () => {
+    if (!isIconButton) {
+      return null;
+    }
+    if (effectiveLeftIconProp && !hasRightIcon && !isLoading && !kbd) {
+      return (
+        <span
+          className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
+        >
+          <Icon
+            icon={effectiveLeftIconProp}
+            size={getIconSize(size)}
+            strokeWidth={iconStrokeWidth}
+          />
+        </span>
+      );
+    }
+    if (isLoading && !kbd) {
+      return (
+        <Loader
+          aria-label={loadingText || "Loading"}
+          size={getLoaderSize(size)}
+        />
+      );
+    }
+    return null;
+  };
+
   const renderButtonContent = () => {
     // Handle simple cases first to reduce complexity
     if (hasCustomLayout && !leftIcon && !hasRightIcon && !isLoading && !kbd) {
@@ -97,30 +124,9 @@ export const ButtonContentRenderer: React.FC<ButtonContentRendererProps> = ({
       return children;
     }
 
-    // Handle icon-only cases
-    if (isIconButton) {
-      if (effectiveLeftIconProp && !hasRightIcon && !isLoading && !kbd) {
-        return (
-          <span
-            className={`relative ${getIconContainerSize(size)} flex items-center justify-center`}
-          >
-            <Icon
-              icon={effectiveLeftIconProp}
-              size={getIconSize(size)}
-              strokeWidth={iconStrokeWidth}
-            />
-          </span>
-        );
-      }
-
-      if (isLoading && !kbd) {
-        return (
-          <Loader
-            aria-label={loadingText || "Loading"}
-            size={getLoaderSize(size)}
-          />
-        );
-      }
+    const iconOnly = renderIconOnly();
+    if (iconOnly) {
+      return iconOnly;
     }
 
     return renderComplexLayout();

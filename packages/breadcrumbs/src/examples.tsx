@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from "./component";
+} from ".";
 
 // Default breadcrumbs
 export const DefaultExample = () => (

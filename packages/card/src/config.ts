@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { Card } from "./component";
+import { Card } from ".";
 import { DefaultExample, WithFooterExample } from "./examples";
 
 export const cardConfig: ComponentConfig = {

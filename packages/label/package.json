@@ -30,14 +30,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/label.tsx",
+      "import": "./src/components/label.tsx",
+      "default": "./src/components/label.tsx"
     },
     "./config": {
       "types": "./src/config.ts",
@@ -78,13 +78,13 @@
     "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "^1.55.0",
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
+    "@types/node": "^24.3.3",
+    "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"

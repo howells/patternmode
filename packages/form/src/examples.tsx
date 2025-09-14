@@ -3,7 +3,7 @@
 import { Button } from "@patternmode/button";
 import { Textarea } from "@patternmode/textarea";
 import { z } from "zod";
-import { Form, FormControl, FormField } from "./component";
+import { Form, FormControl, FormField } from ".";
 
 // Basic form with Zod validation
 export const DefaultExample = () => {
@@ -76,11 +76,14 @@ export const HTML5ValidationExample = () => {
 
 // Registration form with custom layout
 export const RegistrationFormExample = () => {
+  const MIN_PASSWORD_LENGTH = 8;
   const registrationSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z
+      .string()
+      .min(MIN_PASSWORD_LENGTH, "Password must be at least 8 characters"),
   });
 
   const handleRegistration = (/* data: Record<string, unknown> */) => {

@@ -12,9 +12,9 @@
       "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/textarea.tsx",
+      "import": "./src/components/textarea.tsx",
+      "default": "./src/components/textarea.tsx"
     },
     "./variants": {
       "types": "./src/variants.ts",
@@ -54,7 +54,7 @@
   "dependencies": {
     "@patternmode/config": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0",
+    "lucide-react": "^0.544.0",
     "react-textarea-autosize": "^8.5.9",
     "tailwind-variants": "^3.1.1"
   },

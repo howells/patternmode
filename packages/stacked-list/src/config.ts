@@ -6,7 +6,7 @@ import {
   StackedListEmpty,
   StackedListHeader,
   StackedListItem,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   EmptyStateExample,

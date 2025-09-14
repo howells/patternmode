@@ -2,7 +2,7 @@
 
 import { Stack } from "@patternmode/stack";
 import React from "react";
-import { ThemeToggle } from "./component";
+import { ThemeToggle } from ".";
 
 export const DefaultExample = () => {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
@@ -95,6 +95,7 @@ export const RoundedExample = () => {
 export const LoadingExample = () => {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
   const [isLoading, setIsLoading] = React.useState(false);
+  const LOADING_DELAY_MS = 1500;
 
   const handleToggle = () => {
     setIsLoading(true);
@@ -102,7 +103,7 @@ export const LoadingExample = () => {
     setTimeout(() => {
       setTheme(theme === "light" ? "dark" : "light");
       setIsLoading(false);
-    }, 1500);
+    }, LOADING_DELAY_MS);
   };
 
   return (

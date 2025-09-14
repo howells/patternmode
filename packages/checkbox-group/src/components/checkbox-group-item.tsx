@@ -1,6 +1,5 @@
 import { Checkbox } from "@patternmode/checkbox";
 import { cx } from "@patternmode/utils/cx";
-import type * as React from "react";
 import { useId } from "react";
 import type { CheckboxGroupItemProps } from "../types";
 import {
@@ -8,10 +7,7 @@ import {
   checkboxGroupItemVariants,
 } from "../variants";
 
-/**
- * Individual checkbox item component designed for use within CheckboxGroup containers.
- */
-const CheckboxGroupItem = ({
+export const CheckboxGroupItem = ({
   ref,
   value,
   name,
@@ -41,7 +37,3 @@ const CheckboxGroupItem = ({
     </label>
   );
 };
-CheckboxGroupItem.displayName = "CheckboxGroupItem";
-
-export { CheckboxGroupItem };
-export type { CheckboxGroupItemProps };

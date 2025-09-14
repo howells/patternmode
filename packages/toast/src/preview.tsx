@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@patternmode/button";
-import { useToast } from "./component";
+import { useToast } from ".";
 
 type ToastPreviewProps = {
   title?: string;

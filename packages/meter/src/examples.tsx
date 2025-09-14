@@ -1,6 +1,6 @@
 "use client";
 
-import { Meter } from "./component";
+import { Meter } from ".";
 
 export const DefaultExample = () => <Meter value={65} />;
 

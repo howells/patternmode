@@ -9,7 +9,7 @@ import {
   MenuSubmenuContent,
   MenuSubmenuTrigger,
   MenuTrigger,
-} from "./component";
+} from ".";
 
 export type MenuPreviewProps = {
   /**

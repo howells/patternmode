@@ -2,7 +2,7 @@
 
 import { sizes } from "@patternmode/config/sizes";
 import { Camera } from "lucide-react";
-import { Icon } from "./component";
+import { Icon } from ".";
 import type { IconProps } from "./types";
 
 export function IconPreview(props: IconProps) {

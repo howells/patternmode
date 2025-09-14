@@ -2,7 +2,7 @@
 
 import { Button } from "@patternmode/button";
 import { buttonVariants } from "@patternmode/button/types";
-import { ButtonGroup } from "./component";
+import { ButtonGroup } from ".";
 import type { ButtonGroupProps } from "./types";
 
 export function ButtonGroupPreview({ children, ...props }: ButtonGroupProps) {

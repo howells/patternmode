@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./component";
+} from ".";
 
 export function SheetPreview() {
   return (

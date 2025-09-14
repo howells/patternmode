@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "./component";
+import { Separator } from ".";
 
 export const DefaultExample = () => (
   <div>

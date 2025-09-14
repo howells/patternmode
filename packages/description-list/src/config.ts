@@ -1,10 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { List } from "lucide-react";
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionTerm,
-} from "./component";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from ".";
 import {
   DefaultExample,
   ProjectDetailsExample,

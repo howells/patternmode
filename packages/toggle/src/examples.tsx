@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-import { Toggle } from "./component";
+import { Toggle } from ".";
 
 export function DefaultExample() {
   const [isPressed, setIsPressed] = React.useState(false);

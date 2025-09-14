@@ -46,5 +46,5 @@ export type TooltipProps = {
         triggerProps: React.HTMLProps<HTMLElement>,
         state: { open: boolean }
       ) => React.ReactElement);
-} & Omit<useRender.ComponentProps<"button">, "render"> &
+} & Omit<useRender.ComponentProps<"button">, "render" | "content" | "ref"> &
   VariantProps<typeof tooltipVariants>;

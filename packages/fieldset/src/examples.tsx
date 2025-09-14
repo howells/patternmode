@@ -6,7 +6,7 @@ import {
   FieldDescription,
   FieldLabel,
 } from "@patternmode/field";
-import { Fieldset, FieldsetLegend } from "./component";
+import { Fieldset, FieldsetLegend } from ".";
 
 // Default fieldset
 export const DefaultExample = () => (

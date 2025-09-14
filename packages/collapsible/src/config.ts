@@ -1,10 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ChevronDown } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./component";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from ".";
 import {
   ControlledExample,
   DefaultExample,

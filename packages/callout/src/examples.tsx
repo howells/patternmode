@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, AlertTriangle, CheckCircle, Info } from "lucide-react";
-import { Callout } from "./component";
+import { Callout } from ".";
 
 export const DefaultExample = () => (
   <Callout title="Information">

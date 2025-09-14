@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Circle } from "lucide-react";
-import { Dot } from "./component";
+import { Dot } from ".";
 import {
   AnimatedExample,
   BasicExample,

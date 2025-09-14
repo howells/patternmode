@@ -1,8 +1,8 @@
-export type { IconSelectProps } from "./component";
+export type { IconSelectProps } from "./components/icon-select";
 export {
   getDynamicIconByName,
   IconSelect,
   iconStats,
   isValidLucideIcon,
   useIconSelect,
-} from "./component";
+} from "./components/icon-select";

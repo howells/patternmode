@@ -62,7 +62,14 @@ export const IndeterminateParentExample = () => {
   const all = Object.values(childrenVals);
   const allChecked = all.every(Boolean);
   const someChecked = all.some(Boolean);
-  const parentState = allChecked ? true : someChecked ? "indeterminate" : false;
+  let parentState: boolean | "indeterminate";
+  if (allChecked) {
+    parentState = true;
+  } else if (someChecked) {
+    parentState = "indeterminate";
+  } else {
+    parentState = false;
+  }
   const toggleAll = () => {
     const next = !allChecked;
     setChildrenVals({ a: next, b: next, c: next });

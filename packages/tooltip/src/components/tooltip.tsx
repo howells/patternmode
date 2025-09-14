@@ -18,7 +18,6 @@ import { TooltipTrigger } from "./tooltip-trigger";
  * A tooltip component built on Base UI's Tooltip primitive for displaying contextual information.
  */
 const Tooltip = ({
-  ref: forwardedRef,
   children,
   className,
   content,
@@ -36,9 +35,7 @@ const Tooltip = ({
   size,
   render,
   ...props
-}: TooltipProps & {
-  ref?: React.RefObject<HTMLDivElement | null>;
-}) => {
+}: TooltipProps) => {
   const { popup, arrow } = tooltipVariants({ variant, size });
 
   // Handle different render prop patterns
@@ -62,7 +59,6 @@ const Tooltip = ({
             <TooltipPopup
               className={cx(popup(), className)}
               data-testid="tooltip"
-              ref={forwardedRef}
             >
               {content}
               {showArrow && (
@@ -107,7 +103,6 @@ const Tooltip = ({
           <TooltipPopup
             className={cx(popup(), className)}
             data-testid="tooltip"
-            ref={forwardedRef}
           >
             {content}
             {showArrow && (

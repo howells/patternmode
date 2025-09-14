@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { X } from "lucide-react";
-import { DismissButton } from "./component";
+import { DismissButton } from ".";
 import {
   CustomIconExample,
   DefaultExample,

@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { Fieldset, FieldsetLegend } from "./component";
+import { Fieldset, FieldsetLegend } from ".";
 import {
   ContactFieldsetExample,
   DefaultExample,

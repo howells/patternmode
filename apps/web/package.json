@@ -53,7 +53,7 @@
     "@patternmode/dismiss-button": "workspace:*",
     "@patternmode/dot": "workspace:*",
     "@patternmode/drawer": "workspace:*",
-    "@patternmode/empty-state": "workspace:*",
+      
     "@patternmode/feature-item": "workspace:*",
     "@patternmode/field": "workspace:*",
     "@patternmode/field-array": "workspace:*",

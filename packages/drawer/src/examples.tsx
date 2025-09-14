@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => (
   <Drawer>

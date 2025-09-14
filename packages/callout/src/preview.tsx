@@ -1,7 +1,7 @@
 "use client";
 
 import { Info } from "lucide-react";
-import { Callout } from "./component";
+import { Callout } from ".";
 import type { CalloutProps } from "./types";
 
 export function CalloutPreview(props: CalloutProps) {

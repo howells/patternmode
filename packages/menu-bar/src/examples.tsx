@@ -20,7 +20,7 @@ import {
   MenuBarSubmenuContent,
   MenuBarSubmenuTrigger,
   MenuBarTrigger,
-} from "./component";
+} from ".";
 
 // Pre-imported icons from registry
 
@@ -111,69 +111,75 @@ export const ApplicationMenuExample = () => {
   };
 
   return (
-    <MenuBar className="mb-4">
-      <MenuBarMenu>
-        <MenuBarTrigger>File</MenuBarTrigger>
-        <MenuBarContent>
-          <MenuBarItem onSelect={() => handleAction("new")}>
-            <div className="flex items-center gap-2">
-              <Icon icon={Plus} />
-              New Project
-            </div>
-          </MenuBarItem>
-          <MenuBarItem onSelect={() => handleAction("open")}>
-            <div className="flex items-center gap-2">
-              <Icon icon={FileText} />
-              Open...
-            </div>
-          </MenuBarItem>
-          <MenuBarSeparator />
-          <MenuBarItem onSelect={() => handleAction("save")}>Save</MenuBarItem>
-          <MenuBarItem onSelect={() => handleAction("saveAs")}>
-            Save As...
-          </MenuBarItem>
-          <MenuBarSeparator />
-          <MenuBarItem onSelect={() => handleAction("exit")}>Exit</MenuBarItem>
-        </MenuBarContent>
-      </MenuBarMenu>
+    <div className="mb-4">
+      <MenuBar>
+        <MenuBarMenu>
+          <MenuBarTrigger>File</MenuBarTrigger>
+          <MenuBarContent>
+            <MenuBarItem onSelect={() => handleAction("new")}>
+              <div className="flex items-center gap-2">
+                <Icon icon={Plus} />
+                New Project
+              </div>
+            </MenuBarItem>
+            <MenuBarItem onSelect={() => handleAction("open")}>
+              <div className="flex items-center gap-2">
+                <Icon icon={FileText} />
+                Open...
+              </div>
+            </MenuBarItem>
+            <MenuBarSeparator />
+            <MenuBarItem onSelect={() => handleAction("save")}>
+              Save
+            </MenuBarItem>
+            <MenuBarItem onSelect={() => handleAction("saveAs")}>
+              Save As...
+            </MenuBarItem>
+            <MenuBarSeparator />
+            <MenuBarItem onSelect={() => handleAction("exit")}>
+              Exit
+            </MenuBarItem>
+          </MenuBarContent>
+        </MenuBarMenu>
 
-      <MenuBarMenu>
-        <MenuBarTrigger>Tools</MenuBarTrigger>
-        <MenuBarContent>
-          <MenuBarItem onSelect={() => handleAction("settings")}>
-            <div className="flex items-center gap-2">
-              <Icon icon={Settings} />
-              Settings
-            </div>
-          </MenuBarItem>
-          <MenuBarItem onSelect={() => handleAction("extensions")}>
-            Extensions
-          </MenuBarItem>
-          <MenuBarSeparator />
-          <MenuBarItem onSelect={() => handleAction("command")}>
-            Command Palette
-          </MenuBarItem>
-        </MenuBarContent>
-      </MenuBarMenu>
+        <MenuBarMenu>
+          <MenuBarTrigger>Tools</MenuBarTrigger>
+          <MenuBarContent>
+            <MenuBarItem onSelect={() => handleAction("settings")}>
+              <div className="flex items-center gap-2">
+                <Icon icon={Settings} />
+                Settings
+              </div>
+            </MenuBarItem>
+            <MenuBarItem onSelect={() => handleAction("extensions")}>
+              Extensions
+            </MenuBarItem>
+            <MenuBarSeparator />
+            <MenuBarItem onSelect={() => handleAction("command")}>
+              Command Palette
+            </MenuBarItem>
+          </MenuBarContent>
+        </MenuBarMenu>
 
-      <MenuBarMenu>
-        <MenuBarTrigger>Help</MenuBarTrigger>
-        <MenuBarContent>
-          <MenuBarItem onSelect={() => handleAction("docs")}>
-            <div className="flex items-center gap-2">
-              <Icon icon={HelpCircle} />
-              Documentation
-            </div>
-          </MenuBarItem>
-          <MenuBarItem onSelect={() => handleAction("support")}>
-            Support
-          </MenuBarItem>
-          <MenuBarSeparator />
-          <MenuBarItem onSelect={() => handleAction("about")}>
-            About
-          </MenuBarItem>
-        </MenuBarContent>
-      </MenuBarMenu>
-    </MenuBar>
+        <MenuBarMenu>
+          <MenuBarTrigger>Help</MenuBarTrigger>
+          <MenuBarContent>
+            <MenuBarItem onSelect={() => handleAction("docs")}>
+              <div className="flex items-center gap-2">
+                <Icon icon={HelpCircle} />
+                Documentation
+              </div>
+            </MenuBarItem>
+            <MenuBarItem onSelect={() => handleAction("support")}>
+              Support
+            </MenuBarItem>
+            <MenuBarSeparator />
+            <MenuBarItem onSelect={() => handleAction("about")}>
+              About
+            </MenuBarItem>
+          </MenuBarContent>
+        </MenuBarMenu>
+      </MenuBar>
+    </div>
   );
 };

@@ -11,7 +11,7 @@ import {
   DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "./component";
+} from ".";
 import { DefaultExample, FormExample, SettingsExample } from "./examples";
 
 export const drawerConfig: ComponentConfig = {

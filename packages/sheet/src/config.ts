@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./component";
+} from ".";
 import {
   ContactFormExample,
   DefaultExample,

@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./component";
+} from ".";
 import {
   ConfirmationExample,
   ControlledExample,

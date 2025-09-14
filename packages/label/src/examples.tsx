@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { Label } from "./component";
+import { Label } from "./components/label";
 
 export const BasicExample = () => {
   const id = useId();

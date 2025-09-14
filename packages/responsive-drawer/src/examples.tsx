@@ -12,7 +12,7 @@ import {
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => {
   return (

@@ -72,7 +72,14 @@ export const WrappingExample = () => (
 );
 
 export const RenderPropExample = () => (
-  <Stack gap={4} render={<a className="block" href="#" />}>
+  <Stack
+    gap={4}
+    render={
+      <a aria-label="Stack link item" className="block" href="/">
+        <span className="sr-only">Link wrapper</span>
+      </a>
+    }
+  >
     <div>Link Item 1</div>
     <div>Link Item 2</div>
     <div>Link Item 3</div>

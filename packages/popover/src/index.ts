@@ -1,3 +1,4 @@
+export type { PopoverProps } from "./components/popover";
 export {
   Popover,
   PopoverArrow,
@@ -9,4 +10,4 @@ export {
   PopoverPositioner,
   PopoverTitle,
   PopoverTrigger,
-} from "./component";
+} from "./components/popover";

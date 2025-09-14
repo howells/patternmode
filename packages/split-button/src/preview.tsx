@@ -7,7 +7,7 @@ import { componentVariants } from "@patternmode/constants/variants";
 import { Icon } from "@patternmode/icon";
 import { Archive, Copy, Download, Save, Share } from "lucide-react";
 import type React from "react";
-import { SplitButton } from "./component";
+import { SplitButton } from ".";
 
 export type SplitButtonPreviewProps = {
   /**

@@ -424,24 +424,24 @@ export const AutoFlowExample = () => {
     <div className="space-y-4">
       <h4 className="font-medium text-sm">Grid Flow Row (default)</h4>
       <Grid autoFlow="row" className="min-h-[200px]" columns={3} gap={4}>
-        {Array.from({ length: 6 }, (_, i) => (
+        {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
           <GridCell
             className="rounded bg-blue-100 p-4 text-center dark:bg-blue-900"
-            key={i}
+            key={id}
           >
-            {i + 1}
+            {id}
           </GridCell>
         ))}
       </Grid>
 
       <h4 className="font-medium text-sm">Grid Flow Column</h4>
       <Grid autoFlow="column" className="min-h-[200px]" columns={3} gap={4}>
-        {Array.from({ length: 6 }, (_, i) => (
+        {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
           <GridCell
             className="rounded bg-green-100 p-4 text-center dark:bg-green-900"
-            key={i}
+            key={id}
           >
-            {i + 1}
+            {id}
           </GridCell>
         ))}
       </Grid>

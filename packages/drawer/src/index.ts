@@ -1,12 +1,10 @@
-export {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerPortal,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./component";
+export { Drawer } from "./components/drawer-root";
+export { DrawerTrigger } from "./components/drawer-trigger";
+export { DrawerClose } from "./components/drawer-close";
+export { DrawerPortal } from "./components/drawer-portal";
+export { DrawerOverlay } from "./components/drawer-overlay";
+export { DrawerContent } from "./components/drawer-content";
+export { DrawerHeader } from "./components/drawer-header";
+export { DrawerFooter } from "./components/drawer-footer";
+export { DrawerTitle } from "./components/drawer-title";
+export { DrawerDescription } from "./components/drawer-description";

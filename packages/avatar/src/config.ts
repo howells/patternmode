@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { User } from "lucide-react";
-import { Avatar } from "./component";
+import { Avatar } from ".";
 import { DefaultExample, SizesExample } from "./examples";
 
 export const avatarConfig: ComponentConfig = {

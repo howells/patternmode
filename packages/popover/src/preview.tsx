@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@patternmode/button";
-import type { PopoverProps } from "./component";
+import type { PopoverProps } from ".";
 import {
   Popover,
   PopoverClose,
@@ -10,7 +10,7 @@ import {
   PopoverPortal,
   PopoverTitle,
   PopoverTrigger,
-} from "./component";
+} from ".";
 
 export function PopoverPreview(props: PopoverProps) {
   return (

@@ -1,6 +1,18 @@
 "use client";
 
 import { Card } from "@patternmode/card";
+
+const ONE = 1 as const;
+const TWO = 2 as const;
+const THREE = 3 as const;
+const FOUR = 4 as const;
+const FIVE = 5 as const;
+const SIX = 6 as const;
+const SEVEN = 7 as const;
+const EIGHT = 8 as const;
+const FIVE_SLIDES = [ONE, TWO, THREE, FOUR, FIVE] as const;
+const EIGHT_SLIDES = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT] as const;
+
 import React from "react";
 import {
   Carousel,
@@ -8,7 +20,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./component";
+} from ".";
 
 // Default carousel
 export const DefaultExample = () => (
@@ -76,14 +88,14 @@ export const VerticalExample = () => (
 export const MultipleItemsExample = () => (
   <Carousel className="w-full max-w-sm">
     <CarouselContent className="-ml-1">
-      {Array.from({ length: 5 }).map((_, index) => (
+      {FIVE_SLIDES.map((n) => (
         <CarouselItem
           className="pl-1 md:basis-1/2 lg:basis-1/3"
-          key={`carousel-item-${index}`}
+          key={`carousel-item-${n}`}
         >
           <Card>
             <div className="flex aspect-square items-center justify-center p-6">
-              <span className="text-2xl">{index + 1}</span>
+              <span className="text-2xl">{n}</span>
             </div>
           </Card>
         </CarouselItem>
@@ -220,9 +232,8 @@ export const TestimonialCarouselExample = () => (
 
 // Auto-play carousel (simulated with state)
 export const AutoPlayExample = () => {
-  const [api, setApi] = React.useState<
-    import("./component").CarouselApi | null
-  >(null);
+  const [api, setApi] = React.useState<import(".").CarouselApi | null>(null);
+  const AUTO_PLAY_INTERVAL_MS = 3000;
 
   React.useEffect(() => {
     if (!api) {
@@ -231,7 +242,7 @@ export const AutoPlayExample = () => {
 
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 3000);
+    }, AUTO_PLAY_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [api]);
@@ -239,11 +250,11 @@ export const AutoPlayExample = () => {
   return (
     <Carousel className="w-full max-w-xs" setApi={setApi}>
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={`auto-play-${index}`}>
+        {FIVE_SLIDES.map((n) => (
+          <CarouselItem key={`auto-play-${n}`}>
             <Card>
               <div className="flex aspect-square items-center justify-center p-6">
-                <span className="text-4xl">{index + 1}</span>
+                <span className="text-4xl">{n}</span>
               </div>
             </Card>
           </CarouselItem>
@@ -259,14 +270,14 @@ export const AutoPlayExample = () => {
 export const ResponsiveExample = () => (
   <Carousel className="w-full">
     <CarouselContent>
-      {Array.from({ length: 8 }).map((_, index) => (
+      {EIGHT_SLIDES.map((n) => (
         <CarouselItem
           className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-          key={`responsive-${index}`}
+          key={`responsive-${n}`}
         >
           <Card>
             <div className="flex aspect-square items-center justify-center p-6">
-              <span className="text-2xl">{index + 1}</span>
+              <span className="text-2xl">{n}</span>
             </div>
           </Card>
         </CarouselItem>

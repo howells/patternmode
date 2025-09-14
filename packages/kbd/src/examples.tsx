@@ -1,6 +1,6 @@
 "use client";
 
-import { Kbd } from "./component";
+import { Kbd } from ".";
 
 export const DefaultExample = () => <Kbd>K</Kbd>;
 

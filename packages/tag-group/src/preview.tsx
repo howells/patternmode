@@ -1,7 +1,7 @@
 "use client";
 
 import { Tag } from "@patternmode/tag";
-import { TagGroup } from "./component";
+import { TagGroup } from ".";
 import type { TagGroupProps } from "./types";
 
 export function TagGroupPreview(props: TagGroupProps) {

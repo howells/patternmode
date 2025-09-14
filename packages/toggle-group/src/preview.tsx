@@ -9,7 +9,7 @@ import {
   Italic,
   Underline,
 } from "lucide-react";
-import { ToggleGroup, ToggleGroupItem } from "./component";
+import { ToggleGroup, ToggleGroupItem } from "./components/toggle-group";
 
 export type ToggleGroupPreviewProps = {
   /**
@@ -64,12 +64,14 @@ export function ToggleGroupPreview({
   ];
 
   const items = contentType === "alignment" ? alignmentItems : formattingItems;
-  const defaultValue =
-    type === "single"
-      ? [contentType === "alignment" ? "center" : "bold"]
-      : contentType === "alignment"
-        ? ["center"]
-        : ["bold"];
+  let defaultValue: string[];
+  if (type === "single") {
+    defaultValue = [contentType === "alignment" ? "center" : "bold"];
+  } else if (contentType === "alignment") {
+    defaultValue = ["center"];
+  } else {
+    defaultValue = ["bold"];
+  }
 
   return (
     <ToggleGroup

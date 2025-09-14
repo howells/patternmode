@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageSquare } from "lucide-react";
-import { Textarea } from "./component";
+import { Textarea } from ".";
 import {
   DefaultExample,
   DisabledExample,

@@ -11,7 +11,7 @@ import {
   PopoverPositioner,
   PopoverTitle,
   PopoverTrigger,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   WithArrowExample,

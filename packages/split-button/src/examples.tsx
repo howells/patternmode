@@ -2,7 +2,7 @@
 
 import { MenuItem, MenuLabel, MenuSeparator } from "@patternmode/menu";
 import { ChevronDown, Code, Download, File, Image } from "lucide-react";
-import { SplitButton } from "./component";
+import { SplitButton } from ".";
 
 export function DefaultExample() {
   return (

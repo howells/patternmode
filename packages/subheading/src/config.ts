@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Type } from "lucide-react";
-import { Subheading } from "./component";
+import { Subheading } from ".";
 import {
   ColorInheritanceExample,
   DefaultExample,

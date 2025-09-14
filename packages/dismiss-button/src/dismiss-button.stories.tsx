@@ -1,3 +1,3 @@
-import { DismissButton } from "./component";
+import { DismissButton } from ".";
 
 export const TestDismissButton = () => <DismissButton />;

@@ -44,14 +44,14 @@
   "dependencies": {
     "@base-ui-components/react": "1.0.0-beta.3",
     "@patternmode/card": "workspace:*",
-    "@patternmode/input-card": "workspace:*",
-    "@patternmode/input-grid": "workspace:*",
     "@patternmode/checkbox": "workspace:*",
     "@patternmode/checkbox-group": "workspace:*",
     "@patternmode/config": "workspace:*",
     "@patternmode/grid": "workspace:*",
+    "@patternmode/input-card": "workspace:*",
+    "@patternmode/input-grid": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*"

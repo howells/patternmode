@@ -5,4 +5,4 @@ export {
   NumberFieldIncrement,
   NumberFieldInput,
   NumberFieldLabel,
-} from "./component";
+} from "./components/number-field";

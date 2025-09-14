@@ -1,8 +1,8 @@
 "use client";
 
 import { cx } from "@patternmode/utils/cx";
-import type { StackedListProps } from "./component";
-import { StackedList, StackedListItem } from "./component";
+import type { StackedListProps } from ".";
+import { StackedList, StackedListItem } from ".";
 
 export function StackedListPreview(props: StackedListProps) {
   return (

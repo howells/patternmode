@@ -2,7 +2,7 @@
 
 import { Stack } from "@patternmode/stack";
 import { ArrowRight, Check, Heart, Search, Star, User } from "lucide-react";
-import { Icon } from "./component";
+import { Icon } from ".";
 
 // Basic icons
 export const DefaultExample = () => {

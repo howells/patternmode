@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Switch } from "./component";
+import { Switch } from "./components/switch";
 
 export const SwitchExample = () => {
   const [on, setOn] = React.useState(false);

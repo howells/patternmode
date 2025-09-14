@@ -22,7 +22,7 @@ import {
   Underline,
 } from "lucide-react";
 import React from "react";
-import { ToggleGroup, ToggleGroupItem } from "./component";
+import { ToggleGroup, ToggleGroupItem } from "./components/toggle-group";
 
 export function DefaultExample() {
   const [alignment, setAlignment] = React.useState<string[]>(["left"]);
@@ -316,15 +316,20 @@ export function ButtonAlignmentExample() {
           </ToggleGroup>
 
           <button
-            className={`rounded bg-blue-500 px-3 py-2 text-white transition-colors hover:bg-blue-600 ${
-              size === "xs"
-                ? "h-8 text-xs"
-                : size === "sm"
-                  ? "h-9 text-sm"
-                  : size === "lg"
-                    ? "h-12 text-base"
-                    : "h-10 text-sm"
-            }`}
+            className={(() => {
+              const base =
+                "rounded bg-blue-500 px-3 py-2 text-white transition-colors hover:bg-blue-600";
+              if (size === "xs") {
+                return `${base} h-8 text-xs`;
+              }
+              if (size === "sm") {
+                return `${base} h-9 text-sm`;
+              }
+              if (size === "lg") {
+                return `${base} h-12 text-base`;
+              }
+              return `${base} h-10 text-sm`;
+            })()}
             type="button"
           >
             Regular Button

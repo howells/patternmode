@@ -8,7 +8,7 @@ import {
   ProgressLabel,
   ProgressTrack,
   ProgressValue,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => {
   return (

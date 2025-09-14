@@ -1,7 +1,7 @@
 "use client";
 
 import { sizes } from "@patternmode/config/sizes";
-import { Kbd } from "./component";
+import { Kbd } from ".";
 import type { KbdProps } from "./types";
 
 export function KbdPreview(props: KbdProps) {

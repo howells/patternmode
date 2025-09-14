@@ -7,7 +7,7 @@ import {
   ToolbarInput,
   ToolbarLink,
   ToolbarSeparator,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   DisabledExample,

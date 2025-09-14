@@ -1,3 +1,3 @@
-import { IconSelect } from "./component";
+import { IconSelect } from ".";
 
 export const TestIconSelect = () => <IconSelect />;

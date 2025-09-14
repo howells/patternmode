@@ -10,7 +10,7 @@ import {
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
   ResponsiveDrawerTrigger,
-} from "./component";
+} from ".";
 import {
   ControlledExample,
   DefaultExample,

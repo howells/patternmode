@@ -1,10 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { List } from "lucide-react";
-import {
-  TextList as ListComponent,
-  TextListIndicator,
-  TextListItem,
-} from "./component";
+import { TextList as ListComponent, TextListIndicator, TextListItem } from ".";
 import {
   DefaultExample,
   NestedExample,

@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ToggleLeft } from "lucide-react";
-import { Toggle } from "./component";
+import { Toggle } from ".";
 import {
   DefaultExample,
   DisabledExample,

@@ -88,7 +88,6 @@ const Button = ({
     } as React.HTMLAttributes<HTMLButtonElement>),
     children: (
       <ButtonContentRenderer
-        children={children}
         fullWidth={fullWidth}
         icon={icon}
         iconStrokeWidth={iconStrokeWidth}
@@ -103,7 +102,9 @@ const Button = ({
         size={size}
         textAlign={textAlign}
         variant={variant}
-      />
+      >
+        {children}
+      </ButtonContentRenderer>
     ),
   };
 

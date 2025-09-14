@@ -1,6 +1,6 @@
 "use client";
 
-import { HeadingElement } from "./component";
+import { HeadingElement } from ".";
 
 export const DefaultExample = () => {
   return <HeadingElement>Default Heading</HeadingElement>;

@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressSteps } from "./component";
+import { ProgressSteps } from "./components/progress-steps";
 
 export function VerticalExample() {
   return (

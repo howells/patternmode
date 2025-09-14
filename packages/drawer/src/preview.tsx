@@ -11,7 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./component";
+} from ".";
 
 export function DrawerPreview() {
   return (

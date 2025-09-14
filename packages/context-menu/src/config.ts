@@ -15,7 +15,7 @@ import {
   ContextMenuSubmenuContent,
   ContextMenuSubmenuTrigger,
   ContextMenuTrigger,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   WithSectionsExample,

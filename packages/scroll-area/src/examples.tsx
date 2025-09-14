@@ -2,7 +2,7 @@
 
 import { Separator } from "@patternmode/separator";
 import React from "react";
-import { ScrollArea } from "./component";
+import { ScrollArea } from ".";
 
 export const DefaultExample = () => {
   const tags = Array.from({ length: 50 }).map(
@@ -31,19 +31,18 @@ export const HorizontalExample = () => {
       orientation="horizontal"
     >
       <div className="flex w-max space-x-4 p-4">
-        {Array.from({ length: 10 }).map((_, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static demo items
-          <figure className="shrink-0" key={i}>
+        {Array.from({ length: 10 }, (_, i) => i + 1).map((id) => (
+          <figure className="shrink-0" key={id}>
             <div className="overflow-hidden rounded-md">
               <div
                 className="flex aspect-[3/4] h-fit w-fit items-center justify-center bg-gradient-to-br from-blue-400 to-purple-600 text-white"
                 style={{ width: 150, height: 200 }}
               >
-                Photo {i + 1}
+                Photo {id}
               </div>
             </div>
             <figcaption className="pt-2 text-xs text-zinc-600">
-              Photo {i + 1}
+              Photo {id}
             </figcaption>
           </figure>
         ))}
@@ -62,13 +61,12 @@ export const BothDirectionsExample = () => {
           height.
         </p>
         <div className="grid grid-cols-6 gap-4">
-          {Array.from({ length: 24 }).map((_, i) => (
+          {Array.from({ length: 24 }, (_, i) => i + 1).map((id) => (
             <div
-              // biome-ignore lint/suspicious/noArrayIndexKey: static demo items
               className="flex h-16 w-16 items-center justify-center rounded bg-zinc-200 text-sm"
-              key={i}
+              key={id}
             >
-              {i + 1}
+              {id}
             </div>
           ))}
         </div>
@@ -89,11 +87,10 @@ export const CustomStyledExample = () => {
     >
       <div className="space-y-4 p-4">
         <h4 className="text-blue-900 dark:text-blue-100">Custom Scrollbar</h4>
-        {Array.from({ length: 30 }).map((_, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static demo items
-          <div className="rounded-md bg-blue-50 p-3 dark:bg-blue-900" key={i}>
+        {Array.from({ length: 30 }, (_, i) => i + 1).map((id) => (
+          <div className="rounded-md bg-blue-50 p-3 dark:bg-blue-900" key={id}>
             <div className="font-medium text-blue-900 dark:text-blue-100">
-              Item {i + 1}
+              Item {id}
             </div>
             <div className="text-blue-700 text-sm dark:text-blue-300">
               This item demonstrates custom scrollbar styling with blue theme

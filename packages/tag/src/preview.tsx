@@ -1,7 +1,7 @@
 "use client";
 
-import type { TagProps } from "./component";
-import { Tag } from "./component";
+import type { TagProps } from ".";
+import { Tag } from ".";
 
 export function TagPreview(props: TagProps) {
   return <Tag {...props} value={props.value || "Example"} />;

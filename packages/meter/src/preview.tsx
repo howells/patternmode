@@ -1,6 +1,6 @@
 "use client";
 
-import { Meter } from "./component";
+import { Meter } from ".";
 import type { MeterProps } from "./types";
 
 export function MeterPreview(props: Omit<MeterProps, "value">) {

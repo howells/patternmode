@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./component";
+} from ".";
 
 // Props that users can configure in the prop explorer
 export type AccordionPreviewProps = {

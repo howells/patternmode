@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Field,
-  FieldControl,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "./component";
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel } from ".";
 
 // Default field
 export const DefaultExample = () => (

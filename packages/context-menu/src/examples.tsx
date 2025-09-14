@@ -6,7 +6,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => (
   <ContextMenu>

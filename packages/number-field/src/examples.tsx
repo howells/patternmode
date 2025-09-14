@@ -1,5 +1,5 @@
 "use client";
-import { NumberField } from "./component";
+import { NumberField } from ".";
 
 export const DefaultExample = () => (
   <NumberField label="Quantity" placeholder="0" />

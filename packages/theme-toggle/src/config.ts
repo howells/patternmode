@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Palette } from "lucide-react";
-import { ThemeToggle } from "./component";
+import { ThemeToggle } from ".";
 import {
   DarkThemeExample,
   DefaultExample,

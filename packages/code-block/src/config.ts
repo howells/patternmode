@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Code } from "lucide-react";
-import { CodeBlock } from "./component";
+import { CodeBlock } from ".";
 import {
   BashExample,
   CssExample,

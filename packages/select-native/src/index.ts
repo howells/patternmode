@@ -1,2 +1,2 @@
-export { SelectNative } from "./component";
+export { SelectNative } from "./components/select-native";
 export type { SelectNativeProps } from "./types";

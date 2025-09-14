@@ -1,6 +1,6 @@
 "use client";
 
-import { CodeBlock } from "./component";
+import { CodeBlock } from ".";
 import type { CodeBlockProps } from "./types";
 
 export function CodeBlockPreview(props: CodeBlockProps) {

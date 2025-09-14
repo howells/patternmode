@@ -1,3 +1,3 @@
-import { Textarea } from "./component";
+import { Textarea } from ".";
 
 export const TestTextarea = () => <Textarea>Test Textarea</Textarea>;

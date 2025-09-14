@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Bell } from "lucide-react";
-import { ToastProvider } from "./component";
+import { ToastProvider } from ".";
 import {
   ComplexPromiseExample,
   CustomDurationExample,

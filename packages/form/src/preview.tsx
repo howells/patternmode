@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@patternmode/button";
-import type { FormProps } from "./component";
-import { Form, FormControl, FormField } from "./component";
+import type { FormProps } from ".";
+import { Form, FormControl, FormField } from ".";
 
 export function FormPreview(props: FormProps) {
   const handleSubmit = async (_data: Record<string, unknown>) => {

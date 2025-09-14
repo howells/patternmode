@@ -7,7 +7,12 @@ import { comboboxVariants } from "../variants";
 /**
  * Root combobox container component.
  */
-const ComboboxRoot = React.forwardRef<
+type ComboboxRootComponent = React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof BaseCombobox.Root> &
+  React.RefAttributes<React.ElementRef<typeof BaseCombobox.Root>>
+>;
+
+const ComboboxRoot: ComboboxRootComponent = React.forwardRef<
   React.ElementRef<typeof BaseCombobox.Root>,
   React.ComponentPropsWithoutRef<typeof BaseCombobox.Root>
 >((props) => (

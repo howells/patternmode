@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Square } from "lucide-react";
-import { Skeleton } from "./component";
+import { Skeleton } from ".";
 import {
   ArticleExample,
   CardExample,

@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Calendar } from "lucide-react";
-import { DatePicker } from "./component";
+import { DatePicker } from ".";
 import {
   ControlledExample,
   DefaultExample,

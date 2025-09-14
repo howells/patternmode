@@ -6,7 +6,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./component";
+} from ".";
 import {
   AutoPlayExample,
   DefaultExample,

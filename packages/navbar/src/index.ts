@@ -1,1 +1,12 @@
-export * from "./component";
+export { Navbar } from "./components/navbar-root";
+export type { NavbarProps } from "./components/navbar-root";
+export { NavbarDivider } from "./components/navbar-divider";
+export type { NavbarDividerProps } from "./components/navbar-divider";
+export { NavbarSection } from "./components/navbar-section";
+export type { NavbarSectionProps } from "./components/navbar-section";
+export { NavbarSpacer } from "./components/navbar-spacer";
+export type { NavbarSpacerProps } from "./components/navbar-spacer";
+export { NavbarItem } from "./components/navbar-item";
+export type { NavbarItemProps } from "./components/navbar-item";
+export { NavbarLabel } from "./components/navbar-label";
+export type { NavbarLabelProps } from "./components/navbar-label";

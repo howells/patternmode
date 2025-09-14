@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NumberField } from "./component";
+import { NumberField } from ".";
 
 export type NumberFieldPreviewProps = {
   defaultValue?: number;

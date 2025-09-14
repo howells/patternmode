@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
   CardHeading,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => (
   <Card>

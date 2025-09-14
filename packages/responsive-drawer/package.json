@@ -47,7 +47,7 @@
     "@patternmode/drawer": "workspace:*",
     "@patternmode/sheet": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0",
+    "lucide-react": "^0.544.0",
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Slider } from "./component";
+import { Slider } from "./components/slider";
 import type { SliderProps } from "./types";
 
 export function SliderPreview(props: SliderProps) {

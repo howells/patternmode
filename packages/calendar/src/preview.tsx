@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Calendar } from "./component";
+import { Calendar } from ".";
 
 export type CalendarPreviewProps = {
   /**

@@ -2,8 +2,8 @@
 
 import { Field as BaseField } from "@base-ui-components/react/field";
 import { useId } from "react";
-import type { LabelProps } from "./component";
-import { Label } from "./component";
+import type { LabelProps } from "./components/label";
+import { Label } from "./components/label";
 
 export function LabelPreview(props: LabelProps) {
   const id = useId();

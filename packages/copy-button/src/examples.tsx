@@ -1,6 +1,6 @@
 "use client";
 
-import { CopyButton } from "./component";
+import { CopyButton } from ".";
 
 export const DefaultExample = () => <CopyButton text="Hello, World!" />;
 

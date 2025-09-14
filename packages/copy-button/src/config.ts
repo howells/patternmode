@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Copy } from "lucide-react";
-import { CopyButton } from "./component";
+import { CopyButton } from ".";
 import {
   ApiKeyExample,
   CustomLabelsExample,

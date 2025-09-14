@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, Search as SearchIcon } from "lucide-react";
-import { Input } from "./component";
+import { Input } from "./components/input";
 
 export const DefaultExample = () => <Input placeholder="Enter your name" />;
 

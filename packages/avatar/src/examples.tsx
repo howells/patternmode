@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "./component";
+import { Avatar } from ".";
 
 export const DefaultExample = () => (
   <div className="flex items-center gap-4">

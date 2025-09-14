@@ -6,11 +6,7 @@ import { VStack } from "@patternmode/stack";
 import { Code, Text } from "@patternmode/text";
 import { TextList, TextListItem } from "@patternmode/text-list";
 import React from "react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./component";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from ".";
 
 // Default collapsible
 export const DefaultExample = () => (

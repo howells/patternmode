@@ -11,7 +11,7 @@ import {
   PopoverPortal,
   PopoverTitle,
   PopoverTrigger,
-} from "./component";
+} from ".";
 
 export const DefaultExample = () => (
   <Popover>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "./component";
+import { Skeleton } from ".";
 
 export function DefaultExample() {
   return (

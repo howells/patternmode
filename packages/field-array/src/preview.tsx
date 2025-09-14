@@ -9,8 +9,8 @@ import { Input } from "@patternmode/input";
 import { Subheading } from "@patternmode/subheading";
 import { Textarea } from "@patternmode/textarea";
 import React from "react";
-import type { FieldSchema } from "./component";
-import { FieldArray } from "./component";
+import type { FieldSchema } from ".";
+import { FieldArray } from ".";
 
 // Define the structure for accordion items
 type AccordionItem = {

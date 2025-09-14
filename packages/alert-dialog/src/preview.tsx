@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./component";
+} from ".";
 
 export function AlertDialogPreview(
   props: React.ComponentProps<typeof AlertDialog>

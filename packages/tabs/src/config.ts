@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from ".";
 import { DefaultExample } from "./examples";
 
 export const tabsConfig: ComponentConfig = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { CodeBlock } from "./component";
+import { CodeBlock } from ".";
 
 // Default code block
 export const DefaultExample = () => (

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Textarea } from "./component";
+import { Textarea } from "./components/textarea";
 
 export const DefaultExample = () => (
   <Textarea placeholder="Enter your message..." />

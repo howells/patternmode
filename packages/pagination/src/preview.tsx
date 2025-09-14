@@ -1,13 +1,13 @@
 "use client";
 
-import type { PaginationProps } from "./component";
+import type { PaginationProps } from ".";
 import {
   Pagination,
   PaginationList,
   PaginationNext,
   PaginationPage,
   PaginationPrevious,
-} from "./component";
+} from ".";
 
 export function PaginationPreview(props: PaginationProps) {
   return (

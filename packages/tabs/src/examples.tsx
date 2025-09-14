@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./component";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from ".";
 
 export const DefaultExample = () => (
   <Tabs defaultValue="tab1">

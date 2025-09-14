@@ -1,7 +1,7 @@
 "use client";
 
 import type { Size } from "@patternmode/config/sizes";
-import { SelectNative } from "./component";
+import { SelectNative } from "./components/select-native";
 
 type SelectNativePreviewProps = {
   size?: Size;

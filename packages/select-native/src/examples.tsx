@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectNative } from "./component";
+import { SelectNative } from "./components/select-native";
 
 export const DefaultExample = () => (
   <SelectNative className="w-[220px]" defaultValue="">

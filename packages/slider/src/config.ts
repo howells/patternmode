@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Minus } from "lucide-react";
-import { Slider } from "./component";
+import { Slider } from "./components/slider";
 import {
   CustomRangeExample,
   DefaultExample,

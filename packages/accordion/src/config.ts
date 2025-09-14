@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   MixedContentExample,

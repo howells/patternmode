@@ -4,8 +4,12 @@ import { Icon } from "@patternmode/icon";
 import { Tag } from "@patternmode/tag";
 import { Code, MapPin, Palette, User } from "lucide-react";
 import React from "react";
-import type { TagOption } from "./component";
-import { TagInput, useTagInput } from "./component";
+
+const LENGTH_MIN = 2;
+const LENGTH_MAX = 30;
+
+import type { TagOption } from ".";
+import { TagInput, useTagInput } from ".";
 
 const technologies: TagOption[] = [
   { value: "react", label: "React", icon: Code },
@@ -135,7 +139,10 @@ export const WithTagCreationExample = () => {
           value: value.toLowerCase().replace(/\s+/g, "-"),
           label: value,
         })}
-        onValidate={(value) => value.length >= 2 && value.length <= 30}
+        onValidate={(value) => {
+          const len = value.length;
+          return len >= LENGTH_MIN && len <= LENGTH_MAX;
+        }}
         onValueChange={setSelectedTags}
         options={skills}
         placeholder="Add skills (or create new ones)..."

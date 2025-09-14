@@ -1,6 +1,6 @@
 "use client";
 
-import { Container } from "./component";
+import { Container } from ".";
 
 export const BasicExample = () => (
   <Container>

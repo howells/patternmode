@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { ChevronsUpDown } from "lucide-react";
-import { SelectNative } from "./component";
+import { SelectNative } from "./components/select-native";
 import {
   DefaultExample,
   DisabledExample,

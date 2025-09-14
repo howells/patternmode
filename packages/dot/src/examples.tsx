@@ -1,6 +1,6 @@
 "use client";
 
-import { Dot } from "./component";
+import { Dot } from ".";
 
 export const BasicExample = () => (
   <div className="flex items-center gap-3">

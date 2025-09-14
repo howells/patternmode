@@ -12,7 +12,7 @@ import {
   AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./component";
+} from ".";
 import {
   CustomStyledExample,
   DefaultExample,

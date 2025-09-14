@@ -17,8 +17,8 @@ import {
 import { HStack, Stack, VStack } from "@patternmode/stack";
 import { Textarea } from "@patternmode/textarea";
 import React from "react";
-import type { FieldSchema } from "./component";
-import { FieldArray } from "./component";
+import type { FieldSchema } from ".";
+import { FieldArray } from ".";
 
 const EMPTY_OPTIONS_ARRAY: Array<{ label: string; value: string }> = [];
 

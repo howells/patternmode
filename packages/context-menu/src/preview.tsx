@@ -7,7 +7,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "./component";
+} from ".";
 
 type ContextMenuProps = React.ComponentProps<typeof ContextMenu> & {
   open?: boolean;

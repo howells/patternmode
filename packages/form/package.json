@@ -46,10 +46,10 @@
     "@patternmode/config": "workspace:*",
     "@patternmode/textarea": "workspace:*",
     "@patternmode/utils": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*",
-    "zod": "^4.1.5"
+    "zod": "^4.1.8"
   }
 }

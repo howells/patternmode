@@ -13,5 +13,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./component";
+} from "./components/select";
 export type * from "./types";

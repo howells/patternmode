@@ -1,4 +1,4 @@
-import { TextList, TextListItem } from "./component";
+import { TextList, TextListItem } from ".";
 
 export const TestTextList = () => (
   <TextList>

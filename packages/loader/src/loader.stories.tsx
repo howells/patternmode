@@ -1,3 +1,3 @@
-import { Loader } from "./component";
+import { Loader } from ".";
 
 export const TestLoader = () => <Loader>Test Loader</Loader>;

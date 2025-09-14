@@ -3,7 +3,7 @@ export {
   AvatarFallback,
   AvatarImage,
   AvatarWithFallback,
-} from "./component";
+} from "./components/avatar";
 export type {
   AvatarFallbackProps,
   AvatarImageProps,

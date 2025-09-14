@@ -1,6 +1,6 @@
 "use client";
 
-import { Code, Strong, Text, TextLink } from "./component";
+import { Code, Strong, Text, TextLink } from ".";
 
 export const BasicExample = () => (
   <div className="space-y-4">

@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchField } from "./component";
+import { SearchField } from ".";
 
 const sampleItems = [
   {

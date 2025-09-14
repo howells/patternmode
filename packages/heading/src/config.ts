@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Type } from "lucide-react";
-import { Heading } from "./component";
+import { Heading } from ".";
 import {
   CustomStyleExample,
   DefaultExample,

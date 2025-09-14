@@ -11,6 +11,11 @@
       "import": "./src/index.ts",
       "default": "./src/index.ts"
     },
+    "./component": {
+      "types": "./src/components/tabs-root.tsx",
+      "import": "./src/components/tabs-root.tsx",
+      "default": "./src/components/tabs-root.tsx"
+    },
     "./config": {
       "types": "./src/config.ts",
       "import": "./src/config.ts",

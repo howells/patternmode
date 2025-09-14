@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Search } from "lucide-react";
-import { IconSelect } from "./component";
+import { IconSelect } from ".";
 import {
   CustomPlaceholderExample,
   DefaultExample,

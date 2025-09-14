@@ -1,7 +1,7 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Activity } from "lucide-react";
 import React from "react";
-import { Meter } from "./component";
+import { Meter } from ".";
 import type { MeterProps } from "./types";
 
 // Wrapper to satisfy generic ComponentType for docs/registry while providing a default value

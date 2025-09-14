@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from "./component";
+} from ".";
 import type { BreadcrumbsProps } from "./types";
 
 export function BreadcrumbsPreview(props: BreadcrumbsProps) {

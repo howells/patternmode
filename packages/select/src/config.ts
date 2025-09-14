@@ -10,7 +10,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./component";
+} from ".";
 import {
   ControlledExample,
   CustomRenderValueExample,

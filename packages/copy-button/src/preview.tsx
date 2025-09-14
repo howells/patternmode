@@ -1,6 +1,6 @@
 "use client";
 
-import { CopyButton } from "./component";
+import { CopyButton } from ".";
 import type { CopyButtonProps } from "./types";
 
 export function CopyButtonPreview(props: Omit<CopyButtonProps, "text">) {

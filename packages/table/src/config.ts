@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./component";
+} from ".";
 import { BasicTableExample } from "./examples";
 
 export const tableConfig: ComponentConfig = {

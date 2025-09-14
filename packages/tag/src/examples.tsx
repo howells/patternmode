@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tag } from "./component";
+import { Tag } from ".";
 
 export const DefaultExample = () => (
   <div className="flex flex-wrap gap-2">

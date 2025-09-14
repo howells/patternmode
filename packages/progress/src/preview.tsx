@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressBar } from "./component";
+import { ProgressBar } from ".";
 import type { ProgressBarProps } from "./types";
 
 export function ProgressPreview(props: Omit<ProgressBarProps, "value">) {

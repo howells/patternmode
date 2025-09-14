@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { MessageSquare } from "lucide-react";
-import { Callout } from "./component";
+import { Callout } from ".";
 import {
   DefaultExample,
   ErrorExample,

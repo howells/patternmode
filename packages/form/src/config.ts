@@ -8,7 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   HorizontalLayoutExample,

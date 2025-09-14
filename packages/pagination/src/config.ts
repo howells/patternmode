@@ -7,7 +7,7 @@ import {
   PaginationNext,
   PaginationPage,
   PaginationPrevious,
-} from "./component";
+} from ".";
 import {
   DefaultExample,
   TablePaginationExample,

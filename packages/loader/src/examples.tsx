@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader } from "./component";
+import { Loader } from ".";
 
 export const DefaultExample = () => {
   return <Loader aria-label="Loading" />;

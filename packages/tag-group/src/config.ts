@@ -1,6 +1,6 @@
 import type { ComponentConfig } from "@patternmode/config/component-types";
 import { Tags } from "lucide-react";
-import { TagGroup } from "./component";
+import { TagGroup } from ".";
 import {
   AlignmentExample,
   CustomGapExample,

@@ -1,11 +1,7 @@
 "use client";
 
 import type React from "react";
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionTerm,
-} from "./component";
+import { DescriptionDetails, DescriptionList, DescriptionTerm } from ".";
 
 type DescriptionListProps = React.ComponentPropsWithoutRef<"dl"> & {
   className?: string;

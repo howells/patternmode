@@ -2,7 +2,7 @@
 
 import { Tag } from "@patternmode/tag";
 import * as React from "react";
-import { TagGroup } from "./component";
+import { TagGroup } from ".";
 
 export const DefaultExample = () => (
   <TagGroup>

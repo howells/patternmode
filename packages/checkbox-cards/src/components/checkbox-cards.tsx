@@ -48,7 +48,7 @@ const CheckboxCards = ({
   onValueChange?: (value: string[]) => void;
 }) => {
   const handleValueChange = React.useCallback(
-    (newValues: unknown, eventDetails: EventDetails) => {
+    (newValues: unknown, _eventDetails: EventDetails) => {
       const arrayValues: string[] = Array.isArray(newValues)
         ? newValues.filter((item): item is string => typeof item === "string")
         : [];

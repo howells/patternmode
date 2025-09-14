@@ -1,7 +1,7 @@
 "use client";
 
 import { Package } from "lucide-react";
-import { IconContainer } from "./component";
+import { IconContainer } from ".";
 import type { IconContainerProps } from "./types";
 
 export function IconContainerPreview(props: Partial<IconContainerProps>) {

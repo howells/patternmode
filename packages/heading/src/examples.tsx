@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading } from "./component";
+import { Heading } from ".";
 
 export function DefaultExample() {
   return <Heading level={1}>Page Title</Heading>;

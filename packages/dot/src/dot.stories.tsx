@@ -1,3 +1,3 @@
-import { Dot } from "./component";
+import { Dot } from ".";
 
 export const TestDot = () => <Dot />;

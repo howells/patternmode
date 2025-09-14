@@ -3,7 +3,7 @@
 import type { Size } from "@patternmode/config/sizes";
 import { sizes } from "@patternmode/config/sizes";
 import type React from "react";
-import { Input } from "./component";
+import { Input } from "./components/input";
 
 export type InputPreviewProps = {
   placeholder?: string;

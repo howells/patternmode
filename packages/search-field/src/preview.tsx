@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { SearchFieldProps } from "./component";
-import { SearchField } from "./component";
+import type { SearchFieldProps } from ".";
+import { SearchField } from ".";
 
 const sampleItems = [
   {
@@ -66,8 +66,8 @@ export function SearchFieldPreview({
   const handleItemSelect = (item: { label: string }) => {
     setSelectedItem(item.label);
     setValue("");
-    // Reset selection after 2 seconds to show interactive behavior
-    setTimeout(() => setSelectedItem(null), 2000);
+    const RESET_DELAY_MS = 2000;
+    setTimeout(() => setSelectedItem(null), RESET_DELAY_MS);
   };
 
   return (

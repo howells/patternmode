@@ -10,7 +10,7 @@ import {
   MenuBarSubmenuContent,
   MenuBarSubmenuTrigger,
   MenuBarTrigger,
-} from "./component";
+} from ".";
 import {
   ApplicationMenuExample,
   DefaultExample,

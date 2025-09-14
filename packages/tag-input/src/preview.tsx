@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TagInput } from "./component";
+import { TagInput } from ".";
 
 export type TagInputPreviewProps = {
   allowCreate?: boolean;

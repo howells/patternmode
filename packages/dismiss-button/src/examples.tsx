@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2, X } from "lucide-react";
-import { DismissButton } from "./component";
+import { DismissButton } from ".";
 
 export const DefaultExample = () => (
   <DismissButton

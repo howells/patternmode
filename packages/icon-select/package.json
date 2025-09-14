@@ -27,9 +27,9 @@
       "default": "./src/index.ts"
     },
     "./component": {
-      "types": "./src/component.tsx",
-      "import": "./src/component.tsx",
-      "default": "./src/component.tsx"
+      "types": "./src/components/icon-select.tsx",
+      "import": "./src/components/icon-select.tsx",
+      "default": "./src/components/icon-select.tsx"
     },
     "./config": {
       "types": "./src/config.ts",
@@ -70,11 +70,11 @@
     "@patternmode/config": "workspace:*",
     "@patternmode/constants": "workspace:*",
     "@patternmode/icons": "workspace:*",
-    "lucide-react": "^0.543.0"
+    "lucide-react": "^0.544.0"
   },
   "devDependencies": {
     "@patternmode/tsconfig": "workspace:*",
-    "@types/react": "^19.1.12",
+    "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "typescript": "^5.9.2"
   },

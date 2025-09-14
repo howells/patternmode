@@ -9,13 +9,14 @@ import React from "react";
 
 export function ButtonPreview(props: ButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const LOADING_DELAY_MS = 2000;
 
   const handleClick = () => {
     setIsLoading(true);
     // Simulate an async operation
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, LOADING_DELAY_MS);
   };
 
   return (

@@ -7,7 +7,7 @@ import {
   ProgressLabel,
   ProgressTrack,
   ProgressValue,
-} from "./component";
+} from ".";
 import {
   AnimationExample,
   CompositionExample,
