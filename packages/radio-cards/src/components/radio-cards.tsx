@@ -7,6 +7,7 @@ import type {
   SpacingValue,
 } from "@patternmode/utils/spacing";
 import React from "react";
+import { RadioCardsContext } from "../context";
 
 type EventDetails = {
   reason: "none";
@@ -16,16 +17,6 @@ type EventDetails = {
   isCanceled: boolean;
   isPropagationAllowed: boolean;
 };
-
-// Context for RadioCards configuration
-type RadioCardsContextValue = {
-  showIndicator: boolean;
-  selectedValue?: string;
-};
-
-const RadioCardsContext = React.createContext<RadioCardsContextValue | null>(
-  null
-);
 
 type RadioCardsProps = React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & {
   ref?: React.RefObject<React.ElementRef<typeof BaseRadioGroup> | null>;

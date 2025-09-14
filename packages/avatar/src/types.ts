@@ -1,5 +1,6 @@
 import type { Size } from "@patternmode/config/sizes";
 import type * as React from "react";
+import type * as BaseAvatarExport from "@base-ui-components/react/avatar";
 
 export type AvatarProps = {
   src?: string | null;
@@ -15,5 +16,8 @@ export type AvatarProps = {
 } & React.ComponentPropsWithoutRef<"span">;
 
 export type AvatarWithFallbackProps = React.ComponentPropsWithoutRef<"span">;
-export type AvatarImageProps = React.ComponentPropsWithoutRef<"img">;
+type BaseAvatarType = typeof BaseAvatarExport.Avatar;
+export type AvatarImageProps = React.ComponentPropsWithoutRef<
+  BaseAvatarType["Image"]
+>;
 export type AvatarFallbackProps = React.ComponentPropsWithoutRef<"span">;

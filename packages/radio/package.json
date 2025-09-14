@@ -6,9 +6,9 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "types": "./src/components/radio.tsx",
-      "import": "./src/components/radio.tsx",
-      "default": "./src/components/radio.tsx"
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./types": {
       "types": "./src/types.ts",

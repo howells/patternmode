@@ -540,11 +540,7 @@ export default function FormsPage() {
                                   }))
                                 }
                                 placeholder="1000"
-                                ref={
-                                  ref as React.RefObject<React.ElementRef<
-                                    typeof BaseNumberField.Root
-                                  > | null>
-                                }
+                                /* ref is not required for NumberField here */
                                 value={productData.quantity}
                                 {...filteredProps}
                               />
@@ -745,11 +741,7 @@ export default function FormsPage() {
                                   qualityInspection: checked,
                                 }))
                               }
-                              ref={
-                                ref as React.RefObject<React.ElementRef<
-                                  typeof BaseCheckbox.Root
-                                > | null>
-                              }
+                              /* ref not required for Checkbox here */
                               {...props}
                             />
                           )}
@@ -777,11 +769,7 @@ export default function FormsPage() {
                                   certificationRequired: checked,
                                 }))
                               }
-                              ref={
-                                ref as React.RefObject<React.ElementRef<
-                                  typeof BaseCheckbox.Root
-                                > | null>
-                              }
+                              /* ref not required for Checkbox here */
                               {...props}
                             />
                           )}
@@ -862,11 +850,7 @@ export default function FormsPage() {
                                 rushOrder: checked,
                               }))
                             }
-                            ref={
-                              ref as React.RefObject<React.ElementRef<
-                                typeof BaseSwitch.Root
-                              > | null>
-                            }
+                            /* ref not required for Switch here */
                             {...rest}
                           />
                         );
@@ -953,11 +937,7 @@ export default function FormsPage() {
                                 newsletter: checked,
                               }))
                             }
-                            ref={
-                              ref as React.RefObject<React.ElementRef<
-                                typeof BaseSwitch.Root
-                              > | null>
-                            }
+                            /* ref not required for Switch here */
                             {...props}
                           />
                         )}

@@ -4,17 +4,8 @@ import { InputCard } from "@patternmode/input-card";
 import { cx } from "@patternmode/utils/cx";
 import { selectionRing } from "@patternmode/utils/focus-ring";
 import React from "react";
+import { RadioCardsContext } from "../context";
 import { RadioCardIndicator } from "./radio-card-indicator";
-
-// Context type and safe hook (duplicated from radio-cards.tsx for independence)
-type RadioCardsContextValue = {
-  showIndicator: boolean;
-  selectedValue?: string;
-};
-
-const RadioCardsContext = React.createContext<RadioCardsContextValue | null>(
-  null
-);
 
 // Hook that safely handles missing context
 const useRadioCardsSafe = () => {
@@ -95,7 +86,7 @@ const RadioCard = ({
 
   return (
     <Radio.Root
-      className={className}
+      className={className ? `group ${className}` : "group"}
       disabled={disabled}
       name={name}
       nativeButton={false}
