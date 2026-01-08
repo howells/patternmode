@@ -25,11 +25,41 @@ export interface ExperimentManifest {
 const MANIFEST_PATH = path.join(process.cwd(), "data/experiments-manifest.json");
 
 /**
+ * Fisher-Yates shuffle for uniform randomization
+ */
+function shuffle<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+/**
  * Load manifest from filesystem
  */
 export async function loadManifest(): Promise<ExperimentManifest> {
-  const content = await fs.readFile(MANIFEST_PATH, "utf-8");
-  return JSON.parse(content);
+  try {
+    const content = await fs.readFile(MANIFEST_PATH, "utf-8");
+    return JSON.parse(content);
+  } catch (error) {
+    // If file doesn't exist, return empty manifest
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return {
+        experiments: [],
+        stats: {
+          total: 0,
+          approved: 0,
+          byMechanic: {},
+        },
+      };
+    }
+    // For other errors (JSON parse, permissions, etc.), throw with context
+    throw new Error(
+      `Failed to load manifest: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
+  }
 }
 
 /**
@@ -58,7 +88,7 @@ export function selectRandomExperiments(
   experiments: ExperimentMetadata[],
   count: number
 ): ExperimentMetadata[] {
-  const shuffled = [...experiments].sort(() => Math.random() - 0.5);
+  const shuffled = shuffle(experiments);
   return shuffled.slice(0, count);
 }
 
@@ -69,7 +99,7 @@ export function markFeatured(
   experiments: ExperimentMetadata[]
 ): ExperimentMetadata[] {
   const featuredCount = Math.max(1, Math.floor(experiments.length * 0.1));
-  const shuffled = [...experiments].sort(() => Math.random() - 0.5);
+  const shuffled = shuffle(experiments);
 
   return shuffled.map((exp, idx) => ({
     ...exp,
