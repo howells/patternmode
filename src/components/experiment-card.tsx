@@ -16,7 +16,16 @@ export function ExperimentCard({
 }: ExperimentCardProps) {
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${experiment.title} experiment`}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       className={cn(
         "group relative overflow-hidden rounded-lg border border-border bg-card cursor-pointer transition-all hover:border-foreground/20",
         size === "large" ? "col-span-2 row-span-2" : "col-span-1 row-span-1"

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ExperimentCard } from "./experiment-card";
 import { type ExperimentMetadata } from "@/lib/experiments";
@@ -17,6 +17,10 @@ const mockExperiment: ExperimentMetadata = {
 };
 
 describe("ExperimentCard", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders without crashing", () => {
     render(<ExperimentCard experiment={mockExperiment} />);
     const titles = screen.getAllByText("Test Experiment");
@@ -71,11 +75,9 @@ describe("ExperimentCard", () => {
   it("calls onClick handler when card is clicked", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    const { container } = render(
-      <ExperimentCard experiment={mockExperiment} onClick={handleClick} />
-    );
+    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
 
-    const card = container.firstChild as HTMLElement;
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
     await user.click(card);
 
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -130,5 +132,58 @@ describe("ExperimentCard", () => {
     const keys = Array.from(tags).map((tag) => tag.textContent);
     const uniqueKeys = new Set(keys);
     expect(keys.length).toBe(uniqueKeys.size);
+  });
+
+  it("has proper accessibility attributes", () => {
+    render(<ExperimentCard experiment={mockExperiment} />);
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    expect(card.getAttribute("tabIndex")).toBe("0");
+    expect(card.getAttribute("aria-label")).toBe("View Test Experiment experiment");
+  });
+
+  it("triggers onClick when Enter key is pressed", async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    card.focus();
+    await user.keyboard("{Enter}");
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("triggers onClick when Space key is pressed", async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    card.focus();
+    await user.keyboard(" ");
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not trigger onClick for other keys", async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    card.focus();
+    await user.keyboard("{Escape}");
+
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("does not trigger keyboard event when onClick is not provided", async () => {
+    const user = userEvent.setup();
+    render(<ExperimentCard experiment={mockExperiment} />);
+
+    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    card.focus();
+    await expect(user.keyboard("{Enter}")).resolves.not.toThrow();
+    await expect(user.keyboard(" ")).resolves.not.toThrow();
   });
 });
