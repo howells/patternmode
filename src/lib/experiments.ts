@@ -71,7 +71,7 @@ export function markFeatured(
   const featuredCount = Math.max(1, Math.floor(experiments.length * 0.1));
   const shuffled = [...experiments].sort(() => Math.random() - 0.5);
 
-  return experiments.map((exp, idx) => ({
+  return shuffled.map((exp, idx) => ({
     ...exp,
     featured: idx < featuredCount,
   }));
