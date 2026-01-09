@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UI Experiments Library
+
+AI-generated motion component library with Claude Code integration.
+
+## Features
+
+- 🎨 AI-generated UI experiments via Claude Code CLI
+- 🎭 Constrained design system (timezones.digital palette + Apple easings)
+- 📦 Copy-paste ready components
+- 🎪 Bento-style grid layout
+- 🎨 Live theme customization
+- 🛠️ Dev admin panel for generation/review
+
+## Tech Stack
+
+- Next.js 16 + React 19 + TypeScript
+- Tailwind v4 + Shadcn UI
+- Motion (Framer Motion)
+- Vaul drawers
+- Shiki syntax highlighting
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js >= 20
+- pnpm
+- Claude Code CLI (for generation)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit:
+- Public site: http://localhost:3000
+- Admin panel: http://localhost:3000/admin
 
-## Learn More
+### Generate Experiments
 
-To learn more about Next.js, take a look at the following resources:
+1. Go to `/admin`
+2. Select theme or use "Random"
+3. Click "Generate Experiment"
+4. Review in queue
+5. Approve or regenerate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── page.tsx              # Public grid
+│   ├── admin/page.tsx        # Admin panel
+│   ├── actions/              # Server actions
+│   └── api/                  # API routes
+├── components/
+│   ├── experiments/          # Generated experiments
+│   ├── experiment-card.tsx
+│   ├── experiment-drawer.tsx
+│   └── experiment-grid.tsx
+└── lib/
+    ├── motion.ts             # Apple easings
+    ├── experiments.ts        # Manifest utilities
+    └── utils.ts
 
-## Deploy on Vercel
+data/
+└── experiments-manifest.json # Metadata
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+prompts/
+└── experiment-library.md     # Generation prompt
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design System
+
+### Colors
+
+Based on timezones.digital palette, using Shadcn CSS variables:
+
+- `--background`, `--foreground`
+- `--card`, `--card-foreground`
+- `--muted`, `--muted-foreground`
+- `--accent`, `--accent-foreground`
+
+### Easings
+
+Apple's standard easings:
+
+- `standard`: Default easing
+- `deceleration`: Ease out
+- `acceleration`: Ease in
+- `sharp`: Pronounced
+
+## Contributing
+
+This is a personal experiment library. Feel free to fork and adapt!
+
+## License
+
+MIT
