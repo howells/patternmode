@@ -12,11 +12,21 @@ export function ExperimentGrid({
   experiments,
   onExperimentClick,
 }: ExperimentGridProps) {
+  // Sort experiments: featured first, then by date
+  const sortedExperiments = [...experiments].sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return (
+      new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
+    );
+  });
+
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {experiments.map((experiment) => (
+    <div className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {sortedExperiments.map((experiment, index) => (
         <ExperimentCard
           experiment={experiment}
+          index={index}
           key={experiment.id}
           onClick={() => onExperimentClick?.(experiment)}
           size={experiment.featured ? "large" : "normal"}
