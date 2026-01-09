@@ -454,4 +454,88 @@ describe("ExperimentDrawer", () => {
     expect(screen.getByText("Preview of Custom Title")).toBeTruthy();
     expect(screen.getByText("custom-id.tsx")).toBeTruthy();
   });
+
+  // Accessibility tests
+  it("has accessible description for screen readers", () => {
+    render(
+      <ExperimentDrawer
+        experiment={mockExperiment}
+        open={true}
+        onOpenChange={() => {}}
+      />
+    );
+
+    const description = screen.getByText(
+      "Experiment details and code for Test Experiment"
+    );
+    expect(description).toBeTruthy();
+    expect(description.className).toContain("sr-only");
+  });
+
+  it("close button has aria-label", () => {
+    render(
+      <ExperimentDrawer
+        experiment={mockExperiment}
+        open={true}
+        onOpenChange={() => {}}
+      />
+    );
+
+    const closeButton = screen.getByRole("button", { name: "Close drawer" });
+    expect(closeButton).toBeTruthy();
+  });
+
+  it("dependency copy buttons have aria-labels", async () => {
+    render(
+      <ExperimentDrawer
+        experiment={mockExperiment}
+        open={true}
+        onOpenChange={() => {}}
+      />
+    );
+
+    const installTab = screen.getByRole("button", { name: "Install" });
+    fireEvent.click(installTab);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: "Copy motion installation command" })
+      ).toBeTruthy();
+      expect(
+        screen.getByRole("button", {
+          name: "Copy @/lib/utils installation command",
+        })
+      ).toBeTruthy();
+    });
+  });
+
+  it("handles clipboard API errors gracefully", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    mockWriteText.mockRejectedValueOnce(new Error("Clipboard access denied"));
+
+    render(
+      <ExperimentDrawer
+        experiment={mockExperiment}
+        open={true}
+        onOpenChange={() => {}}
+      />
+    );
+
+    const buttons = screen.getAllByRole("button");
+    const copyButton = buttons.find((btn) =>
+      btn.textContent?.includes("Copy Code")
+    );
+    fireEvent.click(copyButton!);
+
+    await waitFor(() => {
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "Failed to copy:",
+        expect.any(Error)
+      );
+    });
+
+    consoleErrorSpy.mockRestore();
+  });
 });

@@ -20,9 +20,13 @@ export function ExperimentDrawer({
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
   };
 
   if (!experiment) return null;
@@ -36,6 +40,9 @@ export function ExperimentDrawer({
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-sm" />
         <Drawer.Content className="fixed right-0 top-0 bottom-0 w-full sm:w-1/2 bg-card flex flex-col outline-none">
+          <Drawer.Description className="sr-only">
+            Experiment details and code for {experiment.title}
+          </Drawer.Description>
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border p-6">
             <div>
@@ -48,6 +55,7 @@ export function ExperimentDrawer({
             </div>
             <button
               onClick={() => onOpenChange(false)}
+              aria-label="Close drawer"
               className="rounded-lg p-2 hover:bg-muted transition-colors"
             >
               <X className="h-5 w-5" />
@@ -142,6 +150,7 @@ export function ExperimentDrawer({
                                 : `pnpm add ${dep}`
                             )
                           }
+                          aria-label={`Copy ${dep} installation command`}
                           className="text-sm text-accent hover:text-accent/80"
                         >
                           <Copy className="h-4 w-4" />
