@@ -1,17 +1,17 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
-  loadManifest,
-  saveManifest,
-  getApprovedExperiments,
-  selectRandomExperiments,
-  markFeatured,
-  updateExperiment,
   addExperiment,
   deleteExperiment,
-  type ExperimentMetadata,
   type ExperimentManifest,
+  type ExperimentMetadata,
+  getApprovedExperiments,
+  loadManifest,
+  markFeatured,
+  saveManifest,
+  selectRandomExperiments,
+  updateExperiment,
 } from "./experiments";
 
 const TEST_MANIFEST_PATH = path.join(

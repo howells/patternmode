@@ -22,7 +22,10 @@ export interface ExperimentManifest {
   };
 }
 
-const MANIFEST_PATH = path.join(process.cwd(), "data/experiments-manifest.json");
+const MANIFEST_PATH = path.join(
+  process.cwd(),
+  "data/experiments-manifest.json"
+);
 
 /**
  * Fisher-Yates shuffle for uniform randomization
@@ -45,7 +48,7 @@ export async function loadManifest(): Promise<ExperimentManifest> {
     return JSON.parse(content);
   } catch (error) {
     // If file doesn't exist, return empty manifest
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       return {
         experiments: [],
         stats: {
@@ -57,7 +60,7 @@ export async function loadManifest(): Promise<ExperimentManifest> {
     }
     // For other errors (JSON parse, permissions, etc.), throw with context
     throw new Error(
-      `Failed to load manifest: ${error instanceof Error ? error.message : 'Unknown error'}`
+      `Failed to load manifest: ${error instanceof Error ? error.message : "Unknown error"}`
     );
   }
 }
@@ -65,12 +68,10 @@ export async function loadManifest(): Promise<ExperimentManifest> {
 /**
  * Save manifest to filesystem
  */
-export async function saveManifest(manifest: ExperimentManifest): Promise<void> {
-  await fs.writeFile(
-    MANIFEST_PATH,
-    JSON.stringify(manifest, null, 2),
-    "utf-8"
-  );
+export async function saveManifest(
+  manifest: ExperimentManifest
+): Promise<void> {
+  await fs.writeFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2), "utf-8");
 }
 
 /**
@@ -181,8 +182,10 @@ export async function deleteExperiment(id: string): Promise<void> {
 
   // Update mechanics count
   for (const mechanic of experiment.mechanics) {
-    manifest.stats.byMechanic[mechanic] =
-      Math.max(0, (manifest.stats.byMechanic[mechanic] || 0) - 1);
+    manifest.stats.byMechanic[mechanic] = Math.max(
+      0,
+      (manifest.stats.byMechanic[mechanic] || 0) - 1
+    );
   }
 
   await saveManifest(manifest);

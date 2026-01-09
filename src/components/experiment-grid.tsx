@@ -1,6 +1,6 @@
 "use client";
 
-import { type ExperimentMetadata } from "@/lib/experiments";
+import type { ExperimentMetadata } from "@/lib/experiments";
 import { ExperimentCard } from "./experiment-card";
 
 interface ExperimentGridProps {
@@ -16,10 +16,10 @@ export function ExperimentGrid({
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {experiments.map((experiment) => (
         <ExperimentCard
-          key={experiment.id}
           experiment={experiment}
-          size={experiment.featured ? "large" : "normal"}
+          key={experiment.id}
           onClick={() => onExperimentClick?.(experiment)}
+          size={experiment.featured ? "large" : "normal"}
         />
       ))}
     </div>

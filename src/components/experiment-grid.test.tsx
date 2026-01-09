@@ -1,8 +1,8 @@
-import { render, screen, cleanup } from "@testing-library/react";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { ExperimentMetadata } from "@/lib/experiments";
 import { ExperimentGrid } from "./experiment-grid";
-import { type ExperimentMetadata } from "@/lib/experiments";
 
 const mockExperiments: ExperimentMetadata[] = [
   {
@@ -48,9 +48,15 @@ describe("ExperimentGrid", () => {
   it("renders all experiments", () => {
     render(<ExperimentGrid experiments={mockExperiments} />);
 
-    const particleCard = screen.getByRole("button", { name: "View Particle System experiment" });
-    const featuredCard = screen.getByRole("button", { name: "View Featured Experiment experiment" });
-    const anotherCard = screen.getByRole("button", { name: "View Another Experiment experiment" });
+    const particleCard = screen.getByRole("button", {
+      name: "View Particle System experiment",
+    });
+    const featuredCard = screen.getByRole("button", {
+      name: "View Featured Experiment experiment",
+    });
+    const anotherCard = screen.getByRole("button", {
+      name: "View Another Experiment experiment",
+    });
 
     expect(particleCard).toBeTruthy();
     expect(featuredCard).toBeTruthy();
@@ -65,7 +71,9 @@ describe("ExperimentGrid", () => {
   });
 
   it("applies responsive grid classes", () => {
-    const { container } = render(<ExperimentGrid experiments={mockExperiments} />);
+    const { container } = render(
+      <ExperimentGrid experiments={mockExperiments} />
+    );
     const grid = container.querySelector(".grid");
 
     expect(grid?.className).toContain("grid-cols-1");
@@ -75,12 +83,16 @@ describe("ExperimentGrid", () => {
   });
 
   it("passes size=large to featured experiments", () => {
-    const { container } = render(<ExperimentGrid experiments={mockExperiments} />);
+    const { container } = render(
+      <ExperimentGrid experiments={mockExperiments} />
+    );
 
     // Featured experiment should have col-span-2 and row-span-2
     const cards = container.querySelectorAll("[role='button']");
     const featuredCard = Array.from(cards).find(
-      card => card.getAttribute("aria-label") === "View Featured Experiment experiment"
+      (card) =>
+        card.getAttribute("aria-label") ===
+        "View Featured Experiment experiment"
     ) as HTMLElement;
 
     expect(featuredCard?.className).toContain("col-span-2");
@@ -88,12 +100,15 @@ describe("ExperimentGrid", () => {
   });
 
   it("passes size=normal to non-featured experiments", () => {
-    const { container } = render(<ExperimentGrid experiments={mockExperiments} />);
+    const { container } = render(
+      <ExperimentGrid experiments={mockExperiments} />
+    );
 
     // Non-featured experiments should have col-span-1 and row-span-1
     const cards = container.querySelectorAll("[role='button']");
     const normalCard = Array.from(cards).find(
-      card => card.getAttribute("aria-label") === "View Particle System experiment"
+      (card) =>
+        card.getAttribute("aria-label") === "View Particle System experiment"
     ) as HTMLElement;
 
     expect(normalCard?.className).toContain("col-span-1");
@@ -110,7 +125,9 @@ describe("ExperimentGrid", () => {
       />
     );
 
-    const particleCard = screen.getByRole("button", { name: "View Particle System experiment" });
+    const particleCard = screen.getByRole("button", {
+      name: "View Particle System experiment",
+    });
     await user.click(particleCard);
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -121,7 +138,9 @@ describe("ExperimentGrid", () => {
     const user = userEvent.setup();
     render(<ExperimentGrid experiments={mockExperiments} />);
 
-    const particleCard = screen.getByRole("button", { name: "View Particle System experiment" });
+    const particleCard = screen.getByRole("button", {
+      name: "View Particle System experiment",
+    });
     await expect(user.click(particleCard)).resolves.not.toThrow();
   });
 
@@ -135,8 +154,12 @@ describe("ExperimentGrid", () => {
       />
     );
 
-    const particleCard = screen.getByRole("button", { name: "View Particle System experiment" });
-    const featuredCard = screen.getByRole("button", { name: "View Featured Experiment experiment" });
+    const particleCard = screen.getByRole("button", {
+      name: "View Particle System experiment",
+    });
+    const featuredCard = screen.getByRole("button", {
+      name: "View Featured Experiment experiment",
+    });
 
     await user.click(particleCard);
     expect(mockOnClick).toHaveBeenCalledWith(mockExperiments[0]);
@@ -148,22 +171,32 @@ describe("ExperimentGrid", () => {
   });
 
   it("renders correct number of experiment cards", () => {
-    const { container } = render(<ExperimentGrid experiments={mockExperiments} />);
+    const { container } = render(
+      <ExperimentGrid experiments={mockExperiments} />
+    );
     const cards = container.querySelectorAll("[role='button']");
     expect(cards.length).toBe(mockExperiments.length);
   });
 
   it("uses experiment id as key", () => {
-    const { container } = render(<ExperimentGrid experiments={mockExperiments} />);
+    const { container } = render(
+      <ExperimentGrid experiments={mockExperiments} />
+    );
     const cards = container.querySelectorAll("[role='button']");
 
     // React keys aren't directly accessible in the DOM, but we can verify
     // that each card renders with unique content
     expect(cards.length).toBe(3);
 
-    const particleCard = screen.getByRole("button", { name: "View Particle System experiment" });
-    const featuredCard = screen.getByRole("button", { name: "View Featured Experiment experiment" });
-    const anotherCard = screen.getByRole("button", { name: "View Another Experiment experiment" });
+    const particleCard = screen.getByRole("button", {
+      name: "View Particle System experiment",
+    });
+    const featuredCard = screen.getByRole("button", {
+      name: "View Featured Experiment experiment",
+    });
+    const anotherCard = screen.getByRole("button", {
+      name: "View Another Experiment experiment",
+    });
 
     expect(particleCard).toBeTruthy();
     expect(featuredCard).toBeTruthy();

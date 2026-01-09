@@ -12,15 +12,13 @@ export default function AdminLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
+      <header className="border-border border-b">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-bold text-foreground">
-              Admin Panel
-            </h1>
+            <h1 className="font-bold text-foreground text-xl">Admin Panel</h1>
             <a
+              className="text-muted-foreground text-sm hover:text-foreground"
               href="/"
-              className="text-sm text-muted-foreground hover:text-foreground"
             >
               ← Back to Public Site
             </a>

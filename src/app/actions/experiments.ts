@@ -5,9 +5,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import {
   addExperiment,
-  updateExperiment,
   deleteExperiment as deleteExperimentFromManifest,
   loadManifest,
+  updateExperiment,
 } from "@/lib/experiments";
 
 /**
@@ -21,7 +21,10 @@ export async function generateExperiment(theme: string) {
 
   try {
     // Read prompt template
-    const promptPath = path.join(process.cwd(), "prompts/experiment-library.md");
+    const promptPath = path.join(
+      process.cwd(),
+      "prompts/experiment-library.md"
+    );
     const promptTemplate = await fs.readFile(promptPath, "utf-8");
     const prompt = promptTemplate.replace("{{THEME}}", theme);
 
@@ -199,16 +202,11 @@ function parseFrontmatter(code: string): ParsedFrontmatter {
     if (titleMatch) title = titleMatch[1].trim();
     if (descMatch) description = descMatch[1].trim();
     if (mechanicsMatch)
-      mechanics = mechanicsMatch[1]
-        .split(",")
-        .map((m) => m.trim());
-    if (depsMatch)
-      dependencies = depsMatch[1]
-        .split(",")
-        .map((d) => d.trim());
+      mechanics = mechanicsMatch[1].split(",").map((m) => m.trim());
+    if (depsMatch) dependencies = depsMatch[1].split(",").map((d) => d.trim());
   }
 
-  if (!title || !description) {
+  if (!(title && description)) {
     throw new Error("Missing required frontmatter fields");
   }
 

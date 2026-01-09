@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { CheckCircle2, Loader2, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
-  generateExperiment,
   approveExperiment,
   deleteExperiment,
+  generateExperiment,
   getAllExperiments,
 } from "@/app/actions/experiments";
-import { type ExperimentMetadata } from "@/lib/experiments";
-import { Loader2, CheckCircle2, X, Trash2 } from "lucide-react";
+import type { ExperimentMetadata } from "@/lib/experiments";
 
 export default function AdminPage() {
   const [generating, setGenerating] = useState(false);
@@ -74,19 +74,22 @@ export default function AdminPage() {
     <div className="space-y-8">
       {/* Generate Section */}
       <section className="rounded-lg border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">
+        <h2 className="mb-4 font-semibold text-foreground text-lg">
           Generate Experiment
         </h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="theme-select" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              className="mb-2 block font-medium text-foreground text-sm"
+              htmlFor="theme-select"
+            >
               Theme
             </label>
             <select
-              id="theme-select"
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
               className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              id="theme-select"
+              onChange={(e) => setTheme(e.target.value)}
+              value={theme}
             >
               <option>Random</option>
               <option>Magnetic Interactions</option>
@@ -98,15 +101,15 @@ export default function AdminPage() {
           </div>
 
           {error && (
-            <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3 text-sm text-red-600">
+            <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-red-600 text-sm">
               {error}
             </div>
           )}
 
           <button
-            onClick={handleGenerate}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 font-medium text-accent-foreground text-sm transition-colors hover:bg-accent/90 disabled:opacity-50"
             disabled={generating}
-            className="w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent/90 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+            onClick={handleGenerate}
           >
             {generating && <Loader2 className="h-4 w-4 animate-spin" />}
             {generating ? "Generating..." : "Generate Experiment"}
@@ -116,31 +119,31 @@ export default function AdminPage() {
 
       {/* Review Queue */}
       <section className="rounded-lg border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">
+        <h2 className="mb-4 font-semibold text-foreground text-lg">
           Review Queue ({pendingExperiments.length})
         </h2>
         {pendingExperiments.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             No experiments pending review
           </p>
         ) : (
           <div className="space-y-4">
             {pendingExperiments.map((exp) => (
               <div
-                key={exp.id}
                 className="rounded-lg border border-border bg-background p-4"
+                key={exp.id}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-medium text-foreground">{exp.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="mt-1 text-muted-foreground text-sm">
                       {exp.description}
                     </p>
-                    <div className="flex flex-wrap gap-1 mt-2">
+                    <div className="mt-2 flex flex-wrap gap-1">
                       {exp.mechanics.map((mechanic) => (
                         <span
+                          className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground text-xs"
                           key={mechanic}
-                          className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground"
                         >
                           {mechanic}
                         </span>
@@ -149,16 +152,16 @@ export default function AdminPage() {
                   </div>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => handleApprove(exp.id)}
                       aria-label={`Approve ${exp.title}`}
                       className="rounded-lg bg-accent p-2 text-accent-foreground hover:bg-accent/90"
+                      onClick={() => handleApprove(exp.id)}
                     >
                       <CheckCircle2 className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleDelete(exp.id)}
                       aria-label={`Delete ${exp.title}`}
                       className="rounded-lg bg-muted p-2 text-muted-foreground hover:bg-red-500 hover:text-white"
+                      onClick={() => handleDelete(exp.id)}
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -172,31 +175,31 @@ export default function AdminPage() {
 
       {/* Approved Library */}
       <section className="rounded-lg border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">
+        <h2 className="mb-4 font-semibold text-foreground text-lg">
           Approved Library ({approvedExperiments.length})
         </h2>
         {approvedExperiments.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             No approved experiments yet
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {approvedExperiments.map((exp) => (
               <div
-                key={exp.id}
                 className="rounded-lg border border-border bg-background p-4"
+                key={exp.id}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-medium text-foreground">{exp.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="mt-1 text-muted-foreground text-sm">
                       {exp.description}
                     </p>
                   </div>
                   <button
-                    onClick={() => handleDelete(exp.id)}
                     aria-label={`Delete ${exp.title}`}
                     className="rounded-lg bg-muted p-2 text-muted-foreground hover:bg-red-500 hover:text-white"
+                    onClick={() => handleDelete(exp.id)}
                   >
                     <X className="h-4 w-4" />
                   </button>

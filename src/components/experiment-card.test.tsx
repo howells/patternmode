@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { ExperimentMetadata } from "@/lib/experiments";
 import { ExperimentCard } from "./experiment-card";
-import { type ExperimentMetadata } from "@/lib/experiments";
 
 const mockExperiment: ExperimentMetadata = {
   id: "test-experiment",
@@ -48,7 +48,9 @@ describe("ExperimentCard", () => {
   });
 
   it("applies normal size classes by default", () => {
-    const { container } = render(<ExperimentCard experiment={mockExperiment} />);
+    const { container } = render(
+      <ExperimentCard experiment={mockExperiment} />
+    );
     const card = container.firstChild as HTMLElement;
     expect(card.className).toContain("col-span-1");
     expect(card.className).toContain("row-span-1");
@@ -75,9 +77,13 @@ describe("ExperimentCard", () => {
   it("calls onClick handler when card is clicked", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+    render(
+      <ExperimentCard experiment={mockExperiment} onClick={handleClick} />
+    );
 
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     await user.click(card);
 
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -85,14 +91,18 @@ describe("ExperimentCard", () => {
 
   it("does not throw error when onClick is not provided", async () => {
     const user = userEvent.setup();
-    const { container } = render(<ExperimentCard experiment={mockExperiment} />);
+    const { container } = render(
+      <ExperimentCard experiment={mockExperiment} />
+    );
 
     const card = container.firstChild as HTMLElement;
     await expect(user.click(card)).resolves.not.toThrow();
   });
 
   it("applies base styling classes", () => {
-    const { container } = render(<ExperimentCard experiment={mockExperiment} />);
+    const { container } = render(
+      <ExperimentCard experiment={mockExperiment} />
+    );
     const card = container.firstChild as HTMLElement;
     expect(card.className).toContain("group");
     expect(card.className).toContain("relative");
@@ -127,7 +137,9 @@ describe("ExperimentCard", () => {
   });
 
   it("renders unique keys for mechanics tags", () => {
-    const { container } = render(<ExperimentCard experiment={mockExperiment} />);
+    const { container } = render(
+      <ExperimentCard experiment={mockExperiment} />
+    );
     const tags = container.querySelectorAll(".rounded-full");
     const keys = Array.from(tags).map((tag) => tag.textContent);
     const uniqueKeys = new Set(keys);
@@ -136,17 +148,25 @@ describe("ExperimentCard", () => {
 
   it("has proper accessibility attributes", () => {
     render(<ExperimentCard experiment={mockExperiment} />);
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     expect(card.getAttribute("tabIndex")).toBe("0");
-    expect(card.getAttribute("aria-label")).toBe("View Test Experiment experiment");
+    expect(card.getAttribute("aria-label")).toBe(
+      "View Test Experiment experiment"
+    );
   });
 
   it("triggers onClick when Enter key is pressed", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+    render(
+      <ExperimentCard experiment={mockExperiment} onClick={handleClick} />
+    );
 
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     card.focus();
     await user.keyboard("{Enter}");
 
@@ -156,9 +176,13 @@ describe("ExperimentCard", () => {
   it("triggers onClick when Space key is pressed", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+    render(
+      <ExperimentCard experiment={mockExperiment} onClick={handleClick} />
+    );
 
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     card.focus();
     await user.keyboard(" ");
 
@@ -168,9 +192,13 @@ describe("ExperimentCard", () => {
   it("does not trigger onClick for other keys", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    render(<ExperimentCard experiment={mockExperiment} onClick={handleClick} />);
+    render(
+      <ExperimentCard experiment={mockExperiment} onClick={handleClick} />
+    );
 
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     card.focus();
     await user.keyboard("{Escape}");
 
@@ -181,7 +209,9 @@ describe("ExperimentCard", () => {
     const user = userEvent.setup();
     render(<ExperimentCard experiment={mockExperiment} />);
 
-    const card = screen.getByRole("button", { name: "View Test Experiment experiment" });
+    const card = screen.getByRole("button", {
+      name: "View Test Experiment experiment",
+    });
     card.focus();
     await expect(user.keyboard("{Enter}")).resolves.not.toThrow();
     await expect(user.keyboard(" ")).resolves.not.toThrow();

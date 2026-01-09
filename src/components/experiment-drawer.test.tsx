@@ -1,7 +1,13 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup, waitFor, fireEvent } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { ExperimentMetadata } from "@/lib/experiments";
 import { ExperimentDrawer } from "./experiment-drawer";
-import { type ExperimentMetadata } from "@/lib/experiments";
 
 const mockExperiment: ExperimentMetadata = {
   id: "test-experiment",
@@ -36,7 +42,7 @@ describe("ExperimentDrawer", () => {
 
   it("returns null when experiment is null", () => {
     const { container } = render(
-      <ExperimentDrawer experiment={null} open={true} onOpenChange={() => {}} />
+      <ExperimentDrawer experiment={null} onOpenChange={() => {}} open={true} />
     );
     expect(container.firstChild).toBeNull();
   });
@@ -45,8 +51,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -58,8 +64,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -70,8 +76,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -84,8 +90,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -96,8 +102,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -112,8 +118,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -130,8 +136,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -148,8 +154,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -159,7 +165,9 @@ describe("ExperimentDrawer", () => {
     await waitFor(() => {
       expect(screen.getByText("Setup Checklist")).toBeTruthy();
       expect(screen.getByText("Install dependencies with pnpm")).toBeTruthy();
-      expect(screen.getByText("Copy lib/motion.ts to your project")).toBeTruthy();
+      expect(
+        screen.getByText("Copy lib/motion.ts to your project")
+      ).toBeTruthy();
       expect(
         screen.getByText("Ensure shadcn CSS variables in globals.css")
       ).toBeTruthy();
@@ -171,8 +179,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={handleOpenChange}
+        open={true}
       />
     );
 
@@ -180,9 +188,11 @@ describe("ExperimentDrawer", () => {
     const buttons = screen.getAllByRole("button");
     const closeButton = buttons.find(
       (btn) =>
-        !btn.textContent?.includes("Code") &&
-        !btn.textContent?.includes("Install") &&
-        !btn.textContent?.includes("Copy")
+        !(
+          btn.textContent?.includes("Code") ||
+          btn.textContent?.includes("Install") ||
+          btn.textContent?.includes("Copy")
+        )
     );
     expect(closeButton).toBeTruthy();
     fireEvent.click(closeButton!);
@@ -194,8 +204,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -215,8 +225,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -235,8 +245,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -262,8 +272,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -295,8 +305,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -334,8 +344,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={experimentWithNoDeps}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -352,8 +362,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -366,8 +376,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -391,8 +401,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -405,8 +415,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -419,8 +429,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={false}
         onOpenChange={() => {}}
+        open={false}
       />
     );
 
@@ -444,8 +454,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={customExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -460,8 +470,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -476,8 +486,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -489,8 +499,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 
@@ -518,8 +528,8 @@ describe("ExperimentDrawer", () => {
     render(
       <ExperimentDrawer
         experiment={mockExperiment}
-        open={true}
         onOpenChange={() => {}}
+        open={true}
       />
     );
 

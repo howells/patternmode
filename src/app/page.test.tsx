@@ -1,8 +1,14 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup, waitFor, fireEvent } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { ExperimentMetadata } from "@/lib/experiments";
 import HomePage from "./page";
-import { type ExperimentMetadata } from "@/lib/experiments";
 
 const mockExperiments: ExperimentMetadata[] = [
   {
@@ -57,7 +63,9 @@ describe("HomePage", () => {
 
     render(<HomePage />);
 
-    expect(screen.getByRole("heading", { name: "UI Experiments" })).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { name: "UI Experiments" })
+    ).toBeTruthy();
     expect(screen.getByText("AI-generated motion components")).toBeTruthy();
   });
 
@@ -133,7 +141,9 @@ describe("HomePage", () => {
         screen.getByRole("button", { name: "View Particle System experiment" })
       ).toBeTruthy();
       expect(
-        screen.getByRole("button", { name: "View Featured Experiment experiment" })
+        screen.getByRole("button", {
+          name: "View Featured Experiment experiment",
+        })
       ).toBeTruthy();
     });
   });
@@ -159,7 +169,9 @@ describe("HomePage", () => {
 
     await waitFor(() => {
       // Drawer should now be open with experiment title (h2 heading in drawer)
-      expect(screen.getByRole("heading", { name: "Particle System" })).toBeTruthy();
+      expect(
+        screen.getByRole("heading", { name: "Particle System" })
+      ).toBeTruthy();
     });
   });
 
@@ -208,7 +220,9 @@ describe("HomePage", () => {
     fireEvent.click(experimentCard);
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Particle System" })).toBeTruthy();
+      expect(
+        screen.getByRole("heading", { name: "Particle System" })
+      ).toBeTruthy();
     });
 
     // Verify close button exists
@@ -246,7 +260,9 @@ describe("HomePage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: "View Featured Experiment experiment" })
+        screen.getByRole("button", {
+          name: "View Featured Experiment experiment",
+        })
       ).toBeTruthy();
     });
 
@@ -258,8 +274,12 @@ describe("HomePage", () => {
 
     await waitFor(() => {
       // Should show Featured Experiment title, not Particle System
-      expect(screen.getByRole("heading", { name: "Featured Experiment" })).toBeTruthy();
-      expect(screen.queryByRole("heading", { name: "Particle System" })).toBeNull();
+      expect(
+        screen.getByRole("heading", { name: "Featured Experiment" })
+      ).toBeTruthy();
+      expect(
+        screen.queryByRole("heading", { name: "Particle System" })
+      ).toBeNull();
     });
   });
 

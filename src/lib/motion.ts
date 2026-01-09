@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { type Transition } from "motion/react";
+import type { Transition } from "motion/react";
+import { useEffect, useState } from "react";
 
 /**
  * Apple's standard easing curves
@@ -25,10 +25,7 @@ export function getEasing(name: EasingName) {
 /**
  * Create transition with named easing
  */
-export function transition(
-  easing: EasingName,
-  duration: number = 0.3
-): Transition {
+export function transition(easing: EasingName, duration = 0.3): Transition {
   return {
     duration,
     ease: easings[easing],
@@ -70,7 +67,8 @@ export function useReducedMotion(): boolean {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    const handler = (e: MediaQueryListEvent) =>
+      setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
 
     return () => mediaQuery.removeEventListener("change", handler);

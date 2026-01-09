@@ -1,10 +1,10 @@
 "use client";
 
-import { ExperimentGrid } from "@/components/experiment-grid";
-import { ExperimentDrawer } from "@/components/experiment-drawer";
-import { type ExperimentMetadata } from "@/lib/experiments";
 import { RefreshCcw, Settings } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ExperimentDrawer } from "@/components/experiment-drawer";
+import { ExperimentGrid } from "@/components/experiment-grid";
+import type { ExperimentMetadata } from "@/lib/experiments";
 
 export default function HomePage() {
   const [experiments, setExperiments] = useState<ExperimentMetadata[]>([]);
@@ -34,26 +34,26 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border">
+      <header className="border-border border-b">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="font-bold text-2xl text-foreground">
                 UI Experiments
               </h1>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="mt-1 text-muted-foreground text-sm">
                 AI-generated motion components
               </p>
             </div>
             <div className="flex items-center gap-2">
               <button
+                className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 font-medium text-sm transition-colors hover:bg-muted"
                 onClick={handleRefresh}
-                className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
               >
                 <RefreshCcw className="h-4 w-4" />
                 Refresh
               </button>
-              <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium hover:bg-muted transition-colors">
+              <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 font-medium text-sm transition-colors hover:bg-muted">
                 <Settings className="h-4 w-4" />
                 Theme
               </button>
@@ -72,8 +72,8 @@ export default function HomePage() {
               </p>
               {process.env.NODE_ENV === "development" && (
                 <a
+                  className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 font-medium text-accent-foreground text-sm hover:bg-accent/90"
                   href="/admin"
-                  className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent/90"
                 >
                   Go to Admin Panel
                 </a>
@@ -91,8 +91,8 @@ export default function HomePage() {
       {/* Drawer */}
       <ExperimentDrawer
         experiment={selectedExperiment}
-        open={drawerOpen}
         onOpenChange={setDrawerOpen}
+        open={drawerOpen}
       />
     </main>
   );
