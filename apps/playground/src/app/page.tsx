@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
 import {
@@ -8,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@patternmode/ui/components/card";
+import { Checkbox } from "@patternmode/ui/components/checkbox";
 import {
   Dialog,
   DialogClose,
@@ -18,8 +20,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@patternmode/ui/components/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@patternmode/ui/components/dropdown-menu";
 import { Input } from "@patternmode/ui/components/input";
 import { Label } from "@patternmode/ui/components/label";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@patternmode/ui/components/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@patternmode/ui/components/select";
 import { Separator } from "@patternmode/ui/components/separator";
 import { Switch } from "@patternmode/ui/components/switch";
 import {
@@ -29,6 +56,11 @@ import {
   TabsTrigger,
 } from "@patternmode/ui/components/tabs";
 import { Textarea } from "@patternmode/ui/components/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@patternmode/ui/components/tooltip";
 
 const operatingPrinciples = [
   "Single upstream for active projects",
@@ -54,6 +86,16 @@ const primitives = [
   {
     name: "Card",
     summary: "Neutral surfaces for dashboards, docs, and review states.",
+  },
+  {
+    name: "Avatar + Selection",
+    summary:
+      "Identity, choice, and option primitives with the same density rules.",
+  },
+  {
+    name: "Select + Menus",
+    summary:
+      "Compound navigation controls built with package-owned review surfaces.",
   },
 ];
 
@@ -249,6 +291,144 @@ export default function Page() {
                 </Dialog>
               </TabsContent>
             </Tabs>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Core breadth</Badge>
+            <CardTitle>Identity and choice primitives</CardTitle>
+            <CardDescription>
+              Materia’s structure only matters if the library also carries a
+              credible baseline surface.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <div className="flex items-center gap-3">
+              <Avatar size="sm">
+                <AvatarFallback>PM</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarFallback>UI</AvatarFallback>
+              </Avatar>
+              <Avatar size="lg">
+                <AvatarFallback>DX</AvatarFallback>
+              </Avatar>
+              <div className="ml-2">
+                <p className="font-medium text-body text-foreground">
+                  Shared identity stays quiet
+                </p>
+                <p className="text-body text-muted-foreground">
+                  Fallbacks, radii, and density follow the same house style.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-3 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/55 p-4">
+              <label
+                className="flex items-start gap-3"
+                htmlFor="playground-checkbox"
+              >
+                <Checkbox defaultChecked id="playground-checkbox" />
+                <div className="grid gap-1">
+                  <Label
+                    className="text-foreground"
+                    htmlFor="playground-checkbox"
+                  >
+                    Package-owned stories are required
+                  </Label>
+                  <p className="text-body text-muted-foreground">
+                    Review surfaces belong with the component source, not only
+                    in the app shell.
+                  </p>
+                </div>
+              </label>
+
+              <RadioGroup defaultValue="upstream">
+                <RadioGroupItem
+                  description="Stable controls with broad reuse potential."
+                  value="upstream"
+                >
+                  Promote upstream
+                </RadioGroupItem>
+                <RadioGroupItem
+                  description="Workflow-specific logic should stay in the app."
+                  value="local"
+                >
+                  Keep app-local
+                </RadioGroupItem>
+              </RadioGroup>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Compound controls
+            </p>
+            <CardTitle>Menus, selects, and hints share the same tone</CardTitle>
+            <CardDescription>
+              Heavier primitives should still inherit the same surface language:
+              panel backgrounds, quiet borders, and tight focus treatment.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <div className="grid gap-2">
+              <Label htmlFor="playground-select">Preset</Label>
+              <Select defaultValue="default">
+                <SelectTrigger id="playground-select">
+                  <SelectValue placeholder="Choose a preset" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectLabel>House presets</SelectLabel>
+                  <SelectItem value="default">Patternmode Default</SelectItem>
+                  <SelectItem value="quiet">Quiet Editorial</SelectItem>
+                  <SelectItem value="bright">Brighter Accent Lift</SelectItem>
+                  <SelectSeparator />
+                  <SelectLabel>Boundary</SelectLabel>
+                  <SelectItem value="local">App-local wrapper</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/55 p-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary">Open review menu</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Patternmode</DropdownMenuLabel>
+                  <DropdownMenuItem>Open package docs</DropdownMenuItem>
+                  <DropdownMenuCheckboxItem checked>
+                    Track package stories
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      Theme preset
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem>Default</DropdownMenuItem>
+                      <DropdownMenuItem>Quiet Editorial</DropdownMenuItem>
+                      <DropdownMenuItem>Accent Lift</DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost">Why this batch?</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  Materia’s breadth starts with the control primitives teams use
+                  every day, not only with hero components.
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </CardContent>
         </Card>
       </section>
