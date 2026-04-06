@@ -1,0 +1,9 @@
+@import "@patternmode/tailwind-config";
+
+@source "./**/*.{ts,tsx,mdx}";
+
+@layer base {
+  #storybook-root {
+    min-height: 100vh;
+  }
+}

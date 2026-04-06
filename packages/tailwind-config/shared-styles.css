@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@source "../ui/src/**/*.{ts,tsx}";
+
+@theme {
+  --font-sans: "Inter", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --font-display: "Inter Tight", "Inter", "SF Pro Display", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", monospace;
+
+  --color-background: oklch(0.985 0.004 286);
+  --color-foreground: oklch(0.19 0.015 286);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.19 0.015 286);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.19 0.015 286);
+  --color-primary: oklch(0.27 0.03 262);
+  --color-primary-foreground: oklch(0.98 0.004 286);
+  --color-secondary: oklch(0.95 0.006 286);
+  --color-secondary-foreground: oklch(0.24 0.015 286);
+  --color-muted: oklch(0.95 0.006 286);
+  --color-muted-foreground: oklch(0.5 0.014 286);
+  --color-accent: oklch(0.72 0.11 217);
+  --color-accent-foreground: oklch(0.16 0.016 286);
+  --color-border: oklch(0.9 0.01 286);
+  --color-input: oklch(1 0 0);
+  --color-ring: oklch(0.68 0.12 217);
+  --color-destructive: oklch(0.61 0.21 25);
+  --color-destructive-foreground: oklch(0.98 0.004 286);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.85rem;
+  --radius-lg: 1.15rem;
+  --radius-xl: 1.5rem;
+
+  --shadow-2xs: 0 1px 0 0 rgb(15 23 42 / 0.05);
+  --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.06);
+  --shadow-sm: 0 10px 30px -14px rgb(15 23 42 / 0.18);
+  --shadow-md: 0 20px 50px -20px rgb(15 23 42 / 0.18);
+  --shadow-lg: 0 30px 80px -28px rgb(15 23 42 / 0.24);
+
+  --tracking-tight: -0.03em;
+  --tracking-display: -0.045em;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.08em;
+  --text-body: 0.95rem;
+  --text-body--line-height: 1.5rem;
+  --text-body--letter-spacing: -0.01em;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.625rem;
+  --text-body-lg--letter-spacing: -0.015em;
+  --text-title-sm: 1.5rem;
+  --text-title-sm--line-height: 1.9rem;
+  --text-title-sm--letter-spacing: var(--tracking-tight);
+  --text-title: 2.5rem;
+  --text-title--line-height: 2.8rem;
+  --text-title--letter-spacing: var(--tracking-display);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    min-height: 100vh;
+    background-image:
+      radial-gradient(
+        circle at top left,
+        rgb(14 165 233 / 0.08),
+        transparent 32%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 0.85),
+        rgb(245 247 250 / 0.98)
+      );
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgb(14 165 233 / 0.18);
+  }
+}

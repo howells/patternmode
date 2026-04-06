@@ -1,0 +1,14 @@
+{
+  "extends": "@patternmode/typescript-config/bundler-dom-app",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["node"]
+  },
+  "include": [
+    ".storybook/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../packages/**/*.ts",
+    "../../packages/**/*.tsx"
+  ]
+}

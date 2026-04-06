@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Patternmode React Library",
+  "extends": "./bundler-dom-library-monorepo.json",
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}

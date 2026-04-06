@@ -1,42 +1,32 @@
 {
   "name": "patternmode",
-  "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.23.0",
   "scripts": {
-    "dev": "next dev --turbopack --port 3000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "biome check src --write",
-    "format": "biome format src --write",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest"
-  },
-  "dependencies": {
-    "@base-ui/react": "^1.0.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.562.0",
-    "motion": "^12.24.11",
-    "next": "16.1.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "shiki": "^3.21.0",
-    "tailwind-merge": "^3.4.0",
-    "vaul": "^1.1.2"
+    "dev": "turbo run dev --filter=@patternmode/playground",
+    "dev:all": "turbo run dev --parallel",
+    "dev:playground": "pnpm --filter @patternmode/playground dev",
+    "dev:storybook": "pnpm --filter @patternmode/storybook dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "biome format --write .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "check": "pnpm typecheck && pnpm lint && pnpm test",
+    "check:affected": "turbo run build lint typecheck test --affected",
+    "clean": "turbo run clean --continue=always && turbo clean",
+    "ui:add": "pnpm dlx shadcn@latest add",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.11",
-    "@tailwindcss/postcss": "4",
-    "@testing-library/react": "^16.3.1",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@vitejs/plugin-react": "^5.1.2",
-    "jsdom": "^27.4.0",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "ultracite": "7.0.10",
-    "vitest": "^4.0.16"
+    "@biomejs/biome": "2.4.8",
+    "husky": "9.1.7",
+    "lint-staged": "^16.2.7",
+    "turbo": "2.9.3",
+    "typescript": "^5.9.3",
+    "ultracite": "7.3.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,jsonc,css,md}": "biome format --write --no-errors-on-unmatched"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "extends": "@patternmode/typescript-config/nextjs",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+}

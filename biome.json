@@ -1,0 +1,20 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
+  "files": {
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "*.json",
+      "*.md",
+      "!**/.next/**",
+      "!**/dist/**",
+      "!**/storybook-static/**"
+    ]
+  },
+  "root": true
+}
