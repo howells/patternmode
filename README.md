@@ -14,6 +14,13 @@ packages/
   ui/
 ```
 
+## What Exists
+
+- `@patternmode/tailwind-config` owns the house-style tokens, semantic colors, typography, radii, shadows, and shared CSS entrypoint
+- `@patternmode/ui` currently ships the first canonical primitive set: `Button`, `Badge`, `Input`, `Textarea`, and `Card`
+- `apps/storybook` is the visual contract for exported user-facing primitives
+- `apps/playground` is the integration sandbox and system showcase
+
 ## Principles
 
 - `@patternmode/ui` launches with primitives and reusable building blocks only
