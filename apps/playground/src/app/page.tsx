@@ -8,7 +8,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@patternmode/ui/components/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@patternmode/ui/components/dialog";
 import { Input } from "@patternmode/ui/components/input";
+import { Label } from "@patternmode/ui/components/label";
+import { Separator } from "@patternmode/ui/components/separator";
+import { Switch } from "@patternmode/ui/components/switch";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@patternmode/ui/components/tabs";
 import { Textarea } from "@patternmode/ui/components/textarea";
 
 const operatingPrinciples = [
@@ -126,25 +145,28 @@ export default function Page() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <label
-                className="text-label text-muted-foreground uppercase"
-                htmlFor="theme-name"
-              >
-                Theme preset
-              </label>
+              <Label htmlFor="theme-name">Theme preset</Label>
               <Input defaultValue="Patternmode Default" id="theme-name" />
             </div>
             <div className="grid gap-2">
-              <label
-                className="text-label text-muted-foreground uppercase"
-                htmlFor="theme-notes"
-              >
-                Variation notes
-              </label>
+              <Label htmlFor="theme-notes">Variation notes</Label>
               <Textarea
                 defaultValue="Accent can shift slightly brighter, but radius, density, and the core neutral backbone stay recognizably Patternmode."
                 id="theme-notes"
               />
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between gap-4 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/70 px-4 py-3">
+              <div className="space-y-1">
+                <Label className="text-foreground" htmlFor="accent-toggle">
+                  Enable accent treatment
+                </Label>
+                <p className="text-body text-muted-foreground">
+                  Token shifts should change tone without changing component
+                  markup.
+                </p>
+              </div>
+              <Switch defaultChecked id="accent-toggle" />
             </div>
           </CardContent>
           <CardFooter>
@@ -164,27 +186,69 @@ export default function Page() {
               still pushing product-specific concerns back into the app.
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-[calc(var(--radius-lg)-4px)] border border-border/70 bg-panel-muted px-4 py-4">
-              <p className="text-label text-muted-foreground uppercase">
-                Shared upstream
-              </p>
-              <ul className="mt-3 grid gap-2 text-body text-foreground/85">
-                <li>Buttons, fields, and surfaces</li>
-                <li>Semantic tokens and motion defaults</li>
-                <li>Storybook-backed review coverage</li>
-              </ul>
-            </div>
-            <div className="rounded-[calc(var(--radius-lg)-4px)] border border-border/70 bg-panel-muted px-4 py-4">
-              <p className="text-label text-muted-foreground uppercase">
-                App-local ownership
-              </p>
-              <ul className="mt-3 grid gap-2 text-body text-foreground/85">
-                <li>Workflow-heavy compositions</li>
-                <li>Product data and domain behavior</li>
-                <li>Visual directions that break house style</li>
-              </ul>
-            </div>
+          <CardContent>
+            <Tabs className="w-full" defaultValue="upstream">
+              <TabsList>
+                <TabsTrigger value="upstream">Shared upstream</TabsTrigger>
+                <TabsTrigger value="local">App-local ownership</TabsTrigger>
+                <TabsTrigger value="review">Review loop</TabsTrigger>
+              </TabsList>
+              <TabsContent
+                className="grid gap-2 text-body text-foreground/85"
+                value="upstream"
+              >
+                <p>
+                  Buttons, fields, surfaces, overlays, and navigation
+                  primitives.
+                </p>
+                <p>
+                  Semantic tokens, motion defaults, and shared utility layers.
+                </p>
+                <p>
+                  Storybook-backed review coverage from the UI package itself.
+                </p>
+              </TabsContent>
+              <TabsContent
+                className="grid gap-2 text-body text-foreground/85"
+                value="local"
+              >
+                <p>Workflow-heavy compositions and product data bindings.</p>
+                <p>Wrappers that encode domain ownership or business logic.</p>
+                <p>Visual directions that no longer fit the house style.</p>
+              </TabsContent>
+              <TabsContent
+                className="grid gap-4 text-body text-foreground/85"
+                value="review"
+              >
+                <p>
+                  Patternmode now follows the Materia direction more closely:
+                  package-owned stories, broader primitive coverage, and
+                  explicit support layers inside `packages/ui`.
+                </p>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="accent">Open review checkpoint</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Promote the next primitive?</DialogTitle>
+                      <DialogDescription>
+                        Only shared behaviors with a clean API and stable visual
+                        language should move upstream.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button variant="ghost">Hold locally</Button>
+                      </DialogClose>
+                      <DialogClose asChild>
+                        <Button>Promote upstream</Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </section>
