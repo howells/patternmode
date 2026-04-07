@@ -428,8 +428,8 @@
     border-color: var(--color-border);
   }
   body {
+    font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv11";
     font-kerning: normal;
-    /* Type rendering optimizations */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-synthesis: none;
