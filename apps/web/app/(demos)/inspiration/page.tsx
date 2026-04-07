@@ -304,7 +304,7 @@ function CollectionCard({ collection }: { collection: Collection }) {
     <VStack className="min-w-[260px] max-w-[300px] cursor-pointer" gap="sm">
       {/* Thumbnail row */}
       <Flex className="h-40 overflow-hidden rounded-lg" gap="xs">
-        {collection.thumbnails.map((color, i) => (
+        {collection.thumbnails.map((color, _i) => (
           <div
             key={color}
             className="flex-1 rounded-sm transition-transform duration-200 hover:scale-[1.02]"
