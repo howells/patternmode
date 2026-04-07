@@ -1,3 +1,14 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@patternmode/ui/components/accordion";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@patternmode/ui/components/alert";
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
@@ -32,8 +43,19 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@patternmode/ui/components/dropdown-menu";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@patternmode/ui/components/hover-card";
 import { Input } from "@patternmode/ui/components/input";
 import { Label } from "@patternmode/ui/components/label";
+import {
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+} from "@patternmode/ui/components/popover";
 import {
   RadioGroup,
   RadioGroupItem,
@@ -56,6 +78,11 @@ import {
   TabsTrigger,
 } from "@patternmode/ui/components/tabs";
 import { Textarea } from "@patternmode/ui/components/textarea";
+import { Toggle } from "@patternmode/ui/components/toggle";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@patternmode/ui/components/toggle-group";
 import {
   Tooltip,
   TooltipContent,
@@ -96,6 +123,11 @@ const primitives = [
     name: "Select + Menus",
     summary:
       "Compound navigation controls built with package-owned review surfaces.",
+  },
+  {
+    name: "Disclosure + Overlays",
+    summary:
+      "Accordions, alerts, popovers, and toggles with the same neutral backbone.",
   },
 ];
 
@@ -429,6 +461,114 @@ export default function Page() {
                 </TooltipContent>
               </Tooltip>
             </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Next breadth</Badge>
+            <CardTitle>Disclosure, overlays, and mode controls</CardTitle>
+            <CardDescription>
+              This batch rounds out the baseline control layer so the library
+              can support richer product surfaces without falling back to
+              app-local primitives too early.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <div className="flex flex-wrap gap-3">
+              <Toggle defaultPressed>Compact mode</Toggle>
+              <Toggle>Review emphasis</Toggle>
+              <ToggleGroup defaultValue="shared" type="single">
+                <ToggleGroupItem value="shared">Shared</ToggleGroupItem>
+                <ToggleGroupItem value="local">Local</ToggleGroupItem>
+                <ToggleGroupItem value="review">Review</ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+
+            <Alert variant="accent">
+              <AlertTitle>Patternmode is tracking Materia’s breadth</AlertTitle>
+              <AlertDescription>
+                The package now supports a broader shared control set instead of
+                stopping at a token demo and a few hero primitives.
+              </AlertDescription>
+            </Alert>
+
+            <Accordion collapsible defaultValue="item-1" type="single">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>
+                  Why keep implementing breadth first?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Because a shared library only becomes genuinely useful once it
+                  covers the baseline product interaction set.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>What still stays app-local?</AccordionTrigger>
+                <AccordionContent>
+                  Domain workflows, data-heavy orchestration, and any visual
+                  direction that no longer fits the house style.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Context surfaces
+            </p>
+            <CardTitle>Short-form overlays should stay disciplined</CardTitle>
+            <CardDescription>
+              These components should provide context and lightweight actions,
+              not become hidden replacement screens.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap items-center gap-3">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary">Open popover</Button>
+              </PopoverTrigger>
+              <PopoverContent className="grid gap-2">
+                <p className="font-medium text-foreground">Review note</p>
+                <p className="text-body text-muted-foreground">
+                  Use popovers for compact editing and contextual review, not
+                  for multi-step flows.
+                </p>
+                <PopoverArrow />
+              </PopoverContent>
+            </Popover>
+
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <button
+                  className="rounded-[calc(var(--radius-md)-2px)] bg-secondary/70 px-3 py-2 text-body text-foreground"
+                  type="button"
+                >
+                  Hover reviewer
+                </button>
+              </HoverCardTrigger>
+              <HoverCardContent className="grid gap-2">
+                <Badge variant="neutral">Reviewer</Badge>
+                <p className="text-body text-muted-foreground">
+                  Checks whether a component is broadly reusable enough to move
+                  into the upstream package.
+                </p>
+              </HoverCardContent>
+            </HoverCard>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost">Overlay rule</Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                If the interaction needs deep navigation or long-form editing,
+                it probably wants a dialog or a full screen.
+              </TooltipContent>
+            </Tooltip>
           </CardContent>
         </Card>
       </section>
