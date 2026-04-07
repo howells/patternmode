@@ -10,7 +10,7 @@ type TabsIndicatorVariant = "pill" | "line";
 
 const indicatorStyles: Record<TabsIndicatorVariant, string> = {
   pill: cn("absolute inset-0 rounded-full", SEGMENTED_INDICATOR_CLASS),
-  line: "absolute inset-x-0 bottom-0 h-0.5 bg-primary dark:bg-gray-100",
+  line: "absolute inset-x-0 bottom-0 h-px bg-primary dark:bg-gray-100",
 };
 
 /**
