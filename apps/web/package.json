@@ -1,0 +1,33 @@
+{
+  "name": "@patternmode/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 32000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "howells-biome check . --write --unsafe ",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@patternmode/motion": "workspace:*",
+    "@patternmode/tailwind-config": "workspace:*",
+    "@patternmode/transition": "workspace:*",
+    "@patternmode/ui": "workspace:*",
+    "lucide-react": "^0.577.0",
+    "fumadocs-core": "^16.7.10",
+    "fumadocs-mdx": "^14.2.11",
+    "fumadocs-typescript": "^4.0.5",
+    "fumadocs-ui": "^16.7.10",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@howells/typescript-config": "^0.1.0",
+    "@types/node": "^20.19.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "typescript": "^5.9.3"
+  }
+}

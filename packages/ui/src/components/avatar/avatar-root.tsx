@@ -1,78 +1,107 @@
 "use client";
 
-import { Fallback, Image, Root } from "@radix-ui/react-avatar";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
-
+import { cn } from "@patternmode/ui/utils/cn";
+import { Root as AvatarRootPrimitive } from "@radix-ui/react-avatar";
+import type { ComponentProps } from "react";
+import type { Radius } from "../../lib/radius";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
 
-export const avatarSizeClasses: Record<ComponentSize, string> = {
-  sm: "size-9 text-[0.78rem]",
-  base: "size-11 text-[0.9rem]",
-  lg: "size-14 text-[1rem]",
+/**
+ * Avatar-specific extended sizes beyond ComponentSize.
+ * Use for large display avatars (e.g., brand cards, profiles).
+ */
+export type AvatarExtendedSize = "4xl" | "5xl" | "6xl";
+
+/**
+ * All available Avatar sizes (standard + extended).
+ */
+export type AvatarSize = ComponentSize | AvatarExtendedSize;
+
+/**
+ * AVATAR_SIZE_CLASS class name map for Avatar.
+ * Import from "@patternmode/ui/components/avatar".
+ * Built on Radix UI primitives for accessible behavior.
+ */
+export const AVATAR_SIZE_CLASS: Record<AvatarSize, string> = {
+  "2xs": "size-5",
+  xs: "size-6",
+  sm: "size-7",
+  base: "size-8",
+  lg: "size-10",
+  xl: "size-12",
+  "2xl": "size-14",
+  "3xl": "size-16",
+  "4xl": "size-20",
+  "5xl": "size-24",
+  "6xl": "size-32",
 };
 
-export interface AvatarProps extends ComponentPropsWithoutRef<typeof Root> {
-  size?: ComponentSize;
-}
+/**
+ * AVATAR_SIZE_PX pixel size map for Avatar.
+ * Import from "@patternmode/ui/components/avatar".
+ * Built on Radix UI primitives for accessible behavior.
+ */
+export const AVATAR_SIZE_PX: Record<AvatarSize, number> = {
+  "2xs": 20,
+  xs: 24,
+  sm: 28,
+  base: 32,
+  lg: 40,
+  xl: 48,
+  "2xl": 56,
+  "3xl": 64,
+  "4xl": 80,
+  "5xl": 96,
+  "6xl": 128,
+};
 
-const Avatar = forwardRef<ComponentRef<typeof Root>, AvatarProps>(
-  ({ className, size = "base", ...props }, ref) => {
-    return (
-      <Root
-        className={cn(
-          "relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-border/70 bg-secondary/75 text-secondary-foreground shadow-2xs",
-          avatarSizeClasses[size],
-          className
-        )}
-        data-size={size}
-        data-slot="avatar"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
+const RADIUS_CLASS: Record<Radius, string> = {
+  full: "rounded-full",
+  square: "rounded-none",
+  rounded: "rounded-md",
+};
 
-Avatar.displayName = Root.displayName;
+export type AvatarRootProps = ComponentProps<typeof AvatarRootPrimitive> & {
+  /** Component size */
+  size?: AvatarSize;
+  /** Border radius. Defaults to "full" (circular). */
+  radius?: Radius;
+  /** With ring */
+  withRing?: boolean;
+  /** Ring color */
+  ringColor?: string;
+};
 
-const AvatarImage = forwardRef<
-  ComponentRef<typeof Image>,
-  ComponentPropsWithoutRef<typeof Image>
->(({ className, ...props }, ref) => {
+/**
+ * AvatarRoot UI component.
+ * Import from "@patternmode/ui/components/avatar".
+ * Built on Radix UI primitives for accessible behavior.
+ */
+export function AvatarRoot({
+  className,
+  size = "base",
+  radius = "full",
+  withRing = false,
+  ringColor,
+  ...props
+}: AvatarRootProps) {
   return (
-    <Image
-      className={cn("aspect-square size-full object-cover", className)}
-      data-slot="avatar-image"
-      ref={ref}
-      {...props}
-    />
-  );
-});
-
-AvatarImage.displayName = Image.displayName;
-
-const AvatarFallback = forwardRef<
-  ComponentRef<typeof Fallback>,
-  ComponentPropsWithoutRef<typeof Fallback>
->(({ className, ...props }, ref) => {
-  return (
-    <Fallback
+    <AvatarRootPrimitive
       className={cn(
-        "flex size-full items-center justify-center bg-secondary font-medium uppercase tracking-[0.08em]",
-        className
+        "relative flex shrink-0 overflow-hidden bg-muted",
+        AVATAR_SIZE_CLASS[size],
+        RADIUS_CLASS[radius],
+        withRing && [
+          "ring-2 ring-offset-2 ring-offset-background",
+          ringColor || "ring-primary",
+        ],
+        className,
       )}
-      data-slot="avatar-fallback"
-      ref={ref}
+      data-component="avatar"
+      data-radius={radius}
+      data-size={size}
+      data-slot="avatar"
       {...props}
     />
   );
-});
-
-AvatarFallback.displayName = Fallback.displayName;
-
-export { Avatar, AvatarFallback, AvatarImage };
+}

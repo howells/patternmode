@@ -1,9 +1,7 @@
-@import "@patternmode/tailwind-config";
+/* Import Inter from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
 
-@source "./**/*.{ts,tsx,mdx}";
-
-@layer base {
-  #storybook-root {
-    min-height: 100vh;
-  }
+/* Apply Inter font to Storybook stories preview */
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
 }

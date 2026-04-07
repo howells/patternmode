@@ -1,2 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Skeleton, type SkeletonProps } from "./skeleton/skeleton-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Skeleton } from "./skeleton/skeleton-root";

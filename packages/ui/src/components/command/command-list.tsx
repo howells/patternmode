@@ -1,31 +1,28 @@
-"use client";
-
+import { cn } from "@patternmode/ui/utils/cn";
 import { Command as CommandPrimitive } from "cmdk";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-const CommandList = forwardRef<
-  ComponentRef<typeof CommandPrimitive.List>,
-  ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => {
+/**
+ * CommandList scrollable container for Command items/groups.
+ * Import from "@patternmode/ui/components/command".
+ */
+export const CommandList = function CommandList({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.List> & {
+  ref?: React.RefObject<React.ElementRef<typeof CommandPrimitive.List> | null>;
+}) {
   return (
     <CommandPrimitive.List
       className={cn(
-        "max-h-[20rem] overflow-y-auto overflow-x-hidden p-2",
-        className
+        "max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden",
+        className,
       )}
+      data-component="command-list"
       data-slot="command-list"
       ref={ref}
       {...props}
     />
   );
-});
-
-CommandList.displayName = "CommandList";
-
-export { CommandList };
+};

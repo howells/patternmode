@@ -1,12 +1,12 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { AlertDialogAction } from "./alert-dialog/alert-dialog-action";
+export { AlertDialogCancel } from "./alert-dialog/alert-dialog-cancel";
 export { AlertDialogContent } from "./alert-dialog/alert-dialog-content";
-export {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "./alert-dialog/alert-dialog-root";
+export { AlertDialogDescription } from "./alert-dialog/alert-dialog-description";
+export { AlertDialogFooter } from "./alert-dialog/alert-dialog-footer";
+export { AlertDialogHeader } from "./alert-dialog/alert-dialog-header";
+export { AlertDialogOverlay } from "./alert-dialog/alert-dialog-overlay";
+export { AlertDialogPortal } from "./alert-dialog/alert-dialog-portal";
+export { AlertDialog } from "./alert-dialog/alert-dialog-root";
+export { AlertDialogTitle } from "./alert-dialog/alert-dialog-title";
+export { AlertDialogTrigger } from "./alert-dialog/alert-dialog-trigger";

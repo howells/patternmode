@@ -1,30 +1,24 @@
-"use client";
+import { cn } from "@patternmode/ui/utils/cn";
+import { Overlay as SheetOverlayPrimitive } from "@radix-ui/react-dialog";
+import type { ComponentProps } from "react";
 
-import { Overlay } from "@radix-ui/react-dialog";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
-
-import { cn } from "../../utils/cn";
-
-const SheetOverlay = forwardRef<
-  ComponentRef<typeof Overlay>,
-  ComponentPropsWithoutRef<typeof Overlay>
->(({ className, ...props }, ref) => {
+/**
+ * SheetOverlay renders the scrim behind the sheet.
+ * Import from "@patternmode/ui/components/sheet".
+ */
+export function SheetOverlay({
+  className,
+  ...props
+}: ComponentProps<typeof SheetOverlayPrimitive>) {
   return (
-    <Overlay
+    <SheetOverlayPrimitive
       className={cn(
-        "fixed inset-0 z-50 bg-foreground/30 backdrop-blur-sm",
-        className
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 glass-scrim fixed inset-0 z-50 data-[state=closed]:animate-out data-[state=open]:animate-in",
+        className,
       )}
-      ref={ref}
+      data-component="sheet-overlay"
+      data-slot="sheet-overlay"
       {...props}
     />
   );
-});
-
-SheetOverlay.displayName = Overlay.displayName;
-
-export { SheetOverlay };
+}

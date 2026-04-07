@@ -1,58 +1,121 @@
 "use client";
 
+import { cn } from "@patternmode/ui/utils/cn";
 import { Root } from "@radix-ui/react-toggle";
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
-
+import type { LucideIcon } from "lucide-react";
+import type * as React from "react";
+import { Children } from "react";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
-import { focusRing } from "../../utils/focus-ring";
+import { Icon } from "../icon";
 
+/** Toggle sizes — subset of the shared ComponentSize scale. */
 export type ToggleSize = Extract<ComponentSize, "sm" | "base" | "lg">;
 
-export const toggleVariants = cva(
-  [
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[calc(var(--radius-md)-2px)] border border-border/80 bg-white/88",
-    "font-medium text-foreground shadow-2xs transition-all duration-200 ease-[var(--ease-snappy)]",
-    "hover:-translate-y-0.5 hover:bg-white data-[state=on]:border-accent/25 data-[state=on]:bg-accent/10 data-[state=on]:text-foreground",
-    "disabled:pointer-events-none disabled:opacity-45",
-    ...focusRing(),
-  ],
+/**
+ * toggleVariants variant class helper for Toggle.
+ * Import from "@patternmode/ui/components/toggle".
+ * Built on Radix UI primitives for accessible behavior.
+ * Uses variant-based styling via class-variance-authority.
+ */
+const toggleVariants = cva(
+  "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap border border-border bg-white font-medium text-foreground text-sm shadow-xs outline-none transition-colors hover:border-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:border-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
+      variant: {
+        default: "data-[state=on]:bg-gray-100",
+        secondary: "data-[state=on]:bg-background",
+      },
       size: {
-        sm: "h-9 px-3 text-[0.85rem]",
-        base: "h-10 px-3.5 text-[0.92rem]",
-        lg: "h-11 px-4 text-[0.98rem]",
+        sm: "h-8 gap-2 px-3 [&_svg:not([class*='size-'])]:size-4",
+        base: "h-9 gap-2 px-3 [&_svg:not([class*='size-'])]:size-4",
+        lg: "h-10 gap-2 px-3 [&_svg:not([class*='size-'])]:size-4",
+      },
+      shape: {
+        square: "rounded-lg",
+        round: "rounded-full",
       },
     },
+    compoundVariants: [
+      { size: "sm", class: "data-[icon-only]:size-8 data-[icon-only]:p-0" },
+      {
+        size: "base",
+        class: "data-[icon-only]:size-9 data-[icon-only]:p-0",
+      },
+      { size: "lg", class: "data-[icon-only]:size-10 data-[icon-only]:p-0" },
+    ],
     defaultVariants: {
+      variant: "default",
       size: "base",
+      shape: "square",
     },
-  }
+  },
 );
 
-export interface ToggleProps
-  extends ComponentPropsWithoutRef<typeof Root>,
-    VariantProps<typeof toggleVariants> {}
+/**
+ * Toggle UI component.
+ * Import from "@patternmode/ui/components/toggle".
+ * Built on Radix UI primitives for accessible behavior.
+ * Uses variant-based styling via class-variance-authority.
+ */
+function Toggle({
+  className,
+  variant,
+  size,
+  shape,
+  icon,
+  iconPlacement = "start",
+  children,
+  ...props
+}: React.ComponentProps<typeof Root> &
+  VariantProps<typeof toggleVariants> & {
+    icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    iconPlacement?: "start" | "end";
+  }) {
+  const hasChildren = Children.count(children) > 0;
+  const isIconOnly = icon && !hasChildren;
 
-const Toggle = forwardRef<ComponentRef<typeof Root>, ToggleProps>(
-  ({ className, size, ...props }, ref) => {
-    return (
-      <Root
-        className={cn(toggleVariants({ className, size }))}
-        data-slot="toggle"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
+  // Icon element - let CSS handle sizing via [&_svg]:size-4
+  const iconElement = icon ? <Icon icon={icon} /> : null;
 
-Toggle.displayName = Root.displayName;
+  const renderContent = () => {
+    // Icon-only toggle
+    if (isIconOnly) {
+      return iconElement;
+    }
 
-export { Toggle };
+    // Labeled toggle with icon
+    if (icon && hasChildren) {
+      if (iconPlacement === "start") {
+        return (
+          <>
+            {iconElement}
+            {children}
+          </>
+        );
+      }
+      return (
+        <>
+          {children}
+          {iconElement}
+        </>
+      );
+    }
+
+    return children;
+  };
+
+  return (
+    <Root
+      className={cn(toggleVariants({ variant, size, shape, className }))}
+      data-component="toggle"
+      data-icon-only={isIconOnly ? "true" : undefined}
+      data-slot="toggle"
+      {...props}
+    >
+      {renderContent()}
+    </Root>
+  );
+}
+
+export { Toggle, toggleVariants };

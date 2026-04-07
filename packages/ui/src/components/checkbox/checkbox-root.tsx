@@ -1,110 +1,97 @@
 "use client";
 
-import { Indicator, Root } from "@radix-ui/react-checkbox";
+import { cn } from "@patternmode/ui/utils/cn";
+import { focusRing } from "@patternmode/ui/utils/focus-ring";
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
-
+import { Check, Minus } from "lucide-react";
+import { Checkbox as CheckboxPrimitive } from "radix-ui";
+import type * as React from "react";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
-import { focusRing } from "../../utils/focus-ring";
 
-function CheckIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M3.5 8.5 6.4 11.4 12.5 5.3"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function MinusIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 8h8"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
+// Define the variants for the Checkbox using cva.
 const checkboxVariants = cva(
-  [
-    "group peer inline-flex shrink-0 items-center justify-center rounded-[calc(var(--radius-sm)-2px)] border border-border/80 bg-white text-transparent shadow-2xs",
-    "transition-[background-color,border-color,color,box-shadow] duration-200 ease-[var(--ease-snappy)]",
-    "disabled:cursor-not-allowed disabled:opacity-45",
-    "data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground",
-    "data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent data-[state=indeterminate]:text-accent-foreground",
-    "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
-    ...focusRing(),
-  ],
+  cn(
+    "group peer shrink-0 rounded-md border border-border bg-input shadow-xs ring-offset-background disabled:cursor-not-allowed disabled:opacity-50",
+    focusRing,
+    "aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 dark:aria-invalid:border-destructive dark:aria-invalid:ring-destructive/20",
+    "[[data-invalid=true]_&]:border-destructive/60 [[data-invalid=true]_&]:ring-destructive/10 dark:[[data-invalid=true]_&]:border-destructive dark:[[data-invalid=true]_&]:ring-destructive/20",
+    "data-[state=checked]:border-primary data-[state=indeterminate]:border-primary data-[state=checked]:bg-primary data-[state=indeterminate]:bg-primary data-[state=checked]:text-primary-foreground data-[state=indeterminate]:text-primary-foreground",
+  ),
   {
     variants: {
       size: {
-        sm: "size-4 [&_[data-slot=checkbox-indicator]]:size-2.5",
-        base: "size-5 [&_[data-slot=checkbox-indicator]]:size-3",
-        lg: "size-6 [&_[data-slot=checkbox-indicator]]:size-3.5",
+        "2xs": "size-3.5 rounded-sm [&_svg]:size-2.5",
+        xs: "size-4 rounded-sm [&_svg]:size-2.5",
+        sm: "size-4.5 [&_svg]:size-3",
+        base: "size-5 [&_svg]:size-3.5",
+        lg: "size-5.5 [&_svg]:size-4",
+        xl: "size-6 [&_svg]:size-4.5",
+        "2xl": "size-7 [&_svg]:size-5",
+        "3xl": "size-8 [&_svg]:size-6",
       } satisfies Record<ComponentSize, string>,
     },
     defaultVariants: {
-      size: "base",
+      size: "sm",
     },
-  }
+  },
 );
 
-export interface CheckboxProps
-  extends ComponentPropsWithoutRef<typeof Root>,
-    VariantProps<typeof checkboxVariants> {
-  indeterminate?: boolean;
-}
+export type CheckboxProps = React.ComponentProps<
+  typeof CheckboxPrimitive.Root
+> &
+  VariantProps<typeof checkboxVariants> & {
+    /**
+     * When true, displays an indeterminate state (dash icon).
+     * This is syntactic sugar for checked="indeterminate".
+     */
+    indeterminate?: boolean;
+  };
 
-const Checkbox = forwardRef<ComponentRef<typeof Root>, CheckboxProps>(
-  ({ checked, className, indeterminate, size, ...props }, ref) => {
-    const resolvedChecked = indeterminate ? "indeterminate" : checked;
+/**
+ * Renders a checkbox input with support for checked, unchecked, and indeterminate states.
+ *
+ * @param props - The checkbox props
+ * @param props.size - Checkbox size using shared ComponentSize scale. Defaults to "sm".
+ * @param props.checked - Controlled checked state. Use with onCheckedChange.
+ * @param props.indeterminate - Show indeterminate state. Overrides checked when true.
+ * @param props.defaultChecked - Uncontrolled default checked state.
+ * @param props.onCheckedChange - Callback when checked state changes.
+ * @param props.disabled - Disable the checkbox. Defaults to false.
+ * @param props.className - Additional CSS classes to apply.
+ * @param props... - All other Radix UI Checkbox.Root props.
+ *
+ * @example
+ * ```tsx
+ * <Checkbox checked={checked} onCheckedChange={setChecked} />
+ * <Checkbox defaultChecked size="lg" />
+ * <Checkbox indeterminate />
+ * ```
+ */
+function Checkbox({
+  className,
+  size,
+  checked,
+  indeterminate,
+  ...props
+}: CheckboxProps) {
+  // When indeterminate is true, use "indeterminate" as the checked value
+  const checkedValue = indeterminate ? "indeterminate" : checked;
 
-    return (
-      <Root
-        checked={resolvedChecked}
-        className={cn(checkboxVariants({ className, size }))}
-        data-slot="checkbox"
-        ref={ref}
-        {...props}
+  return (
+    <CheckboxPrimitive.Root
+      checked={checkedValue}
+      className={cn(checkboxVariants({ size }), className)}
+      data-slot="checkbox"
+      {...props}
+    >
+      <CheckboxPrimitive.Indicator
+        className={cn("flex items-center justify-center text-current")}
       >
-        <Indicator
-          className="flex items-center justify-center"
-          data-slot="checkbox-indicator"
-        >
-          {indeterminate ? <MinusIcon /> : <CheckIcon />}
-        </Indicator>
-      </Root>
-    );
-  }
-);
-
-Checkbox.displayName = Root.displayName;
+        <Check className="group-data-[state=indeterminate]:hidden" />
+        <Minus className="hidden group-data-[state=indeterminate]:block" />
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
+  );
+}
 
 export { Checkbox };

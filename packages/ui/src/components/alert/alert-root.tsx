@@ -1,79 +1,83 @@
+import { cn } from "@patternmode/ui/utils/cn";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, type HTMLAttributes } from "react";
-
-import { cn } from "../../utils/cn";
+import type * as React from "react";
 
 const alertVariants = cva(
-  [
-    "relative w-full rounded-[var(--radius-xl)] border px-4 py-3 shadow-2xs",
-    "grid gap-1.5",
-  ],
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm shadow-xs has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       variant: {
-        default: "border-border/80 bg-panel/92 text-panel-foreground",
-        accent: "border-accent/25 bg-accent/8 text-foreground",
-        destructive: "border-destructive/25 bg-destructive/8 text-foreground",
+        default: "bg-card text-card-foreground",
+        destructive:
+          "bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 [&>svg]:text-current",
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
-export interface AlertProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {}
-
-const Alert = forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant, ...props }, ref) => {
-    return (
-      <div
-        className={cn(alertVariants({ className, variant }))}
-        data-slot="alert"
-        ref={ref}
-        role="alert"
-        {...props}
-      />
-    );
-  }
-);
-
-Alert.displayName = "Alert";
-
-const AlertTitle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        className={cn("font-medium text-[0.96rem] text-foreground", className)}
-        data-slot="alert-title"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
-AlertTitle.displayName = "AlertTitle";
-
-const AlertDescription = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+/**
+ * Alert UI component.
+ * Import from "@patternmode/ui/components/alert".
+ * Uses variant-based styling via class-variance-authority.
+ */
+function Alert({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return (
     <div
-      className={cn(
-        "text-body text-muted-foreground [&_p]:leading-relaxed",
-        className
-      )}
-      data-slot="alert-description"
-      ref={ref}
+      className={cn(alertVariants({ variant }), className)}
+      data-component="alert"
+      data-slot="alert"
+      role="alert"
       {...props}
     />
   );
-});
+}
 
-AlertDescription.displayName = "AlertDescription";
+/**
+ * AlertTitle UI component.
+ * Import from "@patternmode/ui/components/alert".
+ * Uses variant-based styling via class-variance-authority.
+ */
+function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+        className,
+      )}
+      data-component="alert-title"
+      data-slot="alert-title"
+      {...props}
+    />
+  );
+}
+
+/**
+ * AlertDescription UI component.
+ * Import from "@patternmode/ui/components/alert".
+ * Uses variant-based styling via class-variance-authority.
+ */
+function AlertDescription({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed",
+        className,
+      )}
+      data-component="alert-description"
+      data-slot="alert-description"
+      {...props}
+    />
+  );
+}
 
 export { Alert, AlertDescription, AlertTitle };

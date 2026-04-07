@@ -1,35 +1,33 @@
 "use client";
 
+import { cn } from "@patternmode/ui/utils/cn";
 import { Command as CommandPrimitive } from "cmdk";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-const CommandItem = forwardRef<
-  ComponentRef<typeof CommandPrimitive.Item>,
-  ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
->(({ className, children, ...props }, ref) => {
+/**
+ * CommandItem composes cmdk's Item with custom styling.
+ * Import from "@patternmode/ui/components/command".
+ */
+export function CommandItem({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
       className={cn(
-        "relative flex cursor-default select-none items-center gap-2 rounded-[calc(var(--radius-md)-4px)] px-3 py-2 text-body outline-none transition-colors duration-150 ease-[var(--ease-snappy)]",
-        "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-45",
-        "data-[selected=true]:bg-secondary/85 data-[selected=true]:text-foreground",
-        className
+        "relative flex w-full cursor-default select-none items-center gap-2 rounded-sm px-2.5 py-1.5 text-sm outline-none",
+        "hover:bg-accent hover:text-accent-foreground",
+        "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+        "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground",
+        "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        className,
       )}
+      data-component="command-item"
       data-slot="command-item"
-      ref={ref}
       {...props}
     >
       {children}
     </CommandPrimitive.Item>
   );
-});
-
-CommandItem.displayName = "CommandItem";
-
-export { CommandItem };
+}

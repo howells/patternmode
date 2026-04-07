@@ -1,7 +1,6 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   NativeSelect,
   NativeSelectOptGroup,
   NativeSelectOption,
-  type NativeSelectProps,
 } from "./native-select/native-select-root";

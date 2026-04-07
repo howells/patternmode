@@ -1,0 +1,20 @@
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export {
+  DataGridTable,
+  DataGridTableBase,
+  DataGridTableBody,
+  DataGridTableBodyRow,
+  DataGridTableBodyRowCell,
+  DataGridTableBodyRowExpandded,
+  DataGridTableBodyRowSkeleton,
+  DataGridTableBodyRowSkeletonCell,
+  DataGridTableEmpty,
+  DataGridTableHead,
+  DataGridTableHeadRow,
+  DataGridTableHeadRowCell,
+  DataGridTableHeadRowCellResize,
+  DataGridTableLoader,
+  DataGridTableRowSelect,
+  DataGridTableRowSelectAll,
+  DataGridTableRowSpacer,
+} from "./data-grid-table/data-grid-table-root";

@@ -1,31 +1,19 @@
-"use client";
-
 import { Command as CommandPrimitive } from "cmdk";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-const CommandEmpty = forwardRef<
-  ComponentRef<typeof CommandPrimitive.Empty>,
-  ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->(({ className, ...props }, ref) => {
+/**
+ * CommandEmpty empty-state row for a CommandList.
+ * Import from "@patternmode/ui/components/command".
+ */
+export function CommandEmpty(
+  props: React.ComponentProps<typeof CommandPrimitive.Empty>,
+) {
   return (
     <CommandPrimitive.Empty
-      className={cn(
-        "py-8 text-center text-body text-muted-foreground",
-        className
-      )}
+      className="py-6 text-center text-sm"
+      data-component="command-empty"
       data-slot="command-empty"
-      ref={ref}
       {...props}
     />
   );
-});
-
-CommandEmpty.displayName = "CommandEmpty";
-
-export { CommandEmpty };
+}

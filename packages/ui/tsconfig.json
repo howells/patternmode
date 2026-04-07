@@ -1,5 +1,5 @@
 {
-  "extends": "@patternmode/typescript-config/react-library",
+  "extends": "@howells/typescript-config/react-library",
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": []
 }

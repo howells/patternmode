@@ -1,2 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Textarea, type TextareaProps } from "./textarea/textarea-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Textarea } from "./textarea/textarea-root";

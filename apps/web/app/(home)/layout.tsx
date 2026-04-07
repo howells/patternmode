@@ -1,0 +1,108 @@
+import { Container } from "@patternmode/ui/components/container";
+import { Flex } from "@patternmode/ui/components/flex";
+import { Text } from "@patternmode/ui/components/text";
+import Link from "next/link";
+import type { ReactNode } from "react";
+
+function GitHubIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="size-5"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
+    </svg>
+  );
+}
+
+export default function HomeLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-svh flex-col">
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
+        <Container size="3xl">
+          <Flex
+            align="center"
+            className="h-14"
+            gap="xl"
+            justify="space-between"
+          >
+            <Link
+              className="font-display text-[1.05rem] font-medium tracking-tight text-foreground transition-colors hover:text-foreground/80"
+              href="/"
+            >
+              PatternMode
+            </Link>
+
+            <Flex align="center" gap="lg">
+              <Link
+                className="text-body text-muted-foreground transition-colors hover:text-foreground"
+                href="/docs"
+              >
+                Docs
+              </Link>
+              <Link
+                className="text-body text-muted-foreground transition-colors hover:text-foreground"
+                href="/components"
+              >
+                Components
+              </Link>
+              <a
+                className="text-muted-foreground transition-colors hover:text-foreground"
+                href="https://github.com/patternmode/patternmode"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <GitHubIcon />
+              </a>
+            </Flex>
+          </Flex>
+        </Container>
+      </header>
+
+      <main className="flex-1">{children}</main>
+
+      <footer className="border-t border-border/60 bg-surface-subtle">
+        <Container size="3xl">
+          <Flex
+            align="center"
+            className="py-8"
+            justify="space-between"
+            direction={{ base: "column", md: "row" }}
+            gap="lg"
+          >
+            <Text variant="muted" size="sm">
+              Built with PatternMode
+            </Text>
+
+            <Flex align="center" gap="xl">
+              <Link
+                className="text-body text-muted-foreground transition-colors hover:text-foreground"
+                href="/docs"
+              >
+                Docs
+              </Link>
+              <a
+                className="text-body text-muted-foreground transition-colors hover:text-foreground"
+                href="https://storybook.patternmode.dev"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Storybook
+              </a>
+              <a
+                className="text-body text-muted-foreground transition-colors hover:text-foreground"
+                href="https://github.com/patternmode/patternmode"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
+              </a>
+            </Flex>
+          </Flex>
+        </Container>
+      </footer>
+    </div>
+  );
+}

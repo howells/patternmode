@@ -1,5 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Patternmode Bundler DOM Library Monorepo",
-  "extends": "@total-typescript/tsconfig/bundler/dom/library-monorepo"
-}

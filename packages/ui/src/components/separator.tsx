@@ -1,2 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Separator } from "./separator/separator-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Separator, type SeparatorVariant } from "./separator/separator-root";

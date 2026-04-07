@@ -1,29 +1,45 @@
+import { cn } from "@patternmode/ui/utils/cn";
+import { LoaderCircleIcon, type LucideProps } from "lucide-react";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
 
-const SPINNER_SIZE_CLASSES: Record<ComponentSize, string> = {
-  sm: "size-4",
-  base: "size-5",
-  lg: "size-6",
+const SPINNER_PX: Record<ComponentSize, number> = {
+  "2xs": 12,
+  xs: 16,
+  sm: 18,
+  base: 20,
+  lg: 24,
+  xl: 28,
+  "2xl": 32,
+  "3xl": 40,
 };
 
-export interface SpinnerProps {
-  className?: string;
+export type SpinnerProps = LucideProps & {
+  /** Component size */
   size?: ComponentSize;
-}
+};
 
-function Spinner({ className, size = "base" }: SpinnerProps) {
+/**
+ * Loading spinner component. Animated circular indicator for async operations.
+ *
+ * @param props - The spinner props
+ * @param props.size - Spinner size. Options: "2xs", "xs", "sm", "base" (default, 20px), "lg", "xl", "2xl", "3xl".
+ * @param props.className - Additional CSS classes to apply.
+ * @param props... - All other Lucide Icon props.
+ *
+ * @example
+ * ```tsx
+ * <Spinner size="base" />
+ * <Spinner size="lg" className="text-primary" />
+ * ```
+ */
+export function Spinner({ size = "base", className, ...props }: SpinnerProps) {
+  const px = SPINNER_PX[size];
   return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "inline-flex animate-spin rounded-full border-2 border-current/25 border-t-current",
-        SPINNER_SIZE_CLASSES[size],
-        className
-      )}
-      data-slot="spinner"
+    <LoaderCircleIcon
+      className={cn("animate-spin", className)}
+      data-component="spinner"
+      size={px}
+      {...props}
     />
   );
 }
-
-export { Spinner };

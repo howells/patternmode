@@ -1,39 +1,51 @@
-import type { ComponentPropsWithoutRef } from "react";
+import { cn } from "@patternmode/ui/utils/cn";
+import type * as React from "react";
+import {
+  getResponsiveClasses,
+  isResponsiveValue,
+  type ResponsiveValue,
+} from "../../lib/responsive";
+import type { ComponentSize } from "../../lib/size";
 
-import { cn } from "../../utils/cn";
+const SIZE_CLASSES: Record<ComponentSize, string> = {
+  "2xs": "text-paragraph-sm", // 14/20
+  xs: "text-paragraph-lg", // 18/24
+  sm: "text-subheading", // 20/28, -1%
+  base: "text-subheading-lg", // 24/32, -1%
+  lg: "text-heading-sm", // 30/36, -1%
+  xl: "text-heading", // 36/44, -1%
+  "2xl": "text-heading-lg", // 48/56, -2%
+  "3xl": "text-title", // 60/72, -2%
+};
 
-const HEADING_SIZE_CLASSES = {
-  sm: "text-title-sm",
-  base: "text-title",
-  lg: "text-title-lg",
-} as const;
+type HeadingLevel = "1" | "2" | "3" | "4" | "5" | "6";
 
-export interface HeadingProps
-  extends Omit<ComponentPropsWithoutRef<"h2">, "size"> {
-  level?: 1 | 2 | 3 | 4 | 5 | 6;
-  size?: keyof typeof HEADING_SIZE_CLASSES;
-}
+type HeadingProps = Omit<React.ComponentProps<"h1">, "size"> & {
+  level?: HeadingLevel;
+  /** Visual size — accepts a static size or responsive object like `{ base: "lg", md: "2xl" }` */
+  size?: ResponsiveValue<ComponentSize>;
+};
 
-function Heading({
-  className,
-  level = 2,
-  size = "base",
-  ...props
-}: HeadingProps) {
-  const Tag = `h${level}` as const;
+/**
+ * Renders a semantic heading element with configurable level and size.
+ * Size accepts responsive values: `size={{ base: "lg", md: "2xl" }}`.
+ */
+function Heading({ level = "2", size, className, ...props }: HeadingProps) {
+  const Tag = `h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const effectiveSize = size ?? "sm";
+
+  const sizeClasses = isResponsiveValue(effectiveSize)
+    ? getResponsiveClasses(effectiveSize, SIZE_CLASSES)
+    : [SIZE_CLASSES[effectiveSize as ComponentSize]];
 
   return (
     <Tag
-      className={cn(
-        "text-balance font-display font-semibold text-foreground",
-        HEADING_SIZE_CLASSES[size],
-        className
-      )}
+      className={cn("trim-both font-semibold", ...sizeClasses, className)}
+      data-component="heading"
       data-level={level}
-      data-slot="heading"
       {...props}
     />
   );
 }
 
-export { Heading };
+export { Heading, SIZE_CLASSES as headingSizeClasses };

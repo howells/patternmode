@@ -1,35 +1,51 @@
 "use client";
 
-import type { HTMLAttributes } from "react";
+import { cn } from "@patternmode/ui/utils/cn";
+import type { VariantProps } from "class-variance-authority";
+import type * as React from "react";
 import { useMemo } from "react";
-
-import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
+import type { Radius } from "../../lib/radius";
 import { InputGroupContext } from "./input-group-context";
+import type { InputGroupSize } from "./input-group-types";
+import { inputGroupVariants } from "./input-group-variants";
 
-const sizeClasses: Record<ComponentSize, string> = {
-  sm: "min-h-10",
-  base: "min-h-11",
-  lg: "min-h-12",
-};
+export type InputGroupProps = React.ComponentProps<"div"> &
+  VariantProps<typeof inputGroupVariants> & {
+    /** Size of the input group and its children. */
+    size?: InputGroupSize;
+    /** Border radius style. */
+    radius?: Radius;
+    /** Show error styling. */
+    hasError?: boolean;
+    /** Disable the input group and its children. */
+    disabled?: boolean;
+  };
 
-export interface InputGroupProps extends HTMLAttributes<HTMLDivElement> {
-  disabled?: boolean;
-  hasError?: boolean;
-  size?: ComponentSize;
-}
-
-function InputGroup({
-  children,
+/**
+ * Composition container for inputs with addons, icons, and buttons.
+ * Import from "@patternmode/ui/components/input-group".
+ *
+ * @example
+ * ```tsx
+ * <InputGroup size="base">
+ *   <InputGroupIcon icon={Search} />
+ *   <InputGroupInput placeholder="Search..." />
+ *   <InputGroupButton icon={X} onClick={clear} />
+ * </InputGroup>
+ * ```
+ */
+export function InputGroup({
   className,
-  disabled = false,
-  hasError = false,
   size = "base",
+  radius = "rounded",
+  hasError = false,
+  disabled = false,
+  children,
   ...props
 }: InputGroupProps) {
   const contextValue = useMemo(
-    () => ({ disabled, hasError, size }),
-    [disabled, hasError, size]
+    () => ({ size, radius, disabled, hasError }),
+    [size, radius, disabled, hasError],
   );
 
   return (
@@ -37,14 +53,25 @@ function InputGroup({
       <div
         aria-invalid={hasError || undefined}
         className={cn(
-          "flex w-full items-stretch overflow-hidden rounded-[calc(var(--radius-md)-2px)] border border-border/80 bg-input shadow-2xs",
-          "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-4 has-[[data-slot=input-group-control]:focus-visible]:ring-ring/15",
-          hasError && "border-destructive ring-4 ring-destructive/15",
-          disabled && "cursor-not-allowed opacity-55",
-          sizeClasses[size],
-          className
+          inputGroupVariants({ size, radius }),
+          // Clip addon backgrounds to border radius
+          "overflow-hidden",
+          // Focus ring when any input-group-control inside is focused
+          "has-[[data-slot=input-group-control]:focus-visible]:ring-2",
+          "has-[[data-slot=input-group-control]:focus-visible]:ring-gray-400/50",
+          "has-[[data-slot=input-group-control]:focus-visible]:border-border",
+          // Error styling
+          hasError && [
+            "ring-[3px]",
+            "border-destructive",
+            "ring-destructive/20",
+            "dark:ring-destructive/40",
+          ],
+          // Disabled styling
+          disabled && "cursor-not-allowed opacity-50",
+          className,
         )}
-        data-size={size}
+        data-component="input-group"
         data-slot="input-group"
         {...props}
       >
@@ -53,5 +80,3 @@ function InputGroup({
     </InputGroupContext.Provider>
   );
 }
-
-export { InputGroup };

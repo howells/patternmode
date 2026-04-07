@@ -1,7 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export {
-  Alert,
-  AlertDescription,
-  type AlertProps,
-  AlertTitle,
-} from "./alert/alert-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Alert, AlertDescription, AlertTitle } from "./alert/alert-root";

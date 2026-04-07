@@ -1,48 +1,81 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import "@patternmode/tailwind-config/shared-styles.css";
+import { CheckboxField, type CheckboxFieldProps } from "./checkbox-field-root";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
-import { CheckboxField } from "./checkbox-field-root";
-
-const meta = {
-  title: "Forms/Checkbox Field",
+const meta: Meta<CheckboxFieldProps> = {
+  title: "CheckboxField",
   component: CheckboxField,
+  argTypes: {
+    // Content
+    label: {
+      control: "text",
+      description: "Label text for the checkbox",
+    },
+    description: {
+      control: "text",
+      description: "Helper text displayed below the label",
+    },
+
+    // Visual
+    size: {
+      control: "radio",
+      options: ["xs", "sm"],
+      description: "Checkbox size",
+    },
+
+    // States
+    disabled: {
+      control: "boolean",
+      description: "Disable the checkbox and label",
+    },
+    defaultChecked: {
+      control: "boolean",
+      description: "Default checked state (uncontrolled)",
+    },
+    required: {
+      control: "boolean",
+      description: "Mark as required for form validation",
+    },
+    indeterminate: {
+      control: "boolean",
+      description: "Show indeterminate state",
+    },
+
+    // Hidden
+    className: { table: { disable: true } },
+    checkboxClassName: { table: { disable: true } },
+    labelClassName: { table: { disable: true } },
+    descriptionClassName: { table: { disable: true } },
+    id: { table: { disable: true } },
+    checked: { table: { disable: true } },
+    onCheckedChange: { table: { disable: true } },
+  },
   args: {
-    defaultChecked: true,
-    description:
-      "Enable package-owned story coverage for each upstream primitive.",
-    label: "Track component stories",
+    label: "Email me product updates",
+    description: "This is helper text that stays associated with the checkbox.",
+    size: "xs",
+    disabled: false,
+    defaultChecked: false,
   },
   parameters: {
-    layout: "centered",
+    builder: {
+      category: "forms",
+      icon: "check-square",
+    },
+    layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Checkbox with integrated label and optional description. Handles accessibility automatically.",
+      },
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof CheckboxField>;
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base interactive story with all controls.
+ */
 export const Base: Story = {};
-
-export const ReviewSurface: Story = {
-  render: () => (
-    <Card className="w-[30rem]">
-      <CardHeader>
-        <CardTitle>
-          Checkbox fields should preserve readable hierarchy
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <CheckboxField
-          defaultChecked
-          description="Required for review confidence and regression visibility."
-          label="Package-owned Storybook stories"
-        />
-        <CheckboxField
-          description="Use app-local wrappers only when the API boundary is genuinely product-specific."
-          label="Keep workflow wrappers downstream"
-        />
-      </CardContent>
-    </Card>
-  ),
-};

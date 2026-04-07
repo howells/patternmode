@@ -1,2 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Radio, type RadioProps } from "./radio/radio-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Radio, type RadioProps, radioVariants } from "./radio/radio-root";

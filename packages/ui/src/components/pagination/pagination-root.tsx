@@ -1,141 +1,114 @@
+import { cn } from "@patternmode/ui/utils/cn";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
 import { Button } from "../button";
 import { getPageRange } from "./pagination-utils";
 
-function ChevronLeftIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="m10 4-4 4 4 4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="m6 4 4 4-4 4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
-
-export interface PaginationProps {
+interface PaginationProps {
+  /** Additional className for the nav wrapper */
   className?: string;
+  /** Disable all controls */
   disabled?: boolean;
+  /** Page button to render in loading state */
+  loadingPage?: number;
+  /** Called when page changes */
   onPageChange: (page: number) => void;
+  /** Current page (1-indexed) */
   page: number;
-  size?: ComponentSize;
+  /** Button size (default: "sm") */
+  size?: Extract<ComponentSize, "xs" | "sm" | "base">;
+  /** Total number of pages */
   totalPages: number;
 }
 
+/**
+ * Standalone pagination component.
+ * Works with any data source — not coupled to react-table.
+ *
+ * @example
+ * ```tsx
+ * <Pagination page={2} totalPages={13} onPageChange={setPage} />
+ * ```
+ */
 function Pagination({
-  className,
-  disabled = false,
-  onPageChange,
   page,
-  size = "sm",
   totalPages,
+  onPageChange,
+  loadingPage,
+  size = "sm",
+  disabled = false,
+  className,
 }: PaginationProps) {
-  const currentPage = Math.min(Math.max(page, 1), Math.max(totalPages, 1));
-  const pageRange = getPageRange(currentPage, totalPages);
-  const isFirstPage = currentPage <= 1;
-  const isLastPage = currentPage >= totalPages;
+  const pages = getPageRange(page, totalPages);
+  const isFirstPage = page <= 1;
+  const isLastPage = page >= totalPages;
 
   let ellipsisCount = 0;
+  const pageElements = pages.map((item) => {
+    if (item === "ellipsis") {
+      ellipsisCount += 1;
+      return (
+        <span
+          aria-hidden="true"
+          className="flex min-w-8 items-center justify-center text-muted-foreground text-sm"
+          key={`ellipsis-${ellipsisCount}`}
+        >
+          &hellip;
+        </span>
+      );
+    }
+
+    const isActive = item === page;
+    const isLoadingPage = item === loadingPage;
+    return (
+      <Button
+        appearance={isActive ? "input" : undefined}
+        aria-current={isActive ? "page" : undefined}
+        aria-label={`Go to page ${item}`}
+        disabled={disabled}
+        key={item}
+        loading={isLoadingPage}
+        onClick={() => onPageChange(item)}
+        size={size}
+        variant="ghost"
+      >
+        {item}
+      </Button>
+    );
+  });
 
   return (
     <nav
       aria-label="Pagination"
-      className={cn(
-        "flex flex-wrap items-center justify-between gap-3",
-        className
-      )}
+      className={cn("flex items-center justify-between", className)}
+      data-component="pagination"
       data-slot="pagination"
     >
       <Button
+        aria-label="Go to previous page"
         disabled={disabled || isFirstPage}
-        onClick={() => onPageChange(currentPage - 1)}
+        icon={ChevronLeftIcon}
+        onClick={() => onPageChange(page - 1)}
         size={size}
-        type="button"
         variant="ghost"
       >
-        <span className="size-4">
-          <ChevronLeftIcon />
-        </span>
         Previous
       </Button>
 
-      <div className="flex flex-wrap items-center justify-center gap-1">
-        {pageRange.map((item) => {
-          if (item === "ellipsis") {
-            ellipsisCount += 1;
-
-            return (
-              <span
-                aria-hidden="true"
-                className="flex min-w-8 items-center justify-center px-1 text-body text-muted-foreground"
-                key={`ellipsis-${ellipsisCount}`}
-              >
-                ...
-              </span>
-            );
-          }
-
-          const isActive = item === currentPage;
-
-          return (
-            <Button
-              aria-current={isActive ? "page" : undefined}
-              key={item}
-              onClick={() => onPageChange(item)}
-              size={size}
-              type="button"
-              variant={isActive ? "default" : "ghost"}
-            >
-              {item}
-            </Button>
-          );
-        })}
-      </div>
+      <div className="flex items-center gap-0.5">{pageElements}</div>
 
       <Button
+        aria-label="Go to next page"
         disabled={disabled || isLastPage}
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => onPageChange(page + 1)}
         size={size}
-        type="button"
+        suffixIcon={ChevronRightIcon}
         variant="ghost"
       >
         Next
-        <span className="size-4">
-          <ChevronRightIcon />
-        </span>
       </Button>
     </nav>
   );
 }
 
-export { Pagination };
+export { Pagination, type PaginationProps };

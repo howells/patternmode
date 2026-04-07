@@ -9,7 +9,7 @@
     "dev:storybook": "pnpm --filter @patternmode/storybook dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "format": "biome format --write .",
+    "format": "howells-biome format --write .",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
@@ -19,14 +19,14 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.8",
+    "@howells/lint": "^0.1.1",
+    "@howells/typescript-config": "^0.1.0",
     "husky": "9.1.7",
     "lint-staged": "^16.2.7",
     "turbo": "2.9.3",
-    "typescript": "^5.9.3",
-    "ultracite": "7.3.2"
+    "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,jsonc,css,md}": "biome format --write --no-errors-on-unmatched"
+    "*.{js,ts,jsx,tsx,json,jsonc,css,md}": "howells-biome format --write --no-errors-on-unmatched"
   }
 }

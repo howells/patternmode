@@ -1,28 +1,48 @@
 "use client";
 
-import type { InputHTMLAttributes } from "react";
-
-import { cn } from "../../utils/cn";
+import { cn } from "@patternmode/ui/utils/cn";
+import type * as React from "react";
 import { useInputGroup } from "./input-group-context";
+import { inputGroupControlVariants } from "./input-group-variants";
 
-function InputGroupInput({
+export type InputGroupInputProps = Omit<
+  React.ComponentProps<"input">,
+  "size"
+> & {
+  /** Test ID for testing. */
+  testId?: string;
+};
+
+/**
+ * Input element for use inside InputGroup.
+ * Inherits size from InputGroup context.
+ *
+ * @example
+ * ```tsx
+ * <InputGroup size="base">
+ *   <InputGroupInput placeholder="Enter text..." />
+ * </InputGroup>
+ * ```
+ */
+export function InputGroupInput({
   className,
+  type = "text",
+  testId,
+  disabled: disabledProp,
   ...props
-}: InputHTMLAttributes<HTMLInputElement>) {
-  const { disabled } = useInputGroup();
+}: InputGroupInputProps) {
+  const { size, disabled: contextDisabled } = useInputGroup();
+  const disabled = disabledProp ?? contextDisabled;
 
   return (
     <input
-      className={cn(
-        "min-w-0 flex-1 bg-transparent px-3.5 text-body text-foreground outline-none placeholder:text-muted-foreground/90",
-        "selection:bg-accent selection:text-accent-foreground",
-        className
-      )}
+      className={cn(inputGroupControlVariants({ size }), className)}
+      data-component="input-group-input"
       data-slot="input-group-control"
-      disabled={disabled || props.disabled}
+      data-testid={testId}
+      disabled={disabled}
+      type={type}
       {...props}
     />
   );
 }
-
-export { InputGroupInput };

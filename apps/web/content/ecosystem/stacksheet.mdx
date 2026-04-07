@@ -1,0 +1,57 @@
+---
+title: stacksheet
+description: Typed animated sheet stack system with Apple-style depth.
+---
+
+## What it is
+
+stacksheet is a typed, animated sheet stack system that gives you Apple-style stacked modals with depth-aware transitions. When you open a sheet on top of another sheet, the background sheet scales down and recedes — creating a physical sense of depth that communicates hierarchy.
+
+PatternMode recommends stacksheet when your interface needs multiple stacked overlays — settings panels that open sub-panels, multi-step flows, or any scenario where a single modal is not enough.
+
+## Installation
+
+```bash
+pnpm add stacksheet
+```
+
+## When to Use
+
+- **Multi-step flows** — A settings panel opens a confirmation dialog, which opens a detail view
+- **Stacked navigation** — Mobile-style sheet stacking where each level pushes the previous one back
+- **Depth-aware overlays** — Any time you need more than one overlay visible simultaneously with clear visual hierarchy
+
+## How It Works
+
+stacksheet manages a stack of sheets internally. Each new sheet pushed onto the stack triggers depth-aware animations on all existing sheets:
+
+```tsx
+import { SheetStack, Sheet } from "stacksheet";
+
+function App() {
+  return (
+    <SheetStack>
+      <Sheet id="settings">
+        <SettingsPanel />
+      </Sheet>
+      <Sheet id="confirm">
+        <ConfirmDialog />
+      </Sheet>
+    </SheetStack>
+  );
+}
+```
+
+As sheets stack, background sheets automatically:
+
+- Scale down proportionally to their depth
+- Reduce opacity slightly
+- Round their corners to match the native platform feel
+
+## Integration with PatternMode
+
+stacksheet pairs naturally with `@patternmode/transition` for the individual sheet enter/exit animations, while stacksheet handles the stack orchestration and depth scaling. Use PatternMode's `Sheet` component for styling and stacksheet for the stacking behavior.
+
+## Links
+
+- [GitHub](https://github.com/raphaelsalaja/stacksheet)

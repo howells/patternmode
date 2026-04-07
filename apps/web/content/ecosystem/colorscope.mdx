@@ -1,0 +1,60 @@
+---
+title: colorscope
+description: Color science library — extraction, math, naming, and schemes.
+---
+
+## What it is
+
+[colorscope](https://www.npmjs.com/package/colorscope) is a color science library for JavaScript and TypeScript. It provides utilities for color extraction, color math, human-readable naming, and scheme generation — everything you need when working with color programmatically.
+
+PatternMode recommends colorscope as the standard approach to color in the ecosystem. Rather than scattering ad-hoc hex manipulation across your codebase, colorscope gives you a typed, composable API rooted in perceptual color science.
+
+## Installation
+
+```bash
+pnpm add colorscope
+```
+
+## Core Capabilities
+
+- **Extraction** — Pull dominant colors from images for dynamic theming
+- **Math** — Blend, lighten, darken, and compute contrast ratios with perceptual accuracy
+- **Naming** — Convert any color to a human-readable name
+- **Schemes** — Generate complementary, analogous, triadic, and split-complementary palettes from a seed color
+
+## Integration with PatternMode
+
+### Avatar Colors
+
+Use `getColorFromName` to derive consistent, deterministic avatar colors from user names — the same name always produces the same hue:
+
+```tsx
+import { getColorFromName } from "colorscope";
+import { Avatar } from "@patternmode/ui/components/avatar";
+
+function UserAvatar({ name }: { name: string }) {
+  const color = getColorFromName(name);
+
+  return (
+    <Avatar style={{ backgroundColor: color }}>
+      {name.charAt(0).toUpperCase()}
+    </Avatar>
+  );
+}
+```
+
+### Theme Generation
+
+Extract a dominant color from a brand image and generate an entire color scheme for dynamic theming:
+
+```tsx
+import { extractDominant, scheme } from "colorscope";
+
+const dominant = await extractDominant(imageUrl);
+const palette = scheme(dominant, "analogous");
+```
+
+## Links
+
+- [npm](https://www.npmjs.com/package/colorscope)
+- [GitHub](https://github.com/raphaelsalaja/colorscope)

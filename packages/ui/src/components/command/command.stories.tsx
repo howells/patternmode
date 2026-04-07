@@ -1,94 +1,124 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "../command";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
-import { CommandDialog } from "./command-dialog";
-import { CommandEmpty } from "./command-empty";
-import { CommandGroup } from "./command-group";
-import { CommandInput } from "./command-input";
-import { CommandItem } from "./command-item";
-import { CommandList } from "./command-list";
-import { Command } from "./command-root";
-import { CommandSeparator } from "./command-separator";
-import { CommandShortcut } from "./command-shortcut";
+type CommandStoryArgs = React.ComponentProps<typeof CommandDialog> & {
+  placeholder?: string;
+  emptyText?: string;
+};
 
-const meta = {
-  title: "Navigation/Command",
-  component: Command,
-  parameters: {
-    layout: "centered",
+const meta: Meta<CommandStoryArgs> = {
+  title: "Command",
+  argTypes: {
+    // Content
+    placeholder: {
+      control: "text",
+      description: "Search input placeholder text",
+    },
+    emptyText: {
+      control: "text",
+      description: "Text shown when no results found",
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Command>;
+  args: {
+    placeholder: "Type a command…",
+    emptyText: "No results found.",
+  },
+  parameters: {
+    builder: {
+      category: "interactive",
+      icon: "terminal",
+    },
+    docs: {
+      description: {
+        component:
+          "Command palettes provide fast, keyboard-driven access to actions and navigation. They support search, grouping, and keyboard shortcuts for efficient interaction.",
+      },
+    },
+  },
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base interactive story with all controls.
+ */
 export const Base: Story = {
-  render: () => (
-    <div className="w-[32rem]">
-      <Command>
-        <CommandInput placeholder="Search primitives, stories, and docs..." />
-        <CommandList>
-          <CommandEmpty>No matching primitive.</CommandEmpty>
-          <CommandGroup heading="Library">
-            <CommandItem>
-              Button
-              <CommandShortcut>UI</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              Select
-              <CommandShortcut>UI</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              Sheet
-              <CommandShortcut>NEW</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading="Review surfaces">
-            <CommandItem>
-              Storybook overview
-              <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              Playground shell
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
-      </Command>
-    </div>
+  render: (args) => (
+    <CommandDialog
+      onOpenChange={() => {
+        // No-op for static story
+      }}
+      open
+    >
+      <CommandInput placeholder={args.placeholder} />
+      <CommandList>
+        <CommandEmpty>{args.emptyText}</CommandEmpty>
+        <CommandGroup heading="General">
+          <CommandItem>Toggle theme</CommandItem>
+          <CommandItem>Open settings</CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="Navigation">
+          <CommandItem>Go to dashboard</CommandItem>
+          <CommandItem>Open profile</CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
   ),
 };
 
-export const InDialog: Story = {
+/**
+ * Multiple command groups with separators.
+ */
+export const WithMultipleGroups: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          "Command palettes can organize items into multiple groups with headings and separators.",
+      },
+    },
+  },
   render: () => (
-    <Card className="w-[32rem]">
-      <CardHeader>
-        <CardTitle>Command search belongs in the shared shell layer</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CommandDialog defaultOpen>
-          <CommandInput placeholder="Jump to a primitive..." />
-          <CommandList>
-            <CommandGroup heading="Components">
-              <CommandItem>
-                Breadcrumb
-                <CommandShortcut>Nav</CommandShortcut>
-              </CommandItem>
-              <CommandItem>
-                Pagination
-                <CommandShortcut>Nav</CommandShortcut>
-              </CommandItem>
-              <CommandItem>
-                Command
-                <CommandShortcut>Nav</CommandShortcut>
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
-        </CommandDialog>
-      </CardContent>
-    </Card>
+    <CommandDialog
+      onOpenChange={() => {
+        // No-op for static story
+      }}
+      open
+    >
+      <CommandInput placeholder="Search commands…" />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="File">
+          <CommandItem>New file</CommandItem>
+          <CommandItem>Open file…</CommandItem>
+          <CommandItem>Save</CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="Edit">
+          <CommandItem>Copy</CommandItem>
+          <CommandItem>Paste</CommandItem>
+          <CommandItem>Cut</CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="View">
+          <CommandItem>Zoom in</CommandItem>
+          <CommandItem>Zoom out</CommandItem>
+          <CommandItem>Fullscreen</CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
   ),
 };

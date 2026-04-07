@@ -6,7 +6,7 @@
     "dev": "next dev --port 31000",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check . --write --unsafe",
+    "lint": "howells-biome check . --write --unsafe",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -17,7 +17,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@patternmode/typescript-config": "workspace:*",
+    "@howells/typescript-config": "^0.1.0",
     "@types/node": "^20.19.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

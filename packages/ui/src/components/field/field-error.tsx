@@ -1,45 +1,60 @@
 "use client";
 
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
-
-import { cn } from "../../utils/cn";
+import { cn } from "@patternmode/ui/utils/cn";
+import { useMemo } from "react";
 import { useFieldContext } from "./field-context";
 
-function renderErrors(
-  errors?: Array<{ message?: string } | undefined>
-): ReactNode {
-  const messages = [
-    ...new Set(errors?.map((error) => error?.message).filter(Boolean)),
-  ];
-
-  if (!messages.length) {
-    return null;
-  }
-
-  if (messages.length === 1) {
-    return messages[0];
-  }
-
-  return (
-    <ul className="ml-4 list-disc">
-      {messages.map((message) => (
-        <li key={message}>{message}</li>
-      ))}
-    </ul>
-  );
-}
-
-function FieldError({
-  children,
+/**
+ * Error message display for field validation. Shows single or multiple error messages.
+ *
+ * @param props - The field error props
+ * @param props.errors - Array of error objects with optional message property.
+ * @param props.children - Custom error content (overrides errors array).
+ * @param props.className - Additional CSS classes to apply.
+ * @param props... - All other standard HTML div element props.
+ *
+ * @example
+ * ```tsx
+ * <FieldError errors={[{ message: "This field is required" }]} />
+ * <FieldError>Custom error message</FieldError>
+ * ```
+ */
+export function FieldError({
   className,
+  children,
   errors,
   id,
   ...props
-}: ComponentPropsWithoutRef<"div"> & {
+}: React.ComponentProps<"div"> & {
   errors?: Array<{ message?: string } | undefined>;
 }) {
-  const context = useFieldContext();
-  const content = children ?? renderErrors(errors);
+  const ctx = useFieldContext();
+  const errorId = id ?? (ctx ? `${ctx.fieldId}-error` : undefined);
+  const content = useMemo(() => {
+    if (children) {
+      return children;
+    }
+
+    if (!errors?.length) {
+      return null;
+    }
+
+    const uniqueErrors = [
+      ...new Map(errors.map((error) => [error?.message, error])).values(),
+    ];
+
+    if (uniqueErrors?.length === 1) {
+      return uniqueErrors[0]?.message;
+    }
+
+    return (
+      <ul className="ml-4 flex list-disc flex-col gap-1">
+        {uniqueErrors.map((error) =>
+          error?.message ? <li key={error.message}>{error.message}</li> : null,
+        )}
+      </ul>
+    );
+  }, [children, errors]);
 
   if (!content) {
     return null;
@@ -48,9 +63,10 @@ function FieldError({
   return (
     <div
       aria-live="polite"
-      className={cn("text-body text-destructive", className)}
+      className={cn("font-normal text-destructive text-sm", className)}
+      data-component="field-error"
       data-slot="field-error"
-      id={id ?? context?.errorId}
+      id={errorId}
       role="alert"
       {...props}
     >
@@ -58,5 +74,3 @@ function FieldError({
     </div>
   );
 }
-
-export { FieldError };

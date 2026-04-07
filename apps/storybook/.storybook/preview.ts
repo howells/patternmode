@@ -1,21 +1,36 @@
-import type { Preview } from "@storybook/react";
-
 import "../src/storybook.css";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
   parameters: {
+    layout: "centered",
+
     backgrounds: {
-      default: "paper",
+      default: "app",
       values: [
-        { name: "paper", value: "#f8fafc" },
-        { name: "ink", value: "#101827" },
+        { name: "app", value: "#ffffff" },
+        { name: "dark", value: "#111827" },
+        { name: "muted", value: "#f3f4f6" },
       ],
     },
-    controls: {
-      expanded: true,
+
+    actions: {
+      argTypesRegex: "^on.*",
     },
-    layout: "centered",
+
+    options: {
+      storySort: {
+        method: "alphabetical",
+        order: ["Button", "*", "Layout"],
+      },
+    },
+
+    a11y: {
+      test: "todo",
+    },
   },
+  tags: ["autodocs"],
 };
 
 export default preview;

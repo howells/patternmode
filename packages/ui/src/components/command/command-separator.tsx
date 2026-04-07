@@ -1,28 +1,21 @@
-"use client";
-
+import { cn } from "@patternmode/ui/utils/cn";
 import { Command as CommandPrimitive } from "cmdk";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-const CommandSeparator = forwardRef<
-  ComponentRef<typeof CommandPrimitive.Separator>,
-  ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
->(({ className, ...props }, ref) => {
+/**
+ * CommandSeparator visually separates groups or items.
+ * Import from "@patternmode/ui/components/command".
+ */
+export function CommandSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Separator>) {
   return (
     <CommandPrimitive.Separator
-      className={cn("-mx-1 my-1 h-px bg-border/80", className)}
+      className={cn("-mx-1 h-px bg-border", className)}
+      data-component="command-separator"
       data-slot="command-separator"
-      ref={ref}
       {...props}
     />
   );
-});
-
-CommandSeparator.displayName = "CommandSeparator";
-
-export { CommandSeparator };
+}

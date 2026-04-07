@@ -1,88 +1,146 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { Badge } from "../badge";
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
+import { Flex } from "../flex";
+import { Stack } from "../stack";
+import { Text } from "../text";
 import { ScrollArea } from "./scroll-area-root";
 
-const meta = {
-  title: "Utilities/Scroll Area",
-  component: ScrollArea,
-  parameters: {
-    layout: "centered",
-  },
-  tags: ["autodocs"],
-} satisfies Meta<typeof ScrollArea>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-const reviewCheckpoints = [
-  "Review checkpoint 1",
-  "Review checkpoint 2",
-  "Review checkpoint 3",
-  "Review checkpoint 4",
-  "Review checkpoint 5",
-  "Review checkpoint 6",
-  "Review checkpoint 7",
-  "Review checkpoint 8",
-  "Review checkpoint 9",
-  "Review checkpoint 10",
-  "Review checkpoint 11",
-  "Review checkpoint 12",
-] as const;
-
-export const Base: Story = {
-  render: () => (
-    <div className="h-56 w-[22rem]">
-      <ScrollArea className="h-full rounded-[var(--radius-xl)] border border-border/80 bg-panel/94 p-4">
-        <div className="grid gap-3">
-          {reviewCheckpoints.map((item) => (
-            <div
-              className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/70 px-4 py-3 text-body text-secondary-foreground"
-              key={item}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-    </div>
-  ),
+type ScrollAreaStoryArgs = React.ComponentProps<typeof ScrollArea> & {
+  itemCount?: number;
+  scrollDirection?: "vertical" | "horizontal" | "both";
 };
 
-export const ReviewSurface: Story = {
-  render: () => (
-    <Card className="w-[30rem]">
-      <CardHeader>
-        <Badge variant="accent">Utility</Badge>
-        <CardTitle>Scrollable regions should feel unobtrusive</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="h-56">
-          <ScrollArea className="h-full rounded-[calc(var(--radius-lg)-4px)] border border-border/80 bg-secondary/35 p-3">
-            <div className="grid gap-2">
-              {[
-                "Token audit",
-                "Primitive backlog",
-                "Storybook review queue",
-                "Package documentation notes",
-                "Downstream adoption checks",
-                "Accessibility follow-ups",
-                "Design polish tasks",
-                "Testing gaps",
-              ].map((item) => (
-                <div
-                  className="rounded-[calc(var(--radius-md)-4px)] bg-white/80 px-3 py-2 text-body text-foreground shadow-2xs"
-                  key={item}
+const meta: Meta<ScrollAreaStoryArgs> = {
+  title: "ScrollArea",
+  component: ScrollArea,
+  argTypes: {
+    // Content
+    itemCount: {
+      control: { type: "number", min: 5, max: 50 },
+      description: "Number of items to display",
+    },
+    scrollDirection: {
+      control: "select",
+      options: ["vertical", "horizontal", "both"],
+      description: "Direction of scrolling",
+    },
+
+    // Advanced (hidden)
+    className: { table: { disable: true } },
+  },
+  args: {
+    itemCount: 20,
+    scrollDirection: "vertical",
+  },
+  parameters: {
+    builder: {
+      category: "layout",
+      icon: "scroll",
+    },
+    docs: {
+      description: {
+        component:
+          "Custom-styled scrollbars that match your design system. Supports vertical, horizontal, and bidirectional scrolling.",
+      },
+    },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+/**
+ * Base interactive story with all controls.
+ */
+export const Base: Story = {
+  render: (args) => {
+    const items = Array.from({ length: args.itemCount || 20 }, (_, i) => i + 1);
+
+    if (args.scrollDirection === "horizontal") {
+      return (
+        <div className="h-40 w-80 rounded-md border p-4">
+          <ScrollArea className="h-full w-full">
+            <Flex gap="xs">
+              {items.map((n) => (
+                <Stack
+                  className="flex-shrink-0 rounded-sm bg-secondary p-3"
+                  key={n}
                 >
-                  {item}
-                </div>
+                  <Text size="sm">Column {n}</Text>
+                </Stack>
               ))}
-            </div>
+            </Flex>
           </ScrollArea>
         </div>
-      </CardContent>
-    </Card>
+      );
+    }
+
+    if (args.scrollDirection === "both") {
+      return (
+        <div className="h-60 w-80 rounded-md border p-4">
+          <ScrollArea className="h-full w-full">
+            <Stack gap="xs">
+              {items.map((row) => (
+                <Flex gap="xs" key={row}>
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((col) => (
+                    <Stack
+                      className="flex-shrink-0 rounded-sm bg-secondary p-3"
+                      key={col}
+                    >
+                      <Text size="sm">
+                        {row},{col}
+                      </Text>
+                    </Stack>
+                  ))}
+                </Flex>
+              ))}
+            </Stack>
+          </ScrollArea>
+        </div>
+      );
+    }
+
+    // Default: vertical
+    return (
+      <div className="h-60 w-80 rounded-md border p-4">
+        <ScrollArea className="h-full w-full">
+          <Stack gap="xs">
+            {items.map((n) => (
+              <Stack className="rounded-sm bg-secondary p-3" key={n}>
+                <Text size="sm">Item {n} - Scrollable content</Text>
+              </Stack>
+            ))}
+          </Stack>
+        </ScrollArea>
+      </div>
+    );
+  },
+};
+
+/**
+ * Scroll area with padding.
+ */
+export const WithPadding: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: "ScrollArea maintains padding around content while scrolling.",
+      },
+    },
+  },
+  render: () => (
+    <div className="h-60 w-80 rounded-md border">
+      <ScrollArea className="h-full w-full p-4">
+        <Stack gap="xs">
+          {Array.from({ length: 25 }, (_, i) => i + 1).map((n) => (
+            <Stack className="rounded-sm bg-secondary p-3" key={n}>
+              <Text size="sm">Padded item {n}</Text>
+            </Stack>
+          ))}
+        </Stack>
+      </ScrollArea>
+    </div>
   ),
 };

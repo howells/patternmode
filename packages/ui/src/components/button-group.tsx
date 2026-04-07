@@ -1,7 +1,7 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   ButtonGroup,
-  type ButtonGroupProps,
   ButtonGroupSeparator,
   ButtonGroupText,
+  buttonGroupVariants,
 } from "./button-group/button-group-root";

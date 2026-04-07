@@ -1,8 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export {
-  Banner,
-  BannerActions,
-  BannerDescription,
-  type BannerProps,
-  BannerTitle,
-} from "./banner/banner-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Banner } from "./banner/banner-root";

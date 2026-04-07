@@ -1,0 +1,31 @@
+---
+title: Transition
+description: Shared element transitions with physics-based drag dismissal.
+---
+
+> Inspired by [Cambio](https://github.com/raphaelsalaja/cambio) by Raphael Salaja.
+
+<Installer package="@patternmode/transition" />
+
+<Preview path="transition" />
+
+## Motion Presets
+
+Four built-in presets — each bundles transition timing AND drag physics:
+
+| Preset | Duration | Easing | Drag Stiffness |
+|--------|----------|--------|----------------|
+| snappy | 240ms | ease-out | 600 |
+| smooth | 300ms | ease-in-out | 350 |
+| bouncy | spring | stiffness 1200 | 400 |
+| reduced | 10ms | linear | 1000 |
+
+## Drag Dismissal
+
+Content can be dismissed by dragging past a distance threshold (100px) or velocity threshold (500px/s). Uses logarithmic resistance — initial movement is free but gets progressively harder.
+
+## Props
+
+<PropTable component="TransitionRootProps" source="packages/transition/src/transition-root.tsx" />
+
+<PropTable component="TransitionContentProps" source="packages/transition/src/transition-content.tsx" />

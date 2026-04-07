@@ -1,58 +1,160 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
+import { COMPONENT_SIZES, type ComponentSize } from "../../lib/size";
+import { sizeArgType } from "../../lib/storybook";
+import { VariantGrid } from "../../stories/utils/variant-grid";
+import { Flex } from "../flex";
 import { Label } from "../label";
 import { Checkbox } from "./checkbox-root";
 
-const meta = {
-  title: "Forms/Checkbox",
+type CheckboxStoryArgs = React.ComponentProps<typeof Checkbox>;
+
+const meta: Meta<CheckboxStoryArgs> = {
+  title: "Checkbox",
   component: Checkbox,
+  argTypes: {
+    // Visual
+    size: {
+      ...sizeArgType,
+      description: "Checkbox size using shared ComponentSize scale",
+    },
+
+    // States
+    checked: {
+      control: "boolean",
+      description: "Controlled checked state",
+    },
+    defaultChecked: {
+      control: "boolean",
+      description: "Uncontrolled default checked state",
+    },
+    indeterminate: {
+      control: "boolean",
+      description: "Show indeterminate state (dash icon)",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disable the checkbox",
+    },
+    required: {
+      control: "boolean",
+      description: "Mark as required for form validation",
+    },
+
+    // Advanced (hidden)
+    className: { table: { disable: true } },
+    asChild: { table: { disable: true } },
+  },
   args: {
-    defaultChecked: true,
+    size: "sm",
+    checked: false,
+    disabled: false,
+    indeterminate: false,
   },
   parameters: {
-    layout: "centered",
+    builder: {
+      category: "form",
+      icon: "check-square",
+    },
+    docs: {
+      description: {
+        component:
+          "Checkbox input with checked, unchecked, and indeterminate states. Uses shared ComponentSize scale.",
+      },
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Checkbox>;
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base interactive story with all controls.
+ */
 export const Base: Story = {};
 
-export const ReviewSurface: Story = {
+/**
+ * State columns for the matrix.
+ */
+type CheckboxState =
+  | "unchecked"
+  | "checked"
+  | "indeterminate"
+  | "disabled"
+  | "disabled-checked";
+
+const STATE_COLUMNS: { key: CheckboxState; label: string }[] = [
+  { key: "unchecked", label: "Unchecked" },
+  { key: "checked", label: "Checked" },
+  { key: "indeterminate", label: "Indeterminate" },
+  { key: "disabled", label: "Disabled" },
+  { key: "disabled-checked", label: "Disabled Checked" },
+];
+
+/**
+ * Size × State matrix showing all checkbox variations.
+ */
+export const SizeStateMatrix: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          "Complete matrix showing all sizes (2xs-3xl) across all states (unchecked, checked, indeterminate, disabled).",
+      },
+    },
+  },
+  render: () => {
+    const SIZE_ROWS: { key: ComponentSize; label: string }[] =
+      COMPONENT_SIZES.map((s) => ({ key: s, label: s }));
+
+    const renderCell = (size: ComponentSize, state: CheckboxState) => {
+      const stateProps = (() => {
+        switch (state) {
+          case "checked":
+            return { defaultChecked: true };
+          case "indeterminate":
+            return { indeterminate: true };
+          case "disabled":
+            return { disabled: true };
+          case "disabled-checked":
+            return { defaultChecked: true, disabled: true };
+          default:
+            return {};
+        }
+      })();
+
+      return <Checkbox size={size} {...stateProps} />;
+    };
+
+    return (
+      <VariantGrid<ComponentSize, CheckboxState>
+        columns={STATE_COLUMNS}
+        renderCell={renderCell}
+        rowLabels="Size"
+        rows={SIZE_ROWS}
+      />
+    );
+  },
+};
+
+/**
+ * Checkbox with label for accessibility.
+ */
+export const WithLabel: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: "Checkbox paired with a label for accessibility.",
+      },
+    },
+  },
   render: () => (
-    <Card className="w-[30rem]">
-      <CardHeader>
-        <CardTitle>Selection should stay readable at a glance</CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <label className="flex items-start gap-3" htmlFor="checkbox-story-a">
-          <Checkbox defaultChecked id="checkbox-story-a" />
-          <div className="grid gap-1">
-            <Label className="text-foreground" htmlFor="checkbox-story-a">
-              Promote to the upstream library
-            </Label>
-            <p className="text-body text-muted-foreground">
-              Shared behavior belongs here once the API is stable.
-            </p>
-          </div>
-        </label>
-        <label className="flex items-start gap-3" htmlFor="checkbox-story-b">
-          <Checkbox id="checkbox-story-b" />
-          <div className="grid gap-1">
-            <Label className="text-foreground" htmlFor="checkbox-story-b">
-              Keep as app-local composition
-            </Label>
-            <p className="text-body text-muted-foreground">
-              Workflow-specific wrappers should stay outside the primitive
-              layer.
-            </p>
-          </div>
-        </label>
-      </CardContent>
-    </Card>
+    <Flex align="center" gap="xs">
+      <Checkbox id="terms" />
+      <Label htmlFor="terms">Accept terms and conditions</Label>
+    </Flex>
   ),
 };

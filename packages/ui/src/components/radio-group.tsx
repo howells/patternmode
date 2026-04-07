@@ -1,7 +1,6 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   RadioGroup,
   RadioGroupItem,
   type RadioGroupItemProps,
-  type RadioGroupProps,
 } from "./radio-group/radio-group-root";

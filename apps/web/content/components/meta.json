@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "title": "UI",
+  "pages": [
+    "---Layout---",
+    "flex",
+    "---Controls---",
+    "button",
+    "input",
+    "select",
+    "tabs",
+    "---Data Display---",
+    "badge",
+    "heading",
+    "---Feedback---",
+    "alert",
+    "---Surfaces---",
+    "card",
+    "---Overlay---",
+    "dialog"
+  ]
+}

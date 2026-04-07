@@ -1,5 +1,5 @@
 {
-  "extends": "@patternmode/typescript-config/nextjs",
+  "extends": "@howells/typescript-config/nextjs",
   "compilerOptions": {
     "baseUrl": "."
   },

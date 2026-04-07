@@ -1,48 +1,31 @@
-import { Slot } from "@radix-ui/react-slot";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { cn } from "@patternmode/ui/utils/cn";
+import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { Slot as SlotPrimitive } from "radix-ui";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-function ChevronRightIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="m6 4 4 4-4 4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
-
-function Breadcrumb({ className, ...props }: ComponentPropsWithoutRef<"nav">) {
-  return (
-    <nav
-      aria-label="Breadcrumb"
-      className={className}
-      data-slot="breadcrumb"
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbList({
-  className,
+/**
+ * Breadcrumb UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+function Breadcrumb({
   ...props
-}: ComponentPropsWithoutRef<"ol">) {
+}: React.ComponentProps<"nav"> & {
+  separator?: React.ReactNode;
+}) {
+  return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
+}
+
+/**
+ * BreadcrumbList UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
   return (
     <ol
       className={cn(
-        "flex flex-wrap items-center gap-1.5 break-words text-body text-muted-foreground",
-        className
+        "flex flex-wrap items-center gap-1.5 break-words text-muted-foreground text-sm",
+        '[&>li[data-slot="breadcrumb-item"]:first-of-type]:text-foreground [&>li[data-slot="breadcrumb-item"]:last-of-type]:text-foreground',
+        className,
       )}
       data-slot="breadcrumb-list"
       {...props}
@@ -50,10 +33,11 @@ function BreadcrumbList({
   );
 }
 
-function BreadcrumbItem({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"li">) {
+/**
+ * BreadcrumbItem UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
       className={cn("inline-flex items-center gap-1.5", className)}
@@ -63,81 +47,82 @@ function BreadcrumbItem({
   );
 }
 
+/**
+ * BreadcrumbLink UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
 function BreadcrumbLink({
   asChild,
   className,
   ...props
-}: ComponentPropsWithoutRef<"a"> & {
+}: React.ComponentProps<"a"> & {
   asChild?: boolean;
 }) {
-  const Comp = asChild ? Slot : "a";
+  const Comp = asChild ? SlotPrimitive.Slot : "a";
 
   return (
     <Comp
-      className={cn(
-        "transition-colors duration-150 ease-[var(--ease-snappy)] hover:text-foreground",
-        className
-      )}
+      className={cn("transition-colors hover:text-foreground", className)}
       data-slot="breadcrumb-link"
       {...props}
     />
   );
 }
 
-function BreadcrumbPage({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"span">) {
+/**
+ * BreadcrumbPage UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       aria-current="page"
-      className={cn("font-medium text-foreground", className)}
+      className={cn("font-normal text-foreground", className)}
       data-slot="breadcrumb-page"
       {...props}
     />
   );
 }
 
-function BreadcrumbSeparator({
+/**
+ * BreadcrumbSeparator UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+const BreadcrumbSeparator = ({
   children,
   className,
   ...props
-}: ComponentPropsWithoutRef<"li"> & {
-  children?: ReactNode;
-}) {
-  return (
-    <li
-      aria-hidden="true"
-      className={cn("size-4 text-muted-foreground", className)}
-      data-slot="breadcrumb-separator"
-      role="presentation"
-      {...props}
-    >
-      {children ?? <ChevronRightIcon />}
-    </li>
-  );
-}
+}: React.ComponentProps<"li">) => (
+  <li
+    aria-hidden="true"
+    className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)}
+    data-slot="breadcrumb-separator"
+    role="presentation"
+    {...props}
+  >
+    {children ?? <ChevronRight className="rtl:rotate-180" />}
+  </li>
+);
 
-function BreadcrumbEllipsis({
+/**
+ * BreadcrumbEllipsis UI component.
+ * Import from "@patternmode/ui/components/breadcrumb".
+ */
+const BreadcrumbEllipsis = ({
   className,
   ...props
-}: ComponentPropsWithoutRef<"span">) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "flex h-8 w-8 items-center justify-center text-muted-foreground",
-        className
-      )}
-      data-slot="breadcrumb-ellipsis"
-      role="presentation"
-      {...props}
-    >
-      <span className="tracking-[0.2em]">...</span>
-      <span className="sr-only">More</span>
-    </span>
-  );
-}
+}: React.ComponentProps<"span">) => (
+  <span
+    aria-hidden="true"
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    data-slot="breadcrumb-ellipsis"
+    role="presentation"
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More</span>
+  </span>
+);
 
 export {
   Breadcrumb,

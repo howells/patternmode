@@ -33,10 +33,10 @@ src/
 
 ## Scope
 
-Patternmode should track Materia’s general approach:
+Patternmode should track PatternMode’s general approach:
 
 - broad primitive coverage for shared UI foundations
 - package-level stories for review and regression confidence
 - utility and type layers that keep components consistent
 
-Patternmode should still remain distinct in visual language. Materia is the structural reference, not the aesthetic template.
+Patternmode should still remain distinct in visual language. PatternMode is the structural reference, not the aesthetic template.

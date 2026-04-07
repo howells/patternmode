@@ -1,145 +1,93 @@
-import { forwardRef, type HTMLAttributes } from "react";
+"use client";
 
-import { cn } from "../../utils/cn";
+import { cn } from "@patternmode/ui/utils/cn";
+import { cva, type VariantProps } from "class-variance-authority";
+import type * as React from "react";
+import { Card, CardContent } from "../card";
+import { Center } from "../center";
+import { EmptyProvider, type EmptySize } from "./empty-context";
 
-const SIZE_CLASSES = {
-  sm: {
-    media: "size-12 rounded-[var(--radius-md)]",
-    title: "text-[1.1rem]",
+const emptyVariants = cva("", {
+  variants: {
+    size: {
+      sm: "",
+      base: "",
+      lg: "",
+    },
   },
-  base: {
-    media: "size-14 rounded-[var(--radius-lg)]",
-    title: "text-title-sm",
+  defaultVariants: {
+    size: "base",
   },
-  lg: {
-    media: "size-16 rounded-[var(--radius-lg)]",
-    title: "text-title",
-  },
-} as const;
+});
 
-type EmptySize = keyof typeof SIZE_CLASSES;
-
-export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
-  layout?: "card" | "centered";
-  size?: EmptySize;
+export interface EmptyProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof emptyVariants> {
+  /** Layout variant */
+  layout?: "centered" | "card" | "card-dashed";
+  /** Minimum height for centered layout */
+  minHeight?: string;
 }
 
-const Empty = forwardRef<HTMLDivElement, EmptyProps>(
-  ({ className, layout = "centered", size = "base", ...props }, ref) => {
+/**
+ * Empty state root container.
+ *
+ * @example
+ * ```tsx
+ * <Empty layout="centered" size="base">
+ *   <EmptyHeader>
+ *     <EmptyMedia>
+ *       <Search />
+ *     </EmptyMedia>
+ *     <EmptyTitle>No results found</EmptyTitle>
+ *     <EmptyDescription>Try adjusting your search.</EmptyDescription>
+ *   </EmptyHeader>
+ *   <EmptyActions>
+ *     <Button>Clear search</Button>
+ *   </EmptyActions>
+ * </Empty>
+ * ```
+ */
+export function Empty({
+  children,
+  className,
+  layout = "centered",
+  size = "base",
+  minHeight = "min-h-[50vh]",
+  ...props
+}: EmptyProps) {
+  const resolvedSize: EmptySize = size ?? "base";
+
+  const content = <EmptyProvider size={resolvedSize}>{children}</EmptyProvider>;
+
+  if (layout === "card" || layout === "card-dashed") {
+    const paddingMap = { sm: "py-6", lg: "py-12" } as const;
+    const padding =
+      paddingMap[resolvedSize as keyof typeof paddingMap] ?? "py-8";
+
     return (
-      <div
-        className={cn(
-          "grid justify-items-center gap-5 text-center",
-          layout === "card"
-            ? "rounded-[var(--radius-xl)] border border-border-strong/70 border-dashed bg-panel/94 px-6 py-10 shadow-2xs"
-            : "min-h-[22rem] w-full place-content-center px-6 py-10",
-          className
-        )}
-        data-layout={layout}
-        data-size={size}
+      <Card
+        border={layout === "card-dashed" ? "dashed" : undefined}
+        className={cn(padding, className)}
+        data-component="empty"
         data-slot="empty"
-        ref={ref}
         {...props}
-      />
+      >
+        <CardContent>
+          <Center>{content}</Center>
+        </CardContent>
+      </Card>
     );
   }
-);
 
-Empty.displayName = "Empty";
-
-const EmptyHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        className={cn("grid justify-items-center gap-3", className)}
-        data-slot="empty-header"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
-EmptyHeader.displayName = "EmptyHeader";
-
-const EmptyMedia = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        className={cn(
-          "flex items-center justify-center bg-accent-soft text-accent shadow-2xs",
-          SIZE_CLASSES.base.media,
-          className
-        )}
-        data-slot="empty-media"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
-EmptyMedia.displayName = "EmptyMedia";
-
-const EmptyTitle = forwardRef<
-  HTMLHeadingElement,
-  HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => {
   return (
-    <h3
-      className={cn(
-        "max-w-[28rem] font-display text-foreground",
-        SIZE_CLASSES.base.title,
-        className
-      )}
-      data-slot="empty-title"
-      ref={ref}
+    <Center
+      className={cn("w-full", minHeight, className)}
+      data-component="empty"
+      data-slot="empty"
       {...props}
-    />
+    >
+      {content}
+    </Center>
   );
-});
-
-EmptyTitle.displayName = "EmptyTitle";
-
-const EmptyDescription = forwardRef<
-  HTMLParagraphElement,
-  HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
-  return (
-    <p
-      className={cn("max-w-[34rem] text-body text-muted-foreground", className)}
-      data-slot="empty-description"
-      ref={ref}
-      {...props}
-    />
-  );
-});
-
-EmptyDescription.displayName = "EmptyDescription";
-
-const EmptyActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        className={cn(
-          "flex flex-wrap items-center justify-center gap-3",
-          className
-        )}
-        data-slot="empty-actions"
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
-EmptyActions.displayName = "EmptyActions";
-
-export {
-  Empty,
-  EmptyActions,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-};
+}

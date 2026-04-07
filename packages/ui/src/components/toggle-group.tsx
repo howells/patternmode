@@ -1,7 +1,6 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   ToggleGroup,
   ToggleGroupItem,
   type ToggleGroupItemProps,
-  type ToggleGroupProps,
 } from "./toggle-group/toggle-group-root";

@@ -1,58 +1,68 @@
-import { forwardRef, type HTMLAttributes } from "react";
-
+import { cn } from "@patternmode/ui/utils/cn";
+import type * as React from "react";
+import {
+  pushResponsiveClasses,
+  type ResponsiveMode,
+  type ResponsiveValue,
+} from "../../lib/responsive";
+import {
+  MAX_WIDTH_CLASS,
+  PADDING_X_CLASS,
+  PADDING_Y_CLASS,
+} from "../../lib/responsive-classes";
 import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
 
-type ContainerSize = ComponentSize | "xl";
-
-const MAX_WIDTH_CLASSES: Record<ContainerSize, string> = {
-  sm: "max-w-3xl",
-  base: "max-w-5xl",
-  lg: "max-w-6xl",
-  xl: "max-w-7xl",
-};
-
-const PADDING_X_CLASSES: Record<ComponentSize, string> = {
-  sm: "px-4",
-  base: "px-6",
-  lg: "px-8",
-};
-
-const PADDING_Y_CLASSES: Record<ComponentSize, string> = {
-  sm: "py-4",
-  base: "py-6",
-  lg: "py-10",
-};
-
-export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
+export interface ContainerProps extends React.ComponentProps<"div"> {
+  /** When true, container is full width (ignores size). */
   fluid?: boolean;
-  px?: ComponentSize;
-  py?: ComponentSize;
-  size?: ContainerSize;
+  /** Horizontal padding. Can be responsive. */
+  px?: ResponsiveValue<ComponentSize>;
+  /** Vertical padding. Can be responsive. */
+  py?: ResponsiveValue<ComponentSize>;
+  /** Responsive mode: "screen" (viewport) or "container" (container queries). */
+  responsiveMode?: ResponsiveMode;
+  /** Max width. Can be responsive. */
+  size?: ResponsiveValue<ComponentSize>;
 }
 
-const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  (
-    { className, fluid = false, px = "base", py, size = "xl", ...props },
-    ref
-  ) => {
-    return (
-      <div
-        className={cn(
-          "mx-auto w-full",
-          fluid ? undefined : MAX_WIDTH_CLASSES[size],
-          PADDING_X_CLASSES[px],
-          py ? PADDING_Y_CLASSES[py] : undefined,
-          className
-        )}
-        data-slot="container"
-        ref={ref}
-        {...props}
-      />
-    );
+/**
+ * Container UI component.
+ * Import from "@patternmode/ui/components/container".
+ */
+export function Container({
+  className,
+  children,
+  size = "xl",
+  fluid = false,
+  px,
+  py,
+  responsiveMode = "screen",
+  ...props
+}: ContainerProps) {
+  const classes: string[] = ["mx-auto"];
+
+  if (fluid) {
+    classes.push("w-full");
+  } else {
+    pushResponsiveClasses(classes, size, MAX_WIDTH_CLASS, responsiveMode);
   }
-);
 
-Container.displayName = "Container";
+  if (px !== undefined) {
+    pushResponsiveClasses(classes, px, PADDING_X_CLASS, responsiveMode);
+  }
 
-export { Container };
+  if (py !== undefined) {
+    pushResponsiveClasses(classes, py, PADDING_Y_CLASS, responsiveMode);
+  }
+
+  return (
+    <div
+      className={cn(classes.join(" "), className)}
+      data-component="container"
+      data-slot="container"
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}

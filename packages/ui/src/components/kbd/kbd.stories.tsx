@@ -1,27 +1,125 @@
+// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
+import type { ComponentSize } from "../../lib/size";
+import { sizeArgType } from "../../lib/storybook";
+import {
+  KBD_OPTIONS,
+  kbdControlArgType,
+} from "../../stories/controls/kbd-control";
+import { VariantGrid } from "../../stories/utils/variant-grid";
+import { Kbd, KbdGroup } from "../kbd";
 
-import { Text } from "../text";
-import { Kbd } from "./kbd-root";
+type KbdStoryArgs = React.ComponentProps<typeof Kbd> & {
+  keys?: string[];
+};
 
-const meta = {
-  title: "Foundations/Kbd",
+const meta: Meta<KbdStoryArgs> = {
+  title: "Kbd",
   component: Kbd,
-  parameters: {
-    layout: "centered",
+  argTypes: {
+    keys: {
+      ...kbdControlArgType,
+      description: "Select a keyboard shortcut to display",
+    },
+    size: sizeArgType,
+    variant: {
+      control: "select",
+      options: [
+        "default",
+        "primary",
+        "secondary",
+        "destructive",
+        "brand",
+        "ghost",
+      ],
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Kbd>;
+  args: {
+    keys: KBD_OPTIONS["⌘+K (Command)"],
+    size: "sm",
+    variant: "default",
+  },
+  parameters: {
+    builder: {
+      category: "typography",
+      icon: "keyboard",
+    },
+    docs: {
+      description: {
+        component:
+          "Kbd displays keyboard shortcuts and key combinations. Use KbdGroup to display multiple keys together.",
+      },
+    },
+  },
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base story with all controllable props.
+ * Use the controls panel to explore all kbd options.
+ */
 export const Base: Story = {
-  render: () => (
-    <div className="flex items-center gap-2">
-      <Text>Open the command palette with</Text>
-      <Kbd>⌘</Kbd>
-      <Kbd>K</Kbd>
-    </div>
+  render: (args) => (
+    <KbdGroup size={args.size ?? undefined}>
+      {(args.keys ?? []).map((key) => (
+        <Kbd key={key} variant={args.variant ?? undefined}>
+          {key}
+        </Kbd>
+      ))}
+    </KbdGroup>
   ),
+};
+
+// Configuration types
+type KbdVariant = NonNullable<React.ComponentProps<typeof Kbd>["variant"]>;
+
+const VARIANTS: KbdVariant[] = [
+  "default",
+  "primary",
+  "secondary",
+  "destructive",
+  "brand",
+  "ghost",
+];
+const DISPLAY_SIZES: ComponentSize[] = ["xs", "sm", "base", "lg"];
+
+/**
+ * Size and variant matrix showing all combinations.
+ */
+export const VariantMatrix: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: "Matrix showing all kbd sizes and variants.",
+      },
+    },
+  },
+  render: () => {
+    const rows = DISPLAY_SIZES.map((size) => ({ key: size, label: size }));
+    const columns = VARIANTS.map((variant) => ({
+      key: variant,
+      label: variant.charAt(0).toUpperCase() + variant.slice(1),
+    }));
+
+    const renderCell = (size: ComponentSize, variant: KbdVariant) => (
+      <KbdGroup size={size}>
+        <Kbd variant={variant}>⌘</Kbd>
+        <Kbd variant={variant}>K</Kbd>
+      </KbdGroup>
+    );
+
+    return (
+      <VariantGrid
+        columns={columns}
+        renderCell={renderCell}
+        rowLabels="Size"
+        rows={rows}
+      />
+    );
+  },
 };

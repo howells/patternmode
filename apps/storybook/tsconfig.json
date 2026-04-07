@@ -1,5 +1,5 @@
 {
-  "extends": "@patternmode/typescript-config/bundler-dom-app",
+  "extends": "@howells/typescript-config/bundler-dom-app",
   "compilerOptions": {
     "jsx": "react-jsx",
     "types": ["node"]

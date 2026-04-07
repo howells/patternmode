@@ -1,37 +1,93 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
+import { Checkbox } from "../checkbox";
 import { Input } from "../input";
+import { Radio } from "../radio";
+import { RadioGroup } from "../radio-group";
+import { Stack } from "../stack";
+import { Switch } from "../switch";
 import { Label } from "./label-root";
 
-const meta = {
-  title: "Forms/Label",
+type LabelStoryArgs = React.ComponentProps<typeof Label> & {
+  labelText?: string;
+};
+
+const meta: Meta<LabelStoryArgs> = {
+  title: "Label",
   component: Label,
+  argTypes: {
+    // Content
+    children: {
+      control: "text",
+      description: "Label text content",
+    },
+
+    // Advanced (hidden)
+    htmlFor: { table: { disable: true } },
+    className: { table: { disable: true } },
+  },
   args: {
-    children: "Project label",
+    children: "Label",
   },
   parameters: {
-    layout: "centered",
+    builder: {
+      category: "form",
+      icon: "tag",
+    },
+    docs: {
+      description: {
+        component:
+          "Label provides an accessible label for form controls. Associates with form elements via the htmlFor prop.",
+      },
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Label>;
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base interactive story with all controls.
+ */
 export const Base: Story = {};
 
-export const ReviewSurface: Story = {
+/**
+ * Labels paired with various form controls.
+ */
+export const WithFormControls: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          "Label can be paired with any form control using the htmlFor prop for accessibility.",
+      },
+    },
+  },
   render: () => (
-    <Card className="w-[28rem]">
-      <CardHeader>
-        <CardTitle>Labels stay quiet but deliberate</CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-2">
-        <Label htmlFor="label-story">Theme preset name</Label>
-        <Input id="label-story" placeholder="Patternmode Default" />
-      </CardContent>
-    </Card>
+    <Stack gap="lg">
+      <Stack gap="xs">
+        <Label htmlFor="email">Email</Label>
+        <Input id="email" placeholder="you@example.com" />
+      </Stack>
+
+      <Stack direction="row" gap="sm">
+        <Checkbox id="terms" />
+        <Label htmlFor="terms">Accept terms and conditions</Label>
+      </Stack>
+
+      <Stack direction="row" gap="sm">
+        <Switch id="notifications" />
+        <Label htmlFor="notifications">Enable notifications</Label>
+      </Stack>
+
+      <RadioGroup defaultValue="a">
+        <Stack direction="row" gap="sm">
+          <Radio id="option-a" value="a" />
+          <Label htmlFor="option-a">Option A</Label>
+        </Stack>
+      </RadioGroup>
+    </Stack>
   ),
 };

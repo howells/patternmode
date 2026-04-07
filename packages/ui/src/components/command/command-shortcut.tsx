@@ -1,21 +1,23 @@
-import type { ComponentPropsWithoutRef } from "react";
+import { cn } from "@patternmode/ui/utils/cn";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-function CommandShortcut({
+/**
+ * CommandShortcut helper for displaying keyboard shortcuts.
+ * Import from "@patternmode/ui/components/command".
+ */
+export function CommandShortcut({
   className,
   ...props
-}: ComponentPropsWithoutRef<"span">) {
+}: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "ml-auto text-[0.72rem] text-muted-foreground uppercase tracking-[0.08em]",
-        className
+        "ml-auto text-muted-foreground text-xs tracking-widest",
+        className,
       )}
+      data-component="command-shortcut"
       data-slot="command-shortcut"
       {...props}
     />
   );
 }
-
-export { CommandShortcut };

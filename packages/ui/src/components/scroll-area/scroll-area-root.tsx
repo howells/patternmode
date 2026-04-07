@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@patternmode/ui/utils/cn";
 import {
   Corner,
   Root,
@@ -7,23 +8,30 @@ import {
   ScrollAreaThumb,
   Viewport,
 } from "@radix-ui/react-scroll-area";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentProps } from "react";
 
-import { cn } from "../../utils/cn";
-
-export interface ScrollAreaProps extends ComponentPropsWithoutRef<typeof Root> {
+type ScrollAreaProps = ComponentProps<typeof Root> & {
+  /** Allow content to visually overflow the root container. */
   allowOverflow?: boolean;
-  hideScrollbar?: boolean;
+  /** Orientation of the scrollbar. Defaults to "vertical". Set to "horizontal" for horizontal scrolling. */
   orientation?: "vertical" | "horizontal";
+  /** Hide the scrollbar completely while maintaining scroll functionality */
+  hideScrollbar?: boolean;
+  /** Additional classes for the viewport (scrolling container) */
   viewportClassName?: string;
-}
+};
 
+/**
+ * ScrollArea UI component.
+ * Import from "@patternmode/ui/components/scroll-area".
+ * Built on Radix UI primitives for accessible behavior.
+ */
 function ScrollArea({
-  allowOverflow = false,
-  children,
   className,
-  hideScrollbar = false,
+  children,
+  allowOverflow = false,
   orientation = "vertical",
+  hideScrollbar = false,
   viewportClassName,
   ...props
 }: ScrollAreaProps) {
@@ -35,17 +43,19 @@ function ScrollArea({
           (allowOverflow
             ? "overflow-x-hidden overflow-y-visible"
             : "overflow-hidden"),
-        className
+        className,
       )}
+      data-component="scroll-area"
       data-slot="scroll-area"
       {...props}
     >
       <Viewport
         className={cn(
-          "size-full rounded-[inherit]",
+          "size-full rounded-[inherit] outline-none transition-[color,box-shadow] focus-visible:outline-1 focus-visible:ring-[3px] focus-visible:ring-ring/50",
           orientation === "horizontal" && "[&>div]:!block",
-          viewportClassName
+          viewportClassName,
         )}
+        data-component="scroll-area-viewport"
         data-slot="scroll-area-viewport"
       >
         {children}
@@ -59,27 +69,34 @@ function ScrollArea({
   );
 }
 
+/**
+ * ScrollBar UI component.
+ * Import from "@patternmode/ui/components/scroll-area".
+ * Built on Radix UI primitives for accessible behavior.
+ */
 function ScrollBar({
   className,
   orientation = "vertical",
   ...props
-}: ComponentPropsWithoutRef<typeof ScrollAreaScrollbar>) {
+}: ComponentProps<typeof ScrollAreaScrollbar>) {
   return (
     <ScrollAreaScrollbar
       className={cn(
-        "flex touch-none select-none p-px transition-opacity duration-200",
+        "flex touch-none select-none p-px transition-colors",
         orientation === "vertical" &&
           "h-full w-2.5 border-l border-l-transparent",
         orientation === "horizontal" &&
           "h-2.5 flex-col border-t border-t-transparent",
-        className
+        className,
       )}
+      data-component="scroll-area-scrollbar"
       data-slot="scroll-area-scrollbar"
       orientation={orientation}
       {...props}
     >
       <ScrollAreaThumb
-        className="relative flex-1 rounded-full bg-border-strong/90"
+        className="relative flex-1 rounded-full bg-border"
+        data-component="scroll-area-thumb"
         data-slot="scroll-area-thumb"
       />
     </ScrollAreaScrollbar>

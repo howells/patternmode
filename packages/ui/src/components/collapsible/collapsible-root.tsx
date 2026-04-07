@@ -1,24 +1,42 @@
 "use client";
 
-import { Root } from "@radix-ui/react-collapsible";
-import type { ComponentPropsWithoutRef } from "react";
+import { Root as CollapsiblePrimitiveRoot } from "@radix-ui/react-collapsible";
+import { useState } from "react";
+import { CollapsibleContext } from "./collapsible-context";
 
-import { cn } from "../../utils/cn";
-
-function Collapsible({
-  className,
+/**
+ * Collapsible UI component.
+ * Import from "@patternmode/ui/components/collapsible".
+ * Built on Radix UI primitives for accessible behavior.
+ */
+export function Collapsible({
+  open: controlledOpen,
+  onOpenChange,
+  defaultOpen = false,
   ...props
-}: ComponentPropsWithoutRef<typeof Root>) {
+}: React.ComponentProps<typeof CollapsiblePrimitiveRoot>) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const isControlled = controlledOpen !== undefined;
+  const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
+
+  const handleOpenChange = (open: boolean) => {
+    if (!isControlled) {
+      setUncontrolledOpen(open);
+    }
+    onOpenChange?.(open);
+  };
+
   return (
-    <Root
-      className={cn(
-        "rounded-[var(--radius-xl)] border border-border/80 bg-panel/94 shadow-2xs",
-        className
-      )}
-      data-slot="collapsible"
-      {...props}
-    />
+    <CollapsibleContext.Provider
+      value={{ isOpen, setIsOpen: handleOpenChange }}
+    >
+      <CollapsiblePrimitiveRoot
+        data-component="collapsible"
+        data-slot="collapsible"
+        onOpenChange={handleOpenChange}
+        open={isOpen}
+        {...props}
+      />
+    </CollapsibleContext.Provider>
   );
 }
-
-export { Collapsible };

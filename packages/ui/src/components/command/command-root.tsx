@@ -1,31 +1,24 @@
-"use client";
-
+import { cn } from "@patternmode/ui/utils/cn";
 import { Command as CommandPrimitive } from "cmdk";
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from "react";
+import type * as React from "react";
 
-import { cn } from "../../utils/cn";
-
-const Command = forwardRef<
-  ComponentRef<typeof CommandPrimitive>,
-  ComponentPropsWithoutRef<typeof CommandPrimitive>
->(({ className, ...props }, ref) => {
+/**
+ * Command provides the root container for `cmdk` and applies the base styles.
+ * Import from "@patternmode/ui/components/command".
+ */
+export function Command({
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       className={cn(
-        "flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-xl)] bg-panel/98 text-foreground shadow-2xs",
-        className
+        "flex h-full w-full flex-col overflow-hidden rounded-2xl bg-popover text-popover-foreground",
+        className,
       )}
+      data-component="command"
       data-slot="command"
-      ref={ref}
       {...props}
     />
   );
-});
-
-Command.displayName = "Command";
-
-export { Command };
+}

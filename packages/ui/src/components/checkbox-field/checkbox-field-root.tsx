@@ -1,43 +1,52 @@
 "use client";
 
-import { type ReactNode, useId } from "react";
-
-import { cn } from "../../utils/cn";
-import { Checkbox, type CheckboxProps } from "../checkbox";
-import { Label } from "../label";
+import {
+  Checkbox,
+  type CheckboxProps,
+} from "@patternmode/ui/components/checkbox";
+import { Label } from "@patternmode/ui/components/label";
+import { Text } from "@patternmode/ui/components/text";
+import { cn } from "@patternmode/ui/utils/cn";
+import type * as React from "react";
+import { useId } from "react";
+import type { ComponentSize } from "../../lib/size";
 
 export type CheckboxFieldProps = Omit<CheckboxProps, "size"> & {
+  label: React.ReactNode;
+  description?: React.ReactNode;
+  size?: Extract<ComponentSize, "xs" | "sm">;
   checkboxClassName?: string;
-  description?: ReactNode;
-  descriptionClassName?: string;
-  label: ReactNode;
   labelClassName?: string;
-  size?: "sm" | "base";
+  descriptionClassName?: string;
 };
 
-function CheckboxField({
-  checkboxClassName,
-  className,
-  description,
-  descriptionClassName,
-  disabled,
-  id: providedId,
+export function CheckboxField({
   label,
+  description,
+  className,
+  checkboxClassName,
   labelClassName,
-  size = "sm",
+  descriptionClassName,
+  id: idProp,
+  size = "xs",
+  disabled,
+  "aria-describedby": ariaDescribedByProp,
   ...checkboxProps
 }: CheckboxFieldProps) {
   const generatedId = useId();
-  const id = providedId ?? generatedId;
-  const descriptionId = description ? `${id}-description` : undefined;
+  const checkboxId = idProp ?? generatedId;
+  const descriptionId = description ? `${checkboxId}-description` : undefined;
+  const ariaDescribedBy = [ariaDescribedByProp, descriptionId]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className={cn("flex items-start gap-3", className)}>
       <Checkbox
-        aria-describedby={descriptionId}
+        aria-describedby={ariaDescribedBy || undefined}
         className={checkboxClassName}
         disabled={disabled}
-        id={id}
+        id={checkboxId}
         size={size}
         {...checkboxProps}
       />
@@ -45,27 +54,24 @@ function CheckboxField({
         <Label
           className={cn(
             "cursor-pointer font-medium leading-none",
-            disabled && "cursor-not-allowed opacity-60",
-            labelClassName
+            disabled ? "cursor-not-allowed opacity-60" : null,
+            labelClassName,
           )}
-          htmlFor={id}
+          htmlFor={checkboxId}
         >
           {label}
         </Label>
         {description ? (
-          <p
-            className={cn(
-              "text-body text-muted-foreground",
-              descriptionClassName
-            )}
+          <Text
+            className={descriptionClassName}
             id={descriptionId}
+            size="sm"
+            variant="muted"
           >
             {description}
-          </p>
+          </Text>
         ) : null}
       </div>
     </div>
   );
 }
-
-export { CheckboxField };

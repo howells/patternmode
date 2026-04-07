@@ -1,38 +1,77 @@
 "use client";
 
-import type { ButtonHTMLAttributes } from "react";
-
-import type { ComponentSize } from "../../lib/size";
-import { cn } from "../../utils/cn";
+import { cn } from "@patternmode/ui/utils/cn";
+import type { LucideIcon } from "lucide-react";
+import type * as React from "react";
+import { Button, type ButtonAppearance, type ButtonVariant } from "../button";
 import { useInputGroup } from "./input-group-context";
+import {
+  inputGroupButtonHeightClass,
+  inputGroupButtonMarginClass,
+  inputGroupSizeToButtonSize,
+} from "./input-group-variants";
 
-const sizeClasses: Record<ComponentSize, string> = {
-  sm: "px-3 text-[0.82rem]",
-  base: "px-3.5 text-[0.9rem]",
-  lg: "px-4 text-[0.96rem]",
+export type InputGroupButtonProps = Omit<
+  React.ComponentProps<typeof Button>,
+  "size"
+> & {
+  /** Icon to display. */
+  icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  /** Button variant. */
+  variant?: ButtonVariant;
+  /** Button appearance. */
+  appearance?: ButtonAppearance;
 };
 
-function InputGroupButton({
+/**
+ * Button element for use inside InputGroup.
+ * Automatically sizes based on InputGroup context.
+ *
+ * @example
+ * ```tsx
+ * <InputGroup size="base">
+ *   <InputGroupInput value={value} onChange={...} />
+ *   {value && <InputGroupButton icon={X} onClick={() => setValue("")} />}
+ * </InputGroup>
+ * ```
+ */
+export function InputGroupButton({
   className,
-  type = "button",
+  icon,
+  variant = "ghost",
+  appearance,
+  disabled: disabledProp,
+  children,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
-  const { disabled, size } = useInputGroup();
+}: InputGroupButtonProps) {
+  const { size, radius, disabled: contextDisabled } = useInputGroup();
+  const disabled = disabledProp ?? contextDisabled;
+  const buttonSize = inputGroupSizeToButtonSize(size);
+  const marginClass = inputGroupButtonMarginClass(size);
+  const heightClass = inputGroupButtonHeightClass(size);
 
   return (
-    <button
+    <Button
+      appearance={appearance}
       className={cn(
-        "inline-flex items-center justify-center border-border/70 border-l bg-white/85 font-medium text-foreground transition-colors duration-200 ease-[var(--ease-snappy)]",
-        "hover:bg-white disabled:pointer-events-none disabled:opacity-45",
-        sizeClasses[size],
-        className
+        marginClass,
+        // Exact height for consistent 2px gap
+        heightClass,
+        // Nested radius: tighter corners for buttons inside inputs
+        radius === "full" ? "rounded-full" : "rounded-sm",
+        className,
       )}
+      data-component="input-group-button"
       data-slot="input-group-button"
-      disabled={disabled || props.disabled}
-      type={type}
+      disabled={disabled}
+      icon={icon}
+      radius="square"
+      size={buttonSize}
+      square
+      variant={variant}
       {...props}
-    />
+    >
+      {children}
+    </Button>
   );
 }
-
-export { InputGroupButton };

@@ -1,2 +1,2 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Slider, type SliderProps } from "./slider/slider-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export { Slider } from "./slider/slider-root";

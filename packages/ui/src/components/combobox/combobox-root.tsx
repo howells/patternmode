@@ -1,202 +1,240 @@
 "use client";
 
-import {
-  type ButtonHTMLAttributes,
-  useEffect,
-  useId,
-  useMemo,
-  useState,
-} from "react";
-import { cn } from "../../utils/cn";
-import { Button } from "../button";
+import { Button } from "@patternmode/ui/components/button";
 import {
   Command,
   CommandEmpty,
   CommandInput,
   CommandItem,
   CommandList,
-} from "../command";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
-
-function CheckIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M3.5 8.5 6.4 11.4 12.5 5.3"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function ChevronsIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-full"
-      fill="none"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="m4 6 4 4 4-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.6"
-      />
-      <path
-        d="m4 10 4-4 4 4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.6"
-      />
-    </svg>
-  );
-}
+} from "@patternmode/ui/components/command";
+import { Icon } from "@patternmode/ui/components/icon";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@patternmode/ui/components/popover";
+import { cn } from "@patternmode/ui/utils/cn";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
+import type * as React from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+/** Combobox item type definition */
 
 export interface ComboboxItem {
-  keywords?: string[];
   label: string;
   value: string;
 }
 
-export interface ComboboxProps
-  extends Omit<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    "defaultValue" | "onChange" | "value"
-  > {
-  emptyMessage?: string;
-  items: ComboboxItem[];
-  onValueChange?: (value: string) => void;
-  placeholder?: string;
-  searchPlaceholder?: string;
-  value?: string;
+export interface ComboboxVirtualizationOptions {
+  /** Enable virtualization for large lists. */
+  enabled?: boolean;
+  /** Estimated row height in pixels. */
+  estimateSizePx?: number;
+  /** Max height of the list in pixels. */
+  maxHeightPx?: number;
+  /** Number of extra rows to render above/below. */
+  overscan?: number;
 }
 
-function Combobox({
-  className,
-  disabled,
-  emptyMessage = "No results found.",
+export interface ComboboxProps {
+  /** Button class name */
+  buttonClassName?: string;
+  /** Content to display */
+  contentClassName?: string;
+  /** Test id for the trigger button */
+  "data-testid"?: string;
+  /** Whether disabled */
+  disabled?: boolean;
+  /** List of items */
+  items: ComboboxItem[];
+  /** Value change handler */
+  onValueChange?: (value: string) => void;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Current value */
+  value?: string;
+  /** Virtualization settings for large item sets. */
+  virtualization?: ComboboxVirtualizationOptions;
+}
+
+/**
+ * Combobox UI component.
+ * Import from "@patternmode/ui/components/combobox".
+ */
+export function Combobox({
   items,
-  onValueChange,
-  placeholder = "Select an option",
-  searchPlaceholder = "Search…",
   value,
-  ...props
+  onValueChange,
+  placeholder = "Select…",
+  buttonClassName,
+  contentClassName,
+  disabled,
+  virtualization,
+  "data-testid": dataTestId,
 }: ComboboxProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [internalValue, setInternalValue] = useState(value ?? "");
-  const listId = useId();
+  const [internalValue, setInternalValue] = useState<string>(value ?? "");
+  const listboxId = useId();
 
+  // keep controlled in sync
   useEffect(() => {
     if (value !== undefined) {
       setInternalValue(value);
     }
   }, [value]);
 
+  const selected = items.find((i) => i.value === internalValue);
   const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-
-    if (!normalizedQuery) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
       return items;
     }
 
-    return items.filter((item) => {
-      const haystacks = [item.label, item.value, ...(item.keywords ?? [])];
-
-      return haystacks.some((entry) =>
-        entry.toLowerCase().includes(normalizedQuery)
-      );
-    });
+    const results: ComboboxItem[] = [];
+    for (const item of items) {
+      const label = item.label.toLowerCase();
+      const val = item.value.toLowerCase();
+      if (label.includes(q) || val.includes(q)) {
+        results.push(item);
+      }
+    }
+    return results;
   }, [items, query]);
 
-  const selectedItem = items.find((item) => item.value === internalValue);
+  const shouldVirtualize = Boolean(virtualization?.enabled);
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const rowVirtualizer = useVirtualizer({
+    count: shouldVirtualize ? filteredItems.length : 0,
+    getScrollElement: () => listRef.current,
+    estimateSize: () => virtualization?.estimateSizePx ?? 36,
+    overscan: virtualization?.overscan ?? 8,
+    enabled: shouldVirtualize,
+  });
+  const listStyle: React.CSSProperties | undefined = shouldVirtualize
+    ? {
+        maxHeight: virtualization?.maxHeightPx ?? 300,
+        overflowY: "auto",
+      }
+    : undefined;
 
   return (
     <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          aria-controls={listId}
+          appearance="outline"
+          aria-controls={listboxId}
           aria-expanded={open}
-          className={cn(
-            "w-full justify-between text-left font-normal",
-            className
-          )}
-          data-slot="combobox-trigger"
+          className={cn("w-full justify-between font-normal", buttonClassName)}
+          data-component="combobox"
+          data-testid={dataTestId}
           disabled={disabled}
+          pressed={false}
           role="combobox"
-          type="button"
+          suffixIcon={ChevronsUpDownIcon}
+          suffixIconClassName="opacity-50"
           variant="secondary"
-          {...props}
         >
-          <span
-            className={cn(
-              "truncate",
-              selectedItem ? "text-foreground" : "text-muted-foreground"
-            )}
-          >
-            {selectedItem?.label ?? placeholder}
-          </span>
-          <span className="size-4 shrink-0 text-muted-foreground">
-            <ChevronsIcon />
-          </span>
+          {selected?.label ?? placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="w-[var(--radix-popover-trigger-width)] min-w-[14rem] p-0"
+        className={cn(
+          "w-[var(--radix-popover-trigger-width)] min-w-[8rem] p-0",
+          contentClassName,
+        )}
       >
         <Command shouldFilter={false}>
           <CommandInput
+            className="h-9"
             onValueChange={setQuery}
-            placeholder={searchPlaceholder}
+            placeholder={"Search…"}
             value={query}
           />
-          <CommandList id={listId}>
-            <CommandEmpty>{emptyMessage}</CommandEmpty>
-            {filteredItems.map((item) => (
-              <CommandItem
-                key={item.value}
-                onSelect={() => {
-                  const nextValue =
-                    item.value === internalValue ? "" : item.value;
+          <CommandList id={listboxId} ref={listRef} style={listStyle}>
+            <CommandEmpty>No results found.</CommandEmpty>
 
-                  setInternalValue(nextValue);
-                  onValueChange?.(nextValue);
-                  setOpen(false);
-                  setQuery("");
-                }}
-                value={item.value}
+            {shouldVirtualize ? (
+              <div
+                className="relative w-full"
+                style={{ height: rowVirtualizer.getTotalSize() }}
               >
-                {item.label}
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "ml-auto size-4 text-accent transition-opacity",
-                    internalValue === item.value ? "opacity-100" : "opacity-0"
-                  )}
+                {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                  const item = filteredItems[virtualRow.index];
+                  if (!item) {
+                    return null;
+                  }
+
+                  return (
+                    <div
+                      className="absolute left-0 w-full"
+                      key={item.value}
+                      style={{
+                        height: virtualRow.size,
+                        transform: `translateY(${virtualRow.start}px)`,
+                      }}
+                    >
+                      <CommandItem
+                        onSelect={() => {
+                          // Use item.value directly - cmdk lowercases currentValue
+                          // which breaks UUID matching
+                          const next =
+                            item.value === internalValue ? "" : item.value;
+                          onValueChange?.(next);
+                          setInternalValue(next);
+                          setOpen(false);
+                          setQuery("");
+                        }}
+                        value={item.value}
+                      >
+                        {item.label}
+                        <Icon
+                          className={cn(
+                            "ml-auto",
+                            internalValue === item.value
+                              ? "opacity-100"
+                              : "opacity-0",
+                          )}
+                          icon={CheckIcon}
+                        />
+                      </CommandItem>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              filteredItems.map((item) => (
+                <CommandItem
+                  key={item.value}
+                  onSelect={() => {
+                    // Use item.value directly - cmdk lowercases currentValue
+                    // which breaks UUID matching
+                    const next = item.value === internalValue ? "" : item.value;
+                    onValueChange?.(next);
+                    setInternalValue(next);
+                    setOpen(false);
+                    setQuery("");
+                  }}
+                  value={item.value}
                 >
-                  <CheckIcon />
-                </span>
-              </CommandItem>
-            ))}
+                  {item.label}
+                  <Icon
+                    className={cn(
+                      "ml-auto",
+                      internalValue === item.value
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                    icon={CheckIcon}
+                  />
+                </CommandItem>
+              ))
+            )}
           </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
   );
 }
-
-export { Combobox };

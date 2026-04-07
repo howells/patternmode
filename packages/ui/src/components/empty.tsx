@@ -1,10 +1,9 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export {
-  Empty,
-  EmptyActions,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  type EmptyProps,
-  EmptyTitle,
-} from "./empty/empty-root";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+"use client";
+
+export { EmptyActions } from "./empty/empty-actions";
+export { EmptyDescription } from "./empty/empty-description";
+export { EmptyHeader } from "./empty/empty-header";
+export { EmptyMedia } from "./empty/empty-media";
+export { Empty } from "./empty/empty-root";
+export { EmptyTitle } from "./empty/empty-title";

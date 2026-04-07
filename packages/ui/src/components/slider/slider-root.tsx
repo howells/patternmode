@@ -1,73 +1,85 @@
 "use client";
 
+import { cn } from "@patternmode/ui/utils/cn";
 import { Range, Root, Thumb, Track } from "@radix-ui/react-slider";
-import { type ComponentPropsWithoutRef, useMemo } from "react";
+import type React from "react";
+import { useMemo } from "react";
 
-import { cn } from "../../utils/cn";
-
-export interface SliderProps extends ComponentPropsWithoutRef<typeof Root> {}
-
+/**
+ * Slider UI component.
+ * Import from "@patternmode/ui/components/slider".
+ * Built on Radix UI primitives for accessible behavior.
+ */
 function Slider({
   className,
   defaultValue,
-  max = 100,
-  min = 0,
   value,
+  min = 0,
+  max = 100,
   ...props
-}: SliderProps) {
-  const values = useMemo(() => {
-    if (Array.isArray(value)) {
-      return value;
-    }
+}: React.ComponentProps<typeof Root>) {
+  // Coerce single number to array for ergonomic API
+  const normalizedDefault = useMemo(() => {
+    if (Array.isArray(defaultValue)) return defaultValue;
+    if (typeof defaultValue === "number") return [defaultValue];
+    return undefined;
+  }, [defaultValue]);
 
-    if (Array.isArray(defaultValue)) {
-      return defaultValue;
-    }
+  const normalizedValue = useMemo(() => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === "number") return [value];
+    return undefined;
+  }, [value]);
 
-    return [min];
-  }, [defaultValue, min, value]);
+  const _values = useMemo(() => {
+    if (normalizedValue) return normalizedValue;
+    if (normalizedDefault) return normalizedDefault;
+    return [min, max];
+  }, [normalizedValue, normalizedDefault, min, max]);
+  const thumbKeys = useMemo(
+    () =>
+      Array.from(
+        { length: _values.length },
+        (_, index) => `slider-thumb-${index}`,
+      ),
+    [_values.length],
+  );
 
   return (
     <Root
       className={cn(
-        "relative flex w-full touch-none select-none items-center py-3",
-        "data-[orientation=vertical]:h-48 data-[orientation=vertical]:w-6 data-[orientation=vertical]:flex-col",
-        "data-[disabled]:opacity-45",
-        className
+        "relative flex w-full touch-none select-none items-center py-3 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[disabled]:opacity-50",
+        className,
       )}
+      data-component="slider"
       data-slot="slider"
-      defaultValue={defaultValue}
+      defaultValue={normalizedDefault}
       max={max}
       min={min}
-      value={value}
+      value={normalizedValue}
       {...props}
     >
       <Track
         className={cn(
-          "relative grow overflow-hidden rounded-full bg-secondary/90",
-          "data-[orientation=horizontal]:h-2 data-[orientation=horizontal]:w-full",
-          "data-[orientation=vertical]:h-full data-[orientation=vertical]:w-2"
+          "relative grow overflow-hidden rounded-full bg-gray-200 data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-1.5",
         )}
+        data-component="slider-track"
         data-slot="slider-track"
       >
         <Range
           className={cn(
-            "absolute bg-accent",
-            "data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+            "absolute bg-gray-500 data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
           )}
+          data-component="slider-range"
           data-slot="slider-range"
         />
       </Track>
-
-      {values.map((currentValue) => (
+      {thumbKeys.map((thumbKey) => (
         <Thumb
-          className={cn(
-            "block size-5 rounded-full border border-white bg-panel shadow-sm outline-none transition-[box-shadow,border-color]",
-            "after:absolute after:inset-1 after:rounded-full after:bg-accent",
-            "focus-visible:ring-4 focus-visible:ring-ring/15 disabled:pointer-events-none disabled:opacity-45"
-          )}
+          className="relative block size-6 shrink-0 rounded-full border border-gray-200 bg-white shadow-lg ring-gray-400/30 transition-[color,box-shadow] after:absolute after:top-1/2 after:left-1/2 after:size-3 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-gray-500 hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50"
+          data-component="slider-thumb"
           data-slot="slider-thumb"
-          key={`slider-thumb-${currentValue}`}
+          key={thumbKey}
         />
       ))}
     </Root>

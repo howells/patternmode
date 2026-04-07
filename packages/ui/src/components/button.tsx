@@ -1,3 +1,11 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package entrypoint */
-export { Button, type ButtonProps } from "./button/button-root";
-export { BUTTON_VARIANTS, buttonVariants } from "./button/button-variants";
+/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
+export {
+  BUTTON_APPEARANCES,
+  BUTTON_VARIANTS,
+  Button,
+  type ButtonAppearance,
+  type ButtonProps,
+  type ButtonSize,
+  type ButtonVariant,
+  buttonVariants,
+} from "./button/button-root";

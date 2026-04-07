@@ -1,48 +1,132 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { Button } from "../button";
-import { AlertDialogContent } from "./alert-dialog-content";
+import "@patternmode/tailwind-config/shared-styles.css";
+import type React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog-root";
+} from "../alert-dialog";
+import { Button } from "../button";
 
-const meta = {
-  title: "Feedback/Alert Dialog",
+type AlertDialogStoryArgs = React.ComponentProps<typeof AlertDialog> & {
+  triggerText?: string;
+  title?: string;
+  description?: string;
+  cancelText?: string;
+  actionText?: string;
+};
+
+const meta: Meta<AlertDialogStoryArgs> = {
+  title: "AlertDialog",
   component: AlertDialog,
-  parameters: {
-    layout: "centered",
+  argTypes: {
+    // Content
+    triggerText: {
+      control: "text",
+      description: "Text for the trigger button",
+    },
+    title: {
+      control: "text",
+      description: "Alert dialog title",
+    },
+    description: {
+      control: "text",
+      description: "Alert dialog description",
+    },
+    cancelText: {
+      control: "text",
+      description: "Cancel button text",
+    },
+    actionText: {
+      control: "text",
+      description: "Action button text",
+    },
   },
-  tags: ["autodocs"],
-} satisfies Meta<typeof AlertDialog>;
+  args: {
+    triggerText: "Delete project…",
+    title: "Are you absolutely sure?",
+    description:
+      "This action cannot be undone. This will permanently delete the project and remove your data from our servers.",
+    cancelText: "Cancel",
+    actionText: "Continue",
+  },
+  parameters: {
+    builder: {
+      category: "container",
+      icon: "alert-triangle",
+    },
+    docs: {
+      description: {
+        component:
+          "Interrupts users with important content requiring action. Use for confirmations, warnings, or critical information.",
+      },
+    },
+  },
+};
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Base interactive story with all controls.
+ */
 export const Base: Story = {
-  render: () => (
+  render: (args) => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete package story</Button>
+        <Button>{args.triggerText}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete this review surface?</AlertDialogTitle>
+          <AlertDialogTitle>{args.title}</AlertDialogTitle>
+          <AlertDialogDescription>{args.description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{args.cancelText}</AlertDialogCancel>
+          <AlertDialogAction>{args.actionText}</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  ),
+};
+
+/**
+ * Destructive variant for dangerous actions.
+ */
+export const Destructive: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          "Use the destructive variant for irreversible or dangerous actions.",
+      },
+    },
+  },
+  render: () => (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive">Delete account…</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete your account?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action removes the story from the package and makes regression
-            review harder for downstream teams.
+            This will permanently delete your account and all associated data.
+            This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Delete story</AlertDialogAction>
+          <AlertDialogAction asChild>
+            <Button variant="destructive">Delete account</Button>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
