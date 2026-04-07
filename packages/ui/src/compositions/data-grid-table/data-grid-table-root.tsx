@@ -3,6 +3,7 @@ import { useDataGrid } from "@patternmode/ui/compositions/data-grid";
 import type { Cell, HeaderGroup, Row } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Fragment, useRef } from "react";
+import { DataGridScrollSentinel } from "../data-grid/data-grid-scroll-sentinel";
 import {
   DataGridTableBody,
   DataGridTableBodyRow,
@@ -11,6 +12,7 @@ import {
   DataGridTableBodyRowSkeleton,
   DataGridTableBodyRowSkeletonCell,
   DataGridTableEmpty,
+  DataGridTableFooter,
   DataGridTableRowSpacer,
   flexRender,
 } from "./data-grid-table-body";
@@ -228,6 +230,16 @@ function DataGridTable<TData extends object>() {
                       <td style={{ height: `${paddingBottom}px` }} />
                     </tr>
                   )}
+                  {props.onEndReached && (
+                    <tr>
+                      <td colSpan={table.getVisibleFlatColumns().length}>
+                        <DataGridScrollSentinel
+                          onEndReached={props.onEndReached}
+                          threshold={props.endReachedThreshold}
+                        />
+                      </td>
+                    </tr>
+                  )}
                 </>
               );
             }
@@ -236,6 +248,8 @@ function DataGridTable<TData extends object>() {
             return <DataGridTableEmpty />;
           })()}
         </DataGridTableBody>
+
+        <DataGridTableFooter />
       </DataGridTableBase>
     </div>
   );
@@ -249,6 +263,7 @@ export {
   DataGridTableBodyRowSkeleton,
   DataGridTableBodyRowSkeletonCell,
   DataGridTableEmpty,
+  DataGridTableFooter,
   DataGridTableLoader,
   DataGridTableRowSelect,
   DataGridTableRowSelectAll,

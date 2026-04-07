@@ -9,6 +9,7 @@ export {
   DataGridTableBodyRowSkeleton,
   DataGridTableBodyRowSkeletonCell,
   DataGridTableEmpty,
+  DataGridTableFooter,
   DataGridTableHead,
   DataGridTableHeadRow,
   DataGridTableHeadRowCell,

@@ -52,11 +52,15 @@ export interface DataGridProps<TData extends object> {
   children?: ReactNode;
   className?: string;
   emptyMessage?: ReactNode | string;
+  /** Distance from bottom (px) to trigger onEndReached. Default 200. */
+  endReachedThreshold?: number;
   /** Initial pinned columns (applied once). */
   initialColumnPinning?: ColumnPinningState;
   isLoading?: boolean;
   loadingMessage?: ReactNode | string;
   loadingMode?: "skeleton" | "spinner";
+  /** Called when scroll reaches the bottom (for infinite scroll). */
+  onEndReached?: () => void;
   onRowClick?: (row: TData) => void;
   recordCount: number;
   table?: Table<TData>;

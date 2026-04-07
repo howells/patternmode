@@ -65,6 +65,8 @@ export interface DataGridProps<TData extends object> {
   className?: string;
   /** Empty message */
   emptyMessage?: ReactNode | string;
+  /** Distance from bottom (px) to trigger onEndReached. Default 200. */
+  endReachedThreshold?: number;
   /** Initial pinned columns (applied once). */
   initialColumnPinning?: ColumnPinningState;
   /** Whether in loading state */
@@ -73,6 +75,8 @@ export interface DataGridProps<TData extends object> {
   loadingMessage?: ReactNode | string;
   /** Loading state */
   loadingMode?: "skeleton" | "spinner";
+  /** Called when scroll reaches the bottom (for infinite scroll). */
+  onEndReached?: () => void;
   /** On row click */
   onRowClick?: (row: TData) => void;
   /** Record count */
@@ -332,6 +336,10 @@ export {
   DataGridRowSelectAll,
 } from "./data-grid/data-grid-checkbox";
 export {
+  DataGridEditableCell,
+  type DataGridEditableCellProps,
+} from "./data-grid/data-grid-editable-cell";
+export {
   createExpanderColumn,
   DataGridExpandToggle,
 } from "./data-grid/data-grid-expand";
@@ -339,4 +347,8 @@ export {
   DataGridFilterableHeader,
   type FilterOption,
 } from "./data-grid/data-grid-filterable-header";
+export {
+  DataGridScrollSentinel,
+  type DataGridScrollSentinelProps,
+} from "./data-grid/data-grid-scroll-sentinel";
 export { DataGrid, DataGridContainer, DataGridProvider, useDataGrid };

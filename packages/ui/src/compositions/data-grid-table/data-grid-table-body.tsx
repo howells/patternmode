@@ -2,7 +2,12 @@
 import { useDataGrid } from "@patternmode/ui/compositions/data-grid";
 import type { ComponentSize } from "@patternmode/ui/lib/size";
 import { cn } from "@patternmode/ui/utils/cn";
-import type { Cell, Column, Row } from "@tanstack/react-table";
+import {
+  type Cell,
+  type Column,
+  flexRender,
+  type Row,
+} from "@tanstack/react-table";
 import type * as React from "react";
 import type { CSSProperties, ReactNode } from "react";
 import "../data-grid/data-grid-types";
@@ -344,6 +349,48 @@ function DataGridTableRowSelectAll({ size }: { size?: ComponentSize }) {
   );
 }
 
+/**
+ * Table footer for aggregate/summary rows.
+ * Renders `tfoot` with footer groups from TanStack Table column definitions.
+ * Only renders if at least one column has a `footer` defined.
+ */
+function DataGridTableFooter<TData extends object>() {
+  const { table, props } = useDataGrid<TData>();
+  const footerGroups = table.getFooterGroups();
+
+  const hasFooter = footerGroups.some((fg) =>
+    fg.headers.some((h) => h.column.columnDef.footer),
+  );
+
+  if (!hasFooter) {
+    return null;
+  }
+
+  return (
+    <tfoot
+      className={cn("border-t border-border", props.tableClassNames?.footer)}
+    >
+      {footerGroups.map((footerGroup) => (
+        <tr key={footerGroup.id} className="bg-muted/30">
+          {footerGroup.headers.map((header) => (
+            <td
+              key={header.id}
+              className="px-3 py-2 text-xs font-medium text-muted-foreground"
+            >
+              {header.isPlaceholder
+                ? null
+                : flexRender(
+                    header.column.columnDef.footer,
+                    header.getContext(),
+                  )}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tfoot>
+  );
+}
+
 export { flexRender } from "@tanstack/react-table";
 export {
   DataGridTableBody,
@@ -353,6 +400,7 @@ export {
   DataGridTableBodyRowSkeleton,
   DataGridTableBodyRowSkeletonCell,
   DataGridTableEmpty,
+  DataGridTableFooter,
   DataGridTableLoader,
   DataGridTableRowSelect,
   DataGridTableRowSelectAll,
