@@ -3,11 +3,9 @@
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
-import { Dot } from "@patternmode/ui/components/dot";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Icon } from "@patternmode/ui/components/icon";
 import { MenuItem } from "@patternmode/ui/components/menu-item";
-import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
 import {
@@ -224,50 +222,33 @@ function IssueRow({ issue }: { issue: Issue }) {
   return (
     <HStack
       align="center"
-      gap="sm"
+      gap="xs"
       className="group h-9 cursor-default px-4 transition-colors hover:bg-muted/50"
     >
-      {/* ID */}
-      <Text size="2xs" variant="muted" className="w-16 shrink-0 tabular-nums">
-        {issue.id}
-      </Text>
-
-      {/* Priority icon */}
-      <Icon
-        icon={PRIORITY_ICON[issue.priority]}
-        size="2xs"
-        className="shrink-0 text-muted-foreground"
-      />
-
-      {/* Status icon — colored */}
+      {/* Status icon — the primary visual indicator */}
       <Icon
         icon={STATUS_ICON[issue.status]}
-        size="2xs"
+        size="xs"
         className={`shrink-0 ${STATUS_COLOR[issue.status]}`}
       />
 
-      {/* Title */}
+      {/* ID + Title together */}
+      <Text size="2xs" variant="muted" className="shrink-0 tabular-nums">
+        {issue.id}
+      </Text>
       <Text size="sm" className="min-w-0 flex-1 truncate">
         {issue.title}
       </Text>
 
-      {/* Label */}
+      {/* Right side — label, date, avatar — tightly grouped */}
       {issue.label && (
-        <Badge variant="secondary" size="2xs" appearance="outline">
+        <Text size="2xs" variant="muted" className="shrink-0">
           {issue.label}
-        </Badge>
+        </Text>
       )}
-
-      {/* Date */}
-      <Text
-        size="2xs"
-        variant="muted"
-        className="w-14 shrink-0 text-right tabular-nums"
-      >
+      <Text size="2xs" variant="muted" className="shrink-0 tabular-nums">
         {issue.date}
       </Text>
-
-      {/* Assignee */}
       <Avatar size="2xs">
         <AvatarFallback name={issue.assignee} size="2xs" />
       </Avatar>
@@ -329,7 +310,7 @@ export default function LinearDemo() {
             size="2xs"
             variant="muted"
             weight="medium"
-            className="px-2 pb-1 uppercase tracking-wider"
+            className="px-2 pb-1 text-[10px] uppercase tracking-widest"
           >
             Your Teams
           </Text>
