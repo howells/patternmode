@@ -8,13 +8,22 @@ import { Icon } from "@patternmode/ui/components/icon";
 import { MenuItem } from "@patternmode/ui/components/menu-item";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@patternmode/ui/components/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@patternmode/ui/components/tabs";
 import { Text } from "@patternmode/ui/components/text";
+import {
+  DataGrid,
+  DataGridContainer,
+} from "@patternmode/ui/compositions/data-grid";
+import { DataGridTable } from "@patternmode/ui/compositions/data-grid-table";
+import {
+  type ColumnDef,
+  type ColumnFiltersState,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import {
   AlertTriangle,
   ArrowUpCircle,
@@ -36,8 +45,9 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { useState } from "react";
 
-/* ── Data ─────────────────────────────────────────────────────────── */
+/* -- Data --------------------------------------------------------- */
 
 const TEAMS = [
   { name: "Engineering", color: "#3b82f6" },
@@ -74,7 +84,7 @@ const STATUS_COLOR: Record<Status, string> = {
   cancelled: "text-destructive",
 };
 
-const PRIORITY_ICON: Record<Issue["priority"], typeof Circle> = {
+const _PRIORITY_ICON: Record<Issue["priority"], typeof Circle> = {
   urgent: AlertTriangle,
   high: SignalHigh,
   medium: SignalMedium,
@@ -216,58 +226,154 @@ const ISSUES: Issue[] = [
   },
 ];
 
-/* ── Issue Row ────────────────────────────────────────────────────── */
+/* -- Tab filter values -------------------------------------------- */
 
-function IssueRow({ issue }: { issue: Issue }) {
-  return (
-    <HStack
-      align="center"
-      gap="xs"
-      className="group h-9 cursor-default px-4 transition-colors hover:bg-muted/50"
-    >
-      {/* Status icon — the primary visual indicator */}
-      <Icon
-        icon={STATUS_ICON[issue.status]}
-        size="xs"
-        className={`shrink-0 ${STATUS_COLOR[issue.status]}`}
-      />
+const TAB_FILTER_MAP: Record<string, Status[] | undefined> = {
+  all: undefined,
+  active: ["in-progress", "todo"],
+  backlog: ["backlog"],
+  done: ["done"],
+};
 
-      {/* ID + Title together */}
-      <Text size="2xs" variant="muted" className="shrink-0 tabular-nums">
-        {issue.id}
-      </Text>
-      <Text size="sm" className="min-w-0 flex-1 truncate">
-        {issue.title}
-      </Text>
+/* -- Columns ------------------------------------------------------ */
 
-      {/* Right side — label, date, avatar — tightly grouped */}
-      {issue.label && (
-        <Text size="2xs" variant="muted" className="shrink-0">
-          {issue.label}
-        </Text>
-      )}
-      <Text size="2xs" variant="muted" className="shrink-0 tabular-nums">
-        {issue.date}
-      </Text>
+const columnHelper = createColumnHelper<Issue>();
+
+const columns: ColumnDef<Issue, unknown>[] = [
+  columnHelper.accessor("status", {
+    header: "",
+    size: 32,
+    enableSorting: false,
+    cell: ({ row }) => {
+      const status = row.original.status;
+      const StatusIcon = STATUS_ICON[status];
+      return (
+        <Icon
+          icon={StatusIcon}
+          size="xs"
+          className={`shrink-0 ${STATUS_COLOR[status]}`}
+        />
+      );
+    },
+    filterFn: (row, _columnId, filterValue: Status[] | undefined) => {
+      if (!filterValue || filterValue.length === 0) return true;
+      return filterValue.includes(row.original.status);
+    },
+    meta: {
+      cellClassName: "!px-0 !pl-4 !pr-0",
+      headerClassName: "!px-0 !pl-4 !pr-0",
+    },
+  }) as ColumnDef<Issue, unknown>,
+  columnHelper.accessor("id", {
+    header: "",
+    size: 72,
+    enableSorting: false,
+    cell: ({ getValue }) => (
+      <span className="text-muted-foreground text-xs tabular-nums">
+        {getValue()}
+      </span>
+    ),
+    meta: {
+      cellClassName: "!px-0 !pl-1.5 !pr-0",
+      headerClassName: "!px-0 !pl-1.5 !pr-0",
+    },
+  }) as ColumnDef<Issue, unknown>,
+  columnHelper.accessor("title", {
+    header: "",
+    enableSorting: false,
+    cell: ({ getValue }) => (
+      <span className="truncate text-sm">{getValue()}</span>
+    ),
+    meta: {
+      cellClassName: "!pl-1.5 truncate",
+      headerClassName: "!pl-1.5",
+    },
+  }) as ColumnDef<Issue, unknown>,
+  columnHelper.accessor("label", {
+    header: "",
+    size: 72,
+    enableSorting: false,
+    cell: ({ getValue }) => {
+      const label = getValue();
+      if (!label) return null;
+      return <span className="text-muted-foreground text-xs">{label}</span>;
+    },
+    meta: {
+      cellClassName: "!px-1.5",
+      headerClassName: "!px-1.5",
+    },
+  }) as ColumnDef<Issue, unknown>,
+  columnHelper.accessor("date", {
+    header: "",
+    size: 64,
+    enableSorting: false,
+    cell: ({ getValue }) => (
+      <span className="text-muted-foreground text-xs tabular-nums">
+        {getValue()}
+      </span>
+    ),
+    meta: {
+      cellClassName: "!px-1.5",
+      headerClassName: "!px-1.5",
+    },
+  }) as ColumnDef<Issue, unknown>,
+  columnHelper.accessor("assignee", {
+    header: "",
+    size: 36,
+    enableSorting: false,
+    cell: ({ getValue }) => (
       <Avatar size="2xs">
-        <AvatarFallback name={issue.assignee} size="2xs" />
+        <AvatarFallback name={getValue()} size="2xs" />
       </Avatar>
-    </HStack>
-  );
-}
+    ),
+    meta: {
+      cellClassName: "!px-0 !pr-4 !pl-0",
+      headerClassName: "!px-0 !pr-4 !pl-0",
+    },
+  }) as ColumnDef<Issue, unknown>,
+];
 
-/* ── Page ─────────────────────────────────────────────────────────── */
+/* -- Counts ------------------------------------------------------- */
+
+const active = ISSUES.filter(
+  (i) => i.status === "in-progress" || i.status === "todo",
+);
+const backlog = ISSUES.filter((i) => i.status === "backlog");
+const done = ISSUES.filter((i) => i.status === "done");
+
+/* -- Page --------------------------------------------------------- */
 
 export default function LinearDemo() {
-  const active = ISSUES.filter(
-    (i) => i.status === "in-progress" || i.status === "todo",
-  );
-  const backlog = ISSUES.filter((i) => i.status === "backlog");
-  const done = ISSUES.filter((i) => i.status === "done");
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const table = useReactTable({
+    data: ISSUES,
+    columns,
+    state: {
+      columnFilters,
+    },
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  function handleTabChange(value: string) {
+    setActiveTab(value);
+    const statuses = TAB_FILTER_MAP[value];
+    if (statuses) {
+      setColumnFilters([{ id: "status", value: statuses }]);
+    } else {
+      setColumnFilters([]);
+    }
+  }
+
+  const filteredCount = table.getFilteredRowModel().rows.length;
 
   return (
     <Flex fullHeight>
-      {/* ── Sidebar ────────────────────────────────────────────── */}
+      {/* -- Sidebar ------------------------------------------------ */}
       <VStack
         noShrink
         gap="none"
@@ -348,7 +454,7 @@ export default function LinearDemo() {
         </VStack>
       </VStack>
 
-      {/* ── Main ───────────────────────────────────────────────── */}
+      {/* -- Main --------------------------------------------------- */}
       <VStack grow truncate gap="none">
         {/* Header */}
         <VStack gap="xs" className="px-4 pt-3 pb-0">
@@ -375,9 +481,10 @@ export default function LinearDemo() {
           </Flex>
         </VStack>
 
-        {/* Tabs + content */}
+        {/* Tabs + DataGrid */}
         <Tabs
-          defaultValue="all"
+          value={activeTab}
+          onValueChange={handleTabChange}
           variant="line"
           size="xs"
           className="flex min-h-0 flex-1 flex-col"
@@ -397,37 +504,27 @@ export default function LinearDemo() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="all" className="flex-1 overflow-y-auto">
-            <VStack gap="none">
-              {ISSUES.map((issue) => (
-                <IssueRow key={issue.id} issue={issue} />
-              ))}
-            </VStack>
-          </TabsContent>
-
-          <TabsContent value="active" className="flex-1 overflow-y-auto">
-            <VStack gap="none">
-              {active.map((issue) => (
-                <IssueRow key={issue.id} issue={issue} />
-              ))}
-            </VStack>
-          </TabsContent>
-
-          <TabsContent value="backlog" className="flex-1 overflow-y-auto">
-            <VStack gap="none">
-              {backlog.map((issue) => (
-                <IssueRow key={issue.id} issue={issue} />
-              ))}
-            </VStack>
-          </TabsContent>
-
-          <TabsContent value="done" className="flex-1 overflow-y-auto">
-            <VStack gap="none">
-              {done.map((issue) => (
-                <IssueRow key={issue.id} issue={issue} />
-              ))}
-            </VStack>
-          </TabsContent>
+          <div className="flex-1 overflow-y-auto">
+            <DataGrid
+              recordCount={filteredCount}
+              table={table}
+              tableLayout={{
+                dense: true,
+                rowBorder: false,
+                headerBorder: true,
+                headerBackground: false,
+                headerSticky: true,
+                rowHeight: 36,
+              }}
+              tableClassNames={{
+                headerSticky: "sticky top-0 z-10 bg-background",
+              }}
+            >
+              <DataGridContainer border="none">
+                <DataGridTable />
+              </DataGridContainer>
+            </DataGrid>
+          </div>
         </Tabs>
       </VStack>
     </Flex>

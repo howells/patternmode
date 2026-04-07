@@ -312,7 +312,7 @@ function DataGridContainer({
   return (
     <div
       className={cn(
-        "grid w-full overflow-hidden rounded-3xl bg-card",
+        "grid w-full overflow-hidden rounded-xl bg-card",
         borderClasses,
         className,
       )}

@@ -14,11 +14,12 @@
     "@patternmode/tailwind-config": "workspace:*",
     "@patternmode/transition": "workspace:*",
     "@patternmode/ui": "workspace:*",
-    "lucide-react": "^0.577.0",
+    "@tanstack/react-table": "^8.21.3",
     "fumadocs-core": "^16.7.10",
     "fumadocs-mdx": "^14.2.11",
     "fumadocs-typescript": "^4.0.5",
     "fumadocs-ui": "^16.7.10",
+    "lucide-react": "^0.577.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
