@@ -754,3 +754,29 @@
 @utility animate-shimmer {
   animation: shimmer 2s ease-in-out infinite;
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(calc(-100% - 1rem));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee linear infinite;
+}
+
+@utility animate-marquee-reverse {
+  animation: marquee-reverse linear infinite;
+}
