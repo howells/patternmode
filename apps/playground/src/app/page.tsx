@@ -11,6 +11,17 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@patternmode/ui/components/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@patternmode/ui/components/alert-dialog";
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import {
@@ -32,6 +43,11 @@ import {
 } from "@patternmode/ui/components/card";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
 import { CheckboxField } from "@patternmode/ui/components/checkbox-field";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@patternmode/ui/components/collapsible";
 import {
   Command,
   CommandEmpty,
@@ -113,6 +129,7 @@ import {
   SheetTrigger,
 } from "@patternmode/ui/components/sheet";
 import { Skeleton } from "@patternmode/ui/components/skeleton";
+import { Spinner } from "@patternmode/ui/components/spinner";
 import { Switch } from "@patternmode/ui/components/switch";
 import {
   Tabs,
@@ -181,6 +198,11 @@ const primitives = [
     name: "Navigation + Workspace",
     summary:
       "Breadcrumbs, pagination, command search, and sheets for broader product shells.",
+  },
+  {
+    name: "Feedback + Confirmation",
+    summary:
+      "Alert dialogs, collapsible disclosures, and loading indicators for real product edges.",
   },
 ];
 
@@ -838,6 +860,90 @@ export default function Page() {
                 </CommandGroup>
               </CommandList>
             </Command>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1fr_1fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Confirmation flows</Badge>
+            <CardTitle>Risky actions need a shared last checkpoint</CardTitle>
+            <CardDescription>
+              Deletion, destructive publishing, and irreversible changes should
+              not be re-designed separately in every downstream app.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">
+                  Delete downstream override
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Remove this downstream wrapper?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    The product will fall back to the upstream primitive, and
+                    app-specific presentation hooks may need to be rebuilt more
+                    cleanly afterwards.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>Delete override</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
+            <Collapsible defaultOpen>
+              <CollapsibleTrigger>
+                Why add confirmation and disclosure now?
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                Because “usable shared library” includes the awkward edges:
+                dangerous actions, compact reveal patterns, and loading states,
+                not only happy-path controls.
+              </CollapsibleContent>
+            </Collapsible>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Feedback states
+            </p>
+            <CardTitle>
+              Loading should feel deliberate, not incidental
+            </CardTitle>
+            <CardDescription>
+              Even the smallest feedback primitives need a consistent visual
+              pace if the library is going to feel production-grade.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="flex items-center gap-3 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 px-4 py-3">
+              <Spinner size="sm" />
+              <p className="text-body text-muted-foreground">
+                Rebuilding package stories
+              </p>
+            </div>
+            <div className="flex items-center gap-3 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 px-4 py-3">
+              <Spinner className="text-accent" />
+              <p className="text-body text-muted-foreground">
+                Syncing navigation shell primitives
+              </p>
+            </div>
+            <div className="flex items-center gap-3 rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 px-4 py-3">
+              <Spinner size="lg" />
+              <p className="text-body text-muted-foreground">
+                Publishing canonical upstream release
+              </p>
+            </div>
           </CardContent>
         </Card>
       </section>
