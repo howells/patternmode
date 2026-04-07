@@ -22,9 +22,11 @@ const cardVariants = cva(
   },
 );
 
+/** Props for the Card container component. */
 interface CardProps
   extends WithTestId<React.ComponentProps<"div">>,
     VariantProps<typeof cardVariants> {
+  /** Border style. "solid" renders a standard border, "dashed" renders a dashed border, "none" (default) renders no border. */
   border?: "none" | "solid" | "dashed";
 }
 

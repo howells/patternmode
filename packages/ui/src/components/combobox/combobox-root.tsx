@@ -19,10 +19,11 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-/** Combobox item type definition */
-
+/** An option in the Combobox dropdown list. */
 export interface ComboboxItem {
+  /** Display text shown in the dropdown and trigger. */
   label: string;
+  /** Unique value for this option. */
   value: string;
 }
 
@@ -59,8 +60,18 @@ export interface ComboboxProps {
 }
 
 /**
- * Combobox UI component.
- * Import from "@patternmode/ui/components/combobox".
+ * Searchable dropdown select with keyboard navigation and optional virtualization.
+ * Combines a trigger button with a filterable command list in a popover.
+ *
+ * @example
+ * ```tsx
+ * <Combobox
+ *   items={[{ label: "React", value: "react" }, { label: "Vue", value: "vue" }]}
+ *   value={framework}
+ *   onValueChange={setFramework}
+ *   placeholder="Select framework..."
+ * />
+ * ```
  */
 export function Combobox({
   items,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import { useState } from "react";
@@ -56,16 +55,23 @@ const meta: Meta<EditableTextStoryArgs> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function BaseDemo(args: EditableTextStoryArgs) {
+const _BaseDemo = (args: EditableTextStoryArgs) => {
   const [value, setValue] = useState(args.value);
   return <EditableText {...args} onSave={setValue} value={value} />;
-}
+};
 
 /**
  * Base story with all controllable props.
  */
 export const Base: Story = {
-  render: (args) => <BaseDemo {...args} />,
+  args: {
+    value: "Click to edit",
+    placeholder: "Enter text…",
+    multiline: false,
+    showEditIcon: false,
+    selectOnFocus: false,
+    onSave: () => {},
+  } satisfies EditableTextStoryArgs,
 };
 
 type EditMode = "single" | "multiline";
@@ -82,7 +88,7 @@ const FEATURE_COLUMNS: { key: EditFeature; label: string }[] = [
   { key: "select-on-focus", label: "Select on Focus" },
 ];
 
-function FeatureMatrixDemo() {
+const FeatureMatrixDemo = () => {
   const [values, setValues] = useState<Record<string, string>>({
     "single-default": "Click to edit",
     "single-with-icon": "Click to edit",
@@ -116,7 +122,7 @@ function FeatureMatrixDemo() {
       rows={MODE_ROWS}
     />
   );
-}
+};
 
 /**
  * Feature matrix showing different configurations.
@@ -134,7 +140,7 @@ export const FeatureMatrix: Story = {
   render: () => <FeatureMatrixDemo />,
 };
 
-function EmptyStateDemo() {
+const EmptyStateDemo = () => {
   const [value, setValue] = useState("");
   return (
     <div className="flex flex-col gap-4">
@@ -149,7 +155,7 @@ function EmptyStateDemo() {
       </p>
     </div>
   );
-}
+};
 
 /**
  * Empty state with placeholder.
@@ -167,7 +173,7 @@ export const EmptyState: Story = {
   render: () => <EmptyStateDemo />,
 };
 
-function StyledExamplesDemo() {
+const StyledExamplesDemo = () => {
   const [title, setTitle] = useState("Project Title");
   const [description, setDescription] = useState(
     "Add a description for your project",
@@ -192,7 +198,7 @@ function StyledExamplesDemo() {
       />
     </div>
   );
-}
+};
 
 /**
  * Styled example showing common use cases.

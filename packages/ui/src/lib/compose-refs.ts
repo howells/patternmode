@@ -22,8 +22,11 @@ function setRef<T>(ref: PossibleRef<T>, value: T) {
 }
 
 /**
- * A utility to compose multiple refs together
- * Accepts callback refs and RefObject(s)
+ * Compose multiple refs into a single callback ref.
+ * Accepts callback refs and RefObject(s). Supports React 19 ref cleanup functions.
+ *
+ * @param refs - Refs to compose (callback refs, RefObjects, or undefined)
+ * @returns A single callback ref that forwards to all provided refs
  */
 function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
   return (node) => {
@@ -57,8 +60,17 @@ function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
 }
 
 /**
- * A custom hook that composes multiple refs
- * Accepts callback refs and RefObject(s)
+ * Hook that composes multiple refs into a stable callback ref.
+ * Memoizes the result so it can be safely passed as a ref prop.
+ *
+ * @param refs - Refs to compose (callback refs, RefObjects, or undefined)
+ * @returns A stable callback ref that forwards to all provided refs
+ *
+ * @example
+ * ```tsx
+ * const ref = useComposedRefs(localRef, forwardedRef);
+ * return <div ref={ref} />;
+ * ```
  */
 function useComposedRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
   return useCallback(composeRefs(...refs), [...refs]);

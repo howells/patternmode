@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import { useState } from "react";
@@ -93,7 +92,7 @@ type Story = StoryObj<typeof meta>;
 
 type TagSelectorStoryArgs = React.ComponentProps<typeof TagSelector>;
 
-function BaseDemo(args: TagSelectorStoryArgs) {
+const _BaseDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "2", label: "Lobby" },
     { id: "3", label: "Restaurant" },
@@ -109,16 +108,28 @@ function BaseDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Base interactive story with all controls.
  */
 export const Base: Story = {
-  render: (args) => <BaseDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  } satisfies TagSelectorStoryArgs,
 };
 
-function WithCreateDemo(args: TagSelectorStoryArgs) {
+const _WithCreateDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([{ id: "2", label: "Lobby" }]);
   const [tags, setTags] = useState<TagData[]>(SAMPLE_TAGS);
 
@@ -139,19 +150,28 @@ function WithCreateDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * With create tag enabled.
  */
 export const WithCreate: Story = {
   args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
     allowCreate: true,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
   },
-  render: (args) => <WithCreateDemo {...args} />,
 };
 
-function WithReorderDemo(args: TagSelectorStoryArgs) {
+const _WithReorderDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "2", label: "Lobby" },
     { id: "3", label: "Restaurant" },
@@ -170,19 +190,28 @@ function WithReorderDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * With drag-to-reorder enabled.
  */
 export const WithReorder: Story = {
   args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
     allowReorder: true,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
   },
-  render: (args) => <WithReorderDemo {...args} />,
 };
 
-function WithManageDemo(args: TagSelectorStoryArgs) {
+const _WithManageDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([{ id: "2", label: "Lobby" }]);
   const [tags, setTags] = useState<TagData[]>(SAMPLE_TAGS);
 
@@ -214,19 +243,28 @@ function WithManageDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * With edit/delete management enabled.
  */
 export const WithManage: Story = {
   args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
     allowManage: true,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
   },
-  render: (args) => <WithManageDemo {...args} />,
 };
 
-function FullFeaturedDemo(args: TagSelectorStoryArgs) {
+const _FullFeaturedDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "2", label: "Lobby" },
     { id: "3", label: "Restaurant" },
@@ -270,21 +308,28 @@ function FullFeaturedDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Full-featured with all capabilities enabled.
  */
 export const FullFeatured: Story = {
   args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
     allowCreate: true,
     allowReorder: true,
     allowManage: true,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
   },
-  render: (args) => <FullFeaturedDemo {...args} />,
 };
 
-function EmptyDemo(args: TagSelectorStoryArgs) {
+const _EmptyDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([]);
 
   return (
@@ -298,16 +343,28 @@ function EmptyDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Empty state with no tags.
  */
 export const Empty: Story = {
-  render: (args) => <EmptyDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };
 
-function ManySelectedDemo(args: TagSelectorStoryArgs) {
+const _ManySelectedDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "1", label: "Conference room" },
     { id: "2", label: "Lobby" },
@@ -328,16 +385,28 @@ function ManySelectedDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * With many selected tags (wrapping demo).
  */
 export const ManySelected: Story = {
-  render: (args) => <ManySelectedDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };
 
-function SizesDemo() {
+const SizesDemo = () => {
   const [valueXs, setValueXs] = useState<TagData[]>([
     { id: "2", label: "Lobby" },
   ]);
@@ -385,7 +454,7 @@ function SizesDemo() {
       </div>
     </div>
   );
-}
+};
 
 /**
  * Different sizes.
@@ -397,7 +466,7 @@ export const Sizes: Story = {
   render: () => <SizesDemo />,
 };
 
-function HorizontalScrollDemo(args: TagSelectorStoryArgs) {
+const _HorizontalScrollDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "1", label: "Conference room" },
     { id: "2", label: "Lobby" },
@@ -416,7 +485,7 @@ function HorizontalScrollDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Horizontal scroll mode (wrapTags={false}).
@@ -424,12 +493,21 @@ function HorizontalScrollDemo(args: TagSelectorStoryArgs) {
  */
 export const HorizontalScroll: Story = {
   args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
     wrapTags: false,
+    onChange: () => {},
+    value: [],
   },
-  render: (args) => <HorizontalScrollDemo {...args} />,
 };
 
-function CustomTriggerDemo() {
+const CustomTriggerDemo = () => {
   const [value, setValue] = useState<TagData[]>([{ id: "2", label: "Lobby" }]);
 
   return (
@@ -449,7 +527,7 @@ function CustomTriggerDemo() {
       />
     </div>
   );
-}
+};
 
 /**
  * Custom trigger using a simple button.
@@ -461,7 +539,7 @@ export const CustomTrigger: Story = {
   render: () => <CustomTriggerDemo />,
 };
 
-function ConstrainedHeightDemo(args: TagSelectorStoryArgs) {
+const _ConstrainedHeightDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "1", label: "Conference room" },
     { id: "2", label: "Lobby" },
@@ -484,13 +562,25 @@ function ConstrainedHeightDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Wrap mode with constrained max height.
  */
 export const ConstrainedHeight: Story = {
-  render: (args) => <ConstrainedHeightDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };
 
 const COLORED_TAGS: TagData[] = [
@@ -509,7 +599,7 @@ const STATUS_COLOR_PALETTE: TagColor[] = [
   "secondary",
 ];
 
-function SingleSelectDemo(args: TagSelectorStoryArgs) {
+const _SingleSelectDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([{ id: "2", label: "Lobby" }]);
 
   return (
@@ -523,16 +613,28 @@ function SingleSelectDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Single-select mode: only one tag can be selected at a time.
  */
 export const SingleSelect: Story = {
-  render: (args) => <SingleSelectDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };
 
-function WithColorsDemo(args: TagSelectorStoryArgs) {
+const _WithColorsDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "s1", label: "Considering", color: "warning" },
   ]);
@@ -547,16 +649,28 @@ function WithColorsDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Tags with colors (dots and colored variants).
  */
 export const WithColors: Story = {
-  render: (args) => <WithColorsDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };
 
-function ColorPickerDemo(args: TagSelectorStoryArgs) {
+const _ColorPickerDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([]);
   const [tags, setTags] = useState<TagData[]>(COLORED_TAGS);
 
@@ -599,16 +713,28 @@ function ColorPickerDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Color picker enabled for creating and editing tags.
  */
 export const ColorPicker: Story = {
-  render: (args) => <ColorPickerDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  } satisfies TagSelectorStoryArgs,
 };
 
-function SingleSelectWithColorsDemo(args: TagSelectorStoryArgs) {
+const _SingleSelectWithColorsDemo = (args: TagSelectorStoryArgs) => {
   const [value, setValue] = useState<TagData[]>([
     { id: "s3", label: "Approved", color: "affirmative" },
   ]);
@@ -635,12 +761,24 @@ function SingleSelectWithColorsDemo(args: TagSelectorStoryArgs) {
       />
     </div>
   );
-}
+};
 
 /**
  * Status selector pattern: single-select with colored tags and a color picker.
  * This is the pattern used for product status in the products table.
  */
 export const SingleSelectWithColors: Story = {
-  render: (args) => <SingleSelectWithColorsDemo {...args} />,
+  args: {
+    size: "sm",
+    placeholder: "Add tags…",
+    searchPlaceholder: "Search tags…",
+    maxVisibleTags: 3,
+    emptyMessage: "No tags found.",
+    allowCreate: false,
+    allowReorder: false,
+    allowManage: false,
+    wrapTags: true,
+    onChange: () => {},
+    value: [],
+  },
 };

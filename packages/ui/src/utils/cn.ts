@@ -20,8 +20,17 @@ const twMerge = extendTailwindMerge({
 });
 
 /**
- * cn utility.
- * Import from "@patternmode/ui/utils/cn".
+ * Merge and deduplicate Tailwind CSS class names.
+ * Combines clsx conditional logic with tailwind-merge conflict resolution.
+ *
+ * @param inputs - Class values (strings, arrays, objects, or falsy values)
+ * @returns Merged and deduplicated class string
+ *
+ * @example
+ * ```ts
+ * cn("px-4 py-2", isActive && "bg-primary", "px-6");
+ * // → "py-2 px-6 bg-primary" (px-6 wins over px-4)
+ * ```
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

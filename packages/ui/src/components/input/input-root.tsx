@@ -6,13 +6,14 @@ import type * as React from "react";
 import type { WithTestId } from "../../lib/types";
 import { standaloneInputVariants } from "./input-variants";
 
+/** Props for the standalone Input component. */
 export type InputProps = WithTestId<
   Omit<React.ComponentProps<"input">, "size">
 > &
   VariantProps<typeof standaloneInputVariants> & {
-    /** Show error styling */
+    /** Show error styling (red border and ring). */
     hasError?: boolean;
-    /** Force focus ring display (for documentation/testing) */
+    /** Force focus ring display (for documentation/testing). */
     focused?: boolean;
   };
 

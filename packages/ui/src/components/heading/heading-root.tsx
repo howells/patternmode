@@ -20,15 +20,22 @@ const SIZE_CLASSES: Record<ComponentSize, string> = {
 
 type HeadingLevel = "1" | "2" | "3" | "4" | "5" | "6";
 
+/** Props for the Heading component. */
 type HeadingProps = Omit<React.ComponentProps<"h1">, "size"> & {
+  /** Semantic heading level (renders as h1-h6). Default "2". */
   level?: HeadingLevel;
-  /** Visual size — accepts a static size or responsive object like `{ base: "lg", md: "2xl" }` */
+  /** Visual size — accepts a static size or responsive object like `{ base: "lg", md: "2xl" }`. */
   size?: ResponsiveValue<ComponentSize>;
 };
 
 /**
- * Renders a semantic heading element with configurable level and size.
- * Size accepts responsive values: `size={{ base: "lg", md: "2xl" }}`.
+ * Semantic heading element with configurable level and responsive size.
+ *
+ * @example
+ * ```tsx
+ * <Heading level="1" size="2xl">Page Title</Heading>
+ * <Heading size={{ base: "lg", md: "2xl" }}>Responsive Heading</Heading>
+ * ```
  */
 function Heading({ level = "2", size, className, ...props }: HeadingProps) {
   const Tag = `h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";

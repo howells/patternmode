@@ -19,9 +19,17 @@ const alertVariants = cva(
 );
 
 /**
- * Alert UI component.
- * Import from "@patternmode/ui/components/alert".
- * Uses variant-based styling via class-variance-authority.
+ * Alert banner for important messages and notifications.
+ * Supports a leading SVG icon, title, and description slots.
+ *
+ * @example
+ * ```tsx
+ * <Alert variant="destructive">
+ *   <AlertCircle />
+ *   <AlertTitle>Error</AlertTitle>
+ *   <AlertDescription>Something went wrong.</AlertDescription>
+ * </Alert>
+ * ```
  */
 function Alert({
   className,
@@ -39,11 +47,7 @@ function Alert({
   );
 }
 
-/**
- * AlertTitle UI component.
- * Import from "@patternmode/ui/components/alert".
- * Uses variant-based styling via class-variance-authority.
- */
+/** Title text for an Alert. Renders with medium font weight and tight tracking. */
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -58,11 +62,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-/**
- * AlertDescription UI component.
- * Import from "@patternmode/ui/components/alert".
- * Uses variant-based styling via class-variance-authority.
- */
+/** Description text for an Alert. Renders in muted foreground color. */
 function AlertDescription({
   className,
   ...props

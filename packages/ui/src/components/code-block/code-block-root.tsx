@@ -56,7 +56,11 @@ export function CodeBlock({
     setTimeout(() => setCopied(false), 2000);
   }, [code]);
 
-  const lines = code.split("\n");
+  const numberedLines = code.split("\n").map((text, n) => ({
+    key: `L${n + 1}`,
+    num: n + 1,
+    text,
+  }));
   const hasHeader = filename || language;
 
   return (
@@ -103,21 +107,24 @@ export function CodeBlock({
             className="absolute right-2 top-2 h-6 text-gray-500 hover:text-gray-300"
           />
         )}
-        <pre className="text-sm font-mono leading-relaxed">
-          <code>
-            {lines.map((line, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: code lines can have identical content
-              <span key={i} className="block">
-                {lineNumbers && (
-                  <span className="mr-4 inline-block w-8 select-none text-right text-gray-600">
-                    {i + 1}
-                  </span>
-                )}
-                {line || " "}
-              </span>
-            ))}
-          </code>
-        </pre>
+        {lineNumbers ? (
+          <table className="text-sm font-mono leading-relaxed">
+            <tbody>
+              {numberedLines.map((line) => (
+                <tr key={line.key}>
+                  <td className="select-none pr-4 text-right text-gray-600 align-top">
+                    {line.num}
+                  </td>
+                  <td className="whitespace-pre">{line.text || " "}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap">
+            <code>{code}</code>
+          </pre>
+        )}
       </div>
     </div>
   );

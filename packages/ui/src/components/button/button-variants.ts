@@ -15,12 +15,23 @@ const BUTTON_SIZES = [...BUTTON_STANDARD_SIZES, ...BUTTON_ICON_SIZES] as const;
 /** Button size type */
 type ButtonSize = (typeof BUTTON_SIZES)[number];
 
-/** Check if a size is an icon size */
+/**
+ * Check if a button size is an icon-only size (prefixed with "icon-").
+ *
+ * @param size - The button size to check
+ * @returns `true` if the size is an icon-only variant
+ */
 function isIconSize(size: ButtonSize): size is `icon-${ComponentSize}` {
   return size.startsWith("icon-");
 }
 
-/** Extract base size from an icon size */
+/**
+ * Extract the base component size from a button size string.
+ * Strips the "icon-" prefix if present.
+ *
+ * @param size - The button size (may be standard or icon-prefixed)
+ * @returns The underlying ComponentSize
+ */
 function getBaseSize(size: ButtonSize): ComponentSize {
   if (isIconSize(size)) {
     return size.replace("icon-", "") as ComponentSize;
@@ -324,6 +335,13 @@ const BUTTON_SIZE_TO_ICON_SIZE_MAP: Partial<Record<ButtonSize, ComponentSize>> =
     "icon-3xl": "xs",
   };
 
+/**
+ * Map a button size to the appropriate icon size.
+ * Icons render one step smaller than the button for visual balance.
+ *
+ * @param buttonSize - The button size (defaults to "base" when undefined)
+ * @returns The corresponding ComponentSize for the icon
+ */
 function buttonSizeToIconSize(
   buttonSize: ButtonSize | undefined,
 ): ComponentSize {

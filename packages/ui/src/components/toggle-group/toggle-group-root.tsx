@@ -111,10 +111,16 @@ const ToggleGroupContext = createContext<ToggleGroupContextValue>({
 });
 
 /**
- * ToggleGroup UI component.
- * Import from "@patternmode/ui/components/toggle-group".
+ * Group of toggle buttons where one or multiple can be active.
  * Built on Radix UI primitives for accessible behavior.
- * Uses variant-based styling via class-variance-authority.
+ *
+ * @example
+ * ```tsx
+ * <ToggleGroup type="single" variant="outline">
+ *   <ToggleGroupItem value="bold" icon={Bold} aria-label="Bold" />
+ *   <ToggleGroupItem value="italic" icon={Italic} aria-label="Italic" />
+ * </ToggleGroup>
+ * ```
  */
 function ToggleGroup({
   className,
@@ -203,23 +209,22 @@ function ToggleGroup({
   );
 }
 
+/** Props for a single item within a ToggleGroup. */
 export interface ToggleGroupItemProps
   extends React.ComponentProps<typeof Item> {
-  /** Optional count to display alongside the item label */
+  /** Optional count to display alongside the item label. */
   count?: number;
-  /** Dot color indicator (CSS color value) */
+  /** Dot color indicator (CSS color value). */
   dot?: string;
+  /** Icon component to display in the item. */
   icon?: LucideIcon;
+  /** Size override (inherited from ToggleGroup context when not set). */
   size?: ComponentSize;
+  /** Variant override (inherited from ToggleGroup context when not set). */
   variant?: "default" | "outline" | "pill";
 }
 
-/**
- * ToggleGroupItem UI component.
- * Import from "@patternmode/ui/components/toggle-group".
- * Built on Radix UI primitives for accessible behavior.
- * Uses variant-based styling via class-variance-authority.
- */
+/** Individual item within a ToggleGroup. Supports icons, dots, and count badges. */
 function ToggleGroupItem({
   className,
   children,

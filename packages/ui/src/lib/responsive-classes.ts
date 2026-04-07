@@ -13,14 +13,13 @@ import type { FlexWrap } from "./wrap";
 // GAP CLASSES
 // ============================================================================
 
-/** Extended gap size including none and 3xs */
+/** Extended gap size scale including "none" and "3xs" beyond the standard ComponentSize. */
 export const GAP_SIZES = ["none", "3xs", ...COMPONENT_SIZES] as const;
+
+/** Gap size type — standard component sizes plus "none" and "3xs". */
 export type GapSize = (typeof GAP_SIZES)[number];
 
-/**
- * GAP_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind gap class map for responsive layout utilities. */
 export const GAP_CLASS: Record<GapSize, string> = {
   none: "gap-0",
   "3xs": "gap-0.5",
@@ -34,10 +33,7 @@ export const GAP_CLASS: Record<GapSize, string> = {
   "3xl": "gap-10",
 };
 
-/**
- * GAP_X_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind horizontal gap (gap-x) class map. */
 export const GAP_X_CLASS: Record<GapSize, string> = {
   none: "gap-x-0",
   "3xs": "gap-x-0.5",
@@ -51,10 +47,7 @@ export const GAP_X_CLASS: Record<GapSize, string> = {
   "3xl": "gap-x-10",
 };
 
-/**
- * GAP_Y_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind vertical gap (gap-y) class map. */
 export const GAP_Y_CLASS: Record<GapSize, string> = {
   none: "gap-y-0",
   "3xs": "gap-y-0.5",
@@ -72,10 +65,7 @@ export const GAP_Y_CLASS: Record<GapSize, string> = {
 // FLEX DIRECTION CLASSES
 // ============================================================================
 
-/**
- * DIRECTION_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind flex direction class map. */
 export const DIRECTION_CLASS: Record<FlexDirection, string> = {
   row: "flex-row",
   column: "flex-col",
@@ -87,10 +77,7 @@ export const DIRECTION_CLASS: Record<FlexDirection, string> = {
 // JUSTIFY CLASSES
 // ============================================================================
 
-/**
- * JUSTIFY_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind justify-content class map. */
 export const JUSTIFY_CLASS: Record<FlexJustify, string> = {
   "flex-start": "justify-start",
   center: "justify-center",
@@ -104,10 +91,7 @@ export const JUSTIFY_CLASS: Record<FlexJustify, string> = {
 // ALIGN CLASSES
 // ============================================================================
 
-/**
- * ALIGN_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind align-items class map. */
 export const ALIGN_CLASS: Record<FlexAlign, string> = {
   stretch: "items-stretch",
   "flex-start": "items-start",
@@ -120,10 +104,7 @@ export const ALIGN_CLASS: Record<FlexAlign, string> = {
 // WRAP CLASSES
 // ============================================================================
 
-/**
- * WRAP_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind flex-wrap class map. */
 export const WRAP_CLASS: Record<FlexWrap, string> = {
   wrap: "flex-wrap",
   nowrap: "flex-nowrap",
@@ -134,10 +115,7 @@ export const WRAP_CLASS: Record<FlexWrap, string> = {
 // GRID COLUMN CLASSES
 // ============================================================================
 
-/**
- * GRID_COLS_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind grid-template-columns class map (1-12). */
 export const GRID_COLS_CLASS: Record<number, string> = {
   1: "grid-cols-1",
   2: "grid-cols-2",
@@ -157,10 +135,7 @@ export const GRID_COLS_CLASS: Record<number, string> = {
 // GRID COLUMN SPAN CLASSES
 // ============================================================================
 
-/**
- * COL_SPAN_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind grid column span class map (1-12, auto, full). */
 export const COL_SPAN_CLASS: Record<number | "auto" | "full", string> = {
   1: "col-span-1",
   2: "col-span-2",
@@ -182,10 +157,7 @@ export const COL_SPAN_CLASS: Record<number | "auto" | "full", string> = {
 // GRID COLUMN START (OFFSET) CLASSES
 // ============================================================================
 
-/**
- * COL_START_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind grid column start (offset) class map (1-13, auto). */
 export const COL_START_CLASS: Record<number | "auto", string> = {
   1: "col-start-1",
   2: "col-start-2",
@@ -207,10 +179,7 @@ export const COL_START_CLASS: Record<number | "auto", string> = {
 // WIDTH CLASSES (for Space component)
 // ============================================================================
 
-/**
- * WIDTH_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind width class map for spacer elements. */
 export const WIDTH_CLASS: Record<ComponentSize, string> = {
   "2xs": "w-1",
   xs: "w-2",
@@ -226,10 +195,7 @@ export const WIDTH_CLASS: Record<ComponentSize, string> = {
 // HEIGHT CLASSES (for Space component)
 // ============================================================================
 
-/**
- * HEIGHT_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind height class map for spacer elements. */
 export const HEIGHT_CLASS: Record<ComponentSize, string> = {
   "2xs": "h-1",
   xs: "h-2",
@@ -245,10 +211,7 @@ export const HEIGHT_CLASS: Record<ComponentSize, string> = {
 // PADDING CLASSES (for Container component)
 // ============================================================================
 
-/**
- * PADDING_X_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind horizontal padding class map. */
 export const PADDING_X_CLASS: Record<ComponentSize, string> = {
   "2xs": "px-1",
   xs: "px-2",
@@ -260,10 +223,7 @@ export const PADDING_X_CLASS: Record<ComponentSize, string> = {
   "3xl": "px-10",
 };
 
-/**
- * PADDING_Y_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind vertical padding class map. */
 export const PADDING_Y_CLASS: Record<ComponentSize, string> = {
   "2xs": "py-1",
   xs: "py-2",
@@ -279,10 +239,7 @@ export const PADDING_Y_CLASS: Record<ComponentSize, string> = {
 // MAX-WIDTH CLASSES (for Container component)
 // ============================================================================
 
-/**
- * MAX_WIDTH_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind max-width class map for container constraints. */
 export const MAX_WIDTH_CLASS: Record<ComponentSize, string> = {
   "2xs": "max-w-xs",
   xs: "max-w-sm",
@@ -316,10 +273,7 @@ export type OrderValue =
   | "last"
   | "none";
 
-/**
- * ORDER_CLASS utility.
- * Import from "@patternmode/ui/lib/responsive-classes".
- */
+/** Tailwind order class map for flexbox/grid item ordering. */
 export const ORDER_CLASS: Record<OrderValue, string> = {
   1: "order-1",
   2: "order-2",

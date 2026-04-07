@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import type React from "react";
@@ -65,7 +64,7 @@ type Story = StoryObj<typeof meta>;
 export const Base: Story = {
   render: (args) => (
     <KbdGroup size={args.size ?? undefined}>
-      {(args.keys ?? []).map((key) => (
+      {(args.keys ?? []).map((key: string) => (
         <Kbd key={key} variant={args.variant ?? undefined}>
           {key}
         </Kbd>

@@ -1,8 +1,17 @@
 import type ConfettiFunction from "canvas-confetti";
 
 /**
- * Fire a subtle confetti burst - perfect for success moments.
+ * Fire a subtle confetti burst in the brand color palette.
  * Respects prefers-reduced-motion automatically.
+ *
+ * @param options - Optional configuration
+ * @param options.origin - Confetti origin point (0-1 coordinates). Defaults to bottom-right (0.95, 0.85).
+ *
+ * @example
+ * ```ts
+ * await fireSuccessConfetti();
+ * await fireSuccessConfetti({ origin: { x: 0.5, y: 0.5 } });
+ * ```
  */
 export async function fireSuccessConfetti(options?: {
   origin?: { x: number; y: number };
@@ -41,6 +50,16 @@ export async function fireSuccessConfetti(options?: {
 /**
  * Fire a subtle emoji confetti burst from a specific origin point.
  * Respects prefers-reduced-motion automatically.
+ *
+ * @param options - Configuration
+ * @param options.emoji - The emoji character to use as confetti particles
+ * @param options.origin - Confetti origin point (0-1 coordinates). Defaults to center (0.5, 0.5).
+ *
+ * @example
+ * ```ts
+ * await fireEmojiConfetti({ emoji: "🎉" });
+ * await fireEmojiConfetti({ emoji: "⭐", origin: { x: 0.5, y: 0.3 } });
+ * ```
  */
 export async function fireEmojiConfetti(options: {
   emoji: string;

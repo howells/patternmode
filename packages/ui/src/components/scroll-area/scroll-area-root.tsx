@@ -22,9 +22,15 @@ type ScrollAreaProps = ComponentProps<typeof Root> & {
 };
 
 /**
- * ScrollArea UI component.
- * Import from "@patternmode/ui/components/scroll-area".
+ * Custom scrollable area with styled scrollbars.
  * Built on Radix UI primitives for accessible behavior.
+ *
+ * @example
+ * ```tsx
+ * <ScrollArea className="h-64">
+ *   <div>Long scrollable content...</div>
+ * </ScrollArea>
+ * ```
  */
 function ScrollArea({
   className,
@@ -69,11 +75,7 @@ function ScrollArea({
   );
 }
 
-/**
- * ScrollBar UI component.
- * Import from "@patternmode/ui/components/scroll-area".
- * Built on Radix UI primitives for accessible behavior.
- */
+/** Styled scrollbar track and thumb. Used internally by ScrollArea. */
 function ScrollBar({
   className,
   orientation = "vertical",

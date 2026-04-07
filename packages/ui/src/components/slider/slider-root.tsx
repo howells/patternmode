@@ -6,9 +6,21 @@ import type React from "react";
 import { useMemo } from "react";
 
 /**
- * Slider UI component.
- * Import from "@patternmode/ui/components/slider".
+ * Range slider component with single or multi-thumb support.
+ * Accepts a single number or an array for multi-range selection.
  * Built on Radix UI primitives for accessible behavior.
+ *
+ * @example
+ * ```tsx
+ * // Single value
+ * <Slider defaultValue={50} />
+ *
+ * // Range selection
+ * <Slider defaultValue={[25, 75]} />
+ *
+ * // Controlled
+ * <Slider value={volume} onValueChange={setVolume} min={0} max={100} />
+ * ```
  */
 function Slider({
   className,

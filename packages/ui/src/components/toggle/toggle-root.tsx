@@ -53,10 +53,14 @@ const toggleVariants = cva(
 );
 
 /**
- * Toggle UI component.
- * Import from "@patternmode/ui/components/toggle".
+ * Toggle button that switches between on/off states.
  * Built on Radix UI primitives for accessible behavior.
- * Uses variant-based styling via class-variance-authority.
+ *
+ * @example
+ * ```tsx
+ * <Toggle icon={Bold} aria-label="Toggle bold" />
+ * <Toggle pressed={isBold} onPressedChange={setIsBold}>Bold</Toggle>
+ * ```
  */
 function Toggle({
   className,
@@ -69,7 +73,9 @@ function Toggle({
   ...props
 }: React.ComponentProps<typeof Root> &
   VariantProps<typeof toggleVariants> & {
+    /** Icon component (LucideIcon or custom SVG component). */
     icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    /** Position of the icon relative to the label text. */
     iconPlacement?: "start" | "end";
   }) {
   const hasChildren = Children.count(children) > 0;

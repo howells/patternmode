@@ -103,11 +103,7 @@ function PopoverContent({
   );
 }
 
-/**
- * PopoverAnchor UI component.
- * Import from "@patternmode/ui/components/popover".
- * Built on Radix UI primitives for accessible behavior.
- */
+/** Alternative anchor element for positioning the popover relative to a non-trigger element. */
 function PopoverAnchor({ ...props }: React.ComponentProps<typeof Anchor>) {
   return (
     <Anchor
@@ -119,11 +115,8 @@ function PopoverAnchor({ ...props }: React.ComponentProps<typeof Anchor>) {
 }
 
 /**
- * PopoverArrow UI component.
- * Import from "@patternmode/ui/components/popover".
- * Built on Radix UI primitives for accessible behavior.
- *
- * Uses SVG for seamless shadow integration. Arrow dimensions: 22px wide × 9px tall.
+ * SVG arrow pointer that connects the popover to its trigger.
+ * Uses SVG for seamless shadow integration. Arrow dimensions: 22px wide x 9px tall.
  */
 function PopoverArrow({ className }: { className?: string }) {
   // SVG triangle with drop-shadow filter for edge definition.

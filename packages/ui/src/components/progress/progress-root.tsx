@@ -12,28 +12,45 @@ const PROGRESS_SIZE_CLASSES: Record<ProgressSize, string> = {
   base: "h-2",
 };
 
+/** Props for the linear Progress bar component. */
 type ProgressProps = React.ComponentProps<typeof Root> & {
   /** Height variant. "xs" for player bars, "sm" for compact, "base" (default) for standard. */
   size?: ProgressSize;
 };
 
+/** Props for the circular ProgressCircle component. */
 interface ProgressCircleProps {
+  /** Content to render in the center of the circle (e.g., percentage text). */
   children?: React.ReactNode;
+  /** Additional CSS classes for the container. */
   className?: string;
+  /** Additional CSS classes for the progress indicator arc. */
   indicatorClassName?: string;
+  /** Accessible label describing what the progress represents. */
   label: string;
+  /** Maximum value for the progress. Default 100. */
   max?: number;
+  /** Diameter of the circle in pixels. Default 44. */
   size?: number;
+  /** Width of the progress stroke in pixels. Default 3. */
   strokeWidth?: number;
+  /** Additional CSS classes for the background track circle. */
   trackClassName?: string;
+  /** Current progress value (0 to max). */
   value: number;
+  /** Custom formatter for the title tooltip text. */
   valueFormatter?: (value: number, max: number) => string;
 }
 
 /**
- * Progress UI component.
- * Import from "@patternmode/ui/components/progress".
+ * Linear progress bar with configurable height.
  * Built on Radix UI primitives for accessible behavior.
+ *
+ * @example
+ * ```tsx
+ * <Progress value={65} />
+ * <Progress value={30} size="xs" />
+ * ```
  */
 function Progress({
   className,
@@ -71,6 +88,18 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * Circular progress indicator rendered as an SVG ring.
+ * Supports custom sizes, stroke widths, and center content.
+ *
+ * @example
+ * ```tsx
+ * <ProgressCircle label="Upload progress" value={75} />
+ * <ProgressCircle label="Score" value={8} max={10} size={64} strokeWidth={4}>
+ *   <Text size="xs">80%</Text>
+ * </ProgressCircle>
+ * ```
+ */
 function ProgressCircle({
   label,
   value,

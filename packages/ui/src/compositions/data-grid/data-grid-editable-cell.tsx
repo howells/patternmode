@@ -61,18 +61,17 @@ function DataGridEditableCell({
 
   if (!isEditing) {
     return (
-      // biome-ignore lint/a11y/useSemanticElements: intentional span styled as inline editable text, not a button
-      <span
+      <button
         className={cn(
-          "cursor-text rounded px-1 -mx-1 hover:bg-muted/50",
+          "cursor-text rounded px-1 -mx-1 text-left hover:bg-muted/50",
           className,
         )}
         onDoubleClick={() => setIsEditing(true)}
-        role="button"
         tabIndex={0}
+        type="button"
       >
         {value}
-      </span>
+      </button>
     );
   }
 

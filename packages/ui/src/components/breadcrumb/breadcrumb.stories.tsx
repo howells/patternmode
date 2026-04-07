@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import { VariantGrid } from "../../stories/utils/variant-grid";
@@ -191,7 +190,12 @@ function BreadcrumbDemo({
 }
 
 export const Base: Story = {
-  render: (args) => <BreadcrumbDemo {...args} />,
+  args: {
+    mode: "simple",
+    rootLabel: "PatternModels",
+    sectionLabel: "Tiles",
+    currentPage: "Terracotta Tiles",
+  },
 };
 
 export const VariantMatrix: Story = {

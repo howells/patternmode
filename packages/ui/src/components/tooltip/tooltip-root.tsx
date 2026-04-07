@@ -11,11 +11,7 @@ import {
 } from "@radix-ui/react-tooltip";
 import type * as React from "react";
 
-/**
- * TooltipProvider UI component.
- * Import from "@patternmode/ui/components/tooltip".
- * Built on Radix UI primitives for accessible behavior.
- */
+/** Provider that configures tooltip delay behavior for descendant tooltips. */
 function TooltipProvider({
   delayDuration = 0,
   ...props

@@ -6,10 +6,31 @@ import { useId, useState } from "react";
 import type { ComponentSize } from "../../lib/size";
 import { TabsContext } from "./tabs-context";
 
+/** Props for the Tabs root component. */
+export type TabsProps = React.ComponentProps<typeof Root> & {
+  /** Visual style variant. "pill" renders filled tab buttons, "line" renders underlined tabs. */
+  variant?: "pill" | "line";
+  /** Size of the tab buttons following the design system scale. */
+  size?: ComponentSize;
+  /** When true, tabs fill container width with equal proportional widths. */
+  fullWidth?: boolean;
+};
+
 /**
- * Tabs UI component.
- * Import from "@patternmode/ui/components/tabs".
+ * Tabbed interface component with animated indicator.
  * Built on Radix UI primitives for accessible behavior.
+ *
+ * @example
+ * ```tsx
+ * <Tabs defaultValue="tab1">
+ *   <TabsList>
+ *     <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+ *     <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="tab1">Content 1</TabsContent>
+ *   <TabsContent value="tab2">Content 2</TabsContent>
+ * </Tabs>
+ * ```
  */
 export function Tabs({
   className,
@@ -20,12 +41,7 @@ export function Tabs({
   defaultValue,
   onValueChange,
   ...props
-}: React.ComponentProps<typeof Root> & {
-  variant?: "pill" | "line";
-  size?: ComponentSize;
-  /** When true, tabs fill container width with equal proportional widths */
-  fullWidth?: boolean;
-}) {
+}: TabsProps) {
   // Unique ID for this Tabs instance (used for indicator layoutId)
   const instanceId = useId();
 

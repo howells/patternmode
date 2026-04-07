@@ -6,10 +6,7 @@
  */
 
 // A comprehensive palette (subset derived from Midday CATEGORY_COLORS)
-/**
- * DETERMINISTIC_COLORS utility.
- * Import from "@patternmode/ui/lib/color".
- */
+/** Curated palette of 60 hex colors for deterministic string-to-color mapping. */
 export const DETERMINISTIC_COLORS: readonly string[] = [
   // Primary
   "#FF6900",
@@ -93,6 +90,10 @@ const DEFAULT_COLOR = "#6B7280"; // Neutral gray fallback
 
 /**
  * Produces a deterministic positive integer hash for a given string.
+ * Uses polynomial rolling hash with base 31 and modulo 2^31-1.
+ *
+ * @param value - The string to hash
+ * @returns A non-negative integer hash
  */
 export function customHash(value: string): number {
   // Multiplicative hash without bitwise operators (polynomial rolling hash)
@@ -107,6 +108,10 @@ export function customHash(value: string): number {
 
 /**
  * Returns a stable index for `value` within a given array length.
+ *
+ * @param value - The string to hash
+ * @param arrayLength - The size of the target array
+ * @returns An index from 0 to arrayLength - 1
  */
 export function getColorIndex(value: string, arrayLength: number): number {
   const hashValue = customHash(value);
@@ -115,6 +120,17 @@ export function getColorIndex(value: string, arrayLength: number): number {
 
 /**
  * Maps a string to a color from the deterministic palette.
+ * Returns a neutral gray fallback for empty strings.
+ *
+ * @param value - The string to map (e.g., a username or category name)
+ * @returns A hex color string from the deterministic palette
+ *
+ * @example
+ * ```ts
+ * getColorFromName("Alice");   // → "#0693E3"
+ * getColorFromName("Bob");     // → "#FF6900"
+ * getColorFromName("");        // → "#6B7280" (fallback)
+ * ```
  */
 export function getColorFromName(value: string): string {
   if (!value) {
@@ -126,6 +142,8 @@ export function getColorFromName(value: string): string {
 
 /**
  * Returns a random color from the deterministic palette.
+ *
+ * @returns A hex color string
  */
 export function getRandomColor(): string {
   const randomIndex = Math.floor(Math.random() * DETERMINISTIC_COLORS.length);
@@ -139,8 +157,17 @@ const HASH_PREFIX_RE = /^#/;
 const WHITESPACE_RE = /\s+/;
 
 /**
- * getReadableTextColor utility.
- * Import from "@patternmode/ui/lib/color".
+ * Calculates a readable text color (black or white) for the given background
+ * using the YIQ luminance formula.
+ *
+ * @param bgHex - Background color as a hex string (with or without "#")
+ * @returns "#000000" for light backgrounds, "#FFFFFF" for dark backgrounds
+ *
+ * @example
+ * ```ts
+ * getReadableTextColor("#FFFFFF"); // → "#000000"
+ * getReadableTextColor("#000000"); // → "#FFFFFF"
+ * ```
  */
 export function getReadableTextColor(bgHex: string): "#000000" | "#FFFFFF" {
   const START = 0; // slice start index
@@ -169,6 +196,17 @@ export function getReadableTextColor(bgHex: string): "#000000" | "#FFFFFF" {
 
 /**
  * Generates initials from a name for avatar fallbacks.
+ * Returns first and last initial for multi-word names, single initial otherwise.
+ *
+ * @param name - Full name string
+ * @returns Uppercase initials (1-2 characters), or empty string for empty input
+ *
+ * @example
+ * ```ts
+ * getInitials("John Doe");    // → "JD"
+ * getInitials("Alice");       // → "A"
+ * getInitials("Jane A. Doe"); // → "JD"
+ * ```
  */
 export function getInitials(name: string): string {
   if (!name) {

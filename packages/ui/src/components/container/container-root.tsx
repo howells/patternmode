@@ -26,8 +26,16 @@ export interface ContainerProps extends React.ComponentProps<"div"> {
 }
 
 /**
- * Container UI component.
- * Import from "@patternmode/ui/components/container".
+ * Centered content container with configurable max-width and padding.
+ * Supports responsive values for all layout props.
+ *
+ * @example
+ * ```tsx
+ * <Container size="xl" px="base">
+ *   <Text>Centered content with max-width</Text>
+ * </Container>
+ * <Container fluid px={{ base: "sm", lg: "xl" }}>Full width</Container>
+ * ```
  */
 export function Container({
   className,

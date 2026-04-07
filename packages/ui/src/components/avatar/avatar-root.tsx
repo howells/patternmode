@@ -61,21 +61,29 @@ const RADIUS_CLASS: Record<Radius, string> = {
   rounded: "rounded-md",
 };
 
+/** Props for the Avatar root component. */
 export type AvatarRootProps = ComponentProps<typeof AvatarRootPrimitive> & {
-  /** Component size */
+  /** Component size following the avatar size scale (includes extended 4xl-6xl). */
   size?: AvatarSize;
-  /** Border radius. Defaults to "full" (circular). */
+  /** Border radius. "full" (default) for circular, "rounded" for rounded square, "square" for sharp corners. */
   radius?: Radius;
-  /** With ring */
+  /** Show a ring border around the avatar. */
   withRing?: boolean;
-  /** Ring color */
+  /** Ring color as a Tailwind class (e.g., "ring-primary"). Falls back to primary when not set. */
   ringColor?: string;
 };
 
 /**
- * AvatarRoot UI component.
- * Import from "@patternmode/ui/components/avatar".
+ * Avatar root container. Wraps AvatarImage and AvatarFallback children.
  * Built on Radix UI primitives for accessible behavior.
+ *
+ * @example
+ * ```tsx
+ * <Avatar size="lg" radius="full">
+ *   <AvatarImage src="/photo.jpg" alt="User" />
+ *   <AvatarFallback>JD</AvatarFallback>
+ * </Avatar>
+ * ```
  */
 export function AvatarRoot({
   className,

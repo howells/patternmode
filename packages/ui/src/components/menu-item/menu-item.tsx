@@ -291,6 +291,16 @@ type MenuItemProps = Omit<React.ComponentProps<"button">, "children"> &
 /**
  * A standalone menu item component for use in popovers, sheets, and custom menus.
  * This is the base component that DropdownMenuItem and other menu items build upon.
+ *
+ * Supports icons, dots, avatars, keyboard shortcuts, checkboxes, and radio indicators.
+ *
+ * @example
+ * ```tsx
+ * <MenuItem icon={Settings}>Settings</MenuItem>
+ * <MenuItem icon={Trash2} variant="destructive">Delete</MenuItem>
+ * <MenuItem icon={Copy} kbd={["⌘", "C"]}>Copy</MenuItem>
+ * <MenuItem checked={isSelected} selectionMode="checkbox">Option</MenuItem>
+ * ```
  */
 function MenuItem({
   className,

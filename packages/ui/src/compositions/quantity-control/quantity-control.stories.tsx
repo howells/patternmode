@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import type React from "react";
@@ -83,8 +82,8 @@ export const Base: Story = {
         disabled={args.disabled}
         max={max}
         min={min}
-        onDecrement={() => setValue((v) => Math.max(min, v - 1))}
-        onIncrement={() => setValue((v) => Math.min(max, v + 1))}
+        onDecrement={() => setValue((v: number) => Math.max(min, v - 1))}
+        onIncrement={() => setValue((v: number) => Math.min(max, v + 1))}
         onRemove={args.showRemove ? () => setValue(0) : undefined}
         value={value}
       />

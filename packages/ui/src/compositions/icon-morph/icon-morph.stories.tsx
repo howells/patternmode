@@ -1,4 +1,3 @@
-// @ts-nocheck
 import "@patternmode/tailwind-config/shared-styles.css";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Layers, Pause, Play, Search, Sparkles, Target } from "lucide-react";
@@ -45,7 +44,7 @@ const meta: Meta<typeof IconMorph> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function BaseDemo(args: IconMorphStoryArgs) {
+const _BaseDemo = (args: IconMorphStoryArgs) => {
   const [index, setIndex] = useState(0);
   const Icon = ICONS[index % ICONS.length] ?? ICONS[0];
 
@@ -62,16 +61,21 @@ function BaseDemo(args: IconMorphStoryArgs) {
       <p className="text-gray-400 text-xs">Current: {Icon.displayName}</p>
     </div>
   );
-}
+};
 
 /**
  * Base story - click to cycle through icons with morph animation.
  */
 export const Base: Story = {
-  render: (args) => <BaseDemo {...args} />,
+  args: {
+    size: "base",
+    className: "text-gray-500",
+    icon: Target,
+    morphKey: "0",
+  } satisfies IconMorphStoryArgs,
 };
 
-function PlayPauseToggleDemo(args: IconMorphStoryArgs) {
+const _PlayPauseToggleDemo = (args: IconMorphStoryArgs) => {
   const [playing, setPlaying] = useState(false);
   const Icon = playing ? TOGGLE_ICONS.pause : TOGGLE_ICONS.play;
 
@@ -90,13 +94,18 @@ function PlayPauseToggleDemo(args: IconMorphStoryArgs) {
       />
     </button>
   );
-}
+};
 
 /**
  * Play/Pause toggle - common use case for media controls.
  */
 export const PlayPauseToggle: Story = {
-  render: (args) => <PlayPauseToggleDemo {...args} />,
+  args: {
+    size: "base",
+    className: "text-gray-500",
+    icon: Play,
+    morphKey: "play",
+  } satisfies IconMorphStoryArgs,
   parameters: {
     docs: {
       description: {

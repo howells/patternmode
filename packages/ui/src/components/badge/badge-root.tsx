@@ -26,31 +26,46 @@ function badgeSizeToIconSize(
   return PILL_ICON_SIZE_MAP[key] ?? "sm";
 }
 
+/** Props for the Badge component. */
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof pillVariants> {
+  /** Merge props onto child element using Radix Slot. */
   asChild?: boolean;
+  /** Whether the badge is visually disabled. */
   disabled?: boolean;
+  /** Additional CSS classes for the dot element. */
   dotClassName?: string;
-  /** Force focus ring display (for documentation/testing) */
+  /** Force focus ring display (for documentation/testing). */
   focused?: boolean;
-  /** Force hover state display (for documentation/testing) */
+  /** Force hover state display (for documentation/testing). */
   hovered?: boolean;
+  /** Icon component (LucideIcon or custom SVG component). */
   icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  /** Position of the icon relative to content. */
   iconPlacement?: "start" | "end";
+  /** Primary label text. When combined with `value`, renders a split badge with a divider. */
   label?: string;
-  /** Show loading spinner */
+  /** Show loading spinner in place of content. */
   loading?: boolean;
-  /** Label shown during loading */
+  /** Label text displayed during the loading state. */
   loadingLabel?: string;
+  /** Test ID for testing purposes. */
   testid?: string;
+  /** Secondary value text. Renders with medium font weight after the label. */
   value?: string;
 }
 
 /**
- * Badge UI component.
- * Import from "@patternmode/ui/components/badge".
- * Uses variant-based styling via class-variance-authority.
+ * Badge component for labels, tags, and status indicators.
+ * Supports icons, loading state, and split label/value display.
+ *
+ * @example
+ * ```tsx
+ * <Badge variant="affirmative">Active</Badge>
+ * <Badge icon={Star} label="Rating" value="4.5" />
+ * <Badge loading loadingLabel="Saving..." />
+ * ```
  */
 export function Badge({
   className,

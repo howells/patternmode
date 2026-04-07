@@ -1,7 +1,5 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
-import { useState } from "react";
 import { VariantGrid } from "../../stories/utils/variant-grid";
 import { Pagination } from "../pagination";
 
@@ -55,10 +53,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Base: Story = {
-  render: (args) => {
-    const [page, setPage] = useState(args.page);
-    return <Pagination {...args} onPageChange={setPage} page={page} />;
-  },
+  args: {
+    page: 1,
+    totalPages: 13,
+    size: "sm",
+    disabled: false,
+    onPageChange: () => {},
+  } satisfies PaginationStoryArgs,
 };
 
 type PageScenario = "start" | "middle" | "end" | "few-pages" | "single";

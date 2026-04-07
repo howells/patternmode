@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import "@patternmode/tailwind-config/shared-styles.css";
 import { useState } from "react";
@@ -54,20 +53,26 @@ const meta: Meta<CountrySelectStoryArgs> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function BaseDemo(args: CountrySelectStoryArgs) {
+const _BaseDemo = (args: CountrySelectStoryArgs) => {
   const [value, setValue] = useState("US");
   return (
     <div className="inline-flex rounded-md border border-border">
       <CountrySelect {...args} onChange={setValue} value={value} />
     </div>
   );
-}
+};
 
 /**
  * Base story with all controllable props.
  */
 export const Base: Story = {
-  render: (args) => <BaseDemo {...args} />,
+  args: {
+    size: "base",
+    disabled: false,
+    options: SAMPLE_OPTIONS,
+    onChange: () => {},
+    value: "US",
+  } satisfies CountrySelectStoryArgs,
 };
 
 type SelectState = "default" | "disabled";

@@ -161,6 +161,9 @@ export const PREVIEW_COLOR_INDICES = [
 /**
  * Check if a color string is a light color (for contrast/border visibility).
  * Supports hex strings (with or without #) and HSL strings.
+ *
+ * @param color - Color as hex string or HSL string
+ * @returns `true` if the color is light (luminance > 0.7)
  */
 export function isLightColor(color: string): boolean {
   // Handle HSL format: hsl(h, s%, l%)
@@ -281,7 +284,10 @@ export const COLOR_TO_FAMILY: Record<string, string> = {
 };
 
 /**
- * Get the primary color family for a hex code
+ * Get the primary color family name for a hex code.
+ *
+ * @param hex - Hex color string (with or without "#")
+ * @returns Family name (e.g., "Blue", "Red") or null if not in the palette
  */
 export function getColorFamily(hex: string): string | null {
   const normalized = hex.toLowerCase().replace("#", "");
@@ -328,7 +334,10 @@ export function hexToHsl(hex: string): string {
 }
 
 /**
- * Get the lightness value from a hex color (0-100).
+ * Get the HSL lightness value from a hex color.
+ *
+ * @param hex - Hex color string without "#" (e.g., "fbfbfb")
+ * @returns Lightness as integer from 0 (black) to 100 (white)
  */
 export function getHexLightness(hex: string): number {
   const r = Number.parseInt(hex.slice(0, 2), 16) / 255;
@@ -342,11 +351,11 @@ export function getHexLightness(hex: string): number {
   return Math.round(l * 100);
 }
 
-/**
- * Color ring structure for the radial picker.
- */
+/** Color ring structure for the radial picker. */
 export interface ColorRing {
+  /** Array of HSL color strings in this ring. */
   colors: string[];
+  /** Ring index (0 = center, higher = outer). */
   ring: number;
 }
 

@@ -106,20 +106,29 @@ function Button({
 }: WithTestId<
   React.ComponentProps<"button"> &
     VariantProps<typeof buttonVariants> & {
+      /** Merge props onto child element using Radix Slot. */
       asChild?: boolean;
+      /** Show loading spinner and disable the button. */
       loading?: boolean;
+      /** Label text displayed during the loading state. */
       loadingLabel?: string;
+      /** Leading icon component (LucideIcon or custom SVG component). */
       icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+      /** Additional CSS classes applied to the leading icon. */
       iconClassName?: string;
+      /** Trailing icon component (LucideIcon or custom SVG component). */
       suffixIcon?:
         | LucideIcon
         | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+      /** Additional CSS classes applied to the trailing icon. */
       suffixIconClassName?: string;
+      /** Dot color indicator (CSS color value). Renders a small colored dot. */
       dot?: string;
+      /** Position of the dot indicator relative to content. */
       dotPlacement?: "start" | "end";
-      /** Force focus ring display (for documentation/testing) */
+      /** Force focus ring display (for documentation/testing). */
       focused?: boolean;
-      /** Force hover state display (for documentation/testing) */
+      /** Force hover state display (for documentation/testing). */
       hovered?: boolean;
     }
 >) {
@@ -400,22 +409,33 @@ function Button({
   );
 }
 
-/** Button props type */
+/** Props for the Button component. */
 type ButtonProps = WithTestId<
   React.ComponentProps<"button"> &
     VariantProps<typeof buttonVariants> & {
+      /** Merge props onto child element using Radix Slot. */
       asChild?: boolean;
+      /** Show loading spinner and disable the button. */
       loading?: boolean;
+      /** Label text displayed during the loading state. */
       loadingLabel?: string;
+      /** Leading icon component (LucideIcon or custom SVG component). */
       icon?: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+      /** Additional CSS classes applied to the leading icon. */
       iconClassName?: string;
+      /** Trailing icon component (LucideIcon or custom SVG component). */
       suffixIcon?:
         | LucideIcon
         | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+      /** Additional CSS classes applied to the trailing icon. */
       suffixIconClassName?: string;
+      /** Dot color indicator (CSS color value). Renders a small colored dot. */
       dot?: string;
+      /** Position of the dot indicator relative to content. */
       dotPlacement?: "start" | "end";
+      /** Force focus ring display (for documentation/testing). */
       focused?: boolean;
+      /** Force hover state display (for documentation/testing). */
       hovered?: boolean;
     }
 >;

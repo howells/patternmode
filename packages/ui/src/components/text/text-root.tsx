@@ -34,20 +34,27 @@ const WEIGHT_CLASSES = {
 type TextVariant = keyof typeof VARIANT_CLASSES;
 type TextWeight = keyof typeof WEIGHT_CLASSES;
 
+/** Props for the Text component. */
 type TextProps = Omit<React.ComponentProps<"p">, "size"> & {
-  /** Text size — accepts a static size or responsive object like `{ base: "sm", md: "lg" }` */
+  /** Text size — accepts a static size or responsive object like `{ base: "sm", md: "lg" }`. */
   size?: ResponsiveValue<ComponentSize>;
-  /** Text color variant */
+  /** Text color variant. "default" inherits color, "muted" uses muted-foreground, "accent" uses accent-foreground. */
   variant?: TextVariant;
-  /** Font weight */
+  /** Font weight. Default "normal". */
   weight?: TextWeight;
-  /** Merge props onto child element using Slot */
+  /** Merge props onto child element using Radix Slot. */
   asChild?: boolean;
 };
 
 /**
- * Renders a text element with configurable size and variant styles.
- * Size accepts responsive values: `size={{ base: "sm", md: "lg" }}`.
+ * Body text element with configurable size, weight, and color variant.
+ * Supports responsive sizes.
+ *
+ * @example
+ * ```tsx
+ * <Text size="lg" weight="medium">Bold text</Text>
+ * <Text variant="muted" size={{ base: "sm", md: "base" }}>Responsive muted</Text>
+ * ```
  */
 function Text({
   size,
