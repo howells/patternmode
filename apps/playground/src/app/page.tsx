@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +13,14 @@ import {
 } from "@patternmode/ui/components/alert";
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@patternmode/ui/components/breadcrumb";
 import { Button } from "@patternmode/ui/components/button";
 import {
   Card,
@@ -22,6 +32,15 @@ import {
 } from "@patternmode/ui/components/card";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
 import { CheckboxField } from "@patternmode/ui/components/checkbox-field";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "@patternmode/ui/components/command";
 import {
   Dialog,
   DialogClose,
@@ -61,6 +80,7 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "@patternmode/ui/components/native-select";
+import { Pagination } from "@patternmode/ui/components/pagination";
 import {
   Popover,
   PopoverArrow,
@@ -83,6 +103,15 @@ import {
   SelectValue,
 } from "@patternmode/ui/components/select";
 import { Separator } from "@patternmode/ui/components/separator";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@patternmode/ui/components/sheet";
 import { Skeleton } from "@patternmode/ui/components/skeleton";
 import { Switch } from "@patternmode/ui/components/switch";
 import {
@@ -147,6 +176,11 @@ const primitives = [
     name: "Utility + Forms",
     summary:
       "Scroll, loading, progress, native selects, and grouped field composition.",
+  },
+  {
+    name: "Navigation + Workspace",
+    summary:
+      "Breadcrumbs, pagination, command search, and sheets for broader product shells.",
   },
 ];
 
@@ -692,6 +726,118 @@ export default function Page() {
               description="Required for package-level review confidence and regression visibility."
               label="Package-owned stories for every primitive"
             />
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[0.98fr_1.02fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Navigation shell</Badge>
+            <CardTitle>Wayfinding should already be upstream</CardTitle>
+            <CardDescription>
+              Once the library moves beyond basic controls, product shells need
+              navigation primitives that still share the same surface language.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Patternmode</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Navigation shell</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+
+            <div className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 p-4">
+              <Pagination
+                onPageChange={() => undefined}
+                page={7}
+                totalPages={24}
+              />
+            </div>
+
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="secondary">Open side panel</Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>
+                    Promote navigation primitives carefully
+                  </SheetTitle>
+                  <SheetDescription>
+                    Shared shell components should stay broadly reusable while
+                    leaving app-specific orchestration outside the package.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="grid gap-3">
+                  <div className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/55 px-4 py-3 text-body text-secondary-foreground">
+                    Breadcrumbs anchor users in multi-layer product shells.
+                  </div>
+                  <div className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/55 px-4 py-3 text-body text-secondary-foreground">
+                    Sheets extend context without forcing a full route change.
+                  </div>
+                </div>
+                <SheetFooter>
+                  <Button variant="ghost">Keep local</Button>
+                  <Button variant="accent">Promote upstream</Button>
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Workspace affordances
+            </p>
+            <CardTitle>Search and movement need a library baseline</CardTitle>
+            <CardDescription>
+              Product teams should not rebuild command search and shell
+              navigation from scratch once the primitive layer is stable.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <Command>
+              <CommandInput placeholder="Search components, stories, and docs..." />
+              <CommandList>
+                <CommandEmpty>No result yet.</CommandEmpty>
+                <CommandGroup heading="Components">
+                  <CommandItem>
+                    Breadcrumb
+                    <CommandShortcut>Nav</CommandShortcut>
+                  </CommandItem>
+                  <CommandItem>
+                    Pagination
+                    <CommandShortcut>Nav</CommandShortcut>
+                  </CommandItem>
+                  <CommandItem>
+                    Sheet
+                    <CommandShortcut>Overlay</CommandShortcut>
+                  </CommandItem>
+                </CommandGroup>
+                <CommandGroup heading="Review">
+                  <CommandItem>
+                    Storybook surface
+                    <CommandShortcut>⌘S</CommandShortcut>
+                  </CommandItem>
+                  <CommandItem>
+                    Playground audit
+                    <CommandShortcut>⌘P</CommandShortcut>
+                  </CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
           </CardContent>
         </Card>
       </section>
