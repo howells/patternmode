@@ -4,7 +4,7 @@ import type * as React from "react";
 import type { WithTestId } from "../../lib/types";
 
 const cardVariants = cva(
-  "flex flex-col gap-6 rounded-xl py-5 text-card-foreground has-[[data-slot=card-footer]]:pb-0",
+  "flex flex-col gap-4 rounded-xl py-4 text-card-foreground has-[[data-slot=card-footer]]:pb-0",
   {
     variants: {
       variant: {

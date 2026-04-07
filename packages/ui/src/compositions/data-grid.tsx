@@ -208,7 +208,7 @@ function DataGrid<TData extends object>({
       /** Header border */
       headerBorder: true,
       /** Row height */
-      rowHeight: 72,
+      rowHeight: 52,
       width: "fixed",
       /** Columns visibility */
       columnsVisibility: false,

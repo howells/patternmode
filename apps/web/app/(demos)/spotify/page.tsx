@@ -113,7 +113,7 @@ function AlbumCard({ album }: { album: Album }) {
 
 export default function SpotifyDemo() {
   return (
-    <Flex className="h-screen" direction="column">
+    <Flex className="h-screen dark" direction="column">
       {/* Main area (sidebar + content) */}
       <Flex className="flex-1 min-h-0" direction="row">
         {/* Sidebar */}
