@@ -25,6 +25,12 @@ import {
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import {
+  Banner,
+  BannerActions,
+  BannerDescription,
+  BannerTitle,
+} from "@patternmode/ui/components/banner";
+import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -34,6 +40,11 @@ import {
 } from "@patternmode/ui/components/breadcrumb";
 import { Button } from "@patternmode/ui/components/button";
 import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from "@patternmode/ui/components/button-group";
+import {
   Card,
   CardContent,
   CardDescription,
@@ -41,6 +52,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@patternmode/ui/components/card";
+import { Center } from "@patternmode/ui/components/center";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
 import { CheckboxField } from "@patternmode/ui/components/checkbox-field";
 import {
@@ -48,6 +60,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@patternmode/ui/components/collapsible";
+import { Combobox } from "@patternmode/ui/components/combobox";
 import {
   Command,
   CommandEmpty,
@@ -57,6 +70,13 @@ import {
   CommandList,
   CommandShortcut,
 } from "@patternmode/ui/components/command";
+import { Container } from "@patternmode/ui/components/container";
+import {
+  DescriptionDetails,
+  DescriptionItem,
+  DescriptionList,
+  DescriptionTerm,
+} from "@patternmode/ui/components/description-list";
 import {
   Dialog,
   DialogClose,
@@ -80,6 +100,25 @@ import {
   DropdownMenuTrigger,
 } from "@patternmode/ui/components/dropdown-menu";
 import {
+  Empty,
+  EmptyActions,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@patternmode/ui/components/empty";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@patternmode/ui/components/field";
+import { Flex } from "@patternmode/ui/components/flex";
+import { Grid, GridCol } from "@patternmode/ui/components/grid";
+import { Group } from "@patternmode/ui/components/group";
+import { Heading } from "@patternmode/ui/components/heading";
+import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
@@ -91,6 +130,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@patternmode/ui/components/input-group";
+import { Kbd } from "@patternmode/ui/components/kbd";
 import { Label } from "@patternmode/ui/components/label";
 import {
   NativeSelect,
@@ -129,14 +169,26 @@ import {
   SheetTrigger,
 } from "@patternmode/ui/components/sheet";
 import { Skeleton } from "@patternmode/ui/components/skeleton";
+import { Slider } from "@patternmode/ui/components/slider";
 import { Spinner } from "@patternmode/ui/components/spinner";
+import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Switch } from "@patternmode/ui/components/switch";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@patternmode/ui/components/table";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@patternmode/ui/components/tabs";
+import { Text } from "@patternmode/ui/components/text";
 import { Textarea } from "@patternmode/ui/components/textarea";
 import { Toggle } from "@patternmode/ui/components/toggle";
 import {
@@ -203,6 +255,21 @@ const primitives = [
     name: "Feedback + Confirmation",
     summary:
       "Alert dialogs, collapsible disclosures, and loading indicators for real product edges.",
+  },
+  {
+    name: "Foundations + Layout",
+    summary:
+      "Typography, grouped actions, semantic field wrappers, and page-shell layout utilities.",
+  },
+  {
+    name: "Search + Range Input",
+    summary:
+      "Combobox search and sliders for richer filtering, tuning, and configuration surfaces.",
+  },
+  {
+    name: "Data Display + Empty",
+    summary:
+      "Tables, metadata lists, banners, and empty states so downstream apps stop rebuilding the quiet basics.",
   },
 ];
 
@@ -280,6 +347,169 @@ export default function Page() {
             </CardContent>
           </Card>
         ))}
+      </section>
+
+      <section>
+        <Banner className="max-w-5xl" variant="accent">
+          <BannerTitle>
+            Shared surface area is now broad enough to matter
+          </BannerTitle>
+          <BannerDescription>
+            This pass closes the obvious upstream gaps: layout foundations,
+            richer selection controls, empty states, tables, and metadata
+            surfaces. Downstream apps should now reach for local wrappers less
+            often and later.
+          </BannerDescription>
+          <BannerActions>
+            <Button>Review stories</Button>
+            <Button variant="secondary">Audit app-local wrappers</Button>
+          </BannerActions>
+        </Banner>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Foundations</Badge>
+            <CardTitle>
+              Typography and layout now have first-class primitives
+            </CardTitle>
+            <CardDescription>
+              Shared upstreams need more than controls. They also need a clear
+              vocabulary for structure, spacing, and copy hierarchy.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <VStack className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 p-4">
+              <Heading level={3} size="sm">
+                Library posture
+              </Heading>
+              <Text variant="muted">
+                Upstream packages should be opinionated enough to feel coherent,
+                but not so prescriptive that product shells need constant
+                forking.
+              </Text>
+              <HStack align="center" gap="sm">
+                <Kbd>⌘K</Kbd>
+                <Text size="sm" variant="muted">
+                  Open shared command search from anywhere in the shell.
+                </Text>
+              </HStack>
+            </VStack>
+
+            <ButtonGroup variant="segmented">
+              <Button variant="ghost">Preview</Button>
+              <ButtonGroupSeparator />
+              <Button variant="ghost">Review</Button>
+              <ButtonGroupSeparator />
+              <ButtonGroupText>Canonical upstream</ButtonGroupText>
+            </ButtonGroup>
+
+            <Group gap="sm" wrap>
+              <Badge variant="neutral">Heading</Badge>
+              <Badge variant="neutral">Text</Badge>
+              <Badge variant="neutral">Kbd</Badge>
+              <Badge variant="accent">Field</Badge>
+              <Badge variant="accent">Grid</Badge>
+              <Badge variant="accent">Container</Badge>
+            </Group>
+
+            <div className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/35 py-4">
+              <Container px="sm" size="sm">
+                <Grid columns={12} gap="sm">
+                  <GridCol className="md:[grid-column:span_7/span_7]" span={12}>
+                    <div className="rounded-[calc(var(--radius-md)-4px)] bg-white/88 px-4 py-3 text-body text-foreground shadow-2xs">
+                      Primary shell content
+                    </div>
+                  </GridCol>
+                  <GridCol className="md:[grid-column:span_5/span_5]" span={12}>
+                    <Center className="h-full min-h-24 rounded-[calc(var(--radius-md)-4px)] border border-border-strong/70 border-dashed bg-panel/94 px-4 py-3 text-body text-muted-foreground">
+                      Sidebar tools
+                    </Center>
+                  </GridCol>
+                </Grid>
+              </Container>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Semantic composition
+            </p>
+            <CardTitle>
+              Fields and tuning controls feel like one family
+            </CardTitle>
+            <CardDescription>
+              Search inputs, textareas, and range controls now sit behind the
+              same semantic wrappers instead of being wired ad hoc in every app.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-6">
+            <FieldGroup>
+              <Field id="surface-name">
+                <FieldLabel>Surface name</FieldLabel>
+                <FieldContent>
+                  <Input
+                    defaultValue="Patternmode Canonical"
+                    id="surface-name"
+                  />
+                  <FieldDescription>
+                    Shared names should stay stable enough to be referenced in
+                    docs and review.
+                  </FieldDescription>
+                </FieldContent>
+              </Field>
+
+              <Field id="surface-preset">
+                <FieldLabel>Preset search</FieldLabel>
+                <FieldContent>
+                  <Combobox
+                    id="surface-preset"
+                    items={[
+                      { label: "Patternmode Default", value: "default" },
+                      { label: "Quiet Editorial", value: "quiet" },
+                      { label: "Accent Lift", value: "accent" },
+                      { label: "Downstream Wrapper", value: "wrapper" },
+                    ]}
+                    value="default"
+                  />
+                  <FieldDescription>
+                    Search-first selection reduces the pressure to build local
+                    lookup components too early.
+                  </FieldDescription>
+                </FieldContent>
+              </Field>
+
+              <Field id="surface-notes">
+                <FieldLabel>Review notes</FieldLabel>
+                <FieldContent>
+                  <Textarea
+                    defaultValue="Push baseline layout and data-display primitives upstream before accepting new bespoke app wrappers."
+                    id="surface-notes"
+                  />
+                </FieldContent>
+              </Field>
+            </FieldGroup>
+
+            <Flex
+              align="center"
+              className="rounded-[calc(var(--radius-lg)-4px)] bg-secondary/45 px-4 py-3"
+              justify="between"
+            >
+              <div className="space-y-1">
+                <Text weight="medium">Density tuning</Text>
+                <Text size="sm" variant="muted">
+                  Shared sliders cover the last common configuration gap.
+                </Text>
+              </div>
+              <div className="w-44">
+                <Slider defaultValue={[72]} max={100} min={0} />
+              </div>
+            </Flex>
+          </CardContent>
+        </Card>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
@@ -944,6 +1174,107 @@ export default function Page() {
                 Publishing canonical upstream release
               </p>
             </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="accent">Data display</Badge>
+            <CardTitle>
+              Quiet reporting surfaces now live upstream too
+            </CardTitle>
+            <CardDescription>
+              Tables and metadata lists are routine product scaffolding. They
+              belong in the shared package once the visual language is stable.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <DescriptionList dividers>
+              <DescriptionItem>
+                <DescriptionTerm>Surface area</DescriptionTerm>
+                <DescriptionDetails>Broad baseline covered</DescriptionDetails>
+              </DescriptionItem>
+              <DescriptionItem>
+                <DescriptionTerm>Remaining local work</DescriptionTerm>
+                <DescriptionDetails>
+                  Domain-heavy compositions and data-bound workflows
+                </DescriptionDetails>
+              </DescriptionItem>
+              <DescriptionItem>
+                <DescriptionTerm>Review posture</DescriptionTerm>
+                <DescriptionDetails>
+                  Package-owned stories plus tests for critical interactions
+                </DescriptionDetails>
+              </DescriptionItem>
+            </DescriptionList>
+
+            <div className="rounded-[calc(var(--radius-lg)-4px)] border border-border/80 bg-panel/94 p-2">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Primitive</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Scope</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Field</TableCell>
+                    <TableCell>Stable</TableCell>
+                    <TableCell>Forms</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Combobox</TableCell>
+                    <TableCell>New</TableCell>
+                    <TableCell>Search + select</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Empty</TableCell>
+                    <TableCell>New</TableCell>
+                    <TableCell>Zero-state UX</TableCell>
+                  </TableRow>
+                </TableBody>
+                <TableCaption>
+                  Downstream teams now inherit basic reporting surfaces instead
+                  of rebuilding them from scratch.
+                </TableCaption>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Empty-state discipline
+            </p>
+            <CardTitle>
+              Zero states should feel intentional, not absent
+            </CardTitle>
+            <CardDescription>
+              Good empty states set tone, offer next actions, and keep review
+              surfaces coherent even when there is nothing to show.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Empty layout="card">
+              <EmptyHeader>
+                <EmptyMedia>
+                  <span className="font-medium text-sm">0</span>
+                </EmptyMedia>
+                <EmptyTitle>No app-local overrides remain</EmptyTitle>
+                <EmptyDescription>
+                  The playground is now exercising the shared library directly.
+                  Add local wrappers only when a real domain boundary appears.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyActions>
+                <Button>Browse primitives</Button>
+                <Button variant="secondary">Read contribution rules</Button>
+              </EmptyActions>
+            </Empty>
           </CardContent>
         </Card>
       </section>
