@@ -21,6 +21,7 @@ import {
   CardTitle,
 } from "@patternmode/ui/components/card";
 import { Checkbox } from "@patternmode/ui/components/checkbox";
+import { CheckboxField } from "@patternmode/ui/components/checkbox-field";
 import {
   Dialog,
   DialogClose,
@@ -49,17 +50,29 @@ import {
   HoverCardTrigger,
 } from "@patternmode/ui/components/hover-card";
 import { Input } from "@patternmode/ui/components/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@patternmode/ui/components/input-group";
 import { Label } from "@patternmode/ui/components/label";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@patternmode/ui/components/native-select";
 import {
   Popover,
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
 } from "@patternmode/ui/components/popover";
+import { Progress, ProgressCircle } from "@patternmode/ui/components/progress";
 import {
   RadioGroup,
   RadioGroupItem,
 } from "@patternmode/ui/components/radio-group";
+import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import {
   Select,
   SelectContent,
@@ -70,6 +83,7 @@ import {
   SelectValue,
 } from "@patternmode/ui/components/select";
 import { Separator } from "@patternmode/ui/components/separator";
+import { Skeleton } from "@patternmode/ui/components/skeleton";
 import { Switch } from "@patternmode/ui/components/switch";
 import {
   Tabs,
@@ -128,6 +142,11 @@ const primitives = [
     name: "Disclosure + Overlays",
     summary:
       "Accordions, alerts, popovers, and toggles with the same neutral backbone.",
+  },
+  {
+    name: "Utility + Forms",
+    summary:
+      "Scroll, loading, progress, native selects, and grouped field composition.",
   },
 ];
 
@@ -569,6 +588,110 @@ export default function Page() {
                 it probably wants a dialog or a full screen.
               </TooltipContent>
             </Tooltip>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+        <Card>
+          <CardHeader>
+            <Badge variant="success">Utility surfaces</Badge>
+            <CardTitle>
+              Loading, progress, and overflow need shared defaults
+            </CardTitle>
+            <CardDescription>
+              Utility primitives are not glamorous, but they are what make the
+              library feel production-grade instead of ornamental.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <div className="grid gap-3">
+              <div className="flex items-center justify-between text-body text-muted-foreground">
+                <span>Library completion</span>
+                <span>84%</span>
+              </div>
+              <Progress value={84} />
+            </div>
+
+            <div className="flex items-center gap-4">
+              <ProgressCircle label="Coverage" value={84}>
+                <span className="font-medium text-[0.82rem] text-foreground">
+                  84%
+                </span>
+              </ProgressCircle>
+              <div className="grid gap-2">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 w-44" />
+                <Skeleton className="h-16 w-52 rounded-[var(--radius-lg)]" />
+              </div>
+            </div>
+
+            <div className="h-52">
+              <ScrollArea className="h-full rounded-[calc(var(--radius-lg)-4px)] border border-border/80 bg-secondary/35 p-3">
+                <div className="grid gap-2">
+                  {[
+                    "Finish utility surfaces",
+                    "Refine form wrappers",
+                    "Add more package stories",
+                    "Push breadth toward Materia baseline",
+                    "Review downstream usage",
+                    "Add testing infrastructure",
+                    "Polish motion and empty states",
+                    "Document upgrade path",
+                  ].map((item) => (
+                    <div
+                      className="rounded-[calc(var(--radius-md)-4px)] bg-white/80 px-3 py-2 text-body text-foreground shadow-2xs"
+                      key={item}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <p className="text-label text-muted-foreground uppercase">
+              Form composition
+            </p>
+            <CardTitle>
+              Grouped fields should still feel like one family
+            </CardTitle>
+            <CardDescription>
+              Native form controls and composed input shells need the same
+              spacing, focus, and tone as the rest of the library.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-5">
+            <div className="grid gap-2">
+              <Label htmlFor="native-density">Fallback selector</Label>
+              <NativeSelect defaultValue="default" id="native-density">
+                <NativeSelectOption value="default">
+                  Patternmode Default
+                </NativeSelectOption>
+                <NativeSelectOption value="quiet">
+                  Quiet Editorial
+                </NativeSelectOption>
+                <NativeSelectOption value="local">
+                  App-local wrapper
+                </NativeSelectOption>
+              </NativeSelect>
+            </div>
+
+            <InputGroup>
+              <InputGroupAddon>https://</InputGroupAddon>
+              <InputGroupInput defaultValue="patternmode.design" />
+              <InputGroupButton>Open</InputGroupButton>
+            </InputGroup>
+
+            <CheckboxField
+              defaultChecked
+              description="Required for package-level review confidence and regression visibility."
+              label="Package-owned stories for every primitive"
+            />
           </CardContent>
         </Card>
       </section>
