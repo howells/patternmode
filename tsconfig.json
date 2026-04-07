@@ -1,5 +1,5 @@
 {
-  "extends": "@patternmode/typescript-config/bundler-dom-app",
+  "extends": "./packages/typescript-config/bundler-dom-app.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
