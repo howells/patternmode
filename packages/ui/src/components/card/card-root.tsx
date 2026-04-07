@@ -8,12 +8,12 @@ const cardVariants = cva(
   {
     variants: {
       variant: {
-        card: "bg-card shadow-xs",
-        muted: "bg-muted shadow-xs",
-        accent: "bg-accent shadow-xs",
+        card: "bg-card shadow-2xs",
+        muted: "bg-muted shadow-2xs",
+        accent: "bg-accent shadow-2xs",
         ghost: "border-0 bg-transparent shadow-none",
         interactive:
-          "bg-card shadow-xs transition-[box-shadow,transform] duration-150 hover:-translate-y-px hover:shadow-md cursor-pointer active:translate-y-0",
+          "bg-card shadow-2xs transition-shadow duration-150 hover:shadow-sm cursor-pointer",
       },
     },
     defaultVariants: {
