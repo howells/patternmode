@@ -20,7 +20,7 @@ import {
 import { Flex } from "@patternmode/ui/components/flex";
 import { Heading } from "@patternmode/ui/components/heading";
 import { Icon } from "@patternmode/ui/components/icon";
-import { Input } from "@patternmode/ui/components/input";
+
 import { MenuItem } from "@patternmode/ui/components/menu-item";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
@@ -127,24 +127,17 @@ export default function NotionDemo() {
       {/* Sidebar */}
       <AppShellSidebar width="w-60">
         {/* Workspace header */}
-        <Flex align="center" justify="space-between" className="px-3 pt-3 pb-1">
-          <HStack gap="xs" align="center">
-            <Text size="sm" weight="semibold">
-              Team Workspace
-            </Text>
-          </HStack>
-          <Button
-            variant="ghost"
-            size="icon-2xs"
-            icon={Settings}
-            aria-label="Settings"
-          />
-        </Flex>
-
-        {/* Search */}
-        <div className="px-2 pb-1">
-          <Input placeholder="Search..." size="sm" />
-        </div>
+        <HStack align="center" gap="sm" noShrink className="px-4 pt-4 pb-2">
+          <div className="size-5 rounded-full bg-foreground" />
+          <Text
+            size="xs"
+            variant="muted"
+            weight="medium"
+            className="tracking-wide uppercase"
+          >
+            Workspace
+          </Text>
+        </HStack>
 
         <VStack gap="2xs" className="px-2">
           <MenuItem icon={Search} size="xs" kbd={["Cmd", "K"]}>
@@ -196,7 +189,7 @@ export default function NotionDemo() {
       {/* Main content area */}
       <AppShellContent>
         <ScrollArea className="flex-1">
-          <VStack className="max-w-3xl mx-auto px-12 py-8" gap="lg">
+          <VStack className="max-w-2xl mx-auto px-12 pt-12 pb-24" gap="lg">
             {/* Breadcrumb */}
             <Breadcrumb>
               <BreadcrumbList>
@@ -212,20 +205,12 @@ export default function NotionDemo() {
 
             {/* Page header */}
             <VStack gap="xs">
-              <HStack gap="sm" align="center">
-                <Text size="xl">📐</Text>
-                <Heading size="xl" level="1">
-                  Architecture Overview
-                </Heading>
-              </HStack>
-              <HStack gap="sm" align="center">
-                <Text size="xs" variant="muted">
-                  Last edited by Sarah Chen
-                </Text>
-                <Text size="xs" variant="muted">
-                  April 4, 2026
-                </Text>
-              </HStack>
+              <Heading size="xl" level="1">
+                Architecture Overview
+              </Heading>
+              <Text size="xs" variant="muted">
+                Last edited by Sarah Chen &middot; April 4, 2026
+              </Text>
             </VStack>
 
             <Separator />
@@ -333,7 +318,7 @@ export default function NotionDemo() {
               <Text size="base">
                 All writes go through the command pipeline, which validates
                 input, applies business rules, persists changes, and publishes
-                domain events. Reads are served from patternmodelized views
+                domain events. Reads are served from materialized views
                 optimized for each query pattern.
               </Text>
 

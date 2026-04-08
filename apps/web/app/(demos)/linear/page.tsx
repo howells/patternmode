@@ -352,7 +352,7 @@ const backlog = ISSUES.filter((i) => i.status === "backlog");
 const doneIssues = ISSUES.filter((i) => i.status === "done");
 
 const totalActive = inProgress.length + todo.length;
-const progressPercent = Math.round((doneIssues.length / ISSUES.length) * 100);
+const _progressPercent = Math.round((doneIssues.length / ISSUES.length) * 100);
 
 export default function LinearDemo() {
   return (
