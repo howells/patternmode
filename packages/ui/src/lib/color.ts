@@ -6,31 +6,31 @@
  */
 
 /**
- * Muted, desaturated palette for professional UI contexts.
- * Colors are chosen to feel quiet and confident at 50% opacity —
- * closer to Linear/Medusa avatar tones than primary-color loudness.
+ * Palette with tasteful saturation — distinct enough to tell people apart,
+ * restrained enough to not fight for attention. At 50% opacity these
+ * become soft watercolor tones that feel alive without being loud.
  */
 export const DETERMINISTIC_COLORS: readonly string[] = [
-  "#6B7280", // gray
-  "#7C8594", // cool gray
-  "#64748B", // slate
-  "#78716C", // stone
-  "#71717A", // zinc
-  "#6D8B74", // muted sage
-  "#7B8FA1", // steel blue
-  "#8B7E74", // warm taupe
-  "#7E6B8A", // muted purple
-  "#6B8A8A", // teal-gray
-  "#8A7B6B", // khaki
-  "#7A7A6B", // olive-gray
-  "#7B6B7A", // dusty mauve
-  "#6B7B7B", // blue-gray
-  "#8A7070", // rosewood
-  "#6B8078", // sea-gray
-  "#7A6B65", // brown-gray
-  "#6B6B8A", // cool indigo
-  "#7A8A6B", // moss
-  "#857B74", // warm gray
+  "#4F7CAC", // steel blue
+  "#7B68A8", // soft violet
+  "#C4785B", // terracotta
+  "#4A9B8E", // teal
+  "#8B6BAE", // purple
+  "#5B8C6F", // forest
+  "#B07156", // warm sienna
+  "#6089A5", // ocean
+  "#A0705F", // clay
+  "#5C8A9E", // aegean
+  "#7E7B52", // olive
+  "#8C6A7A", // dusty rose
+  "#5B7F6E", // sage
+  "#9B7B54", // amber
+  "#6B7BA0", // periwinkle
+  "#8A6B6B", // muted coral
+  "#5A8080", // teal-gray
+  "#7A6B90", // lavender
+  "#6B8B5E", // moss
+  "#9E7B6B", // sandstone
 ];
 
 const DEFAULT_COLOR = "#6B7280"; // Neutral gray fallback

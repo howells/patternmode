@@ -44,7 +44,7 @@ function ScrollArea({
   return (
     <Root
       className={cn(
-        "relative",
+        "relative overflow-hidden",
         orientation === "horizontal" &&
           (allowOverflow
             ? "overflow-x-hidden overflow-y-visible"

@@ -70,6 +70,7 @@ export function TabsTrigger({
         tabsTriggerVariants({ variant, size }),
         "relative",
         fullWidth && "flex-1",
+        isActive ? "text-foreground" : "text-muted-foreground",
         className,
       )}
       data-component="tabs-trigger"

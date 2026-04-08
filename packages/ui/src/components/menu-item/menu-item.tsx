@@ -212,7 +212,7 @@ const menuItemVariants = cva(
       size: MENU_ITEM_SIZE_CLASSES,
       variant: {
         default:
-          "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:font-medium data-[active=true]:text-accent-foreground",
+          "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground data-[active=true]:bg-zinc-100 data-[active=true]:font-semibold data-[active=true]:text-foreground",
         input:
           "hover:bg-input hover:text-foreground focus:bg-input focus:text-foreground focus-visible:bg-input focus-visible:text-foreground data-[active=true]:bg-input data-[active=true]:font-medium data-[active=true]:text-foreground",
         outline:

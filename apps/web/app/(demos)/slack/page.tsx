@@ -416,7 +416,7 @@ export default function SlackDemo() {
         </ScrollArea>
 
         {/* Message input */}
-        <VStack gap="xs" className="px-5 pb-14 pt-2">
+        <VStack gap="xs" className="px-5 pb-4 pt-2">
           <InputGroup size="lg">
             <InputGroupInput placeholder="Message #engineering" />
             <InputGroupButton icon={Paperclip} aria-label="Attach file" />

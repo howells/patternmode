@@ -96,7 +96,11 @@
   --color-favorite: var(--color-red-500);
   --color-border: var(--color-zinc-200);
   --color-input: var(--color-white);
-  --color-ring: var(--color-zinc-300);
+  --color-ring: var(--color-blue-500);
+
+  /* Interactive accent — the one color that says "alive" */
+  --color-interactive: var(--color-blue-600);
+  --color-interactive-foreground: var(--color-white);
 
   /* Sidebar tokens — zinc palette */
   --color-sidebar: var(--color-zinc-100);
@@ -121,11 +125,11 @@
   --color-affirmative-foreground: #14532d; /* green-900 */
 
   --color-warning-soft: #fffbeb; /* very soft amber */
-  --color-warning-accent: #fcd34d; /* amber-300 - much calmer */
+  --color-warning-accent: #f59e0b; /* amber-500 — visible as a signal */
   --color-warning-foreground: #92400e; /* amber-800 */
 
   --color-error-soft: #fef2f2; /* very soft red */
-  --color-error-accent: #fca5a5; /* red-300 - much calmer */
+  --color-error-accent: #ef4444; /* red-500 — visible as a signal */
   --color-error-foreground: #991b1b; /* red-800 */
 
   --color-info-soft: #eff6ff; /* blue-50 */
@@ -439,6 +443,23 @@
     font-synthesis: none;
     color: var(--color-foreground);
     text-rendering: optimizeLegibility;
+  }
+
+  /* Global interactive transitions — everything that can be clicked should breathe */
+  button,
+  a,
+  [role="tab"],
+  [role="option"],
+  [role="menuitem"],
+  [role="menuitemcheckbox"],
+  [data-component="menu-item"],
+  [data-slot="card"] {
+    transition:
+      color 0.15s,
+      background-color 0.15s,
+      border-color 0.15s,
+      opacity 0.15s,
+      box-shadow 0.15s;
   }
 }
 

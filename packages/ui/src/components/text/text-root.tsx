@@ -23,6 +23,7 @@ const VARIANT_CLASSES = {
   default: "",
   muted: "text-muted-foreground",
   accent: "text-accent-foreground",
+  interactive: "text-interactive",
 } as const;
 
 const WEIGHT_CLASSES = {

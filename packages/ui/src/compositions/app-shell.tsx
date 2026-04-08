@@ -77,7 +77,7 @@ function AppShellContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-1 flex-col overflow-hidden",
+        "flex min-w-0 flex-1 flex-col overflow-hidden bg-background",
         // In framed mode: white card with border and rounded corners
         "[[data-variant=framed]>&]:my-2 [[data-variant=framed]>&]:mr-2 [[data-variant=framed]>&]:overflow-hidden [[data-variant=framed]>&]:rounded-lg [[data-variant=framed]>&]:border [[data-variant=framed]>&]:border-border [[data-variant=framed]>&]:bg-card",
         className,

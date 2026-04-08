@@ -112,7 +112,7 @@ function AlbumCard({ album }: { album: Album }) {
 
 export default function SpotifyDemo() {
   return (
-    <div className="dark h-screen bg-background text-foreground pb-14 overflow-hidden">
+    <div className="dark h-screen bg-background text-foreground overflow-hidden">
       <Flex direction="column" className="h-full">
         {/* Main area: sidebar + content */}
         <AppShell variant="bordered" className="h-auto flex-1 min-h-0">
@@ -158,7 +158,7 @@ export default function SpotifyDemo() {
           {/* Main content */}
           <AppShellContent>
             <ScrollArea className="flex-1 min-w-0">
-              <VStack gap="xl" className="p-6 pb-16">
+              <VStack gap="xl" className="p-6">
                 {/* Recently Played */}
                 <VStack gap="sm">
                   <Heading size="sm" level="2">

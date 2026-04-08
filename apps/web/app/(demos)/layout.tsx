@@ -60,12 +60,12 @@ export default function DemosLayout({
   const pathname = usePathname();
 
   return (
-    <div className="min-w-6xl h-screen overflow-hidden">
-      {children}
+    <>
+      <div className="min-w-6xl h-screen overflow-hidden">{children}</div>
 
-      {/* Floating demo switcher — bottom center */}
+      {/* Floating demo switcher — outside overflow wrapper */}
       <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
-        <div className="flex items-center gap-1 rounded-xl border-0 bg-card/95 px-1 py-1 shadow-lg backdrop-blur-md">
+        <div className="flex items-center gap-1 rounded-lg bg-card/95 px-1.5 py-1 shadow-borders-base backdrop-blur-md">
           <TabNavigation variant="pill" size="xs">
             <TabNavigationList>
               {DEMOS.map((demo) => (
@@ -85,6 +85,6 @@ export default function DemosLayout({
           <ThemeToggle />
         </div>
       </div>
-    </div>
+    </>
   );
 }
