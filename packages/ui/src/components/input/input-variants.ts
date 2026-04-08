@@ -6,7 +6,7 @@ import { RADIUS_CLASSES } from "../../lib/radius";
  * For composed inputs with icons/addons, use InputGroup.
  */
 export const standaloneInputVariants = cva(
-  "w-full min-w-0 border border-border bg-input shadow-xs outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:border-0 file:bg-transparent file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+  "w-full min-w-0 border-0 bg-input shadow-borders-base outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:border-0 file:bg-transparent file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
   {
     variants: {
       size: {

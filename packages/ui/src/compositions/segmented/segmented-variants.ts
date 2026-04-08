@@ -2,7 +2,7 @@ import type { ComponentSize } from "../../lib/size";
 
 /** Shared shell classes for segmented controls (Tabs default, ToggleGroup pill). */
 export const SEGMENTED_SHELL_BASE =
-  "rounded-full bg-accent text-muted-foreground dark:bg-white/5 dark:text-gray-500";
+  "rounded-full bg-zinc-100/60 text-muted-foreground dark:bg-white/5 dark:text-zinc-500";
 
 /** Shared shell padding scale by size. */
 export const SEGMENTED_SHELL_PADDING: Record<ComponentSize, string> = {
@@ -40,10 +40,10 @@ export const SEGMENTED_GAP: Record<ComponentSize, string> = {
   "3xl": "gap-2",
 };
 
-/** Shared active indicator visual treatment (matches secondary button sans gradient). */
+/** Shared active indicator visual treatment — white pill with shadow-border ring. */
 export const SEGMENTED_INDICATOR_CLASS =
-  "bg-card border border-gray-200 shadow-xs dark:bg-white/10 dark:border-white/10 dark:shadow-none";
+  "bg-card border-0 shadow-borders-base dark:bg-white/10 dark:shadow-none";
 
 /** Shared active indicator utility for Radix data-state selectors. */
 export const SEGMENTED_INDICATOR_ACTIVE_CLASS =
-  "data-[state=on]:bg-card data-[state=on]:border-gray-200 data-[state=on]:shadow-xs dark:data-[state=on]:bg-white/10 dark:data-[state=on]:border-white/10 dark:data-[state=on]:shadow-none";
+  "data-[state=on]:bg-card data-[state=on]:border-0 data-[state=on]:shadow-borders-base dark:data-[state=on]:bg-white/10 dark:data-[state=on]:shadow-none";

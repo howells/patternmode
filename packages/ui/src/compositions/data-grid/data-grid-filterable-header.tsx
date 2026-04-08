@@ -2,28 +2,28 @@
 
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
-import { Icon } from "@patternmode/ui/components/icon";
-import { MenuItem } from "@patternmode/ui/components/menu-item";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@patternmode/ui/components/popover";
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@patternmode/ui/components/dropdown-menu";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
-import { Separator } from "@patternmode/ui/components/separator";
 import { Tag } from "@patternmode/ui/components/tag";
 import { cn } from "@patternmode/ui/utils/cn";
 import type { Column } from "@tanstack/react-table";
 import {
   ArrowDown,
   ArrowUp,
-  Check,
   ChevronDown,
   ChevronsUpDown,
-  Search,
   X,
 } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 
 export interface FilterOption {
   label: string;
@@ -36,26 +36,23 @@ interface DataGridFilterableHeaderProps<TData, TValue> {
   column: Column<TData, TValue>;
   /** Filter options — enables the facets section */
   options?: FilterOption[];
-  /** Control search: true = always, false = never, undefined = auto (> 5 options) */
-  showSearch?: boolean;
   /** Show selected values as dismissible Tag pills above the filter list */
   showSelectedTags?: boolean;
 }
 
 /**
  * Unified column header for DataGrid columns.
- * Combines sorting, filtering, search, and tag pills in a single popover.
+ * Uses DropdownMenu for filter/sort interactions — same component used in
+ * all dropdown menus across the design system. Zero duplication.
  *
- * - Sort-only columns render a plain button with sort toggle.
- * - Filter columns open a popover with optional search, facet checkboxes, and sort commands.
- * - Tag columns add dismissible pills above the facet list via `showSelectedTags`.
+ * - Sort-only columns render a button with sort toggle.
+ * - Filter columns open a DropdownMenu with checkbox items and sort commands.
  */
 export function DataGridFilterableHeader<TData, TValue>({
   column,
   children,
   options,
   showSelectedTags,
-  showSearch,
   className,
 }: DataGridFilterableHeaderProps<TData, TValue>) {
   const canSort = column.getCanSort();
@@ -67,10 +64,6 @@ export function DataGridFilterableHeader<TData, TValue>({
   );
   const hasActiveFilter = selectedValues.size > 0;
 
-  const searchVisible =
-    showSearch === true ||
-    (showSearch !== false && canFilter && options.length > 5);
-
   const toggle = (value: string) => {
     const next = new Set(selectedValues);
     if (next.has(value)) {
@@ -81,7 +74,7 @@ export function DataGridFilterableHeader<TData, TValue>({
     column.setFilterValue(next.size > 0 ? Array.from(next) : undefined);
   };
 
-  // Sort-only indicator (single arrow) — shown when NOT filterable
+  // Sort icon for sort-only columns (no filter)
   const sortIconMap = { asc: ArrowUp, desc: ArrowDown } as const;
   const SortIcon =
     sortIconMap[sorted as keyof typeof sortIconMap] ?? ChevronsUpDown;
@@ -96,18 +89,14 @@ export function DataGridFilterableHeader<TData, TValue>({
       />
     ) : null;
 
-  // Menu indicator (chevron + badge count) — shown when filterable
+  // Chevron + active filter count for filterable columns
   const menuIndicator = canFilter ? (
     <span className="flex items-center gap-1">
       <ChevronDown
         className="size-3 text-muted-foreground transition-colors group-hover:text-foreground"
         strokeWidth={2}
       />
-      {hasActiveFilter && (
-        <Badge radius="full" size="xs">
-          {selectedValues.size}
-        </Badge>
-      )}
+      {hasActiveFilter && <Badge size="xs">{selectedValues.size}</Badge>}
     </span>
   ) : null;
 
@@ -119,7 +108,7 @@ export function DataGridFilterableHeader<TData, TValue>({
     </span>
   );
 
-  // No filter — render button (sortable or static)
+  // Sort-only — no dropdown, just a clickable button
   if (!canFilter) {
     return (
       <Button
@@ -129,7 +118,6 @@ export function DataGridFilterableHeader<TData, TValue>({
           className,
         )}
         onClick={canSort ? column.getToggleSortingHandler() : undefined}
-        radius="full"
         size="xs"
         variant="ghost"
       >
@@ -138,193 +126,98 @@ export function DataGridFilterableHeader<TData, TValue>({
     );
   }
 
-  // With filter dropdown
+  // Filterable — DropdownMenu with checkbox items
   return (
-    <FilterDropdown
-      canSort={canSort}
-      className={className}
-      facets={facets}
-      hasActiveFilter={hasActiveFilter}
-      headerContent={headerContent}
-      onClearFilter={() => column.setFilterValue(undefined)}
-      onClearSort={() => column.clearSorting()}
-      onSort={(desc) => column.toggleSorting(desc)}
-      onToggle={toggle}
-      options={options}
-      searchVisible={!!searchVisible}
-      selectedValues={selectedValues}
-      showSelectedTags={showSelectedTags}
-      sorted={sorted}
-    />
-  );
-}
-
-/**
- * Inner dropdown extracted as its own component so `useState` for the
- * search query resets automatically when the popover unmounts.
- */
-function FilterDropdown({
-  canSort,
-  className,
-  hasActiveFilter,
-  headerContent,
-  options,
-  searchVisible,
-  selectedValues,
-  showSelectedTags,
-  sorted,
-  onClearFilter,
-  onClearSort,
-  onSort,
-  onToggle,
-  facets,
-}: {
-  canSort: boolean;
-  className?: string;
-  hasActiveFilter: boolean;
-  headerContent: ReactNode;
-  options: FilterOption[];
-  searchVisible: boolean;
-  selectedValues: Set<string>;
-  showSelectedTags?: boolean;
-  sorted: false | "asc" | "desc";
-  onClearFilter: () => void;
-  onClearSort: () => void;
-  onSort: (desc: boolean) => void;
-  onToggle: (value: string) => void;
-  facets: Map<string, number> | undefined;
-}) {
-  const [query, setQuery] = useState("");
-
-  const filtered = useMemo(() => {
-    if (!query) {
-      return options;
-    }
-    const lower = query.toLowerCase();
-    return options.filter((opt) => opt.label.toLowerCase().includes(lower));
-  }, [options, query]);
-
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           className={cn("-ml-1 font-normal", className)}
-          radius="full"
           size="xs"
           variant="ghost"
         >
           {headerContent}
         </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        align="start"
-        className="w-[245px] rounded-3xl p-0 shadow-lg"
-      >
-        {searchVisible && (
-          <div className="flex items-center gap-1.5 border-border border-b px-2.5 py-1.5">
-            <Icon
-              className="shrink-0 text-muted-foreground"
-              icon={Search}
-              size="xs"
-            />
-            <input
-              className="h-7 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search…"
-              value={query}
-            />
-          </div>
-        )}
-
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-[220px]">
         {showSelectedTags && hasActiveFilter && (
-          <div className="flex flex-wrap items-center gap-1.5 border-border border-b px-3 py-2.5">
-            {options
-              .filter((opt) => selectedValues.has(opt.value))
-              .map((opt) => (
-                <Tag
-                  key={opt.value}
-                  onDismiss={() => onToggle(opt.value)}
-                  size="base"
-                >
-                  {opt.label}
-                </Tag>
-              ))}
-          </div>
+          <>
+            <div className="flex flex-wrap items-center gap-1.5 px-2 py-2">
+              {options
+                .filter((opt) => selectedValues.has(opt.value))
+                .map((opt) => (
+                  <Tag
+                    key={opt.value}
+                    onDismiss={() => toggle(opt.value)}
+                    size="base"
+                  >
+                    {opt.label}
+                  </Tag>
+                ))}
+            </div>
+            <DropdownMenuSeparator />
+          </>
         )}
 
-        <ScrollArea className="max-h-[300px]">
-          <div className="p-1.5" role="listbox">
-            {filtered.length === 0 && (
-              <p className="py-4 text-center text-muted-foreground text-sm">
-                No results.
-              </p>
-            )}
-            {filtered.map((option) => {
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Filter</DropdownMenuLabel>
+          <ScrollArea className="max-h-[240px]">
+            {options.map((option) => {
               const isSelected = selectedValues.has(option.value);
               const count = facets?.get(option.value) ?? 0;
-              const isDisabled = count === 0 && !isSelected;
               return (
-                <MenuItem
-                  aria-selected={isSelected}
-                  disabled={isDisabled}
-                  icon={isSelected ? Check : undefined}
-                  iconClassName="text-foreground"
-                  inset={!isSelected}
+                <DropdownMenuCheckboxItem
                   key={option.value}
-                  onClick={() => onToggle(option.value)}
-                  radius="full"
-                  role="option"
-                  size="sm"
+                  checked={isSelected}
+                  disabled={count === 0 && !isSelected}
+                  onCheckedChange={() => toggle(option.value)}
+                  onSelect={(e) => e.preventDefault()}
                 >
                   {option.label}
-                </MenuItem>
+                </DropdownMenuCheckboxItem>
               );
             })}
-            {hasActiveFilter && !showSelectedTags && (
-              <MenuItem
-                icon={X}
-                onClick={onClearFilter}
-                radius="full"
-                size="sm"
-              >
-                Clear filter
-              </MenuItem>
-            )}
-          </div>
-        </ScrollArea>
+          </ScrollArea>
+          {hasActiveFilter && (
+            <DropdownMenuItem
+              icon={X}
+              onClick={() => column.setFilterValue(undefined)}
+            >
+              Clear filter
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
 
         {canSort && (
           <>
-            <Separator />
-            <div className="p-1.5">
-              <MenuItem
-                activeIndicator="check"
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Sort</DropdownMenuLabel>
+              <DropdownMenuItem
                 icon={ArrowUp}
-                isActive={sorted === "asc"}
                 onClick={() =>
-                  sorted === "asc" ? onClearSort() : onSort(false)
+                  sorted === "asc"
+                    ? column.clearSorting()
+                    : column.toggleSorting(false)
                 }
-                radius="full"
-                size="sm"
+                suffix={sorted === "asc" ? "Active" : undefined}
               >
                 Sort ascending
-              </MenuItem>
-              <MenuItem
-                activeIndicator="check"
+              </DropdownMenuItem>
+              <DropdownMenuItem
                 icon={ArrowDown}
-                isActive={sorted === "desc"}
                 onClick={() =>
-                  sorted === "desc" ? onClearSort() : onSort(true)
+                  sorted === "desc"
+                    ? column.clearSorting()
+                    : column.toggleSorting(true)
                 }
-                radius="full"
-                size="sm"
+                suffix={sorted === "desc" ? "Active" : undefined}
               >
                 Sort descending
-              </MenuItem>
-            </div>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </>
         )}
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

@@ -77,7 +77,7 @@ export function FileUploadDropzone({
       aria-disabled={disabled || undefined}
       className={cn(
         // Base styles
-        "group relative flex min-h-[180px] cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed p-6 transition-all duration-200",
+        "group relative flex min-h-[180px] cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-6 transition-all duration-200",
         // Default state
         "border-gray-200 bg-gray-50/50 hover:border-gray-300 hover:bg-gray-100/50",
         // Dragging state

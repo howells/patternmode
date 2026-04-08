@@ -67,27 +67,21 @@ const buttonVariants = cva(
         ghost:
           "border-transparent bg-transparent text-foreground shadow-none hover:bg-muted hover:text-accent-foreground data-[hovered=true]:bg-muted data-[hovered=true]:text-accent-foreground",
         link: "border-transparent bg-transparent text-foreground underline-offset-4 shadow-none hover:underline data-[hovered=true]:underline",
-        brand:
-          "border-brand-accent bg-brand-accent text-brand-foreground focus-visible:ring-yellow-400/25 data-[focused=true]:ring-yellow-400/25",
       },
       appearance: {
         solid: [
-          "relative overflow-hidden",
-          "shadow-[0_1px_2px_rgba(0,0,0,0.05),inset_0_1px_0_var(--color-alpha-20)]",
-          "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit]",
-          "before:bg-[linear-gradient(180deg,var(--color-alpha-20)_0%,var(--color-alpha-5)_100%)]",
-          "before:transition-[background] before:duration-150",
-          "active:shadow-none active:before:bg-none disabled:shadow-none disabled:before:bg-none",
-          "data-[pressed=true]:shadow-none data-[pressed=true]:before:bg-none",
+          "shadow-[inset_0_0.75px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.08)]",
+          "active:shadow-[0_0_0_1px_rgba(0,0,0,0.08)] disabled:shadow-none",
+          "data-[pressed=true]:shadow-[0_0_0_1px_rgba(0,0,0,0.08)]",
         ].join(" "),
-        outline: "border bg-transparent before:hidden",
+        outline: "border bg-transparent",
         ghost:
-          "border-transparent bg-transparent shadow-none before:hidden hover:bg-[color-mix(in_srgb,var(--color-foreground)_2%,transparent)] data-[hovered=true]:bg-[color-mix(in_srgb,var(--color-foreground)_2%,transparent)]",
-        dashed: "border border-dashed bg-transparent before:hidden",
+          "border-transparent bg-transparent shadow-none hover:bg-[color-mix(in_srgb,var(--color-foreground)_2%,transparent)] data-[hovered=true]:bg-[color-mix(in_srgb,var(--color-foreground)_2%,transparent)]",
+        dashed: "border border-dashed bg-transparent",
         transparent:
-          "transform-gpu backdrop-blur-md will-change-[filter,background-color] before:hidden",
+          "transform-gpu backdrop-blur-md will-change-[filter,background-color]",
         input:
-          "border-border bg-input text-foreground before:hidden hover:bg-input/90 data-[hovered=true]:bg-input/90",
+          "border-border bg-input text-foreground hover:bg-input/90 data-[hovered=true]:bg-input/90",
       },
       radius: RADIUS_CLASSES,
       size: {
@@ -153,12 +147,6 @@ const buttonVariants = cva(
         class:
           "text-destructive hover:bg-destructive/10 hover:text-destructive data-[hovered=true]:bg-destructive/10 data-[hovered=true]:text-destructive",
       },
-      {
-        appearance: "ghost",
-        variant: "brand",
-        class:
-          "text-brand hover:bg-brand/10 hover:text-brand data-[hovered=true]:bg-brand/10 data-[hovered=true]:text-brand",
-      },
       // Outline appearance modifier on solid variants
       {
         appearance: "outline",
@@ -177,12 +165,6 @@ const buttonVariants = cva(
         variant: "destructive",
         class:
           "border-destructive text-destructive hover:bg-destructive/5 data-[hovered=true]:bg-destructive/5",
-      },
-      {
-        appearance: "outline",
-        variant: "brand",
-        class:
-          "border-brand text-brand hover:bg-brand/5 data-[hovered=true]:bg-brand/5",
       },
       // Dashed appearance modifier on solid variants
       {
@@ -205,12 +187,6 @@ const buttonVariants = cva(
       },
       {
         appearance: "dashed",
-        variant: "brand",
-        class:
-          "border-brand text-brand hover:bg-brand/5 data-[hovered=true]:bg-brand/5",
-      },
-      {
-        appearance: "dashed",
         variant: "outline",
         class:
           "border-border bg-background text-foreground hover:bg-muted data-[hovered=true]:bg-muted",
@@ -221,7 +197,7 @@ const buttonVariants = cva(
         size: ["2xs", "xs", "icon-2xs", "icon-xs"],
         class: "rounded-sm",
       },
-      // Shadow for solid variants (default, secondary, destructive, brand)
+      // Shadow for solid variants (default, secondary, destructive)
       // disabled/active: removes shadow for flat appearance, disables scale (shadow removal is the feedback)
       {
         variant: "default",
@@ -237,25 +213,6 @@ const buttonVariants = cva(
         variant: "destructive",
         class:
           "shadow-xs active:scale-100 active:shadow-none disabled:shadow-none data-[pressed=true]:scale-100 data-[pressed=true]:shadow-none",
-      },
-      {
-        variant: "brand",
-        class:
-          "shadow-xs active:scale-100 active:shadow-none disabled:shadow-none data-[pressed=true]:scale-100 data-[pressed=true]:shadow-none",
-      },
-      // Secondary solid: white→alpha-10 default, alpha-50→alpha-5 on hover (matches Figma)
-      {
-        appearance: "solid",
-        variant: "secondary",
-        class:
-          "before:bg-[linear-gradient(180deg,white_0%,var(--color-alpha-10)_100%)] hover:before:bg-[linear-gradient(180deg,var(--color-alpha-50)_0%,var(--color-alpha-5)_100%)] active:before:bg-none disabled:before:bg-none data-[hovered=true]:before:bg-[linear-gradient(180deg,var(--color-alpha-50)_0%,var(--color-alpha-5)_100%)] data-[pressed=true]:before:bg-none",
-      },
-      // Brand solid: alpha-40→alpha-5 default, alpha-50→alpha-5 on hover (matches Figma)
-      {
-        appearance: "solid",
-        variant: "brand",
-        class:
-          "shadow-[0_1px_2px_rgba(0,0,0,0.05),inset_0_1px_0_var(--color-alpha-30)] before:bg-[linear-gradient(180deg,var(--color-alpha-40)_0%,var(--color-alpha-5)_100%)] hover:before:bg-[linear-gradient(180deg,var(--color-alpha-50)_0%,var(--color-alpha-5)_100%)] active:shadow-none active:before:bg-none disabled:shadow-none disabled:before:bg-none data-[pressed=true]:shadow-none data-[hovered=true]:before:bg-[linear-gradient(180deg,var(--color-alpha-50)_0%,var(--color-alpha-5)_100%)] data-[pressed=true]:before:bg-none",
       },
       // Transparent appearance overrides background with 50% opacity and backdrop blur
       {
@@ -276,30 +233,24 @@ const buttonVariants = cva(
         class:
           "transform-gpu border-transparent bg-destructive/50 backdrop-blur-md will-change-[filter,background-color] hover:bg-destructive/60 data-[hovered=true]:bg-destructive/60",
       },
-      {
-        appearance: "transparent",
-        variant: "brand",
-        class:
-          "transform-gpu border-transparent bg-brand/50 backdrop-blur-md will-change-[filter,background-color] hover:bg-brand/60 data-[hovered=true]:bg-brand/60",
-      },
-      // Outline, link and ghost variants never show shadow or gradient (must come last to override)
+      // Outline, link and ghost variants never show shadow (must come last to override)
       {
         variant: "outline",
-        class: "shadow-none before:hidden",
+        class: "shadow-none",
       },
       {
         variant: "link",
         class:
-          "shadow-none before:hidden active:scale-100 active:underline-offset-[5px] data-[pressed=true]:scale-100 data-[pressed=true]:underline-offset-[5px]",
+          "shadow-none active:scale-100 active:underline-offset-[5px] data-[pressed=true]:scale-100 data-[pressed=true]:underline-offset-[5px]",
       },
       {
         variant: "ghost",
-        class: "shadow-none before:hidden",
+        class: "shadow-none",
       },
       // Ghost appearance removes shadow for all variants (must come last to override)
       {
         appearance: "ghost",
-        class: "shadow-none before:hidden",
+        class: "shadow-none",
       },
     ],
     defaultVariants: {
@@ -367,7 +318,6 @@ const BUTTON_VARIANTS = [
   "outline",
   "ghost",
   "link",
-  "brand",
 ] as const;
 
 /** All button appearances */

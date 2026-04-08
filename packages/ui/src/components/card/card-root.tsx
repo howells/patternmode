@@ -4,16 +4,16 @@ import type * as React from "react";
 import type { WithTestId } from "../../lib/types";
 
 const cardVariants = cva(
-  "flex flex-col gap-4 rounded-xl py-4 text-card-foreground has-[[data-slot=card-footer]]:pb-0",
+  "flex flex-col gap-4 rounded-lg py-4 text-card-foreground has-[[data-slot=card-footer]]:pb-0",
   {
     variants: {
       variant: {
-        card: "bg-card shadow-2xs",
-        muted: "bg-muted shadow-2xs",
-        accent: "bg-accent shadow-2xs",
-        ghost: "border-0 bg-transparent shadow-none",
+        card: "bg-card shadow-borders-base",
+        muted: "bg-muted shadow-borders-base",
+        accent: "bg-accent shadow-borders-base",
+        ghost: "bg-transparent shadow-none",
         interactive:
-          "bg-card shadow-2xs transition-shadow duration-150 hover:shadow-sm cursor-pointer",
+          "bg-card shadow-borders-base transition-shadow duration-150 hover:shadow-sm cursor-pointer",
       },
     },
     defaultVariants: {
@@ -58,11 +58,13 @@ function Card({
 }: CardProps) {
   let borderClasses: string;
   if (border === "none") {
-    borderClasses = "border-0";
+    borderClasses = "";
   } else if (border === "dashed") {
     borderClasses = "border border-dashed border-muted-foreground/25";
   } else {
-    borderClasses = "border border-border";
+    // "solid" — shadow-ring already provides the border via shadow-borders-base
+    // Only add CSS border if the variant is ghost (no shadow)
+    borderClasses = "";
   }
   return (
     <div

@@ -30,7 +30,7 @@ function Textarea({ className, testId, hasError, ...props }: TextareaProps) {
     <textarea
       aria-invalid={hasError || undefined}
       className={cn(
-        "field-sizing-content flex min-h-16 w-full rounded-lg border border-border bg-input px-3 py-2 text-base shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "field-sizing-content flex min-h-16 w-full rounded-lg border-0 bg-input px-3 py-2 text-base shadow-borders-base outline-none transition-[color,box-shadow] placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         focusInput(),
         hasErrorInput,
         className,

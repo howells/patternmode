@@ -117,7 +117,7 @@ export function inputGroupButtonMarginClass(
 
 /** InputGroup container variants. */
 export const inputGroupVariants = cva(
-  "relative flex w-full items-center border border-border bg-input shadow-xs transition-[box-shadow,border-color]",
+  "relative flex w-full items-center border-0 bg-input shadow-borders-base transition-[box-shadow]",
   {
     variants: {
       size: {

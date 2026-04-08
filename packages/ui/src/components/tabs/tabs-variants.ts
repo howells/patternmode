@@ -64,7 +64,7 @@ export const tabsListVariants = cva(
 /** Text size per component size (shared by all trigger variants). */
 const TRIGGER_TEXT_SIZE: Record<ComponentSize, string> = {
   "2xs": "text-2xs",
-  xs: "text-xs",
+  xs: "text-app",
   sm: "text-sm",
   base: "text-sm",
   lg: "text-sm",
@@ -76,8 +76,8 @@ const TRIGGER_TEXT_SIZE: Record<ComponentSize, string> = {
 /** Line variant trigger padding (no horizontal padding, asymmetric vertical). */
 const LINE_TRIGGER_PADDING: Record<ComponentSize, string> = {
   "2xs": "px-0 pt-0.5 pb-1.5",
-  xs: "px-0 pt-1 pb-2",
-  sm: "px-0 pt-1.5 pb-2.5",
+  xs: "px-0 pt-1.5 pb-2.5",
+  sm: "px-0 pt-2 pb-3",
   base: "px-0 pt-2 pb-3",
   lg: "px-0 pt-2.5 pb-3.5",
   xl: "px-0 pt-3 pb-4",

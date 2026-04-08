@@ -22,7 +22,7 @@ const TEXT_SIZE_CLASS: Record<AvatarSize, string> = {
   "2xs": "text-[8px]",
   xs: "text-[9px]",
   sm: "text-[11px]",
-  base: "text-[13px]",
+  base: "text-app",
   lg: "text-[15px]",
   xl: "text-[17px]",
   "2xl": "text-[19px]",

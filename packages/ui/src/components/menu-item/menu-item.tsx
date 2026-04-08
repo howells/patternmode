@@ -16,9 +16,9 @@ import { Spinner } from "../spinner";
  * Size classes for menu items - shared across MenuItem, DropdownMenuItem, etc.
  */
 const MENU_ITEM_SIZE_CLASSES: Record<ComponentSize, string> = {
-  "2xs": "min-h-6 px-2 py-0.5 text-xs gap-1",
-  xs: "min-h-7 px-2.5 py-1 text-xs gap-1.5",
-  sm: "min-h-8 px-2.5 py-1.5 text-sm gap-2",
+  "2xs": "min-h-6 px-2 py-0.5 text-xs gap-1.5",
+  xs: "min-h-8 px-2.5 py-1 text-app gap-2",
+  sm: "min-h-9 px-3 py-1.5 text-sm gap-2.5",
   base: "min-h-9 px-3 py-2 text-sm gap-2",
   lg: "min-h-10 px-3.5 py-2.5 text-sm gap-2.5",
   xl: "min-h-11 px-4 py-3 text-base gap-3",
@@ -206,7 +206,7 @@ function MenuItemCheckbox({
  * Uses variant-based styling via class-variance-authority.
  */
 const menuItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center whitespace-nowrap text-left outline-none transition-colors duration-100 hover:duration-0 focus:duration-0 focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50",
+  "relative flex w-full cursor-default select-none items-center whitespace-nowrap text-left font-medium outline-none transition-colors duration-100 hover:duration-0 focus:duration-0 focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       size: MENU_ITEM_SIZE_CLASSES,

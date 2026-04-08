@@ -13,7 +13,7 @@ const itemGroupVariants = cva("group/item-group flex flex-col", {
     variant: {
       divided: "divide-y divide-border",
       separated: "gap-3",
-      grouped: "overflow-hidden rounded-3xl border border-border bg-card",
+      grouped: "overflow-hidden rounded-lg border border-border bg-card",
     },
   },
   defaultVariants: {

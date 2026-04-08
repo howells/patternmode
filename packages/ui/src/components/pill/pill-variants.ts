@@ -30,9 +30,9 @@ export const pillVariants = cva(
         ghost: "border-transparent bg-transparent",
         transparent:
           "transform-gpu backdrop-blur-md will-change-[filter,background-color]",
-        /** Input-style chip: white bg + subtle shadow (unselected state). */
+        /** Input-style chip: white bg + shadow-border ring (unselected state). */
         input:
-          "border-border bg-input text-foreground shadow-xs transition-colors hover:bg-secondary",
+          "border-0 bg-input text-foreground shadow-borders-base transition-colors hover:bg-secondary",
       },
       disabled: {
         true: "pointer-events-none opacity-50",

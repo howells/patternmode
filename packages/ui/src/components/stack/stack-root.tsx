@@ -16,7 +16,6 @@ import {
   type GapSize,
   JUSTIFY_CLASS,
 } from "../../lib/responsive-classes";
-
 export interface StackProps extends React.ComponentProps<"div"> {
   /** Align items on the cross axis. Can be responsive. */
   align?: ResponsiveValue<FlexAlign>;

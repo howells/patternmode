@@ -172,7 +172,6 @@ function buildVariantMatrixRows(): VariantSizeRow[] {
     "outline",
     "ghost",
     "link",
-    "brand",
   ];
 
   const rows: VariantSizeRow[] = [];
@@ -346,7 +345,6 @@ export const AppearanceMatrix: Story = {
       "outline",
       "ghost",
       "link",
-      "brand",
     ];
     const appearances: ButtonAppearance[] = [
       "solid",
@@ -418,7 +416,6 @@ export const IconMatrix: Story = {
       "outline",
       "ghost",
       "link",
-      "brand",
     ];
 
     const rows = variants.map((variant) => ({
@@ -497,7 +494,6 @@ export const LoadingStates: Story = {
       "outline",
       "ghost",
       "link",
-      "brand",
     ];
 
     const rows = variants.map((variant) => ({

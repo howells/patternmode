@@ -18,7 +18,7 @@ interface DropdownMenuContextValue {
  */
 const DropdownMenuContext = createContext<DropdownMenuContextValue>({
   size: "sm",
-  itemRadiusClass: "rounded-xl",
+  itemRadiusClass: "rounded-md",
 });
 
 /**
