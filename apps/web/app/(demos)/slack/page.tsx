@@ -1,15 +1,5 @@
 "use client";
 
-/**
- * DESIGN SYSTEM GAPS FOUND:
- * - No "workspace strip" component — narrow icon-only sidebar composed from VStack + fixed width
- * - MenuItem dot prop only accepts DotProps["variant"] (semantic tokens) — cannot pass custom CSS colors for channel indicators
- * - No "unread" visual weight modifier on MenuItem — need to compose with Dot + bold text manually
- * - No thread/reply composition — built from Avatar + VStack + Text
- * - Hover-reveal actions on message rows require group/group-hover className — no built-in MenuItem hover slot
- * - InputGroupButton variant="default" for send button looks correct but requires explicit variant prop
- */
-
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
@@ -26,6 +16,7 @@ import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Text } from "@patternmode/ui/components/text";
+import { AppShell } from "@patternmode/ui/compositions/app-shell";
 import {
   AtSign,
   Bell,
@@ -228,12 +219,12 @@ function MessageBubble({ message }: { message: Message }) {
 
 export default function SlackDemo() {
   return (
-    <Flex className="h-screen" direction="row">
+    <AppShell variant="bordered">
       {/* Server list (narrow strip) */}
       <VStack
         align="center"
         gap="sm"
-        className="w-[68px] shrink-0 bg-card border-r border-border py-3"
+        className="w-17 shrink-0 bg-card border-r border-border py-3"
       >
         <Flex
           align="center"
@@ -273,7 +264,7 @@ export default function SlackDemo() {
       </VStack>
 
       {/* Channel sidebar */}
-      <VStack className="w-[220px] shrink-0 bg-card border-r border-border">
+      <VStack className="w-55 shrink-0 bg-card border-r border-border">
         <Flex align="center" justify="space-between" className="px-3 pt-3 pb-1">
           <Text size="sm" weight="semibold">
             PatternMode
@@ -425,7 +416,7 @@ export default function SlackDemo() {
         </ScrollArea>
 
         {/* Message input */}
-        <VStack gap="xs" className="px-5 pb-4 pt-2">
+        <VStack gap="xs" className="px-5 pb-14 pt-2">
           <InputGroup size="lg">
             <InputGroupInput placeholder="Message #engineering" />
             <InputGroupButton icon={Paperclip} aria-label="Attach file" />
@@ -478,7 +469,7 @@ export default function SlackDemo() {
       </VStack>
 
       {/* Thread panel (right side) */}
-      <VStack className="w-[340px] shrink-0 border-l border-border">
+      <VStack className="w-85 shrink-0 border-l border-border">
         <Flex
           align="center"
           justify="space-between"
@@ -585,6 +576,6 @@ export default function SlackDemo() {
           </InputGroup>
         </VStack>
       </VStack>
-    </Flex>
+    </AppShell>
   );
 }

@@ -1,16 +1,5 @@
 "use client";
 
-/**
- * DESIGN SYSTEM GAPS (resolved):
- * - TreeView composition now available (compositions/tree-view)
- * - No color picker or color swatch component (Swatch exists in compositions, not components)
- * - PropertyField composition now available (compositions/property-field)
- * - ButtonGroup "joined" variant works for toolbar but spacing is a bit wide — could use a "compact" variant
- * - SimpleSelect component now available (components/simple-select)
- * - No "canvas" or "artboard" component — placeholder div with bg-muted/30
- * - Input size="sm" does not have a "compact" modifier for dense property panels
- */
-
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
 import { ButtonGroup } from "@patternmode/ui/components/button-group";
@@ -266,7 +255,8 @@ function LayerRow({ layer }: { layer: LayerNode }) {
       <Icon icon={iconComponent} size="2xs" />
       <Text
         size="xs"
-        className="flex-1 min-w-0 truncate"
+        truncate
+        className="flex-1 min-w-0"
         variant={layer.visible ? "default" : "muted"}
       >
         {layer.name}
@@ -311,7 +301,7 @@ function PropertyRow({
 
 export default function FigmaDemo() {
   return (
-    <Flex className="h-screen" direction="column">
+    <Flex fullHeight direction="column" className="overflow-hidden">
       {/* Top toolbar */}
       <Flex
         align="center"
@@ -461,7 +451,7 @@ export default function FigmaDemo() {
       {/* Main area */}
       <Flex className="flex-1 min-h-0" direction="row">
         {/* Left panel — Layers */}
-        <VStack className="w-[240px] shrink-0 border-r border-border">
+        <VStack className="w-60 shrink-0 border-r border-border">
           <Flex
             align="center"
             justify="space-between"
@@ -506,7 +496,7 @@ export default function FigmaDemo() {
         >
           {/* Canvas placeholder with artboard */}
           <VStack align="center" gap="sm">
-            <div className="w-[400px] h-[520px] bg-card rounded-lg border border-border shadow-sm">
+            <div className="w-100 h-130 bg-card rounded-lg border border-border shadow-sm">
               <VStack gap="base" className="p-8">
                 {/* Mini hero section representation */}
                 <div className="w-full h-32 rounded-md bg-muted" />
@@ -532,7 +522,7 @@ export default function FigmaDemo() {
         </Flex>
 
         {/* Right panel — Properties */}
-        <VStack className="w-[260px] shrink-0 border-l border-border">
+        <VStack className="w-65 shrink-0 border-l border-border">
           <Flex
             align="center"
             className="h-9 shrink-0 border-b border-border px-3"

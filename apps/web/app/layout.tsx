@@ -1,3 +1,4 @@
+import { Agentation } from "agentation";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="isolate min-h-svh touch-manipulation break-words font-sans antialiased">
         <RootProvider>{children}</RootProvider>
+        {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>
   );

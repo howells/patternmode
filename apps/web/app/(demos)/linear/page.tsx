@@ -6,13 +6,21 @@ import { Button } from "@patternmode/ui/components/button";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Icon } from "@patternmode/ui/components/icon";
 import { MenuItem } from "@patternmode/ui/components/menu-item";
+import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Tabs, TabsList, TabsTrigger } from "@patternmode/ui/components/tabs";
 import { Text } from "@patternmode/ui/components/text";
 import {
+  AppShell,
+  AppShellContent,
+  AppShellSidebar,
+} from "@patternmode/ui/compositions/app-shell";
+import {
   DataGrid,
   DataGridContainer,
+  DataGridFilterableHeader,
+  type FilterOption,
 } from "@patternmode/ui/compositions/data-grid";
 import { DataGridTable } from "@patternmode/ui/compositions/data-grid-table";
 import {
@@ -20,12 +28,12 @@ import {
   type ColumnFiltersState,
   createColumnHelper,
   getCoreRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
-  AlertTriangle,
   ArrowUpCircle,
   CheckCircle2,
   Circle,
@@ -34,13 +42,9 @@ import {
   Layers,
   LayoutGrid,
   ListFilter,
-  Minus,
   Plus,
   Search,
   Settings,
-  SignalHigh,
-  SignalLow,
-  SignalMedium,
   Timer,
   Users,
   XCircle,
@@ -82,14 +86,6 @@ const STATUS_COLOR: Record<Status, string> = {
   "in-progress": "text-amber-500",
   done: "text-emerald-500",
   cancelled: "text-destructive",
-};
-
-const _PRIORITY_ICON: Record<Issue["priority"], typeof Circle> = {
-  urgent: AlertTriangle,
-  high: SignalHigh,
-  medium: SignalMedium,
-  low: SignalLow,
-  none: Minus,
 };
 
 const ISSUES: Issue[] = [
@@ -224,6 +220,173 @@ const ISSUES: Issue[] = [
     date: "Mar 24",
     label: "Feature",
   },
+  {
+    id: "ENG-466",
+    title: "Replace polling with SSE for real-time dashboard",
+    status: "in-progress",
+    priority: "high",
+    assignee: "SC",
+    date: "Mar 23",
+    label: "Feature",
+  },
+  {
+    id: "ENG-465",
+    title: "Fix Safari rendering bug in data table headers",
+    status: "todo",
+    priority: "medium",
+    assignee: "ER",
+    date: "Mar 22",
+    label: "Bug",
+  },
+  {
+    id: "ENG-464",
+    title: "Add request tracing with OpenTelemetry spans",
+    status: "backlog",
+    priority: "medium",
+    assignee: "JW",
+    date: "Mar 21",
+    label: "Infra",
+  },
+  {
+    id: "ENG-463",
+    title: "Implement webhook retry logic with exponential backoff",
+    status: "in-progress",
+    priority: "high",
+    assignee: "MJ",
+    date: "Mar 20",
+  },
+  {
+    id: "ENG-462",
+    title: "Migrate Redis cache layer to cluster mode",
+    status: "done",
+    priority: "high",
+    assignee: "JW",
+    date: "Mar 19",
+    label: "Infra",
+  },
+  {
+    id: "ENG-461",
+    title: "Add input validation for file upload endpoints",
+    status: "done",
+    priority: "urgent",
+    assignee: "SC",
+    date: "Mar 18",
+    label: "Security",
+  },
+  {
+    id: "ENG-460",
+    title: "Create design token export script for Figma sync",
+    status: "backlog",
+    priority: "low",
+    assignee: "ER",
+    date: "Mar 17",
+  },
+  {
+    id: "ENG-459",
+    title: "Fix timezone handling in scheduled report generation",
+    status: "todo",
+    priority: "medium",
+    assignee: "PP",
+    date: "Mar 16",
+    label: "Bug",
+  },
+  {
+    id: "ENG-458",
+    title: "Implement row-level security for multi-tenant data",
+    status: "in-progress",
+    priority: "urgent",
+    assignee: "JW",
+    date: "Mar 15",
+    label: "Security",
+  },
+  {
+    id: "ENG-457",
+    title: "Add skeleton loading states to all list views",
+    status: "done",
+    priority: "medium",
+    assignee: "ER",
+    date: "Mar 14",
+    label: "Feature",
+  },
+  {
+    id: "ENG-456",
+    title: "Optimize image pipeline with sharp and WebP fallback",
+    status: "backlog",
+    priority: "low",
+    assignee: "MJ",
+    date: "Mar 13",
+  },
+  {
+    id: "ENG-455",
+    title: "Fix memory pressure in long-running batch jobs",
+    status: "todo",
+    priority: "high",
+    assignee: "SC",
+    date: "Mar 12",
+    label: "Bug",
+  },
+  {
+    id: "ENG-454",
+    title: "Add Stripe webhook signature verification",
+    status: "done",
+    priority: "urgent",
+    assignee: "PP",
+    date: "Mar 11",
+    label: "Security",
+  },
+  {
+    id: "ENG-453",
+    title: "Implement feature flag system with LaunchDarkly",
+    status: "backlog",
+    priority: "medium",
+    assignee: "MJ",
+    date: "Mar 10",
+    label: "Feature",
+  },
+  {
+    id: "ENG-452",
+    title: "Refactor permission checks into middleware layer",
+    status: "todo",
+    priority: "high",
+    assignee: "JW",
+    date: "Mar 9",
+  },
+  {
+    id: "ENG-451",
+    title: "Fix flaky integration tests in CI pipeline",
+    status: "in-progress",
+    priority: "medium",
+    assignee: "PP",
+    date: "Mar 8",
+    label: "Testing",
+  },
+  {
+    id: "ENG-450",
+    title: "Add CSV export for audit log entries",
+    status: "backlog",
+    priority: "low",
+    assignee: "ER",
+    date: "Mar 7",
+    label: "Feature",
+  },
+  {
+    id: "ENG-449",
+    title: "Implement database connection pooling with PgBouncer",
+    status: "done",
+    priority: "high",
+    assignee: "JW",
+    date: "Mar 6",
+    label: "Infra",
+  },
+  {
+    id: "ENG-448",
+    title: "Fix CORS preflight caching for API gateway",
+    status: "done",
+    priority: "medium",
+    assignee: "SC",
+    date: "Mar 5",
+    label: "Bug",
+  },
 ];
 
 /* -- Tab filter values -------------------------------------------- */
@@ -238,6 +401,14 @@ const TAB_FILTER_MAP: Record<string, Status[] | undefined> = {
 /* -- Columns ------------------------------------------------------ */
 
 const columnHelper = createColumnHelper<Issue>();
+
+const labelOptions: FilterOption[] = [
+  { label: "Bug", value: "Bug" },
+  { label: "Feature", value: "Feature" },
+  { label: "Security", value: "Security" },
+  { label: "Testing", value: "Testing" },
+  { label: "Infra", value: "Infra" },
+];
 
 const columns: ColumnDef<Issue, unknown>[] = [
   columnHelper.accessor("status", {
@@ -269,9 +440,9 @@ const columns: ColumnDef<Issue, unknown>[] = [
     size: 72,
     enableSorting: false,
     cell: ({ getValue }) => (
-      <span className="text-muted-foreground text-xs tabular-nums">
+      <Text variant="muted" size="2xs" tabularNums>
         {getValue()}
-      </span>
+      </Text>
     ),
     meta: {
       cellClassName: "!px-0 !pl-1.5 !pr-0",
@@ -279,10 +450,14 @@ const columns: ColumnDef<Issue, unknown>[] = [
     },
   }) as ColumnDef<Issue, unknown>,
   columnHelper.accessor("title", {
-    header: "",
-    enableSorting: false,
+    header: ({ column }) => (
+      <DataGridFilterableHeader column={column}>Title</DataGridFilterableHeader>
+    ),
+    enableSorting: true,
     cell: ({ getValue }) => (
-      <span className="truncate text-sm">{getValue()}</span>
+      <Text size="sm" truncate>
+        {getValue()}
+      </Text>
     ),
     meta: {
       cellClassName: "!pl-1.5 truncate",
@@ -290,13 +465,26 @@ const columns: ColumnDef<Issue, unknown>[] = [
     },
   }) as ColumnDef<Issue, unknown>,
   columnHelper.accessor("label", {
-    header: "",
+    header: ({ column }) => (
+      <DataGridFilterableHeader column={column} options={labelOptions}>
+        Label
+      </DataGridFilterableHeader>
+    ),
     size: 72,
     enableSorting: false,
+    enableColumnFilter: true,
+    filterFn: (row, _columnId, filterValue: string[] | undefined) => {
+      if (!filterValue || filterValue.length === 0) return true;
+      return filterValue.includes(row.original.label ?? "");
+    },
     cell: ({ getValue }) => {
       const label = getValue();
       if (!label) return null;
-      return <span className="text-muted-foreground text-xs">{label}</span>;
+      return (
+        <Text variant="muted" size="2xs">
+          {label}
+        </Text>
+      );
     },
     meta: {
       cellClassName: "!px-1.5",
@@ -304,13 +492,15 @@ const columns: ColumnDef<Issue, unknown>[] = [
     },
   }) as ColumnDef<Issue, unknown>,
   columnHelper.accessor("date", {
-    header: "",
+    header: ({ column }) => (
+      <DataGridFilterableHeader column={column}>Date</DataGridFilterableHeader>
+    ),
     size: 64,
-    enableSorting: false,
+    enableSorting: true,
     cell: ({ getValue }) => (
-      <span className="text-muted-foreground text-xs tabular-nums">
+      <Text variant="muted" size="2xs" tabularNums>
         {getValue()}
-      </span>
+      </Text>
     ),
     meta: {
       cellClassName: "!px-1.5",
@@ -357,6 +547,7 @@ export default function LinearDemo() {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
   function handleTabChange(value: string) {
@@ -372,15 +563,11 @@ export default function LinearDemo() {
   const filteredCount = table.getFilteredRowModel().rows.length;
 
   return (
-    <Flex fullHeight>
+    <AppShell variant="bordered" className="pb-16">
       {/* -- Sidebar ------------------------------------------------ */}
-      <VStack
-        noShrink
-        gap="none"
-        className="w-52 border-r border-border bg-card"
-      >
+      <AppShellSidebar width="w-56">
         {/* Workspace */}
-        <HStack align="center" gap="xs" className="px-3 py-2.5">
+        <HStack align="center" gap="xs" noShrink className="px-4 pt-3.5 pb-2">
           <Flex
             align="center"
             justify="center"
@@ -396,7 +583,7 @@ export default function LinearDemo() {
         </HStack>
 
         {/* Nav */}
-        <VStack gap="none" className="px-1.5 py-1">
+        <VStack gap="none" className="px-2 pb-1">
           <MenuItem icon={Inbox} size="xs">
             Inbox
           </MenuItem>
@@ -408,56 +595,58 @@ export default function LinearDemo() {
           </MenuItem>
         </VStack>
 
-        <Separator className="my-1" />
+        <ScrollArea className="flex-1">
+          <Separator className="my-1" />
 
-        {/* Teams */}
-        <VStack gap="none" className="px-1.5 py-1">
-          <Text
-            size="2xs"
-            variant="muted"
-            weight="medium"
-            className="px-2 pb-1 text-[10px] uppercase tracking-widest"
-          >
-            Your Teams
-          </Text>
-          {TEAMS.map((team) => (
-            <MenuItem
-              key={team.name}
-              size="xs"
-              dotColor={team.color}
-              dot="default"
+          {/* Teams */}
+          <VStack gap="none" className="px-1.5 py-1">
+            <Text
+              size="2xs"
+              variant="muted"
+              weight="medium"
+              className="px-2 pb-1"
             >
-              {team.name}
+              Your Teams
+            </Text>
+            {TEAMS.map((team) => (
+              <MenuItem
+                key={team.name}
+                size="xs"
+                dotColor={team.color}
+                dot="default"
+              >
+                {team.name}
+              </MenuItem>
+            ))}
+          </VStack>
+
+          <Separator className="my-1" />
+
+          <VStack gap="none" className="px-1.5 py-1">
+            <MenuItem icon={Layers} size="xs">
+              Views
             </MenuItem>
-          ))}
-        </VStack>
-
-        <Separator className="my-1" />
-
-        <VStack gap="none" className="px-1.5 py-1">
-          <MenuItem icon={Layers} size="xs">
-            Views
-          </MenuItem>
-          <MenuItem icon={Timer} size="xs">
-            Cycles
-          </MenuItem>
-          <MenuItem icon={Users} size="xs">
-            Members
-          </MenuItem>
-        </VStack>
+            <MenuItem icon={Timer} size="xs">
+              Cycles
+            </MenuItem>
+            <MenuItem icon={Users} size="xs">
+              Members
+            </MenuItem>
+          </VStack>
+        </ScrollArea>
 
         {/* Bottom */}
-        <VStack grow justify="flex-end" className="px-1.5 pb-2">
+        <VStack noShrink className="px-1.5 pb-2">
           <MenuItem icon={Settings} size="xs">
             Settings
           </MenuItem>
         </VStack>
-      </VStack>
+      </AppShellSidebar>
 
       {/* -- Main --------------------------------------------------- */}
-      <VStack grow truncate gap="none">
+      <AppShellContent>
         {/* Header */}
-        <VStack gap="xs" className="px-4 pt-3 pb-0">
+        <VStack gap="xs" className="px-4 pt-4 pb-1">
           <Flex align="center" justify="space-between">
             <HStack gap="xs" align="center">
               <Text size="base" weight="semibold">
@@ -526,7 +715,7 @@ export default function LinearDemo() {
             </DataGrid>
           </div>
         </Tabs>
-      </VStack>
-    </Flex>
+      </AppShellContent>
+    </AppShell>
   );
 }

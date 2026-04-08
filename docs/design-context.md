@@ -66,6 +66,13 @@ modal:        0 0 0 1px rgb(0 0 0 / 0.06), 0 8px 16px 0 rgb(0 0 0 / 0.08), 0 24p
 
 The overall density and precision. Every pixel feels earned. Tightest, most precise docs site. Like Linear's docs — you notice the quality through the absence of waste.
 
+## Design References
+
+The aesthetic sweet spot is **between Medusa UI and Linear**:
+- **Medusa UI** (https://docs.medusajs.com/ui) — flat buttons, clean tables, subtle borders, slightly warmer/more spacious
+- **Linear** — dense, compact, aggressive density, every pixel earned
+- **PatternMode target** — Medusa's cleanliness + Linear's density. Muted avatar tones. Tight radii (rounded-lg, 8px). No button gradients.
+
 ## Anti-Patterns (Project-Specific)
 
 - No generous whitespace for its own sake — whitespace must create hierarchy, not fill space
@@ -75,3 +82,6 @@ The overall density and precision. Every pixel feels earned. Tightest, most prec
 - No gradient dividers or decorative elements in docs pages
 - No "hero section" energy in the docs — it's a reference, not a pitch
 - The landing page can have personality; docs pages are strictly functional
+- No saturated avatar colors — use muted gray-range palette
+- No button gradients or pseudo-element overlays — flat surfaces only
+- Default component radius is rounded-md (6px) via RADIUS_CLASSES; Card is rounded-lg (8px); never rounded-xl or larger for containers

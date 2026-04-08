@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@patternmode/ui/components/button";
 import {
   TabNavigation,
   TabNavigationLink,
@@ -10,12 +11,16 @@ import {
   FileText,
   Kanban,
   MessageSquare,
+  Moon,
   Music,
   PenTool,
   Sparkles,
+  Sun,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const DEMOS = [
   { href: "/linear", label: "Linear", icon: Kanban },
@@ -23,9 +28,29 @@ const DEMOS = [
   { href: "/spotify", label: "Spotify", icon: Music },
   { href: "/slack", label: "Slack", icon: MessageSquare },
   { href: "/figma", label: "Figma", icon: PenTool },
-  { href: "/cosmos", label: "Database", icon: Database },
-  { href: "/inspiration", label: "Cosmos", icon: Sparkles },
+  { href: "/datastore", label: "Datastore", icon: Database },
+  { href: "/intelligence", label: "Intelligence", icon: Sparkles },
 ];
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="size-7" />;
+
+  return (
+    <Button
+      size="icon-2xs"
+      variant="ghost"
+      icon={theme === "dark" ? Sun : Moon}
+      aria-label="Toggle theme"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="shrink-0"
+    />
+  );
+}
 
 export default function DemosLayout({
   children,
@@ -35,12 +60,12 @@ export default function DemosLayout({
   const pathname = usePathname();
 
   return (
-    <>
+    <div className="min-w-6xl h-screen overflow-hidden">
       {children}
 
       {/* Floating demo switcher — bottom center */}
       <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
-        <div className="rounded-xl border border-border/50 bg-card/95 px-1 py-1 shadow-lg backdrop-blur-md">
+        <div className="flex items-center gap-1 rounded-xl border-0 bg-card/95 px-1 py-1 shadow-lg backdrop-blur-md">
           <TabNavigation variant="pill" size="xs">
             <TabNavigationList>
               {DEMOS.map((demo) => (
@@ -56,8 +81,10 @@ export default function DemosLayout({
               ))}
             </TabNavigationList>
           </TabNavigation>
+          <div className="mx-0.5 h-4 w-px bg-border" />
+          <ThemeToggle />
         </div>
       </div>
-    </>
+    </div>
   );
 }

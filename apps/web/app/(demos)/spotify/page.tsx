@@ -2,7 +2,6 @@
 
 import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Button } from "@patternmode/ui/components/button";
-import { Card } from "@patternmode/ui/components/card";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Grid } from "@patternmode/ui/components/grid";
 import { Heading } from "@patternmode/ui/components/heading";
@@ -14,6 +13,11 @@ import { Separator } from "@patternmode/ui/components/separator";
 import { Slider } from "@patternmode/ui/components/slider";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
 import { Text } from "@patternmode/ui/components/text";
+import {
+  AppShell,
+  AppShellContent,
+  AppShellSidebar,
+} from "@patternmode/ui/compositions/app-shell";
 import {
   Heart,
   Home,
@@ -87,33 +91,33 @@ const MADE_FOR_YOU: Album[] = [
 
 function AlbumCard({ album }: { album: Album }) {
   return (
-    <Card variant="interactive" className="p-3">
+    <div className="cursor-pointer rounded-lg p-2 transition-colors hover:bg-card">
       <VStack gap="sm">
         <div
           className="aspect-square w-full rounded-md"
           style={{ backgroundColor: album.color }}
         />
         <VStack gap="2xs" className="min-w-0">
-          <Text size="sm" weight="medium" className="truncate">
+          <Text size="sm" weight="medium" truncate>
             {album.title}
           </Text>
-          <Text size="xs" variant="muted" className="truncate">
+          <Text size="xs" variant="muted" truncate>
             {album.artist}
           </Text>
         </VStack>
       </VStack>
-    </Card>
+    </div>
   );
 }
 
 export default function SpotifyDemo() {
   return (
-    <div className="dark h-screen bg-background text-foreground">
+    <div className="dark h-screen bg-background text-foreground pb-14 overflow-hidden">
       <Flex direction="column" className="h-full">
         {/* Main area: sidebar + content */}
-        <Flex grow className="min-h-0">
+        <AppShell variant="bordered" className="h-auto flex-1 min-h-0">
           {/* Sidebar */}
-          <VStack noShrink className="w-[220px] border-r border-border bg-card">
+          <AppShellSidebar width="w-55">
             <VStack gap="2xs" className="px-2 pt-3">
               <MenuItem icon={Home} size="sm" isActive>
                 Home
@@ -149,42 +153,44 @@ export default function SpotifyDemo() {
                 ))}
               </VStack>
             </ScrollArea>
-          </VStack>
+          </AppShellSidebar>
 
           {/* Main content */}
-          <ScrollArea className="flex-1 min-w-0">
-            <VStack gap="xl" className="p-6 pb-16">
-              {/* Recently Played */}
-              <VStack gap="sm">
-                <Heading size="sm" level="2">
-                  Recently Played
-                </Heading>
-                <Grid columns={4} gap="base">
-                  {RECENT_ALBUMS.map((album) => (
-                    <AlbumCard key={album.title} album={album} />
-                  ))}
-                </Grid>
-              </VStack>
-
-              {/* Made For You */}
-              <VStack gap="sm">
-                <Flex align="center" justify="space-between">
+          <AppShellContent>
+            <ScrollArea className="flex-1 min-w-0">
+              <VStack gap="xl" className="p-6 pb-16">
+                {/* Recently Played */}
+                <VStack gap="sm">
                   <Heading size="sm" level="2">
-                    Made For You
+                    Recently Played
                   </Heading>
-                  <Button variant="ghost" size="sm">
-                    Show all
-                  </Button>
-                </Flex>
-                <Grid columns={4} gap="base">
-                  {MADE_FOR_YOU.map((album) => (
-                    <AlbumCard key={album.title} album={album} />
-                  ))}
-                </Grid>
+                  <Grid columns={4} gap="base">
+                    {RECENT_ALBUMS.map((album) => (
+                      <AlbumCard key={album.title} album={album} />
+                    ))}
+                  </Grid>
+                </VStack>
+
+                {/* Made For You */}
+                <VStack gap="sm">
+                  <Flex align="center" justify="space-between">
+                    <Heading size="sm" level="2">
+                      Made For You
+                    </Heading>
+                    <Button variant="ghost" size="sm">
+                      Show all
+                    </Button>
+                  </Flex>
+                  <Grid columns={4} gap="base">
+                    {MADE_FOR_YOU.map((album) => (
+                      <AlbumCard key={album.title} album={album} />
+                    ))}
+                  </Grid>
+                </VStack>
               </VStack>
-            </VStack>
-          </ScrollArea>
-        </Flex>
+            </ScrollArea>
+          </AppShellContent>
+        </AppShell>
 
         {/* Player bar — fixed at bottom, z-40 to sit above demo switcher */}
         <Flex
@@ -193,7 +199,7 @@ export default function SpotifyDemo() {
           className="h-20 border-t border-border bg-card px-4 z-40 relative"
         >
           {/* Now playing info */}
-          <HStack gap="sm" align="center" className="w-[280px] shrink-0">
+          <HStack gap="sm" align="center" className="w-70 shrink-0">
             <Avatar size="lg" radius="rounded">
               <AvatarFallback
                 size="lg"
@@ -204,10 +210,10 @@ export default function SpotifyDemo() {
               </AvatarFallback>
             </Avatar>
             <VStack gap="2xs" className="min-w-0">
-              <Text size="sm" weight="medium" className="truncate">
+              <Text size="sm" weight="medium" truncate>
                 Reckoner
               </Text>
-              <Text size="xs" variant="muted" className="truncate">
+              <Text size="xs" variant="muted" truncate>
                 Radiohead
               </Text>
             </VStack>
@@ -266,11 +272,7 @@ export default function SpotifyDemo() {
           </VStack>
 
           {/* Right controls */}
-          <HStack
-            gap="xs"
-            align="center"
-            className="w-[180px] shrink-0 justify-end"
-          >
+          <HStack gap="xs" align="center" className="w-45 shrink-0 justify-end">
             <Button
               variant="ghost"
               size="icon-xs"
