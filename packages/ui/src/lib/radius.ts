@@ -1,6 +1,6 @@
 /**
  * Shared border radius options used across UI components.
- * - rounded: Default border radius (rounded-md)
+ * - rounded: Default border radius (rounded-md, 6px — matches Medusa UI)
  * - square: No border radius (sharp corners)
  * - full: Fully rounded (pill/circle shape)
  */
@@ -13,7 +13,7 @@ export type Radius = (typeof RADIUS_OPTIONS)[number];
  * Components may override with compound variants for size-specific behavior.
  */
 export const RADIUS_CLASSES: Record<Radius, string> = {
-  rounded: "rounded-lg",
+  rounded: "rounded-md",
   square: "rounded-none",
   full: "rounded-full",
 };

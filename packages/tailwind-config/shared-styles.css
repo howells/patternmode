@@ -74,46 +74,46 @@
   --text-title--line-height: 4.5rem;
   --text-title--letter-spacing: -0.02em;
 
-  /* Core colors using Tailwind gray palette */
+  /* Core colors — zinc palette for cool, intentional grays (matches Medusa/Linear) */
   --color-background: var(--color-white);
-  --color-foreground: var(--color-gray-950);
+  --color-foreground: var(--color-zinc-900);
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
 
-  /* Theme tokens using Tailwind gray palette */
-  --color-primary: var(--color-gray-900);
-  --color-primary-foreground: var(--color-gray-50);
-  --color-secondary: var(--color-gray-100);
-  --color-secondary-foreground: var(--color-gray-900);
-  --color-muted: var(--color-gray-100);
-  --color-muted-foreground: var(--color-gray-600);
-  --color-accent: var(--color-gray-200);
-  --color-accent-foreground: var(--color-gray-900);
+  /* Theme tokens — zinc palette throughout */
+  --color-primary: var(--color-zinc-900);
+  --color-primary-foreground: var(--color-zinc-50);
+  --color-secondary: var(--color-zinc-100);
+  --color-secondary-foreground: var(--color-zinc-900);
+  --color-muted: var(--color-zinc-100);
+  --color-muted-foreground: var(--color-zinc-500);
+  --color-accent: var(--color-zinc-50);
+  --color-accent-foreground: var(--color-zinc-900);
   --color-destructive: var(--color-red-600);
   --color-destructive-foreground: var(--color-white);
   --color-favorite: var(--color-red-500);
-  --color-border: var(--color-gray-200);
+  --color-border: var(--color-zinc-200);
   --color-input: var(--color-white);
-  --color-ring: var(--color-gray-300);
+  --color-ring: var(--color-zinc-300);
 
-  /* Sidebar tokens using Tailwind gray palette */
-  --color-sidebar: var(--color-gray-100);
-  --color-sidebar-foreground: var(--color-gray-900);
-  --color-sidebar-primary: var(--color-gray-900);
-  --color-sidebar-primary-foreground: var(--color-gray-50);
-  --color-sidebar-accent: var(--color-gray-200);
-  --color-sidebar-accent-foreground: var(--color-gray-900);
-  --color-sidebar-border: var(--color-gray-200);
-  --color-sidebar-ring: var(--color-gray-700);
+  /* Sidebar tokens — zinc palette */
+  --color-sidebar: var(--color-zinc-100);
+  --color-sidebar-foreground: var(--color-zinc-900);
+  --color-sidebar-primary: var(--color-zinc-900);
+  --color-sidebar-primary-foreground: var(--color-zinc-50);
+  --color-sidebar-accent: var(--color-zinc-200);
+  --color-sidebar-accent-foreground: var(--color-zinc-900);
+  --color-sidebar-border: var(--color-zinc-200);
+  --color-sidebar-ring: var(--color-zinc-700);
 
   /* Material grid specific color tokens */
   --color-card-background: #ffffff;
-  --color-card-border: var(--color-gray-200);
-  --color-text-primary: var(--color-gray-900);
-  --color-text-secondary: var(--color-gray-600);
-  --color-text-muted: var(--color-gray-500);
+  --color-card-border: var(--color-zinc-200);
+  --color-text-primary: var(--color-zinc-900);
+  --color-text-secondary: var(--color-zinc-500);
+  --color-text-muted: var(--color-zinc-400);
 
   /* Calm semantic colors - Next.js inspired */
   --color-affirmative-soft: #f0fdf4; /* green-50 */
@@ -224,9 +224,13 @@
   --shadow-edge-bottom: 0 1px 0 0 rgb(17 24 39 / 0.06);
   --shadow-edge-top: 0 -4px 12px -4px rgb(17 24 39 / 0.08);
 
-  /* ── Border-as-shadow tokens (from Stow) ── */
+  /* ── Border-as-shadow tokens ──
+     The canonical "bordered surface" look. Used by Card, Input, InputGroup,
+     Textarea, Select, Checkbox — any component that needs a subtle edge.
+     Composed of: 1px ring (border) + micro drop shadow (depth).
+     Tune these two values to adjust the entire system. */
   --shadow-borders-base:
-    0 1px 2px 0 rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-borders-interactive-with-shadow:
     0 1px 2px 0 rgba(30, 58, 138, 0.5), 0 0 0 1px rgba(37, 99, 235, 1);
   --shadow-borders-focus:
@@ -352,27 +356,27 @@
   }
 
   .dark {
-    --color-background: var(--color-gray-950);
-    --color-foreground: var(--color-gray-50);
-    --color-card: var(--color-gray-900);
-    --color-card-muted: var(--color-gray-800);
-    --color-card-foreground: var(--color-gray-50);
-    --color-popover: var(--color-gray-800);
-    --color-popover-foreground: var(--color-gray-50);
-    --color-primary: var(--color-gray-200);
-    --color-primary-foreground: var(--color-gray-900);
-    --color-secondary: var(--color-gray-800);
-    --color-secondary-foreground: var(--color-gray-50);
-    --color-muted: var(--color-gray-800);
-    --color-muted-foreground: var(--color-gray-400);
-    --color-accent: var(--color-gray-700);
-    --color-accent-foreground: var(--color-gray-50);
+    --color-background: var(--color-zinc-950);
+    --color-foreground: var(--color-zinc-50);
+    --color-card: var(--color-zinc-900);
+    --color-card-muted: var(--color-zinc-800);
+    --color-card-foreground: var(--color-zinc-50);
+    --color-popover: var(--color-zinc-800);
+    --color-popover-foreground: var(--color-zinc-50);
+    --color-primary: var(--color-zinc-200);
+    --color-primary-foreground: var(--color-zinc-900);
+    --color-secondary: var(--color-zinc-800);
+    --color-secondary-foreground: var(--color-zinc-50);
+    --color-muted: var(--color-zinc-800);
+    --color-muted-foreground: var(--color-zinc-400);
+    --color-accent: var(--color-zinc-700);
+    --color-accent-foreground: var(--color-zinc-50);
     --color-destructive: var(--color-red-500);
     --color-destructive-foreground: var(--color-red-50);
     --color-favorite: var(--color-red-400);
-    --color-border: var(--color-gray-800);
-    --color-input: var(--color-gray-600);
-    --color-ring: var(--color-gray-600);
+    --color-border: var(--color-zinc-800);
+    --color-input: var(--color-zinc-800);
+    --color-ring: var(--color-zinc-600);
     /* Border-as-shadow tokens (dark mode) */
     --shadow-borders-base:
       0 -1px 0 0 rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.06),

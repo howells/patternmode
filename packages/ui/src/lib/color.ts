@@ -5,85 +5,32 @@
  * predefined palette. Useful for avatars, category labels, etc.
  */
 
-// A comprehensive palette (subset derived from Midday CATEGORY_COLORS)
-/** Curated palette of 60 hex colors for deterministic string-to-color mapping. */
+/**
+ * Muted, desaturated palette for professional UI contexts.
+ * Colors are chosen to feel quiet and confident at 50% opacity —
+ * closer to Linear/Medusa avatar tones than primary-color loudness.
+ */
 export const DETERMINISTIC_COLORS: readonly string[] = [
-  // Primary
-  "#FF6900",
-  "#00D084",
-  "#0693E3",
-  "#8ED1FC",
-  "#9900EF",
-  "#EB144C",
-  "#FF9F1C",
-  "#39CCCC",
-  "#0074D9",
-  "#3D9970",
-  "#B04632",
-  "#DC2626",
-  "#059669",
-  "#6B7280",
-  // Extended
-  "#FCB900",
-  "#ABB8C3",
-  "#F78DA7",
-  "#0079BF",
-  "#B6BBBF",
-  "#FF5A5F",
-  "#F7C59F",
-  "#8492A6",
-  "#4D5055",
-  "#AF5A50",
-  "#F9D6E7",
-  "#B5EAEA",
-  "#B388EB",
-  "#FF78CB",
-  "#4E5A65",
-  "#01FF70",
-  "#85144B",
-  "#F012BE",
-  "#7FDBFF",
-  "#AAAAAA",
-  "#111111",
-  "#001F3F",
-  "#5E6A71",
-  "#75D701",
-  "#B6C8A9",
-  "#00A9FE",
-  "#EAE8E1",
-  "#CD346C",
-  "#FF6FA4",
-  "#D667FB",
-  "#0080FF",
-  "#656D78",
-  "#F8842C",
-  "#FF8CFF",
-  "#647F6A",
-  "#5E574E",
-  "#EF5466",
-  "#B0E0E6",
-  "#EB5E7C",
-  "#8A2BE2",
-  "#6B7C85",
-  "#8C92AC",
-  "#6C587A",
-  "#52A1FF",
-  "#32CD32",
-  "#E04F9F",
-  "#915C83",
-  "#4C6B88",
-  "#587376",
-  "#C46210",
-  "#65B0D0",
-  "#2F4F4F",
-  "#528B8B",
-  "#8B4513",
-  "#4682B4",
-  "#CD853F",
-  "#FFA07A",
-  "#CD5C5C",
-  "#483D8B",
-  "#696969",
+  "#6B7280", // gray
+  "#7C8594", // cool gray
+  "#64748B", // slate
+  "#78716C", // stone
+  "#71717A", // zinc
+  "#6D8B74", // muted sage
+  "#7B8FA1", // steel blue
+  "#8B7E74", // warm taupe
+  "#7E6B8A", // muted purple
+  "#6B8A8A", // teal-gray
+  "#8A7B6B", // khaki
+  "#7A7A6B", // olive-gray
+  "#7B6B7A", // dusty mauve
+  "#6B7B7B", // blue-gray
+  "#8A7070", // rosewood
+  "#6B8078", // sea-gray
+  "#7A6B65", // brown-gray
+  "#6B6B8A", // cool indigo
+  "#7A8A6B", // moss
+  "#857B74", // warm gray
 ];
 
 const DEFAULT_COLOR = "#6B7280"; // Neutral gray fallback
