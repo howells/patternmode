@@ -20,7 +20,6 @@ import {
 import { Flex } from "@patternmode/ui/components/flex";
 import { Heading } from "@patternmode/ui/components/heading";
 import { Icon } from "@patternmode/ui/components/icon";
-
 import { MenuItem } from "@patternmode/ui/components/menu-item";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
@@ -41,13 +40,16 @@ import {
   Hash,
   Lightbulb,
   MessageSquare,
+  MoreHorizontal,
   Plus,
   Search,
-  Settings,
+  Share2,
   Star,
   Trash2,
   Users,
 } from "lucide-react";
+
+/* -- Data --------------------------------------------------------- */
 
 interface PageNode {
   name: string;
@@ -94,6 +96,20 @@ const WORKSPACE_PAGES: PageNode[] = [
   },
 ];
 
+const SERVICES = [
+  { service: "Auth Service", status: "Stable", owner: "Platform Team" },
+  { service: "User Service", status: "Stable", owner: "Platform Team" },
+  { service: "Payment Service", status: "Beta", owner: "Commerce Team" },
+  {
+    service: "Notification Service",
+    status: "Refactoring",
+    owner: "Platform Team",
+  },
+  { service: "Analytics Service", status: "Stable", owner: "Data Team" },
+];
+
+/* -- Sub-components ----------------------------------------------- */
+
 function PageTreeGroup({ node }: { node: PageNode }) {
   if (!node.children) {
     return (
@@ -121,12 +137,49 @@ function PageTreeGroup({ node }: { node: PageNode }) {
   );
 }
 
+function Comment({
+  name,
+  date,
+  text,
+}: {
+  name: string;
+  date: string;
+  text: string;
+}) {
+  return (
+    <HStack gap="sm" align="flex-start" className="group">
+      <Avatar size="sm">
+        <AvatarFallback name={name} size="sm" />
+      </Avatar>
+      <VStack gap="2xs" className="flex-1">
+        <HStack gap="xs" align="baseline">
+          <Text size="sm" weight="medium">
+            {name}
+          </Text>
+          <Text size="xs" variant="muted">
+            {date}
+          </Text>
+        </HStack>
+        <Text size="sm">{text}</Text>
+      </VStack>
+      <Button
+        variant="ghost"
+        size="icon-2xs"
+        icon={MoreHorizontal}
+        aria-label="More"
+        className="opacity-0 group-hover:opacity-100"
+      />
+    </HStack>
+  );
+}
+
+/* -- Page --------------------------------------------------------- */
+
 export default function NotionDemo() {
   return (
     <AppShell variant="bordered">
       {/* Sidebar */}
       <AppShellSidebar width="w-60">
-        {/* Workspace header */}
         <HStack align="center" gap="sm" noShrink className="px-4 pt-4 pb-2">
           <div className="size-5 rounded-full bg-foreground" />
           <Text
@@ -151,10 +204,9 @@ export default function NotionDemo() {
           </MenuItem>
         </VStack>
 
-        <Separator />
+        <Separator className="my-2" />
 
-        {/* Page tree */}
-        <Flex align="center" justify="space-between" className="px-4 pt-1">
+        <Flex align="center" justify="space-between" className="px-4">
           <Text size="xs" variant="muted" weight="medium">
             Pages
           </Text>
@@ -174,7 +226,6 @@ export default function NotionDemo() {
           </VStack>
         </ScrollArea>
 
-        {/* Bottom actions */}
         <Separator />
         <VStack gap="2xs" className="px-2 py-2">
           <MenuItem icon={Users} size="xs">
@@ -186,10 +237,13 @@ export default function NotionDemo() {
         </VStack>
       </AppShellSidebar>
 
-      {/* Main content area */}
+      {/* Main */}
       <AppShellContent>
         <ScrollArea className="flex-1">
-          <VStack className="max-w-2xl mx-auto px-12 pt-12 pb-24" gap="lg">
+          {/* Cover area — subtle gradient */}
+          <div className="h-32 bg-gradient-to-b from-zinc-100 to-background" />
+
+          <VStack className="max-w-2xl mx-auto px-12 -mt-12 pb-24" gap="lg">
             {/* Breadcrumb */}
             <Breadcrumb>
               <BreadcrumbList>
@@ -204,35 +258,76 @@ export default function NotionDemo() {
             </Breadcrumb>
 
             {/* Page header */}
-            <VStack gap="xs">
-              <Heading size="xl" level="1">
+            <VStack gap="sm">
+              <Heading size="2xl" level="1">
                 Architecture Overview
               </Heading>
-              <Text size="xs" variant="muted">
-                Last edited by Sarah Chen &middot; April 4, 2026
-              </Text>
+
+              {/* Page properties — inline tags */}
+              <HStack gap="sm" align="center">
+                <HStack gap="xs" align="center">
+                  <Avatar size="2xs">
+                    <AvatarFallback name="Sarah Chen" size="2xs" />
+                  </Avatar>
+                  <Text size="xs" variant="muted">
+                    Sarah Chen
+                  </Text>
+                </HStack>
+                <Text size="xs" variant="muted">
+                  &middot;
+                </Text>
+                <Text size="xs" variant="muted">
+                  April 4, 2026
+                </Text>
+                <Text size="xs" variant="muted">
+                  &middot;
+                </Text>
+                <Badge variant="affirmative" size="xs" appearance="outline">
+                  Published
+                </Badge>
+              </HStack>
+
+              {/* Actions */}
+              <HStack gap="xs">
+                <Button variant="ghost" size="xs" icon={Share2}>
+                  Share
+                </Button>
+                <Button variant="ghost" size="xs" icon={Star}>
+                  Favorite
+                </Button>
+                <Button variant="ghost" size="xs" icon={MoreHorizontal}>
+                  More
+                </Button>
+              </HStack>
             </VStack>
 
             <Separator />
 
-            {/* Document content */}
-            <VStack gap="lg">
-              <Text size="base">
+            {/* Document body */}
+            <VStack gap="xl">
+              <Text size="base" className="leading-relaxed">
                 This document provides a high-level overview of our system
                 architecture, including the major services, data flows, and
                 deployment topology. It serves as the canonical reference for
                 engineering onboarding and architectural decisions.
               </Text>
 
-              {/* Callout block */}
-              <Card variant="muted" border="solid" className="px-6">
+              {/* Key Principle callout */}
+              <Card
+                variant="muted"
+                className="px-6 border-l-2 border-l-foreground"
+              >
                 <HStack gap="sm" align="flex-start">
-                  <Icon icon={Lightbulb} size="sm" />
+                  <Icon
+                    icon={Lightbulb}
+                    size="sm"
+                    className="mt-0.5 text-amber-500"
+                  />
                   <VStack gap="xs">
                     <Text size="sm" weight="semibold">
                       Key Principle
                     </Text>
-                    <Text size="sm">
+                    <Text size="sm" className="leading-relaxed">
                       All services communicate through the event bus. Direct
                       service-to-service calls are prohibited except for
                       synchronous read operations via the API gateway.
@@ -241,51 +336,27 @@ export default function NotionDemo() {
                 </HStack>
               </Card>
 
-              <Heading size="base" level="2">
-                System Components
-              </Heading>
-              <Text size="base">
-                The platform consists of five core services, each responsible
-                for a bounded context within the domain model. Services are
-                independently deployable and maintain their own data stores.
-              </Text>
+              <VStack gap="sm">
+                <Heading size="lg" level="2">
+                  System Components
+                </Heading>
+                <Text size="base" className="leading-relaxed">
+                  The platform consists of five core services, each responsible
+                  for a bounded context within the domain model. Services are
+                  independently deployable and maintain their own data stores.
+                </Text>
+              </VStack>
 
-              {/* Inline table-like content */}
-              <VStack gap="xs">
-                {[
-                  {
-                    service: "Auth Service",
-                    status: "Stable",
-                    owner: "Platform Team",
-                  },
-                  {
-                    service: "User Service",
-                    status: "Stable",
-                    owner: "Platform Team",
-                  },
-                  {
-                    service: "Payment Service",
-                    status: "Beta",
-                    owner: "Commerce Team",
-                  },
-                  {
-                    service: "Notification Service",
-                    status: "Refactoring",
-                    owner: "Platform Team",
-                  },
-                  {
-                    service: "Analytics Service",
-                    status: "Stable",
-                    owner: "Data Team",
-                  },
-                ].map((row) => (
+              {/* Service table */}
+              <VStack gap="none" className="rounded-lg overflow-hidden">
+                {SERVICES.map((row, i) => (
                   <Flex
                     key={row.service}
                     align="center"
                     gap="sm"
-                    className="px-4 py-2 rounded-lg bg-muted/50"
+                    className={`px-4 py-3 ${i % 2 === 0 ? "bg-muted/30" : ""}`}
                   >
-                    <Text size="sm" weight="medium" className="w-44">
+                    <Text size="sm" weight="medium" className="w-48">
                       {row.service}
                     </Text>
                     <Badge
@@ -312,25 +383,34 @@ export default function NotionDemo() {
                 ))}
               </VStack>
 
-              <Heading size="base" level="2">
-                Data Flow
-              </Heading>
-              <Text size="base">
-                All writes go through the command pipeline, which validates
-                input, applies business rules, persists changes, and publishes
-                domain events. Reads are served from materialized views
-                optimized for each query pattern.
-              </Text>
+              <VStack gap="sm">
+                <Heading size="lg" level="2">
+                  Data Flow
+                </Heading>
+                <Text size="base" className="leading-relaxed">
+                  All writes go through the command pipeline, which validates
+                  input, applies business rules, persists changes, and publishes
+                  domain events. Reads are served from materialized views
+                  optimized for each query pattern.
+                </Text>
+              </VStack>
 
               {/* Warning callout */}
-              <Card variant="muted" border="dashed" className="px-6">
+              <Card
+                variant="muted"
+                className="px-6 border-l-2 border-l-amber-500"
+              >
                 <HStack gap="sm" align="flex-start">
-                  <Icon icon={AlertCircle} size="sm" />
+                  <Icon
+                    icon={AlertCircle}
+                    size="sm"
+                    className="mt-0.5 text-amber-500"
+                  />
                   <VStack gap="xs">
                     <Text size="sm" weight="semibold">
                       Migration in Progress
                     </Text>
-                    <Text size="sm">
+                    <Text size="sm" className="leading-relaxed">
                       The Notification Service is being migrated from polling to
                       event-driven. See ENG-475 for the tracking issue. Expected
                       completion: April 15, 2026.
@@ -339,20 +419,22 @@ export default function NotionDemo() {
                 </HStack>
               </Card>
 
-              <Heading size="base" level="2">
-                Deployment
-              </Heading>
-              <Text size="base">
-                Services are containerized and deployed to a Kubernetes cluster
-                with auto-scaling policies based on CPU and request latency
-                metrics. Blue-green deployments are used for all production
-                releases.
-              </Text>
+              <VStack gap="sm">
+                <Heading size="lg" level="2">
+                  Deployment
+                </Heading>
+                <Text size="base" className="leading-relaxed">
+                  Services are containerized and deployed to a Kubernetes
+                  cluster with auto-scaling policies based on CPU and request
+                  latency metrics. Blue-green deployments are used for all
+                  production releases.
+                </Text>
+              </VStack>
 
               <Separator />
 
-              {/* Comments section */}
-              <VStack gap="sm">
+              {/* Comments */}
+              <VStack gap="base">
                 <HStack gap="xs" align="center">
                   <Icon icon={MessageSquare} size="xs" />
                   <Text size="sm" weight="medium">
@@ -360,46 +442,17 @@ export default function NotionDemo() {
                   </Text>
                 </HStack>
 
-                <VStack gap="base">
-                  <HStack gap="sm" align="flex-start">
-                    <Avatar size="sm">
-                      <AvatarFallback name="Marcus Johnson" size="sm" />
-                    </Avatar>
-                    <VStack gap="2xs">
-                      <HStack gap="xs" align="center">
-                        <Text size="sm" weight="medium">
-                          Marcus Johnson
-                        </Text>
-                        <Text size="xs" variant="muted">
-                          Apr 3
-                        </Text>
-                      </HStack>
-                      <Text size="sm">
-                        Should we add a section about the caching layer? The
-                        Redis cluster setup is non-obvious for new engineers.
-                      </Text>
-                    </VStack>
-                  </HStack>
-
-                  <HStack gap="sm" align="flex-start">
-                    <Avatar size="sm">
-                      <AvatarFallback name="Sarah Chen" size="sm" />
-                    </Avatar>
-                    <VStack gap="2xs">
-                      <HStack gap="xs" align="center">
-                        <Text size="sm" weight="medium">
-                          Sarah Chen
-                        </Text>
-                        <Text size="xs" variant="muted">
-                          Apr 4
-                        </Text>
-                      </HStack>
-                      <Text size="sm">
-                        Good call. I will add that in the next revision along
-                        with the CDN configuration details.
-                      </Text>
-                    </VStack>
-                  </HStack>
+                <VStack gap="lg">
+                  <Comment
+                    name="Marcus Johnson"
+                    date="Apr 3"
+                    text="Should we add a section about the caching layer? The Redis cluster setup is non-obvious for new engineers."
+                  />
+                  <Comment
+                    name="Sarah Chen"
+                    date="Apr 4"
+                    text="Good call. I will add that in the next revision along with the CDN configuration details."
+                  />
                 </VStack>
               </VStack>
             </VStack>
