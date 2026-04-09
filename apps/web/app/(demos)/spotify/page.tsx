@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@patternmode/ui/components/button";
-import Image from "next/image";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Icon } from "@patternmode/ui/components/icon";
 import { MenuItem } from "@patternmode/ui/components/menu-item";
@@ -26,6 +25,7 @@ import {
   SkipForward,
   Volume2,
 } from "lucide-react";
+import Image from "next/image";
 
 /* -- Data --------------------------------------------------------- */
 
@@ -125,14 +125,14 @@ const RECENT_ALBUMS = [
 ];
 
 const PLAYLISTS = [
-  "Liked Songs",
-  "Discover Weekly",
-  "Release Radar",
-  "Daily Mix 1",
-  "Daily Mix 2",
-  "Chill Vibes",
-  "Focus Flow",
-  "Late Night Jazz",
+  { name: "Liked Songs", color: "#3b3557" },
+  { name: "Discover Weekly", color: "#2a3a3a" },
+  { name: "Release Radar", color: "#3a2a3a" },
+  { name: "Daily Mix 1", color: "#3a3525" },
+  { name: "Daily Mix 2", color: "#253540" },
+  { name: "Chill Vibes", color: "#2a3530" },
+  { name: "Focus Flow", color: "#302a40" },
+  { name: "Late Night Jazz", color: "#1a2535" },
 ];
 
 /* -- Sub-components ----------------------------------------------- */
@@ -197,7 +197,7 @@ function QueueItem({ track, index }: { track: Track; index: number }) {
         size="small"
         alt={track.album}
       />
-      <VStack gap="none" className="flex-1 min-w-0">
+      <VStack gap="2xs" className="flex-1 min-w-0">
         <Text size="sm" truncate className="text-white">
           {track.title}
         </Text>
@@ -256,11 +256,33 @@ export default function SpotifyDemo() {
           </HStack>
 
           <ScrollArea className="flex-1">
-            <VStack gap="none" className="px-2 py-1">
-              {PLAYLISTS.map((name) => (
-                <MenuItem key={name} icon={ListMusic} size="xs">
-                  {name}
-                </MenuItem>
+            <VStack gap="xs" className="px-3 py-2">
+              {PLAYLISTS.map((pl) => (
+                <HStack
+                  key={pl.name}
+                  gap="sm"
+                  align="center"
+                  className="group cursor-pointer rounded-md px-1.5 py-1.5 hover:bg-white/5"
+                >
+                  <div
+                    className="size-10 shrink-0 rounded-md image-frame"
+                    style={{
+                      background: `linear-gradient(135deg, ${pl.color} 0%, ${pl.color}88 100%)`,
+                    }}
+                  />
+                  <VStack gap="2xs" className="min-w-0">
+                    <Text
+                      size="sm"
+                      truncate
+                      className="text-zinc-200 group-hover:text-white"
+                    >
+                      {pl.name}
+                    </Text>
+                    <Text size="2xs" className="text-zinc-500">
+                      Playlist
+                    </Text>
+                  </VStack>
+                </HStack>
               ))}
             </VStack>
           </ScrollArea>
@@ -268,53 +290,54 @@ export default function SpotifyDemo() {
 
         {/* Main content */}
         <VStack grow gap="none" className="min-w-0 overflow-hidden">
-          <ScrollArea className="flex-1">
-            {/* Hero: Now Playing — large, atmospheric */}
-            <div
-              className="relative px-8 pt-12 pb-8"
-              style={{
-                background: `radial-gradient(ellipse at 20% 40%, ${NOW_PLAYING.color} 0%, ${NOW_PLAYING.color}60 30%, transparent 70%)`,
-              }}
-            >
-              <HStack gap="lg" align="flex-end">
-                <AlbumArt
-                  color={NOW_PLAYING.color}
-                  image={NOW_PLAYING.image}
-                  size="large"
-                  alt={NOW_PLAYING.album}
-                />
-                <VStack gap="xs" className="pb-2">
-                  <Text
-                    size="xs"
-                    weight="medium"
-                    className="text-white/60 uppercase tracking-wider"
-                  >
-                    Now Playing
+          {/* Hero: Now Playing — fixed above scroll */}
+          <div
+            className="relative shrink-0 px-8 pt-10 pb-6"
+            style={{
+              background: `radial-gradient(ellipse at 15% 50%, ${NOW_PLAYING.color} 0%, ${NOW_PLAYING.color}50 25%, transparent 60%)`,
+            }}
+          >
+            <HStack gap="lg" align="flex-end">
+              <AlbumArt
+                color={NOW_PLAYING.color}
+                image={NOW_PLAYING.image}
+                size="large"
+                alt={NOW_PLAYING.album}
+              />
+              <VStack gap="xs" className="pb-2">
+                <Text
+                  size="xs"
+                  weight="medium"
+                  className="text-white/60 uppercase tracking-wider"
+                >
+                  Now Playing
+                </Text>
+                <Text
+                  size="3xl"
+                  weight="semibold"
+                  className="text-white leading-none"
+                >
+                  {NOW_PLAYING.title}
+                </Text>
+                <HStack gap="xs" align="center">
+                  <Text size="sm" className="text-white/80">
+                    {NOW_PLAYING.artist}
                   </Text>
-                  <Text
-                    size="3xl"
-                    weight="semibold"
-                    className="text-white leading-none"
-                  >
-                    {NOW_PLAYING.title}
+                  <Text size="sm" className="text-white/40">
+                    &middot;
                   </Text>
-                  <HStack gap="xs" align="center">
-                    <Text size="sm" className="text-white/80">
-                      {NOW_PLAYING.artist}
-                    </Text>
-                    <Text size="sm" className="text-white/40">
-                      &middot;
-                    </Text>
-                    <Text size="sm" className="text-white/60">
-                      {NOW_PLAYING.album}
-                    </Text>
-                  </HStack>
-                </VStack>
-              </HStack>
-            </div>
+                  <Text size="sm" className="text-white/60">
+                    {NOW_PLAYING.album}
+                  </Text>
+                </HStack>
+              </VStack>
+            </HStack>
+          </div>
 
+          {/* Scrollable panels below hero */}
+          <ScrollArea className="flex-1">
             {/* Queue */}
-            <VStack gap="sm" className="px-6 py-6">
+            <VStack gap="sm" className="px-6 pt-4 pb-4">
               <Text
                 size="xs"
                 weight="medium"
@@ -332,7 +355,7 @@ export default function SpotifyDemo() {
             <Separator className="border-white/5 mx-6" />
 
             {/* Recent albums */}
-            <VStack gap="sm" className="px-6 py-6 pb-24">
+            <VStack gap="sm" className="px-6 pt-4 pb-20">
               <Text
                 size="xs"
                 weight="medium"
@@ -340,23 +363,23 @@ export default function SpotifyDemo() {
               >
                 Recently Played
               </Text>
-              <div className="grid grid-cols-3 gap-4 px-3">
+              <div className="grid grid-cols-6 gap-4 px-3">
                 {RECENT_ALBUMS.map((album) => (
                   <VStack
                     key={album.title}
-                    gap="sm"
+                    gap="xs"
                     className="group cursor-pointer"
                   >
-                    <div className="aspect-square w-full overflow-hidden rounded-md image-frame transition-transform duration-200 group-hover:scale-[1.02]">
+                    <div className="aspect-square w-full overflow-hidden rounded-md image-frame">
                       <Image
                         src={album.image}
                         alt={album.title}
-                        width={400}
-                        height={400}
-                        className="size-full object-cover"
+                        width={200}
+                        height={200}
+                        className="size-full object-cover transition-transform duration-200 group-hover:scale-105"
                       />
                     </div>
-                    <VStack gap="none">
+                    <VStack gap="2xs">
                       <Text
                         size="sm"
                         weight="medium"
@@ -389,7 +412,7 @@ export default function SpotifyDemo() {
                 size="small"
                 alt={NOW_PLAYING.album}
               />
-              <VStack gap="none" className="min-w-0">
+              <VStack gap="2xs" className="min-w-0">
                 <Text size="sm" weight="medium" truncate className="text-white">
                   {NOW_PLAYING.title}
                 </Text>
