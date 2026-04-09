@@ -3,7 +3,6 @@
 import { Button } from "@patternmode/ui/components/button";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Icon } from "@patternmode/ui/components/icon";
-import { MenuItem } from "@patternmode/ui/components/menu-item";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
@@ -11,7 +10,6 @@ import { Text } from "@patternmode/ui/components/text";
 import {
   Heart,
   Home,
-  Library,
   Maximize2,
   Mic2,
   MonitorSpeaker,
@@ -223,32 +221,10 @@ export default function SpotifyDemo() {
           gap="none"
           className="w-72 border-r border-white/5 bg-zinc-900/50"
         >
-          {/* Top bar — search + user controls */}
-          <HStack align="center" gap="xs" noShrink className="px-3 pt-3 pb-2">
-            <HStack
-              align="center"
-              gap="xs"
-              className="flex-1 rounded-md bg-white/5 px-2.5 py-1.5 cursor-pointer hover:bg-white/8"
-            >
-              <Icon icon={Search} size="xs" className="text-zinc-500" />
-              <Text size="xs" className="text-zinc-500">
-                Search
-              </Text>
-            </HStack>
-            <Button
-              variant="ghost"
-              size="icon-2xs"
-              icon={Home}
-              aria-label="Home"
-              className="text-zinc-400 hover:text-white"
-            />
-            <div className="size-6 rounded-full bg-zinc-700 shrink-0 cursor-pointer" />
-          </HStack>
-
           <HStack
             align="center"
             justify="space-between"
-            className="px-4 pt-2 pb-1"
+            className="px-4 pt-4 pb-1"
           >
             <Text
               size="2xs"
@@ -300,24 +276,41 @@ export default function SpotifyDemo() {
         </VStack>
 
         {/* Main content */}
-        <VStack grow gap="none" className="relative min-w-0 overflow-hidden">
-          {/* Top bar — app controls, top right */}
+        <VStack grow gap="none" className="min-w-0 overflow-hidden">
+          {/* Top bar */}
           <HStack
             align="center"
-            justify="flex-end"
-            gap="xs"
+            justify="space-between"
             noShrink
-            className="absolute top-0 right-0 z-10 px-6 py-3"
+            className="px-6 py-2.5"
           >
-            <Button
-              variant="ghost"
-              size="icon-2xs"
-              icon={Heart}
-              aria-label="Liked"
-              className="text-zinc-400 hover:text-white"
-            />
-            <Separator orientation="vertical" className="h-4 border-white/10" />
-            <div className="size-7 rounded-full bg-zinc-700 cursor-pointer hover:bg-zinc-600 transition-colors" />
+            <HStack
+              align="center"
+              gap="xs"
+              className="w-56 rounded-md bg-white/5 px-2.5 py-1.5 cursor-pointer hover:bg-white/8"
+            >
+              <Icon icon={Search} size="xs" className="text-zinc-500" />
+              <Text size="xs" className="text-zinc-500">
+                Search music
+              </Text>
+            </HStack>
+            <HStack align="center" gap="sm">
+              <Button
+                variant="ghost"
+                size="icon-2xs"
+                icon={Home}
+                aria-label="Home"
+                className="text-zinc-400 hover:text-white"
+              />
+              <Button
+                variant="ghost"
+                size="icon-2xs"
+                icon={Heart}
+                aria-label="Liked"
+                className="text-zinc-400 hover:text-white"
+              />
+              <div className="size-7 rounded-full bg-zinc-700 cursor-pointer hover:bg-zinc-600 transition-colors" />
+            </HStack>
           </HStack>
 
           {/* Hero: Now Playing — fixed above scroll */}
