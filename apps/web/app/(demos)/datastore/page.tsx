@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback } from "@patternmode/ui/components/avatar";
 import { Badge } from "@patternmode/ui/components/badge";
 import { Button } from "@patternmode/ui/components/button";
 import {
@@ -13,36 +14,11 @@ import { Icon } from "@patternmode/ui/components/icon";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@patternmode/ui/components/tabs";
 import { Text } from "@patternmode/ui/components/text";
-import { Textarea } from "@patternmode/ui/components/textarea";
 import {
   AppShell,
-  AppShellContent,
   AppShellSidebar,
 } from "@patternmode/ui/compositions/app-shell";
-import {
-  DataGrid,
-  DataGridContainer,
-  DataGridFilterableHeader,
-  type FilterOption,
-} from "@patternmode/ui/compositions/data-grid";
-import { DataGridTable } from "@patternmode/ui/compositions/data-grid-table";
-import {
-  type ColumnDef,
-  createColumnHelper,
-  getCoreRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
 import {
   ChevronDown,
   ChevronRight,
@@ -52,18 +28,14 @@ import {
   FolderOpen,
   Globe,
   Pencil,
-  Play,
   Plus,
   RefreshCw,
   Search,
-  Settings,
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
 
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
+/* -- Data --------------------------------------------------------- */
 
 type DocumentStatus = "active" | "inactive" | "pending" | "archived";
 
@@ -192,7 +164,7 @@ const DOCUMENTS: UserDocument[] = [
   },
 ];
 
-const STATUS_BADGE_VARIANT: Record<
+const STATUS_VARIANT: Record<
   DocumentStatus,
   "affirmative" | "destructive" | "warning" | "default"
 > = {
@@ -204,738 +176,363 @@ const STATUS_BADGE_VARIANT: Record<
 
 const COLLECTIONS = ["users", "sessions", "events", "billing", "audit_logs"];
 
-const DEFAULT_QUERY = `SELECT *
-FROM users
-WHERE status = 'active'
-ORDER BY createdAt DESC
-OFFSET 0 LIMIT 20`;
+/* -- Sub-components ----------------------------------------------- */
 
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
-function TreeNode({
-  icon,
-  label,
-  depth = 0,
-  isActive = false,
-  suffix,
-  onClick,
-}: {
-  icon: typeof Database;
-  label: string;
-  depth?: number;
-  isActive?: boolean;
-  suffix?: React.ReactNode;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      className={`flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-xs transition-colors hover:bg-accent/50 ${
-        isActive ? "bg-accent text-accent-foreground" : "text-foreground"
-      }`}
-      onClick={onClick}
-      style={{ paddingLeft: `${depth * 12 + 8}px` }}
-      type="button"
-    >
-      <Icon className="shrink-0 text-muted-foreground" icon={icon} size="2xs" />
-      <span className="flex-1 truncate">{label}</span>
-      {suffix}
-    </button>
-  );
-}
-
-function CollectionTree({
-  activeCollection,
+function RecordRow({
+  doc,
+  isSelected,
   onSelect,
 }: {
-  activeCollection: string;
-  onSelect: (name: string) => void;
+  doc: UserDocument;
+  isSelected: boolean;
+  onSelect: () => void;
 }) {
   return (
-    <Collapsible defaultOpen>
-      <CollapsibleTrigger asChild>
-        <button
-          className="flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-xs font-medium text-foreground transition-colors hover:bg-accent/50"
-          type="button"
-        >
-          <Icon
-            className="shrink-0 text-muted-foreground"
-            icon={Database}
-            size="2xs"
-          />
-          <span className="flex-1 truncate">datastore-prod</span>
-          <Icon
-            className="shrink-0 text-muted-foreground [[data-state=open]_&]:hidden"
-            icon={ChevronRight}
-            size="2xs"
-          />
-          <Icon
-            className="shrink-0 text-muted-foreground [[data-state=closed]_&]:hidden"
-            icon={ChevronDown}
-            size="2xs"
-          />
-        </button>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <Collapsible defaultOpen>
-          <CollapsibleTrigger asChild>
-            <button
-              className="flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-xs text-foreground transition-colors hover:bg-accent/50"
-              style={{ paddingLeft: "20px" }}
-              type="button"
-            >
-              <Icon
-                className="shrink-0 text-muted-foreground"
-                icon={FolderOpen}
-                size="2xs"
-              />
-              <span className="flex-1 truncate">Collections</span>
-              <Text tabularNums size="2xs" variant="muted">
-                {COLLECTIONS.length}
-              </Text>
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <VStack gap="none">
-              {COLLECTIONS.map((col) => (
-                <TreeNode
-                  key={col}
-                  depth={3}
-                  icon={FileJson}
-                  isActive={col === activeCollection}
-                  label={col}
-                  onClick={() => onSelect(col)}
-                  suffix={
-                    col === "users" ? (
-                      <Text tabularNums size="2xs" variant="muted">
-                        {DOCUMENTS.length}
-                      </Text>
-                    ) : undefined
-                  }
-                />
-              ))}
-            </VStack>
-          </CollapsibleContent>
-        </Collapsible>
-      </CollapsibleContent>
-    </Collapsible>
+    <HStack
+      align="center"
+      gap="sm"
+      className={`cursor-pointer rounded-md px-3 py-2 ${
+        isSelected ? "bg-blue-500/10" : "hover:bg-accent/50"
+      }`}
+      onClick={onSelect}
+    >
+      <Avatar size="sm">
+        <AvatarFallback name={doc.name} size="sm" />
+      </Avatar>
+      <VStack gap="2xs" className="flex-1 min-w-0">
+        <Text size="sm" weight={isSelected ? "semibold" : "medium"} truncate>
+          {doc.name}
+        </Text>
+        <Text size="2xs" variant="muted" truncate font="mono">
+          {doc.id}
+        </Text>
+      </VStack>
+      <Badge
+        variant={STATUS_VARIANT[doc.status]}
+        size="xs"
+        appearance="outline"
+      >
+        {doc.status}
+      </Badge>
+    </HStack>
   );
 }
 
-function DocumentDetailPanel({
-  document: doc,
+function DetailField({
+  label,
+  value,
+  mono,
 }: {
-  document: UserDocument | null;
+  label: string;
+  value: string;
+  mono?: boolean;
 }) {
-  if (!doc) {
-    return (
-      <Flex
-        align="center"
-        className="p-6"
-        direction="column"
-        grow
-        justify="center"
-      >
-        <Text size="sm" variant="muted">
-          Select a document to view details
-        </Text>
-      </Flex>
-    );
-  }
-
-  const entries: [string, string][] = [
-    ["id", doc.id],
-    ["name", doc.name],
-    ["email", doc.email],
-    ["status", doc.status],
-    ["role", doc.role],
-    ["plan", doc.plan],
-    ["region", doc.region],
-    ["createdAt", doc.createdAt],
-    ["lastLogin", doc.lastLogin.replace("T", " ").replace("Z", "")],
-  ];
-
   return (
-    <VStack gap="none" grow>
-      {/* Detail header */}
-      <Flex
-        align="center"
-        className="border-b border-border px-3 py-2"
-        justify="space-between"
-        noShrink
+    <VStack gap="2xs">
+      <Text
+        size="2xs"
+        variant="muted"
+        weight="medium"
+        className="uppercase tracking-wider"
       >
-        <HStack align="center" gap="xs">
-          <Icon className="text-muted-foreground" icon={FileJson} size="xs" />
-          <Text size="xs" weight="medium">
-            {doc.id}
-          </Text>
-        </HStack>
-        <Button
-          aria-label="Copy document ID"
-          icon={Copy}
-          size="icon-2xs"
-          variant="ghost"
-        />
-      </Flex>
-
-      {/* Key-value pairs */}
-      <ScrollArea className="flex-1">
-        <VStack className="p-3" gap="none">
-          {entries.map(([key, value]) => (
-            <Flex
-              key={key}
-              align="flex-start"
-              className="border-b border-border/50 py-1.5"
-              gap="sm"
-            >
-              <Text
-                className="w-20 shrink-0"
-                font="mono"
-                size="2xs"
-                variant="muted"
-              >
-                {key}
-              </Text>
-              <Text className="min-w-0 break-all" font="mono" size="2xs">
-                {value}
-              </Text>
-            </Flex>
-          ))}
-        </VStack>
-      </ScrollArea>
-
-      {/* Action buttons */}
-      <Flex className="border-t border-border p-3" gap="xs" noShrink>
-        <Button className="flex-1" icon={Pencil} size="sm" variant="outline">
-          Edit
-        </Button>
-        <Button
-          className="flex-1"
-          icon={Trash2}
-          size="sm"
-          variant="destructive"
-          appearance="outline"
-        >
-          Delete
-        </Button>
-      </Flex>
+        {label}
+      </Text>
+      <Text
+        size="sm"
+        font={mono ? "mono" : undefined}
+        className={mono ? "select-all" : ""}
+      >
+        {value}
+      </Text>
     </VStack>
   );
 }
 
-const documentColumnHelper = createColumnHelper<UserDocument>();
-
-const statusOptions: FilterOption[] = [
-  { label: "Active", value: "active" },
-  { label: "Inactive", value: "inactive" },
-  { label: "Pending", value: "pending" },
-  { label: "Archived", value: "archived" },
-];
-
-const roleOptions: FilterOption[] = [
-  { label: "Admin", value: "admin" },
-  { label: "Editor", value: "editor" },
-  { label: "Viewer", value: "viewer" },
-];
-
-const planOptions: FilterOption[] = [
-  { label: "Enterprise", value: "enterprise" },
-  { label: "Pro", value: "pro" },
-  { label: "Free", value: "free" },
-];
-
-const documentColumns: ColumnDef<UserDocument, unknown>[] = [
-  documentColumnHelper.accessor("id", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column}>id</DataGridFilterableHeader>
-    ),
-    size: 144,
-    enableSorting: true,
-    cell: ({ getValue }) => (
-      <Text font="mono" size="2xs">
-        {getValue()}
-      </Text>
-    ),
-  }) as ColumnDef<UserDocument, unknown>,
-  documentColumnHelper.accessor("name", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column}>name</DataGridFilterableHeader>
-    ),
-    enableSorting: true,
-    cell: ({ getValue }) => <Text size="sm">{getValue()}</Text>,
-  }) as ColumnDef<UserDocument, unknown>,
-  documentColumnHelper.accessor("status", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column} options={statusOptions}>
-        status
-      </DataGridFilterableHeader>
-    ),
-    size: 96,
-    enableSorting: true,
-    enableColumnFilter: true,
-    filterFn: (row, _columnId, filterValue: string[] | undefined) => {
-      if (!filterValue || filterValue.length === 0) return true;
-      return filterValue.includes(row.original.status);
-    },
-    cell: ({ getValue }) => (
-      <Badge
-        appearance="outline"
-        size="xs"
-        variant={STATUS_BADGE_VARIANT[getValue()]}
-      >
-        {getValue()}
-      </Badge>
-    ),
-  }) as ColumnDef<UserDocument, unknown>,
-  documentColumnHelper.accessor("role", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column} options={roleOptions}>
-        role
-      </DataGridFilterableHeader>
-    ),
-    size: 80,
-    enableSorting: false,
-    enableColumnFilter: true,
-    filterFn: (row, _columnId, filterValue: string[] | undefined) => {
-      if (!filterValue || filterValue.length === 0) return true;
-      return filterValue.includes(row.original.role);
-    },
-    cell: ({ getValue }) => (
-      <Text size="xs" variant="muted">
-        {getValue()}
-      </Text>
-    ),
-  }) as ColumnDef<UserDocument, unknown>,
-  documentColumnHelper.accessor("plan", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column} options={planOptions}>
-        plan
-      </DataGridFilterableHeader>
-    ),
-    size: 96,
-    enableSorting: false,
-    enableColumnFilter: true,
-    filterFn: (row, _columnId, filterValue: string[] | undefined) => {
-      if (!filterValue || filterValue.length === 0) return true;
-      return filterValue.includes(row.original.plan);
-    },
-    cell: ({ getValue }) => (
-      <Text size="xs" variant="muted">
-        {getValue()}
-      </Text>
-    ),
-  }) as ColumnDef<UserDocument, unknown>,
-  documentColumnHelper.accessor("createdAt", {
-    header: ({ column }) => (
-      <DataGridFilterableHeader column={column}>
-        createdAt
-      </DataGridFilterableHeader>
-    ),
-    size: 208,
-    enableSorting: true,
-    cell: ({ getValue }) => (
-      <Text font="mono" size="2xs" variant="muted">
-        {getValue()}
-      </Text>
-    ),
-  }) as ColumnDef<UserDocument, unknown>,
-];
-
-function QueryResultsTable({
-  documents,
-  selectedId,
-  onSelect,
-}: {
-  documents: UserDocument[];
-  selectedId: string | null;
-  onSelect: (doc: UserDocument) => void;
-}) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const rowSelection = selectedId ? { [selectedId]: true } : {};
-
-  const table = useReactTable({
-    data: documents,
-    columns: documentColumns,
-    state: { sorting, rowSelection },
-    onSortingChange: setSorting,
-    getRowId: (row) => row.id,
-    enableRowSelection: true,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
-
+function DocumentDetail({ doc }: { doc: UserDocument }) {
   return (
-    <DataGrid
-      onRowClick={onSelect}
-      recordCount={documents.length}
-      table={table}
-      tableClassNames={{
-        bodyRow: "data-[state=selected]:!bg-accent",
-      }}
-      tableLayout={{
-        dense: true,
-        rowBorder: true,
-        headerBorder: true,
-        headerBackground: false,
-        rowHeight: 44,
-      }}
-    >
-      <DataGridContainer border="none">
-        <DataGridTable />
-      </DataGridContainer>
-    </DataGrid>
+    <VStack gap="lg" className="p-6">
+      {/* Profile header */}
+      <VStack gap="sm" align="center" className="text-center pt-4">
+        <Avatar size="xl">
+          <AvatarFallback name={doc.name} size="xl" />
+        </Avatar>
+        <VStack gap="2xs" align="center">
+          <Text size="lg" weight="semibold">
+            {doc.name}
+          </Text>
+          <Text size="sm" variant="muted">
+            {doc.email}
+          </Text>
+        </VStack>
+        <HStack gap="xs">
+          <Badge variant={STATUS_VARIANT[doc.status]} size="xs">
+            {doc.status}
+          </Badge>
+          <Badge variant="secondary" size="xs" appearance="outline">
+            {doc.role}
+          </Badge>
+          <Badge variant="secondary" size="xs" appearance="outline">
+            {doc.plan}
+          </Badge>
+        </HStack>
+      </VStack>
+
+      <Separator />
+
+      {/* Details grid */}
+      <div className="grid grid-cols-2 gap-4">
+        <DetailField label="ID" value={doc.id} mono />
+        <DetailField label="Region" value={doc.region} mono />
+        <DetailField
+          label="Created"
+          value={doc.createdAt.replace("T", " ").replace("Z", "")}
+        />
+        <DetailField
+          label="Last Login"
+          value={doc.lastLogin.replace("T", " ").replace("Z", "")}
+        />
+      </div>
+
+      <Separator />
+
+      {/* Actions */}
+      <HStack gap="xs">
+        <Button variant="outline" size="xs" icon={Pencil} className="flex-1">
+          Edit
+        </Button>
+        <Button variant="outline" size="xs" icon={Copy} className="flex-1">
+          Duplicate
+        </Button>
+        <Button
+          variant="destructive"
+          size="xs"
+          icon={Trash2}
+          appearance="outline"
+        >
+          Delete
+        </Button>
+      </HStack>
+    </VStack>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main page
-// ---------------------------------------------------------------------------
+/* -- Page --------------------------------------------------------- */
 
 export default function DatastoreDemo() {
-  const [activeCollection, setActiveCollection] = useState("users");
-  const [selectedDoc, setSelectedDoc] = useState<UserDocument | null>(
-    DOCUMENTS[0] ?? null,
+  const [selectedDoc, setSelectedDoc] = useState<UserDocument>(
+    DOCUMENTS[0] as UserDocument,
   );
-  const [queryText, setQueryText] = useState(DEFAULT_QUERY);
-  const [queryExecuted, setQueryExecuted] = useState(true);
-
-  const activeDocuments = activeCollection === "users" ? DOCUMENTS : [];
 
   return (
-    <AppShell variant="bordered">
-      {/* ----------------------------------------------------------------- */}
-      {/* Left panel: Resource tree                                         */}
-      {/* ----------------------------------------------------------------- */}
-      <AppShellSidebar width="w-60" edge="border">
-        {/* Database header */}
-        <Flex
-          align="center"
-          className="border-b border-border px-3 py-2"
-          justify="space-between"
-          noShrink
-        >
-          <HStack align="center" gap="xs">
-            <Icon className="text-muted-foreground" icon={Database} size="xs" />
-            <Text size="sm" weight="semibold">
-              Explorer
+    <AppShell variant="framed">
+      {/* Collection sidebar */}
+      <AppShellSidebar width="w-52" edge="none">
+        <HStack align="center" gap="sm" noShrink className="px-4 pt-4 pb-2">
+          <div className="size-5 rounded-full bg-foreground" />
+          <Text
+            size="xs"
+            variant="muted"
+            weight="medium"
+            className="tracking-wide uppercase"
+          >
+            Datastore
+          </Text>
+        </HStack>
+
+        <VStack gap="none" className="px-3 pt-1 pb-2">
+          <HStack
+            align="center"
+            gap="xs"
+            className="rounded-md bg-accent/60 px-2.5 py-1.5 cursor-pointer"
+          >
+            <Icon icon={Search} size="xs" className="text-muted-foreground" />
+            <Text size="xs" variant="muted">
+              Search
             </Text>
           </HStack>
-          <HStack gap="2xs">
-            <Button
-              aria-label="Search"
-              icon={Search}
-              size="icon-2xs"
-              variant="ghost"
-            />
-            <Button
-              aria-label="Refresh"
-              icon={RefreshCw}
-              size="icon-2xs"
-              variant="ghost"
-            />
-          </HStack>
-        </Flex>
+        </VStack>
 
-        {/* Tree */}
+        <Separator />
+
         <ScrollArea className="flex-1">
-          <VStack className="p-2" gap="none">
-            <CollectionTree
-              activeCollection={activeCollection}
-              onSelect={setActiveCollection}
-            />
+          <VStack gap="none" className="px-2 py-2">
+            <Text
+              size="2xs"
+              variant="muted"
+              weight="medium"
+              className="px-2 pb-1 uppercase tracking-wider"
+            >
+              Collections
+            </Text>
+            <Collapsible defaultOpen>
+              <CollapsibleTrigger asChild>
+                <HStack
+                  align="center"
+                  gap="xs"
+                  className="cursor-pointer rounded-md px-2 py-1.5 hover:bg-accent/50"
+                >
+                  <Icon
+                    icon={Database}
+                    size="2xs"
+                    className="text-muted-foreground"
+                  />
+                  <Text size="xs" weight="medium" className="flex-1">
+                    datastore-prod
+                  </Text>
+                  <Icon
+                    icon={ChevronDown}
+                    size="2xs"
+                    className="text-muted-foreground"
+                  />
+                </HStack>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <VStack gap="none" className="pl-3">
+                  <Collapsible defaultOpen>
+                    <CollapsibleTrigger asChild>
+                      <HStack
+                        align="center"
+                        gap="xs"
+                        className="cursor-pointer rounded-md px-2 py-1 hover:bg-accent/50"
+                      >
+                        <Icon
+                          icon={FolderOpen}
+                          size="2xs"
+                          className="text-muted-foreground"
+                        />
+                        <Text size="xs" className="flex-1">
+                          Collections
+                        </Text>
+                        <Text size="2xs" variant="muted" tabularNums>
+                          5
+                        </Text>
+                      </HStack>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <VStack gap="none" className="pl-3">
+                        {COLLECTIONS.map((col) => (
+                          <HStack
+                            key={col}
+                            align="center"
+                            gap="xs"
+                            className={`cursor-pointer rounded-md px-2 py-1 ${
+                              col === "users"
+                                ? "bg-blue-500/10 text-foreground"
+                                : "hover:bg-accent/50"
+                            }`}
+                          >
+                            <Icon
+                              icon={FileJson}
+                              size="2xs"
+                              className={
+                                col === "users"
+                                  ? "text-blue-500"
+                                  : "text-muted-foreground"
+                              }
+                            />
+                            <Text
+                              size="xs"
+                              weight={col === "users" ? "medium" : "normal"}
+                            >
+                              {col}
+                            </Text>
+                            {col === "users" && (
+                              <Text
+                                size="2xs"
+                                variant="muted"
+                                tabularNums
+                                className="ml-auto"
+                              >
+                                {DOCUMENTS.length}
+                              </Text>
+                            )}
+                          </HStack>
+                        ))}
+                      </VStack>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </VStack>
+              </CollapsibleContent>
+            </Collapsible>
           </VStack>
         </ScrollArea>
 
-        {/* Bottom actions */}
-        <Flex className="border-t border-border p-2" noShrink>
-          <Button className="w-full" icon={Plus} size="xs" variant="outline">
+        <VStack noShrink className="px-3 pb-3">
+          <Button variant="outline" size="xs" icon={Plus} className="w-full">
             New Collection
           </Button>
-        </Flex>
+        </VStack>
       </AppShellSidebar>
 
-      <AppShellContent className="flex-row">
-        {/* ----------------------------------------------------------------- */}
-        {/* Center panel: Query / Documents / Settings                        */}
-        {/* ----------------------------------------------------------------- */}
-        <VStack grow>
-          {/* Top bar */}
-          <Flex
-            align="center"
-            className="border-b border-border px-4 py-2"
-            justify="space-between"
-            noShrink
-          >
-            <HStack align="center" gap="sm">
-              <Text size="sm" weight="semibold" font="mono">
-                datastore-prod
-              </Text>
-              <Separator className="h-4" orientation="vertical" />
-              <HStack align="center" gap="xs">
-                <Dot size="xs" variant="affirmative" />
-                <Text size="xs" variant="muted">
-                  Connected
-                </Text>
-              </HStack>
-              <Separator className="h-4" orientation="vertical" />
-              <Badge icon={Globe} size="xs" variant="secondary">
-                us-east-1
-              </Badge>
-            </HStack>
-            <HStack gap="xs">
-              <Badge
-                appearance="outline"
-                label="RU/s"
-                size="xs"
-                value="400"
-                variant="info"
-              />
-              <Badge
-                appearance="outline"
-                label="Docs"
-                size="xs"
-                value={String(DOCUMENTS.length)}
-                variant="secondary"
-              />
-            </HStack>
-          </Flex>
-
-          {/* Tabbed content */}
-          <Tabs defaultValue="documents" variant="line" size="sm">
-            <Flex className="border-b border-border px-4" noShrink>
-              <TabsList>
-                <TabsTrigger value="query" icon={Search}>
-                  Query
-                </TabsTrigger>
-                <TabsTrigger
-                  value="documents"
-                  icon={FileJson}
-                  count={activeDocuments.length}
-                >
-                  Documents
-                </TabsTrigger>
-                <TabsTrigger value="settings" icon={Settings}>
-                  Settings
-                </TabsTrigger>
-              </TabsList>
-            </Flex>
-
-            <div className="relative isolate grid flex-1 overflow-hidden">
-              {/* Query tab */}
-              <TabsContent value="query">
-                <VStack className="bg-background" grow gap="none">
-                  {/* Query input area */}
-                  <VStack
-                    className="border-b border-border p-4"
-                    gap="sm"
-                    noShrink
-                  >
-                    <Textarea
-                      className="font-mono text-xs"
-                      onChange={(e) => {
-                        setQueryText(e.target.value);
-                        setQueryExecuted(false);
-                      }}
-                      placeholder="Enter SQL query..."
-                      rows={4}
-                      value={queryText}
-                    />
-                    <Flex align="center" justify="space-between">
-                      <Text size="2xs" variant="muted">
-                        Target: {activeCollection}
-                      </Text>
-                      <Button
-                        icon={Play}
-                        onClick={() => setQueryExecuted(true)}
-                        size="sm"
-                        variant="default"
-                      >
-                        Execute
-                      </Button>
-                    </Flex>
-                  </VStack>
-
-                  {/* Query results */}
-                  <VStack grow>
-                    {queryExecuted ? (
-                      <VStack gap="none" grow>
-                        <Flex
-                          align="center"
-                          className="border-b border-border px-4 py-1.5"
-                          justify="space-between"
-                          noShrink
-                        >
-                          <Text size="2xs" variant="muted">
-                            {activeDocuments.length} results returned in 12ms
-                          </Text>
-                          <Badge
-                            size="xs"
-                            variant="affirmative"
-                            appearance="outline"
-                          >
-                            200 OK
-                          </Badge>
-                        </Flex>
-                        <ScrollArea className="flex-1">
-                          <QueryResultsTable
-                            documents={activeDocuments}
-                            onSelect={setSelectedDoc}
-                            selectedId={selectedDoc?.id ?? null}
-                          />
-                        </ScrollArea>
-                      </VStack>
-                    ) : (
-                      <Flex
-                        align="center"
-                        className="p-8"
-                        direction="column"
-                        grow
-                        justify="center"
-                      >
-                        <Text size="sm" variant="muted">
-                          Press Execute to run your query
-                        </Text>
-                      </Flex>
-                    )}
-                  </VStack>
-                </VStack>
-              </TabsContent>
-
-              {/* Documents tab */}
-              <TabsContent value="documents">
-                <VStack className="bg-background" grow gap="none">
-                  {/* Toolbar */}
-                  <Flex
-                    align="center"
-                    className="border-b border-border px-4 py-1.5"
-                    justify="space-between"
-                    noShrink
-                  >
-                    <HStack align="center" gap="xs">
-                      <Text font="mono" size="xs" weight="medium">
-                        {activeCollection}
-                      </Text>
-                      <Text size="2xs" variant="muted">
-                        {activeDocuments.length} documents
-                      </Text>
-                    </HStack>
-                    <HStack gap="xs">
-                      <Button icon={RefreshCw} size="xs" variant="ghost">
-                        Refresh
-                      </Button>
-                      <Button icon={Plus} size="xs" variant="default">
-                        New Document
-                      </Button>
-                    </HStack>
-                  </Flex>
-
-                  {/* Document table */}
-                  <ScrollArea className="flex-1">
-                    <QueryResultsTable
-                      documents={activeDocuments}
-                      onSelect={setSelectedDoc}
-                      selectedId={selectedDoc?.id ?? null}
-                    />
-                  </ScrollArea>
-                </VStack>
-              </TabsContent>
-
-              {/* Settings tab */}
-              <TabsContent value="settings">
-                <VStack className="bg-background p-4" gap="base">
-                  <Text size="sm" weight="semibold">
-                    Collection Settings
-                  </Text>
-                  <Separator />
-                  <VStack gap="sm">
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Collection ID
-                      </Text>
-                      <Text font="mono" size="xs">
-                        {activeCollection}
-                      </Text>
-                    </Flex>
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Partition Key
-                      </Text>
-                      <Text font="mono" size="xs">
-                        /region
-                      </Text>
-                    </Flex>
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Throughput
-                      </Text>
-                      <Text font="mono" size="xs">
-                        400 RU/s (Manual)
-                      </Text>
-                    </Flex>
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Indexing Policy
-                      </Text>
-                      <Text font="mono" size="xs">
-                        Consistent
-                      </Text>
-                    </Flex>
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Default TTL
-                      </Text>
-                      <Text font="mono" size="xs">
-                        Off
-                      </Text>
-                    </Flex>
-                    <Flex align="flex-start" gap="lg">
-                      <Text className="w-32 shrink-0" size="xs" variant="muted">
-                        Unique Keys
-                      </Text>
-                      <Text font="mono" size="xs">
-                        /email
-                      </Text>
-                    </Flex>
-                  </VStack>
-                </VStack>
-              </TabsContent>
-            </div>
-          </Tabs>
-        </VStack>
-
-        {/* ----------------------------------------------------------------- */}
-        {/* Right panel: Document detail                                      */}
-        {/* ----------------------------------------------------------------- */}
-        <VStack
-          className="w-70 shrink-0 border-l border-border bg-card"
-          gap="none"
+      {/* Record list — center panel */}
+      <VStack className="w-80 shrink-0 overflow-hidden border-r border-border bg-card">
+        <Flex
+          align="center"
+          justify="space-between"
+          noShrink
+          className="px-4 py-3 border-b border-border"
         >
-          <Flex
-            align="center"
-            className="border-b border-border px-3 py-2"
-            justify="space-between"
-            noShrink
-          >
-            <Text size="xs" weight="semibold">
-              Document Inspector
+          <HStack gap="xs" align="center">
+            <Text size="sm" weight="semibold" font="mono">
+              users
             </Text>
-            {selectedDoc && (
-              <Badge
-                appearance="outline"
-                size="xs"
-                variant={STATUS_BADGE_VARIANT[selectedDoc.status]}
-              >
-                {selectedDoc.status}
-              </Badge>
-            )}
-          </Flex>
-          <DocumentDetailPanel document={selectedDoc} />
-        </VStack>
-      </AppShellContent>
+            <Badge variant="secondary" size="xs">
+              {DOCUMENTS.length}
+            </Badge>
+          </HStack>
+          <HStack gap="xs">
+            <Button
+              variant="ghost"
+              size="icon-2xs"
+              icon={RefreshCw}
+              aria-label="Refresh"
+            />
+            <Button size="xs" icon={Plus}>
+              New
+            </Button>
+          </HStack>
+        </Flex>
+
+        <ScrollArea className="flex-1">
+          <VStack gap="xs" className="p-2">
+            {DOCUMENTS.map((doc) => (
+              <RecordRow
+                key={doc.id}
+                doc={doc}
+                isSelected={selectedDoc.id === doc.id}
+                onSelect={() => setSelectedDoc(doc)}
+              />
+            ))}
+          </VStack>
+        </ScrollArea>
+
+        <Flex
+          noShrink
+          align="center"
+          justify="space-between"
+          className="px-4 py-2 border-t border-border"
+        >
+          <HStack gap="xs" align="center">
+            <Dot variant="affirmative" size="xs" />
+            <Text size="2xs" variant="muted">
+              Connected
+            </Text>
+          </HStack>
+          <HStack gap="xs" align="center">
+            <Icon icon={Globe} size="2xs" className="text-muted-foreground" />
+            <Text size="2xs" variant="muted" font="mono">
+              us-east-1
+            </Text>
+          </HStack>
+        </Flex>
+      </VStack>
+
+      {/* Document detail — right panel */}
+      <VStack grow className="min-w-0 overflow-hidden bg-background">
+        <ScrollArea className="flex-1">
+          <DocumentDetail doc={selectedDoc} />
+        </ScrollArea>
+      </VStack>
     </AppShell>
   );
 }
