@@ -12,7 +12,6 @@ import {
   Heart,
   Home,
   Library,
-  ListMusic,
   Maximize2,
   Mic2,
   MonitorSpeaker,
@@ -222,47 +221,59 @@ export default function SpotifyDemo() {
         <VStack
           noShrink
           gap="none"
-          className="w-56 border-r border-white/5 bg-zinc-950"
+          className="w-72 border-r border-white/5 bg-zinc-900/50"
         >
-          <VStack gap="none" className="px-3 pt-4 pb-2">
-            <MenuItem icon={Home} size="xs" isActive>
-              Home
-            </MenuItem>
-            <MenuItem icon={Search} size="xs">
-              Search
-            </MenuItem>
-          </VStack>
-
-          <Separator className="border-white/5" />
-
-          <HStack
-            align="center"
-            justify="space-between"
-            className="px-4 pt-3 pb-1"
-          >
-            <HStack gap="xs" align="center">
-              <Icon icon={Library} size="xs" className="text-zinc-400" />
-              <Text size="xs" weight="medium" className="text-zinc-400">
-                Your Library
+          {/* Top bar — search + user controls */}
+          <HStack align="center" gap="xs" noShrink className="px-3 pt-3 pb-2">
+            <HStack
+              align="center"
+              gap="xs"
+              className="flex-1 rounded-md bg-white/5 px-2.5 py-1.5 cursor-pointer hover:bg-white/8"
+            >
+              <Icon icon={Search} size="xs" className="text-zinc-500" />
+              <Text size="xs" className="text-zinc-500">
+                Search
               </Text>
             </HStack>
             <Button
               variant="ghost"
               size="icon-2xs"
+              icon={Home}
+              aria-label="Home"
+              className="text-zinc-400 hover:text-white"
+            />
+            <div className="size-6 rounded-full bg-zinc-700 shrink-0 cursor-pointer" />
+          </HStack>
+
+          <HStack
+            align="center"
+            justify="space-between"
+            className="px-4 pt-2 pb-1"
+          >
+            <Text
+              size="2xs"
+              weight="medium"
+              className="text-zinc-500 uppercase tracking-wider"
+            >
+              Library
+            </Text>
+            <Button
+              variant="ghost"
+              size="icon-2xs"
               icon={Plus}
               aria-label="Create playlist"
-              className="text-zinc-400 hover:text-white"
+              className="text-zinc-500 hover:text-white"
             />
           </HStack>
 
           <ScrollArea className="flex-1">
-            <VStack gap="xs" className="px-3 py-2">
+            <VStack gap="xs" className="px-2 py-1">
               {PLAYLISTS.map((pl) => (
                 <HStack
                   key={pl.name}
                   gap="sm"
                   align="center"
-                  className="group cursor-pointer rounded-md px-1.5 py-1.5 hover:bg-white/5"
+                  className="group cursor-pointer rounded-lg px-2 py-1.5 hover:bg-white/5"
                 >
                   <div
                     className="size-10 shrink-0 rounded-md image-frame"
@@ -274,11 +285,11 @@ export default function SpotifyDemo() {
                     <Text
                       size="sm"
                       truncate
-                      className="text-zinc-200 group-hover:text-white"
+                      className="text-zinc-300 group-hover:text-white"
                     >
                       {pl.name}
                     </Text>
-                    <Text size="2xs" className="text-zinc-500">
+                    <Text size="2xs" className="text-zinc-600">
                       Playlist
                     </Text>
                   </VStack>
@@ -289,7 +300,26 @@ export default function SpotifyDemo() {
         </VStack>
 
         {/* Main content */}
-        <VStack grow gap="none" className="min-w-0 overflow-hidden">
+        <VStack grow gap="none" className="relative min-w-0 overflow-hidden">
+          {/* Top bar — app controls, top right */}
+          <HStack
+            align="center"
+            justify="flex-end"
+            gap="xs"
+            noShrink
+            className="absolute top-0 right-0 z-10 px-6 py-3"
+          >
+            <Button
+              variant="ghost"
+              size="icon-2xs"
+              icon={Heart}
+              aria-label="Liked"
+              className="text-zinc-400 hover:text-white"
+            />
+            <Separator orientation="vertical" className="h-4 border-white/10" />
+            <div className="size-7 rounded-full bg-zinc-700 cursor-pointer hover:bg-zinc-600 transition-colors" />
+          </HStack>
+
           {/* Hero: Now Playing — fixed above scroll */}
           <div
             className="relative shrink-0 px-8 pt-10 pb-6"
@@ -334,14 +364,14 @@ export default function SpotifyDemo() {
             </HStack>
           </div>
 
-          {/* Scrollable panels below hero */}
+          {/* Scrollable content below hero */}
           <ScrollArea className="flex-1">
             {/* Queue */}
             <VStack gap="sm" className="px-6 pt-4 pb-4">
               <Text
-                size="xs"
+                size="2xs"
                 weight="medium"
-                className="text-zinc-400 uppercase tracking-wider px-3"
+                className="text-zinc-500 uppercase tracking-wider px-3"
               >
                 Up Next
               </Text>
@@ -354,16 +384,16 @@ export default function SpotifyDemo() {
 
             <Separator className="border-white/5 mx-6" />
 
-            {/* Recent albums */}
+            {/* Recent albums — compact grid */}
             <VStack gap="sm" className="px-6 pt-4 pb-20">
               <Text
-                size="xs"
+                size="2xs"
                 weight="medium"
-                className="text-zinc-400 uppercase tracking-wider px-3"
+                className="text-zinc-500 uppercase tracking-wider px-3"
               >
                 Recently Played
               </Text>
-              <div className="grid grid-cols-6 gap-4 px-3">
+              <div className="grid grid-cols-6 gap-3 px-3">
                 {RECENT_ALBUMS.map((album) => (
                   <VStack
                     key={album.title}
@@ -381,14 +411,14 @@ export default function SpotifyDemo() {
                     </div>
                     <VStack gap="2xs">
                       <Text
-                        size="sm"
+                        size="xs"
                         weight="medium"
                         truncate
                         className="text-white"
                       >
                         {album.title}
                       </Text>
-                      <Text size="xs" truncate className="text-zinc-400">
+                      <Text size="2xs" truncate className="text-zinc-500">
                         {album.artist}
                       </Text>
                     </VStack>
