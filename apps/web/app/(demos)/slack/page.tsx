@@ -29,6 +29,7 @@ import {
   Hash,
   MessageSquare,
   MoreVertical,
+  Paperclip,
   Plus,
   Search,
   Send,
@@ -70,6 +71,7 @@ interface Message {
   text: string;
   reactions?: { emoji: string; count: number }[];
   threadCount?: number;
+  threadAuthors?: string[];
 }
 
 const MESSAGES: Message[] = [
@@ -83,46 +85,49 @@ const MESSAGES: Message[] = [
       { emoji: "👍", count: 2 },
     ],
     threadCount: 4,
+    threadAuthors: ["Marcus Johnson", "Sarah Chen", "James Wright"],
   },
   {
     id: "2",
     author: "Marcus Johnson",
     time: "9:15 AM",
-    text: "I will take a look at it after standup. Also, heads up that I will be working on the rate limiting implementation today. If anyone has thoughts on the algorithm (token bucket vs sliding window), I would love to hear them.",
+    text: "I will take a look at it after standup. Also, heads up that I will be working on the rate limiting implementation today.",
   },
   {
     id: "3",
-    author: "Elena Rodriguez",
-    time: "9:22 AM",
-    text: "Token bucket is probably the way to go for our use case. It handles burst traffic better and the implementation is simpler. I have some reference code from the auth service we can reuse.",
-    reactions: [{ emoji: "👍", count: 4 }],
+    author: "Marcus Johnson",
+    time: "9:16 AM",
+    text: "If anyone has thoughts on the algorithm (token bucket vs sliding window), I would love to hear them.",
   },
   {
     id: "4",
+    author: "Elena Rodriguez",
+    time: "9:22 AM",
+    text: "Token bucket is probably the way to go for our use case. It handles burst traffic better and the implementation is simpler.",
+    reactions: [{ emoji: "👍", count: 4 }],
+  },
+  {
+    id: "5",
     author: "James Wright",
     time: "9:30 AM",
     text: "Agreed on token bucket. Quick note: the payment service monitoring alerts are live now. I set thresholds at 1% failure rate for warnings and 5% for critical. The PagerDuty integration is working.",
     reactions: [{ emoji: "🎉", count: 5 }],
     threadCount: 2,
+    threadAuthors: ["Priya Patel", "James Wright"],
   },
   {
-    id: "5",
+    id: "6",
     author: "Priya Patel",
     time: "9:45 AM",
     text: "Nice work on the monitoring, James. I started writing E2E tests for the checkout flow yesterday. Already found a race condition when applying discount codes concurrently. Created ENG-476 to track it.",
   },
   {
-    id: "6",
+    id: "7",
     author: "Sarah Chen",
     time: "10:01 AM",
     text: "That race condition might be related to the optimistic locking issue I saw last week. Let me dig up the logs and we can compare.",
     threadCount: 6,
-  },
-  {
-    id: "7",
-    author: "Marcus Johnson",
-    time: "10:15 AM",
-    text: "Standup reminder: starting in 15 minutes. Today I want to also discuss the TypeScript 5.8 migration timeline since Elena finished the initial upgrade.",
+    threadAuthors: ["Sarah Chen", "Marcus Johnson", "Priya Patel"],
   },
   {
     id: "8",
@@ -135,58 +140,102 @@ const MESSAGES: Message[] = [
 
 /* -- Sub-components ----------------------------------------------- */
 
-function MessageBubble({ message }: { message: Message }) {
+function MessageRow({
+  message,
+  showAvatar,
+}: {
+  message: Message;
+  showAvatar: boolean;
+}) {
   return (
     <HStack
       gap="sm"
       align="flex-start"
-      className="group px-6 py-2.5 hover:bg-accent/50"
+      className="group relative px-8 py-1 hover:bg-accent/40"
     >
-      <Avatar size="sm" className="shrink-0 mt-0.5">
-        <AvatarFallback name={message.author} size="sm" />
-      </Avatar>
-      <VStack gap="xs" className="flex-1 min-w-0">
-        <HStack gap="xs" align="baseline">
-          <Text size="sm" weight="semibold">
-            {message.author}
-          </Text>
-          <Text size="2xs" variant="muted">
+      {/* Avatar or time on hover */}
+      <div className="w-9 shrink-0 flex items-start justify-center pt-0.5">
+        {showAvatar ? (
+          <Avatar size="sm">
+            <AvatarFallback name={message.author} size="sm" />
+          </Avatar>
+        ) : (
+          <Text
+            size="2xs"
+            variant="muted"
+            className="opacity-0 group-hover:opacity-100 pt-1"
+          >
             {message.time}
           </Text>
-        </HStack>
+        )}
+      </div>
+
+      <VStack gap="xs" className="flex-1 min-w-0 max-w-2xl">
+        {showAvatar && (
+          <HStack gap="xs" align="baseline">
+            <Text size="sm" weight="semibold">
+              {message.author}
+            </Text>
+            <Text size="2xs" variant="muted">
+              {message.time}
+            </Text>
+          </HStack>
+        )}
         <Text size="sm" className="leading-relaxed">
           {message.text}
         </Text>
+
+        {/* Reactions */}
         {message.reactions && (
           <HStack gap="xs">
             {message.reactions.map((r) => (
-              <Badge
+              <HStack
                 key={r.emoji}
-                variant="secondary"
-                size="xs"
-                appearance="outline"
-                className="cursor-pointer hover:bg-accent"
+                gap="2xs"
+                align="center"
+                className="rounded-full bg-accent/80 px-2 py-0.5 cursor-pointer hover:bg-accent text-xs"
               >
-                {r.emoji} {r.count}
-              </Badge>
+                <span>{r.emoji}</span>
+                <Text size="2xs" weight="medium">
+                  {r.count}
+                </Text>
+              </HStack>
             ))}
           </HStack>
         )}
-        {message.threadCount && (
-          <Button
-            variant="ghost"
-            size="xs"
-            icon={MessageSquare}
-            className="text-interactive -ml-1"
+
+        {/* Thread preview */}
+        {message.threadCount && message.threadAuthors && (
+          <HStack
+            gap="sm"
+            align="center"
+            className="cursor-pointer rounded-md border border-border/50 bg-accent/30 px-3 py-1.5 hover:bg-accent/50 -ml-1 mt-0.5"
           >
-            {message.threadCount} replies
-          </Button>
+            <div className="flex -space-x-1">
+              {message.threadAuthors.slice(0, 3).map((name) => (
+                <Avatar
+                  key={name}
+                  size="2xs"
+                  className="ring-2 ring-background"
+                >
+                  <AvatarFallback name={name} size="2xs" />
+                </Avatar>
+              ))}
+            </div>
+            <Text size="xs" className="text-interactive" weight="medium">
+              {message.threadCount} replies
+            </Text>
+            <Text size="2xs" variant="muted">
+              Last reply 12m ago
+            </Text>
+          </HStack>
         )}
       </VStack>
-      {/* Hover actions */}
+
+      {/* Hover actions — floating */}
       <HStack
         gap="2xs"
-        className="opacity-0 group-hover:opacity-100 shrink-0 mt-0.5"
+        className="absolute -top-3 right-6 opacity-0 group-hover:opacity-100 rounded-md shadow-borders-base bg-card px-1 py-0.5"
       >
         <Button
           variant="ghost"
@@ -224,7 +273,6 @@ export default function SlackDemo() {
     <AppShell variant="bordered">
       {/* Sidebar */}
       <AppShellSidebar width="w-60" edge="shadow">
-        {/* Workspace header */}
         <HStack
           align="center"
           justify="space-between"
@@ -250,7 +298,6 @@ export default function SlackDemo() {
           />
         </HStack>
 
-        {/* Quick nav */}
         <VStack gap="none" className="px-2 pb-1">
           <MenuItem icon={MessageSquare} size="xs">
             Threads
@@ -266,7 +313,6 @@ export default function SlackDemo() {
         <Separator className="my-1" />
 
         <ScrollArea className="flex-1">
-          {/* Channels */}
           <Flex align="center" justify="space-between" className="px-4 pt-1">
             <HStack gap="2xs" align="center">
               <Icon
@@ -315,7 +361,6 @@ export default function SlackDemo() {
 
           <Separator className="my-1" />
 
-          {/* DMs */}
           <Flex align="center" justify="space-between" className="px-4 pt-1">
             <HStack gap="2xs" align="center">
               <Icon
@@ -349,7 +394,6 @@ export default function SlackDemo() {
           </VStack>
         </ScrollArea>
 
-        {/* Footer */}
         <VStack noShrink className="px-2 pb-2">
           <MenuItem icon={Settings} size="xs">
             Settings
@@ -375,10 +419,10 @@ export default function SlackDemo() {
             </HStack>
             <Separator orientation="vertical" className="h-4" />
             <Text size="xs" variant="muted">
-              Engineering team discussions, PRs, and technical decisions
+              Engineering team discussions
             </Text>
           </HStack>
-          <HStack gap="xs">
+          <HStack gap="sm" align="center">
             <Button
               variant="ghost"
               size="icon-xs"
@@ -406,41 +450,64 @@ export default function SlackDemo() {
 
         {/* Messages */}
         <ScrollArea className="flex-1">
-          <VStack gap="none" className="py-4">
+          <VStack gap="none" className="py-6">
             {/* Date divider */}
-            <Flex align="center" gap="sm" className="px-6 py-3">
+            <Flex align="center" gap="sm" className="px-8 py-4">
               <Separator className="flex-1" />
-              <Badge variant="secondary" size="xs" appearance="outline">
+              <Text size="2xs" variant="muted" weight="medium">
                 Monday, April 7
-              </Badge>
+              </Text>
               <Separator className="flex-1" />
             </Flex>
 
-            {MESSAGES.map((msg) => (
-              <MessageBubble key={msg.id} message={msg} />
-            ))}
+            {MESSAGES.map((msg, i) => {
+              const prev = i > 0 ? MESSAGES[i - 1] : null;
+              const showAvatar = !prev || prev.author !== msg.author;
+              return (
+                <div key={msg.id} className={showAvatar && i > 0 ? "mt-4" : ""}>
+                  <MessageRow message={msg} showAvatar={showAvatar} />
+                </div>
+              );
+            })}
 
             {/* Typing indicator */}
-            <HStack gap="sm" align="center" className="px-6 py-2">
-              <HStack gap="xs">
-                <div className="size-1.5 rounded-full bg-muted-foreground/40 animate-pulse" />
-                <div className="size-1.5 rounded-full bg-muted-foreground/40 animate-pulse [animation-delay:0.2s]" />
-                <div className="size-1.5 rounded-full bg-muted-foreground/40 animate-pulse [animation-delay:0.4s]" />
+            <HStack gap="sm" align="center" className="px-8 pt-4">
+              <Avatar size="2xs">
+                <AvatarFallback name="Elena Rodriguez" size="2xs" />
+              </Avatar>
+              <HStack gap="xs" align="center">
+                <div className="flex gap-0.5">
+                  <div className="size-1.5 rounded-full bg-muted-foreground/50 animate-pulse" />
+                  <div className="size-1.5 rounded-full bg-muted-foreground/50 animate-pulse [animation-delay:150ms]" />
+                  <div className="size-1.5 rounded-full bg-muted-foreground/50 animate-pulse [animation-delay:300ms]" />
+                </div>
+                <Text size="2xs" variant="muted">
+                  Elena is typing...
+                </Text>
               </HStack>
-              <Text size="2xs" variant="muted">
-                Elena is typing...
-              </Text>
             </HStack>
           </VStack>
         </ScrollArea>
 
         {/* Composer */}
-        <VStack gap="xs" noShrink className="px-6 pb-4 pt-2">
-          <InputGroup size="lg" radius="rounded">
-            <InputGroupInput placeholder="Message #engineering" />
-            <InputGroupButton icon={Smile} aria-label="Emoji" />
-            <InputGroupButton icon={Send} aria-label="Send" variant="default" />
-          </InputGroup>
+        <VStack gap="none" noShrink className="px-6 pb-5 pt-2">
+          <div className="rounded-lg shadow-borders-base bg-card">
+            <InputGroup
+              size="lg"
+              radius="rounded"
+              className="border-0 shadow-none"
+            >
+              <InputGroupButton icon={Plus} aria-label="Attach" />
+              <InputGroupInput placeholder="Message #engineering" />
+              <InputGroupButton icon={Paperclip} aria-label="File" />
+              <InputGroupButton icon={Smile} aria-label="Emoji" />
+              <InputGroupButton
+                icon={Send}
+                aria-label="Send"
+                variant="default"
+              />
+            </InputGroup>
+          </div>
         </VStack>
       </AppShellContent>
     </AppShell>
