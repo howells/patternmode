@@ -5,7 +5,7 @@ import { Button } from "@patternmode/ui/components/button";
 import { ButtonGroup } from "@patternmode/ui/components/button-group";
 import { Flex } from "@patternmode/ui/components/flex";
 import { Icon } from "@patternmode/ui/components/icon";
-import { Input } from "@patternmode/ui/components/input";
+
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
@@ -239,19 +239,19 @@ function LayerRow({ layer }: { layer: LayerNode }) {
   );
 }
 
-function PropertyRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function PropInput({ label, value }: { label: string; value: string }) {
   return (
-    <Flex align="center" gap="sm" className="min-h-8">
-      <Text size="xs" variant="muted" className="w-16 shrink-0">
+    <Flex
+      align="center"
+      className="flex-1 min-w-0 rounded-md shadow-borders-base bg-input"
+    >
+      <Text size="2xs" variant="muted" className="pl-2 pr-1 shrink-0">
         {label}
       </Text>
-      <div className="flex-1">{children}</div>
+      <input
+        className="w-full min-w-0 bg-transparent py-1 pr-2 text-xs outline-none tabular-nums"
+        defaultValue={value}
+      />
     </Flex>
   );
 }
@@ -563,20 +563,12 @@ export default function FigmaDemo() {
                   Position
                 </Text>
                 <HStack gap="xs">
-                  <PropertyRow label="X">
-                    <Input size="xs" defaultValue="0" />
-                  </PropertyRow>
-                  <PropertyRow label="Y">
-                    <Input size="xs" defaultValue="0" />
-                  </PropertyRow>
+                  <PropInput label="X" value="0" />
+                  <PropInput label="Y" value="0" />
                 </HStack>
                 <HStack gap="xs">
-                  <PropertyRow label="W">
-                    <Input size="xs" defaultValue="1440" />
-                  </PropertyRow>
-                  <PropertyRow label="H">
-                    <Input size="xs" defaultValue="400" />
-                  </PropertyRow>
+                  <PropInput label="W" value="1440" />
+                  <PropInput label="H" value="400" />
                 </HStack>
               </VStack>
 
@@ -596,12 +588,8 @@ export default function FigmaDemo() {
                   />
                 </Flex>
                 <HStack gap="xs">
-                  <PropertyRow label="Gap">
-                    <Input size="xs" defaultValue="24" />
-                  </PropertyRow>
-                  <PropertyRow label="Pad">
-                    <Input size="xs" defaultValue="40" />
-                  </PropertyRow>
+                  <PropInput label="Gap" value="24" />
+                  <PropInput label="Pad" value="40" />
                 </HStack>
                 <HStack gap="xs">
                   <ButtonGroup variant="joined" radius="rounded">
@@ -650,10 +638,10 @@ export default function FigmaDemo() {
                     />
                   </HStack>
                 </Flex>
-                <HStack gap="sm" align="center">
+                <HStack gap="xs" align="center">
                   <div className="size-6 shrink-0 rounded border border-border bg-gradient-to-br from-zinc-900 to-zinc-800" />
-                  <Input size="xs" defaultValue="1A1A1D" className="flex-1" />
-                  <Text size="xs" variant="muted">
+                  <PropInput label="#" value="1A1A1D" />
+                  <Text size="2xs" variant="muted" className="shrink-0">
                     100%
                   </Text>
                 </HStack>
