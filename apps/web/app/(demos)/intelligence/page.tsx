@@ -481,7 +481,7 @@ export default function IntelligenceDemo() {
 
   return (
     <AppShell variant="framed">
-      <AppShellSidebar width="w-56">
+      <AppShellSidebar width="w-56" edge="none">
         {/* Fixed header */}
         <HStack align="center" gap="xs" noShrink className="px-3 py-2.5">
           <Flex

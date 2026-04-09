@@ -3,9 +3,12 @@ import type * as React from "react";
 
 type AppShellVariant = "bordered" | "framed";
 
+/** Edge style for the sidebar divider. */
+type SidebarEdge = "border" | "shadow" | "card" | "none";
+
 interface AppShellProps extends React.ComponentProps<"div"> {
   /** Layout variant.
-   * - `"bordered"` — white sidebar with right border, content fills remaining space (Linear, Slack style)
+   * - `"bordered"` — white sidebar, content fills remaining space (Linear, Slack style)
    * - `"framed"` — muted background, sidebar floats on bg, content in a raised white card frame (Medusa, Vercel style)
    */
   variant?: AppShellVariant;
@@ -14,15 +17,29 @@ interface AppShellProps extends React.ComponentProps<"div"> {
 interface AppShellSidebarProps extends React.ComponentProps<"div"> {
   /** Width class (e.g., "w-52", "w-60"). Applied directly as className. */
   width?: string;
+  /** Edge divider style between sidebar and content.
+   * - `"shadow"` (default) — subtle 1px shadow edge, softer than a border
+   * - `"border"` — traditional 1px CSS border
+   * - `"card"` — sidebar renders as a raised card with shadow-borders-base
+   * - `"none"` — no divider (sidebar floats on background)
+   */
+  edge?: SidebarEdge;
 }
+
+const EDGE_CLASSES: Record<SidebarEdge, string> = {
+  shadow: "shadow-[1px_0_0_0_rgba(0,0,0,0.06)]",
+  border: "border-r border-border",
+  card: "m-2 rounded-lg shadow-borders-base",
+  none: "",
+};
 
 /**
  * App shell layout with configurable sidebar style.
  *
  * @example
  * ```tsx
- * <AppShell variant="framed">
- *   <AppShellSidebar width="w-52">
+ * <AppShell variant="bordered">
+ *   <AppShellSidebar width="w-56" edge="shadow">
  *     <MenuItem>Overview</MenuItem>
  *   </AppShellSidebar>
  *   <AppShellContent>
@@ -50,9 +67,10 @@ function AppShell({
   );
 }
 
-/** Sidebar panel within an AppShell. Styling adapts to the parent variant. */
+/** Sidebar panel within an AppShell. */
 function AppShellSidebar({
   width = "w-52",
+  edge = "shadow",
   className,
   ...props
 }: AppShellSidebarProps) {
@@ -61,9 +79,10 @@ function AppShellSidebar({
       className={cn(
         "flex shrink-0 flex-col overflow-hidden",
         width,
-        // In bordered mode: white bg with right border
-        // In framed mode: transparent, sits on muted bg
-        "[[data-variant=bordered]>&]:bg-card [[data-variant=bordered]>&]:border-r [[data-variant=bordered]>&]:border-border",
+        // In bordered mode: white bg + chosen edge style
+        // In framed mode: transparent, sits on muted bg (no edge)
+        "[[data-variant=bordered]>&]:bg-card",
+        EDGE_CLASSES[edge],
         className,
       )}
       data-slot="app-shell-sidebar"

@@ -177,9 +177,9 @@ function Comment({
 
 export default function NotionDemo() {
   return (
-    <AppShell variant="bordered">
+    <AppShell variant="framed">
       {/* Sidebar */}
-      <AppShellSidebar width="w-60">
+      <AppShellSidebar width="w-60" edge="card">
         <HStack align="center" gap="sm" noShrink className="px-4 pt-4 pb-2">
           <div className="size-5 rounded-full bg-foreground" />
           <Text

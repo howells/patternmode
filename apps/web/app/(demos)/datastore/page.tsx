@@ -610,7 +610,7 @@ export default function DatastoreDemo() {
       {/* ----------------------------------------------------------------- */}
       {/* Left panel: Resource tree                                         */}
       {/* ----------------------------------------------------------------- */}
-      <AppShellSidebar width="w-60">
+      <AppShellSidebar width="w-60" edge="border">
         {/* Database header */}
         <Flex
           align="center"
