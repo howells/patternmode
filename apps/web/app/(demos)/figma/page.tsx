@@ -36,7 +36,6 @@ import {
   Plus,
   Redo,
   Square,
-  Star,
   Type,
   Undo,
   Unlock,
@@ -565,18 +564,18 @@ export default function FigmaDemo() {
                 </Text>
                 <HStack gap="xs">
                   <PropertyRow label="X">
-                    <Input size="sm" defaultValue="0" />
+                    <Input size="xs" defaultValue="0" />
                   </PropertyRow>
                   <PropertyRow label="Y">
-                    <Input size="sm" defaultValue="0" />
+                    <Input size="xs" defaultValue="0" />
                   </PropertyRow>
                 </HStack>
                 <HStack gap="xs">
                   <PropertyRow label="W">
-                    <Input size="sm" defaultValue="1440" />
+                    <Input size="xs" defaultValue="1440" />
                   </PropertyRow>
                   <PropertyRow label="H">
-                    <Input size="sm" defaultValue="400" />
+                    <Input size="xs" defaultValue="400" />
                   </PropertyRow>
                 </HStack>
               </VStack>
@@ -598,10 +597,10 @@ export default function FigmaDemo() {
                 </Flex>
                 <HStack gap="xs">
                   <PropertyRow label="Gap">
-                    <Input size="sm" defaultValue="24" />
+                    <Input size="xs" defaultValue="24" />
                   </PropertyRow>
                   <PropertyRow label="Pad">
-                    <Input size="sm" defaultValue="40" />
+                    <Input size="xs" defaultValue="40" />
                   </PropertyRow>
                 </HStack>
                 <HStack gap="xs">
@@ -653,7 +652,7 @@ export default function FigmaDemo() {
                 </Flex>
                 <HStack gap="sm" align="center">
                   <div className="size-6 shrink-0 rounded border border-border bg-gradient-to-br from-zinc-900 to-zinc-800" />
-                  <Input size="sm" defaultValue="1A1A1D" className="flex-1" />
+                  <Input size="xs" defaultValue="1A1A1D" className="flex-1" />
                   <Text size="xs" variant="muted">
                     100%
                   </Text>
