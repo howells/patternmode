@@ -11,17 +11,10 @@ import {
   InputGroupIcon,
   InputGroupInput,
 } from "@patternmode/ui/components/input-group";
-import { MenuItem } from "@patternmode/ui/components/menu-item";
-import { Progress } from "@patternmode/ui/components/progress";
 import { ScrollArea } from "@patternmode/ui/components/scroll-area";
 import { Separator } from "@patternmode/ui/components/separator";
 import { HStack, VStack } from "@patternmode/ui/components/stack";
-import { Tabs, TabsList, TabsTrigger } from "@patternmode/ui/components/tabs";
 import { Text } from "@patternmode/ui/components/text";
-import {
-  AppShell,
-  AppShellSidebar,
-} from "@patternmode/ui/compositions/app-shell";
 import {
   DataGrid,
   DataGridContainer,
@@ -42,22 +35,15 @@ import {
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpRight,
   BarChart3,
-  Bell,
-  Bookmark,
-  ChevronDown,
   Filter,
-  Layers,
   Minus,
   Search,
-  Settings,
-  TrendingUp,
-  Zap,
+  SlidersHorizontal,
 } from "lucide-react";
 import { useState } from "react";
 
-/* -- Data ---------------------------------------------------------------- */
+/* -- Types --------------------------------------------------------------- */
 
 interface Brand {
   name: string;
@@ -83,18 +69,7 @@ interface Activity {
   severity: "info" | "warning" | "critical";
 }
 
-const CATEGORIES = [
-  { name: "All Categories", count: 2847 },
-  { name: "Seating", count: 612 },
-  { name: "Lighting", count: 489 },
-  { name: "Textiles", count: 378 },
-  { name: "Flooring", count: 334 },
-  { name: "Surfaces", count: 291 },
-  { name: "Fixtures", count: 267 },
-  { name: "Acoustics", count: 198 },
-  { name: "Hardware", count: 156 },
-  { name: "Outdoor", count: 122 },
-];
+/* -- Data ---------------------------------------------------------------- */
 
 const BRANDS: Brand[] = [
   {
@@ -263,13 +238,6 @@ const ALERTS: Activity[] = [
   },
 ];
 
-const SAVED_VIEWS = [
-  { name: "Hospitality — APAC", count: 34 },
-  { name: "Nordic Office", count: 18 },
-  { name: "Residential Luxury", count: 27 },
-  { name: "Healthcare", count: 12 },
-];
-
 /* -- Helpers ------------------------------------------------------------- */
 
 function TrendArrow({
@@ -279,8 +247,9 @@ function TrendArrow({
   trend: "up" | "down" | "flat";
   delta: number;
 }) {
-  if (trend === "flat")
+  if (trend === "flat") {
     return <Icon icon={Minus} size="2xs" className="text-muted-foreground" />;
+  }
   const isUp = trend === "up";
   return (
     <HStack gap="2xs" align="center">
@@ -306,28 +275,45 @@ function KpiCard({
   value,
   sub,
   trend,
+  delta,
 }: {
   label: string;
   value: string;
   sub: string;
-  trend?: "up" | "down";
+  trend: "up" | "down" | "flat";
+  delta: number;
 }) {
+  const isUp = trend === "up";
   return (
-    <Card variant="card" border="solid" className="flex-1 px-5 py-4 gap-1.5">
-      <Text size="2xs" variant="muted" weight="medium">
+    <Card variant="card" border="solid" className="px-4 py-3 gap-1.5">
+      <Text
+        size="2xs"
+        variant="muted"
+        weight="medium"
+        className="uppercase tracking-wider"
+      >
         {label}
       </Text>
       <HStack align="baseline" gap="xs">
-        <Text size="xl" weight="semibold" tabularNums>
+        <Text size="2xl" weight="semibold" tabularNums className="leading-none">
           {value}
         </Text>
-        {trend && (
+        <HStack gap="2xs" align="center">
           <Icon
-            icon={trend === "up" ? ArrowUpRight : ArrowDown}
-            size="xs"
-            className={trend === "up" ? "text-emerald-500" : "text-red-500"}
+            icon={isUp ? ArrowUp : ArrowDown}
+            size="2xs"
+            className={isUp ? "text-emerald-500" : "text-red-500"}
           />
-        )}
+          <Text
+            size="2xs"
+            className={isUp ? "text-emerald-500" : "text-red-500"}
+            tabularNums
+            weight="medium"
+          >
+            {delta > 0 ? "+" : ""}
+            {delta.toFixed(1)}%
+          </Text>
+        </HStack>
       </HStack>
       <Text size="2xs" variant="muted" tabularNums>
         {sub}
@@ -336,26 +322,48 @@ function KpiCard({
   );
 }
 
-function ShareBar({ share, name }: { share: number; name: string }) {
+function ShareBar({ brand, maxShare }: { brand: Brand; maxShare: number }) {
+  const delta = brand.share - brand.prevShare;
+  const widthPercent = (brand.share / maxShare) * 100;
+
   return (
-    <HStack gap="sm" align="center" className="min-h-6">
-      <Text size="2xs" className="w-24 shrink-0" truncate>
-        {name}
+    <HStack gap="sm" align="center" className="h-6">
+      <Text
+        size="2xs"
+        className="w-24 shrink-0 text-foreground/80"
+        weight="medium"
+        truncate
+      >
+        {brand.name}
       </Text>
-      <div className="flex-1">
-        <Progress value={share} max={20} size="xs" />
+      <div className="relative flex-1 h-2 bg-foreground/[0.04] rounded-full overflow-hidden">
+        <div
+          className="absolute inset-y-0 left-0 rounded-full bg-indigo-500/40 transition-all duration-500"
+          style={{ width: `${widthPercent}%` }}
+        />
       </div>
       <Text
         size="2xs"
-        variant="muted"
         tabularNums
-        className="w-10 shrink-0"
-        align="right"
+        className="w-12 shrink-0 text-right font-medium"
       >
-        {share}%
+        {brand.share}%
       </Text>
+      <div className="w-14 shrink-0">
+        <TrendArrow trend={brand.trend} delta={delta} />
+      </div>
     </HStack>
   );
+}
+
+function SeverityDot({ severity }: { severity: Activity["severity"] }) {
+  const variant =
+    severity === "critical"
+      ? "destructive"
+      : severity === "warning"
+        ? "warning"
+        : "info";
+  return <Dot variant={variant} size="xs" />;
 }
 
 /* -- Brand columns ------------------------------------------------------- */
@@ -430,7 +438,7 @@ const brandColumns: ColumnDef<Brand, unknown>[] = [
         Volume
       </DataGridFilterableHeader>
     ),
-    size: 80,
+    size: 90,
     enableSorting: true,
     cell: ({ getValue }) => (
       <Text size="sm" variant="muted" tabularNums>
@@ -444,7 +452,7 @@ const brandColumns: ColumnDef<Brand, unknown>[] = [
         Tier
       </DataGridFilterableHeader>
     ),
-    size: 80,
+    size: 100,
     enableSorting: false,
     enableColumnFilter: true,
     filterFn: (row, _columnId, filterValue: string[] | undefined) => {
@@ -461,11 +469,49 @@ const brandColumns: ColumnDef<Brand, unknown>[] = [
       </Badge>
     ),
   }) as ColumnDef<Brand, unknown>,
+  brandColumnHelper.display({
+    id: "cospec",
+    header: "Co-Spec",
+    size: 140,
+    enableSorting: false,
+    cell: ({ row }) => {
+      const match = CO_SPECS.find(
+        (c) =>
+          BRANDS.indexOf(row.original) < 4 &&
+          CO_SPECS.indexOf(c) === BRANDS.indexOf(row.original),
+      );
+      if (!match)
+        return (
+          <Text size="2xs" variant="muted">
+            --
+          </Text>
+        );
+      return (
+        <HStack gap="xs" align="center">
+          <Text size="2xs" variant="muted" truncate>
+            {match.brand}
+          </Text>
+          <Text
+            size="2xs"
+            tabularNums
+            font="mono"
+            className={
+              match.correlation > 0.7
+                ? "text-emerald-600"
+                : "text-foreground/50"
+            }
+          >
+            {(match.correlation * 100).toFixed(0)}%
+          </Text>
+        </HStack>
+      );
+    },
+  }) as ColumnDef<Brand, unknown>,
 ];
 
 /* -- Page ---------------------------------------------------------------- */
 
-export default function IntelligenceDemo() {
+export default function IntelligencePage() {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -479,273 +525,280 @@ export default function IntelligenceDemo() {
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  const maxShare = Math.max(...BRANDS.map((b) => b.share));
+
   return (
-    <AppShell variant="framed">
-      <AppShellSidebar width="w-56" edge="none">
-        {/* Fixed header */}
-        <HStack align="center" gap="xs" noShrink className="px-3 py-2.5">
+    <div className="flex h-screen flex-col overflow-hidden bg-muted/50">
+      {/* Top bar */}
+      <Flex
+        align="center"
+        justify="space-between"
+        noShrink
+        className="border-b border-border/40 bg-background px-5 py-2.5"
+      >
+        <HStack gap="sm" align="center">
           <Flex
             align="center"
             justify="center"
-            className="size-5 rounded bg-foreground"
+            className="size-6 rounded-md bg-foreground"
           >
-            <BarChart3 className="size-3 text-background" />
+            <BarChart3 className="size-3.5 text-background" />
           </Flex>
-          <Text size="sm" weight="medium">
+          <Text size="sm" weight="semibold">
             Intelligence
           </Text>
+          <Separator orientation="vertical" className="mx-1 h-4" />
+          <Badge variant="secondary" size="xs" appearance="outline">
+            Q1 2026
+          </Badge>
+          <Badge variant="secondary" size="xs" appearance="outline">
+            Seating
+          </Badge>
         </HStack>
+        <HStack gap="sm" align="center">
+          <div className="w-52">
+            <InputGroup size="sm" radius="rounded">
+              <InputGroupIcon icon={Search} />
+              <InputGroupInput placeholder="Search brands..." />
+            </InputGroup>
+          </div>
+          <Button size="xs" variant="ghost" icon={Filter}>
+            Filter
+          </Button>
+          <Button size="xs" variant="ghost" icon={SlidersHorizontal}>
+            Configure
+          </Button>
+        </HStack>
+      </Flex>
 
-        {/* Scrollable nav */}
-        <ScrollArea className="flex-1">
-          <VStack gap="none" className="px-1.5 py-1">
-            <MenuItem icon={Layers} size="xs" isActive>
-              Overview
-            </MenuItem>
-            <MenuItem icon={TrendingUp} size="xs">
-              Trends
-            </MenuItem>
-            <MenuItem
-              icon={Zap}
-              size="xs"
-              suffix={
-                <Badge variant="destructive" size="xs">
-                  3
-                </Badge>
-              }
+      {/* Scrollable bento grid content */}
+      <ScrollArea className="flex-1">
+        <div className="p-4">
+          <div className="grid grid-cols-4 gap-3">
+            {/* --- Row 1: KPI cards --- */}
+            <KpiCard
+              label="Spec Volume"
+              value="6,974"
+              sub="vs 5,891 prev quarter"
+              trend="up"
+              delta={18.4}
+            />
+            <KpiCard
+              label="Active Brands"
+              value="148"
+              sub="+12 new entrants"
+              trend="up"
+              delta={8.8}
+            />
+            <KpiCard
+              label="Avg Unit Price"
+              value="$2,340"
+              sub="vs $2,180 prev quarter"
+              trend="up"
+              delta={7.3}
+            />
+            <KpiCard
+              label="Substitution Rate"
+              value="8.2%"
+              sub="vs 6.7% prev quarter"
+              trend="down"
+              delta={-1.5}
+            />
+
+            {/* --- Row 2: Market Share (3 cols) + Activity (1 col, 2 rows) --- */}
+            <Card
+              variant="card"
+              border="solid"
+              className="col-span-3 px-4 py-3 gap-2"
             >
-              Alerts
-            </MenuItem>
-          </VStack>
-
-          <Separator className="my-1" />
-
-          <VStack gap="none" className="px-1.5 py-1">
-            <Text
-              size="2xs"
-              variant="muted"
-              weight="medium"
-              className="px-2 pb-1"
-            >
-              Categories
-            </Text>
-            {CATEGORIES.map((cat) => (
-              <MenuItem
-                key={cat.name}
-                size="xs"
-                isActive={cat.name === "Seating"}
-                suffix={
-                  <Text size="2xs" variant="muted" tabularNums>
-                    {cat.count}
-                  </Text>
-                }
-              >
-                {cat.name}
-              </MenuItem>
-            ))}
-          </VStack>
-
-          <Separator className="my-1" />
-
-          <VStack gap="none" className="px-1.5 py-1">
-            <HStack
-              align="center"
-              justify="space-between"
-              className="px-2 pb-1"
-            >
-              <Text size="2xs" variant="muted" weight="medium">
-                Saved Views
-              </Text>
-              <Icon
-                icon={ChevronDown}
-                size="2xs"
-                className="text-muted-foreground"
-              />
-            </HStack>
-            {SAVED_VIEWS.map((view) => (
-              <MenuItem
-                key={view.name}
-                icon={Bookmark}
-                size="xs"
-                suffix={
-                  <Text size="2xs" variant="muted" tabularNums>
-                    {view.count}
-                  </Text>
-                }
-              >
-                {view.name}
-              </MenuItem>
-            ))}
-          </VStack>
-        </ScrollArea>
-
-        {/* Fixed footer */}
-        <VStack noShrink className="px-1.5 pb-2">
-          <MenuItem icon={Settings} size="xs">
-            Settings
-          </MenuItem>
-        </VStack>
-      </AppShellSidebar>
-
-      {/* Main content — cards sit directly on muted bg */}
-      <VStack grow gap="none" className="min-w-0 overflow-hidden">
-        {/* Top bar */}
-        <Flex
-          align="center"
-          justify="space-between"
-          noShrink
-          className="border-b border-border/50 px-4 py-2"
-        >
-          <HStack gap="sm" align="center">
-            <Text size="sm" weight="semibold">
-              Seating
-            </Text>
-            <Badge variant="secondary" size="xs" appearance="outline">
-              Q1 2026
-            </Badge>
-            <Separator orientation="vertical" className="h-4" />
-            <Tabs defaultValue="share" variant="pill" size="xs">
-              <TabsList>
-                <TabsTrigger value="share">Market Share</TabsTrigger>
-                <TabsTrigger value="trends">Trends</TabsTrigger>
-                <TabsTrigger value="cospec">Co-Specification</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </HStack>
-          <HStack gap="sm" align="center">
-            <div className="w-48">
-              <InputGroup size="sm" radius="rounded">
-                <InputGroupIcon icon={Search} />
-                <InputGroupInput placeholder="Search brands..." />
-              </InputGroup>
-            </div>
-            <Button size="xs" variant="ghost" icon={Filter}>
-              Filter
-            </Button>
-            <Button size="xs" variant="ghost" icon={Bell}>
-              Alerts
-            </Button>
-          </HStack>
-        </Flex>
-
-        {/* Scrollable content */}
-        <ScrollArea className="flex-1">
-          <VStack gap="lg" className="p-5">
-            {/* KPI row */}
-            <HStack gap="sm">
-              <KpiCard
-                label="Spec Volume"
-                value="6,974"
-                sub="vs 5,891 prev quarter"
-                trend="up"
-              />
-              <KpiCard
-                label="Active Brands"
-                value="148"
-                sub="+12 new entrants"
-                trend="up"
-              />
-              <KpiCard
-                label="Avg Unit Price"
-                value="$2,340"
-                sub="vs $2,180 prev quarter"
-                trend="up"
-              />
-              <KpiCard
-                label="Substitution Rate"
-                value="8.2%"
-                sub="vs 6.7% prev quarter"
-                trend="down"
-              />
-            </HStack>
-
-            {/* Two-column: Market Share + Co-Specification */}
-            <HStack gap="sm" align="stretch">
-              {/* Market Share */}
-              <Card
-                variant="card"
-                border="solid"
-                className="flex-1 px-4 py-3 gap-3"
-              >
-                <HStack align="center" justify="space-between">
+              <HStack align="center" justify="space-between">
+                <HStack gap="xs" align="center">
                   <Text size="xs" weight="semibold">
-                    Market Share — Top 8
+                    Market Share
                   </Text>
                   <Text size="2xs" variant="muted">
-                    By spec volume
+                    Top 12 by spec volume
                   </Text>
                 </HStack>
-                <VStack gap="xs">
-                  {BRANDS.slice(0, 8).map((brand) => (
-                    <ShareBar
-                      key={brand.name}
-                      share={brand.share}
-                      name={brand.name}
-                    />
-                  ))}
-                </VStack>
-              </Card>
-
-              {/* Co-Specification */}
-              <Card
-                variant="card"
-                border="solid"
-                className="w-72 shrink-0 px-4 py-3 gap-3"
-              >
-                <HStack align="center" justify="space-between">
-                  <Text size="xs" weight="semibold">
-                    Co-Specified With
-                  </Text>
-                  <Text size="2xs" variant="muted">
-                    Seating category
-                  </Text>
-                </HStack>
-                <VStack gap="xs">
-                  {CO_SPECS.map((spec) => (
-                    <HStack
+                <HStack gap="xs" align="center">
+                  {CO_SPECS.slice(0, 3).map((spec) => (
+                    <Badge
                       key={spec.brand}
-                      align="center"
-                      gap="sm"
-                      className="min-h-6"
+                      variant="secondary"
+                      size="xs"
+                      appearance="outline"
                     >
-                      <Text size="2xs" className="flex-1" truncate>
-                        {spec.brand}
-                      </Text>
-                      <Text size="2xs" variant="muted" tabularNums>
-                        {spec.frequency}
-                      </Text>
-                      <Badge
-                        variant={
-                          spec.correlation > 0.7
-                            ? "affirmative"
-                            : spec.correlation > 0.6
-                              ? "warning"
-                              : "secondary"
-                        }
-                        size="xs"
-                        appearance="outline"
+                      {spec.brand}{" "}
+                      <Text
+                        size="2xs"
+                        tabularNums
+                        font="mono"
+                        className="text-emerald-600"
+                        asChild
                       >
-                        {(spec.correlation * 100).toFixed(0)}%
-                      </Badge>
-                    </HStack>
+                        <span>{(spec.correlation * 100).toFixed(0)}%</span>
+                      </Text>
+                    </Badge>
                   ))}
-                </VStack>
-              </Card>
-            </HStack>
+                </HStack>
+              </HStack>
+              <VStack gap="2xs">
+                {BRANDS.map((b) => (
+                  <ShareBar key={b.name} brand={b} maxShare={maxShare} />
+                ))}
+              </VStack>
+            </Card>
 
-            {/* Brand table */}
-            <Card variant="card" className="px-0 py-0 gap-0 overflow-hidden">
+            {/* Activity feed — tall card spanning 2 rows */}
+            <Card
+              variant="card"
+              border="solid"
+              className="row-span-2 px-0 py-0 gap-0 overflow-hidden"
+            >
               <Flex
                 align="center"
                 justify="space-between"
-                className="px-4 py-2.5 border-b border-border"
+                className="px-3.5 py-2.5 border-b border-border/50"
               >
+                <HStack gap="xs" align="center">
+                  <Text size="xs" weight="semibold">
+                    Signals
+                  </Text>
+                  <Badge variant="destructive" size="xs">
+                    {ALERTS.filter((a) => a.severity === "critical").length}
+                  </Badge>
+                </HStack>
+                <Text size="2xs" variant="muted">
+                  Last 7d
+                </Text>
+              </Flex>
+              <ScrollArea className="flex-1">
+                <VStack gap="none">
+                  {ALERTS.map((alert) => (
+                    <div
+                      key={alert.id}
+                      className="px-3.5 py-2 border-b border-border/30 last:border-0 hover:bg-muted/30 transition-colors cursor-pointer"
+                    >
+                      <HStack gap="sm" align="flex-start">
+                        <div className="mt-1">
+                          <SeverityDot severity={alert.severity} />
+                        </div>
+                        <VStack gap="none" className="flex-1 min-w-0">
+                          <HStack gap="xs" align="center">
+                            <Text size="xs" weight="medium">
+                              {alert.event}
+                            </Text>
+                            <Badge
+                              variant="secondary"
+                              size="xs"
+                              appearance="outline"
+                            >
+                              {alert.category}
+                            </Badge>
+                          </HStack>
+                          <Text
+                            size="2xs"
+                            variant="muted"
+                            className="leading-relaxed"
+                          >
+                            {alert.detail}
+                          </Text>
+                          <Text
+                            size="2xs"
+                            variant="muted"
+                            tabularNums
+                            className="mt-0.5 opacity-50"
+                          >
+                            {alert.time} ago
+                          </Text>
+                        </VStack>
+                      </HStack>
+                    </div>
+                  ))}
+                </VStack>
+              </ScrollArea>
+            </Card>
+
+            {/* --- Row 3 (sits under Market Share): Co-Specification mini cards --- */}
+            <Card
+              variant="card"
+              border="solid"
+              className="col-span-3 px-4 py-3 gap-2"
+            >
+              <HStack align="center" justify="space-between">
                 <Text size="xs" weight="semibold">
-                  Brand Performance
+                  Co-Specified Brands
                 </Text>
-                <Text size="xs" variant="muted" tabularNums>
-                  {BRANDS.length} brands
+                <Text size="2xs" variant="muted">
+                  Correlation with seating specs
                 </Text>
+              </HStack>
+              <div className="grid grid-cols-6 gap-2">
+                {CO_SPECS.map((spec) => {
+                  const barWidth = spec.correlation * 100;
+                  return (
+                    <div
+                      key={spec.brand}
+                      className="rounded-md border border-border/50 bg-muted/30 px-3 py-2.5 space-y-1.5"
+                    >
+                      <HStack align="center" justify="space-between">
+                        <Text size="2xs" weight="medium">
+                          {spec.brand}
+                        </Text>
+                        <Text
+                          size="2xs"
+                          tabularNums
+                          font="mono"
+                          weight="medium"
+                          className={
+                            spec.correlation > 0.7
+                              ? "text-emerald-600"
+                              : spec.correlation > 0.6
+                                ? "text-foreground/60"
+                                : "text-foreground/40"
+                          }
+                        >
+                          {(spec.correlation * 100).toFixed(0)}%
+                        </Text>
+                      </HStack>
+                      <div className="h-1 bg-foreground/[0.06] rounded-full overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-indigo-500/30"
+                          style={{ width: `${barWidth}%` }}
+                        />
+                      </div>
+                      <Text size="2xs" variant="muted" tabularNums>
+                        {spec.frequency} specs
+                      </Text>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+
+            {/* --- Row 4: Brand table (full width) --- */}
+            <Card
+              variant="card"
+              className="col-span-4 px-0 py-0 gap-0 overflow-hidden"
+            >
+              <Flex
+                align="center"
+                justify="space-between"
+                className="px-4 py-2.5 border-b border-border/50"
+              >
+                <HStack gap="xs" align="center">
+                  <Text size="xs" weight="semibold">
+                    Brand Performance
+                  </Text>
+                  <Text size="2xs" variant="muted" tabularNums>
+                    {BRANDS.length} brands
+                  </Text>
+                </HStack>
+                <HStack gap="xs" align="center">
+                  <Button size="xs" variant="ghost">
+                    Export
+                  </Button>
+                </HStack>
               </Flex>
               <DataGrid
                 recordCount={BRANDS.length}
@@ -755,7 +808,7 @@ export default function IntelligenceDemo() {
                   rowBorder: true,
                   headerBorder: true,
                   headerBackground: false,
-                  rowHeight: 44,
+                  rowHeight: 36,
                 }}
               >
                 <DataGridContainer border="none">
@@ -763,81 +816,9 @@ export default function IntelligenceDemo() {
                 </DataGridContainer>
               </DataGrid>
             </Card>
-
-            {/* Activity feed */}
-            <Card
-              variant="card"
-              border="solid"
-              className="px-0 py-0 gap-0 overflow-hidden"
-            >
-              <Flex
-                align="center"
-                justify="space-between"
-                className="px-4 py-2.5 border-b border-border"
-              >
-                <HStack gap="xs" align="center">
-                  <Text size="xs" weight="semibold">
-                    Recent Signals
-                  </Text>
-                  <Badge variant="destructive" size="xs">
-                    {ALERTS.filter((a) => a.severity === "critical").length}{" "}
-                    critical
-                  </Badge>
-                </HStack>
-                <Button size="xs" variant="ghost">
-                  View all
-                </Button>
-              </Flex>
-              <VStack gap="none">
-                {ALERTS.map((alert) => (
-                  <Flex
-                    key={alert.id}
-                    align="center"
-                    gap="sm"
-                    className="px-4 py-2 border-b border-border/50 last:border-0 hover:bg-muted/30 transition-colors cursor-pointer"
-                  >
-                    <Dot
-                      variant={
-                        alert.severity === "critical"
-                          ? "destructive"
-                          : alert.severity === "warning"
-                            ? "warning"
-                            : "info"
-                      }
-                      size="xs"
-                    />
-                    <VStack gap="none" className="flex-1 min-w-0">
-                      <HStack gap="xs" align="center">
-                        <Text size="xs" weight="medium">
-                          {alert.event}
-                        </Text>
-                        <Badge
-                          variant="secondary"
-                          size="xs"
-                          appearance="outline"
-                        >
-                          {alert.category}
-                        </Badge>
-                      </HStack>
-                      <Text size="xs" variant="muted" truncate>
-                        {alert.detail}
-                      </Text>
-                    </VStack>
-                    <Text
-                      size="2xs"
-                      variant="muted"
-                      tabularNums
-                      className="shrink-0"
-                    >
-                      {alert.time}
-                    </Text>
-                  </Flex>
-                ))}
-              </VStack>
-            </Card>
-          </VStack>
-        </ScrollArea>
-      </VStack>
-    </AppShell>
+          </div>
+        </div>
+      </ScrollArea>
+    </div>
   );
 }
