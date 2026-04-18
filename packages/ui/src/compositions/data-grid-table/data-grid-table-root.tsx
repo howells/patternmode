@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 import { useDataGrid } from "@patternmode/ui/compositions/data-grid";
 import type { Cell, HeaderGroup, Row } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";

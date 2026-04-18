@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { InputGroupAddon } from "./input-group/input-group-addon";
 export { inputGroupAnatomy } from "./input-group/input-group-anatomy";
 export { InputGroupButton } from "./input-group/input-group-button";

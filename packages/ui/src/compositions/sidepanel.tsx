@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 export { SidepanelBody } from "./sidepanel/sidepanel-body";
 export { SidepanelClose } from "./sidepanel/sidepanel-close";
 export type {

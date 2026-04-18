@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 export {
   SEGMENTED_GAP,
   SEGMENTED_INDICATOR_ACTIVE_CLASS,

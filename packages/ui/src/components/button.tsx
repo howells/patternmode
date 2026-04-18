@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   BUTTON_APPEARANCES,
   BUTTON_VARIANTS,

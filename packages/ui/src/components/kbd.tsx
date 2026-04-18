@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 import { cn } from "@patternmode/ui/utils/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 import { createContext, useContext } from "react";

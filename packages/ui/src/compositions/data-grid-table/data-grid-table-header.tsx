@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 import { useDataGrid } from "@patternmode/ui/compositions/data-grid";
 import { cn } from "@patternmode/ui/utils/cn";
 import type { Header, HeaderGroup } from "@tanstack/react-table";

@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export { CollapsibleContent } from "./collapsible/collapsible-content";
 export {
   CollapsibleContext,

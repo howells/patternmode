@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   MENU_ITEM_ICON_SIZES,
   MENU_ITEM_INDICATOR_LEFT,

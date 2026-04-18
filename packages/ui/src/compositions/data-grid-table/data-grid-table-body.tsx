@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 import { useDataGrid } from "@patternmode/ui/compositions/data-grid";
 import type { ComponentSize } from "@patternmode/ui/lib/size";
 import { cn } from "@patternmode/ui/utils/cn";

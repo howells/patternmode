@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 /**
  * Pill — internal base for pill-shaped elements.
  * Not intended for direct use. Use Badge or Tag instead.

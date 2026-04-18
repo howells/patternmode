@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { DropdownMenuCheckboxItem } from "./dropdown-menu/dropdown-menu-checkbox-item";
 export { DropdownMenuContent } from "./dropdown-menu/dropdown-menu-content";
 export { DropdownMenuGroup } from "./dropdown-menu/dropdown-menu-group";

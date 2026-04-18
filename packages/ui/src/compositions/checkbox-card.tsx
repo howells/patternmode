@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { CheckboxCardContent } from "./checkbox-card/checkbox-card-content";
 export { CheckboxCardDescription } from "./checkbox-card/checkbox-card-description";
 export { CheckboxCardIcon } from "./checkbox-card/checkbox-card-icon";

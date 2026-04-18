@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { DocumentListAction } from "./document-list/document-list-action";
 export { DocumentListCheckbox } from "./document-list/document-list-checkbox";
 export { DocumentListContent } from "./document-list/document-list-content";

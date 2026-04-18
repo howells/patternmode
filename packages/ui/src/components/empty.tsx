@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 "use client";
 
 export { EmptyActions } from "./empty/empty-actions";

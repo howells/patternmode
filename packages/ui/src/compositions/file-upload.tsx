@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { FileUploadDropzone } from "./file-upload/file-upload-dropzone";
 export { FileUploadItem } from "./file-upload/file-upload-item";
 export { FileUploadList } from "./file-upload/file-upload-list";

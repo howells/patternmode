@@ -32,7 +32,11 @@ function PlaceholderCard({ index }: { index: number }) {
   );
 }
 
-function SidebarNav({ variant }: { variant?: "bordered" | "framed" }) {
+function SidebarNav({
+  variant: _variant,
+}: {
+  variant?: "bordered" | "framed";
+}) {
   return (
     <VStack className="h-full" gap="none">
       {/* Header */}

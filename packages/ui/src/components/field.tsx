@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export { fieldAnatomy, fieldGroupAnatomy } from "./field/field-anatomy";
 export { FieldContent } from "./field/field-content";
 export { useFieldIds } from "./field/field-context";

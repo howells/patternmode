@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { SelectContent } from "./select/select-content";
 export { SelectGroup } from "./select/select-group";
 export { SelectItem } from "./select/select-item";

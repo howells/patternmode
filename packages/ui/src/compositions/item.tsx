@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export { ItemActions } from "./item/item-actions";
 export { itemAnatomy, itemGroupAnatomy } from "./item/item-anatomy";
 export { ItemContent } from "./item/item-content";

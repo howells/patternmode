@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 /**
  * Simple standalone input field.
  * For inputs with icons, addons, or buttons, use InputGroup.

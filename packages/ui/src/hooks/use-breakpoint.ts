@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 "use client";
 
 import { useMediaQuery } from "usehooks-ts";

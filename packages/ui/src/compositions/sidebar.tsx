@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export {
   HEADER_HEIGHT,
   SIDEBAR_COOKIE_MAX_AGE,

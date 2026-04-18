@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { AvatarBadge } from "./avatar/avatar-badge";
 export { AvatarFallback } from "./avatar/avatar-fallback";
 export {

@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export type { StepperSize } from "./stepper/stepper-context";
 export type { StepperItemProps } from "./stepper/stepper-item";
 export { StepperItem } from "./stepper/stepper-item";

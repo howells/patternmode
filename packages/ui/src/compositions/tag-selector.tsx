@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export { TagSelectorContent } from "./tag-selector/tag-selector-content";
 export type {
   TagColor,

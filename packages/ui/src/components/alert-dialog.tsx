@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { AlertDialogAction } from "./alert-dialog/alert-dialog-action";
 export { AlertDialogCancel } from "./alert-dialog/alert-dialog-cancel";
 export { AlertDialogContent } from "./alert-dialog/alert-dialog-content";

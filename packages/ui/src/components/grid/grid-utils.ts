@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: intentional package or module entrypoint */
 import type { FlexAlign } from "../../lib/alignment";
 import type { FlexJustify } from "../../lib/justify";
 import {

@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { CardAction } from "./card/card-action";
 export { cardAnatomy } from "./card/card-anatomy";
 export { CardContent } from "./card/card-content";

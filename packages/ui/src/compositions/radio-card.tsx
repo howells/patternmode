@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
 export { RadioCardContent } from "./radio-card/radio-card-content";
 export { RadioCardDescription } from "./radio-card/radio-card-description";
 export { RadioCardIcon } from "./radio-card/radio-card-icon";

@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/performance/noBarrelFile: needed for ui package */
-
 export type { BadgeButtonProps } from "./badge/badge-button";
 export { BadgeButton } from "./badge/badge-button";
 export type { BadgeDotProps } from "./badge/badge-dot";

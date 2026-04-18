@@ -1,11 +1,12 @@
 // source.config.ts
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
-
 var docs = defineDocs({
-  dir: "content",
+  dir: "content"
 });
 var source_config_default = defineConfig({
-  mdxOptions: {},
+  mdxOptions: {}
 });
-
-export { docs, source_config_default as default };
+export {
+  source_config_default as default,
+  docs
+};
