@@ -5,12 +5,11 @@ declare global {
 		| undefined;
 }
 
-import { FocusTrap } from "focus-trap-react";
 import { AnimatePresence, motion as m, useReducedMotion } from "motion/react";
 import {
 	type ComponentType,
 	type CSSProperties,
-	memo,
+	type ReactNode,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -20,672 +19,22 @@ import {
 import { RemoveScroll } from "react-remove-scroll";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
-import { ArrowLeftIcon, XIcon } from "./icons";
 import { useResolvedSide } from "./media";
-import { SheetPanelContext } from "./panel-context";
-import {
-	buildAnimateTarget,
-	buildAriaProps,
-	buildPanelStyle,
-	buildPanelTransition,
-	computeSnapYOffset,
-	getDragTransform,
-	getInitialRadius,
-	getShadow,
-	type ResolvedClassNames,
-	resolveClassNames,
-	resolveSlideFrom,
-	VISUAL_TWEEN,
-} from "./renderer-helpers";
+import { useBodyScale, useViewportHeight } from "./renderer-effects";
+import { resolveClassNames } from "./renderer-helpers";
+import { SheetPanel } from "./sheet-panel";
 import { resolveSnapPoints } from "./snap-points";
-import {
-	getAnimatedBorderRadius,
-	getPanelStyles,
-	getSlideFrom,
-	getSlideTarget,
-	getStackOffset,
-	getStackTransform,
-	type SlideValues,
-} from "./stacking";
+import { getSlideFrom, getSlideTarget } from "./stacking";
 import type {
 	CloseReason,
 	ContentMap,
 	HeaderRenderProps,
 	ResolvedConfig,
 	SheetActions,
-	SheetItem,
-	Side,
 	StacksheetClassNames,
 	StacksheetLayout,
 	StacksheetSnapshot,
 } from "./types";
-import { type DragState, useDrag } from "./use-drag";
-
-// ── Default header ──────────────────────────────
-
-function DefaultHeader({
-	isNested,
-	onBack,
-	onClose,
-	className,
-}: HeaderRenderProps & { className?: string }) {
-	return (
-		<div
-			className={`flex shrink-0 items-center justify-between px-4 pt-4 pb-2 ${className ?? ""}`}
-		>
-			<div className="flex items-center gap-2">
-				{isNested && (
-					<button
-						aria-label="Back"
-						className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-black/5 p-0 text-inherit opacity-70 transition-opacity duration-150 hover:opacity-100"
-						onClick={onBack}
-						type="button"
-					>
-						<ArrowLeftIcon />
-					</button>
-				)}
-			</div>
-			<button
-				aria-label="Close"
-				className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-black/5 p-0 text-inherit opacity-70 transition-opacity duration-150 hover:opacity-100"
-				onClick={onClose}
-				type="button"
-			>
-				<XIcon />
-			</button>
-		</div>
-	);
-}
-
-// ── Panel helpers (extracted to reduce SheetPanel complexity) ──
-
-/** Measure panel height via ResizeObserver for snap point calculations */
-function usePanelHeight(
-	panelRef: React.RefObject<HTMLDivElement | null>,
-	hasSnapPoints: boolean,
-): number {
-	const [height, setHeight] = useState(0);
-
-	useEffect(() => {
-		const el = panelRef.current;
-		if (!(el && hasSnapPoints)) {
-			return;
-		}
-		setHeight(el.offsetHeight);
-		const observer = new ResizeObserver(([entry]) => {
-			if (entry) {
-				setHeight(entry.contentRect.height);
-			}
-		});
-		observer.observe(el);
-		return () => observer.disconnect();
-	}, [panelRef, hasSnapPoints]);
-
-	return height;
-}
-
-function useViewportHeight(active: boolean): number {
-	const getHeight = useCallback(
-		() =>
-			typeof window === "undefined"
-				? 0
-				: (window.visualViewport?.height ?? window.innerHeight),
-		[],
-	);
-	const [height, setHeight] = useState(() => getHeight());
-
-	useEffect(() => {
-		if (!active || typeof window === "undefined") {
-			return;
-		}
-
-		const update = () => setHeight(getHeight());
-		update();
-
-		window.addEventListener("resize", update);
-		window.visualViewport?.addEventListener("resize", update);
-
-		return () => {
-			window.removeEventListener("resize", update);
-			window.visualViewport?.removeEventListener("resize", update);
-		};
-	}, [active, getHeight]);
-
-	return height;
-}
-
-// ── Modal focus trap wrapper ────────────────────
-
-/**
- * Selectors for "layered modal" surfaces that should be allowed to take focus
- * away from the sheet's panel without the trap snatching it back. Covers
- * Radix Dialog/AlertDialog and any Radix Popper-based layer (Popover,
- * DropdownMenu, Select, Combobox, Tooltip with portal, etc.).
- *
- * If a focused element matches one of these (or has an ancestor that does),
- * the focus trap pauses so the layered modal can manage focus itself.
- */
-const LAYERED_MODAL_SELECTORS = [
-	'[role="dialog"][data-state="open"]',
-	'[role="alertdialog"][data-state="open"]',
-	"[data-radix-popper-content-wrapper]",
-	"[data-radix-focus-guard]",
-].join(", ");
-
-/**
- * Returns true while the focused element lives inside a layered modal that
- * should take precedence over the stacksheet panel's focus trap.
- *
- * Implemented as a focusin listener on the document — fires whenever focus
- * moves anywhere on the page, in either direction (into the layered modal,
- * or back out into the sheet).
- */
-function useLayeredModalFocused(active: boolean): boolean {
-	const [layered, setLayered] = useState(false);
-
-	useEffect(() => {
-		if (!active) {
-			setLayered(false);
-			return;
-		}
-		const evaluate = () => {
-			const target = document.activeElement;
-			if (!target || target === document.body) {
-				setLayered(false);
-				return;
-			}
-			const inLayer =
-				target instanceof Element &&
-				target.closest(LAYERED_MODAL_SELECTORS) !== null;
-			setLayered(inLayer);
-		};
-		evaluate();
-		const handler = () => evaluate();
-		document.addEventListener("focusin", handler, true);
-		return () => document.removeEventListener("focusin", handler, true);
-	}, [active]);
-
-	return layered;
-}
-
-/** Wraps children in a focus trap when modal mode is enabled. */
-function ModalFocusTrap({
-	enabled,
-	active,
-	fallbackRef,
-	children,
-}: {
-	enabled: boolean;
-	active: boolean;
-	fallbackRef: React.RefObject<HTMLElement | null>;
-	children: React.ReactNode;
-}) {
-	const paused = useLayeredModalFocused(enabled && active);
-
-	if (!enabled) {
-		return children;
-	}
-	return (
-		<FocusTrap
-			active={active}
-			paused={paused}
-			focusTrapOptions={{
-				initialFocus: false,
-				returnFocusOnDeactivate: true,
-				escapeDeactivates: false,
-				allowOutsideClick: true,
-				checkCanFocusTrap: () =>
-					new Promise<void>((resolve) =>
-						requestAnimationFrame(() => resolve()),
-					),
-				fallbackFocus: () => {
-					if (fallbackRef.current) {
-						return fallbackRef.current;
-					}
-					return document.body;
-				},
-			}}
-		>
-			{children}
-		</FocusTrap>
-	);
-}
-
-// ── SheetPanel ──────────────────────────────────
-
-interface SheetPanelProps {
-	/** Currently active snap index */
-	activeSnapIndex: number;
-	// biome-ignore lint/suspicious/noExplicitAny: heterogeneous content component
-	Content: ComponentType<any> | undefined;
-	classNames: ResolvedClassNames;
-	close: () => void;
-	config: ResolvedConfig;
-	depth: number;
-	index: number;
-	isNested: boolean;
-	isTop: boolean;
-	item: SheetItem;
-	layout?: StacksheetLayout;
-	/** Called when drag release targets a snap point */
-	onSnap: (index: number) => void;
-	pop: () => void;
-	/** Whether the user prefers reduced motion */
-	prefersReducedMotion: boolean;
-	renderHeader?: false | ((props: HeaderRenderProps) => React.ReactNode);
-	shouldRender: boolean;
-	side: Side;
-	slideFrom: SlideValues;
-	slideTarget: SlideValues;
-	/** Resolved snap point heights in px (ascending). Empty = no snaps. */
-	snapHeights: number[];
-	spring: Record<string, unknown>;
-	stackSpring: Record<string, unknown>;
-	/** Swipe-specific close — sets reason to "swipe" */
-	swipeClose: () => void;
-	/** Swipe-specific pop — sets reason to "swipe" */
-	swipePop: () => void;
-}
-
-/** Renders panel inner content — composable mode vs classic (header + scroll) */
-const PanelInnerContent = memo(function PanelInnerContent({
-	isComposable,
-	shouldRender,
-	Content,
-	data,
-	renderHeader,
-	headerProps,
-	headerClassName,
-}: {
-	isComposable: boolean;
-	shouldRender: boolean;
-	// biome-ignore lint/suspicious/noExplicitAny: heterogeneous content component
-	Content: ComponentType<any> | undefined;
-	data: Record<string, unknown>;
-	renderHeader?: false | ((props: HeaderRenderProps) => React.ReactNode);
-	headerProps: HeaderRenderProps;
-	headerClassName: string | undefined;
-}) {
-	if (isComposable) {
-		return shouldRender && Content ? <Content {...data} /> : null;
-	}
-
-	return (
-		<>
-			{renderHeader ? (
-				renderHeader(headerProps)
-			) : (
-				<DefaultHeader {...headerProps} className={headerClassName} />
-			)}
-			{shouldRender && Content && (
-				<div
-					className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
-					data-stacksheet-no-drag=""
-				>
-					<Content {...data} />
-				</div>
-			)}
-		</>
-	);
-});
-
-PanelInnerContent.displayName = "PanelInnerContent";
-
-function resolvePanelLayout(
-	layout: StacksheetLayout | undefined,
-	renderHeader?: false | ((props: HeaderRenderProps) => React.ReactNode),
-): StacksheetLayout {
-	if (layout) {
-		return layout;
-	}
-	return renderHeader === false ? "composable" : "classic";
-}
-
-/** Built-in drag handle for bottom panels — always visible on the top sheet */
-function BottomHandle({ onDismiss }: { onDismiss?: () => void }) {
-	return (
-		<button
-			aria-label="Dismiss"
-			className="absolute inset-x-0 top-0 z-10 flex w-full cursor-grab touch-none items-center justify-center border-none bg-transparent pt-2.5 pb-2"
-			data-stacksheet-handle=""
-			onClick={onDismiss}
-			type="button"
-		>
-			<div
-				aria-hidden="true"
-				className="h-[5px] w-9 rounded-full bg-current/15"
-			/>
-		</button>
-	);
-}
-
-/** Floating drag handle for left/right side panels */
-function SideHandle({
-	side,
-	isHovered,
-	onDismiss,
-}: {
-	side: Side;
-	isHovered: boolean;
-	onDismiss?: () => void;
-}) {
-	const position: CSSProperties =
-		side === "right" ? { right: "100%" } : { left: "100%" };
-
-	return (
-		<m.div
-			animate={{ opacity: isHovered ? 1 : 0 }}
-			aria-label="Dismiss"
-			className="absolute top-0 bottom-0 flex w-6 cursor-grab touch-none items-center justify-center"
-			data-stacksheet-handle=""
-			onClick={onDismiss}
-			onKeyDown={(e) => {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					onDismiss?.();
-				}
-			}}
-			role="button"
-			style={position}
-			tabIndex={0}
-			transition={{ duration: isHovered ? 0.15 : 0.4, ease: "easeOut" }}
-		>
-			<div aria-hidden="true" className="h-8 w-1 rounded-full bg-current/20" />
-		</m.div>
-	);
-}
-
-const SheetPanel = memo(function SheetPanel({
-	item,
-	index,
-	depth,
-	isTop,
-	isNested,
-	side,
-	config,
-	classNames,
-	Content,
-	shouldRender,
-	pop,
-	close,
-	swipeClose,
-	swipePop,
-	snapHeights,
-	activeSnapIndex,
-	onSnap,
-	layout,
-	renderHeader,
-	slideFrom,
-	slideTarget,
-	spring,
-	stackSpring,
-	prefersReducedMotion,
-}: SheetPanelProps) {
-	const panelRef = useRef<HTMLDivElement>(null);
-	const hasEnteredRef = useRef(false);
-	const [dragState, setDragState] = useState<DragState>({
-		offset: 0,
-		isDragging: false,
-	});
-	const [isHovered, setIsHovered] = useState(false);
-
-	const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
-
-	const transform = getStackTransform(depth, config.stacking);
-	const panelStyles = getPanelStyles(side, config, index);
-
-	// Reset entrance flag when panel moves away from top
-	useEffect(() => {
-		if (!isTop) {
-			hasEnteredRef.current = false;
-		}
-	}, [isTop]);
-
-	const handleAnimationComplete = useCallback(() => {
-		if (isTop && !hasEnteredRef.current) {
-			hasEnteredRef.current = true;
-			config.onOpenComplete?.();
-		}
-	}, [isTop, config]);
-
-	// Drag-to-dismiss (only on top panel, disabled when reduced motion is preferred)
-	useDrag(
-		panelRef,
-		{
-			enabled:
-				isTop && config.drag && config.dismissible && !prefersReducedMotion,
-			closeThreshold: config.closeThreshold,
-			velocityThreshold: config.velocityThreshold,
-			side,
-			onClose: swipeClose,
-			onPop: swipePop,
-			isNested,
-			snapHeights,
-			activeSnapIndex,
-			onSnap,
-			sequential: config.snapToSequentialPoints,
-		},
-		setDragState,
-	);
-
-	// Prefer explicit per-sheet metadata; keep data.__ariaLabel as a legacy fallback.
-	const ariaLabel =
-		item.ariaLabel ??
-		(typeof item.data?.__ariaLabel === "string"
-			? item.data.__ariaLabel
-			: undefined) ??
-		config.ariaLabel;
-
-	// Panel context for composable parts (Sheet.Close, Sheet.Title, etc.)
-	const panelId = `stacksheet-${item.id}`;
-	const [hasDescription, setHasDescription] = useState(false);
-	const registerDescription = useCallback(() => {
-		setHasDescription(true);
-		return () => setHasDescription(false);
-	}, []);
-	const panelContext = useMemo(
-		() => ({
-			close,
-			back: pop,
-			isNested,
-			isTop,
-			panelId,
-			side,
-			hasDescription,
-			registerDescription,
-		}),
-		[
-			close,
-			pop,
-			isNested,
-			isTop,
-			panelId,
-			side,
-			hasDescription,
-			registerDescription,
-		],
-	);
-
-	const panelLayout = resolvePanelLayout(layout, renderHeader);
-	const isComposable = panelLayout === "composable";
-	const hasPanelClass = classNames.panel !== "";
-	const dragOffset = getDragTransform(side, dragState.offset);
-	const panelStyle = buildPanelStyle(
-		panelStyles,
-		isTop,
-		hasPanelClass,
-		dragState.isDragging,
-	);
-
-	const headerProps = useMemo<HeaderRenderProps>(
-		() => ({
-			isNested,
-			onBack: pop,
-			onClose: close,
-			side,
-		}),
-		[close, isNested, pop, side],
-	);
-
-	const ariaProps = buildAriaProps(
-		isTop,
-		config.modal,
-		isComposable,
-		ariaLabel,
-		panelId,
-		hasDescription,
-	);
-
-	const transition = buildPanelTransition(
-		dragState.isDragging,
-		isTop,
-		spring,
-		stackSpring,
-	);
-
-	const animatedRadius = getAnimatedBorderRadius(side, depth, config.stacking);
-	const snapYOffset = computeSnapYOffset(
-		side,
-		snapHeights,
-		activeSnapIndex,
-		measuredHeight,
-	);
-	const resolvedSlideFrom = resolveSlideFrom(side, slideFrom, measuredHeight);
-
-	// Merge stack offset + drag offset + snap offset into the animate target.
-	const stackOffset = getStackOffset(side, transform.offset);
-	const animateTarget = buildAnimateTarget(
-		slideTarget,
-		stackOffset,
-		dragOffset,
-		transform,
-		animatedRadius,
-		transition,
-		snapYOffset,
-		isTop,
-	);
-
-	const initialRadius = getInitialRadius(side);
-	const showSideHandle = isTop && side !== "bottom";
-	const showBottomHandle = isTop && side === "bottom";
-
-	const panelContent = (
-		<m.div
-			animate={animateTarget}
-			className={classNames.panel || undefined}
-			exit={{
-				...resolvedSlideFrom,
-				opacity: 0.6,
-				boxShadow: getShadow(false),
-				transition: {
-					type: "tween",
-					duration: prefersReducedMotion ? 0 : 0.24,
-					ease: "easeOut",
-					boxShadow: VISUAL_TWEEN,
-				},
-			}}
-			initial={{
-				...resolvedSlideFrom,
-				opacity: 0.8,
-				...initialRadius,
-				boxShadow: getShadow(false),
-			}}
-			key={item.id}
-			onAnimationComplete={handleAnimationComplete}
-			onBlur={showSideHandle ? () => setIsHovered(false) : undefined}
-			onFocus={showSideHandle ? () => setIsHovered(true) : undefined}
-			onMouseEnter={showSideHandle ? () => setIsHovered(true) : undefined}
-			onMouseLeave={showSideHandle ? () => setIsHovered(false) : undefined}
-			ref={panelRef}
-			style={panelStyle}
-			tabIndex={isTop ? -1 : undefined}
-			{...(isTop ? {} : { "aria-hidden": "true" as const, inert: true })}
-			{...ariaProps}
-		>
-			{showSideHandle && (
-				<SideHandle
-					isHovered={isHovered}
-					onDismiss={isNested ? pop : close}
-					side={side}
-				/>
-			)}
-			<div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit]">
-				{showBottomHandle && (
-					<BottomHandle onDismiss={isNested ? pop : close} />
-				)}
-				<PanelInnerContent
-					Content={Content}
-					data={item.data as Record<string, unknown>}
-					headerClassName={classNames.header || undefined}
-					headerProps={headerProps}
-					isComposable={isComposable}
-					renderHeader={renderHeader}
-					shouldRender={shouldRender}
-				/>
-			</div>
-		</m.div>
-	);
-
-	return (
-		<SheetPanelContext.Provider value={panelContext}>
-			<ModalFocusTrap
-				active={isTop}
-				enabled={config.modal}
-				fallbackRef={panelRef}
-			>
-				{panelContent}
-			</ModalFocusTrap>
-		</SheetPanelContext.Provider>
-	);
-});
-
-// ── Body scale effect ───────────────────────────
-
-function useBodyScale(
-	config: ResolvedConfig,
-	isOpen: boolean,
-	prefersReducedMotion: boolean,
-) {
-	useEffect(() => {
-		if (!config.shouldScaleBackground || prefersReducedMotion) {
-			return;
-		}
-
-		const wrapper = document.querySelector("[data-stacksheet-wrapper]");
-		if (!(wrapper && wrapper instanceof HTMLElement)) {
-			return;
-		}
-
-		if (isOpen) {
-			const scale = config.scaleBackgroundAmount;
-			wrapper.style.transition =
-				"transform 500ms cubic-bezier(0.32, 0.72, 0, 1), border-radius 500ms cubic-bezier(0.32, 0.72, 0, 1)";
-			wrapper.style.transform = `scale(${scale})`;
-			wrapper.style.borderRadius = "8px";
-			wrapper.style.overflow = "hidden";
-			wrapper.style.transformOrigin = "center top";
-			return;
-		}
-
-		wrapper.style.transform = "";
-		wrapper.style.borderRadius = "";
-		// Clean up after transition completes
-		const handleEnd = () => {
-			wrapper.style.transition = "";
-			wrapper.style.overflow = "";
-			wrapper.style.transformOrigin = "";
-		};
-		wrapper.addEventListener("transitionend", handleEnd, { once: true });
-		return () => wrapper.removeEventListener("transitionend", handleEnd);
-	}, [
-		isOpen,
-		config.shouldScaleBackground,
-		config.scaleBackgroundAmount,
-		prefersReducedMotion,
-	]);
-}
-
-// ── Renderer ────────────────────────────────────
 
 interface SheetRendererProps<TMap extends object> {
 	classNames?: StacksheetClassNames;
@@ -694,7 +43,7 @@ interface SheetRendererProps<TMap extends object> {
 	componentMap: Map<string, ComponentType<any>>;
 	config: ResolvedConfig;
 	layout?: StacksheetLayout;
-	renderHeader?: false | ((props: HeaderRenderProps) => React.ReactNode);
+	renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
 	sheets: ContentMap<TMap>;
 	store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
 }
@@ -730,7 +79,6 @@ export function SheetRenderer<TMap extends object>({
 		isOpen && side === "bottom" && config.snapPoints.length > 0,
 	);
 
-	// ── Snap points ──────────────────────────────
 	const snapHeights = useMemo(
 		() =>
 			side === "bottom" && config.snapPoints.length > 0
@@ -739,12 +87,9 @@ export function SheetRenderer<TMap extends object>({
 		[side, config.snapPoints, viewportHeight],
 	);
 
-	// Default to the last snap point (fully open) when snap points are defined
 	const [internalSnapIndex, setInternalSnapIndex] = useState(
 		snapHeights.length > 0 ? snapHeights.length - 1 : 0,
 	);
-
-	// Controlled vs uncontrolled snap index
 	const activeSnapIndex = config.snapPointIndex ?? internalSnapIndex;
 
 	const handleSnap = useCallback(
@@ -755,7 +100,6 @@ export function SheetRenderer<TMap extends object>({
 		[config.onSnapPointChange, config],
 	);
 
-	// Reset snap index when stack opens (start at initial snap point or fully open)
 	useEffect(() => {
 		if (isOpen && snapHeights.length > 0) {
 			const initial = config.snapPointIndex ?? snapHeights.length - 1;
@@ -763,7 +107,6 @@ export function SheetRenderer<TMap extends object>({
 		}
 	}, [isOpen, snapHeights.length, config.snapPointIndex]);
 
-	// Track why the sheet was closed — ref survives until exit animation completes
 	const closeReasonRef = useRef<CloseReason>("programmatic");
 
 	const closeWith = useCallback(
@@ -782,15 +125,11 @@ export function SheetRenderer<TMap extends object>({
 		[rawPop],
 	);
 
-	// Default close/pop (programmatic) for child components
 	const close = useCallback(() => closeWith("programmatic"), [closeWith]);
 	const pop = useCallback(() => popWith("programmatic"), [popWith]);
 
-	// Body scale effect
 	useBodyScale(config, isOpen, prefersReducedMotion);
 
-	// Focus restoration: capture the element that was focused when the stack opens.
-	// When the stack fully closes, return focus to that element.
 	const triggerRef = useRef<Element | null>(null);
 	const wasOpenRef = useRef(false);
 
@@ -799,8 +138,6 @@ export function SheetRenderer<TMap extends object>({
 			triggerRef.current = document.activeElement;
 		} else if (!isOpen && wasOpenRef.current) {
 			const el = triggerRef.current;
-			// Only restore focus to meaningful elements — skip document.body
-			// which happens when sheets are opened programmatically.
 			if (
 				el &&
 				el instanceof HTMLElement &&
@@ -814,14 +151,11 @@ export function SheetRenderer<TMap extends object>({
 		wasOpenRef.current = isOpen;
 	}, [isOpen]);
 
-	// Ref for stack length — avoids re-subscribing keyboard/CloseWatcher
-	// effects on every push/pop.
 	const stackLengthRef = useRef(stack.length);
 	useEffect(() => {
 		stackLengthRef.current = stack.length;
 	}, [stack.length]);
 
-	// Escape key
 	useEffect(() => {
 		if (!(isOpen && config.closeOnEscape && config.dismissible)) {
 			return;
@@ -842,8 +176,6 @@ export function SheetRenderer<TMap extends object>({
 		return () => document.removeEventListener("keydown", handleKeyDown);
 	}, [isOpen, config.closeOnEscape, config.dismissible, popWith, closeWith]);
 
-	// CloseWatcher — handles Android back gesture (progressive enhancement).
-	// On browsers without support (Safari, Firefox), this is a no-op.
 	useEffect(() => {
 		if (
 			!(isOpen && config.dismissible) ||
@@ -867,8 +199,6 @@ export function SheetRenderer<TMap extends object>({
 	const slideFrom = useMemo(() => getSlideFrom(side), [side]);
 	const slideTarget = useMemo(() => getSlideTarget(), []);
 
-	// Primary spring — drives the top sheet's entrance slide.
-	// When reduced motion is preferred, use instant transitions.
 	const spring = useMemo(
 		() =>
 			prefersReducedMotion
@@ -886,16 +216,10 @@ export function SheetRenderer<TMap extends object>({
 			config.spring.mass,
 		],
 	);
-
-	// Same spring for stacking transforms
 	const stackSpring = spring;
 
-	// Non-modal: skip overlay, skip scroll lock
 	const isModal = config.modal;
 	const showOverlay = isModal && config.showOverlay;
-
-	// Backdrop: use className if provided, otherwise inline fallback.
-	// will-change hints the compositor to properly manage the layer lifecycle.
 	const hasBackdropClass = classNames.backdrop !== "";
 	const backdropStyle: CSSProperties = {
 		zIndex: config.zIndex,
@@ -907,36 +231,25 @@ export function SheetRenderer<TMap extends object>({
 			: { background: "var(--overlay, rgba(0, 0, 0, 0.15))" }),
 	};
 
-	// Handle exit complete — fire onCloseComplete when stack is fully empty
 	const handleExitComplete = useCallback(() => {
 		if (stack.length === 0) {
 			config.onCloseComplete?.(closeReasonRef.current);
 		}
 	}, [stack.length, config]);
 
-	// Force WebKit repaint after backdrop exit animation completes.
-	// iOS Safari's compositor can retain the visual layer of a fixed-position
-	// element after it's removed from the DOM, leaving a ghost tint.
-	// A layout recalc via offsetHeight forces the compositor to invalidate
-	// stale layers without affecting element positioning.
 	const handleBackdropExitComplete = useCallback(() => {
 		requestAnimationFrame(() => {
-			// Read offsetHeight to force a layout recalc — the value itself is unused.
 			void document.body.offsetHeight;
 		});
 	}, []);
 
-	// Swipe-specific dismiss callbacks
 	const swipeClose = useCallback(() => closeWith("swipe"), [closeWith]);
 	const swipePop = useCallback(() => popWith("swipe"), [popWith]);
 
-	// Non-modal: don't lock scroll
 	const shouldLockScroll = isOpen && isModal && config.lockScroll;
 
 	return (
 		<>
-			{/* Backdrop — independent AnimatePresence so it fades on its own.
-          onExitComplete forces a WebKit repaint to clear stale compositor layers (iOS Safari). */}
 			{showOverlay && (
 				<AnimatePresence onExitComplete={handleBackdropExitComplete}>
 					{isOpen && (
@@ -958,7 +271,6 @@ export function SheetRenderer<TMap extends object>({
 				</AnimatePresence>
 			)}
 
-			{/* Panel clip container — always rendered, invisible when empty */}
 			<RemoveScroll enabled={shouldLockScroll} forwardProps>
 				<div
 					className="pointer-events-none fixed inset-0 overflow-hidden"
@@ -969,12 +281,7 @@ export function SheetRenderer<TMap extends object>({
 							const depth = stack.length - 1 - index;
 							const isTop = depth === 0;
 							const isNested = index > 0;
-							// Keep one extra hidden panel mounted as a warm buffer.
-							// Without this, popping from deep stacks can mount content on the
-							// same frame it becomes visible, which can cause a reverse jank.
 							const shouldRender = depth <= config.stacking.renderThreshold;
-
-							// Ad-hoc components take priority, then fall back to sheets map
 							const Content = (componentMap.get(item.type) ??
 								sheets[item.type as keyof TMap]) as
 								| ComponentType<Record<string, unknown>>
