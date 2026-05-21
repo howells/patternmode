@@ -23,8 +23,8 @@ function OptionBar<T extends string | number>({
 	value: T;
 }) {
 	return (
-		<div className="option-bar" role="radiogroup" aria-label={label}>
-			<span className="option-bar-label">{label}</span>
+		<fieldset className="option-bar">
+			<legend className="option-bar-label">{label}</legend>
 			{options.map((option) => (
 				<button
 					aria-pressed={value === option.value}
@@ -36,7 +36,7 @@ function OptionBar<T extends string | number>({
 					{option.label}
 				</button>
 			))}
-		</div>
+		</fieldset>
 	);
 }
 

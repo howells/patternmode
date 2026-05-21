@@ -205,14 +205,21 @@ button {
 
 .option-bar {
 	align-items: baseline;
+	border: 0;
 	display: flex;
 	gap: 2px;
+	margin: 0;
+	min-inline-size: 0;
+	padding: 0;
 }
 
 .option-bar-label {
 	color: var(--quiet);
+	float: left;
 	font-size: 0.72rem;
+	line-height: 1;
 	margin-right: 4px;
+	padding: 4px 0;
 }
 
 .option-bar-item {
