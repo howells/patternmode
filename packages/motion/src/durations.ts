@@ -12,20 +12,20 @@
  * - slow: Long-running animations like shimmer (1000ms)
  */
 export const durations = {
-  instant: 0,
-  quick: 0.12,
-  normal: 0.25,
-  moderate: 0.4,
-  slow: 1.0,
+	instant: 0,
+	quick: 0.12,
+	normal: 0.25,
+	moderate: 0.4,
+	slow: 1.0,
 } as const;
 
 /** Duration tokens in milliseconds for CSS/Tailwind usage. */
 export const durationMs = {
-  instant: 0,
-  quick: 120,
-  normal: 250,
-  moderate: 400,
-  slow: 1000,
+	instant: 0,
+	quick: 120,
+	normal: 250,
+	moderate: 400,
+	slow: 1000,
 } as const;
 
 export type Duration = keyof typeof durations;

@@ -1,18 +1,20 @@
 {
-  "name": "@patternmode/motion",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.ts"
-  },
-  "scripts": {
-    "lint": "howells-biome check src --write --unsafe",
-    "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@howells/typescript-config": "^0.1.0",
-    "typescript": "^5.9.3"
-  }
+	"name": "@howells/motion-reference",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"clean": "rm -rf .turbo",
+		"lint:check": "howells-biome check src",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@howells/lint": "^0.1.7",
+		"@howells/typescript-config": "^0.1.2",
+		"typescript": "^6.0.3"
+	}
 }

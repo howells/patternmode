@@ -1,31 +1,31 @@
 {
-  "name": "patternmode",
-  "private": true,
-  "packageManager": "pnpm@10.23.0",
-  "scripts": {
-    "dev": "turbo run dev --filter=@patternmode/playground",
-    "dev:all": "turbo run dev --parallel",
-    "dev:playground": "pnpm --filter @patternmode/playground dev",
-    "dev:storybook": "pnpm --filter @patternmode/storybook dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "format": "howells-biome format --write .",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
-    "check": "pnpm typecheck && pnpm lint && pnpm test",
-    "check:affected": "turbo run build lint typecheck test --affected",
-    "clean": "turbo run clean --continue=always && turbo clean",
-    "ui:add": "pnpm dlx shadcn@latest add",
-    "prepare": "howells-husky"
-  },
-  "devDependencies": {
-    "@howells/lint": "^0.1.3",
-    "@howells/typescript-config": "^0.1.0",
-    "@howells/husky": "^0.1.0",
-    "turbo": "2.9.3",
-    "typescript": "^5.9.3"
-  },
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,jsonc,css}": "howells-format"
-  }
+	"name": "patternmode",
+	"private": true,
+	"packageManager": "pnpm@10.23.0",
+	"scripts": {
+		"build": "turbo run build",
+		"check": "pnpm typecheck && pnpm lint:check && pnpm test && pnpm build && pnpm check:boundaries",
+		"check:boundaries": "node scripts/check-boundaries.mjs",
+		"clean": "turbo run clean --continue=always && turbo clean",
+		"dev": "turbo run dev --filter=@howells/patternmode-web",
+		"format": "howells-format",
+		"lint": "pnpm lint:check",
+		"lint:check": "turbo run lint:check",
+		"prepare": "howells-husky",
+		"smoke:tarballs": "node scripts/smoke-tarballs.mjs",
+		"test": "turbo run test",
+		"typecheck": "turbo run typecheck",
+		"version-packages": "changeset version"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.29.7",
+		"@howells/husky": "^0.1.0",
+		"@howells/lint": "^0.1.7",
+		"@howells/typescript-config": "^0.1.2",
+		"turbo": "2.9.12",
+		"typescript": "^6.0.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,jsx,tsx,json,jsonc}": "howells-format"
+	}
 }

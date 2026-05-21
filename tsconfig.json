@@ -1,20 +1,7 @@
 {
-  "extends": "@howells/typescript-config/bundler-dom-app",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@patternmode/ui/*": ["./packages/ui/src/*"],
-      "@patternmode/tailwind-config": [
-        "./packages/tailwind-config/shared-styles.css"
-      ],
-      "@patternmode/tailwind-config/*": ["./packages/tailwind-config/*"]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "**/node_modules",
-    "**/.next",
-    "**/dist",
-    "**/storybook-static"
-  ]
+	"extends": "@howells/typescript-config/bundler-dom-app",
+	"compilerOptions": {
+		"baseUrl": "."
+	},
+	"exclude": ["node_modules", "dist", ".next"]
 }

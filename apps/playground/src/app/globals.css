@@ -1,9 +1,0 @@
-@import "@patternmode/tailwind-config";
-
-@source "./**/*.{ts,tsx}";
-
-@layer base {
-  body {
-    min-height: 100vh;
-  }
-}

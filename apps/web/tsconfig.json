@@ -1,23 +1,17 @@
 {
-  "extends": "@howells/typescript-config/nextjs",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "@patternmode/ui/*": ["../../packages/ui/src/*"],
-      "@patternmode/motion/*": ["../../packages/motion/src/*"],
-      "@patternmode/transition/*": ["../../packages/transition/src/*"],
-      "@patternmode/tailwind-config": [
-        "../../packages/tailwind-config/shared-styles.css"
-      ],
-      "@patternmode/tailwind-config/*": ["../../packages/tailwind-config/*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".source/**/*.ts"
-  ]
+	"extends": "@howells/typescript-config/nextjs",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"ignoreDeprecations": "6.0",
+		"paths": {
+			"@/*": ["./*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }

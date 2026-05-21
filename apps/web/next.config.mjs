@@ -1,12 +1,6 @@
-import { createMDX } from "fumadocs-mdx/next";
-
-const withMDX = createMDX();
-
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
-  outputFileTracingIncludes: {
-    "/": ["./examples/**/*.tsx"],
-  },
+	transpilePackages: ["@howells/site-ui"],
 };
 
-export default withMDX(nextConfig);
+export default nextConfig;
