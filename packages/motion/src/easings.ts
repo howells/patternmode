@@ -10,6 +10,7 @@
  * - customOut: Smooth start, decelerate out (exiting elements)
  * - customExpand: Smooth expansion (complex transitions)
  * - customGentle: Gentle easing out
+ * - snappy: Ease-out-quint — crisp emergence with no over-shoot
  */
 
 /** Cubic bezier easing curve as [x1, y1, x2, y2] control points */
@@ -20,6 +21,7 @@ const CUSTOM_IN_EASING: EasingTuple = [0.55, 0.085, 0.68, 0.53];
 const CUSTOM_OUT_EASING: EasingTuple = [0.165, 0.84, 0.44, 1];
 const CUSTOM_EXPAND_EASING: EasingTuple = [0.25, 0.46, 0.45, 0.94];
 const CUSTOM_GENTLE_EASING: EasingTuple = [0.25, 0.1, 0.12, 1];
+const SNAPPY_EASING: EasingTuple = [0.22, 1, 0.36, 1];
 
 export const easings = {
 	smooth: SMOOTH_EASING,
@@ -27,6 +29,7 @@ export const easings = {
 	customOut: CUSTOM_OUT_EASING,
 	customExpand: CUSTOM_EXPAND_EASING,
 	customGentle: CUSTOM_GENTLE_EASING,
+	snappy: SNAPPY_EASING,
 } as const;
 
 /** CSS cubic-bezier string representations for Tailwind or inline styles. */
@@ -36,6 +39,7 @@ export const easingsCSS = {
 	customOut: "cubic-bezier(0.165, 0.84, 0.44, 1)",
 	customExpand: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
 	customGentle: "cubic-bezier(0.25, 0.1, 0.12, 1)",
+	snappy: "cubic-bezier(0.22, 1, 0.36, 1)",
 } as const;
 
 export type Easing = keyof typeof easings;

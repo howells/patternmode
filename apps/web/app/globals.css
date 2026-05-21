@@ -176,6 +176,12 @@ button {
 	outline-offset: 2px;
 }
 
+.aperto-demo {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
 .aperto-grid {
 	display: grid;
 	gap: 6px;
@@ -189,6 +195,46 @@ button {
 .aperto-thumb {
 	aspect-ratio: 3 / 2;
 	width: 100%;
+}
+
+.aperto-controls {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 20px;
+}
+
+.option-bar {
+	align-items: baseline;
+	display: flex;
+	gap: 2px;
+}
+
+.option-bar-label {
+	color: var(--quiet);
+	font-size: 0.72rem;
+	margin-right: 4px;
+}
+
+.option-bar-item {
+	background: none;
+	border: 0;
+	border-radius: 4px;
+	color: var(--quiet);
+	cursor: pointer;
+	font-size: 0.72rem;
+	line-height: 1;
+	padding: 4px 6px;
+	transition: color 120ms ease;
+}
+
+.option-bar-item[aria-pressed="true"] {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.option-bar-item:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 1px;
 }
 
 .stacksheet-surface {
@@ -433,6 +479,194 @@ button {
 	margin-top: -6px;
 }
 
+/* ── Catalog homepage ──────────────────────── */
+
+.site-shell:has(.catalog-grid) {
+	gap: 40px;
+}
+
+.catalog-intro {
+	max-width: 420px;
+}
+
+.catalog-intro h1 {
+	font-size: 0.95rem;
+	font-weight: 450;
+	letter-spacing: 0;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.catalog-intro p {
+	color: var(--muted);
+	font-size: 0.84rem;
+	line-height: 1.65;
+	margin: 6px 0 0;
+}
+
+.catalog-grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.catalog-card {
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	border-radius: var(--radius);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	text-decoration: none;
+	transition:
+		border-color 180ms ease,
+		box-shadow 180ms ease;
+}
+
+.catalog-card-body {
+	padding: 16px 18px 18px;
+}
+
+.catalog-card-body h2 {
+	font-size: 0.88rem;
+	font-weight: 450;
+	letter-spacing: 0;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.catalog-card-body p {
+	color: var(--muted);
+	font-size: 0.78rem;
+	line-height: 1.55;
+	margin: 5px 0 0;
+}
+
+.catalog-card-preview {
+	aspect-ratio: 5 / 3;
+	background:
+		linear-gradient(135deg, rgba(49, 92, 75, 0.06), transparent 50%),
+		var(--surface-soft);
+	border-bottom: 1px solid var(--border-soft);
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Stacksheet preview — stacked panels */
+.preview-stacksheet {
+	height: 60%;
+	position: relative;
+	width: 45%;
+}
+
+.preview-panel {
+	background: rgba(255, 255, 255, 0.92);
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	box-shadow: 0 8px 24px rgba(29, 29, 27, 0.07);
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+	transition: transform 300ms ease;
+}
+
+.preview-panel:nth-child(2) {
+	transform: translate(-12px, 8px);
+}
+
+.preview-panel:nth-child(3) {
+	transform: translate(-24px, 16px);
+}
+
+/* Aperto preview — thumbnail grid */
+.preview-aperto {
+	display: grid;
+	gap: 4px;
+	grid-template-columns: 1fr 1fr;
+	padding: 18%;
+	width: 100%;
+}
+
+.preview-thumb {
+	aspect-ratio: 4 / 3;
+	background: var(--border-soft);
+	border-radius: 4px;
+	transition: background 300ms ease;
+}
+
+/* Placeholder card */
+.catalog-card-placeholder {
+	border-style: dashed;
+	cursor: default;
+}
+
+.catalog-card-preview-placeholder {
+	background: var(--surface-soft);
+	border-bottom-style: dashed;
+	color: var(--quiet);
+}
+
+.catalog-card-placeholder .catalog-card-body h2 {
+	color: var(--quiet);
+}
+
+.catalog-card-placeholder .catalog-card-body p {
+	color: var(--quiet);
+}
+
+/* ── Component page header ─────────────────── */
+
+.back-link {
+	align-items: center;
+	color: var(--muted);
+	display: inline-flex;
+	font-size: 0.78rem;
+	gap: 5px;
+	text-decoration: none;
+	transition: color 140ms ease;
+}
+
+.back-link:hover {
+	color: var(--ink);
+}
+
+.component-header {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.component-header h1 {
+	font-size: 0.95rem;
+	font-weight: 450;
+	letter-spacing: 0;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.component-header p {
+	color: var(--muted);
+	font-size: 0.84rem;
+	line-height: 1.65;
+	margin: 6px 0 0;
+	max-width: 62ch;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.catalog-card:not(.catalog-card-placeholder):hover {
+		border-color: var(--border);
+		box-shadow: 0 4px 16px rgba(29, 29, 27, 0.06);
+	}
+
+	.catalog-card:not(.catalog-card-placeholder):hover .preview-thumb {
+		background: var(--border);
+	}
+}
+
 @media (hover: hover) and (pointer: fine) {
 	.segmented-control button:hover,
 	.demo-button-row button:hover,
@@ -447,6 +681,10 @@ button {
 		border-color: var(--accent);
 		color: white;
 	}
+
+	.option-bar-item:hover {
+		color: var(--ink);
+	}
 }
 
 @media (max-width: 720px) {
@@ -457,6 +695,10 @@ button {
 
 	.intro {
 		flex-direction: column;
+	}
+
+	.catalog-grid {
+		grid-template-columns: 1fr;
 	}
 
 	.stacksheet-surface {

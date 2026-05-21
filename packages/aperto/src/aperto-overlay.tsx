@@ -1,32 +1,36 @@
 "use client";
 
+import { easings } from "@howells/motion";
 import * as Dialog from "@radix-ui/react-dialog";
-import { motion } from "motion/react";
+import { motion, type Transition } from "motion/react";
 import { forwardRef } from "react";
 
 import { useApertoContext } from "./context";
-import { resolvePreset } from "./presets";
-import type { MotionPresetName } from "./types";
 
 export interface ApertoOverlayProps {
 	className?: string;
 	/** Internal flag used to fade the overlay during measured close transitions. */
 	fadeOut?: boolean;
-	/** Override motion preset for the overlay */
-	motion?: MotionPresetName;
 	style?: React.CSSProperties;
 }
 
+/** Overlay always fades gently regardless of the content's motion preset. */
+const OVERLAY_TRANSITION: Transition = {
+	duration: 0.3,
+	ease: easings.customGentle,
+};
+
+const OVERLAY_TRANSITION_REDUCED: Transition = {
+	duration: 0.01,
+	ease: "linear",
+};
+
 const ApertoOverlay = forwardRef<HTMLDivElement, ApertoOverlayProps>(
-	({ className, fadeOut, motion: motionOverride, style }, ref) => {
+	({ className, fadeOut, style }, ref) => {
 		const ctx = useApertoContext();
-		const resolved = resolvePreset(
-			"backdrop",
-			motionOverride,
-			ctx.presetName,
-			ctx.variants,
-			ctx.reduceMotion,
-		);
+		const transition = ctx.reduceMotion
+			? OVERLAY_TRANSITION_REDUCED
+			: OVERLAY_TRANSITION;
 
 		return (
 			<Dialog.Overlay asChild forceMount>
@@ -38,7 +42,7 @@ const ApertoOverlay = forwardRef<HTMLDivElement, ApertoOverlayProps>(
 					initial={{ opacity: 0 }}
 					ref={ref}
 					style={style}
-					transition={resolved.transition}
+					transition={transition}
 				/>
 			</Dialog.Overlay>
 		);

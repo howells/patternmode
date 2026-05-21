@@ -3,24 +3,81 @@
 import {
 	Aperto,
 	type ApertoMediaItem,
+	type MotionPresetName,
 	type NavigationMotionPresetName,
 } from "@howells/aperto";
-import { SegmentedControl } from "@howells/site-ui/client";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 
 export type CatalogMediaItem = ApertoMediaItem;
 
+function OptionBar<T extends string | number>({
+	label,
+	onChange,
+	options,
+	value,
+}: {
+	label: string;
+	onChange: (value: T) => void;
+	options: { label: string; value: T }[];
+	value: T;
+}) {
+	return (
+		<div className="option-bar" role="radiogroup" aria-label={label}>
+			<span className="option-bar-label">{label}</span>
+			{options.map((option) => (
+				<button
+					aria-pressed={value === option.value}
+					className="option-bar-item"
+					key={String(option.value)}
+					onClick={() => onChange(option.value)}
+					type="button"
+				>
+					{option.label}
+				</button>
+			))}
+		</div>
+	);
+}
+
 export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
-	const [columns, setColumns] = useState(2);
+	const [columns, setColumns] = useState(3);
+	const [easing, setEasing] = useState<MotionPresetName>("smooth");
 	const [navigationMotion, setNavigationMotion] =
 		useState<NavigationMotionPresetName>("glide");
 	const [radius, setRadius] = useState(6);
+	const visibleMedia = columns === 2 ? media.slice(0, 4) : media;
 
 	return (
-		<div className="demo-block aperto-demo">
-			<div className="demo-controls">
-				<SegmentedControl
+		<div className="aperto-demo">
+			<div style={{ "--aperto-radius": `${radius}px` } as CSSProperties}>
+				<Aperto.Group
+					classNames={{ thumbnail: "aperto-thumb" }}
+					key={columns}
+					media={visibleMedia}
+					motion={easing}
+					navigationMotion={navigationMotion}
+				>
+					<div className="aperto-grid" data-columns={columns}>
+						{visibleMedia.map((item, index) => (
+							<Aperto.Thumbnail key={item.id ?? item.src} index={index} />
+						))}
+					</div>
+				</Aperto.Group>
+			</div>
+
+			<div className="aperto-controls">
+				<OptionBar
+					label="Easing"
+					onChange={setEasing}
+					options={[
+						{ label: "Snappy", value: "snappy" as const },
+						{ label: "Smooth", value: "smooth" as const },
+						{ label: "Bouncy", value: "bouncy" as const },
+					]}
+					value={easing}
+				/>
+				<OptionBar
 					label="Navigation"
 					onChange={setNavigationMotion}
 					options={[
@@ -30,7 +87,7 @@ export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
 					]}
 					value={navigationMotion}
 				/>
-				<SegmentedControl
+				<OptionBar
 					label="Columns"
 					onChange={setColumns}
 					options={[
@@ -39,7 +96,7 @@ export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
 					]}
 					value={columns}
 				/>
-				<SegmentedControl
+				<OptionBar
 					label="Radius"
 					onChange={setRadius}
 					options={[
@@ -49,20 +106,6 @@ export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
 					]}
 					value={radius}
 				/>
-			</div>
-
-			<div style={{ "--aperto-radius": `${radius}px` } as CSSProperties}>
-				<Aperto.Group
-					classNames={{ thumbnail: "aperto-thumb" }}
-					media={media}
-					navigationMotion={navigationMotion}
-				>
-					<div className="aperto-grid" data-columns={columns}>
-						{media.map((item, index) => (
-							<Aperto.Thumbnail key={item.id ?? item.src} index={index} />
-						))}
-					</div>
-				</Aperto.Group>
 			</div>
 		</div>
 	);

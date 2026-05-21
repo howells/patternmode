@@ -1,3 +1,4 @@
+import { durations, easings, springs } from "@howells/motion";
 import type {
 	DragSpringConfig,
 	MotionPreset,
@@ -8,24 +9,38 @@ import type {
 /**
  * Motion presets — each bundles transition timing AND drag physics
  * so "snappy" feels snappy everywhere: open, close, and drag.
+ *
+ * Curves and springs sourced from @howells/motion tokens.
  */
 export const PRESETS: Record<MotionPresetName, MotionPreset> = {
 	snappy: {
-		transition: { ease: [0.22, 1, 0.36, 1], duration: 0.22 },
-		drag: { stiffness: 600, damping: 40, restDelta: 0.01 },
+		transition: { ease: easings.snappy, duration: durations.snappy },
+		drag: {
+			stiffness: springs.stiff.stiffness,
+			damping: springs.stiff.damping,
+			restDelta: 0.01,
+		},
 	},
 	smooth: {
-		transition: { ease: [0.42, 0, 0.58, 1], duration: 0.48 },
-		drag: { stiffness: 350, damping: 25, restDelta: 0.01 },
+		transition: { ease: easings.customGentle, duration: durations.moderate },
+		drag: {
+			stiffness: springs.natural.stiffness,
+			damping: springs.natural.damping,
+			restDelta: 0.01,
+		},
 	},
 	bouncy: {
 		transition: {
 			type: "spring",
-			stiffness: 260,
-			damping: 12,
-			mass: 1,
+			stiffness: springs.bouncy.stiffness,
+			damping: springs.bouncy.damping,
+			mass: springs.bouncy.mass,
 		},
-		drag: { stiffness: 400, damping: 30, restDelta: 0.01 },
+		drag: {
+			stiffness: springs.snappy.stiffness,
+			damping: springs.snappy.damping,
+			restDelta: 0.01,
+		},
 	},
 	reduced: {
 		transition: { ease: "linear", duration: 0.01 },

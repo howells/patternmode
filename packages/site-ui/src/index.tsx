@@ -136,3 +136,53 @@ export function ApiTable({ sections }: { sections: ApiSection[] }) {
 export function LinkSet({ children }: { children: ReactNode }) {
 	return <div className="link-set">{children}</div>;
 }
+
+export function BackLink({
+	href = "/",
+	label = "Patternmode",
+}: {
+	href?: string;
+	label?: string;
+}) {
+	return (
+		<a className="back-link" href={href}>
+			<svg
+				aria-hidden="true"
+				fill="none"
+				height="12"
+				stroke="currentColor"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="1.5"
+				viewBox="0 0 24 24"
+				width="12"
+			>
+				<path d="M19 12H5M12 19l-7-7 7-7" />
+			</svg>
+			{label}
+		</a>
+	);
+}
+
+export function ComponentPage({
+	children,
+	description,
+	title,
+}: {
+	children: ReactNode;
+	description: string;
+	title: string;
+}) {
+	return (
+		<main className="site-shell">
+			<header className="component-header">
+				<BackLink />
+				<div>
+					<h1>{title}</h1>
+					<p>{description}</p>
+				</div>
+			</header>
+			{children}
+		</main>
+	);
+}

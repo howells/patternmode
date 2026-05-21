@@ -33,6 +33,8 @@ import { useApertoContext } from "./context";
 import type {
 	ApertoClassNames,
 	ApertoMediaItem,
+	MotionPresetName,
+	MotionVariants,
 	NavigationMotionPresetName,
 	RenderImage,
 	RenderVideo,
@@ -51,6 +53,8 @@ export interface ApertoGroupProps {
 	index?: number;
 	initialIndex?: number;
 	media: ApertoMediaItem[];
+	/** Motion preset for open/close transitions */
+	motion?: MotionPresetName | MotionVariants;
 	navigationMotion?: NavigationMotionPresetName;
 	onIndexChange?: (index: number) => void;
 	renderImage?: RenderImage;
@@ -476,6 +480,7 @@ function ApertoGroup({
 	index: controlledIndex,
 	initialIndex = 0,
 	media,
+	motion: motionProp,
 	navigationMotion = "glide",
 	onIndexChange,
 	renderImage,
@@ -696,7 +701,11 @@ function ApertoGroup({
 
 	return (
 		<ApertoGroupContext.Provider value={value}>
-			<ApertoRoot onOpenChange={handleOpenChange} open={open}>
+			<ApertoRoot
+				motion={motionProp}
+				onOpenChange={handleOpenChange}
+				open={open}
+			>
 				{children}
 				{activeMedia ? (
 					<ApertoPortal>

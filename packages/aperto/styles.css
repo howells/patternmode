@@ -18,6 +18,11 @@
 	@apply block size-full object-cover;
 }
 
+[data-slot="aperto-trigger"][data-aperto-active] > img,
+[data-slot="aperto-trigger"][data-aperto-active] > video {
+	@apply invisible;
+}
+
 [data-slot="aperto-overlay"] {
 	@apply fixed inset-0 z-[1000] bg-black/80;
 }
@@ -62,8 +67,43 @@
 	will-change: opacity, transform;
 }
 
+/* Hide all children during shared-element transition */
 [data-slot="aperto-content"][data-aperto-transition] > * {
 	@apply opacity-0;
+}
+
+/* Fade controls in after transition completes */
+@keyframes aperto-control-in {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-close"],
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-media"]
+	> [data-slot="aperto-previous-button"],
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-media"]
+	> [data-slot="aperto-next-button"] {
+	animation: aperto-control-in 0.35s cubic-bezier(0.25, 0.1, 0.12, 1) 0.08s
+		both;
+}
+
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-title"],
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-description"],
+[data-slot="aperto-content"]:not([data-aperto-transition])
+	> [data-slot="aperto-counter"] {
+	animation: aperto-control-in 0.4s cubic-bezier(0.25, 0.1, 0.12, 1) 0.18s
+		both;
 }
 
 [data-slot="aperto-title"] {
@@ -153,5 +193,11 @@
 
 	[data-slot="aperto-next-button"] {
 		@apply right-2;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-slot="aperto-content"]:not([data-aperto-transition]) > * {
+		animation: none !important;
 	}
 }

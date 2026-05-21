@@ -44,6 +44,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@howells/motion": "workspace:*",
 		"@radix-ui/react-dialog": "^1.1.15",
 		"lucide-react": "^1.16.0",
 		"motion": "^12.38.0"

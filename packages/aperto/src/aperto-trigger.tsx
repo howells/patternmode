@@ -66,6 +66,7 @@ const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
 		return (
 			<Dialog.Trigger asChild ref={ref} {...props}>
 				<motion.button
+					data-aperto-active={shouldRaise ? "" : undefined}
 					data-slot="aperto-trigger"
 					key={layoutId ?? "unshared"}
 					layout

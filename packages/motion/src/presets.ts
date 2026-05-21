@@ -20,6 +20,9 @@ export const presets = {
 	hoverLift: springs.snappy,
 	hoverSettle: springs.natural,
 
+	/** Crisp emergence — peeks, lifts, and small reveals on hover/focus */
+	snappy: { duration: durations.snappy, ease: easings.snappy },
+
 	slideIn: { duration: durations.normal, ease: easings.customOut },
 	slideOut: { duration: durations.quick, ease: easings.customIn },
 
