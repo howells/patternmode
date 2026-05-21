@@ -1,0 +1,96 @@
+import {
+	type ApiSection,
+	ApiTable,
+	CodeBlock,
+	ComponentPage,
+	DocsBlock,
+} from "@howells/site-ui";
+import { DeckDemo } from "@/components/deck-demo";
+
+const deckApi: ApiSection[] = [
+	{
+		name: "Deck",
+		description:
+			"Root swipeable stack with finite and cyclic progression modes.",
+		props: [
+			{
+				name: "mode",
+				type: '"cycle" | "finite"',
+				defaultValue: '"cycle"',
+				description: "Whether cards wrap forever or exhaust into Deck.Empty.",
+			},
+			{
+				name: "index",
+				type: "number",
+				description: "Controlled active card index.",
+			},
+			{
+				name: "defaultIndex",
+				type: "number",
+				defaultValue: "0",
+				description: "Initial active card for uncontrolled decks.",
+			},
+			{
+				name: "visibleCount",
+				type: "number",
+				defaultValue: "3",
+				description: "Number of cards rendered in the visual stack.",
+			},
+			{
+				name: "onSwipe",
+				type: "(event: DeckSwipeEvent) => void",
+				description:
+					"Called when the active card is accepted by drag or keyboard.",
+			},
+		],
+	},
+	{
+		name: "Deck.Card",
+		description: "A card child rendered into the animated stack.",
+		props: [
+			{
+				name: "children",
+				type: "ReactNode",
+				required: true,
+				description: "Card content.",
+			},
+			{
+				name: "className",
+				type: "string",
+				description: "Class passed to the rendered motion card.",
+			},
+		],
+	},
+];
+
+const deckExample = `import { Deck } from "@howells/deck";
+import "@howells/deck/styles.css";
+
+export function ProjectDeck() {
+  return (
+    <Deck mode="cycle" visibleCount={3} onSwipe={({ direction }) => console.log(direction)}>
+      <Deck.Card key="one">One</Deck.Card>
+      <Deck.Card key="two">Two</Deck.Card>
+      <Deck.Card key="three">Three</Deck.Card>
+      <Deck.Empty>No cards left</Deck.Empty>
+    </Deck>
+  );
+}`;
+
+export default function DeckPage() {
+	return (
+		<ComponentPage
+			description="Swipeable card decks that merge cyclic stacks, finite queues, velocity gestures, keyboard control, and deterministic motion."
+			title="Deck"
+		>
+			<DeckDemo />
+			<DocsBlock title="Install">
+				<CodeBlock install>npm install @howells/deck</CodeBlock>
+				<CodeBlock>{deckExample}</CodeBlock>
+			</DocsBlock>
+			<DocsBlock title="Core API">
+				<ApiTable sections={deckApi} />
+			</DocsBlock>
+		</ComponentPage>
+	);
+}

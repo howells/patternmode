@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@howells/aperto": "workspace:*",
+		"@howells/deck": "workspace:*",
 		"@howells/site-ui": "workspace:*",
 		"@howells/stacksheet": "workspace:*",
 		"next": "^16.2.6",

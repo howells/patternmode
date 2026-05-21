@@ -605,6 +605,37 @@ button {
 	transition: background 300ms ease;
 }
 
+/* Deck preview — swipeable card stack */
+.preview-deck {
+	height: 62%;
+	position: relative;
+	width: 46%;
+}
+
+.preview-deck-card {
+	background: white;
+	border: 1px solid var(--border);
+	border-radius: 7px;
+	box-shadow: 0 10px 24px rgba(29, 29, 27, 0.08);
+	height: 100%;
+	position: absolute;
+	width: 100%;
+}
+
+.preview-deck-card:nth-child(1) {
+	transform: rotate(-6deg) translate(-16px, 12px);
+}
+
+.preview-deck-card:nth-child(2) {
+	transform: rotate(4deg) translate(8px, 5px);
+}
+
+.preview-deck-card:nth-child(3) {
+	background:
+		linear-gradient(145deg, rgba(49, 92, 75, 0.18), transparent 60%), white;
+	transform: rotate(-1deg);
+}
+
 /* Placeholder card */
 .catalog-card-placeholder {
 	border-style: dashed;
@@ -663,6 +694,127 @@ button {
 	max-width: 62ch;
 }
 
+/* ── Deck demo ─────────────────────────────── */
+
+.deck-demo {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.deck-stage {
+	background:
+		linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 58%),
+		var(--surface-soft);
+	border: 1px solid var(--border-soft);
+	border-radius: var(--radius);
+	display: grid;
+	min-height: 420px;
+	overflow: hidden;
+	place-items: center;
+	position: relative;
+}
+
+.deck-surface {
+	height: min(320px, 72vw);
+	width: min(420px, 78vw);
+}
+
+.deck-demo-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	box-shadow: 0 22px 56px rgba(29, 29, 27, 0.14);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	min-height: 100%;
+	overflow: hidden;
+	padding: 26px;
+}
+
+.deck-demo-card::before {
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.65), transparent 52%),
+		var(--deck-card-tone, var(--accent-soft));
+	border-radius: 7px;
+	content: "";
+	inset: 14px 14px auto;
+	height: 42%;
+	position: absolute;
+}
+
+.deck-demo-card[data-tone="green"] {
+	--deck-card-tone: #dbe9df;
+}
+
+.deck-demo-card[data-tone="ochre"] {
+	--deck-card-tone: #efe3bd;
+}
+
+.deck-demo-card[data-tone="clay"] {
+	--deck-card-tone: #ead3cb;
+}
+
+.deck-demo-card[data-tone="ink"] {
+	--deck-card-tone: #d8d9d4;
+}
+
+.deck-demo-card span {
+	color: var(--accent);
+	font-size: 0.74rem;
+	margin-bottom: 8px;
+}
+
+.deck-demo-card h3,
+.deck-empty-state h3 {
+	font-size: 1rem;
+	font-weight: 450;
+	letter-spacing: 0;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.deck-demo-card p,
+.deck-empty-state p,
+.deck-demo-state {
+	color: var(--muted);
+	font-size: 0.8rem;
+	line-height: 1.6;
+	margin: 8px 0 0;
+}
+
+.deck-swipe-badge {
+	background: var(--ink);
+	border-radius: 999px;
+	color: white;
+	font-size: 0.7rem;
+	line-height: 1;
+	padding: 6px 8px;
+	position: absolute;
+	right: 16px;
+	top: 16px;
+}
+
+.deck-empty-state {
+	align-items: center;
+	background: var(--surface);
+	border: 1px dashed var(--border);
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	inset: 0;
+	justify-content: center;
+	padding: 24px;
+	position: absolute;
+	text-align: center;
+}
+
+.deck-demo-state {
+	margin: 0;
+	padding: 4px 0;
+}
+
 @media (hover: hover) and (pointer: fine) {
 	.catalog-card:not(.catalog-card-placeholder):hover {
 		border-color: var(--border);
@@ -671,6 +823,11 @@ button {
 
 	.catalog-card:not(.catalog-card-placeholder):hover .preview-thumb {
 		background: var(--border);
+	}
+
+	.catalog-card:not(.catalog-card-placeholder):hover
+		.preview-deck-card:nth-child(3) {
+		transform: rotate(3deg) translate(12px, -2px);
 	}
 }
 
@@ -714,6 +871,10 @@ button {
 
 	.stack-preview {
 		min-height: 190px;
+	}
+
+	.deck-stage {
+		min-height: 360px;
 	}
 
 	.aperto-grid[data-columns="3"] {

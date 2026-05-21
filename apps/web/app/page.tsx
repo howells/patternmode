@@ -19,6 +19,12 @@ const components: CatalogEntry[] = [
 			"Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
 		href: "/aperto",
 	},
+	{
+		title: "Deck",
+		description:
+			"Swipeable card decks with cyclic stacks, finite flows, velocity gestures, and keyboard control.",
+		href: "/deck",
+	},
 ];
 
 function CatalogCard({ description, href, title }: CatalogEntry) {
@@ -33,6 +39,12 @@ function CatalogCard({ description, href, title }: CatalogEntry) {
 						<div className="preview-panel" />
 						<div className="preview-panel" />
 						<div className="preview-panel" />
+					</div>
+				) : title === "Deck" ? (
+					<div className="preview-deck" aria-hidden="true">
+						<div className="preview-deck-card" />
+						<div className="preview-deck-card" />
+						<div className="preview-deck-card" />
 					</div>
 				) : (
 					<div className="preview-aperto" aria-hidden="true">

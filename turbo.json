@@ -13,7 +13,11 @@
 		},
 		"dev": {
 			"dependsOn": ["^build"],
-			"with": ["@howells/stacksheet#dev", "@howells/aperto#dev"],
+			"with": [
+				"@howells/stacksheet#dev",
+				"@howells/aperto#dev",
+				"@howells/deck#dev"
+			],
 			"cache": false,
 			"persistent": true
 		},
