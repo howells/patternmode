@@ -2,6 +2,7 @@
 
 import { Deck, type DeckMode, type SwipeDirection } from "@howells/deck";
 import { useState } from "react";
+import { OptionBar } from "./option-bar";
 
 const cards = [
 	{
@@ -37,35 +38,6 @@ const cards = [
 		tone: "ink",
 	},
 ];
-
-function OptionBar<T extends string | number>({
-	label,
-	onChange,
-	options,
-	value,
-}: {
-	label: string;
-	onChange: (value: T) => void;
-	options: { label: string; value: T }[];
-	value: T;
-}) {
-	return (
-		<fieldset className="option-bar">
-			<legend className="option-bar-label">{label}</legend>
-			{options.map((option) => (
-				<button
-					aria-pressed={value === option.value}
-					className="option-bar-item"
-					key={String(option.value)}
-					onClick={() => onChange(option.value)}
-					type="button"
-				>
-					{option.label}
-				</button>
-			))}
-		</fieldset>
-	);
-}
 
 export function DeckDemo() {
 	const [mode, setMode] = useState<DeckMode>("cycle");
