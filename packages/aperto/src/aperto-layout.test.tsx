@@ -114,6 +114,40 @@ afterEach(() => {
 });
 
 describe("Aperto layout projection", () => {
+	it("centers primitive content by default", () => {
+		render(
+			<Aperto.Primitive.Root defaultOpen>
+				<Aperto.Primitive.Content aria-label="Centered panel">
+					Centered content
+				</Aperto.Primitive.Content>
+			</Aperto.Primitive.Root>,
+		);
+
+		expect(screen.getByRole("dialog", { name: "Centered panel" })).toHaveStyle({
+			left: "50%",
+			top: "50%",
+			translate: "-50% -50%",
+		});
+	});
+
+	it("can leave primitive content positioning to the caller", () => {
+		render(
+			<Aperto.Primitive.Root defaultOpen>
+				<Aperto.Primitive.Content
+					aria-label="Unpositioned panel"
+					placement="none"
+				>
+					Custom content
+				</Aperto.Primitive.Content>
+			</Aperto.Primitive.Root>,
+		);
+
+		const content = screen.getByRole("dialog", { name: "Unpositioned panel" });
+		expect(content.style.left).toBe("");
+		expect(content.style.top).toBe("");
+		expect(content.style.translate).toBe("");
+	});
+
 	it("keeps grouped content mounted while switching media", async () => {
 		const user = userEvent.setup();
 		const media: ApertoMediaItem[] = [

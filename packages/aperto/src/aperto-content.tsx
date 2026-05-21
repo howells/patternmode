@@ -37,6 +37,8 @@ export interface ApertoContentProps
 	> {
 	/** Motion preset override for this content panel, independent of the root preset. */
 	motion?: MotionPresetName;
+	/** Built-in positioning strategy. Use "none" for custom primitive compositions. */
+	placement?: "center" | "none";
 	/** Internal shared layout ID override for grouped media. */
 	sharedLayoutId?: string | false;
 }
@@ -47,6 +49,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
 			children,
 			className,
 			motion: motionOverride,
+			placement = "center",
 			sharedLayoutId,
 			style,
 			...props
@@ -122,19 +125,24 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
 		const motionStyle = useMemo(
 			(): MotionStyle => ({
 				cursor: isDragging ? "grabbing" : isDismissible ? "grab" : undefined,
-				left: "50%",
 				opacity: opacityMotion,
 				scale: scaleMotion,
-				top: "50%",
-				translate: "-50% -50%",
 				x: springX,
 				y: springY,
+				...(placement === "center"
+					? {
+							left: "50%",
+							top: "50%",
+							translate: "-50% -50%",
+						}
+					: {}),
 				...style,
 			}),
 			[
 				isDismissible,
 				isDragging,
 				opacityMotion,
+				placement,
 				scaleMotion,
 				springX,
 				springY,

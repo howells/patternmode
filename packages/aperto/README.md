@@ -42,3 +42,9 @@ pnpm add @howells/aperto
 ```
 
 React and React DOM are peer dependencies.
+
+## Primitive transitions
+
+Use `Aperto.Primitive` for custom shared-element dialogs that are not media
+lightboxes. `Aperto.Primitive.Content` is centered by default; pass
+`placement="none"` when the panel should own its own positioning.
