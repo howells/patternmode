@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "next build",
 		"clean": "rm -rf .next .turbo",
-		"dev": "next dev",
+		"dev": "next dev --port 31037",
 		"lint:check": "howells-biome check app components",
 		"typecheck": "tsc --noEmit"
 	},
