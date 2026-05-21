@@ -1,11 +1,11 @@
 "use client";
 
-import { easings } from "@howells/motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, type Transition } from "motion/react";
 import { forwardRef } from "react";
 
 import { useApertoContext } from "./context";
+import { easings } from "./motion-tokens";
 
 export interface ApertoOverlayProps {
 	className?: string;

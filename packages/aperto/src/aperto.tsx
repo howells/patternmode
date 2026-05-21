@@ -80,7 +80,6 @@ interface ApertoGroupContextValue {
 	setIndex: (index: number) => void;
 	sharedLayoutId: string;
 	sharedLayoutIdForIndex: (index: number) => string;
-	sourceLocked: boolean;
 }
 
 const ApertoGroupContext = createContext<ApertoGroupContextValue | null>(null);
@@ -647,11 +646,9 @@ function ApertoGroup({
 			setIndex,
 			sharedLayoutId,
 			sharedLayoutIdForIndex,
-			sourceLocked: closing,
 		}),
 		[
 			classNames,
-			closing,
 			index,
 			media,
 			open,

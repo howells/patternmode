@@ -40,11 +40,11 @@
 		"dev:styles": "tailwindcss -i styles.css -o dist/styles.css --watch",
 		"lint": "howells-biome check src",
 		"lint:check": "howells-biome check src",
+		"prepack": "pnpm build",
 		"test": "vitest run --passWithNoTests",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@howells/motion": "workspace:*",
 		"@radix-ui/react-dialog": "^1.1.15",
 		"lucide-react": "^1.16.0",
 		"motion": "^12.38.0"

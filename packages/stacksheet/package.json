@@ -42,6 +42,7 @@
 		"dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
 		"dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false --watch --preserveWatchOutput",
 		"lint:check": "find src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 howells-biome check",
+		"prepack": "pnpm build",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit"
 	},
