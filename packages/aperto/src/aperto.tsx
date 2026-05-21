@@ -20,6 +20,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { flushSync } from "react-dom";
 
 import { ApertoClose } from "./aperto-close";
 import { ApertoContent } from "./aperto-content";
@@ -568,16 +569,18 @@ function ApertoGroup({
 			);
 			const item = media[thumbIndex];
 
-			setClosing(false);
-			setMediaTransition(
-				sourceRect && item
-					? { from: sourceRect, item, phase: "opening" }
-					: null,
-			);
-			setNavigationDirection(0);
-			setLayoutSourceIndex(thumbIndex);
-			setIndex(thumbIndex);
-			setOpen(true);
+			flushSync(() => {
+				setClosing(false);
+				setMediaTransition(
+					sourceRect && item
+						? { from: sourceRect, item, phase: "opening" }
+						: null,
+				);
+				setNavigationDirection(0);
+				setLayoutSourceIndex(thumbIndex);
+				setIndex(thumbIndex);
+				setOpen(true);
+			});
 		},
 		[media, setIndex],
 	);
@@ -599,12 +602,14 @@ function ApertoGroup({
 			return;
 		}
 
-		setClosing(true);
-		setMediaTransition({
-			from: sourceRect,
-			item: activeMedia,
-			phase: "closing",
-			to: targetRect,
+		flushSync(() => {
+			setClosing(true);
+			setMediaTransition({
+				from: sourceRect,
+				item: activeMedia,
+				phase: "closing",
+				to: targetRect,
+			});
 		});
 	}, [activeMedia, closing, index, open]);
 
