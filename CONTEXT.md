@@ -137,6 +137,134 @@ A layout where the consumer owns **Sheet** structure using Stacksheet-provided p
 A composable building block used inside a **Composable Layout**.
 _Avoid_: Treating Sheet Parts as generic typography or button components
 
+### Swatch
+
+**Swatch**:
+A compact representation of a **Visual Value**.
+_Avoid_: Treating Swatch as only a product color chip
+
+**Visual Value**:
+A color, gradient, weighted palette, image, or other visual source represented by a **Swatch**.
+_Avoid_: Material as the general term unless physical surface properties are intended
+
+**Transparent Visual Value**:
+A **Visual Value** with partial or full alpha transparency.
+_Avoid_: Rendering transparency as plain white or empty space
+
+**Transparency Backdrop**:
+A visible backdrop affordance behind a **Transparent Visual Value**.
+_Avoid_: Depending only on automatic CSS alpha detection
+
+**Weighted Palette Swatch**:
+A single **Swatch** whose fill is divided across multiple colors according to ratios.
+_Avoid_: Calling this a gradient when the ratios represent palette proportions
+
+**Selected Swatch**:
+A **Swatch** that communicates active selection through ring and optional icon state.
+_Avoid_: Making selection depend on color alone
+
+**Unavailable Swatch**:
+A **Swatch** representing a **Visual Value** that exists but is not currently available for use.
+_Avoid_: Treating unavailable as disabled interaction, missing data, or invalid value
+
+**Empty Swatch**:
+A **Swatch** placeholder shown when no **Visual Value** is present or resolvable.
+_Avoid_: Representing absence as an intentional neutral color
+
+**Swatch Label**:
+Text outside a **Swatch** that names or describes its **Visual Value**.
+_Avoid_: Rendering names, token values, or contrast scores as core Swatch content
+
+**Swatch Remove Affordance**:
+An optional control that requests removal of the **Visual Value** represented by a **Swatch**.
+_Avoid_: Treating removal as collection management owned by Swatch
+
+**Selectable Swatch**:
+A **Swatch** composed inside a separate interactive selection control.
+_Avoid_: Making Swatch own picker interaction or selection state
+
+**Swatch Representation**:
+The **Visual Value** or availability state shown by a **Swatch**.
+_Avoid_: Treating representation as editing, copying, sorting, or picker workflow
+
+### ScrollFrame
+
+**ScrollFrame**:
+A Radix-based scroll container with measured Patternmode affordances.
+_Avoid_: Scroll Area as the canonical Patternmode component name
+
+**Scroll Area Primitive**:
+The Radix Scroll Area anatomy that provides Root, Viewport, Scrollbar, Thumb, and Corner parts.
+_Avoid_: Reimplementing Radix scroll anatomy inside Patternmode
+
+**Scroll Plumbing**:
+The structural Radix parts required for **ScrollFrame** to scroll reliably.
+_Avoid_: Making consumers remember invisible required parts
+
+**Viewport**:
+The element that owns native scroll position inside a **ScrollFrame**.
+_Avoid_: Measuring the outer wrapper when fade state depends on scroll position
+
+**Edge Fade**:
+A non-interactive visual affordance that indicates hidden scrollable content.
+_Avoid_: Rendering a permanent fade when the viewport is already at that edge
+
+**Eased Edge Fade**:
+An **Edge Fade** whose gradient curve is tuned to reduce visible banding.
+_Avoid_: Using a naive linear fade when a smoother fade is required
+
+**Fade Color**:
+The background color an **Edge Fade** blends into.
+_Avoid_: Assuming every edge fades into the same surface
+
+**Scroll Edge State**:
+The measured **Viewport** state describing whether content is scrollable and whether it is at the start or end edge.
+_Avoid_: Measuring separate edge state for fades and movement controls
+
+**Scroll Axis**:
+A measured direction of **Viewport** overflow, either vertical or horizontal.
+_Avoid_: Limiting ScrollFrame to one axis when Radix supports both
+
+**Scrollbar Visibility**:
+The visual presentation of ScrollFrame scrollbars.
+_Avoid_: Treating hidden scrollbars as omitted scroll plumbing
+
+**Scroll Movement Control**:
+An optional control that moves the **Viewport** backward or forward along the measured scroll axis.
+_Avoid_: Treating movement controls as pagination or virtualized list navigation
+
+**Overflow-Aware Control**:
+A **Scroll Movement Control** whose visibility or enabled state follows measured **Viewport** overflow and edge position.
+_Avoid_: Always showing movement controls when content already fits
+
+**Control Visibility Policy**:
+The rule for hiding or disabling **Overflow-Aware Controls** when movement is not useful.
+_Avoid_: Applying one visibility rule to both inline and overlay controls
+
+**ScrollFrame Part**:
+A composable piece of ScrollFrame anatomy or affordance.
+_Avoid_: Forcing custom layouts through composed-component props only
+
+**ScrollFrame Context**:
+The scoped state and movement API shared by **ScrollFrame Parts**.
+_Avoid_: Treating ScrollFrame context as a page-level scroll hook
+
+**Named Scroll Region**:
+A **ScrollFrame** with an accessible name that can be exposed as a region.
+_Avoid_: Creating unnamed landmarks for every scrollable container
+
+**Scroll Step**:
+The distance a **Scroll Movement Control** moves the **Viewport**.
+_Avoid_: Inferring item boundaries before item-aware movement is explicitly supported
+
+**Page Step**:
+A **Scroll Step** based on most of the current **Viewport** size.
+_Avoid_: Moving a full viewport when preserving context is useful
+
+**Scroll Behavior**:
+The native scrolling behavior used by **Scroll Movement Controls**.
+_Avoid_: Ignoring reduced-motion preferences for smooth movement
+
 ## Relationships
 
 ### Deck
@@ -174,6 +302,55 @@ _Avoid_: Treating Sheet Parts as generic typography or button components
 - A **Snap** changes the **Active Sheet** resting position but does not change the **Sheet Stack**.
 - **Classic Layout** and **Composable Layout** affect rendering responsibility, not **Navigation**, **Dismissal**, or modality.
 - **Sheet Title** and **Sheet Description** parts provide accessibility relationships for the **Panel** in **Composable Layout**.
+
+### Swatch
+
+- A **Swatch** represents one **Visual Value**.
+- A **Visual Value** can be a solid color, CSS background, child media, or weighted color stops.
+- A **Transparent Visual Value** should use a visible backdrop affordance so transparency is distinguishable from white or absence.
+- A **Transparency Backdrop** may be explicitly requested when transparency cannot be inferred from the **Visual Value**.
+- Swatch APIs should use `transparencyBackdrop` for the **Transparency Backdrop** option.
+- A **Weighted Palette Swatch** uses ratios to communicate color proportions, not decorative gradient direction.
+- A **Weighted Palette Swatch** preserves the supplied color order.
+- **Weighted Palette Swatch** ratios are non-negative weights; missing ratios default to equal weight.
+- If all **Weighted Palette Swatch** ratios are zero or invalid, segments should fall back to equal weights.
+- A **Selected Swatch** should remain readable regardless of fill color.
+- An **Unavailable Swatch** communicates availability only; parent controls own disabled interaction semantics.
+- An **Empty Swatch** communicates absence; it is distinct from an **Unavailable Swatch**.
+- A **Swatch Label** belongs beside or around a **Swatch**, not inside the core representation.
+- Swatch shape is visual; it does not define the kind of **Visual Value** represented.
+- A **Selectable Swatch** uses Swatch for representation while the parent control owns selection behavior.
+- Swatch extensions should improve **Swatch Representation**, not own surrounding workflows.
+- A **Swatch Remove Affordance** requests removal only; consumer code owns whether and how the collection changes.
+
+### ScrollFrame
+
+- A **ScrollFrame** extends the Radix **Scroll Area Primitive** with Patternmode affordances.
+- The package and public component should use **ScrollFrame**, not Scroll Area.
+- The composed **ScrollFrame** should include required **Scroll Plumbing** by default.
+- A **ScrollFrame** owns one measured **Viewport**.
+- **Scroll Edge State** is derived from actual **Viewport** scroll position.
+- **Edge Fades** and **Overflow-Aware Controls** derive from the same **Scroll Edge State**.
+- **Edge Fades** may be enabled through composed props or rendered as **ScrollFrame Parts**.
+- **Edge Fades** are passive and should not intercept pointer input.
+- **Edge Fades** should use eased gradients and support custom fade colors.
+- **Fade Color** may be global by default and overridden per edge when surrounding surfaces differ.
+- A **ScrollFrame** should preserve Radix parity for vertical, horizontal, and both-axis scrolling.
+- Patternmode affordances should be configured per **Scroll Axis** when both axes are present.
+- `axes` should describe supported **Scroll Axes** on the composed **ScrollFrame**.
+- `scrollbars` should describe **Scrollbar Visibility**, not whether required **Scroll Plumbing** exists.
+- Hidden scrollbars should not disable native scrolling or edge measurement.
+- **Scroll Movement Controls** move native scroll position; they do not own content pagination.
+- **Scroll Movement Controls** are opt-in active UI.
+- **Scroll Movement Controls** may be enabled through composed props or rendered as **ScrollFrame Parts**.
+- Custom **ScrollFrame Parts** may use **ScrollFrame Context** for edge state and movement helpers.
+- **Overflow-Aware Controls** should appear or enable only when useful for the measured **Viewport** state.
+- **Control Visibility Policy** may differ for reserved inline controls and floating overlay controls.
+- Initial **Scroll Movement Controls** use fixed **Scroll Steps**, not item-aware navigation.
+- The default **Scroll Step** should be a **Page Step** that preserves some visible context.
+- The default **Scroll Behavior** should be smooth unless reduced motion is requested.
+- **Scroll Movement Controls** should not move focus by default.
+- A **Named Scroll Region** may expose region semantics; unnamed **ScrollFrames** should avoid extra landmark noise.
 
 ## Example dialogue
 
@@ -242,3 +419,44 @@ _Avoid_: Treating Sheet Parts as generic typography or button components
 - "Swipe" could describe all pointer movement — resolved: **Drag** is continuous input; **Swipe** is a completed drag that causes **Dismissal**.
 - "Snap" could be confused with stack navigation — resolved: **Snap** only changes the **Active Sheet** resting position.
 - "Composable" could sound like a different navigation model — resolved: **Composable Layout** only changes rendering responsibility.
+
+### Swatch
+
+- "Swatch" could mean only a circular color chip — resolved: a **Swatch** represents a **Visual Value**, which can include gradients, child media, and weighted palettes.
+- "Material" could describe visual sources broadly — resolved: use **Visual Value** unless physical surface properties are intended.
+- "Transparent" could look identical to white or empty space — resolved: **Transparent Visual Value** requires a visible backdrop affordance.
+- CSS alpha cannot be inferred reliably for every visual source — resolved: expose an explicit **Transparency Backdrop** concept and treat detection as best-effort only.
+- "Gradient" and "weighted palette" can look similar — resolved: use **Weighted Palette Swatch** when stops represent ratios.
+- Weighted palette colors could be sorted by dominance — resolved: preserve supplied order; consumers sort before passing colors when needed.
+- Negative or invalid weighted palette ratios could produce reversed segments — resolved: treat ratios as non-negative weights and fall back to equal weights when no positive weights remain.
+- Shape could imply a specific visual value type — resolved: shape is a visual choice, not a semantic distinction.
+- "Unavailable" could mean disabled, missing, invalid, or out of stock — resolved: **Unavailable Swatch** means the **Visual Value** exists but is not currently available for use.
+- An unresolved or absent value could appear as a neutral color — resolved: use **Empty Swatch** for absent **Visual Values**.
+- Labels, token names, and contrast scores could be rendered inside Swatch — resolved: use **Swatch Label** outside the core **Swatch** representation.
+- "Remove" could imply Swatch owns collection management — resolved: **Swatch Remove Affordance** only requests removal; consumer code owns the resulting workflow.
+- "Swatch" could imply a picker control — resolved: **Swatch** is a representation primitive; selection behavior belongs to a parent control.
+- "Extension" could mean adding workflow features — resolved: extend **Swatch Representation** fidelity rather than copying, editing, sorting, or picker behavior.
+
+### ScrollFrame
+
+- "Scroll Area" could mean any scrollable page region or the underlying Radix primitive — resolved: **ScrollFrame** is the canonical Patternmode component name.
+- The package could stay `@howells/scroll-area` while the concept is **ScrollFrame** — resolved: rename the public package and component to **ScrollFrame**.
+- "ScrollFrame" could mean reimplementing scroll anatomy — resolved: Radix owns the **Scroll Area Primitive**; Patternmode layers measurement, fades, and movement controls.
+- Forgetting an invisible primitive part can break scrolling — resolved: the composed **ScrollFrame** owns required **Scroll Plumbing**.
+- Fades and movement controls could duplicate measurement logic — resolved: derive both from shared **Scroll Edge State**.
+- Fades could be only automatic or only manually composed — resolved: support both composed props and **ScrollFrame Parts**.
+- Fades could block interaction with scroll content — resolved: **Edge Fades** are passive and non-interactive.
+- Linear fades can show visible banding — resolved: use **Eased Edge Fades** with custom fade colors.
+- Fade color could be one-size-fits-all — resolved: support a global **Fade Color** with per-edge overrides.
+- Single-axis measurement would fall short of Radix parity — resolved: **ScrollFrame** supports vertical, horizontal, and both-axis scrolling, with affordances configured per **Scroll Axis**.
+- Scrollbar visibility could be confused with structural omission — resolved: `scrollbars` controls presentation only; **Scroll Plumbing** remains mounted.
+- Previous/next controls could imply carousel-style item navigation — resolved: **Scroll Movement Controls** initially use fixed **Scroll Steps**.
+- Movement controls could imply item focus management — resolved: **Scroll Movement Controls** change scroll position, not active item focus.
+- Movement controls could appear even when content fits — resolved: use **Overflow-Aware Controls** driven by measured **Viewport** state.
+- Hidden versus disabled controls depends on placement — resolved: make it a **Control Visibility Policy**, not a fixed semantic rule.
+- Controls could be only automatic or only manually composed — resolved: support both composed props and **ScrollFrame Parts**.
+- Custom controls need shared movement state — resolved: expose **ScrollFrame Context** through a scoped hook.
+- Page movement could jump exactly one viewport — resolved: default **Page Step** should move most of the **Viewport** while preserving context.
+- Smooth movement could ignore motion preferences — resolved: default **Scroll Behavior** respects reduced motion.
+- Scroll containers could create noisy unnamed landmarks — resolved: only a **Named Scroll Region** should expose region semantics by default.
+- "Fade" could be static decoration — resolved: **Edge Fade** visibility follows measured **Viewport** edge state.

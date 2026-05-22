@@ -4,7 +4,8 @@ import "./globals.css";
 import "@howells/stacksheet/styles.css";
 import "@howells/aperto/styles.css";
 import "@howells/deck/styles.css";
-import "@howells/button/styles.css";
+import "@howells/swatch/styles.css";
+import "@howells/scroll-frame/styles.css";
 
 export const metadata: Metadata = {
 	description: "Minimal catalog for Howells UI tools.",

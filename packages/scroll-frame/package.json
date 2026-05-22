@@ -1,0 +1,82 @@
+{
+	"name": "@howells/scroll-frame",
+	"version": "0.1.0",
+	"private": false,
+	"description": "A Radix-based scroll frame with measured fades and movement controls.",
+	"type": "module",
+	"sideEffects": [
+		"**/*.css"
+	],
+	"license": "MIT",
+	"author": "Daniel Howells",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/howells/patternmode.git",
+		"directory": "packages/scroll-frame"
+	},
+	"bugs": {
+		"url": "https://github.com/howells/patternmode/issues"
+	},
+	"homepage": "https://github.com/howells/patternmode/tree/main/packages/scroll-frame#readme",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		},
+		"./styles.css": "./dist/styles.css",
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsdown && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false && pnpm build:styles",
+		"build:styles": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
+		"clean": "rm -rf dist .turbo",
+		"dev": "concurrently \"pnpm dev:js\" \"pnpm dev:types\" \"pnpm dev:styles\"",
+		"dev:js": "tsdown --watch",
+		"dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
+		"dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false --watch --preserveWatchOutput",
+		"lint:check": "find src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 howells-biome check",
+		"prepack": "pnpm build",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit"
+	},
+	"keywords": [
+		"scroll-frame",
+		"scroll-area",
+		"scroll-fade",
+		"react",
+		"component",
+		"patternmode"
+	],
+	"dependencies": {
+		"@radix-ui/react-scroll-area": "^1.2.10",
+		"@radix-ui/react-slot": "^1.2.4"
+	},
+	"peerDependencies": {
+		"react": "^18.0.0 || ^19.0.0",
+		"react-dom": "^18.0.0 || ^19.0.0"
+	},
+	"devDependencies": {
+		"@howells/lint": "^0.1.7",
+		"@howells/typescript-config": "^0.1.2",
+		"@tailwindcss/cli": "^4.3.0",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"concurrently": "^9.2.1",
+		"jsdom": "^29.1.1",
+		"tailwindcss": "^4.3.0",
+		"tsdown": "^0.22.0",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.6"
+	}
+}

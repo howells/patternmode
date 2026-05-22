@@ -26,10 +26,16 @@ const components: CatalogEntry[] = [
 		href: "/deck",
 	},
 	{
-		title: "Button",
+		title: "Swatch",
 		description:
-			"Responsive controls with icons, loading states, slots, dots, and predictable sizing.",
-		href: "/button",
+			"Color, gradient, image, and weighted palette swatches with selection affordances.",
+		href: "/swatch",
+	},
+	{
+		title: "ScrollFrame",
+		description:
+			"Radix-backed scroll containers with eased fades and movement controls.",
+		href: "/scroll-frame",
 	},
 ];
 
@@ -52,8 +58,17 @@ function CatalogCard({ description, href, title }: CatalogEntry) {
 						<div className="preview-deck-card" />
 						<div className="preview-deck-card" />
 					</div>
-				) : title === "Button" ? (
-					<div className="preview-button-set" aria-hidden="true">
+				) : title === "Swatch" ? (
+					<div className="preview-swatch-set" aria-hidden="true">
+						<span />
+						<span />
+						<span />
+						<span />
+					</div>
+				) : title === "ScrollFrame" ? (
+					<div className="preview-scroll-area" aria-hidden="true">
+						<span />
+						<span />
 						<span />
 						<span />
 						<span />

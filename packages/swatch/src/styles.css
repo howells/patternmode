@@ -1,0 +1,176 @@
+@layer components {
+	.howells-swatch {
+		--howells-swatch-size: 2rem;
+		--howells-swatch-fill: #e3e1dc;
+		--howells-swatch-radius: 999px;
+		align-items: center;
+		aspect-ratio: 1;
+		border-radius: var(--howells-swatch-radius);
+		box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
+		color: white;
+		display: inline-flex;
+		height: var(--howells-swatch-size);
+		justify-content: center;
+		position: relative;
+		transition:
+			box-shadow 140ms ease,
+			opacity 140ms ease,
+			transform 140ms ease;
+		vertical-align: middle;
+		width: var(--howells-swatch-size);
+	}
+
+	.howells-swatch[data-tone="light"] {
+		color: #1d1d1b;
+	}
+
+	.howells-swatch[data-shape="pill"] {
+		--howells-swatch-radius: 999px;
+		aspect-ratio: auto;
+		width: calc(var(--howells-swatch-size) * 3);
+	}
+
+	.howells-swatch[data-shape="square"] {
+		--howells-swatch-radius: 7px;
+	}
+
+	.howells-swatch[data-size="2xs"] {
+		--howells-swatch-size: 1rem;
+	}
+
+	.howells-swatch[data-size="xs"] {
+		--howells-swatch-size: 1.25rem;
+	}
+
+	.howells-swatch[data-size="sm"] {
+		--howells-swatch-size: 1.5rem;
+	}
+
+	.howells-swatch[data-size="lg"] {
+		--howells-swatch-size: 2.5rem;
+	}
+
+	.howells-swatch[data-size="xl"] {
+		--howells-swatch-size: 3rem;
+	}
+
+	.howells-swatch[data-size="2xl"] {
+		--howells-swatch-size: 3.5rem;
+	}
+
+	.howells-swatch[data-size="3xl"] {
+		--howells-swatch-size: 4rem;
+	}
+
+	.howells-swatch[data-raised="true"] {
+		box-shadow:
+			0 1px 2px rgb(17 24 39 / 10%),
+			0 0 0 2px var(--surface, #fff);
+	}
+
+	.howells-swatch[data-selected="true"][data-show-ring="true"] {
+		box-shadow:
+			0 1px 2px rgb(17 24 39 / 10%),
+			0 0 0 2px var(--surface, #fff),
+			0 0 0 4px var(--accent, #315c4b);
+	}
+
+	.howells-swatch[data-unavailable="true"] {
+		opacity: 0.5;
+	}
+
+	.howells-swatch__fill,
+	.howells-swatch__media,
+	.howells-swatch__scrim {
+		border-radius: inherit;
+		inset: 0;
+		overflow: hidden;
+		position: absolute;
+	}
+
+	.howells-swatch__fill {
+		background: var(--howells-swatch-fill);
+	}
+
+	.howells-swatch__media > * {
+		display: block;
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
+
+	.howells-swatch__scrim {
+		background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 20%) 100%);
+		pointer-events: none;
+	}
+
+	.howells-swatch__icon {
+		align-items: center;
+		display: inline-flex;
+		inset: 0;
+		justify-content: center;
+		position: absolute;
+	}
+
+	.howells-swatch__icon svg {
+		display: block;
+		height: 48%;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2.4;
+		width: 48%;
+	}
+
+	.howells-swatch__slash {
+		background: currentColor;
+		border-radius: 999px;
+		height: 2px;
+		position: absolute;
+		transform: rotate(-45deg);
+		width: 112%;
+	}
+
+	.howells-swatch__remove {
+		align-items: center;
+		background: var(--ink, #1d1d1b);
+		border: 0;
+		border-radius: 999px;
+		color: var(--surface, #fff);
+		cursor: pointer;
+		display: inline-flex;
+		height: 1.25rem;
+		justify-content: center;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		right: -0.35rem;
+		top: -0.35rem;
+		transition:
+			background 140ms ease,
+			opacity 140ms ease;
+		width: 1.25rem;
+	}
+
+	.howells-swatch:hover .howells-swatch__remove,
+	.howells-swatch__remove:focus-visible {
+		opacity: 1;
+	}
+
+	.howells-swatch__remove:hover {
+		background: var(--accent, #315c4b);
+	}
+
+	.howells-swatch__remove:focus-visible {
+		outline: 2px solid var(--accent, #315c4b);
+		outline-offset: 2px;
+	}
+
+	.howells-swatch__remove svg {
+		height: 0.8rem;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-width: 2;
+		width: 0.8rem;
+	}
+}

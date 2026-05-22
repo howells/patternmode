@@ -2,7 +2,13 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
-const publicPackages = ["packages/stacksheet", "packages/aperto"];
+const publicPackages = [
+	"packages/stacksheet",
+	"packages/aperto",
+	"packages/deck",
+	"packages/swatch",
+	"packages/scroll-frame",
+];
 const privatePackages = [
 	"apps/web/package.json",
 	"packages/site-ui/package.json",

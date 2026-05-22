@@ -17,7 +17,8 @@
 				"@howells/stacksheet#dev",
 				"@howells/aperto#dev",
 				"@howells/deck#dev",
-				"@howells/button#dev"
+				"@howells/swatch#dev",
+				"@howells/scroll-frame#dev"
 			],
 			"cache": false,
 			"persistent": true

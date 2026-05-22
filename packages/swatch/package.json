@@ -1,8 +1,8 @@
 {
-	"name": "@howells/button",
+	"name": "@howells/swatch",
 	"version": "0.1.0",
 	"private": false,
-	"description": "A precise, responsive React button primitive for Patternmode interfaces.",
+	"description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
 	"type": "module",
 	"sideEffects": [
 		"**/*.css"
@@ -12,12 +12,12 @@
 	"repository": {
 		"type": "git",
 		"url": "git+ssh://git@github.com/howells/patternmode.git",
-		"directory": "packages/button"
+		"directory": "packages/swatch"
 	},
 	"bugs": {
 		"url": "https://github.com/howells/patternmode/issues"
 	},
-	"homepage": "https://github.com/howells/patternmode/tree/main/packages/button#readme",
+	"homepage": "https://github.com/howells/patternmode/tree/main/packages/swatch#readme",
 	"files": [
 		"dist"
 	],
@@ -49,16 +49,13 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"keywords": [
-		"button",
+		"swatch",
+		"palette",
+		"color",
 		"react",
 		"component",
-		"design-system",
 		"patternmode"
 	],
-	"dependencies": {
-		"@radix-ui/react-slot": "^1.2.4",
-		"motion": "^12.38.0"
-	},
 	"peerDependencies": {
 		"react": "^18.0.0 || ^19.0.0",
 		"react-dom": "^18.0.0 || ^19.0.0"
@@ -69,6 +66,7 @@
 		"@tailwindcss/cli": "^4.3.0",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"concurrently": "^9.2.1",
