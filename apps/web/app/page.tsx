@@ -25,6 +25,12 @@ const components: CatalogEntry[] = [
 			"Swipeable card decks with cyclic stacks, finite flows, velocity gestures, and keyboard control.",
 		href: "/deck",
 	},
+	{
+		title: "Button",
+		description:
+			"Responsive controls with icons, loading states, slots, dots, and predictable sizing.",
+		href: "/button",
+	},
 ];
 
 function CatalogCard({ description, href, title }: CatalogEntry) {
@@ -45,6 +51,12 @@ function CatalogCard({ description, href, title }: CatalogEntry) {
 						<div className="preview-deck-card" />
 						<div className="preview-deck-card" />
 						<div className="preview-deck-card" />
+					</div>
+				) : title === "Button" ? (
+					<div className="preview-button-set" aria-hidden="true">
+						<span />
+						<span />
+						<span />
 					</div>
 				) : (
 					<div className="preview-aperto" aria-hidden="true">

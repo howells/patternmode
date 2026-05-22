@@ -16,7 +16,8 @@
 			"with": [
 				"@howells/stacksheet#dev",
 				"@howells/aperto#dev",
-				"@howells/deck#dev"
+				"@howells/deck#dev",
+				"@howells/button#dev"
 			],
 			"cache": false,
 			"persistent": true

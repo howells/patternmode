@@ -1,3 +1,5 @@
+"use client";
+
 export {
 	BUTTON_APPEARANCES,
 	BUTTON_BASE_SIZES,

@@ -32,6 +32,9 @@ importers:
       '@howells/aperto':
         specifier: workspace:*
         version: link:../../packages/aperto
+      '@howells/button':
+        specifier: workspace:*
+        version: link:../../packages/button
       '@howells/deck':
         specifier: workspace:*
         version: link:../../packages/deck

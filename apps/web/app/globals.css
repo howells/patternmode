@@ -636,6 +636,35 @@ button {
 	transform: rotate(-1deg);
 }
 
+/* Button preview — compact controls */
+.preview-button-set {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 54%;
+}
+
+.preview-button-set span {
+	background: var(--ink);
+	border-radius: 999px;
+	display: block;
+	height: 26px;
+	width: 74%;
+}
+
+.preview-button-set span:nth-child(2) {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	width: 100%;
+}
+
+.preview-button-set span:nth-child(3) {
+	background: var(--accent-soft);
+	border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+	width: 46%;
+}
+
 /* Placeholder card */
 .catalog-card-placeholder {
 	border-style: dashed;
@@ -777,6 +806,30 @@ button {
 .deck-demo-state {
 	margin: 0;
 	padding: 4px 0;
+}
+
+/* ── Button demo ───────────────────────────── */
+
+.button-demo {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.button-demo-row,
+.button-demo-responsive {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.button-demo-responsive {
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	border-radius: var(--radius);
+	padding: 14px;
 }
 
 @media (hover: hover) and (pointer: fine) {
