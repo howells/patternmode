@@ -703,14 +703,9 @@ button {
 }
 
 .deck-stage {
-	background:
-		linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 58%),
-		var(--surface-soft);
-	border: 1px solid var(--border-soft);
-	border-radius: var(--radius);
 	display: grid;
 	min-height: 420px;
-	overflow: hidden;
+	overflow: visible;
 	place-items: center;
 	position: relative;
 }
