@@ -55,6 +55,7 @@ vi.mock("motion/react", () => {
 		...props
 	}: MotionTestProps) => ({
 		...props,
+		"data-drag": _drag === undefined ? undefined : String(_drag),
 		"data-layout": layout === undefined ? undefined : String(layout),
 		"data-layout-id": layoutId,
 	});
@@ -146,6 +147,84 @@ describe("Aperto layout projection", () => {
 		expect(content.style.left).toBe("");
 		expect(content.style.top).toBe("");
 		expect(content.style.translate).toBe("");
+	});
+
+	it("allows single media drag dismissal to be disabled", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem = {
+			type: "image",
+			src: "/large.jpg",
+			alt: "A mountain at sunrise",
+			title: "Morning ridge",
+		};
+
+		render(<Aperto dismissible={false} media={media} />);
+
+		await user.click(
+			screen.getByRole("button", { name: "Open Morning ridge" }),
+		);
+
+		expect(
+			screen.getByRole("dialog", { name: "Morning ridge" }),
+		).toHaveAttribute("data-drag", "false");
+	});
+
+	it("allows grouped media drag dismissal to be disabled", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/first-large.jpg",
+				alt: "Ceramic vessels on linen",
+				title: "Studio table",
+			},
+			{
+				type: "image",
+				src: "/second-large.jpg",
+				alt: "A quiet reading nook",
+				title: "Soft afternoon",
+			},
+		];
+
+		render(
+			<Aperto.Group dismissible={false} media={media}>
+				<Aperto.Thumbnail index={0} />
+				<Aperto.Thumbnail index={1} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Studio table" }));
+
+		expect(
+			screen.getByRole("dialog", { name: "Studio table" }),
+		).toHaveAttribute("data-drag", "false");
+	});
+
+	it("keeps grouped media draggable when using custom dismissal thresholds", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/first-large.jpg",
+				alt: "Ceramic vessels on linen",
+				title: "Studio table",
+			},
+		];
+
+		render(
+			<Aperto.Group
+				dismissible={{ threshold: 180, velocity: 900 }}
+				media={media}
+			>
+				<Aperto.Thumbnail index={0} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Studio table" }));
+
+		expect(
+			screen.getByRole("dialog", { name: "Studio table" }),
+		).toHaveAttribute("data-drag", "true");
 	});
 
 	it("keeps grouped content mounted while switching media", async () => {

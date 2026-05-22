@@ -26,7 +26,7 @@ const media: ApertoMediaItem[] = [
 
 export function PreviewGrid() {
   return (
-    <Aperto.Group media={media}>
+    <Aperto.Group media={media} dismissible={{ threshold: 120, velocity: 600 }}>
       {media.map((item, index) => (
         <Aperto.Thumbnail key={item.id ?? item.src} index={index} />
       ))}
@@ -42,6 +42,12 @@ pnpm add @howells/aperto
 ```
 
 React and React DOM are peer dependencies.
+
+## Drag dismissal
+
+Expanded media can be dismissed by dragging past a distance or velocity
+threshold. Pass `dismissible={false}` to disable drag dismissal, or pass
+`{ threshold, velocity }` to tune the gesture.
 
 ## Primitive transitions
 

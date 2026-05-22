@@ -40,6 +40,7 @@ import {
 import type {
 	ApertoClassNames,
 	ApertoMediaItem,
+	DismissibleConfig,
 	MotionPresetName,
 	MotionVariants,
 	NavigationMotionPresetName,
@@ -49,6 +50,8 @@ import type {
 
 export interface ApertoProps {
 	classNames?: ApertoClassNames;
+	/** Whether dragging can dismiss the expanded media (default: true). */
+	dismissible?: boolean | DismissibleConfig;
 	media: ApertoMediaItem;
 	renderImage?: RenderImage;
 	renderVideo?: RenderVideo;
@@ -57,6 +60,8 @@ export interface ApertoProps {
 export interface ApertoGroupProps {
 	children: ReactNode;
 	classNames?: ApertoClassNames;
+	/** Whether dragging can dismiss the expanded media (default: true). */
+	dismissible?: boolean | DismissibleConfig;
 	index?: number;
 	initialIndex?: number;
 	media: ApertoMediaItem[];
@@ -93,6 +98,7 @@ function shouldIgnoreKeyboardNavigationTarget(
 
 function ApertoSingle({
 	classNames,
+	dismissible,
 	media,
 	renderImage,
 	renderVideo,
@@ -101,7 +107,7 @@ function ApertoSingle({
 	const title = media.title ?? label;
 
 	return (
-		<ApertoRoot>
+		<ApertoRoot dismissible={dismissible}>
 			<ApertoTrigger
 				aria-label={`Open ${label}`}
 				className={classNames?.thumbnail}
@@ -133,6 +139,7 @@ function ApertoSingle({
 function ApertoGroup({
 	children,
 	classNames,
+	dismissible,
 	index: controlledIndex,
 	initialIndex = 0,
 	media,
@@ -360,6 +367,7 @@ function ApertoGroup({
 	return (
 		<ApertoGroupContext.Provider value={value}>
 			<ApertoRoot
+				dismissible={dismissible}
 				motion={motionProp}
 				onOpenChange={handleOpenChange}
 				open={open}

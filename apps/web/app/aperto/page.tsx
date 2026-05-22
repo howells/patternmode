@@ -33,6 +33,12 @@ const apertoApi: ApiSection[] = [
 				description: "Expanded-media navigation transition style.",
 			},
 			{
+				name: "dismissible",
+				type: "boolean | { threshold?: number; velocity?: number }",
+				defaultValue: "true",
+				description: "Drag-to-dismiss behavior for the expanded media surface.",
+			},
+			{
 				name: "classNames",
 				type: "ApertoClassNames",
 				description:
