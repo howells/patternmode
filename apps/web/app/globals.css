@@ -779,18 +779,6 @@ button {
 	margin: 8px 0 0;
 }
 
-.deck-swipe-badge {
-	background: var(--ink);
-	border-radius: 999px;
-	color: white;
-	font-size: 0.7rem;
-	line-height: 1;
-	padding: 6px 8px;
-	position: absolute;
-	right: 16px;
-	top: 16px;
-}
-
 .deck-empty-state {
 	align-items: center;
 	background: var(--surface);

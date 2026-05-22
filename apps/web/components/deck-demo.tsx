@@ -53,11 +53,6 @@ export function DeckDemo() {
 					key={mode}
 					mode={mode}
 					onSwipe={({ direction }) => setLastSwipe(direction)}
-					renderOverlay={({ active, direction }) =>
-						active && direction ? (
-							<span className="deck-swipe-badge">{direction}</span>
-						) : null
-					}
 					rotation={7}
 					visibleCount={visibleCount}
 				>
