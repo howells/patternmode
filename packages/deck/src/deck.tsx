@@ -19,6 +19,7 @@ import {
 } from "react";
 
 import {
+	getDeckRenderKey,
 	getNextDeckIndex,
 	getSwipeDecision,
 	getVisibleDeckItems,
@@ -103,6 +104,7 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 	) => {
 		const generatedId = useId();
 		const [internalIndex, setInternalIndex] = useState(defaultIndex);
+		const [visualBaseIndex, setVisualBaseIndex] = useState(defaultIndex);
 		const [lastDirection, setLastDirection] = useState<SwipeDirection | null>(
 			null,
 		);
@@ -148,6 +150,11 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 
 				if (!controlled) {
 					setInternalIndex(nextIndex);
+				}
+				if (mode === "cycle") {
+					setVisualBaseIndex((current) => current + 1);
+				} else {
+					setVisualBaseIndex(nextIndex);
 				}
 
 				onIndexChange?.(nextIndex);
@@ -243,6 +250,8 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 						const active = depth === 0;
 						const card = item.element as DeckCardElement;
 						const cardProps = card.props;
+						const absoluteVisualIndex =
+							(mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
 						const cardStyle = {
 							...cardProps.style,
 							"--deck-depth": depth,
@@ -311,7 +320,12 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 									timeConstant: 350,
 								}}
 								initial={false}
-								key={item.id}
+								key={getDeckRenderKey(
+									item.id,
+									absoluteVisualIndex,
+									cards.length,
+									mode,
+								)}
 								onDrag={active && !disabled ? handleDrag : undefined}
 								onDragEnd={active && !disabled ? handleDragEnd : undefined}
 								style={cardStyle}

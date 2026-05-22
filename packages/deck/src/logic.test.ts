@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	getDeckRenderKey,
 	getNextDeckIndex,
 	getSwipeDecision,
 	getVisibleDeckItems,
@@ -44,6 +45,18 @@ describe("getNextDeckIndex", () => {
 
 	it("returns zero for empty cyclic decks", () => {
 		expect(getNextDeckIndex(0, 0, "cycle")).toBe(0);
+	});
+});
+
+describe("getDeckRenderKey", () => {
+	it("keeps finite cards keyed by stable item id", () => {
+		expect(getDeckRenderKey("a", 4, items.length, "finite")).toBe("a");
+	});
+
+	it("adds a cycle generation when a cyclic card re-enters the deck", () => {
+		expect(getDeckRenderKey("a", 0, items.length, "cycle")).toBe("a:0");
+		expect(getDeckRenderKey("a", 4, items.length, "cycle")).toBe("a:1");
+		expect(getDeckRenderKey("a", 8, items.length, "cycle")).toBe("a:2");
 	});
 });
 

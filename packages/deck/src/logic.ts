@@ -51,6 +51,19 @@ export function getNextDeckIndex(
 	return mode === "cycle" ? next % length : Math.min(next, length);
 }
 
+export function getDeckRenderKey(
+	itemId: string,
+	absoluteIndex: number,
+	length: number,
+	mode: DeckMode,
+): string {
+	if (mode !== "cycle" || length <= 0) {
+		return itemId;
+	}
+
+	return `${itemId}:${Math.floor(absoluteIndex / length)}`;
+}
+
 export function getSwipeDecision(input: SwipeDecisionInput): SwipeDecision {
 	const width = Math.max(input.width, 1);
 	const distanceThreshold =
