@@ -1,43 +1,10 @@
 "use client";
 
 import { Deck, type DeckMode, type SwipeDirection } from "@howells/deck";
+import Image from "next/image";
 import { useState } from "react";
+import { apertoMedia } from "@/lib/aperto-media";
 import { OptionBar } from "./option-bar";
-
-const cards = [
-	{
-		id: "archive",
-		kicker: "Research",
-		title: "Material archive",
-		description:
-			"Collect loose references, compare surfaces, and keep the next candidate close behind the active card.",
-		tone: "green",
-	},
-	{
-		id: "studio",
-		kicker: "Studio",
-		title: "Light study",
-		description:
-			"A tactile card that can cycle forever, useful for prompts, concepts, photos, or profile stacks.",
-		tone: "ochre",
-	},
-	{
-		id: "review",
-		kicker: "Review",
-		title: "Shortlist pass",
-		description:
-			"Switch to finite mode when the gesture means yes/no progression through a bounded queue.",
-		tone: "clay",
-	},
-	{
-		id: "handoff",
-		kicker: "Handoff",
-		title: "Ready state",
-		description:
-			"Events expose the index, direction, next index, mode, and stable item id for real workflows.",
-		tone: "ink",
-	},
-];
 
 export function DeckDemo() {
 	const [mode, setMode] = useState<DeckMode>("cycle");
@@ -56,15 +23,15 @@ export function DeckDemo() {
 					rotation={7}
 					visibleCount={visibleCount}
 				>
-					{cards.map((card) => (
-						<Deck.Card
-							className="deck-demo-card"
-							data-tone={card.tone}
-							key={card.id}
-						>
-							<span>{card.kicker}</span>
-							<h3>{card.title}</h3>
-							<p>{card.description}</p>
+					{apertoMedia.map((item) => (
+						<Deck.Card className="deck-demo-card" key={item.id ?? item.src}>
+							<Image
+								alt={item.alt}
+								draggable={false}
+								fill
+								sizes="(max-width: 640px) 78vw, 420px"
+								src={item.thumbnailSrc ?? item.src}
+							/>
 						</Deck.Card>
 					))}
 					<Deck.Empty>
