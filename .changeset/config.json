@@ -5,12 +5,7 @@
 	"changelog": "@changesets/cli/changelog",
 	"commit": false,
 	"fixed": [],
-	"ignore": [
-		"@howells/patternmode-web",
-		"@howells/site-ui",
-		"@howells/motion",
-		"@howells/tarball-consumer"
-	],
+	"ignore": ["@howells/patternmode-web", "@howells/site-ui", "@howells/motion"],
 	"linked": [],
 	"privatePackages": {
 		"tag": false,
