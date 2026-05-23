@@ -4,6 +4,100 @@ Patternmode is a catalog of focused React interface components whose names shoul
 
 ## Language
 
+### Aperto
+
+**Aperto**:
+A first-class Patternmode component for thumbnail-to-expanded media transitions and custom shared-element dialogs.
+_Avoid_: Treating Aperto as only an implementation-specific lightbox or dialog wrapper
+
+**Media Transition**:
+A transition from a **Thumbnail** to **Expanded Media**.
+_Avoid_: Using Shared-Element Dialog as the canonical high-level Aperto concept
+
+**Shared-Element Transition**:
+The visual continuity between a **Thumbnail** and its **Expanded Media**.
+_Avoid_: Projection as the canonical product term
+
+**Shared-Element Dialog**:
+A dialog whose trigger and content are visually connected by shared-element motion.
+_Avoid_: Using Media Transition for non-media primitive composition
+
+**Primitive API**:
+The lower-level Aperto surface for composing custom **Shared-Element Dialogs**.
+_Avoid_: Parts as the canonical Aperto term
+
+**Thumbnail**:
+The compact media element that opens a high-level **Media Transition**.
+_Avoid_: Preview as the canonical term
+
+**Trigger**:
+The primitive element that opens a **Shared-Element Dialog**.
+_Avoid_: Using Trigger for the high-level media-first API
+
+**Expanded Media**:
+The opened media content shown by a high-level **Media Transition**.
+_Avoid_: Lightbox as the canonical term
+
+**Content**:
+The primitive dialog body shown by a **Shared-Element Dialog**.
+_Avoid_: Using Content as the high-level media concept
+
+**Dialog**:
+The accessibility and platform semantics used by opened Aperto content.
+_Avoid_: Using Dialog as the primary product concept for high-level Aperto
+
+**Media Group**:
+An ordered set of **Media Items** that share high-level Aperto navigation.
+_Avoid_: Gallery or Collection as the canonical term
+
+**Media Item**:
+One image or video entry shown by high-level Aperto.
+_Avoid_: Asset or Source as the canonical term
+
+**Image Media Item**:
+A **Media Item** whose expanded representation is an image.
+_Avoid_: Image asset as the canonical term
+
+**Video Media Item**:
+A **Media Item** whose expanded representation is video.
+_Avoid_: Video asset as the canonical term
+
+**Active Media Item**:
+The **Media Item** currently shown as **Expanded Media** inside an open **Media Group**.
+_Avoid_: Selected Media Item or Open Media Item as the canonical term
+
+**Media Item Metadata**:
+Textual information that names or describes a **Media Item**.
+_Avoid_: Caption as the umbrella term
+
+**Media Item Title**:
+The primary name for a **Media Item**.
+_Avoid_: Label as the canonical term
+
+**Media Item Description**:
+Supplementary descriptive text for a **Media Item**.
+_Avoid_: Caption as the canonical term
+
+**Media Navigation**:
+Movement between **Media Items** inside a **Media Group**.
+_Avoid_: Browsing or Paging as the canonical term
+
+**Aperto Control**:
+An interactive control rendered inside opened Aperto content.
+_Avoid_: Affordance or Action as the canonical term
+
+**Close Control**:
+An **Aperto Control** that closes opened Aperto content.
+_Avoid_: Close Action as the canonical term
+
+**Media Navigation Control**:
+An **Aperto Control** that performs **Media Navigation**.
+_Avoid_: Paging Control as the canonical term
+
+**Drag Dismissal**:
+Closing opened Aperto content by dragging beyond configured distance or velocity thresholds.
+_Avoid_: Swipe as the canonical Aperto term
+
 ### Deck
 
 **Deck**:
@@ -267,6 +361,28 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 
 ## Relationships
 
+### Aperto
+
+- **Aperto** is a public Patternmode component, not just internal transition plumbing.
+- The high-level **Aperto** component owns **Media Transitions**.
+- A **Media Transition** may use a **Shared-Element Transition** between **Thumbnail** and **Expanded Media**.
+- The **Primitive API** owns custom **Shared-Element Dialog** composition.
+- A high-level **Media Transition** is opened by a **Thumbnail**.
+- A **Shared-Element Dialog** is opened by a **Trigger**.
+- A high-level **Media Transition** reveals **Expanded Media**.
+- A **Shared-Element Dialog** reveals primitive **Content**.
+- Opened Aperto surfaces use **Dialog** semantics without making Dialog the high-level product concept.
+- A **Media Group** contains one or more **Media Items** addressed by `Aperto.Group`.
+- A **Media Item** is either an **Image Media Item** or a **Video Media Item**.
+- An open **Media Group** has at most one **Active Media Item**.
+- **Media Item Metadata** may include a **Media Item Title** and **Media Item Description**.
+- **Media Navigation** changes the **Active Media Item** inside a **Media Group**.
+- **Media Navigation** does not change route, page position, or collection membership.
+- **Aperto Controls** exist inside opened Aperto content.
+- **Media Navigation Controls** perform **Media Navigation**.
+- A **Close Control** closes opened Aperto content.
+- **Drag Dismissal** closes opened Aperto content without changing **Media Group** membership.
+
 ### Deck
 
 - A **Deck** contains zero or more **Cards**.
@@ -354,6 +470,47 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 
 ## Example dialogue
 
+### Aperto
+
+> **Dev:** "Is Aperto just the internal media dialog implementation?"
+> **Domain expert:** "No — **Aperto** is a first-class Patternmode component with its own public language."
+>
+> **Dev:** "Should every Aperto use case be called a Shared-Element Dialog?"
+> **Domain expert:** "No — the high-level component is a **Media Transition**; **Shared-Element Dialog** belongs to the primitive API."
+>
+> **Dev:** "Should we call `Aperto.Primitive` Aperto Parts?"
+> **Domain expert:** "No — call it the **Primitive API**. Parts already means something specific in Stacksheet and ScrollFrame."
+>
+> **Dev:** "Is the thumbnail-to-expanded motion a layout projection?"
+> **Domain expert:** "Implementation may use projection, but the domain term is **Shared-Element Transition**."
+>
+> **Dev:** "Should the small clickable media be called a Trigger?"
+> **Domain expert:** "No — in high-level Aperto it is a **Thumbnail**. **Trigger** is primitive anatomy."
+>
+> **Dev:** "Should opened high-level Aperto be documented as a Lightbox?"
+> **Domain expert:** "No — call it **Expanded Media**. **Dialog** is the accessibility semantic, and **Content** is primitive anatomy."
+>
+> **Dev:** "Is `Aperto.Group` a gallery component?"
+> **Domain expert:** "No — it represents a **Media Group**. Aperto owns transition and navigation, not the surrounding gallery workflow."
+>
+> **Dev:** "Are the entries passed to Aperto assets?"
+> **Domain expert:** "No — call each entry a **Media Item**. Storage and asset ownership belong outside Aperto."
+>
+> **Dev:** "Do next and previous controls page through a gallery?"
+> **Domain expert:** "No — they perform **Media Navigation** within the current **Media Group**."
+>
+> **Dev:** "Is the visible item selected?"
+> **Domain expert:** "No — call it the **Active Media Item**. Selection is a persistent choice state that Aperto does not own."
+>
+> **Dev:** "Should title and description be documented as captions?"
+> **Domain expert:** "No — they are **Media Item Metadata**. Use **Media Item Title** and **Media Item Description** for the field-level terms."
+>
+> **Dev:** "Are next, previous, and close actions?"
+> **Domain expert:** "Call them **Aperto Controls**. Next and previous are **Media Navigation Controls**; close is a **Close Control**."
+>
+> **Dev:** "Should drag-to-close be described as a swipe?"
+> **Domain expert:** "No — call it **Drag Dismissal** unless Aperto later needs a separate completed-swipe concept."
+
 ### Deck
 
 > **Dev:** "Should the docs call this a CardStack because it renders layered cards?"
@@ -398,6 +555,26 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 > **Domain expert:** "No — it only changes who owns the **Sheet** structure and **Panel** chrome."
 
 ## Flagged ambiguities
+
+### System
+
+- `@patternmode/system` could be treated as a first-class Patternmode component — resolved: it remains implementation support until it exports domain-level design primitives.
+
+### Aperto
+
+- "Aperto" could be treated as a private media/dialog implementation detail — resolved: **Aperto** is a first-class Patternmode component with its own public domain language.
+- "Shared-element dialog" could describe both media-first and primitive usage — resolved: **Media Transition** is canonical for high-level Aperto; **Shared-Element Dialog** is canonical for `Aperto.Primitive`.
+- "Parts" could conflict with Stacksheet and ScrollFrame terminology — resolved: use **Primitive API** for `Aperto.Primitive`.
+- "Projection" is Motion implementation language and "Expansion" suggests only size change — resolved: use **Shared-Element Transition** for visual continuity between **Thumbnail** and **Expanded Media**.
+- "Preview" could mean compact media, expanded media, or a transition state — resolved: use **Thumbnail** for high-level media and **Trigger** for primitive dialog anatomy.
+- "Lightbox", "Dialog", and "Content" could all describe the opened state — resolved: use **Expanded Media** for high-level Aperto, **Content** for primitive anatomy, and **Dialog** for accessibility semantics.
+- "Group" is API shorthand and "Gallery" implies a broader browsing workflow — resolved: use **Media Group** for ordered media handled by `Aperto.Group`.
+- "Asset" implies storage ownership and "Source" only names the input URL/file — resolved: use **Media Item**, with **Image Media Item** and **Video Media Item** when type-specific language is needed.
+- "Selected" implies persistent choice state and "Open" mixes dialog state with item identity — resolved: use **Active Media Item** for the item currently shown as **Expanded Media**.
+- "Caption" could imply a single rendered block and "Label" collides with accessible naming — resolved: use **Media Item Metadata**, with **Media Item Title** and **Media Item Description** for field-level terms.
+- "Navigation", "Browsing", and "Paging" could imply route, page, or gallery ownership — resolved: use **Media Navigation** for moving between items in a **Media Group**.
+- "Affordance" is vague and "Action" suggests command semantics beyond the rendered UI — resolved: use **Aperto Control**, **Close Control**, and **Media Navigation Control**.
+- "Swipe" could conflict with Stacksheet and Deck gesture language — resolved: use **Drag Dismissal** for Aperto drag-to-close behavior.
 
 ### Deck
 

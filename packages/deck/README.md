@@ -1,14 +1,14 @@
-# @howells/deck
+# @patternmode/deck
 
-Composable swipeable deck and card stack primitives for React.
+Composable Deck primitives for React.
 
 ```tsx
-import { Deck } from "@howells/deck";
-import "@howells/deck/styles.css";
+import { Deck } from "@patternmode/deck";
+import "@patternmode/deck/styles.css";
 
 export function Example() {
 	return (
-		<Deck mode="cycle" visibleCount={3} onSwipe={({ direction }) => console.log(direction)}>
+		<Deck mode="cycle" visibleCount={3} onAdvance={({ direction }) => console.log(direction)}>
 			<Deck.Card key="one">One</Deck.Card>
 			<Deck.Card key="two">Two</Deck.Card>
 			<Deck.Card key="three">Three</Deck.Card>
@@ -18,4 +18,4 @@ export function Example() {
 }
 ```
 
-Use `mode="cycle"` for an infinite carousel-style stack, or `mode="finite"` when swiped cards should exhaust into `Deck.Empty`.
+Use `mode="cycle"` for a repeating Deck, or `mode="finite"` when advanced Cards should exhaust into `Deck.Empty`.

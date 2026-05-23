@@ -8,7 +8,7 @@
 	"ignore": [
 		"@howells/patternmode-web",
 		"@howells/site-ui",
-		"@howells/motion-reference",
+		"@howells/motion",
 		"@howells/tarball-consumer"
 	],
 	"linked": [],

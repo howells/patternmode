@@ -1,6 +1,6 @@
 "use client";
 
-import { createStacksheet } from "@howells/stacksheet";
+import { createStacksheet } from "@patternmode/stacksheet";
 
 interface DemoSheets {
 	Config: { category: string };
@@ -34,7 +34,7 @@ function OverviewSheet({ title }: { title: string }) {
 			<p className="sheet-kicker">Sheet stack</p>
 			<h3>{title}</h3>
 			<p>
-				Start with one panel, then push more panels without losing the path
+				Start with one Sheet, then push more Sheets without losing the path
 				back.
 			</p>
 			<div className="sheet-action-row">
@@ -99,7 +99,7 @@ function ConfigSheet({ category }: { category: string }) {
 			<div className="sheet-list">
 				<span>Responsive side</span>
 				<span>Modal or non-modal</span>
-				<span>Composed panel parts</span>
+				<span>Composable Sheet Parts</span>
 			</div>
 			<div className="sheet-action-row">
 				<button
@@ -154,7 +154,7 @@ function Launcher() {
 						Push config
 					</button>
 				</div>
-				<p className="demo-state">{stack.length} panels in stack</p>
+				<p className="demo-state">{stack.length} Sheets in stack</p>
 			</div>
 		</div>
 	);

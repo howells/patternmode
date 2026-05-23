@@ -107,9 +107,9 @@ export interface StacksheetConfig {
 	/** Allow any form of dismissal (drag, backdrop, escape). Default: true */
 	dismissible?: boolean;
 
-	// ── Drag-to-dismiss ─────────────────────────
+	// ── Drag dismissal ──────────────────────────
 
-	/** Enable drag-to-dismiss. Default: true */
+	/** Enable drag-driven dismissal. Default: true */
 	drag?: boolean;
 	/** Lock body scroll when open. Default: true */
 	lockScroll?: boolean;

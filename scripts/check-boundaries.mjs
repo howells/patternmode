@@ -6,8 +6,9 @@ const publicPackages = [
 	"packages/stacksheet",
 	"packages/aperto",
 	"packages/deck",
+	"packages/system",
 	"packages/swatch",
-	"packages/scroll-frame",
+	"packages/scrollframe",
 ];
 const privatePackages = [
 	"apps/web/package.json",
@@ -17,9 +18,8 @@ const privatePackages = [
 
 const forbiddenInPublicPackages = [
 	"@howells/site-ui",
-	"@howells/motion-reference",
+	"@howells/motion",
 	"@howells/patternmode-web",
-	"@patternmode/",
 	"apps/web",
 	"packages/site-ui",
 	"packages/motion",

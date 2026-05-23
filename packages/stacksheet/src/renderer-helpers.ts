@@ -5,7 +5,7 @@ import type { Side, StacksheetClassNames } from "./types";
 
 export type ResolvedClassNames = Required<StacksheetClassNames>;
 
-export const EMPTY_CLASSNAMES: ResolvedClassNames = {
+const EMPTY_CLASSNAMES: ResolvedClassNames = {
 	backdrop: "",
 	panel: "",
 	header: "",

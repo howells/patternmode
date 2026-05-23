@@ -10,7 +10,7 @@ const components: CatalogEntry[] = [
 	{
 		title: "Stacksheet",
 		description:
-			"Typed sheet stacks with push, navigate, replace, and composable panel parts.",
+			"Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
 		href: "/stacksheet",
 	},
 	{
@@ -22,7 +22,7 @@ const components: CatalogEntry[] = [
 	{
 		title: "Deck",
 		description:
-			"Swipeable card decks with cyclic stacks, finite flows, velocity gestures, and keyboard control.",
+			"Card Decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
 		href: "/deck",
 	},
 	{
@@ -35,7 +35,7 @@ const components: CatalogEntry[] = [
 		title: "ScrollFrame",
 		description:
 			"Radix-backed scroll containers with eased fades and movement controls.",
-		href: "/scroll-frame",
+		href: "/scrollframe",
 	},
 ];
 

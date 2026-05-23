@@ -5,7 +5,7 @@ import {
 	type ApertoMediaItem,
 	type MotionPresetName,
 	type NavigationMotionPresetName,
-} from "@howells/aperto";
+} from "@patternmode/aperto";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import { OptionBar } from "./option-bar";

@@ -10,8 +10,7 @@ import { DeckDemo } from "@/components/deck-demo";
 const deckApi: ApiSection[] = [
 	{
 		name: "Deck",
-		description:
-			"Root swipeable stack with finite and cyclic progression modes.",
+		description: "Root deck with finite and cyclic advance modes.",
 		props: [
 			{
 				name: "mode",
@@ -37,10 +36,10 @@ const deckApi: ApiSection[] = [
 				description: "Number of cards rendered in the visual stack.",
 			},
 			{
-				name: "onSwipe",
-				type: "(event: DeckSwipeEvent) => void",
+				name: "onAdvance",
+				type: "(event: DeckAdvanceEvent) => void",
 				description:
-					"Called when the active card is accepted by drag or keyboard.",
+					"Called when the active card advances by drag or keyboard.",
 			},
 		],
 	},
@@ -63,12 +62,12 @@ const deckApi: ApiSection[] = [
 	},
 ];
 
-const deckExample = `import { Deck } from "@howells/deck";
-import "@howells/deck/styles.css";
+const deckExample = `import { Deck } from "@patternmode/deck";
+import "@patternmode/deck/styles.css";
 
 export function ProjectDeck() {
   return (
-    <Deck mode="cycle" visibleCount={3} onSwipe={({ direction }) => console.log(direction)}>
+    <Deck mode="cycle" visibleCount={3} onAdvance={({ direction }) => console.log(direction)}>
       <Deck.Card key="one">One</Deck.Card>
       <Deck.Card key="two">Two</Deck.Card>
       <Deck.Card key="three">Three</Deck.Card>
@@ -80,12 +79,12 @@ export function ProjectDeck() {
 export default function DeckPage() {
 	return (
 		<ComponentPage
-			description="Swipeable card decks that merge cyclic stacks, finite queues, velocity gestures, keyboard control, and deterministic motion."
+			description="Card decks that merge cyclic stacks, finite advance flows, velocity gestures, keyboard control, and deterministic motion."
 			title="Deck"
 		>
 			<DeckDemo />
 			<DocsBlock title="Install">
-				<CodeBlock install>npm install @howells/deck</CodeBlock>
+				<CodeBlock install>npm install @patternmode/deck</CodeBlock>
 				<CodeBlock>{deckExample}</CodeBlock>
 			</DocsBlock>
 			<DocsBlock title="Core API">

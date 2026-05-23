@@ -22,8 +22,13 @@
 		"@howells/husky": "^0.1.0",
 		"@howells/lint": "^0.1.7",
 		"@howells/typescript-config": "^0.1.2",
-		"turbo": "2.9.12",
+		"turbo": "2.9.14",
 		"typescript": "^6.0.3"
+	},
+	"pnpm": {
+		"overrides": {
+			"postcss": "^8.5.15"
+		}
 	},
 	"lint-staged": {
 		"*.{js,ts,jsx,tsx,json,jsonc}": "howells-format"

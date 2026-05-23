@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import "@howells/stacksheet/styles.css";
-import "@howells/aperto/styles.css";
-import "@howells/deck/styles.css";
-import "@howells/swatch/styles.css";
-import "@howells/scroll-frame/styles.css";
+import "@patternmode/stacksheet/styles.css";
+import "@patternmode/aperto/styles.css";
+import "@patternmode/deck/styles.css";
+import "@patternmode/swatch/styles.css";
+import "@patternmode/scrollframe/styles.css";
 
 export const metadata: Metadata = {
 	description: "Minimal catalog for Howells UI tools.",

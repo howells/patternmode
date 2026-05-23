@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+	getAdvanceDecision,
 	getDeckRenderKey,
 	getNextDeckIndex,
-	getSwipeDecision,
 	getVisibleDeckItems,
 	getVisualDepth,
 	resolveCardRotation,
@@ -60,10 +60,10 @@ describe("getDeckRenderKey", () => {
 	});
 });
 
-describe("getSwipeDecision", () => {
-	it("accepts a swipe when horizontal distance crosses the threshold", () => {
+describe("getAdvanceDecision", () => {
+	it("accepts an advance when horizontal distance crosses the threshold", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: -121,
 				velocityX: 100,
 				width: 300,
@@ -74,9 +74,9 @@ describe("getSwipeDecision", () => {
 		).toEqual({ accepted: true, direction: "left" });
 	});
 
-	it("accepts a swipe when horizontal velocity crosses the threshold", () => {
+	it("accepts an advance when horizontal velocity crosses the threshold", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: 24,
 				velocityX: 650,
 				width: 300,
@@ -87,9 +87,9 @@ describe("getSwipeDecision", () => {
 		).toEqual({ accepted: true, direction: "right" });
 	});
 
-	it("rejects swipes in disallowed directions", () => {
+	it("rejects advances in disallowed directions", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: -200,
 				velocityX: -900,
 				width: 300,

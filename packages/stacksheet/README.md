@@ -2,10 +2,10 @@
 
 Typed, animated sheet stacking for React.
 
-Stacksheet gives you a provider and a hook for opening, pushing, replacing, and navigating sheet panels from anywhere in your app. It handles the motion, layering, focus management, scroll locking, and mobile/desktop presentation details for you.
+Stacksheet gives you a provider and a hook for opening, pushing, replacing, and navigating Sheets from anywhere in your app. It handles the motion, layering, focus management, scroll locking, and mobile/desktop presentation details for you.
 
 ```bash
-npm install @howells/stacksheet
+npm install @patternmode/stacksheet
 ```
 
 Peer dependencies: `react >= 18`, `react-dom >= 18`.
@@ -15,18 +15,18 @@ Peer dependencies: `react >= 18`, `react-dom >= 18`.
 - Direct-component API: `open(Component, props)`
 - Optional type registry for large apps: `open("user-profile", "u1", data)`
 - Stacked navigation: `open`, `push`, `replace`, `swap`, `navigate`, `pop`, `close`
-- Desktop side panels and mobile bottom sheets from one API
+- Desktop side Sheets and mobile bottom Sheets from one API
 - Built-in focus trapping, Escape handling, scroll lock, and Android back gesture support
-- Drag-to-dismiss with configurable snap points
-- Classic mode with auto header, or composable mode with `Sheet.*` parts
+- Drag, Swipe, and Snap Point behavior for bottom Sheets
+- Classic Layout with auto header, or Composable Layout with `Sheet.*` Sheet Parts
 
 ## Quick start
 
 Create a sheet instance once and use it across your app:
 
 ```tsx
-import { createStacksheet } from "@howells/stacksheet";
-import "@howells/stacksheet/styles.css";
+import { createStacksheet } from "@patternmode/stacksheet";
+import "@patternmode/stacksheet/styles.css";
 
 export const { StacksheetProvider, useSheet } = createStacksheet();
 ```
@@ -77,7 +77,7 @@ function ViewProfileButton() {
 If your app has a fixed set of known sheet types, you can pre-register them for string-keyed, compile-time checked actions:
 
 ```tsx
-import { createStacksheet } from "@howells/stacksheet";
+import { createStacksheet } from "@patternmode/stacksheet";
 
 const { StacksheetProvider, useSheet } = createStacksheet<{
   "user-profile": { userId: string };
@@ -117,12 +117,12 @@ function OpenSettingsButton() {
 
 ## Composable layout
 
-Classic mode is the default: Stacksheet renders the panel chrome and header for you.
+Classic mode is the default: Stacksheet owns the standard Panel chrome and header around your Sheet content.
 
-If you want full control over the panel structure, use `layout="composable"` and build the panel with exported parts:
+If you want full control over Sheet structure, use `layout="composable"` and build the Sheet with exported Sheet Parts:
 
 ```tsx
-import { Sheet } from "@howells/stacksheet";
+import { Sheet } from "@patternmode/stacksheet";
 
 function App() {
   return (
@@ -142,23 +142,23 @@ function SettingsSheet() {
         <Sheet.Close />
       </Sheet.Header>
       <Sheet.Body>
-        <div className="p-4">Panel content</div>
+        <div className="p-4">Sheet content</div>
       </Sheet.Body>
     </>
   );
 }
 ```
 
-For custom controls and panel metadata inside a sheet, use `useSheetPanel()`.
+For custom controls and Sheet metadata inside a Sheet, use `useSheetPanel()`.
 
 ## Accessibility
 
-The default panel is rendered as a dialog with focus management, keyboard navigation, and focus restoration built in.
+The default Panel is rendered as a dialog with focus management, keyboard navigation, and focus restoration built in.
 
 You can set a global label:
 
 ```tsx
-createStacksheet({ ariaLabel: "Settings panel" });
+createStacksheet({ ariaLabel: "Settings Sheet" });
 ```
 
 Or override it per sheet:
@@ -169,7 +169,7 @@ const { open } = useSheet();
 open(UserProfile, { userId: "u_abc" }, { ariaLabel: "User profile for Jane" });
 ```
 
-In composable mode, use `Sheet.Title` and `Sheet.Description` so the panel gets `aria-labelledby` and `aria-describedby` automatically.
+In composable mode, use `Sheet.Title` and `Sheet.Description` so the Panel gets `aria-labelledby` and `aria-describedby` automatically.
 
 ## Documentation
 
@@ -182,7 +182,7 @@ Full docs, interactive playground, and API reference:
 - [Configuration](https://stacksheet.danielhowells.com/docs/config)
 - [Composable Parts](https://stacksheet.danielhowells.com/docs/composable-parts)
 - [Accessibility](https://stacksheet.danielhowells.com/docs/accessibility)
-- [Drag to Dismiss](https://stacksheet.danielhowells.com/docs/drag-to-dismiss)
+- [Drag and Dismissal](https://stacksheet.danielhowells.com/docs/drag-to-dismiss)
 - [Styling](https://stacksheet.danielhowells.com/docs/styling)
 - [Type Registry](https://stacksheet.danielhowells.com/docs/type-registry)
 

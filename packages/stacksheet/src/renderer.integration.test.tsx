@@ -144,7 +144,10 @@ describe("SheetRenderer integration", () => {
 			screen.queryByRole("button", { name: "Open nested" }),
 		).not.toBeInTheDocument();
 
-		await user.click(screen.getByRole("button", { name: "Back" }));
+		const backButton = screen.getByRole("button", { name: "Back" });
+		expect(backButton).toHaveClass("min-h-11", "min-w-11");
+
+		await user.click(backButton);
 
 		expect(
 			screen.getByRole("dialog", { name: "Root sheet" }),
@@ -153,7 +156,10 @@ describe("SheetRenderer integration", () => {
 			screen.getByRole("button", { name: "Open nested" }),
 		).toBeInTheDocument();
 
-		await user.click(screen.getByRole("button", { name: "Close" }));
+		const closeButton = screen.getByRole("button", { name: "Close" });
+		expect(closeButton).toHaveClass("min-h-11", "min-w-11");
+
+		await user.click(closeButton);
 
 		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 	});
@@ -206,5 +212,9 @@ describe("SheetRenderer integration", () => {
 		expect(dialog).toBeInTheDocument();
 		expect(dialog).toHaveAttribute("aria-labelledby");
 		expect(dialog).toHaveAttribute("aria-describedby");
+		expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
+			"min-h-11",
+			"min-w-11",
+		);
 	});
 });

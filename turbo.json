@@ -14,11 +14,11 @@
 		"dev": {
 			"dependsOn": ["^build"],
 			"with": [
-				"@howells/stacksheet#dev",
-				"@howells/aperto#dev",
-				"@howells/deck#dev",
-				"@howells/swatch#dev",
-				"@howells/scroll-frame#dev"
+				"@patternmode/stacksheet#dev",
+				"@patternmode/aperto#dev",
+				"@patternmode/deck#dev",
+				"@patternmode/swatch#dev",
+				"@patternmode/scrollframe#dev"
 			],
 			"cache": false,
 			"persistent": true

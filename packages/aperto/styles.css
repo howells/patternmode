@@ -64,6 +64,11 @@
 
 [data-slot="aperto-media-stage"] {
 	@apply absolute inset-0;
+}
+
+[data-slot="aperto-content"][data-aperto-transition]
+	[data-slot="aperto-media-stage"],
+[data-slot="aperto-transition-media"] {
 	will-change: opacity, transform;
 }
 

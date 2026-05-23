@@ -1,4 +1,4 @@
-import type { ApertoMediaItem } from "@howells/aperto";
+import type { ApertoMediaItem } from "@patternmode/aperto";
 
 export const apertoMedia = [
 	{

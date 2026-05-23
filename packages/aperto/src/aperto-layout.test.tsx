@@ -10,7 +10,7 @@ import {
 	useEffect,
 	useRef,
 } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const unmountedLayoutIds = vi.hoisted((): string[] => []);
 
@@ -109,16 +109,28 @@ vi.mock("motion/react", () => {
 
 import { Aperto, type ApertoMediaItem } from "./index";
 
+let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+
+beforeEach(() => {
+	consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+});
+
 afterEach(() => {
-	cleanup();
-	unmountedLayoutIds.length = 0;
+	try {
+		expect(consoleErrorSpy).not.toHaveBeenCalled();
+	} finally {
+		consoleErrorSpy.mockRestore();
+		cleanup();
+		unmountedLayoutIds.length = 0;
+	}
 });
 
 describe("Aperto layout projection", () => {
 	it("centers primitive content by default", () => {
 		render(
 			<Aperto.Primitive.Root defaultOpen>
-				<Aperto.Primitive.Content aria-label="Centered panel">
+				<Aperto.Primitive.Content aria-describedby={undefined}>
+					<Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
 					Centered content
 				</Aperto.Primitive.Content>
 			</Aperto.Primitive.Root>,
@@ -134,10 +146,8 @@ describe("Aperto layout projection", () => {
 	it("can leave primitive content positioning to the caller", () => {
 		render(
 			<Aperto.Primitive.Root defaultOpen>
-				<Aperto.Primitive.Content
-					aria-label="Unpositioned panel"
-					placement="none"
-				>
+				<Aperto.Primitive.Content aria-describedby={undefined} placement="none">
+					<Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
 					Custom content
 				</Aperto.Primitive.Content>
 			</Aperto.Primitive.Root>,

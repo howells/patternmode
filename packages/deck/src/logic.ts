@@ -1,7 +1,7 @@
-import type { DeckItem, DeckMode, SwipeDirection } from "./types";
+import type { AdvanceDirection, DeckItem, DeckMode } from "./types";
 
-export interface SwipeDecisionInput {
-	allowedDirections: SwipeDirection[];
+export interface AdvanceDecisionInput {
+	allowedDirections: AdvanceDirection[];
 	distanceThreshold: number;
 	offsetX: number;
 	velocityThreshold: number;
@@ -9,9 +9,9 @@ export interface SwipeDecisionInput {
 	width: number;
 }
 
-export interface SwipeDecision {
+export interface AdvanceDecision {
 	accepted: boolean;
-	direction: SwipeDirection;
+	direction: AdvanceDirection;
 }
 
 export function getVisibleDeckItems(
@@ -64,7 +64,9 @@ export function getDeckRenderKey(
 	return `${itemId}:${Math.floor(absoluteIndex / length)}`;
 }
 
-export function getSwipeDecision(input: SwipeDecisionInput): SwipeDecision {
+export function getAdvanceDecision(
+	input: AdvanceDecisionInput,
+): AdvanceDecision {
 	const width = Math.max(input.width, 1);
 	const distanceThreshold =
 		input.distanceThreshold <= 1
@@ -76,7 +78,7 @@ export function getSwipeDecision(input: SwipeDecisionInput): SwipeDecision {
 		Math.abs(input.offsetX) >= Math.abs(input.velocityX) / 4
 			? input.offsetX
 			: input.velocityX;
-	const direction: SwipeDirection = primaryMovement < 0 ? "left" : "right";
+	const direction: AdvanceDirection = primaryMovement < 0 ? "left" : "right";
 	const directionAllowed = input.allowedDirections.includes(direction);
 
 	return {

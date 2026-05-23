@@ -1,10 +1,78 @@
 "use client";
 
-import { Swatch } from "@howells/swatch";
+import { Swatch } from "@patternmode/swatch";
 import type { SVGProps } from "react";
 import { useState } from "react";
 
-const colors = ["#315c4b", "#e1ebe5", "#9b3d32", "#d9a441", "#1d1d1b"];
+/* ── Palettes ──────────────────────────────────── */
+
+const finishes = [
+	{ color: "#315c4b", name: "Evergreen" },
+	{ color: "#e1ebe5", name: "Sage" },
+	{ color: "#9b3d32", name: "Oxblood" },
+	{ color: "#d9a441", name: "Saffron" },
+	{ color: "#1d1d1b", name: "Ink" },
+	{ color: "#c4b7a3", name: "Dune" },
+] as const;
+
+const palettes = [
+	{
+		name: "Terrace",
+		type: "segmented" as const,
+		colors: [
+			{ color: "#c4b7a3", ratio: 45 },
+			{ color: "#9b3d32", ratio: 30 },
+			{ color: "#e8dfd3", ratio: 25 },
+		],
+	},
+	{
+		name: "Dusk",
+		type: "gradient" as const,
+		background: "linear-gradient(135deg, #1d1d1b, #315c4b 52%, #3d6b6e)",
+	},
+	{
+		name: "Archive",
+		type: "segmented" as const,
+		colors: [
+			{ color: "#1d1d1b", ratio: 50 },
+			{ color: "#f5f0e8", ratio: 30 },
+			{ color: "#6b4c3b", ratio: 20 },
+		],
+	},
+] as const;
+
+const gradients = [
+	{
+		name: "Patina",
+		background: "linear-gradient(135deg, #3d6b6e, #c4b7a3)",
+	},
+	{
+		name: "Copper",
+		background: "linear-gradient(135deg, #6b4c3b, #d9a441)",
+	},
+	{
+		name: "Stone",
+		background: "linear-gradient(135deg, #c4b7a3, #e8dfd3)",
+	},
+	{
+		name: "Ember",
+		background: "linear-gradient(135deg, #9b3d32, #d9a441)",
+	},
+	{
+		name: "Moss",
+		background: "linear-gradient(135deg, #1d1d1b, #315c4b)",
+	},
+	{
+		name: "Dune",
+		background: "linear-gradient(135deg, #e1ebe5, #c4b7a3)",
+	},
+] as const;
+
+const sizes = ["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"] as const;
+type FinishColor = (typeof finishes)[number]["color"];
+type PaletteName = (typeof palettes)[number]["name"];
+
+/* ── Icons ─────────────────────────────────────── */
 
 function CheckIcon(props: SVGProps<SVGSVGElement>) {
 	return (
@@ -15,65 +83,162 @@ function CheckIcon(props: SVGProps<SVGSVGElement>) {
 	);
 }
 
+/* ── Demo ──────────────────────────────────────── */
+
 export function SwatchDemo() {
-	const [selected, setSelected] = useState(colors[0]);
-	const [visibleColors, setVisibleColors] = useState(colors);
+	const [selected, setSelected] = useState<FinishColor>(finishes[0].color);
+	const [selectedPalette, setSelectedPalette] = useState<PaletteName>(
+		palettes[0].name,
+	);
 
 	return (
 		<div className="swatch-demo">
-			<fieldset aria-label="Selectable colors" className="swatch-demo-row">
-				<legend className="sr-only">Selectable colors</legend>
-				{visibleColors.map((color) => (
-					<button
-						aria-label={`Select ${color}`}
-						aria-pressed={selected === color}
-						className="swatch-demo-button"
-						key={color}
-						onClick={() => setSelected(color)}
-						type="button"
-					>
+			{/* ① Finish selector */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">Finishes</div>
+				<fieldset aria-label="Select a finish" className="swatch-demo-swatches">
+					<legend className="sr-only">Select a finish</legend>
+					{finishes.map((finish) => (
+						<button
+							aria-label={`Select ${finish.name}`}
+							aria-pressed={selected === finish.color}
+							className="swatch-demo-button"
+							key={finish.color}
+							onClick={() => setSelected(finish.color)}
+							type="button"
+						>
+							<Swatch
+								aria-hidden="true"
+								color={finish.color}
+								icon={CheckIcon}
+								selected={selected === finish.color}
+								size="xl"
+							/>
+						</button>
+					))}
+				</fieldset>
+			</div>
+
+			{/* ② Curated palettes */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">Palettes</div>
+				<div className="swatch-demo-palette-grid">
+					{palettes.map((palette) => (
+						<button
+							aria-label={`Select ${palette.name} palette`}
+							aria-pressed={selectedPalette === palette.name}
+							className="swatch-demo-palette-item"
+							key={palette.name}
+							onClick={() => setSelectedPalette(palette.name)}
+							type="button"
+						>
+							<Swatch
+								aria-hidden="true"
+								{...(palette.type === "gradient"
+									? { background: palette.background }
+									: { colors: [...palette.colors] })}
+								selected={selectedPalette === palette.name}
+								shape="pill"
+								showRing={selectedPalette === palette.name}
+								size="xl"
+							/>
+							<span>{palette.name}</span>
+						</button>
+					))}
+				</div>
+			</div>
+
+			{/* ③ Gradient squares */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">Gradients</div>
+				<div className="swatch-demo-swatches">
+					{gradients.map((gradient) => (
+						<div className="swatch-demo-specimen" key={gradient.name}>
+							<Swatch
+								aria-label={gradient.name}
+								background={gradient.background}
+								shape="square"
+								size="xl"
+							/>
+							<span>{gradient.name}</span>
+						</div>
+					))}
+				</div>
+			</div>
+
+			{/* ④ States */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">States</div>
+				<div className="swatch-demo-swatches">
+					<div className="swatch-demo-specimen">
 						<Swatch
-							aria-hidden="true"
-							color={color}
+							aria-label="Selected"
+							color="#315c4b"
 							icon={CheckIcon}
-							onRemove={
-								visibleColors.length > 1
-									? () =>
-											setVisibleColors((current) =>
-												current.filter((item) => item !== color),
-											)
-									: undefined
-							}
-							selected={selected === color}
+							selected
 							size="xl"
 						/>
-					</button>
-				))}
-			</fieldset>
+						<span>Selected</span>
+					</div>
+					<div className="swatch-demo-specimen">
+						<Swatch aria-label="Default" color="#315c4b" size="xl" />
+						<span>Default</span>
+					</div>
+					<div className="swatch-demo-specimen">
+						<Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
+						<span>Raised</span>
+					</div>
+					<div className="swatch-demo-specimen">
+						<Swatch
+							aria-label="Unavailable"
+							color="#315c4b"
+							size="xl"
+							unavailable
+						/>
+						<span>Unavailable</span>
+					</div>
+				</div>
+			</div>
 
-			<div className="swatch-demo-specimens">
-				<Swatch
-					aria-label="Weighted palette"
-					colors={[
-						{ color: "#315c4b", ratio: 48 },
-						{ color: "#e1ebe5", ratio: 28 },
-						{ color: "#d9a441", ratio: 24 },
-					]}
-					shape="pill"
-					size="2xl"
-				/>
-				<Swatch
-					aria-label="Gradient swatch"
-					background="linear-gradient(135deg, #1d1d1b, #315c4b 52%, #e1ebe5)"
-					shape="square"
-					size="2xl"
-				/>
-				<Swatch
-					aria-label="Unavailable finish"
-					color="#d7d2c7"
-					size="2xl"
-					unavailable
-				/>
+			{/* ⑤ Distribution */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">Distribution</div>
+				<div className="swatch-demo-distribution">
+					<div className="swatch-demo-distribution-bar">
+						<div className="swatch-demo-distribution-filled">
+							<div
+								className="swatch-demo-distribution-segment"
+								style={{ width: "48%", background: "#315c4b" }}
+							/>
+							<div
+								className="swatch-demo-distribution-segment"
+								style={{ width: "30%", background: "#d9a441" }}
+							/>
+							<div
+								className="swatch-demo-distribution-segment"
+								style={{ width: "22%", background: "#9b3d32" }}
+							/>
+						</div>
+						<div className="swatch-demo-distribution-empty" />
+					</div>
+					<div className="swatch-demo-distribution-legend">
+						<span>79% assigned</span>
+						<span>21% unassigned</span>
+					</div>
+				</div>
+			</div>
+
+			{/* ⑥ Size scale */}
+			<div className="swatch-demo-cell">
+				<div className="swatch-demo-label">Scale</div>
+				<div className="swatch-demo-scale">
+					{sizes.map((size) => (
+						<div className="swatch-demo-specimen" key={size}>
+							<Swatch aria-label={size} color="#315c4b" size={size} />
+							<span className="swatch-demo-mono">{size}</span>
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);

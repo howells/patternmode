@@ -3,15 +3,15 @@ import type { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 export type DeckMode = "cycle" | "finite";
 
-export type SwipeDirection = "left" | "right";
+export type AdvanceDirection = "left" | "right";
 
 export interface DeckItem {
 	element: ReactNode;
 	id: string;
 }
 
-export interface DeckSwipeEvent {
-	direction: SwipeDirection;
+export interface DeckAdvanceEvent {
+	direction: AdvanceDirection;
 	index: number;
 	itemId: string;
 	mode: DeckMode;
@@ -21,7 +21,7 @@ export interface DeckSwipeEvent {
 export interface DeckRenderOverlayState {
 	active: boolean;
 	depth: number;
-	direction: SwipeDirection | null;
+	direction: AdvanceDirection | null;
 	index: number;
 	itemId: string;
 }
@@ -31,7 +31,7 @@ export interface DeckRootProps
 		HTMLAttributes<HTMLDivElement>,
 		"children" | "onDrag" | "onDragEnd"
 	> {
-	allowedDirections?: SwipeDirection[];
+	allowedDirections?: AdvanceDirection[];
 	children: ReactNode;
 	defaultIndex?: number;
 	disabled?: boolean;
@@ -41,8 +41,8 @@ export interface DeckRootProps
 	mode?: DeckMode;
 	onExhausted?: () => void;
 	onIndexChange?: (index: number) => void;
-	onSwipe?: (event: DeckSwipeEvent) => void;
-	onSwipeEnd?: (event: DeckSwipeEvent) => void;
+	onAdvance?: (event: DeckAdvanceEvent) => void;
+	onAdvanceEnd?: (event: DeckAdvanceEvent) => void;
 	peekOffset?: number;
 	perspective?: number;
 	renderOverlay?: (state: DeckRenderOverlayState) => ReactNode;

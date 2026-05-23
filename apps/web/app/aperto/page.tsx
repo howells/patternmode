@@ -12,19 +12,19 @@ const apertoApi: ApiSection[] = [
 	{
 		name: "Aperto.Group",
 		description:
-			"Gallery with keyboard navigation and shared-element transitions.",
+			"Media Group with keyboard Media Navigation and shared-element transitions.",
 		props: [
 			{
 				name: "media",
 				type: "ApertoMediaItem[]",
 				required: true,
-				description: "Array of image or video items.",
+				description: "Array of Image Media Items or Video Media Items.",
 			},
 			{
 				name: "motion",
 				type: '"snappy" | "smooth" | "bouncy"',
 				defaultValue: '"smooth"',
-				description: "Open/close transition easing preset.",
+				description: "Media Transition easing preset.",
 			},
 			{
 				name: "navigationMotion",
@@ -36,25 +36,24 @@ const apertoApi: ApiSection[] = [
 				name: "dismissible",
 				type: "boolean | { threshold?: number; velocity?: number }",
 				defaultValue: "true",
-				description: "Drag-to-dismiss behavior for the expanded media surface.",
+				description: "Drag Dismissal behavior for Expanded Media.",
 			},
 			{
 				name: "classNames",
 				type: "ApertoClassNames",
-				description:
-					"Slot class overrides for thumbnails and overlay controls.",
+				description: "Slot class overrides for Thumbnails and Aperto Controls.",
 			},
 		],
 	},
 	{
 		name: "Aperto.Thumbnail",
-		description: "Individual thumbnail trigger inside a group.",
+		description: "Thumbnail for a Media Item inside a Media Group.",
 		props: [
 			{
 				name: "index",
 				type: "number",
 				required: true,
-				description: "Position in the media array.",
+				description: "Position in the Media Group.",
 			},
 			{
 				name: "children",
@@ -65,14 +64,14 @@ const apertoApi: ApiSection[] = [
 	},
 ];
 
-const apertoExample = `import { Aperto, type ApertoMediaItem } from "@howells/aperto";
-import "@howells/aperto/styles.css";
+const apertoExample = `import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
+import "@patternmode/aperto/styles.css";
 
 const media: ApertoMediaItem[] = [
   { id: "photo", type: "image", src: "/photo.jpg", alt: "Photo" },
 ];
 
-export function Gallery() {
+export function MediaGroupExample() {
   return (
     <Aperto.Group media={media} navigationMotion="glide">
       {media.map((item, index) => (
@@ -90,7 +89,7 @@ export default function ApertoPage() {
 		>
 			<ApertoDemo media={apertoMedia} />
 			<DocsBlock title="Install">
-				<CodeBlock install>npm install @howells/aperto</CodeBlock>
+				<CodeBlock install>npm install @patternmode/aperto</CodeBlock>
 				<CodeBlock>{apertoExample}</CodeBlock>
 			</DocsBlock>
 			<DocsBlock title="Core API">

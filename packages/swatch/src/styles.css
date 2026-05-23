@@ -1,15 +1,15 @@
 @layer components {
-	.howells-swatch {
-		--howells-swatch-size: 2rem;
-		--howells-swatch-fill: #e3e1dc;
-		--howells-swatch-radius: 999px;
+	.patternmode-swatch {
+		--patternmode-swatch-size: 2rem;
+		--patternmode-swatch-fill: #e3e1dc;
+		--patternmode-swatch-radius: 999px;
 		align-items: center;
 		aspect-ratio: 1;
-		border-radius: var(--howells-swatch-radius);
+		border-radius: var(--patternmode-swatch-radius);
 		box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
 		color: white;
 		display: inline-flex;
-		height: var(--howells-swatch-size);
+		height: var(--patternmode-swatch-size);
 		justify-content: center;
 		position: relative;
 		transition:
@@ -17,94 +17,67 @@
 			opacity 140ms ease,
 			transform 140ms ease;
 		vertical-align: middle;
-		width: var(--howells-swatch-size);
+		width: var(--patternmode-swatch-size);
 	}
 
-	.howells-swatch[data-tone="light"] {
+	.patternmode-swatch[data-tone="light"] {
 		color: #1d1d1b;
 	}
 
-	.howells-swatch[data-shape="pill"] {
-		--howells-swatch-radius: 999px;
+	.patternmode-swatch[data-shape="pill"] {
+		--patternmode-swatch-radius: 999px;
 		aspect-ratio: auto;
-		width: calc(var(--howells-swatch-size) * 3);
+		width: calc(var(--patternmode-swatch-size) * 3);
 	}
 
-	.howells-swatch[data-shape="square"] {
-		--howells-swatch-radius: 7px;
+	.patternmode-swatch[data-shape="square"] {
+		--patternmode-swatch-radius: 7px;
 	}
 
-	.howells-swatch[data-size="2xs"] {
-		--howells-swatch-size: 1rem;
-	}
-
-	.howells-swatch[data-size="xs"] {
-		--howells-swatch-size: 1.25rem;
-	}
-
-	.howells-swatch[data-size="sm"] {
-		--howells-swatch-size: 1.5rem;
-	}
-
-	.howells-swatch[data-size="lg"] {
-		--howells-swatch-size: 2.5rem;
-	}
-
-	.howells-swatch[data-size="xl"] {
-		--howells-swatch-size: 3rem;
-	}
-
-	.howells-swatch[data-size="2xl"] {
-		--howells-swatch-size: 3.5rem;
-	}
-
-	.howells-swatch[data-size="3xl"] {
-		--howells-swatch-size: 4rem;
-	}
-
-	.howells-swatch[data-raised="true"] {
+	.patternmode-swatch[data-raised="true"] {
 		box-shadow:
 			0 1px 2px rgb(17 24 39 / 10%),
 			0 0 0 2px var(--surface, #fff);
 	}
 
-	.howells-swatch[data-selected="true"][data-show-ring="true"] {
+	.patternmode-swatch[data-selected="true"][data-show-ring="true"] {
 		box-shadow:
 			0 1px 2px rgb(17 24 39 / 10%),
 			0 0 0 2px var(--surface, #fff),
 			0 0 0 4px var(--accent, #315c4b);
 	}
 
-	.howells-swatch[data-unavailable="true"] {
+	.patternmode-swatch[data-unavailable="true"] {
 		opacity: 0.5;
 	}
 
-	.howells-swatch__fill,
-	.howells-swatch__media,
-	.howells-swatch__scrim {
+	.patternmode-swatch__fill,
+	.patternmode-swatch__media,
+	.patternmode-swatch__scrim {
 		border-radius: inherit;
 		inset: 0;
 		overflow: hidden;
 		position: absolute;
 	}
 
-	.howells-swatch__fill {
-		background: var(--howells-swatch-fill);
+	.patternmode-swatch__fill {
+		background: var(--patternmode-swatch-fill);
 	}
 
-	.howells-swatch__media > * {
+	.patternmode-swatch__media > * {
 		display: block;
 		height: 100%;
-		object-fit: cover;
+		object-fit: inherit;
+		object-position: inherit;
 		width: 100%;
 	}
 
-	.howells-swatch__scrim {
+	.patternmode-swatch__scrim {
 		background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 20%) 100%);
 		pointer-events: none;
 	}
 
-	.howells-swatch__icon {
+	.patternmode-swatch__icon {
 		align-items: center;
 		display: inline-flex;
 		inset: 0;
@@ -112,7 +85,7 @@
 		position: absolute;
 	}
 
-	.howells-swatch__icon svg {
+	.patternmode-swatch__icon svg {
 		display: block;
 		height: 48%;
 		stroke: currentColor;
@@ -122,7 +95,7 @@
 		width: 48%;
 	}
 
-	.howells-swatch__slash {
+	.patternmode-swatch__slash {
 		background: currentColor;
 		border-radius: 999px;
 		height: 2px;
@@ -131,7 +104,7 @@
 		width: 112%;
 	}
 
-	.howells-swatch__remove {
+	.patternmode-swatch__remove {
 		align-items: center;
 		background: var(--ink, #1d1d1b);
 		border: 0;
@@ -152,21 +125,21 @@
 		width: 1.25rem;
 	}
 
-	.howells-swatch:hover .howells-swatch__remove,
-	.howells-swatch__remove:focus-visible {
+	.patternmode-swatch:hover .patternmode-swatch__remove,
+	.patternmode-swatch__remove:focus-visible {
 		opacity: 1;
 	}
 
-	.howells-swatch__remove:hover {
+	.patternmode-swatch__remove:hover {
 		background: var(--accent, #315c4b);
 	}
 
-	.howells-swatch__remove:focus-visible {
+	.patternmode-swatch__remove:focus-visible {
 		outline: 2px solid var(--accent, #315c4b);
 		outline-offset: 2px;
 	}
 
-	.howells-swatch__remove svg {
+	.patternmode-swatch__remove svg {
 		height: 0.8rem;
 		stroke: currentColor;
 		stroke-linecap: round;

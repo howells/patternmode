@@ -12,6 +12,14 @@ import { join, resolve } from "node:path";
 const root = process.cwd();
 const packDir = join(root, ".pack");
 const fixtureDir = join(packDir, "next-consumer");
+const packages = [
+	{ name: "@patternmode/system", tarballPrefix: "patternmode-system-" },
+	{ name: "@patternmode/stacksheet", tarballPrefix: "patternmode-stacksheet-" },
+	{ name: "@patternmode/aperto", tarballPrefix: "patternmode-aperto-" },
+	{ name: "@patternmode/deck", tarballPrefix: "patternmode-deck-" },
+	{ name: "@patternmode/scrollframe", tarballPrefix: "patternmode-scrollframe-" },
+	{ name: "@patternmode/swatch", tarballPrefix: "patternmode-swatch-" },
+];
 
 function run(command, args, options = {}) {
 	execFileSync(command, args, {
@@ -24,31 +32,27 @@ function run(command, args, options = {}) {
 rmSync(packDir, { force: true, recursive: true });
 mkdirSync(packDir, { recursive: true });
 
-run("pnpm", [
-	"--filter",
-	"@howells/stacksheet",
-	"pack",
-	"--pack-destination",
-	packDir,
-]);
-run("pnpm", [
-	"--filter",
-	"@howells/aperto",
-	"pack",
-	"--pack-destination",
-	packDir,
-]);
-
-const stacksheetTarball = readdirSync(packDir).find((file) =>
-	file.startsWith("howells-stacksheet-"),
-);
-const apertoTarball = readdirSync(packDir).find((file) =>
-	file.startsWith("howells-aperto-"),
-);
-
-if (!stacksheetTarball || !apertoTarball) {
-	throw new Error("Expected package tarballs were not created.");
+for (const pkg of packages) {
+	run("pnpm", [
+		"--filter",
+		pkg.name,
+		"pack",
+		"--pack-destination",
+		packDir,
+	]);
 }
+
+const tarballs = Object.fromEntries(
+	packages.map((pkg) => {
+		const tarball = readdirSync(packDir).find((file) =>
+			file.startsWith(pkg.tarballPrefix),
+		);
+		if (!tarball) {
+			throw new Error(`Expected tarball was not created for ${pkg.name}.`);
+		}
+		return [pkg.name, tarball];
+	}),
+);
 
 mkdirSync(join(fixtureDir, "app"), { recursive: true });
 writeFileSync(
@@ -63,11 +67,20 @@ writeFileSync(
 				typecheck: "tsc --noEmit",
 			},
 			dependencies: {
-				"@howells/aperto": `file:${resolve(packDir, apertoTarball)}`,
-				"@howells/stacksheet": `file:${resolve(packDir, stacksheetTarball)}`,
+				"@patternmode/aperto": `file:${resolve(packDir, tarballs["@patternmode/aperto"])}`,
+				"@patternmode/deck": `file:${resolve(packDir, tarballs["@patternmode/deck"])}`,
+				"@patternmode/scrollframe": `file:${resolve(packDir, tarballs["@patternmode/scrollframe"])}`,
+				"@patternmode/stacksheet": `file:${resolve(packDir, tarballs["@patternmode/stacksheet"])}`,
+				"@patternmode/swatch": `file:${resolve(packDir, tarballs["@patternmode/swatch"])}`,
+				"@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
 				next: "^16.2.6",
 				react: "^19.2.3",
 				"react-dom": "^19.2.3",
+			},
+			pnpm: {
+				overrides: {
+					"@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
+				},
 			},
 			devDependencies: {
 				"@types/node": "^24.10.3",
@@ -114,8 +127,11 @@ writeFileSync(
 writeFileSync(
 	join(fixtureDir, "app", "layout.tsx"),
 	`import type { ReactNode } from "react";
-import "@howells/stacksheet/styles.css";
-import "@howells/aperto/styles.css";
+import "@patternmode/aperto/styles.css";
+import "@patternmode/deck/styles.css";
+import "@patternmode/scrollframe/styles.css";
+import "@patternmode/stacksheet/styles.css";
+import "@patternmode/swatch/styles.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return <html lang="en"><body>{children}</body></html>;
@@ -135,8 +151,11 @@ writeFileSync(
 	join(fixtureDir, "app", "demo.tsx"),
 	`"use client";
 
-import { Aperto, type ApertoMediaItem } from "@howells/aperto";
-import { createStacksheet } from "@howells/stacksheet";
+import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
+import { Deck } from "@patternmode/deck";
+import { ScrollFrame } from "@patternmode/scrollframe";
+import { createStacksheet } from "@patternmode/stacksheet";
+import { Swatch } from "@patternmode/swatch";
 
 const media: ApertoMediaItem[] = [
   { id: "one", type: "image", src: "/one.jpg", alt: "One" },
@@ -147,9 +166,19 @@ const { StacksheetProvider } = createStacksheet();
 export function Demo() {
   return (
     <StacksheetProvider>
-      <Aperto.Group media={media}>
-        <Aperto.Thumbnail index={0} />
-      </Aperto.Group>
+      <main>
+        <Aperto.Group media={media}>
+          <Aperto.Thumbnail index={0} />
+        </Aperto.Group>
+        <Deck aria-label="Smoke cards">
+          <Deck.Card>Card one</Deck.Card>
+          <Deck.Card>Card two</Deck.Card>
+        </Deck>
+        <ScrollFrame aria-label="Smoke scroller">
+          <div>Scrollable content</div>
+        </ScrollFrame>
+        <Swatch color="#ff3355" aria-label="Smoke swatch" />
+      </main>
     </StacksheetProvider>
   );
 }

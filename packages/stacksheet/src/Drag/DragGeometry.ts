@@ -1,0 +1,155 @@
+import type { Side } from "../types";
+import { INTERACTIVE_TAGS, MAX_ANGLE_DEG } from "./DragConstants";
+import type { DragAxis, DragSign } from "./DragTypes";
+
+export function isInteractiveElement(el: Element): boolean {
+	if (INTERACTIVE_TAGS.has(el.tagName)) {
+		return true;
+	}
+	if ((el as HTMLElement).isContentEditable) {
+		return true;
+	}
+	// Children of interactive elements (e.g. SVG inside button, span inside link)
+	if (el.closest("button, a, input, textarea, select, [contenteditable]")) {
+		return true;
+	}
+	if (el.closest("[data-stacksheet-no-drag]")) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Walk up from `el` to find the nearest scrollable ancestor.
+ * Returns null if nothing is scrollable in the dismiss axis.
+ */
+export function findScrollableAncestor(
+	el: Element,
+	axis: DragAxis,
+): Element | null {
+	let current: Element | null = el;
+	while (current) {
+		if (current instanceof HTMLElement) {
+			const style = getComputedStyle(current);
+			const overflow = axis === "y" ? style.overflowY : style.overflowX;
+			if (overflow === "auto" || overflow === "scroll") {
+				const scrollable =
+					axis === "y"
+						? current.scrollHeight > current.clientHeight
+						: current.scrollWidth > current.clientWidth;
+				if (scrollable) {
+					return current;
+				}
+			}
+		}
+		current = current.parentElement;
+	}
+	return null;
+}
+
+/**
+ * Check if a scrollable element is at its edge in the dismiss direction.
+ * For bottom sheets (sign=1, axis=y), "at edge" means scrolled to top.
+ * For left panels (sign=-1, axis=x), "at edge" means scrolled to right end.
+ */
+export function isAtScrollEdge(
+	el: Element,
+	axis: DragAxis,
+	sign: DragSign,
+): boolean {
+	if (axis === "y") {
+		// Dismiss down (sign=1): at edge when scrollTop ≈ 0
+		// Dismiss up (sign=-1): at edge when scrolled to bottom
+		return sign === 1
+			? el.scrollTop <= 0
+			: el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+	}
+	return sign === 1
+		? el.scrollLeft <= 0
+		: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+}
+
+/**
+ * Get the dismiss direction axis and sign for a given side.
+ * - right panel → dismiss by dragging right (+x)
+ * - left panel → dismiss by dragging left (-x)
+ * - bottom panel → dismiss by dragging down (+y)
+ */
+export function getDismissAxis(side: Side): {
+	axis: DragAxis;
+	sign: DragSign;
+} {
+	switch (side) {
+		case "right":
+			return { axis: "x", sign: 1 };
+		case "left":
+			return { axis: "x", sign: -1 };
+		case "bottom":
+			return { axis: "y", sign: 1 };
+		default:
+			return { axis: "x", sign: 1 };
+	}
+}
+
+/**
+ * Decide whether a gesture past the dead zone qualifies as a dismiss drag.
+ * Returns "drag" if it's a valid dismiss gesture, "none" if it's off-axis
+ * or moving in the wrong direction.
+ */
+export function classifyGesture(
+	dx: number,
+	dy: number,
+	axis: DragAxis,
+	sign: DragSign,
+): "drag" | "none" {
+	const absDx = Math.abs(dx);
+	const absDy = Math.abs(dy);
+
+	// Compute angle between movement vector and dismiss axis
+	let angleDeg: number;
+	if (axis === "y") {
+		angleDeg = absDy === 0 ? 90 : (Math.atan(absDx / absDy) * 180) / Math.PI;
+	} else {
+		angleDeg = absDx === 0 ? 90 : (Math.atan(absDy / absDx) * 180) / Math.PI;
+	}
+
+	if (angleDeg > MAX_ANGLE_DEG) {
+		return "none";
+	}
+
+	// Must be moving in the dismiss direction
+	const moveInAxis = axis === "x" ? dx : dy;
+	if (moveInAxis * sign < 0) {
+		return "none";
+	}
+
+	return "drag";
+}
+
+/** Decide whether a pointer gesture commits as a drag or should be ignored. */
+export function commitGesture(
+	dx: number,
+	dy: number,
+	axis: DragAxis,
+	sign: DragSign,
+	scrollEl: Element | null,
+): "drag" | "none" {
+	const gesture = classifyGesture(dx, dy, axis, sign);
+	if (gesture === "none") {
+		return "none";
+	}
+	if (scrollEl && !isAtScrollEdge(scrollEl, axis, sign)) {
+		return "none";
+	}
+	return "drag";
+}
+
+export function getPanelDimension(
+	panel: HTMLDivElement | null,
+	axis: DragAxis,
+): number {
+	if (!panel) {
+		return 300;
+	}
+	return axis === "x" ? panel.offsetWidth : panel.offsetHeight;
+}

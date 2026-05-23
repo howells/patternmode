@@ -1,0 +1,249 @@
+@layer components {
+	.patternmode-scrollframe {
+		--patternmode-scrollframe-fade-color: var(--surface, #fff);
+		--patternmode-scrollframe-fade-size: 2rem;
+		min-height: 0;
+		min-width: 0;
+		position: relative;
+	}
+
+	.patternmode-scrollframe__viewport {
+		height: 100%;
+		max-height: inherit;
+		max-width: inherit;
+		min-height: 0;
+		min-width: 0;
+		overscroll-behavior: contain;
+		scrollbar-gutter: stable;
+		width: 100%;
+	}
+
+	.patternmode-scrollframe[data-axis-vertical="true"]
+		> .patternmode-scrollframe__viewport {
+		overflow-y: auto;
+	}
+
+	.patternmode-scrollframe[data-axis-vertical="false"]
+		> .patternmode-scrollframe__viewport {
+		overflow-y: hidden;
+	}
+
+	.patternmode-scrollframe[data-axis-horizontal="true"]
+		> .patternmode-scrollframe__viewport {
+		overflow-x: auto;
+	}
+
+	.patternmode-scrollframe[data-axis-horizontal="false"]
+		> .patternmode-scrollframe__viewport {
+		overflow-x: hidden;
+	}
+
+	.patternmode-scrollframe[data-scrollbar-visibility="hidden"]
+		.patternmode-scrollframe__viewport {
+		scrollbar-width: none;
+	}
+
+	.patternmode-scrollframe[data-scrollbar-visibility="hidden"]
+		.patternmode-scrollframe__viewport::-webkit-scrollbar {
+		display: none;
+	}
+
+	.patternmode-scrollframe__content {
+		min-height: min-content;
+		min-width: min-content;
+	}
+
+	.patternmode-scrollframe[data-axis-horizontal="true"]
+		.patternmode-scrollframe__content {
+		width: max-content;
+	}
+
+	/* ── Fades ──────────────────────────────────── */
+
+	.patternmode-scrollframe__fade {
+		--_fade-stops: transparent 0%, rgb(0 0 0 / 0.02) 9%,
+			rgb(0 0 0 / 0.08) 18%, rgb(0 0 0 / 0.18) 29%, rgb(0 0 0 / 0.32) 42%,
+			rgb(0 0 0 / 0.52) 58%, rgb(0 0 0 / 0.72) 74%, black 100%;
+		background: var(--patternmode-scrollframe-fade-color);
+		mask-image: linear-gradient(var(--_fade-dir), var(--_fade-stops));
+		opacity: 1;
+		pointer-events: none;
+		position: absolute;
+		transition: opacity 140ms ease;
+		z-index: 1;
+	}
+
+	.patternmode-scrollframe__fade[data-hidden="true"] {
+		opacity: 0;
+	}
+
+	.patternmode-scrollframe__fade[data-axis="vertical"] {
+		height: var(--patternmode-scrollframe-fade-size);
+		left: 0;
+		right: 0;
+	}
+
+	.patternmode-scrollframe__fade[data-axis="vertical"][data-edge="start"] {
+		--_fade-dir: to top;
+		top: 0;
+	}
+
+	.patternmode-scrollframe__fade[data-axis="vertical"][data-edge="end"] {
+		--_fade-dir: to bottom;
+		bottom: 0;
+	}
+
+	.patternmode-scrollframe__fade[data-axis="horizontal"] {
+		bottom: 0;
+		top: 0;
+		width: var(--patternmode-scrollframe-fade-size);
+	}
+
+	.patternmode-scrollframe__fade[data-axis="horizontal"][data-edge="start"] {
+		--_fade-dir: to left;
+		left: 0;
+	}
+
+	.patternmode-scrollframe__fade[data-axis="horizontal"][data-edge="end"] {
+		--_fade-dir: to right;
+		right: 0;
+	}
+
+	/* ── Scrollbar ──────────────────────────────── */
+
+	.patternmode-scrollframe__scrollbar {
+		display: flex;
+		padding: 2px;
+		touch-action: none;
+		user-select: none;
+	}
+
+	.patternmode-scrollframe__scrollbar[data-orientation="vertical"] {
+		width: 10px;
+	}
+
+	.patternmode-scrollframe__scrollbar[data-orientation="horizontal"] {
+		flex-direction: column;
+		height: 10px;
+	}
+
+	.patternmode-scrollframe__scrollbar[data-hidden="true"] {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.patternmode-scrollframe__thumb {
+		background: color-mix(in srgb, currentColor 18%, transparent);
+		border-radius: 999px;
+		flex: 1;
+		position: relative;
+		transition: background 150ms ease;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.patternmode-scrollframe__thumb:hover {
+			background: color-mix(in srgb, currentColor 30%, transparent);
+		}
+	}
+
+	.patternmode-scrollframe__thumb:active {
+		background: color-mix(in srgb, currentColor 38%, transparent);
+	}
+
+	/* ── Controls ───────────────────────────────── */
+
+	.patternmode-scrollframe__control {
+		align-items: center;
+		background: color-mix(
+			in srgb,
+			var(--surface, #fff) 80%,
+			transparent
+		);
+		backdrop-filter: blur(6px);
+		border: 1px solid
+			color-mix(in srgb, var(--border, #e3e1dc) 60%, transparent);
+		border-radius: 999px;
+		color: inherit;
+		cursor: pointer;
+		display: inline-flex;
+		font: inherit;
+		height: 2rem;
+		justify-content: center;
+		padding: 0;
+		position: absolute;
+		transition: background 150ms ease, border-color 150ms ease,
+			opacity 150ms ease;
+		width: 2rem;
+		z-index: 2;
+	}
+
+	.patternmode-scrollframe__control[data-axis="horizontal"] {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	.patternmode-scrollframe__control[data-axis="horizontal"][data-direction="start"] {
+		left: 0.375rem;
+	}
+
+	.patternmode-scrollframe__control[data-axis="horizontal"][data-direction="end"] {
+		right: 0.375rem;
+	}
+
+	.patternmode-scrollframe__control[data-axis="vertical"] {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.patternmode-scrollframe__control[data-axis="vertical"][data-direction="start"] {
+		top: 0.375rem;
+	}
+
+	.patternmode-scrollframe__control[data-axis="vertical"][data-direction="end"] {
+		bottom: 0.375rem;
+	}
+
+	.patternmode-scrollframe__control > svg {
+		pointer-events: none;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.patternmode-scrollframe__control:not(:disabled):not(
+				[aria-disabled="true"]
+			):hover {
+			background: color-mix(
+				in srgb,
+				var(--surface, #fff) 95%,
+				transparent
+			);
+			border-color: var(--border, #e3e1dc);
+		}
+	}
+
+	.patternmode-scrollframe__control:focus-visible {
+		outline: 2px solid var(--border, #e3e1dc);
+		outline-offset: 2px;
+	}
+
+	.patternmode-scrollframe__control:disabled,
+	.patternmode-scrollframe__control[aria-disabled="true"] {
+		cursor: not-allowed;
+		opacity: 0.42;
+	}
+
+	/* ── Reduced motion ─────────────────────────── */
+
+	@media (prefers-reduced-motion: reduce) {
+		.patternmode-scrollframe__fade {
+			transition: none;
+		}
+
+		.patternmode-scrollframe__thumb {
+			transition: none;
+		}
+
+		.patternmode-scrollframe__control {
+			transition: none;
+		}
+	}
+}

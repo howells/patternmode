@@ -1,5 +1,5 @@
 {
-	"name": "@howells/swatch",
+	"name": "@patternmode/swatch",
 	"version": "0.1.0",
 	"private": false,
 	"description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
@@ -56,6 +56,9 @@
 		"component",
 		"patternmode"
 	],
+	"dependencies": {
+		"@patternmode/system": "workspace:*"
+	},
 	"peerDependencies": {
 		"react": "^18.0.0 || ^19.0.0",
 		"react-dom": "^18.0.0 || ^19.0.0"

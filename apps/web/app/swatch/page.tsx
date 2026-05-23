@@ -57,8 +57,8 @@ const swatchApi: ApiSection[] = [
 	},
 ];
 
-const swatchExample = `import { Swatch } from "@howells/swatch";
-import "@howells/swatch/styles.css";
+const swatchExample = `import { Swatch } from "@patternmode/swatch";
+import "@patternmode/swatch/styles.css";
 
 function PalettePreview() {
   return (
@@ -82,7 +82,7 @@ export default function SwatchPage() {
 		>
 			<SwatchDemo />
 			<DocsBlock title="Install">
-				<CodeBlock install>npm install @howells/swatch</CodeBlock>
+				<CodeBlock install>npm install @patternmode/swatch</CodeBlock>
 				<CodeBlock>{swatchExample}</CodeBlock>
 			</DocsBlock>
 			<DocsBlock title="Core API">

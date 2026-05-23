@@ -20,12 +20,12 @@ describe("Swatch", () => {
 		render(<Swatch aria-label="Olive" color="#315c4b" />);
 
 		const swatch = screen.getByRole("img", { name: "Olive" });
-		expect(swatch).toHaveClass("howells-swatch");
+		expect(swatch).toHaveClass("patternmode-swatch");
 		expect(swatch).toHaveAttribute("data-slot", "swatch");
 		expect(swatch).toHaveAttribute("data-shape", "circle");
 		expect(swatch).toHaveAttribute("data-size", "base");
 		expect(swatch).toHaveAttribute("data-tone", "dark");
-		expect(swatch).toHaveStyle({ "--howells-swatch-fill": "#315c4b" });
+		expect(swatch).toHaveStyle({ "--patternmode-swatch-fill": "#315c4b" });
 	});
 
 	it("renders weighted color stops as a single fill", () => {
@@ -40,7 +40,7 @@ describe("Swatch", () => {
 		);
 
 		expect(screen.getByRole("img", { name: "Palette" })).toHaveStyle({
-			"--howells-swatch-fill":
+			"--patternmode-swatch-fill":
 				"linear-gradient(90deg, #315c4b 0% 60%, #e1ebe5 60% 100%)",
 		});
 	});
@@ -86,5 +86,21 @@ describe("Swatch", () => {
 		await user.click(screen.getByRole("button", { name: "Remove" }));
 
 		expect(onRemove).toHaveBeenCalledTimes(1);
+	});
+
+	it("applies shared object sizing to media children", () => {
+		render(
+			<Swatch aria-label="Sample" objectFit="contain" objectPosition="top left">
+				<img alt="Sample media" src="/sample.jpg" />
+			</Swatch>,
+		);
+
+		const media = screen.getByAltText("Sample media").parentElement;
+		expect(media).toHaveStyle({
+			height: "100%",
+			objectFit: "contain",
+			objectPosition: "top left",
+			width: "100%",
+		});
 	});
 });

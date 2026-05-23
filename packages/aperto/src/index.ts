@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @howells/aperto
+ * @patternmode/aperto
  *
  * Opinionated thumbnail-to-expanded media transitions.
  * Built on Radix Dialog + Motion.
@@ -11,10 +11,10 @@
  *
  * @example
  * ```tsx
- * import { Aperto } from "@howells/aperto";
+ * import { Aperto } from "@patternmode/aperto";
  *
- * import { Aperto } from "@howells/aperto";
- * import "@howells/aperto/styles.css";
+ * import { Aperto } from "@patternmode/aperto";
+ * import "@patternmode/aperto/styles.css";
  *
  * <Aperto.Group media={media}>
  *   {media.map((item, index) => (

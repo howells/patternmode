@@ -1,6 +1,6 @@
 "use client";
 
-import { Deck, type DeckMode, type SwipeDirection } from "@howells/deck";
+import { type AdvanceDirection, Deck, type DeckMode } from "@patternmode/deck";
 import Image from "next/image";
 import { useState } from "react";
 import { apertoMedia } from "@/lib/aperto-media";
@@ -9,7 +9,9 @@ import { OptionBar } from "./option-bar";
 export function DeckDemo() {
 	const [mode, setMode] = useState<DeckMode>("cycle");
 	const [visibleCount, setVisibleCount] = useState(3);
-	const [lastSwipe, setLastSwipe] = useState<SwipeDirection | "none">("none");
+	const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">(
+		"none",
+	);
 
 	return (
 		<div className="deck-demo">
@@ -19,7 +21,7 @@ export function DeckDemo() {
 					className="deck-surface"
 					key={mode}
 					mode={mode}
-					onSwipe={({ direction }) => setLastSwipe(direction)}
+					onAdvance={({ direction }) => setLastAdvance(direction)}
 					rotation={7}
 					visibleCount={visibleCount}
 				>
@@ -63,7 +65,7 @@ export function DeckDemo() {
 					]}
 					value={visibleCount}
 				/>
-				<p className="deck-demo-state">Last swipe: {lastSwipe}</p>
+				<p className="deck-demo-state">Last advance: {lastAdvance}</p>
 			</div>
 		</div>
 	);
