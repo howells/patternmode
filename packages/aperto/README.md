@@ -1,10 +1,10 @@
-# @howells/aperto
+# @patternmode/aperto
 
 Opinionated, styled thumbnail-to-expanded media transitions for React.
 
 ```tsx
-import { Aperto, type ApertoMediaItem } from "@howells/aperto";
-import "@howells/aperto/styles.css";
+import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
+import "@patternmode/aperto/styles.css";
 
 const media: ApertoMediaItem[] = [
   {
@@ -24,9 +24,9 @@ const media: ApertoMediaItem[] = [
   },
 ];
 
-export function PreviewGrid() {
+export function MediaGroupExample() {
   return (
-    <Aperto.Group media={media}>
+    <Aperto.Group media={media} dismissible={{ threshold: 120, velocity: 600 }}>
       {media.map((item, index) => (
         <Aperto.Thumbnail key={item.id ?? item.src} index={index} />
       ))}
@@ -38,13 +38,19 @@ export function PreviewGrid() {
 ## Install
 
 ```bash
-pnpm add @howells/aperto
+pnpm add @patternmode/aperto
 ```
 
 React and React DOM are peer dependencies.
 
+## Drag dismissal
+
+Expanded media can be dismissed by dragging past a distance or velocity
+threshold. Pass `dismissible={false}` to disable drag dismissal, or pass
+`{ threshold, velocity }` to tune the gesture.
+
 ## Primitive transitions
 
-Use `Aperto.Primitive` for custom shared-element dialogs that are not media
-lightboxes. `Aperto.Primitive.Content` is centered by default; pass
+Use the Aperto Primitive API for custom shared-element dialogs that are not
+Media Transitions. `Aperto.Primitive.Content` is centered by default; pass
 `placement="none"` when the panel should own its own positioning.

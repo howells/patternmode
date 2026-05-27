@@ -10,7 +10,7 @@ import {
 	useEffect,
 	useRef,
 } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const unmountedLayoutIds = vi.hoisted((): string[] => []);
 
@@ -55,6 +55,7 @@ vi.mock("motion/react", () => {
 		...props
 	}: MotionTestProps) => ({
 		...props,
+		"data-drag": _drag === undefined ? undefined : String(_drag),
 		"data-layout": layout === undefined ? undefined : String(layout),
 		"data-layout-id": layoutId,
 	});
@@ -108,16 +109,28 @@ vi.mock("motion/react", () => {
 
 import { Aperto, type ApertoMediaItem } from "./index";
 
+let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+
+beforeEach(() => {
+	consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+});
+
 afterEach(() => {
-	cleanup();
-	unmountedLayoutIds.length = 0;
+	try {
+		expect(consoleErrorSpy).not.toHaveBeenCalled();
+	} finally {
+		consoleErrorSpy.mockRestore();
+		cleanup();
+		unmountedLayoutIds.length = 0;
+	}
 });
 
 describe("Aperto layout projection", () => {
 	it("centers primitive content by default", () => {
 		render(
 			<Aperto.Primitive.Root defaultOpen>
-				<Aperto.Primitive.Content aria-label="Centered panel">
+				<Aperto.Primitive.Content aria-describedby={undefined}>
+					<Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
 					Centered content
 				</Aperto.Primitive.Content>
 			</Aperto.Primitive.Root>,
@@ -133,10 +146,8 @@ describe("Aperto layout projection", () => {
 	it("can leave primitive content positioning to the caller", () => {
 		render(
 			<Aperto.Primitive.Root defaultOpen>
-				<Aperto.Primitive.Content
-					aria-label="Unpositioned panel"
-					placement="none"
-				>
+				<Aperto.Primitive.Content aria-describedby={undefined} placement="none">
+					<Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
 					Custom content
 				</Aperto.Primitive.Content>
 			</Aperto.Primitive.Root>,
@@ -146,6 +157,84 @@ describe("Aperto layout projection", () => {
 		expect(content.style.left).toBe("");
 		expect(content.style.top).toBe("");
 		expect(content.style.translate).toBe("");
+	});
+
+	it("allows single media drag dismissal to be disabled", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem = {
+			type: "image",
+			src: "/large.jpg",
+			alt: "A mountain at sunrise",
+			title: "Morning ridge",
+		};
+
+		render(<Aperto dismissible={false} media={media} />);
+
+		await user.click(
+			screen.getByRole("button", { name: "Open Morning ridge" }),
+		);
+
+		expect(
+			screen.getByRole("dialog", { name: "Morning ridge" }),
+		).toHaveAttribute("data-drag", "false");
+	});
+
+	it("allows grouped media drag dismissal to be disabled", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/first-large.jpg",
+				alt: "Ceramic vessels on linen",
+				title: "Studio table",
+			},
+			{
+				type: "image",
+				src: "/second-large.jpg",
+				alt: "A quiet reading nook",
+				title: "Soft afternoon",
+			},
+		];
+
+		render(
+			<Aperto.Group dismissible={false} media={media}>
+				<Aperto.Thumbnail index={0} />
+				<Aperto.Thumbnail index={1} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Studio table" }));
+
+		expect(
+			screen.getByRole("dialog", { name: "Studio table" }),
+		).toHaveAttribute("data-drag", "false");
+	});
+
+	it("keeps grouped media draggable when using custom dismissal thresholds", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/first-large.jpg",
+				alt: "Ceramic vessels on linen",
+				title: "Studio table",
+			},
+		];
+
+		render(
+			<Aperto.Group
+				dismissible={{ threshold: 180, velocity: 900 }}
+				media={media}
+			>
+				<Aperto.Thumbnail index={0} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Studio table" }));
+
+		expect(
+			screen.getByRole("dialog", { name: "Studio table" }),
+		).toHaveAttribute("data-drag", "true");
 	});
 
 	it("keeps grouped content mounted while switching media", async () => {

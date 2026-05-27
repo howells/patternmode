@@ -2,7 +2,14 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
-const publicPackages = ["packages/stacksheet", "packages/aperto"];
+const publicPackages = [
+	"packages/stacksheet",
+	"packages/aperto",
+	"packages/deck",
+	"packages/system",
+	"packages/swatch",
+	"packages/scrollframe",
+];
 const privatePackages = [
 	"apps/web/package.json",
 	"packages/site-ui/package.json",
@@ -11,9 +18,8 @@ const privatePackages = [
 
 const forbiddenInPublicPackages = [
 	"@howells/site-ui",
-	"@howells/motion-reference",
+	"@howells/motion",
 	"@howells/patternmode-web",
-	"@patternmode/",
 	"apps/web",
 	"packages/site-ui",
 	"packages/motion",

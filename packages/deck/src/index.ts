@@ -5,21 +5,21 @@ export {
 	DeckEmpty,
 	DeckRoot,
 } from "./deck";
-export type { SwipeDecision, SwipeDecisionInput } from "./logic";
+export type { AdvanceDecision, AdvanceDecisionInput } from "./logic";
 export {
+	getAdvanceDecision,
 	getNextDeckIndex,
-	getSwipeDecision,
 	getVisibleDeckItems,
 	getVisualDepth,
 	resolveCardRotation,
 } from "./logic";
 export type {
+	AdvanceDirection,
+	DeckAdvanceEvent,
 	DeckCardProps,
 	DeckEmptyProps,
 	DeckItem,
 	DeckMode,
 	DeckRenderOverlayState,
 	DeckRootProps,
-	DeckSwipeEvent,
-	SwipeDirection,
 } from "./types";

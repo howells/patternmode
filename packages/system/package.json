@@ -1,0 +1,60 @@
+{
+	"name": "@patternmode/system",
+	"version": "0.2.0",
+	"private": false,
+	"description": "Shared Patternmode sizing, responsive, object sizing, and composition utilities.",
+	"type": "module",
+	"license": "MIT",
+	"author": "Daniel Howells",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/howells/patternmode.git",
+		"directory": "packages/system"
+	},
+	"bugs": {
+		"url": "https://github.com/howells/patternmode/issues"
+	},
+	"homepage": "https://github.com/howells/patternmode/tree/main/packages/system#readme",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsdown && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false",
+		"clean": "rm -rf dist .turbo",
+		"dev": "concurrently \"pnpm dev:js\" \"pnpm dev:types\"",
+		"dev:js": "tsdown --watch",
+		"dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false --watch --preserveWatchOutput",
+		"lint:check": "find src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 howells-biome check",
+		"prepack": "pnpm build",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit"
+	},
+	"keywords": [
+		"patternmode",
+		"design-system",
+		"sizing",
+		"responsive",
+		"object-fit"
+	],
+	"devDependencies": {
+		"@howells/lint": "^0.1.7",
+		"@howells/typescript-config": "^0.1.2",
+		"concurrently": "^9.2.1",
+		"tsdown": "^0.22.0",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.6"
+	}
+}

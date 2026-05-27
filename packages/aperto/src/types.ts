@@ -1,5 +1,5 @@
 /**
- * @howells/aperto
+ * @patternmode/aperto
  *
  * Shared element transitions with physics-based drag dismissal.
  * Built on Radix Dialog + Motion.
@@ -11,7 +11,7 @@
 import type { Transition } from "motion/react";
 import type { ImgHTMLAttributes, ReactNode, VideoHTMLAttributes } from "react";
 
-export interface BaseMediaItem {
+interface BaseMediaItem {
 	description?: string;
 	height?: number;
 	id?: string;

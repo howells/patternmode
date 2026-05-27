@@ -1,29 +1,29 @@
 @layer components {
-	.howells-deck {
+	.patternmode-deck {
 		perspective: var(--deck-perspective, 1000px);
 		position: relative;
 		touch-action: pan-y;
 	}
 
-	.howells-deck-card {
+	.patternmode-deck-card {
 		cursor: grab;
 		inset: 0;
 		position: absolute;
 		transform-origin: center 70%;
 		user-select: none;
-		will-change: transform, opacity;
 	}
 
-	.howells-deck-card[data-active="false"] {
+	.patternmode-deck-card[data-active="false"] {
 		cursor: default;
 		pointer-events: none;
 	}
 
-	.howells-deck-card[data-active="true"] {
+	.patternmode-deck-card[data-active="true"] {
 		pointer-events: auto;
+		will-change: transform, opacity;
 	}
 
-	.howells-deck-empty {
+	.patternmode-deck-empty {
 		inset: 0;
 		position: absolute;
 	}

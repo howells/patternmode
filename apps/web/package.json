@@ -6,15 +6,18 @@
 	"scripts": {
 		"build": "next build",
 		"clean": "rm -rf .next .turbo",
-		"dev": "next dev --port 31037",
+		"dev": "next dev",
 		"lint:check": "howells-biome check app components",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@howells/aperto": "workspace:*",
-		"@howells/deck": "workspace:*",
+		"@patternmode/aperto": "workspace:*",
+		"@patternmode/deck": "workspace:*",
+		"@patternmode/scrollframe": "workspace:*",
 		"@howells/site-ui": "workspace:*",
-		"@howells/stacksheet": "workspace:*",
+		"@patternmode/swatch": "workspace:*",
+		"@patternmode/stacksheet": "workspace:*",
+		"@patternmode/tags": "workspace:*",
 		"next": "^16.2.6",
 		"react": "^19.2.3",
 		"react-dom": "^19.2.3"

@@ -5,6 +5,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
 	type CSSProperties,
+	Fragment,
 	forwardRef,
 	type HTMLAttributes,
 	type ReactNode,
@@ -19,6 +20,7 @@ vi.mock("motion/react", () => {
 		dragConstraints?: unknown;
 		dragElastic?: unknown;
 		dragMomentum?: unknown;
+		dragTransition?: unknown;
 		exit?: unknown;
 		initial?: unknown;
 		onDragEnd?: unknown;
@@ -33,6 +35,7 @@ vi.mock("motion/react", () => {
 		dragConstraints: _dragConstraints,
 		dragElastic: _dragElastic,
 		dragMomentum: _dragMomentum,
+		dragTransition: _dragTransition,
 		exit: _exit,
 		initial: _initial,
 		onDragEnd: _onDragEnd,
@@ -65,7 +68,7 @@ afterEach(() => {
 describe("Deck", () => {
 	it("renders a cyclic stack and advances with the keyboard", async () => {
 		const user = userEvent.setup();
-		const onSwipe = vi.fn();
+		const onAdvance = vi.fn();
 		const onIndexChange = vi.fn();
 
 		render(
@@ -74,7 +77,7 @@ describe("Deck", () => {
 				defaultIndex={1}
 				mode="cycle"
 				onIndexChange={onIndexChange}
-				onSwipe={onSwipe}
+				onAdvance={onAdvance}
 				visibleCount={3}
 			>
 				<Deck.Card>Alpha</Deck.Card>
@@ -93,7 +96,7 @@ describe("Deck", () => {
 		deck.focus();
 		await user.keyboard("{ArrowRight}");
 
-		expect(onSwipe).toHaveBeenCalledWith(
+		expect(onAdvance).toHaveBeenCalledWith(
 			expect.objectContaining({ direction: "right", index: 1 }),
 		);
 		expect(onIndexChange).toHaveBeenCalledWith(2);
@@ -147,5 +150,40 @@ describe("Deck", () => {
 
 		expect(onIndexChange).toHaveBeenCalledWith(1);
 		expect(screen.getByText("First")).toHaveAttribute("data-active", "true");
+	});
+
+	it("renders card children inside fragments", () => {
+		render(
+			<Deck aria-label="Fragment cards">
+				<Fragment key="fragment-cards">
+					<Deck.Card>Fragment one</Deck.Card>
+					<Deck.Card>Fragment two</Deck.Card>
+				</Fragment>
+			</Deck>,
+		);
+
+		expect(screen.getByText("Fragment one")).toHaveAttribute(
+			"data-active",
+			"true",
+		);
+		expect(screen.getByText("Fragment two")).toHaveAttribute("data-depth", "1");
+	});
+
+	it("warns when cards are wrapped in unsupported elements", () => {
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+		render(
+			<Deck aria-label="Wrapped cards">
+				<div>
+					<Deck.Card>Wrapped one</Deck.Card>
+				</div>
+			</Deck>,
+		);
+
+		expect(warn).toHaveBeenCalledWith(
+			expect.stringContaining("Deck.Card must be a direct child"),
+		);
+
+		warn.mockRestore();
 	});
 });

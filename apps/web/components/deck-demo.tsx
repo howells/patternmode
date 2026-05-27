@@ -1,76 +1,17 @@
 "use client";
 
-import { Deck, type DeckMode, type SwipeDirection } from "@howells/deck";
+import { type AdvanceDirection, Deck, type DeckMode } from "@patternmode/deck";
+import Image from "next/image";
 import { useState } from "react";
-
-const cards = [
-	{
-		id: "archive",
-		kicker: "Research",
-		title: "Material archive",
-		description:
-			"Collect loose references, compare surfaces, and keep the next candidate close behind the active card.",
-		tone: "green",
-	},
-	{
-		id: "studio",
-		kicker: "Studio",
-		title: "Light study",
-		description:
-			"A tactile card that can cycle forever, useful for prompts, concepts, photos, or profile stacks.",
-		tone: "ochre",
-	},
-	{
-		id: "review",
-		kicker: "Review",
-		title: "Shortlist pass",
-		description:
-			"Switch to finite mode when the gesture means yes/no progression through a bounded queue.",
-		tone: "clay",
-	},
-	{
-		id: "handoff",
-		kicker: "Handoff",
-		title: "Ready state",
-		description:
-			"Events expose the index, direction, next index, mode, and stable item id for real workflows.",
-		tone: "ink",
-	},
-];
-
-function OptionBar<T extends string | number>({
-	label,
-	onChange,
-	options,
-	value,
-}: {
-	label: string;
-	onChange: (value: T) => void;
-	options: { label: string; value: T }[];
-	value: T;
-}) {
-	return (
-		<fieldset className="option-bar">
-			<legend className="option-bar-label">{label}</legend>
-			{options.map((option) => (
-				<button
-					aria-pressed={value === option.value}
-					className="option-bar-item"
-					key={String(option.value)}
-					onClick={() => onChange(option.value)}
-					type="button"
-				>
-					{option.label}
-				</button>
-			))}
-		</fieldset>
-	);
-}
+import { apertoMedia } from "@/lib/aperto-media";
+import { OptionBar } from "./option-bar";
 
 export function DeckDemo() {
 	const [mode, setMode] = useState<DeckMode>("cycle");
 	const [visibleCount, setVisibleCount] = useState(3);
-	const [lastSwipe, setLastSwipe] = useState<SwipeDirection | "none">("none");
+	const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">(
+		"none",
+	);
 
 	return (
 		<div className="deck-demo">
@@ -80,24 +21,19 @@ export function DeckDemo() {
 					className="deck-surface"
 					key={mode}
 					mode={mode}
-					onSwipe={({ direction }) => setLastSwipe(direction)}
-					renderOverlay={({ active, direction }) =>
-						active && direction ? (
-							<span className="deck-swipe-badge">{direction}</span>
-						) : null
-					}
+					onAdvance={({ direction }) => setLastAdvance(direction)}
 					rotation={7}
 					visibleCount={visibleCount}
 				>
-					{cards.map((card) => (
-						<Deck.Card
-							className="deck-demo-card"
-							data-tone={card.tone}
-							key={card.id}
-						>
-							<span>{card.kicker}</span>
-							<h3>{card.title}</h3>
-							<p>{card.description}</p>
+					{apertoMedia.map((item) => (
+						<Deck.Card className="deck-demo-card" key={item.id ?? item.src}>
+							<Image
+								alt={item.alt}
+								draggable={false}
+								fill
+								sizes="(max-width: 640px) 78vw, 420px"
+								src={item.thumbnailSrc ?? item.src}
+							/>
 						</Deck.Card>
 					))}
 					<Deck.Empty>
@@ -129,7 +65,7 @@ export function DeckDemo() {
 					]}
 					value={visibleCount}
 				/>
-				<p className="deck-demo-state">Last swipe: {lastSwipe}</p>
+				<p className="deck-demo-state">Last advance: {lastAdvance}</p>
 			</div>
 		</div>
 	);

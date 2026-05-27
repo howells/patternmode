@@ -5,82 +5,26 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
-import { ApertoDemo, type CatalogMediaItem } from "@/components/aperto-demo";
-
-const apertoMedia: CatalogMediaItem[] = [
-	{
-		id: "earth-corridor",
-		type: "image",
-		src: "/media/earth-corridor.jpg",
-		thumbnailSrc: "/media/earth-corridor.jpg",
-		alt: "A rammed earth corridor with a ceramic vase and wooden bench between tall slit windows",
-		title: "Earth corridor",
-		description: "Rammed earth, narrow light slits, and a single vessel.",
-	},
-	{
-		id: "light-study",
-		type: "image",
-		src: "/media/light-study.jpg",
-		thumbnailSrc: "/media/light-study.jpg",
-		alt: "A blade of warm light falling across a polished floor from a slit in rammed earth walls",
-		title: "Light study",
-		description: "A narrow opening cuts a line across polished concrete.",
-	},
-	{
-		id: "rammed-light",
-		type: "image",
-		src: "/media/rammed-light.jpg",
-		thumbnailSrc: "/media/rammed-light.jpg",
-		alt: "A rammed earth room with tall vertical windows casting warm light across a built-in bench",
-		title: "Rammed light",
-		description: "Earth walls, tall slits, and a low stone bench.",
-	},
-	{
-		id: "concrete-room",
-		type: "image",
-		src: "/media/concrete-room.jpg",
-		thumbnailSrc: "/media/concrete-room.jpg",
-		alt: "A concrete and clay plaster room with a clerestory window flooding warm light onto a wooden bench",
-		title: "Concrete room",
-		description: "Clay plaster meets poured concrete under a clerestory.",
-	},
-	{
-		id: "slit-window",
-		type: "image",
-		src: "/media/slit-window.jpg",
-		thumbnailSrc: "/media/slit-window.jpg",
-		alt: "Warm afternoon light entering through a vertical slit in a rammed earth wall",
-		title: "Slit window",
-		description: "A single opening washes warm light across earth.",
-	},
-	{
-		id: "warm-chamber",
-		type: "image",
-		src: "/media/warm-chamber.jpg",
-		thumbnailSrc: "/media/warm-chamber.jpg",
-		alt: "A contemplative concrete chamber with a wooden bench beneath a beam of warm daylight",
-		title: "Warm chamber",
-		description: "Concrete walls, one bench, and a shaft of light.",
-	},
-];
+import { ApertoDemo } from "@/components/aperto-demo";
+import { apertoMedia } from "@/lib/aperto-media";
 
 const apertoApi: ApiSection[] = [
 	{
 		name: "Aperto.Group",
 		description:
-			"Gallery with keyboard navigation and shared-element transitions.",
+			"Media Group with keyboard Media Navigation and shared-element transitions.",
 		props: [
 			{
 				name: "media",
 				type: "ApertoMediaItem[]",
 				required: true,
-				description: "Array of image or video items.",
+				description: "Array of Image Media Items or Video Media Items.",
 			},
 			{
 				name: "motion",
 				type: '"snappy" | "smooth" | "bouncy"',
 				defaultValue: '"smooth"',
-				description: "Open/close transition easing preset.",
+				description: "Media Transition easing preset.",
 			},
 			{
 				name: "navigationMotion",
@@ -89,22 +33,27 @@ const apertoApi: ApiSection[] = [
 				description: "Expanded-media navigation transition style.",
 			},
 			{
+				name: "dismissible",
+				type: "boolean | { threshold?: number; velocity?: number }",
+				defaultValue: "true",
+				description: "Drag Dismissal behavior for Expanded Media.",
+			},
+			{
 				name: "classNames",
 				type: "ApertoClassNames",
-				description:
-					"Slot class overrides for thumbnails and overlay controls.",
+				description: "Slot class overrides for Thumbnails and Aperto Controls.",
 			},
 		],
 	},
 	{
 		name: "Aperto.Thumbnail",
-		description: "Individual thumbnail trigger inside a group.",
+		description: "Thumbnail for a Media Item inside a Media Group.",
 		props: [
 			{
 				name: "index",
 				type: "number",
 				required: true,
-				description: "Position in the media array.",
+				description: "Position in the Media Group.",
 			},
 			{
 				name: "children",
@@ -115,14 +64,14 @@ const apertoApi: ApiSection[] = [
 	},
 ];
 
-const apertoExample = `import { Aperto, type ApertoMediaItem } from "@howells/aperto";
-import "@howells/aperto/styles.css";
+const apertoExample = `import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
+import "@patternmode/aperto/styles.css";
 
 const media: ApertoMediaItem[] = [
   { id: "photo", type: "image", src: "/photo.jpg", alt: "Photo" },
 ];
 
-export function Gallery() {
+export function MediaGroupExample() {
   return (
     <Aperto.Group media={media} navigationMotion="glide">
       {media.map((item, index) => (
@@ -140,7 +89,7 @@ export default function ApertoPage() {
 		>
 			<ApertoDemo media={apertoMedia} />
 			<DocsBlock title="Install">
-				<CodeBlock install>npm install @howells/aperto</CodeBlock>
+				<CodeBlock install>npm install @patternmode/aperto</CodeBlock>
 				<CodeBlock>{apertoExample}</CodeBlock>
 			</DocsBlock>
 			<DocsBlock title="Core API">

@@ -10,7 +10,7 @@ const components: CatalogEntry[] = [
 	{
 		title: "Stacksheet",
 		description:
-			"Typed sheet stacks with push, navigate, replace, and composable panel parts.",
+			"Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
 		href: "/stacksheet",
 	},
 	{
@@ -22,8 +22,26 @@ const components: CatalogEntry[] = [
 	{
 		title: "Deck",
 		description:
-			"Swipeable card decks with cyclic stacks, finite flows, velocity gestures, and keyboard control.",
+			"Card Decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
 		href: "/deck",
+	},
+	{
+		title: "Swatch",
+		description:
+			"Color, gradient, image, and weighted palette swatches with selection affordances.",
+		href: "/swatch",
+	},
+	{
+		title: "ScrollFrame",
+		description:
+			"Radix-backed scroll containers with eased fades and movement controls.",
+		href: "/scrollframe",
+	},
+	{
+		title: "Tags",
+		description:
+			"Composable tag pills and token inputs with keyboard entry, suggestions, and duplicate prevention.",
+		href: "/tags",
 	},
 ];
 
@@ -45,6 +63,28 @@ function CatalogCard({ description, href, title }: CatalogEntry) {
 						<div className="preview-deck-card" />
 						<div className="preview-deck-card" />
 						<div className="preview-deck-card" />
+					</div>
+				) : title === "Swatch" ? (
+					<div className="preview-swatch-set" aria-hidden="true">
+						<span />
+						<span />
+						<span />
+						<span />
+					</div>
+				) : title === "ScrollFrame" ? (
+					<div className="preview-scroll-area" aria-hidden="true">
+						<span />
+						<span />
+						<span />
+						<span />
+						<span />
+					</div>
+				) : title === "Tags" ? (
+					<div className="preview-tags" aria-hidden="true">
+						<span />
+						<span />
+						<span />
+						<span />
 					</div>
 				) : (
 					<div className="preview-aperto" aria-hidden="true">

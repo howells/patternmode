@@ -1,5 +1,6 @@
 "use client";
 
+import { joinClassNames } from "@patternmode/system";
 import {
 	AnimatePresence,
 	motion,
@@ -7,71 +8,49 @@ import {
 	useReducedMotion,
 } from "motion/react";
 import {
-	Children,
 	type CSSProperties,
 	forwardRef,
-	isValidElement,
-	type ReactNode,
 	useCallback,
 	useId,
 	useMemo,
 	useState,
 } from "react";
-
 import {
+	getAdvanceDecision,
+	getDeckRenderKey,
 	getNextDeckIndex,
-	getSwipeDecision,
 	getVisibleDeckItems,
 	resolveCardRotation,
-} from "./logic";
+} from "../logic";
 import type {
+	AdvanceDirection,
+	DeckAdvanceEvent,
 	DeckCardElement,
-	DeckCardProps,
-	DeckEmptyElement,
-	DeckEmptyProps,
 	DeckRenderOverlayState,
 	DeckRootProps,
-	DeckSwipeEvent,
-	SwipeDirection,
-} from "./types";
+} from "../types";
+import { DeckCard } from "./DeckCard";
+import {
+	BG_RESPONSE_FACTOR,
+	BG_RESPONSE_RAMP,
+	DEFAULT_DIRECTIONS,
+	DEFAULT_DISTANCE_THRESHOLD,
+	DEFAULT_DRAG_ELASTIC,
+	DEFAULT_PEEK_OFFSET,
+	DEFAULT_PERSPECTIVE,
+	DEFAULT_ROTATION,
+	DEFAULT_SCALE_STEP,
+	DEFAULT_VELOCITY_THRESHOLD,
+	DEFAULT_VISIBLE_COUNT,
+	DRAG_INFLUENCE_RAMP,
+	DRAG_TILT_MAX,
+	DRAG_TILT_RAMP,
+} from "./DeckConstants";
+import { DeckEmpty } from "./DeckEmpty";
+import { cardExitVariants } from "./DeckMotion";
+import { useDeckChildren } from "./useDeckChildren";
 
-const DEFAULT_VISIBLE_COUNT = 3;
-const DEFAULT_DISTANCE_THRESHOLD = 0.35;
-const DEFAULT_VELOCITY_THRESHOLD = 500;
-const DEFAULT_PEEK_OFFSET = 16;
-const DEFAULT_SCALE_STEP = 0.045;
-const DEFAULT_ROTATION = 6;
-const DEFAULT_PERSPECTIVE = 1000;
-const DEFAULT_DRAG_ELASTIC = 0.9;
-const DEFAULT_DIRECTIONS: SwipeDirection[] = ["left", "right"];
-
-const DRAG_TILT_MAX = 15;
-const DRAG_TILT_RAMP = 250;
-const DRAG_INFLUENCE_RAMP = 80;
-const EXIT_ROTATION = 20;
-const BG_RESPONSE_FACTOR = 0.4;
-const BG_RESPONSE_RAMP = 150;
-
-const cardExitVariants = {
-	exit: (custom: { velocity: number; direction: SwipeDirection | null }) => {
-		const speed = Math.abs(custom?.velocity ?? 0);
-		const dir = custom?.direction;
-		return {
-			opacity: 0,
-			rotate: dir === "left" ? -EXIT_ROTATION : EXIT_ROTATION,
-			scale: 0.96,
-			x: dir === "left" ? "-120%" : "120%",
-			transition: {
-				type: "spring" as const,
-				stiffness: speed > 600 ? 280 : 180,
-				damping: speed > 600 ? 32 : 25,
-				opacity: { duration: 0.15, ease: "easeIn" as const },
-			},
-		};
-	},
-};
-
-const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
+export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 	(
 		{
 			allowedDirections = DEFAULT_DIRECTIONS,
@@ -86,8 +65,8 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 			onExhausted,
 			onIndexChange,
 			onKeyDown,
-			onSwipe,
-			onSwipeEnd,
+			onAdvance,
+			onAdvanceEnd,
 			peekOffset = DEFAULT_PEEK_OFFSET,
 			perspective = DEFAULT_PERSPECTIVE,
 			renderOverlay,
@@ -103,7 +82,8 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 	) => {
 		const generatedId = useId();
 		const [internalIndex, setInternalIndex] = useState(defaultIndex);
-		const [lastDirection, setLastDirection] = useState<SwipeDirection | null>(
+		const [visualBaseIndex, setVisualBaseIndex] = useState(defaultIndex);
+		const [lastDirection, setLastDirection] = useState<AdvanceDirection | null>(
 			null,
 		);
 		const [dragOffset, setDragOffset] = useState(0);
@@ -127,14 +107,14 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 			[exitVelocity, lastDirection],
 		);
 
-		const commitSwipe = useCallback(
-			(direction: SwipeDirection, velocity = 0) => {
+		const commitAdvance = useCallback(
+			(direction: AdvanceDirection, velocity = 0) => {
 				if (disabled || !activeCard) {
 					return;
 				}
 
 				const nextIndex = getNextDeckIndex(activeIndex, cards.length, mode);
-				const event: DeckSwipeEvent = {
+				const event: DeckAdvanceEvent = {
 					direction,
 					index: activeIndex,
 					itemId: activeCard.id,
@@ -144,14 +124,19 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 
 				setLastDirection(direction);
 				setExitVelocity(velocity);
-				onSwipe?.(event);
+				onAdvance?.(event);
 
 				if (!controlled) {
 					setInternalIndex(nextIndex);
 				}
+				if (mode === "cycle") {
+					setVisualBaseIndex((current) => current + 1);
+				} else {
+					setVisualBaseIndex(nextIndex);
+				}
 
 				onIndexChange?.(nextIndex);
-				onSwipeEnd?.(event);
+				onAdvanceEnd?.(event);
 
 				if (mode === "finite" && nextIndex >= cards.length) {
 					onExhausted?.();
@@ -165,9 +150,9 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 				disabled,
 				mode,
 				onExhausted,
+				onAdvance,
+				onAdvanceEnd,
 				onIndexChange,
-				onSwipe,
-				onSwipeEnd,
 			],
 		);
 
@@ -183,7 +168,7 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 				setDragOffset(0);
 
 				const target = event.currentTarget as HTMLElement | null;
-				const decision = getSwipeDecision({
+				const decision = getAdvanceDecision({
 					allowedDirections,
 					distanceThreshold,
 					offsetX: info.offset.x,
@@ -193,10 +178,10 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 				});
 
 				if (decision.accepted) {
-					commitSwipe(decision.direction, info.velocity.x);
+					commitAdvance(decision.direction, info.velocity.x);
 				}
 			},
-			[allowedDirections, commitSwipe, distanceThreshold, velocityThreshold],
+			[allowedDirections, commitAdvance, distanceThreshold, velocityThreshold],
 		);
 
 		const handleKeyDown = useCallback(
@@ -209,15 +194,15 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 
 				if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
 					event.preventDefault();
-					commitSwipe("left");
+					commitAdvance("left");
 				}
 
 				if (event.key === "ArrowRight" && allowedDirections.includes("right")) {
 					event.preventDefault();
-					commitSwipe("right");
+					commitAdvance("right");
 				}
 			},
-			[allowedDirections, commitSwipe, disabled, onKeyDown],
+			[allowedDirections, commitAdvance, disabled, onKeyDown],
 		);
 
 		const rootStyle = {
@@ -226,10 +211,10 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 		} as CSSProperties;
 
 		return (
-			// biome-ignore lint/a11y/noStaticElementInteractions: the root owns arrow-key swipe affordances for the active card.
+			// biome-ignore lint/a11y/noStaticElementInteractions: the root owns arrow-key advance affordances for the active card.
 			<div
 				{...props}
-				className={["howells-deck", className].filter(Boolean).join(" ")}
+				className={joinClassNames("patternmode-deck", className)}
 				data-disabled={disabled ? "true" : undefined}
 				data-empty={exhausted ? "true" : undefined}
 				onKeyDown={handleKeyDown}
@@ -243,6 +228,8 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 						const active = depth === 0;
 						const card = item.element as DeckCardElement;
 						const cardProps = card.props;
+						const absoluteVisualIndex =
+							(mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
 						const cardStyle = {
 							...cardProps.style,
 							"--deck-depth": depth,
@@ -293,9 +280,10 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 							<motion.div
 								{...cardProps}
 								aria-hidden={active ? undefined : true}
-								className={["howells-deck-card", cardProps.className]
-									.filter(Boolean)
-									.join(" ")}
+								className={joinClassNames(
+									"patternmode-deck-card",
+									cardProps.className,
+								)}
 								custom={exitCustom}
 								data-active={active ? "true" : "false"}
 								data-depth={depth}
@@ -311,7 +299,12 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 									timeConstant: 350,
 								}}
 								initial={false}
-								key={item.id}
+								key={getDeckRenderKey(
+									item.id,
+									absoluteVisualIndex,
+									cards.length,
+									mode,
+								)}
 								onDrag={active && !disabled ? handleDrag : undefined}
 								onDragEnd={active && !disabled ? handleDragEnd : undefined}
 								style={cardStyle}
@@ -369,60 +362,6 @@ const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 
 DeckRoot.displayName = "Deck";
 
-function DeckCard(_props: DeckCardProps) {
-	return null;
-}
-
-DeckCard.displayName = "Deck.Card";
-
-const DeckEmpty = forwardRef<HTMLDivElement, DeckEmptyProps>(
-	({ children, className, ...props }, ref) => (
-		<div
-			{...props}
-			className={["howells-deck-empty", className].filter(Boolean).join(" ")}
-			ref={ref}
-		>
-			{children}
-		</div>
-	),
-);
-
-DeckEmpty.displayName = "Deck.Empty";
-
-function useDeckChildren(children: ReactNode, generatedId: string) {
-	return useMemo(() => {
-		const cards: DeckItemWithElement[] = [];
-		let empty: DeckEmptyElement | null = null;
-
-		Children.forEach(children, (child, childIndex) => {
-			if (!isValidElement(child)) {
-				return;
-			}
-
-			if (child.type === DeckCard) {
-				const card = child as DeckCardElement;
-				const id =
-					child.key === null
-						? `${generatedId}-${childIndex}`
-						: String(child.key).replace(/^\.\$/, "");
-				cards.push({ id, element: card });
-				return;
-			}
-
-			if (child.type === DeckEmpty) {
-				empty = child as DeckEmptyElement;
-			}
-		});
-
-		return { cards, empty };
-	}, [children, generatedId]);
-}
-
-interface DeckItemWithElement {
-	element: DeckCardElement;
-	id: string;
-}
-
 const Deck = Object.assign(DeckRoot, {
 	Card: DeckCard,
 	Empty: DeckEmpty,
@@ -430,4 +369,4 @@ const Deck = Object.assign(DeckRoot, {
 
 const CardStack = Deck;
 
-export { CardStack, Deck, DeckCard, DeckEmpty, DeckRoot };
+export { CardStack, Deck };

@@ -34,12 +34,12 @@ const stacksheetApi: ApiSection[] = [
 	},
 	{
 		name: "Sheet",
-		description: "Composable panel parts for custom layouts.",
+		description: "Composable Sheet Parts for custom layouts.",
 		props: [
 			{
 				name: "Header / Body / Footer",
 				type: "Components",
-				description: "Panel regions with scroll and drag handling.",
+				description: "Sheet regions with scroll and drag handling.",
 			},
 			{
 				name: "Back / Close",
@@ -50,8 +50,8 @@ const stacksheetApi: ApiSection[] = [
 	},
 ];
 
-const stacksheetExample = `import { createStacksheet } from "@howells/stacksheet";
-import "@howells/stacksheet/styles.css";
+const stacksheetExample = `import { createStacksheet } from "@patternmode/stacksheet";
+import "@patternmode/stacksheet/styles.css";
 
 const { StacksheetProvider, useSheet } = createStacksheet<{
   Settings: { title: string };
@@ -69,12 +69,12 @@ function OpenSettings() {
 export default function StacksheetPage() {
 	return (
 		<ComponentPage
-			description="Typed sheet stacks with push, navigate, replace, and composable panel parts."
+			description="Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts."
 			title="Stacksheet"
 		>
 			<StacksheetDemo />
 			<DocsBlock title="Install">
-				<CodeBlock install>npm install @howells/stacksheet</CodeBlock>
+				<CodeBlock install>npm install @patternmode/stacksheet</CodeBlock>
 				<CodeBlock>{stacksheetExample}</CodeBlock>
 			</DocsBlock>
 			<DocsBlock title="Core API">

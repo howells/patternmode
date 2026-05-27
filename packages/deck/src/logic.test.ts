@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+	getAdvanceDecision,
+	getDeckRenderKey,
 	getNextDeckIndex,
-	getSwipeDecision,
 	getVisibleDeckItems,
 	getVisualDepth,
 	resolveCardRotation,
@@ -47,10 +48,22 @@ describe("getNextDeckIndex", () => {
 	});
 });
 
-describe("getSwipeDecision", () => {
-	it("accepts a swipe when horizontal distance crosses the threshold", () => {
+describe("getDeckRenderKey", () => {
+	it("keeps finite cards keyed by stable item id", () => {
+		expect(getDeckRenderKey("a", 4, items.length, "finite")).toBe("a");
+	});
+
+	it("adds a cycle generation when a cyclic card re-enters the deck", () => {
+		expect(getDeckRenderKey("a", 0, items.length, "cycle")).toBe("a:0");
+		expect(getDeckRenderKey("a", 4, items.length, "cycle")).toBe("a:1");
+		expect(getDeckRenderKey("a", 8, items.length, "cycle")).toBe("a:2");
+	});
+});
+
+describe("getAdvanceDecision", () => {
+	it("accepts an advance when horizontal distance crosses the threshold", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: -121,
 				velocityX: 100,
 				width: 300,
@@ -61,9 +74,9 @@ describe("getSwipeDecision", () => {
 		).toEqual({ accepted: true, direction: "left" });
 	});
 
-	it("accepts a swipe when horizontal velocity crosses the threshold", () => {
+	it("accepts an advance when horizontal velocity crosses the threshold", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: 24,
 				velocityX: 650,
 				width: 300,
@@ -74,9 +87,9 @@ describe("getSwipeDecision", () => {
 		).toEqual({ accepted: true, direction: "right" });
 	});
 
-	it("rejects swipes in disallowed directions", () => {
+	it("rejects advances in disallowed directions", () => {
 		expect(
-			getSwipeDecision({
+			getAdvanceDecision({
 				offsetX: -200,
 				velocityX: -900,
 				width: 300,

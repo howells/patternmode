@@ -34,7 +34,12 @@ describe("styles.css", () => {
 		const css = buildStyles();
 
 		expect(css).toContain(".h-8{height:calc(var(--spacing,.25rem) * 8)}");
-		expect(css).toContain(".w-8{width:calc(var(--spacing,.25rem) * 8)}");
+		expect(css).toContain(
+			".min-h-11{min-height:calc(var(--spacing,.25rem) * 11)}",
+		);
+		expect(css).toContain(
+			".min-w-11{min-width:calc(var(--spacing,.25rem) * 11)}",
+		);
 		expect(css).toContain(
 			".px-4{padding-inline:calc(var(--spacing,.25rem) * 4)}",
 		);
