@@ -359,6 +359,133 @@ _Avoid_: Moving a full viewport when preserving context is useful
 The native scrolling behavior used by **Scroll Movement Controls**.
 _Avoid_: Ignoring reduced-motion preferences for smooth movement
 
+### Tags
+
+**Tag Selector**:
+A Patternmode interaction pattern for choosing, creating, and removing **Tags** from a known or open set.
+_Avoid_: Treating TagsInput or token input as the canonical product concept
+
+**Tag**:
+A convenient default representation for one **Tag Item**.
+_Avoid_: Treating Tag as the only allowed Tag Item representation or as collection management workflow
+
+**Tag Item**:
+An identity-bearing tag option or selection with a stable id and display label.
+_Avoid_: Modeling Tag Selector state as plain strings
+
+**Tag Item Identity**:
+The stable string id that determines whether two **Tag Items** are the same.
+_Avoid_: Comparing Tag Items by label text
+
+**Disabled Tag Item**:
+A **Tag Item** that is visible in the **Tag Option Catalog** but cannot be selected through the current **Tag Selector**.
+_Avoid_: Treating disabled state as the same as domain availability
+
+**Tag Selection Serialization**:
+The hidden form value representation of selected **Tag Items**.
+_Avoid_: Submitting display labels as the default selected value
+
+**Tag Selection Order**:
+The order of selected **Tag Items** as supplied by the controlled value.
+_Avoid_: Reordering selected tags to match the Tag Option Catalog by default
+
+**Tag Item Representation**:
+The rendered UI used to show a **Tag Item** inside or around a **Tag Selector**.
+_Avoid_: Requiring every Tag Item Representation to use the default **Tag** component
+
+**Selected Tag Renderer**:
+A customization hook for rendering selected **Tag Items**.
+_Avoid_: Making selected-item rendering also own selection or removal behavior
+
+**Tag Option Renderer**:
+A customization hook for rendering available **Tag Items** inside the option list.
+_Avoid_: Making option rendering also own selection behavior
+
+**Classic Tag Selector Layout**:
+A Tag Selector layout where Patternmode owns the standard trigger, search, selected-tag display, and option list structure.
+_Avoid_: Forcing every consumer to assemble Tag Selector parts manually
+
+**Composable Tag Selector Layout**:
+A Tag Selector layout where the consumer owns structure using **Tag Selector Parts**.
+_Avoid_: Treating custom renderers as the full composability model
+
+**Tag Selector Part**:
+A composable building block used inside a **Composable Tag Selector Layout**.
+_Avoid_: Exposing implementation details that do not carry Tag Selector behavior or accessibility relationships
+
+**Tag Selector Root**:
+The **Tag Selector Part** that owns Tag Selector state, context, and accessibility wiring.
+_Avoid_: Putting selection state on individual visual parts
+
+**Tag Selector Trigger**:
+The **Tag Selector Part** that opens the selectable surface and displays selected **Tag Items**.
+_Avoid_: Treating Trigger as only a button when selected Tag Item display is part of the standard layout
+
+**Selected Tag Scroll Region**:
+A horizontal **ScrollFrame** inside **Tag Selector Trigger** that presents selected **Tag Items**.
+_Avoid_: Reimplementing horizontal overflow, fades, or scroll controls inside Tag Selector
+
+**Tag Selector Content**:
+The **Tag Selector Part** that contains the search and option list surface.
+_Avoid_: Treating Content as the selected Tag Item display
+
+**Tag Selector Search**:
+The **Tag Selector Part** for entering the filter or draft label.
+_Avoid_: Calling Search the whole selector or using it as the selected Tag Item display
+
+**Last Tag Removal**:
+Removing the final selected **Tag Item** with Backspace from an empty **Tag Selector Search**.
+_Avoid_: Treating Backspace as text editing when the search query is already empty
+
+**Tag Search Query**:
+The text used by **Tag Selector Search** to filter or request **Tag Items**.
+_Avoid_: Treating search text as a selected Tag Item
+
+**Tag Option Filter**:
+The rule used to match **Tag Items** against a **Tag Search Query**.
+_Avoid_: Treating filtering as ownership of the Tag Option Catalog
+
+**Tag Selector List**:
+The **Tag Selector Part** that presents available **Tag Items** and creation affordances.
+_Avoid_: Making List own the Tag Option Catalog
+
+**Tag Selector Option**:
+The **Tag Selector Part** that represents one selectable **Tag Item** in the option list.
+_Avoid_: Treating Option as the selected Tag representation
+
+**Selected Tag Option**:
+A **Tag Selector Option** whose **Tag Item** is currently selected.
+_Avoid_: Removing selected options from the option list by default
+
+**Tag Selector Empty**:
+The **Tag Selector Part** shown when the current search has no options or creation affordance.
+_Avoid_: Treating Empty as a missing Tag Item
+
+
+**Tag Item Creation**:
+The consumer-owned process that turns a draft label into a new **Tag Item**.
+_Avoid_: Having Tag Selector invent persistent Tag Item identity
+
+**Tag Creation Route**:
+An interaction path that requests **Tag Item Creation** from a draft label.
+_Avoid_: Treating comma entry, paste entry, and create-option selection as separate creation semantics
+
+**Create Tag Option**:
+The option-list affordance that starts **Tag Item Creation** for the current draft label.
+_Avoid_: Placing creation ahead of safer matching options by default
+
+**Tag Draft Resolution**:
+The rule that turns a draft label into either an existing **Tag Item** selection or **Tag Item Creation**.
+_Avoid_: Creating a new Tag Item when the draft clearly identifies one existing option
+
+**Tag Option Catalog**:
+The consumer-owned set of **Tag Items** available for selection.
+_Avoid_: Making Tag Selector the source of truth for all available tags
+
+**Badge**:
+The shadcn-compatible styling base that **Tag** extends.
+_Avoid_: Treating Badge as the canonical Patternmode concept
+
 ## Relationships
 
 ### Aperto
@@ -468,6 +595,54 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 - **Scroll Movement Controls** should not move focus by default.
 - A **Named Scroll Region** may expose region semantics; unnamed **ScrollFrames** should avoid extra landmark noise.
 
+### Tags
+
+- A **Tag Selector** contains zero or more selected **Tags**.
+- A **Tag Selector** renders **Tag Items** through **Tag Item Representations**.
+- **Tag** is the default **Tag Item Representation**, not the only allowed representation.
+- A **Selected Tag Renderer** customizes selected **Tag Item Representations**.
+- A **Tag Option Renderer** customizes option-list **Tag Item Representations**.
+- **Tag Selector** owns selection and removal behavior even when custom renderers provide the visual representation.
+- **Classic Tag Selector Layout** is the default layout.
+- **Composable Tag Selector Layout** exposes **Tag Selector Parts** for custom structure.
+- **Tag Selector Parts** should follow the Stacksheet pattern: default layout first, composable parts when consumers need structure ownership.
+- Public **Tag Selector Parts** should use the `TagSelector.*` namespace.
+- The first public **Tag Selector Parts** are Root, Trigger, Content, Search, List, Option, and Empty.
+- **Tag Selector Content** should be Popover-backed by default.
+- Selected **Tag Items** belong in **Tag Selector Trigger** in the classic layout.
+- The classic **Tag Selector Trigger** should use a horizontal **Selected Tag Scroll Region** by default.
+- **Selected Tag Scroll Region** should use **ScrollFrame** rather than custom overflow or fade behavior.
+- `@patternmode/tags` may depend directly on `@patternmode/scrollframe` for the classic **Selected Tag Scroll Region**.
+- **Tag Selector Search** filters or drafts labels; it does not own selected Tag Item display.
+- **Tag Search Query** may be controlled or uncontrolled.
+- **Tag Option Filter** defaults to local label matching.
+- Async search should update the consumer-owned **Tag Option Catalog** rather than returning options directly to **Tag Selector**.
+- Selected **Tag Selector Options** stay visible in the option list.
+- Activating a **Selected Tag Option** removes that **Tag Item** from selection.
+- Activating an unselected **Tag Selector Option** adds that **Tag Item** to selection.
+- **Last Tag Removal** applies when **Tag Selector Search** is focused and empty.
+- A **Tag Item** has stable identity independent of its display label.
+- **Tag Item Creation** returns a full **Tag Item** before it enters selection.
+- **Tag Selector** may request **Tag Item Creation**, but does not generate stable Tag Item ids.
+- **Tag Creation Routes** include explicit create-option selection and separator or paste entry.
+- Every **Tag Creation Route** uses consumer-owned **Tag Item Creation**.
+- **Create Tag Option** appears after matching options by default.
+- **Tag Draft Resolution** selects an existing **Tag Item** when the draft exactly matches one option label.
+- **Tag Draft Resolution** requests **Tag Item Creation** when the draft does not match an existing option label.
+- Ambiguous exact-label matches require explicit option selection.
+- **Tag Item Identity** is determined only by `id`.
+- Duplicate Tag Item labels are allowed when **Tag Item Identity** differs.
+- A **Disabled Tag Item** remains visible as an option but cannot be toggled on.
+- Disabled state belongs to the current selector interaction, not to universal Tag Item availability.
+- **Tag Selection Serialization** uses **Tag Item Identity** by default.
+- **Tag Selection Order** follows the controlled value order.
+- New selections append to the end of **Tag Selection Order**.
+- A **Tag Option Catalog** is controlled by consumer state.
+- **Tag Selector** controls selection interaction, not **Tag Option Catalog** ownership.
+- The first Tag Selector version supports multiple selected **Tag Items** only.
+- Public Tag Selector APIs should use `TagSelector`, not `TagsInput`.
+- **Badge** provides styling compatibility for **Tag**, but does not own **Tag Selector** interaction.
+
 ## Example dialogue
 
 ### Aperto
@@ -554,6 +729,83 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 > **Dev:** "Does Composable Layout change how sheets navigate?"
 > **Domain expert:** "No — it only changes who owns the **Sheet** structure and **Panel** chrome."
 
+### Tags
+
+> **Dev:** "Is this component a TagsInput?"
+> **Domain expert:** "No — the canonical Patternmode concept is a **Tag Selector**. An input may be part of the implementation, but the pattern is selecting **Tags**."
+>
+> **Dev:** "Should Badge be the public concept because Tag extends shadcn Badge?"
+> **Domain expert:** "No — **Badge** is the compatibility base. **Tag** is the Patternmode representation primitive."
+>
+> **Dev:** "Does every selected item have to render as Patternmode's Tag component?"
+> **Domain expert:** "No — **Tag** is the convenient default **Tag Item Representation**. Consumers can provide a different representation while **Tag Selector** still owns selection behavior."
+>
+> **Dev:** "If a consumer customizes the option row, do they also own selecting it?"
+> **Domain expert:** "No — the **Tag Option Renderer** customizes rendering. **Tag Selector** still supplies and owns the selection behavior."
+>
+> **Dev:** "Should Tag Selector only expose render props for customization?"
+> **Domain expert:** "No — follow Stacksheet. Use **Classic Tag Selector Layout** by default, and expose **Tag Selector Parts** for a **Composable Tag Selector Layout**."
+>
+> **Dev:** "Should composable parts live in a separate TagSelectorParts export?"
+> **Domain expert:** "No — public **Tag Selector Parts** use the `TagSelector.*` namespace."
+>
+> **Dev:** "Should we expose Clear, Group, and CreateOption parts immediately?"
+> **Domain expert:** "No — the first public **Tag Selector Parts** are Root, Trigger, Content, Search, List, Option, and Empty."
+>
+> **Dev:** "Can the option list just be an absolutely positioned div inside the input?"
+> **Domain expert:** "No — **Tag Selector Content** should be Popover-backed by default, with Search and List inside it."
+>
+> **Dev:** "Should selected tags live inside the search input?"
+> **Domain expert:** "No — selected **Tag Items** belong in **Tag Selector Trigger**. **Tag Selector Search** is for filtering or drafting labels."
+>
+> **Dev:** "Should selected tags wrap in the classic Trigger by default?"
+> **Domain expert:** "No — the classic Trigger uses a horizontal **Selected Tag Scroll Region**, backed by **ScrollFrame**."
+>
+> **Dev:** "Should ScrollFrame be optional so Tags has no package dependency?"
+> **Domain expert:** "No — `@patternmode/tags` can depend directly on `@patternmode/scrollframe` because the classic Trigger uses ScrollFrame behavior."
+>
+> **Dev:** "Should `onSearch` return the next options?"
+> **Domain expert:** "No — **Tag Search Query** changes may update the consumer-owned **Tag Option Catalog**, but **Tag Selector** does not own catalog replacement."
+>
+> **Dev:** "Should selected options disappear from the list?"
+> **Domain expert:** "No — a **Selected Tag Option** stays visible with selected state and toggles off when activated."
+>
+> **Dev:** "If Search is empty and the user presses Backspace, should nothing happen?"
+> **Domain expert:** "No — **Last Tag Removal** removes the final selected **Tag Item**."
+>
+> **Dev:** "Can selected tags just be strings?"
+> **Domain expert:** "No — **Tag Selector** state should use **Tag Items** with stable identity, so labels can change without changing selection identity."
+>
+> **Dev:** "If two tags have the same label, are they duplicates?"
+> **Domain expert:** "Only if they share **Tag Item Identity**. Labels are display text; `id` determines identity."
+>
+> **Dev:** "Should unavailable-looking options disappear from the list?"
+> **Domain expert:** "No — a **Disabled Tag Item** can remain visible in the **Tag Option Catalog**, but cannot be selected through the current **Tag Selector**."
+>
+> **Dev:** "Should hidden form inputs submit tag labels?"
+> **Domain expert:** "No — **Tag Selection Serialization** uses **Tag Item Identity** by default."
+>
+> **Dev:** "Should selected tags be sorted to match the option list?"
+> **Domain expert:** "No — **Tag Selection Order** follows the controlled value order."
+>
+> **Dev:** "When a user creates a new tag, can the selector just make an id from the label?"
+> **Domain expert:** "No — **Tag Item Creation** belongs to the consumer. The selector receives the resulting **Tag Item** and selects it."
+>
+> **Dev:** "Can creation happen through both the create row and comma or paste entry?"
+> **Domain expert:** "Yes — those are both **Tag Creation Routes**, and both use consumer-owned **Tag Item Creation**."
+>
+> **Dev:** "Should the create option appear before matching options?"
+> **Domain expert:** "No — **Create Tag Option** appears after matching options by default."
+>
+> **Dev:** "If typed text exactly matches an existing option, should Enter create a duplicate?"
+> **Domain expert:** "No — **Tag Draft Resolution** selects the existing **Tag Item** when the draft exactly matches one option label."
+>
+> **Dev:** "Should Tag Selector edit, delete, or reorder all available tags?"
+> **Domain expert:** "No — the **Tag Option Catalog** is consumer-owned. **Tag Selector** controls selection interaction, not tag catalog management."
+>
+> **Dev:** "Should Tag Selector also support single-select?"
+> **Domain expert:** "Not initially. **Tag Selector** is multi-select; single-select can be introduced later if a concrete scenario requires it."
+
 ## Flagged ambiguities
 
 ### System
@@ -637,3 +889,26 @@ _Avoid_: Ignoring reduced-motion preferences for smooth movement
 - Smooth movement could ignore motion preferences — resolved: default **Scroll Behavior** respects reduced motion.
 - Scroll containers could create noisy unnamed landmarks — resolved: only a **Named Scroll Region** should expose region semantics by default.
 - "Fade" could be static decoration — resolved: **Edge Fade** visibility follows measured **Viewport** edge state.
+
+### Tags
+
+- "TagsInput" could imply a plain input field rather than the reusable interaction pattern — resolved: use **Tag Selector** as the canonical concept and `TagSelector` as the public API name, with no alias.
+- "Badge" could be mistaken for the Patternmode domain component because **Tag** extends a shadcn-compatible badge base — resolved: **Badge** is a compatibility base; **Tag** is the default representation.
+- "Tag" could be mistaken for the only renderable form inside **Tag Selector** — resolved: consumers may provide custom **Tag Item Representations**.
+- Custom rendering could be mistaken for the whole composability story — resolved: **Selected Tag Renderer** and **Tag Option Renderer** customize representation, while **Composable Tag Selector Layout** uses **Tag Selector Parts** for structure ownership.
+- Plain strings could seem sufficient for tag state — resolved: **Tag Selector** uses identity-bearing **Tag Items**.
+- Label matching could be used for equality — resolved: **Tag Item Identity** is determined only by `id`.
+- Disabled options could be confused with domain availability — resolved: **Disabled Tag Item** describes current selector interaction state.
+- Hidden form values could submit labels — resolved: **Tag Selection Serialization** submits **Tag Item Identity** by default.
+- Selected tags could be sorted by catalog order — resolved: **Tag Selection Order** follows the controlled value order.
+- Creation could be treated as label normalization inside **Tag Selector** — resolved: **Tag Item Creation** is consumer-owned because stable identity comes from outside the selector.
+- Create-option selection, separator entry, and paste entry could diverge — resolved: they are all **Tag Creation Routes** backed by the same **Tag Item Creation** contract.
+- Create option could be ordered before matching options — resolved: **Create Tag Option** appears after matching options by default.
+- Exact draft matches could create duplicate tags — resolved: **Tag Draft Resolution** selects the matching option when exactly one match exists.
+- Tag Selector could grow into a local tag-management system — resolved: the **Tag Option Catalog** remains consumer-owned.
+- Single-select support could blur Tag Selector with Combobox or Select — resolved: first-version **Tag Selector** is multi-select only.
+- Selected tags could wrap by default or use custom horizontal overflow — resolved: classic **Tag Selector Trigger** uses a horizontal **Selected Tag Scroll Region** backed by **ScrollFrame**.
+- ScrollFrame could be optional to keep the package smaller — resolved: `@patternmode/tags` may depend directly on `@patternmode/scrollframe` for classic Trigger overflow behavior.
+- Async search could make Tag Selector own option loading — resolved: **Tag Search Query** is controllable, while the **Tag Option Catalog** remains consumer-owned.
+- Selected options could be filtered out of the option list — resolved: **Selected Tag Options** stay visible and toggle off.
+- Backspace could be treated only as text editing — resolved: empty **Tag Selector Search** performs **Last Tag Removal**.

@@ -37,6 +37,12 @@ const components: CatalogEntry[] = [
 			"Radix-backed scroll containers with eased fades and movement controls.",
 		href: "/scrollframe",
 	},
+	{
+		title: "Tags",
+		description:
+			"Composable tag pills and token inputs with keyboard entry, suggestions, and duplicate prevention.",
+		href: "/tags",
+	},
 ];
 
 function CatalogCard({ description, href, title }: CatalogEntry) {
@@ -68,6 +74,13 @@ function CatalogCard({ description, href, title }: CatalogEntry) {
 				) : title === "ScrollFrame" ? (
 					<div className="preview-scroll-area" aria-hidden="true">
 						<span />
+						<span />
+						<span />
+						<span />
+						<span />
+					</div>
+				) : title === "Tags" ? (
+					<div className="preview-tags" aria-hidden="true">
 						<span />
 						<span />
 						<span />

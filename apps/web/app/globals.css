@@ -580,7 +580,8 @@ button {
 .preview-aperto,
 .preview-deck,
 .preview-swatch-set,
-.preview-scroll-area {
+.preview-scroll-area,
+.preview-tags {
 	transition: transform 300ms ease;
 }
 
@@ -733,6 +734,46 @@ button {
 
 .preview-scroll-area span:nth-child(3n) {
 	width: 60%;
+}
+
+/* Tags preview — token input */
+.preview-tags {
+	align-content: center;
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	min-height: 52px;
+	padding: 8px;
+	width: 54%;
+}
+
+.preview-tags span {
+	background: var(--accent-soft);
+	border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+	border-radius: 999px;
+	display: block;
+	height: 18px;
+	width: 44px;
+}
+
+.preview-tags span:nth-child(2) {
+	background: var(--surface-soft);
+	width: 64px;
+}
+
+.preview-tags span:nth-child(3) {
+	background: #fff3cf;
+	width: 34px;
+}
+
+.preview-tags span:nth-child(4) {
+	background: var(--surface-soft);
+	opacity: 0.72;
+	width: 70px;
 }
 
 /* Placeholder card */
@@ -1154,6 +1195,53 @@ button {
 	white-space: nowrap;
 }
 
+/* ── Tags demo ─────────────────────────────── */
+
+.tags-demo {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tags-demo-cell {
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	border-radius: var(--radius);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-width: 0;
+	padding: 18px;
+}
+
+.tags-demo-label {
+	color: var(--quiet);
+	font-size: 0.72rem;
+	font-weight: 520;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.tags-demo-note {
+	color: var(--muted);
+	font-size: 0.75rem;
+	line-height: 1.55;
+	margin: 0;
+}
+
+.tags-demo-row {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+@media (max-width: 768px) {
+	.tags-demo {
+		grid-template-columns: 1fr;
+	}
+}
+
 @media (hover: hover) and (pointer: fine) {
 	.catalog-card:not(.catalog-card-placeholder):hover {
 		border-color: var(--border);
@@ -1164,7 +1252,8 @@ button {
 	.catalog-card:not(.catalog-card-placeholder):hover .preview-aperto,
 	.catalog-card:not(.catalog-card-placeholder):hover .preview-deck,
 	.catalog-card:not(.catalog-card-placeholder):hover .preview-swatch-set,
-	.catalog-card:not(.catalog-card-placeholder):hover .preview-scroll-area {
+	.catalog-card:not(.catalog-card-placeholder):hover .preview-scroll-area,
+	.catalog-card:not(.catalog-card-placeholder):hover .preview-tags {
 		transform: translateY(-3px);
 	}
 }
