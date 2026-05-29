@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.5.0
+
+### Minor Changes
+
+- `DistributionBar` and `DistributionDisplay` track height and segment corner radius are now themeable via `--patternmode-distribution-height` (default 40px) and `--patternmode-distribution-radius` (default 999px), so consumers can render compact or square-cornered bars without overriding internals.
+
 ## 0.4.1
 
 ### Patch Changes

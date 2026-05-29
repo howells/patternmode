@@ -185,7 +185,7 @@
 	}
 
 	.patternmode-distribution-bar__track {
-		height: 40px;
+		height: var(--patternmode-distribution-height, 40px);
 		position: relative;
 		width: 100%;
 	}
@@ -196,7 +196,7 @@
 
 	.patternmode-distribution-bar__segments {
 		border: 1px solid var(--border-soft, rgb(17 24 39 / 12%));
-		border-radius: 999px;
+		border-radius: var(--patternmode-distribution-radius, 999px);
 		display: flex;
 		height: 100%;
 		overflow: hidden;
