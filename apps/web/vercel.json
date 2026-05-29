@@ -1,6 +1,6 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"buildCommand": "cd ../.. && pnpm --filter @howells/patternmode-web build",
+	"buildCommand": "cd ../.. && pnpm turbo run build --filter=@howells/patternmode-web...",
 	"framework": "nextjs",
 	"installCommand": "cd ../.. && pnpm install",
 	"outputDirectory": ".next"
