@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
+	type CSSProperties,
 	type KeyboardEvent,
 	useCallback,
 	useId,
@@ -171,6 +172,14 @@ export function ApertoGroup({
 		});
 	}, [activeMedia, closing, index, open]);
 
+	const handleCloseAutoFocus = useCallback(
+		(event: Event) => {
+			event.preventDefault();
+			thumbnailRefs.current.get(index)?.focus({ preventScroll: true });
+		},
+		[index],
+	);
+
 	const handleMediaTransitionComplete = useCallback(() => {
 		if (mediaTransition?.phase === "closing") {
 			setOpen(false);
@@ -259,6 +268,17 @@ export function ApertoGroup({
 		},
 		[goToNext, goToPrevious],
 	);
+	const expandedMediaStyle = useMemo((): CSSProperties | undefined => {
+		if (!activeMedia?.width || !activeMedia.height) {
+			return undefined;
+		}
+
+		return {
+			"--aperto-expanded-aspect-ratio": `${activeMedia.width} / ${activeMedia.height}`,
+			"--aperto-expanded-aspect-ratio-height": activeMedia.height,
+			"--aperto-expanded-aspect-ratio-width": activeMedia.width,
+		} as CSSProperties;
+	}, [activeMedia?.height, activeMedia?.width]);
 
 	return (
 		<ApertoGroupContext.Provider value={value}>
@@ -275,11 +295,16 @@ export function ApertoGroup({
 						<ApertoContent
 							className={classNames?.content}
 							data-aperto-transition={mediaTransition?.phase}
+							onCloseAutoFocus={handleCloseAutoFocus}
 							onKeyDown={hasNavigation ? handleContentKeyDown : undefined}
 							sharedLayoutId={false}
 							{...getDescriptionProps(activeMedia)}
 						>
-							<div data-slot="aperto-media" ref={setExpandedMediaNode}>
+							<div
+								data-slot="aperto-media"
+								ref={setExpandedMediaNode}
+								style={expandedMediaStyle}
+							>
 								<ApertoExpandedMediaStage
 									direction={navigationDirection}
 									index={index}
@@ -342,6 +367,8 @@ export function ApertoGroup({
 						</ApertoContent>
 						<ApertoMediaTransitionClone
 							onComplete={handleMediaTransitionComplete}
+							renderImage={renderImage}
+							renderVideo={renderVideo}
 							transition={mediaTransition}
 						/>
 					</ApertoPortal>

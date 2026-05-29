@@ -1,6 +1,6 @@
 {
 	"name": "@patternmode/aperto",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Opinionated, styled thumbnail-to-expanded media transitions for React.",
 	"license": "MIT",
 	"type": "module",

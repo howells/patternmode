@@ -49,6 +49,13 @@ const scrollFrameApi: ApiSection[] = [
 				description: "Adds overflow-aware previous and next movement controls.",
 			},
 			{
+				name: "dragScroll",
+				type: "boolean | ScrollFrameDragScrollConfig",
+				defaultValue: "false",
+				description:
+					"Enables pointer drag scrolling while preserving native scroll and text selection until a drag threshold is crossed.",
+			},
+			{
 				name: "scrollStep",
 				type: '"page" | number | ((state, axis) => number)',
 				defaultValue: '"page"',
@@ -62,11 +69,17 @@ const scrollFrameApi: ApiSection[] = [
 const scrollFrameExample = `import { ScrollFrame } from "@patternmode/scrollframe";
 import "@patternmode/scrollframe/styles.css";
 
-function ActivityPanel() {
+function MaterialStrip() {
   return (
-    <ScrollFrame aria-label="Activity" fadeColor="var(--surface)">
-      {items.map((item) => (
-        <ActivityRow key={item.id} item={item} />
+    <ScrollFrame
+      aria-label="Materials"
+      axes="horizontal"
+      dragScroll
+      fadeColor="var(--surface)"
+      scrollbars="hidden"
+    >
+      {materials.map((material) => (
+        <Tag key={material}>{material}</Tag>
       ))}
     </ScrollFrame>
   );

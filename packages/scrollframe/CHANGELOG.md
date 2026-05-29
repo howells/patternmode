@@ -1,5 +1,11 @@
 # @patternmode/scrollframe
 
+## 0.1.2
+
+### Patch Changes
+
+- Add optional native drag scrolling with activation thresholds, ignored descendants, cursor states, and demo documentation.
+
 ## 0.1.1
 
 ### Patch Changes

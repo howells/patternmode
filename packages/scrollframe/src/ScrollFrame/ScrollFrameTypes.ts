@@ -33,6 +33,7 @@ export type ScrollFrameFadeEdges = "none" | "start" | "end" | "both" | boolean;
 export type ScrollFrameFadeConfig =
 	| ScrollFrameFadeEdges
 	| Partial<Record<ScrollFrameAxis, ScrollFrameFadeEdges>>;
+export type ScrollFrameDragScrollAxis = "auto" | ScrollFrameAxes;
 export type ScrollFrameScrollStep =
 	| "page"
 	| number
@@ -55,6 +56,20 @@ export interface ScrollFrameControlsConfig {
 	visibility?: ScrollFrameControlVisibility;
 }
 
+export interface ScrollFrameDragScrollConfig {
+	activationDistance?: number;
+	axis?: ScrollFrameDragScrollAxis;
+	cursor?: boolean;
+	ignoreSelector?: string;
+}
+
+export interface ScrollFrameResolvedDragScrollConfig {
+	activationDistance: number;
+	axis: ScrollFrameDragScrollAxis;
+	cursor: boolean;
+	ignoreSelector: string;
+}
+
 export interface ScrollFrameProps
 	extends Omit<ComponentPropsWithoutRef<typeof RadixScrollArea.Root>, "type"> {
 	axes?: ScrollFrameAxes;
@@ -63,6 +78,7 @@ export interface ScrollFrameProps
 	contentStyle?: CSSProperties;
 	controls?: boolean | ScrollFrameControlsConfig;
 	controlVisibility?: ScrollFrameControlVisibility;
+	dragScroll?: boolean | ScrollFrameDragScrollConfig;
 	fadeColor?: string;
 	fadeSize?: number | string;
 	fades?: ScrollFrameFadeConfig;
@@ -79,6 +95,7 @@ export interface ScrollFrameRootProps
 	axes?: ScrollFrameAxes;
 	children: ReactNode;
 	controlVisibility?: ScrollFrameControlVisibility;
+	dragScroll?: boolean | ScrollFrameDragScrollConfig;
 	fadeColor?: string;
 	fadeSize?: number | string;
 	scrollbars?: ScrollFrameScrollbarVisibility;
@@ -111,11 +128,14 @@ export interface ScrollFrameMovementControlProps
 export interface ScrollFrameContextValue {
 	axes: ScrollFrameAxes;
 	controlVisibility: ScrollFrameControlVisibility;
+	dragScroll: ScrollFrameResolvedDragScrollConfig | null;
 	edgeState: ScrollFrameEdgeState;
+	isDragging: boolean;
 	registerViewport: (node: HTMLDivElement | null) => void;
 	scrollbars: ScrollFrameScrollbarVisibility;
 	scrollBehavior: ScrollFrameScrollBehavior;
 	scrollByStep: (direction: ScrollFrameEdge, axis?: ScrollFrameAxis) => void;
 	scrollStep: ScrollFrameScrollStep;
+	setDragging: (isDragging: boolean) => void;
 	viewport: HTMLDivElement | null;
 }

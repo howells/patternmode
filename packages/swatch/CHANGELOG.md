@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.2.1
+
+### Patch Changes
+
+- Update `DistributionBar` boundary handles so segment values and dimensions change continuously while dragging.
+
 ## 0.2.0
 
 ### Minor Changes

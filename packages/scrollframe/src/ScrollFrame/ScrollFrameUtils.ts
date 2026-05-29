@@ -5,11 +5,17 @@ import type {
 	ScrollFrameAxes,
 	ScrollFrameAxis,
 	ScrollFrameAxisState,
+	ScrollFrameDragScrollConfig,
 	ScrollFrameEdge,
 	ScrollFrameFadeConfig,
 	ScrollFrameFadeEdges,
+	ScrollFrameResolvedDragScrollConfig,
 	ScrollFrameScrollbarVisibility,
 } from "./ScrollFrameTypes";
+
+const DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR =
+	"input, textarea, select, option, [contenteditable], [data-scrollframe-no-drag]";
+const DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE = 8;
 
 export function setRef<T>(ref: Ref<T> | undefined, value: T | null) {
 	if (!ref) {
@@ -40,6 +46,37 @@ export function supportsAxis(
 
 export function defaultControlAxis(axes: ScrollFrameAxes): ScrollFrameAxis {
 	return axes === "horizontal" ? "horizontal" : "vertical";
+}
+
+export function resolveDragScrollConfig(
+	dragScroll: boolean | ScrollFrameDragScrollConfig | undefined,
+): ScrollFrameResolvedDragScrollConfig | null {
+	if (!dragScroll) {
+		return null;
+	}
+
+	const config = typeof dragScroll === "object" ? dragScroll : {};
+	return {
+		activationDistance:
+			config.activationDistance ?? DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE,
+		axis: config.axis ?? "auto",
+		cursor: config.cursor ?? true,
+		ignoreSelector:
+			config.ignoreSelector ?? DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR,
+	};
+}
+
+export function isDragScrollIgnored(
+	target: EventTarget | null,
+	ignoreSelector: string,
+): boolean {
+	if (!(target instanceof Element)) {
+		return true;
+	}
+	if ((target as HTMLElement).isContentEditable) {
+		return true;
+	}
+	return Boolean(target.closest(ignoreSelector));
 }
 
 export function shouldRenderFade(

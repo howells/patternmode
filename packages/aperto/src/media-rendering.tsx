@@ -89,10 +89,31 @@ export function renderExpandedMedia(
 	return (renderVideo ?? renderDefaultVideo)(videoProps);
 }
 
-export function renderTransitionMedia(item: ApertoMediaItem): ReactNode {
+export function renderTransitionMedia(
+	item: ApertoMediaItem,
+	renderImage?: RenderImage,
+	renderVideo?: RenderVideo,
+): ReactNode {
 	if (item.type === "image") {
-		return <img alt="" src={item.src} />;
+		const imageProps: Parameters<RenderImage>[0] = {
+			alt: item.alt,
+			height: item.height,
+			item,
+			src: item.src,
+			variant: "expanded",
+			width: item.width,
+		};
+		return (renderImage ?? renderDefaultImage)(imageProps);
 	}
 
-	return <img alt="" src={item.poster ?? item.thumbnailSrc} />;
+	const videoProps: Parameters<RenderVideo>[0] = {
+		"aria-label": item.alt ?? item.title ?? "Video",
+		height: item.height,
+		item,
+		poster: item.poster,
+		src: item.src,
+		variant: "expanded",
+		width: item.width,
+	};
+	return (renderVideo ?? renderDefaultVideo)(videoProps);
 }

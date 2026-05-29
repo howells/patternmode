@@ -1,5 +1,11 @@
 # @patternmode/aperto
 
+## 0.1.2
+
+### Patch Changes
+
+- Preserve expanded media aspect ratios, restore focus to the opening thumbnail on close, and use custom media renderers for transition clones.
+
 ## 0.1.1
 
 ### Patch Changes

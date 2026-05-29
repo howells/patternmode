@@ -35,7 +35,7 @@
 [data-slot="aperto-content"] > img,
 [data-slot="aperto-content"] > video,
 [data-slot="aperto-content"] > [data-slot="aperto-media"] {
-	@apply block rounded-[var(--aperto-radius,0.5rem)] object-cover;
+	@apply block rounded-[var(--aperto-radius,0.5rem)];
 	aspect-ratio: var(--aperto-expanded-aspect-ratio, 3 / 2);
 	height: auto;
 	max-height: calc(100vh - 8rem);
@@ -43,7 +43,11 @@
 	max-width: 90vw;
 	width: min(
 		var(--aperto-expanded-width, 76vw),
-		calc((100dvh - 8rem) * 1.5),
+		calc(
+			(100dvh - 8rem) *
+				(var(--aperto-expanded-aspect-ratio-width, 3) /
+					var(--aperto-expanded-aspect-ratio-height, 2))
+		),
 		1000px,
 		90vw
 	);
@@ -59,7 +63,7 @@
 [data-slot="aperto-media-stage"] > video,
 [data-slot="aperto-transition-media"] > img,
 [data-slot="aperto-transition-media"] > video {
-	@apply block size-full object-cover;
+	@apply block size-full;
 }
 
 [data-slot="aperto-media-stage"] {

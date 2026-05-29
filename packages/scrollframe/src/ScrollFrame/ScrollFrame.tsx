@@ -26,6 +26,7 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
 			contentStyle,
 			controls = false,
 			controlVisibility,
+			dragScroll,
 			fades = true,
 			scrollbars = "auto",
 			viewportClassName,
@@ -50,6 +51,7 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
 				{...props}
 				axes={axes}
 				controlVisibility={visibility}
+				dragScroll={dragScroll}
 				ref={ref}
 				scrollbars={scrollbars}
 			>

@@ -28,21 +28,46 @@ export function DistributionBar({
 	...props
 }: DistributionBarProps) {
 	const trackRef = useRef<HTMLDivElement>(null);
+	const dragStartSegmentsRef = useRef<DistributionBarSegment[] | null>(null);
 	const total = getDistributionTotal(segments);
 
-	function moveBoundary(boundaryIndex: number, deltaValue: number) {
+	function moveBoundary(
+		boundaryIndex: number,
+		deltaValue: number,
+		sourceSegments = segments,
+	) {
 		onChange?.(
-			moveDistributionBoundary(segments, boundaryIndex, deltaValue, minValue),
+			moveDistributionBoundary(
+				sourceSegments,
+				boundaryIndex,
+				deltaValue,
+				minValue,
+			),
+		);
+	}
+
+	function handleDragStart() {
+		dragStartSegmentsRef.current = segments;
+	}
+
+	function handleDrag(boundaryIndex: number, info: PanInfo) {
+		const sourceSegments = dragStartSegmentsRef.current ?? segments;
+		const sourceTotal = getDistributionTotal(sourceSegments);
+		const trackWidth = trackRef.current?.getBoundingClientRect().width ?? 0;
+		if (!(trackWidth > 0 && sourceTotal > 0)) {
+			return;
+		}
+
+		moveBoundary(
+			boundaryIndex,
+			(info.offset.x / trackWidth) * sourceTotal,
+			sourceSegments,
 		);
 	}
 
 	function handleDragEnd(boundaryIndex: number, info: PanInfo) {
-		const trackWidth = trackRef.current?.getBoundingClientRect().width ?? 0;
-		if (!(trackWidth > 0 && total > 0)) {
-			return;
-		}
-
-		moveBoundary(boundaryIndex, (info.offset.x / trackWidth) * total);
+		handleDrag(boundaryIndex, info);
+		dragStartSegmentsRef.current = null;
 	}
 
 	function handleKeyDown(
@@ -96,7 +121,9 @@ export function DistributionBar({
 							aria-label={label}
 							boundaryPercent={boundaryPercent}
 							key={`${segment.id}-${nextSegment?.id ?? "end"}`}
+							onDrag={(info) => handleDrag(boundaryIndex, info)}
 							onDragEnd={(info) => handleDragEnd(boundaryIndex, info)}
+							onDragStart={handleDragStart}
 							onKeyDown={(event) => handleKeyDown(event, boundaryIndex)}
 						/>
 					);
@@ -137,14 +164,18 @@ function getDerivedDistributionPercentage(
 interface DistributionBarHandleProps {
 	"aria-label": string;
 	boundaryPercent: number;
+	onDrag: (info: PanInfo) => void;
 	onDragEnd: (info: PanInfo) => void;
+	onDragStart: () => void;
 	onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 function DistributionBarHandle({
 	"aria-label": ariaLabel,
 	boundaryPercent,
+	onDrag,
 	onDragEnd,
+	onDragStart,
 	onKeyDown,
 }: DistributionBarHandleProps) {
 	return (
@@ -155,9 +186,12 @@ function DistributionBarHandle({
 			dragElastic={0}
 			dragMomentum={false}
 			dragSnapToOrigin
+			onDrag={(_event, info) => onDrag(info)}
 			onDragEnd={(_event, info) => onDragEnd(info)}
+			onDragStart={onDragStart}
 			onKeyDown={onKeyDown}
 			style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
+			transformTemplate={() => "none"}
 			type="button"
 		/>
 	);

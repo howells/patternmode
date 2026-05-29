@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollFrame } from "@patternmode/scrollframe";
+import { useState } from "react";
 
 const notes = [
 	"Selection state remains visible while the surrounding page stays still.",
@@ -33,6 +34,8 @@ const chips = [
 ];
 
 export function ScrollFrameDemo() {
+	const [selectedChip, setSelectedChip] = useState(chips[0]);
+
 	return (
 		<div className="scrollframe-demo">
 			<ScrollFrame
@@ -56,12 +59,20 @@ export function ScrollFrameDemo() {
 				axes="horizontal"
 				className="scrollframe-demo-strip"
 				controls
+				dragScroll
 				fadeColor="var(--surface)"
 				scrollbars="hidden"
 			>
 				<div className="scrollframe-demo-chips">
 					{chips.map((chip) => (
-						<span key={chip}>{chip}</span>
+						<button
+							aria-pressed={selectedChip === chip}
+							key={chip}
+							onClick={() => setSelectedChip(chip)}
+							type="button"
+						>
+							{chip}
+						</button>
 					))}
 				</div>
 			</ScrollFrame>

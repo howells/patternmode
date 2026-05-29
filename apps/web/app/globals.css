@@ -1170,7 +1170,7 @@ button {
 	gap: 8px;
 }
 
-.scrollframe-demo-chips span {
+.scrollframe-demo-chips button {
 	background: var(--surface-soft);
 	border: 1px solid var(--border-soft);
 	border-radius: 999px;
@@ -1180,6 +1180,12 @@ button {
 	line-height: 1;
 	padding: 8px 11px;
 	white-space: nowrap;
+}
+
+.scrollframe-demo-chips button[aria-pressed="true"] {
+	background: var(--ink);
+	border-color: var(--ink);
+	color: var(--surface);
 }
 
 /* ── Tags demo ─────────────────────────────── */

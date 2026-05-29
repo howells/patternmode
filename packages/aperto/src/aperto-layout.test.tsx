@@ -313,4 +313,115 @@ describe("Aperto layout projection", () => {
 			expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
 		);
 	});
+
+	it("returns grouped media focus to the opened thumbnail without scrolling", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/first-large.jpg",
+				alt: "Ceramic vessels on linen",
+				title: "Studio table",
+			},
+			{
+				type: "image",
+				src: "/second-large.jpg",
+				alt: "A quiet reading nook",
+				title: "Soft afternoon",
+			},
+			{
+				type: "image",
+				src: "/third-large.jpg",
+				alt: "A garden passage",
+				title: "Garden passage",
+			},
+		];
+		const focusSpy = vi.spyOn(HTMLElement.prototype, "focus");
+
+		render(
+			<Aperto.Group media={media}>
+				<Aperto.Thumbnail index={0} />
+				<Aperto.Thumbnail index={1} />
+				<Aperto.Thumbnail index={2} />
+			</Aperto.Group>,
+		);
+
+		const openedThumbnail = screen.getByRole("button", {
+			name: "Open Studio table",
+		});
+		const lastThumbnail = screen.getByRole("button", {
+			name: "Open Garden passage",
+		});
+
+		await user.click(openedThumbnail);
+		await user.click(screen.getByRole("button", { name: "Close" }));
+
+		await waitFor(() =>
+			expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+		);
+		expect(document.activeElement).toBe(openedThumbnail);
+		expect(document.activeElement).not.toBe(lastThumbnail);
+		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
+
+		focusSpy.mockRestore();
+	});
+
+	it("sizes expanded grouped media from the active item aspect ratio", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/portrait.jpg",
+				alt: "Tall gallery view",
+				height: 1600,
+				title: "Portrait",
+				width: 900,
+			},
+		];
+
+		render(
+			<Aperto.Group media={media}>
+				<Aperto.Thumbnail index={0} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Portrait" }));
+
+		expect(document.querySelector('[data-slot="aperto-media"]')).toHaveStyle({
+			"--aperto-expanded-aspect-ratio": "900 / 1600",
+			"--aperto-expanded-aspect-ratio-height": "1600",
+			"--aperto-expanded-aspect-ratio-width": "900",
+		});
+	});
+
+	it("uses the supplied media renderer for transition clones", async () => {
+		const user = userEvent.setup();
+		const media: ApertoMediaItem[] = [
+			{
+				type: "image",
+				src: "/optimized.jpg",
+				alt: "Optimized render",
+				height: 900,
+				title: "Optimized",
+				width: 1600,
+			},
+		];
+
+		render(
+			<Aperto.Group
+				media={media}
+				renderImage={({ alt, src, variant }) => (
+					<img alt={alt ?? ""} data-renderer={variant} src={String(src)} />
+				)}
+			>
+				<Aperto.Thumbnail index={0} />
+			</Aperto.Group>,
+		);
+
+		await user.click(screen.getByRole("button", { name: "Open Optimized" }));
+
+		expect(
+			document.querySelector('[data-slot="aperto-transition-media"] img'),
+		).toHaveAttribute("data-renderer", "expanded");
+	});
 });

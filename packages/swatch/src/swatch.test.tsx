@@ -1,9 +1,14 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { SVGProps } from "react";
+import type {
+	ButtonHTMLAttributes,
+	ReactNode,
+	PointerEvent as ReactPointerEvent,
+	SVGProps,
+} from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	DistributionBar,
@@ -17,6 +22,73 @@ import {
 	type SwatchSize,
 	updateDistributionSegment,
 } from "./index";
+
+interface MockPanInfo {
+	offset: {
+		x: number;
+		y: number;
+	};
+}
+
+interface MockMotionButtonProps
+	extends Omit<
+		ButtonHTMLAttributes<HTMLButtonElement>,
+		"onDrag" | "onDragEnd" | "onDragStart"
+	> {
+	children?: ReactNode;
+	drag?: string;
+	dragElastic?: number;
+	dragMomentum?: boolean;
+	dragSnapToOrigin?: boolean;
+	onDrag?: (event: PointerEvent, info: MockPanInfo) => void;
+	onDragEnd?: (event: PointerEvent, info: MockPanInfo) => void;
+	onDragStart?: (event: PointerEvent, info: MockPanInfo) => void;
+	transformTemplate?: () => string;
+}
+
+vi.mock("motion/react", () => ({
+	motion: {
+		button: ({
+			children,
+			drag: _drag,
+			dragElastic: _dragElastic,
+			dragMomentum: _dragMomentum,
+			dragSnapToOrigin: _dragSnapToOrigin,
+			onDrag,
+			onDragEnd,
+			onDragStart,
+			transformTemplate: _transformTemplate,
+			...props
+		}: MockMotionButtonProps) => {
+			const getPanInfo = (event: ReactPointerEvent<HTMLButtonElement>) => ({
+				offset: {
+					x: Number(event.currentTarget.dataset.offsetX ?? 0),
+					y: Number(event.currentTarget.dataset.offsetY ?? 0),
+				},
+			});
+
+			return (
+				<button
+					{...props}
+					onPointerDown={(event) => {
+						props.onPointerDown?.(event);
+						onDragStart?.(event.nativeEvent, getPanInfo(event));
+					}}
+					onPointerMove={(event) => {
+						props.onPointerMove?.(event);
+						onDrag?.(event.nativeEvent, getPanInfo(event));
+					}}
+					onPointerUp={(event) => {
+						props.onPointerUp?.(event);
+						onDragEnd?.(event.nativeEvent, getPanInfo(event));
+					}}
+				>
+					{children}
+				</button>
+			);
+		},
+	},
+}));
 
 function CheckIcon(props: SVGProps<SVGSVGElement>) {
 	return <svg data-testid="check-icon" {...props} />;
@@ -230,6 +302,45 @@ describe("DistributionBar", () => {
 		expect(onChange).toHaveBeenCalledWith([
 			{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 49 },
 			{ id: "saffron", color: "#d9a441", label: "Saffron", value: 29 },
+			{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+		]);
+	});
+
+	it("emits updated segment values while a boundary handle is dragged", () => {
+		const onChange = vi.fn();
+
+		render(
+			<DistributionBar
+				aria-label="Finish distribution"
+				onChange={onChange}
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+				]}
+			/>,
+		);
+
+		const group = screen.getByRole("group", { name: "Finish distribution" });
+		const track = group.querySelector(".patternmode-distribution-bar__track");
+		const handle = screen.getByRole("button", {
+			name: "Adjust Evergreen and Saffron distribution",
+		});
+		if (!track) {
+			throw new Error("Distribution bar track was not rendered");
+		}
+		track.getBoundingClientRect = () =>
+			({
+				width: 100,
+			}) as DOMRect;
+		handle.dataset.offsetX = "10";
+
+		fireEvent.pointerDown(handle);
+		fireEvent.pointerMove(handle);
+
+		expect(onChange).toHaveBeenCalledWith([
+			{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 58 },
+			{ id: "saffron", color: "#d9a441", label: "Saffron", value: 20 },
 			{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
 		]);
 	});

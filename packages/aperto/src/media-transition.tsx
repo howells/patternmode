@@ -6,7 +6,7 @@ import {
 import { useEffect } from "react";
 import { useApertoContext } from "./context";
 import { renderTransitionMedia } from "./media-rendering";
-import type { ApertoMediaItem } from "./types";
+import type { ApertoMediaItem, RenderImage, RenderVideo } from "./types";
 
 export interface ApertoRect {
 	height: number;
@@ -53,9 +53,13 @@ function transitionDurationMs(transition: Transition): number {
 
 export function ApertoMediaTransitionClone({
 	onComplete,
+	renderImage,
+	renderVideo,
 	transition,
 }: {
 	onComplete: () => void;
+	renderImage?: RenderImage;
+	renderVideo?: RenderVideo;
 	transition: ApertoMediaTransition | null;
 }) {
 	const ctx = useApertoContext();
@@ -79,6 +83,7 @@ export function ApertoMediaTransitionClone({
 	return (
 		<motion.div
 			animate={rectTarget(transition.to)}
+			aria-hidden="true"
 			data-slot="aperto-transition-media"
 			initial={rectTarget(transition.from)}
 			style={{
@@ -91,7 +96,7 @@ export function ApertoMediaTransitionClone({
 			}}
 			transition={ctx.preset.transition}
 		>
-			{renderTransitionMedia(transition.item)}
+			{renderTransitionMedia(transition.item, renderImage, renderVideo)}
 		</motion.div>
 	);
 }

@@ -24,6 +24,7 @@ import {
 	getAxisState,
 	getPageStep,
 	getReducedMotionPreference,
+	resolveDragScrollConfig,
 	resolveRadixType,
 	supportsAxis,
 } from "./ScrollFrameUtils";
@@ -37,6 +38,7 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 			children,
 			className,
 			controlVisibility = "auto",
+			dragScroll,
 			fadeColor,
 			fadeSize,
 			role,
@@ -51,8 +53,13 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 		const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
 		const [edgeState, setEdgeState] =
 			useState<ScrollFrameEdgeState>(DEFAULT_EDGE_STATE);
+		const [isDragging, setDragging] = useState(false);
 		const viewportRef = useRef<HTMLDivElement | null>(null);
 		const contextRef = useRef<ScrollFrameContextValue | null>(null);
+		const resolvedDragScroll = useMemo(
+			() => resolveDragScrollConfig(dragScroll),
+			[dragScroll],
+		);
 
 		const measure = useCallback(() => {
 			const node = viewportRef.current;
@@ -101,18 +108,23 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 			() => ({
 				axes,
 				controlVisibility,
+				dragScroll: resolvedDragScroll,
 				edgeState,
+				isDragging,
 				registerViewport,
 				scrollbars,
 				scrollBehavior,
 				scrollByStep,
 				scrollStep,
+				setDragging,
 				viewport,
 			}),
 			[
 				axes,
 				controlVisibility,
+				resolvedDragScroll,
 				edgeState,
+				isDragging,
 				registerViewport,
 				scrollbars,
 				scrollBehavior,
@@ -159,6 +171,11 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 					}
 					data-axis-vertical={supportsAxis(axes, "vertical") ? "true" : "false"}
 					data-axes={axes}
+					data-drag-scroll={resolvedDragScroll ? "true" : undefined}
+					data-drag-scroll-cursor={
+						resolvedDragScroll?.cursor ? "true" : undefined
+					}
+					data-dragging={isDragging ? "true" : undefined}
 					data-scrollbar-visibility={scrollbars}
 					data-slot="scrollframe"
 					ref={ref}

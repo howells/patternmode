@@ -38,6 +38,10 @@ _Avoid_: Using Trigger for the high-level media-first API
 The opened media content shown by a high-level **Media Transition**.
 _Avoid_: Lightbox as the canonical term
 
+**Expanded Media Aspect Ratio**:
+The final displayed aspect ratio for **Expanded Media**, derived from the active **Media Item** dimensions when available.
+_Avoid_: Deriving final expanded sizing from the **Thumbnail**, transition clone, or a fixed frame
+
 **Content**:
 The primitive dialog body shown by a **Shared-Element Dialog**.
 _Avoid_: Using Content as the high-level media concept
@@ -90,9 +94,17 @@ _Avoid_: Affordance or Action as the canonical term
 An **Aperto Control** that closes opened Aperto content.
 _Avoid_: Close Action as the canonical term
 
+**Focus Return**:
+Restoring focus to the **Thumbnail** that opened a high-level **Media Transition** when opened Aperto content closes.
+_Avoid_: Treating close focus as generic dialog autofocus or focusing the current **Active Media Item**
+
 **Media Navigation Control**:
 An **Aperto Control** that performs **Media Navigation**.
 _Avoid_: Paging Control as the canonical term
+
+**Media Renderer Consistency**:
+Using consumer-provided image and video renderers consistently across **Thumbnail**, **Expanded Media**, and internal transition rendering for the same **Media Item**.
+_Avoid_: Treating transition clone rendering as separate public anatomy or as a raw media fallback
 
 **Drag Dismissal**:
 Closing opened Aperto content by dragging beyond configured distance or velocity thresholds.
@@ -305,6 +317,10 @@ _Avoid_: Rendering raw distribution values as percentages
 The draggable control between adjacent **Distribution Segments**.
 _Avoid_: Treating handles as independent values rather than controls over adjacent segments
 
+**Live Distribution Adjustment**:
+The continuous update of adjacent **Distribution Segment** dimensions and values while a **Boundary Handle** is being dragged.
+_Avoid_: Waiting until drag release before updating the visible distribution
+
 **Distribution Segment Removal**:
 A helper-level operation that removes a **Distribution Segment** and redistributes its **Distribution Value** across remaining segments.
 _Avoid_: Treating segment removal as behavior owned by Distribution Bar itself
@@ -390,6 +406,26 @@ _Avoid_: Moving a full viewport when preserving context is useful
 **Scroll Behavior**:
 The native scrolling behavior used by **Scroll Movement Controls**.
 _Avoid_: Ignoring reduced-motion preferences for smooth movement
+
+**Drag Scrolling**:
+An optional **ScrollFrame** affordance where pointer dragging on a content surface changes the **Viewport** scroll position after an activation threshold.
+_Avoid_: Panning, grabbing, swipe scrolling, kinetic scrolling, native scrollbar dragging, or item reordering as the canonical term
+
+**Drag Scroll Surface**:
+The content surface inside a **Viewport** that can listen for pointer movement and perform **Drag Scrolling**.
+_Avoid_: Treating the Viewport, scrollbar parts, or excluded child controls as the drag surface
+
+**Native Drag Scroll Implementation**:
+Implementing **Drag Scrolling** with pointer events and native **Viewport** scroll position rather than a motion-library gesture contract.
+_Avoid_: Adding a runtime animation dependency when native pointer capture and scroll offsets are sufficient
+
+**Drag Scroll Activation**:
+The threshold crossing where pointer movement stops being ordinary content interaction and becomes committed **Drag Scrolling**.
+_Avoid_: Suppressing clicks, clearing selection, or setting dragging state before activation
+
+**Drag Scroll Exclusion**:
+A descendant interaction region that keeps its own pointer behavior instead of starting **Drag Scrolling**.
+_Avoid_: Letting Drag Scrolling steal pointer interaction from form controls, editable content, or explicit no-drag descendants
 
 ### Tags
 
@@ -534,12 +570,15 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - A **Media Group** contains one or more **Media Items** addressed by `Aperto.Group`.
 - A **Media Item** is either an **Image Media Item** or a **Video Media Item**.
 - An open **Media Group** has at most one **Active Media Item**.
+- **Expanded Media Aspect Ratio** follows the active **Media Item**, not the opening **Thumbnail** or **Shared-Element Transition** measurement.
 - **Media Item Metadata** may include a **Media Item Title** and **Media Item Description**.
 - **Media Navigation** changes the **Active Media Item** inside a **Media Group**.
 - **Media Navigation** does not change route, page position, or collection membership.
 - **Aperto Controls** exist inside opened Aperto content.
 - **Media Navigation Controls** perform **Media Navigation**.
 - A **Close Control** closes opened Aperto content.
+- **Focus Return** targets the **Thumbnail** that opened the **Media Transition**, not the current **Active Media Item** after navigation.
+- **Media Renderer Consistency** keeps internal transition rendering aligned with the same media renderer used by **Thumbnail** and **Expanded Media**.
 - **Drag Dismissal** closes opened Aperto content without changing **Media Group** membership.
 
 ### Deck
@@ -597,6 +636,7 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - A **Selectable Swatch** uses Swatch for representation while the parent control owns selection behavior.
 - Swatch extensions should improve **Swatch Representation**, not own surrounding workflows.
 - A **Swatch Remove Affordance** requests removal only; consumer code owns whether and how the collection changes.
+- A **Boundary Handle** performs **Live Distribution Adjustment** so adjacent **Distribution Segments** resize during drag, not only after release.
 
 ### ScrollFrame
 
@@ -623,6 +663,11 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - **Control Visibility Policy** may differ for reserved inline controls and floating overlay controls.
 - Initial **Scroll Movement Controls** use fixed **Scroll Steps**, not item-aware navigation.
 - The default **Scroll Step** should be a **Page Step** that preserves some visible context.
+- **Drag Scrolling** changes native **Viewport** scroll position; it does not perform item navigation, item reordering, or scrollbar dragging.
+- A **Drag Scroll Surface** is inside the **Viewport**; it is not the same concept as the **Viewport** or Radix scrollbar parts.
+- **Native Drag Scroll Implementation** keeps Drag Scrolling independent of Motion or gesture-library runtime contracts.
+- **Drag Scroll Activation** separates ordinary content clicks and text-selection attempts from committed **Drag Scrolling**.
+- **Drag Scroll Exclusion** covers form controls, editable content, and explicit no-drag descendants inside a drag-scroll surface.
 - The default **Scroll Behavior** should be smooth unless reduced motion is requested.
 - **Scroll Movement Controls** should not move focus by default.
 - A **Named Scroll Region** may expose region semantics; unnamed **ScrollFrames** should avoid extra landmark noise.
@@ -697,6 +742,9 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 > **Dev:** "Should opened high-level Aperto be documented as a Lightbox?"
 > **Domain expert:** "No — call it **Expanded Media**. **Dialog** is the accessibility semantic, and **Content** is primitive anatomy."
 >
+> **Dev:** "Should expanded sizing come from the thumbnail frame or transition clone?"
+> **Domain expert:** "No — use **Expanded Media Aspect Ratio**, derived from the active **Media Item** dimensions when available."
+>
 > **Dev:** "Is `Aperto.Group` a gallery component?"
 > **Domain expert:** "No — it represents a **Media Group**. Aperto owns transition and navigation, not the surrounding gallery workflow."
 >
@@ -717,6 +765,12 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 >
 > **Dev:** "Should drag-to-close be described as a swipe?"
 > **Domain expert:** "No — call it **Drag Dismissal** unless Aperto later needs a separate completed-swipe concept."
+>
+> **Dev:** "Should close focus return to whichever media item is currently active?"
+> **Domain expert:** "No — **Focus Return** restores focus to the **Thumbnail** that opened the **Media Transition**, without scrolling the page."
+>
+> **Dev:** "Should the animated transition clone use raw media elements when custom renderers are supplied?"
+> **Domain expert:** "No — preserve **Media Renderer Consistency** across **Thumbnail**, **Expanded Media**, and internal transition rendering while keeping the clone hidden from accessibility."
 
 ### Deck
 
@@ -852,6 +906,7 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - "Projection" is Motion implementation language and "Expansion" suggests only size change — resolved: use **Shared-Element Transition** for visual continuity between **Thumbnail** and **Expanded Media**.
 - "Preview" could mean compact media, expanded media, or a transition state — resolved: use **Thumbnail** for high-level media and **Trigger** for primitive dialog anatomy.
 - "Lightbox", "Dialog", and "Content" could all describe the opened state — resolved: use **Expanded Media** for high-level Aperto, **Content** for primitive anatomy, and **Dialog** for accessibility semantics.
+- "Frame", "thumbnail ratio", and transition measurement could imply final expanded sizing follows the visual bridge — resolved: use **Expanded Media Aspect Ratio** from the active **Media Item** dimensions when available.
 - "Group" is API shorthand and "Gallery" implies a broader browsing workflow — resolved: use **Media Group** for ordered media handled by `Aperto.Group`.
 - "Asset" implies storage ownership and "Source" only names the input URL/file — resolved: use **Media Item**, with **Image Media Item** and **Video Media Item** when type-specific language is needed.
 - "Selected" implies persistent choice state and "Open" mixes dialog state with item identity — resolved: use **Active Media Item** for the item currently shown as **Expanded Media**.
@@ -859,6 +914,8 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - "Navigation", "Browsing", and "Paging" could imply route, page, or gallery ownership — resolved: use **Media Navigation** for moving between items in a **Media Group**.
 - "Affordance" is vague and "Action" suggests command semantics beyond the rendered UI — resolved: use **Aperto Control**, **Close Control**, and **Media Navigation Control**.
 - "Swipe" could conflict with Stacksheet and Deck gesture language — resolved: use **Drag Dismissal** for Aperto drag-to-close behavior.
+- "Autofocus", "return focus", and "active item focus" could imply generic dialog behavior or target the wrong thumbnail after navigation — resolved: use **Focus Return** for restoring focus to the opening **Thumbnail** without scrolling.
+- "Transition clone" could sound like public anatomy and "fallback media" could ignore consumer rendering — resolved: use **Media Renderer Consistency** while keeping transition rendering internal and accessibility-hidden.
 
 ### Deck
 
@@ -897,6 +954,7 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - "Remove" could imply Swatch owns collection management — resolved: **Swatch Remove Affordance** only requests removal; consumer code owns the resulting workflow.
 - "Swatch" could imply a picker control — resolved: **Swatch** is a representation primitive; selection behavior belongs to a parent control.
 - "Extension" could mean adding workflow features — resolved: extend **Swatch Representation** fidelity rather than copying, editing, sorting, or picker behavior.
+- "Drag adjustment" could imply commit-only updates after release — resolved: use **Live Distribution Adjustment** for continuous segment resizing while a **Boundary Handle** is dragged.
 
 ### ScrollFrame
 
@@ -917,6 +975,11 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - Hidden versus disabled controls depends on placement — resolved: make it a **Control Visibility Policy**, not a fixed semantic rule.
 - Controls could be only automatic or only manually composed — resolved: support both composed props and **ScrollFrame Parts**.
 - Custom controls need shared movement state — resolved: expose **ScrollFrame Context** through a scoped hook.
+- "Panning", "grabbing", "swipe scrolling", and "kinetic scrolling" could imply canvas movement, gesture momentum, or item movement — resolved: use **Drag Scrolling** for pointer-drag changes to **Viewport** scroll position after activation.
+- "Drag surface" could be confused with the **Viewport** or scrollbar parts — resolved: use **Drag Scroll Surface** for the content surface that listens for pointer movement inside the **Viewport**.
+- "Motion drag" could imply a dependency on `motion/react` gesture semantics — resolved: use **Native Drag Scroll Implementation** with pointer events and native **Viewport** scroll offsets.
+- "Dragging" could start on pointer down and break normal content clicks — resolved: use **Drag Scroll Activation** before suppressing clicks, clearing selection, or setting dragging state.
+- "Ignore selector" could sound like an implementation-only escape hatch — resolved: use **Drag Scroll Exclusion** for descendants that keep their own pointer interaction inside a drag-scroll surface.
 - Page movement could jump exactly one viewport — resolved: default **Page Step** should move most of the **Viewport** while preserving context.
 - Smooth movement could ignore motion preferences — resolved: default **Scroll Behavior** respects reduced motion.
 - Scroll containers could create noisy unnamed landmarks — resolved: only a **Named Scroll Region** should expose region semantics by default.
