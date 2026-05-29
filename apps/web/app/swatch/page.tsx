@@ -111,10 +111,38 @@ const swatchApi: ApiSection[] = [
 			},
 		],
 	},
+	{
+		name: "DistributionDisplay",
+		description:
+			"Non-interactive distribution primitive for read-only weighted visual displays.",
+		props: [
+			{
+				name: "segments",
+				type: "Array<{ id: string; color: string; label?: string; value: number }>",
+				description:
+					"Segment weights and colors. Values render proportionally without drag handles.",
+			},
+			{
+				name: "emptyValue",
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Optional unassigned weight rendered as a hatched remainder segment.",
+			},
+			{
+				name: "legend",
+				type: '"segments" | "summary" | false',
+				defaultValue: '"segments"',
+				description:
+					"Controls whether the legend lists each segment, summarizes assigned/unassigned weight, or is hidden.",
+			},
+		],
+	},
 ];
 
 const swatchExample = `import {
   DistributionBar,
+  DistributionDisplay,
   Swatch,
 } from "@patternmode/swatch";
 import "@patternmode/swatch/styles.css";
@@ -142,6 +170,16 @@ function PalettePreview() {
         aria-label="Finish distribution"
         onChange={setSegments}
         segments={segments}
+      />
+      <DistributionDisplay
+        aria-label="Assigned finish distribution: 79% assigned, 21% unassigned"
+        emptyValue={21}
+        legend="summary"
+        segments={[
+          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 38 },
+          { id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
+          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
+        ]}
       />
     </>
   );

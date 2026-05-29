@@ -10,12 +10,76 @@ import {
 	moveDistributionBoundary,
 } from "./DistributionBarMath";
 
+export interface DistributionDisplayProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, "role"> {
+	assignedLabel?: string;
+	emptyLabel?: string;
+	emptyValue?: number;
+	legend?: "segments" | "summary" | false;
+	segments: DistributionBarSegment[];
+}
+
 export interface DistributionBarProps
 	extends Omit<HTMLAttributes<HTMLFieldSetElement>, "onChange"> {
 	minValue?: number;
 	onChange?: (segments: DistributionBarSegment[]) => void;
 	segments: DistributionBarSegment[];
 	step?: number;
+}
+
+export function DistributionDisplay({
+	"aria-label": ariaLabel,
+	assignedLabel = "assigned",
+	className,
+	emptyLabel = "unassigned",
+	emptyValue = 0,
+	legend = "segments",
+	segments,
+	...props
+}: DistributionDisplayProps) {
+	const total = getDistributionDisplayTotal(segments, emptyValue);
+	const accessibleLabel =
+		ariaLabel ??
+		getDistributionDisplayAccessibleLabel(
+			segments,
+			emptyValue,
+			emptyLabel,
+			total,
+		);
+
+	return (
+		<div
+			{...props}
+			aria-label={accessibleLabel}
+			className={joinClassNames("patternmode-distribution-display", className)}
+			data-slot="distribution-display"
+			role="img"
+		>
+			<div className="patternmode-distribution-bar__track">
+				<DistributionSegments
+					emptyValue={emptyValue}
+					segments={segments}
+					total={total}
+				/>
+			</div>
+			{legend === "segments" ? (
+				<DistributionSegmentLegend
+					emptyLabel={emptyLabel}
+					emptyValue={emptyValue}
+					segments={segments}
+					total={total}
+				/>
+			) : null}
+			{legend === "summary" ? (
+				<DistributionSummaryLegend
+					assignedLabel={assignedLabel}
+					emptyLabel={emptyLabel}
+					emptyValue={emptyValue}
+					total={total}
+				/>
+			) : null}
+		</div>
+	);
 }
 
 export function DistributionBar({
@@ -92,21 +156,7 @@ export function DistributionBar({
 			data-slot="distribution-bar"
 		>
 			<div className="patternmode-distribution-bar__track" ref={trackRef}>
-				<div className="patternmode-distribution-bar__segments">
-					{segments.map((segment) => (
-						<div
-							aria-hidden="true"
-							className="patternmode-distribution-bar__segment"
-							key={segment.id}
-							style={
-								{
-									"--patternmode-distribution-segment-color": segment.color,
-									width: total > 0 ? `${(segment.value / total) * 100}%` : "0%",
-								} as CSSProperties
-							}
-						/>
-					))}
-				</div>
+				<DistributionSegments segments={segments} total={total} />
 				{segments.slice(0, -1).map((segment, boundaryIndex) => {
 					const nextSegment = segments[boundaryIndex + 1];
 					const boundaryPercent = getDistributionBoundaryPercent(
@@ -129,25 +179,157 @@ export function DistributionBar({
 					);
 				})}
 			</div>
-			<div className="patternmode-distribution-bar__legend">
-				{segments.map((segment) => (
-					<span key={segment.id}>
-						<span
-							aria-hidden="true"
-							className="patternmode-distribution-bar__swatch"
-							style={
-								{
-									"--patternmode-distribution-segment-color": segment.color,
-								} as CSSProperties
-							}
-						/>
-						{segment.label ?? segment.id}{" "}
-						{getDerivedDistributionPercentage(segment.value, total)}%
-					</span>
-				))}
-			</div>
+			<DistributionSegmentLegend segments={segments} total={total} />
 		</fieldset>
 	);
+}
+
+interface DistributionSegmentsProps {
+	emptyValue?: number;
+	segments: DistributionBarSegment[];
+	total: number;
+}
+
+function DistributionSegments({
+	emptyValue = 0,
+	segments,
+	total,
+}: DistributionSegmentsProps) {
+	return (
+		<div className="patternmode-distribution-bar__segments">
+			{segments.map((segment) => (
+				<div
+					aria-hidden="true"
+					className="patternmode-distribution-bar__segment"
+					key={segment.id}
+					style={
+						{
+							"--patternmode-distribution-segment-color": segment.color,
+							width:
+								total > 0
+									? `${(getRenderableDistributionValue(segment.value) / total) * 100}%`
+									: "0%",
+						} as CSSProperties
+					}
+				/>
+			))}
+			{emptyValue > 0 ? (
+				<div
+					aria-hidden="true"
+					className="patternmode-distribution-bar__segment patternmode-distribution-bar__segment--empty"
+					style={{
+						width:
+							total > 0
+								? `${(getRenderableDistributionValue(emptyValue) / total) * 100}%`
+								: "0%",
+					}}
+				/>
+			) : null}
+		</div>
+	);
+}
+
+interface DistributionSegmentLegendProps {
+	emptyLabel?: string;
+	emptyValue?: number;
+	segments: DistributionBarSegment[];
+	total: number;
+}
+
+function DistributionSegmentLegend({
+	emptyLabel,
+	emptyValue = 0,
+	segments,
+	total,
+}: DistributionSegmentLegendProps) {
+	return (
+		<div className="patternmode-distribution-bar__legend">
+			{segments.map((segment) => (
+				<span key={segment.id}>
+					<span
+						aria-hidden="true"
+						className="patternmode-distribution-bar__swatch"
+						style={
+							{
+								"--patternmode-distribution-segment-color": segment.color,
+							} as CSSProperties
+						}
+					/>
+					{segment.label ?? segment.id}{" "}
+					{getDerivedDistributionPercentage(segment.value, total)}%
+				</span>
+			))}
+			{emptyValue > 0 && emptyLabel ? (
+				<span>
+					<span
+						aria-hidden="true"
+						className="patternmode-distribution-bar__swatch patternmode-distribution-bar__swatch--empty"
+					/>
+					{emptyLabel} {getDerivedDistributionPercentage(emptyValue, total)}%
+				</span>
+			) : null}
+		</div>
+	);
+}
+
+interface DistributionSummaryLegendProps {
+	assignedLabel: string;
+	emptyLabel: string;
+	emptyValue: number;
+	total: number;
+}
+
+function DistributionSummaryLegend({
+	assignedLabel,
+	emptyLabel,
+	emptyValue,
+	total,
+}: DistributionSummaryLegendProps) {
+	const emptyPercentage = getDerivedDistributionPercentage(emptyValue, total);
+
+	return (
+		<div className="patternmode-distribution-bar__legend">
+			<span>
+				{Math.max(0, 100 - emptyPercentage)}% {assignedLabel}
+			</span>
+			{emptyValue > 0 ? (
+				<span>
+					{emptyPercentage}% {emptyLabel}
+				</span>
+			) : null}
+		</div>
+	);
+}
+
+function getDistributionDisplayTotal(
+	segments: DistributionBarSegment[],
+	emptyValue: number,
+): number {
+	return (
+		getDistributionTotal(segments) + getRenderableDistributionValue(emptyValue)
+	);
+}
+
+function getDistributionDisplayAccessibleLabel(
+	segments: DistributionBarSegment[],
+	emptyValue: number,
+	emptyLabel: string,
+	total: number,
+): string {
+	const segmentLabels = segments.map(
+		(segment) =>
+			`${segment.label ?? segment.id} ${getDerivedDistributionPercentage(
+				segment.value,
+				total,
+			)}%`,
+	);
+	if (emptyValue > 0) {
+		segmentLabels.push(
+			`${emptyLabel} ${getDerivedDistributionPercentage(emptyValue, total)}%`,
+		);
+	}
+
+	return segmentLabels.join(", ");
 }
 
 function getDerivedDistributionPercentage(
@@ -159,6 +341,10 @@ function getDerivedDistributionPercentage(
 	}
 
 	return Math.round((Math.max(0, value) / total) * 100);
+}
+
+function getRenderableDistributionValue(value: number): number {
+	return Number.isFinite(value) ? Math.max(0, value) : 0;
 }
 
 interface DistributionBarHandleProps {

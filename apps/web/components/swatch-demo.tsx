@@ -3,6 +3,7 @@
 import {
 	DistributionBar,
 	type DistributionBarSegment,
+	DistributionDisplay,
 	Swatch,
 } from "@patternmode/swatch";
 import type { SVGProps } from "react";
@@ -77,6 +78,13 @@ const startingDistribution: DistributionBarSegment[] = [
 	{ id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
 	{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
 ];
+
+const assignedDistribution: DistributionBarSegment[] = [
+	{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 38 },
+	{ id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
+	{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
+];
+
 type FinishColor = (typeof finishes)[number]["color"];
 type PaletteName = (typeof palettes)[number]["name"];
 
@@ -213,29 +221,12 @@ export function SwatchDemo() {
 			{/* ⑤ Distribution */}
 			<div className="swatch-demo-cell">
 				<div className="swatch-demo-label">Distribution</div>
-				<div className="swatch-demo-distribution">
-					<div className="swatch-demo-distribution-bar">
-						<div className="swatch-demo-distribution-filled">
-							<div
-								className="swatch-demo-distribution-segment"
-								style={{ width: "48%", background: "#315c4b" }}
-							/>
-							<div
-								className="swatch-demo-distribution-segment"
-								style={{ width: "30%", background: "#d9a441" }}
-							/>
-							<div
-								className="swatch-demo-distribution-segment"
-								style={{ width: "22%", background: "#9b3d32" }}
-							/>
-						</div>
-						<div className="swatch-demo-distribution-empty" />
-					</div>
-					<div className="swatch-demo-distribution-legend">
-						<span>79% assigned</span>
-						<span>21% unassigned</span>
-					</div>
-				</div>
+				<DistributionDisplay
+					aria-label="Assigned finish distribution: 79% assigned, 21% unassigned"
+					emptyValue={21}
+					legend="summary"
+					segments={assignedDistribution}
+				/>
 			</div>
 
 			{/* ⑥ Adjustable distribution */}

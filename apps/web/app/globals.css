@@ -1035,59 +1035,6 @@ button {
 	font-weight: 500;
 }
 
-.swatch-demo-distribution {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-.swatch-demo-distribution-bar {
-	border: 1px solid var(--border-soft);
-	border-radius: 999px;
-	display: flex;
-	height: 40px;
-	overflow: hidden;
-	width: 100%;
-}
-
-.swatch-demo-distribution-filled {
-	display: flex;
-	gap: 1px;
-	width: 79%;
-}
-
-.swatch-demo-distribution-segment {
-	height: 100%;
-}
-
-.swatch-demo-distribution-segment:first-child {
-	border-radius: 999px 0 0 999px;
-}
-
-.swatch-demo-distribution-empty {
-	background-color: var(--surface-soft);
-	background-image: repeating-linear-gradient(
-		45deg,
-		transparent,
-		transparent 3px,
-		var(--border) 3px,
-		var(--border) 4px
-	);
-	flex: 1;
-	opacity: 0.7;
-}
-
-.swatch-demo-distribution-legend {
-	display: flex;
-	gap: 16px;
-}
-
-.swatch-demo-distribution-legend span {
-	color: var(--muted);
-	font-size: 0.68rem;
-	font-weight: 500;
-}
-
 @media (max-width: 768px) {
 	.swatch-demo {
 		grid-template-columns: 1fr;

@@ -12,6 +12,7 @@ import type {
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	DistributionBar,
+	DistributionDisplay,
 	getDistributionBoundaryPercent,
 	getDistributionTotal,
 	getSwatchColorsBackground,
@@ -274,6 +275,48 @@ describe("DistributionBar math", () => {
 });
 
 describe("DistributionBar", () => {
+	it("renders a non-interactive display without boundary handles", () => {
+		render(
+			<DistributionDisplay
+				aria-label="Assigned finish distribution: 79% assigned, 21% unassigned"
+				emptyValue={21}
+				legend="summary"
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 38 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
+					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
+				]}
+			/>,
+		);
+
+		expect(
+			screen.getByRole("img", {
+				name: "Assigned finish distribution: 79% assigned, 21% unassigned",
+			}),
+		).toHaveClass("patternmode-distribution-display");
+		expect(screen.getByText("79% assigned")).toBeInTheDocument();
+		expect(screen.getByText("21% unassigned")).toBeInTheDocument();
+		expect(screen.queryByRole("button")).not.toBeInTheDocument();
+	});
+
+	it("renders segment percentages for display legends", () => {
+		render(
+			<DistributionDisplay
+				aria-label="Weighted finish display"
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 2 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
+					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
+				]}
+			/>,
+		);
+
+		expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();
+		expect(screen.getByText("Saffron 30%")).toBeInTheDocument();
+		expect(screen.getByText("Oxblood 50%")).toBeInTheDocument();
+		expect(screen.queryByRole("button")).not.toBeInTheDocument();
+	});
+
 	it("renders adjustable boundary handles and emits updated values", async () => {
 		const user = userEvent.setup();
 		const onChange = vi.fn();

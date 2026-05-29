@@ -295,10 +295,14 @@ _Avoid_: Treating representation as editing, copying, sorting, or picker workflo
 
 **Distribution Bar**:
 A controlled editing primitive for arranging a weighted visual distribution.
-_Avoid_: Treating Distribution Bar as a Swatch
+_Avoid_: Using Distribution Bar for read-only or selectable proportion displays
+
+**Distribution Display**:
+A non-interactive primitive for showing a weighted visual distribution without editing controls.
+_Avoid_: Rendering Boundary Handles or drag behavior when the distribution is only informational
 
 **Distribution Segment**:
-One labeled visual portion inside a **Distribution Bar**.
+One labeled visual portion inside a **Distribution Bar** or **Distribution Display**.
 _Avoid_: Treating a segment as only a rendered color stop
 
 **Distribution Value**:

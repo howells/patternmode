@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.3.0
+
+### Minor Changes
+
+- Add `DistributionDisplay` for non-interactive weighted distribution visuals.
+
 ## 0.2.1
 
 ### Patch Changes

@@ -10,4 +10,6 @@ export {
 export {
 	DistributionBar,
 	type DistributionBarProps,
+	DistributionDisplay,
+	type DistributionDisplayProps,
 } from "./DistributionBarRoot";
