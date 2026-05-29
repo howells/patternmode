@@ -205,8 +205,34 @@
 
 	.patternmode-distribution-bar__segment {
 		background: var(--patternmode-distribution-segment-color);
+		border: 0;
 		height: 100%;
+		margin: 0;
 		min-width: 0;
+		padding: 0;
+		transition: width 480ms cubic-bezier(0.2, 0, 0, 1);
+	}
+
+	/* Selectable segments (DistributionDisplay with onSegmentSelect) */
+	button.patternmode-distribution-bar__segment {
+		cursor: pointer;
+	}
+
+	button.patternmode-distribution-bar__segment:focus-visible {
+		outline: 2px solid var(--accent, #315c4b);
+		outline-offset: -2px;
+		z-index: 2;
+	}
+
+	.patternmode-distribution-bar__segment[data-selected="true"] {
+		box-shadow: inset 0 0 0 2px var(--accent, #315c4b);
+		z-index: 2;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.patternmode-distribution-bar__segment {
+			transition: none;
+		}
 	}
 
 	.patternmode-distribution-bar__segment--empty {

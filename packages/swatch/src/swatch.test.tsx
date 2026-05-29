@@ -299,6 +299,34 @@ describe("DistributionBar", () => {
 		expect(screen.queryByRole("button")).not.toBeInTheDocument();
 	});
 
+	it("renders selectable segments and emits the chosen segment", async () => {
+		const user = userEvent.setup();
+		const onSegmentSelect = vi.fn();
+		render(
+			<DistributionDisplay
+				aria-label="Selectable finish distribution"
+				legend={false}
+				onSegmentSelect={onSegmentSelect}
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 60 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 40 },
+				]}
+				selectedSegmentId="evergreen"
+			/>,
+		);
+
+		const evergreen = screen.getByRole("button", { name: "Evergreen 60%" });
+		expect(evergreen).toHaveAttribute("aria-pressed", "true");
+		expect(evergreen).toHaveAttribute("data-selected", "true");
+
+		const saffron = screen.getByRole("button", { name: "Saffron 40%" });
+		expect(saffron).toHaveAttribute("aria-pressed", "false");
+		await user.click(saffron);
+		expect(onSegmentSelect).toHaveBeenCalledWith(
+			expect.objectContaining({ id: "saffron" }),
+		);
+	});
+
 	it("renders segment percentages for display legends", () => {
 		render(
 			<DistributionDisplay

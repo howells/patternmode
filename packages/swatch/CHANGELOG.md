@@ -1,5 +1,17 @@
 # @patternmode/swatch
 
+## 0.4.1
+
+### Patch Changes
+
+- `DistributionDisplay` renders the selectable variant as a semantic `fieldset` (implicit group role) instead of a `div[role=group]`.
+
+## 0.4.0
+
+### Minor Changes
+
+- `DistributionDisplay` gains optional segment selection: pass `onSegmentSelect` to render segments as buttons and `selectedSegmentId` to mark one with a ring. Segment width changes now animate (respecting `prefers-reduced-motion`), so distribution updates reveal smoothly.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -11,12 +11,20 @@ import {
 } from "./DistributionBarMath";
 
 export interface DistributionDisplayProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, "role"> {
+	extends Omit<HTMLAttributes<HTMLDivElement>, "role" | "onSelect"> {
 	assignedLabel?: string;
 	emptyLabel?: string;
 	emptyValue?: number;
 	legend?: "segments" | "summary" | false;
+	/**
+	 * When provided, each segment renders as a button and selecting one
+	 * invokes this callback. Pair with `selectedSegmentId` to mark a segment
+	 * as selected (renders a ring). Read-only by default.
+	 */
+	onSegmentSelect?: (segment: DistributionBarSegment) => void;
 	segments: DistributionBarSegment[];
+	/** Id of the selected segment — renders a ring on that segment. */
+	selectedSegmentId?: string;
 }
 
 export interface DistributionBarProps
@@ -34,10 +42,13 @@ export function DistributionDisplay({
 	emptyLabel = "unassigned",
 	emptyValue = 0,
 	legend = "segments",
+	onSegmentSelect,
 	segments,
+	selectedSegmentId,
 	...props
 }: DistributionDisplayProps) {
 	const total = getDistributionDisplayTotal(segments, emptyValue);
+	const interactive = Boolean(onSegmentSelect);
 	const accessibleLabel =
 		ariaLabel ??
 		getDistributionDisplayAccessibleLabel(
@@ -47,18 +58,14 @@ export function DistributionDisplay({
 			total,
 		);
 
-	return (
-		<div
-			{...props}
-			aria-label={accessibleLabel}
-			className={joinClassNames("patternmode-distribution-display", className)}
-			data-slot="distribution-display"
-			role="img"
-		>
+	const content = (
+		<>
 			<div className="patternmode-distribution-bar__track">
 				<DistributionSegments
 					emptyValue={emptyValue}
+					onSegmentSelect={onSegmentSelect}
 					segments={segments}
+					selectedSegmentId={selectedSegmentId}
 					total={total}
 				/>
 			</div>
@@ -78,6 +85,34 @@ export function DistributionDisplay({
 					total={total}
 				/>
 			) : null}
+		</>
+	);
+	const sharedClassName = joinClassNames(
+		"patternmode-distribution-display",
+		className,
+	);
+
+	// A selectable distribution is a group of buttons (fieldset → implicit
+	// group role); a read-only one is an image. Static elements (not a ternary
+	// role on one node) so a11y lint can verify aria support.
+	return interactive ? (
+		<fieldset
+			{...(props as HTMLAttributes<HTMLFieldSetElement>)}
+			aria-label={accessibleLabel}
+			className={sharedClassName}
+			data-slot="distribution-display"
+		>
+			{content}
+		</fieldset>
+	) : (
+		<div
+			{...props}
+			aria-label={accessibleLabel}
+			className={sharedClassName}
+			data-slot="distribution-display"
+			role="img"
+		>
+			{content}
 		</div>
 	);
 }
@@ -186,33 +221,56 @@ export function DistributionBar({
 
 interface DistributionSegmentsProps {
 	emptyValue?: number;
+	onSegmentSelect?: (segment: DistributionBarSegment) => void;
 	segments: DistributionBarSegment[];
+	selectedSegmentId?: string;
 	total: number;
 }
 
 function DistributionSegments({
 	emptyValue = 0,
+	onSegmentSelect,
 	segments,
+	selectedSegmentId,
 	total,
 }: DistributionSegmentsProps) {
 	return (
 		<div className="patternmode-distribution-bar__segments">
-			{segments.map((segment) => (
-				<div
-					aria-hidden="true"
-					className="patternmode-distribution-bar__segment"
-					key={segment.id}
-					style={
-						{
-							"--patternmode-distribution-segment-color": segment.color,
-							width:
-								total > 0
-									? `${(getRenderableDistributionValue(segment.value) / total) * 100}%`
-									: "0%",
-						} as CSSProperties
-					}
-				/>
-			))}
+			{segments.map((segment) => {
+				const segmentStyle = {
+					"--patternmode-distribution-segment-color": segment.color,
+					width:
+						total > 0
+							? `${(getRenderableDistributionValue(segment.value) / total) * 100}%`
+							: "0%",
+				} as CSSProperties;
+				const isSelected = selectedSegmentId === segment.id;
+
+				if (onSegmentSelect) {
+					return (
+						<button
+							aria-label={`${segment.label ?? segment.id} ${getDerivedDistributionPercentage(segment.value, total)}%`}
+							aria-pressed={isSelected}
+							className="patternmode-distribution-bar__segment"
+							data-selected={isSelected ? "true" : undefined}
+							key={segment.id}
+							onClick={() => onSegmentSelect(segment)}
+							style={segmentStyle}
+							type="button"
+						/>
+					);
+				}
+
+				return (
+					<div
+						aria-hidden="true"
+						className="patternmode-distribution-bar__segment"
+						data-selected={isSelected ? "true" : undefined}
+						key={segment.id}
+						style={segmentStyle}
+					/>
+				);
+			})}
 			{emptyValue > 0 ? (
 				<div
 					aria-hidden="true"
