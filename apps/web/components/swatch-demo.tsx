@@ -1,6 +1,10 @@
 "use client";
 
-import { Swatch } from "@patternmode/swatch";
+import {
+	DistributionBar,
+	type DistributionBarSegment,
+	Swatch,
+} from "@patternmode/swatch";
 import type { SVGProps } from "react";
 import { useState } from "react";
 
@@ -68,7 +72,11 @@ const gradients = [
 	},
 ] as const;
 
-const sizes = ["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"] as const;
+const startingDistribution: DistributionBarSegment[] = [
+	{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+	{ id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+	{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+];
 type FinishColor = (typeof finishes)[number]["color"];
 type PaletteName = (typeof palettes)[number]["name"];
 
@@ -90,6 +98,8 @@ export function SwatchDemo() {
 	const [selectedPalette, setSelectedPalette] = useState<PaletteName>(
 		palettes[0].name,
 	);
+	const [distribution, setDistribution] =
+		useState<DistributionBarSegment[]>(startingDistribution);
 
 	return (
 		<div className="swatch-demo">
@@ -228,17 +238,14 @@ export function SwatchDemo() {
 				</div>
 			</div>
 
-			{/* ⑥ Size scale */}
+			{/* ⑥ Adjustable distribution */}
 			<div className="swatch-demo-cell">
-				<div className="swatch-demo-label">Scale</div>
-				<div className="swatch-demo-scale">
-					{sizes.map((size) => (
-						<div className="swatch-demo-specimen" key={size}>
-							<Swatch aria-label={size} color="#315c4b" size={size} />
-							<span className="swatch-demo-mono">{size}</span>
-						</div>
-					))}
-				</div>
+				<div className="swatch-demo-label">Adjustable distribution</div>
+				<DistributionBar
+					aria-label="Adjust finish distribution"
+					onChange={setDistribution}
+					segments={distribution}
+				/>
 			</div>
 		</div>
 	);

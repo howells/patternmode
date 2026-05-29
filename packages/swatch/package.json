@@ -1,6 +1,6 @@
 {
 	"name": "@patternmode/swatch",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"private": false,
 	"description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
 	"type": "module",
@@ -57,7 +57,8 @@
 		"patternmode"
 	],
 	"dependencies": {
-		"@patternmode/system": "workspace:*"
+		"@patternmode/system": "workspace:*",
+		"motion": "^12.38.0"
 	},
 	"peerDependencies": {
 		"react": "^18.0.0 || ^19.0.0",

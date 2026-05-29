@@ -1,12 +1,8 @@
-import {
-	getObjectSizingStyle,
-	getSizeVariableStyle,
-	joinClassNames,
-} from "@patternmode/system";
+import { getObjectSizingStyle, joinClassNames } from "@patternmode/system";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { getSwatchColorsBackground, isLightColor } from "./SwatchColors";
-import type { SwatchProps } from "./SwatchTypes";
+import { getSwatchSizeVariableStyle, type SwatchProps } from "./SwatchTypes";
 
 export function Swatch({
 	"aria-label": ariaLabel,
@@ -21,6 +17,7 @@ export function Swatch({
 	objectPosition,
 	onRemove,
 	raised = false,
+	removeLabel,
 	role: _role,
 	selected = false,
 	shape = "circle",
@@ -37,9 +34,11 @@ export function Swatch({
 		(color && !background && !colorsBackground
 			? isLightColor(color as string)
 			: false);
+	const resolvedRemoveLabel =
+		removeLabel ?? (ariaLabel ? `Remove ${ariaLabel}` : "Remove");
 
 	const rootStyle = {
-		...getSizeVariableStyle(size, "--patternmode-swatch-size"),
+		...getSwatchSizeVariableStyle(size),
 		"--patternmode-swatch-fill": fill,
 		...style,
 	} as CSSProperties;
@@ -51,6 +50,57 @@ export function Swatch({
 	function handleRemove(event: MouseEvent<HTMLButtonElement>) {
 		event.stopPropagation();
 		onRemove?.();
+	}
+
+	const swatchContent = (
+		<>
+			<span aria-hidden="true" className="patternmode-swatch__fill" />
+			{children ? (
+				<span className="patternmode-swatch__media" style={mediaStyle}>
+					{children}
+				</span>
+			) : null}
+			<span aria-hidden="true" className="patternmode-swatch__scrim" />
+			{selected && Icon ? (
+				<span className="patternmode-swatch__icon">
+					<Icon aria-hidden="true" focusable="false" />
+				</span>
+			) : null}
+			{unavailable ? (
+				<span aria-hidden="true" className="patternmode-swatch__slash" />
+			) : null}
+		</>
+	);
+
+	if (onRemove) {
+		return (
+			<fieldset
+				{...props}
+				aria-label={ariaLabel}
+				className={joinClassNames("patternmode-swatch", className)}
+				data-raised={raised ? "true" : undefined}
+				data-selected={selected ? "true" : undefined}
+				data-shape={shape}
+				data-show-ring={showRing ? "true" : "false"}
+				data-size={size}
+				data-slot="swatch"
+				data-tone={light ? "light" : "dark"}
+				data-unavailable={unavailable ? "true" : undefined}
+				style={rootStyle}
+			>
+				{swatchContent}
+				<button
+					aria-label={resolvedRemoveLabel}
+					className="patternmode-swatch__remove"
+					onClick={handleRemove}
+					type="button"
+				>
+					<svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+						<path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
+					</svg>
+				</button>
+			</fieldset>
+		);
 	}
 
 	return (
@@ -69,33 +119,7 @@ export function Swatch({
 			role="img"
 			style={rootStyle}
 		>
-			<span aria-hidden="true" className="patternmode-swatch__fill" />
-			{children ? (
-				<span className="patternmode-swatch__media" style={mediaStyle}>
-					{children}
-				</span>
-			) : null}
-			<span aria-hidden="true" className="patternmode-swatch__scrim" />
-			{selected && Icon ? (
-				<span className="patternmode-swatch__icon">
-					<Icon aria-hidden="true" focusable="false" />
-				</span>
-			) : null}
-			{unavailable ? (
-				<span aria-hidden="true" className="patternmode-swatch__slash" />
-			) : null}
-			{onRemove ? (
-				<button
-					aria-label="Remove"
-					className="patternmode-swatch__remove"
-					onClick={handleRemove}
-					type="button"
-				>
-					<svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
-						<path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
-					</svg>
-				</button>
-			) : null}
+			{swatchContent}
 		</span>
 	);
 }

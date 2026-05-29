@@ -5,7 +5,18 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { SVGProps } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getSwatchColorsBackground, Swatch } from "./index";
+import {
+	DistributionBar,
+	getDistributionBoundaryPercent,
+	getDistributionTotal,
+	getSwatchColorsBackground,
+	moveDistributionBoundary,
+	removeDistributionSegment,
+	SWATCH_SIZES,
+	Swatch,
+	type SwatchSize,
+	updateDistributionSegment,
+} from "./index";
 
 function CheckIcon(props: SVGProps<SVGSVGElement>) {
 	return <svg data-testid="check-icon" {...props} />;
@@ -78,12 +89,12 @@ describe("Swatch", () => {
 			/>,
 		);
 
-		const swatch = screen.getByRole("img", { name: "Selected" });
+		const swatch = screen.getByRole("group", { name: "Selected" });
 		expect(swatch).toHaveAttribute("data-selected", "true");
 		expect(swatch).toHaveAttribute("data-tone", "light");
 		expect(screen.getByTestId("check-icon")).toBeInTheDocument();
 
-		await user.click(screen.getByRole("button", { name: "Remove" }));
+		await user.click(screen.getByRole("button", { name: "Remove Selected" }));
 
 		expect(onRemove).toHaveBeenCalledTimes(1);
 	});
@@ -102,5 +113,141 @@ describe("Swatch", () => {
 			objectPosition: "top left",
 			width: "100%",
 		});
+	});
+
+	it("supports extended swatch sizes through 7xl", () => {
+		expect(SWATCH_SIZES).toEqual([
+			"2xs",
+			"xs",
+			"sm",
+			"base",
+			"lg",
+			"xl",
+			"2xl",
+			"3xl",
+			"4xl",
+			"5xl",
+			"6xl",
+			"7xl",
+		]);
+
+		render(
+			<Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />,
+		);
+
+		expect(screen.getByRole("img", { name: "Huge" })).toHaveStyle({
+			"--patternmode-swatch-size": "6rem",
+		});
+	});
+});
+
+describe("DistributionBar math", () => {
+	it("moves a boundary while preserving the distribution total", () => {
+		const segments = [
+			{ id: "a", color: "#315c4b", value: 48 },
+			{ id: "b", color: "#d9a441", value: 30 },
+			{ id: "c", color: "#9b3d32", value: 22 },
+		];
+
+		const next = moveDistributionBoundary(segments, 0, 8, 6);
+
+		expect(next.map((segment) => segment.value)).toEqual([56, 22, 22]);
+		expect(getDistributionTotal(next)).toBe(100);
+		expect(getDistributionBoundaryPercent(next, 0)).toBe(56);
+	});
+
+	it("clamps a moved boundary so adjacent segments keep a minimum value", () => {
+		const segments = [
+			{ id: "a", color: "#315c4b", value: 48 },
+			{ id: "b", color: "#d9a441", value: 30 },
+			{ id: "c", color: "#9b3d32", value: 22 },
+		];
+
+		const next = moveDistributionBoundary(segments, 1, 40, 8);
+
+		expect(next.map((segment) => segment.value)).toEqual([48, 44, 8]);
+		expect(getDistributionTotal(next)).toBe(100);
+	});
+
+	it("removes a segment and redistributes its value across remaining segments", () => {
+		const segments = [
+			{ id: "a", color: "#315c4b", value: 50 },
+			{ id: "b", color: "#d9a441", value: 30 },
+			{ id: "c", color: "#9b3d32", value: 20 },
+		];
+
+		const next = removeDistributionSegment(segments, "b");
+
+		expect(next.map((segment) => segment.value)).toEqual([71.4, 28.6]);
+		expect(getDistributionTotal(next)).toBe(100);
+	});
+
+	it("updates a segment without changing the distribution values", () => {
+		const segments = [
+			{ id: "a", color: "#315c4b", label: "Evergreen", value: 48 },
+			{ id: "b", color: "#d9a441", label: "Saffron", value: 30 },
+		];
+
+		const next = updateDistributionSegment(segments, "a", {
+			color: "#e1ebe5",
+			id: "sage",
+			label: "Sage",
+		});
+
+		expect(next).toEqual([
+			{ id: "sage", color: "#e1ebe5", label: "Sage", value: 48 },
+			{ id: "b", color: "#d9a441", label: "Saffron", value: 30 },
+		]);
+	});
+});
+
+describe("DistributionBar", () => {
+	it("renders adjustable boundary handles and emits updated values", async () => {
+		const user = userEvent.setup();
+		const onChange = vi.fn();
+
+		render(
+			<DistributionBar
+				aria-label="Finish distribution"
+				onChange={onChange}
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+				]}
+			/>,
+		);
+
+		expect(
+			screen.getByRole("group", { name: "Finish distribution" }),
+		).toHaveClass("patternmode-distribution-bar");
+		expect(screen.getByText("Evergreen 48%")).toBeInTheDocument();
+		expect(screen.getByText("Saffron 30%")).toBeInTheDocument();
+
+		await user.keyboard("{Tab}");
+		await user.keyboard("{ArrowRight}");
+
+		expect(onChange).toHaveBeenCalledWith([
+			{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 49 },
+			{ id: "saffron", color: "#d9a441", label: "Saffron", value: 29 },
+			{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+		]);
+	});
+
+	it("renders derived percentages in the legend for weighted values", () => {
+		render(
+			<DistributionBar
+				aria-label="Weighted finish distribution"
+				segments={[
+					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 2 },
+					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
+					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
+				]}
+			/>,
+		);
+
+		expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();
+		expect(screen.getByText("Saffron 30%")).toBeInTheDocument();
+		expect(screen.getByText("Oxblood 50%")).toBeInTheDocument();
 	});
 });

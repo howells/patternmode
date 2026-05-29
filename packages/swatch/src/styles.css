@@ -5,12 +5,16 @@
 		--patternmode-swatch-radius: 999px;
 		align-items: center;
 		aspect-ratio: 1;
+		border: 0;
 		border-radius: var(--patternmode-swatch-radius);
 		box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
 		color: white;
 		display: inline-flex;
 		height: var(--patternmode-swatch-size);
 		justify-content: center;
+		margin: 0;
+		min-inline-size: 0;
+		padding: 0;
 		position: relative;
 		transition:
 			box-shadow 140ms ease,
@@ -106,32 +110,45 @@
 
 	.patternmode-swatch__remove {
 		align-items: center;
-		background: var(--ink, #1d1d1b);
+		background: transparent;
 		border: 0;
 		border-radius: 999px;
 		color: var(--surface, #fff);
 		cursor: pointer;
 		display: inline-flex;
-		height: 1.25rem;
+		height: 2.75rem;
 		justify-content: center;
 		opacity: 0;
 		padding: 0;
 		position: absolute;
-		right: -0.35rem;
-		top: -0.35rem;
-		transition:
-			background 140ms ease,
-			opacity 140ms ease;
+		right: -1.1rem;
+		top: -1.1rem;
+		transition: opacity 140ms ease;
+		width: 2.75rem;
+	}
+
+	.patternmode-swatch__remove::before {
+		background: var(--ink, #1d1d1b);
+		border-radius: inherit;
+		content: "";
+		height: 1.25rem;
+		position: absolute;
+		transition: background 140ms ease;
 		width: 1.25rem;
 	}
 
-	.patternmode-swatch:hover .patternmode-swatch__remove,
 	.patternmode-swatch__remove:focus-visible {
 		opacity: 1;
 	}
 
-	.patternmode-swatch__remove:hover {
-		background: var(--accent, #315c4b);
+	@media (hover: hover) {
+		.patternmode-swatch:hover .patternmode-swatch__remove {
+			opacity: 1;
+		}
+
+		.patternmode-swatch__remove:hover::before {
+			background: var(--accent, #315c4b);
+		}
 	}
 
 	.patternmode-swatch__remove:focus-visible {
@@ -145,5 +162,124 @@
 		stroke-linecap: round;
 		stroke-width: 2;
 		width: 0.8rem;
+		z-index: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.patternmode-swatch,
+		.patternmode-swatch__remove,
+		.patternmode-swatch__remove::before {
+			transition: none;
+		}
+	}
+
+	.patternmode-distribution-bar {
+		border: 0;
+		display: grid;
+		gap: 10px;
+		margin: 0;
+		min-inline-size: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	.patternmode-distribution-bar__track {
+		height: 40px;
+		position: relative;
+		touch-action: none;
+		width: 100%;
+	}
+
+	.patternmode-distribution-bar__segments {
+		border: 1px solid var(--border-soft, rgb(17 24 39 / 12%));
+		border-radius: 999px;
+		display: flex;
+		height: 100%;
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.patternmode-distribution-bar__segment {
+		background: var(--patternmode-distribution-segment-color);
+		height: 100%;
+		min-width: 0;
+	}
+
+	.patternmode-distribution-bar__segment
+		+ .patternmode-distribution-bar__segment {
+		box-shadow: inset 1px 0 0 rgb(255 255 255 / 60%);
+	}
+
+	.patternmode-distribution-bar__handle {
+		align-items: center;
+		background: transparent;
+		border: 0;
+		border-radius: 999px;
+		cursor: ew-resize;
+		display: inline-flex;
+		height: 2.75rem;
+		justify-content: center;
+		padding: 0;
+		position: absolute;
+		top: calc(50% - 1.375rem);
+		width: 2.75rem;
+		z-index: 1;
+	}
+
+	.patternmode-distribution-bar__handle::before {
+		background: var(--surface, #fff);
+		border-radius: 999px;
+		box-shadow:
+			0 1px 4px rgb(17 24 39 / 18%),
+			0 0 0 1px rgb(17 24 39 / 20%);
+		content: "";
+		height: 0.62rem;
+		transition:
+			box-shadow 120ms ease,
+			transform 120ms ease;
+		width: 0.62rem;
+	}
+
+	.patternmode-distribution-bar__handle:focus-visible {
+		outline: 2px solid var(--accent, #315c4b);
+		outline-offset: -4px;
+	}
+
+	@media (hover: hover) {
+		.patternmode-distribution-bar__handle:hover::before {
+			box-shadow:
+				0 5px 14px rgb(17 24 39 / 30%),
+				0 0 0 1px rgb(17 24 39 / 22%);
+			transform: scale(1.15);
+		}
+	}
+
+	.patternmode-distribution-bar__legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 14px;
+	}
+
+	.patternmode-distribution-bar__legend > span {
+		align-items: center;
+		color: var(--muted, #595853);
+		display: inline-flex;
+		font-size: 0.68rem;
+		font-weight: 500;
+		gap: 6px;
+	}
+
+	.patternmode-distribution-bar__swatch {
+		background: var(--patternmode-distribution-segment-color);
+		border-radius: 999px;
+		display: inline-flex;
+		height: 0.55rem;
+		width: 0.55rem;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.patternmode-distribution-bar__handle::before {
+			transition: none;
+		}
 	}
 }

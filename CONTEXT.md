@@ -270,8 +270,8 @@ Text outside a **Swatch** that names or describes its **Visual Value**.
 _Avoid_: Rendering names, token values, or contrast scores as core Swatch content
 
 **Swatch Remove Affordance**:
-An optional control that requests removal of the **Visual Value** represented by a **Swatch**.
-_Avoid_: Treating removal as collection management owned by Swatch
+An optional control inside a **Swatch** that requests removal of its represented **Visual Value**.
+_Avoid_: Treating removal as collection state management owned by Swatch
 
 **Selectable Swatch**:
 A **Swatch** composed inside a separate interactive selection control.
@@ -280,6 +280,38 @@ _Avoid_: Making Swatch own picker interaction or selection state
 **Swatch Representation**:
 The **Visual Value** or availability state shown by a **Swatch**.
 _Avoid_: Treating representation as editing, copying, sorting, or picker workflow
+
+**Distribution Bar**:
+A controlled editing primitive for arranging a weighted visual distribution.
+_Avoid_: Treating Distribution Bar as a Swatch
+
+**Distribution Segment**:
+One labeled visual portion inside a **Distribution Bar**.
+_Avoid_: Treating a segment as only a rendered color stop
+
+**Distribution Value**:
+The numeric weight assigned to a **Distribution Segment** relative to the bar's total.
+_Avoid_: Calling raw values percentages or assuming values must be persisted on a 0-100 scale
+
+**Derived Distribution Percentage**:
+The displayed percentage calculated from a **Distribution Value** and the total of all segment values.
+_Avoid_: Persisting derived percentages as if they were canonical distribution values
+
+**Distribution Legend**:
+The built-in text summary of **Distribution Segments** and their **Derived Distribution Percentages**.
+_Avoid_: Rendering raw distribution values as percentages
+
+**Boundary Handle**:
+The draggable control between adjacent **Distribution Segments**.
+_Avoid_: Treating handles as independent values rather than controls over adjacent segments
+
+**Distribution Segment Removal**:
+A helper-level operation that removes a **Distribution Segment** and redistributes its **Distribution Value** across remaining segments.
+_Avoid_: Treating segment removal as behavior owned by Distribution Bar itself
+
+**Distribution Segment Metadata Update**:
+A helper-level operation that changes a **Distribution Segment's** identity, label, or visual representation without changing its **Distribution Value**.
+_Avoid_: Mixing metadata edits with distribution value changes
 
 ### ScrollFrame
 

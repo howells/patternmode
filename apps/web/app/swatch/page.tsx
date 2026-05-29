@@ -38,7 +38,7 @@ const swatchApi: ApiSection[] = [
 			},
 			{
 				name: "size",
-				type: '"2xs" | "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl"',
+				type: '"2xs" | "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl"',
 				defaultValue: '"base"',
 				description: "Sets the swatch dimensions.",
 			},
@@ -53,24 +53,97 @@ const swatchApi: ApiSection[] = [
 				type: "() => void",
 				description: "Adds a hover/focus remove affordance.",
 			},
+			{
+				name: "removeLabel",
+				type: "string",
+				description:
+					"Accessible label for the remove affordance. Defaults to the swatch label.",
+			},
+		],
+	},
+	{
+		name: "DistributionBar",
+		description:
+			"Sibling primitive for editing weighted visual distributions with draggable boundary handles.",
+		props: [
+			{
+				name: "segments",
+				type: "Array<{ id: string; color: string; label?: string; value: number }>",
+				description:
+					"Segment weights and colors. Values render proportionally, and the legend shows derived percentages.",
+			},
+			{
+				name: "onChange",
+				type: "(segments) => void",
+				description:
+					"Called with the next segment values after drag or keyboard adjustment.",
+			},
+			{
+				name: "minValue",
+				type: "number",
+				defaultValue: "4",
+				description:
+					"Smallest value each adjacent segment can be dragged down to.",
+			},
+			{
+				name: "step",
+				type: "number",
+				defaultValue: "1",
+				description: "Keyboard adjustment amount for ArrowLeft and ArrowRight.",
+			},
+			{
+				name: "moveDistributionBoundary",
+				type: "(segments, boundaryIndex, deltaValue, minValue) => segments",
+				description:
+					"Helper for external controls that need to move a boundary without dragging.",
+			},
+			{
+				name: "updateDistributionSegment",
+				type: "(segments, id, update) => segments",
+				description:
+					"Updates segment metadata such as id, color, or label while preserving its current value.",
+			},
+			{
+				name: "removeDistributionSegment",
+				type: "(segments, id) => segments",
+				description:
+					"Removes a segment and redistributes its value across the remaining segments.",
+			},
 		],
 	},
 ];
 
-const swatchExample = `import { Swatch } from "@patternmode/swatch";
+const swatchExample = `import {
+  DistributionBar,
+  Swatch,
+} from "@patternmode/swatch";
 import "@patternmode/swatch/styles.css";
+import { useState } from "react";
 
 function PalettePreview() {
+  const [segments, setSegments] = useState([
+    { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+    { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+    { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+  ]);
+
   return (
-    <Swatch
-      aria-label="Palette"
-      colors={[
-        { color: "#315c4b", ratio: 60 },
-        { color: "#e1ebe5", ratio: 40 },
-      ]}
-      shape="pill"
-      size="2xl"
-    />
+    <>
+      <Swatch
+        aria-label="Palette"
+        colors={[
+          { color: "#315c4b", ratio: 60 },
+          { color: "#e1ebe5", ratio: 40 },
+        ]}
+        shape="pill"
+        size="2xl"
+      />
+      <DistributionBar
+        aria-label="Finish distribution"
+        onChange={setSegments}
+        segments={segments}
+      />
+    </>
   );
 }`;
 

@@ -929,7 +929,7 @@ button {
 	border-radius: var(--radius);
 	display: grid;
 	gap: 1px;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	left: -120px;
 	overflow: hidden;
 	position: relative;
@@ -1035,13 +1035,6 @@ button {
 	font-weight: 500;
 }
 
-.swatch-demo-mono {
-	color: var(--quiet);
-	font-family: var(--mono);
-	font-size: 0.62rem;
-	font-weight: 400;
-}
-
 .swatch-demo-distribution {
 	display: flex;
 	flex-direction: column;
@@ -1093,12 +1086,6 @@ button {
 	color: var(--muted);
 	font-size: 0.68rem;
 	font-weight: 500;
-}
-
-.swatch-demo-scale {
-	align-items: flex-end;
-	display: flex;
-	gap: 16px;
 }
 
 @media (max-width: 768px) {
