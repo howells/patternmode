@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.6.0
+
+### Minor Changes
+
+- `DistributionBar` accepts a `legend` prop (`"segments" | false`) to hide the per-segment legend, matching `DistributionDisplay`.
+
 ## 0.5.0
 
 ### Minor Changes

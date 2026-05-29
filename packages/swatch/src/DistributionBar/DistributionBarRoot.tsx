@@ -29,6 +29,8 @@ export interface DistributionDisplayProps
 
 export interface DistributionBarProps
 	extends Omit<HTMLAttributes<HTMLFieldSetElement>, "onChange"> {
+	/** Show the per-segment legend below the bar, or hide it. Default "segments". */
+	legend?: "segments" | false;
 	minValue?: number;
 	onChange?: (segments: DistributionBarSegment[]) => void;
 	segments: DistributionBarSegment[];
@@ -120,6 +122,7 @@ export function DistributionDisplay({
 export function DistributionBar({
 	"aria-label": ariaLabel,
 	className,
+	legend = "segments",
 	minValue = 4,
 	onChange,
 	segments,
@@ -214,7 +217,9 @@ export function DistributionBar({
 					);
 				})}
 			</div>
-			<DistributionSegmentLegend segments={segments} total={total} />
+			{legend === "segments" ? (
+				<DistributionSegmentLegend segments={segments} total={total} />
+			) : null}
 		</fieldset>
 	);
 }
