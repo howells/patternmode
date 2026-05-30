@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.7.1
+
+### Patch Changes
+
+- Fix `block` shape collapsing to zero width: it now fills its container (display:block, 100% width/height) so callers can size it with a single dimension (e.g. a height utility) or a flex utility.
+
 ## 0.7.0
 
 ### Minor Changes

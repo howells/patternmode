@@ -45,8 +45,9 @@
 	.patternmode-swatch[data-shape="block"] {
 		--patternmode-swatch-radius: 0.25rem;
 		aspect-ratio: auto;
-		height: auto;
-		width: auto;
+		display: block;
+		height: 100%;
+		width: 100%;
 	}
 
 	.patternmode-swatch[data-raised="true"] {
