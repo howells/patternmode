@@ -67,6 +67,12 @@
 		opacity: 0.5;
 	}
 
+	/* Flat: a precise color block for data viz — no shadow (scrim is omitted
+	   from the DOM by the component) so the fill reads as the exact value. */
+	.patternmode-swatch[data-flat="true"] {
+		box-shadow: none;
+	}
+
 	.patternmode-swatch__fill,
 	.patternmode-swatch__media,
 	.patternmode-swatch__scrim {

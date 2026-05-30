@@ -11,6 +11,7 @@ export function Swatch({
 	className,
 	color,
 	colors,
+	flat = false,
 	icon: Icon,
 	isLight,
 	objectFit,
@@ -60,7 +61,9 @@ export function Swatch({
 					{children}
 				</span>
 			) : null}
-			<span aria-hidden="true" className="patternmode-swatch__scrim" />
+			{flat ? null : (
+				<span aria-hidden="true" className="patternmode-swatch__scrim" />
+			)}
 			{selected && Icon ? (
 				<span className="patternmode-swatch__icon">
 					<Icon aria-hidden="true" focusable="false" />
@@ -78,6 +81,7 @@ export function Swatch({
 				{...props}
 				aria-label={ariaLabel}
 				className={joinClassNames("patternmode-swatch", className)}
+				data-flat={flat ? "true" : undefined}
 				data-raised={raised ? "true" : undefined}
 				data-selected={selected ? "true" : undefined}
 				data-shape={shape}
@@ -108,6 +112,7 @@ export function Swatch({
 			{...props}
 			aria-label={ariaLabel}
 			className={joinClassNames("patternmode-swatch", className)}
+			data-flat={flat ? "true" : undefined}
 			data-raised={raised ? "true" : undefined}
 			data-selected={selected ? "true" : undefined}
 			data-shape={shape}

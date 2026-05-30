@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.8.0
+
+### Minor Changes
+
+- `Swatch` gains a `flat` prop that renders a precise color block — no scrim gradient and no drop shadow — for data-visualisation cells where the fill must read as the exact color value.
+
 ## 0.7.1
 
 ### Patch Changes

@@ -41,6 +41,12 @@ export interface SwatchProps extends HTMLAttributes<HTMLElement> {
 	background?: string;
 	color?: string;
 	colors?: SwatchColorStop[];
+	/**
+	 * Render a precise, flat color block: no top-to-bottom scrim gradient and
+	 * no drop shadow. Use for data visualisation where the fill must read as
+	 * the exact color value.
+	 */
+	flat?: boolean;
 	icon?: SwatchIcon;
 	isLight?: boolean;
 	objectFit?: ObjectFit;

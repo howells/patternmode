@@ -222,6 +222,15 @@ describe("Swatch", () => {
 			"block",
 		);
 	});
+
+	it("omits the scrim for a flat swatch so the fill reads as the exact color", () => {
+		const { container } = render(
+			<Swatch aria-label="Cell" color="#315c4b" flat shape="block" />,
+		);
+		const swatch = screen.getByRole("img", { name: "Cell" });
+		expect(swatch).toHaveAttribute("data-flat", "true");
+		expect(container.querySelector(".patternmode-swatch__scrim")).toBeNull();
+	});
 });
 
 describe("DistributionBar math", () => {
