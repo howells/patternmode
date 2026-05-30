@@ -38,6 +38,17 @@
 		--patternmode-swatch-radius: 7px;
 	}
 
+	/* Block: an unconstrained swatch that fills whatever box the caller gives
+	   it (full-width rows, flex band segments, hero fills). The caller sizes it
+	   via className/parent (e.g. h-7 w-full, flex-1 h-full) and may set the
+	   corner radius with a `rounded-*` utility or --patternmode-swatch-radius. */
+	.patternmode-swatch[data-shape="block"] {
+		--patternmode-swatch-radius: 0.25rem;
+		aspect-ratio: auto;
+		height: auto;
+		width: auto;
+	}
+
 	.patternmode-swatch[data-raised="true"] {
 		box-shadow:
 			0 1px 2px rgb(17 24 39 / 10%),

@@ -18,6 +18,7 @@ import {
 	getSwatchColorsBackground,
 	moveDistributionBoundary,
 	removeDistributionSegment,
+	SWATCH_SHAPES,
 	SWATCH_SIZES,
 	Swatch,
 	type SwatchSize,
@@ -211,6 +212,15 @@ describe("Swatch", () => {
 		expect(screen.getByRole("img", { name: "Huge" })).toHaveStyle({
 			"--patternmode-swatch-size": "6rem",
 		});
+	});
+
+	it("renders a block-shaped swatch that fills its container", () => {
+		expect(SWATCH_SHAPES).toContain("block");
+		render(<Swatch aria-label="Band" color="#315c4b" shape="block" />);
+		expect(screen.getByRole("img", { name: "Band" })).toHaveAttribute(
+			"data-shape",
+			"block",
+		);
 	});
 });
 

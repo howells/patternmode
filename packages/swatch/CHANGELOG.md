@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.7.0
+
+### Minor Changes
+
+- `Swatch` gains a `block` shape — an unconstrained swatch that fills the box the caller gives it (full-width rows, flex band segments, hero fills), with size and corner radius controlled via className/parent.
+
 ## 0.6.0
 
 ### Minor Changes

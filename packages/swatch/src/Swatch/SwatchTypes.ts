@@ -21,7 +21,7 @@ export const SWATCH_SIZE_VALUES = {
 	"7xl": "6rem",
 } as const satisfies Record<SwatchSize, string>;
 
-export const SWATCH_SHAPES = ["circle", "pill", "square"] as const;
+export const SWATCH_SHAPES = ["circle", "pill", "square", "block"] as const;
 
 export type SwatchSize = (typeof SWATCH_SIZES)[number];
 export type SwatchShape = (typeof SWATCH_SHAPES)[number];
