@@ -293,17 +293,41 @@ _Avoid_: Making Swatch own picker interaction or selection state
 The **Visual Value** or availability state shown by a **Swatch**.
 _Avoid_: Treating representation as editing, copying, sorting, or picker workflow
 
+**Swatch Shape**:
+The silhouette or layout constraint applied to a **Swatch Representation**.
+_Avoid_: Treating shape as a kind of **Visual Value**
+
+**Block Swatch**:
+A **Swatch Shape** that fills bounds supplied by the surrounding layout.
+_Avoid_: Treating block as a separate **Visual Value** type
+
+**Flat Swatch**:
+A **Swatch** rendered without decorative shadow or scrim so its fill reads as the exact **Visual Value**.
+_Avoid_: Using flat as a general styling synonym for plain, small, or low-emphasis
+
+**Swatch Texture**:
+A rendering treatment that changes how a **Visual Value** is composed inside a **Swatch**.
+_Avoid_: Using texture to encode quantitative palette proportions
+
+**Atmosphere Texture**:
+A **Swatch Texture** that blends supplied colors as soft overlapping pools.
+_Avoid_: Using atmosphere when ratios must communicate palette proportions
+
 **Distribution Bar**:
 A controlled editing primitive for arranging a weighted visual distribution.
 _Avoid_: Using Distribution Bar for read-only or selectable proportion displays
 
 **Distribution Display**:
-A non-interactive primitive for showing a weighted visual distribution without editing controls.
-_Avoid_: Rendering Boundary Handles or drag behavior when the distribution is only informational
+A non-editing primitive for showing a weighted visual distribution.
+_Avoid_: Rendering Boundary Handles or drag behavior
 
 **Distribution Segment**:
 One labeled visual portion inside a **Distribution Bar** or **Distribution Display**.
 _Avoid_: Treating a segment as only a rendered color stop
+
+**Selectable Distribution Display**:
+A **Distribution Display** whose **Distribution Segments** can be chosen by a parent control.
+_Avoid_: Treating segment selection as distribution value editing
 
 **Distribution Value**:
 The numeric weight assigned to a **Distribution Segment** relative to the bar's total.
@@ -636,11 +660,17 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - An **Unavailable Swatch** communicates availability only; parent controls own disabled interaction semantics.
 - An **Empty Swatch** communicates absence; it is distinct from an **Unavailable Swatch**.
 - A **Swatch Label** belongs beside or around a **Swatch**, not inside the core representation.
-- Swatch shape is visual; it does not define the kind of **Visual Value** represented.
+- **Swatch Shape** is visual; it does not define the kind of **Visual Value** represented.
+- A **Block Swatch** fills the caller's layout bounds; the surrounding layout owns its dimensions.
+- A **Flat Swatch** is for exact color reading, especially data visualisation; it is not a general elevation or density state.
+- A **Swatch Texture** changes representation fidelity without changing the underlying **Visual Value**.
+- An **Atmosphere Texture** is qualitative color blending; use **Weighted Palette Swatch** when ratios must communicate proportions.
 - A **Selectable Swatch** uses Swatch for representation while the parent control owns selection behavior.
 - Swatch extensions should improve **Swatch Representation**, not own surrounding workflows.
 - A **Swatch Remove Affordance** requests removal only; consumer code owns whether and how the collection changes.
 - A **Boundary Handle** performs **Live Distribution Adjustment** so adjacent **Distribution Segments** resize during drag, not only after release.
+- A **Distribution Display** may be read-only or selectable, but it does not perform **Live Distribution Adjustment**.
+- A **Selectable Distribution Display** reports segment choice to its parent; the parent owns selected segment state.
 
 ### ScrollFrame
 
@@ -959,6 +989,9 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - "Swatch" could imply a picker control — resolved: **Swatch** is a representation primitive; selection behavior belongs to a parent control.
 - "Extension" could mean adding workflow features — resolved: extend **Swatch Representation** fidelity rather than copying, editing, sorting, or picker behavior.
 - "Drag adjustment" could imply commit-only updates after release — resolved: use **Live Distribution Adjustment** for continuous segment resizing while a **Boundary Handle** is dragged.
+- "Interactive distribution" could mean segment selection or value editing — resolved: **Distribution Bar** edits values; **Selectable Distribution Display** only chooses a segment.
+- "Flat" could mean generally plain or low emphasis — resolved: **Flat Swatch** means exact-color rendering without decorative shadow or scrim.
+- "Atmosphere" could be mistaken for a **Weighted Palette Swatch** — resolved: **Atmosphere Texture** is qualitative blending, not ratio communication.
 
 ### ScrollFrame
 

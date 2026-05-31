@@ -32,9 +32,36 @@ const swatchApi: ApiSection[] = [
 			},
 			{
 				name: "shape",
-				type: '"circle" | "pill" | "square"',
+				type: '"circle" | "pill" | "square" | "block"',
 				defaultValue: '"circle"',
 				description: "Controls the rendered silhouette.",
+			},
+			{
+				name: "flat",
+				type: "boolean",
+				defaultValue: "false",
+				description:
+					"Removes decorative shadow and scrim so the fill reads as an exact visual value.",
+			},
+			{
+				name: "texture",
+				type: '"atmosphere"',
+				description:
+					"Renders supplied colors as a qualitative atmosphere texture instead of a weighted palette.",
+			},
+			{
+				name: "density",
+				type: "number",
+				defaultValue: "0.5",
+				description:
+					"Controls how tight or diffuse atmosphere texture pools appear.",
+			},
+			{
+				name: "gravity",
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Shifts atmosphere texture pools vertically without changing the visual value.",
 			},
 			{
 				name: "size",
@@ -92,6 +119,13 @@ const swatchApi: ApiSection[] = [
 				description: "Keyboard adjustment amount for ArrowLeft and ArrowRight.",
 			},
 			{
+				name: "legend",
+				type: '"segments" | false',
+				defaultValue: '"segments"',
+				description:
+					"Shows or hides the per-segment derived percentage legend.",
+			},
+			{
 				name: "moveDistributionBoundary",
 				type: "(segments, boundaryIndex, deltaValue, minValue) => segments",
 				description:
@@ -114,7 +148,7 @@ const swatchApi: ApiSection[] = [
 	{
 		name: "DistributionDisplay",
 		description:
-			"Non-interactive distribution primitive for read-only weighted visual displays.",
+			"Non-editing distribution primitive for read-only or selectable weighted visual displays.",
 		props: [
 			{
 				name: "segments",
@@ -135,6 +169,18 @@ const swatchApi: ApiSection[] = [
 				defaultValue: '"segments"',
 				description:
 					"Controls whether the legend lists each segment, summarizes assigned/unassigned weight, or is hidden.",
+			},
+			{
+				name: "onSegmentSelect",
+				type: "(segment) => void",
+				description:
+					"Renders segments as buttons and reports which segment the parent selected.",
+			},
+			{
+				name: "selectedSegmentId",
+				type: "string",
+				description:
+					"Marks the selected segment when DistributionDisplay is used for selection.",
 			},
 		],
 	},

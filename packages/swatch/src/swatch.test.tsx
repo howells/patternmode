@@ -15,6 +15,7 @@ import {
 	DistributionDisplay,
 	getDistributionBoundaryPercent,
 	getDistributionTotal,
+	getSwatchAtmosphereBackground,
 	getSwatchColorsBackground,
 	moveDistributionBoundary,
 	removeDistributionSegment,
@@ -221,6 +222,43 @@ describe("Swatch", () => {
 			"data-shape",
 			"block",
 		);
+	});
+
+	it("builds a layered radial atmosphere from color stops", () => {
+		expect(
+			getSwatchAtmosphereBackground(["#315c4b", "#d9a441", "#9b3d32"]),
+		).toBe(
+			"radial-gradient(ellipse at 30% 42%, #315c4bcc 0%, transparent 58%), " +
+				"radial-gradient(ellipse at 72% 58%, #d9a44199 0%, transparent 53%), " +
+				"radial-gradient(ellipse at 45% 65%, #9b3d3277 0%, transparent 66%)",
+		);
+	});
+
+	it("shifts atmosphere pools with density and gravity", () => {
+		const background = getSwatchAtmosphereBackground(["#315c4b"], {
+			density: 1,
+			gravity: 1,
+		});
+		// density 1 → tight reach (50%); gravity 1 with a -1 pool sign → 42 - 8.
+		expect(background).toBe(
+			"radial-gradient(ellipse at 30% 34%, #315c4bcc 0%, transparent 50%)",
+		);
+	});
+
+	it("renders an atmosphere texture as a radial-gradient fill", () => {
+		render(
+			<Swatch
+				aria-label="Atmosphere"
+				colors={["#315c4b", "#d9a441", "#9b3d32"]}
+				texture="atmosphere"
+			/>,
+		);
+
+		const swatch = screen.getByRole("img", { name: "Atmosphere" });
+		const fill = swatch.style.getPropertyValue("--patternmode-swatch-fill");
+		expect(fill).toContain("radial-gradient(ellipse at 30% 42%, #315c4bcc");
+		expect(swatch).not.toHaveAttribute("density");
+		expect(swatch).not.toHaveAttribute("gravity");
 	});
 
 	it("omits the scrim for a flat swatch so the fill reads as the exact color", () => {

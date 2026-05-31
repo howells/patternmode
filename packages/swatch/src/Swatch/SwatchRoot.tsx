@@ -1,6 +1,7 @@
 import { getObjectSizingStyle, joinClassNames } from "@patternmode/system";
 import type { CSSProperties, MouseEvent } from "react";
 
+import { getSwatchAtmosphereBackground } from "./SwatchAtmosphere";
 import { getSwatchColorsBackground, isLightColor } from "./SwatchColors";
 import { getSwatchSizeVariableStyle, type SwatchProps } from "./SwatchTypes";
 
@@ -11,7 +12,9 @@ export function Swatch({
 	className,
 	color,
 	colors,
+	density,
 	flat = false,
+	gravity,
 	icon: Icon,
 	isLight,
 	objectFit,
@@ -25,11 +28,16 @@ export function Swatch({
 	showRing = true,
 	size = "base",
 	style,
+	texture,
 	unavailable = false,
 	...props
 }: SwatchProps) {
 	const colorsBackground = getSwatchColorsBackground(colors);
-	const fill = background ?? colorsBackground ?? color;
+	const atmosphereBackground =
+		texture === "atmosphere"
+			? getSwatchAtmosphereBackground(colors, { density, gravity })
+			: undefined;
+	const fill = background ?? atmosphereBackground ?? colorsBackground ?? color;
 	const light =
 		isLight ??
 		(color && !background && !colorsBackground

@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.9.0
+
+### Minor Changes
+
+- `Swatch` gains an `atmosphere` texture for qualitative color blending, with density and gravity controls for shaping the color pools.
+
 ## 0.8.0
 
 ### Minor Changes
