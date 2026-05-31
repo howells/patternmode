@@ -26,18 +26,18 @@ describe("Aperto", () => {
     render(<Aperto media={media} />);
 
     await user.click(
-      screen.getByRole("button", { name: "Open Morning ridge" }),
+      screen.getByRole("button", { name: "Open Morning ridge" })
     );
 
     expect(
-      screen.getByRole("dialog", { name: "Morning ridge" }),
+      screen.getByRole("dialog", { name: "Morning ridge" })
     ).toBeInTheDocument();
     expect(screen.getByRole("img", { name: media.alt })).toHaveAttribute(
       "src",
-      media.src,
+      media.src
     );
     expect(
-      screen.getByText("A warm sunrise over a quiet mountain ridge."),
+      screen.getByText("A warm sunrise over a quiet mountain ridge.")
     ).toBeInTheDocument();
   });
 
@@ -64,18 +64,18 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(
-      screen.getByRole("button", { name: "Open Soft afternoon" }),
+      screen.getByRole("button", { name: "Open Soft afternoon" })
     );
 
     expect(
-      screen.getByRole("dialog", { name: "Soft afternoon" }),
+      screen.getByRole("dialog", { name: "Soft afternoon" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("img", { name: "A quiet reading nook" }),
+      screen.getByRole("img", { name: "A quiet reading nook" })
     ).toHaveAttribute("src", "/second-large.jpg");
   });
 
@@ -100,14 +100,14 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
     await user.click(screen.getByRole("button", { name: "Next media" }));
 
     expect(
-      screen.getByRole("dialog", { name: "Soft afternoon" }),
+      screen.getByRole("dialog", { name: "Soft afternoon" })
     ).toBeInTheDocument();
     expect(screen.getByText("2 / 2")).toBeInTheDocument();
   });
@@ -133,7 +133,7 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -141,13 +141,13 @@ describe("Aperto", () => {
     expect(
       screen
         .getByRole("button", { name: "Previous media" })
-        .querySelector("svg"),
+        .querySelector("svg")
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Next media" }).querySelector("svg"),
+      screen.getByRole("button", { name: "Next media" }).querySelector("svg")
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Close" }).querySelector("svg"),
+      screen.getByRole("button", { name: "Close" }).querySelector("svg")
     ).toBeInTheDocument();
   });
 
@@ -172,7 +172,7 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -180,7 +180,7 @@ describe("Aperto", () => {
     expect(
       screen
         .getByRole("img", { name: "Ceramic vessels on linen" })
-        .closest('[data-slot="aperto-media-stage"]'),
+        .closest('[data-slot="aperto-media-stage"]')
     ).toHaveAttribute("data-navigation-direction", "0");
 
     await user.click(screen.getByRole("button", { name: "Next media" }));
@@ -188,7 +188,7 @@ describe("Aperto", () => {
     expect(
       screen
         .getByRole("img", { name: "A quiet reading nook" })
-        .closest('[data-slot="aperto-media-stage"]'),
+        .closest('[data-slot="aperto-media-stage"]')
     ).toHaveAttribute("data-navigation-direction", "1");
 
     await user.click(screen.getByRole("button", { name: "Previous media" }));
@@ -196,7 +196,7 @@ describe("Aperto", () => {
     expect(
       screen
         .getByRole("img", { name: "Ceramic vessels on linen" })
-        .closest('[data-slot="aperto-media-stage"]'),
+        .closest('[data-slot="aperto-media-stage"]')
     ).toHaveAttribute("data-navigation-direction", "-1");
   });
 
@@ -221,7 +221,7 @@ describe("Aperto", () => {
       <Aperto.Group media={media} navigationMotion="snap">
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -230,7 +230,7 @@ describe("Aperto", () => {
     expect(
       screen
         .getByRole("img", { name: "A quiet reading nook" })
-        .closest('[data-slot="aperto-media-stage"]'),
+        .closest('[data-slot="aperto-media-stage"]')
     ).toHaveAttribute("data-navigation-motion", "snap");
   });
 
@@ -255,7 +255,7 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -264,14 +264,14 @@ describe("Aperto", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(
-      screen.getByRole("dialog", { name: "Soft afternoon" }),
+      screen.getByRole("dialog", { name: "Soft afternoon" })
     ).toBeInTheDocument();
     expect(screen.getByText("2 / 2")).toBeInTheDocument();
 
     await user.keyboard("{ArrowLeft}");
 
     expect(
-      screen.getByRole("dialog", { name: "Studio table" }),
+      screen.getByRole("dialog", { name: "Studio table" })
     ).toBeInTheDocument();
     expect(screen.getByText("1 / 2")).toBeInTheDocument();
   });
@@ -297,21 +297,21 @@ describe("Aperto", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
     const openedContent = document.querySelector(
-      '[data-slot="aperto-content"]',
+      '[data-slot="aperto-content"]'
     );
 
     await user.click(screen.getByRole("button", { name: "Next media" }));
 
     expect(document.querySelector('[data-slot="aperto-content"]')).toBe(
-      openedContent,
+      openedContent
     );
     expect(
-      screen.getByRole("dialog", { name: "Soft afternoon" }),
+      screen.getByRole("dialog", { name: "Soft afternoon" })
     ).toBeInTheDocument();
   });
 
@@ -336,25 +336,25 @@ describe("Aperto", () => {
             data-variant={variant}
           />
         )}
-      />,
+      />
     );
 
     expect(
-      screen.getByRole("button", { name: "Open Oak and stone" }),
+      screen.getByRole("button", { name: "Open Oak and stone" })
     ).toBeInTheDocument();
     expect(
-      container.querySelector('[data-variant="thumbnail"]'),
+      container.querySelector('[data-variant="thumbnail"]')
     ).toBeInTheDocument();
 
     await user.click(
-      screen.getByRole("button", { name: "Open Oak and stone" }),
+      screen.getByRole("button", { name: "Open Oak and stone" })
     );
 
     expect(
-      screen.getByRole("img", { name: "Minimal kitchen shelf" }),
+      screen.getByRole("img", { name: "Minimal kitchen shelf" })
     ).toHaveAttribute("data-rendered-by", "custom-image");
     expect(
-      screen.getByRole("img", { name: "Minimal kitchen shelf" }),
+      screen.getByRole("img", { name: "Minimal kitchen shelf" })
     ).toHaveAttribute("data-variant", "expanded");
   });
 
@@ -372,16 +372,16 @@ describe("Aperto", () => {
     render(<Aperto media={media} />);
 
     await user.click(
-      screen.getByRole("button", { name: "Open Quiet room study" }),
+      screen.getByRole("button", { name: "Open Quiet room study" })
     );
 
     expect(screen.getByLabelText("A slow interior pan")).toHaveAttribute(
       "src",
-      "/film.mp4",
+      "/film.mp4"
     );
     expect(screen.getByLabelText("A slow interior pan")).toHaveAttribute(
       "poster",
-      "/film-poster.jpg",
+      "/film-poster.jpg"
     );
   });
 
@@ -411,14 +411,14 @@ describe("Aperto", () => {
       >
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
     expect(changes).toEqual([0]);
     expect(
-      screen.getByRole("dialog", { name: "Soft afternoon" }),
+      screen.getByRole("dialog", { name: "Soft afternoon" })
     ).toBeInTheDocument();
   });
 });

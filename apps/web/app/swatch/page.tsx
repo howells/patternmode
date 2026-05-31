@@ -6,6 +6,7 @@ import {
   DocsBlock,
 } from "@howells/site-ui";
 import type { Metadata } from "next";
+
 import { SwatchDemo } from "@/components/swatch-demo";
 
 export const metadata: Metadata = {

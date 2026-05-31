@@ -1,10 +1,4 @@
-export {
-  CardStack,
-  Deck,
-  DeckCard,
-  DeckEmpty,
-  DeckRoot,
-} from "./deck";
+export { CardStack, Deck, DeckCard, DeckEmpty, DeckRoot } from "./deck";
 export type { AdvanceDecision, AdvanceDecisionInput } from "./logic";
 export {
   getAdvanceDecision,

@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
+
 import { ScrollFrameNext, ScrollFramePrevious } from "./ScrollFrameControls";
 import { ScrollFrameFade } from "./ScrollFrameFade";
 import { ScrollFrameRoot } from "./ScrollFrameRoot";
@@ -34,7 +35,7 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
       viewportStyle,
       ...props
     },
-    ref,
+    ref
   ) {
     const controlConfig = typeof controls === "object" ? controls : {};
     const controlsEnabled = controls !== false;
@@ -75,8 +76,8 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
                 edge={edge}
                 key={`${axis}-${edge}`}
               />
-            ) : null,
-          ),
+            ) : null
+          )
         )}
         {supportsAxis(axes, "vertical") ? (
           <ScrollFrameScrollbar orientation="vertical">
@@ -94,7 +95,7 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
         ) : null}
       </ScrollFrameRoot>
     );
-  },
+  }
 );
 
 const ScrollFrame = Object.assign(ScrollFrameBase, {

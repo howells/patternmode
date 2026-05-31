@@ -108,7 +108,9 @@ function App() {
 function OpenSettingsButton() {
   const { open } = useSheet();
   return (
-    <button onClick={() => open("settings", "settings-root", { tab: "billing" })}>
+    <button
+      onClick={() => open("settings", "settings-root", { tab: "billing" })}
+    >
       Open settings
     </button>
   );

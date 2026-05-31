@@ -1,12 +1,20 @@
 {
   "name": "@patternmode/scrollframe",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "A Radix-based scroll frame with measured fades and movement controls.",
-  "type": "module",
-  "sideEffects": [
-    "**/*.css"
+  "keywords": [
+    "component",
+    "patternmode",
+    "react",
+    "scroll-area",
+    "scroll-fade",
+    "scrollframe"
   ],
+  "homepage": "https://github.com/howells/patternmode/tree/main/packages/scrollframe#readme",
+  "bugs": {
+    "url": "https://github.com/howells/patternmode/issues"
+  },
   "license": "MIT",
   "author": "Daniel Howells",
   "repository": {
@@ -14,12 +22,12 @@
     "url": "git+ssh://git@github.com/howells/patternmode.git",
     "directory": "packages/scrollframe"
   },
-  "bugs": {
-    "url": "https://github.com/howells/patternmode/issues"
-  },
-  "homepage": "https://github.com/howells/patternmode/tree/main/packages/scrollframe#readme",
   "files": [
     "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
   ],
   "exports": {
     ".": {
@@ -32,9 +40,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": ">=20"
-  },
   "scripts": {
     "build": "tsdown && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false && pnpm build:styles",
     "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
@@ -43,33 +48,20 @@
     "dev:js": "tsdown --watch",
     "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
     "dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false --watch --preserveWatchOutput",
-    "lint": "howells-lint .",
-    "lint:fix": "howells-format .",
-    "lint:strict": "howells-lint-strict .",
+    "lint": "howells-ox-check .",
+    "lint:fix": "howells-ox-fix .",
     "prepack": "pnpm build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": [
-    "scrollframe",
-    "scroll-area",
-    "scroll-fade",
-    "react",
-    "component",
-    "patternmode"
-  ],
   "dependencies": {
     "@patternmode/system": "workspace:*",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.2.4",
     "lucide-react": "^1.16.0"
   },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
-  },
   "devDependencies": {
-    "@howells/lint": "^0.1.8",
+    "@howells/lint": "^0.2.0",
     "@howells/typescript-config": "^0.1.2",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
@@ -84,5 +76,12 @@
     "tsdown": "^0.22.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.6"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

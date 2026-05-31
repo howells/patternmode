@@ -23,7 +23,7 @@ const RESISTANCE_MIN = 0.1;
 export function calculateResistance(distance: number): number {
   return Math.max(
     RESISTANCE_MIN,
-    1 - Math.log(distance / RESISTANCE_DIVISOR + 1) / RESISTANCE_SCALE,
+    1 - Math.log(distance / RESISTANCE_DIVISOR + 1) / RESISTANCE_SCALE
   );
 }
 

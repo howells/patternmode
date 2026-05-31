@@ -30,11 +30,10 @@ import {
 import { getDragSpring, resolvePreset } from "./presets";
 import type { DismissibleConfig, MotionPresetName } from "./types";
 
-export interface ApertoContentProps
-  extends Omit<
-    ComponentPropsWithoutRef<typeof Dialog.Content>,
-    "asChild" | "forceMount"
-  > {
+export interface ApertoContentProps extends Omit<
+  ComponentPropsWithoutRef<typeof Dialog.Content>,
+  "asChild" | "forceMount"
+> {
   /** Motion preset override for this content panel, independent of the root preset. */
   motion?: MotionPresetName;
   /** Built-in positioning strategy. Use "none" for custom primitive compositions. */
@@ -54,7 +53,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
       style,
       ...props
     },
-    ref,
+    ref
   ) => {
     const ctx = useApertoContext();
     const [isDragging, setIsDragging] = useState(false);
@@ -63,7 +62,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
       motionOverride,
       ctx.presetName,
       ctx.variants,
-      ctx.reduceMotion,
+      ctx.reduceMotion
     );
 
     const contentLayoutId =
@@ -87,7 +86,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
     const springY = useSpring(dragY, dragSpring);
 
     const distance = useTransform(() =>
-      Math.hypot(springX.get(), springY.get()),
+      Math.hypot(springX.get(), springY.get())
     );
     const scaleMotion = useTransform(distance, SCALE_INPUT, SCALE_OUTPUT);
     const opacityMotion = useTransform(distance, OPACITY_INPUT, OPACITY_OUTPUT);
@@ -102,7 +101,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
         dragX.set(info.offset.x * r);
         dragY.set(info.offset.y * r);
       },
-      [dragX, dragY, isDragging, resistance],
+      [dragX, dragY, isDragging, resistance]
     );
 
     const handleDragEnd = useCallback(
@@ -119,7 +118,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
         dragX.set(0);
         dragY.set(0);
       },
-      [ctx.onOpenChange, distanceThreshold, dragX, dragY, velocityThreshold],
+      [ctx.onOpenChange, distanceThreshold, dragX, dragY, velocityThreshold]
     );
 
     const motionStyle = useMemo(
@@ -147,7 +146,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
         springX,
         springY,
         style,
-      ],
+      ]
     );
 
     return (
@@ -172,7 +171,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
         </m.div>
       </Dialog.Content>
     );
-  },
+  }
 );
 
 ApertoContent.displayName = "ApertoContent";

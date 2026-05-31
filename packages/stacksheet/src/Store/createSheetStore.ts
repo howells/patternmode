@@ -1,4 +1,5 @@
 import { createStore } from "zustand";
+
 import type { ResolvedConfig, SheetItem } from "../types";
 import {
   resolveArgs,
@@ -24,7 +25,7 @@ import type {
  * multiple `createStacksheet()` calls or test runs.
  */
 export function createSheetStore<TMap extends object>(
-  config: ResolvedConfig,
+  config: ResolvedConfig
 ): SheetStoreBundle<TMap> {
   type Item = SheetItem<Extract<keyof TMap, string>>;
 
@@ -44,7 +45,7 @@ export function createSheetStore<TMap extends object>(
     first: unknown,
     second: unknown,
     third: unknown,
-    fourth?: unknown,
+    fourth?: unknown
   ) {
     return resolveArgs(
       componentRegistry,
@@ -54,7 +55,7 @@ export function createSheetStore<TMap extends object>(
       first,
       second,
       third,
-      fourth,
+      fourth
     );
   }
 
@@ -119,7 +120,7 @@ export function createSheetStore<TMap extends object>(
         first: unknown,
         second?: unknown,
         third?: unknown,
-        fourth?: unknown,
+        fourth?: unknown
       ) {
         _openResolved(resolve(first, second, third, fourth));
       },
@@ -128,7 +129,7 @@ export function createSheetStore<TMap extends object>(
         first: unknown,
         second?: unknown,
         third?: unknown,
-        fourth?: unknown,
+        fourth?: unknown
       ) {
         _pushResolved(resolve(first, second, third, fourth));
       },
@@ -137,7 +138,7 @@ export function createSheetStore<TMap extends object>(
         first: unknown,
         second?: unknown,
         third?: unknown,
-        fourth?: unknown,
+        fourth?: unknown
       ) {
         _replaceResolved(resolve(first, second, third, fourth));
       },
@@ -183,7 +184,7 @@ export function createSheetStore<TMap extends object>(
         first: unknown,
         second?: unknown,
         third?: unknown,
-        fourth?: unknown,
+        fourth?: unknown
       ) {
         const resolved = resolve(first, second, third, fourth);
         const { stack } = get();

@@ -1,5 +1,14 @@
 # @patternmode/tags
 
+## 0.1.2
+
+### Patch Changes
+
+- Switch package linting and formatting to the `@howells/lint` Ox lane.
+- Updated dependencies
+  - @patternmode/scrollframe@0.1.4
+  - @patternmode/system@0.2.2
+
 ## 0.1.1
 
 ### Patch Changes

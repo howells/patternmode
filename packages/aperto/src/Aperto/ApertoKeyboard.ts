@@ -1,5 +1,5 @@
 export function shouldIgnoreKeyboardNavigationTarget(
-  target: EventTarget | null,
+  target: EventTarget | null
 ): boolean {
   if (!(target instanceof Element)) {
     return false;
@@ -9,8 +9,8 @@ export function shouldIgnoreKeyboardNavigationTarget(
     (target as HTMLElement).isContentEditable ||
     Boolean(
       target.closest(
-        'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], audio, video',
-      ),
+        'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], audio, video'
+      )
     )
   );
 }

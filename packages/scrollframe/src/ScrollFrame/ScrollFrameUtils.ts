@@ -29,7 +29,7 @@ export function setRef<T>(ref: Ref<T> | undefined, value: T | null) {
 }
 
 export function resolveRadixType(
-  scrollbars: ScrollFrameScrollbarVisibility,
+  scrollbars: ScrollFrameScrollbarVisibility
 ): ComponentPropsWithoutRef<typeof RadixScrollArea.Root>["type"] {
   if (scrollbars === "hidden") {
     return "always";
@@ -39,7 +39,7 @@ export function resolveRadixType(
 
 export function supportsAxis(
   axes: ScrollFrameAxes,
-  axis: ScrollFrameAxis,
+  axis: ScrollFrameAxis
 ): boolean {
   return axes === "both" || axes === axis;
 }
@@ -49,7 +49,7 @@ export function defaultControlAxis(axes: ScrollFrameAxes): ScrollFrameAxis {
 }
 
 export function resolveDragScrollConfig(
-  dragScroll: boolean | ScrollFrameDragScrollConfig | undefined,
+  dragScroll: boolean | ScrollFrameDragScrollConfig | undefined
 ): ScrollFrameResolvedDragScrollConfig | null {
   if (!dragScroll) {
     return null;
@@ -68,7 +68,7 @@ export function resolveDragScrollConfig(
 
 export function isDragScrollIgnored(
   target: EventTarget | null,
-  ignoreSelector: string,
+  ignoreSelector: string
 ): boolean {
   if (!(target instanceof Element)) {
     return true;
@@ -82,7 +82,7 @@ export function isDragScrollIgnored(
 export function shouldRenderFade(
   fades: ScrollFrameFadeConfig | undefined,
   axis: ScrollFrameAxis,
-  edge: ScrollFrameEdge,
+  edge: ScrollFrameEdge
 ): boolean {
   if (fades === false || fades === "none") {
     return false;
@@ -97,7 +97,7 @@ export function shouldRenderFade(
 
 export function getAxisState(
   node: HTMLDivElement,
-  axis: ScrollFrameAxis,
+  axis: ScrollFrameAxis
 ): ScrollFrameAxisState {
   const max =
     axis === "vertical"
@@ -121,14 +121,14 @@ export function getReducedMotionPreference(): boolean {
 
 export function getPageStep(
   node: HTMLDivElement,
-  axis: ScrollFrameAxis,
+  axis: ScrollFrameAxis
 ): number {
   const size = axis === "vertical" ? node.clientHeight : node.clientWidth;
   return Math.max(1, size * 0.85);
 }
 
 function normalizeFadeEdges(
-  fadeEdges: ScrollFrameFadeEdges | undefined,
+  fadeEdges: ScrollFrameFadeEdges | undefined
 ): "none" | "start" | "end" | "both" {
   if (fadeEdges === undefined || fadeEdges === true) {
     return "both";

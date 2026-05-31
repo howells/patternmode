@@ -7,27 +7,27 @@ import { DistributionBar, Swatch } from "@patternmode/swatch";
 import "@patternmode/swatch/styles.css";
 
 export function Example() {
-	return (
-		<>
-			<Swatch
-				aria-label="Palette"
-				colors={[
-					{ color: "#315c4b", ratio: 60 },
-					{ color: "#e1ebe5", ratio: 40 },
-				]}
-				shape="pill"
-				size="2xl"
-			/>
-			<DistributionBar
-				aria-label="Finish distribution"
-				segments={[
-					{ id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
-					{ id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
-					{ id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
-				]}
-			/>
-		</>
-	);
+  return (
+    <>
+      <Swatch
+        aria-label="Palette"
+        colors={[
+          { color: "#315c4b", ratio: 60 },
+          { color: "#e1ebe5", ratio: 40 },
+        ]}
+        shape="pill"
+        size="2xl"
+      />
+      <DistributionBar
+        aria-label="Finish distribution"
+        segments={[
+          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+          { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+        ]}
+      />
+    </>
+  );
 }
 ```
 

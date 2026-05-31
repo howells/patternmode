@@ -4,7 +4,7 @@ import type { SheetPresentationOptions } from "../types";
 import type { AnyComponent, ResolvedItem } from "./StoreTypes";
 
 export function resolvePresentationOptions(
-  value: unknown,
+  value: unknown
 ): SheetPresentationOptions | undefined {
   if (!(value && typeof value === "object")) {
     return undefined;
@@ -27,7 +27,7 @@ export function resolvePresentationOptions(
 export function warnInlineComponent(
   component: AnyComponent,
   componentRegistry: Map<AnyComponent, string>,
-  warnedNames: Set<string>,
+  warnedNames: Set<string>
 ): void {
   if (
     typeof process === "undefined" ||
@@ -53,7 +53,7 @@ export function warnInlineComponent(
           `(key: ${key}), but a different reference with the same name already exists. ` +
           `This usually means you're passing an inline arrow function (e.g. ` +
           "open(() => <MySheet />)). Define the component outside of render to avoid " +
-          "memory leaks and broken navigate() same-type detection.",
+          "memory leaks and broken navigate() same-type detection."
       );
       return;
     }
@@ -72,7 +72,7 @@ export function resolveArgs(
   first: unknown,
   second: unknown,
   third: unknown,
-  fourth?: unknown,
+  fourth?: unknown
 ): ResolvedItem {
   if (typeof first === "function") {
     const component = first as AnyComponent;

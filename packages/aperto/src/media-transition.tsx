@@ -1,5 +1,6 @@
 import { m } from "motion/react";
 import { useEffect } from "react";
+
 import { useApertoContext } from "./context";
 import { ApertoTransitionMedia } from "./media-rendering";
 import {
@@ -29,7 +30,7 @@ export function ApertoMediaTransitionClone({
 
     const timer = setTimeout(
       onComplete,
-      transitionDurationMs(ctx.preset.transition),
+      transitionDurationMs(ctx.preset.transition)
     );
     return () => clearTimeout(timer);
   }, [ctx.preset.transition, onComplete, transition]);

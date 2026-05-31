@@ -9,13 +9,12 @@
   },
   "scripts": {
     "clean": "rm -rf .turbo",
-    "lint": "howells-lint .",
-    "lint:fix": "howells-format .",
-    "lint:strict": "howells-lint-strict .",
+    "lint": "howells-ox-check .",
+    "lint:fix": "howells-ox-fix .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@howells/lint": "^0.1.8",
+    "@howells/lint": "^0.2.0",
     "@howells/typescript-config": "^0.1.2",
     "typescript": "^6.0.3"
   }

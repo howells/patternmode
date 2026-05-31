@@ -48,7 +48,7 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
       style,
       ...props
     },
-    ref,
+    ref
   ) {
     const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
     const [edgeState, setEdgeState] =
@@ -58,7 +58,7 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
     const contextRef = useRef<ScrollFrameContextValue | null>(null);
     const resolvedDragScroll = useMemo(
       () => resolveDragScrollConfig(dragScroll),
-      [dragScroll],
+      [dragScroll]
     );
 
     const measure = useCallback(() => {
@@ -100,7 +100,7 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
           behavior: scrollBehavior,
         });
       },
-      [axes, scrollBehavior, scrollStep],
+      [axes, scrollBehavior, scrollStep]
     );
 
     const context = useMemo<ScrollFrameContextValue>(
@@ -130,7 +130,7 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
         scrollByStep,
         scrollStep,
         viewport,
-      ],
+      ]
     );
     contextRef.current = context;
 
@@ -187,5 +187,5 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
         </RadixScrollArea.Root>
       </ScrollFrameContext.Provider>
     );
-  },
+  }
 );

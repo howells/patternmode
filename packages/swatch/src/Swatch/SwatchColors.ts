@@ -14,7 +14,7 @@ export function isLightColor(color: string): boolean {
 }
 
 export function getSwatchColorsBackground(
-  colors: SwatchColorStop[] | undefined,
+  colors: SwatchColorStop[] | undefined
 ): string | undefined {
   if (!colors || colors.length === 0) {
     return undefined;
@@ -45,10 +45,7 @@ export function getSwatchColorsBackground(
 function normalizeHex(hex: string): string | null {
   const value = hex.trim().replace(/^#/, "");
   if (/^[\da-f]{3}$/i.test(value)) {
-    return value
-      .split("")
-      .map((part) => part + part)
-      .join("");
+    return [...value].map((part) => part + part).join("");
   }
   if (/^[\da-f]{6}$/i.test(value)) {
     return value;

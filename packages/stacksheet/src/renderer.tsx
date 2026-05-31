@@ -25,6 +25,7 @@ import {
 import { RemoveScroll } from "react-remove-scroll";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
+
 import { useResolvedSide } from "./media";
 import { useBodyScale, useViewportHeight } from "./renderer-effects";
 import { resolveClassNames } from "./renderer-helpers";
@@ -79,10 +80,10 @@ export function SheetRenderer<TMap extends object>({
   const prefersReducedMotion = useReducedMotion() ?? false;
   const classNames = useMemo(
     () => resolveClassNames(classNamesProp),
-    [classNamesProp],
+    [classNamesProp]
   );
   const viewportHeight = useViewportHeight(
-    isOpen && side === "bottom" && config.snapPoints.length > 0,
+    isOpen && side === "bottom" && config.snapPoints.length > 0
   );
 
   const snapHeights = useMemo(
@@ -90,7 +91,7 @@ export function SheetRenderer<TMap extends object>({
       side === "bottom" && config.snapPoints.length > 0
         ? resolveSnapPoints(config.snapPoints, viewportHeight)
         : [],
-    [side, config.snapPoints, viewportHeight],
+    [side, config.snapPoints, viewportHeight]
   );
 
   const snapContext = isOpen ? stack.map((item) => item.id).join("\u0000") : "";
@@ -116,7 +117,7 @@ export function SheetRenderer<TMap extends object>({
       });
       config.onSnapPointChange?.(index);
     },
-    [config, snapContext, snapHeights.length],
+    [config, snapContext, snapHeights.length]
   );
 
   const closeReasonRef = useRef<CloseReason>("programmatic");
@@ -126,7 +127,7 @@ export function SheetRenderer<TMap extends object>({
       closeReasonRef.current = reason;
       rawClose();
     },
-    [rawClose],
+    [rawClose]
   );
 
   const popWith = useCallback(
@@ -134,7 +135,7 @@ export function SheetRenderer<TMap extends object>({
       closeReasonRef.current = reason;
       rawPop();
     },
-    [rawPop],
+    [rawPop]
   );
 
   const close = useCallback(() => closeWith("programmatic"), [closeWith]);
@@ -226,7 +227,7 @@ export function SheetRenderer<TMap extends object>({
       config.spring.damping,
       config.spring.stiffness,
       config.spring.mass,
-    ],
+    ]
   );
   const stackSpring = spring;
 

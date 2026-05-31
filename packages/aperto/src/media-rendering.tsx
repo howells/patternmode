@@ -1,4 +1,5 @@
 import { createElement, type ReactNode } from "react";
+
 import type { ApertoMediaItem, RenderImage, RenderVideo } from "./types";
 
 function renderDefaultImage(props: Parameters<RenderImage>[0]): ReactNode {

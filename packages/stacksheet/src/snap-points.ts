@@ -29,7 +29,7 @@ function resolveSnapPointPx(point: SnapPoint, viewportHeight: number): number {
           typeof document === "undefined"
             ? 16
             : Number.parseFloat(
-                getComputedStyle(document.documentElement).fontSize,
+                getComputedStyle(document.documentElement).fontSize
               );
         return value * fontSize;
       }
@@ -50,7 +50,7 @@ function resolveSnapPointPx(point: SnapPoint, viewportHeight: number): number {
  */
 export function resolveSnapPoints(
   points: SnapPoint[],
-  viewportHeight: number,
+  viewportHeight: number
 ): number[] {
   if (points.length === 0) {
     return [];
@@ -103,7 +103,7 @@ export function findSnapTarget(
   snapHeights: number[],
   velocity: number,
   currentIndex: number,
-  sequential: boolean,
+  sequential: boolean
 ): number {
   if (snapHeights.length === 0) {
     return -1;
@@ -169,7 +169,7 @@ export function findSnapTarget(
 export function getSnapOffset(
   snapIndex: number,
   snapHeights: number[],
-  panelHeight: number,
+  panelHeight: number
 ): number {
   if (snapIndex < 0 || snapIndex >= snapHeights.length) {
     return 0;

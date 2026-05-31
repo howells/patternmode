@@ -42,13 +42,13 @@ for (const pkg of packages) {
 const tarballs = Object.fromEntries(
   packages.map((pkg) => {
     const tarball = readdirSync(packDir).find((file) =>
-      file.startsWith(pkg.tarballPrefix),
+      file.startsWith(pkg.tarballPrefix)
     );
     if (!tarball) {
       throw new Error(`Expected tarball was not created for ${pkg.name}.`);
     }
     return [pkg.name, tarball];
-  }),
+  })
 );
 
 mkdirSync(join(fixtureDir, "app"), { recursive: true });
@@ -87,8 +87,8 @@ writeFileSync(
       },
     },
     null,
-    2,
-  ),
+    2
+  )
 );
 writeFileSync(join(fixtureDir, "next.config.mjs"), "export default {};\n");
 writeFileSync(
@@ -114,12 +114,12 @@ writeFileSync(
       include: ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     },
     null,
-    2,
-  ),
+    2
+  )
 );
 writeFileSync(
   join(fixtureDir, "next-env.d.ts"),
-  '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n',
+  '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n'
 );
 writeFileSync(
   join(fixtureDir, "app", "layout.tsx"),
@@ -133,7 +133,7 @@ import "@patternmode/swatch/styles.css";
 export default function Layout({ children }: { children: ReactNode }) {
   return <html lang="en"><body>{children}</body></html>;
 }
-`,
+`
 );
 writeFileSync(
   join(fixtureDir, "app", "page.tsx"),
@@ -142,7 +142,7 @@ writeFileSync(
 export default function Page() {
   return <Demo />;
 }
-`,
+`
 );
 writeFileSync(
   join(fixtureDir, "app", "demo.tsx"),
@@ -179,7 +179,7 @@ export function Demo() {
     </StacksheetProvider>
   );
 }
-`,
+`
 );
 
 if (existsSync(join(fixtureDir, "node_modules"))) {

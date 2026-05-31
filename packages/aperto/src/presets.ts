@@ -64,7 +64,7 @@ export function resolvePreset(
   componentMotion: MotionPresetName | undefined,
   globalPreset: MotionPresetName,
   variants: MotionVariants | undefined,
-  reduceMotion: boolean,
+  reduceMotion: boolean
 ): MotionPreset {
   if (reduceMotion) {
     return PRESETS.reduced;

@@ -40,7 +40,7 @@ export function getInitialGroupState(initialIndex: number): ApertoGroupState {
 
 export function apertoGroupReducer(
   state: ApertoGroupState,
-  action: ApertoGroupAction,
+  action: ApertoGroupAction
 ): ApertoGroupState {
   switch (action.type) {
     case "close-without-transition":

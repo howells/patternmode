@@ -11,7 +11,7 @@ import { isDragScrollIgnored, setRef, supportsAxis } from "./ScrollFrameUtils";
 
 function getDragDistance(
   offset: { x: number; y: number },
-  axis: "horizontal" | "vertical" | "both",
+  axis: "horizontal" | "vertical" | "both"
 ): number {
   if (axis === "horizontal") {
     return Math.abs(offset.x);
@@ -25,7 +25,7 @@ function getDragDistance(
 function resolveDragAxis(
   offset: { x: number; y: number },
   contextAxes: "vertical" | "horizontal" | "both",
-  configAxis: "auto" | "vertical" | "horizontal" | "both",
+  configAxis: "auto" | "vertical" | "horizontal" | "both"
 ) {
   if (configAxis !== "auto") {
     return configAxis;
@@ -63,7 +63,7 @@ export const ScrollFrameViewport = forwardRef<
     viewportRef,
     ...props
   },
-  ref,
+  ref
 ) {
   const context = useScrollFrame();
   const { axes, dragScroll, registerViewport, setDragging, viewport } = context;
@@ -76,7 +76,7 @@ export const ScrollFrameViewport = forwardRef<
       setRef(ref, node);
       setRef(viewportRef, node);
     },
-    [ref, registerViewport, viewportRef],
+    [ref, registerViewport, viewportRef]
   );
 
   const endDrag = useCallback(() => {
@@ -111,7 +111,7 @@ export const ScrollFrameViewport = forwardRef<
       committedRef.current = false;
       event.currentTarget.setPointerCapture?.(event.pointerId);
     },
-    [dragScroll, viewport],
+    [dragScroll, viewport]
   );
 
   const handlePointerMoveCapture = useCallback(
@@ -161,7 +161,7 @@ export const ScrollFrameViewport = forwardRef<
       }
       event.preventDefault();
     },
-    [axes, dragScroll, setDragging, viewport],
+    [axes, dragScroll, setDragging, viewport]
   );
 
   const handlePointerEndCapture = useCallback(
@@ -171,7 +171,7 @@ export const ScrollFrameViewport = forwardRef<
       }
       endDrag();
     },
-    [endDrag],
+    [endDrag]
   );
 
   const handleClickCapture = useCallback(
@@ -183,7 +183,7 @@ export const ScrollFrameViewport = forwardRef<
       event.preventDefault();
       event.stopPropagation();
     },
-    [],
+    []
   );
 
   return (
@@ -197,7 +197,7 @@ export const ScrollFrameViewport = forwardRef<
       <div
         className={joinClassNames(
           "patternmode-scrollframe__content",
-          contentClassName,
+          contentClassName
         )}
         data-scrollframe-drag-surface={dragScroll ? "" : undefined}
         data-slot="scrollframe-content"

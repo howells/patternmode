@@ -25,7 +25,7 @@ export function isInteractiveElement(el: Element): boolean {
  */
 export function findScrollableAncestor(
   el: Element,
-  axis: DragAxis,
+  axis: DragAxis
 ): Element | null {
   let current: Element | null = el;
   while (current) {
@@ -96,7 +96,7 @@ function classifyGesture(
   dx: number,
   dy: number,
   axis: DragAxis,
-  sign: DragSign,
+  sign: DragSign
 ): "drag" | "none" {
   const absDx = Math.abs(dx);
   const absDy = Math.abs(dy);
@@ -128,7 +128,7 @@ export function commitGesture(
   dy: number,
   axis: DragAxis,
   sign: DragSign,
-  scrollEl: Element | null,
+  scrollEl: Element | null
 ): "drag" | "none" {
   const gesture = classifyGesture(dx, dy, axis, sign);
   if (gesture === "none") {
@@ -142,7 +142,7 @@ export function commitGesture(
 
 export function getPanelDimension(
   panel: HTMLDivElement | null,
-  axis: DragAxis,
+  axis: DragAxis
 ): number {
   if (!panel) {
     return 300;

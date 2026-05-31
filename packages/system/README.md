@@ -4,10 +4,10 @@ Shared Patternmode primitives for package authors.
 
 ```ts
 import {
-	getObjectSizingStyle,
-	getResponsiveClasses,
-	getSizeVariableStyle,
-	joinClassNames,
+  getObjectSizingStyle,
+  getResponsiveClasses,
+  getSizeVariableStyle,
+  joinClassNames,
 } from "@patternmode/system";
 ```
 

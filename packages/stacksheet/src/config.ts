@@ -36,7 +36,7 @@ function resolveSide(side: SideConfig | undefined): ResponsiveSide {
 
 /** Resolve a preset name to a SpringConfig, or merge partial config with defaults. */
 function resolveSpring(
-  spring: SpringPreset | Partial<SpringConfig> | undefined,
+  spring: SpringPreset | Partial<SpringConfig> | undefined
 ): SpringConfig {
   if (typeof spring === "string") {
     return springs[spring];

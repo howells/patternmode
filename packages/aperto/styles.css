@@ -44,10 +44,10 @@
     var(--aperto-expanded-width, 76vw),
     calc(
       (100dvh - 8rem) *
-      (
-        var(--aperto-expanded-aspect-ratio-width, 3) /
-        var(--aperto-expanded-aspect-ratio-height, 2)
-      )
+        (
+          var(--aperto-expanded-aspect-ratio-width, 3) /
+            var(--aperto-expanded-aspect-ratio-height, 2)
+        )
     ),
     1000px,
     90vw

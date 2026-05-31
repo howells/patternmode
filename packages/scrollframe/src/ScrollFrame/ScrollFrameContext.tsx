@@ -18,7 +18,7 @@ export const DEFAULT_EDGE_STATE: ScrollFrameEdgeState = {
 };
 
 export const ScrollFrameContext = createContext<ScrollFrameContextValue | null>(
-  null,
+  null
 );
 
 export function useScrollFrame(): ScrollFrameContextValue {

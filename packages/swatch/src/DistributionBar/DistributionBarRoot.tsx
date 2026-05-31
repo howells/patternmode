@@ -10,8 +10,10 @@ import {
   moveDistributionBoundary,
 } from "./DistributionBarMath";
 
-export interface DistributionDisplayProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "role" | "onSelect"> {
+export interface DistributionDisplayProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "role" | "onSelect"
+> {
   assignedLabel?: string;
   emptyLabel?: string;
   emptyValue?: number;
@@ -27,8 +29,10 @@ export interface DistributionDisplayProps
   selectedSegmentId?: string;
 }
 
-export interface DistributionBarProps
-  extends Omit<HTMLAttributes<HTMLFieldSetElement>, "onChange"> {
+export interface DistributionBarProps extends Omit<
+  HTMLAttributes<HTMLFieldSetElement>,
+  "onChange"
+> {
   /** Show the per-segment legend below the bar, or hide it. Default "segments". */
   legend?: "segments" | false;
   minValue?: number;
@@ -57,7 +61,7 @@ export function DistributionDisplay({
       segments,
       emptyValue,
       emptyLabel,
-      total,
+      total
     );
 
   const content = (
@@ -91,7 +95,7 @@ export function DistributionDisplay({
   );
   const sharedClassName = joinClassNames(
     "patternmode-distribution-display",
-    className,
+    className
   );
 
   // A selectable distribution is a group of buttons (fieldset → implicit
@@ -134,15 +138,15 @@ export function DistributionBar({
   function moveBoundary(
     boundaryIndex: number,
     deltaValue: number,
-    sourceSegments = segments,
+    sourceSegments = segments
   ) {
     onChange?.(
       moveDistributionBoundary(
         sourceSegments,
         boundaryIndex,
         deltaValue,
-        minValue,
-      ),
+        minValue
+      )
     );
   }
 
@@ -161,7 +165,7 @@ export function DistributionBar({
     moveBoundary(
       boundaryIndex,
       (info.offset.x / trackWidth) * sourceTotal,
-      sourceSegments,
+      sourceSegments
     );
   }
 
@@ -172,7 +176,7 @@ export function DistributionBar({
 
   function handleKeyDown(
     event: KeyboardEvent<HTMLButtonElement>,
-    boundaryIndex: number,
+    boundaryIndex: number
   ) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -197,7 +201,7 @@ export function DistributionBar({
           const nextSegment = segments[boundaryIndex + 1];
           const boundaryPercent = getDistributionBoundaryPercent(
             segments,
-            boundaryIndex,
+            boundaryIndex
           );
           const label = `Adjust ${segment.label ?? segment.id} and ${
             nextSegment?.label ?? nextSegment?.id
@@ -364,7 +368,7 @@ function DistributionSummaryLegend({
 
 function getDistributionDisplayTotal(
   segments: DistributionBarSegment[],
-  emptyValue: number,
+  emptyValue: number
 ): number {
   return (
     getDistributionTotal(segments) + getRenderableDistributionValue(emptyValue)
@@ -375,18 +379,18 @@ function getDistributionDisplayAccessibleLabel(
   segments: DistributionBarSegment[],
   emptyValue: number,
   emptyLabel: string,
-  total: number,
+  total: number
 ): string {
   const segmentLabels = segments.map(
     (segment) =>
       `${segment.label ?? segment.id} ${getDerivedDistributionPercentage(
         segment.value,
-        total,
-      )}%`,
+        total
+      )}%`
   );
   if (emptyValue > 0) {
     segmentLabels.push(
-      `${emptyLabel} ${getDerivedDistributionPercentage(emptyValue, total)}%`,
+      `${emptyLabel} ${getDerivedDistributionPercentage(emptyValue, total)}%`
     );
   }
 
@@ -395,7 +399,7 @@ function getDistributionDisplayAccessibleLabel(
 
 function getDerivedDistributionPercentage(
   value: number,
-  total: number,
+  total: number
 ): number {
   if (!(total > 0 && Number.isFinite(value))) {
     return 0;

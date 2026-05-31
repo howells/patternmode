@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { resolveConfig } from "./config";
 import { createSheetStore } from "./store";
 
@@ -259,7 +260,7 @@ describe("createSheetStore", () => {
       // Same component should have same key
       expect(componentRegistry.size).toBe(1);
       expect(store.getState().stack[0]?.type).toBe(
-        store.getState().stack[1]?.type,
+        store.getState().stack[1]?.type
       );
     });
 

@@ -9,6 +9,7 @@ import {
   screen,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ScrollFrame } from "./index";
 
 class ResizeObserverMock {
@@ -33,7 +34,7 @@ describe("ScrollFrame", () => {
       <ScrollFrame aria-label="Updates">
         <p>One</p>
         <p>Two</p>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const region = screen.getByRole("region", { name: "Updates" });
@@ -45,10 +46,10 @@ describe("ScrollFrame", () => {
     const viewport = screen.getByTestId("scrollframe-viewport");
     expect(viewport).toHaveAttribute("data-slot", "scrollframe-viewport");
     expect(
-      screen.getByTestId("scrollframe-fade-vertical-start"),
+      screen.getByTestId("scrollframe-fade-vertical-start")
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId("scrollframe-fade-vertical-end"),
+      screen.getByTestId("scrollframe-fade-vertical-end")
     ).toBeInTheDocument();
   });
 
@@ -56,14 +57,14 @@ describe("ScrollFrame", () => {
     render(
       <ScrollFrame axes="both" scrollbars="hidden">
         <div>Content</div>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const root = screen.getByTestId("scrollframe-viewport").parentElement;
     expect(root).toHaveAttribute("data-axes", "both");
     expect(root).toHaveAttribute("data-scrollbar-visibility", "hidden");
     expect(
-      root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]'),
+      root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]')
     ).toHaveLength(2);
   });
 
@@ -77,7 +78,7 @@ describe("ScrollFrame", () => {
         scrollBehavior="auto"
       >
         <div>Content</div>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const viewport = screen.getByTestId("scrollframe-viewport");
@@ -114,7 +115,7 @@ describe("ScrollFrame", () => {
       >
         <span>Granite</span>
         <span>Basalt</span>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -158,7 +159,7 @@ describe("ScrollFrame", () => {
           Granite
         </button>
         <button type="button">Basalt</button>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -201,7 +202,7 @@ describe("ScrollFrame", () => {
           Granite
         </button>
         <button type="button">Basalt</button>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -231,7 +232,7 @@ describe("ScrollFrame", () => {
       <ScrollFrame aria-label="Actions" axes="horizontal" dragScroll>
         <input aria-label="Search" />
         <span data-scrollframe-no-drag="">Selectable label</span>
-      </ScrollFrame>,
+      </ScrollFrame>
     );
 
     const root = screen.getByRole("region", { name: "Actions" });

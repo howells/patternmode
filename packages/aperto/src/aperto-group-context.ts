@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 import type {
   ApertoClassNames,
   ApertoMediaItem,
@@ -21,7 +22,7 @@ export interface ApertoGroupContextValue {
 }
 
 export const ApertoGroupContext = createContext<ApertoGroupContextValue | null>(
-  null,
+  null
 );
 
 export function useApertoGroup(): ApertoGroupContextValue {

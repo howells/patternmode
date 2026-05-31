@@ -48,7 +48,7 @@ export function ApertoGroup({
   const [state, dispatch] = useReducer(
     apertoGroupReducer,
     initialIndex,
-    getInitialGroupState,
+    getInitialGroupState
   );
   const isControlled = controlledIndex !== undefined;
   const index = isControlled ? controlledIndex : state.internalIndex;
@@ -61,7 +61,7 @@ export function ApertoGroup({
   const thumbnailMap = thumbnailRefs.current;
   const sharedLayoutIdForIndex = useCallback(
     (nextIndex: number) => `aperto-group-${generatedId}-${nextIndex}-shared`,
-    [generatedId],
+    [generatedId]
   );
   const sharedLayoutId = sharedLayoutIdForIndex(state.layoutSourceIndex);
   const measureOpeningTarget = useCallback((node: HTMLDivElement) => {
@@ -78,7 +78,7 @@ export function ApertoGroup({
         measureOpeningTarget(node);
       }
     },
-    [measureOpeningTarget],
+    [measureOpeningTarget]
   );
 
   const registerThumbnail = useCallback(
@@ -89,7 +89,7 @@ export function ApertoGroup({
       }
       thumbnailMap.delete(thumbIndex);
     },
-    [thumbnailMap],
+    [thumbnailMap]
   );
 
   useLayoutEffect(() => {
@@ -111,7 +111,7 @@ export function ApertoGroup({
       }
       onIndexChange?.(nextIndex);
     },
-    [isControlled, onIndexChange],
+    [isControlled, onIndexChange]
   );
 
   const openAtIndex = useCallback(
@@ -126,7 +126,7 @@ export function ApertoGroup({
       dispatch({ index: thumbIndex, transition, type: "open-at-index" });
       onIndexChange?.(thumbIndex);
     },
-    [media, onIndexChange, thumbnailMap],
+    [media, onIndexChange, thumbnailMap]
   );
 
   const startClose = useCallback(() => {
@@ -158,7 +158,7 @@ export function ApertoGroup({
       event.preventDefault();
       thumbnailMap.get(index)?.focus({ preventScroll: true });
     },
-    [index, thumbnailMap],
+    [index, thumbnailMap]
   );
 
   const handleMediaTransitionComplete = useCallback(() => {
@@ -174,7 +174,7 @@ export function ApertoGroup({
 
       startClose();
     },
-    [startClose],
+    [startClose]
   );
 
   const value = useMemo(
@@ -203,7 +203,7 @@ export function ApertoGroup({
       setIndex,
       sharedLayoutId,
       sharedLayoutIdForIndex,
-    ],
+    ]
   );
   const hasNavigation = media.length > 1;
   const navigateToIndex = useCallback(
@@ -211,7 +211,7 @@ export function ApertoGroup({
       dispatch({ direction, index: nextIndex, type: "navigate" });
       onIndexChange?.(nextIndex);
     },
-    [onIndexChange],
+    [onIndexChange]
   );
   const goToPrevious = useCallback(() => {
     navigateToIndex((index - 1 + media.length) % media.length, -1);
@@ -241,7 +241,7 @@ export function ApertoGroup({
         goToNext();
       }
     },
-    [goToNext, goToPrevious],
+    [goToNext, goToPrevious]
   );
   const expandedMediaStyle = useMemo((): CSSProperties | undefined => {
     if (!activeMedia?.width || !activeMedia.height) {

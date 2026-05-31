@@ -1,4 +1,5 @@
 import { type RefObject, useCallback, useEffect, useRef } from "react";
+
 import { findSnapTarget } from "../snap-points";
 import { DEAD_ZONE, RUBBER_BAND_FACTOR } from "./DragConstants";
 import {
@@ -29,7 +30,7 @@ import type { DragConfig, DragState } from "./DragTypes";
 export function useDrag(
   panelRef: RefObject<HTMLDivElement | null>,
   config: DragConfig,
-  onDragUpdate: (state: DragState) => void,
+  onDragUpdate: (state: DragState) => void
 ) {
   const startRef = useRef<{ x: number; y: number; time: number } | null>(null);
   const committedRef = useRef<"drag" | "none" | null>(null);
@@ -73,7 +74,7 @@ export function useDrag(
       // Capture pointer for reliable move/up outside the element
       (e.currentTarget as HTMLElement)?.setPointerCapture?.(e.pointerId);
     },
-    [config.enabled, axis],
+    [config.enabled, axis]
   );
 
   const handlePointerMove = useCallback(
@@ -98,7 +99,7 @@ export function useDrag(
           dy,
           axis,
           sign,
-          scrollTargetRef.current,
+          scrollTargetRef.current
         );
         if (committedRef.current !== "drag") {
           startRef.current = null;
@@ -127,7 +128,7 @@ export function useDrag(
       // Prevent text selection during active drag
       e.preventDefault();
     },
-    [axis, sign, onDragUpdate],
+    [axis, sign, onDragUpdate]
   );
 
   const dismiss = useCallback(() => {
@@ -166,7 +167,7 @@ export function useDrag(
           config.snapHeights,
           velocity,
           config.activeSnapIndex,
-          config.sequential,
+          config.sequential
         );
         if (targetIndex === -1) {
           dismiss();
@@ -186,7 +187,7 @@ export function useDrag(
         onDragUpdate({ offset: 0, isDragging: false });
       }
     },
-    [panelRef, axis, config, onDragUpdate, dismiss],
+    [panelRef, axis, config, onDragUpdate, dismiss]
   );
 
   const handlePointerCancel = useCallback(() => {

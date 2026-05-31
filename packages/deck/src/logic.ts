@@ -18,7 +18,7 @@ export function getVisibleDeckItems(
   items: DeckItem[],
   index: number,
   visibleCount: number,
-  mode: DeckMode,
+  mode: DeckMode
 ): DeckItem[] {
   if (items.length === 0 || visibleCount <= 0) {
     return [];
@@ -34,14 +34,14 @@ export function getVisibleDeckItems(
     (_, depth) => {
       const itemIndex = (start + depth) % items.length;
       return items[itemIndex] as DeckItem;
-    },
+    }
   );
 }
 
 export function getNextDeckIndex(
   index: number,
   length: number,
-  mode: DeckMode,
+  mode: DeckMode
 ): number {
   if (length <= 0) {
     return 0;
@@ -55,7 +55,7 @@ export function getDeckRenderKey(
   itemId: string,
   absoluteIndex: number,
   length: number,
-  mode: DeckMode,
+  mode: DeckMode
 ): string {
   if (mode !== "cycle" || length <= 0) {
     return itemId;
@@ -65,7 +65,7 @@ export function getDeckRenderKey(
 }
 
 export function getAdvanceDecision(
-  input: AdvanceDecisionInput,
+  input: AdvanceDecisionInput
 ): AdvanceDecision {
   const width = Math.max(input.width, 1);
   const distanceThreshold =
@@ -99,7 +99,7 @@ export function resolveCardRotation(id: string, spread: number): number {
 
 export function getVisualDepth(
   item: DeckItem,
-  visibleItems: DeckItem[],
+  visibleItems: DeckItem[]
 ): number {
   return visibleItems.findIndex((visibleItem) => visibleItem.id === item.id);
 }

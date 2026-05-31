@@ -1,5 +1,11 @@
 # @patternmode/system
 
+## 0.2.2
+
+### Patch Changes
+
+- Switch package linting and formatting to the `@howells/lint` Ox lane.
+
 ## 0.2.1
 
 ### Patch Changes

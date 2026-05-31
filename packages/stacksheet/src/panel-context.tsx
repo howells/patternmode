@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 import type { Side } from "./types";
 
 export interface SheetPanelContextValue {
@@ -21,7 +22,7 @@ export interface SheetPanelContextValue {
 }
 
 export const SheetPanelContext = createContext<SheetPanelContextValue | null>(
-  null,
+  null
 );
 
 /**
@@ -33,7 +34,7 @@ export function useSheetPanel(): SheetPanelContextValue {
   if (!ctx) {
     throw new Error(
       "Sheet.* components must be used inside a sheet panel. " +
-        "They should be rendered by a component opened via actions.open(), push(), etc.",
+        "They should be rendered by a component opened via actions.open(), push(), etc."
     );
   }
   return ctx;

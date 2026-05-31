@@ -1,9 +1,0 @@
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
-  "extends": [
-    "@howells/lint/biome/core",
-    "@howells/lint/biome/react",
-    "@howells/lint/biome/next"
-  ],
-  "root": true
-}

@@ -12,7 +12,7 @@ export const DeckEmpty = forwardRef<HTMLDivElement, DeckEmptyProps>(
     >
       {children}
     </div>
-  ),
+  )
 );
 
 DeckEmpty.displayName = "Deck.Empty";

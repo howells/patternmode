@@ -7,9 +7,8 @@
     "build": "next build",
     "clean": "rm -rf .next .turbo",
     "dev": "next dev",
-    "lint": "howells-lint .",
-    "lint:fix": "howells-format .",
-    "lint:strict": "howells-lint-strict .",
+    "lint": "howells-ox-check .",
+    "lint:fix": "howells-ox-fix .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -25,7 +24,7 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@howells/lint": "^0.1.8",
+    "@howells/lint": "^0.2.0",
     "@howells/typescript-config": "^0.1.2",
     "@types/node": "^24.10.3",
     "@types/react": "^19.2.14",

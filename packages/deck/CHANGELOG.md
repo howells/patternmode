@@ -1,5 +1,13 @@
 # @patternmode/deck
 
+## 0.2.2
+
+### Patch Changes
+
+- Switch package linting and formatting to the `@howells/lint` Ox lane.
+- Updated dependencies
+  - @patternmode/system@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

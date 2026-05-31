@@ -63,7 +63,7 @@ for (const packagePath of publicPackages) {
     for (const forbidden of forbiddenInPublicPackages) {
       if (source.includes(forbidden)) {
         failures.push(
-          `${relative(root, file)} imports or references forbidden private surface: ${forbidden}`,
+          `${relative(root, file)} imports or references forbidden private surface: ${forbidden}`
         );
       }
     }

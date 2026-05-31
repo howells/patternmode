@@ -1,5 +1,11 @@
 # @patternmode/aperto
 
+## 0.1.4
+
+### Patch Changes
+
+- Switch package linting and formatting to the `@howells/lint` Ox lane.
+
 ## 0.1.3
 
 ### Patch Changes

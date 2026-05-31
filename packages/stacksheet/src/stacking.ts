@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+
 import type { ResolvedConfig, Side, StackingConfig } from "./types";
 
 // ── Depth transforms ────────────────────────────
@@ -17,7 +18,7 @@ export interface StackTransform {
  */
 export function getStackTransform(
   depth: number,
-  stacking: StackingConfig,
+  stacking: StackingConfig
 ): StackTransform {
   if (depth <= 0) {
     return { scale: 1, offset: 0, opacity: 1, borderRadius: 0 };
@@ -45,7 +46,7 @@ export function getStackTransform(
 export function getAnimatedBorderRadius(
   side: Side,
   depth: number,
-  stacking: StackingConfig,
+  stacking: StackingConfig
 ): Record<string, number> {
   if (side === "bottom") {
     const radius = depth > 0 ? stacking.radius : 16;
@@ -93,7 +94,7 @@ export function getSlideTarget(): SlideValues {
 /** Translate offset that pushes stacked panels away from the stack edge. */
 export function getStackOffset(
   side: Side,
-  offset: number,
+  offset: number
 ): { x?: number; y?: number } {
   if (offset === 0) {
     return {};
@@ -131,7 +132,7 @@ function getTransformOrigin(side: Side): string {
 export function getPanelStyles(
   side: Side,
   config: ResolvedConfig,
-  index: number,
+  index: number
 ): CSSProperties {
   const { width, maxWidth, zIndex } = config;
   const base: CSSProperties = {

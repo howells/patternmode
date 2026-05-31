@@ -14,21 +14,21 @@
  */
 export const durations = {
   instant: 0,
-  quick: 0.12,
-  snappy: 0.22,
-  normal: 0.25,
   moderate: 0.4,
-  slow: 1.0,
+  normal: 0.25,
+  quick: 0.12,
+  slow: 1,
+  snappy: 0.22,
 } as const;
 
 /** Duration tokens in milliseconds for CSS/Tailwind usage. */
 export const durationMs = {
   instant: 0,
-  quick: 120,
-  snappy: 220,
-  normal: 250,
   moderate: 400,
+  normal: 250,
+  quick: 120,
   slow: 1000,
+  snappy: 220,
 } as const;
 
 export type Duration = keyof typeof durations;

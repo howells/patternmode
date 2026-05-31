@@ -24,11 +24,10 @@ import type {
   MotionVariants,
 } from "./types";
 
-export interface ApertoRootProps
-  extends Omit<
-    ComponentPropsWithoutRef<typeof Dialog.Root>,
-    "open" | "onOpenChange"
-  > {
+export interface ApertoRootProps extends Omit<
+  ComponentPropsWithoutRef<typeof Dialog.Root>,
+  "open" | "onOpenChange"
+> {
   children: ReactNode;
   /** Whether dragging can dismiss the content (default: true) */
   dismissible?: boolean | DismissibleConfig;
@@ -71,7 +70,7 @@ function ApertoRoot({
       }
       controlledOnOpenChange?.(nextOpen);
     },
-    [isControlled, controlledOnOpenChange],
+    [isControlled, controlledOnOpenChange]
   );
 
   // Resolve global preset name
@@ -104,7 +103,7 @@ function ApertoRoot({
       presetName,
       shouldReduce,
       variants,
-    ],
+    ]
   );
 
   return (

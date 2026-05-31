@@ -17,6 +17,7 @@ import {
   useMemo,
   useState,
 } from "react";
+
 import {
   getAdvanceDecision,
   getDeckRenderKey,
@@ -80,13 +81,13 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
       visibleCount = DEFAULT_VISIBLE_COUNT,
       ...props
     },
-    ref,
+    ref
   ) => {
     const generatedId = useId();
     const [internalIndex, setInternalIndex] = useState(defaultIndex);
     const [visualBaseIndex, setVisualBaseIndex] = useState(defaultIndex);
     const [lastDirection, setLastDirection] = useState<AdvanceDirection | null>(
-      null,
+      null
     );
     const [dragOffset, setDragOffset] = useState(0);
     const [exitVelocity, setExitVelocity] = useState(0);
@@ -96,7 +97,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
     const { cards, empty } = useDeckChildren(children, generatedId);
     const visibleCards = useMemo(
       () => getVisibleDeckItems(cards, activeIndex, visibleCount, mode),
-      [cards, activeIndex, visibleCount, mode],
+      [cards, activeIndex, visibleCount, mode]
     );
     const activeCard = visibleCards[0];
     const exhausted = mode === "finite" && visibleCards.length === 0;
@@ -106,7 +107,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 
     const exitCustom = useMemo(
       () => ({ velocity: exitVelocity, direction: lastDirection }),
-      [exitVelocity, lastDirection],
+      [exitVelocity, lastDirection]
     );
 
     const commitAdvance = useCallback(
@@ -155,14 +156,14 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
         onAdvance,
         onAdvanceEnd,
         onIndexChange,
-      ],
+      ]
     );
 
     const handleDrag = useCallback(
       (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         setDragOffset(info.offset.x);
       },
-      [],
+      []
     );
 
     const handleDragEnd = useCallback(
@@ -183,7 +184,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
           commitAdvance(decision.direction, info.velocity.x);
         }
       },
-      [allowedDirections, commitAdvance, distanceThreshold, velocityThreshold],
+      [allowedDirections, commitAdvance, distanceThreshold, velocityThreshold]
     );
 
     const handleKeyDown = useCallback(
@@ -204,7 +205,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
           commitAdvance("right");
         }
       },
-      [allowedDirections, commitAdvance, disabled, onKeyDown],
+      [allowedDirections, commitAdvance, disabled, onKeyDown]
     );
 
     const rootStyle = {
@@ -252,11 +253,11 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
               if (active && isDragging && !reduceMotion) {
                 const influence = Math.min(
                   1,
-                  Math.abs(dragOffset) / DRAG_INFLUENCE_RAMP,
+                  Math.abs(dragOffset) / DRAG_INFLUENCE_RAMP
                 );
                 const tilt = (dragOffset / DRAG_TILT_RAMP) * DRAG_TILT_MAX;
                 cardRotate = Number(
-                  (idleRotate * (1 - influence) + tilt).toFixed(3),
+                  (idleRotate * (1 - influence) + tilt).toFixed(3)
                 );
               }
 
@@ -271,7 +272,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
               if (!active && isDragging && !reduceMotion) {
                 const promotedScale = Math.max(
                   0.7,
-                  1 - (depth - 1) * scaleStep,
+                  1 - (depth - 1) * scaleStep
                 );
                 const promotedY = (depth - 1) * peekOffset;
                 cardScale =
@@ -290,13 +291,13 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
                     item.id,
                     absoluteVisualIndex,
                     cards.length,
-                    mode,
+                    mode
                   )}
                   {...cardProps}
                   aria-hidden={active ? undefined : true}
                   className={joinClassNames(
                     "patternmode-deck-card",
-                    cardProps.className,
+                    cardProps.className
                   )}
                   custom={exitCustom}
                   data-active={active ? "true" : "false"}
@@ -366,7 +367,7 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
         {exhausted && empty ? empty : null}
       </div>
     );
-  },
+  }
 );
 
 DeckRoot.displayName = "Deck";

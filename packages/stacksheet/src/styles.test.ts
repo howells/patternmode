@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 function buildStyles() {
@@ -20,7 +21,7 @@ function buildStyles() {
         outFile,
         "--minify",
       ],
-      { cwd: process.cwd(), stdio: "pipe" },
+      { cwd: process.cwd(), stdio: "pipe" }
     );
 
     return readFileSync(outFile, "utf8");
@@ -35,16 +36,16 @@ describe("styles.css", () => {
 
     expect(css).toContain(".h-8{height:calc(var(--spacing,.25rem) * 8)}");
     expect(css).toContain(
-      ".min-h-11{min-height:calc(var(--spacing,.25rem) * 11)}",
+      ".min-h-11{min-height:calc(var(--spacing,.25rem) * 11)}"
     );
     expect(css).toContain(
-      ".min-w-11{min-width:calc(var(--spacing,.25rem) * 11)}",
+      ".min-w-11{min-width:calc(var(--spacing,.25rem) * 11)}"
     );
     expect(css).toContain(
-      ".px-4{padding-inline:calc(var(--spacing,.25rem) * 4)}",
+      ".px-4{padding-inline:calc(var(--spacing,.25rem) * 4)}"
     );
     expect(css).toContain(
-      ".rounded-md{border-radius:var(--radius-md,.375rem)}",
+      ".rounded-md{border-radius:var(--radius-md,.375rem)}"
     );
 
     expect(css).not.toContain(":root,:host");

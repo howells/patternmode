@@ -10,8 +10,9 @@ import type { MotionPresetName } from "./types";
 
 const TRIGGER_OPEN_Z_INDEX = 1000;
 
-export interface ApertoTriggerProps
-  extends ComponentPropsWithoutRef<typeof Dialog.Trigger> {
+export interface ApertoTriggerProps extends ComponentPropsWithoutRef<
+  typeof Dialog.Trigger
+> {
   /** Internal flag used by grouped thumbnails to raise only the active trigger. */
   active?: boolean;
   /** Override motion preset for this trigger */
@@ -23,7 +24,7 @@ export interface ApertoTriggerProps
 const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
   (
     { active, children, motion: motionOverride, sharedLayoutId, ...props },
-    ref,
+    ref
   ) => {
     const ctx = useApertoContext();
     const shouldRaise = ctx.open && (active ?? true);
@@ -34,7 +35,7 @@ const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
       motionOverride,
       ctx.presetName,
       ctx.variants,
-      ctx.reduceMotion,
+      ctx.reduceMotion
     );
     const layoutId =
       sharedLayoutId === false
@@ -58,7 +59,7 @@ const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
         </m.button>
       </Dialog.Trigger>
     );
-  },
+  }
 );
 
 ApertoTrigger.displayName = "ApertoTrigger";

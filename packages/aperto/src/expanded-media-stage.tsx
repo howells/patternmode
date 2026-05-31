@@ -4,6 +4,7 @@ import {
   type TargetAndTransition,
   type Transition,
 } from "motion/react";
+
 import { useApertoContext } from "./context";
 import { ApertoExpandedMedia } from "./media-rendering";
 import { getMediaKey } from "./media-utils";

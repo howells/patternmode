@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import {
   BREAKPOINTS,
   getBreakpointPrefix,
@@ -39,7 +40,7 @@ describe("Patternmode system utilities", () => {
 
   it("joins class names without leaking falsey values", () => {
     expect(joinClassNames("base", false, null, undefined, "active")).toBe(
-      "base active",
+      "base active"
     );
     expect(joinClassNames(false, null, undefined)).toBeUndefined();
   });
@@ -55,10 +56,10 @@ describe("Patternmode system utilities", () => {
     expect(getBreakpointPrefix("md")).toBe("md:");
     expect(getBreakpointPrefix("md", "container")).toBe("@md:");
     expect(
-      getResponsiveClasses({ base: "sm", md: "base", xl: "lg" }, classMap),
+      getResponsiveClasses({ base: "sm", md: "base", xl: "lg" }, classMap)
     ).toEqual(["size-6", "md:size-8", "xl:size-10"]);
     expect(
-      getResponsiveClasses({ base: "sm", md: "base" }, classMap, "container"),
+      getResponsiveClasses({ base: "sm", md: "base" }, classMap, "container")
     ).toEqual(["size-6", "@md:size-8"]);
   });
 
@@ -75,7 +76,7 @@ describe("Patternmode system utilities", () => {
         height: "4rem",
         position: "top left",
         width: 32,
-      }),
+      })
     ).toEqual({
       height: "4rem",
       objectFit: "contain",

@@ -47,7 +47,7 @@ export function toCssSize(value: CssSize | undefined): string | undefined {
 
 export function getSizeVariableStyle(
   size: PatternmodeSize,
-  variableName = "--patternmode-size",
+  variableName = "--patternmode-size"
 ): Record<string, string> {
   return {
     [variableName]: getPatternmodeSizeValue(size),
@@ -115,14 +115,14 @@ export const CONTAINER_PREFIX = {
 } as const satisfies Record<Breakpoint, string>;
 
 export function isResponsiveValue<T>(
-  value: ResponsiveValue<T> | undefined,
+  value: ResponsiveValue<T> | undefined
 ): value is Partial<Record<Breakpoint, T>> & { base?: T } {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
 
 export function getBreakpointPrefix(
   breakpoint: Breakpoint,
-  mode: ResponsiveMode = "screen",
+  mode: ResponsiveMode = "screen"
 ): string {
   return mode === "container"
     ? CONTAINER_PREFIX[breakpoint]
@@ -132,7 +132,7 @@ export function getBreakpointPrefix(
 export function getResponsiveClasses<T extends number | string>(
   value: ResponsiveValue<T> | undefined,
   classMap: Record<T, string>,
-  mode: ResponsiveMode = "screen",
+  mode: ResponsiveMode = "screen"
 ): string[] {
   if (value === undefined) {
     return [];
@@ -170,7 +170,7 @@ export function pushResponsiveClasses<T extends number | string>(
   classes: string[],
   value: ResponsiveValue<T> | undefined,
   classMap: Record<T, string>,
-  mode: ResponsiveMode = "screen",
+  mode: ResponsiveMode = "screen"
 ): void {
   classes.push(...getResponsiveClasses(value, classMap, mode));
 }
@@ -200,7 +200,7 @@ export interface ObjectSizingStyle {
 }
 
 export function getObjectSizingStyle(
-  sizing: ObjectSizing = {},
+  sizing: ObjectSizing = {}
 ): ObjectSizingStyle {
   return {
     height: toCssSize(sizing.height) ?? "100%",

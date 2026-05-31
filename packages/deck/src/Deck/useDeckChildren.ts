@@ -48,7 +48,7 @@ export function useDeckChildren(children: ReactNode, generatedId: string) {
         if (!warnedUnsupportedChild) {
           warnedUnsupportedChild = true;
           console.warn(
-            "Deck.Card must be a direct child of Deck. Fragments are supported, but wrapper elements are ignored.",
+            "Deck.Card must be a direct child of Deck. Fragments are supported, but wrapper elements are ignored."
           );
         }
       });

@@ -19,6 +19,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import type {
   BadgeProps,
   BadgeVariant,
@@ -97,7 +98,7 @@ function useTagSelectorContext<TItem extends TagItem>() {
   const context = useContext(TagSelectorContext);
   if (!context) {
     throw new Error(
-      "TagSelector parts must be rendered inside <TagSelector.Root>.",
+      "TagSelector parts must be rendered inside <TagSelector.Root>."
     );
   }
 
@@ -250,11 +251,11 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
     const query = searchValue ?? internalQuery;
     const selectedIds = useMemo(
       () => new Set(value.map((item) => item.id)),
-      [value],
+      [value]
     );
     const filteredOptions = useMemo(
       () => options.filter((item) => filterOption(item, query)),
-      [filterOption, options, query],
+      [filterOption, options, query]
     );
     const exactMatches = useMemo(() => {
       const normalizedQuery = normalizeComparable(query);
@@ -263,7 +264,7 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
       }
 
       return options.filter(
-        (item) => normalizeComparable(item.label) === normalizedQuery,
+        (item) => normalizeComparable(item.label) === normalizedQuery
       );
     }, [options, query]);
     const canCreate =
@@ -277,7 +278,7 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
           item,
           label: item.label,
           type: "item",
-        }),
+        })
       );
 
       if (canCreate) {
@@ -324,7 +325,7 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
           const matches = options.filter(
             (item) =>
               normalizeComparable(item.label) ===
-              normalizeComparable(normalizedDraft),
+              normalizeComparable(normalizedDraft)
           );
 
           if (matches.length === 1) {
@@ -336,7 +337,7 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
             return onCreateItem(normalizedDraft);
           }
           return null;
-        }),
+        })
       );
 
       for (const item of resolvedDrafts) {
@@ -444,7 +445,7 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
         </Popover.Root>
       </TagSelectorContext.Provider>
     );
-  },
+  }
 );
 
 const TagSelectorTrigger = forwardRef<
@@ -452,7 +453,7 @@ const TagSelectorTrigger = forwardRef<
   TagSelectorTriggerProps
 >(function TagSelectorTrigger(
   { className, onClick, onKeyDown, placeholder, tabIndex, ...triggerProps },
-  ref,
+  ref
 ) {
   const context = useTagSelectorContext();
   const label = context.ariaLabel;
@@ -487,7 +488,7 @@ const TagSelectorTrigger = forwardRef<
         aria-label={label}
         className={joinClassNames(
           "patternmode-tag-selector__trigger",
-          className,
+          className
         )}
         onClick={handleTriggerClick}
         onKeyDown={handleKeyDown}
@@ -559,7 +560,7 @@ const TagSelectorTrigger = forwardRef<
 const TagSelectorContent = forwardRef<HTMLDivElement, TagSelectorContentProps>(
   function TagSelectorContent(
     { align = "start", className, sideOffset = 6, ...contentProps },
-    ref,
+    ref
   ) {
     return (
       <Popover.Portal>
@@ -568,7 +569,7 @@ const TagSelectorContent = forwardRef<HTMLDivElement, TagSelectorContentProps>(
           align={align}
           className={joinClassNames(
             "patternmode-tag-selector__content",
-            className,
+            className
           )}
           data-slot="tag-selector-content"
           ref={ref}
@@ -576,13 +577,13 @@ const TagSelectorContent = forwardRef<HTMLDivElement, TagSelectorContentProps>(
         />
       </Popover.Portal>
     );
-  },
+  }
 );
 
 const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
   function TagSelectorSearch(
     { "aria-label": ariaLabel, className, onKeyDown, onPaste, ...searchProps },
-    ref,
+    ref
   ) {
     const context = useTagSelectorContext();
     const localRef = useRef<HTMLInputElement | null>(null);
@@ -614,7 +615,7 @@ const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
       if (event.key === "ArrowDown") {
         event.preventDefault();
         context.setActiveIndex((currentIndex) =>
-          getNextIndex(currentIndex, context.commandOptions.length),
+          getNextIndex(currentIndex, context.commandOptions.length)
         );
         return;
       }
@@ -622,7 +623,7 @@ const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
       if (event.key === "ArrowUp") {
         event.preventDefault();
         context.setActiveIndex((currentIndex) =>
-          getPreviousIndex(currentIndex, context.commandOptions.length),
+          getPreviousIndex(currentIndex, context.commandOptions.length)
         );
         return;
       }
@@ -676,7 +677,7 @@ const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
         aria-label={searchLabel}
         className={joinClassNames(
           "patternmode-tag-selector__search",
-          className,
+          className
         )}
         disabled={context.disabled}
         id={context.inputId}
@@ -688,7 +689,7 @@ const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
         value={context.query}
       />
     );
-  },
+  }
 );
 
 function TagSelectorOption<TItem extends TagItem>({
@@ -803,7 +804,7 @@ const TagSelectorEmpty = forwardRef<HTMLDivElement, TagSelectorEmptyProps>(
         ref={ref}
       />
     );
-  },
+  }
 );
 
 const TagSelectorList = forwardRef<HTMLDivElement, TagSelectorListProps>(
@@ -829,7 +830,7 @@ const TagSelectorList = forwardRef<HTMLDivElement, TagSelectorListProps>(
         )}
       </div>
     );
-  },
+  }
 );
 
 function TagSelectorBase(props: TagSelectorProps<TagItem>): ReactElement {

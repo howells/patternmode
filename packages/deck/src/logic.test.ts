@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import {
   getAdvanceDecision,
   getDeckRenderKey,
@@ -19,13 +20,13 @@ const items: DeckItem[] = [
 describe("getVisibleDeckItems", () => {
   it("wraps cyclic decks around the end of the list", () => {
     expect(
-      getVisibleDeckItems(items, 2, 3, "cycle").map((item) => item.id),
+      getVisibleDeckItems(items, 2, 3, "cycle").map((item) => item.id)
     ).toEqual(["c", "d", "a"]);
   });
 
   it("stops finite decks when no more cards are available", () => {
     expect(
-      getVisibleDeckItems(items, 2, 3, "finite").map((item) => item.id),
+      getVisibleDeckItems(items, 2, 3, "finite").map((item) => item.id)
     ).toEqual(["c", "d"]);
   });
 
@@ -70,7 +71,7 @@ describe("getAdvanceDecision", () => {
         distanceThreshold: 0.4,
         velocityThreshold: 600,
         allowedDirections: ["left", "right"],
-      }),
+      })
     ).toEqual({ accepted: true, direction: "left" });
   });
 
@@ -83,7 +84,7 @@ describe("getAdvanceDecision", () => {
         distanceThreshold: 0.5,
         velocityThreshold: 600,
         allowedDirections: ["left", "right"],
-      }),
+      })
     ).toEqual({ accepted: true, direction: "right" });
   });
 
@@ -96,7 +97,7 @@ describe("getAdvanceDecision", () => {
         distanceThreshold: 0.35,
         velocityThreshold: 600,
         allowedDirections: ["right"],
-      }),
+      })
     ).toEqual({ accepted: false, direction: "left" });
   });
 });

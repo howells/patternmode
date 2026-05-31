@@ -46,7 +46,7 @@ const ApertoOverlay = forwardRef<HTMLDivElement, ApertoOverlayProps>(
         />
       </Dialog.Overlay>
     );
-  },
+  }
 );
 
 ApertoOverlay.displayName = "ApertoOverlay";

@@ -3,14 +3,16 @@
 import { type AdvanceDirection, Deck, type DeckMode } from "@patternmode/deck";
 import Image from "next/image";
 import { useState } from "react";
+
 import { apertoMedia } from "@/lib/aperto-media";
+
 import { OptionBar } from "./option-bar";
 
 export function DeckDemo() {
   const [mode, setMode] = useState<DeckMode>("cycle");
   const [visibleCount, setVisibleCount] = useState(3);
   const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">(
-    "none",
+    "none"
   );
 
   return (

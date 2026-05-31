@@ -10,6 +10,7 @@ import type {
   SVGProps,
 } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
 import {
   DistributionBar,
   DistributionDisplay,
@@ -33,11 +34,10 @@ interface MockPanInfo {
   };
 }
 
-interface MockMotionButtonProps
-  extends Omit<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    "onDrag" | "onDragEnd" | "onDragStart"
-  > {
+interface MockMotionButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "onDrag" | "onDragEnd" | "onDragStart"
+> {
   children?: ReactNode;
   drag?: string;
   dragElastic?: number;
@@ -131,7 +131,7 @@ describe("Swatch", () => {
           { color: "#315c4b", ratio: 60 },
           { color: "#e1ebe5", ratio: 40 },
         ]}
-      />,
+      />
     );
 
     expect(screen.getByLabelText("Palette")).toHaveStyle({
@@ -146,16 +146,16 @@ describe("Swatch", () => {
         { color: "#111111", ratio: -4 },
         { color: "#222222", ratio: 2 },
         { color: "#333333", ratio: Number.NaN },
-      ]),
+      ])
     ).toBe(
-      "linear-gradient(90deg, #111111 0% 0%, #222222 0% 100%, #333333 100% 100%)",
+      "linear-gradient(90deg, #111111 0% 0%, #222222 0% 100%, #333333 100% 100%)"
     );
 
     expect(
       getSwatchColorsBackground([
         { color: "#111111", ratio: 0 },
         { color: "#222222", ratio: -1 },
-      ]),
+      ])
     ).toBe("linear-gradient(90deg, #111111 0% 50%, #222222 50% 100%)");
   });
 
@@ -170,7 +170,7 @@ describe("Swatch", () => {
         icon={CheckIcon}
         onRemove={onRemove}
         selected
-      />,
+      />
     );
 
     const swatch = screen.getByRole("group", { name: "Selected" });
@@ -187,7 +187,7 @@ describe("Swatch", () => {
     render(
       <Swatch aria-label="Sample" objectFit="contain" objectPosition="top left">
         <img alt="Sample media" src="/sample.jpg" />
-      </Swatch>,
+      </Swatch>
     );
 
     const media = screen.getByAltText("Sample media").parentElement;
@@ -216,7 +216,7 @@ describe("Swatch", () => {
     ]);
 
     render(
-      <Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />,
+      <Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />
     );
 
     expect(screen.getByLabelText("Huge")).toHaveStyle({
@@ -229,17 +229,17 @@ describe("Swatch", () => {
     render(<Swatch aria-label="Band" color="#315c4b" shape="block" />);
     expect(screen.getByLabelText("Band")).toHaveAttribute(
       "data-shape",
-      "block",
+      "block"
     );
   });
 
   it("builds a layered radial atmosphere from color stops", () => {
     expect(
-      getSwatchAtmosphereBackground(["#315c4b", "#d9a441", "#9b3d32"]),
+      getSwatchAtmosphereBackground(["#315c4b", "#d9a441", "#9b3d32"])
     ).toBe(
       "radial-gradient(ellipse at 30% 42%, #315c4bcc 0%, transparent 58%), " +
         "radial-gradient(ellipse at 72% 58%, #d9a44199 0%, transparent 53%), " +
-        "radial-gradient(ellipse at 45% 65%, #9b3d3277 0%, transparent 66%)",
+        "radial-gradient(ellipse at 45% 65%, #9b3d3277 0%, transparent 66%)"
     );
   });
 
@@ -250,7 +250,7 @@ describe("Swatch", () => {
     });
     // density 1 → tight reach (50%); gravity 1 with a -1 pool sign → 42 - 8.
     expect(background).toBe(
-      "radial-gradient(ellipse at 30% 34%, #315c4bcc 0%, transparent 50%)",
+      "radial-gradient(ellipse at 30% 34%, #315c4bcc 0%, transparent 50%)"
     );
   });
 
@@ -260,7 +260,7 @@ describe("Swatch", () => {
         aria-label="Atmosphere"
         colors={["#315c4b", "#d9a441", "#9b3d32"]}
         texture="atmosphere"
-      />,
+      />
     );
 
     const swatch = screen.getByLabelText("Atmosphere");
@@ -272,7 +272,7 @@ describe("Swatch", () => {
 
   it("omits the scrim for a flat swatch so the fill reads as the exact color", () => {
     const { container } = render(
-      <Swatch aria-label="Cell" color="#315c4b" flat shape="block" />,
+      <Swatch aria-label="Cell" color="#315c4b" flat shape="block" />
     );
     const swatch = screen.getByLabelText("Cell");
     expect(swatch).toHaveAttribute("data-flat", "true");
@@ -352,13 +352,13 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
           { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
         ]}
-      />,
+      />
     );
 
     expect(
       screen.getByLabelText(
-        "Assigned finish distribution: 79% assigned, 21% unassigned",
-      ),
+        "Assigned finish distribution: 79% assigned, 21% unassigned"
+      )
     ).toHaveClass("patternmode-distribution-display");
     expect(screen.getByText("79% assigned")).toBeInTheDocument();
     expect(screen.getByText("21% unassigned")).toBeInTheDocument();
@@ -378,7 +378,7 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 40 },
         ]}
         selectedSegmentId="evergreen"
-      />,
+      />
     );
 
     const evergreen = screen.getByRole("button", { name: "Evergreen 60%" });
@@ -389,7 +389,7 @@ describe("DistributionBar", () => {
     expect(saffron).toHaveAttribute("aria-pressed", "false");
     await user.click(saffron);
     expect(onSegmentSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "saffron" }),
+      expect.objectContaining({ id: "saffron" })
     );
   });
 
@@ -402,7 +402,7 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
           { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
         ]}
-      />,
+      />
     );
 
     expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();
@@ -424,11 +424,11 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
           { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
         ]}
-      />,
+      />
     );
 
     expect(
-      screen.getByRole("group", { name: "Finish distribution" }),
+      screen.getByRole("group", { name: "Finish distribution" })
     ).toHaveClass("patternmode-distribution-bar");
     expect(screen.getByText("Evergreen 48%")).toBeInTheDocument();
     expect(screen.getByText("Saffron 30%")).toBeInTheDocument();
@@ -455,7 +455,7 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
           { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
         ]}
-      />,
+      />
     );
 
     const group = screen.getByRole("group", { name: "Finish distribution" });
@@ -491,7 +491,7 @@ describe("DistributionBar", () => {
           { id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
           { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
         ]}
-      />,
+      />
     );
 
     expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();

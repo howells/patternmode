@@ -40,14 +40,14 @@ export type RenderImage = (
   props: ImgHTMLAttributes<HTMLImageElement> & {
     item: ApertoImageItem;
     variant: "expanded" | "thumbnail";
-  },
+  }
 ) => ReactNode;
 
 export type RenderVideo = (
   props: VideoHTMLAttributes<HTMLVideoElement> & {
     item: ApertoVideoItem;
     variant: "expanded" | "thumbnail";
-  },
+  }
 ) => ReactNode;
 
 export interface ApertoClassNames {

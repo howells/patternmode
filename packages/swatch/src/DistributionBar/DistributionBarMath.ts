@@ -12,17 +12,17 @@ export type DistributionBarSegmentUpdate = Partial<
 };
 
 export function getDistributionTotal(
-  segments: DistributionBarSegment[],
+  segments: DistributionBarSegment[]
 ): number {
   return segments.reduce(
     (sum, segment) => sum + sanitizeValue(segment.value),
-    0,
+    0
   );
 }
 
 export function getDistributionBoundaryPercent(
   segments: DistributionBarSegment[],
-  boundaryIndex: number,
+  boundaryIndex: number
 ): number {
   const total = getDistributionTotal(segments);
   if (total <= 0) {
@@ -39,7 +39,7 @@ export function moveDistributionBoundary(
   segments: DistributionBarSegment[],
   boundaryIndex: number,
   deltaValue: number,
-  minValue: number,
+  minValue: number
 ): DistributionBarSegment[] {
   const left = segments[boundaryIndex];
   const right = segments[boundaryIndex + 1];
@@ -52,7 +52,7 @@ export function moveDistributionBoundary(
   const nextLeft = clamp(
     sanitizeValue(left.value) + deltaValue,
     clampedMin,
-    pairTotal - clampedMin,
+    pairTotal - clampedMin
   );
   const nextRight = pairTotal - nextLeft;
 
@@ -69,7 +69,7 @@ export function moveDistributionBoundary(
 
 export function removeDistributionSegment(
   segments: DistributionBarSegment[],
-  segmentId: string,
+  segmentId: string
 ): DistributionBarSegment[] {
   if (segments.length <= 1) {
     return segments;
@@ -100,7 +100,7 @@ export function removeDistributionSegment(
 
     const nextValue = roundValue(
       sanitizeValue(segment.value) +
-        (removedValue * sanitizeValue(segment.value)) / remainingTotal,
+        (removedValue * sanitizeValue(segment.value)) / remainingTotal
     );
     assignedValue += nextValue;
     return { ...segment, value: nextValue };
@@ -110,10 +110,10 @@ export function removeDistributionSegment(
 export function updateDistributionSegment(
   segments: DistributionBarSegment[],
   segmentId: string,
-  update: DistributionBarSegmentUpdate,
+  update: DistributionBarSegmentUpdate
 ): DistributionBarSegment[] {
   return segments.map((segment) =>
-    segment.id === segmentId ? { ...segment, ...update } : segment,
+    segment.id === segmentId ? { ...segment, ...update } : segment
   );
 }
 

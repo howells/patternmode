@@ -98,7 +98,7 @@ export const SheetPanel = memo(function SheetPanel({
       onSnap,
       sequential: config.snapToSequentialPoints,
     },
-    setDragState,
+    setDragState
   );
 
   const ariaLabel =
@@ -134,7 +134,7 @@ export const SheetPanel = memo(function SheetPanel({
       side,
       hasDescription,
       registerDescription,
-    ],
+    ]
   );
 
   const panelLayout = resolvePanelLayout(layout, renderHeader);
@@ -145,7 +145,7 @@ export const SheetPanel = memo(function SheetPanel({
     panelStyles,
     isTop,
     hasPanelClass,
-    dragState.isDragging,
+    dragState.isDragging
   );
 
   const headerProps = useMemo<HeaderRenderProps>(
@@ -155,7 +155,7 @@ export const SheetPanel = memo(function SheetPanel({
       onClose: close,
       side,
     }),
-    [close, isNested, pop, side],
+    [close, isNested, pop, side]
   );
 
   const ariaProps = buildAriaProps(
@@ -164,14 +164,14 @@ export const SheetPanel = memo(function SheetPanel({
     isComposable,
     ariaLabel,
     panelId,
-    hasDescription,
+    hasDescription
   );
 
   const transition = buildPanelTransition(
     dragState.isDragging,
     isTop,
     spring,
-    stackSpring,
+    stackSpring
   );
 
   const animatedRadius = getAnimatedBorderRadius(side, depth, config.stacking);
@@ -179,7 +179,7 @@ export const SheetPanel = memo(function SheetPanel({
     side,
     snapHeights,
     activeSnapIndex,
-    measuredHeight,
+    measuredHeight
   );
   const resolvedSlideFrom = resolveSlideFrom(side, slideFrom, measuredHeight);
 
@@ -192,7 +192,7 @@ export const SheetPanel = memo(function SheetPanel({
     animatedRadius,
     transition,
     snapYOffset,
-    isTop,
+    isTop
   );
 
   const initialRadius = getInitialRadius(side);

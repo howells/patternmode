@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+
 import { getSnapOffset } from "./snap-points";
 import type { getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
@@ -12,7 +13,7 @@ const EMPTY_CLASSNAMES: ResolvedClassNames = {
 };
 
 export function resolveClassNames(
-  cn?: StacksheetClassNames,
+  cn?: StacksheetClassNames
 ): ResolvedClassNames {
   if (!cn) {
     return EMPTY_CLASSNAMES;
@@ -30,7 +31,7 @@ export function buildAriaProps(
   isComposable: boolean,
   ariaLabel: string,
   panelId: string,
-  hasDescription: boolean,
+  hasDescription: boolean
 ): Record<string, string | undefined> {
   if (!isTop) {
     return {};
@@ -52,7 +53,7 @@ export function buildAriaProps(
 
 export function getDragTransform(
   side: Side,
-  offset: number,
+  offset: number
 ): { x?: number; y?: number } {
   if (offset === 0) {
     return {};
@@ -79,7 +80,7 @@ export function buildPanelStyle(
   panelStyles: CSSProperties,
   isTop: boolean,
   hasPanelClass: boolean,
-  isDragging: boolean,
+  isDragging: boolean
 ): CSSProperties {
   return {
     ...panelStyles,
@@ -99,7 +100,7 @@ export function buildPanelTransition(
   isDragging: boolean,
   isTop: boolean,
   spring: Record<string, unknown>,
-  stackSpring: Record<string, unknown>,
+  stackSpring: Record<string, unknown>
 ) {
   if (isDragging) {
     return { type: "tween" as const, duration: 0 };
@@ -113,7 +114,7 @@ export function computeSnapYOffset(
   side: Side,
   snapHeights: number[],
   activeSnapIndex: number,
-  measuredHeight: number,
+  measuredHeight: number
 ): number {
   if (side !== "bottom" || snapHeights.length === 0 || measuredHeight <= 0) {
     return 0;
@@ -134,7 +135,7 @@ export function getBottomSlideDistance(measuredHeight: number): number {
 export function resolveSlideFrom(
   side: Side,
   slideFrom: SlideValues,
-  measuredHeight: number,
+  measuredHeight: number
 ): SlideValues {
   if (side !== "bottom") {
     return slideFrom;
@@ -150,7 +151,7 @@ export function buildAnimateTarget(
   animatedRadius: Record<string, number>,
   transition: Record<string, unknown>,
   snapYOffset: number,
-  isTop: boolean,
+  isTop: boolean
 ) {
   const base = {
     ...slideTarget,

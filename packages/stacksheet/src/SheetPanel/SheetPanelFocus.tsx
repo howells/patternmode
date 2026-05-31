@@ -35,7 +35,7 @@ export function ModalFocusTrap({
         allowOutsideClick: true,
         checkCanFocusTrap: () =>
           new Promise<void>((resolve) =>
-            requestAnimationFrame(() => resolve()),
+            requestAnimationFrame(() => resolve())
           ),
         fallbackFocus: () => {
           if (fallbackRef.current) {
@@ -55,7 +55,7 @@ function useLayeredModalFocused(active: boolean): boolean {
   const layered = useSyncExternalStore(
     subscribeToFocusTarget,
     getLayeredModalFocused,
-    getServerLayeredModalFocused,
+    getServerLayeredModalFocused
   );
   return active && layered;
 }

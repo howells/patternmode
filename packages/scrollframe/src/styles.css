@@ -88,9 +88,9 @@
 
   .patternmode-scrollframe__fade {
     --_fade-stops:
-      transparent 0%, rgb(0 0 0 / 0.02) 9%,
-      rgb(0 0 0 / 0.08) 18%, rgb(0 0 0 / 0.18) 29%, rgb(0 0 0 / 0.32) 42%,
-      rgb(0 0 0 / 0.52) 58%, rgb(0 0 0 / 0.72) 74%, black 100%;
+      transparent 0%, rgb(0 0 0 / 0.02) 9%, rgb(0 0 0 / 0.08) 18%,
+      rgb(0 0 0 / 0.18) 29%, rgb(0 0 0 / 0.32) 42%, rgb(0 0 0 / 0.52) 58%,
+      rgb(0 0 0 / 0.72) 74%, black 100%;
     background: var(--patternmode-scrollframe-fade-color);
     mask-image: linear-gradient(var(--_fade-dir), var(--_fade-stops));
     opacity: 1;

@@ -8,6 +8,7 @@ import {
 } from "@patternmode/aperto";
 import type { CSSProperties } from "react";
 import { useState } from "react";
+
 import { OptionBar } from "./option-bar";
 
 export type CatalogMediaItem = ApertoMediaItem;

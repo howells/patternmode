@@ -40,7 +40,7 @@ vi.mock("motion/react", () => {
       }, [props]);
 
       return <div ref={ref} {...stripMotionProps(props)} />;
-    },
+    }
   );
   const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
   const motionComponents = {
@@ -128,25 +128,25 @@ describe("SheetRenderer integration", () => {
         }}
       >
         <Controls />
-      </StacksheetProvider>,
+      </StacksheetProvider>
     );
 
     await user.click(screen.getByRole("button", { name: "Open root" }));
 
     expect(
-      screen.getByRole("dialog", { name: "Root sheet" }),
+      screen.getByRole("dialog", { name: "Root sheet" })
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Open nested" }));
 
     expect(
-      screen.getByRole("dialog", { name: "Nested sheet" }),
+      screen.getByRole("dialog", { name: "Nested sheet" })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("dialog", { name: "Root sheet" }),
+      screen.queryByRole("dialog", { name: "Root sheet" })
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Open nested" }),
+      screen.queryByRole("button", { name: "Open nested" })
     ).not.toBeInTheDocument();
 
     const backButton = screen.getByRole("button", { name: "Back" });
@@ -155,10 +155,10 @@ describe("SheetRenderer integration", () => {
     await user.click(backButton);
 
     expect(
-      screen.getByRole("dialog", { name: "Root sheet" }),
+      screen.getByRole("dialog", { name: "Root sheet" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Open nested" }),
+      screen.getByRole("button", { name: "Open nested" })
     ).toBeInTheDocument();
 
     const closeButton = screen.getByRole("button", { name: "Close" });
@@ -205,7 +205,7 @@ describe("SheetRenderer integration", () => {
         sheets={{ details: DetailsSheet }}
       >
         <Controls />
-      </StacksheetProvider>,
+      </StacksheetProvider>
     );
 
     await user.click(screen.getByRole("button", { name: "Open details" }));
@@ -219,7 +219,7 @@ describe("SheetRenderer integration", () => {
     expect(dialog).toHaveAttribute("aria-describedby");
     expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
       "min-h-11",
-      "min-w-11",
+      "min-w-11"
     );
   });
 });

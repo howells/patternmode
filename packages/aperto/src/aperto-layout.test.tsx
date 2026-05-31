@@ -76,7 +76,7 @@ vi.mock("motion/react", () => {
             unmountedLayoutIds.push(latestLayoutIdRef.current);
           }
         },
-        [],
+        []
       );
 
       useEffect(() => {
@@ -86,7 +86,7 @@ vi.mock("motion/react", () => {
       }, [props]);
 
       return <div ref={ref} {...stripMotionProps(props)} />;
-    },
+    }
   );
 
   const motionComponents = {
@@ -139,7 +139,7 @@ describe("Aperto layout projection", () => {
           <Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
           Centered content
         </Aperto.Primitive.Content>
-      </Aperto.Primitive.Root>,
+      </Aperto.Primitive.Root>
     );
 
     expect(screen.getByRole("dialog", { name: "Centered panel" })).toHaveStyle({
@@ -156,7 +156,7 @@ describe("Aperto layout projection", () => {
           <Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
           Custom content
         </Aperto.Primitive.Content>
-      </Aperto.Primitive.Root>,
+      </Aperto.Primitive.Root>
     );
 
     const content = screen.getByRole("dialog", { name: "Unpositioned panel" });
@@ -177,11 +177,11 @@ describe("Aperto layout projection", () => {
     render(<Aperto dismissible={false} media={media} />);
 
     await user.click(
-      screen.getByRole("button", { name: "Open Morning ridge" }),
+      screen.getByRole("button", { name: "Open Morning ridge" })
     );
 
     expect(
-      screen.getByRole("dialog", { name: "Morning ridge" }),
+      screen.getByRole("dialog", { name: "Morning ridge" })
     ).toHaveAttribute("data-drag", "false");
   });
 
@@ -206,13 +206,13 @@ describe("Aperto layout projection", () => {
       <Aperto.Group dismissible={false} media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
     expect(
-      screen.getByRole("dialog", { name: "Studio table" }),
+      screen.getByRole("dialog", { name: "Studio table" })
     ).toHaveAttribute("data-drag", "false");
   });
 
@@ -233,13 +233,13 @@ describe("Aperto layout projection", () => {
         media={media}
       >
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
     expect(
-      screen.getByRole("dialog", { name: "Studio table" }),
+      screen.getByRole("dialog", { name: "Studio table" })
     ).toHaveAttribute("data-drag", "true");
   });
 
@@ -264,7 +264,7 @@ describe("Aperto layout projection", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -301,7 +301,7 @@ describe("Aperto layout projection", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -311,12 +311,12 @@ describe("Aperto layout projection", () => {
       screen.getByRole("button", {
         hidden: true,
         name: "Open Soft afternoon",
-      }),
+      })
     ).not.toHaveAttribute("data-layout-id");
     await user.click(screen.getByRole("button", { name: "Close" }));
 
     await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     );
   });
 
@@ -349,7 +349,7 @@ describe("Aperto layout projection", () => {
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
         <Aperto.Thumbnail index={2} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     const openedThumbnail = screen.getByRole("button", {
@@ -363,7 +363,7 @@ describe("Aperto layout projection", () => {
     await user.click(screen.getByRole("button", { name: "Close" }));
 
     await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     );
     expect(document.activeElement).toBe(openedThumbnail);
     expect(document.activeElement).not.toBe(lastThumbnail);
@@ -388,7 +388,7 @@ describe("Aperto layout projection", () => {
     render(
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Portrait" }));
@@ -421,13 +421,13 @@ describe("Aperto layout projection", () => {
         )}
       >
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>,
+      </Aperto.Group>
     );
 
     await user.click(screen.getByRole("button", { name: "Open Optimized" }));
 
     expect(
-      document.querySelector('[data-slot="aperto-transition-media"] img'),
+      document.querySelector('[data-slot="aperto-transition-media"] img')
     ).toHaveAttribute("data-renderer", "expanded");
   });
 });

@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
 import { loadDotenv } from "@howells/envy/dotenv";
 
 import { envSchema } from "./release-env/schema.mjs";
@@ -28,7 +29,7 @@ try {
     `//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}\nregistry=https://registry.npmjs.org/\n`,
     {
       mode: 0o600,
-    },
+    }
   );
 
   const exitCode = await new Promise((resolve) => {

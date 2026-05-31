@@ -70,8 +70,10 @@ export interface ScrollFrameResolvedDragScrollConfig {
   ignoreSelector: string;
 }
 
-export interface ScrollFrameProps
-  extends Omit<ComponentPropsWithoutRef<typeof RadixScrollArea.Root>, "type"> {
+export interface ScrollFrameProps extends Omit<
+  ComponentPropsWithoutRef<typeof RadixScrollArea.Root>,
+  "type"
+> {
   axes?: ScrollFrameAxes;
   children: ReactNode;
   contentClassName?: string;
@@ -90,8 +92,10 @@ export interface ScrollFrameProps
   viewportStyle?: CSSProperties;
 }
 
-export interface ScrollFrameRootProps
-  extends Omit<ComponentPropsWithoutRef<typeof RadixScrollArea.Root>, "type"> {
+export interface ScrollFrameRootProps extends Omit<
+  ComponentPropsWithoutRef<typeof RadixScrollArea.Root>,
+  "type"
+> {
   axes?: ScrollFrameAxes;
   children: ReactNode;
   controlVisibility?: ScrollFrameControlVisibility;
@@ -103,8 +107,9 @@ export interface ScrollFrameRootProps
   scrollStep?: ScrollFrameScrollStep;
 }
 
-export interface ScrollFrameViewportProps
-  extends ComponentPropsWithoutRef<typeof RadixScrollArea.Viewport> {
+export interface ScrollFrameViewportProps extends ComponentPropsWithoutRef<
+  typeof RadixScrollArea.Viewport
+> {
   children: ReactNode;
   contentClassName?: string;
   contentStyle?: CSSProperties;
@@ -118,8 +123,7 @@ export interface ScrollFrameFadeProps extends HTMLAttributes<HTMLSpanElement> {
   size?: number | string;
 }
 
-export interface ScrollFrameMovementControlProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ScrollFrameMovementControlProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   axis?: ScrollFrameAxis;
   visibility?: ScrollFrameControlVisibility;

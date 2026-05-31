@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo } from "react";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
+
 import { resolveConfig } from "./config";
 import { SheetRenderer } from "./renderer";
 import { createSheetStore } from "./store";
@@ -50,7 +51,7 @@ type StoreState<TMap extends object> = StacksheetSnapshot<TMap> &
  * Use `useSheetPanel()` inside content components to access `close()` and `back()`.
  */
 export function createStacksheet<TMap extends object>(
-  config?: StacksheetConfig,
+  config?: StacksheetConfig
 ): StacksheetInstance<TMap> {
   const resolved = resolveConfig(config);
   const { store, componentMap } = createSheetStore<TMap>(resolved);
@@ -65,7 +66,7 @@ export function createStacksheet<TMap extends object>(
     const ctx = useContext(StoreContext);
     if (!ctx) {
       throw new Error(
-        "useSheet/useStacksheetState must be used within <StacksheetProvider>",
+        "useSheet/useStacksheetState must be used within <StacksheetProvider>"
       );
     }
     return ctx;
@@ -129,7 +130,7 @@ export function createStacksheet<TMap extends object>(
       useShallow((state) => ({
         stack: state.stack,
         isOpen: state.isOpen,
-      })),
+      }))
     );
   }
 

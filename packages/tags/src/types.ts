@@ -67,8 +67,9 @@ export interface TagOptionRenderProps<TItem extends TagItem = TagItem> {
   selected: boolean;
 }
 
-export interface TagSelectorRootProps<TItem extends TagItem = TagItem>
-  extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "onChange"> {
+export interface TagSelectorRootProps<
+  TItem extends TagItem = TagItem,
+> extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "onChange"> {
   "aria-label"?: string;
   children?: ReactNode;
   disabled?: boolean;
@@ -88,29 +89,27 @@ export interface TagSelectorRootProps<TItem extends TagItem = TagItem>
   value: readonly TItem[];
 }
 
-export interface TagSelectorProps<TItem extends TagItem = TagItem>
-  extends TagSelectorRootProps<TItem> {
+export interface TagSelectorProps<
+  TItem extends TagItem = TagItem,
+> extends TagSelectorRootProps<TItem> {
   contentClassName?: string;
   searchPlaceholder?: string;
   triggerClassName?: string;
 }
 
-export interface TagSelectorTriggerProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface TagSelectorTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   placeholder?: string;
 }
 
-export interface TagSelectorContentProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface TagSelectorContentProps extends HTMLAttributes<HTMLDivElement> {
   align?: "center" | "end" | "start";
   sideOffset?: number;
 }
 
-export interface TagSelectorSearchProps
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    "children" | "onChange"
-  > {}
+export interface TagSelectorSearchProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "children" | "onChange"
+> {}
 
 export interface TagSelectorListProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;

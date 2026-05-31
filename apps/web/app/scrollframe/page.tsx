@@ -6,6 +6,7 @@ import {
   DocsBlock,
 } from "@howells/site-ui";
 import type { Metadata } from "next";
+
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
 
 export const metadata: Metadata = {

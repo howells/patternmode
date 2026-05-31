@@ -15,15 +15,14 @@ export interface SwatchAtmosphereOptions {
  * gradient exactly; further entries extend the pattern for palettes with
  * more than three colors.
  */
-const POOLS: ReadonlyArray<readonly [number, number, number, number, number]> =
-  [
-    [30, 42, 0xcc, 0, -1],
-    [72, 58, 0x99, -5, 1],
-    [45, 65, 0x77, 8, -1],
-    [62, 32, 0x66, 3, 1],
-    [24, 72, 0x55, -3, -1],
-    [80, 40, 0x44, 6, 1],
-  ];
+const POOLS: readonly (readonly [number, number, number, number, number])[] = [
+  [30, 42, 0xcc, 0, -1],
+  [72, 58, 0x99, -5, 1],
+  [45, 65, 0x77, 8, -1],
+  [62, 32, 0x66, 3, 1],
+  [24, 72, 0x55, -3, -1],
+  [80, 40, 0x44, 6, 1],
+];
 
 /**
  * Build a soft, layered radial "atmosphere" background from color stops — a
@@ -33,7 +32,7 @@ const POOLS: ReadonlyArray<readonly [number, number, number, number, number]> =
  */
 export function getSwatchAtmosphereBackground(
   colors: SwatchColorStop[] | undefined,
-  options: SwatchAtmosphereOptions = {},
+  options: SwatchAtmosphereOptions = {}
 ): string | undefined {
   if (!colors || colors.length === 0) {
     return undefined;
@@ -55,7 +54,7 @@ export function getSwatchAtmosphereBackground(
     const radius = Math.max(8, reach + radiusDelta);
     return `radial-gradient(ellipse at ${x}% ${focalY}%, ${withAlpha(
       color,
-      alpha,
+      alpha
     )} 0%, transparent ${radius}%)`;
   });
 
@@ -77,10 +76,7 @@ function withAlpha(color: string, alpha: number): string {
 function normalizeHex(color: string): string | null {
   const value = color.trim().replace(/^#/, "");
   if (/^[\da-f]{3}$/i.test(value)) {
-    return value
-      .split("")
-      .map((part) => part + part)
-      .join("");
+    return [...value].map((part) => part + part).join("");
   }
   if (/^[\da-f]{6}$/i.test(value)) {
     return value;

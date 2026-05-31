@@ -33,7 +33,7 @@ type SwatchIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 export function getSwatchSizeVariableStyle(
   size: SwatchSize,
-  variableName = "--patternmode-swatch-size",
+  variableName = "--patternmode-swatch-size"
 ): Record<string, string> {
   return {
     [variableName]: SWATCH_SIZE_VALUES[size],

@@ -26,11 +26,10 @@ export interface DeckRenderOverlayState {
   itemId: string;
 }
 
-export interface DeckRootProps
-  extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "children" | "onDrag" | "onDragEnd"
-  > {
+export interface DeckRootProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children" | "onDrag" | "onDragEnd"
+> {
   allowedDirections?: AdvanceDirection[];
   children: ReactNode;
   defaultIndex?: number;
@@ -52,24 +51,23 @@ export interface DeckRootProps
   visibleCount?: number;
 }
 
-export interface DeckCardProps
-  extends Omit<
-    HTMLMotionProps<"div">,
-    | "animate"
-    | "children"
-    | "drag"
-    | "dragConstraints"
-    | "dragElastic"
-    | "dragMomentum"
-    | "exit"
-    | "initial"
-    | "onDrag"
-    | "onDragEnd"
-    | "onDragStart"
-    | "style"
-    | "transition"
-    | "whileDrag"
-  > {
+export interface DeckCardProps extends Omit<
+  HTMLMotionProps<"div">,
+  | "animate"
+  | "children"
+  | "drag"
+  | "dragConstraints"
+  | "dragElastic"
+  | "dragMomentum"
+  | "exit"
+  | "initial"
+  | "onDrag"
+  | "onDragEnd"
+  | "onDragStart"
+  | "style"
+  | "transition"
+  | "whileDrag"
+> {
   children: ReactNode;
   style?: HTMLAttributes<HTMLDivElement>["style"];
 }

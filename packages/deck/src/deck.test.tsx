@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { Deck } from "./index";
 
 vi.mock("motion/react", () => {
@@ -45,7 +46,7 @@ vi.mock("motion/react", () => {
   }: MotionTestProps) => props;
 
   const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
-    (props, ref) => <div ref={ref} {...stripMotionProps(props)} />,
+    (props, ref) => <div ref={ref} {...stripMotionProps(props)} />
   );
 
   const AnimatePresence = ({ children }: { children: ReactNode }) => (
@@ -89,7 +90,7 @@ describe("Deck", () => {
         <Deck.Card>Beta</Deck.Card>
         <Deck.Card>Gamma</Deck.Card>
         <Deck.Card>Delta</Deck.Card>
-      </Deck>,
+      </Deck>
     );
 
     const deck = screen.getByRole("application", { name: "Project cards" });
@@ -102,7 +103,7 @@ describe("Deck", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(onAdvance).toHaveBeenCalledWith(
-      expect.objectContaining({ direction: "right", index: 1 }),
+      expect.objectContaining({ direction: "right", index: 1 })
     );
     expect(onIndexChange).toHaveBeenCalledWith(2);
     expect(screen.getByText("Gamma")).toHaveAttribute("data-active", "true");
@@ -122,7 +123,7 @@ describe("Deck", () => {
         <Deck.Card>One</Deck.Card>
         <Deck.Card>Two</Deck.Card>
         <Deck.Empty>No cards left</Deck.Empty>
-      </Deck>,
+      </Deck>
     );
 
     const deck = screen.getByRole("application", { name: "Finite cards" });
@@ -146,7 +147,7 @@ describe("Deck", () => {
       >
         <Deck.Card>First</Deck.Card>
         <Deck.Card>Second</Deck.Card>
-      </Deck>,
+      </Deck>
     );
 
     const deck = screen.getByRole("application", { name: "Controlled cards" });
@@ -164,12 +165,12 @@ describe("Deck", () => {
           <Deck.Card>Fragment one</Deck.Card>
           <Deck.Card>Fragment two</Deck.Card>
         </Fragment>
-      </Deck>,
+      </Deck>
     );
 
     expect(screen.getByText("Fragment one")).toHaveAttribute(
       "data-active",
-      "true",
+      "true"
     );
     expect(screen.getByText("Fragment two")).toHaveAttribute("data-depth", "1");
   });
@@ -182,11 +183,11 @@ describe("Deck", () => {
         <div>
           <Deck.Card>Wrapped one</Deck.Card>
         </div>
-      </Deck>,
+      </Deck>
     );
 
     expect(warn).toHaveBeenCalledWith(
-      expect.stringContaining("Deck.Card must be a direct child"),
+      expect.stringContaining("Deck.Card must be a direct child")
     );
 
     warn.mockRestore();

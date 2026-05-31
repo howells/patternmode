@@ -18,7 +18,7 @@ export const ScrollFrameScrollbar = forwardRef<
       {...props}
       className={joinClassNames(
         "patternmode-scrollframe__scrollbar",
-        className,
+        className
       )}
       data-hidden={scrollbars === "hidden" ? "true" : undefined}
       data-slot="scrollframe-scrollbar"

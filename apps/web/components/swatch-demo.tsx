@@ -104,7 +104,7 @@ function CheckIcon(props: SVGProps<SVGSVGElement>) {
 export function SwatchDemo() {
   const [selected, setSelected] = useState<FinishColor>(finishes[0].color);
   const [selectedPalette, setSelectedPalette] = useState<PaletteName>(
-    palettes[0].name,
+    palettes[0].name
   );
   const [distribution, setDistribution] =
     useState<DistributionBarSegment[]>(startingDistribution);

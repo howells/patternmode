@@ -1,9 +1,10 @@
 import { type RefObject, useCallback, useEffect, useState } from "react";
+
 import type { ResolvedConfig } from "./types";
 
 export function usePanelHeight(
   panelRef: RefObject<HTMLDivElement | null>,
-  hasSnapPoints: boolean,
+  hasSnapPoints: boolean
 ): number {
   const [height, setHeight] = useState(0);
 
@@ -31,7 +32,7 @@ export function useViewportHeight(active: boolean): number {
       typeof window === "undefined"
         ? 0
         : (window.visualViewport?.height ?? window.innerHeight),
-    [],
+    []
   );
   const [height, setHeight] = useState(() => getHeight());
 
@@ -58,7 +59,7 @@ export function useViewportHeight(active: boolean): number {
 export function useBodyScale(
   config: ResolvedConfig,
   isOpen: boolean,
-  prefersReducedMotion: boolean,
+  prefersReducedMotion: boolean
 ) {
   useEffect(() => {
     if (!config.shouldScaleBackground || prefersReducedMotion) {

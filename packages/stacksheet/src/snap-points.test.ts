@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import {
   findSnapTarget,
   getSnapOffset,
@@ -98,7 +99,7 @@ describe("findSnapTarget", () => {
     expect(findSnapTarget(100, panelHeight, snapHeights, 0.5, 1, true)).toBe(0);
     // Currently at index 0, swiping down → dismiss
     expect(findSnapTarget(100, panelHeight, snapHeights, 0.5, 0, true)).toBe(
-      -1,
+      -1
     );
   });
 
