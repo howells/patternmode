@@ -1,11 +1,12 @@
 import {
 	AnimatePresence,
-	motion,
+	m,
 	type TargetAndTransition,
 	type Transition,
 } from "motion/react";
 import { useApertoContext } from "./context";
-import { getMediaKey, renderExpandedMedia } from "./media-rendering";
+import { ApertoExpandedMedia } from "./media-rendering";
+import { getMediaKey } from "./media-utils";
 import type {
 	ApertoMediaItem,
 	NavigationMotionPresetName,
@@ -137,7 +138,7 @@ export function ApertoExpandedMediaStage({
 
 	return (
 		<AnimatePresence custom={animationCustom} initial={false} mode="sync">
-			<motion.div
+			<m.div
 				animate="center"
 				custom={animationCustom}
 				data-navigation-direction={direction}
@@ -149,8 +150,12 @@ export function ApertoExpandedMediaStage({
 				transition={transition}
 				variants={variants}
 			>
-				{renderExpandedMedia(item, renderImage, renderVideo)}
-			</motion.div>
+				<ApertoExpandedMedia
+					item={item}
+					renderImage={renderImage}
+					renderVideo={renderVideo}
+				/>
+			</m.div>
 		</AnimatePresence>
 	);
 }

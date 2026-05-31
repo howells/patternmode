@@ -97,7 +97,7 @@ const ScrollFrameBase = forwardRef<HTMLDivElement, ScrollFrameProps>(
 	},
 );
 
-export const ScrollFrame = Object.assign(ScrollFrameBase, {
+const ScrollFrame = Object.assign(ScrollFrameBase, {
 	Corner: ScrollFrameCorner,
 	Fade: ScrollFrameFade,
 	Next: ScrollFrameNext,
@@ -107,3 +107,5 @@ export const ScrollFrame = Object.assign(ScrollFrameBase, {
 	Thumb: ScrollFrameThumb,
 	Viewport: ScrollFrameViewport,
 });
+
+export { ScrollFrame };

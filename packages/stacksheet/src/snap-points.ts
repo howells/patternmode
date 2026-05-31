@@ -56,9 +56,13 @@ export function resolveSnapPoints(
 		return [];
 	}
 
-	const resolved = points
-		.map((p) => resolveSnapPointPx(p, viewportHeight))
-		.filter((px) => px > 0);
+	const resolved: number[] = [];
+	for (const point of points) {
+		const px = resolveSnapPointPx(point, viewportHeight);
+		if (px > 0) {
+			resolved.push(px);
+		}
+	}
 
 	// Sort ascending (smallest snap point first)
 	resolved.sort((a, b) => a - b);

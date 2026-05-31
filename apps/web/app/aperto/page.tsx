@@ -5,8 +5,15 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { ApertoDemo } from "@/components/aperto-demo";
 import { apertoMedia } from "@/lib/aperto-media";
+
+export const metadata: Metadata = {
+	title: "Aperto | Patternmode",
+	description:
+		"Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
+};
 
 const apertoApi: ApiSection[] = [
 	{

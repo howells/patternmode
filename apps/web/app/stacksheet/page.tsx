@@ -5,7 +5,14 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { StacksheetDemo } from "@/components/stacksheet-demo";
+
+export const metadata: Metadata = {
+	title: "Stacksheet | Patternmode",
+	description:
+		"Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
+};
 
 const stacksheetApi: ApiSection[] = [
 	{

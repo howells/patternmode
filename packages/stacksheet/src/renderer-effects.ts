@@ -36,7 +36,7 @@ export function useViewportHeight(active: boolean): number {
 	const [height, setHeight] = useState(() => getHeight());
 
 	useEffect(() => {
-		if (!active || typeof window === "undefined") {
+		if (typeof window === "undefined") {
 			return;
 		}
 
@@ -50,9 +50,9 @@ export function useViewportHeight(active: boolean): number {
 			window.removeEventListener("resize", update);
 			window.visualViewport?.removeEventListener("resize", update);
 		};
-	}, [active, getHeight]);
+	}, [getHeight]);
 
-	return height;
+	return active ? height : 0;
 }
 
 export function useBodyScale(

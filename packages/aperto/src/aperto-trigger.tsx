@@ -1,14 +1,8 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { motion } from "motion/react";
-import {
-	type ComponentPropsWithoutRef,
-	forwardRef,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
+import { m } from "motion/react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import { useApertoContext } from "./context";
 import { resolvePreset } from "./presets";
@@ -33,23 +27,7 @@ const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
 	) => {
 		const ctx = useApertoContext();
 		const shouldRaise = ctx.open && (active ?? true);
-		const [zIndex, setZIndex] = useState(
-			shouldRaise ? TRIGGER_OPEN_Z_INDEX : 0,
-		);
-
-		useEffect(() => {
-			if (shouldRaise) {
-				setZIndex(TRIGGER_OPEN_Z_INDEX);
-			} else if (ctx.open) {
-				setZIndex(0);
-			}
-		}, [ctx.open, shouldRaise]);
-
-		const handleLayoutAnimationComplete = useCallback(() => {
-			if (!shouldRaise) {
-				setZIndex(0);
-			}
-		}, [shouldRaise]);
+		const zIndex = shouldRaise ? TRIGGER_OPEN_Z_INDEX : 0;
 
 		const resolved = resolvePreset(
 			"trigger",
@@ -65,20 +43,19 @@ const ApertoTrigger = forwardRef<HTMLButtonElement, ApertoTriggerProps>(
 
 		return (
 			<Dialog.Trigger asChild ref={ref} {...props}>
-				<motion.button
+				<m.button
 					data-aperto-active={shouldRaise ? "" : undefined}
 					data-slot="aperto-trigger"
 					key={layoutId ?? "unshared"}
 					layout
 					layoutCrossfade={false}
 					layoutId={layoutId}
-					onLayoutAnimationComplete={handleLayoutAnimationComplete}
 					style={{ zIndex }}
 					transition={resolved.transition}
 					type="button"
 				>
 					{children}
-				</motion.button>
+				</m.button>
 			</Dialog.Trigger>
 		);
 	},

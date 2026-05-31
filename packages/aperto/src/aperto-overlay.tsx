@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { motion, type Transition } from "motion/react";
+import { m, type Transition } from "motion/react";
 import { forwardRef } from "react";
 
 import { useApertoContext } from "./context";
@@ -34,7 +34,7 @@ const ApertoOverlay = forwardRef<HTMLDivElement, ApertoOverlayProps>(
 
 		return (
 			<Dialog.Overlay asChild forceMount>
-				<motion.div
+				<m.div
 					animate={{ opacity: fadeOut ? 0 : 1 }}
 					className={className}
 					data-slot="aperto-overlay"

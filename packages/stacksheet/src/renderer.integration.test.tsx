@@ -42,12 +42,17 @@ vi.mock("motion/react", () => {
 			return <div ref={ref} {...stripMotionProps(props)} />;
 		},
 	);
+	const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
+	const motionComponents = {
+		div: MotionDiv,
+	};
 
 	return {
 		AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
-		motion: {
-			div: MotionDiv,
-		},
+		domMax: {},
+		LazyMotion,
+		m: motionComponents,
+		motion: motionComponents,
 		useReducedMotion: () => false,
 	};
 });

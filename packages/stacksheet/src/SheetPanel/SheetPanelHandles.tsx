@@ -1,4 +1,4 @@
-import { motion as m } from "motion/react";
+import { m } from "motion/react";
 import type { CSSProperties } from "react";
 
 import type { Side } from "../types";

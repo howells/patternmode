@@ -1,6 +1,6 @@
 import { type ComponentType, memo, type ReactNode } from "react";
 
-import type { HeaderRenderProps, StacksheetLayout } from "../types";
+import type { HeaderRenderProps } from "../types";
 import { DefaultHeader } from "./DefaultHeader";
 
 export const PanelInnerContent = memo(function PanelInnerContent({
@@ -45,13 +45,3 @@ export const PanelInnerContent = memo(function PanelInnerContent({
 });
 
 PanelInnerContent.displayName = "PanelInnerContent";
-
-export function resolvePanelLayout(
-	layout: StacksheetLayout | undefined,
-	renderHeader?: false | ((props: HeaderRenderProps) => ReactNode),
-): StacksheetLayout {
-	if (layout) {
-		return layout;
-	}
-	return renderHeader === false ? "composable" : "classic";
-}

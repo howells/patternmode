@@ -1,12 +1,18 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { LayoutGroup, useReducedMotion } from "motion/react";
+import {
+	domMax,
+	LayoutGroup,
+	LazyMotion,
+	useReducedMotion,
+} from "motion/react";
 import {
 	type ComponentPropsWithoutRef,
 	type ReactNode,
 	useCallback,
 	useId,
+	useMemo,
 	useState,
 } from "react";
 
@@ -78,22 +84,35 @@ function ApertoRoot({
 		? "reduced"
 		: globalPresetName;
 	const preset = PRESETS[presetName];
+	const contextValue = useMemo(
+		() => ({
+			dismissible,
+			layoutId,
+			onOpenChange,
+			open,
+			preset,
+			presetName,
+			reduceMotion: shouldReduce,
+			variants,
+		}),
+		[
+			dismissible,
+			layoutId,
+			onOpenChange,
+			open,
+			preset,
+			presetName,
+			shouldReduce,
+			variants,
+		],
+	);
 
 	return (
-		<ApertoContext.Provider
-			value={{
-				dismissible,
-				layoutId,
-				onOpenChange,
-				open,
-				preset,
-				presetName,
-				reduceMotion: shouldReduce,
-				variants,
-			}}
-		>
+		<ApertoContext.Provider value={contextValue}>
 			<Dialog.Root onOpenChange={onOpenChange} open={open} {...dialogProps}>
-				<LayoutGroup id={layoutId}>{children}</LayoutGroup>
+				<LazyMotion features={domMax}>
+					<LayoutGroup id={layoutId}>{children}</LayoutGroup>
+				</LazyMotion>
 			</Dialog.Root>
 		</ApertoContext.Provider>
 	);

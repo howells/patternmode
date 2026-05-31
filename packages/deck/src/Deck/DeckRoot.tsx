@@ -3,7 +3,9 @@
 import { joinClassNames } from "@patternmode/system";
 import {
 	AnimatePresence,
-	motion,
+	domMax,
+	LazyMotion,
+	m,
 	type PanInfo,
 	useReducedMotion,
 } from "motion/react";
@@ -211,7 +213,6 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 		} as CSSProperties;
 
 		return (
-			// biome-ignore lint/a11y/noStaticElementInteractions: the root owns arrow-key advance affordances for the active card.
 			<div
 				{...props}
 				className={joinClassNames("patternmode-deck", className)}
@@ -219,141 +220,149 @@ export const DeckRoot = forwardRef<HTMLDivElement, DeckRootProps>(
 				data-empty={exhausted ? "true" : undefined}
 				onKeyDown={handleKeyDown}
 				ref={ref}
-				role={props.role ?? "group"}
+				role="application"
 				style={rootStyle}
 				tabIndex={tabIndex ?? 0}
 			>
-				<AnimatePresence custom={exitCustom} initial={false}>
-					{visibleCards.map((item, depth) => {
-						const active = depth === 0;
-						const card = item.element as DeckCardElement;
-						const cardProps = card.props;
-						const absoluteVisualIndex =
-							(mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
-						const cardStyle = {
-							...cardProps.style,
-							"--deck-depth": depth,
-						} as CSSProperties;
-						const overlayState: DeckRenderOverlayState = {
-							active,
-							depth,
-							direction: lastDirection,
-							index: activeIndex + depth,
-							itemId: item.id,
-						};
+				<LazyMotion features={domMax}>
+					<AnimatePresence custom={exitCustom} initial={false}>
+						{visibleCards.map((item, depth) => {
+							const active = depth === 0;
+							const card = item.element as DeckCardElement;
+							const cardProps = card.props;
+							const absoluteVisualIndex =
+								(mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
+							const cardStyle = {
+								...cardProps.style,
+								"--deck-depth": depth,
+							} as CSSProperties;
+							const overlayState: DeckRenderOverlayState = {
+								active,
+								depth,
+								direction: lastDirection,
+								index: activeIndex + depth,
+								itemId: item.id,
+							};
 
-						const idleRotate = reduceMotion
-							? 0
-							: resolveCardRotation(item.id, rotation);
+							const idleRotate = reduceMotion
+								? 0
+								: resolveCardRotation(item.id, rotation);
 
-						let cardRotate = idleRotate;
-						if (active && isDragging && !reduceMotion) {
-							const influence = Math.min(
-								1,
-								Math.abs(dragOffset) / DRAG_INFLUENCE_RAMP,
+							let cardRotate = idleRotate;
+							if (active && isDragging && !reduceMotion) {
+								const influence = Math.min(
+									1,
+									Math.abs(dragOffset) / DRAG_INFLUENCE_RAMP,
+								);
+								const tilt = (dragOffset / DRAG_TILT_RAMP) * DRAG_TILT_MAX;
+								cardRotate = Number(
+									(idleRotate * (1 - influence) + tilt).toFixed(3),
+								);
+							}
+
+							const restScale = reduceMotion
+								? 1
+								: Math.max(0.7, 1 - depth * scaleStep);
+							const restY = reduceMotion ? 0 : depth * peekOffset;
+
+							let cardScale = restScale;
+							let cardY = restY;
+
+							if (!active && isDragging && !reduceMotion) {
+								const promotedScale = Math.max(
+									0.7,
+									1 - (depth - 1) * scaleStep,
+								);
+								const promotedY = (depth - 1) * peekOffset;
+								cardScale =
+									restScale +
+									(promotedScale - restScale) *
+										dragProgress *
+										BG_RESPONSE_FACTOR;
+								cardY =
+									restY +
+									(promotedY - restY) * dragProgress * BG_RESPONSE_FACTOR;
+							}
+
+							return (
+								<m.div
+									key={getDeckRenderKey(
+										item.id,
+										absoluteVisualIndex,
+										cards.length,
+										mode,
+									)}
+									{...cardProps}
+									aria-hidden={active ? undefined : true}
+									className={joinClassNames(
+										"patternmode-deck-card",
+										cardProps.className,
+									)}
+									custom={exitCustom}
+									data-active={active ? "true" : "false"}
+									data-depth={depth}
+									data-direction={lastDirection ?? undefined}
+									drag={active && !disabled ? "x" : false}
+									dragConstraints={{ left: 0, right: 0 }}
+									dragElastic={dragElastic}
+									dragMomentum={true}
+									dragTransition={{
+										bounceStiffness: 300,
+										bounceDamping: 22,
+										power: 0.3,
+										timeConstant: 350,
+									}}
+									initial={false}
+									onDrag={active && !disabled ? handleDrag : undefined}
+									onDragEnd={active && !disabled ? handleDragEnd : undefined}
+									style={cardStyle}
+									variants={cardExitVariants}
+									exit="exit"
+									transition={{
+										rotate:
+											isDragging && active
+												? { duration: 0 }
+												: {
+														type: "spring",
+														stiffness: 400,
+														damping: 25,
+													},
+										scale: {
+											type: "spring",
+											stiffness: 350,
+											damping: 28,
+										},
+										y: { type: "spring", stiffness: 300, damping: 28 },
+										opacity: { duration: 0.2, ease: "easeOut" },
+										default: {
+											type: "spring",
+											stiffness: 320,
+											damping: 28,
+										},
+									}}
+									animate={{
+										opacity: 1,
+										rotate: cardRotate,
+										scale: active ? 1 : cardScale,
+										y: active ? 0 : cardY,
+										zIndex: visibleCards.length - depth,
+									}}
+									whileDrag={
+										active && !disabled
+											? {
+													cursor: "grabbing",
+													scale: reduceMotion ? 1 : 1.02,
+												}
+											: undefined
+									}
+								>
+									{cardProps.children}
+									{renderOverlay?.(overlayState)}
+								</m.div>
 							);
-							const tilt = (dragOffset / DRAG_TILT_RAMP) * DRAG_TILT_MAX;
-							cardRotate = Number(
-								(idleRotate * (1 - influence) + tilt).toFixed(3),
-							);
-						}
-
-						const restScale = reduceMotion
-							? 1
-							: Math.max(0.7, 1 - depth * scaleStep);
-						const restY = reduceMotion ? 0 : depth * peekOffset;
-
-						let cardScale = restScale;
-						let cardY = restY;
-
-						if (!active && isDragging && !reduceMotion) {
-							const promotedScale = Math.max(0.7, 1 - (depth - 1) * scaleStep);
-							const promotedY = (depth - 1) * peekOffset;
-							cardScale =
-								restScale +
-								(promotedScale - restScale) * dragProgress * BG_RESPONSE_FACTOR;
-							cardY =
-								restY + (promotedY - restY) * dragProgress * BG_RESPONSE_FACTOR;
-						}
-
-						return (
-							<motion.div
-								{...cardProps}
-								aria-hidden={active ? undefined : true}
-								className={joinClassNames(
-									"patternmode-deck-card",
-									cardProps.className,
-								)}
-								custom={exitCustom}
-								data-active={active ? "true" : "false"}
-								data-depth={depth}
-								data-direction={lastDirection ?? undefined}
-								drag={active && !disabled ? "x" : false}
-								dragConstraints={{ left: 0, right: 0 }}
-								dragElastic={dragElastic}
-								dragMomentum={true}
-								dragTransition={{
-									bounceStiffness: 300,
-									bounceDamping: 22,
-									power: 0.3,
-									timeConstant: 350,
-								}}
-								initial={false}
-								key={getDeckRenderKey(
-									item.id,
-									absoluteVisualIndex,
-									cards.length,
-									mode,
-								)}
-								onDrag={active && !disabled ? handleDrag : undefined}
-								onDragEnd={active && !disabled ? handleDragEnd : undefined}
-								style={cardStyle}
-								variants={cardExitVariants}
-								exit="exit"
-								transition={{
-									rotate:
-										isDragging && active
-											? { duration: 0 }
-											: {
-													type: "spring",
-													stiffness: 400,
-													damping: 25,
-												},
-									scale: {
-										type: "spring",
-										stiffness: 350,
-										damping: 28,
-									},
-									y: { type: "spring", stiffness: 300, damping: 28 },
-									opacity: { duration: 0.2, ease: "easeOut" },
-									default: {
-										type: "spring",
-										stiffness: 320,
-										damping: 28,
-									},
-								}}
-								animate={{
-									opacity: 1,
-									rotate: cardRotate,
-									scale: active ? 1 : cardScale,
-									y: active ? 0 : cardY,
-									zIndex: visibleCards.length - depth,
-								}}
-								whileDrag={
-									active && !disabled
-										? {
-												cursor: "grabbing",
-												scale: reduceMotion ? 1 : 1.02,
-											}
-										: undefined
-								}
-							>
-								{cardProps.children}
-								{renderOverlay?.(overlayState)}
-							</motion.div>
-						);
-					})}
-				</AnimatePresence>
+						})}
+					</AnimatePresence>
+				</LazyMotion>
 				{exhausted && empty ? empty : null}
 			</div>
 		);

@@ -14,6 +14,14 @@ const options: TagItem[] = [
 	{ disabled: true, id: "locked", label: "Locked", variant: "ghost" },
 ];
 
+function createTag(label: string): TagItem {
+	return {
+		id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+		label,
+		variant: "outline",
+	};
+}
+
 export function TagsDemo() {
 	const [tags, setTags] = useState<TagItem[]>([
 		options[0] as TagItem,
@@ -22,14 +30,6 @@ export function TagsDemo() {
 	const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([
 		options[3] as TagItem,
 	]);
-
-	function createTag(label: string): TagItem {
-		return {
-			id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-			label,
-			variant: "outline",
-		};
-	}
 
 	return (
 		<div className="tags-demo">

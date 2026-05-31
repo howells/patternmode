@@ -8,12 +8,8 @@ import { ApertoPortal } from "../aperto-portal";
 import { ApertoRoot } from "../aperto-root";
 import { ApertoTitle } from "../aperto-title";
 import { ApertoTrigger } from "../aperto-trigger";
-import {
-	getDescriptionProps,
-	getMediaLabel,
-	renderExpandedMedia,
-	renderThumbnail,
-} from "../media-rendering";
+import { ApertoExpandedMedia, ApertoThumbnailMedia } from "../media-rendering";
+import { getDescriptionProps, getMediaLabel } from "../media-utils";
 import type { ApertoProps } from "./ApertoTypes";
 
 export function ApertoSingle({
@@ -32,7 +28,11 @@ export function ApertoSingle({
 				aria-label={`Open ${label}`}
 				className={classNames?.thumbnail}
 			>
-				{renderThumbnail(media, renderImage, renderVideo)}
+				<ApertoThumbnailMedia
+					item={media}
+					renderImage={renderImage}
+					renderVideo={renderVideo}
+				/>
 			</ApertoTrigger>
 			<ApertoPortal>
 				<ApertoOverlay className={classNames?.overlay} />
@@ -40,7 +40,11 @@ export function ApertoSingle({
 					className={classNames?.content}
 					{...getDescriptionProps(media)}
 				>
-					{renderExpandedMedia(media, renderImage, renderVideo)}
+					<ApertoExpandedMedia
+						item={media}
+						renderImage={renderImage}
+						renderVideo={renderVideo}
+					/>
 					<ApertoTitle>{title}</ApertoTitle>
 					{media.description ? (
 						<ApertoDescription>{media.description}</ApertoDescription>

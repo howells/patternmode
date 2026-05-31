@@ -6,7 +6,7 @@ import type {
 	ScrollFrameEdgeState,
 } from "./ScrollFrameTypes";
 
-export const DEFAULT_AXIS_STATE: ScrollFrameAxisState = {
+const DEFAULT_AXIS_STATE: ScrollFrameAxisState = {
 	atEnd: true,
 	atStart: true,
 	scrollable: false,

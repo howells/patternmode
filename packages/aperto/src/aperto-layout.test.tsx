@@ -63,6 +63,7 @@ vi.mock("motion/react", () => {
 	const LayoutGroup = ({ children }: { children: ReactNode }) => (
 		<>{children}</>
 	);
+	const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
 
 	const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
 		(props, ref) => {
@@ -88,15 +89,20 @@ vi.mock("motion/react", () => {
 		},
 	);
 
+	const motionComponents = {
+		button: forwardRef<HTMLButtonElement, MotionTestProps>((props, ref) => (
+			<button ref={ref} {...stripMotionProps(props)} />
+		)),
+		div: MotionDiv,
+	};
+
 	return {
 		AnimatePresence: LayoutGroup,
+		domMax: {},
 		LayoutGroup,
-		motion: {
-			button: forwardRef<HTMLButtonElement, MotionTestProps>((props, ref) => (
-				<button ref={ref} {...stripMotionProps(props)} />
-			)),
-			div: MotionDiv,
-		},
+		LazyMotion,
+		m: motionComponents,
+		motion: motionComponents,
 		useMotionValue: (initial: number) => ({
 			get: () => initial,
 			set: vi.fn(),

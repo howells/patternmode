@@ -1,40 +1,35 @@
-import type { ReactNode } from "react";
+import { createElement, type ReactNode } from "react";
 import type { ApertoMediaItem, RenderImage, RenderVideo } from "./types";
-
-export function getMediaLabel(item: ApertoMediaItem): string {
-	return item.title ?? item.alt ?? "media";
-}
-
-export function getMediaKey(item: ApertoMediaItem, index: number): string {
-	return item.id ?? `${item.type}:${item.src}:${index}`;
-}
-
-export function getDescriptionProps(item: ApertoMediaItem): {
-	"aria-describedby"?: undefined;
-} {
-	return item.description ? {} : { "aria-describedby": undefined };
-}
 
 function renderDefaultImage(props: Parameters<RenderImage>[0]): ReactNode {
 	const { item: _item, variant: _variant, ...imageProps } = props;
-	return <img {...imageProps} alt={imageProps.alt ?? ""} />;
+	return createElement("img", { ...imageProps, alt: imageProps.alt ?? "" });
 }
 
 function renderDefaultVideo(props: Parameters<RenderVideo>[0]): ReactNode {
 	const { item: _item, variant, ...videoProps } = props;
 	if (variant === "thumbnail") {
-		return (
-			<img alt={videoProps["aria-label"] ?? ""} src={props.item.thumbnailSrc} />
-		);
+		return createElement("img", {
+			alt: videoProps["aria-label"] ?? "",
+			src: props.item.thumbnailSrc,
+		});
 	}
-	return <video {...videoProps} />;
+	return (
+		<video {...videoProps}>
+			<track kind="captions" src={props.item.captionsSrc ?? "data:text/vtt,"} />
+		</video>
+	);
 }
 
-export function renderThumbnail(
-	item: ApertoMediaItem,
-	renderImage?: RenderImage,
-	renderVideo?: RenderVideo,
-): ReactNode {
+export function ApertoThumbnailMedia({
+	item,
+	renderImage,
+	renderVideo,
+}: {
+	item: ApertoMediaItem;
+	renderImage?: RenderImage;
+	renderVideo?: RenderVideo;
+}) {
 	if (item.type === "image") {
 		const imageProps: Parameters<RenderImage>[0] = {
 			alt: "",
@@ -59,11 +54,15 @@ export function renderThumbnail(
 	return (renderVideo ?? renderDefaultVideo)(videoProps);
 }
 
-export function renderExpandedMedia(
-	item: ApertoMediaItem,
-	renderImage?: RenderImage,
-	renderVideo?: RenderVideo,
-): ReactNode {
+export function ApertoExpandedMedia({
+	item,
+	renderImage,
+	renderVideo,
+}: {
+	item: ApertoMediaItem;
+	renderImage?: RenderImage;
+	renderVideo?: RenderVideo;
+}) {
 	if (item.type === "image") {
 		const imageProps: Parameters<RenderImage>[0] = {
 			alt: item.alt,
@@ -89,11 +88,15 @@ export function renderExpandedMedia(
 	return (renderVideo ?? renderDefaultVideo)(videoProps);
 }
 
-export function renderTransitionMedia(
-	item: ApertoMediaItem,
-	renderImage?: RenderImage,
-	renderVideo?: RenderVideo,
-): ReactNode {
+export function ApertoTransitionMedia({
+	item,
+	renderImage,
+	renderVideo,
+}: {
+	item: ApertoMediaItem;
+	renderImage?: RenderImage;
+	renderVideo?: RenderVideo;
+}) {
 	if (item.type === "image") {
 		const imageProps: Parameters<RenderImage>[0] = {
 			alt: item.alt,

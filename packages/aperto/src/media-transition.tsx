@@ -1,55 +1,13 @@
-import {
-	motion,
-	type TargetAndTransition,
-	type Transition,
-} from "motion/react";
+import { m } from "motion/react";
 import { useEffect } from "react";
 import { useApertoContext } from "./context";
-import { renderTransitionMedia } from "./media-rendering";
-import type { ApertoMediaItem, RenderImage, RenderVideo } from "./types";
-
-export interface ApertoRect {
-	height: number;
-	left: number;
-	top: number;
-	width: number;
-}
-
-export interface ApertoMediaTransition {
-	from: ApertoRect;
-	item: ApertoMediaItem;
-	phase: "opening" | "closing";
-	to?: ApertoRect;
-}
-
-export function rectFromElement(element: Element | null): ApertoRect | null {
-	if (!element) {
-		return null;
-	}
-
-	const rect = element.getBoundingClientRect();
-	return {
-		height: rect.height,
-		left: rect.left,
-		top: rect.top,
-		width: rect.width,
-	};
-}
-
-function rectTarget(rect: ApertoRect): TargetAndTransition {
-	return {
-		height: rect.height,
-		left: rect.left,
-		top: rect.top,
-		width: rect.width,
-	};
-}
-
-function transitionDurationMs(transition: Transition): number {
-	return typeof transition.duration === "number"
-		? transition.duration * 1000
-		: 450;
-}
+import { ApertoTransitionMedia } from "./media-rendering";
+import {
+	type ApertoMediaTransition,
+	rectTarget,
+	transitionDurationMs,
+} from "./media-transition-utils";
+import type { RenderImage, RenderVideo } from "./types";
 
 export function ApertoMediaTransitionClone({
 	onComplete,
@@ -81,7 +39,7 @@ export function ApertoMediaTransitionClone({
 	}
 
 	return (
-		<motion.div
+		<m.div
 			animate={rectTarget(transition.to)}
 			aria-hidden="true"
 			data-slot="aperto-transition-media"
@@ -91,12 +49,15 @@ export function ApertoMediaTransitionClone({
 				overflow: "hidden",
 				pointerEvents: "none",
 				position: "fixed",
-				willChange: "left, top, width, height",
-				zIndex: 1002,
+				zIndex: 30,
 			}}
 			transition={ctx.preset.transition}
 		>
-			{renderTransitionMedia(transition.item, renderImage, renderVideo)}
-		</motion.div>
+			<ApertoTransitionMedia
+				item={transition.item}
+				renderImage={renderImage}
+				renderVideo={renderVideo}
+			/>
+		</m.div>
 	);
 }

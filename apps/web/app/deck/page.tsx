@@ -5,7 +5,14 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { DeckDemo } from "@/components/deck-demo";
+
+export const metadata: Metadata = {
+	title: "Deck | Patternmode",
+	description:
+		"Card decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
+};
 
 const deckApi: ApiSection[] = [
 	{

@@ -5,7 +5,14 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { TagsDemo } from "@/components/tags-demo";
+
+export const metadata: Metadata = {
+	title: "Tags | Patternmode",
+	description:
+		"Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows.",
+};
 
 const tagsApi: ApiSection[] = [
 	{

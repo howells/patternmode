@@ -116,7 +116,7 @@ export function Swatch({
 	}
 
 	return (
-		<span
+		<figure
 			{...props}
 			aria-label={ariaLabel}
 			className={joinClassNames("patternmode-swatch", className)}
@@ -129,10 +129,9 @@ export function Swatch({
 			data-slot="swatch"
 			data-tone={light ? "light" : "dark"}
 			data-unavailable={unavailable ? "true" : undefined}
-			role="img"
 			style={rootStyle}
 		>
 			{swatchContent}
-		</span>
+		</figure>
 	);
 }

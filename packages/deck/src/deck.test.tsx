@@ -51,12 +51,17 @@ vi.mock("motion/react", () => {
 	const AnimatePresence = ({ children }: { children: ReactNode }) => (
 		<>{children}</>
 	);
+	const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
+	const motionComponents = {
+		div: MotionDiv,
+	};
 
 	return {
 		AnimatePresence,
-		motion: {
-			div: MotionDiv,
-		},
+		domMax: {},
+		LazyMotion,
+		m: motionComponents,
+		motion: motionComponents,
 		useReducedMotion: () => false,
 	};
 });
@@ -87,7 +92,7 @@ describe("Deck", () => {
 			</Deck>,
 		);
 
-		const deck = screen.getByRole("group", { name: "Project cards" });
+		const deck = screen.getByRole("application", { name: "Project cards" });
 		expect(screen.getByText("Beta")).toHaveAttribute("data-active", "true");
 		expect(screen.getByText("Gamma")).toHaveAttribute("data-depth", "1");
 		expect(screen.getByText("Delta")).toHaveAttribute("data-depth", "2");
@@ -120,7 +125,7 @@ describe("Deck", () => {
 			</Deck>,
 		);
 
-		const deck = screen.getByRole("group", { name: "Finite cards" });
+		const deck = screen.getByRole("application", { name: "Finite cards" });
 		deck.focus();
 		await user.keyboard("{ArrowRight}");
 
@@ -144,7 +149,7 @@ describe("Deck", () => {
 			</Deck>,
 		);
 
-		const deck = screen.getByRole("group", { name: "Controlled cards" });
+		const deck = screen.getByRole("application", { name: "Controlled cards" });
 		deck.focus();
 		await user.keyboard("{ArrowRight}");
 

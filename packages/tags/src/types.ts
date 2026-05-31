@@ -96,7 +96,7 @@ export interface TagSelectorProps<TItem extends TagItem = TagItem>
 }
 
 export interface TagSelectorTriggerProps
-	extends HTMLAttributes<HTMLDivElement> {
+	extends ButtonHTMLAttributes<HTMLButtonElement> {
 	placeholder?: string;
 }
 

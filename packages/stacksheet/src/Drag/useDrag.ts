@@ -196,6 +196,18 @@ export function useDrag(
 		scrollTargetRef.current = null;
 		onDragUpdate({ offset: 0, isDragging: false });
 	}, [onDragUpdate]);
+	const handlersRef = useRef({
+		handlePointerCancel,
+		handlePointerDown,
+		handlePointerMove,
+		handlePointerUp,
+	});
+	handlersRef.current = {
+		handlePointerCancel,
+		handlePointerDown,
+		handlePointerMove,
+		handlePointerUp,
+	};
 
 	// Attach pointer events to the panel element
 	useEffect(() => {
@@ -203,24 +215,24 @@ export function useDrag(
 		if (!(el && config.enabled)) {
 			return;
 		}
+		const onPointerDown = (event: PointerEvent) =>
+			handlersRef.current.handlePointerDown(event);
+		const onPointerMove = (event: PointerEvent) =>
+			handlersRef.current.handlePointerMove(event);
+		const onPointerUp = (event: PointerEvent) =>
+			handlersRef.current.handlePointerUp(event);
+		const onPointerCancel = () => handlersRef.current.handlePointerCancel();
 
-		el.addEventListener("pointerdown", handlePointerDown);
-		el.addEventListener("pointermove", handlePointerMove);
-		el.addEventListener("pointerup", handlePointerUp);
-		el.addEventListener("pointercancel", handlePointerCancel);
+		el.addEventListener("pointerdown", onPointerDown);
+		el.addEventListener("pointermove", onPointerMove);
+		el.addEventListener("pointerup", onPointerUp);
+		el.addEventListener("pointercancel", onPointerCancel);
 
 		return () => {
-			el.removeEventListener("pointerdown", handlePointerDown);
-			el.removeEventListener("pointermove", handlePointerMove);
-			el.removeEventListener("pointerup", handlePointerUp);
-			el.removeEventListener("pointercancel", handlePointerCancel);
+			el.removeEventListener("pointerdown", onPointerDown);
+			el.removeEventListener("pointermove", onPointerMove);
+			el.removeEventListener("pointerup", onPointerUp);
+			el.removeEventListener("pointercancel", onPointerCancel);
 		};
-	}, [
-		panelRef,
-		config.enabled,
-		handlePointerDown,
-		handlePointerMove,
-		handlePointerUp,
-		handlePointerCancel,
-	]);
+	}, [panelRef, config.enabled]);
 }

@@ -1,4 +1,4 @@
-import { motion as m } from "motion/react";
+import { m } from "motion/react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { DragState } from "../Drag/DragTypes";
@@ -24,9 +24,10 @@ import {
 	getStackTransform,
 } from "../stacking";
 import type { HeaderRenderProps } from "../types";
-import { PanelInnerContent, resolvePanelLayout } from "./SheetPanelContent";
+import { PanelInnerContent } from "./SheetPanelContent";
 import { ModalFocusTrap } from "./SheetPanelFocus";
 import { BottomHandle, SideHandle } from "./SheetPanelHandles";
+import { resolvePanelLayout } from "./SheetPanelLayout";
 import type { SheetPanelProps } from "./SheetPanelTypes";
 
 export const SheetPanel = memo(function SheetPanel({

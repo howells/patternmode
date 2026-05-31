@@ -5,7 +5,13 @@ declare global {
 		| undefined;
 }
 
-import { AnimatePresence, motion as m, useReducedMotion } from "motion/react";
+import {
+	AnimatePresence,
+	domMax,
+	LazyMotion,
+	m,
+	useReducedMotion,
+} from "motion/react";
 import {
 	type ComponentType,
 	type CSSProperties,
@@ -87,25 +93,31 @@ export function SheetRenderer<TMap extends object>({
 		[side, config.snapPoints, viewportHeight],
 	);
 
-	const [internalSnapIndex, setInternalSnapIndex] = useState(
-		snapHeights.length > 0 ? snapHeights.length - 1 : 0,
-	);
+	const snapContext = isOpen ? stack.map((item) => item.id).join("\u0000") : "";
+	const defaultSnapIndex = snapHeights.length > 0 ? snapHeights.length - 1 : 0;
+	const [internalSnap, setInternalSnap] = useState({
+		context: "",
+		index: defaultSnapIndex,
+		snapCount: snapHeights.length,
+	});
+	const internalSnapIndex =
+		internalSnap.context === snapContext &&
+		internalSnap.snapCount === snapHeights.length
+			? internalSnap.index
+			: defaultSnapIndex;
 	const activeSnapIndex = config.snapPointIndex ?? internalSnapIndex;
 
 	const handleSnap = useCallback(
 		(index: number) => {
-			setInternalSnapIndex(index);
+			setInternalSnap({
+				context: snapContext,
+				index,
+				snapCount: snapHeights.length,
+			});
 			config.onSnapPointChange?.(index);
 		},
-		[config.onSnapPointChange, config],
+		[config, snapContext, snapHeights.length],
 	);
-
-	useEffect(() => {
-		if (isOpen && snapHeights.length > 0) {
-			const initial = config.snapPointIndex ?? snapHeights.length - 1;
-			setInternalSnapIndex(initial);
-		}
-	}, [isOpen, snapHeights.length, config.snapPointIndex]);
 
 	const closeReasonRef = useRef<CloseReason>("programmatic");
 
@@ -249,7 +261,7 @@ export function SheetRenderer<TMap extends object>({
 	const shouldLockScroll = isOpen && isModal && config.lockScroll;
 
 	return (
-		<>
+		<LazyMotion features={domMax}>
 			{showOverlay && (
 				<AnimatePresence onExitComplete={handleBackdropExitComplete}>
 					{isOpen && (
@@ -320,6 +332,6 @@ export function SheetRenderer<TMap extends object>({
 					</AnimatePresence>
 				</div>
 			</RemoveScroll>
-		</>
+		</LazyMotion>
 	);
 }

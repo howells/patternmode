@@ -2,7 +2,8 @@
 
 import { useApertoGroup } from "../aperto-group-context";
 import { ApertoTrigger } from "../aperto-trigger";
-import { getMediaLabel, renderThumbnail } from "../media-rendering";
+import { ApertoThumbnailMedia } from "../media-rendering";
+import { getMediaLabel } from "../media-utils";
 import type { ApertoThumbnailProps } from "./ApertoTypes";
 
 export function ApertoThumbnail({
@@ -26,7 +27,13 @@ export function ApertoThumbnail({
 			ref={(node) => group.registerThumbnail(index, node)}
 			sharedLayoutId={false}
 		>
-			{children ?? renderThumbnail(media, group.renderImage, group.renderVideo)}
+			{children ?? (
+				<ApertoThumbnailMedia
+					item={media}
+					renderImage={group.renderImage}
+					renderVideo={group.renderVideo}
+				/>
+			)}
 		</ApertoTrigger>
 	);
 }

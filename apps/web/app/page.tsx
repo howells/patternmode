@@ -1,4 +1,10 @@
 import { PageShell } from "@howells/site-ui";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Patternmode",
+	description: "Component catalog for Patternmode interface primitives.",
+};
 
 interface CatalogEntry {
 	description: string;

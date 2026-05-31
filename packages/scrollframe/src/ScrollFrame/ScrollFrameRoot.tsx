@@ -71,17 +71,16 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 				vertical: getAxisState(node, "vertical"),
 			});
 		}, []);
+		const measureRef = useRef(measure);
+		measureRef.current = measure;
 
-		const registerViewport = useCallback(
-			(node: HTMLDivElement | null) => {
-				viewportRef.current = node;
-				setViewport(node);
-				if (node) {
-					queueMicrotask(measure);
-				}
-			},
-			[measure],
-		);
+		const registerViewport = useCallback((node: HTMLDivElement | null) => {
+			viewportRef.current = node;
+			setViewport(node);
+			if (node) {
+				queueMicrotask(() => measureRef.current());
+			}
+		}, []);
 
 		const scrollByStep = useCallback(
 			(direction: ScrollFrameEdge, axis = defaultControlAxis(axes)) => {
@@ -140,18 +139,19 @@ export const ScrollFrameRoot = forwardRef<HTMLDivElement, ScrollFrameRootProps>(
 				return;
 			}
 
-			measure();
+			const handleMeasure = () => measureRef.current();
+			handleMeasure();
 			const ResizeObserverCtor = globalThis.ResizeObserver;
 			const resizeObserver = ResizeObserverCtor
-				? new ResizeObserverCtor(measure)
+				? new ResizeObserverCtor(handleMeasure)
 				: null;
 			resizeObserver?.observe(viewport);
-			viewport.addEventListener("scroll", measure, { passive: true });
+			viewport.addEventListener("scroll", handleMeasure, { passive: true });
 			return () => {
 				resizeObserver?.disconnect();
-				viewport.removeEventListener("scroll", measure);
+				viewport.removeEventListener("scroll", handleMeasure);
 			};
-		}, [measure, viewport]);
+		}, [viewport]);
 
 		const rootStyle = {
 			"--patternmode-scrollframe-fade-color": fadeColor,

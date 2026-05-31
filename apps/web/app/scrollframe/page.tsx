@@ -5,7 +5,14 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
+
+export const metadata: Metadata = {
+	title: "ScrollFrame | Patternmode",
+	description:
+		"Radix-backed scroll frames with eased edge fades and movement controls.",
+};
 
 const scrollFrameApi: ApiSection[] = [
 	{

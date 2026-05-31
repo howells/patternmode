@@ -5,7 +5,14 @@ import {
 	ComponentPage,
 	DocsBlock,
 } from "@howells/site-ui";
+import type { Metadata } from "next";
 import { SwatchDemo } from "@/components/swatch-demo";
+
+export const metadata: Metadata = {
+	title: "Swatch | Patternmode",
+	description:
+		"Color, gradient, image, and weighted palette swatches with selection, remove, unavailable, and contrast-aware states.",
+};
 
 const swatchApi: ApiSection[] = [
 	{

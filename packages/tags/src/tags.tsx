@@ -113,22 +113,14 @@ function normalizeComparable(value: string): string {
 }
 
 function splitPastedTags(value: string): string[] {
-	return value
-		.split(/[,\n\r\t]+/)
-		.map(normalizeTag)
-		.filter(Boolean);
+	return value.split(/[,\n\r\t]+/).flatMap((part) => {
+		const tag = normalizeTag(part);
+		return tag ? [tag] : [];
+	});
 }
 
 function defaultFilterOption(item: TagItem, query: string): boolean {
 	return item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase());
-}
-
-function getRemoveLabel(children: TagProps["children"]): string {
-	if (typeof children === "string" || typeof children === "number") {
-		return `Remove ${children}`;
-	}
-
-	return "Remove tag";
 }
 
 function getTagVariant(variant: BadgeVariant | undefined, tone?: TagTone) {
@@ -209,7 +201,7 @@ export function Tag(props: TagProps): ReactElement {
 			<span className="patternmode-tag__label">{children}</span>
 			{onRemove ? (
 				<button
-					aria-label={removeLabel ?? getRemoveLabel(children)}
+					aria-label={removeLabel ?? "Remove tag"}
 					className="patternmode-tag__remove"
 					disabled={disabled}
 					onClick={handleRemove}
@@ -322,35 +314,36 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
 			const nextIds = new Set(nextValue.map((item) => item.id));
 			let changed = false;
 
-			for (const draft of drafts) {
-				const normalizedDraft = normalizeTag(draft);
-				if (!normalizedDraft) {
-					continue;
-				}
-
-				const matches = options.filter(
-					(item) =>
-						normalizeComparable(item.label) ===
-						normalizeComparable(normalizedDraft),
-				);
-
-				if (matches.length === 1) {
-					const [match] = matches;
-					if (match && !match.disabled && !nextIds.has(match.id)) {
-						nextValue.push(match);
-						nextIds.add(match.id);
-						changed = true;
+			const resolvedDrafts = await Promise.all(
+				drafts.map(async (draft) => {
+					const normalizedDraft = normalizeTag(draft);
+					if (!normalizedDraft) {
+						return null;
 					}
-					continue;
-				}
 
-				if (matches.length === 0 && onCreateItem) {
-					const createdItem = await onCreateItem(normalizedDraft);
-					if (!nextIds.has(createdItem.id)) {
-						nextValue.push(createdItem);
-						nextIds.add(createdItem.id);
-						changed = true;
+					const matches = options.filter(
+						(item) =>
+							normalizeComparable(item.label) ===
+							normalizeComparable(normalizedDraft),
+					);
+
+					if (matches.length === 1) {
+						const [match] = matches;
+						return match && !match.disabled ? match : null;
 					}
+
+					if (matches.length === 0 && onCreateItem) {
+						return onCreateItem(normalizedDraft);
+					}
+					return null;
+				}),
+			);
+
+			for (const item of resolvedDrafts) {
+				if (item && !nextIds.has(item.id)) {
+					nextValue.push(item);
+					nextIds.add(item.id);
+					changed = true;
 				}
 			}
 
@@ -454,112 +447,114 @@ const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
 	},
 );
 
-const TagSelectorTrigger = forwardRef<HTMLDivElement, TagSelectorTriggerProps>(
-	function TagSelectorTrigger(
-		{ className, onClick, onKeyDown, placeholder, tabIndex, ...triggerProps },
-		ref,
-	) {
-		const context = useTagSelectorContext();
-		const label = context.ariaLabel;
+const TagSelectorTrigger = forwardRef<
+	HTMLButtonElement,
+	TagSelectorTriggerProps
+>(function TagSelectorTrigger(
+	{ className, onClick, onKeyDown, placeholder, tabIndex, ...triggerProps },
+	ref,
+) {
+	const context = useTagSelectorContext();
+	const label = context.ariaLabel;
 
-		function handleClick(event: MouseEvent<HTMLDivElement>) {
-			onClick?.(event);
-			if (context.disabled) {
-				event.preventDefault();
-				event.stopPropagation();
-			}
+	function handleTriggerClick(event: MouseEvent<HTMLButtonElement>) {
+		onClick?.(event);
+		if (context.disabled) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
+
+	function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+		onKeyDown?.(event);
+		if (event.defaultPrevented || context.disabled) {
+			return;
 		}
 
-		function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-			onKeyDown?.(event);
-			if (event.defaultPrevented || context.disabled) {
-				return;
-			}
-
-			if (event.key === "Enter" || event.key === " ") {
-				event.preventDefault();
-				context.setOpen(!context.open);
-			}
+		if (event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			context.setOpen(!context.open);
 		}
+	}
 
-		return (
-			<Popover.Trigger asChild>
-				<div
-					{...triggerProps}
-					aria-controls={context.open ? context.listboxId : undefined}
-					aria-disabled={context.disabled}
-					aria-expanded={context.open}
-					aria-label={label}
-					className={joinClassNames(
-						"patternmode-tag-selector__trigger",
-						className,
-					)}
-					onClick={handleClick}
-					onKeyDown={handleKeyDown}
-					data-slot="tag-selector-trigger"
-					ref={ref}
-					role="combobox"
-					tabIndex={context.disabled ? undefined : (tabIndex ?? 0)}
+	return (
+		<Popover.Trigger asChild>
+			<button
+				{...triggerProps}
+				aria-controls={context.open ? context.listboxId : undefined}
+				aria-disabled={context.disabled}
+				aria-expanded={context.open}
+				aria-label={label}
+				className={joinClassNames(
+					"patternmode-tag-selector__trigger",
+					className,
+				)}
+				onClick={handleTriggerClick}
+				onKeyDown={handleKeyDown}
+				data-slot="tag-selector-trigger"
+				ref={ref}
+				role="combobox"
+				tabIndex={context.disabled ? undefined : (tabIndex ?? 0)}
+				type="button"
+			>
+				<ScrollFrame
+					axes="horizontal"
+					className="patternmode-tag-selector__scroll"
+					contentClassName="patternmode-tag-selector__scroll-content"
+					controls={false}
+					data-testid="tag-selector-selected-scroll"
+					fades="end"
+					scrollbars="hidden"
 				>
-					<ScrollFrame
-						axes="horizontal"
-						className="patternmode-tag-selector__scroll"
-						contentClassName="patternmode-tag-selector__scroll-content"
-						controls={false}
-						data-testid="tag-selector-selected-scroll"
-						fades="end"
-						scrollbars="hidden"
-					>
-						{context.value.length > 0 ? (
-							context.value.map((item) => {
-								const removeProps = {
-									"aria-label": `Remove ${item.label}`,
-									disabled: context.disabled,
-									onClick: (event: MouseEvent<HTMLButtonElement>) => {
-										event.preventDefault();
-										event.stopPropagation();
-										if (!context.disabled) {
-											context.removeItem(item);
-										}
-									},
-									type: "button" as const,
-								};
+					{context.value.length > 0 ? (
+						context.value.map((item) => {
+							const removeProps = {
+								"aria-label": `Remove ${item.label}`,
+								disabled: context.disabled,
+								onClick: (event: MouseEvent<HTMLButtonElement>) => {
+									event.preventDefault();
+									event.stopPropagation();
+									if (!context.disabled) {
+										context.removeItem(item);
+									}
+								},
+								type: "button" as const,
+							};
 
-								return (
-									<span
-										className="patternmode-tag-selector__selected-item"
-										key={item.id}
-									>
-										{context.renderTag ? (
-											context.renderTag({
-												disabled: context.disabled,
-												item,
-												removeProps,
-												selected: true,
-											})
-										) : (
-											<Tag
-												disabled={context.disabled}
-												size="sm"
-												variant={item.variant}
-											>
-												{item.label}
-											</Tag>
-										)}
-									</span>
-								);
-							})
-						) : (
-							<span className="patternmode-tag-selector__placeholder">
-								{placeholder ?? context.placeholder}
-							</span>
-						)}
-					</ScrollFrame>
-				</div>
-			</Popover.Trigger>
-		);
-	},
-);
+							return (
+								<span
+									className="patternmode-tag-selector__selected-item"
+									key={item.id}
+								>
+									{context.renderTag ? (
+										context.renderTag({
+											disabled: context.disabled,
+											item,
+											removeProps,
+											selected: true,
+										})
+									) : (
+										<Tag
+											disabled={context.disabled}
+											size="sm"
+											variant={item.variant}
+										>
+											{item.label}
+										</Tag>
+									)}
+								</span>
+							);
+						})
+					) : (
+						<span className="patternmode-tag-selector__placeholder">
+							{placeholder ?? context.placeholder}
+						</span>
+					)}
+				</ScrollFrame>
+			</button>
+		</Popover.Trigger>
+	);
+});
 
 const TagSelectorContent = forwardRef<HTMLDivElement, TagSelectorContentProps>(
 	function TagSelectorContent(
@@ -703,7 +698,7 @@ function TagSelectorOption<TItem extends TagItem>({
 	item?: TItem;
 	option?: CommandOption<TItem>;
 }) {
-	const context = useTagSelectorContext<TItem>();
+	const context = useTagSelectorContext<TagItem>();
 	const resolvedOption =
 		option ??
 		(item
@@ -732,25 +727,23 @@ function TagSelectorOption<TItem extends TagItem>({
 		id: resolvedOption.id,
 		onClick: () => context.selectCommandOption(resolvedOption),
 		role: "option",
-		type: "button" as const,
 	};
 
 	if (optionItem && context.renderOption) {
 		return (
-			<>
-				{context.renderOption({
-					active,
-					disabled,
-					item: optionItem,
-					optionProps,
-					selected,
-				})}
-			</>
+			<TagSelectorRenderedOption
+				active={active}
+				disabled={disabled}
+				item={optionItem}
+				optionProps={optionProps}
+				renderOption={context.renderOption}
+				selected={selected}
+			/>
 		);
 	}
 
 	return (
-		<button {...optionProps}>
+		<button type="button" {...optionProps}>
 			<span
 				aria-hidden="true"
 				className="patternmode-tag-selector__option-icon"
@@ -769,6 +762,34 @@ function TagSelectorOption<TItem extends TagItem>({
 				{resolvedOption.label}
 			</span>
 		</button>
+	);
+}
+
+function TagSelectorRenderedOption({
+	active,
+	disabled,
+	item,
+	optionProps,
+	renderOption: render,
+	selected,
+}: {
+	active: boolean;
+	disabled: boolean;
+	item: TagItem;
+	optionProps: TagOptionRenderProps<TagItem>["optionProps"];
+	renderOption: NonNullable<TagSelectorContextValue<TagItem>["renderOption"]>;
+	selected: boolean;
+}) {
+	return (
+		<>
+			{render({
+				active,
+				disabled,
+				item,
+				optionProps,
+				selected,
+			})}
+		</>
 	);
 }
 
@@ -792,14 +813,10 @@ const TagSelectorList = forwardRef<HTMLDivElement, TagSelectorListProps>(
 		return (
 			<div
 				{...listProps}
-				aria-label={
-					context.ariaLabel ? `${context.ariaLabel} options` : "Tag options"
-				}
 				className={joinClassNames("patternmode-tag-selector__list", className)}
 				data-slot="tag-selector-list"
 				id={context.listboxId}
 				ref={ref}
-				role="listbox"
 			>
 				{context.commandOptions.length > 0 ? (
 					context.commandOptions.map((option) => (
@@ -850,7 +867,7 @@ function TagSelectorBase(props: TagSelectorProps<TagItem>): ReactElement {
 	);
 }
 
-export const TagSelector = Object.assign(TagSelectorBase, {
+const TagSelector = Object.assign(TagSelectorBase, {
 	Content: TagSelectorContent,
 	Empty: TagSelectorEmpty,
 	List: TagSelectorList,
@@ -859,3 +876,5 @@ export const TagSelector = Object.assign(TagSelectorBase, {
 	Search: TagSelectorSearch,
 	Trigger: TagSelectorTrigger,
 });
+
+export { TagSelector };

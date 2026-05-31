@@ -28,6 +28,9 @@ const sheets = {
 
 function OverviewSheet({ title }: { title: string }) {
 	const { close, push } = useSheet();
+	const pushFlowSheet = () => {
+		push("Flow", `flow-${Date.now()}`, { action: "Push" });
+	};
 
 	return (
 		<div className="sheet-panel-content">
@@ -38,10 +41,7 @@ function OverviewSheet({ title }: { title: string }) {
 				back.
 			</p>
 			<div className="sheet-action-row">
-				<button
-					onClick={() => push("Flow", `flow-${Date.now()}`, { action: "Push" })}
-					type="button"
-				>
+				<button onClick={pushFlowSheet} type="button">
 					Push next
 				</button>
 				<button onClick={close} type="button">
@@ -54,6 +54,12 @@ function OverviewSheet({ title }: { title: string }) {
 
 function FlowSheet({ action }: { action: string }) {
 	const { navigate, push } = useSheet();
+	const pushMotionConfigSheet = () => {
+		push("Config", `config-${Date.now()}`, { category: "Motion" });
+	};
+	const navigateToLayoutConfigSheet = () => {
+		navigate("Config", `config-${Date.now()}`, { category: "Layout" });
+	};
 
 	return (
 		<div className="sheet-panel-content">
@@ -64,20 +70,10 @@ function FlowSheet({ action }: { action: string }) {
 				for back behavior.
 			</p>
 			<div className="sheet-action-row">
-				<button
-					onClick={() =>
-						push("Config", `config-${Date.now()}`, { category: "Motion" })
-					}
-					type="button"
-				>
+				<button onClick={pushMotionConfigSheet} type="button">
 					Push config
 				</button>
-				<button
-					onClick={() =>
-						navigate("Config", `config-${Date.now()}`, { category: "Layout" })
-					}
-					type="button"
-				>
+				<button onClick={navigateToLayoutConfigSheet} type="button">
 					Navigate
 				</button>
 			</div>
@@ -87,6 +83,9 @@ function FlowSheet({ action }: { action: string }) {
 
 function ConfigSheet({ category }: { category: string }) {
 	const { close, replace } = useSheet();
+	const replaceWithFlowSheet = () => {
+		replace("Flow", `flow-${Date.now()}`, { action: "Replace" });
+	};
 
 	return (
 		<div className="sheet-panel-content">
@@ -102,12 +101,7 @@ function ConfigSheet({ category }: { category: string }) {
 				<span>Composable Sheet Parts</span>
 			</div>
 			<div className="sheet-action-row">
-				<button
-					onClick={() =>
-						replace("Flow", `flow-${Date.now()}`, { action: "Replace" })
-					}
-					type="button"
-				>
+				<button onClick={replaceWithFlowSheet} type="button">
 					Replace
 				</button>
 				<button onClick={close} type="button">
@@ -121,6 +115,12 @@ function ConfigSheet({ category }: { category: string }) {
 function Launcher() {
 	const { open, push } = useSheet();
 	const { stack } = useStacksheetState();
+	const openOverviewSheet = () => {
+		open("Overview", "overview", { title: "Typed sheet" });
+	};
+	const pushBehaviorConfigSheet = () => {
+		push("Config", `config-${Date.now()}`, { category: "Behavior" });
+	};
 
 	return (
 		<div className="stacksheet-surface">
@@ -136,19 +136,12 @@ function Launcher() {
 					mobile bottom-sheet behavior.
 				</p>
 				<div className="demo-button-row">
-					<button
-						onClick={() =>
-							open("Overview", "overview", { title: "Typed sheet" })
-						}
-						type="button"
-					>
+					<button onClick={openOverviewSheet} type="button">
 						Open sheet
 					</button>
 					<button
 						disabled={stack.length === 0}
-						onClick={() =>
-							push("Config", `config-${Date.now()}`, { category: "Behavior" })
-						}
+						onClick={pushBehaviorConfigSheet}
 						type="button"
 					>
 						Push config

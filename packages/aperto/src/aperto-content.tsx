@@ -3,7 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import {
 	type MotionStyle,
-	motion,
+	m,
 	type PanInfo,
 	useMotionValue,
 	useSpring,
@@ -152,7 +152,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
 
 		return (
 			<Dialog.Content asChild forceMount {...props}>
-				<motion.div
+				<m.div
 					className={className}
 					data-slot="aperto-content"
 					drag={isDismissible}
@@ -169,7 +169,7 @@ const ApertoContent = forwardRef<HTMLDivElement, ApertoContentProps>(
 					transition={resolved.transition}
 				>
 					{children}
-				</motion.div>
+				</m.div>
 			</Dialog.Content>
 		);
 	},

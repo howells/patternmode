@@ -1,5 +1,5 @@
 import { joinClassNames } from "@patternmode/system";
-import { motion, type PanInfo } from "motion/react";
+import { domMax, LazyMotion, m, type PanInfo } from "motion/react";
 import type { CSSProperties, HTMLAttributes, KeyboardEvent } from "react";
 import { useRef } from "react";
 
@@ -95,8 +95,7 @@ export function DistributionDisplay({
 	);
 
 	// A selectable distribution is a group of buttons (fieldset → implicit
-	// group role); a read-only one is an image. Static elements (not a ternary
-	// role on one node) so a11y lint can verify aria support.
+	// group role); a read-only one keeps the label on the display wrapper.
 	return interactive ? (
 		<fieldset
 			{...(props as HTMLAttributes<HTMLFieldSetElement>)}
@@ -107,15 +106,14 @@ export function DistributionDisplay({
 			{content}
 		</fieldset>
 	) : (
-		<div
+		<figure
 			{...props}
 			aria-label={accessibleLabel}
 			className={sharedClassName}
 			data-slot="distribution-display"
-			role="img"
 		>
 			{content}
-		</div>
+		</figure>
 	);
 }
 
@@ -428,20 +426,22 @@ function DistributionBarHandle({
 	onKeyDown,
 }: DistributionBarHandleProps) {
 	return (
-		<motion.button
-			aria-label={ariaLabel}
-			className="patternmode-distribution-bar__handle"
-			drag="x"
-			dragElastic={0}
-			dragMomentum={false}
-			dragSnapToOrigin
-			onDrag={(_event, info) => onDrag(info)}
-			onDragEnd={(_event, info) => onDragEnd(info)}
-			onDragStart={onDragStart}
-			onKeyDown={onKeyDown}
-			style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
-			transformTemplate={() => "none"}
-			type="button"
-		/>
+		<LazyMotion features={domMax}>
+			<m.button
+				aria-label={ariaLabel}
+				className="patternmode-distribution-bar__handle"
+				drag="x"
+				dragElastic={0}
+				dragMomentum={false}
+				dragSnapToOrigin
+				onDrag={(_event, info) => onDrag(info)}
+				onDragEnd={(_event, info) => onDragEnd(info)}
+				onDragStart={onDragStart}
+				onKeyDown={onKeyDown}
+				style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
+				transformTemplate={() => "none"}
+				type="button"
+			/>
+		</LazyMotion>
 	);
 }

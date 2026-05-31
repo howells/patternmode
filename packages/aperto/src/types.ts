@@ -28,6 +28,7 @@ export interface ApertoImageItem extends BaseMediaItem {
 
 export interface ApertoVideoItem extends BaseMediaItem {
 	alt?: string;
+	captionsSrc?: string;
 	poster?: string;
 	thumbnailSrc: string;
 	type: "video";

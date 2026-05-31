@@ -52,11 +52,7 @@ export function findScrollableAncestor(
  * For bottom sheets (sign=1, axis=y), "at edge" means scrolled to top.
  * For left panels (sign=-1, axis=x), "at edge" means scrolled to right end.
  */
-export function isAtScrollEdge(
-	el: Element,
-	axis: DragAxis,
-	sign: DragSign,
-): boolean {
+function isAtScrollEdge(el: Element, axis: DragAxis, sign: DragSign): boolean {
 	if (axis === "y") {
 		// Dismiss down (sign=1): at edge when scrollTop ≈ 0
 		// Dismiss up (sign=-1): at edge when scrolled to bottom
@@ -96,7 +92,7 @@ export function getDismissAxis(side: Side): {
  * Returns "drag" if it's a valid dismiss gesture, "none" if it's off-axis
  * or moving in the wrong direction.
  */
-export function classifyGesture(
+function classifyGesture(
 	dx: number,
 	dy: number,
 	axis: DragAxis,

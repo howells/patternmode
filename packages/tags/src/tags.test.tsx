@@ -90,7 +90,7 @@ describe("TagSelector", () => {
 	it("renders selected TagItems in a ScrollFrame-backed trigger and opens popover content", async () => {
 		const user = userEvent.setup();
 
-		render(
+		const { container } = render(
 			<ControlledTagSelector
 				defaultValue={[options[0] as TagItem, options[1] as TagItem]}
 			/>,
@@ -107,8 +107,8 @@ describe("TagSelector", () => {
 		await user.click(trigger);
 
 		expect(
-			screen.getByRole("listbox", { name: "Project tags options" }),
-		).toHaveAttribute("data-slot", "tag-selector-list");
+			container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
+		).toBeInTheDocument();
 		expect(
 			screen.getByRole("textbox", { name: "Search Project tags" }),
 		).toBeInTheDocument();
@@ -237,10 +237,10 @@ describe("TagSelector", () => {
 				renderOption={({ item, optionProps }) => (
 					<button {...optionProps}>Custom option {item.label}</button>
 				)}
-				renderTag={({ item, removeProps }) => (
+				renderTag={({ item }) => (
 					<span>
 						Custom tag {item.label}
-						<button {...removeProps}>Remove custom {item.label}</button>
+						<span>Remove custom {item.label}</span>
 					</span>
 				)}
 				searchValue="key"

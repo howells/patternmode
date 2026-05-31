@@ -49,49 +49,58 @@ interface MockMotionButtonProps
 	transformTemplate?: () => string;
 }
 
-vi.mock("motion/react", () => ({
-	motion: {
-		button: ({
-			children,
-			drag: _drag,
-			dragElastic: _dragElastic,
-			dragMomentum: _dragMomentum,
-			dragSnapToOrigin: _dragSnapToOrigin,
-			onDrag,
-			onDragEnd,
-			onDragStart,
-			transformTemplate: _transformTemplate,
-			...props
-		}: MockMotionButtonProps) => {
-			const getPanInfo = (event: ReactPointerEvent<HTMLButtonElement>) => ({
-				offset: {
-					x: Number(event.currentTarget.dataset.offsetX ?? 0),
-					y: Number(event.currentTarget.dataset.offsetY ?? 0),
-				},
-			});
+vi.mock("motion/react", () => {
+	const MockMotionButton = ({
+		children,
+		drag: _drag,
+		dragElastic: _dragElastic,
+		dragMomentum: _dragMomentum,
+		dragSnapToOrigin: _dragSnapToOrigin,
+		onDrag,
+		onDragEnd,
+		onDragStart,
+		transformTemplate: _transformTemplate,
+		...props
+	}: MockMotionButtonProps) => {
+		const getPanInfo = (event: ReactPointerEvent<HTMLButtonElement>) => ({
+			offset: {
+				x: Number(event.currentTarget.dataset.offsetX ?? 0),
+				y: Number(event.currentTarget.dataset.offsetY ?? 0),
+			},
+		});
 
-			return (
-				<button
-					{...props}
-					onPointerDown={(event) => {
-						props.onPointerDown?.(event);
-						onDragStart?.(event.nativeEvent, getPanInfo(event));
-					}}
-					onPointerMove={(event) => {
-						props.onPointerMove?.(event);
-						onDrag?.(event.nativeEvent, getPanInfo(event));
-					}}
-					onPointerUp={(event) => {
-						props.onPointerUp?.(event);
-						onDragEnd?.(event.nativeEvent, getPanInfo(event));
-					}}
-				>
-					{children}
-				</button>
-			);
-		},
-	},
-}));
+		return (
+			<button
+				{...props}
+				onPointerDown={(event) => {
+					props.onPointerDown?.(event);
+					onDragStart?.(event.nativeEvent, getPanInfo(event));
+				}}
+				onPointerMove={(event) => {
+					props.onPointerMove?.(event);
+					onDrag?.(event.nativeEvent, getPanInfo(event));
+				}}
+				onPointerUp={(event) => {
+					props.onPointerUp?.(event);
+					onDragEnd?.(event.nativeEvent, getPanInfo(event));
+				}}
+			>
+				{children}
+			</button>
+		);
+	};
+	const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
+	const motionComponents = {
+		button: MockMotionButton,
+	};
+
+	return {
+		domMax: {},
+		LazyMotion,
+		m: motionComponents,
+		motion: motionComponents,
+	};
+});
 
 function CheckIcon(props: SVGProps<SVGSVGElement>) {
 	return <svg data-testid="check-icon" {...props} />;
@@ -105,7 +114,7 @@ describe("Swatch", () => {
 	it("renders a solid color swatch with contrast metadata", () => {
 		render(<Swatch aria-label="Olive" color="#315c4b" />);
 
-		const swatch = screen.getByRole("img", { name: "Olive" });
+		const swatch = screen.getByLabelText("Olive");
 		expect(swatch).toHaveClass("patternmode-swatch");
 		expect(swatch).toHaveAttribute("data-slot", "swatch");
 		expect(swatch).toHaveAttribute("data-shape", "circle");
@@ -125,7 +134,7 @@ describe("Swatch", () => {
 			/>,
 		);
 
-		expect(screen.getByRole("img", { name: "Palette" })).toHaveStyle({
+		expect(screen.getByLabelText("Palette")).toHaveStyle({
 			"--patternmode-swatch-fill":
 				"linear-gradient(90deg, #315c4b 0% 60%, #e1ebe5 60% 100%)",
 		});
@@ -210,7 +219,7 @@ describe("Swatch", () => {
 			<Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />,
 		);
 
-		expect(screen.getByRole("img", { name: "Huge" })).toHaveStyle({
+		expect(screen.getByLabelText("Huge")).toHaveStyle({
 			"--patternmode-swatch-size": "6rem",
 		});
 	});
@@ -218,7 +227,7 @@ describe("Swatch", () => {
 	it("renders a block-shaped swatch that fills its container", () => {
 		expect(SWATCH_SHAPES).toContain("block");
 		render(<Swatch aria-label="Band" color="#315c4b" shape="block" />);
-		expect(screen.getByRole("img", { name: "Band" })).toHaveAttribute(
+		expect(screen.getByLabelText("Band")).toHaveAttribute(
 			"data-shape",
 			"block",
 		);
@@ -254,7 +263,7 @@ describe("Swatch", () => {
 			/>,
 		);
 
-		const swatch = screen.getByRole("img", { name: "Atmosphere" });
+		const swatch = screen.getByLabelText("Atmosphere");
 		const fill = swatch.style.getPropertyValue("--patternmode-swatch-fill");
 		expect(fill).toContain("radial-gradient(ellipse at 30% 42%, #315c4bcc");
 		expect(swatch).not.toHaveAttribute("density");
@@ -265,7 +274,7 @@ describe("Swatch", () => {
 		const { container } = render(
 			<Swatch aria-label="Cell" color="#315c4b" flat shape="block" />,
 		);
-		const swatch = screen.getByRole("img", { name: "Cell" });
+		const swatch = screen.getByLabelText("Cell");
 		expect(swatch).toHaveAttribute("data-flat", "true");
 		expect(container.querySelector(".patternmode-swatch__scrim")).toBeNull();
 	});
@@ -347,9 +356,9 @@ describe("DistributionBar", () => {
 		);
 
 		expect(
-			screen.getByRole("img", {
-				name: "Assigned finish distribution: 79% assigned, 21% unassigned",
-			}),
+			screen.getByLabelText(
+				"Assigned finish distribution: 79% assigned, 21% unassigned",
+			),
 		).toHaveClass("patternmode-distribution-display");
 		expect(screen.getByText("79% assigned")).toBeInTheDocument();
 		expect(screen.getByText("21% unassigned")).toBeInTheDocument();
