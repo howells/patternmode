@@ -25,12 +25,12 @@
  */
 
 import {
-	ApertoGroup,
-	type ApertoGroupProps,
-	type ApertoProps,
-	ApertoSingle,
-	ApertoThumbnail,
-	type ApertoThumbnailProps,
+  ApertoGroup,
+  type ApertoGroupProps,
+  type ApertoProps,
+  ApertoSingle,
+  ApertoThumbnail,
+  type ApertoThumbnailProps,
 } from "./aperto";
 import { ApertoClose } from "./aperto-close";
 import { ApertoContent, type ApertoContentProps } from "./aperto-content";
@@ -43,61 +43,61 @@ import { ApertoTrigger, type ApertoTriggerProps } from "./aperto-trigger";
 
 /** Lower-level compound component namespace for advanced composition. */
 const ApertoPrimitive = {
-	Close: ApertoClose,
-	Content: ApertoContent,
-	Description: ApertoDescription,
-	Overlay: ApertoOverlay,
-	Portal: ApertoPortal,
-	Root: ApertoRoot,
-	Title: ApertoTitle,
-	Trigger: ApertoTrigger,
+  Close: ApertoClose,
+  Content: ApertoContent,
+  Description: ApertoDescription,
+  Overlay: ApertoOverlay,
+  Portal: ApertoPortal,
+  Root: ApertoRoot,
+  Title: ApertoTitle,
+  Trigger: ApertoTrigger,
 };
 
 /** Primary media-first component namespace. */
 const Aperto = Object.assign(ApertoSingle, {
-	Group: ApertoGroup,
-	Primitive: ApertoPrimitive,
-	Thumbnail: ApertoThumbnail,
+  Group: ApertoGroup,
+  Primitive: ApertoPrimitive,
+  Thumbnail: ApertoThumbnail,
 });
 
 // Preset system
 export { PRESETS, resolvePreset } from "./presets";
 // Types
 export type {
-	ApertoClassNames,
-	ApertoImageItem,
-	ApertoMediaItem,
-	ApertoVideoItem,
-	DismissibleConfig,
-	DragSpringConfig,
-	MotionPreset,
-	MotionPresetName,
-	MotionProp,
-	MotionVariants,
-	NavigationMotionPresetName,
-	RenderImage,
-	RenderVideo,
+  ApertoClassNames,
+  ApertoImageItem,
+  ApertoMediaItem,
+  ApertoVideoItem,
+  DismissibleConfig,
+  DragSpringConfig,
+  MotionPreset,
+  MotionPresetName,
+  MotionProp,
+  MotionVariants,
+  NavigationMotionPresetName,
+  RenderImage,
+  RenderVideo,
 } from "./types";
 // Named exports for tree-shaking
 export {
-	Aperto,
-	ApertoClose,
-	ApertoContent,
-	type ApertoContentProps,
-	ApertoDescription,
-	ApertoGroup,
-	type ApertoGroupProps,
-	ApertoOverlay,
-	type ApertoOverlayProps,
-	ApertoPortal,
-	type ApertoPortalProps,
-	ApertoPrimitive,
-	type ApertoProps,
-	ApertoRoot,
-	type ApertoRootProps,
-	ApertoThumbnail,
-	type ApertoThumbnailProps,
-	ApertoTitle,
-	ApertoTrigger,
-	type ApertoTriggerProps,
+  Aperto,
+  ApertoClose,
+  ApertoContent,
+  type ApertoContentProps,
+  ApertoDescription,
+  ApertoGroup,
+  type ApertoGroupProps,
+  ApertoOverlay,
+  type ApertoOverlayProps,
+  ApertoPortal,
+  type ApertoPortalProps,
+  ApertoPrimitive,
+  type ApertoProps,
+  ApertoRoot,
+  type ApertoRootProps,
+  ApertoThumbnail,
+  type ApertoThumbnailProps,
+  ApertoTitle,
+  ApertoTrigger,
+  type ApertoTriggerProps,
 };

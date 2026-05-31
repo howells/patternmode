@@ -24,22 +24,22 @@ const CUSTOM_GENTLE_EASING: EasingTuple = [0.25, 0.1, 0.12, 1];
 const SNAPPY_EASING: EasingTuple = [0.22, 1, 0.36, 1];
 
 export const easings = {
-	smooth: SMOOTH_EASING,
-	customIn: CUSTOM_IN_EASING,
-	customOut: CUSTOM_OUT_EASING,
-	customExpand: CUSTOM_EXPAND_EASING,
-	customGentle: CUSTOM_GENTLE_EASING,
-	snappy: SNAPPY_EASING,
+  smooth: SMOOTH_EASING,
+  customIn: CUSTOM_IN_EASING,
+  customOut: CUSTOM_OUT_EASING,
+  customExpand: CUSTOM_EXPAND_EASING,
+  customGentle: CUSTOM_GENTLE_EASING,
+  snappy: SNAPPY_EASING,
 } as const;
 
 /** CSS cubic-bezier string representations for Tailwind or inline styles. */
 export const easingsCSS = {
-	smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
-	customIn: "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
-	customOut: "cubic-bezier(0.165, 0.84, 0.44, 1)",
-	customExpand: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-	customGentle: "cubic-bezier(0.25, 0.1, 0.12, 1)",
-	snappy: "cubic-bezier(0.22, 1, 0.36, 1)",
+  smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
+  customIn: "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
+  customOut: "cubic-bezier(0.165, 0.84, 0.44, 1)",
+  customExpand: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+  customGentle: "cubic-bezier(0.25, 0.1, 0.12, 1)",
+  snappy: "cubic-bezier(0.22, 1, 0.36, 1)",
 } as const;
 
 export type Easing = keyof typeof easings;

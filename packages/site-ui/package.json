@@ -1,24 +1,27 @@
 {
-	"name": "@howells/site-ui",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"exports": {
-		".": "./src/index.tsx",
-		"./client": "./src/client.tsx"
-	},
-	"scripts": {
-		"clean": "rm -rf .turbo",
-		"lint:check": "howells-biome check src",
-		"typecheck": "tsc --noEmit"
-	},
-	"devDependencies": {
-		"@howells/lint": "^0.1.7",
-		"@howells/typescript-config": "^0.1.2",
-		"@types/react": "^19.2.14",
-		"typescript": "^6.0.3"
-	},
-	"peerDependencies": {
-		"react": "^19.0.0"
-	}
+  "name": "@howells/site-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./client": "./src/client.tsx"
+  },
+  "scripts": {
+    "clean": "rm -rf .turbo",
+    "lint": "howells-lint .",
+    "lint:fix": "howells-format .",
+    "lint:strict": "howells-lint-strict .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@howells/lint": "^0.1.8",
+    "@howells/typescript-config": "^0.1.2",
+    "@types/react": "^19.2.14",
+    "react": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
 }

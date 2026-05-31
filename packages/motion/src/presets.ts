@@ -14,22 +14,22 @@ import { springs } from "./springs";
  * ```
  */
 export const presets = {
-	dialogOpen: { duration: durations.normal, ease: easings.customOut },
-	dialogClose: { duration: durations.quick, ease: easings.customIn },
+  dialogOpen: { duration: durations.normal, ease: easings.customOut },
+  dialogClose: { duration: durations.quick, ease: easings.customIn },
 
-	hoverLift: springs.snappy,
-	hoverSettle: springs.natural,
+  hoverLift: springs.snappy,
+  hoverSettle: springs.natural,
 
-	/** Crisp emergence — peeks, lifts, and small reveals on hover/focus */
-	snappy: { duration: durations.snappy, ease: easings.snappy },
+  /** Crisp emergence — peeks, lifts, and small reveals on hover/focus */
+  snappy: { duration: durations.snappy, ease: easings.snappy },
 
-	slideIn: { duration: durations.normal, ease: easings.customOut },
-	slideOut: { duration: durations.quick, ease: easings.customIn },
+  slideIn: { duration: durations.normal, ease: easings.customOut },
+  slideOut: { duration: durations.quick, ease: easings.customIn },
 
-	fadeIn: { duration: durations.quick, ease: easings.customOut },
-	fadeOut: { duration: durations.quick, ease: easings.customIn },
+  fadeIn: { duration: durations.quick, ease: easings.customOut },
+  fadeOut: { duration: durations.quick, ease: easings.customIn },
 
-	shake: { duration: durations.normal, ease: easings.customOut },
+  shake: { duration: durations.normal, ease: easings.customOut },
 } as const;
 
 /**

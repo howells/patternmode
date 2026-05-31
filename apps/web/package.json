@@ -1,33 +1,35 @@
 {
-	"name": "@howells/patternmode-web",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"build": "next build",
-		"clean": "rm -rf .next .turbo",
-		"dev": "next dev",
-		"lint:check": "howells-biome check app components",
-		"typecheck": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@patternmode/aperto": "workspace:*",
-		"@patternmode/deck": "workspace:*",
-		"@patternmode/scrollframe": "workspace:*",
-		"@howells/site-ui": "workspace:*",
-		"@patternmode/swatch": "workspace:*",
-		"@patternmode/stacksheet": "workspace:*",
-		"@patternmode/tags": "workspace:*",
-		"next": "^16.2.6",
-		"react": "^19.2.3",
-		"react-dom": "^19.2.3"
-	},
-	"devDependencies": {
-		"@howells/lint": "^0.1.7",
-		"@howells/typescript-config": "^0.1.2",
-		"@types/node": "^24.10.3",
-		"@types/react": "^19.2.14",
-		"@types/react-dom": "^19.2.3",
-		"typescript": "^6.0.3"
-	}
+  "name": "@howells/patternmode-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "clean": "rm -rf .next .turbo",
+    "dev": "next dev",
+    "lint": "howells-lint .",
+    "lint:fix": "howells-format .",
+    "lint:strict": "howells-lint-strict .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@howells/site-ui": "workspace:*",
+    "@patternmode/aperto": "workspace:*",
+    "@patternmode/deck": "workspace:*",
+    "@patternmode/scrollframe": "workspace:*",
+    "@patternmode/stacksheet": "workspace:*",
+    "@patternmode/swatch": "workspace:*",
+    "@patternmode/tags": "workspace:*",
+    "next": "^16.2.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@howells/lint": "^0.1.8",
+    "@howells/typescript-config": "^0.1.2",
+    "@types/node": "^24.10.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  }
 }

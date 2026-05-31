@@ -9,15 +9,15 @@ import "@patternmode/scrollframe/styles.css";
 import "@patternmode/tags/styles.css";
 
 export const metadata: Metadata = {
-	description: "Minimal catalog for Howells UI tools.",
-	icons: [{ rel: "icon", url: "/favicon.svg" }],
-	title: "Patternmode",
+  description: "Minimal catalog for Howells UI tools.",
+  icons: [{ rel: "icon", url: "/favicon.svg" }],
+  title: "Patternmode",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-	return (
-		<html lang="en">
-			<body>{children}</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }

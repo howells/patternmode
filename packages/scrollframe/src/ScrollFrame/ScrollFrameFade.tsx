@@ -7,35 +7,35 @@ import { useScrollFrame } from "./ScrollFrameContext";
 import type { ScrollFrameFadeProps } from "./ScrollFrameTypes";
 
 export function ScrollFrameFade({
-	axis = "vertical",
-	className,
-	color,
-	edge,
-	size,
-	style,
-	...props
+  axis = "vertical",
+  className,
+  color,
+  edge,
+  size,
+  style,
+  ...props
 }: ScrollFrameFadeProps) {
-	const { edgeState } = useScrollFrame();
-	const axisState = edgeState[axis];
-	const hidden =
-		!axisState.scrollable || axisState[edge === "start" ? "atStart" : "atEnd"];
-	const fadeStyle = {
-		"--patternmode-scrollframe-fade-color": color,
-		"--patternmode-scrollframe-fade-size": toCssSize(size),
-		...style,
-	} as CSSProperties;
+  const { edgeState } = useScrollFrame();
+  const axisState = edgeState[axis];
+  const hidden =
+    !axisState.scrollable || axisState[edge === "start" ? "atStart" : "atEnd"];
+  const fadeStyle = {
+    "--patternmode-scrollframe-fade-color": color,
+    "--patternmode-scrollframe-fade-size": toCssSize(size),
+    ...style,
+  } as CSSProperties;
 
-	return (
-		<span
-			{...props}
-			aria-hidden="true"
-			className={joinClassNames("patternmode-scrollframe__fade", className)}
-			data-axis={axis}
-			data-edge={edge}
-			data-hidden={hidden ? "true" : "false"}
-			data-slot="scrollframe-fade"
-			data-testid={`scrollframe-fade-${axis}-${edge}`}
-			style={fadeStyle}
-		/>
-	);
+  return (
+    <span
+      {...props}
+      aria-hidden="true"
+      className={joinClassNames("patternmode-scrollframe__fade", className)}
+      data-axis={axis}
+      data-edge={edge}
+      data-hidden={hidden ? "true" : "false"}
+      data-slot="scrollframe-fade"
+      data-testid={`scrollframe-fade-${axis}-${edge}`}
+      style={fadeStyle}
+    />
+  );
 }

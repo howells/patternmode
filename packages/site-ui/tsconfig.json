@@ -1,7 +1,7 @@
 {
-	"extends": "@howells/typescript-config/react-library",
-	"compilerOptions": {
-		"rootDir": "src"
-	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"]
+  "extends": "@howells/typescript-config/react-library",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

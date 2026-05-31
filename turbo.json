@@ -1,36 +1,40 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"ui": "stream",
-	"globalDependencies": ["**/.env", "**/.env.local"],
-	"tasks": {
-		"build": {
-			"dependsOn": ["^build"],
-			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
-		},
-		"clean": {
-			"cache": false
-		},
-		"dev": {
-			"dependsOn": ["^build"],
-			"with": [
-				"@patternmode/stacksheet#dev",
-				"@patternmode/aperto#dev",
-				"@patternmode/deck#dev",
-				"@patternmode/swatch#dev",
-				"@patternmode/scrollframe#dev",
-				"@patternmode/tags#dev"
-			],
-			"cache": false,
-			"persistent": true
-		},
-		"lint:check": {},
-		"test": {
-			"dependsOn": ["^build"],
-			"outputs": []
-		},
-		"typecheck": {
-			"dependsOn": ["^build"]
-		}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "stream",
+  "globalDependencies": ["**/.env", "**/.env.local"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "with": [
+        "@patternmode/stacksheet#dev",
+        "@patternmode/aperto#dev",
+        "@patternmode/deck#dev",
+        "@patternmode/swatch#dev",
+        "@patternmode/scrollframe#dev",
+        "@patternmode/tags#dev"
+      ],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "lint:fix": {
+      "cache": false
+    },
+    "lint:strict": {},
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    }
+  }
 }

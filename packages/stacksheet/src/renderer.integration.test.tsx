@@ -4,222 +4,222 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
-	forwardRef,
-	type HTMLAttributes,
-	type ReactNode,
-	useEffect,
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+  useEffect,
 } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("focus-trap-react", () => ({
-	FocusTrap: ({ children }: { children: ReactNode }) => <>{children}</>,
+  FocusTrap: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 vi.mock("motion/react", () => {
-	type MotionTestProps = HTMLAttributes<HTMLElement> & {
-		animate?: unknown;
-		exit?: unknown;
-		initial?: unknown;
-		onAnimationComplete?: () => void;
-		transition?: unknown;
-	};
+  type MotionTestProps = HTMLAttributes<HTMLElement> & {
+    animate?: unknown;
+    exit?: unknown;
+    initial?: unknown;
+    onAnimationComplete?: () => void;
+    transition?: unknown;
+  };
 
-	const stripMotionProps = ({
-		animate: _animate,
-		exit: _exit,
-		initial: _initial,
-		onAnimationComplete: _onAnimationComplete,
-		transition: _transition,
-		...props
-	}: MotionTestProps) => props;
+  const stripMotionProps = ({
+    animate: _animate,
+    exit: _exit,
+    initial: _initial,
+    onAnimationComplete: _onAnimationComplete,
+    transition: _transition,
+    ...props
+  }: MotionTestProps) => props;
 
-	const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
-		(props, ref) => {
-			useEffect(() => {
-				props.onAnimationComplete?.();
-			}, [props]);
+  const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
+    (props, ref) => {
+      useEffect(() => {
+        props.onAnimationComplete?.();
+      }, [props]);
 
-			return <div ref={ref} {...stripMotionProps(props)} />;
-		},
-	);
-	const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
-	const motionComponents = {
-		div: MotionDiv,
-	};
+      return <div ref={ref} {...stripMotionProps(props)} />;
+    },
+  );
+  const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
+  const motionComponents = {
+    div: MotionDiv,
+  };
 
-	return {
-		AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
-		domMax: {},
-		LazyMotion,
-		m: motionComponents,
-		motion: motionComponents,
-		useReducedMotion: () => false,
-	};
+  return {
+    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
+    domMax: {},
+    LazyMotion,
+    m: motionComponents,
+    motion: motionComponents,
+    useReducedMotion: () => false,
+  };
 });
 
 import { createStacksheet, Sheet } from "./index";
 
 beforeEach(() => {
-	Object.defineProperty(window, "matchMedia", {
-		configurable: true,
-		value: vi.fn().mockImplementation((query: string) => ({
-			addEventListener: vi.fn(),
-			addListener: vi.fn(),
-			dispatchEvent: vi.fn(),
-			matches: false,
-			media: query,
-			onchange: null,
-			removeEventListener: vi.fn(),
-			removeListener: vi.fn(),
-		})),
-	});
+  Object.defineProperty(window, "matchMedia", {
+    configurable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      addEventListener: vi.fn(),
+      addListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+      matches: false,
+      media: query,
+      onchange: null,
+      removeEventListener: vi.fn(),
+      removeListener: vi.fn(),
+    })),
+  });
 });
 
 afterEach(() => {
-	cleanup();
+  cleanup();
 });
 
 describe("SheetRenderer integration", () => {
-	it("makes the pushed Nested Sheet active, then backs out and closes the Sheet Stack", async () => {
-		const user = userEvent.setup();
-		const { StacksheetProvider, useSheet } = createStacksheet<{
-			root: Record<string, never>;
-			nested: Record<string, never>;
-		}>();
+  it("makes the pushed Nested Sheet active, then backs out and closes the Sheet Stack", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet<{
+      root: Record<string, never>;
+      nested: Record<string, never>;
+    }>();
 
-		function RootSheet() {
-			const { push } = useSheet();
-			return (
-				<div>
-					<p>Root sheet content</p>
-					<button
-						onClick={() =>
-							push("nested", "nested", {}, { ariaLabel: "Nested sheet" })
-						}
-						type="button"
-					>
-						Open nested
-					</button>
-				</div>
-			);
-		}
+    function RootSheet() {
+      const { push } = useSheet();
+      return (
+        <div>
+          <p>Root sheet content</p>
+          <button
+            onClick={() =>
+              push("nested", "nested", {}, { ariaLabel: "Nested sheet" })
+            }
+            type="button"
+          >
+            Open nested
+          </button>
+        </div>
+      );
+    }
 
-		function NestedSheet() {
-			return <p>Nested sheet content</p>;
-		}
+    function NestedSheet() {
+      return <p>Nested sheet content</p>;
+    }
 
-		function Controls() {
-			const { open } = useSheet();
-			return (
-				<button
-					onClick={() => open("root", "root", {}, { ariaLabel: "Root sheet" })}
-					type="button"
-				>
-					Open root
-				</button>
-			);
-		}
+    function Controls() {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => open("root", "root", {}, { ariaLabel: "Root sheet" })}
+          type="button"
+        >
+          Open root
+        </button>
+      );
+    }
 
-		render(
-			<StacksheetProvider
-				sheets={{
-					nested: NestedSheet,
-					root: RootSheet,
-				}}
-			>
-				<Controls />
-			</StacksheetProvider>,
-		);
+    render(
+      <StacksheetProvider
+        sheets={{
+          nested: NestedSheet,
+          root: RootSheet,
+        }}
+      >
+        <Controls />
+      </StacksheetProvider>,
+    );
 
-		await user.click(screen.getByRole("button", { name: "Open root" }));
+    await user.click(screen.getByRole("button", { name: "Open root" }));
 
-		expect(
-			screen.getByRole("dialog", { name: "Root sheet" }),
-		).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Root sheet" }),
+    ).toBeInTheDocument();
 
-		await user.click(screen.getByRole("button", { name: "Open nested" }));
+    await user.click(screen.getByRole("button", { name: "Open nested" }));
 
-		expect(
-			screen.getByRole("dialog", { name: "Nested sheet" }),
-		).toBeInTheDocument();
-		expect(
-			screen.queryByRole("dialog", { name: "Root sheet" }),
-		).not.toBeInTheDocument();
-		expect(
-			screen.queryByRole("button", { name: "Open nested" }),
-		).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Nested sheet" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("dialog", { name: "Root sheet" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Open nested" }),
+    ).not.toBeInTheDocument();
 
-		const backButton = screen.getByRole("button", { name: "Back" });
-		expect(backButton).toHaveClass("min-h-11", "min-w-11");
+    const backButton = screen.getByRole("button", { name: "Back" });
+    expect(backButton).toHaveClass("min-h-11", "min-w-11");
 
-		await user.click(backButton);
+    await user.click(backButton);
 
-		expect(
-			screen.getByRole("dialog", { name: "Root sheet" }),
-		).toBeInTheDocument();
-		expect(
-			screen.getByRole("button", { name: "Open nested" }),
-		).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Root sheet" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Open nested" }),
+    ).toBeInTheDocument();
 
-		const closeButton = screen.getByRole("button", { name: "Close" });
-		expect(closeButton).toHaveClass("min-h-11", "min-w-11");
+    const closeButton = screen.getByRole("button", { name: "Close" });
+    expect(closeButton).toHaveClass("min-h-11", "min-w-11");
 
-		await user.click(closeButton);
+    await user.click(closeButton);
 
-		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-	});
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
 
-	it("links composable Sheet Title and Description to the Active Sheet dialog", async () => {
-		const user = userEvent.setup();
-		const { StacksheetProvider, useSheet } = createStacksheet<{
-			details: Record<string, never>;
-		}>();
+  it("links composable Sheet Title and Description to the Active Sheet dialog", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet<{
+      details: Record<string, never>;
+    }>();
 
-		function DetailsSheet() {
-			return (
-				<>
-					<Sheet.Header>
-						<Sheet.Title>Composable details</Sheet.Title>
-						<Sheet.Close />
-					</Sheet.Header>
-					<Sheet.Description>
-						Choose how this Sheet should continue.
-					</Sheet.Description>
-					<Sheet.Body>Details body</Sheet.Body>
-				</>
-			);
-		}
+    function DetailsSheet() {
+      return (
+        <>
+          <Sheet.Header>
+            <Sheet.Title>Composable details</Sheet.Title>
+            <Sheet.Close />
+          </Sheet.Header>
+          <Sheet.Description>
+            Choose how this Sheet should continue.
+          </Sheet.Description>
+          <Sheet.Body>Details body</Sheet.Body>
+        </>
+      );
+    }
 
-		function Controls() {
-			const { open } = useSheet();
-			return (
-				<button onClick={() => open("details", "details", {})} type="button">
-					Open details
-				</button>
-			);
-		}
+    function Controls() {
+      const { open } = useSheet();
+      return (
+        <button onClick={() => open("details", "details", {})} type="button">
+          Open details
+        </button>
+      );
+    }
 
-		render(
-			<StacksheetProvider
-				layout="composable"
-				sheets={{ details: DetailsSheet }}
-			>
-				<Controls />
-			</StacksheetProvider>,
-		);
+    render(
+      <StacksheetProvider
+        layout="composable"
+        sheets={{ details: DetailsSheet }}
+      >
+        <Controls />
+      </StacksheetProvider>,
+    );
 
-		await user.click(screen.getByRole("button", { name: "Open details" }));
+    await user.click(screen.getByRole("button", { name: "Open details" }));
 
-		const dialog = screen.getByRole("dialog", {
-			description: "Choose how this Sheet should continue.",
-			name: "Composable details",
-		});
-		expect(dialog).toBeInTheDocument();
-		expect(dialog).toHaveAttribute("aria-labelledby");
-		expect(dialog).toHaveAttribute("aria-describedby");
-		expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
-			"min-h-11",
-			"min-w-11",
-		);
-	});
+    const dialog = screen.getByRole("dialog", {
+      description: "Choose how this Sheet should continue.",
+      name: "Composable details",
+    });
+    expect(dialog).toBeInTheDocument();
+    expect(dialog).toHaveAttribute("aria-labelledby");
+    expect(dialog).toHaveAttribute("aria-describedby");
+    expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
+      "min-h-11",
+      "min-w-11",
+    );
+  });
 });

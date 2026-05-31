@@ -1,5 +1,13 @@
 # @patternmode/swatch
 
+## 0.9.1
+
+### Patch Changes
+
+- Configure `@howells/lint` across the monorepo, adopt Biome presets, and reformat source with 2-space indentation.
+- Updated dependencies
+  - @patternmode/system@0.2.1
+
 ## 0.9.0
 
 ### Minor Changes

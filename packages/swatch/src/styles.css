@@ -1,356 +1,356 @@
 @layer components {
-	.patternmode-swatch {
-		--patternmode-swatch-size: 2rem;
-		--patternmode-swatch-fill: #e3e1dc;
-		--patternmode-swatch-radius: 999px;
-		align-items: center;
-		aspect-ratio: 1;
-		border: 0;
-		border-radius: var(--patternmode-swatch-radius);
-		box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
-		color: white;
-		display: inline-flex;
-		height: var(--patternmode-swatch-size);
-		justify-content: center;
-		margin: 0;
-		min-inline-size: 0;
-		padding: 0;
-		position: relative;
-		transition:
-			box-shadow 140ms ease,
-			opacity 140ms ease,
-			transform 140ms ease;
-		vertical-align: middle;
-		width: var(--patternmode-swatch-size);
-	}
+  .patternmode-swatch {
+    --patternmode-swatch-size: 2rem;
+    --patternmode-swatch-fill: #e3e1dc;
+    --patternmode-swatch-radius: 999px;
+    align-items: center;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: var(--patternmode-swatch-radius);
+    box-shadow: 0 1px 2px rgb(17 24 39 / 10%);
+    color: white;
+    display: inline-flex;
+    height: var(--patternmode-swatch-size);
+    justify-content: center;
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+    position: relative;
+    transition:
+      box-shadow 140ms ease,
+      opacity 140ms ease,
+      transform 140ms ease;
+    vertical-align: middle;
+    width: var(--patternmode-swatch-size);
+  }
 
-	.patternmode-swatch[data-tone="light"] {
-		color: #1d1d1b;
-	}
+  .patternmode-swatch[data-tone="light"] {
+    color: #1d1d1b;
+  }
 
-	.patternmode-swatch[data-shape="pill"] {
-		--patternmode-swatch-radius: 999px;
-		aspect-ratio: auto;
-		width: calc(var(--patternmode-swatch-size) * 3);
-	}
+  .patternmode-swatch[data-shape="pill"] {
+    --patternmode-swatch-radius: 999px;
+    aspect-ratio: auto;
+    width: calc(var(--patternmode-swatch-size) * 3);
+  }
 
-	.patternmode-swatch[data-shape="square"] {
-		--patternmode-swatch-radius: 7px;
-	}
+  .patternmode-swatch[data-shape="square"] {
+    --patternmode-swatch-radius: 7px;
+  }
 
-	/* Block: an unconstrained swatch that fills whatever box the caller gives
+  /* Block: an unconstrained swatch that fills whatever box the caller gives
 	   it (full-width rows, flex band segments, hero fills). The caller sizes it
 	   via className/parent (e.g. h-7 w-full, flex-1 h-full) and may set the
 	   corner radius with a `rounded-*` utility or --patternmode-swatch-radius. */
-	.patternmode-swatch[data-shape="block"] {
-		--patternmode-swatch-radius: 0.25rem;
-		aspect-ratio: auto;
-		display: block;
-		height: 100%;
-		width: 100%;
-	}
+  .patternmode-swatch[data-shape="block"] {
+    --patternmode-swatch-radius: 0.25rem;
+    aspect-ratio: auto;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
 
-	.patternmode-swatch[data-raised="true"] {
-		box-shadow:
-			0 1px 2px rgb(17 24 39 / 10%),
-			0 0 0 2px var(--surface, #fff);
-	}
+  .patternmode-swatch[data-raised="true"] {
+    box-shadow:
+      0 1px 2px rgb(17 24 39 / 10%),
+      0 0 0 2px var(--surface, #fff);
+  }
 
-	.patternmode-swatch[data-selected="true"][data-show-ring="true"] {
-		box-shadow:
-			0 1px 2px rgb(17 24 39 / 10%),
-			0 0 0 2px var(--surface, #fff),
-			0 0 0 4px var(--accent, #315c4b);
-	}
+  .patternmode-swatch[data-selected="true"][data-show-ring="true"] {
+    box-shadow:
+      0 1px 2px rgb(17 24 39 / 10%),
+      0 0 0 2px var(--surface, #fff),
+      0 0 0 4px var(--accent, #315c4b);
+  }
 
-	.patternmode-swatch[data-unavailable="true"] {
-		opacity: 0.5;
-	}
+  .patternmode-swatch[data-unavailable="true"] {
+    opacity: 0.5;
+  }
 
-	/* Flat: a precise color block for data viz — no shadow (scrim is omitted
+  /* Flat: a precise color block for data viz — no shadow (scrim is omitted
 	   from the DOM by the component) so the fill reads as the exact value. */
-	.patternmode-swatch[data-flat="true"] {
-		box-shadow: none;
-	}
+  .patternmode-swatch[data-flat="true"] {
+    box-shadow: none;
+  }
 
-	.patternmode-swatch__fill,
-	.patternmode-swatch__media,
-	.patternmode-swatch__scrim {
-		border-radius: inherit;
-		inset: 0;
-		overflow: hidden;
-		position: absolute;
-	}
+  .patternmode-swatch__fill,
+  .patternmode-swatch__media,
+  .patternmode-swatch__scrim {
+    border-radius: inherit;
+    inset: 0;
+    overflow: hidden;
+    position: absolute;
+  }
 
-	.patternmode-swatch__fill {
-		background: var(--patternmode-swatch-fill);
-	}
+  .patternmode-swatch__fill {
+    background: var(--patternmode-swatch-fill);
+  }
 
-	.patternmode-swatch__media > * {
-		display: block;
-		height: 100%;
-		object-fit: inherit;
-		object-position: inherit;
-		width: 100%;
-	}
+  .patternmode-swatch__media > * {
+    display: block;
+    height: 100%;
+    object-fit: inherit;
+    object-position: inherit;
+    width: 100%;
+  }
 
-	.patternmode-swatch__scrim {
-		background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 20%) 100%);
-		pointer-events: none;
-	}
+  .patternmode-swatch__scrim {
+    background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 20%) 100%);
+    pointer-events: none;
+  }
 
-	.patternmode-swatch__icon {
-		align-items: center;
-		display: inline-flex;
-		inset: 0;
-		justify-content: center;
-		position: absolute;
-	}
+  .patternmode-swatch__icon {
+    align-items: center;
+    display: inline-flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+  }
 
-	.patternmode-swatch__icon svg {
-		display: block;
-		height: 48%;
-		stroke: currentColor;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-		stroke-width: 2.4;
-		width: 48%;
-	}
+  .patternmode-swatch__icon svg {
+    display: block;
+    height: 48%;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
+    width: 48%;
+  }
 
-	.patternmode-swatch__slash {
-		background: currentColor;
-		border-radius: 999px;
-		height: 2px;
-		position: absolute;
-		transform: rotate(-45deg);
-		width: 112%;
-	}
+  .patternmode-swatch__slash {
+    background: currentColor;
+    border-radius: 999px;
+    height: 2px;
+    position: absolute;
+    transform: rotate(-45deg);
+    width: 112%;
+  }
 
-	.patternmode-swatch__remove {
-		align-items: center;
-		background: transparent;
-		border: 0;
-		border-radius: 999px;
-		color: var(--surface, #fff);
-		cursor: pointer;
-		display: inline-flex;
-		height: 2.75rem;
-		justify-content: center;
-		opacity: 0;
-		padding: 0;
-		position: absolute;
-		right: -1.1rem;
-		top: -1.1rem;
-		transition: opacity 140ms ease;
-		width: 2.75rem;
-	}
+  .patternmode-swatch__remove {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    color: var(--surface, #fff);
+    cursor: pointer;
+    display: inline-flex;
+    height: 2.75rem;
+    justify-content: center;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    right: -1.1rem;
+    top: -1.1rem;
+    transition: opacity 140ms ease;
+    width: 2.75rem;
+  }
 
-	.patternmode-swatch__remove::before {
-		background: var(--ink, #1d1d1b);
-		border-radius: inherit;
-		content: "";
-		height: 1.25rem;
-		position: absolute;
-		transition: background 140ms ease;
-		width: 1.25rem;
-	}
+  .patternmode-swatch__remove::before {
+    background: var(--ink, #1d1d1b);
+    border-radius: inherit;
+    content: "";
+    height: 1.25rem;
+    position: absolute;
+    transition: background 140ms ease;
+    width: 1.25rem;
+  }
 
-	.patternmode-swatch__remove:focus-visible {
-		opacity: 1;
-	}
+  .patternmode-swatch__remove:focus-visible {
+    opacity: 1;
+  }
 
-	@media (hover: hover) {
-		.patternmode-swatch:hover .patternmode-swatch__remove {
-			opacity: 1;
-		}
+  @media (hover: hover) {
+    .patternmode-swatch:hover .patternmode-swatch__remove {
+      opacity: 1;
+    }
 
-		.patternmode-swatch__remove:hover::before {
-			background: var(--accent, #315c4b);
-		}
-	}
+    .patternmode-swatch__remove:hover::before {
+      background: var(--accent, #315c4b);
+    }
+  }
 
-	.patternmode-swatch__remove:focus-visible {
-		outline: 2px solid var(--accent, #315c4b);
-		outline-offset: 2px;
-	}
+  .patternmode-swatch__remove:focus-visible {
+    outline: 2px solid var(--accent, #315c4b);
+    outline-offset: 2px;
+  }
 
-	.patternmode-swatch__remove svg {
-		height: 0.8rem;
-		stroke: currentColor;
-		stroke-linecap: round;
-		stroke-width: 2;
-		width: 0.8rem;
-		z-index: 1;
-	}
+  .patternmode-swatch__remove svg {
+    height: 0.8rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+    width: 0.8rem;
+    z-index: 1;
+  }
 
-	@media (prefers-reduced-motion: reduce) {
-		.patternmode-swatch,
-		.patternmode-swatch__remove,
-		.patternmode-swatch__remove::before {
-			transition: none;
-		}
-	}
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-swatch,
+    .patternmode-swatch__remove,
+    .patternmode-swatch__remove::before {
+      transition: none;
+    }
+  }
 
-	.patternmode-distribution-bar,
-	.patternmode-distribution-display {
-		border: 0;
-		display: grid;
-		gap: 10px;
-		margin: 0;
-		min-inline-size: 0;
-		padding: 0;
-		width: 100%;
-	}
+  .patternmode-distribution-bar,
+  .patternmode-distribution-display {
+    border: 0;
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+    width: 100%;
+  }
 
-	.patternmode-distribution-bar__track {
-		height: var(--patternmode-distribution-height, 40px);
-		position: relative;
-		width: 100%;
-	}
+  .patternmode-distribution-bar__track {
+    height: var(--patternmode-distribution-height, 40px);
+    position: relative;
+    width: 100%;
+  }
 
-	.patternmode-distribution-bar .patternmode-distribution-bar__track {
-		touch-action: none;
-	}
+  .patternmode-distribution-bar .patternmode-distribution-bar__track {
+    touch-action: none;
+  }
 
-	.patternmode-distribution-bar__segments {
-		border: 1px solid var(--border-soft, rgb(17 24 39 / 12%));
-		border-radius: var(--patternmode-distribution-radius, 999px);
-		display: flex;
-		height: 100%;
-		overflow: hidden;
-		width: 100%;
-	}
+  .patternmode-distribution-bar__segments {
+    border: 1px solid var(--border-soft, rgb(17 24 39 / 12%));
+    border-radius: var(--patternmode-distribution-radius, 999px);
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
 
-	.patternmode-distribution-bar__segment {
-		background: var(--patternmode-distribution-segment-color);
-		border: 0;
-		height: 100%;
-		margin: 0;
-		min-width: 0;
-		padding: 0;
-		transition: width 480ms cubic-bezier(0.2, 0, 0, 1);
-	}
+  .patternmode-distribution-bar__segment {
+    background: var(--patternmode-distribution-segment-color);
+    border: 0;
+    height: 100%;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    transition: width 480ms cubic-bezier(0.2, 0, 0, 1);
+  }
 
-	/* Selectable segments (DistributionDisplay with onSegmentSelect) */
-	button.patternmode-distribution-bar__segment {
-		cursor: pointer;
-	}
+  /* Selectable segments (DistributionDisplay with onSegmentSelect) */
+  button.patternmode-distribution-bar__segment {
+    cursor: pointer;
+  }
 
-	button.patternmode-distribution-bar__segment:focus-visible {
-		outline: 2px solid var(--accent, #315c4b);
-		outline-offset: -2px;
-		z-index: 2;
-	}
+  button.patternmode-distribution-bar__segment:focus-visible {
+    outline: 2px solid var(--accent, #315c4b);
+    outline-offset: -2px;
+    z-index: 2;
+  }
 
-	.patternmode-distribution-bar__segment
-		+ .patternmode-distribution-bar__segment {
-		box-shadow: inset 1px 0 0 rgb(255 255 255 / 60%);
-	}
+  .patternmode-distribution-bar__segment
+    + .patternmode-distribution-bar__segment {
+    box-shadow: inset 1px 0 0 rgb(255 255 255 / 60%);
+  }
 
-	.patternmode-distribution-bar__segment[data-selected="true"] {
-		box-shadow: inset 0 0 0 2px var(--accent, #315c4b);
-		z-index: 2;
-	}
+  .patternmode-distribution-bar__segment[data-selected="true"] {
+    box-shadow: inset 0 0 0 2px var(--accent, #315c4b);
+    z-index: 2;
+  }
 
-	@media (prefers-reduced-motion: reduce) {
-		.patternmode-distribution-bar__segment {
-			transition: none;
-		}
-	}
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-distribution-bar__segment {
+      transition: none;
+    }
+  }
 
-	.patternmode-distribution-bar__segment--empty {
-		background-color: var(--surface-soft, #f7f5f0);
-		background-image: repeating-linear-gradient(
-			45deg,
-			transparent,
-			transparent 3px,
-			var(--border-soft, rgb(17 24 39 / 12%)) 3px,
-			var(--border-soft, rgb(17 24 39 / 12%)) 4px
-		);
-	}
+  .patternmode-distribution-bar__segment--empty {
+    background-color: var(--surface-soft, #f7f5f0);
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      var(--border-soft, rgb(17 24 39 / 12%)) 3px,
+      var(--border-soft, rgb(17 24 39 / 12%)) 4px
+    );
+  }
 
-	.patternmode-distribution-bar__handle {
-		align-items: center;
-		background: transparent;
-		border: 0;
-		border-radius: 999px;
-		cursor: ew-resize;
-		display: inline-flex;
-		height: 2.75rem;
-		justify-content: center;
-		padding: 0;
-		position: absolute;
-		top: calc(50% - 1.375rem);
-		width: 2.75rem;
-		z-index: 1;
-	}
+  .patternmode-distribution-bar__handle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: ew-resize;
+    display: inline-flex;
+    height: 2.75rem;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    top: calc(50% - 1.375rem);
+    width: 2.75rem;
+    z-index: 1;
+  }
 
-	.patternmode-distribution-bar__handle::before {
-		background: var(--surface, #fff);
-		border-radius: 999px;
-		box-shadow:
-			0 1px 4px rgb(17 24 39 / 18%),
-			0 0 0 1px rgb(17 24 39 / 20%);
-		content: "";
-		height: 0.62rem;
-		transition:
-			box-shadow 120ms ease,
-			transform 120ms ease;
-		width: 0.62rem;
-	}
+  .patternmode-distribution-bar__handle::before {
+    background: var(--surface, #fff);
+    border-radius: 999px;
+    box-shadow:
+      0 1px 4px rgb(17 24 39 / 18%),
+      0 0 0 1px rgb(17 24 39 / 20%);
+    content: "";
+    height: 0.62rem;
+    transition:
+      box-shadow 120ms ease,
+      transform 120ms ease;
+    width: 0.62rem;
+  }
 
-	.patternmode-distribution-bar__handle:focus-visible {
-		outline: 2px solid var(--accent, #315c4b);
-		outline-offset: -4px;
-	}
+  .patternmode-distribution-bar__handle:focus-visible {
+    outline: 2px solid var(--accent, #315c4b);
+    outline-offset: -4px;
+  }
 
-	@media (hover: hover) {
-		.patternmode-distribution-bar__handle:hover::before {
-			box-shadow:
-				0 5px 14px rgb(17 24 39 / 30%),
-				0 0 0 1px rgb(17 24 39 / 22%);
-			transform: scale(1.15);
-		}
-	}
+  @media (hover: hover) {
+    .patternmode-distribution-bar__handle:hover::before {
+      box-shadow:
+        0 5px 14px rgb(17 24 39 / 30%),
+        0 0 0 1px rgb(17 24 39 / 22%);
+      transform: scale(1.15);
+    }
+  }
 
-	.patternmode-distribution-bar__legend {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px 14px;
-	}
+  .patternmode-distribution-bar__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
 
-	.patternmode-distribution-bar__legend > span {
-		align-items: center;
-		color: var(--muted, #595853);
-		display: inline-flex;
-		font-size: 0.68rem;
-		font-weight: 500;
-		gap: 6px;
-	}
+  .patternmode-distribution-bar__legend > span {
+    align-items: center;
+    color: var(--muted, #595853);
+    display: inline-flex;
+    font-size: 0.68rem;
+    font-weight: 500;
+    gap: 6px;
+  }
 
-	.patternmode-distribution-bar__swatch {
-		background: var(--patternmode-distribution-segment-color);
-		border-radius: 999px;
-		display: inline-flex;
-		height: 0.55rem;
-		width: 0.55rem;
-	}
+  .patternmode-distribution-bar__swatch {
+    background: var(--patternmode-distribution-segment-color);
+    border-radius: 999px;
+    display: inline-flex;
+    height: 0.55rem;
+    width: 0.55rem;
+  }
 
-	.patternmode-distribution-bar__swatch--empty {
-		background-color: var(--surface-soft, #f7f5f0);
-		background-image: repeating-linear-gradient(
-			45deg,
-			transparent,
-			transparent 2px,
-			var(--border-soft, rgb(17 24 39 / 12%)) 2px,
-			var(--border-soft, rgb(17 24 39 / 12%)) 3px
-		);
-		box-shadow: inset 0 0 0 1px var(--border-soft, rgb(17 24 39 / 12%));
-	}
+  .patternmode-distribution-bar__swatch--empty {
+    background-color: var(--surface-soft, #f7f5f0);
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      var(--border-soft, rgb(17 24 39 / 12%)) 2px,
+      var(--border-soft, rgb(17 24 39 / 12%)) 3px
+    );
+    box-shadow: inset 0 0 0 1px var(--border-soft, rgb(17 24 39 / 12%));
+  }
 
-	@media (prefers-reduced-motion: reduce) {
-		.patternmode-distribution-bar__handle::before {
-			transition: none;
-		}
-	}
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-distribution-bar__handle::before {
+      transition: none;
+    }
+  }
 }

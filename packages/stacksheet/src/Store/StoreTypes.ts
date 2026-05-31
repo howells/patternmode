@@ -7,21 +7,21 @@ import type { SheetActions, StacksheetSnapshot } from "../types";
 export type AnyComponent = ComponentType<any>;
 
 export type StoreState<TMap extends object> = StacksheetSnapshot<TMap> &
-	SheetActions<TMap>;
+  SheetActions<TMap>;
 
 /** Return type of createSheetStore — store plus ad-hoc component maps */
 export interface SheetStoreBundle<TMap extends object> {
-	/** Generated type key → Component (for renderer lookup) */
-	componentMap: Map<string, AnyComponent>;
-	/** Component → generated type key (dedup) */
-	componentRegistry: Map<AnyComponent, string>;
-	store: StoreApi<StoreState<TMap>>;
+  /** Generated type key → Component (for renderer lookup) */
+  componentMap: Map<string, AnyComponent>;
+  /** Component → generated type key (dedup) */
+  componentRegistry: Map<AnyComponent, string>;
+  store: StoreApi<StoreState<TMap>>;
 }
 
 /** Pre-resolved args — skips resolveArgs entirely */
 export interface ResolvedItem {
-	ariaLabel?: string;
-	data: Record<string, unknown>;
-	id: string;
-	type: string;
+  ariaLabel?: string;
+  data: Record<string, unknown>;
+  id: string;
+  type: string;
 }

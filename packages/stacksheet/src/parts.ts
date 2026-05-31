@@ -7,15 +7,15 @@ export { SheetHandle } from "./SheetParts/SheetHandle";
 export { SheetHeader } from "./SheetParts/SheetHeader";
 export { Sheet } from "./SheetParts/SheetParts";
 export type {
-	SheetBackProps,
-	SheetBodyProps,
-	SheetCloseProps,
-	SheetDescriptionProps,
-	SheetFooterProps,
-	SheetHandleProps,
-	SheetHeaderProps,
-	SheetOptionalContentPartProps,
-	SheetPartProps,
-	SheetTitleProps,
+  SheetBackProps,
+  SheetBodyProps,
+  SheetCloseProps,
+  SheetDescriptionProps,
+  SheetFooterProps,
+  SheetHandleProps,
+  SheetHeaderProps,
+  SheetOptionalContentPartProps,
+  SheetPartProps,
+  SheetTitleProps,
 } from "./SheetParts/SheetPartTypes";
 export { SheetTitle } from "./SheetParts/SheetTitle";

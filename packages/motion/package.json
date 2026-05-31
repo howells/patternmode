@@ -1,20 +1,22 @@
 {
-	"name": "@howells/motion",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts",
-		"./*": "./src/*.ts"
-	},
-	"scripts": {
-		"clean": "rm -rf .turbo",
-		"lint:check": "howells-biome check src",
-		"typecheck": "tsc --noEmit"
-	},
-	"devDependencies": {
-		"@howells/lint": "^0.1.7",
-		"@howells/typescript-config": "^0.1.2",
-		"typescript": "^6.0.3"
-	}
+  "name": "@howells/motion",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf .turbo",
+    "lint": "howells-lint .",
+    "lint:fix": "howells-format .",
+    "lint:strict": "howells-lint-strict .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@howells/lint": "^0.1.8",
+    "@howells/typescript-config": "^0.1.2",
+    "typescript": "^6.0.3"
+  }
 }

@@ -13,49 +13,49 @@ import { getDescriptionProps, getMediaLabel } from "../media-utils";
 import type { ApertoProps } from "./ApertoTypes";
 
 export function ApertoSingle({
-	classNames,
-	dismissible,
-	media,
-	renderImage,
-	renderVideo,
+  classNames,
+  dismissible,
+  media,
+  renderImage,
+  renderVideo,
 }: ApertoProps) {
-	const label = getMediaLabel(media);
-	const title = media.title ?? label;
+  const label = getMediaLabel(media);
+  const title = media.title ?? label;
 
-	return (
-		<ApertoRoot dismissible={dismissible}>
-			<ApertoTrigger
-				aria-label={`Open ${label}`}
-				className={classNames?.thumbnail}
-			>
-				<ApertoThumbnailMedia
-					item={media}
-					renderImage={renderImage}
-					renderVideo={renderVideo}
-				/>
-			</ApertoTrigger>
-			<ApertoPortal>
-				<ApertoOverlay className={classNames?.overlay} />
-				<ApertoContent
-					className={classNames?.content}
-					{...getDescriptionProps(media)}
-				>
-					<ApertoExpandedMedia
-						item={media}
-						renderImage={renderImage}
-						renderVideo={renderVideo}
-					/>
-					<ApertoTitle>{title}</ApertoTitle>
-					{media.description ? (
-						<ApertoDescription>{media.description}</ApertoDescription>
-					) : null}
-					<ApertoClose
-						aria-label="Close"
-						className={classNames?.closeButton}
-						type="button"
-					/>
-				</ApertoContent>
-			</ApertoPortal>
-		</ApertoRoot>
-	);
+  return (
+    <ApertoRoot dismissible={dismissible}>
+      <ApertoTrigger
+        aria-label={`Open ${label}`}
+        className={classNames?.thumbnail}
+      >
+        <ApertoThumbnailMedia
+          item={media}
+          renderImage={renderImage}
+          renderVideo={renderVideo}
+        />
+      </ApertoTrigger>
+      <ApertoPortal>
+        <ApertoOverlay className={classNames?.overlay} />
+        <ApertoContent
+          className={classNames?.content}
+          {...getDescriptionProps(media)}
+        >
+          <ApertoExpandedMedia
+            item={media}
+            renderImage={renderImage}
+            renderVideo={renderVideo}
+          />
+          <ApertoTitle>{title}</ApertoTitle>
+          {media.description ? (
+            <ApertoDescription>{media.description}</ApertoDescription>
+          ) : null}
+          <ApertoClose
+            aria-label="Close"
+            className={classNames?.closeButton}
+            type="button"
+          />
+        </ApertoContent>
+      </ApertoPortal>
+    </ApertoRoot>
+  );
 }

@@ -17,12 +17,12 @@ import { SheetTitle } from "./SheetTitle";
  * `aria-labelledby` and `aria-describedby` via matching IDs.
  */
 export const Sheet = {
-	Back: SheetBack,
-	Body: SheetBody,
-	Close: SheetClose,
-	Description: SheetDescription,
-	Footer: SheetFooter,
-	Handle: SheetHandle,
-	Header: SheetHeader,
-	Title: SheetTitle,
+  Back: SheetBack,
+  Body: SheetBody,
+  Close: SheetClose,
+  Description: SheetDescription,
+  Footer: SheetFooter,
+  Handle: SheetHandle,
+  Header: SheetHeader,
+  Title: SheetTitle,
 } as const;

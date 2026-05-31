@@ -1,17 +1,17 @@
 import type { CSSProperties, ReactNode } from "react";
 
 export interface SheetPartProps {
-	asChild?: boolean;
-	children: ReactNode;
-	className?: string;
-	style?: CSSProperties;
+  asChild?: boolean;
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export interface SheetOptionalContentPartProps {
-	asChild?: boolean;
-	children?: ReactNode;
-	className?: string;
-	style?: CSSProperties;
+  asChild?: boolean;
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export type SheetBackProps = SheetOptionalContentPartProps;

@@ -1,40 +1,44 @@
 {
-	"name": "patternmode",
-	"private": true,
-	"packageManager": "pnpm@10.23.0",
-	"scripts": {
-		"build": "turbo run build",
-		"check": "pnpm typecheck && pnpm lint:check && pnpm test && pnpm build && pnpm check:boundaries",
-		"check:boundaries": "node scripts/check-boundaries.mjs",
-		"clean": "turbo run clean --continue=always && turbo clean",
-		"dev": "turbo run dev --filter=@howells/patternmode-web",
-		"env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
-		"format": "howells-format",
-		"lint": "pnpm lint:check",
-		"lint:check": "turbo run lint:check",
-		"prepare": "howells-husky",
-		"publish:packages": "node scripts/publish-packages.mjs",
-		"smoke:tarballs": "node scripts/smoke-tarballs.mjs",
-		"test": "turbo run test",
-		"typecheck": "turbo run typecheck",
-		"version-packages": "changeset version"
-	},
-	"devDependencies": {
-		"@changesets/cli": "^2.29.7",
-		"@howells/envy": "^0.3.7",
-		"@howells/husky": "^0.1.0",
-		"@howells/lint": "^0.1.7",
-		"@howells/typescript-config": "^0.1.2",
-		"turbo": "2.9.14",
-		"typescript": "^6.0.3",
-		"zod": "^4.4.3"
-	},
-	"pnpm": {
-		"overrides": {
-			"postcss": "^8.5.15"
-		}
-	},
-	"lint-staged": {
-		"*.{js,ts,jsx,tsx,json,jsonc}": "howells-format"
-	}
+  "name": "patternmode",
+  "private": true,
+  "packageManager": "pnpm@10.23.0",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "clean": "turbo run clean --continue=always && turbo clean",
+    "dev": "turbo run dev --filter=@howells/patternmode-web",
+    "env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
+    "format": "howells-format .",
+    "lint": "turbo run lint && howells-lint scripts && howells-workspace-check",
+    "lint:fix": "turbo run lint:fix && howells-format scripts",
+    "lint:strict": "turbo run lint:strict",
+    "prepare": "howells-husky",
+    "publish:packages": "node scripts/publish-packages.mjs",
+    "smoke:tarballs": "node scripts/smoke-tarballs.mjs",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "version-packages": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.7",
+    "@howells/envy": "^0.3.7",
+    "@howells/husky": "^0.1.0",
+    "@howells/lint": "^0.1.8",
+    "@howells/typescript-config": "^0.1.2",
+    "turbo": "2.9.14",
+    "typescript": "^6.0.3",
+    "zod": "^4.4.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "^8.5.15"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,jsonc}": "howells-format"
+  }
 }

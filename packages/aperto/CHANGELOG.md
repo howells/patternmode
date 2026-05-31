@@ -1,5 +1,11 @@
 # @patternmode/aperto
 
+## 0.1.3
+
+### Patch Changes
+
+- Configure `@howells/lint` across the monorepo, adopt Biome presets, and reformat source with 2-space indentation.
+
 ## 0.1.2
 
 ### Patch Changes

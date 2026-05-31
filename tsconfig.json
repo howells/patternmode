@@ -1,7 +1,7 @@
 {
-	"extends": "@howells/typescript-config/bundler-dom-app",
-	"compilerOptions": {
-		"baseUrl": "."
-	},
-	"exclude": ["node_modules", "dist", ".next"]
+  "extends": "@howells/typescript-config/bundler-dom-app",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules", "dist", ".next"]
 }

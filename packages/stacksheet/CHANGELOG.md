@@ -1,5 +1,13 @@
 # @patternmode/stacksheet
 
+## 1.3.4
+
+### Patch Changes
+
+- Configure `@howells/lint` across the monorepo, adopt Biome presets, and reformat source with 2-space indentation.
+- Updated dependencies
+  - @patternmode/system@0.2.1
+
 ## 1.3.3
 
 ### Patch Changes

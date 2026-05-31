@@ -5,14 +5,14 @@ import { X } from "lucide-react";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 const ApertoClose = forwardRef<
-	HTMLButtonElement,
-	ComponentPropsWithoutRef<typeof Dialog.Close>
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<typeof Dialog.Close>
 >(({ children, ...props }, ref) => {
-	return (
-		<Dialog.Close data-slot="aperto-close" ref={ref} {...props}>
-			{children ?? <X aria-hidden="true" size={17} strokeWidth={2} />}
-		</Dialog.Close>
-	);
+  return (
+    <Dialog.Close data-slot="aperto-close" ref={ref} {...props}>
+      {children ?? <X aria-hidden="true" size={17} strokeWidth={2} />}
+    </Dialog.Close>
+  );
 });
 
 ApertoClose.displayName = "ApertoClose";

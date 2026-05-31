@@ -1,10 +1,10 @@
 /** Elements that should never initiate a drag */
 export const INTERACTIVE_TAGS = new Set([
-	"INPUT",
-	"TEXTAREA",
-	"SELECT",
-	"BUTTON",
-	"A",
+  "INPUT",
+  "TEXTAREA",
+  "SELECT",
+  "BUTTON",
+  "A",
 ]);
 
 /** Dead zone in px before committing to drag vs text selection */
