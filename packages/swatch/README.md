@@ -49,7 +49,7 @@ cell in a color matrix:
 ```tsx
 <Swatch asChild color="#315c4b" flat shape="block" size="lg">
   <button onClick={() => select("#315c4b")} type="button" />
-</Swatch>;
+</Swatch>
 ```
 
 `asChild` requires exactly one React element child and does not support
