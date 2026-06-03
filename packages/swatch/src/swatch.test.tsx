@@ -263,6 +263,87 @@ describe("Swatch", () => {
     expect(swatch).toHaveAttribute("data-flat", "true");
     expect(container.querySelector(".patternmode-swatch__scrim")).toBeNull();
   });
+
+  it("renders a figure wrapper by default", () => {
+    const { container } = render(<Swatch aria-label="Plain" color="#315c4b" />);
+    expect(container.querySelector("figure.patternmode-swatch")).not.toBeNull();
+    expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("renders the child element when asChild is set", () => {
+    render(
+      <Swatch aria-label="Cell" asChild color="#315c4b" shape="block" size="lg">
+        <button data-testid="cell" type="button" />
+      </Swatch>,
+    );
+
+    const cell = screen.getByTestId("cell");
+    expect(cell.tagName).toBe("BUTTON");
+    expect(cell).toHaveClass("patternmode-swatch");
+    expect(cell).toHaveAttribute("data-slot", "swatch");
+    expect(cell).toHaveAttribute("data-shape", "block");
+    expect(cell).toHaveAttribute("data-size", "lg");
+    expect(cell).toHaveStyle({
+      "--patternmode-swatch-fill": "#315c4b",
+      "--patternmode-swatch-size": "2.5rem",
+    });
+    expect(cell.querySelector(".patternmode-swatch__fill")).not.toBeNull();
+    expect(cell.querySelector(".patternmode-swatch__scrim")).not.toBeNull();
+    expect(screen.queryByRole("figure")).toBeNull();
+  });
+
+  it("merges the child's own className while keeping precedence", () => {
+    render(
+      <Swatch aria-label="Cell" asChild className="swatch-extra" color="#315c4b">
+        <button className="cell-button" type="button" />
+      </Swatch>,
+    );
+
+    const cell = screen.getByRole("button", { name: "Cell" });
+    expect(cell).toHaveClass("patternmode-swatch");
+    expect(cell).toHaveClass("swatch-extra");
+    expect(cell).toHaveClass("cell-button");
+  });
+
+  it("omits the scrim through the child when flat", () => {
+    render(
+      <Swatch aria-label="Cell" asChild color="#315c4b" flat>
+        <button type="button" />
+      </Swatch>,
+    );
+
+    const cell = screen.getByRole("button", { name: "Cell" });
+    expect(cell).toHaveAttribute("data-flat", "true");
+    expect(cell.querySelector(".patternmode-swatch__scrim")).toBeNull();
+  });
+
+  it("forwards interaction to the slotted child element", async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+
+    render(
+      <Swatch aria-label="Cell" asChild color="#315c4b">
+        <button onClick={onClick} type="button" />
+      </Swatch>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Cell" }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the child's own content alongside the swatch fill layers", () => {
+    render(
+      <Swatch asChild color="#315c4b">
+        <button type="button">
+          <span data-testid="cell-label">A1</span>
+        </button>
+      </Swatch>,
+    );
+
+    expect(screen.getByTestId("cell-label")).toHaveTextContent("A1");
+    const cell = screen.getByRole("button");
+    expect(cell.querySelector(".patternmode-swatch__fill")).not.toBeNull();
+  });
 });
 
 describe("DistributionBar math", () => {

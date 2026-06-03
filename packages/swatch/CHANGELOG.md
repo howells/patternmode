@@ -1,5 +1,11 @@
 # @patternmode/swatch
 
+## 0.10.0
+
+### Minor Changes
+
+- Add an `asChild` prop to `Swatch`. When set, the swatch renders through its single child element (Radix Slot pattern) — merging its className, style (including the size and fill CSS variables), `data-*` attributes, and remaining props onto the child and injecting the fill/scrim layers inside it — instead of emitting its own `<figure>` wrapper. Use it when the swatch must be an interactive element such as a `<button>` cell in a color matrix. `asChild` requires a single element child and does not support `onRemove`.
+
 ## 0.9.3
 
 ### Patch Changes

@@ -1,4 +1,5 @@
 import { getObjectSizingStyle, joinClassNames } from "@patternmode/system";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { getSwatchAtmosphereBackground } from "./swatch-atmosphere";
@@ -114,6 +115,7 @@ const getSwatchDataProps = ({
 
 export const Swatch = ({
   "aria-label": ariaLabel,
+  asChild = false,
   background,
   children,
   className,
@@ -188,9 +190,24 @@ export const Swatch = ({
       selected={selected}
       unavailable={unavailable}
     >
-      {children}
+      {asChild ? undefined : children}
     </SwatchContent>
   );
+
+  if (asChild) {
+    return (
+      <Slot
+        {...props}
+        {...dataProps}
+        aria-label={ariaLabel}
+        className={joinClassNames("patternmode-swatch", className)}
+        style={rootStyle}
+      >
+        {swatchContent}
+        <Slottable>{children}</Slottable>
+      </Slot>
+    );
+  }
 
   if (onRemove) {
     return (

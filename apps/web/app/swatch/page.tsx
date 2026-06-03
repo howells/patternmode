@@ -82,7 +82,7 @@ const swatchApi: ApiSection[] = [
         type: "boolean",
       },
       {
-        description: "Adds a hover/focus remove affordance.",
+        description: "Adds a hover/focus remove affordance. Not supported with asChild.",
         name: "onRemove",
         type: "() => void",
       },
@@ -90,6 +90,13 @@ const swatchApi: ApiSection[] = [
         description: "Accessible label for the remove affordance. Defaults to the swatch label.",
         name: "removeLabel",
         type: "string",
+      },
+      {
+        defaultValue: "false",
+        description:
+          "Merges the swatch styling, fill, and data attributes onto a single child element (Radix Slot) instead of rendering an own wrapper. Use when the swatch must be an interactive element such as a button cell.",
+        name: "asChild",
+        type: "boolean",
       },
     ],
   },

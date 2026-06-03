@@ -1,6 +1,6 @@
 import { PATTERNMODE_SIZE_VALUES, PATTERNMODE_SIZES } from "@patternmode/system";
 import type { ObjectFit } from "@patternmode/system";
-import type { ComponentType, HTMLAttributes, ReactNode, SVGProps } from "react";
+import type { ComponentType, HTMLAttributes, ReactElement, ReactNode, SVGProps } from "react";
 
 export const SWATCH_SIZES = [...PATTERNMODE_SIZES, "4xl", "5xl", "6xl", "7xl"] as const;
 
@@ -29,16 +29,14 @@ export const getSwatchSizeVariableStyle = (
   [variableName]: SWATCH_SIZE_VALUES[size],
 });
 
-export interface SwatchProps extends HTMLAttributes<HTMLElement> {
+/**
+ * Visual and behavioural props shared by every Swatch rendering mode. These
+ * map deterministically to the fill, scrim, shape, and size treatment
+ * regardless of whether the swatch renders its own wrapper or an `asChild`
+ * element.
+ */
+export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
   background?: string;
-  /**
-   * Optional media rendered inside the swatch frame.
-   *
-   * Swatch does not optimize image elements itself. Next.js consumers can pass
-   * their own `next/image` `Image` component here and use `objectFit` /
-   * `objectPosition` to align it with the swatch shape.
-   */
-  children?: ReactNode;
   color?: string;
   colors?: SwatchColorStop[];
   /**
@@ -77,9 +75,7 @@ export interface SwatchProps extends HTMLAttributes<HTMLElement> {
    * Default `"center"`.
    */
   objectPosition?: string;
-  onRemove?: () => void;
   raised?: boolean;
-  removeLabel?: string;
   /**
    * Shows selected state and optional icon overlay.
    *
@@ -117,3 +113,50 @@ export interface SwatchProps extends HTMLAttributes<HTMLElement> {
    */
   unavailable?: boolean;
 }
+
+/**
+ * Default Swatch props: the swatch renders its own wrapper element
+ * (`<figure>`, or `<fieldset>` when `onRemove` is set).
+ */
+export interface SwatchDefaultProps extends SwatchSharedProps {
+  /**
+   * Render the swatch styling onto a provided child element instead of an
+   * own wrapper. See {@link SwatchAsChildProps}.
+   *
+   * Default `false`.
+   */
+  asChild?: false;
+  /**
+   * Optional media rendered inside the swatch frame.
+   *
+   * Swatch does not optimize image elements itself. Next.js consumers can pass
+   * their own `next/image` `Image` component here and use `objectFit` /
+   * `objectPosition` to align it with the swatch shape.
+   */
+  children?: ReactNode;
+  /** Renders a remove affordance and calls this after stopping propagation. */
+  onRemove?: () => void;
+  /** Accessible label for the remove affordance. Defaults to the swatch label. */
+  removeLabel?: string;
+}
+
+/**
+ * `asChild` Swatch props: the swatch merges its className, style (size/fill
+ * CSS variables), data attributes, and other props onto the single React
+ * element passed as `children`, rendering through it (Radix Slot pattern)
+ * instead of emitting its own wrapper. Use this when the swatch must *be* an
+ * interactive element, such as a `<button>` cell in a color matrix.
+ *
+ * `onRemove` is unsupported in this mode — its remove affordance cannot be
+ * composed into an arbitrary slotted element. Wrap a default Swatch instead
+ * when a remove control is required.
+ */
+export interface SwatchAsChildProps extends SwatchSharedProps {
+  asChild: true;
+  /** The single element the swatch styling is merged onto and rendered through. */
+  children: ReactElement;
+  onRemove?: never;
+  removeLabel?: never;
+}
+
+export type SwatchProps = SwatchDefaultProps | SwatchAsChildProps;

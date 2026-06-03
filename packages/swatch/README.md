@@ -33,6 +33,29 @@ export function Example() {
 
 Use `color` for a solid fill, `background` for a CSS background value, or `colors` for weighted palette stops. `Swatch` remains representation-only: compose selection around it, or pass `onRemove` when the swatch should expose its built-in remove request affordance.
 
+## Rendering as a child element
+
+By default `Swatch` renders its own `<figure>` wrapper. Pass `asChild` to render
+the swatch styling _through_ a single child element instead — the Radix Slot
+pattern. Swatch merges its `className`, `style` (including the
+`--patternmode-swatch-size` / `--patternmode-swatch-fill` variables), `data-*`
+attributes, and remaining props onto the child, and injects the fill / scrim
+layers inside it. The child's own props win on conflict, and event handlers are
+composed.
+
+Use this when the swatch must _be_ an interactive element, such as a `<button>`
+cell in a color matrix:
+
+```tsx
+<Swatch asChild color="#315c4b" flat shape="block" size="lg">
+  <button onClick={() => select("#315c4b")} type="button" />
+</Swatch>;
+```
+
+`asChild` requires exactly one React element child and does not support
+`onRemove` (its remove affordance cannot be composed into an arbitrary slotted
+element). Wrap a default Swatch when a remove control is required.
+
 ## Optimized images
 
 Swatch can frame media via `children`, but it does not optimize images itself.

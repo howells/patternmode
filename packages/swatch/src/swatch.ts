@@ -23,9 +23,12 @@ export {
   SWATCH_SIZE_VALUES,
   SWATCH_SIZES,
   SWATCH_TEXTURES,
+  type SwatchAsChildProps,
   type SwatchColorStop,
+  type SwatchDefaultProps,
   type SwatchProps,
   type SwatchShape,
+  type SwatchSharedProps,
   type SwatchSize,
   type SwatchTexture,
 } from "./Swatch/swatch-types";
