@@ -29,18 +29,14 @@ describe("renderer helpers", () => {
   });
 
   it("builds ARIA props only for the top panel", () => {
-    expect(buildAriaProps(false, true, true, "Sheet", "panel-1", true)).toEqual(
-      {}
-    );
+    expect(buildAriaProps(false, true, true, "Sheet", "panel-1", true)).toEqual({});
     expect(buildAriaProps(true, true, true, "Sheet", "panel-1", true)).toEqual({
       "aria-describedby": "panel-1-desc",
       "aria-labelledby": "panel-1-title",
       "aria-modal": "true",
       role: "dialog",
     });
-    expect(
-      buildAriaProps(true, false, false, "Sheet", "panel-1", false)
-    ).toEqual({
+    expect(buildAriaProps(true, false, false, "Sheet", "panel-1", false)).toEqual({
       "aria-label": "Sheet",
       role: "dialog",
     });
@@ -69,16 +65,17 @@ describe("renderer helpers", () => {
   });
 
   it("builds transition objects for dragging and stacked panels", () => {
-    expect(
-      buildPanelTransition(true, true, { type: "spring" }, { type: "tween" })
-    ).toEqual({ duration: 0, type: "tween" });
-    expect(
-      buildPanelTransition(false, false, { type: "spring" }, { type: "tween" })
-    ).toMatchObject({
-      borderRadius: { duration: 0.25, ease: "easeOut", type: "tween" },
-      boxShadow: { duration: 0.25, ease: "easeOut", type: "tween" },
+    expect(buildPanelTransition(true, true, { type: "spring" }, { type: "tween" })).toEqual({
+      duration: 0,
       type: "tween",
     });
+    expect(buildPanelTransition(false, false, { type: "spring" }, { type: "tween" })).toMatchObject(
+      {
+        borderRadius: { duration: 0.25, ease: "easeOut", type: "tween" },
+        boxShadow: { duration: 0.25, ease: "easeOut", type: "tween" },
+        type: "tween",
+      },
+    );
   });
 
   it("computes snap offsets only for measured bottom sheets", () => {
@@ -119,8 +116,8 @@ describe("renderer helpers", () => {
         { borderRadius: 16 },
         { type: "spring" },
         40,
-        false
-      )
+        false,
+      ),
     ).toMatchObject({
       borderRadius: 16,
       opacity: 0.8,

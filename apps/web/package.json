@@ -24,7 +24,7 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "@types/node": "^24.10.3",
     "@types/react": "^19.2.14",

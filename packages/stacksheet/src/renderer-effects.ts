@@ -1,13 +1,11 @@
-import { type RefObject, useCallback, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import type { RefObject } from "react";
 import type { ResolvedConfig } from "./types";
-
-export function usePanelHeight(
+export const usePanelHeight = (
   panelRef: RefObject<HTMLDivElement | null>,
-  hasSnapPoints: boolean
-): number {
+  hasSnapPoints: boolean,
+): number => {
   const [height, setHeight] = useState(0);
-
   useEffect(() => {
     const el = panelRef.current;
     if (!(el && hasSnapPoints)) {
@@ -22,55 +20,42 @@ export function usePanelHeight(
     observer.observe(el);
     return () => observer.disconnect();
   }, [panelRef, hasSnapPoints]);
-
   return height;
-}
+};
+const getViewportHeight = () =>
+  typeof window === "undefined" ? 0 : (window.visualViewport?.height ?? window.innerHeight);
 
-export function useViewportHeight(active: boolean): number {
-  const getHeight = useCallback(
-    () =>
-      typeof window === "undefined"
-        ? 0
-        : (window.visualViewport?.height ?? window.innerHeight),
-    []
+export const useViewportHeight = (active: boolean): number => {
+  const [height, setHeight] = useState<number | undefined>(() =>
+    typeof window === "undefined" ? undefined : getViewportHeight(),
   );
-  const [height, setHeight] = useState(() => getHeight());
-
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
-
-    const update = () => setHeight(getHeight());
-    update();
-
+    const update = () => setHeight(getViewportHeight());
     window.addEventListener("resize", update);
     window.visualViewport?.addEventListener("resize", update);
-
     return () => {
       window.removeEventListener("resize", update);
       window.visualViewport?.removeEventListener("resize", update);
     };
-  }, [getHeight]);
-
-  return active ? height : 0;
-}
-
-export function useBodyScale(
+  }, []);
+  return active ? (height ?? 0) : 0;
+};
+export const useBodyScale = (
   config: ResolvedConfig,
   isOpen: boolean,
-  prefersReducedMotion: boolean
-) {
+  prefersReducedMotion: boolean,
+) => {
   useEffect(() => {
     if (!config.shouldScaleBackground || prefersReducedMotion) {
       return;
     }
-
     const wrapper = document.querySelector("[data-stacksheet-wrapper]");
     if (!(wrapper && wrapper instanceof HTMLElement)) {
       return;
     }
-
     if (isOpen) {
       const scale = config.scaleBackgroundAmount;
       wrapper.style.transition =
@@ -81,7 +66,6 @@ export function useBodyScale(
       wrapper.style.transformOrigin = "center top";
       return;
     }
-
     wrapper.style.transform = "";
     wrapper.style.borderRadius = "";
     const handleEnd = () => {
@@ -91,10 +75,5 @@ export function useBodyScale(
     };
     wrapper.addEventListener("transitionend", handleEnd, { once: true });
     return () => wrapper.removeEventListener("transitionend", handleEnd);
-  }, [
-    isOpen,
-    config.shouldScaleBackground,
-    config.scaleBackgroundAmount,
-    prefersReducedMotion,
-  ]);
-}
+  }, [isOpen, config.shouldScaleBackground, config.scaleBackgroundAmount, prefersReducedMotion]);
+};

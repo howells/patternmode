@@ -1,70 +1,65 @@
-import {
-  type ApiSection,
-  ApiTable,
-  CodeBlock,
-  ComponentPage,
-  DocsBlock,
-} from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
 import { DeckDemo } from "@/components/deck-demo";
 
 export const metadata: Metadata = {
-  title: "Deck | Patternmode",
   description:
     "Card decks with cyclic stacks, finite advance flows, velocity gestures, and keyboard control.",
+  title: "Deck | Patternmode",
 };
 
 const deckApi: ApiSection[] = [
   {
-    name: "Deck",
     description: "Root deck with finite and cyclic advance modes.",
+    name: "Deck",
     props: [
       {
-        name: "mode",
-        type: '"cycle" | "finite"',
         defaultValue: '"cycle"',
         description: "Whether cards wrap forever or exhaust into Deck.Empty.",
+        name: "mode",
+        type: '"cycle" | "finite"',
       },
       {
+        description: "Controlled active card index.",
         name: "index",
         type: "number",
-        description: "Controlled active card index.",
       },
       {
-        name: "defaultIndex",
-        type: "number",
         defaultValue: "0",
         description: "Initial active card for uncontrolled decks.",
+        name: "defaultIndex",
+        type: "number",
       },
       {
-        name: "visibleCount",
-        type: "number",
         defaultValue: "3",
         description: "Number of cards rendered in the visual stack.",
+        name: "visibleCount",
+        type: "number",
       },
       {
+        description: "Called when the active card advances by drag or keyboard.",
         name: "onAdvance",
         type: "(event: DeckAdvanceEvent) => void",
-        description:
-          "Called when the active card advances by drag or keyboard.",
       },
     ],
   },
   {
-    name: "Deck.Card",
     description: "A card child rendered into the animated stack.",
+    name: "Deck.Card",
     props: [
       {
+        description:
+          "Card content rendered unchanged. Next.js consumers can place their own next/image Image inside the card.",
         name: "children",
-        type: "ReactNode",
         required: true,
-        description: "Card content.",
+        type: "ReactNode",
       },
       {
+        description: "Class passed to the rendered motion card.",
         name: "className",
         type: "string",
-        description: "Class passed to the rendered motion card.",
       },
     ],
   },

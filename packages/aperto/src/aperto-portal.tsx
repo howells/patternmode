@@ -12,7 +12,7 @@ export interface ApertoPortalProps {
   container?: HTMLElement;
 }
 
-function ApertoPortal({ children, container }: ApertoPortalProps) {
+const ApertoPortal = ({ children, container }: ApertoPortalProps) => {
   const { open } = useApertoContext();
 
   return (
@@ -24,6 +24,6 @@ function ApertoPortal({ children, container }: ApertoPortalProps) {
       )}
     </AnimatePresence>
   );
-}
+};
 
 export { ApertoPortal };

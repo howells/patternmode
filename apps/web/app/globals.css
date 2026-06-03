@@ -12,8 +12,7 @@
   --accent: #315c4b;
   --accent-soft: #e1ebe5;
   --radius: 8px;
-  --mono:
-    "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --mono: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   color: var(--ink);
   background: var(--background);
   font-family:
@@ -271,9 +270,7 @@ button {
 }
 
 .stack-preview {
-  background:
-    linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 56%),
-    var(--surface-soft);
+  background: linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 56%), var(--surface-soft);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   min-height: 240px;
@@ -569,9 +566,7 @@ button {
 
 .catalog-card-preview {
   aspect-ratio: 5 / 3;
-  background:
-    linear-gradient(135deg, rgba(49, 92, 75, 0.06), transparent 50%),
-    var(--surface-soft);
+  background: linear-gradient(135deg, rgba(49, 92, 75, 0.06), transparent 50%), var(--surface-soft);
   border-bottom: 1px solid var(--border-soft);
   display: grid;
   place-items: center;

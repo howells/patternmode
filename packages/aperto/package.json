@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/aperto",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Opinionated, styled thumbnail-to-expanded media transitions for React.",
   "homepage": "https://github.com/howells/patternmode/tree/main/packages/aperto#readme",
   "bugs": {
@@ -50,7 +50,7 @@
     "motion": "^12.38.0"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
@@ -68,7 +68,7 @@
     "vitest": "^4.1.6"
   },
   "peerDependencies": {
-    "react": ">=18.2.0 <20",
-    "react-dom": ">=18.2.0 <20"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

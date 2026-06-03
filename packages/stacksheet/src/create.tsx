@@ -1,9 +1,8 @@
 import { Portal } from "@radix-ui/react-portal";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, use } from "react";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
-
 import { resolveConfig } from "./config";
 import { SheetRenderer } from "./renderer";
 import { createSheetStore } from "./store";
@@ -16,10 +15,7 @@ import type {
   StacksheetProviderProps,
   StacksheetSnapshot,
 } from "./types";
-
-type StoreState<TMap extends object> = StacksheetSnapshot<TMap> &
-  SheetActions<TMap>;
-
+type StoreState<TMap extends object> = StacksheetSnapshot<TMap> & SheetActions<TMap>;
 /**
  * Create an isolated sheet stack instance with typed store, hooks, and provider.
  *
@@ -50,89 +46,74 @@ type StoreState<TMap extends object> = StacksheetSnapshot<TMap> &
  *
  * Use `useSheetPanel()` inside content components to access `close()` and `back()`.
  */
-export function createStacksheet<TMap extends object>(
-  config?: StacksheetConfig
-): StacksheetInstance<TMap> {
+export const createStacksheet = <TMap extends object>(
+  config?: StacksheetConfig,
+): StacksheetInstance<TMap> => {
   const resolved = resolveConfig(config);
   const { store, componentMap } = createSheetStore<TMap>(resolved);
-
   // Context for the store — allows multiple instances
   const StoreContext = createContext<{
     store: StoreApi<StoreState<TMap>>;
     config: ResolvedConfig;
   } | null>(null);
-
-  function useStoreContext() {
-    const ctx = useContext(StoreContext);
+  const useStoreContext = () => {
+    const ctx = use(StoreContext);
     if (!ctx) {
-      throw new Error(
-        "useSheet/useStacksheetState must be used within <StacksheetProvider>"
-      );
+      throw new Error("useSheet/useStacksheetState must be used within <StacksheetProvider>");
     }
     return ctx;
-  }
-
+  };
   // ── Provider ────────────────────────────────
-
   const EMPTY_SHEETS = {} as ContentMap<TMap>;
-
-  function StacksheetProvider({
+  const providerValue = { config: resolved, store };
+  const StacksheetProvider = ({
     sheets = EMPTY_SHEETS,
     children,
     classNames,
     layout,
     renderHeader,
-  }: StacksheetProviderProps<TMap>) {
-    const value = useMemo(() => ({ store, config: resolved }), []);
-    return (
-      <StoreContext.Provider value={value}>
-        {children}
-        <Portal asChild={false}>
-          <SheetRenderer<TMap>
-            classNames={classNames}
-            componentMap={componentMap}
-            config={resolved}
-            layout={layout}
-            renderHeader={renderHeader}
-            sheets={sheets}
-            store={store}
-          />
-        </Portal>
-      </StoreContext.Provider>
-    );
-  }
-
+  }: StacksheetProviderProps<TMap>) => (
+    <StoreContext.Provider value={providerValue}>
+      {children}
+      <Portal asChild={false}>
+        <SheetRenderer<TMap>
+          classNames={classNames}
+          componentMap={componentMap}
+          config={resolved}
+          layout={layout}
+          renderHeader={renderHeader}
+          sheets={sheets}
+          store={store}
+        />
+      </Portal>
+    </StoreContext.Provider>
+  );
   // ── Hooks ───────────────────────────────────
-
-  function useSheet(): SheetActions<TMap> {
+  const useSheet = (): SheetActions<TMap> => {
     const { store: s } = useStoreContext();
     // Actions are stable refs in Zustand v5 — read once, no subscription needed
-    return useMemo(() => {
-      const state = s.getState();
-      return {
-        open: state.open,
-        push: state.push,
-        replace: state.replace,
-        swap: state.swap,
-        navigate: state.navigate,
-        setData: state.setData,
-        remove: state.remove,
-        pop: state.pop,
-        close: state.close,
-      };
-    }, [s]);
-  }
-
-  function useStacksheetState(): StacksheetSnapshot<TMap> {
+    const state = s.getState();
+    return {
+      close: state.close,
+      navigate: state.navigate,
+      open: state.open,
+      pop: state.pop,
+      push: state.push,
+      remove: state.remove,
+      replace: state.replace,
+      setData: state.setData,
+      swap: state.swap,
+    };
+  };
+  const useStacksheetState = (): StacksheetSnapshot<TMap> => {
     const { store: s } = useStoreContext();
     return useStore(
       s,
       useShallow((state) => ({
-        stack: state.stack,
         isOpen: state.isOpen,
-      }))
+        stack: state.stack,
+      })),
     );
-  }
-
-  return { StacksheetProvider, useSheet, useStacksheetState, store };
-}
+  };
+  return { StacksheetProvider, store, useSheet, useStacksheetState };
+};

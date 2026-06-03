@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "@types/react": "^19.2.14",
     "react": "^19.2.3",

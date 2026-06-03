@@ -1,3 +1,3 @@
-export { DeckCard } from "./Deck/DeckCard";
-export { DeckEmpty } from "./Deck/DeckEmpty";
-export { CardStack, Deck, DeckRoot } from "./Deck/DeckRoot";
+export { DeckCard } from "./Deck/deck-card";
+export { DeckEmpty } from "./Deck/deck-empty";
+export { CardStack, Deck, DeckRoot } from "./Deck/deck-root";

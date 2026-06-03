@@ -20,12 +20,8 @@ const RESISTANCE_MIN = 0.1;
  * At distance 100: returns ~0.58
  * At distance 200: returns ~0.42
  */
-export function calculateResistance(distance: number): number {
-  return Math.max(
-    RESISTANCE_MIN,
-    1 - Math.log(distance / RESISTANCE_DIVISOR + 1) / RESISTANCE_SCALE
-  );
-}
+export const calculateResistance = (distance: number): number =>
+  Math.max(RESISTANCE_MIN, 1 - Math.log(distance / RESISTANCE_DIVISOR + 1) / RESISTANCE_SCALE);
 
 /** Scale mapping: distance → visual scale (1.0 → 0.95) */
 export const SCALE_INPUT = [0, 50, 100];

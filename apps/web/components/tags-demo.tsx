@@ -1,6 +1,7 @@
 "use client";
 
-import { Tag, type TagItem, TagSelector } from "@patternmode/tags";
+import { Tag, TagSelector } from "@patternmode/tags";
+import type { TagItem } from "@patternmode/tags";
 import { useState } from "react";
 
 const options: TagItem[] = [
@@ -14,22 +15,15 @@ const options: TagItem[] = [
   { disabled: true, id: "locked", label: "Locked", variant: "ghost" },
 ];
 
-function createTag(label: string): TagItem {
-  return {
-    id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-    label,
-    variant: "outline",
-  };
-}
+const createTag = (label: string): TagItem => ({
+  id: label.toLowerCase().replaceAll(/[^a-z0-9]+/gu, "-"),
+  label,
+  variant: "outline",
+});
 
-export function TagsDemo() {
-  const [tags, setTags] = useState<TagItem[]>([
-    options[0] as TagItem,
-    options[5] as TagItem,
-  ]);
-  const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([
-    options[3] as TagItem,
-  ]);
+export const TagsDemo = () => {
+  const [tags, setTags] = useState<TagItem[]>([options[0] as TagItem, options[5] as TagItem]);
+  const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([options[3] as TagItem]);
 
   return (
     <div className="tags-demo">
@@ -44,8 +38,7 @@ export function TagsDemo() {
           value={tags}
         />
         <p className="tags-demo-note">
-          Search, create from the menu, create from separators, paste, and
-          toggle selected options.
+          Search, create from the menu, create from separators, paste, and toggle selected options.
         </p>
       </div>
 
@@ -79,11 +72,11 @@ export function TagsDemo() {
           <Tag size="base" selected variant="outline">
             Base
           </Tag>
-          <Tag size="lg" onRemove={() => undefined}>
+          <Tag size="lg" onRemove={() => null}>
             Large
           </Tag>
         </div>
       </div>
     </div>
   );
-}
+};

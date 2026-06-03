@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/deck",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": false,
   "description": "Composable Deck primitives with finite and cyclic advance modes for React.",
   "keywords": [
@@ -59,7 +59,7 @@
     "motion": "^12.38.0"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
@@ -77,8 +77,8 @@
     "vitest": "^4.1.6"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "engines": {
     "node": ">=20"

@@ -1,4 +1,5 @@
 import type { TargetAndTransition, Transition } from "motion/react";
+import type { ApertoMediaItem } from "./types";
 
 export interface ApertoRect {
   height: number;
@@ -9,12 +10,12 @@ export interface ApertoRect {
 
 export interface ApertoMediaTransition {
   from: ApertoRect;
-  item: import("./types").ApertoMediaItem;
+  item: ApertoMediaItem;
   phase: "opening" | "closing";
   to?: ApertoRect;
 }
 
-export function rectFromElement(element: Element | null): ApertoRect | null {
+export const rectFromElement = (element: Element | null): ApertoRect | null => {
   if (!element) {
     return null;
   }
@@ -26,19 +27,14 @@ export function rectFromElement(element: Element | null): ApertoRect | null {
     top: rect.top,
     width: rect.width,
   };
-}
+};
 
-export function rectTarget(rect: ApertoRect): TargetAndTransition {
-  return {
-    height: rect.height,
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-  };
-}
+export const rectTarget = (rect: ApertoRect): TargetAndTransition => ({
+  height: rect.height,
+  left: rect.left,
+  top: rect.top,
+  width: rect.width,
+});
 
-export function transitionDurationMs(transition: Transition): number {
-  return typeof transition.duration === "number"
-    ? transition.duration * 1000
-    : 450;
-}
+export const transitionDurationMs = (transition: Transition): number =>
+  typeof transition.duration === "number" ? transition.duration * 1000 : 450;

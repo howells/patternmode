@@ -188,11 +188,7 @@
   }
 
   .patternmode-tag-selector__trigger:focus-visible {
-    border-color: color-mix(
-      in srgb,
-      var(--accent, #315c4b) 54%,
-      var(--border, #e3e1dc)
-    );
+    border-color: color-mix(in srgb, var(--accent, #315c4b) 54%, var(--border, #e3e1dc));
     box-shadow: 0 0 0 3px rgb(49 92 75 / 12%);
     outline: 0;
   }
@@ -255,11 +251,7 @@
   }
 
   .patternmode-tag-selector__search:focus-visible {
-    border-color: color-mix(
-      in srgb,
-      var(--accent, #315c4b) 54%,
-      var(--border, #e3e1dc)
-    );
+    border-color: color-mix(in srgb, var(--accent, #315c4b) 54%, var(--border, #e3e1dc));
   }
 
   .patternmode-tag-selector__list {

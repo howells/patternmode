@@ -242,8 +242,7 @@
     z-index: 2;
   }
 
-  .patternmode-distribution-bar__segment
-    + .patternmode-distribution-bar__segment {
+  .patternmode-distribution-bar__segment + .patternmode-distribution-bar__segment {
     box-shadow: inset 1px 0 0 rgb(255 255 255 / 60%);
   }
 

@@ -1,5 +1,16 @@
 # @patternmode/deck
 
+## 0.3.0
+
+### Minor Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes

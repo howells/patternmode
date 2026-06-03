@@ -2,24 +2,41 @@ import type { AdvanceDirection, DeckItem, DeckMode } from "./types";
 
 export interface AdvanceDecisionInput {
   allowedDirections: AdvanceDirection[];
+  /** Pixel threshold, or width ratio when <= 1. */
   distanceThreshold: number;
   offsetX: number;
+  /** Horizontal velocity threshold in px/s. */
   velocityThreshold: number;
   velocityX: number;
   width: number;
 }
 
+/** Result of evaluating a drag or keyboard advance gesture. */
 export interface AdvanceDecision {
   accepted: boolean;
   direction: AdvanceDirection;
 }
 
-export function getVisibleDeckItems(
+const normalizeIndex = (index: number, length: number): number =>
+  ((index % length) + length) % length;
+
+const hashString = (value: string): number => {
+  let hash = 2_166_136_261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (Math.imul(hash, 16_777_619) + (value.codePointAt(index) ?? 0)) % 0xff_ff_ff_ff;
+  }
+
+  return Math.abs(hash);
+};
+
+/** Returns the visible stack slice, wrapping repeated items only in cycle mode. */
+export const getVisibleDeckItems = (
   items: DeckItem[],
   index: number,
   visibleCount: number,
-  mode: DeckMode
-): DeckItem[] {
+  mode: DeckMode,
+): DeckItem[] => {
   if (items.length === 0 || visibleCount <= 0) {
     return [];
   }
@@ -29,55 +46,50 @@ export function getVisibleDeckItems(
   }
 
   const start = normalizeIndex(index, items.length);
-  return Array.from(
-    { length: Math.min(visibleCount, items.length) },
-    (_, depth) => {
-      const itemIndex = (start + depth) % items.length;
-      return items[itemIndex] as DeckItem;
-    }
-  );
-}
+  return Array.from({ length: Math.min(visibleCount, items.length) }, (_, depth) => {
+    const itemIndex = (start + depth) % items.length;
+    return items[itemIndex] as DeckItem;
+  });
+};
 
-export function getNextDeckIndex(
-  index: number,
-  length: number,
-  mode: DeckMode
-): number {
+/** Returns the next index, wrapping only in cycle mode. */
+export const getNextDeckIndex = (index: number, length: number, mode: DeckMode): number => {
   if (length <= 0) {
     return 0;
   }
 
   const next = index + 1;
   return mode === "cycle" ? next % length : Math.min(next, length);
-}
+};
 
-export function getDeckRenderKey(
+/** Builds a stable React key that changes each cycle pass for repeated items. */
+export const getDeckRenderKey = (
   itemId: string,
   absoluteIndex: number,
   length: number,
-  mode: DeckMode
-): string {
+  mode: DeckMode,
+): string => {
   if (mode !== "cycle" || length <= 0) {
     return itemId;
   }
 
   return `${itemId}:${Math.floor(absoluteIndex / length)}`;
-}
+};
 
-export function getAdvanceDecision(
-  input: AdvanceDecisionInput
-): AdvanceDecision {
+/**
+ * Evaluates whether drag distance or velocity should advance a card.
+ *
+ * Direction is inferred from the dominant horizontal movement, then checked
+ * against `allowedDirections`.
+ */
+export const getAdvanceDecision = (input: AdvanceDecisionInput): AdvanceDecision => {
   const width = Math.max(input.width, 1);
   const distanceThreshold =
-    input.distanceThreshold <= 1
-      ? width * input.distanceThreshold
-      : input.distanceThreshold;
+    input.distanceThreshold <= 1 ? width * input.distanceThreshold : input.distanceThreshold;
   const distanceAccepted = Math.abs(input.offsetX) >= distanceThreshold;
   const velocityAccepted = Math.abs(input.velocityX) >= input.velocityThreshold;
   const primaryMovement =
-    Math.abs(input.offsetX) >= Math.abs(input.velocityX) / 4
-      ? input.offsetX
-      : input.velocityX;
+    Math.abs(input.offsetX) >= Math.abs(input.velocityX) / 4 ? input.offsetX : input.velocityX;
   const direction: AdvanceDirection = primaryMovement < 0 ? "left" : "right";
   const directionAllowed = input.allowedDirections.includes(direction);
 
@@ -85,36 +97,19 @@ export function getAdvanceDecision(
     accepted: directionAllowed && (distanceAccepted || velocityAccepted),
     direction,
   };
-}
+};
 
-export function resolveCardRotation(id: string, spread: number): number {
+/** Resolves deterministic per-card rotation from an item id and spread. */
+export const resolveCardRotation = (id: string, spread: number): number => {
   if (spread <= 0) {
     return 0;
   }
 
   const hash = hashString(id);
-  const normalized = hash / 0xffffffff;
+  const normalized = hash / 0xff_ff_ff_ff;
   return Number(((normalized * 2 - 1) * spread).toFixed(3));
-}
+};
 
-export function getVisualDepth(
-  item: DeckItem,
-  visibleItems: DeckItem[]
-): number {
-  return visibleItems.findIndex((visibleItem) => visibleItem.id === item.id);
-}
-
-function normalizeIndex(index: number, length: number): number {
-  return ((index % length) + length) % length;
-}
-
-function hashString(value: string): number {
-  let hash = 2166136261;
-
-  for (let index = 0; index < value.length; index += 1) {
-    hash ^= value.charCodeAt(index);
-    hash = Math.imul(hash, 16777619);
-  }
-
-  return hash >>> 0;
-}
+/** Returns the visual depth of an item within the currently visible stack. */
+export const getVisualDepth = (item: DeckItem, visibleItems: DeckItem[]): number =>
+  visibleItems.findIndex((visibleItem) => visibleItem.id === item.id);

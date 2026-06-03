@@ -5,6 +5,14 @@
     touch-action: pan-y;
   }
 
+  .patternmode-deck__control {
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 1px;
+  }
+
   .patternmode-deck-card {
     cursor: grab;
     inset: 0;

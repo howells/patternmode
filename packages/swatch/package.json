@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/swatch",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": false,
   "description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
   "keywords": [
@@ -59,7 +59,7 @@
     "motion": "^12.38.0"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",

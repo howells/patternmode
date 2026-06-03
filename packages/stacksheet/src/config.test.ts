@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { resolveConfig } from "./config";
 
+const onSnapPointChange = () => {};
+const onCloseComplete = (_reason: string) => {};
+
 describe("resolveConfig", () => {
   it("returns all defaults when called with no args", () => {
     const config = resolveConfig();
@@ -80,44 +83,42 @@ describe("resolveConfig", () => {
   });
 
   it("passes through snap callbacks", () => {
-    const onChange = () => undefined;
     const config = resolveConfig({
+      onSnapPointChange,
       snapPointIndex: 1,
-      onSnapPointChange: onChange,
       snapToSequentialPoints: true,
     });
     expect(config.snapPointIndex).toBe(1);
-    expect(config.onSnapPointChange).toBe(onChange);
+    expect(config.onSnapPointChange).toBe(onSnapPointChange);
     expect(config.snapToSequentialPoints).toBe(true);
   });
 
   // ── Close reason callback ────────────────────
 
   it("passes through onCloseComplete with reason signature", () => {
-    const onClose = (_reason: string) => undefined;
-    const config = resolveConfig({ onCloseComplete: onClose });
-    expect(config.onCloseComplete).toBe(onClose);
+    const config = resolveConfig({ onCloseComplete });
+    expect(config.onCloseComplete).toBe(onCloseComplete);
   });
 
   it("allows overriding all values", () => {
     const config = resolveConfig({
-      maxDepth: 3,
-      closeOnEscape: false,
-      closeOnBackdrop: false,
-      showOverlay: false,
-      lockScroll: false,
-      width: 500,
-      maxWidth: "80vw",
-      breakpoint: 640,
-      zIndex: 200,
       ariaLabel: "Custom",
-      drag: false,
+      breakpoint: 640,
+      closeOnBackdrop: false,
+      closeOnEscape: false,
       closeThreshold: 0.5,
-      velocityThreshold: 1,
       dismissible: false,
+      drag: false,
+      lockScroll: false,
+      maxDepth: 3,
+      maxWidth: "80vw",
       modal: false,
-      shouldScaleBackground: true,
       scaleBackgroundAmount: 0.9,
+      shouldScaleBackground: true,
+      showOverlay: false,
+      velocityThreshold: 1,
+      width: 500,
+      zIndex: 200,
     });
     expect(config.maxDepth).toBe(3);
     expect(config.closeOnEscape).toBe(false);

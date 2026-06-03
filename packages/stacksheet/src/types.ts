@@ -1,4 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
+import type { SpringPreset } from "./springs";
+import type { StoreApi } from "zustand";
 
 // ── Close reason ────────────────────────────────
 
@@ -34,7 +36,7 @@ export interface HeaderRenderProps {
   /** Close the entire sheet stack */
   onClose: () => void;
   /** Current resolved side (left/right/bottom) */
-  side: import("./types").Side;
+  side: Side;
 }
 
 export interface SheetPresentationOptions {
@@ -149,7 +151,7 @@ export interface StacksheetConfig {
   /** When true, velocity can't skip intermediate snap points. Default: false */
   snapToSequentialPoints?: boolean;
   /** Spring animation parameters — preset name or custom config */
-  spring?: import("./springs").SpringPreset | Partial<SpringConfig>;
+  spring?: SpringPreset | Partial<SpringConfig>;
   /** Stacking visual parameters */
   stacking?: Partial<StackingConfig>;
   /** Velocity threshold (px/ms) to trigger close. Default: 0.5 */
@@ -220,40 +222,40 @@ export interface SheetActions<TMap extends object> {
     type: K,
     id: string,
     data: TMap[K],
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Smart navigate with an ad-hoc component */
   navigate<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Smart navigate with an ad-hoc component (explicit id) */
   navigate<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     id: string,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Replace stack with a single item */
   open<K extends Extract<keyof TMap, string>>(
     type: K,
     id: string,
     data: TMap[K],
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Replace stack with an ad-hoc component */
   open<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Replace stack with an ad-hoc component (explicit id) */
   open<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     id: string,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Pop top item; close if last */
   pop(): void;
@@ -263,20 +265,20 @@ export interface SheetActions<TMap extends object> {
     type: K,
     id: string,
     data: TMap[K],
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Push an ad-hoc component onto the stack */
   push<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Push an ad-hoc component onto the stack (explicit id) */
   push<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     id: string,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
 
   /** Remove a specific sheet by id; close if last */
@@ -287,46 +289,42 @@ export interface SheetActions<TMap extends object> {
     type: K,
     id: string,
     data: TMap[K],
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Swap the top item with an ad-hoc component */
   replace<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Swap the top item with an ad-hoc component (explicit id) */
   replace<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     id: string,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
 
   /** Update data on a sheet by id (no animation) */
-  setData<K extends Extract<keyof TMap, string>>(
-    type: K,
-    id: string,
-    data: TMap[K]
-  ): void;
+  setData<K extends Extract<keyof TMap, string>>(type: K, id: string, data: TMap[K]): void;
   /** Update data on an ad-hoc sheet by id */
   setData<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     id: string,
-    data: TData
+    data: TData,
   ): void;
 
   /** Swap the top item's content in place (no animation) */
   swap<K extends Extract<keyof TMap, string>>(
     type: K,
     data: TMap[K],
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
   /** Swap the top item's content with an ad-hoc component (no animation) */
   swap<TData extends Record<string, unknown>>(
     component: ComponentType<TData>,
     data: TData,
-    options?: SheetPresentationOptions
+    options?: SheetPresentationOptions,
   ): void;
 }
 
@@ -354,9 +352,7 @@ export interface StacksheetInstance<TMap extends object> {
   /** Provider component — wrap your app, pass sheets map */
   StacksheetProvider: ComponentType<StacksheetProviderProps<TMap>>;
   /** Raw Zustand store for advanced use */
-  store: import("zustand").StoreApi<
-    StacksheetSnapshot<TMap> & SheetActions<TMap>
-  >;
+  store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
   /** Hook returning sheet actions */
   useSheet: () => SheetActions<TMap>;
   /** Hook returning sheet state (stack, isOpen) */

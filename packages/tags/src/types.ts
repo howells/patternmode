@@ -1,50 +1,61 @@
 import type {
   ButtonHTMLAttributes,
   ComponentProps,
+  ComponentPropsWithRef,
   ComponentType,
-  HTMLAttributes,
-  InputHTMLAttributes,
   ReactNode,
   SVGProps,
 } from "react";
 
-export type BadgeVariant =
-  | "default"
-  | "secondary"
-  | "destructive"
-  | "outline"
-  | "ghost"
-  | "link";
+export type BadgeVariant = "default" | "secondary" | "destructive" | "outline" | "ghost" | "link";
 
+/** Shadcn-compatible badge wrapper used by Tag and TagSelector. */
 export interface BadgeProps extends ComponentProps<"span"> {
+  /**
+   * Render through Radix Slot so the child element receives badge props.
+   *
+   * Default `false`.
+   */
   asChild?: boolean;
+  /**
+   * Shadcn-compatible badge variant.
+   *
+   * Default `"default"`.
+   */
   variant?: BadgeVariant;
 }
 
 export type TagSize = "sm" | "base" | "lg";
 
-export type TagTone =
-  | "neutral"
-  | "accent"
-  | "success"
-  | "warning"
-  | "danger"
-  | "info";
+export type TagTone = "neutral" | "accent" | "success" | "warning" | "danger" | "info";
 
 type TagIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
+/** Props for a single visual tag, optionally removable or selectable. */
 export interface TagProps extends Omit<BadgeProps, "asChild" | "color"> {
   children: ReactNode;
   disabled?: boolean;
   icon?: TagIcon;
+  /** Renders a remove affordance and calls this after stopping event propagation. */
   onRemove?: () => void;
   removeLabel?: string;
+  /**
+   * Adds a selected treatment without changing semantics.
+   *
+   * Default `false`.
+   */
   selected?: boolean;
+  /**
+   * Tag size.
+   *
+   * Default `"base"`.
+   */
   size?: TagSize;
   /** @deprecated Use shadcn-compatible `variant` instead. */
   tone?: TagTone;
 }
 
+/** Minimum item shape used by TagSelector. Extend it with app-specific fields. */
 export interface TagItem {
   disabled?: boolean;
   id: string;
@@ -52,43 +63,63 @@ export interface TagItem {
   variant?: BadgeVariant;
 }
 
+/** Render props for selected tags inside the trigger. */
 export interface TagRenderProps<TItem extends TagItem = TagItem> {
   disabled: boolean;
   item: TItem;
+  /** Props for a remove button; spread them onto your custom remove affordance. */
   removeProps: ButtonHTMLAttributes<HTMLButtonElement>;
   selected: true;
 }
 
+/** Render props for selectable options inside the popover listbox. */
 export interface TagOptionRenderProps<TItem extends TagItem = TagItem> {
   active: boolean;
   disabled: boolean;
   item: TItem;
+  /** Props for the option button; spread them onto your custom option root. */
   optionProps: ButtonHTMLAttributes<HTMLButtonElement>;
   selected: boolean;
 }
 
-export interface TagSelectorRootProps<
-  TItem extends TagItem = TagItem,
-> extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "onChange"> {
+/** Controlled TagSelector root props shared by the component and compound API. */
+export interface TagSelectorRootProps<TItem extends TagItem = TagItem> extends Omit<
+  ComponentPropsWithRef<"div">,
+  "children" | "onChange"
+> {
   "aria-label"?: string;
   children?: ReactNode;
   disabled?: boolean;
   emptyMessage?: ReactNode;
+  /** Filters available options as the search query changes. */
   filterOption?: (item: TItem, query: string) => boolean;
+  /** When set, selected items render hidden inputs using `serializeItem`. */
   name?: string;
+  /** Receives the complete selected item list whenever selection changes. */
   onChange: (items: TItem[]) => void;
+  /** Creates an item from a normalized draft label entered or pasted by the user. */
   onCreateItem?: (label: string) => Promise<TItem> | TItem;
+  /** Called for search input changes, including internal uncontrolled changes. */
   onSearchChange?: (query: string) => void;
   options: readonly TItem[];
   placeholder?: string;
   renderOption?: (props: TagOptionRenderProps<TItem>) => ReactNode;
   renderTag?: (props: TagRenderProps<TItem>) => ReactNode;
+  /** Controlled search query. Omit to let TagSelector manage search internally. */
   searchValue?: string;
+  /**
+   * Keys that commit the current search draft.
+   *
+   * Default `["Enter", ","]`.
+   */
   separators?: readonly string[];
+  /** Converts selected items to hidden input values when `name` is set. */
   serializeItem?: (item: TItem) => string;
+  /** Controlled selected items. */
   value: readonly TItem[];
 }
 
+/** Convenience TagSelector props for the bundled trigger/content/search/list composition. */
 export interface TagSelectorProps<
   TItem extends TagItem = TagItem,
 > extends TagSelectorRootProps<TItem> {
@@ -97,24 +128,32 @@ export interface TagSelectorProps<
   triggerClassName?: string;
 }
 
-export interface TagSelectorTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface TagSelectorTriggerProps extends ComponentPropsWithRef<"button"> {
+  /** Placeholder shown when no tags are selected. */
   placeholder?: string;
 }
 
-export interface TagSelectorContentProps extends HTMLAttributes<HTMLDivElement> {
+export interface TagSelectorContentProps extends ComponentPropsWithRef<"div"> {
+  /**
+   * Popover alignment relative to the trigger.
+   *
+   * Default `"start"`.
+   */
   align?: "center" | "end" | "start";
+  /**
+   * Popover offset from the trigger in pixels.
+   *
+   * Default `6`.
+   */
   sideOffset?: number;
 }
 
-export interface TagSelectorSearchProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "children" | "onChange"
-> {}
+export type TagSelectorSearchProps = Omit<ComponentPropsWithRef<"input">, "children" | "onChange">;
 
-export interface TagSelectorListProps extends HTMLAttributes<HTMLDivElement> {
+export interface TagSelectorListProps extends ComponentPropsWithRef<"div"> {
   children?: ReactNode;
 }
 
-export interface TagSelectorEmptyProps extends HTMLAttributes<HTMLDivElement> {
+export interface TagSelectorEmptyProps extends ComponentPropsWithRef<"div"> {
   children?: ReactNode;
 }

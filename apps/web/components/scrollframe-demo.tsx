@@ -33,7 +33,7 @@ const chips = [
   "Concrete",
 ];
 
-export function ScrollFrameDemo() {
+export const ScrollFrameDemo = () => {
   const [selectedChip, setSelectedChip] = useState(chips[0]);
 
   return (
@@ -78,4 +78,4 @@ export function ScrollFrameDemo() {
       </ScrollFrame>
     </div>
   );
-}
+};

@@ -11,31 +11,31 @@ import {
 import type { ResolvedConfig, StackingConfig } from "./types";
 
 const defaultStacking: StackingConfig = {
-  scaleStep: 0.04,
   offsetStep: 16,
+  opacityStep: 0.15,
   radius: 12,
   renderThreshold: 3,
-  opacityStep: 0.15,
+  scaleStep: 0.04,
 };
 
 describe("getStackTransform", () => {
   it("returns identity transform at depth 0", () => {
     const result = getStackTransform(0, defaultStacking);
     expect(result).toEqual({
-      scale: 1,
+      borderRadius: 0,
       offset: 0,
       opacity: 1,
-      borderRadius: 0,
+      scale: 1,
     });
   });
 
   it("returns identity for negative depth", () => {
     const result = getStackTransform(-1, defaultStacking);
     expect(result).toEqual({
-      scale: 1,
+      borderRadius: 0,
       offset: 0,
       opacity: 1,
-      borderRadius: 0,
+      scale: 1,
     });
   });
 
@@ -73,8 +73,8 @@ describe("getStackTransform", () => {
   it("enforces minimum scale of 0.5", () => {
     const bigStep: StackingConfig = {
       ...defaultStacking,
-      scaleStep: 0.3,
       renderThreshold: 10,
+      scaleStep: 0.3,
     };
     const result = getStackTransform(3, bigStep);
     expect(result.scale).toBe(0.5);
@@ -85,20 +85,20 @@ describe("getAnimatedBorderRadius", () => {
   it("returns top corners for bottom panel at depth 0", () => {
     const result = getAnimatedBorderRadius("bottom", 0, defaultStacking);
     expect(result).toEqual({
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
     });
   });
 
   it("returns stacking radius for bottom panel at depth > 0", () => {
     const result = getAnimatedBorderRadius("bottom", 1, defaultStacking);
     expect(result).toEqual({
-      borderTopLeftRadius: 12,
-      borderTopRightRadius: 12,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
+      borderTopLeftRadius: 12,
+      borderTopRightRadius: 12,
     });
   });
 
@@ -166,8 +166,8 @@ describe("getStackOffset", () => {
 
 describe("getPanelStyles", () => {
   const mockConfig = {
-    width: 420,
     maxWidth: "90vw",
+    width: 420,
     zIndex: 100,
   } as ResolvedConfig;
 

@@ -8,25 +8,18 @@ interface DemoSheets {
   Overview: { title: string };
 }
 
-const { StacksheetProvider, useSheet, useStacksheetState } =
-  createStacksheet<DemoSheets>({
-    side: { desktop: "right", mobile: "bottom" },
-    spring: "subtle",
-    stacking: {
-      opacityStep: 0.04,
-      radius: 10,
-      scaleStep: 0.035,
-    },
-    width: 430,
-  });
+const { StacksheetProvider, useSheet, useStacksheetState } = createStacksheet<DemoSheets>({
+  side: { desktop: "right", mobile: "bottom" },
+  spring: "subtle",
+  stacking: {
+    opacityStep: 0.04,
+    radius: 10,
+    scaleStep: 0.035,
+  },
+  width: 430,
+});
 
-const sheets = {
-  Config: ConfigSheet,
-  Flow: FlowSheet,
-  Overview: OverviewSheet,
-};
-
-function OverviewSheet({ title }: { title: string }) {
+const OverviewSheet = ({ title }: { title: string }) => {
   const { close, push } = useSheet();
   const pushFlowSheet = () => {
     push("Flow", `flow-${Date.now()}`, { action: "Push" });
@@ -36,10 +29,7 @@ function OverviewSheet({ title }: { title: string }) {
     <div className="sheet-panel-content">
       <p className="sheet-kicker">Sheet stack</p>
       <h3>{title}</h3>
-      <p>
-        Start with one Sheet, then push more Sheets without losing the path
-        back.
-      </p>
+      <p>Start with one Sheet, then push more Sheets without losing the path back.</p>
       <div className="sheet-action-row">
         <button onClick={pushFlowSheet} type="button">
           Push next
@@ -50,9 +40,9 @@ function OverviewSheet({ title }: { title: string }) {
       </div>
     </div>
   );
-}
+};
 
-function FlowSheet({ action }: { action: string }) {
+const FlowSheet = ({ action }: { action: string }) => {
   const { navigate, push } = useSheet();
   const pushMotionConfigSheet = () => {
     push("Config", `config-${Date.now()}`, { category: "Motion" });
@@ -66,8 +56,7 @@ function FlowSheet({ action }: { action: string }) {
       <p className="sheet-kicker">{action}</p>
       <h3>Nested flow</h3>
       <p>
-        Use push for depth, navigate for replacing the current branch, and pop
-        for back behavior.
+        Use push for depth, navigate for replacing the current branch, and pop for back behavior.
       </p>
       <div className="sheet-action-row">
         <button onClick={pushMotionConfigSheet} type="button">
@@ -79,9 +68,9 @@ function FlowSheet({ action }: { action: string }) {
       </div>
     </div>
   );
-}
+};
 
-function ConfigSheet({ category }: { category: string }) {
+const ConfigSheet = ({ category }: { category: string }) => {
   const { close, replace } = useSheet();
   const replaceWithFlowSheet = () => {
     replace("Flow", `flow-${Date.now()}`, { action: "Replace" });
@@ -91,10 +80,7 @@ function ConfigSheet({ category }: { category: string }) {
     <div className="sheet-panel-content">
       <p className="sheet-kicker">{category}</p>
       <h3>Configuration</h3>
-      <p>
-        Placement, drag thresholds, snap points, and springs are set on each
-        stack instance.
-      </p>
+      <p>Placement, drag thresholds, snap points, and springs are set on each stack instance.</p>
       <div className="sheet-list">
         <span>Responsive side</span>
         <span>Modal or non-modal</span>
@@ -110,9 +96,15 @@ function ConfigSheet({ category }: { category: string }) {
       </div>
     </div>
   );
-}
+};
 
-function Launcher() {
+const sheets = {
+  Config: ConfigSheet,
+  Flow: FlowSheet,
+  Overview: OverviewSheet,
+};
+
+const Launcher = () => {
   const { open, push } = useSheet();
   const { stack } = useStacksheetState();
   const openOverviewSheet = () => {
@@ -132,18 +124,14 @@ function Launcher() {
       <div className="stacksheet-copy">
         <h3>Open one sheet, then keep moving.</h3>
         <p>
-          The demo exercises open, push, navigate, replace, back, close, and
-          mobile bottom-sheet behavior.
+          The demo exercises open, push, navigate, replace, back, close, and mobile bottom-sheet
+          behavior.
         </p>
         <div className="demo-button-row">
           <button onClick={openOverviewSheet} type="button">
             Open sheet
           </button>
-          <button
-            disabled={stack.length === 0}
-            onClick={pushBehaviorConfigSheet}
-            type="button"
-          >
+          <button disabled={stack.length === 0} onClick={pushBehaviorConfigSheet} type="button">
             Push config
           </button>
         </div>
@@ -151,21 +139,19 @@ function Launcher() {
       </div>
     </div>
   );
-}
+};
 
-export function StacksheetDemo() {
-  return (
-    <StacksheetProvider
-      classNames={{
-        backdrop: "stacksheet-backdrop",
-        header: "stacksheet-header",
-        panel: "stacksheet-panel",
-      }}
-      sheets={sheets}
-    >
-      <div className="demo-block">
-        <Launcher />
-      </div>
-    </StacksheetProvider>
-  );
-}
+export const StacksheetDemo = () => (
+  <StacksheetProvider
+    classNames={{
+      backdrop: "stacksheet-backdrop",
+      header: "stacksheet-header",
+      panel: "stacksheet-panel",
+    }}
+    sheets={sheets}
+  >
+    <div className="demo-block">
+      <Launcher />
+    </div>
+  </StacksheetProvider>
+);

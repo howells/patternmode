@@ -1,3 +1,5 @@
 import howells from "@howells/lint/oxfmt";
 
-export default howells;
+export default {
+  extends: [howells],
+};

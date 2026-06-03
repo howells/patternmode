@@ -1,5 +1,13 @@
 # @patternmode/stacksheet
 
+## 1.3.6
+
+### Patch Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+- Updated dependencies
+  - @patternmode/system@0.2.3
+
 ## 1.3.5
 
 ### Patch Changes

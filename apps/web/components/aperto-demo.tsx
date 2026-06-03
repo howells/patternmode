@@ -1,11 +1,13 @@
 "use client";
 
-import {
-  Aperto,
-  type ApertoMediaItem,
-  type MotionPresetName,
-  type NavigationMotionPresetName,
+import { Aperto } from "@patternmode/aperto";
+import type {
+  ApertoMediaItem,
+  MotionPresetName,
+  NavigationMotionPresetName,
+  RenderImage,
 } from "@patternmode/aperto";
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 
@@ -13,13 +15,27 @@ import { OptionBar } from "./option-bar";
 
 export type CatalogMediaItem = ApertoMediaItem;
 
-export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
+export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
   const [columns, setColumns] = useState(3);
   const [easing, setEasing] = useState<MotionPresetName>("smooth");
-  const [navigationMotion, setNavigationMotion] =
-    useState<NavigationMotionPresetName>("glide");
+  const [navigationMotion, setNavigationMotion] = useState<NavigationMotionPresetName>("glide");
   const [radius, setRadius] = useState(6);
   const visibleMedia = columns === 2 ? media.slice(0, 4) : media;
+  const firstVisibleSrc = visibleMedia[0]?.src;
+  const renderApertoImage: RenderImage = ({ alt, item, src, variant }) => {
+    const isLeadImage = variant === "expanded" || item.src === firstVisibleSrc;
+
+    return (
+      <Image
+        alt={alt ?? ""}
+        fetchPriority={isLeadImage ? "high" : "auto"}
+        fill
+        loading={isLeadImage || variant === "thumbnail" ? "eager" : "lazy"}
+        sizes={variant === "thumbnail" ? "(max-width: 640px) 50vw, 320px" : "90vw"}
+        src={String(src)}
+      />
+    );
+  };
 
   return (
     <div className="aperto-demo">
@@ -30,6 +46,7 @@ export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
           media={visibleMedia}
           motion={easing}
           navigationMotion={navigationMotion}
+          renderImage={renderApertoImage}
         >
           <div className="aperto-grid" data-columns={columns}>
             {visibleMedia.map((item, index) => (
@@ -82,4 +99,4 @@ export function ApertoDemo({ media }: { media: CatalogMediaItem[] }) {
       </div>
     </div>
   );
-}
+};

@@ -1,0 +1,127 @@
+/** Weighted segment used by DistributionBar and DistributionDisplay. */
+export interface DistributionBarSegment {
+  color: string;
+  id: string;
+  label?: string;
+  /** Relative weight, not a persisted percentage. Invalid or negative values render as 0. */
+  value: number;
+}
+
+/** Segment metadata update; weight changes happen through boundary movement. */
+export type DistributionBarSegmentUpdate = Partial<Omit<DistributionBarSegment, "value">> & {
+  value?: never;
+};
+
+const sanitizeValue = (value: number): number => (Number.isFinite(value) ? Math.max(0, value) : 0);
+
+const clamp = (value: number, min: number, max: number): number =>
+  Math.min(Math.max(value, min), max);
+
+const roundValue = (value: number): number => Number(value.toFixed(1));
+
+/** Sums sanitized segment weights, treating invalid or negative values as 0. */
+export const getDistributionTotal = (segments: DistributionBarSegment[]): number =>
+  segments.reduce((sum, segment) => sum + sanitizeValue(segment.value), 0);
+
+/** Returns the percentage position of the boundary after `boundaryIndex`. */
+export const getDistributionBoundaryPercent = (
+  segments: DistributionBarSegment[],
+  boundaryIndex: number,
+): number => {
+  const total = getDistributionTotal(segments);
+  if (total <= 0) {
+    return 0;
+  }
+
+  const boundaryValue = segments
+    .slice(0, boundaryIndex + 1)
+    .reduce((sum, segment) => sum + sanitizeValue(segment.value), 0);
+  return roundValue((boundaryValue / total) * 100);
+};
+
+/**
+ * Moves the boundary between two adjacent segments while preserving their sum.
+ *
+ * `deltaValue` is applied to the left segment and subtracted from the right
+ * segment. `minValue` prevents either side of the pair from collapsing below a
+ * caller-defined minimum.
+ */
+export const moveDistributionBoundary = (
+  segments: DistributionBarSegment[],
+  boundaryIndex: number,
+  deltaValue: number,
+  minValue: number,
+): DistributionBarSegment[] => {
+  const left = segments[boundaryIndex];
+  const right = segments[boundaryIndex + 1];
+  if (!(left && right)) {
+    return segments;
+  }
+
+  const pairTotal = sanitizeValue(left.value) + sanitizeValue(right.value);
+  const clampedMin = Math.max(0, Math.min(minValue, pairTotal / 2));
+  const nextLeft = clamp(
+    sanitizeValue(left.value) + deltaValue,
+    clampedMin,
+    pairTotal - clampedMin,
+  );
+  const nextRight = pairTotal - nextLeft;
+
+  return segments.map((segment, index) => {
+    if (index === boundaryIndex) {
+      return { ...segment, value: roundValue(nextLeft) };
+    }
+    if (index === boundaryIndex + 1) {
+      return { ...segment, value: roundValue(nextRight) };
+    }
+    return segment;
+  });
+};
+
+/** Removes a segment and redistributes its weight proportionally to the rest. */
+export const removeDistributionSegment = (
+  segments: DistributionBarSegment[],
+  segmentId: string,
+): DistributionBarSegment[] => {
+  if (segments.length <= 1) {
+    return segments;
+  }
+
+  const removed = segments.find((segment) => segment.id === segmentId);
+  if (!removed) {
+    return segments;
+  }
+
+  const remaining = segments.filter((segment) => segment.id !== segmentId);
+  const removedValue = sanitizeValue(removed.value);
+  const remainingTotal = getDistributionTotal(remaining);
+  if (remainingTotal <= 0) {
+    const equalValue = removedValue / remaining.length;
+    return remaining.map((segment) => ({
+      ...segment,
+      value: roundValue(equalValue),
+    }));
+  }
+
+  let assignedValue = 0;
+  const originalTotal = getDistributionTotal(segments);
+  return remaining.map((segment, index) => {
+    if (index === remaining.length - 1) {
+      return { ...segment, value: roundValue(originalTotal - assignedValue) };
+    }
+
+    const nextValue = roundValue(
+      sanitizeValue(segment.value) + (removedValue * sanitizeValue(segment.value)) / remainingTotal,
+    );
+    assignedValue += nextValue;
+    return { ...segment, value: nextValue };
+  });
+};
+
+/** Updates non-weight segment metadata such as label or color. */
+export const updateDistributionSegment = (
+  segments: DistributionBarSegment[],
+  segmentId: string,
+  update: DistributionBarSegmentUpdate,
+): DistributionBarSegment[] =>
+  segments.map((segment) => (segment.id === segmentId ? { ...segment, ...update } : segment));

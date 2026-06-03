@@ -1,10 +1,5 @@
 import { durations, easings, springs } from "./motion-tokens";
-import type {
-  DragSpringConfig,
-  MotionPreset,
-  MotionPresetName,
-  MotionVariants,
-} from "./types";
+import type { DragSpringConfig, MotionPreset, MotionPresetName, MotionVariants } from "./types";
 
 /**
  * Motion presets — each bundles transition timing AND drag physics
@@ -14,38 +9,38 @@ import type {
  * published package has no private workspace runtime dependencies.
  */
 export const PRESETS: Record<MotionPresetName, MotionPreset> = {
-  snappy: {
-    transition: { ease: easings.snappy, duration: durations.snappy },
-    drag: {
-      stiffness: springs.stiff.stiffness,
-      damping: springs.stiff.damping,
-      restDelta: 0.01,
-    },
-  },
-  smooth: {
-    transition: { ease: easings.customGentle, duration: durations.moderate },
-    drag: {
-      stiffness: springs.natural.stiffness,
-      damping: springs.natural.damping,
-      restDelta: 0.01,
-    },
-  },
   bouncy: {
-    transition: {
-      type: "spring",
-      stiffness: springs.bouncy.stiffness,
-      damping: springs.bouncy.damping,
-      mass: springs.bouncy.mass,
-    },
     drag: {
-      stiffness: springs.snappy.stiffness,
       damping: springs.snappy.damping,
       restDelta: 0.01,
+      stiffness: springs.snappy.stiffness,
+    },
+    transition: {
+      damping: springs.bouncy.damping,
+      mass: springs.bouncy.mass,
+      stiffness: springs.bouncy.stiffness,
+      type: "spring",
     },
   },
   reduced: {
-    transition: { ease: "linear", duration: 0.01 },
-    drag: { stiffness: 1000, damping: 50, restDelta: 0.1 },
+    drag: { damping: 50, restDelta: 0.1, stiffness: 1000 },
+    transition: { duration: 0.01, ease: "linear" },
+  },
+  smooth: {
+    drag: {
+      damping: springs.natural.damping,
+      restDelta: 0.01,
+      stiffness: springs.natural.stiffness,
+    },
+    transition: { duration: durations.moderate, ease: easings.customGentle },
+  },
+  snappy: {
+    drag: {
+      damping: springs.stiff.damping,
+      restDelta: 0.01,
+      stiffness: springs.stiff.stiffness,
+    },
+    transition: { duration: durations.snappy, ease: easings.snappy },
   },
 };
 
@@ -59,13 +54,13 @@ type ComponentType = "trigger" | "content" | "backdrop";
  *
  * If `prefers-reduced-motion` is active, always returns "reduced".
  */
-export function resolvePreset(
+export const resolvePreset = (
   componentType: ComponentType,
   componentMotion: MotionPresetName | undefined,
   globalPreset: MotionPresetName,
   variants: MotionVariants | undefined,
-  reduceMotion: boolean
-): MotionPreset {
+  reduceMotion: boolean,
+): MotionPreset => {
   if (reduceMotion) {
     return PRESETS.reduced;
   }
@@ -82,9 +77,7 @@ export function resolvePreset(
 
   // 3. Global preset
   return PRESETS[globalPreset];
-}
+};
 
 /** Extract the drag spring config from a preset */
-export function getDragSpring(preset: MotionPreset): DragSpringConfig {
-  return preset.drag;
-}
+export const getDragSpring = (preset: MotionPreset): DragSpringConfig => preset.drag;

@@ -1,15 +1,12 @@
 import type { ApertoMediaItem } from "./types";
 
-export function getMediaLabel(item: ApertoMediaItem): string {
-  return item.title ?? item.alt ?? "media";
-}
+export const getMediaLabel = (item: ApertoMediaItem): string => item.title ?? item.alt ?? "media";
 
-export function getMediaKey(item: ApertoMediaItem, index: number): string {
-  return item.id ?? `${item.type}:${item.src}:${index}`;
-}
+export const getMediaKey = (item: ApertoMediaItem, index: number): string =>
+  item.id ?? `${item.type}:${item.src}:${index}`;
 
-export function getDescriptionProps(item: ApertoMediaItem): {
+export const getDescriptionProps = (
+  item: ApertoMediaItem,
+): {
   "aria-describedby"?: undefined;
-} {
-  return item.description ? {} : { "aria-describedby": undefined };
-}
+} => (item.description ? {} : { "aria-describedby": undefined });

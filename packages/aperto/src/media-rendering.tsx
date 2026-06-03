@@ -1,13 +1,14 @@
-import { createElement, type ReactNode } from "react";
+import { createElement } from "react";
+import type { ReactNode } from "react";
 
 import type { ApertoMediaItem, RenderImage, RenderVideo } from "./types";
 
-function renderDefaultImage(props: Parameters<RenderImage>[0]): ReactNode {
+const renderDefaultImage = (props: Parameters<RenderImage>[0]): ReactNode => {
   const { item: _item, variant: _variant, ...imageProps } = props;
   return createElement("img", { ...imageProps, alt: imageProps.alt ?? "" });
-}
+};
 
-function renderDefaultVideo(props: Parameters<RenderVideo>[0]): ReactNode {
+const renderDefaultVideo = (props: Parameters<RenderVideo>[0]): ReactNode => {
   const { item: _item, variant, ...videoProps } = props;
   if (variant === "thumbnail") {
     return createElement("img", {
@@ -20,9 +21,9 @@ function renderDefaultVideo(props: Parameters<RenderVideo>[0]): ReactNode {
       <track kind="captions" src={props.item.captionsSrc ?? "data:text/vtt,"} />
     </video>
   );
-}
+};
 
-export function ApertoThumbnailMedia({
+export const ApertoThumbnailMedia = ({
   item,
   renderImage,
   renderVideo,
@@ -30,7 +31,7 @@ export function ApertoThumbnailMedia({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) {
+}) => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: "",
@@ -53,9 +54,9 @@ export function ApertoThumbnailMedia({
     width: item.width,
   };
   return (renderVideo ?? renderDefaultVideo)(videoProps);
-}
+};
 
-export function ApertoExpandedMedia({
+export const ApertoExpandedMedia = ({
   item,
   renderImage,
   renderVideo,
@@ -63,7 +64,7 @@ export function ApertoExpandedMedia({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) {
+}) => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: item.alt,
@@ -87,9 +88,9 @@ export function ApertoExpandedMedia({
     width: item.width,
   };
   return (renderVideo ?? renderDefaultVideo)(videoProps);
-}
+};
 
-export function ApertoTransitionMedia({
+export const ApertoTransitionMedia = ({
   item,
   renderImage,
   renderVideo,
@@ -97,7 +98,7 @@ export function ApertoTransitionMedia({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) {
+}) => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: item.alt,
@@ -120,4 +121,4 @@ export function ApertoTransitionMedia({
     width: item.width,
   };
   return (renderVideo ?? renderDefaultVideo)(videoProps);
-}
+};

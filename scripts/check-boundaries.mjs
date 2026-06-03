@@ -1,31 +1,27 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
-const publicPackages = [
-  "packages/stacksheet",
-  "packages/aperto",
-  "packages/deck",
-  "packages/system",
-  "packages/swatch",
-  "packages/scrollframe",
-];
-const privatePackages = [
-  "apps/web/package.json",
-  "packages/site-ui/package.json",
-  "packages/motion/package.json",
-];
 
-const forbiddenInPublicPackages = [
-  "@howells/site-ui",
-  "@howells/motion",
-  "@howells/patternmode-web",
-  "apps/web",
-  "packages/site-ui",
-  "packages/motion",
-];
+const readJson = (path) => JSON.parse(readFileSync(path, "utf-8"));
 
-function walk(dir) {
+const workspaceRoots = ["apps", "packages"];
+
+const workspaceManifests = () =>
+  workspaceRoots.flatMap((workspaceDir) =>
+    readdirSync(join(root, workspaceDir), { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => {
+        const path = join(workspaceDir, entry.name);
+        return {
+          manifestPath: join(path, "package.json"),
+          packagePath: path,
+        };
+      })
+      .filter(({ manifestPath }) => existsSync(join(root, manifestPath))),
+  );
+
+const walk = (dir) => {
   const entries = readdirSync(dir);
   const files = [];
 
@@ -40,30 +36,45 @@ function walk(dir) {
       continue;
     }
 
-    if (/\.(ts|tsx|js|jsx|json)$/.test(entry)) {
+    if (/\.(ts|tsx|js|jsx|json)$/u.test(entry)) {
       files.push(path);
     }
   }
 
   return files;
-}
+};
 
 const failures = [];
+const manifests = workspaceManifests().map(({ manifestPath, packagePath }) => ({
+  manifestPath,
+  packageJson: readJson(join(root, manifestPath)),
+  packagePath,
+}));
 
-for (const manifest of privatePackages) {
-  const packageJson = JSON.parse(readFileSync(join(root, manifest), "utf8"));
+const privatePackages = manifests.filter(({ packageJson }) => packageJson.private === true);
+const publicPackages = manifests.filter(
+  ({ packageJson, packagePath }) =>
+    packagePath.startsWith("packages/") && packageJson.private !== true,
+);
+
+const forbiddenInPublicPackages = privatePackages.flatMap(({ packageJson, packagePath }) => [
+  packageJson.name,
+  packagePath,
+]);
+
+for (const { manifestPath, packageJson } of privatePackages) {
   if (packageJson.private !== true) {
-    failures.push(`${manifest} must stay private.`);
+    failures.push(`${manifestPath} must stay private.`);
   }
 }
 
-for (const packagePath of publicPackages) {
+for (const { packagePath } of publicPackages) {
   for (const file of walk(join(root, packagePath, "src"))) {
-    const source = readFileSync(file, "utf8");
+    const source = readFileSync(file, "utf-8");
     for (const forbidden of forbiddenInPublicPackages) {
       if (source.includes(forbidden)) {
         failures.push(
-          `${relative(root, file)} imports or references forbidden private surface: ${forbidden}`
+          `${relative(root, file)} imports or references forbidden private surface: ${forbidden}`,
         );
       }
     }

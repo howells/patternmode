@@ -1,6 +1,7 @@
 "use client";
 
-import { type AdvanceDirection, Deck, type DeckMode } from "@patternmode/deck";
+import { Deck } from "@patternmode/deck";
+import type { AdvanceDirection, DeckMode } from "@patternmode/deck";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,12 +9,10 @@ import { apertoMedia } from "@/lib/aperto-media";
 
 import { OptionBar } from "./option-bar";
 
-export function DeckDemo() {
+export const DeckDemo = () => {
   const [mode, setMode] = useState<DeckMode>("cycle");
   const [visibleCount, setVisibleCount] = useState(3);
-  const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">(
-    "none"
-  );
+  const [lastAdvance, setLastAdvance] = useState<AdvanceDirection | "none">("none");
 
   return (
     <div className="deck-demo">
@@ -27,12 +26,14 @@ export function DeckDemo() {
           rotation={7}
           visibleCount={visibleCount}
         >
-          {apertoMedia.map((item) => (
+          {apertoMedia.map((item, index) => (
             <Deck.Card className="deck-demo-card" key={item.id ?? item.src}>
               <Image
                 alt={item.alt}
                 draggable={false}
                 fill
+                fetchPriority={index === 0 ? "high" : "auto"}
+                loading={index === 0 ? "eager" : "lazy"}
                 sizes="(max-width: 640px) 78vw, 420px"
                 src={item.thumbnailSrc ?? item.src}
               />
@@ -71,4 +72,4 @@ export function DeckDemo() {
       </div>
     </div>
   );
-}
+};

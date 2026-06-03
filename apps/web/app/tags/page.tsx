@@ -1,144 +1,133 @@
-import {
-  type ApiSection,
-  ApiTable,
-  CodeBlock,
-  ComponentPage,
-  DocsBlock,
-} from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
 import { TagsDemo } from "@/components/tags-demo";
 
 export const metadata: Metadata = {
-  title: "Tags | Patternmode",
   description:
     "Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows.",
+  title: "Tags | Patternmode",
 };
 
 const tagsApi: ApiSection[] = [
   {
+    description: "Shadcn-compatible badge base with variant and asChild support.",
     name: "Badge",
-    description:
-      "Shadcn-compatible badge base with variant and asChild support.",
     props: [
       {
-        name: "variant",
-        type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
         defaultValue: '"default"',
         description: "Matches the normal shadcn Badge variant names.",
-      },
-      {
-        name: "asChild",
-        type: "boolean",
-        defaultValue: "false",
-        description: "Renders the badge styles onto a child via Radix Slot.",
-      },
-    ],
-  },
-  {
-    name: "Tag",
-    description:
-      "Badge extension for selected filters, labels, metadata, and removable tokens.",
-    props: [
-      {
         name: "variant",
         type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
+      },
+      {
+        defaultValue: "false",
+        description: "Renders the badge styles onto a child via Radix Slot.",
+        name: "asChild",
+        type: "boolean",
+      },
+    ],
+  },
+  {
+    description: "Badge extension for selected filters, labels, metadata, and removable tokens.",
+    name: "Tag",
+    props: [
+      {
         defaultValue: '"secondary"',
         description: "Inherited from the Badge base.",
+        name: "variant",
+        type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
       },
       {
-        name: "size",
-        type: '"sm" | "base" | "lg"',
         defaultValue: '"base"',
         description: "Controls compact, default, or large sizing.",
+        name: "size",
+        type: '"sm" | "base" | "lg"',
       },
       {
+        description: "Adds an accessible remove button inside the tag.",
         name: "onRemove",
         type: "() => void",
-        description: "Adds an accessible remove button inside the tag.",
       },
       {
-        name: "selected",
-        type: "boolean",
         defaultValue: "false",
         description: "Adds a selected treatment without changing semantics.",
+        name: "selected",
+        type: "boolean",
       },
     ],
   },
   {
-    name: "TagSelector",
     description:
       "Controlled object-based tag selector with Popover content, ScrollFrame selected tags, creation, keyboard navigation, paste parsing, and Stacksheet-style parts.",
+    name: "TagSelector",
     props: [
       {
+        description: "The selected items. Selection order follows this array order.",
         name: "value",
         type: "readonly TagItem[]",
-        description:
-          "The selected items. Selection order follows this array order.",
       },
       {
+        description: "Called with the next selected item objects.",
         name: "onChange",
         type: "(items: TagItem[]) => void",
-        description: "Called with the next selected item objects.",
       },
       {
-        name: "options",
-        type: "readonly TagItem[]",
         description:
           "The consumer-owned option catalog. Selected options stay visible and toggle off by id.",
+        name: "options",
+        type: "readonly TagItem[]",
       },
       {
-        name: "onCreateItem",
-        type: "(label: string) => Promise<TagItem> | TagItem",
         description:
           "Enables creation through the create option, Enter/comma, and paste. The consumer returns the new object.",
+        name: "onCreateItem",
+        type: "(label: string) => Promise<TagItem> | TagItem",
       },
       {
-        name: "renderTag",
-        type: "(props: TagRenderProps) => ReactNode",
         description:
           "Renders selected items with any component. Patternmode provides Tag as the convenient default.",
+        name: "renderTag",
+        type: "(props: TagRenderProps) => ReactNode",
       },
       {
+        description: "Renders command options while preserving provided props.",
         name: "renderOption",
         type: "(props: TagOptionRenderProps) => ReactNode",
-        description: "Renders command options while preserving provided props.",
       },
       {
-        name: "emptyMessage",
-        type: "ReactNode",
         defaultValue: '"No tags found."',
         description: "Empty command-list state when no option can be shown.",
+        name: "emptyMessage",
+        type: "ReactNode",
       },
     ],
   },
   {
-    name: "TagSelector parts",
     description:
       "Composable selector parts for Stacksheet-style layouts: Root, Trigger, Content, Search, List, Option, and Empty.",
+    name: "TagSelector parts",
     props: [
       {
+        description: "Owns state wiring, filtering, creation, serialization, and Popover context.",
         name: "TagSelector.Root",
         type: "TagSelectorRootProps",
-        description:
-          "Owns state wiring, filtering, creation, serialization, and Popover context.",
       },
       {
+        description: "Renders selected tags in a horizontal ScrollFrame by default.",
         name: "TagSelector.Trigger",
         type: "TagSelectorTriggerProps",
-        description:
-          "Renders selected tags in a horizontal ScrollFrame by default.",
       },
       {
+        description: "Popover-backed command surface.",
         name: "TagSelector.Content",
         type: "TagSelectorContentProps",
-        description: "Popover-backed command surface.",
       },
       {
+        description: "Search input, option list, explicit option renderer, and empty state.",
         name: "TagSelector.Search | List | Option | Empty",
         type: "component parts",
-        description:
-          "Search input, option list, explicit option renderer, and empty state.",
       },
     ],
   },

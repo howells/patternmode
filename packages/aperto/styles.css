@@ -71,8 +71,7 @@
   @apply absolute inset-0;
 }
 
-[data-slot="aperto-content"][data-aperto-transition]
-  [data-slot="aperto-media-stage"],
+[data-slot="aperto-content"][data-aperto-transition] [data-slot="aperto-media-stage"],
 [data-slot="aperto-transition-media"] {
   will-change: opacity, transform;
 }
@@ -94,8 +93,7 @@
   }
 }
 
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-close"],
+[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-close"],
 [data-slot="aperto-content"]:not([data-aperto-transition])
   > [data-slot="aperto-media"]
   > [data-slot="aperto-previous-button"],
@@ -105,12 +103,9 @@
   animation: aperto-control-in 0.35s cubic-bezier(0.25, 0.1, 0.12, 1) 0.08s both;
 }
 
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-title"],
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-description"],
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-counter"] {
+[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-title"],
+[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-description"],
+[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-counter"] {
   animation: aperto-control-in 0.4s cubic-bezier(0.25, 0.1, 0.12, 1) 0.18s both;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/system",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "description": "Shared Patternmode sizing, responsive, object sizing, and composition utilities.",
   "keywords": [
@@ -48,7 +48,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.0",
+    "@howells/lint": "^0.2.1",
     "@howells/typescript-config": "^0.1.2",
     "concurrently": "^9.2.1",
     "tsdown": "^0.22.0",

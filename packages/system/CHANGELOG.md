@@ -1,5 +1,11 @@
 # @patternmode/system
 
+## 0.2.3
+
+### Patch Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+
 ## 0.2.2
 
 ### Patch Changes

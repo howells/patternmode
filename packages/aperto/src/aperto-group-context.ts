@@ -1,11 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext, use } from "react";
 
-import type {
-  ApertoClassNames,
-  ApertoMediaItem,
-  RenderImage,
-  RenderVideo,
-} from "./types";
+import type { ApertoClassNames, ApertoMediaItem, RenderImage, RenderVideo } from "./types";
 
 export interface ApertoGroupContextValue {
   classNames?: ApertoClassNames;
@@ -21,14 +16,12 @@ export interface ApertoGroupContextValue {
   sharedLayoutIdForIndex: (index: number) => string;
 }
 
-export const ApertoGroupContext = createContext<ApertoGroupContextValue | null>(
-  null
-);
+export const ApertoGroupContext = createContext<ApertoGroupContextValue | null>(null);
 
-export function useApertoGroup(): ApertoGroupContextValue {
-  const ctx = useContext(ApertoGroupContext);
+export const useApertoGroup = (): ApertoGroupContextValue => {
+  const ctx = use(ApertoGroupContext);
   if (!ctx) {
     throw new Error("Aperto.Thumbnail must be used within <Aperto.Group>");
   }
   return ctx;
-}
+};

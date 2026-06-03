@@ -8,72 +8,67 @@ import type {
   StackingConfig,
   StacksheetConfig,
 } from "./types";
-
 // ── Defaults ────────────────────────────────────
-
 const DEFAULT_STACKING: StackingConfig = {
-  scaleStep: 0.04,
   offsetStep: 16,
   opacityStep: 0,
   radius: 12,
   renderThreshold: 3,
+  scaleStep: 0.04,
 };
-
 const DEFAULT_SIDE: ResponsiveSide = {
   desktop: "right",
   mobile: "bottom",
 };
-
+const DEFAULT_CONFIG: Omit<ResolvedConfig, "side" | "spring" | "stacking"> = {
+  ariaLabel: "Sheet dialog",
+  breakpoint: 768,
+  closeOnBackdrop: true,
+  closeOnEscape: true,
+  closeThreshold: 0.25,
+  dismissible: true,
+  drag: true,
+  lockScroll: true,
+  maxDepth: Number.POSITIVE_INFINITY,
+  maxWidth: "90vw",
+  modal: true,
+  scaleBackgroundAmount: 0.97,
+  shouldScaleBackground: false,
+  showOverlay: true,
+  snapPoints: [],
+  snapToSequentialPoints: false,
+  velocityThreshold: 0.5,
+  width: 420,
+  zIndex: 100,
+};
 // ── Helpers ─────────────────────────────────────
-
 /** Normalize a string side to a responsive object, merging with defaults. */
-function resolveSide(side: SideConfig | undefined): ResponsiveSide {
+const resolveSide = (side: SideConfig | undefined): ResponsiveSide => {
   if (typeof side === "string") {
     return { desktop: side, mobile: side };
   }
   return { ...DEFAULT_SIDE, ...side };
-}
-
+};
 /** Resolve a preset name to a SpringConfig, or merge partial config with defaults. */
-function resolveSpring(
-  spring: SpringPreset | Partial<SpringConfig> | undefined
-): SpringConfig {
+const resolveSpring = (spring: SpringPreset | Partial<SpringConfig> | undefined): SpringConfig => {
   if (typeof spring === "string") {
     return springs[spring];
   }
   return { ...springs.stiff, ...spring };
-}
-
+};
 // ── Resolver ────────────────────────────────────
-
 /** Merge user-provided config with defaults. Resolves union types (side, spring) to concrete values. */
-export function resolveConfig(config: StacksheetConfig = {}): ResolvedConfig {
+export const resolveConfig = (config: StacksheetConfig = {}): ResolvedConfig => {
+  const { side, spring, stacking, ...scalarConfig } = config;
+  const definedConfig = Object.fromEntries(
+    Object.entries(scalarConfig).filter(([, value]) => value !== undefined),
+  ) as Partial<Omit<ResolvedConfig, "side" | "spring" | "stacking">>;
+
   return {
-    maxDepth: config.maxDepth ?? Number.POSITIVE_INFINITY,
-    closeOnEscape: config.closeOnEscape ?? true,
-    closeOnBackdrop: config.closeOnBackdrop ?? true,
-    showOverlay: config.showOverlay ?? true,
-    lockScroll: config.lockScroll ?? true,
-    width: config.width ?? 420,
-    maxWidth: config.maxWidth ?? "90vw",
-    breakpoint: config.breakpoint ?? 768,
-    side: resolveSide(config.side),
-    stacking: { ...DEFAULT_STACKING, ...config.stacking },
-    spring: resolveSpring(config.spring),
-    zIndex: config.zIndex ?? 100,
-    ariaLabel: config.ariaLabel ?? "Sheet dialog",
-    onOpenComplete: config.onOpenComplete,
-    onCloseComplete: config.onCloseComplete,
-    snapPoints: config.snapPoints ?? [],
-    snapPointIndex: config.snapPointIndex,
-    onSnapPointChange: config.onSnapPointChange,
-    snapToSequentialPoints: config.snapToSequentialPoints ?? false,
-    drag: config.drag ?? true,
-    closeThreshold: config.closeThreshold ?? 0.25,
-    velocityThreshold: config.velocityThreshold ?? 0.5,
-    dismissible: config.dismissible ?? true,
-    modal: config.modal ?? true,
-    shouldScaleBackground: config.shouldScaleBackground ?? false,
-    scaleBackgroundAmount: config.scaleBackgroundAmount ?? 0.97,
+    ...DEFAULT_CONFIG,
+    ...definedConfig,
+    side: resolveSide(side),
+    spring: resolveSpring(spring),
+    stacking: { ...DEFAULT_STACKING, ...stacking },
   };
-}
+};

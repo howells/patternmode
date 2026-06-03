@@ -1,72 +1,72 @@
-import {
-  type ApiSection,
-  ApiTable,
-  CodeBlock,
-  ComponentPage,
-  DocsBlock,
-} from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
 import { ApertoDemo } from "@/components/aperto-demo";
 import { apertoMedia } from "@/lib/aperto-media";
 
 export const metadata: Metadata = {
-  title: "Aperto | Patternmode",
   description:
     "Thumbnail-to-expanded media transitions with image, video, and keyboard navigation.",
+  title: "Aperto | Patternmode",
 };
 
 const apertoApi: ApiSection[] = [
   {
+    description: "Media Group with keyboard Media Navigation and shared-element transitions.",
     name: "Aperto.Group",
-    description:
-      "Media Group with keyboard Media Navigation and shared-element transitions.",
     props: [
       {
-        name: "media",
-        type: "ApertoMediaItem[]",
-        required: true,
         description: "Array of Image Media Items or Video Media Items.",
+        name: "media",
+        required: true,
+        type: "ApertoMediaItem[]",
       },
       {
-        name: "motion",
-        type: '"snappy" | "smooth" | "bouncy"',
         defaultValue: '"smooth"',
         description: "Media Transition easing preset.",
+        name: "motion",
+        type: '"snappy" | "smooth" | "bouncy"',
       },
       {
-        name: "navigationMotion",
-        type: '"float" | "glide" | "snap"',
         defaultValue: '"glide"',
         description: "Expanded-media navigation transition style.",
+        name: "navigationMotion",
+        type: '"float" | "glide" | "snap"',
       },
       {
-        name: "dismissible",
-        type: "boolean | { threshold?: number; velocity?: number }",
         defaultValue: "true",
         description: "Drag Dismissal behavior for Expanded Media.",
+        name: "dismissible",
+        type: "boolean | { threshold?: number; velocity?: number }",
       },
       {
+        description: "Slot class overrides for Thumbnails and Aperto Controls.",
         name: "classNames",
         type: "ApertoClassNames",
-        description: "Slot class overrides for Thumbnails and Aperto Controls.",
+      },
+      {
+        description:
+          "Replaces Aperto's framework-agnostic img renderer. Next.js consumers can return next/image Image here.",
+        name: "renderImage",
+        type: "RenderImage",
       },
     ],
   },
   {
-    name: "Aperto.Thumbnail",
     description: "Thumbnail for a Media Item inside a Media Group.",
+    name: "Aperto.Thumbnail",
     props: [
       {
-        name: "index",
-        type: "number",
-        required: true,
         description: "Position in the Media Group.",
+        name: "index",
+        required: true,
+        type: "number",
       },
       {
+        description: "Optional custom thumbnail content.",
         name: "children",
         type: "ReactNode",
-        description: "Optional custom thumbnail content.",
       },
     ],
   },
@@ -104,8 +104,7 @@ export default function ApertoPage() {
         <ApiTable sections={apertoApi} />
       </DocsBlock>
       <p className="read-more">
-        Read the package README for primitive composition, media renderers, and
-        motion presets.
+        Read the package README for primitive composition, media renderers, and motion presets.
       </p>
     </ComponentPage>
   );

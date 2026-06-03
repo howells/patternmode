@@ -1,12 +1,5 @@
 import { execFileSync } from "node:child_process";
-import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const root = process.cwd();
@@ -22,15 +15,16 @@ const packages = [
     tarballPrefix: "patternmode-scrollframe-",
   },
   { name: "@patternmode/swatch", tarballPrefix: "patternmode-swatch-" },
+  { name: "@patternmode/tags", tarballPrefix: "patternmode-tags-" },
 ];
 
-function run(command, args, options = {}) {
+const run = (command, args, options = {}) => {
   execFileSync(command, args, {
     cwd: root,
     stdio: "inherit",
     ...options,
   });
-}
+};
 
 rmSync(packDir, { force: true, recursive: true });
 mkdirSync(packDir, { recursive: true });
@@ -41,43 +35,33 @@ for (const pkg of packages) {
 
 const tarballs = Object.fromEntries(
   packages.map((pkg) => {
-    const tarball = readdirSync(packDir).find((file) =>
-      file.startsWith(pkg.tarballPrefix)
-    );
+    const tarball = readdirSync(packDir).find((file) => file.startsWith(pkg.tarballPrefix));
     if (!tarball) {
       throw new Error(`Expected tarball was not created for ${pkg.name}.`);
     }
     return [pkg.name, tarball];
-  })
+  }),
 );
+const tarballDependencies = {
+  "@patternmode/aperto": `file:${resolve(packDir, tarballs["@patternmode/aperto"])}`,
+  "@patternmode/deck": `file:${resolve(packDir, tarballs["@patternmode/deck"])}`,
+  "@patternmode/scrollframe": `file:${resolve(packDir, tarballs["@patternmode/scrollframe"])}`,
+  "@patternmode/stacksheet": `file:${resolve(packDir, tarballs["@patternmode/stacksheet"])}`,
+  "@patternmode/swatch": `file:${resolve(packDir, tarballs["@patternmode/swatch"])}`,
+  "@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
+  "@patternmode/tags": `file:${resolve(packDir, tarballs["@patternmode/tags"])}`,
+};
 
 mkdirSync(join(fixtureDir, "app"), { recursive: true });
 writeFileSync(
   join(fixtureDir, "package.json"),
   JSON.stringify(
     {
-      name: "@howells/tarball-consumer",
-      private: true,
-      type: "module",
-      scripts: {
-        build: "next build",
-        typecheck: "tsc --noEmit",
-      },
       dependencies: {
-        "@patternmode/aperto": `file:${resolve(packDir, tarballs["@patternmode/aperto"])}`,
-        "@patternmode/deck": `file:${resolve(packDir, tarballs["@patternmode/deck"])}`,
-        "@patternmode/scrollframe": `file:${resolve(packDir, tarballs["@patternmode/scrollframe"])}`,
-        "@patternmode/stacksheet": `file:${resolve(packDir, tarballs["@patternmode/stacksheet"])}`,
-        "@patternmode/swatch": `file:${resolve(packDir, tarballs["@patternmode/swatch"])}`,
-        "@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
+        ...tarballDependencies,
         next: "^16.2.6",
         react: "^19.2.3",
         "react-dom": "^19.2.3",
-      },
-      pnpm: {
-        overrides: {
-          "@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
-        },
       },
       devDependencies: {
         "@types/node": "^24.10.3",
@@ -85,10 +69,20 @@ writeFileSync(
         "@types/react-dom": "^19.2.3",
         typescript: "^6.0.3",
       },
+      name: "@howells/tarball-consumer",
+      pnpm: {
+        overrides: tarballDependencies,
+      },
+      private: true,
+      scripts: {
+        build: "next build",
+        typecheck: "tsc --noEmit",
+      },
+      type: "module",
     },
     null,
-    2
-  )
+    2,
+  ),
 );
 writeFileSync(join(fixtureDir, "next.config.mjs"), "export default {};\n");
 writeFileSync(
@@ -114,12 +108,12 @@ writeFileSync(
       include: ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     },
     null,
-    2
-  )
+    2,
+  ),
 );
 writeFileSync(
   join(fixtureDir, "next-env.d.ts"),
-  '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n'
+  '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n',
 );
 writeFileSync(
   join(fixtureDir, "app", "layout.tsx"),
@@ -129,11 +123,12 @@ import "@patternmode/deck/styles.css";
 import "@patternmode/scrollframe/styles.css";
 import "@patternmode/stacksheet/styles.css";
 import "@patternmode/swatch/styles.css";
+import "@patternmode/tags/styles.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return <html lang="en"><body>{children}</body></html>;
 }
-`
+`,
 );
 writeFileSync(
   join(fixtureDir, "app", "page.tsx"),
@@ -142,7 +137,7 @@ writeFileSync(
 export default function Page() {
   return <Demo />;
 }
-`
+`,
 );
 writeFileSync(
   join(fixtureDir, "app", "demo.tsx"),
@@ -153,6 +148,7 @@ import { Deck } from "@patternmode/deck";
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { createStacksheet } from "@patternmode/stacksheet";
 import { Swatch } from "@patternmode/swatch";
+import { Tag, TagSelector } from "@patternmode/tags";
 
 const media: ApertoMediaItem[] = [
   { id: "one", type: "image", src: "/one.jpg", alt: "One" },
@@ -175,11 +171,17 @@ export function Demo() {
           <div>Scrollable content</div>
         </ScrollFrame>
         <Swatch color="#ff3355" aria-label="Smoke swatch" />
+        <Tag>Smoke tag</Tag>
+        <TagSelector
+          onChange={() => {}}
+          options={[{ id: "one", label: "One" }]}
+          value={[{ id: "one", label: "One" }]}
+        />
       </main>
     </StacksheetProvider>
   );
 }
-`
+`,
 );
 
 if (existsSync(join(fixtureDir, "node_modules"))) {

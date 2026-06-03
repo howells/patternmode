@@ -35,6 +35,40 @@ export function MediaGroupExample() {
 }
 ```
 
+## Optimized images
+
+Aperto's built-in image renderer uses a plain `img` so the package stays
+framework agnostic. If your app uses Next.js, pass `renderImage` and return
+your own `next/image` `Image` component:
+
+```tsx
+import Image from "next/image";
+
+const leadSrc = media[0]?.src;
+
+<Aperto.Group
+  media={media}
+  renderImage={({ alt, item, src, variant }) => {
+    const isLeadImage = variant === "expanded" || item.src === leadSrc;
+
+    return (
+      <Image
+        alt={alt ?? ""}
+        fetchPriority={isLeadImage ? "high" : "auto"}
+        fill
+        loading={isLeadImage || variant === "thumbnail" ? "eager" : "lazy"}
+        sizes={variant === "thumbnail" ? "(max-width: 640px) 50vw, 320px" : "90vw"}
+        src={String(src)}
+      />
+    );
+  }}
+>
+  {media.map((item, index) => (
+    <Aperto.Thumbnail key={item.id ?? item.src} index={index} />
+  ))}
+</Aperto.Group>;
+```
+
 ## Install
 
 ```bash

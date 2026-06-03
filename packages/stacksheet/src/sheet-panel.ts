@@ -1,2 +1,2 @@
-export { SheetPanel } from "./SheetPanel/SheetPanel";
-export type { SheetPanelProps } from "./SheetPanel/SheetPanelTypes";
+export { SheetPanel } from "./SheetPanel/sheet-panel";
+export type { SheetPanelProps } from "./SheetPanel/sheet-panel-types";

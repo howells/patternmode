@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @patternmode/aperto
+ * Package: @patternmode/aperto
  *
  * Opinionated thumbnail-to-expanded media transitions.
  * Built on Radix Dialog + Motion.
@@ -24,22 +24,21 @@
  * ```
  */
 
-import {
-  ApertoGroup,
-  type ApertoGroupProps,
-  type ApertoProps,
-  ApertoSingle,
-  ApertoThumbnail,
-  type ApertoThumbnailProps,
-} from "./aperto";
+import { ApertoGroup, ApertoSingle, ApertoThumbnail } from "./aperto";
+import type { ApertoGroupProps, ApertoProps, ApertoThumbnailProps } from "./aperto";
 import { ApertoClose } from "./aperto-close";
-import { ApertoContent, type ApertoContentProps } from "./aperto-content";
+import { ApertoContent } from "./aperto-content";
+import type { ApertoContentProps } from "./aperto-content";
 import { ApertoDescription } from "./aperto-description";
-import { ApertoOverlay, type ApertoOverlayProps } from "./aperto-overlay";
-import { ApertoPortal, type ApertoPortalProps } from "./aperto-portal";
-import { ApertoRoot, type ApertoRootProps } from "./aperto-root";
+import { ApertoOverlay } from "./aperto-overlay";
+import type { ApertoOverlayProps } from "./aperto-overlay";
+import { ApertoPortal } from "./aperto-portal";
+import type { ApertoPortalProps } from "./aperto-portal";
+import { ApertoRoot } from "./aperto-root";
+import type { ApertoRootProps } from "./aperto-root";
 import { ApertoTitle } from "./aperto-title";
-import { ApertoTrigger, type ApertoTriggerProps } from "./aperto-trigger";
+import { ApertoTrigger } from "./aperto-trigger";
+import type { ApertoTriggerProps } from "./aperto-trigger";
 
 /** Lower-level compound component namespace for advanced composition. */
 const ApertoPrimitive = {

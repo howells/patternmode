@@ -4,21 +4,8 @@ import { ScrollFrame } from "@patternmode/scrollframe";
 import { joinClassNames } from "@patternmode/system";
 import * as Popover from "@radix-ui/react-popover";
 import { Slot } from "@radix-ui/react-slot";
-import {
-  type ClipboardEvent,
-  createContext,
-  forwardRef,
-  type KeyboardEvent,
-  type MouseEvent,
-  type ReactElement,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, use, useEffect, useId, useRef, useState } from "react";
+import type { ClipboardEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
 
 import type {
   BadgeProps,
@@ -41,12 +28,12 @@ const DEFAULT_SEPARATORS = ["Enter", ","] as const;
 const DEFAULT_BADGE_VARIANT = "default" satisfies BadgeVariant;
 const NO_ACTIVE_OPTION = -1;
 const TONE_VARIANT_MAP = {
-  neutral: "secondary",
   accent: "default",
-  success: "secondary",
-  warning: "outline",
   danger: "destructive",
   info: "secondary",
+  neutral: "secondary",
+  success: "secondary",
+  warning: "outline",
 } as const satisfies Record<TagTone, BadgeVariant>;
 
 type CommandOption<TItem extends TagItem> =
@@ -91,66 +78,51 @@ interface TagSelectorContextValue<TItem extends TagItem> {
   value: readonly TItem[];
 }
 
-const TagSelectorContext =
-  createContext<TagSelectorContextValue<TagItem> | null>(null);
+const TagSelectorContext = createContext<TagSelectorContextValue<TagItem> | null>(null);
 
-function useTagSelectorContext<TItem extends TagItem>() {
-  const context = useContext(TagSelectorContext);
+const useTagSelectorContext = <TItem extends TagItem>() => {
+  const context = use(TagSelectorContext);
   if (!context) {
-    throw new Error(
-      "TagSelector parts must be rendered inside <TagSelector.Root>."
-    );
+    throw new Error("TagSelector parts must be rendered inside <TagSelector.Root>.");
   }
 
   return context as unknown as TagSelectorContextValue<TItem>;
-}
+};
 
-function normalizeTag(value: string): string {
-  return value.trim().replace(/\s+/g, " ");
-}
+const normalizeTag = (value: string): string => value.trim().replaceAll(/\s+/gu, " ");
 
-function normalizeComparable(value: string): string {
-  return normalizeTag(value).toLocaleLowerCase();
-}
+const normalizeComparable = (value: string): string => normalizeTag(value).toLocaleLowerCase();
 
-function splitPastedTags(value: string): string[] {
-  return value.split(/[,\n\r\t]+/).flatMap((part) => {
+const splitPastedTags = (value: string): string[] =>
+  value.split(/[,\n\r\t]+/u).flatMap((part) => {
     const tag = normalizeTag(part);
     return tag ? [tag] : [];
   });
-}
 
-function defaultFilterOption(item: TagItem, query: string): boolean {
-  return item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase());
-}
+const defaultFilterOption = (item: TagItem, query: string): boolean =>
+  item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 
-function getTagVariant(variant: BadgeVariant | undefined, tone?: TagTone) {
-  return variant ?? (tone ? TONE_VARIANT_MAP[tone] : "secondary");
-}
+const getTagVariant = (variant: BadgeVariant | undefined, tone?: TagTone) =>
+  variant ?? (tone ? TONE_VARIANT_MAP[tone] : "secondary");
 
-function getNextIndex(currentIndex: number, length: number): number {
+const getNextIndex = (currentIndex: number, length: number): number => {
   if (length === 0) {
     return NO_ACTIVE_OPTION;
   }
 
   return currentIndex < 0 ? 0 : (currentIndex + 1) % length;
-}
+};
 
-function getPreviousIndex(currentIndex: number, length: number): number {
+const getPreviousIndex = (currentIndex: number, length: number): number => {
   if (length === 0) {
     return NO_ACTIVE_OPTION;
   }
 
   return currentIndex <= 0 ? length - 1 : currentIndex - 1;
-}
+};
 
-export function Badge(props: BadgeProps): ReactElement {
-  const {
-    asChild = false,
-    className,
-    variant = DEFAULT_BADGE_VARIANT,
-    ...badgeProps
-  } = props;
+export const Badge = (props: BadgeProps): ReactElement => {
+  const { asChild = false, className, variant = DEFAULT_BADGE_VARIANT, ...badgeProps } = props;
   const Comp = asChild ? Slot : "span";
 
   return (
@@ -161,9 +133,9 @@ export function Badge(props: BadgeProps): ReactElement {
       {...badgeProps}
     />
   );
-}
+};
 
-export function Tag(props: TagProps): ReactElement {
+export const Tag = (props: TagProps): ReactElement => {
   const {
     children,
     className,
@@ -178,10 +150,10 @@ export function Tag(props: TagProps): ReactElement {
     ...tagProps
   } = props;
 
-  function handleRemove(event: MouseEvent<HTMLButtonElement>) {
+  const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     onRemove?.();
-  }
+  };
 
   return (
     <Badge
@@ -215,258 +187,236 @@ export function Tag(props: TagProps): ReactElement {
       ) : null}
     </Badge>
   );
-}
+};
 
-const TagSelectorRoot = forwardRef<HTMLDivElement, TagSelectorRootProps>(
-  function TagSelectorRoot(props, ref) {
-    const {
-      "aria-label": ariaLabel,
-      children,
-      className,
-      disabled = false,
-      emptyMessage = "No tags found.",
-      filterOption = defaultFilterOption,
-      id,
-      name,
-      onChange,
-      onCreateItem,
-      onSearchChange,
-      options,
-      placeholder = "Select tags",
-      renderOption,
-      renderTag,
-      searchValue,
-      separators = DEFAULT_SEPARATORS,
-      serializeItem = (item) => item.id,
-      value,
-      ...rootProps
-    } = props;
-    const generatedId = useId();
-    const rootId = id ?? generatedId;
-    const inputId = `${rootId}-search`;
-    const listboxId = `${rootId}-listbox`;
-    const [open, setOpen] = useState(false);
-    const [internalQuery, setInternalQuery] = useState("");
-    const [activeIndex, setActiveIndex] = useState(NO_ACTIVE_OPTION);
-    const query = searchValue ?? internalQuery;
-    const selectedIds = useMemo(
-      () => new Set(value.map((item) => item.id)),
-      [value]
+const TagSelectorRoot = (props: TagSelectorRootProps) => {
+  const {
+    "aria-label": ariaLabel,
+    children,
+    className,
+    disabled = false,
+    emptyMessage = "No tags found.",
+    filterOption = defaultFilterOption,
+    id,
+    name,
+    onChange,
+    onCreateItem,
+    onSearchChange,
+    options,
+    placeholder = "Select tags",
+    ref,
+    renderOption,
+    renderTag,
+    searchValue,
+    separators = DEFAULT_SEPARATORS,
+    serializeItem = (item) => item.id,
+    value,
+    ...rootProps
+  } = props;
+  const generatedId = useId();
+  const rootId = id ?? generatedId;
+  const inputId = `${rootId}-search`;
+  const listboxId = `${rootId}-listbox`;
+  const [open, setOpen] = useState(false);
+  const [internalQuery, setInternalQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(NO_ACTIVE_OPTION);
+  const query = searchValue ?? internalQuery;
+  const selectedIds = new Set(value.map((item) => item.id));
+  const filteredOptions = options.filter((item) => filterOption(item, query));
+  const exactMatches = (() => {
+    const normalizedQuery = normalizeComparable(query);
+    if (!normalizedQuery) {
+      return [];
+    }
+
+    return options.filter((item) => normalizeComparable(item.label) === normalizedQuery);
+  })();
+  const canCreate =
+    Boolean(onCreateItem) && Boolean(normalizeTag(query)) && exactMatches.length === 0;
+  const commandOptions = (() => {
+    const itemOptions: CommandOption<TagItem>[] = filteredOptions.map((item) => ({
+      id: `${listboxId}-option-${item.id}`,
+      item,
+      label: item.label,
+      type: "item",
+    }));
+
+    if (canCreate) {
+      itemOptions.push({
+        id: `${listboxId}-create`,
+        label: `Create "${normalizeTag(query)}"`,
+        type: "create",
+        value: normalizeTag(query),
+      });
+    }
+
+    return itemOptions;
+  })();
+  const activeOption = commandOptions[activeIndex];
+
+  const updateQuery = (nextQuery: string) => {
+    if (searchValue === undefined) {
+      setInternalQuery(nextQuery);
+    }
+    onSearchChange?.(nextQuery);
+    setActiveIndex(NO_ACTIVE_OPTION);
+  };
+
+  const removeItem = (item: TagItem) => {
+    onChange(value.filter((selectedItem) => selectedItem.id !== item.id));
+  };
+
+  const resolveDrafts = async (drafts: readonly string[]) => {
+    if (disabled) {
+      return;
+    }
+
+    const nextValue = [...value];
+    const nextIds = new Set(nextValue.map((item) => item.id));
+    let changed = false;
+
+    const resolvedDrafts = await Promise.all(
+      drafts.map((draft) => {
+        const normalizedDraft = normalizeTag(draft);
+        if (!normalizedDraft) {
+          return null;
+        }
+
+        const matches = options.filter(
+          (item) => normalizeComparable(item.label) === normalizeComparable(normalizedDraft),
+        );
+
+        if (matches.length === 1) {
+          const [match] = matches;
+          return match && !match.disabled ? match : null;
+        }
+
+        if (matches.length === 0 && onCreateItem) {
+          return onCreateItem(normalizedDraft);
+        }
+        return null;
+      }),
     );
-    const filteredOptions = useMemo(
-      () => options.filter((item) => filterOption(item, query)),
-      [filterOption, options, query]
-    );
-    const exactMatches = useMemo(() => {
-      const normalizedQuery = normalizeComparable(query);
-      if (!normalizedQuery) {
-        return [];
+
+    for (const item of resolvedDrafts) {
+      if (item && !nextIds.has(item.id)) {
+        nextValue.push(item);
+        nextIds.add(item.id);
+        changed = true;
       }
+    }
 
-      return options.filter(
-        (item) => normalizeComparable(item.label) === normalizedQuery
-      );
-    }, [options, query]);
-    const canCreate =
-      Boolean(onCreateItem) &&
-      Boolean(normalizeTag(query)) &&
-      exactMatches.length === 0;
-    const commandOptions = useMemo<CommandOption<TagItem>[]>(() => {
-      const itemOptions: CommandOption<TagItem>[] = filteredOptions.map(
-        (item) => ({
-          id: `${listboxId}-option-${item.id}`,
-          item,
-          label: item.label,
-          type: "item",
-        })
-      );
+    if (changed) {
+      onChange(nextValue);
+      updateQuery("");
+    }
+  };
 
-      if (canCreate) {
-        itemOptions.push({
-          id: `${listboxId}-create`,
-          label: `Create "${normalizeTag(query)}"`,
-          type: "create",
-          value: normalizeTag(query),
-        });
-      }
+  const resolveDraft = async (draft: string) => {
+    await resolveDrafts([draft]);
+  };
 
-      return itemOptions;
-    }, [canCreate, filteredOptions, listboxId, query]);
-    const activeOption = commandOptions[activeIndex];
+  const selectCommandOption = async (option: CommandOption<TagItem>) => {
+    if (disabled) {
+      return;
+    }
 
-    function updateQuery(nextQuery: string) {
-      if (searchValue === undefined) {
-        setInternalQuery(nextQuery);
-      }
-      onSearchChange?.(nextQuery);
+    if (option.type === "create") {
+      await resolveDraft(option.value);
+      return;
+    }
+
+    const isSelected = selectedIds.has(option.item.id);
+    if (option.item.disabled && !isSelected) {
+      return;
+    }
+
+    if (isSelected) {
+      removeItem(option.item);
+    } else {
+      onChange([...value, option.item]);
+    }
+  };
+
+  const contextValue: TagSelectorContextValue<TagItem> = {
+    activeIndex,
+    activeOption,
+    ariaLabel,
+    commandOptions,
+    disabled,
+    emptyMessage,
+    filteredOptions,
+    inputId,
+    listboxId,
+    name,
+    onSearchInput: updateQuery,
+    open,
+    placeholder,
+    query,
+    removeItem,
+    renderOption: renderOption as ((props: TagOptionRenderProps<TagItem>) => ReactNode) | undefined,
+    renderTag: renderTag as ((props: TagRenderProps<TagItem>) => ReactNode) | undefined,
+    resolveDraft,
+    resolveDrafts,
+    selectCommandOption,
+    separators,
+    serializeItem,
+    setActiveIndex,
+    setOpen,
+    value,
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) {
       setActiveIndex(NO_ACTIVE_OPTION);
     }
+  };
 
-    function removeItem(item: TagItem) {
-      onChange(value.filter((selectedItem) => selectedItem.id !== item.id));
-    }
+  return (
+    <TagSelectorContext.Provider value={contextValue}>
+      <Popover.Root onOpenChange={handleOpenChange} open={open}>
+        <div
+          {...rootProps}
+          className={joinClassNames("patternmode-tag-selector", className)}
+          data-disabled={disabled ? "true" : undefined}
+          data-slot="tag-selector"
+          id={rootId}
+          ref={ref}
+        >
+          {name
+            ? value.map((item) => (
+                <input key={item.id} name={name} type="hidden" value={serializeItem(item)} />
+              ))
+            : null}
+          {children}
+        </div>
+      </Popover.Root>
+    </TagSelectorContext.Provider>
+  );
+};
 
-    async function resolveDrafts(drafts: readonly string[]) {
-      if (disabled) {
-        return;
-      }
-
-      const nextValue = [...value];
-      const nextIds = new Set(nextValue.map((item) => item.id));
-      let changed = false;
-
-      const resolvedDrafts = await Promise.all(
-        drafts.map(async (draft) => {
-          const normalizedDraft = normalizeTag(draft);
-          if (!normalizedDraft) {
-            return null;
-          }
-
-          const matches = options.filter(
-            (item) =>
-              normalizeComparable(item.label) ===
-              normalizeComparable(normalizedDraft)
-          );
-
-          if (matches.length === 1) {
-            const [match] = matches;
-            return match && !match.disabled ? match : null;
-          }
-
-          if (matches.length === 0 && onCreateItem) {
-            return onCreateItem(normalizedDraft);
-          }
-          return null;
-        })
-      );
-
-      for (const item of resolvedDrafts) {
-        if (item && !nextIds.has(item.id)) {
-          nextValue.push(item);
-          nextIds.add(item.id);
-          changed = true;
-        }
-      }
-
-      if (changed) {
-        onChange(nextValue);
-        updateQuery("");
-      }
-    }
-
-    async function resolveDraft(draft: string) {
-      await resolveDrafts([draft]);
-    }
-
-    async function selectCommandOption(option: CommandOption<TagItem>) {
-      if (disabled) {
-        return;
-      }
-
-      if (option.type === "create") {
-        await resolveDraft(option.value);
-        return;
-      }
-
-      const isSelected = selectedIds.has(option.item.id);
-      if (option.item.disabled && !isSelected) {
-        return;
-      }
-
-      if (isSelected) {
-        removeItem(option.item);
-      } else {
-        onChange([...value, option.item]);
-      }
-    }
-
-    const contextValue: TagSelectorContextValue<TagItem> = {
-      activeIndex,
-      activeOption,
-      ariaLabel,
-      commandOptions,
-      disabled,
-      emptyMessage,
-      filteredOptions,
-      inputId,
-      listboxId,
-      name,
-      onSearchInput: updateQuery,
-      open,
-      placeholder,
-      query,
-      removeItem,
-      renderOption: renderOption as
-        | ((props: TagOptionRenderProps<TagItem>) => ReactNode)
-        | undefined,
-      renderTag: renderTag as
-        | ((props: TagRenderProps<TagItem>) => ReactNode)
-        | undefined,
-      resolveDraft,
-      resolveDrafts,
-      selectCommandOption,
-      serializeItem,
-      separators,
-      setActiveIndex,
-      setOpen,
-      value,
-    };
-
-    function handleOpenChange(nextOpen: boolean) {
-      setOpen(nextOpen);
-      if (!nextOpen) {
-        setActiveIndex(NO_ACTIVE_OPTION);
-      }
-    }
-
-    return (
-      <TagSelectorContext.Provider value={contextValue}>
-        <Popover.Root onOpenChange={handleOpenChange} open={open}>
-          <div
-            {...rootProps}
-            className={joinClassNames("patternmode-tag-selector", className)}
-            data-disabled={disabled ? "true" : undefined}
-            data-slot="tag-selector"
-            id={rootId}
-            ref={ref}
-          >
-            {name
-              ? value.map((item) => (
-                  <input
-                    key={item.id}
-                    name={name}
-                    type="hidden"
-                    value={serializeItem(item)}
-                  />
-                ))
-              : null}
-            {children}
-          </div>
-        </Popover.Root>
-      </TagSelectorContext.Provider>
-    );
-  }
-);
-
-const TagSelectorTrigger = forwardRef<
-  HTMLButtonElement,
-  TagSelectorTriggerProps
->(function TagSelectorTrigger(
-  { className, onClick, onKeyDown, placeholder, tabIndex, ...triggerProps },
-  ref
-) {
+const TagSelectorTrigger = ({
+  className,
+  onClick,
+  onKeyDown,
+  placeholder,
+  ref,
+  tabIndex,
+  ...triggerProps
+}: TagSelectorTriggerProps) => {
   const context = useTagSelectorContext();
   const label = context.ariaLabel;
 
-  function handleTriggerClick(event: MouseEvent<HTMLButtonElement>) {
+  const handleTriggerClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (context.disabled) {
       event.preventDefault();
       event.stopPropagation();
     }
-  }
+  };
 
-  function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
     if (event.defaultPrevented || context.disabled) {
       return;
@@ -476,7 +426,7 @@ const TagSelectorTrigger = forwardRef<
       event.preventDefault();
       context.setOpen(!context.open);
     }
-  }
+  };
 
   return (
     <Popover.Trigger asChild>
@@ -485,16 +435,13 @@ const TagSelectorTrigger = forwardRef<
         aria-controls={context.open ? context.listboxId : undefined}
         aria-disabled={context.disabled}
         aria-expanded={context.open}
+        aria-haspopup="listbox"
         aria-label={label}
-        className={joinClassNames(
-          "patternmode-tag-selector__trigger",
-          className
-        )}
+        className={joinClassNames("patternmode-tag-selector__trigger", className)}
         onClick={handleTriggerClick}
         onKeyDown={handleKeyDown}
         data-slot="tag-selector-trigger"
         ref={ref}
-        role="combobox"
         tabIndex={context.disabled ? undefined : (tabIndex ?? 0)}
         type="button"
       >
@@ -523,10 +470,7 @@ const TagSelectorTrigger = forwardRef<
               };
 
               return (
-                <span
-                  className="patternmode-tag-selector__selected-item"
-                  key={item.id}
-                >
+                <span className="patternmode-tag-selector__selected-item" key={item.id}>
                   {context.renderTag ? (
                     context.renderTag({
                       disabled: context.disabled,
@@ -535,11 +479,7 @@ const TagSelectorTrigger = forwardRef<
                       selected: true,
                     })
                   ) : (
-                    <Tag
-                      disabled={context.disabled}
-                      size="sm"
-                      variant={item.variant}
-                    >
+                    <Tag disabled={context.disabled} size="sm" variant={item.variant}>
                       {item.label}
                     </Tag>
                   )}
@@ -555,156 +495,169 @@ const TagSelectorTrigger = forwardRef<
       </button>
     </Popover.Trigger>
   );
-});
+};
 
-const TagSelectorContent = forwardRef<HTMLDivElement, TagSelectorContentProps>(
-  function TagSelectorContent(
-    { align = "start", className, sideOffset = 6, ...contentProps },
-    ref
-  ) {
-    return (
-      <Popover.Portal>
-        <Popover.Content
-          {...contentProps}
-          align={align}
-          className={joinClassNames(
-            "patternmode-tag-selector__content",
-            className
-          )}
-          data-slot="tag-selector-content"
-          ref={ref}
-          sideOffset={sideOffset}
-        />
-      </Popover.Portal>
-    );
-  }
+const TagSelectorContent = ({
+  align = "start",
+  className,
+  ref,
+  sideOffset = 6,
+  ...contentProps
+}: TagSelectorContentProps) => (
+  <Popover.Portal>
+    <Popover.Content
+      {...contentProps}
+      align={align}
+      className={joinClassNames("patternmode-tag-selector__content", className)}
+      data-slot="tag-selector-content"
+      ref={ref}
+      sideOffset={sideOffset}
+    />
+  </Popover.Portal>
 );
 
-const TagSelectorSearch = forwardRef<HTMLInputElement, TagSelectorSearchProps>(
-  function TagSelectorSearch(
-    { "aria-label": ariaLabel, className, onKeyDown, onPaste, ...searchProps },
-    ref
-  ) {
-    const context = useTagSelectorContext();
-    const localRef = useRef<HTMLInputElement | null>(null);
-    const searchLabel =
-      ariaLabel ??
-      (context.ariaLabel ? `Search ${context.ariaLabel}` : "Search tags");
+const TagSelectorSearch = ({
+  "aria-label": ariaLabel,
+  className,
+  onKeyDown,
+  onPaste,
+  ref,
+  ...searchProps
+}: TagSelectorSearchProps) => {
+  const context = useTagSelectorContext();
+  const localRef = useRef<HTMLInputElement | null>(null);
+  const searchLabel =
+    ariaLabel ?? (context.ariaLabel ? `Search ${context.ariaLabel}` : "Search tags");
 
-    useEffect(() => {
-      if (context.open) {
-        localRef.current?.focus();
-      }
-    }, [context.open]);
+  useEffect(() => {
+    if (context.open) {
+      localRef.current?.focus();
+    }
+  }, [context.open]);
 
-    function setRefs(node: HTMLInputElement | null) {
-      localRef.current = node;
-      if (typeof ref === "function") {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
+  const setRefs = (node: HTMLInputElement | null) => {
+    localRef.current = node;
+    if (typeof ref === "function") {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+
+  const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+    if (event.defaultPrevented) {
+      return;
     }
 
-    async function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-      onKeyDown?.(event);
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      if (event.key === "ArrowDown") {
-        event.preventDefault();
-        context.setActiveIndex((currentIndex) =>
-          getNextIndex(currentIndex, context.commandOptions.length)
-        );
-        return;
-      }
-
-      if (event.key === "ArrowUp") {
-        event.preventDefault();
-        context.setActiveIndex((currentIndex) =>
-          getPreviousIndex(currentIndex, context.commandOptions.length)
-        );
-        return;
-      }
-
-      if (event.key === "Enter" && context.activeOption) {
-        event.preventDefault();
-        await context.selectCommandOption(context.activeOption);
-        return;
-      }
-
-      if (event.key === "Enter" || context.separators.includes(event.key)) {
-        event.preventDefault();
-        await context.resolveDraft(context.query);
-        return;
-      }
-
-      if (
-        event.key === "Backspace" &&
-        context.query === "" &&
-        context.value.length > 0
-      ) {
-        event.preventDefault();
-        const lastItem = context.value.at(-1);
-        if (lastItem) {
-          context.removeItem(lastItem);
-        }
-      }
-    }
-
-    async function handlePaste(event: ClipboardEvent<HTMLInputElement>) {
-      onPaste?.(event);
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      const pastedTags = splitPastedTags(event.clipboardData.getData("text"));
-      if (pastedTags.length <= 1) {
-        return;
-      }
-
+    if (event.key === "ArrowDown") {
       event.preventDefault();
-      await context.resolveDrafts(pastedTags);
+      context.setActiveIndex((currentIndex) =>
+        getNextIndex(currentIndex, context.commandOptions.length),
+      );
+      return;
     }
 
-    return (
-      <input
-        {...searchProps}
-        aria-activedescendant={context.activeOption?.id}
-        aria-autocomplete="list"
-        aria-controls={context.listboxId}
-        aria-label={searchLabel}
-        className={joinClassNames(
-          "patternmode-tag-selector__search",
-          className
-        )}
-        disabled={context.disabled}
-        id={context.inputId}
-        onChange={(event) => context.onSearchInput(event.target.value)}
-        onKeyDown={handleKeyDown}
-        onPaste={handlePaste}
-        ref={setRefs}
-        type="text"
-        value={context.query}
-      />
-    );
-  }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      context.setActiveIndex((currentIndex) =>
+        getPreviousIndex(currentIndex, context.commandOptions.length),
+      );
+      return;
+    }
+
+    if (event.key === "Enter" && context.activeOption) {
+      event.preventDefault();
+      await context.selectCommandOption(context.activeOption);
+      return;
+    }
+
+    if (event.key === "Enter" || context.separators.includes(event.key)) {
+      event.preventDefault();
+      await context.resolveDraft(context.query);
+      return;
+    }
+
+    if (event.key === "Backspace" && context.query === "" && context.value.length > 0) {
+      event.preventDefault();
+      const lastItem = context.value.at(-1);
+      if (lastItem) {
+        context.removeItem(lastItem);
+      }
+    }
+  };
+
+  const handlePaste = async (event: ClipboardEvent<HTMLInputElement>) => {
+    onPaste?.(event);
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const pastedTags = splitPastedTags(event.clipboardData.getData("text"));
+    if (pastedTags.length <= 1) {
+      return;
+    }
+
+    event.preventDefault();
+    await context.resolveDrafts(pastedTags);
+  };
+
+  return (
+    <input
+      {...searchProps}
+      aria-activedescendant={context.activeOption?.id}
+      aria-autocomplete="list"
+      aria-controls={context.listboxId}
+      aria-label={searchLabel}
+      className={joinClassNames("patternmode-tag-selector__search", className)}
+      disabled={context.disabled}
+      id={context.inputId}
+      onChange={(event) => context.onSearchInput(event.target.value)}
+      onKeyDown={handleKeyDown}
+      onPaste={handlePaste}
+      ref={setRefs}
+      type="text"
+      value={context.query}
+    />
+  );
+};
+
+const TagSelectorRenderedOption = ({
+  active,
+  disabled,
+  item,
+  optionProps,
+  renderOption: render,
+  selected,
+}: {
+  active: boolean;
+  disabled: boolean;
+  item: TagItem;
+  optionProps: TagOptionRenderProps<TagItem>["optionProps"];
+  renderOption: NonNullable<TagSelectorContextValue<TagItem>["renderOption"]>;
+  selected: boolean;
+}) => (
+  <>
+    {render({
+      active,
+      disabled,
+      item,
+      optionProps,
+      selected,
+    })}
+  </>
 );
 
-function TagSelectorOption<TItem extends TagItem>({
+const TagSelectorOption = <TItem extends TagItem>({
   item,
   option,
 }: {
   item?: TItem;
   option?: CommandOption<TItem>;
-}) {
+}) => {
   const context = useTagSelectorContext<TagItem>();
   const resolvedOption =
-    option ??
-    (item
-      ? { id: item.id, item, label: item.label, type: "item" as const }
-      : undefined);
+    option ?? (item ? { id: item.id, item, label: item.label, type: "item" as const } : undefined);
 
   if (!resolvedOption) {
     return null;
@@ -715,10 +668,8 @@ function TagSelectorOption<TItem extends TagItem>({
   const selected = optionItem
     ? context.value.some((selectedItem) => selectedItem.id === optionItem.id)
     : false;
-  const disabled =
-    context.disabled || Boolean(optionItem?.disabled && !selected);
-  const active =
-    context.commandOptions[context.activeIndex]?.id === resolvedOption.id;
+  const disabled = context.disabled || Boolean(optionItem?.disabled && !selected);
+  const active = context.commandOptions[context.activeIndex]?.id === resolvedOption.id;
   const optionProps = {
     "aria-selected": selected,
     className: "patternmode-tag-selector__option",
@@ -729,6 +680,21 @@ function TagSelectorOption<TItem extends TagItem>({
     onClick: () => context.selectCommandOption(resolvedOption),
     role: "option",
   };
+  let optionIcon: ReactNode = null;
+
+  if (isCreate) {
+    optionIcon = (
+      <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+        <path d="M10 4.5v11M4.5 10h11" />
+      </svg>
+    );
+  } else if (selected) {
+    optionIcon = (
+      <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+        <path d="M4.5 10.5l3.25 3.25 7.75-8" />
+      </svg>
+    );
+  }
 
   if (optionItem && context.renderOption) {
     return (
@@ -745,95 +711,47 @@ function TagSelectorOption<TItem extends TagItem>({
 
   return (
     <button type="button" {...optionProps}>
-      <span
-        aria-hidden="true"
-        className="patternmode-tag-selector__option-icon"
-      >
-        {isCreate ? (
-          <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
-            <path d="M10 4.5v11M4.5 10h11" />
-          </svg>
-        ) : selected ? (
-          <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
-            <path d="M4.5 10.5l3.25 3.25 7.75-8" />
-          </svg>
-        ) : null}
+      <span aria-hidden="true" className="patternmode-tag-selector__option-icon">
+        {optionIcon}
       </span>
-      <span className="patternmode-tag-selector__option-label">
-        {resolvedOption.label}
-      </span>
+      <span className="patternmode-tag-selector__option-label">{resolvedOption.label}</span>
     </button>
   );
-}
+};
 
-function TagSelectorRenderedOption({
-  active,
-  disabled,
-  item,
-  optionProps,
-  renderOption: render,
-  selected,
-}: {
-  active: boolean;
-  disabled: boolean;
-  item: TagItem;
-  optionProps: TagOptionRenderProps<TagItem>["optionProps"];
-  renderOption: NonNullable<TagSelectorContextValue<TagItem>["renderOption"]>;
-  selected: boolean;
-}) {
+const TagSelectorEmpty = ({ className, ref, ...emptyProps }: TagSelectorEmptyProps) => (
+  <div
+    {...emptyProps}
+    className={joinClassNames("patternmode-tag-selector__empty", className)}
+    data-slot="tag-selector-empty"
+    ref={ref}
+  />
+);
+
+const TagSelectorList = ({ children, className, ref, ...listProps }: TagSelectorListProps) => {
+  const context = useTagSelectorContext();
+  let listChildren = children ?? <TagSelectorEmpty>{context.emptyMessage}</TagSelectorEmpty>;
+
+  if (context.commandOptions.length > 0) {
+    listChildren = context.commandOptions.map((option) => (
+      <TagSelectorOption key={option.id} option={option} />
+    ));
+  }
+
   return (
-    <>
-      {render({
-        active,
-        disabled,
-        item,
-        optionProps,
-        selected,
-      })}
-    </>
+    <div
+      {...listProps}
+      className={joinClassNames("patternmode-tag-selector__list", className)}
+      data-slot="tag-selector-list"
+      id={context.listboxId}
+      ref={ref}
+    >
+      {listChildren}
+    </div>
   );
-}
+};
 
-const TagSelectorEmpty = forwardRef<HTMLDivElement, TagSelectorEmptyProps>(
-  function TagSelectorEmpty({ className, ...emptyProps }, ref) {
-    return (
-      <div
-        {...emptyProps}
-        className={joinClassNames("patternmode-tag-selector__empty", className)}
-        data-slot="tag-selector-empty"
-        ref={ref}
-      />
-    );
-  }
-);
-
-const TagSelectorList = forwardRef<HTMLDivElement, TagSelectorListProps>(
-  function TagSelectorList({ children, className, ...listProps }, ref) {
-    const context = useTagSelectorContext();
-
-    return (
-      <div
-        {...listProps}
-        className={joinClassNames("patternmode-tag-selector__list", className)}
-        data-slot="tag-selector-list"
-        id={context.listboxId}
-        ref={ref}
-      >
-        {context.commandOptions.length > 0 ? (
-          context.commandOptions.map((option) => (
-            <TagSelectorOption key={option.id} option={option} />
-          ))
-        ) : children ? (
-          children
-        ) : (
-          <TagSelectorEmpty>{context.emptyMessage}</TagSelectorEmpty>
-        )}
-      </div>
-    );
-  }
-);
-
-function TagSelectorBase(props: TagSelectorProps<TagItem>): ReactElement {
+const TagSelectorBase = (props: TagSelectorProps<TagItem>): ReactElement => {
   const {
     children,
     contentClassName,
@@ -845,17 +763,10 @@ function TagSelectorBase(props: TagSelectorProps<TagItem>): ReactElement {
   } = props;
 
   return (
-    <TagSelectorRoot
-      {...rootProps}
-      emptyMessage={emptyMessage}
-      placeholder={placeholder}
-    >
+    <TagSelectorRoot {...rootProps} emptyMessage={emptyMessage} placeholder={placeholder}>
       {children ?? (
         <>
-          <TagSelectorTrigger
-            className={triggerClassName}
-            placeholder={placeholder}
-          />
+          <TagSelectorTrigger className={triggerClassName} placeholder={placeholder} />
           <TagSelectorContent className={contentClassName}>
             <TagSelectorSearch placeholder={searchPlaceholder} />
             <TagSelectorList>
@@ -866,7 +777,7 @@ function TagSelectorBase(props: TagSelectorProps<TagItem>): ReactElement {
       )}
     </TagSelectorRoot>
   );
-}
+};
 
 const TagSelector = Object.assign(TagSelectorBase, {
   Content: TagSelectorContent,

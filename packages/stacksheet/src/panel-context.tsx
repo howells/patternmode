@@ -1,7 +1,5 @@
-import { createContext, useContext } from "react";
-
+import { createContext, use } from "react";
 import type { Side } from "./types";
-
 export interface SheetPanelContextValue {
   /** Pop the top sheet (go back one level) */
   back: () => void;
@@ -20,22 +18,18 @@ export interface SheetPanelContextValue {
   /** Current resolved side (left/right/bottom) */
   side: Side;
 }
-
-export const SheetPanelContext = createContext<SheetPanelContextValue | null>(
-  null
-);
-
+export const SheetPanelContext = createContext<SheetPanelContextValue | null>(null);
 /**
  * Access the current sheet panel's context.
  * Must be called inside a component rendered by the sheet stack.
  */
-export function useSheetPanel(): SheetPanelContextValue {
-  const ctx = useContext(SheetPanelContext);
+export const useSheetPanel = (): SheetPanelContextValue => {
+  const ctx = use(SheetPanelContext);
   if (!ctx) {
     throw new Error(
       "Sheet.* components must be used inside a sheet panel. " +
-        "They should be rendered by a component opened via actions.open(), push(), etc."
+        "They should be rendered by a component opened via actions.open(), push(), etc.",
     );
   }
   return ctx;
-}
+};

@@ -1,15 +1,11 @@
 "use client";
 
-import {
-  DistributionBar,
-  type DistributionBarSegment,
-  DistributionDisplay,
-  Swatch,
-} from "@patternmode/swatch";
+import { DistributionBar, DistributionDisplay, Swatch } from "@patternmode/swatch";
+import type { DistributionBarSegment } from "@patternmode/swatch";
 import type { SVGProps } from "react";
 import { useState } from "react";
 
-/* ── Palettes ──────────────────────────────────── */
+/* Palettes */
 
 const finishes = [
   { color: "#315c4b", name: "Evergreen" },
@@ -22,96 +18,91 @@ const finishes = [
 
 const palettes = [
   {
-    name: "Terrace",
-    type: "segmented" as const,
     colors: [
       { color: "#c4b7a3", ratio: 45 },
       { color: "#9b3d32", ratio: 30 },
       { color: "#e8dfd3", ratio: 25 },
     ],
+    name: "Terrace",
+    type: "segmented" as const,
   },
   {
+    background: "linear-gradient(135deg, #1d1d1b, #315c4b 52%, #3d6b6e)",
     name: "Dusk",
     type: "gradient" as const,
-    background: "linear-gradient(135deg, #1d1d1b, #315c4b 52%, #3d6b6e)",
   },
   {
-    name: "Archive",
-    type: "segmented" as const,
     colors: [
       { color: "#1d1d1b", ratio: 50 },
       { color: "#f5f0e8", ratio: 30 },
       { color: "#6b4c3b", ratio: 20 },
     ],
+    name: "Archive",
+    type: "segmented" as const,
   },
 ] as const;
 
 const gradients = [
   {
-    name: "Patina",
     background: "linear-gradient(135deg, #3d6b6e, #c4b7a3)",
+    name: "Patina",
   },
   {
-    name: "Copper",
     background: "linear-gradient(135deg, #6b4c3b, #d9a441)",
+    name: "Copper",
   },
   {
-    name: "Stone",
     background: "linear-gradient(135deg, #c4b7a3, #e8dfd3)",
+    name: "Stone",
   },
   {
-    name: "Ember",
     background: "linear-gradient(135deg, #9b3d32, #d9a441)",
+    name: "Ember",
   },
   {
-    name: "Moss",
     background: "linear-gradient(135deg, #1d1d1b, #315c4b)",
+    name: "Moss",
   },
   {
-    name: "Dune",
     background: "linear-gradient(135deg, #e1ebe5, #c4b7a3)",
+    name: "Dune",
   },
 ] as const;
 
 const startingDistribution: DistributionBarSegment[] = [
-  { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
-  { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
-  { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+  { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 48 },
+  { color: "#d9a441", id: "saffron", label: "Saffron", value: 30 },
+  { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
 ];
 
 const assignedDistribution: DistributionBarSegment[] = [
-  { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 38 },
-  { id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
-  { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
+  { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 38 },
+  { color: "#d9a441", id: "saffron", label: "Saffron", value: 24 },
+  { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 17 },
 ];
 
 type FinishColor = (typeof finishes)[number]["color"];
 type PaletteName = (typeof palettes)[number]["name"];
 
-/* ── Icons ─────────────────────────────────────── */
+/* Icons */
 
-function CheckIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" {...props}>
-      <title>Selected</title>
-      <path d="m5 12 4 4L19 6" />
-    </svg>
-  );
-}
+const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg fill="none" viewBox="0 0 24 24" {...props}>
+    <title>Selected</title>
+    <path d="m5 12 4 4L19 6" />
+  </svg>
+);
 
-/* ── Demo ──────────────────────────────────────── */
+/* Demo */
 
-export function SwatchDemo() {
+export const SwatchDemo = () => {
   const [selected, setSelected] = useState<FinishColor>(finishes[0].color);
-  const [selectedPalette, setSelectedPalette] = useState<PaletteName>(
-    palettes[0].name
-  );
-  const [distribution, setDistribution] =
-    useState<DistributionBarSegment[]>(startingDistribution);
+  const [selectedPalette, setSelectedPalette] = useState<PaletteName>(palettes[0].name);
+  const [distribution, setDistribution] = useState<DistributionBarSegment[]>(startingDistribution);
 
   return (
     <div className="swatch-demo">
-      {/* ① Finish selector */}
+      {/* Finish selector */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Finishes</div>
         <fieldset aria-label="Select a finish" className="swatch-demo-swatches">
@@ -137,7 +128,7 @@ export function SwatchDemo() {
         </fieldset>
       </div>
 
-      {/* ② Curated palettes */}
+      {/* Curated palettes */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Palettes</div>
         <div className="swatch-demo-palette-grid">
@@ -166,7 +157,7 @@ export function SwatchDemo() {
         </div>
       </div>
 
-      {/* ③ Gradient squares */}
+      {/* Gradient squares */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Gradients</div>
         <div className="swatch-demo-swatches">
@@ -184,18 +175,12 @@ export function SwatchDemo() {
         </div>
       </div>
 
-      {/* ④ States */}
+      {/* States */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">States</div>
         <div className="swatch-demo-swatches">
           <div className="swatch-demo-specimen">
-            <Swatch
-              aria-label="Selected"
-              color="#315c4b"
-              icon={CheckIcon}
-              selected
-              size="xl"
-            />
+            <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
             <span>Selected</span>
           </div>
           <div className="swatch-demo-specimen">
@@ -207,18 +192,13 @@ export function SwatchDemo() {
             <span>Raised</span>
           </div>
           <div className="swatch-demo-specimen">
-            <Swatch
-              aria-label="Unavailable"
-              color="#315c4b"
-              size="xl"
-              unavailable
-            />
+            <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
             <span>Unavailable</span>
           </div>
         </div>
       </div>
 
-      {/* ⑤ Distribution */}
+      {/* Distribution */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Distribution</div>
         <DistributionDisplay
@@ -229,7 +209,7 @@ export function SwatchDemo() {
         />
       </div>
 
-      {/* ⑥ Adjustable distribution */}
+      {/* Adjustable distribution */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Adjustable distribution</div>
         <DistributionBar
@@ -240,4 +220,4 @@ export function SwatchDemo() {
       </div>
     </div>
   );
-}
+};

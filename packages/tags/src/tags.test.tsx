@@ -34,7 +34,7 @@ const options: TagItem[] = [
   { disabled: true, id: "locked", label: "Locked" },
 ];
 
-function ControlledTagSelector({
+const ControlledTagSelector = ({
   defaultValue = [],
   onCreateItem,
   ...props
@@ -46,7 +46,7 @@ function ControlledTagSelector({
   options?: TagItem[];
   searchValue?: string;
   serializeItem?: (item: TagItem) => string;
-}) {
+}) => {
   const [value, setValue] = useState(defaultValue);
 
   return (
@@ -60,7 +60,7 @@ function ControlledTagSelector({
       {...props}
     />
   );
-}
+};
 
 describe("TagSelector", () => {
   it("uses the shadcn badge base and lets tags extend badge variants", () => {
@@ -68,51 +68,45 @@ describe("TagSelector", () => {
       <>
         <Badge variant="outline">Badge</Badge>
         <Tag variant="destructive">Needs review</Tag>
-      </>
+      </>,
     );
 
     expect(screen.getByText("Badge")).toHaveAttribute("data-slot", "badge");
-    expect(screen.getByText("Badge")).toHaveAttribute(
-      "data-variant",
-      "outline"
-    );
+    expect(screen.getByText("Badge")).toHaveAttribute("data-variant", "outline");
     const tag = screen.getByText("Needs review").closest("[data-slot='tag']");
     expect(tag).toHaveAttribute("data-slot", "tag");
     expect(tag).toHaveAttribute("data-variant", "destructive");
   });
 
   it("exports TagSelector as the public selector API without a TagsInput alias", async () => {
-    const module = await import("./index");
+    const publicApi = await import("./index");
 
-    expect(module.TagSelector).toBeDefined();
-    expect("TagsInput" in module).toBe(false);
+    expect(publicApi.TagSelector).toBeDefined();
+    expect("TagsInput" in publicApi).toBe(false);
   });
 
   it("renders selected TagItems in a ScrollFrame-backed trigger and opens popover content", async () => {
     const user = userEvent.setup();
 
     const { container } = render(
-      <ControlledTagSelector
-        defaultValue={[options[0] as TagItem, options[1] as TagItem]}
-      />
+      <ControlledTagSelector defaultValue={[options[0] as TagItem, options[1] as TagItem]} />,
     );
 
-    const trigger = screen.getByRole("combobox", { name: "Project tags" });
+    const trigger = screen.getByRole("button", { name: "Project tags" });
     expect(trigger).toHaveAttribute("data-slot", "tag-selector-trigger");
-    expect(
-      within(trigger).getByTestId("tag-selector-selected-scroll")
-    ).toHaveAttribute("data-slot", "scrollframe");
+    expect(within(trigger).getByTestId("tag-selector-selected-scroll")).toHaveAttribute(
+      "data-slot",
+      "scrollframe",
+    );
     expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
     expect(within(trigger).getByText("Command menu")).toBeInTheDocument();
 
     await user.click(trigger);
 
     expect(
-      container.ownerDocument.querySelector('[data-slot="tag-selector-list"]')
+      container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: "Search Project tags" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Search Project tags" })).toBeInTheDocument();
   });
 
   it("keeps selected options visible and toggles them by id", async () => {
@@ -120,53 +114,44 @@ describe("TagSelector", () => {
 
     render(<ControlledTagSelector defaultValue={[options[0] as TagItem]} />);
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
 
     const selectedOption = screen.getByRole("option", { name: "Accessible" });
     expect(selectedOption).toHaveAttribute("aria-selected", "true");
 
     await user.click(selectedOption);
     expect(
-      within(
-        screen.getByRole("combobox", { name: "Project tags" })
-      ).queryByText("Accessible")
+      within(screen.getByRole("button", { name: "Project tags" })).queryByText("Accessible"),
     ).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("option", { name: "Command menu" }));
     expect(
-      within(screen.getByRole("combobox", { name: "Project tags" })).getByText(
-        "Command menu"
-      )
+      within(screen.getByRole("button", { name: "Project tags" })).getByText("Command menu"),
     ).toBeInTheDocument();
   });
 
   it("creates items through the create option after matching options", async () => {
     const user = userEvent.setup();
     const onCreateItem = vi.fn((label: string) => ({
-      id: label.toLowerCase().replace(/\s+/g, "-"),
+      id: label.toLowerCase().replaceAll(/\s+/gu, "-"),
       label,
     }));
 
     render(<ControlledTagSelector onCreateItem={onCreateItem} />);
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
-    await user.type(
-      screen.getByRole("textbox", { name: "Search Project tags" }),
-      "a"
-    );
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "a");
 
     const optionTexts = screen
       .getAllByRole("option")
-      .map((option) => option.textContent?.replace(/\s+/g, " ").trim());
+      .map((option) => option.textContent?.replaceAll(/\s+/gu, " ").trim());
     expect(optionTexts.at(-1)).toBe('Create "a"');
 
     await user.click(screen.getByRole("option", { name: 'Create "a"' }));
 
     expect(onCreateItem).toHaveBeenCalledWith("a");
     expect(
-      within(screen.getByRole("combobox", { name: "Project tags" })).getByText(
-        "a"
-      )
+      within(screen.getByRole("button", { name: "Project tags" })).getByText("a"),
     ).toBeInTheDocument();
   });
 
@@ -179,24 +164,20 @@ describe("TagSelector", () => {
 
     render(<ControlledTagSelector onCreateItem={onCreateItem} />);
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
     const search = screen.getByRole("textbox", { name: "Search Project tags" });
 
     await user.type(search, "Accessible{Enter}");
     expect(onCreateItem).not.toHaveBeenCalled();
     expect(
-      within(screen.getByRole("combobox", { name: "Project tags" })).getByText(
-        "Accessible"
-      )
+      within(screen.getByRole("button", { name: "Project tags" })).getByText("Accessible"),
     ).toBeInTheDocument();
 
     await user.clear(search);
     await user.type(search, "Duplicate{Enter}");
     expect(onCreateItem).not.toHaveBeenCalled();
     expect(
-      within(
-        screen.getByRole("combobox", { name: "Project tags" })
-      ).queryByText("Duplicate")
+      within(screen.getByRole("button", { name: "Project tags" })).queryByText("Duplicate"),
     ).not.toBeInTheDocument();
   });
 
@@ -212,16 +193,14 @@ describe("TagSelector", () => {
         defaultValue={[options[0] as TagItem]}
         name="tags"
         onCreateItem={onCreateItem}
-      />
+      />,
     );
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
     await user.paste("Indoor, Outdoor");
 
     expect(onCreateItem).toHaveBeenCalledTimes(2);
-    expect(
-      screen.getAllByDisplayValue(/accessible|indoor|outdoor/)
-    ).toHaveLength(3);
+    expect(screen.getAllByDisplayValue(/accessible|indoor|outdoor/u)).toHaveLength(3);
   });
 
   it("supports controlled search, custom filtering, and custom renderers", async () => {
@@ -232,7 +211,7 @@ describe("TagSelector", () => {
       <TagSelector
         aria-label="Project tags"
         filterOption={(item, query) => item.id.startsWith(query)}
-        onChange={() => undefined}
+        onChange={() => {}}
         onSearchChange={onSearchChange}
         options={options}
         renderOption={({ item, optionProps }) => (
@@ -246,23 +225,16 @@ describe("TagSelector", () => {
         )}
         searchValue="key"
         value={[options[1] as TagItem]}
-      />
+      />,
     );
 
     expect(screen.getByText("Custom tag Command menu")).toBeInTheDocument();
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
-    expect(
-      screen.getByText("Custom option Keyboard first")
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByText("Custom option Accessible")
-    ).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    expect(screen.getByText("Custom option Keyboard first")).toBeInTheDocument();
+    expect(screen.queryByText("Custom option Accessible")).not.toBeInTheDocument();
 
-    await user.type(
-      screen.getByRole("textbox", { name: "Search Project tags" }),
-      "s"
-    );
+    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "s");
     expect(onSearchChange).toHaveBeenCalled();
   });
 
@@ -271,18 +243,15 @@ describe("TagSelector", () => {
 
     render(<ControlledTagSelector />);
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
-    await user.type(
-      screen.getByRole("textbox", { name: "Search Project tags" }),
-      "locked"
-    );
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "locked");
     expect(screen.getByRole("option", { name: "Locked" })).toBeDisabled();
   });
 
   it("supports TagSelector parts for composable layouts", async () => {
     const user = userEvent.setup();
 
-    function ComposableExample() {
+    const ComposableExample = () => {
       const [value, setValue] = useState<TagItem[]>([]);
 
       return (
@@ -301,17 +270,15 @@ describe("TagSelector", () => {
           </TagSelector.Content>
         </TagSelector.Root>
       );
-    }
+    };
 
     render(<ComposableExample />);
 
-    await user.click(screen.getByRole("combobox", { name: "Project tags" }));
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
     await user.click(screen.getByRole("option", { name: "Accessible" }));
 
     expect(
-      within(screen.getByRole("combobox", { name: "Project tags" })).getByText(
-        "Accessible"
-      )
+      within(screen.getByRole("button", { name: "Project tags" })).getByText("Accessible"),
     ).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
-export { ScrollFrame } from "./ScrollFrame/ScrollFrame";
-export { useScrollFrame } from "./ScrollFrame/ScrollFrameContext";
+export { ScrollFrame } from "./ScrollFrame/scroll-frame";
+export { useScrollFrame } from "./ScrollFrame/scroll-frame-context";
 export {
   SCROLL_FRAME_AXES,
   SCROLL_FRAME_CONTROL_VISIBILITY,
@@ -26,4 +26,4 @@ export {
   type ScrollFrameScrollbarVisibility,
   type ScrollFrameScrollStep,
   type ScrollFrameViewportProps,
-} from "./ScrollFrame/ScrollFrameTypes";
+} from "./ScrollFrame/scroll-frame-types";

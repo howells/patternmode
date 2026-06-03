@@ -1,74 +1,65 @@
-import {
-  type ApiSection,
-  ApiTable,
-  CodeBlock,
-  ComponentPage,
-  DocsBlock,
-} from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
 
 export const metadata: Metadata = {
+  description: "Radix-backed scroll frames with eased edge fades and movement controls.",
   title: "ScrollFrame | Patternmode",
-  description:
-    "Radix-backed scroll frames with eased edge fades and movement controls.",
 };
 
 const scrollFrameApi: ApiSection[] = [
   {
+    description: "Radix-based scroll container with measured fades and movement controls.",
     name: "ScrollFrame",
-    description:
-      "Radix-based scroll container with measured fades and movement controls.",
     props: [
       {
-        name: "axes",
-        type: '"vertical" | "horizontal" | "both"',
         defaultValue: '"vertical"',
         description: "Chooses the supported scroll axes.",
+        name: "axes",
+        type: '"vertical" | "horizontal" | "both"',
       },
       {
-        name: "fades",
-        type: 'boolean | "none" | "start" | "end" | "both" | AxisFadeConfig',
         defaultValue: "true",
         description: "Controls measured eased edge fades.",
+        name: "fades",
+        type: 'boolean | "none" | "start" | "end" | "both" | AxisFadeConfig',
       },
       {
+        description: "CSS color used by the fade overlays.",
         name: "fadeColor",
         type: "string",
-        description: "CSS color used by the fade overlays.",
       },
       {
+        description: "Size of the fade overlay along the scroll axis.",
         name: "fadeSize",
         type: "number | string",
-        description: "Size of the fade overlay along the scroll axis.",
       },
       {
+        defaultValue: '"auto"',
+        description: "Controls scrollbar visibility while keeping Radix scroll plumbing mounted.",
         name: "scrollbars",
         type: '"auto" | "always" | "hover" | "hidden"',
-        defaultValue: '"auto"',
-        description:
-          "Controls scrollbar visibility while keeping Radix scroll plumbing mounted.",
       },
       {
-        name: "controls",
-        type: "boolean | ScrollFrameControlsConfig",
         defaultValue: "false",
         description: "Adds overflow-aware previous and next movement controls.",
+        name: "controls",
+        type: "boolean | ScrollFrameControlsConfig",
       },
       {
-        name: "dragScroll",
-        type: "boolean | ScrollFrameDragScrollConfig",
         defaultValue: "false",
         description:
           "Enables pointer drag scrolling while preserving native scroll and text selection until a drag threshold is crossed.",
+        name: "dragScroll",
+        type: "boolean | ScrollFrameDragScrollConfig",
       },
       {
+        defaultValue: '"page"',
+        description: "Controls movement distance for previous and next controls.",
         name: "scrollStep",
         type: '"page" | number | ((state, axis) => number)',
-        defaultValue: '"page"',
-        description:
-          "Controls movement distance for previous and next controls.",
       },
     ],
   },

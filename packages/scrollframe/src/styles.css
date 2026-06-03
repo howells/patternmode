@@ -18,28 +18,23 @@
     width: 100%;
   }
 
-  .patternmode-scrollframe[data-axis-vertical="true"]
-    > .patternmode-scrollframe__viewport {
+  .patternmode-scrollframe[data-axis-vertical="true"] > .patternmode-scrollframe__viewport {
     overflow-y: auto;
   }
 
-  .patternmode-scrollframe[data-axis-vertical="false"]
-    > .patternmode-scrollframe__viewport {
+  .patternmode-scrollframe[data-axis-vertical="false"] > .patternmode-scrollframe__viewport {
     overflow-y: hidden;
   }
 
-  .patternmode-scrollframe[data-axis-horizontal="true"]
-    > .patternmode-scrollframe__viewport {
+  .patternmode-scrollframe[data-axis-horizontal="true"] > .patternmode-scrollframe__viewport {
     overflow-x: auto;
   }
 
-  .patternmode-scrollframe[data-axis-horizontal="false"]
-    > .patternmode-scrollframe__viewport {
+  .patternmode-scrollframe[data-axis-horizontal="false"] > .patternmode-scrollframe__viewport {
     overflow-x: hidden;
   }
 
-  .patternmode-scrollframe[data-scrollbar-visibility="hidden"]
-    .patternmode-scrollframe__viewport {
+  .patternmode-scrollframe[data-scrollbar-visibility="hidden"] .patternmode-scrollframe__viewport {
     scrollbar-width: none;
   }
 
@@ -73,14 +68,12 @@
     touch-action: none;
   }
 
-  .patternmode-scrollframe[data-dragging="true"]
-    .patternmode-scrollframe__content {
+  .patternmode-scrollframe[data-dragging="true"] .patternmode-scrollframe__content {
     cursor: grabbing;
     user-select: none;
   }
 
-  .patternmode-scrollframe[data-axis-horizontal="true"]
-    .patternmode-scrollframe__content {
+  .patternmode-scrollframe[data-axis-horizontal="true"] .patternmode-scrollframe__content {
     width: max-content;
   }
 
@@ -88,9 +81,8 @@
 
   .patternmode-scrollframe__fade {
     --_fade-stops:
-      transparent 0%, rgb(0 0 0 / 0.02) 9%, rgb(0 0 0 / 0.08) 18%,
-      rgb(0 0 0 / 0.18) 29%, rgb(0 0 0 / 0.32) 42%, rgb(0 0 0 / 0.52) 58%,
-      rgb(0 0 0 / 0.72) 74%, black 100%;
+      transparent 0%, rgb(0 0 0 / 0.02) 9%, rgb(0 0 0 / 0.08) 18%, rgb(0 0 0 / 0.18) 29%,
+      rgb(0 0 0 / 0.32) 42%, rgb(0 0 0 / 0.52) 58%, rgb(0 0 0 / 0.72) 74%, black 100%;
     background: var(--patternmode-scrollframe-fade-color);
     mask-image: linear-gradient(var(--_fade-dir), var(--_fade-stops));
     opacity: 1;
@@ -183,8 +175,7 @@
     align-items: center;
     background: color-mix(in srgb, var(--surface, #fff) 80%, transparent);
     backdrop-filter: blur(6px);
-    border: 1px solid
-      color-mix(in srgb, var(--border, #e3e1dc) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border, #e3e1dc) 60%, transparent);
     border-radius: 999px;
     color: inherit;
     cursor: pointer;
@@ -233,9 +224,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .patternmode-scrollframe__control:not(:disabled):not(
-        [aria-disabled="true"]
-      ):hover {
+    .patternmode-scrollframe__control:not(:disabled):not([aria-disabled="true"]):hover {
       background: color-mix(in srgb, var(--surface, #fff) 95%, transparent);
       border-color: var(--border, #e3e1dc);
     }

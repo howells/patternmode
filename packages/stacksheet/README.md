@@ -64,11 +64,7 @@ function UserProfile({ userId }: { userId: string }) {
 function ViewProfileButton() {
   const { open } = useSheet();
 
-  return (
-    <button onClick={() => open(UserProfile, { userId: "u_abc" })}>
-      View profile
-    </button>
-  );
+  return <button onClick={() => open(UserProfile, { userId: "u_abc" })}>View profile</button>;
 }
 ```
 
@@ -108,9 +104,7 @@ function App() {
 function OpenSettingsButton() {
   const { open } = useSheet();
   return (
-    <button
-      onClick={() => open("settings", "settings-root", { tab: "billing" })}
-    >
+    <button onClick={() => open("settings", "settings-root", { tab: "billing" })}>
       Open settings
     </button>
   );

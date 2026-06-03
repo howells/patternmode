@@ -3,14 +3,11 @@ import { useEffect } from "react";
 
 import { useApertoContext } from "./context";
 import { ApertoTransitionMedia } from "./media-rendering";
-import {
-  type ApertoMediaTransition,
-  rectTarget,
-  transitionDurationMs,
-} from "./media-transition-utils";
+import { rectTarget, transitionDurationMs } from "./media-transition-utils";
+import type { ApertoMediaTransition } from "./media-transition-utils";
 import type { RenderImage, RenderVideo } from "./types";
 
-export function ApertoMediaTransitionClone({
+export const ApertoMediaTransitionClone = ({
   onComplete,
   renderImage,
   renderVideo,
@@ -20,7 +17,7 @@ export function ApertoMediaTransitionClone({
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
   transition: ApertoMediaTransition | null;
-}) {
+}) => {
   const ctx = useApertoContext();
 
   useEffect(() => {
@@ -28,10 +25,7 @@ export function ApertoMediaTransitionClone({
       return;
     }
 
-    const timer = setTimeout(
-      onComplete,
-      transitionDurationMs(ctx.preset.transition)
-    );
+    const timer = setTimeout(onComplete, transitionDurationMs(ctx.preset.transition));
     return () => clearTimeout(timer);
   }, [ctx.preset.transition, onComplete, transition]);
 
@@ -61,4 +55,4 @@ export function ApertoMediaTransitionClone({
       />
     </m.div>
   );
-}
+};

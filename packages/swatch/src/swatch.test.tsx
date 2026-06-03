@@ -23,9 +23,9 @@ import {
   SWATCH_SHAPES,
   SWATCH_SIZES,
   Swatch,
-  type SwatchSize,
   updateDistributionSegment,
 } from "./index";
+import type { SwatchSize } from "./index";
 
 interface MockPanInfo {
   offset: {
@@ -49,27 +49,26 @@ interface MockMotionButtonProps extends Omit<
   transformTemplate?: () => string;
 }
 
-vi.mock("motion/react", () => {
-  const MockMotionButton = ({
-    children,
-    drag: _drag,
-    dragElastic: _dragElastic,
-    dragMomentum: _dragMomentum,
-    dragSnapToOrigin: _dragSnapToOrigin,
-    onDrag,
-    onDragEnd,
-    onDragStart,
-    transformTemplate: _transformTemplate,
-    ...props
-  }: MockMotionButtonProps) => {
-    const getPanInfo = (event: ReactPointerEvent<HTMLButtonElement>) => ({
-      offset: {
-        x: Number(event.currentTarget.dataset.offsetX ?? 0),
-        y: Number(event.currentTarget.dataset.offsetY ?? 0),
-      },
-    });
-
-    return (
+const getPanInfo = vi.hoisted(() => (event: ReactPointerEvent<HTMLButtonElement>) => ({
+  offset: {
+    x: Number(event.currentTarget.dataset.offsetX ?? 0),
+    y: Number(event.currentTarget.dataset.offsetY ?? 0),
+  },
+}));
+const MockMotionButton = vi.hoisted(
+  () =>
+    ({
+      children,
+      drag: _drag,
+      dragElastic: _dragElastic,
+      dragMomentum: _dragMomentum,
+      dragSnapToOrigin: _dragSnapToOrigin,
+      onDrag,
+      onDragEnd,
+      onDragStart,
+      transformTemplate: _transformTemplate,
+      ...props
+    }: MockMotionButtonProps) => (
       <button
         {...props}
         onPointerDown={(event) => {
@@ -87,24 +86,24 @@ vi.mock("motion/react", () => {
       >
         {children}
       </button>
-    );
-  };
-  const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
+    ),
+);
+const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
+
+vi.mock("motion/react", () => {
   const motionComponents = {
     button: MockMotionButton,
   };
 
   return {
-    domMax: {},
     LazyMotion,
+    domMax: {},
     m: motionComponents,
     motion: motionComponents,
   };
 });
 
-function CheckIcon(props: SVGProps<SVGSVGElement>) {
-  return <svg data-testid="check-icon" {...props} />;
-}
+const CheckIcon = (props: SVGProps<SVGSVGElement>) => <svg data-testid="check-icon" {...props} />;
 
 afterEach(() => {
   cleanup();
@@ -131,12 +130,11 @@ describe("Swatch", () => {
           { color: "#315c4b", ratio: 60 },
           { color: "#e1ebe5", ratio: 40 },
         ]}
-      />
+      />,
     );
 
     expect(screen.getByLabelText("Palette")).toHaveStyle({
-      "--patternmode-swatch-fill":
-        "linear-gradient(90deg, #315c4b 0% 60%, #e1ebe5 60% 100%)",
+      "--patternmode-swatch-fill": "linear-gradient(90deg, #315c4b 0% 60%, #e1ebe5 60% 100%)",
     });
   });
 
@@ -146,16 +144,14 @@ describe("Swatch", () => {
         { color: "#111111", ratio: -4 },
         { color: "#222222", ratio: 2 },
         { color: "#333333", ratio: Number.NaN },
-      ])
-    ).toBe(
-      "linear-gradient(90deg, #111111 0% 0%, #222222 0% 100%, #333333 100% 100%)"
-    );
+      ]),
+    ).toBe("linear-gradient(90deg, #111111 0% 0%, #222222 0% 100%, #333333 100% 100%)");
 
     expect(
       getSwatchColorsBackground([
         { color: "#111111", ratio: 0 },
         { color: "#222222", ratio: -1 },
-      ])
+      ]),
     ).toBe("linear-gradient(90deg, #111111 0% 50%, #222222 50% 100%)");
   });
 
@@ -170,7 +166,7 @@ describe("Swatch", () => {
         icon={CheckIcon}
         onRemove={onRemove}
         selected
-      />
+      />,
     );
 
     const swatch = screen.getByRole("group", { name: "Selected" });
@@ -186,11 +182,11 @@ describe("Swatch", () => {
   it("applies shared object sizing to media children", () => {
     render(
       <Swatch aria-label="Sample" objectFit="contain" objectPosition="top left">
-        <img alt="Sample media" src="/sample.jpg" />
-      </Swatch>
+        <svg aria-label="Sample media" />
+      </Swatch>,
     );
 
-    const media = screen.getByAltText("Sample media").parentElement;
+    const media = screen.getByLabelText("Sample media").parentElement;
     expect(media).toHaveStyle({
       height: "100%",
       objectFit: "contain",
@@ -215,9 +211,7 @@ describe("Swatch", () => {
       "7xl",
     ]);
 
-    render(
-      <Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />
-    );
+    render(<Swatch aria-label="Huge" color="#315c4b" size={"7xl" as SwatchSize} />);
 
     expect(screen.getByLabelText("Huge")).toHaveStyle({
       "--patternmode-swatch-size": "6rem",
@@ -227,19 +221,14 @@ describe("Swatch", () => {
   it("renders a block-shaped swatch that fills its container", () => {
     expect(SWATCH_SHAPES).toContain("block");
     render(<Swatch aria-label="Band" color="#315c4b" shape="block" />);
-    expect(screen.getByLabelText("Band")).toHaveAttribute(
-      "data-shape",
-      "block"
-    );
+    expect(screen.getByLabelText("Band")).toHaveAttribute("data-shape", "block");
   });
 
   it("builds a layered radial atmosphere from color stops", () => {
-    expect(
-      getSwatchAtmosphereBackground(["#315c4b", "#d9a441", "#9b3d32"])
-    ).toBe(
+    expect(getSwatchAtmosphereBackground(["#315c4b", "#d9a441", "#9b3d32"])).toBe(
       "radial-gradient(ellipse at 30% 42%, #315c4bcc 0%, transparent 58%), " +
         "radial-gradient(ellipse at 72% 58%, #d9a44199 0%, transparent 53%), " +
-        "radial-gradient(ellipse at 45% 65%, #9b3d3277 0%, transparent 66%)"
+        "radial-gradient(ellipse at 45% 65%, #9b3d3277 0%, transparent 66%)",
     );
   });
 
@@ -249,9 +238,7 @@ describe("Swatch", () => {
       gravity: 1,
     });
     // density 1 → tight reach (50%); gravity 1 with a -1 pool sign → 42 - 8.
-    expect(background).toBe(
-      "radial-gradient(ellipse at 30% 34%, #315c4bcc 0%, transparent 50%)"
-    );
+    expect(background).toBe("radial-gradient(ellipse at 30% 34%, #315c4bcc 0%, transparent 50%)");
   });
 
   it("renders an atmosphere texture as a radial-gradient fill", () => {
@@ -260,7 +247,7 @@ describe("Swatch", () => {
         aria-label="Atmosphere"
         colors={["#315c4b", "#d9a441", "#9b3d32"]}
         texture="atmosphere"
-      />
+      />,
     );
 
     const swatch = screen.getByLabelText("Atmosphere");
@@ -271,9 +258,7 @@ describe("Swatch", () => {
   });
 
   it("omits the scrim for a flat swatch so the fill reads as the exact color", () => {
-    const { container } = render(
-      <Swatch aria-label="Cell" color="#315c4b" flat shape="block" />
-    );
+    const { container } = render(<Swatch aria-label="Cell" color="#315c4b" flat shape="block" />);
     const swatch = screen.getByLabelText("Cell");
     expect(swatch).toHaveAttribute("data-flat", "true");
     expect(container.querySelector(".patternmode-swatch__scrim")).toBeNull();
@@ -283,9 +268,9 @@ describe("Swatch", () => {
 describe("DistributionBar math", () => {
   it("moves a boundary while preserving the distribution total", () => {
     const segments = [
-      { id: "a", color: "#315c4b", value: 48 },
-      { id: "b", color: "#d9a441", value: 30 },
-      { id: "c", color: "#9b3d32", value: 22 },
+      { color: "#315c4b", id: "a", value: 48 },
+      { color: "#d9a441", id: "b", value: 30 },
+      { color: "#9b3d32", id: "c", value: 22 },
     ];
 
     const next = moveDistributionBoundary(segments, 0, 8, 6);
@@ -297,9 +282,9 @@ describe("DistributionBar math", () => {
 
   it("clamps a moved boundary so adjacent segments keep a minimum value", () => {
     const segments = [
-      { id: "a", color: "#315c4b", value: 48 },
-      { id: "b", color: "#d9a441", value: 30 },
-      { id: "c", color: "#9b3d32", value: 22 },
+      { color: "#315c4b", id: "a", value: 48 },
+      { color: "#d9a441", id: "b", value: 30 },
+      { color: "#9b3d32", id: "c", value: 22 },
     ];
 
     const next = moveDistributionBoundary(segments, 1, 40, 8);
@@ -310,9 +295,9 @@ describe("DistributionBar math", () => {
 
   it("removes a segment and redistributes its value across remaining segments", () => {
     const segments = [
-      { id: "a", color: "#315c4b", value: 50 },
-      { id: "b", color: "#d9a441", value: 30 },
-      { id: "c", color: "#9b3d32", value: 20 },
+      { color: "#315c4b", id: "a", value: 50 },
+      { color: "#d9a441", id: "b", value: 30 },
+      { color: "#9b3d32", id: "c", value: 20 },
     ];
 
     const next = removeDistributionSegment(segments, "b");
@@ -323,8 +308,8 @@ describe("DistributionBar math", () => {
 
   it("updates a segment without changing the distribution values", () => {
     const segments = [
-      { id: "a", color: "#315c4b", label: "Evergreen", value: 48 },
-      { id: "b", color: "#d9a441", label: "Saffron", value: 30 },
+      { color: "#315c4b", id: "a", label: "Evergreen", value: 48 },
+      { color: "#d9a441", id: "b", label: "Saffron", value: 30 },
     ];
 
     const next = updateDistributionSegment(segments, "a", {
@@ -334,8 +319,8 @@ describe("DistributionBar math", () => {
     });
 
     expect(next).toEqual([
-      { id: "sage", color: "#e1ebe5", label: "Sage", value: 48 },
-      { id: "b", color: "#d9a441", label: "Saffron", value: 30 },
+      { color: "#e1ebe5", id: "sage", label: "Sage", value: 48 },
+      { color: "#d9a441", id: "b", label: "Saffron", value: 30 },
     ]);
   });
 });
@@ -348,17 +333,15 @@ describe("DistributionBar", () => {
         emptyValue={21}
         legend="summary"
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 38 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 24 },
-          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 17 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 38 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 24 },
+          { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 17 },
         ]}
-      />
+      />,
     );
 
     expect(
-      screen.getByLabelText(
-        "Assigned finish distribution: 79% assigned, 21% unassigned"
-      )
+      screen.getByLabelText("Assigned finish distribution: 79% assigned, 21% unassigned"),
     ).toHaveClass("patternmode-distribution-display");
     expect(screen.getByText("79% assigned")).toBeInTheDocument();
     expect(screen.getByText("21% unassigned")).toBeInTheDocument();
@@ -374,11 +357,11 @@ describe("DistributionBar", () => {
         legend={false}
         onSegmentSelect={onSegmentSelect}
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 60 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 40 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 60 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 40 },
         ]}
         selectedSegmentId="evergreen"
-      />
+      />,
     );
 
     const evergreen = screen.getByRole("button", { name: "Evergreen 60%" });
@@ -388,9 +371,7 @@ describe("DistributionBar", () => {
     const saffron = screen.getByRole("button", { name: "Saffron 40%" });
     expect(saffron).toHaveAttribute("aria-pressed", "false");
     await user.click(saffron);
-    expect(onSegmentSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "saffron" })
-    );
+    expect(onSegmentSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "saffron" }));
   });
 
   it("renders segment percentages for display legends", () => {
@@ -398,11 +379,11 @@ describe("DistributionBar", () => {
       <DistributionDisplay
         aria-label="Weighted finish display"
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 2 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
-          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 2 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 3 },
+          { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 5 },
         ]}
-      />
+      />,
     );
 
     expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();
@@ -420,16 +401,16 @@ describe("DistributionBar", () => {
         aria-label="Finish distribution"
         onChange={onChange}
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
-          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 48 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 30 },
+          { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
         ]}
-      />
+      />,
     );
 
-    expect(
-      screen.getByRole("group", { name: "Finish distribution" })
-    ).toHaveClass("patternmode-distribution-bar");
+    expect(screen.getByRole("group", { name: "Finish distribution" })).toHaveClass(
+      "patternmode-distribution-bar",
+    );
     expect(screen.getByText("Evergreen 48%")).toBeInTheDocument();
     expect(screen.getByText("Saffron 30%")).toBeInTheDocument();
 
@@ -437,9 +418,9 @@ describe("DistributionBar", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(onChange).toHaveBeenCalledWith([
-      { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 49 },
-      { id: "saffron", color: "#d9a441", label: "Saffron", value: 29 },
-      { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+      { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 49 },
+      { color: "#d9a441", id: "saffron", label: "Saffron", value: 29 },
+      { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
     ]);
   });
 
@@ -451,11 +432,11 @@ describe("DistributionBar", () => {
         aria-label="Finish distribution"
         onChange={onChange}
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
-          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 48 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 30 },
+          { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
         ]}
-      />
+      />,
     );
 
     const group = screen.getByRole("group", { name: "Finish distribution" });
@@ -476,9 +457,9 @@ describe("DistributionBar", () => {
     fireEvent.pointerMove(handle);
 
     expect(onChange).toHaveBeenCalledWith([
-      { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 58 },
-      { id: "saffron", color: "#d9a441", label: "Saffron", value: 20 },
-      { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 22 },
+      { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 58 },
+      { color: "#d9a441", id: "saffron", label: "Saffron", value: 20 },
+      { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
     ]);
   });
 
@@ -487,11 +468,11 @@ describe("DistributionBar", () => {
       <DistributionBar
         aria-label="Weighted finish distribution"
         segments={[
-          { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 2 },
-          { id: "saffron", color: "#d9a441", label: "Saffron", value: 3 },
-          { id: "oxblood", color: "#9b3d32", label: "Oxblood", value: 5 },
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 2 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 3 },
+          { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 5 },
         ]}
-      />
+      />,
     );
 
     expect(screen.getByText("Evergreen 20%")).toBeInTheDocument();

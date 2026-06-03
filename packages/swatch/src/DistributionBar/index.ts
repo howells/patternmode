@@ -6,10 +6,10 @@ export {
   moveDistributionBoundary,
   removeDistributionSegment,
   updateDistributionSegment,
-} from "./DistributionBarMath";
+} from "./distribution-bar-math";
 export {
   DistributionBar,
   type DistributionBarProps,
   DistributionDisplay,
   type DistributionDisplayProps,
-} from "./DistributionBarRoot";
+} from "./distribution-bar-root";

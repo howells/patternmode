@@ -1,15 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  findSnapTarget,
-  getSnapOffset,
-  resolveSnapPoints,
-} from "./snap-points";
+import { findSnapTarget, getSnapOffset, resolveSnapPoints } from "./snap-points";
 
 // ── resolveSnapPoints ──────────────────────────
 
 describe("resolveSnapPoints", () => {
-  const vh = 800; // viewport height
+  // Viewport height.
+  const vh = 800;
 
   it("returns empty array for no snap points", () => {
     expect(resolveSnapPoints([], vh)).toEqual([]);
@@ -89,7 +86,8 @@ describe("findSnapTarget", () => {
 
   it("velocity shifts the projected position", () => {
     // Small offset but high velocity in dismiss direction → jumps further
-    expect(findSnapTarget(50, panelHeight, snapHeights, 0.8, 2, false)).toBe(1); // velocity projects past fully open
+    // Velocity projects past fully open.
+    expect(findSnapTarget(50, panelHeight, snapHeights, 0.8, 2, false)).toBe(1);
   });
 
   it("sequential mode only moves to adjacent point", () => {
@@ -98,9 +96,7 @@ describe("findSnapTarget", () => {
     // Currently at index 1, swiping down
     expect(findSnapTarget(100, panelHeight, snapHeights, 0.5, 1, true)).toBe(0);
     // Currently at index 0, swiping down → dismiss
-    expect(findSnapTarget(100, panelHeight, snapHeights, 0.5, 0, true)).toBe(
-      -1
-    );
+    expect(findSnapTarget(100, panelHeight, snapHeights, 0.5, 0, true)).toBe(-1);
   });
 
   it("sequential mode moves up when swiping up (negative velocity)", () => {

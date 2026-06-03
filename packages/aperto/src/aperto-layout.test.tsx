@@ -3,104 +3,103 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
+import type { HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { Aperto } from "./index";
+import type { ApertoMediaItem } from "./index";
 
 const unmountedLayoutIds = vi.hoisted((): string[] => []);
 
+type MotionTestProps = HTMLAttributes<HTMLElement> & {
+  animate?: unknown;
+  "data-slot"?: string;
+  drag?: unknown;
+  dragConstraints?: unknown;
+  dragElastic?: unknown;
+  dragMomentum?: unknown;
+  dragSnapToOrigin?: unknown;
+  exit?: unknown;
+  initial?: unknown;
+  layout?: boolean;
+  layoutCrossfade?: unknown;
+  layoutId?: string;
+  onAnimationComplete?: () => void;
+  onDrag?: unknown;
+  onDragEnd?: unknown;
+  onLayoutAnimationComplete?: unknown;
+  ref?: Ref<HTMLElement>;
+  transition?: unknown;
+};
+
+const stripMotionProps = ({
+  animate: _animate,
+  drag: _drag,
+  dragConstraints: _dragConstraints,
+  dragElastic: _dragElastic,
+  dragMomentum: _dragMomentum,
+  dragSnapToOrigin: _dragSnapToOrigin,
+  exit: _exit,
+  initial: _initial,
+  layout,
+  layoutCrossfade: _layoutCrossfade,
+  layoutId,
+  onAnimationComplete: _onAnimationComplete,
+  onDrag: _onDrag,
+  onDragEnd: _onDragEnd,
+  onLayoutAnimationComplete: _onLayoutAnimationComplete,
+  ref: _ref,
+  transition: _transition,
+  ...props
+}: MotionTestProps) => ({
+  ...props,
+  "data-drag": _drag === undefined ? undefined : String(_drag),
+  "data-layout": layout === undefined ? undefined : String(layout),
+  "data-layout-id": layoutId,
+});
+const LayoutGroupComponent = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+));
+const LazyMotionComponent = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+));
+
 vi.mock("motion/react", () => {
-  type MotionTestProps = HTMLAttributes<HTMLElement> & {
-    animate?: unknown;
-    "data-slot"?: string;
-    drag?: unknown;
-    dragConstraints?: unknown;
-    dragElastic?: unknown;
-    dragMomentum?: unknown;
-    dragSnapToOrigin?: unknown;
-    exit?: unknown;
-    initial?: unknown;
-    layout?: boolean;
-    layoutCrossfade?: unknown;
-    layoutId?: string;
-    onAnimationComplete?: () => void;
-    onDrag?: unknown;
-    onDragEnd?: unknown;
-    onLayoutAnimationComplete?: unknown;
-    transition?: unknown;
+  const MotionDiv = ({ ref, ...props }: MotionTestProps) => {
+    const latestLayoutIdRef = useRef(props.layoutId);
+    latestLayoutIdRef.current = props.layoutId;
+
+    useEffect(
+      () => () => {
+        if (latestLayoutIdRef.current) {
+          unmountedLayoutIds.push(latestLayoutIdRef.current);
+        }
+      },
+      [],
+    );
+
+    useEffect(() => {
+      if (props["data-slot"] === "aperto-transition-media" && props.animate) {
+        props.onAnimationComplete?.();
+      }
+    }, [props]);
+
+    return <div ref={ref as Ref<HTMLDivElement>} {...stripMotionProps(props)} />;
   };
 
-  const stripMotionProps = ({
-    animate: _animate,
-    drag: _drag,
-    dragConstraints: _dragConstraints,
-    dragElastic: _dragElastic,
-    dragMomentum: _dragMomentum,
-    dragSnapToOrigin: _dragSnapToOrigin,
-    exit: _exit,
-    initial: _initial,
-    layout,
-    layoutCrossfade: _layoutCrossfade,
-    layoutId,
-    onAnimationComplete: _onAnimationComplete,
-    onDrag: _onDrag,
-    onDragEnd: _onDragEnd,
-    onLayoutAnimationComplete: _onLayoutAnimationComplete,
-    transition: _transition,
-    ...props
-  }: MotionTestProps) => ({
-    ...props,
-    "data-drag": _drag === undefined ? undefined : String(_drag),
-    "data-layout": layout === undefined ? undefined : String(layout),
-    "data-layout-id": layoutId,
-  });
-
-  const LayoutGroup = ({ children }: { children: ReactNode }) => (
-    <>{children}</>
-  );
-  const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
-
-  const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
-    (props, ref) => {
-      const latestLayoutIdRef = useRef(props.layoutId);
-      latestLayoutIdRef.current = props.layoutId;
-
-      useEffect(
-        () => () => {
-          if (latestLayoutIdRef.current) {
-            unmountedLayoutIds.push(latestLayoutIdRef.current);
-          }
-        },
-        []
-      );
-
-      useEffect(() => {
-        if (props["data-slot"] === "aperto-transition-media" && props.animate) {
-          props.onAnimationComplete?.();
-        }
-      }, [props]);
-
-      return <div ref={ref} {...stripMotionProps(props)} />;
-    }
-  );
-
   const motionComponents = {
-    button: forwardRef<HTMLButtonElement, MotionTestProps>((props, ref) => (
-      <button ref={ref} {...stripMotionProps(props)} />
-    )),
+    button: ({ ref, ...props }: MotionTestProps) => (
+      <button ref={ref as Ref<HTMLButtonElement>} {...stripMotionProps(props)} />
+    ),
     div: MotionDiv,
   };
 
   return {
-    AnimatePresence: LayoutGroup,
+    AnimatePresence: LayoutGroupComponent,
+    LayoutGroup: LayoutGroupComponent,
+    LazyMotion: LazyMotionComponent,
     domMax: {},
-    LayoutGroup,
-    LazyMotion,
     m: motionComponents,
     motion: motionComponents,
     useMotionValue: (initial: number) => ({
@@ -112,8 +111,6 @@ vi.mock("motion/react", () => {
     useTransform: () => 1,
   };
 });
-
-import { Aperto, type ApertoMediaItem } from "./index";
 
 let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
@@ -139,7 +136,7 @@ describe("Aperto layout projection", () => {
           <Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
           Centered content
         </Aperto.Primitive.Content>
-      </Aperto.Primitive.Root>
+      </Aperto.Primitive.Root>,
     );
 
     expect(screen.getByRole("dialog", { name: "Centered panel" })).toHaveStyle({
@@ -156,7 +153,7 @@ describe("Aperto layout projection", () => {
           <Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
           Custom content
         </Aperto.Primitive.Content>
-      </Aperto.Primitive.Root>
+      </Aperto.Primitive.Root>,
     );
 
     const content = screen.getByRole("dialog", { name: "Unpositioned panel" });
@@ -168,37 +165,36 @@ describe("Aperto layout projection", () => {
   it("allows single media drag dismissal to be disabled", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem = {
-      type: "image",
-      src: "/large.jpg",
       alt: "A mountain at sunrise",
+      src: "/large.jpg",
       title: "Morning ridge",
+      type: "image",
     };
 
     render(<Aperto dismissible={false} media={media} />);
 
-    await user.click(
-      screen.getByRole("button", { name: "Open Morning ridge" })
-    );
+    await user.click(screen.getByRole("button", { name: "Open Morning ridge" }));
 
-    expect(
-      screen.getByRole("dialog", { name: "Morning ridge" })
-    ).toHaveAttribute("data-drag", "false");
+    expect(screen.getByRole("dialog", { name: "Morning ridge" })).toHaveAttribute(
+      "data-drag",
+      "false",
+    );
   });
 
   it("allows grouped media drag dismissal to be disabled", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/first-large.jpg",
         alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
         title: "Studio table",
+        type: "image",
       },
       {
-        type: "image",
-        src: "/second-large.jpg",
         alt: "A quiet reading nook",
+        src: "/second-large.jpg",
         title: "Soft afternoon",
+        type: "image",
       },
     ];
 
@@ -206,57 +202,56 @@ describe("Aperto layout projection", () => {
       <Aperto.Group dismissible={false} media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
-    expect(
-      screen.getByRole("dialog", { name: "Studio table" })
-    ).toHaveAttribute("data-drag", "false");
+    expect(screen.getByRole("dialog", { name: "Studio table" })).toHaveAttribute(
+      "data-drag",
+      "false",
+    );
   });
 
   it("keeps grouped media draggable when using custom dismissal thresholds", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/first-large.jpg",
         alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
         title: "Studio table",
+        type: "image",
       },
     ];
 
     render(
-      <Aperto.Group
-        dismissible={{ threshold: 180, velocity: 900 }}
-        media={media}
-      >
+      <Aperto.Group dismissible={{ threshold: 180, velocity: 900 }} media={media}>
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
-    expect(
-      screen.getByRole("dialog", { name: "Studio table" })
-    ).toHaveAttribute("data-drag", "true");
+    expect(screen.getByRole("dialog", { name: "Studio table" })).toHaveAttribute(
+      "data-drag",
+      "true",
+    );
   });
 
   it("keeps grouped content mounted while switching media", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/first-large.jpg",
         alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
         title: "Studio table",
+        type: "image",
       },
       {
-        type: "image",
-        src: "/second-large.jpg",
         alt: "A quiet reading nook",
+        src: "/second-large.jpg",
         title: "Soft afternoon",
+        type: "image",
       },
     ];
 
@@ -264,7 +259,7 @@ describe("Aperto layout projection", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -284,16 +279,16 @@ describe("Aperto layout projection", () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/first-large.jpg",
         alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
         title: "Studio table",
+        type: "image",
       },
       {
-        type: "image",
-        src: "/second-large.jpg",
         alt: "A quiet reading nook",
+        src: "/second-large.jpg",
         title: "Soft afternoon",
+        type: "image",
       },
     ];
 
@@ -301,7 +296,7 @@ describe("Aperto layout projection", () => {
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
@@ -311,35 +306,33 @@ describe("Aperto layout projection", () => {
       screen.getByRole("button", {
         hidden: true,
         name: "Open Soft afternoon",
-      })
+      }),
     ).not.toHaveAttribute("data-layout-id");
     await user.click(screen.getByRole("button", { name: "Close" }));
 
-    await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 
   it("returns grouped media focus to the opened thumbnail without scrolling", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/first-large.jpg",
         alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
         title: "Studio table",
+        type: "image",
       },
       {
-        type: "image",
-        src: "/second-large.jpg",
         alt: "A quiet reading nook",
+        src: "/second-large.jpg",
         title: "Soft afternoon",
+        type: "image",
       },
       {
-        type: "image",
-        src: "/third-large.jpg",
         alt: "A garden passage",
+        src: "/third-large.jpg",
         title: "Garden passage",
+        type: "image",
       },
     ];
     const focusSpy = vi.spyOn(HTMLElement.prototype, "focus");
@@ -349,7 +342,7 @@ describe("Aperto layout projection", () => {
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
         <Aperto.Thumbnail index={2} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     const openedThumbnail = screen.getByRole("button", {
@@ -362,9 +355,7 @@ describe("Aperto layout projection", () => {
     await user.click(openedThumbnail);
     await user.click(screen.getByRole("button", { name: "Close" }));
 
-    await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(document.activeElement).toBe(openedThumbnail);
     expect(document.activeElement).not.toBe(lastThumbnail);
     expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
@@ -376,11 +367,11 @@ describe("Aperto layout projection", () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/portrait.jpg",
         alt: "Tall gallery view",
         height: 1600,
+        src: "/portrait.jpg",
         title: "Portrait",
+        type: "image",
         width: 900,
       },
     ];
@@ -388,7 +379,7 @@ describe("Aperto layout projection", () => {
     render(
       <Aperto.Group media={media}>
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Portrait" }));
@@ -404,11 +395,11 @@ describe("Aperto layout projection", () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [
       {
-        type: "image",
-        src: "/optimized.jpg",
         alt: "Optimized render",
         height: 900,
+        src: "/optimized.jpg",
         title: "Optimized",
+        type: "image",
         width: 1600,
       },
     ];
@@ -417,17 +408,21 @@ describe("Aperto layout projection", () => {
       <Aperto.Group
         media={media}
         renderImage={({ alt, src, variant }) => (
-          <img alt={alt ?? ""} data-renderer={variant} src={String(src)} />
+          <svg aria-label={alt ?? ""} data-renderer={variant} data-src={String(src)} />
         )}
       >
         <Aperto.Thumbnail index={0} />
-      </Aperto.Group>
+      </Aperto.Group>,
     );
 
     await user.click(screen.getByRole("button", { name: "Open Optimized" }));
 
-    expect(
-      document.querySelector('[data-slot="aperto-transition-media"] img')
-    ).toHaveAttribute("data-renderer", "expanded");
+    await waitFor(() => {
+      expect(
+        document.querySelector(
+          '[data-slot="aperto-transition-media"] [aria-label="Optimized render"]',
+        ),
+      ).toHaveAttribute("data-renderer", "expanded");
+    });
   });
 });

@@ -1,5 +1,5 @@
 /**
- * @patternmode/aperto
+ * Package: @patternmode/aperto
  *
  * Shared element transitions with physics-based drag dismissal.
  * Built on Radix Dialog + Motion.
@@ -21,33 +21,53 @@ interface BaseMediaItem {
   width?: number;
 }
 
+/** Image media item rendered as a thumbnail and expanded image. */
 export interface ApertoImageItem extends BaseMediaItem {
+  /** Required alt text for the image renderer. */
   alt: string;
   type: "image";
 }
 
+/** Video media item rendered with a thumbnail and expanded player. */
 export interface ApertoVideoItem extends BaseMediaItem {
   alt?: string;
+  /** Optional captions track URL for the expanded video. */
   captionsSrc?: string;
   poster?: string;
+  /** Required thumbnail image shown before expansion. */
   thumbnailSrc: string;
   type: "video";
 }
 
+/** Media item supported by Aperto's grouped media API. */
 export type ApertoMediaItem = ApertoImageItem | ApertoVideoItem;
 
+/**
+ * Custom image renderer for image media.
+ *
+ * Aperto's default renderer is a plain `img` so the package stays framework
+ * agnostic. Next.js consumers should return their own `next/image` `Image`
+ * component here, using `variant` to choose thumbnail vs expanded sizing,
+ * loading, or fetch priority behavior.
+ */
 export type RenderImage = (
   props: ImgHTMLAttributes<HTMLImageElement> & {
     item: ApertoImageItem;
     variant: "expanded" | "thumbnail";
-  }
+  },
 ) => ReactNode;
 
+/**
+ * Custom video renderer for video media.
+ *
+ * Use this to replace the default `video` element while preserving the supplied
+ * accessibility, poster, and control props.
+ */
 export type RenderVideo = (
   props: VideoHTMLAttributes<HTMLVideoElement> & {
     item: ApertoVideoItem;
     variant: "expanded" | "thumbnail";
-  }
+  },
 ) => ReactNode;
 
 export interface ApertoClassNames {
@@ -91,9 +111,17 @@ export interface MotionPreset {
 
 /** Dismissal behaviour config */
 export interface DismissibleConfig {
-  /** Distance in px to trigger dismissal (default: 100) */
+  /**
+   * Distance in px to trigger dismissal.
+   *
+   * Default `100`.
+   */
   threshold?: number;
-  /** Velocity in px/s to trigger dismissal (default: 500) */
+  /**
+   * Velocity in px/s to trigger dismissal.
+   *
+   * Default `500`.
+   */
   velocity?: number;
 }
 

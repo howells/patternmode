@@ -1,5 +1,17 @@
 # @patternmode/tags
 
+## 0.2.0
+
+### Minor Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/scrollframe@0.2.0
+  - @patternmode/system@0.2.3
+
 ## 0.1.2
 
 ### Patch Changes

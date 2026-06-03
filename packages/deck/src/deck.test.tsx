@@ -3,64 +3,64 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  type CSSProperties,
-  Fragment,
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { Fragment } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Deck } from "./index";
 
+type MotionTestProps = HTMLAttributes<HTMLElement> & {
+  animate?: unknown;
+  drag?: unknown;
+  dragConstraints?: unknown;
+  dragElastic?: unknown;
+  dragMomentum?: unknown;
+  dragTransition?: unknown;
+  exit?: unknown;
+  initial?: unknown;
+  onDragEnd?: unknown;
+  ref?: Ref<HTMLDivElement>;
+  style?: CSSProperties;
+  transition?: unknown;
+  whileDrag?: unknown;
+};
+
+const stripMotionProps = vi.hoisted(
+  () =>
+    ({
+      animate: _animate,
+      drag: _drag,
+      dragConstraints: _dragConstraints,
+      dragElastic: _dragElastic,
+      dragMomentum: _dragMomentum,
+      dragTransition: _dragTransition,
+      exit: _exit,
+      initial: _initial,
+      onDragEnd: _onDragEnd,
+      transition: _transition,
+      whileDrag: _whileDrag,
+      ...props
+    }: MotionTestProps) =>
+      props,
+);
+const AnimatePresence = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+));
+const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
+
 vi.mock("motion/react", () => {
-  type MotionTestProps = HTMLAttributes<HTMLElement> & {
-    animate?: unknown;
-    drag?: unknown;
-    dragConstraints?: unknown;
-    dragElastic?: unknown;
-    dragMomentum?: unknown;
-    dragTransition?: unknown;
-    exit?: unknown;
-    initial?: unknown;
-    onDragEnd?: unknown;
-    style?: CSSProperties;
-    transition?: unknown;
-    whileDrag?: unknown;
-  };
-
-  const stripMotionProps = ({
-    animate: _animate,
-    drag: _drag,
-    dragConstraints: _dragConstraints,
-    dragElastic: _dragElastic,
-    dragMomentum: _dragMomentum,
-    dragTransition: _dragTransition,
-    exit: _exit,
-    initial: _initial,
-    onDragEnd: _onDragEnd,
-    transition: _transition,
-    whileDrag: _whileDrag,
-    ...props
-  }: MotionTestProps) => props;
-
-  const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
-    (props, ref) => <div ref={ref} {...stripMotionProps(props)} />
+  const MotionDiv = ({ ref, ...props }: MotionTestProps) => (
+    <div ref={ref} {...stripMotionProps(props)} />
   );
 
-  const AnimatePresence = ({ children }: { children: ReactNode }) => (
-    <>{children}</>
-  );
-  const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
   const motionComponents = {
     div: MotionDiv,
   };
 
   return {
     AnimatePresence,
-    domMax: {},
     LazyMotion,
+    domMax: {},
     m: motionComponents,
     motion: motionComponents,
     useReducedMotion: () => false,
@@ -90,10 +90,10 @@ describe("Deck", () => {
         <Deck.Card>Beta</Deck.Card>
         <Deck.Card>Gamma</Deck.Card>
         <Deck.Card>Delta</Deck.Card>
-      </Deck>
+      </Deck>,
     );
 
-    const deck = screen.getByRole("application", { name: "Project cards" });
+    const deck = screen.getByRole("slider", { name: "Project cards" });
     expect(screen.getByText("Beta")).toHaveAttribute("data-active", "true");
     expect(screen.getByText("Gamma")).toHaveAttribute("data-depth", "1");
     expect(screen.getByText("Delta")).toHaveAttribute("data-depth", "2");
@@ -103,7 +103,7 @@ describe("Deck", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(onAdvance).toHaveBeenCalledWith(
-      expect.objectContaining({ direction: "right", index: 1 })
+      expect.objectContaining({ direction: "right", index: 1 }),
     );
     expect(onIndexChange).toHaveBeenCalledWith(2);
     expect(screen.getByText("Gamma")).toHaveAttribute("data-active", "true");
@@ -114,19 +114,14 @@ describe("Deck", () => {
     const onExhausted = vi.fn();
 
     render(
-      <Deck
-        aria-label="Finite cards"
-        defaultIndex={1}
-        mode="finite"
-        onExhausted={onExhausted}
-      >
+      <Deck aria-label="Finite cards" defaultIndex={1} mode="finite" onExhausted={onExhausted}>
         <Deck.Card>One</Deck.Card>
         <Deck.Card>Two</Deck.Card>
         <Deck.Empty>No cards left</Deck.Empty>
-      </Deck>
+      </Deck>,
     );
 
-    const deck = screen.getByRole("application", { name: "Finite cards" });
+    const deck = screen.getByRole("slider", { name: "Finite cards" });
     deck.focus();
     await user.keyboard("{ArrowRight}");
 
@@ -139,18 +134,13 @@ describe("Deck", () => {
     const onIndexChange = vi.fn();
 
     render(
-      <Deck
-        aria-label="Controlled cards"
-        index={0}
-        mode="cycle"
-        onIndexChange={onIndexChange}
-      >
+      <Deck aria-label="Controlled cards" index={0} mode="cycle" onIndexChange={onIndexChange}>
         <Deck.Card>First</Deck.Card>
         <Deck.Card>Second</Deck.Card>
-      </Deck>
+      </Deck>,
     );
 
-    const deck = screen.getByRole("application", { name: "Controlled cards" });
+    const deck = screen.getByRole("slider", { name: "Controlled cards" });
     deck.focus();
     await user.keyboard("{ArrowRight}");
 
@@ -165,13 +155,10 @@ describe("Deck", () => {
           <Deck.Card>Fragment one</Deck.Card>
           <Deck.Card>Fragment two</Deck.Card>
         </Fragment>
-      </Deck>
+      </Deck>,
     );
 
-    expect(screen.getByText("Fragment one")).toHaveAttribute(
-      "data-active",
-      "true"
-    );
+    expect(screen.getByText("Fragment one")).toHaveAttribute("data-active", "true");
     expect(screen.getByText("Fragment two")).toHaveAttribute("data-depth", "1");
   });
 
@@ -183,12 +170,10 @@ describe("Deck", () => {
         <div>
           <Deck.Card>Wrapped one</Deck.Card>
         </div>
-      </Deck>
+      </Deck>,
     );
 
-    expect(warn).toHaveBeenCalledWith(
-      expect.stringContaining("Deck.Card must be a direct child")
-    );
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("Deck.Card must be a direct child"));
 
     warn.mockRestore();
   });

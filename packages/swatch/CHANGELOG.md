@@ -1,5 +1,13 @@
 # @patternmode/swatch
 
+## 0.9.3
+
+### Patch Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+- Updated dependencies
+  - @patternmode/system@0.2.3
+
 ## 0.9.2
 
 ### Patch Changes

@@ -1,63 +1,75 @@
 // @vitest-environment jsdom
-
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-  useEffect,
-} from "react";
+import { useEffect } from "react";
+import type { HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { createStacksheet, Sheet } from "./index";
+
+type MotionTestProps = HTMLAttributes<HTMLElement> & {
+  animate?: unknown;
+  exit?: unknown;
+  initial?: unknown;
+  onAnimationComplete?: () => void;
+  ref?: Ref<HTMLElement>;
+  transition?: unknown;
+};
+const stripMotionProps = vi.hoisted(
+  () =>
+    ({
+      animate: _animate,
+      exit: _exit,
+      initial: _initial,
+      onAnimationComplete: _onAnimationComplete,
+      ref: _ref,
+      transition: _transition,
+      ...props
+    }: MotionTestProps) =>
+      props,
+);
+const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
+const AnimatePresence = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+  <>{children}</>
+));
+const NestedSheet = () => <p>Nested sheet content</p>;
+const DetailsSheet = () => (
+  <>
+    <Sheet.Header>
+      <Sheet.Title>Composable details</Sheet.Title>
+      <Sheet.Close />
+    </Sheet.Header>
+    <Sheet.Description>Choose how this Sheet should continue.</Sheet.Description>
+    <Sheet.Body>Details body</Sheet.Body>
+  </>
+);
 
 vi.mock("focus-trap-react", () => ({
   FocusTrap: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
-
 vi.mock("motion/react", () => {
-  type MotionTestProps = HTMLAttributes<HTMLElement> & {
-    animate?: unknown;
-    exit?: unknown;
-    initial?: unknown;
-    onAnimationComplete?: () => void;
-    transition?: unknown;
+  const MotionDiv = ({ ref, ...props }: MotionTestProps) => {
+    useEffect(() => {
+      props.onAnimationComplete?.();
+    }, [props]);
+    return <div ref={ref as Ref<HTMLDivElement>} {...stripMotionProps(props)} />;
   };
-
-  const stripMotionProps = ({
-    animate: _animate,
-    exit: _exit,
-    initial: _initial,
-    onAnimationComplete: _onAnimationComplete,
-    transition: _transition,
-    ...props
-  }: MotionTestProps) => props;
-
-  const MotionDiv = forwardRef<HTMLDivElement, MotionTestProps>(
-    (props, ref) => {
-      useEffect(() => {
-        props.onAnimationComplete?.();
-      }, [props]);
-
-      return <div ref={ref} {...stripMotionProps(props)} />;
-    }
-  );
-  const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
   const motionComponents = {
+    button: ({ ref, ...props }: MotionTestProps) => (
+      <button ref={ref as Ref<HTMLButtonElement>} {...stripMotionProps(props)} />
+    ),
     div: MotionDiv,
   };
-
   return {
-    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
-    domMax: {},
+    AnimatePresence,
     LazyMotion,
+    domMax: {},
     m: motionComponents,
     motion: motionComponents,
     useReducedMotion: () => false,
   };
 });
-
-import { createStacksheet, Sheet } from "./index";
 
 beforeEach(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -74,11 +86,9 @@ beforeEach(() => {
     })),
   });
 });
-
 afterEach(() => {
   cleanup();
 });
-
 describe("SheetRenderer integration", () => {
   it("makes the pushed Nested Sheet active, then backs out and closes the Sheet Stack", async () => {
     const user = userEvent.setup();
@@ -86,40 +96,28 @@ describe("SheetRenderer integration", () => {
       root: Record<string, never>;
       nested: Record<string, never>;
     }>();
-
-    function RootSheet() {
+    const RootSheet = () => {
       const { push } = useSheet();
       return (
         <div>
           <p>Root sheet content</p>
           <button
-            onClick={() =>
-              push("nested", "nested", {}, { ariaLabel: "Nested sheet" })
-            }
+            onClick={() => push("nested", "nested", {}, { ariaLabel: "Nested sheet" })}
             type="button"
           >
             Open nested
           </button>
         </div>
       );
-    }
-
-    function NestedSheet() {
-      return <p>Nested sheet content</p>;
-    }
-
-    function Controls() {
+    };
+    const Controls = () => {
       const { open } = useSheet();
       return (
-        <button
-          onClick={() => open("root", "root", {}, { ariaLabel: "Root sheet" })}
-          type="button"
-        >
+        <button onClick={() => open("root", "root", {}, { ariaLabel: "Root sheet" })} type="button">
           Open root
         </button>
       );
-    }
-
+    };
     render(
       <StacksheetProvider
         sheets={{
@@ -128,88 +126,43 @@ describe("SheetRenderer integration", () => {
         }}
       >
         <Controls />
-      </StacksheetProvider>
+      </StacksheetProvider>,
     );
-
     await user.click(screen.getByRole("button", { name: "Open root" }));
-
-    expect(
-      screen.getByRole("dialog", { name: "Root sheet" })
-    ).toBeInTheDocument();
-
+    expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Open nested" }));
-
-    expect(
-      screen.getByRole("dialog", { name: "Nested sheet" })
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("dialog", { name: "Root sheet" })
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: "Open nested" })
-    ).not.toBeInTheDocument();
-
+    expect(screen.getByRole("dialog", { name: "Nested sheet" })).toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Root sheet" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open nested" })).not.toBeInTheDocument();
     const backButton = screen.getByRole("button", { name: "Back" });
     expect(backButton).toHaveClass("min-h-11", "min-w-11");
-
     await user.click(backButton);
-
-    expect(
-      screen.getByRole("dialog", { name: "Root sheet" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Open nested" })
-    ).toBeInTheDocument();
-
+    expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open nested" })).toBeInTheDocument();
     const closeButton = screen.getByRole("button", { name: "Close" });
     expect(closeButton).toHaveClass("min-h-11", "min-w-11");
-
     await user.click(closeButton);
-
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
-
   it("links composable Sheet Title and Description to the Active Sheet dialog", async () => {
     const user = userEvent.setup();
     const { StacksheetProvider, useSheet } = createStacksheet<{
       details: Record<string, never>;
     }>();
-
-    function DetailsSheet() {
-      return (
-        <>
-          <Sheet.Header>
-            <Sheet.Title>Composable details</Sheet.Title>
-            <Sheet.Close />
-          </Sheet.Header>
-          <Sheet.Description>
-            Choose how this Sheet should continue.
-          </Sheet.Description>
-          <Sheet.Body>Details body</Sheet.Body>
-        </>
-      );
-    }
-
-    function Controls() {
+    const Controls = () => {
       const { open } = useSheet();
       return (
         <button onClick={() => open("details", "details", {})} type="button">
           Open details
         </button>
       );
-    }
-
+    };
     render(
-      <StacksheetProvider
-        layout="composable"
-        sheets={{ details: DetailsSheet }}
-      >
+      <StacksheetProvider layout="composable" sheets={{ details: DetailsSheet }}>
         <Controls />
-      </StacksheetProvider>
+      </StacksheetProvider>,
     );
-
     await user.click(screen.getByRole("button", { name: "Open details" }));
-
     const dialog = screen.getByRole("dialog", {
       description: "Choose how this Sheet should continue.",
       name: "Composable details",
@@ -217,9 +170,6 @@ describe("SheetRenderer integration", () => {
     expect(dialog).toBeInTheDocument();
     expect(dialog).toHaveAttribute("aria-labelledby");
     expect(dialog).toHaveAttribute("aria-describedby");
-    expect(screen.getByRole("button", { name: "Close" })).toHaveClass(
-      "min-h-11",
-      "min-w-11"
-    );
+    expect(screen.getByRole("button", { name: "Close" })).toHaveClass("min-h-11", "min-w-11");
   });
 });

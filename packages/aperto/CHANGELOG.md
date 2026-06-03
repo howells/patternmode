@@ -1,5 +1,11 @@
 # @patternmode/aperto
 
+## 0.2.0
+
+### Minor Changes
+
+- Align public package documentation, lint configuration, and React 19 release metadata.
+
 ## 0.1.4
 
 ### Patch Changes

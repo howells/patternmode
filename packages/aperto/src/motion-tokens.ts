@@ -1,8 +1,8 @@
 import type { Easing } from "motion/react";
 
 export const durations = {
-  snappy: 0.22,
   moderate: 0.4,
+  snappy: 0.22,
 } as const;
 
 export const easings = {
@@ -11,8 +11,8 @@ export const easings = {
 } satisfies Record<string, Easing>;
 
 export const springs = {
-  bouncy: { stiffness: 260, damping: 12, mass: 1 },
-  natural: { stiffness: 200, damping: 20, mass: 1 },
-  snappy: { stiffness: 400, damping: 28, mass: 0.8 },
-  stiff: { stiffness: 500, damping: 30, mass: 1 },
+  bouncy: { damping: 12, mass: 1, stiffness: 260 },
+  natural: { damping: 20, mass: 1, stiffness: 200 },
+  snappy: { damping: 28, mass: 0.8, stiffness: 400 },
+  stiff: { damping: 30, mass: 1, stiffness: 500 },
 } as const;

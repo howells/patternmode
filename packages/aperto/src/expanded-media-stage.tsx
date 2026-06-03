@@ -1,9 +1,5 @@
-import {
-  AnimatePresence,
-  m,
-  type TargetAndTransition,
-  type Transition,
-} from "motion/react";
+import { AnimatePresence, m } from "motion/react";
+import type { TargetAndTransition, Transition } from "motion/react";
 
 import { useApertoContext } from "./context";
 import { ApertoExpandedMedia } from "./media-rendering";
@@ -29,10 +25,7 @@ interface NavigationAnimationCustom {
   scale: number;
 }
 
-const NAVIGATION_MOTION_PRESETS: Record<
-  NavigationMotionPresetName,
-  NavigationMotionPreset
-> = {
+const NAVIGATION_MOTION_PRESETS: Record<NavigationMotionPresetName, NavigationMotionPreset> = {
   float: {
     offset: 96,
     scale: 0.97,
@@ -73,20 +66,12 @@ const expandedMediaVariants = {
     scale: 1,
     x: 0,
   },
-  enter: ({
-    direction,
-    offset,
-    scale,
-  }: NavigationAnimationCustom): TargetAndTransition => ({
+  enter: ({ direction, offset, scale }: NavigationAnimationCustom): TargetAndTransition => ({
     opacity: 0,
     scale: direction === 0 ? 1 : scale,
     x: direction * offset,
   }),
-  exit: ({
-    direction,
-    offset,
-    scale,
-  }: NavigationAnimationCustom): TargetAndTransition => ({
+  exit: ({ direction, offset, scale }: NavigationAnimationCustom): TargetAndTransition => ({
     opacity: 0,
     scale: direction === 0 ? 1 : scale,
     x: direction * -offset,
@@ -108,7 +93,7 @@ const reducedExpandedMediaVariants = {
   },
 };
 
-export function ApertoExpandedMediaStage({
+export const ApertoExpandedMediaStage = ({
   direction,
   index,
   item,
@@ -122,15 +107,11 @@ export function ApertoExpandedMediaStage({
   navigationMotion: NavigationMotionPresetName;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) {
+}) => {
   const ctx = useApertoContext();
   const preset = NAVIGATION_MOTION_PRESETS[navigationMotion];
-  const transition = ctx.reduceMotion
-    ? REDUCED_EXPANDED_MEDIA_TRANSITION
-    : preset.transition;
-  const variants = ctx.reduceMotion
-    ? reducedExpandedMediaVariants
-    : expandedMediaVariants;
+  const transition = ctx.reduceMotion ? REDUCED_EXPANDED_MEDIA_TRANSITION : preset.transition;
+  const variants = ctx.reduceMotion ? reducedExpandedMediaVariants : expandedMediaVariants;
   const animationCustom: NavigationAnimationCustom = {
     direction,
     offset: preset.offset,
@@ -151,12 +132,8 @@ export function ApertoExpandedMediaStage({
         transition={transition}
         variants={variants}
       >
-        <ApertoExpandedMedia
-          item={item}
-          renderImage={renderImage}
-          renderVideo={renderVideo}
-        />
+        <ApertoExpandedMedia item={item} renderImage={renderImage} renderVideo={renderVideo} />
       </m.div>
     </AnimatePresence>
   );
-}
+};

@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { once } from "node:events";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -29,20 +30,18 @@ try {
     `//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}\nregistry=https://registry.npmjs.org/\n`,
     {
       mode: 0o600,
-    }
+    },
   );
 
-  const exitCode = await new Promise((resolve) => {
-    const child = spawn("pnpm", ["changeset", "publish"], {
-      env: {
-        ...process.env,
-        NPM_CONFIG_USERCONFIG: npmConfigPath,
-      },
-      stdio: "inherit",
-    });
-
-    child.on("close", resolve);
+  const child = spawn("pnpm", ["changeset", "publish"], {
+    env: {
+      ...process.env,
+      NPM_CONFIG_USERCONFIG: npmConfigPath,
+    },
+    stdio: "inherit",
   });
+
+  const [exitCode] = await once(child, "close");
 
   if (exitCode !== 0) {
     process.exitCode = exitCode ?? 1;

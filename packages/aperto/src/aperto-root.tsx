@@ -1,28 +1,13 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  domMax,
-  LayoutGroup,
-  LazyMotion,
-  useReducedMotion,
-} from "motion/react";
-import {
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-  useCallback,
-  useId,
-  useMemo,
-  useState,
-} from "react";
+import { domMax, LayoutGroup, LazyMotion, useReducedMotion } from "motion/react";
+import { useId, useState } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import { ApertoContext } from "./context";
 import { PRESETS } from "./presets";
-import type {
-  DismissibleConfig,
-  MotionPresetName,
-  MotionVariants,
-} from "./types";
+import type { DismissibleConfig, MotionPresetName, MotionVariants } from "./types";
 
 export interface ApertoRootProps extends Omit<
   ComponentPropsWithoutRef<typeof Dialog.Root>,
@@ -43,7 +28,7 @@ export interface ApertoRootProps extends Omit<
   reduceMotion?: boolean;
 }
 
-function ApertoRoot({
+const ApertoRoot = ({
   children,
   dismissible = true,
   layoutId: layoutIdProp,
@@ -52,7 +37,7 @@ function ApertoRoot({
   onOpenChange: controlledOnOpenChange,
   reduceMotion: reduceMotionProp,
   ...dialogProps
-}: ApertoRootProps) {
+}: ApertoRootProps) => {
   const generatedId = useId();
   const layoutId = layoutIdProp ?? `aperto-${generatedId}`;
   const systemReducedMotion = useReducedMotion() ?? false;
@@ -63,48 +48,30 @@ function ApertoRoot({
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-  const onOpenChange = useCallback(
-    (nextOpen: boolean) => {
-      if (!isControlled) {
-        setInternalOpen(nextOpen);
-      }
-      controlledOnOpenChange?.(nextOpen);
-    },
-    [isControlled, controlledOnOpenChange]
-  );
+  const onOpenChange = (nextOpen: boolean) => {
+    if (!isControlled) {
+      setInternalOpen(nextOpen);
+    }
+    controlledOnOpenChange?.(nextOpen);
+  };
 
   // Resolve global preset name
-  const globalPresetName: MotionPresetName =
-    typeof motionProp === "string" ? motionProp : "smooth";
+  const globalPresetName: MotionPresetName = typeof motionProp === "string" ? motionProp : "smooth";
   const variants: MotionVariants | undefined =
     typeof motionProp === "object" ? motionProp : undefined;
 
-  const presetName: MotionPresetName = shouldReduce
-    ? "reduced"
-    : globalPresetName;
+  const presetName: MotionPresetName = shouldReduce ? "reduced" : globalPresetName;
   const preset = PRESETS[presetName];
-  const contextValue = useMemo(
-    () => ({
-      dismissible,
-      layoutId,
-      onOpenChange,
-      open,
-      preset,
-      presetName,
-      reduceMotion: shouldReduce,
-      variants,
-    }),
-    [
-      dismissible,
-      layoutId,
-      onOpenChange,
-      open,
-      preset,
-      presetName,
-      shouldReduce,
-      variants,
-    ]
-  );
+  const contextValue = {
+    dismissible,
+    layoutId,
+    onOpenChange,
+    open,
+    preset,
+    presetName,
+    reduceMotion: shouldReduce,
+    variants,
+  };
 
   return (
     <ApertoContext.Provider value={contextValue}>
@@ -115,6 +82,6 @@ function ApertoRoot({
       </Dialog.Root>
     </ApertoContext.Provider>
   );
-}
+};
 
 export { ApertoRoot };

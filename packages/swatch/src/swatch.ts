@@ -14,9 +14,9 @@ export {
 export {
   getSwatchAtmosphereBackground,
   type SwatchAtmosphereOptions,
-} from "./Swatch/SwatchAtmosphere";
-export { getSwatchColorsBackground } from "./Swatch/SwatchColors";
-export { Swatch } from "./Swatch/SwatchRoot";
+} from "./Swatch/swatch-atmosphere";
+export { getSwatchColorsBackground } from "./Swatch/swatch-colors";
+export { Swatch } from "./Swatch/swatch-root";
 export {
   getSwatchSizeVariableStyle,
   SWATCH_SHAPES,
@@ -28,4 +28,4 @@ export {
   type SwatchShape,
   type SwatchSize,
   type SwatchTexture,
-} from "./Swatch/SwatchTypes";
+} from "./Swatch/swatch-types";

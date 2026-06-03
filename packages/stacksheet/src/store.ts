@@ -1,2 +1,2 @@
-export { createSheetStore } from "./Store/createSheetStore";
-export type { SheetStoreBundle } from "./Store/StoreTypes";
+export { createSheetStore } from "./Store/create-sheet-store";
+export type { SheetStoreBundle } from "./Store/store-types";

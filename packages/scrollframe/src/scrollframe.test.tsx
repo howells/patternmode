@@ -1,13 +1,7 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-} from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ScrollFrame } from "./index";
@@ -34,7 +28,7 @@ describe("ScrollFrame", () => {
       <ScrollFrame aria-label="Updates">
         <p>One</p>
         <p>Two</p>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const region = screen.getByRole("region", { name: "Updates" });
@@ -45,27 +39,21 @@ describe("ScrollFrame", () => {
 
     const viewport = screen.getByTestId("scrollframe-viewport");
     expect(viewport).toHaveAttribute("data-slot", "scrollframe-viewport");
-    expect(
-      screen.getByTestId("scrollframe-fade-vertical-start")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId("scrollframe-fade-vertical-end")
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("scrollframe-fade-vertical-start")).toBeInTheDocument();
+    expect(screen.getByTestId("scrollframe-fade-vertical-end")).toBeInTheDocument();
   });
 
   it("supports both axes and keeps hidden scrollbar plumbing mounted", () => {
     render(
       <ScrollFrame axes="both" scrollbars="hidden">
         <div>Content</div>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const root = screen.getByTestId("scrollframe-viewport").parentElement;
     expect(root).toHaveAttribute("data-axes", "both");
     expect(root).toHaveAttribute("data-scrollbar-visibility", "hidden");
-    expect(
-      root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]')
-    ).toHaveLength(2);
+    expect(root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]')).toHaveLength(2);
   });
 
   it("updates edge state and moves by a page step", () => {
@@ -78,16 +66,16 @@ describe("ScrollFrame", () => {
         scrollBehavior="auto"
       >
         <div>Content</div>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const viewport = screen.getByTestId("scrollframe-viewport");
     const root = screen.getByRole("region", { name: "Scrollable" });
     Object.defineProperties(viewport, {
       clientHeight: { configurable: true, value: 100 },
+      scrollBy: { configurable: true, value: scrollBy },
       scrollHeight: { configurable: true, value: 300 },
       scrollTop: { configurable: true, value: 0, writable: true },
-      scrollBy: { configurable: true, value: scrollBy },
     });
 
     act(() => {
@@ -102,7 +90,7 @@ describe("ScrollFrame", () => {
 
     fireEvent.click(next);
 
-    expect(scrollBy).toHaveBeenCalledWith({ top: 85, behavior: "auto" });
+    expect(scrollBy).toHaveBeenCalledWith({ behavior: "auto", top: 85 });
   });
 
   it("optionally drag-scrolls native scroll while preserving selection until the drag threshold", () => {
@@ -115,7 +103,7 @@ describe("ScrollFrame", () => {
       >
         <span>Granite</span>
         <span>Basalt</span>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -159,7 +147,7 @@ describe("ScrollFrame", () => {
           Granite
         </button>
         <button type="button">Basalt</button>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -167,9 +155,9 @@ describe("ScrollFrame", () => {
     const content = screen.getByTestId("scrollframe-content");
     const button = screen.getByRole("button", { name: "Granite" });
     Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
       scrollLeft: { configurable: true, value: 20, writable: true },
       scrollWidth: { configurable: true, value: 300 },
-      clientWidth: { configurable: true, value: 100 },
     });
 
     act(() => {
@@ -193,16 +181,12 @@ describe("ScrollFrame", () => {
     const handleClick = vi.fn();
 
     render(
-      <ScrollFrame
-        aria-label="Materials"
-        axes="horizontal"
-        dragScroll={{ activationDistance: 8 }}
-      >
+      <ScrollFrame aria-label="Materials" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
         <button onClick={handleClick} type="button">
           Granite
         </button>
         <button type="button">Basalt</button>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
@@ -210,9 +194,9 @@ describe("ScrollFrame", () => {
     const content = screen.getByTestId("scrollframe-content");
     const button = screen.getByRole("button", { name: "Granite" });
     Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
       scrollLeft: { configurable: true, value: 20, writable: true },
       scrollWidth: { configurable: true, value: 300 },
-      clientWidth: { configurable: true, value: 100 },
     });
 
     act(() => {
@@ -232,7 +216,7 @@ describe("ScrollFrame", () => {
       <ScrollFrame aria-label="Actions" axes="horizontal" dragScroll>
         <input aria-label="Search" />
         <span data-scrollframe-no-drag="">Selectable label</span>
-      </ScrollFrame>
+      </ScrollFrame>,
     );
 
     const root = screen.getByRole("region", { name: "Actions" });
@@ -241,9 +225,9 @@ describe("ScrollFrame", () => {
     const input = screen.getByRole("textbox", { name: "Search" });
     const ignored = screen.getByText("Selectable label");
     Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
       scrollLeft: { configurable: true, value: 20, writable: true },
       scrollWidth: { configurable: true, value: 300 },
-      clientWidth: { configurable: true, value: 100 },
     });
 
     act(() => {

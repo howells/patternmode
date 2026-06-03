@@ -1,11 +1,11 @@
-export { SheetBack } from "./SheetParts/SheetBack";
-export { SheetBody } from "./SheetParts/SheetBody";
-export { SheetClose } from "./SheetParts/SheetClose";
-export { SheetDescription } from "./SheetParts/SheetDescription";
-export { SheetFooter } from "./SheetParts/SheetFooter";
-export { SheetHandle } from "./SheetParts/SheetHandle";
-export { SheetHeader } from "./SheetParts/SheetHeader";
-export { Sheet } from "./SheetParts/SheetParts";
+export { SheetBack } from "./SheetParts/sheet-back";
+export { SheetBody } from "./SheetParts/sheet-body";
+export { SheetClose } from "./SheetParts/sheet-close";
+export { SheetDescription } from "./SheetParts/sheet-description";
+export { SheetFooter } from "./SheetParts/sheet-footer";
+export { SheetHandle } from "./SheetParts/sheet-handle";
+export { SheetHeader } from "./SheetParts/sheet-header";
+export { Sheet } from "./SheetParts/sheet-parts";
 export type {
   SheetBackProps,
   SheetBodyProps,
@@ -17,5 +17,5 @@ export type {
   SheetOptionalContentPartProps,
   SheetPartProps,
   SheetTitleProps,
-} from "./SheetParts/SheetPartTypes";
-export { SheetTitle } from "./SheetParts/SheetTitle";
+} from "./SheetParts/sheet-part-types";
+export { SheetTitle } from "./SheetParts/sheet-title";
