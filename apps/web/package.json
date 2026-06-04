@@ -17,6 +17,7 @@
     "@patternmode/deck": "workspace:*",
     "@patternmode/scrollframe": "workspace:*",
     "@patternmode/stacksheet": "workspace:*",
+    "@patternmode/status": "workspace:*",
     "@patternmode/swatch": "workspace:*",
     "@patternmode/tags": "workspace:*",
     "next": "^16.2.6",

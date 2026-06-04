@@ -37,6 +37,12 @@ const components: CatalogEntry[] = [
     title: "Swatch",
   },
   {
+    description:
+      "Animated discrete status marks with authored SVG transitions for scale and symbolic states.",
+    href: "/status",
+    title: "Status",
+  },
+  {
     description: "Radix-backed scroll containers with eased fades and movement controls.",
     href: "/scrollframe",
     title: "ScrollFrame",
@@ -72,6 +78,16 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
     case "Swatch": {
       return (
         <div className="preview-swatch-set" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      );
+    }
+    case "Status": {
+      return (
+        <div className="preview-status-set" aria-hidden="true">
           <span />
           <span />
           <span />

@@ -7,6 +7,7 @@ import "@patternmode/aperto/styles.css";
 import "@patternmode/deck/styles.css";
 import "@patternmode/swatch/styles.css";
 import "@patternmode/scrollframe/styles.css";
+import "@patternmode/status/styles.css";
 import "@patternmode/tags/styles.css";
 
 export const metadata: Metadata = {

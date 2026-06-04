@@ -19,6 +19,7 @@
         "@patternmode/deck#dev",
         "@patternmode/swatch#dev",
         "@patternmode/scrollframe#dev",
+        "@patternmode/status#dev",
         "@patternmode/tags#dev"
       ],
       "cache": false,

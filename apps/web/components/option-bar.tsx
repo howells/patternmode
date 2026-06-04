@@ -1,6 +1,7 @@
 "use client";
 
 interface OptionBarProps<T extends string | number> {
+  isPressed?: (value: T) => boolean;
   label: string;
   onChange: (value: T) => void;
   options: { label: string; value: T }[];
@@ -8,6 +9,7 @@ interface OptionBarProps<T extends string | number> {
 }
 
 export const OptionBar = <T extends string | number>({
+  isPressed,
   label,
   onChange,
   options,
@@ -17,7 +19,7 @@ export const OptionBar = <T extends string | number>({
     <legend className="option-bar-label">{label}</legend>
     {options.map((option) => (
       <button
-        aria-pressed={value === option.value}
+        aria-pressed={isPressed ? isPressed(option.value) : value === option.value}
         className="option-bar-item"
         key={String(option.value)}
         onClick={() => onChange(option.value)}

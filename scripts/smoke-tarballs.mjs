@@ -14,6 +14,7 @@ const packages = [
     name: "@patternmode/scrollframe",
     tarballPrefix: "patternmode-scrollframe-",
   },
+  { name: "@patternmode/status", tarballPrefix: "patternmode-status-" },
   { name: "@patternmode/swatch", tarballPrefix: "patternmode-swatch-" },
   { name: "@patternmode/tags", tarballPrefix: "patternmode-tags-" },
 ];
@@ -47,6 +48,7 @@ const tarballDependencies = {
   "@patternmode/deck": `file:${resolve(packDir, tarballs["@patternmode/deck"])}`,
   "@patternmode/scrollframe": `file:${resolve(packDir, tarballs["@patternmode/scrollframe"])}`,
   "@patternmode/stacksheet": `file:${resolve(packDir, tarballs["@patternmode/stacksheet"])}`,
+  "@patternmode/status": `file:${resolve(packDir, tarballs["@patternmode/status"])}`,
   "@patternmode/swatch": `file:${resolve(packDir, tarballs["@patternmode/swatch"])}`,
   "@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
   "@patternmode/tags": `file:${resolve(packDir, tarballs["@patternmode/tags"])}`,
@@ -122,6 +124,7 @@ import "@patternmode/aperto/styles.css";
 import "@patternmode/deck/styles.css";
 import "@patternmode/scrollframe/styles.css";
 import "@patternmode/stacksheet/styles.css";
+import "@patternmode/status/styles.css";
 import "@patternmode/swatch/styles.css";
 import "@patternmode/tags/styles.css";
 
@@ -147,6 +150,7 @@ import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
 import { Deck } from "@patternmode/deck";
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { createStacksheet } from "@patternmode/stacksheet";
+import { StatusMark } from "@patternmode/status";
 import { Swatch } from "@patternmode/swatch";
 import { Tag, TagSelector } from "@patternmode/tags";
 
@@ -170,6 +174,7 @@ export function Demo() {
         <ScrollFrame aria-label="Smoke scroller">
           <div>Scrollable content</div>
         </ScrollFrame>
+        <StatusMark value={75} label="Smoke status" />
         <Swatch color="#ff3355" aria-label="Smoke swatch" />
         <Tag>Smoke tag</Tag>
         <TagSelector
