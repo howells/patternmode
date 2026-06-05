@@ -5,7 +5,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode, Ref, SVGAttributes } from "react";
 
-import { getStatusMarkState, StatusMark } from "./index";
+import { resolveStatusProgress, StatusMark } from "./index";
 
 type MotionElementProps<TElement> = SVGAttributes<TElement> & {
   animate?: unknown;
@@ -52,31 +52,28 @@ afterEach(() => {
   cleanup();
 });
 
-describe("getStatusMarkState", () => {
-  it("snaps numeric values to a discrete scale", () => {
-    expect(getStatusMarkState({ value: -20 })).toMatchObject({
+describe("resolveStatusProgress", () => {
+  it("snaps numeric values to discrete progress steps", () => {
+    expect(resolveStatusProgress({ value: -20 })).toEqual({
       progress: 0,
       status: "empty",
-      variant: "scale",
     });
-    expect(getStatusMarkState({ value: 38 })).toMatchObject({
+    expect(resolveStatusProgress({ value: 38 })).toEqual({
       progress: 50,
       status: "half",
-      variant: "scale",
     });
-    expect(getStatusMarkState({ value: 88 })).toMatchObject({
+    expect(resolveStatusProgress({ value: 88 })).toEqual({
       progress: 100,
       status: "full",
-      variant: "scale",
     });
   });
 
-  it("lets symbolic statuses override numeric values", () => {
-    expect(getStatusMarkState({ status: "blocked", value: 100 })).toMatchObject({
-      progress: 0,
-      status: "blocked",
-      variant: "symbolic",
+  it("keeps null progress distinct from zero progress", () => {
+    expect(resolveStatusProgress({ status: "null", value: 100 })).toEqual({
+      progress: null,
+      status: "null",
     });
+    expect(resolveStatusProgress({ status: "empty" })).toEqual({ progress: 0, status: "empty" });
   });
 });
 
@@ -85,84 +82,44 @@ describe("StatusMark", () => {
     render(<StatusMark label="Build is halfway complete" value={50} />);
 
     const mark = screen.getByRole("img", { name: "Build is halfway complete" });
-    expect(mark).toHaveAttribute("data-border", "true");
-    expect(mark).toHaveAttribute("data-fill", "true");
+    expect(mark).toHaveAttribute("data-variant", "fill");
     expect(mark).toHaveAttribute("data-status", "half");
     expect(mark).toHaveAttribute("data-progress", "50");
   });
 
   it("renders decorative marks as hidden when no label is supplied", () => {
-    render(<StatusMark status="pending" />);
+    render(<StatusMark status="null" />);
 
     const mark = document.querySelector(".patternmode-status-mark");
     expect(mark).toHaveAttribute("aria-hidden", "true");
-    expect(mark).toHaveAttribute("data-status", "pending");
+    expect(mark).toHaveAttribute("data-status", "null");
+    expect(mark).toHaveAttribute("data-progress", "null");
   });
 
-  it("renders symbolic glyph parts for blocked and paused states", () => {
-    const { rerender } = render(<StatusMark label="Blocked" status="blocked" />);
+  it("renders null progress as the same dashed placeholder in every variant", () => {
+    const { rerender } = render(<StatusMark label="Null" status="null" />);
 
-    expect(screen.getByTestId("status-mark-slash")).toBeInTheDocument();
+    expect(screen.getByTestId("status-mark-null")).toHaveAttribute("r", "8");
+    expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
 
-    rerender(<StatusMark label="Paused" status="paused" />);
+    rerender(<StatusMark label="Null" status="null" variant="border" />);
 
-    expect(screen.getByTestId("status-mark-pause")).toBeInTheDocument();
-  });
-
-  it("renders refined pause and question glyph geometry", () => {
-    const { rerender } = render(<StatusMark label="Paused" status="paused" />);
-
-    expect(screen.getByTestId("status-mark-pause").querySelector("g")).toHaveAttribute(
-      "transform",
-      "translate(12 12) scale(0.82) translate(-12 -12)",
-    );
-    expect(screen.getByTestId("status-mark-pause")).toContainHTML("M10.15 8.85v6.3");
-    expect(screen.getByTestId("status-mark-pause")).toContainHTML("M13.85 8.85v6.3");
-
-    rerender(<StatusMark label="Unknown" status="unknown" />);
-
-    expect(screen.getByTestId("status-mark-question").querySelector("g")).toHaveAttribute(
-      "transform",
-      "translate(12 12) scale(0.82) translate(-12 -12)",
-    );
-    expect(screen.getByTestId("status-mark-question").querySelector("path")).toHaveAttribute(
-      "d",
-      "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3",
-    );
-    expect(screen.getByTestId("status-mark-question")).toContainHTML("M12 17h.01");
-  });
-
-  it("renders the complete check at symbolic glyph scale", () => {
-    render(<StatusMark label="Complete" status="complete" />);
-
-    expect(screen.getByTestId("status-mark-check")).toHaveAttribute(
-      "d",
-      "m8.3 12.3 2.35 2.35 5.05-5.3",
-    );
-    expect(screen.getByTestId("status-mark-check").parentElement).toHaveAttribute(
-      "transform",
-      "translate(12 12) scale(0.82) translate(-12 -12)",
-    );
-  });
-
-  it("renders fill disc behind symbolic glyphs when fill is enabled", () => {
-    render(<StatusMark label="Blocked" status="blocked" />);
-
-    expect(screen.getByRole("img", { name: "Blocked" })).toHaveAttribute("data-fill", "true");
-    expect(screen.getByTestId("status-mark-fill")).toBeInTheDocument();
-    expect(screen.getByTestId("status-mark-slash")).toBeInTheDocument();
+    expect(screen.getByTestId("status-mark-null")).toHaveAttribute("r", "8");
+    expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
   });
 
   it("renders filled sweep layer by default", () => {
     render(<StatusMark label="Three quarters complete" value={75} />);
 
     expect(screen.getByTestId("status-mark-fill")).toBeInTheDocument();
-    expect(screen.getByTestId("status-mark-border")).toBeInTheDocument();
+    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
     expect(screen.getByTestId("status-mark-fill-sweep")).toBeInTheDocument();
   });
 
   it("renders precise filled sweep geometry for half and full progress", () => {
-    const { unmount } = render(<StatusMark border={false} label="Half complete" value={50} />);
+    const { unmount } = render(<StatusMark label="Half complete" value={50} />);
 
     expect(screen.getByTestId("status-mark-fill-sweep")).toHaveAttribute(
       "d",
@@ -170,7 +127,7 @@ describe("StatusMark", () => {
     );
 
     unmount();
-    render(<StatusMark border={false} label="Complete" value={100} />);
+    render(<StatusMark label="Complete" value={100} />);
 
     expect(screen.getByTestId("status-mark-fill-sweep")).toHaveAttribute(
       "d",
@@ -178,36 +135,27 @@ describe("StatusMark", () => {
     );
   });
 
-  it("can hide the border or fill layers independently", () => {
-    const { rerender } = render(<StatusMark border={false} label="No border" value={75} />);
+  it("switches between fill and border variants", () => {
+    const { rerender } = render(<StatusMark label="Filled" value={75} />);
 
-    expect(screen.getByRole("img", { name: "No border" })).toHaveAttribute("data-border", "false");
+    expect(screen.getByRole("img", { name: "Filled" })).toHaveAttribute("data-variant", "fill");
     expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
     expect(screen.getByTestId("status-mark-fill")).toBeInTheDocument();
     expect(screen.getByTestId("status-mark-fill")).toHaveAttribute("r", "8.9");
 
-    rerender(<StatusMark fill={false} label="No fill" value={75} />);
+    rerender(<StatusMark label="Bordered" value={75} variant="border" />);
 
-    expect(screen.getByRole("img", { name: "No fill" })).toHaveAttribute("data-fill", "false");
+    expect(screen.getByRole("img", { name: "Bordered" })).toHaveAttribute("data-variant", "border");
     expect(screen.getByTestId("status-mark-border")).toBeInTheDocument();
     expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
   });
 
   it("accepts instance-level colors", () => {
-    render(
-      <StatusMark
-        color="#315c4b"
-        fillColor="#dfeae4"
-        label="Almost complete"
-        trackColor="#edeae2"
-        value={75}
-      />,
-    );
+    render(<StatusMark color="#315c4b" label="Almost complete" trackColor="#edeae2" value={75} />);
 
     const mark = screen.getByRole("img", { name: "Almost complete" });
     expect(mark).toHaveStyle({
       "--patternmode-status-color": "#315c4b",
-      "--patternmode-status-fill": "#dfeae4",
       "--patternmode-status-track": "#edeae2",
     });
   });

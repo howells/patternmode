@@ -357,6 +357,64 @@ _Avoid_: Treating segment removal as behavior owned by Distribution Bar itself
 A helper-level operation that changes a **Distribution Segment's** identity, label, or visual representation without changing its **Distribution Value**.
 _Avoid_: Mixing metadata edits with distribution value changes
 
+### Status
+
+**StatusMark**:
+A compact representation of **Status Progress** at discrete visual steps.
+_Avoid_: Treating StatusMark as a general symbolic state badge, loading spinner, or continuous progress bar
+
+**Status Progress**:
+The known completion amount represented by a **StatusMark**.
+_Avoid_: Treating progress as arbitrary continuous measurement when the mark communicates discrete steps
+
+**Numeric Status Progress Input**:
+A numeric progress value accepted by **StatusMark** and snapped to the nearest **Status Progress Step**.
+_Avoid_: Treating numeric input as exact percentage display or continuous progress-bar rendering
+
+**Status Progress Resolution**:
+The pure operation that converts named or numeric progress input into a resolved **Status Progress Step**.
+_Avoid_: Treating progress resolution as React state or lifecycle behavior
+
+**Null Status Progress**:
+A **StatusMark** state for progress that is not yet known or not yet measured.
+_Avoid_: Treating null progress as the same as **Empty Status Progress** or resolving it to numeric zero
+
+**Empty Status Progress**:
+A **StatusMark** state for known progress of zero.
+_Avoid_: Using empty progress to mean missing, unknown, unavailable, blocked, or not yet measured
+
+**Complete Status Progress**:
+A **StatusMark** state for known progress of completion.
+_Avoid_: Treating completion as a separate symbolic success badge when the component is communicating progress
+
+**Status Progress Step**:
+A named discrete **Status Progress** value accepted by a **StatusMark**.
+_Avoid_: Using status step names for unrelated symbolic states or workflow conditions
+
+**StatusMark Variant**:
+The visual treatment used to render a **StatusMark**, either filled or bordered.
+_Avoid_: Combining independent fill and border modes on the same StatusMark
+
+**StatusMark Tone**:
+A visual emphasis treatment for **StatusMark**.
+_Avoid_: Using tone to encode success, warning, danger, availability, or workflow semantics
+
+**StatusMark Active Color**:
+The color used for the active **Status Progress** mark.
+_Avoid_: Splitting active progress into separate fill and stroke color semantics
+
+**StatusMark Track Color**:
+The color used for inactive or placeholder StatusMark structure.
+_Avoid_: Treating track color as the active progress color
+
+**StatusMark Motion**:
+The transition preference for movement between **Status Progress Steps**.
+_Avoid_: Treating motion as a separate status meaning or workflow signal
+
+**StatusMark Size**:
+The named size token used to render a **StatusMark** consistently across Patternmode surfaces.
+_Avoid_: Treating StatusMark size as a domain state
+
 ### ScrollFrame
 
 **ScrollFrame**:
@@ -671,6 +729,32 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - A **Boundary Handle** performs **Live Distribution Adjustment** so adjacent **Distribution Segments** resize during drag, not only after release.
 - A **Distribution Display** may be read-only or selectable, but it does not perform **Live Distribution Adjustment**.
 - A **Selectable Distribution Display** reports segment choice to its parent; the parent owns selected segment state.
+
+### Status
+
+- A **StatusMark** represents **Status Progress**.
+- **Status Progress** is discrete, not a continuous progress-bar measurement.
+- **Numeric Status Progress Input** is clamped and snapped to the nearest **Status Progress Step**.
+- **Status Progress Resolution** is pure domain logic, not a React hook.
+- Resolved **Status Progress** contains a progress amount and **Status Progress Step**, not symbolic variant metadata.
+- A **Status Progress Step** names a discrete progress point such as null, empty, quarter, half, three-quarter, or full.
+- StatusMark uses fixed quarter-step progress granularity.
+- StatusMark should not keep symbolic glyph rendering for unrelated states.
+- **Null Status Progress** means the progress is not yet known or not yet measured.
+- **Null Status Progress** is explicit; it is not inferred from an omitted numeric input.
+- Resolved **Null Status Progress** has no numeric progress amount.
+- **Empty Status Progress** means the progress is known to be zero.
+- **Complete Status Progress** means the progress is known to be complete.
+- The API name for **Complete Status Progress** is the `full` **Status Progress Step**.
+- A **StatusMark Variant** is either fill or border, not both.
+- **StatusMark Tone** is visual emphasis only.
+- **StatusMark Active Color** is shared by fill and border variants.
+- **StatusMark Track Color** is inactive structure, not a second active progress color.
+- **Null Status Progress** uses **StatusMark Track Color**, not **StatusMark Active Color**.
+- **Null Status Progress** renders consistently across **StatusMark Variants**.
+- **StatusMark Motion** describes transition behavior only.
+- **StatusMark Size** affects layout scale only.
+- StatusMark should not mix progress with unrelated exceptional, availability, or workflow states.
 
 ### ScrollFrame
 
@@ -992,6 +1076,30 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - "Interactive distribution" could mean segment selection or value editing — resolved: **Distribution Bar** edits values; **Selectable Distribution Display** only chooses a segment.
 - "Flat" could mean generally plain or low emphasis — resolved: **Flat Swatch** means exact-color rendering without decorative shadow or scrim.
 - "Atmosphere" could be mistaken for a **Weighted Palette Swatch** — resolved: **Atmosphere Texture** is qualitative blending, not ratio communication.
+
+### Status
+
+- "Status" could imply a general symbolic state badge for blocked, pending, paused, unavailable, unknown, or complete states — resolved: **StatusMark** represents **Status Progress** only.
+- "ProgressMark" could be more literal but imply a miniature progress bar — resolved: keep **StatusMark** as the component name and define it narrowly as a compact mark for **Status Progress**.
+- "Null" and "empty" could both describe absence — resolved: **Null Status Progress** means progress is not yet known or measured; **Empty Status Progress** means known zero progress.
+- `zero` could be a literal API name for 0% progress — resolved: use `empty` as the **Status Progress Step** name because it describes the visual mark, while the glossary preserves known-zero semantics.
+- "Complete" could be treated as a symbolic success state — resolved: **Complete Status Progress** is the full progress step, not a separate success badge.
+- Lucide-compatible geometry could be documented as part of StatusMark identity — resolved: StatusMark uses Patternmode-authored geometry and should not mention Lucide.
+- `complete` and `full` could both name the 100% step — resolved: `full` is the API step; complete remains concept language only.
+- The `status` prop could sound like a general state input — resolved: `status` accepts only named **Status Progress Steps**, while `value` accepts numeric progress input.
+- Numeric progress input could imply exact percentage rendering — resolved: **StatusMark** snaps numeric input to the nearest **Status Progress Step**; exact continuous progress belongs in a different component.
+- Configurable segment counts could make StatusMark behave like a gauge — resolved: StatusMark uses fixed quarter-step progress granularity.
+- A resolver hook could imply React state — resolved: expose **Status Progress Resolution** as a pure function such as `resolveStatusProgress`.
+- Resolved state could include symbolic variant metadata from the old API — resolved: remove variant metadata because StatusMark is progress-only.
+- Symbolic glyph rendering could remain as unused internal code — resolved: remove it because StatusMark is progress-only.
+- Null could be resolved as numeric zero for rendering convenience — resolved: resolved **Null Status Progress** has no numeric progress amount.
+- Missing numeric input could imply **Null Status Progress** — resolved: null progress must be requested explicitly as a **Status Progress Step**.
+- Independent `fill` and `border` booleans allow muddy combinations — resolved: **StatusMark Variant** is a single fill-or-border choice.
+- `success`, `warning`, and `danger` tones suggest semantic states — resolved: **StatusMark Tone** should be limited to visual emphasis such as neutral, accent, and muted.
+- `fillColor` could make fill mode communicate a different active state than border mode — resolved: use one **StatusMark Active Color** and separate only inactive **StatusMark Track Color**.
+- Null progress could look active if it uses the active color — resolved: **Null Status Progress** uses **StatusMark Track Color**.
+- Null progress could change meaning across fill and border variants — resolved: **Null Status Progress** keeps the same dashed placeholder mark in every **StatusMark Variant**.
+- Motion options could be mistaken for state semantics — resolved: **StatusMark Motion** controls transition behavior only.
 
 ### ScrollFrame
 

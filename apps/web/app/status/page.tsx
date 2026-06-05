@@ -5,34 +5,32 @@ import type { Metadata } from "next";
 import { StatusDemo } from "@/components/status-demo";
 
 export const metadata: Metadata = {
-  description:
-    "Animated filled status marks with authored SVG transitions for scale and symbolic states.",
+  description: "Animated discrete progress marks with fill and border variants.",
   title: "Status | Patternmode",
 };
 
 const statusApi: ApiSection[] = [
   {
-    description: "Animated SVG status mark for scale and symbolic states.",
+    description: "Animated SVG status mark for discrete progress steps.",
     name: "StatusMark",
     props: [
       {
         description:
-          "Numeric status value. Values are clamped from 0 to 100 and snapped to the nearest discrete visual step.",
+          "Numeric progress input. Values are clamped from 0 to 100 and snapped to the nearest quarter step.",
         name: "value",
         type: "number",
       },
       {
         description:
-          "Named status. Scale statuses map to the same visual steps as value; symbolic statuses override value.",
+          "Named progress step. Use null only when progress is explicitly not yet known or measured.",
         name: "status",
-        type: '"empty" | "quarter" | "half" | "three-quarter" | "full" | "pending" | "blocked" | "paused" | "unknown" | "unavailable" | "complete"',
+        type: '"null" | "empty" | "quarter" | "half" | "three-quarter" | "full"',
       },
       {
         defaultValue: '"neutral"',
-        description:
-          "Semantic color treatment. Tone changes color only; shape carries status meaning.",
+        description: "Visual emphasis treatment. Tone changes color only.",
         name: "tone",
-        type: '"neutral" | "accent" | "success" | "warning" | "danger" | "muted"',
+        type: '"neutral" | "accent" | "muted"',
       },
       {
         defaultValue: '"base"',
@@ -42,37 +40,24 @@ const statusApi: ApiSection[] = [
       },
       {
         defaultValue: '"smooth"',
-        description:
-          "Transition preset. Status uses motion/react while respecting reduced-motion preferences.",
+        description: "Transition preset for movement between progress steps.",
         name: "motion",
         type: '"smooth" | "snap" | "reduced" | false',
       },
       {
-        defaultValue: "true",
-        description: "Shows the soft base disc and filled quadrant segments for scale states.",
-        name: "fill",
-        type: "boolean",
+        defaultValue: '"fill"',
+        description:
+          "Visual treatment for known progress. Null progress renders the same dashed placeholder in every variant.",
+        name: "variant",
+        type: '"fill" | "border"',
       },
       {
-        defaultValue: "true",
-        description:
-          "Shows the outer track ring. When fill is false, the ring carries the stroked progress arc.",
-        name: "border",
-        type: "boolean",
-      },
-      {
-        description:
-          "Optional CSS color for the active stroke, glyphs, and segment fill fallback. Overrides tone.",
+        description: "Optional CSS color for active progress. Overrides tone.",
         name: "color",
         type: "string",
       },
       {
-        description: "Optional CSS color for the filled progress segments.",
-        name: "fillColor",
-        type: "string",
-      },
-      {
-        description: "Optional CSS color for the empty track beneath the active status.",
+        description: "Optional CSS color for inactive track and placeholder structure.",
         name: "trackColor",
         type: "string",
       },
@@ -95,12 +80,10 @@ export function BuildStatus() {
       <StatusMark
         value={75}
         label="Almost complete"
-        border
         color="#315c4b"
-        fill
-        fillColor="#315c4b2e"
+        trackColor="#edeae2"
       />
-      <StatusMark status="blocked" label="Blocked" tone="danger" />
+      <StatusMark status="null" label="Not measured yet" />
     </div>
   );
 }`;
@@ -108,7 +91,7 @@ export function BuildStatus() {
 export default function StatusPage() {
   return (
     <ComponentPage
-      description="Filled segmented status marks with Patternmode-authored SVG, lucide-compatible geometry, optional colors, and motion/react transitions."
+      description="Discrete progress marks with fill and border variants, explicit null progress, optional colors, and motion/react transitions."
       title="Status"
     >
       <StatusDemo />

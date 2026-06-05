@@ -37,8 +37,7 @@ const components: CatalogEntry[] = [
     title: "Swatch",
   },
   {
-    description:
-      "Animated discrete status marks with authored SVG transitions for scale and symbolic states.",
+    description: "Animated discrete progress marks with explicit null and fill or border variants.",
     href: "/status",
     title: "Status",
   },

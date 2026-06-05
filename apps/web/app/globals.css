@@ -1130,10 +1130,14 @@ button {
 
 .status-demo-states {
   align-items: center;
+  border: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
 }
 
 .status-demo-state-item {
@@ -1159,6 +1163,10 @@ button {
 .status-demo-state-item[aria-pressed="true"] span {
   color: var(--ink);
   font-weight: 500;
+}
+
+.status-demo-null-label::before {
+  content: "\2014";
 }
 
 .status-demo-state-item:focus-visible {
@@ -1346,7 +1354,6 @@ button {
   .option-bar-item:hover {
     color: var(--ink);
   }
-
 }
 
 @media (max-width: 720px) {

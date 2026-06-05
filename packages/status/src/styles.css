@@ -2,7 +2,6 @@
   .patternmode-status-mark {
     --patternmode-status-size: 2rem;
     --patternmode-status-color: oklch(0.29 0.018 92);
-    --patternmode-status-fill: color-mix(in oklch, var(--patternmode-status-color) 22%, white);
     --patternmode-status-track: oklch(0.9 0.012 88);
     align-items: center;
     color: var(--patternmode-status-color);
@@ -17,31 +16,11 @@
 
   .patternmode-status-mark[data-tone="accent"] {
     --patternmode-status-color: var(--accent, #315c4b);
-    --patternmode-status-fill: color-mix(in oklch, var(--patternmode-status-color) 20%, white);
     --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
-  }
-
-  .patternmode-status-mark[data-tone="success"] {
-    --patternmode-status-color: oklch(0.49 0.105 155);
-    --patternmode-status-fill: oklch(0.91 0.055 155);
-    --patternmode-status-track: oklch(0.94 0.026 155);
-  }
-
-  .patternmode-status-mark[data-tone="warning"] {
-    --patternmode-status-color: oklch(0.53 0.105 65);
-    --patternmode-status-fill: oklch(0.92 0.075 78);
-    --patternmode-status-track: oklch(0.95 0.04 80);
-  }
-
-  .patternmode-status-mark[data-tone="danger"] {
-    --patternmode-status-color: oklch(0.49 0.13 30);
-    --patternmode-status-fill: oklch(0.92 0.055 30);
-    --patternmode-status-track: oklch(0.95 0.03 30);
   }
 
   .patternmode-status-mark[data-tone="muted"] {
     --patternmode-status-color: var(--muted, #77756d);
-    --patternmode-status-fill: color-mix(in oklch, var(--patternmode-status-color) 14%, white);
     --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
   }
 
@@ -53,9 +32,7 @@
   }
 
   .patternmode-status-mark__track,
-  .patternmode-status-mark__arc,
-  .patternmode-status-mark__glyph,
-  .patternmode-status-mark__dots circle {
+  .patternmode-status-mark__arc {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.8;
@@ -83,18 +60,4 @@
     transform: rotate(-90deg);
     transform-origin: 12px 12px;
   }
-
-  .patternmode-status-mark__glyph {
-    fill: none;
-    stroke: currentColor;
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-
-  .patternmode-status-mark__dots {
-    fill: currentColor;
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-
 }

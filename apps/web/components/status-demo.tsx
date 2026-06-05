@@ -16,18 +16,18 @@ const scaleColors: Record<(typeof scaleValues)[number], string> = {
 const NULL_COLOR = "#77756d";
 
 type ScaleStep = (typeof scaleValues)[number] | "null";
-type StatusDemoStyle = "border" | "fill";
+type StatusDemoVariant = "border" | "fill";
 interface StatusDemoState {
   step: ScaleStep;
-  style: StatusDemoStyle;
+  variant: StatusDemoVariant;
 }
 type StatusDemoAction =
   | { step: ScaleStep; type: "set-step" }
-  | { style: StatusDemoStyle; type: "set-style" };
+  | { type: "set-variant"; variant: StatusDemoVariant };
 
 const initialState: StatusDemoState = {
   step: 50,
-  style: "fill",
+  variant: "fill",
 };
 
 const statusDemoReducer = (state: StatusDemoState, action: StatusDemoAction): StatusDemoState => {
@@ -35,8 +35,8 @@ const statusDemoReducer = (state: StatusDemoState, action: StatusDemoAction): St
     case "set-step": {
       return { ...state, step: action.step };
     }
-    case "set-style": {
-      return { ...state, style: action.style };
+    case "set-variant": {
+      return { ...state, variant: action.variant };
     }
     default: {
       return state;
@@ -45,41 +45,44 @@ const statusDemoReducer = (state: StatusDemoState, action: StatusDemoAction): St
 };
 
 const getColor = (step: ScaleStep) => {
-  if (step === "null") {return NULL_COLOR;}
+  if (step === "null") {
+    return NULL_COLOR;
+  }
   return scaleColors[step];
 };
 
 const getLabel = (step: ScaleStep) => {
-  if (step === "null") {return "Null";}
+  if (step === "null") {
+    return "Null";
+  }
   return `${step}%`;
 };
 
 const getMarkProps = (step: ScaleStep) => {
-  if (step === "null") {return { status: "null" as const };}
+  if (step === "null") {
+    return { status: "null" as const };
+  }
   return { value: step };
 };
 
 export const StatusDemo = () => {
-  const [{ step, style }, dispatch] = useReducer(statusDemoReducer, initialState);
-  const hasFill = style === "fill";
-  const hasBorder = style === "border";
+  const [{ step, variant }, dispatch] = useReducer(statusDemoReducer, initialState);
 
   return (
     <div className="status-demo">
       <div className="status-demo-cell status-demo-cell--full status-demo-preview">
         <StatusMark
-          border={hasBorder}
           color={getColor(step)}
-          fill={hasFill}
           label={getLabel(step)}
           size="2xl"
           trackColor="#edeae2"
+          variant={variant}
           {...getMarkProps(step)}
         />
       </div>
 
       <div className="status-demo-cell status-demo-cell--full">
-        <div className="status-demo-states" role="group" aria-label="Status values">
+        <fieldset className="status-demo-states" aria-label="Status values">
           <button
             aria-pressed={step === "null"}
             className="status-demo-state-item"
@@ -87,16 +90,15 @@ export const StatusDemo = () => {
             type="button"
           >
             <StatusMark
-              border={hasBorder}
               color={NULL_COLOR}
-              fill={hasFill}
               label="Null"
               size="xl"
               status="null"
               tone={step === "null" ? "accent" : "muted"}
               trackColor="#edeae2"
+              variant={variant}
             />
-            <span>—</span>
+            <span aria-hidden="true" className="status-demo-null-label" />
           </button>
           {scaleValues.map((v) => (
             <button
@@ -107,30 +109,29 @@ export const StatusDemo = () => {
               type="button"
             >
               <StatusMark
-                border={hasBorder}
                 color={scaleColors[v]}
-                fill={hasFill}
                 label={`${v}%`}
                 size="xl"
                 tone={step === v ? "accent" : "muted"}
                 trackColor="#edeae2"
+                variant={variant}
                 value={v}
               />
               <span>{v}</span>
             </button>
           ))}
-        </div>
+        </fieldset>
       </div>
 
       <div className="status-demo-cell status-demo-cell--full status-demo-controls">
         <OptionBar
-          label="Style"
-          onChange={(nextStyle) => dispatch({ style: nextStyle, type: "set-style" })}
+          label="Variant"
+          onChange={(nextVariant) => dispatch({ type: "set-variant", variant: nextVariant })}
           options={[
             { label: "fill", value: "fill" as const },
             { label: "border", value: "border" as const },
           ]}
-          value={style}
+          value={variant}
         />
       </div>
     </div>
