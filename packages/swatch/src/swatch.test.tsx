@@ -273,7 +273,7 @@ describe("Swatch", () => {
   it("renders the child element when asChild is set", () => {
     render(
       <Swatch aria-label="Cell" asChild color="#315c4b" shape="block" size="lg">
-        <button data-testid="cell" type="button" />
+        <button aria-label="Cell" data-testid="cell" type="button" />
       </Swatch>,
     );
 
@@ -295,7 +295,7 @@ describe("Swatch", () => {
   it("merges the child's own className while keeping precedence", () => {
     render(
       <Swatch aria-label="Cell" asChild className="swatch-extra" color="#315c4b">
-        <button className="cell-button" type="button" />
+        <button aria-label="Cell" className="cell-button" type="button" />
       </Swatch>,
     );
 
@@ -308,7 +308,7 @@ describe("Swatch", () => {
   it("omits the scrim through the child when flat", () => {
     render(
       <Swatch aria-label="Cell" asChild color="#315c4b" flat>
-        <button type="button" />
+        <button aria-label="Cell" type="button" />
       </Swatch>,
     );
 
@@ -323,7 +323,7 @@ describe("Swatch", () => {
 
     render(
       <Swatch aria-label="Cell" asChild color="#315c4b">
-        <button onClick={onClick} type="button" />
+        <button aria-label="Cell" onClick={onClick} type="button" />
       </Swatch>,
     );
 
