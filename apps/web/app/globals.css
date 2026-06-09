@@ -580,6 +580,7 @@ button {
 .preview-aperto,
 .preview-deck,
 .preview-swatch-set,
+.preview-halo,
 .preview-status-set,
 .preview-scroll-area,
 .preview-tags {
@@ -680,6 +681,47 @@ button {
   box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
   display: block;
   width: 32px;
+}
+
+/* Halo preview — round pad and hue smile */
+.preview-halo {
+  height: 112px;
+  position: relative;
+  width: 128px;
+}
+
+.preview-halo-pad {
+  background:
+    linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent),
+    #d99a81;
+  border: 1px solid rgb(17 24 39 / 12%);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
+  display: block;
+  height: 74px;
+  left: 50%;
+  position: absolute;
+  top: 8px;
+  transform: translateX(-50%);
+  width: 74px;
+}
+
+.preview-halo svg {
+  inset: 0;
+  overflow: visible;
+  position: absolute;
+}
+
+.preview-halo path {
+  stroke: #d99a81;
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.preview-halo circle {
+  fill: #d99a81;
+  stroke: white;
+  stroke-width: 2;
 }
 
 /* Status preview — discrete circular marks */
@@ -1098,6 +1140,91 @@ button {
   }
 }
 
+/* ── Halo demo ─────────────────────────────── */
+
+.halo-demo {
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  left: -120px;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% + 240px);
+}
+
+.halo-demo-cell {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 36px;
+}
+
+.halo-demo-picker {
+  align-items: center;
+  justify-content: center;
+}
+
+.halo-demo-readout {
+  justify-content: center;
+}
+
+.halo-demo-label {
+  color: var(--quiet);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.halo-demo-chip {
+  border: 1px solid rgb(17 24 39 / 12%);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
+  height: 72px;
+  width: 72px;
+}
+
+.halo-demo dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.halo-demo dl div {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.halo-demo dt {
+  color: var(--quiet);
+  font-size: 0.68rem;
+}
+
+.halo-demo dd {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .halo-demo {
+    grid-template-columns: 1fr;
+    left: 0;
+    width: 100%;
+  }
+
+  .halo-demo-cell {
+    padding: 24px;
+  }
+}
+
 /* ── Status demo ───────────────────────────── */
 
 .status-demo {
@@ -1329,6 +1456,7 @@ button {
   .catalog-card:not(.catalog-card-placeholder):hover .preview-aperto,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-deck,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-swatch-set,
+  .catalog-card:not(.catalog-card-placeholder):hover .preview-halo,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-status-set,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-scroll-area,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-tags {

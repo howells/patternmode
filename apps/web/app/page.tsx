@@ -37,6 +37,11 @@ const components: CatalogEntry[] = [
     title: "Swatch",
   },
   {
+    description: "Round saturation and lightness picker with a compact hue smile arc.",
+    href: "/halo",
+    title: "Halo",
+  },
+  {
     description: "Animated discrete progress marks with explicit null and fill or border variants.",
     href: "/status",
     title: "Status",
@@ -91,6 +96,17 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
           <span />
           <span />
           <span />
+        </div>
+      );
+    }
+    case "Halo": {
+      return (
+        <div className="preview-halo" aria-hidden="true">
+          <span className="preview-halo-pad" />
+          <svg fill="none" viewBox="0 0 128 128">
+            <path d="M 122 75 A 58 58 0 0 1 14 75" />
+            <circle cx="122" cy="75" r="6" />
+          </svg>
         </div>
       );
     }

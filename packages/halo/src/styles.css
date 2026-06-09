@@ -1,0 +1,110 @@
+@layer components {
+  .patternmode-halo-picker {
+    --patternmode-halo-color: #d99a81;
+    border: 0;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+    vertical-align: top;
+    width: max-content;
+  }
+
+  .patternmode-halo-picker__legend {
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .patternmode-halo-picker__stage {
+    position: relative;
+  }
+
+  .patternmode-halo-picker__pad {
+    border: 1px solid rgb(17 24 39 / 12%);
+    border-radius: 999px;
+    cursor: crosshair;
+    overflow: hidden;
+    position: absolute;
+    touch-action: none;
+  }
+
+  .patternmode-halo-picker__pad:focus-visible,
+  .patternmode-halo-picker__arc:focus-visible {
+    outline: 2px solid var(--accent, #315c4b);
+    outline-offset: 3px;
+  }
+
+  .patternmode-halo-picker__pad-hue,
+  .patternmode-halo-picker__pad-white,
+  .patternmode-halo-picker__pad-black {
+    border-radius: inherit;
+    inset: 0;
+    position: absolute;
+  }
+
+  .patternmode-halo-picker__pad-hue {
+    background: hsl(var(--patternmode-halo-hue-value, 16) 100% 50%);
+  }
+
+  .patternmode-halo-picker__pad-white {
+    background: linear-gradient(to right, #fff, transparent);
+  }
+
+  .patternmode-halo-picker__pad-black {
+    background: linear-gradient(to top, #000, transparent);
+  }
+
+  .patternmode-halo-picker__pad-handle {
+    border: 2px solid white;
+    border-radius: 999px;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 25%);
+    height: 0.875rem;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 0.875rem;
+  }
+
+  .patternmode-halo-picker__arc {
+    inset: 0;
+    overflow: visible;
+    position: absolute;
+    touch-action: none;
+  }
+
+  .patternmode-halo-picker__arc-path {
+    fill: none;
+    pointer-events: stroke;
+    stroke-linecap: round;
+  }
+
+  .patternmode-halo-picker__arc-handle {
+    pointer-events: auto;
+    stroke: white;
+    stroke-width: 2;
+  }
+
+  .patternmode-halo-picker__value {
+    color: var(--muted, #77756d);
+    font-family: var(
+      --mono,
+      "SFMono-Regular",
+      "SF Mono",
+      Consolas,
+      "Liberation Mono",
+      Menlo,
+      monospace
+    );
+    font-size: 0.75rem;
+    line-height: 1;
+    text-align: center;
+  }
+}
