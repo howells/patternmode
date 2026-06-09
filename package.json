@@ -34,7 +34,7 @@
     "*.{json,jsonc}": "howells-oxfmt --write"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=24.15.0 <25"
   },
   "packageManager": "pnpm@10.23.0",
   "pnpm": {
