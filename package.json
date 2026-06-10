@@ -31,7 +31,8 @@
     "zod": "catalog:"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,jsonc,css}": "howells-fix"
+    "*.{js,ts,jsx,tsx,jsonc,css}": "howells-fix",
+    "!(package).json": "howells-fix"
   },
   "engines": {
     "node": ">=24.15.0 <25"
