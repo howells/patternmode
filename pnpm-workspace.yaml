@@ -26,6 +26,7 @@ minimumReleaseAgeExclude:
   - "@turbo/windows-arm64@2.9.17"
   - "next@16.2.9"
   - "turbo@2.9.17"
+  - "@instruments/colorscope@2.0.1"
 catalog:
   "@howells/envy": "^0.3.7"
   "@howells/husky": "^0.1.1"

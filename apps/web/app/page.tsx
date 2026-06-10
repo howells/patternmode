@@ -42,6 +42,12 @@ const components: CatalogEntry[] = [
     title: "Halo",
   },
   {
+    description:
+      "Spinnable geodesic color sphere whose facets refine around each selection in OKLab.",
+    href: "/briolette",
+    title: "Briolette",
+  },
+  {
     description: "Animated discrete progress marks with explicit null and fill or border variants.",
     href: "/status",
     title: "Status",
@@ -106,6 +112,27 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
           <svg fill="none" viewBox="0 0 128 128">
             <path d="M 122 75 A 58 58 0 0 1 14 75" />
             <circle cx="122" cy="75" r="6" />
+          </svg>
+        </div>
+      );
+    }
+    case "Briolette": {
+      return (
+        <div className="preview-briolette" aria-hidden="true">
+          <svg viewBox="0 0 128 128">
+            <polygon fill="#9eb8aa" points="92,64 78,88.2 112.5,92" />
+            <polygon fill="#8ba99a" points="78,88.2 112.5,92 64,120" />
+            <polygon fill="#aac3b4" points="78,88.2 50,88.2 64,120" />
+            <polygon fill="#93ad9f" points="50,88.2 64,120 15.5,92" />
+            <polygon fill="#b9cec1" points="50,88.2 36,64 15.5,92" />
+            <polygon fill="#87a395" points="36,64 15.5,92 15.5,36" />
+            <polygon fill="#a3bcae" points="36,64 50,39.8 15.5,36" />
+            <polygon fill="#c2d4c8" points="50,39.8 15.5,36 64,8" />
+            <polygon fill="#90aa9c" points="50,39.8 78,39.8 64,8" />
+            <polygon fill="#b0c7b9" points="78,39.8 64,8 112.5,36" />
+            <polygon fill="#9cb6a8" points="78,39.8 92,64 112.5,36" />
+            <polygon fill="#85a194" points="92,64 112.5,36 112.5,92" />
+            <polygon fill="#a6bfb0" points="92,64 78,88.2 50,88.2 36,64 50,39.8 78,39.8" />
           </svg>
         </div>
       );

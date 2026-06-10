@@ -724,6 +724,20 @@ button {
   stroke-width: 2;
 }
 
+/* Briolette preview — faceted color sphere */
+.preview-briolette svg {
+  display: block;
+  filter: drop-shadow(0 4px 16px rgba(29, 29, 27, 0.08));
+  height: 96px;
+  width: 96px;
+}
+
+.preview-briolette polygon {
+  stroke: #fff;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
 /* Status preview — discrete circular marks */
 .preview-status-set {
   align-items: center;
@@ -1221,6 +1235,83 @@ button {
   }
 
   .halo-demo-cell {
+    padding: 24px;
+  }
+}
+
+/* ── Briolette demo ────────────────────────────── */
+
+.briolette-demo {
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  left: -120px;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% + 240px);
+}
+
+.briolette-demo-cell {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 36px;
+}
+
+.briolette-demo-picker {
+  align-items: center;
+  justify-content: center;
+}
+
+.briolette-demo-readout {
+  justify-content: center;
+}
+
+.briolette-demo-label {
+  color: var(--quiet);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.briolette-demo dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.briolette-demo dl div {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.briolette-demo dt {
+  color: var(--quiet);
+  font-size: 0.68rem;
+}
+
+.briolette-demo dd {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .briolette-demo {
+    grid-template-columns: 1fr;
+    left: 0;
+    width: 100%;
+  }
+
+  .briolette-demo-cell {
     padding: 24px;
   }
 }

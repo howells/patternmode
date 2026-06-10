@@ -1,0 +1,109 @@
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
+import type { ApiSection } from "@howells/site-ui";
+import type { Metadata } from "next";
+
+import { BrioletteDemo } from "@/components/briolette-demo";
+
+export const metadata: Metadata = {
+  description:
+    "Spinnable geodesic color sphere whose facets refine around each selection in OKLab.",
+  title: "Briolette | Patternmode",
+};
+
+const brioletteApi: ApiSection[] = [
+  {
+    description:
+      "Controlled hex picker rendered as a spinnable 80-facet geodesic sphere. Selecting a facet glides it to the center and repaints the sphere with similar but distinct OKLab neighbors — hue rotates around the anchor, lightness shifts into its headroom, chroma swings with distance, and neutral anchors bloom into tints. Selecting the pinned facet again unsets the value.",
+    name: "BriolettePicker",
+    props: [
+      {
+        description: "Controlled hex color value, or null when nothing is selected.",
+        name: "value",
+        type: "string | null",
+      },
+      {
+        description: "Called with the facet's hex color on selection, or null when unset.",
+        name: "onChange",
+        type: "(value: string | null) => void",
+      },
+      {
+        defaultValue: '"Color"',
+        description: "Accessible name for the sphere stage.",
+        name: "label",
+        type: "string",
+      },
+      {
+        defaultValue: "true",
+        description: "Shows the selected hex output beneath the sphere.",
+        name: "showValue",
+        type: "boolean",
+      },
+      {
+        defaultValue: "280",
+        description: "Rendered sphere size in pixels.",
+        name: "size",
+        type: "number",
+      },
+    ],
+  },
+  {
+    description:
+      "Pure geometry and palette helpers, computed with @instruments/colorscope, for custom renderers.",
+    name: "Utilities",
+    props: [
+      {
+        description: "Builds the 80 facets of the frequency-2 geodesic icosahedron.",
+        name: "buildBrioletteFaces",
+        type: "() => BrioletteFace[]",
+      },
+      {
+        description: "Rotates, culls, and projects facets into SVG polygon points.",
+        name: "projectBrioletteFaces",
+        type: "(faces, orientation) => BrioletteProjectedFace[]",
+      },
+      {
+        description: "Computes every facet's hex for the universe or a refinement view.",
+        name: "buildBriolettePalette",
+        type: "(faces, view) => string[]",
+      },
+      {
+        description: "Maps a facet direction to the at-rest color universe.",
+        name: "brioletteUniverseColor",
+        type: "(direction) => string",
+      },
+    ],
+  },
+];
+
+const brioletteExample = `import { BriolettePicker } from "@patternmode/briolette";
+import "@patternmode/briolette/styles.css";
+
+export function AccentColorField() {
+  const [color, setColor] = useState<string | null>(null);
+
+  return (
+    <BriolettePicker
+      aria-label="Accent color"
+      value={color}
+      onChange={setColor}
+    />
+  );
+}`;
+
+export default function BriolettePage() {
+  return (
+    <ComponentDocsShell
+      description="A spinnable geodesic color sphere. At rest it shows the whole color universe; each selection repaints the facets with similar but distinct OKLab neighbors of your color."
+      title="Briolette"
+    >
+      <BrioletteDemo />
+      <DocsBlock title="Install">
+        <CodeBlock install>npm install @patternmode/briolette</CodeBlock>
+        <CodeBlock>{brioletteExample}</CodeBlock>
+      </DocsBlock>
+      <DocsBlock title="Core API">
+        <ApiTable sections={brioletteApi} />
+      </DocsBlock>
+    </ComponentDocsShell>
+  );
+}

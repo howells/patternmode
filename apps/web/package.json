@@ -14,6 +14,7 @@
   "dependencies": {
     "@howells/site-ui": "workspace:*",
     "@patternmode/aperto": "workspace:*",
+    "@patternmode/briolette": "workspace:*",
     "@patternmode/deck": "workspace:*",
     "@patternmode/halo": "workspace:*",
     "@patternmode/scrollframe": "workspace:*",

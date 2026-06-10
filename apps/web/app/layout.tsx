@@ -5,6 +5,7 @@ import "./globals.css";
 import "@patternmode/stacksheet/styles.css";
 import "@patternmode/aperto/styles.css";
 import "@patternmode/deck/styles.css";
+import "@patternmode/briolette/styles.css";
 import "@patternmode/halo/styles.css";
 import "@patternmode/swatch/styles.css";
 import "@patternmode/scrollframe/styles.css";
