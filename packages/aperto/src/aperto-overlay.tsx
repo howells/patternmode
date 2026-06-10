@@ -34,7 +34,7 @@ const ApertoOverlay = ({ className, fadeOut, ref, style }: ApertoOverlayProps) =
   return (
     <Dialog.Overlay asChild forceMount>
       <m.div
-        animate={{ opacity: fadeOut ? 0 : 1 }}
+        animate={{ opacity: fadeOut === true ? 0 : 1 }}
         className={className}
         data-slot="aperto-overlay"
         exit={{ opacity: 0 }}

@@ -6,6 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { useEffect, useRef } from "react";
 import type { HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { MockInstance } from "vitest";
 
 import { Aperto } from "./index";
 import type { ApertoMediaItem } from "./index";
@@ -32,6 +33,20 @@ type MotionTestProps = HTMLAttributes<HTMLElement> & {
   ref?: Ref<HTMLElement>;
   transition?: unknown;
 };
+type MotionDivTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLDivElement> };
+type MotionButtonTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLButtonElement> };
+
+const getMotionDataValue = (value: unknown): string | undefined => {
+  if (value === undefined) {
+    return undefined;
+  }
+  if (typeof value === "boolean" || typeof value === "number" || typeof value === "string") {
+    return String(value);
+  }
+  return "configured";
+};
+
+const isAnimationConfigured = (value: unknown): boolean => value !== undefined && value !== false;
 
 const stripMotionProps = ({
   animate: _animate,
@@ -54,25 +69,25 @@ const stripMotionProps = ({
   ...props
 }: MotionTestProps) => ({
   ...props,
-  "data-drag": _drag === undefined ? undefined : String(_drag),
+  "data-drag": getMotionDataValue(_drag),
   "data-layout": layout === undefined ? undefined : String(layout),
   "data-layout-id": layoutId,
 });
-const LayoutGroupComponent = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+const LayoutGroupShell = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
   <>{children}</>
 ));
-const LazyMotionComponent = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
+const LazyMotionShell = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
   <>{children}</>
 ));
 
 vi.mock("motion/react", () => {
-  const MotionDiv = ({ ref, ...props }: MotionTestProps) => {
+  const MotionDiv = ({ ref, ...props }: MotionDivTestProps) => {
     const latestLayoutIdRef = useRef(props.layoutId);
     latestLayoutIdRef.current = props.layoutId;
 
     useEffect(
       () => () => {
-        if (latestLayoutIdRef.current) {
+        if (latestLayoutIdRef.current !== undefined && latestLayoutIdRef.current !== "") {
           unmountedLayoutIds.push(latestLayoutIdRef.current);
         }
       },
@@ -80,31 +95,34 @@ vi.mock("motion/react", () => {
     );
 
     useEffect(() => {
-      if (props["data-slot"] === "aperto-transition-media" && props.animate) {
+      if (
+        props["data-slot"] === "aperto-transition-media" &&
+        isAnimationConfigured(props.animate)
+      ) {
         props.onAnimationComplete?.();
       }
     }, [props]);
 
-    return <div ref={ref as Ref<HTMLDivElement>} {...stripMotionProps(props)} />;
+    return <div ref={ref} {...stripMotionProps(props)} />;
   };
 
   const motionComponents = {
-    button: ({ ref, ...props }: MotionTestProps) => (
-      <button ref={ref as Ref<HTMLButtonElement>} {...stripMotionProps(props)} />
+    button: ({ ref, ...props }: MotionButtonTestProps) => (
+      <button ref={ref} {...stripMotionProps(props)} />
     ),
     div: MotionDiv,
   };
 
   return {
-    AnimatePresence: LayoutGroupComponent,
-    LayoutGroup: LayoutGroupComponent,
-    LazyMotion: LazyMotionComponent,
+    AnimatePresence: LayoutGroupShell,
+    LayoutGroup: LayoutGroupShell,
+    LazyMotion: LazyMotionShell,
     domMax: {},
     m: motionComponents,
     motion: motionComponents,
     useMotionValue: (initial: number) => ({
       get: () => initial,
-      set: vi.fn(),
+      set: vi.fn<(latest: number) => void>(),
     }),
     useReducedMotion: () => false,
     useSpring: (value: unknown) => value,
@@ -112,15 +130,18 @@ vi.mock("motion/react", () => {
   };
 });
 
-let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+let consoleErrorSpy: MockInstance<typeof console.error>;
 
 beforeEach(() => {
   consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 });
 
 afterEach(() => {
+  const consoleErrorCalls = consoleErrorSpy.mock.calls.length;
   try {
-    expect(consoleErrorSpy).not.toHaveBeenCalled();
+    if (consoleErrorCalls > 0) {
+      throw new Error(`console.error was called ${consoleErrorCalls} times.`);
+    }
   } finally {
     consoleErrorSpy.mockRestore();
     cleanup();

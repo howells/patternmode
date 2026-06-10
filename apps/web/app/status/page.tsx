@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -90,7 +90,7 @@ export function BuildStatus() {
 
 export default function StatusPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Discrete progress marks with fill and border variants, explicit null progress, optional colors, and motion/react transitions."
       title="Status"
     >
@@ -102,6 +102,6 @@ export default function StatusPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={statusApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

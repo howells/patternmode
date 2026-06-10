@@ -25,7 +25,7 @@ import {
   Swatch,
   updateDistributionSegment,
 } from "./index";
-import type { SwatchSize } from "./index";
+import type { DistributionBarSegment, SwatchSize } from "./index";
 
 interface MockPanInfo {
   offset: {
@@ -157,7 +157,7 @@ describe("Swatch", () => {
 
   it("shows selected and removable affordances", async () => {
     const user = userEvent.setup();
-    const onRemove = vi.fn();
+    const onRemove = vi.fn<() => void>();
 
     render(
       <Swatch
@@ -319,7 +319,7 @@ describe("Swatch", () => {
 
   it("forwards interaction to the slotted child element", async () => {
     const user = userEvent.setup();
-    const onClick = vi.fn();
+    const onClick = vi.fn<() => void>();
 
     render(
       <Swatch aria-label="Cell" asChild color="#315c4b">
@@ -431,7 +431,7 @@ describe("DistributionBar", () => {
 
   it("renders selectable segments and emits the chosen segment", async () => {
     const user = userEvent.setup();
-    const onSegmentSelect = vi.fn();
+    const onSegmentSelect = vi.fn<(segment: DistributionBarSegment) => void>();
     render(
       <DistributionDisplay
         aria-label="Selectable finish distribution"
@@ -475,7 +475,7 @@ describe("DistributionBar", () => {
 
   it("renders adjustable boundary handles and emits updated values", async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
+    const onChange = vi.fn<(segments: DistributionBarSegment[]) => void>();
 
     render(
       <DistributionBar
@@ -506,7 +506,7 @@ describe("DistributionBar", () => {
   });
 
   it("emits updated segment values while a boundary handle is dragged", () => {
-    const onChange = vi.fn();
+    const onChange = vi.fn<(segments: DistributionBarSegment[]) => void>();
 
     render(
       <DistributionBar
@@ -528,10 +528,7 @@ describe("DistributionBar", () => {
     if (!track) {
       throw new Error("Distribution bar track was not rendered");
     }
-    track.getBoundingClientRect = () =>
-      ({
-        width: 100,
-      }) as DOMRect;
+    track.getBoundingClientRect = () => new DOMRect(0, 0, 100, 0);
     handle.dataset.offsetX = "10";
 
     fireEvent.pointerDown(handle);

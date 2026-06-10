@@ -106,7 +106,25 @@ const snapProgress = (value: number | undefined): StatusMarkProgressValue => {
   }
 
   const clamped = Math.min(100, Math.max(0, value));
-  return (Math.round(clamped / 25) * 25) as StatusMarkProgressValue;
+  const snapped = Math.round(clamped / 25) * 25;
+
+  switch (snapped) {
+    case 25: {
+      return 25;
+    }
+    case 50: {
+      return 50;
+    }
+    case 75: {
+      return 75;
+    }
+    case 100: {
+      return 100;
+    }
+    default: {
+      return 0;
+    }
+  }
 };
 
 /** Resolves named or numeric progress input into a discrete StatusMark step. */
@@ -121,7 +139,7 @@ export const resolveStatusProgress = ({
     };
   }
 
-  if (status) {
+  if (status !== undefined) {
     return {
       progress: STEP_PROGRESS[status],
       status,

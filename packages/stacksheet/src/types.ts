@@ -67,7 +67,7 @@ export interface ResponsiveSide {
   mobile: Side;
 }
 
-export type SideConfig = Side | ResponsiveSide;
+export type SideConfig = Side | Partial<ResponsiveSide>;
 
 // ── Visual config ───────────────────────────────
 
@@ -206,126 +206,80 @@ export type ContentMap<TMap extends object> = {
 
 // ── Store state + actions ───────────────────────
 
-export interface StacksheetSnapshot<TMap extends object> {
+export interface StacksheetSnapshot<_TMap extends object> {
   /** Whether any sheets are currently visible */
   isOpen: boolean;
   /** Current sheet stack, ordered bottom to top */
-  stack: SheetItem<Extract<keyof TMap, string>>[];
+  stack: SheetItem[];
+}
+
+interface SheetStackCommand<TMap extends object> {
+  <K extends Extract<keyof TMap, string>>(
+    type: K,
+    id: string,
+    data: TMap[K],
+    options?: SheetPresentationOptions,
+  ): void;
+  <TData extends Record<string, unknown>>(
+    component: ComponentType<TData>,
+    data: TData,
+    options?: SheetPresentationOptions,
+  ): void;
+  <TData extends Record<string, unknown>>(
+    component: ComponentType<TData>,
+    id: string,
+    data: TData,
+    options?: SheetPresentationOptions,
+  ): void;
+}
+
+interface SheetSetDataCommand<TMap extends object> {
+  <K extends Extract<keyof TMap, string>>(type: K, id: string, data: TMap[K]): void;
+  <TData extends Record<string, unknown>>(
+    component: ComponentType<TData>,
+    id: string,
+    data: TData,
+  ): void;
+}
+
+interface SheetSwapCommand<TMap extends object> {
+  <K extends Extract<keyof TMap, string>>(
+    type: K,
+    data: TMap[K],
+    options?: SheetPresentationOptions,
+  ): void;
+  <TData extends Record<string, unknown>>(
+    component: ComponentType<TData>,
+    data: TData,
+    options?: SheetPresentationOptions,
+  ): void;
 }
 
 export interface SheetActions<TMap extends object> {
   /** Clear entire stack */
-  close(): void;
+  close: () => void;
 
   /** Smart: empty→open, same type on top→replace, different→push */
-  navigate<K extends Extract<keyof TMap, string>>(
-    type: K,
-    id: string,
-    data: TMap[K],
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Smart navigate with an ad-hoc component */
-  navigate<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Smart navigate with an ad-hoc component (explicit id) */
-  navigate<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    id: string,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
+  navigate: SheetStackCommand<TMap>;
   /** Replace stack with a single item */
-  open<K extends Extract<keyof TMap, string>>(
-    type: K,
-    id: string,
-    data: TMap[K],
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Replace stack with an ad-hoc component */
-  open<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Replace stack with an ad-hoc component (explicit id) */
-  open<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    id: string,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
+  open: SheetStackCommand<TMap>;
   /** Pop top item; close if last */
-  pop(): void;
+  pop: () => void;
 
   /** Push onto stack (replaces top at maxDepth) */
-  push<K extends Extract<keyof TMap, string>>(
-    type: K,
-    id: string,
-    data: TMap[K],
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Push an ad-hoc component onto the stack */
-  push<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Push an ad-hoc component onto the stack (explicit id) */
-  push<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    id: string,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
+  push: SheetStackCommand<TMap>;
 
   /** Remove a specific sheet by id; close if last */
-  remove(id: string): void;
+  remove: (id: string) => void;
 
   /** Swap the top item */
-  replace<K extends Extract<keyof TMap, string>>(
-    type: K,
-    id: string,
-    data: TMap[K],
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Swap the top item with an ad-hoc component */
-  replace<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Swap the top item with an ad-hoc component (explicit id) */
-  replace<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    id: string,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
+  replace: SheetStackCommand<TMap>;
 
   /** Update data on a sheet by id (no animation) */
-  setData<K extends Extract<keyof TMap, string>>(type: K, id: string, data: TMap[K]): void;
-  /** Update data on an ad-hoc sheet by id */
-  setData<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    id: string,
-    data: TData,
-  ): void;
+  setData: SheetSetDataCommand<TMap>;
 
   /** Swap the top item's content in place (no animation) */
-  swap<K extends Extract<keyof TMap, string>>(
-    type: K,
-    data: TMap[K],
-    options?: SheetPresentationOptions,
-  ): void;
-  /** Swap the top item's content with an ad-hoc component (no animation) */
-  swap<TData extends Record<string, unknown>>(
-    component: ComponentType<TData>,
-    data: TData,
-    options?: SheetPresentationOptions,
-  ): void;
+  swap: SheetSwapCommand<TMap>;
 }
 
 // ── Factory return type ─────────────────────────

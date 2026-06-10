@@ -32,7 +32,7 @@ export const Intro = ({
       <h1>{title}</h1>
       <p>{description}</p>
     </div>
-    {links ? <nav aria-label="Product links">{links}</nav> : null}
+    {links !== undefined && links !== null ? <nav aria-label="Product links">{links}</nav> : null}
   </header>
 );
 
@@ -92,7 +92,7 @@ export const ApiTable = ({ sections }: { sections: ApiSection[] }) => (
             <div className="prop-row" key={prop.name}>
               <dt>
                 <code>{prop.name}</code>
-                {prop.required ? (
+                {prop.required === true ? (
                   <span className="required-marker" title="required">
                     *
                   </span>
@@ -100,7 +100,7 @@ export const ApiTable = ({ sections }: { sections: ApiSection[] }) => (
               </dt>
               <dd>
                 <span className="prop-type">{prop.type}</span>
-                {prop.defaultValue ? (
+                {prop.defaultValue !== undefined && prop.defaultValue !== "" ? (
                   <span className="prop-default">{prop.defaultValue}</span>
                 ) : null}
                 <span className="prop-description">{prop.description}</span>
@@ -142,7 +142,7 @@ export const BackLink = ({
   </a>
 );
 
-export const ComponentPage = ({
+export const ComponentDocsShell = ({
   children,
   description,
   title,

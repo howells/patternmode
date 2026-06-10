@@ -8,6 +8,7 @@ import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Deck } from "./index";
+import type { DeckAdvanceEvent } from "./types";
 
 type MotionTestProps = HTMLAttributes<HTMLElement> & {
   animate?: unknown;
@@ -74,8 +75,8 @@ afterEach(() => {
 describe("Deck", () => {
   it("renders a cyclic stack and advances with the keyboard", async () => {
     const user = userEvent.setup();
-    const onAdvance = vi.fn();
-    const onIndexChange = vi.fn();
+    const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
+    const onIndexChange = vi.fn<(index: number) => void>();
 
     render(
       <Deck
@@ -111,7 +112,7 @@ describe("Deck", () => {
 
   it("renders an empty state after a finite deck is exhausted", async () => {
     const user = userEvent.setup();
-    const onExhausted = vi.fn();
+    const onExhausted = vi.fn<() => void>();
 
     render(
       <Deck aria-label="Finite cards" defaultIndex={1} mode="finite" onExhausted={onExhausted}>
@@ -131,7 +132,7 @@ describe("Deck", () => {
 
   it("respects controlled index updates", async () => {
     const user = userEvent.setup();
-    const onIndexChange = vi.fn();
+    const onIndexChange = vi.fn<(index: number) => void>();
 
     render(
       <Deck aria-label="Controlled cards" index={0} mode="cycle" onIndexChange={onIndexChange}>

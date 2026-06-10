@@ -18,7 +18,7 @@ const DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR =
 const DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE = 8;
 
 export const setRef = <T>(ref: Ref<T> | undefined, value: T | null): void => {
-  if (!ref) {
+  if (ref === undefined || ref === null) {
     return;
   }
   if (typeof ref === "function") {
@@ -46,7 +46,7 @@ export const defaultControlAxis = (axes: ScrollFrameAxes): ScrollFrameAxis =>
 export const resolveDragScrollConfig = (
   dragScroll: boolean | ScrollFrameDragScrollConfig | undefined,
 ): ScrollFrameResolvedDragScrollConfig | null => {
-  if (!dragScroll) {
+  if (dragScroll !== true && typeof dragScroll !== "object") {
     return null;
   }
 
@@ -66,7 +66,7 @@ export const isDragScrollIgnored = (
   if (!(target instanceof Element)) {
     return true;
   }
-  if ((target as HTMLElement).isContentEditable) {
+  if (target instanceof HTMLElement && target.isContentEditable) {
     return true;
   }
   return Boolean(target.closest(ignoreSelector));
@@ -92,7 +92,7 @@ export const shouldRenderFade = (
   if (fades === false || fades === "none") {
     return false;
   }
-  if (fades && typeof fades === "object") {
+  if (fades !== undefined && typeof fades === "object") {
     const axisEdges = normalizeFadeEdges(fades[axis]);
     return axisEdges === "both" || axisEdges === edge;
   }
@@ -115,7 +115,7 @@ export const getAxisState = (node: HTMLDivElement, axis: ScrollFrameAxis): Scrol
 };
 
 export const getReducedMotionPreference = (): boolean => {
-  if (typeof window === "undefined" || !window.matchMedia) {
+  if (typeof window === "undefined" || window.matchMedia === undefined) {
     return false;
   }
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;

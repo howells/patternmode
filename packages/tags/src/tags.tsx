@@ -4,29 +4,30 @@ import { ScrollFrame } from "@patternmode/scrollframe";
 import { joinClassNames } from "@patternmode/system";
 import * as Popover from "@radix-ui/react-popover";
 import { Slot } from "@radix-ui/react-slot";
-import { createContext, use, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { ClipboardEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
 
+import { useTagSelectorContext } from "./tag-selector-context";
+import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
+import { TagSelectorRoot } from "./tag-selector-root";
+import { getNextIndex, getPreviousIndex, splitPastedTags } from "./tag-selector-utils";
 import type {
   BadgeProps,
   BadgeVariant,
   TagItem,
   TagOptionRenderProps,
   TagProps,
-  TagRenderProps,
   TagSelectorContentProps,
   TagSelectorEmptyProps,
   TagSelectorListProps,
   TagSelectorProps,
-  TagSelectorRootProps,
   TagSelectorSearchProps,
   TagSelectorTriggerProps,
   TagTone,
 } from "./types";
 
-const DEFAULT_SEPARATORS = ["Enter", ","] as const;
 const DEFAULT_BADGE_VARIANT = "default" satisfies BadgeVariant;
-const NO_ACTIVE_OPTION = -1;
+const LEGACY_TONE_PROP = "tone" as const;
 const TONE_VARIANT_MAP = {
   accent: "default",
   danger: "destructive",
@@ -36,90 +37,8 @@ const TONE_VARIANT_MAP = {
   warning: "outline",
 } as const satisfies Record<TagTone, BadgeVariant>;
 
-type CommandOption<TItem extends TagItem> =
-  | {
-      id: string;
-      label: string;
-      type: "create";
-      value: string;
-    }
-  | {
-      id: string;
-      item: TItem;
-      label: string;
-      type: "item";
-    };
-
-interface TagSelectorContextValue<TItem extends TagItem> {
-  activeIndex: number;
-  activeOption: CommandOption<TItem> | undefined;
-  ariaLabel: string | undefined;
-  commandOptions: CommandOption<TItem>[];
-  disabled: boolean;
-  emptyMessage: ReactNode;
-  filteredOptions: TItem[];
-  inputId: string;
-  listboxId: string;
-  name: string | undefined;
-  onSearchInput: (query: string) => void;
-  open: boolean;
-  placeholder: string;
-  query: string;
-  removeItem: (item: TItem) => void;
-  renderOption: ((props: TagOptionRenderProps<TItem>) => ReactNode) | undefined;
-  renderTag: ((props: TagRenderProps<TItem>) => ReactNode) | undefined;
-  resolveDraft: (draft: string) => Promise<void>;
-  resolveDrafts: (drafts: readonly string[]) => Promise<void>;
-  selectCommandOption: (option: CommandOption<TItem>) => Promise<void>;
-  serializeItem: (item: TItem) => string;
-  separators: readonly string[];
-  setActiveIndex: (index: number | ((currentIndex: number) => number)) => void;
-  setOpen: (open: boolean) => void;
-  value: readonly TItem[];
-}
-
-const TagSelectorContext = createContext<TagSelectorContextValue<TagItem> | null>(null);
-
-const useTagSelectorContext = <TItem extends TagItem>() => {
-  const context = use(TagSelectorContext);
-  if (!context) {
-    throw new Error("TagSelector parts must be rendered inside <TagSelector.Root>.");
-  }
-
-  return context as unknown as TagSelectorContextValue<TItem>;
-};
-
-const normalizeTag = (value: string): string => value.trim().replaceAll(/\s+/gu, " ");
-
-const normalizeComparable = (value: string): string => normalizeTag(value).toLocaleLowerCase();
-
-const splitPastedTags = (value: string): string[] =>
-  value.split(/[,\n\r\t]+/u).flatMap((part) => {
-    const tag = normalizeTag(part);
-    return tag ? [tag] : [];
-  });
-
-const defaultFilterOption = (item: TagItem, query: string): boolean =>
-  item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase());
-
 const getTagVariant = (variant: BadgeVariant | undefined, tone?: TagTone) =>
-  variant ?? (tone ? TONE_VARIANT_MAP[tone] : "secondary");
-
-const getNextIndex = (currentIndex: number, length: number): number => {
-  if (length === 0) {
-    return NO_ACTIVE_OPTION;
-  }
-
-  return currentIndex < 0 ? 0 : (currentIndex + 1) % length;
-};
-
-const getPreviousIndex = (currentIndex: number, length: number): number => {
-  if (length === 0) {
-    return NO_ACTIVE_OPTION;
-  }
-
-  return currentIndex <= 0 ? length - 1 : currentIndex - 1;
-};
+  variant ?? (tone === undefined ? "secondary" : TONE_VARIANT_MAP[tone]);
 
 export const Badge = (props: BadgeProps): ReactElement => {
   const { asChild = false, className, variant = DEFAULT_BADGE_VARIANT, ...badgeProps } = props;
@@ -145,8 +64,8 @@ export const Tag = (props: TagProps): ReactElement => {
     removeLabel,
     selected = false,
     size = "base",
-    tone,
     variant,
+    [LEGACY_TONE_PROP]: legacyTone,
     ...tagProps
   } = props;
 
@@ -164,15 +83,15 @@ export const Tag = (props: TagProps): ReactElement => {
       data-size={size}
       data-slot="tag"
       data-testid="patternmode-tag"
-      variant={getTagVariant(variant, tone)}
+      variant={getTagVariant(variant, legacyTone)}
     >
-      {Icon ? (
+      {Icon === undefined ? null : (
         <span aria-hidden="true" className="patternmode-tag__icon">
           <Icon focusable="false" />
         </span>
-      ) : null}
+      )}
       <span className="patternmode-tag__label">{children}</span>
-      {onRemove ? (
+      {onRemove === undefined ? null : (
         <button
           aria-label={removeLabel ?? "Remove tag"}
           className="patternmode-tag__remove"
@@ -184,215 +103,8 @@ export const Tag = (props: TagProps): ReactElement => {
             <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
           </svg>
         </button>
-      ) : null}
+      )}
     </Badge>
-  );
-};
-
-const TagSelectorRoot = (props: TagSelectorRootProps) => {
-  const {
-    "aria-label": ariaLabel,
-    children,
-    className,
-    disabled = false,
-    emptyMessage = "No tags found.",
-    filterOption = defaultFilterOption,
-    id,
-    name,
-    onChange,
-    onCreateItem,
-    onSearchChange,
-    options,
-    placeholder = "Select tags",
-    ref,
-    renderOption,
-    renderTag,
-    searchValue,
-    separators = DEFAULT_SEPARATORS,
-    serializeItem = (item) => item.id,
-    value,
-    ...rootProps
-  } = props;
-  const generatedId = useId();
-  const rootId = id ?? generatedId;
-  const inputId = `${rootId}-search`;
-  const listboxId = `${rootId}-listbox`;
-  const [open, setOpen] = useState(false);
-  const [internalQuery, setInternalQuery] = useState("");
-  const [activeIndex, setActiveIndex] = useState(NO_ACTIVE_OPTION);
-  const query = searchValue ?? internalQuery;
-  const selectedIds = new Set(value.map((item) => item.id));
-  const filteredOptions = options.filter((item) => filterOption(item, query));
-  const exactMatches = (() => {
-    const normalizedQuery = normalizeComparable(query);
-    if (!normalizedQuery) {
-      return [];
-    }
-
-    return options.filter((item) => normalizeComparable(item.label) === normalizedQuery);
-  })();
-  const canCreate =
-    Boolean(onCreateItem) && Boolean(normalizeTag(query)) && exactMatches.length === 0;
-  const commandOptions = (() => {
-    const itemOptions: CommandOption<TagItem>[] = filteredOptions.map((item) => ({
-      id: `${listboxId}-option-${item.id}`,
-      item,
-      label: item.label,
-      type: "item",
-    }));
-
-    if (canCreate) {
-      itemOptions.push({
-        id: `${listboxId}-create`,
-        label: `Create "${normalizeTag(query)}"`,
-        type: "create",
-        value: normalizeTag(query),
-      });
-    }
-
-    return itemOptions;
-  })();
-  const activeOption = commandOptions[activeIndex];
-
-  const updateQuery = (nextQuery: string) => {
-    if (searchValue === undefined) {
-      setInternalQuery(nextQuery);
-    }
-    onSearchChange?.(nextQuery);
-    setActiveIndex(NO_ACTIVE_OPTION);
-  };
-
-  const removeItem = (item: TagItem) => {
-    onChange(value.filter((selectedItem) => selectedItem.id !== item.id));
-  };
-
-  const resolveDrafts = async (drafts: readonly string[]) => {
-    if (disabled) {
-      return;
-    }
-
-    const nextValue = [...value];
-    const nextIds = new Set(nextValue.map((item) => item.id));
-    let changed = false;
-
-    const resolvedDrafts = await Promise.all(
-      drafts.map((draft) => {
-        const normalizedDraft = normalizeTag(draft);
-        if (!normalizedDraft) {
-          return null;
-        }
-
-        const matches = options.filter(
-          (item) => normalizeComparable(item.label) === normalizeComparable(normalizedDraft),
-        );
-
-        if (matches.length === 1) {
-          const [match] = matches;
-          return match && !match.disabled ? match : null;
-        }
-
-        if (matches.length === 0 && onCreateItem) {
-          return onCreateItem(normalizedDraft);
-        }
-        return null;
-      }),
-    );
-
-    for (const item of resolvedDrafts) {
-      if (item && !nextIds.has(item.id)) {
-        nextValue.push(item);
-        nextIds.add(item.id);
-        changed = true;
-      }
-    }
-
-    if (changed) {
-      onChange(nextValue);
-      updateQuery("");
-    }
-  };
-
-  const resolveDraft = async (draft: string) => {
-    await resolveDrafts([draft]);
-  };
-
-  const selectCommandOption = async (option: CommandOption<TagItem>) => {
-    if (disabled) {
-      return;
-    }
-
-    if (option.type === "create") {
-      await resolveDraft(option.value);
-      return;
-    }
-
-    const isSelected = selectedIds.has(option.item.id);
-    if (option.item.disabled && !isSelected) {
-      return;
-    }
-
-    if (isSelected) {
-      removeItem(option.item);
-    } else {
-      onChange([...value, option.item]);
-    }
-  };
-
-  const contextValue: TagSelectorContextValue<TagItem> = {
-    activeIndex,
-    activeOption,
-    ariaLabel,
-    commandOptions,
-    disabled,
-    emptyMessage,
-    filteredOptions,
-    inputId,
-    listboxId,
-    name,
-    onSearchInput: updateQuery,
-    open,
-    placeholder,
-    query,
-    removeItem,
-    renderOption: renderOption as ((props: TagOptionRenderProps<TagItem>) => ReactNode) | undefined,
-    renderTag: renderTag as ((props: TagRenderProps<TagItem>) => ReactNode) | undefined,
-    resolveDraft,
-    resolveDrafts,
-    selectCommandOption,
-    separators,
-    serializeItem,
-    setActiveIndex,
-    setOpen,
-    value,
-  };
-
-  const handleOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen);
-    if (!nextOpen) {
-      setActiveIndex(NO_ACTIVE_OPTION);
-    }
-  };
-
-  return (
-    <TagSelectorContext.Provider value={contextValue}>
-      <Popover.Root onOpenChange={handleOpenChange} open={open}>
-        <div
-          {...rootProps}
-          className={joinClassNames("patternmode-tag-selector", className)}
-          data-disabled={disabled ? "true" : undefined}
-          data-slot="tag-selector"
-          id={rootId}
-          ref={ref}
-        >
-          {name
-            ? value.map((item) => (
-                <input key={item.id} name={name} type="hidden" value={serializeItem(item)} />
-              ))
-            : null}
-          {children}
-        </div>
-      </Popover.Root>
-    </TagSelectorContext.Provider>
   );
 };
 
@@ -527,7 +239,10 @@ const TagSelectorSearch = ({
   const context = useTagSelectorContext();
   const localRef = useRef<HTMLInputElement | null>(null);
   const searchLabel =
-    ariaLabel ?? (context.ariaLabel ? `Search ${context.ariaLabel}` : "Search tags");
+    ariaLabel ??
+    (context.ariaLabel !== undefined && context.ariaLabel !== ""
+      ? `Search ${context.ariaLabel}`
+      : "Search tags");
 
   useEffect(() => {
     if (context.open) {
@@ -539,12 +254,12 @@ const TagSelectorSearch = ({
     localRef.current = node;
     if (typeof ref === "function") {
       ref(node);
-    } else if (ref) {
+    } else if (ref !== undefined && ref !== null) {
       ref.current = node;
     }
   };
 
-  const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDownAsync = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
     onKeyDown?.(event);
     if (event.defaultPrevented) {
       return;
@@ -566,7 +281,7 @@ const TagSelectorSearch = ({
       return;
     }
 
-    if (event.key === "Enter" && context.activeOption) {
+    if (event.key === "Enter" && context.activeOption !== undefined) {
       event.preventDefault();
       await context.selectCommandOption(context.activeOption);
       return;
@@ -581,13 +296,13 @@ const TagSelectorSearch = ({
     if (event.key === "Backspace" && context.query === "" && context.value.length > 0) {
       event.preventDefault();
       const lastItem = context.value.at(-1);
-      if (lastItem) {
+      if (lastItem !== undefined) {
         context.removeItem(lastItem);
       }
     }
   };
 
-  const handlePaste = async (event: ClipboardEvent<HTMLInputElement>) => {
+  const handlePasteAsync = async (event: ClipboardEvent<HTMLInputElement>): Promise<void> => {
     onPaste?.(event);
     if (event.defaultPrevented) {
       return;
@@ -602,6 +317,14 @@ const TagSelectorSearch = ({
     await context.resolveDrafts(pastedTags);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    void handleKeyDownAsync(event);
+  };
+
+  const handlePaste = (event: ClipboardEvent<HTMLInputElement>) => {
+    void handlePasteAsync(event);
+  };
+
   return (
     <input
       {...searchProps}
@@ -612,7 +335,9 @@ const TagSelectorSearch = ({
       className={joinClassNames("patternmode-tag-selector__search", className)}
       disabled={context.disabled}
       id={context.inputId}
-      onChange={(event) => context.onSearchInput(event.target.value)}
+      onChange={(event) => {
+        context.onSearchInput(event.target.value);
+      }}
       onKeyDown={handleKeyDown}
       onPaste={handlePaste}
       ref={setRefs}
@@ -633,8 +358,8 @@ const TagSelectorRenderedOption = ({
   active: boolean;
   disabled: boolean;
   item: TagItem;
-  optionProps: TagOptionRenderProps<TagItem>["optionProps"];
-  renderOption: NonNullable<TagSelectorContextValue<TagItem>["renderOption"]>;
+  optionProps: TagOptionRenderProps["optionProps"];
+  renderOption: NonNullable<TagSelectorContextValue["renderOption"]>;
   selected: boolean;
 }) => (
   <>
@@ -648,27 +373,25 @@ const TagSelectorRenderedOption = ({
   </>
 );
 
-const TagSelectorOption = <TItem extends TagItem>({
-  item,
-  option,
-}: {
-  item?: TItem;
-  option?: CommandOption<TItem>;
-}) => {
-  const context = useTagSelectorContext<TagItem>();
+const TagSelectorOption = ({ item, option }: { item?: TagItem; option?: CommandOption }) => {
+  const context = useTagSelectorContext();
   const resolvedOption =
-    option ?? (item ? { id: item.id, item, label: item.label, type: "item" as const } : undefined);
+    option ??
+    (item === undefined
+      ? undefined
+      : { id: item.id, item, label: item.label, type: "item" as const });
 
-  if (!resolvedOption) {
+  if (resolvedOption === undefined) {
     return null;
   }
 
   const isCreate = resolvedOption.type === "create";
   const optionItem = isCreate ? undefined : resolvedOption.item;
-  const selected = optionItem
-    ? context.value.some((selectedItem) => selectedItem.id === optionItem.id)
-    : false;
-  const disabled = context.disabled || Boolean(optionItem?.disabled && !selected);
+  const selected =
+    optionItem === undefined
+      ? false
+      : context.value.some((selectedItem) => selectedItem.id === optionItem.id);
+  const disabled = context.disabled || (selected ? false : optionItem?.disabled === true);
   const active = context.commandOptions[context.activeIndex]?.id === resolvedOption.id;
   const optionProps = {
     "aria-selected": selected,
@@ -677,7 +400,9 @@ const TagSelectorOption = <TItem extends TagItem>({
     "data-slot": "tag-selector-option",
     disabled,
     id: resolvedOption.id,
-    onClick: () => context.selectCommandOption(resolvedOption),
+    onClick: () => {
+      void context.selectCommandOption(resolvedOption);
+    },
     role: "option",
   };
   let optionIcon: ReactNode = null;
@@ -696,7 +421,7 @@ const TagSelectorOption = <TItem extends TagItem>({
     );
   }
 
-  if (optionItem && context.renderOption) {
+  if (optionItem !== undefined && context.renderOption !== undefined) {
     return (
       <TagSelectorRenderedOption
         active={active}
@@ -751,7 +476,7 @@ const TagSelectorList = ({ children, className, ref, ...listProps }: TagSelector
   );
 };
 
-const TagSelectorBase = (props: TagSelectorProps<TagItem>): ReactElement => {
+const TagSelectorBase = (props: TagSelectorProps): ReactElement => {
   const {
     children,
     contentClassName,

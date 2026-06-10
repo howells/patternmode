@@ -3,7 +3,6 @@ import { domMax, LazyMotion, m } from "motion/react";
 import type { PanInfo } from "motion/react";
 import type { CSSProperties, HTMLAttributes, KeyboardEvent } from "react";
 import { useRef } from "react";
-
 import {
   getDistributionBoundaryPercent,
   getDistributionTotal,
@@ -12,7 +11,7 @@ import {
 import type { DistributionBarSegment } from "./distribution-bar-math";
 
 export interface DistributionDisplayProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
+  HTMLAttributes<HTMLElement>,
   "role" | "onSelect"
 > {
   /** Label used in summary legends for assigned segment weight. */
@@ -101,6 +100,9 @@ interface DistributionBarHandleProps {
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }
 
+type DistributionSegmentStyle = CSSProperties &
+  Partial<Record<`--${string}`, number | string | undefined>>;
+
 const getRenderableDistributionValue = (value: number): number =>
   Number.isFinite(value) ? Math.max(0, value) : 0;
 
@@ -147,7 +149,7 @@ const DistributionSegments = ({
         "--patternmode-distribution-segment-color": segment.color,
         width:
           total > 0 ? `${(getRenderableDistributionValue(segment.value) / total) * 100}%` : "0%",
-      } as CSSProperties;
+      } satisfies DistributionSegmentStyle;
       const isSelected = selectedSegmentId === segment.id;
 
       if (onSegmentSelect) {
@@ -158,7 +160,9 @@ const DistributionSegments = ({
             className="patternmode-distribution-bar__segment"
             data-selected={isSelected ? "true" : undefined}
             key={segment.id}
-            onClick={() => onSegmentSelect(segment)}
+            onClick={() => {
+              onSegmentSelect(segment);
+            }}
             style={segmentStyle}
             type="button"
           />
@@ -195,21 +199,24 @@ const DistributionSegmentLegend = ({
   total,
 }: DistributionSegmentLegendProps) => (
   <div className="patternmode-distribution-bar__legend">
-    {segments.map((segment) => (
-      <span key={segment.id}>
-        <span
-          aria-hidden="true"
-          className="patternmode-distribution-bar__swatch"
-          style={
-            {
-              "--patternmode-distribution-segment-color": segment.color,
-            } as CSSProperties
-          }
-        />
-        {segment.label ?? segment.id} {getDerivedDistributionPercentage(segment.value, total)}%
-      </span>
-    ))}
-    {emptyValue > 0 && emptyLabel ? (
+    {segments.map((segment) => {
+      const segmentStyle = {
+        "--patternmode-distribution-segment-color": segment.color,
+        backgroundColor: undefined,
+      } satisfies DistributionSegmentStyle;
+
+      return (
+        <span key={segment.id}>
+          <span
+            aria-hidden="true"
+            className="patternmode-distribution-bar__swatch"
+            style={segmentStyle}
+          />
+          {segment.label ?? segment.id} {getDerivedDistributionPercentage(segment.value, total)}%
+        </span>
+      );
+    })}
+    {emptyValue > 0 && emptyLabel !== undefined && emptyLabel !== "" ? (
       <span>
         <span
           aria-hidden="true"
@@ -259,8 +266,12 @@ const DistributionBarHandle = ({
       dragElastic={0}
       dragMomentum={false}
       dragSnapToOrigin
-      onDrag={(_event, info) => onDrag(info)}
-      onDragEnd={(_event, info) => onDragEnd(info)}
+      onDrag={(_event, info) => {
+        onDrag(info);
+      }}
+      onDragEnd={(_event, info) => {
+        onDragEnd(info);
+      }}
       onDragStart={onDragStart}
       onKeyDown={onKeyDown}
       style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
@@ -320,7 +331,7 @@ export const DistributionDisplay = ({
 
   return interactive ? (
     <fieldset
-      {...(props as HTMLAttributes<HTMLFieldSetElement>)}
+      {...props}
       aria-label={accessibleLabel}
       className={sharedClassName}
       data-slot="distribution-display"
@@ -408,10 +419,16 @@ export const DistributionBar = ({
               aria-label={label}
               boundaryPercent={boundaryPercent}
               key={`${segment.id}-${nextSegment?.id ?? "end"}`}
-              onDrag={(info) => handleDrag(boundaryIndex, info)}
-              onDragEnd={(info) => handleDragEnd(boundaryIndex, info)}
+              onDrag={(info) => {
+                handleDrag(boundaryIndex, info);
+              }}
+              onDragEnd={(info) => {
+                handleDragEnd(boundaryIndex, info);
+              }}
               onDragStart={handleDragStart}
-              onKeyDown={(event) => handleKeyDown(event, boundaryIndex)}
+              onKeyDown={(event) => {
+                handleKeyDown(event, boundaryIndex);
+              }}
             />
           );
         })}

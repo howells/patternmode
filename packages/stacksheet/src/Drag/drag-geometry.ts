@@ -1,11 +1,12 @@
 import type { Side } from "../types";
 import { INTERACTIVE_TAGS, MAX_ANGLE_DEG } from "./drag-constants";
 import type { DragAxis, DragSign } from "./drag-types";
+
 export const isInteractiveElement = (el: Element): boolean => {
   if (INTERACTIVE_TAGS.has(el.tagName)) {
     return true;
   }
-  if ((el as HTMLElement).isContentEditable) {
+  if (el instanceof HTMLElement && el.isContentEditable) {
     return true;
   }
   // Children of interactive elements (e.g. SVG inside button, span inside link)
@@ -123,7 +124,7 @@ export const commitGesture = (
   if (gesture === "none") {
     return "none";
   }
-  if (scrollEl && !isAtScrollEdge(scrollEl, axis, sign)) {
+  if (scrollEl !== null && !isAtScrollEdge(scrollEl, axis, sign)) {
     return "none";
   }
   return "drag";

@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -68,7 +68,7 @@ function OpenSettings() {
 
 export default function StacksheetPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts."
       title="Stacksheet"
     >
@@ -83,6 +83,6 @@ export default function StacksheetPage() {
       <p className="read-more">
         Read the package README for callbacks, snap points, accessibility, and styling details.
       </p>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

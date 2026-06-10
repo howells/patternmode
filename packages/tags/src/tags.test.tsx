@@ -6,13 +6,14 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import * as publicApi from "./index";
 import { Badge, Tag, TagSelector } from "./index";
 import type { TagItem } from "./types";
 
 class ResizeObserverMock {
-  observe = vi.fn();
-  disconnect = vi.fn();
-  unobserve = vi.fn();
+  observe = vi.fn<(target: Element) => void>();
+  disconnect = vi.fn<() => void>();
+  unobserve = vi.fn<(target: Element) => void>();
 }
 
 beforeEach(() => {
@@ -33,9 +34,18 @@ const options: TagItem[] = [
   { id: "duplicate-b", label: "Duplicate" },
   { disabled: true, id: "locked", label: "Locked" },
 ];
+const EMPTY_TAGS: TagItem[] = [];
+
+const getOption = (index: number): TagItem => {
+  const option = options[index];
+  if (option === undefined) {
+    throw new Error(`Missing test option at index ${index}.`);
+  }
+  return option;
+};
 
 const ControlledTagSelector = ({
-  defaultValue = [],
+  defaultValue = EMPTY_TAGS,
   onCreateItem,
   ...props
 }: {
@@ -78,9 +88,7 @@ describe("TagSelector", () => {
     expect(tag).toHaveAttribute("data-variant", "destructive");
   });
 
-  it("exports TagSelector as the public selector API without a TagsInput alias", async () => {
-    const publicApi = await import("./index");
-
+  it("exports TagSelector as the public selector API without a TagsInput alias", () => {
     expect(publicApi.TagSelector).toBeDefined();
     expect("TagsInput" in publicApi).toBe(false);
   });
@@ -89,7 +97,7 @@ describe("TagSelector", () => {
     const user = userEvent.setup();
 
     const { container } = render(
-      <ControlledTagSelector defaultValue={[options[0] as TagItem, options[1] as TagItem]} />,
+      <ControlledTagSelector defaultValue={[getOption(0), getOption(1)]} />,
     );
 
     const trigger = screen.getByRole("button", { name: "Project tags" });
@@ -112,7 +120,7 @@ describe("TagSelector", () => {
   it("keeps selected options visible and toggles them by id", async () => {
     const user = userEvent.setup();
 
-    render(<ControlledTagSelector defaultValue={[options[0] as TagItem]} />);
+    render(<ControlledTagSelector defaultValue={[getOption(0)]} />);
 
     await user.click(screen.getByRole("button", { name: "Project tags" }));
 
@@ -132,7 +140,7 @@ describe("TagSelector", () => {
 
   it("creates items through the create option after matching options", async () => {
     const user = userEvent.setup();
-    const onCreateItem = vi.fn((label: string) => ({
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => ({
       id: label.toLowerCase().replaceAll(/\s+/gu, "-"),
       label,
     }));
@@ -157,7 +165,7 @@ describe("TagSelector", () => {
 
   it("resolves exact draft matches to existing options and leaves ambiguous labels explicit", async () => {
     const user = userEvent.setup();
-    const onCreateItem = vi.fn((label: string) => ({
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => ({
       id: `new-${label}`,
       label,
     }));
@@ -183,14 +191,14 @@ describe("TagSelector", () => {
 
   it("creates multiple pasted labels through onCreateItem and serializes selected ids", async () => {
     const user = userEvent.setup();
-    const onCreateItem = vi.fn((label: string) => ({
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => ({
       id: label.toLowerCase(),
       label,
     }));
 
     render(
       <ControlledTagSelector
-        defaultValue={[options[0] as TagItem]}
+        defaultValue={[getOption(0)]}
         name="tags"
         onCreateItem={onCreateItem}
       />,
@@ -205,7 +213,7 @@ describe("TagSelector", () => {
 
   it("supports controlled search, custom filtering, and custom renderers", async () => {
     const user = userEvent.setup();
-    const onSearchChange = vi.fn();
+    const onSearchChange = vi.fn<(query: string) => void>();
 
     render(
       <TagSelector
@@ -224,7 +232,7 @@ describe("TagSelector", () => {
           </span>
         )}
         searchValue="key"
-        value={[options[1] as TagItem]}
+        value={[getOption(1)]}
       />,
     );
 

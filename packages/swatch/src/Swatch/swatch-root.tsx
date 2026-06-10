@@ -1,11 +1,13 @@
 import { getObjectSizingStyle, joinClassNames } from "@patternmode/system";
 import { Slot, Slottable } from "@radix-ui/react-slot";
-import type { CSSProperties, MouseEvent } from "react";
+import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from "react";
 
 import { getSwatchAtmosphereBackground } from "./swatch-atmosphere";
 import { getSwatchColorsBackground, isLightColor } from "./swatch-colors";
 import { getSwatchSizeVariableStyle } from "./swatch-types";
 import type { SwatchProps } from "./swatch-types";
+
+type SwatchRootStyle = CSSProperties & Record<"--patternmode-swatch-fill", string | undefined>;
 
 interface SwatchContentProps {
   children: SwatchProps["children"];
@@ -14,6 +16,17 @@ interface SwatchContentProps {
   mediaStyle: CSSProperties;
   selected: boolean;
   unavailable: boolean;
+}
+
+interface RemovableSwatchProps {
+  ariaLabel: string | undefined;
+  children: ReactNode;
+  className: string | undefined;
+  dataProps: ReturnType<typeof getSwatchDataProps>;
+  onRemove: () => void;
+  removeLabel: string;
+  rootStyle: SwatchRootStyle;
+  props: HTMLAttributes<HTMLElement>;
 }
 
 const SwatchContent = ({
@@ -26,7 +39,7 @@ const SwatchContent = ({
 }: SwatchContentProps) => (
   <>
     <span aria-hidden="true" className="patternmode-swatch__fill" />
-    {children ? (
+    {children !== undefined && children !== null ? (
       <span className="patternmode-swatch__media" style={mediaStyle}>
         {children}
       </span>
@@ -76,7 +89,11 @@ const getSwatchTone = ({
     return isLight ? "light" : "dark";
   }
 
-  if (color && !background && !colorsBackground && isLightColor(color as string)) {
+  const hasColor = color !== undefined && color !== "";
+  const hasBackground = background !== undefined && background !== "";
+  const hasColorsBackground = colorsBackground !== undefined && colorsBackground !== "";
+
+  if (hasColor && !hasBackground && !hasColorsBackground && isLightColor(color)) {
     return "light";
   }
 
@@ -112,6 +129,44 @@ const getSwatchDataProps = ({
   "data-tone": lightTone,
   "data-unavailable": unavailable ? "true" : undefined,
 });
+
+const RemovableSwatch = ({
+  ariaLabel,
+  children,
+  className,
+  dataProps,
+  onRemove,
+  removeLabel,
+  rootStyle,
+  props,
+}: RemovableSwatchProps) => {
+  const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onRemove();
+  };
+
+  return (
+    <fieldset
+      {...props}
+      {...dataProps}
+      aria-label={ariaLabel}
+      className={joinClassNames("patternmode-swatch", className)}
+      style={rootStyle}
+    >
+      {children}
+      <button
+        aria-label={removeLabel}
+        className="patternmode-swatch__remove"
+        onClick={handleRemove}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+          <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
+        </svg>
+      </button>
+    </fieldset>
+  );
+};
 
 export const Swatch = ({
   "aria-label": ariaLabel,
@@ -155,17 +210,18 @@ export const Swatch = ({
     colorsBackground,
     isLight,
   });
-  const resolvedRemoveLabel = removeLabel ?? (ariaLabel ? `Remove ${ariaLabel}` : "Remove");
+  const resolvedRemoveLabel =
+    removeLabel ?? (ariaLabel !== undefined && ariaLabel !== "" ? `Remove ${ariaLabel}` : "Remove");
 
-  const rootStyle = {
+  const rootStyle: SwatchRootStyle = {
     ...getSwatchSizeVariableStyle(size),
     "--patternmode-swatch-fill": fill,
     ...style,
-  } as CSSProperties;
-  const mediaStyle = getObjectSizingStyle({
+  };
+  const mediaStyle: CSSProperties = getObjectSizingStyle({
     fit: objectFit,
     position: objectPosition,
-  }) as CSSProperties;
+  });
   const dataProps = getSwatchDataProps({
     flat,
     lightTone,
@@ -176,11 +232,6 @@ export const Swatch = ({
     size,
     unavailable,
   });
-
-  const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onRemove?.();
-  };
 
   const swatchContent = (
     <SwatchContent
@@ -209,27 +260,19 @@ export const Swatch = ({
     );
   }
 
-  if (onRemove) {
+  if (onRemove !== undefined) {
     return (
-      <fieldset
-        {...props}
-        {...dataProps}
-        aria-label={ariaLabel}
-        className={joinClassNames("patternmode-swatch", className)}
-        style={rootStyle}
+      <RemovableSwatch
+        ariaLabel={ariaLabel}
+        className={className}
+        dataProps={dataProps}
+        onRemove={onRemove}
+        props={props}
+        removeLabel={resolvedRemoveLabel}
+        rootStyle={rootStyle}
       >
         {swatchContent}
-        <button
-          aria-label={resolvedRemoveLabel}
-          className="patternmode-swatch__remove"
-          onClick={handleRemove}
-          type="button"
-        >
-          <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
-            <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
-          </svg>
-        </button>
-      </fieldset>
+      </RemovableSwatch>
     );
   }
 

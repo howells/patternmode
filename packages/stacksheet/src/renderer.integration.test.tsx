@@ -3,19 +3,29 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
-import type { HTMLAttributes, ReactNode, Ref } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createStacksheet, Sheet } from "./index";
 
-type MotionTestProps = HTMLAttributes<HTMLElement> & {
+interface MotionProps {
   animate?: unknown;
   exit?: unknown;
   initial?: unknown;
   onAnimationComplete?: () => void;
-  ref?: Ref<HTMLElement>;
   transition?: unknown;
-};
+}
+
+type MotionDivProps = HTMLAttributes<HTMLDivElement> &
+  MotionProps & {
+    ref?: Ref<HTMLDivElement>;
+  };
+
+type MotionButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  MotionProps & {
+    ref?: Ref<HTMLButtonElement>;
+  };
+
 const stripMotionProps = vi.hoisted(
   () =>
     ({
@@ -26,7 +36,7 @@ const stripMotionProps = vi.hoisted(
       ref: _ref,
       transition: _transition,
       ...props
-    }: MotionTestProps) =>
+    }: MotionDivProps | MotionButtonProps) =>
       props,
 );
 const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
@@ -49,15 +59,15 @@ vi.mock("focus-trap-react", () => ({
   FocusTrap: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 vi.mock("motion/react", () => {
-  const MotionDiv = ({ ref, ...props }: MotionTestProps) => {
+  const MotionDiv = ({ ref, ...props }: MotionDivProps) => {
     useEffect(() => {
       props.onAnimationComplete?.();
     }, [props]);
-    return <div ref={ref as Ref<HTMLDivElement>} {...stripMotionProps(props)} />;
+    return <div ref={ref} {...stripMotionProps(props)} />;
   };
   const motionComponents = {
-    button: ({ ref, ...props }: MotionTestProps) => (
-      <button ref={ref as Ref<HTMLButtonElement>} {...stripMotionProps(props)} />
+    button: ({ ref, ...props }: MotionButtonProps) => (
+      <button ref={ref} {...stripMotionProps(props)} />
     ),
     div: MotionDiv,
   };
@@ -72,18 +82,19 @@ vi.mock("motion/react", () => {
 });
 
 beforeEach(() => {
+  const matchMedia = vi.fn<(query: string) => MediaQueryList>().mockImplementation((query) => ({
+    addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
+    addListener: vi.fn<MediaQueryList["addListener"]>(),
+    dispatchEvent: vi.fn<MediaQueryList["dispatchEvent"]>(),
+    matches: false,
+    media: query,
+    onchange: null,
+    removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
+    removeListener: vi.fn<MediaQueryList["removeListener"]>(),
+  }));
   Object.defineProperty(window, "matchMedia", {
     configurable: true,
-    value: vi.fn().mockImplementation((query: string) => ({
-      addEventListener: vi.fn(),
-      addListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-      matches: false,
-      media: query,
-      onchange: null,
-      removeEventListener: vi.fn(),
-      removeListener: vi.fn(),
-    })),
+    value: matchMedia,
   });
 });
 afterEach(() => {
@@ -102,7 +113,9 @@ describe("SheetRenderer integration", () => {
         <div>
           <p>Root sheet content</p>
           <button
-            onClick={() => push("nested", "nested", {}, { ariaLabel: "Nested sheet" })}
+            onClick={() => {
+              push("nested", "nested", {}, { ariaLabel: "Nested sheet" });
+            }}
             type="button"
           >
             Open nested
@@ -113,7 +126,12 @@ describe("SheetRenderer integration", () => {
     const Controls = () => {
       const { open } = useSheet();
       return (
-        <button onClick={() => open("root", "root", {}, { ariaLabel: "Root sheet" })} type="button">
+        <button
+          onClick={() => {
+            open("root", "root", {}, { ariaLabel: "Root sheet" });
+          }}
+          type="button"
+        >
           Open root
         </button>
       );
@@ -152,7 +170,12 @@ describe("SheetRenderer integration", () => {
     const Controls = () => {
       const { open } = useSheet();
       return (
-        <button onClick={() => open("details", "details", {})} type="button">
+        <button
+          onClick={() => {
+            open("details", "details", {});
+          }}
+          type="button"
+        >
           Open details
         </button>
       );

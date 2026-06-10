@@ -18,7 +18,9 @@ export const SegmentedControl = <T extends string | number>({
         <button
           aria-pressed={value === option.value}
           key={String(option.value)}
-          onClick={() => onChange(option.value)}
+          onClick={() => {
+            onChange(option.value);
+          }}
           type="button"
         >
           {option.label}

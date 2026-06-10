@@ -8,6 +8,7 @@ import {
   getStackOffset,
   getStackTransform,
 } from "./stacking";
+import { resolveConfig } from "./config";
 import type { ResolvedConfig, StackingConfig } from "./types";
 
 const defaultStacking: StackingConfig = {
@@ -132,7 +133,7 @@ describe("getSlideFrom", () => {
   });
 
   it("defaults to right for unknown side", () => {
-    expect(getSlideFrom("unknown" as never)).toEqual({ x: "100%" });
+    expect(getSlideFrom("unknown")).toEqual({ x: "100%" });
   });
 });
 
@@ -160,16 +161,17 @@ describe("getStackOffset", () => {
   });
 
   it("returns empty for unknown side with offset", () => {
-    expect(getStackOffset("unknown" as never, 10)).toEqual({});
+    expect(getStackOffset("unknown", 10)).toEqual({});
   });
 });
 
 describe("getPanelStyles", () => {
-  const mockConfig = {
+  const mockConfig: ResolvedConfig = {
+    ...resolveConfig(),
     maxWidth: "90vw",
     width: 420,
     zIndex: 100,
-  } as ResolvedConfig;
+  };
 
   it("positions bottom panel with left/right/bottom anchors", () => {
     const styles = getPanelStyles("bottom", mockConfig, 0);

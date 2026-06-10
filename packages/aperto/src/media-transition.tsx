@@ -21,15 +21,19 @@ export const ApertoMediaTransitionClone = ({
   const ctx = useApertoContext();
 
   useEffect(() => {
-    if (!transition?.to) {
-      return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (transition?.to !== undefined) {
+      timer = setTimeout(onComplete, transitionDurationMs(ctx.preset.transition));
     }
 
-    const timer = setTimeout(onComplete, transitionDurationMs(ctx.preset.transition));
-    return () => clearTimeout(timer);
+    return () => {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    };
   }, [ctx.preset.transition, onComplete, transition]);
 
-  if (!transition?.to) {
+  if (transition?.to === undefined) {
     return null;
   }
 

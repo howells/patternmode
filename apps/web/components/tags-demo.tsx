@@ -21,9 +21,18 @@ const createTag = (label: string): TagItem => ({
   variant: "outline",
 });
 
+const getOption = (index: number): TagItem => {
+  const option = options[index];
+  if (option === undefined) {
+    throw new Error(`Missing tag demo option at index ${index}.`);
+  }
+  return option;
+};
+
 export const TagsDemo = () => {
-  const [tags, setTags] = useState<TagItem[]>([options[0] as TagItem, options[5] as TagItem]);
-  const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([options[3] as TagItem]);
+  const [tags, setTags] = useState<TagItem[]>([getOption(0), getOption(5)]);
+  const [restrictedTags, setRestrictedTags] = useState<TagItem[]>([getOption(3)]);
+  const [showLargeTag, setShowLargeTag] = useState(true);
 
   return (
     <div className="tags-demo">
@@ -72,9 +81,16 @@ export const TagsDemo = () => {
           <Tag size="base" selected variant="outline">
             Base
           </Tag>
-          <Tag size="lg" onRemove={() => null}>
-            Large
-          </Tag>
+          {showLargeTag ? (
+            <Tag
+              size="lg"
+              onRemove={() => {
+                setShowLargeTag(false);
+              }}
+            >
+              Large
+            </Tag>
+          ) : null}
         </div>
       </div>
     </div>

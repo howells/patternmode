@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -167,7 +167,7 @@ function Example() {
 
 export default function TagsPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Badge-based tag pills and controlled command selectors for filtering, categorizing, and lightweight metadata workflows."
       title="Tags"
     >
@@ -179,6 +179,6 @@ export default function TagsPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={tagsApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

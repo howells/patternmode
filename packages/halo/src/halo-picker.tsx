@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentPropsWithoutRef, CSSProperties, PointerEvent } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties, PointerEvent, RefObject } from "react";
 import { useId, useRef } from "react";
 
 import {
@@ -22,6 +22,8 @@ import {
 import type { HaloColor } from "./halo-utils";
 
 type HaloPickerRootProps = Omit<ComponentPropsWithoutRef<"fieldset">, "onChange" | "value">;
+type HaloPadPointerEvent = PointerEvent<HTMLDivElement>;
+type HaloHuePointerEvent = PointerEvent<SVGSVGElement>;
 
 export interface HaloPickerProps extends HaloPickerRootProps {
   /**
@@ -64,6 +66,127 @@ const getRootStyle = (hue: number, hex: string, style: CSSProperties | undefined
     ...style,
   }) as CSSProperties;
 
+const HaloPad = ({
+  hex,
+  onPointerCancel,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  padHandle,
+  padLeft,
+  padRef,
+  padTop,
+}: {
+  hex: string;
+  onPointerCancel: () => void;
+  onPointerDown: (event: HaloPadPointerEvent) => void;
+  onPointerMove: (event: HaloPadPointerEvent) => void;
+  onPointerUp: (event: HaloPadPointerEvent) => void;
+  padHandle: { x: number; y: number };
+  padLeft: number;
+  padRef: RefObject<HTMLDivElement | null>;
+  padTop: number;
+}) => (
+  <div
+    className="patternmode-halo-picker__pad"
+    data-slot="halo-picker-pad"
+    data-testid="halo-picker-pad"
+    onPointerCancel={onPointerCancel}
+    onPointerDown={onPointerDown}
+    onPointerMove={onPointerMove}
+    onPointerUp={onPointerUp}
+    ref={padRef}
+    style={{
+      height: HALO_PAD_SIZE,
+      left: padLeft,
+      top: padTop,
+      width: HALO_PAD_SIZE,
+    }}
+  >
+    <span className="patternmode-halo-picker__pad-hue" />
+    <span className="patternmode-halo-picker__pad-white" />
+    <span className="patternmode-halo-picker__pad-black" />
+    <span
+      className="patternmode-halo-picker__pad-handle"
+      style={{
+        backgroundColor: hex,
+        left: `${padHandle.x}px`,
+        top: `${padHandle.y}px`,
+      }}
+    />
+  </div>
+);
+
+const HaloHueArc = ({
+  hex,
+  hue,
+  hueGradientId,
+  hueHandle,
+  onPointerCancel,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  svgRef,
+}: {
+  hex: string;
+  hue: number;
+  hueGradientId: string;
+  hueHandle: { x: number; y: number };
+  onPointerCancel: () => void;
+  onPointerDown: (event: HaloHuePointerEvent) => void;
+  onPointerMove: (event: HaloHuePointerEvent) => void;
+  onPointerUp: (event: HaloHuePointerEvent) => void;
+  svgRef: RefObject<SVGSVGElement | null>;
+}) => (
+  <>
+    <input
+      aria-label="Hue"
+      aria-valuenow={Math.round(hue)}
+      className="patternmode-halo-picker__arc-input"
+      max={360}
+      min={0}
+      readOnly
+      type="range"
+      value={Math.round(hue)}
+    />
+    <svg
+      aria-hidden="true"
+      className="patternmode-halo-picker__arc"
+      onPointerCancel={onPointerCancel}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      ref={svgRef}
+      viewBox={HALO_VIEWBOX}
+    >
+      <defs>
+        <linearGradient id={hueGradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+          <stop offset="0%" stopColor="#ff3b30" />
+          <stop offset="16%" stopColor="#ff9500" />
+          <stop offset="33%" stopColor="#ffcc00" />
+          <stop offset="50%" stopColor="#34c759" />
+          <stop offset="66%" stopColor="#0a84ff" />
+          <stop offset="83%" stopColor="#5856d6" />
+          <stop offset="100%" stopColor="#ff2d55" />
+        </linearGradient>
+      </defs>
+      <path
+        className="patternmode-halo-picker__arc-path"
+        d={HALO_ARC_PATH}
+        stroke={`url(#${hueGradientId})`}
+        strokeWidth={HALO_ARC_STROKE_WIDTH}
+      />
+      <circle
+        className="patternmode-halo-picker__arc-handle"
+        cx={hueHandle.x}
+        cy={hueHandle.y}
+        fill={hex}
+        r="6"
+      />
+    </svg>
+  </>
+);
+
 /** Round saturation/lightness pad with a compact hue smile arc. */
 export const HaloPicker = ({
   className,
@@ -104,40 +227,40 @@ export const HaloPicker = ({
     onChange({ ...value, h: pointerToHaloHue(clientX, clientY, svg.getBoundingClientRect()) });
   };
 
-  const onPadPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+  const onPadPointerDown = (event: HaloPadPointerEvent) => {
     event.preventDefault();
     setPointerCapture(event);
     isPadDraggingRef.current = true;
     updatePad(event.clientX, event.clientY);
   };
 
-  const onPadPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+  const onPadPointerMove = (event: HaloPadPointerEvent) => {
     if (!(isPadDraggingRef.current || event.buttons === 1)) {
       return;
     }
     updatePad(event.clientX, event.clientY);
   };
 
-  const onPadPointerUp = (event: PointerEvent<HTMLDivElement>) => {
+  const onPadPointerUp = (event: HaloPadPointerEvent) => {
     releasePointerCapture(event);
     isPadDraggingRef.current = false;
   };
 
-  const onHuePointerDown = (event: PointerEvent<SVGSVGElement>) => {
+  const onHuePointerDown = (event: HaloHuePointerEvent) => {
     event.preventDefault();
     setPointerCapture(event);
     isHueDraggingRef.current = true;
     updateHue(event.clientX, event.clientY);
   };
 
-  const onHuePointerMove = (event: PointerEvent<SVGSVGElement>) => {
+  const onHuePointerMove = (event: HaloHuePointerEvent) => {
     if (!(isHueDraggingRef.current || event.buttons === 1)) {
       return;
     }
     updateHue(event.clientX, event.clientY);
   };
 
-  const onHuePointerUp = (event: PointerEvent<SVGSVGElement>) => {
+  const onHuePointerUp = (event: HaloHuePointerEvent) => {
     releasePointerCapture(event);
     isHueDraggingRef.current = false;
   };
@@ -154,78 +277,33 @@ export const HaloPicker = ({
         className="patternmode-halo-picker__stage"
         style={{ height: HALO_HEIGHT, width: HALO_WIDTH }}
       >
-        <div
-          className="patternmode-halo-picker__pad"
-          data-slot="halo-picker-pad"
-          data-testid="halo-picker-pad"
+        <HaloPad
+          hex={hex}
           onPointerCancel={() => {
             isPadDraggingRef.current = false;
           }}
           onPointerDown={onPadPointerDown}
           onPointerMove={onPadPointerMove}
           onPointerUp={onPadPointerUp}
-          ref={padRef}
-          style={{
-            height: HALO_PAD_SIZE,
-            left: padLeft,
-            top: padTop,
-            width: HALO_PAD_SIZE,
-          }}
-        >
-          <span className="patternmode-halo-picker__pad-hue" />
-          <span className="patternmode-halo-picker__pad-white" />
-          <span className="patternmode-halo-picker__pad-black" />
-          <span
-            className="patternmode-halo-picker__pad-handle"
-            style={{
-              backgroundColor: hex,
-              left: `${padHandle.x}px`,
-              top: `${padHandle.y}px`,
-            }}
-          />
-        </div>
+          padHandle={padHandle}
+          padLeft={padLeft}
+          padRef={padRef}
+          padTop={padTop}
+        />
 
-        <svg
-          aria-label="Hue"
-          aria-valuemax={360}
-          aria-valuemin={0}
-          aria-valuenow={Math.round(value.h)}
-          className="patternmode-halo-picker__arc"
+        <HaloHueArc
+          hex={hex}
+          hue={value.h}
+          hueGradientId={hueGradientId}
+          hueHandle={hueHandle}
           onPointerCancel={() => {
             isHueDraggingRef.current = false;
           }}
           onPointerDown={onHuePointerDown}
           onPointerMove={onHuePointerMove}
           onPointerUp={onHuePointerUp}
-          ref={svgRef}
-          role="slider"
-          viewBox={HALO_VIEWBOX}
-        >
-          <defs>
-            <linearGradient id={hueGradientId} x1="0%" x2="100%" y1="0%" y2="0%">
-              <stop offset="0%" stopColor="#ff3b30" />
-              <stop offset="16%" stopColor="#ff9500" />
-              <stop offset="33%" stopColor="#ffcc00" />
-              <stop offset="50%" stopColor="#34c759" />
-              <stop offset="66%" stopColor="#0a84ff" />
-              <stop offset="83%" stopColor="#5856d6" />
-              <stop offset="100%" stopColor="#ff2d55" />
-            </linearGradient>
-          </defs>
-          <path
-            className="patternmode-halo-picker__arc-path"
-            d={HALO_ARC_PATH}
-            stroke={`url(#${hueGradientId})`}
-            strokeWidth={HALO_ARC_STROKE_WIDTH}
-          />
-          <circle
-            className="patternmode-halo-picker__arc-handle"
-            cx={hueHandle.x}
-            cy={hueHandle.y}
-            fill={hex}
-            r="6"
-          />
-        </svg>
+          svgRef={svgRef}
+        />
       </div>
       {showValue ? <output className="patternmode-halo-picker__value">{hex}</output> : null}
     </fieldset>

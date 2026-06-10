@@ -57,7 +57,7 @@ export interface SlideValues {
   y?: string | number;
 }
 /** Motion initial/exit values for sliding from the given side. */
-export const getSlideFrom = (side: Side): SlideValues => {
+export const getSlideFrom = (side: string): SlideValues => {
   switch (side) {
     case "right": {
       return { x: "100%" };
@@ -77,7 +77,7 @@ export const getSlideFrom = (side: Side): SlideValues => {
 export const getSlideTarget = (): SlideValues => ({ x: 0, y: 0 });
 /** Translate offset that pushes stacked panels away from the stack edge. */
 export const getStackOffset = (
-  side: Side,
+  side: string,
   offset: number,
 ): {
   x?: number;

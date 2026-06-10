@@ -1,6 +1,7 @@
 import { FocusTrap } from "focus-trap-react";
 import type { ReactNode, RefObject } from "react";
 import { useSyncExternalStore } from "react";
+
 const LAYERED_MODAL_SELECTORS = [
   '[role="dialog"][data-state="open"]',
   '[role="alertdialog"][data-state="open"]',
@@ -10,7 +11,9 @@ const LAYERED_MODAL_SELECTORS = [
 
 const subscribeToFocusTarget = (onStoreChange: () => void): (() => void) => {
   document.addEventListener("focusin", onStoreChange, true);
-  return () => document.removeEventListener("focusin", onStoreChange, true);
+  return () => {
+    document.removeEventListener("focusin", onStoreChange, true);
+  };
 };
 const getServerLayeredModalFocused = (): boolean => false;
 const getLayeredModalFocused = (): boolean => {
@@ -44,7 +47,7 @@ export const ModalFocusTrap = ({
   active: boolean;
   fallbackRef: RefObject<HTMLElement | null>;
   children: ReactNode;
-}) => {
+}): ReactNode => {
   const paused = useLayeredModalFocused(enabled && active);
   if (!enabled) {
     return children;
@@ -56,7 +59,7 @@ export const ModalFocusTrap = ({
         allowOutsideClick: true,
         escapeDeactivates: false,
         fallbackFocus: () => {
-          if (fallbackRef.current) {
+          if (fallbackRef.current !== null) {
             return fallbackRef.current;
           }
           return document.body;

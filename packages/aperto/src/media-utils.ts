@@ -9,4 +9,7 @@ export const getDescriptionProps = (
   item: ApertoMediaItem,
 ): {
   "aria-describedby"?: undefined;
-} => (item.description ? {} : { "aria-describedby": undefined });
+} =>
+  item.description === undefined || item.description === ""
+    ? { "aria-describedby": undefined }
+    : {};

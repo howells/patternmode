@@ -1,43 +1,73 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import path from "node:path";
 
 const root = process.cwd();
 
-const readJson = (path) => JSON.parse(readFileSync(path, "utf-8"));
+/**
+ * @typedef {{
+ *   name: string;
+ *   private?: boolean;
+ * }} PackageJson
+ */
+
+/**
+ * @param {unknown} value Value to test.
+ * @returns {value is PackageJson} Whether the value is a package manifest.
+ */
+const isPackageJson = (value) =>
+  typeof value === "object" && value !== null && "name" in value && typeof value.name === "string";
+
+/**
+ * @param {string} filePath Manifest file path.
+ * @returns {PackageJson} Parsed package manifest.
+ */
+const readPackageJson = (filePath) => {
+  /** @type {unknown} */
+  const parsed = JSON.parse(readFileSync(filePath, "utf-8"));
+  if (!isPackageJson(parsed)) {
+    throw new Error(`${path.relative(root, filePath)} is not a package manifest.`);
+  }
+  return parsed;
+};
 
 const workspaceRoots = ["apps", "packages"];
 
 const workspaceManifests = () =>
   workspaceRoots.flatMap((workspaceDir) =>
-    readdirSync(join(root, workspaceDir), { withFileTypes: true })
+    readdirSync(path.join(root, workspaceDir), { withFileTypes: true })
       .filter((entry) => entry.isDirectory())
       .map((entry) => {
-        const path = join(workspaceDir, entry.name);
+        const packagePath = path.join(workspaceDir, entry.name);
         return {
-          manifestPath: join(path, "package.json"),
-          packagePath: path,
+          manifestPath: path.join(packagePath, "package.json"),
+          packagePath,
         };
       })
-      .filter(({ manifestPath }) => existsSync(join(root, manifestPath))),
+      .filter(({ manifestPath }) => existsSync(path.join(root, manifestPath))),
   );
 
+/**
+ * @param {string} dir Directory to walk.
+ * @returns {string[]} Matching source files.
+ */
 const walk = (dir) => {
   const entries = readdirSync(dir);
+  /** @type {string[]} */
   const files = [];
 
   for (const entry of entries) {
-    const path = join(dir, entry);
-    const stats = statSync(path);
+    const filePath = path.join(dir, entry);
+    const stats = statSync(filePath);
     if (stats.isDirectory()) {
       if (entry === "dist" || entry === "node_modules" || entry === ".turbo") {
         continue;
       }
-      files.push(...walk(path));
+      files.push(...walk(filePath));
       continue;
     }
 
-    if (/\.(ts|tsx|js|jsx|json)$/u.test(entry)) {
-      files.push(path);
+    if (/\.(?<extension>ts|tsx|js|jsx|json)$/u.test(entry)) {
+      files.push(filePath);
     }
   }
 
@@ -47,7 +77,7 @@ const walk = (dir) => {
 const failures = [];
 const manifests = workspaceManifests().map(({ manifestPath, packagePath }) => ({
   manifestPath,
-  packageJson: readJson(join(root, manifestPath)),
+  packageJson: readPackageJson(path.join(root, manifestPath)),
   packagePath,
 }));
 
@@ -69,12 +99,12 @@ for (const { manifestPath, packageJson } of privatePackages) {
 }
 
 for (const { packagePath } of publicPackages) {
-  for (const file of walk(join(root, packagePath, "src"))) {
+  for (const file of walk(path.join(root, packagePath, "src"))) {
     const source = readFileSync(file, "utf-8");
     for (const forbidden of forbiddenInPublicPackages) {
       if (source.includes(forbidden)) {
         failures.push(
-          `${relative(root, file)} imports or references forbidden private surface: ${forbidden}`,
+          `${path.relative(root, file)} imports or references forbidden private surface: ${forbidden}`,
         );
       }
     }

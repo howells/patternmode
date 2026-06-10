@@ -12,6 +12,7 @@ import {
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./index";
+import type { HaloColor } from "./index";
 
 afterEach(() => {
   cleanup();
@@ -27,24 +28,23 @@ describe("HaloPicker utilities", () => {
 
   it("maps saturation/lightness and hue to stable handle coordinates", () => {
     expect(getHaloPadHandlePosition(50, 50)).toEqual({ x: 52, y: 52 });
-    expect(getHaloHueHandlePosition(0)).toMatchObject({
-      x: expect.any(Number),
-      y: expect.any(Number),
-    });
+    const hueHandle = getHaloHueHandlePosition(0);
+    expect(typeof hueHandle.x).toBe("number");
+    expect(typeof hueHandle.y).toBe("number");
   });
 
   it("converts pointer positions into bounded color channels", () => {
-    const padRect = { height: 104, left: 10, top: 20, width: 104 } as DOMRect;
+    const padRect = new DOMRect(10, 20, 104, 104);
     expect(pointerToHaloPad(62, 72, padRect)).toEqual({ l: 50, s: 50 });
 
-    const svgRect = { height: 128, left: 0, top: 0, width: 128 } as DOMRect;
+    const svgRect = new DOMRect(0, 0, 128, 128);
     expect(pointerToHaloHue(128, 78, svgRect)).toBeGreaterThan(0);
   });
 });
 
 describe("HaloPicker", () => {
   it("renders the round pad, hue smile arc, and current hex output", () => {
-    render(<HaloPicker aria-label="Accent color" onChange={() => null} value={value} />);
+    render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
 
     const picker = screen.getByRole("group", { name: "Accent color" });
     expect(picker).toHaveAttribute("data-slot", "halo-picker");
@@ -53,7 +53,7 @@ describe("HaloPicker", () => {
   });
 
   it("reports saturation and lightness changes from the round pad", () => {
-    const onChange = vi.fn();
+    const onChange = vi.fn<(value: HaloColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
     const pad = screen.getByTestId("halo-picker-pad");

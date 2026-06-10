@@ -1,9 +1,10 @@
 import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { ComponentType, CSSProperties, ReactNode } from "react";
+import type { ComponentType, CSSProperties, ReactNode, RefObject } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 import { useResolvedSide } from "./media";
 import { useBodyScale, useViewportHeight } from "./renderer-effects";
 import { resolveClassNames } from "./renderer-helpers";
@@ -85,32 +86,46 @@ interface SheetRendererProps<TMap extends object> {
   config: ResolvedConfig;
   layout?: StacksheetLayout;
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
-  sheets: ContentMap<TMap>;
+  sheets?: ContentMap<TMap>;
   store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
 }
-/**
- * Root renderer component — manages the backdrop, scroll lock, snap points,
- * close reasons, focus restoration, keyboard/CloseWatcher dismissal, and
- * delegates per-panel rendering to `SheetPanel`.
- *
- * Mounted inside a Portal by `StacksheetProvider`.
- */
-export const SheetRenderer = <TMap extends object>({
-  store,
-  config,
-  sheets,
-  componentMap,
-  classNames: classNamesProp,
-  layout,
-  renderHeader,
-}: SheetRendererProps<TMap>) => {
+
+const isContentComponent = (content: unknown): content is ComponentType<Record<string, unknown>> =>
+  typeof content === "function";
+
+const getStaticContent = <TMap extends object>(
+  sheets: ContentMap<TMap> | undefined,
+  type: string,
+): ComponentType<Record<string, unknown>> | undefined => {
+  if (sheets === undefined) {
+    return undefined;
+  }
+  const match = Object.entries(sheets).find(([sheetType]) => sheetType === type);
+  const content = match?.[1];
+  return isContentComponent(content) ? content : undefined;
+};
+
+const useRendererStore = <TMap extends object>(
+  store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>,
+) => {
   const isOpen = useStore(store, (s) => s.isOpen);
   const stack = useStore(store, (s) => s.stack);
-  const rawClose = useStore(store, (s) => s.close);
-  const rawPop = useStore(store, (s) => s.pop);
-  const side = useResolvedSide(config);
-  const prefersReducedMotion = useReducedMotion() ?? false;
-  const classNames = resolveClassNames(classNamesProp);
+  const { rawClose, rawPop } = useStore(
+    store,
+    useShallow((s) => ({
+      rawClose: s.close,
+      rawPop: s.pop,
+    })),
+  );
+  return { isOpen, rawClose, rawPop, stack };
+};
+
+const useSnapState = (
+  config: ResolvedConfig,
+  isOpen: boolean,
+  side: Side,
+  stack: StacksheetSnapshot<object>["stack"],
+) => {
   const viewportHeight = useViewportHeight(
     isOpen && side === "bottom" && config.snapPoints.length > 0,
   );
@@ -137,6 +152,10 @@ export const SheetRenderer = <TMap extends object>({
     });
     config.onSnapPointChange?.(index);
   };
+  return { activeSnapIndex, handleSnap, snapHeights };
+};
+
+const useCloseControls = (rawClose: () => void, rawPop: () => void) => {
   const closeReasonRef = useRef<CloseReason>("programmatic");
   const closeWith = (reason: CloseReason) => {
     closeReasonRef.current = reason;
@@ -146,9 +165,20 @@ export const SheetRenderer = <TMap extends object>({
     closeReasonRef.current = reason;
     rawPop();
   };
-  const close = () => closeWith("programmatic");
-  const pop = () => popWith("programmatic");
-  useBodyScale(config, isOpen, prefersReducedMotion);
+  return {
+    close: () => {
+      closeWith("programmatic");
+    },
+    closeReasonRef,
+    closeWith,
+    pop: () => {
+      popWith("programmatic");
+    },
+    popWith,
+  };
+};
+
+const useFocusRestore = (isOpen: boolean) => {
   const triggerRef = useRef<Element | null>(null);
   const wasOpenRef = useRef(false);
   useEffect(() => {
@@ -163,49 +193,115 @@ export const SheetRenderer = <TMap extends object>({
     }
     wasOpenRef.current = isOpen;
   }, [isOpen]);
-  const stackLengthRef = useRef(stack.length);
+};
+
+const dismissFromEscape = ({
+  closeReasonRef,
+  rawClose,
+  rawPop,
+  stackLengthRef,
+}: {
+  closeReasonRef: RefObject<CloseReason>;
+  rawClose: () => void;
+  rawPop: () => void;
+  stackLengthRef: RefObject<number>;
+}) => {
+  closeReasonRef.current = "escape";
+  if (stackLengthRef.current > 1) {
+    rawPop();
+  } else {
+    rawClose();
+  }
+};
+
+const useDismissalEffects = ({
+  closeReasonRef,
+  config,
+  isOpen,
+  rawClose,
+  rawPop,
+  stackLength,
+}: {
+  closeReasonRef: RefObject<CloseReason>;
+  config: ResolvedConfig;
+  isOpen: boolean;
+  rawClose: () => void;
+  rawPop: () => void;
+  stackLength: number;
+}) => {
+  const stackLengthRef = useRef(stackLength);
   useEffect(() => {
-    stackLengthRef.current = stack.length;
-  }, [stack.length]);
+    stackLengthRef.current = stackLength;
+  }, [stackLength]);
   useEffect(() => {
-    if (!(isOpen && config.closeOnEscape && config.dismissible)) {
-      return;
-    }
+    const shouldListen = isOpen && config.closeOnEscape && config.dismissible;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        if (stackLengthRef.current > 1) {
-          closeReasonRef.current = "escape";
-          rawPop();
-        } else {
-          closeReasonRef.current = "escape";
-          rawClose();
-        }
+        dismissFromEscape({ closeReasonRef, rawClose, rawPop, stackLengthRef });
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, config.closeOnEscape, config.dismissible, rawPop, rawClose]);
-  useEffect(() => {
-    if (!(isOpen && config.dismissible) || globalThis.CloseWatcher === undefined) {
-      return;
+    if (shouldListen) {
+      document.addEventListener("keydown", handleKeyDown);
     }
-    const watcher = new globalThis.CloseWatcher();
-    const handleClose = () => {
-      if (stackLengthRef.current > 1) {
-        closeReasonRef.current = "escape";
-        rawPop();
-      } else {
-        closeReasonRef.current = "escape";
-        rawClose();
+    return () => {
+      if (shouldListen) {
+        document.removeEventListener("keydown", handleKeyDown);
       }
     };
-    watcher.addEventListener("close", handleClose);
-    return () => {
-      watcher.removeEventListener("close", handleClose);
-      watcher.destroy();
+  }, [isOpen, config.closeOnEscape, config.dismissible, rawPop, rawClose, closeReasonRef]);
+  useEffect(() => {
+    const CloseWatcherConstructor = globalThis.CloseWatcher;
+    const shouldListen = isOpen && config.dismissible && CloseWatcherConstructor !== undefined;
+    let watcher: InstanceType<NonNullable<typeof CloseWatcherConstructor>> | undefined;
+    const handleClose = () => {
+      dismissFromEscape({ closeReasonRef, rawClose, rawPop, stackLengthRef });
     };
-  }, [isOpen, config.dismissible, rawPop, rawClose]);
+    if (shouldListen) {
+      watcher = new CloseWatcherConstructor();
+      watcher.addEventListener("close", handleClose);
+    }
+    return () => {
+      if (watcher !== undefined) {
+        watcher.removeEventListener("close", handleClose);
+        watcher.destroy();
+      }
+    };
+  }, [isOpen, config.dismissible, rawPop, rawClose, closeReasonRef]);
+};
+
+/**
+ * Root renderer component — manages the backdrop, scroll lock, snap points,
+ * close reasons, focus restoration, keyboard/CloseWatcher dismissal, and
+ * delegates per-panel rendering to `SheetPanel`.
+ *
+ * Mounted inside a Portal by `StacksheetProvider`.
+ */
+export const SheetRenderer = <TMap extends object>({
+  store,
+  config,
+  sheets,
+  componentMap,
+  classNames: classNamesProp,
+  layout,
+  renderHeader,
+}: SheetRendererProps<TMap>) => {
+  const { isOpen, rawClose, rawPop, stack } = useRendererStore(store);
+  const side = useResolvedSide(config);
+  const prefersReducedMotion = useReducedMotion() ?? false;
+  const classNames = resolveClassNames(classNamesProp);
+  const { activeSnapIndex, handleSnap, snapHeights } = useSnapState(config, isOpen, side, stack);
+  const { close, closeReasonRef, closeWith, pop, popWith } = useCloseControls(rawClose, rawPop);
+  useBodyScale(config, isOpen, prefersReducedMotion);
+  useFocusRestore(isOpen);
+  useDismissalEffects({
+    closeReasonRef,
+    config,
+    isOpen,
+    rawClose,
+    rawPop,
+    stackLength: stack.length,
+  });
   const slideFrom = getSlideFrom(side);
   const slideTarget = getSlideTarget();
   const spring = getMotionSpring(prefersReducedMotion, config);
@@ -219,8 +315,12 @@ export const SheetRenderer = <TMap extends object>({
       config.onCloseComplete?.(closeReasonRef.current);
     }
   };
-  const swipeClose = () => closeWith("swipe");
-  const swipePop = () => popWith("swipe");
+  const swipeClose = () => {
+    closeWith("swipe");
+  };
+  const swipePop = () => {
+    popWith("swipe");
+  };
   const shouldLockScroll = isOpen && isModal && config.lockScroll;
   return (
     <LazyMotion features={domMax}>
@@ -235,7 +335,9 @@ export const SheetRenderer = <TMap extends object>({
               key="stacksheet-backdrop"
               onClick={
                 config.closeOnBackdrop && config.dismissible
-                  ? () => closeWith("backdrop")
+                  ? () => {
+                      closeWith("backdrop");
+                    }
                   : undefined
               }
               style={backdropStyle}
@@ -256,9 +358,7 @@ export const SheetRenderer = <TMap extends object>({
               const isTop = depth === 0;
               const isNested = index > 0;
               const shouldRender = depth <= config.stacking.renderThreshold;
-              const Content = (componentMap.get(item.type) ?? sheets[item.type as keyof TMap]) as
-                | ComponentType<Record<string, unknown>>
-                | undefined;
+              const Content = componentMap.get(item.type) ?? getStaticContent(sheets, item.type);
               return (
                 <SheetPanel
                   activeSnapIndex={activeSnapIndex}

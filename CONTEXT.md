@@ -615,7 +615,6 @@ _Avoid_: Removing selected options from the option list by default
 The **Tag Selector Part** shown when the current search has no options or creation affordance.
 _Avoid_: Treating Empty as a missing Tag Item
 
-
 **Tag Item Creation**:
 The consumer-owned process that turns a draft label into a new **Tag Item**.
 _Avoid_: Having Tag Selector invent persistent Tag Item identity

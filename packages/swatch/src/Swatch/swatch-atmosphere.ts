@@ -37,7 +37,7 @@ const clamp = (value: number, min: number, max: number): number =>
 const normalizeHex = (color: string): string | null => {
   const value = color.trim().replace(/^#/u, "");
   if (/^[\da-f]{3}$/iu.test(value)) {
-    return [...value].map((part) => part + part).join("");
+    return `${value[0]}${value[0]}${value[1]}${value[1]}${value[2]}${value[2]}`;
   }
   if (/^[\da-f]{6}$/iu.test(value)) {
     return value;
@@ -47,7 +47,7 @@ const normalizeHex = (color: string): string | null => {
 
 const withAlpha = (color: string, alpha: number): string => {
   const hex = normalizeHex(color);
-  if (hex) {
+  if (hex !== null) {
     const suffix = Math.round(clamp(alpha, 0, 255))
       .toString(16)
       .padStart(2, "0");
@@ -61,7 +61,7 @@ export const getSwatchAtmosphereBackground = (
   colors: SwatchColorStop[] | undefined,
   options: SwatchAtmosphereOptions = {},
 ): string | undefined => {
-  if (!colors || colors.length === 0) {
+  if (colors === undefined || colors.length === 0) {
     return undefined;
   }
 
@@ -72,7 +72,10 @@ export const getSwatchAtmosphereBackground = (
 
   const layers = colors.map((stop, index) => {
     const color = typeof stop === "string" ? stop : stop.color;
-    const pool = POOLS[index % POOLS.length] as (typeof POOLS)[number];
+    const pool = POOLS[index % POOLS.length];
+    if (pool === undefined) {
+      throw new Error("Expected atmosphere pool to exist.");
+    }
     const [x, y, baseAlpha, radiusDelta, gravitySign] = pool;
     // Each wrap past the palette length fades the extra pools further back.
     const cycle = Math.floor(index / POOLS.length);

@@ -19,8 +19,12 @@ export const ApertoThumbnail = ({ children, className, index }: ApertoThumbnailP
       active={group.index === index}
       aria-label={`Open ${getMediaLabel(media)}`}
       className={className ?? group.classNames?.thumbnail}
-      onClick={() => group.openAtIndex(index)}
-      ref={(node) => group.registerThumbnail(index, node)}
+      onClick={() => {
+        group.openAtIndex(index);
+      }}
+      ref={(node) => {
+        group.registerThumbnail(index, node);
+      }}
       sharedLayoutId={false}
     >
       {children ?? (

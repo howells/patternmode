@@ -113,7 +113,7 @@ export const CONTAINER_PREFIX = {
 export const isResponsiveValue = <T>(
   value: ResponsiveValue<T> | undefined,
 ): value is Partial<Record<Breakpoint, T>> & { base?: T } =>
-  !!value && typeof value === "object" && !Array.isArray(value);
+  value !== undefined && value !== null && typeof value === "object" && !Array.isArray(value);
 
 /** Returns the class prefix for a breakpoint in screen or container mode. */
 export const getBreakpointPrefix = (
@@ -137,13 +137,13 @@ export const getResponsiveClasses = <T extends number | string>(
   }
 
   if (!isResponsiveValue(value)) {
-    const className = classMap[value as T];
+    const className = classMap[value];
     return className ? [className] : [];
   }
 
   const classes: string[] = [];
   if (value.base !== undefined) {
-    const className = classMap[value.base as T];
+    const className = classMap[value.base];
     if (className) {
       classes.push(className);
     }
@@ -155,7 +155,7 @@ export const getResponsiveClasses = <T extends number | string>(
       continue;
     }
 
-    const className = classMap[breakpointValue as T];
+    const className = classMap[breakpointValue];
     if (className) {
       classes.push(`${getBreakpointPrefix(breakpoint, mode)}${className}`);
     }

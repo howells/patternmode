@@ -7,7 +7,6 @@ import { resolveConfig } from "./config";
 import { SheetRenderer } from "./renderer";
 import { createSheetStore } from "./store";
 import type {
-  ContentMap,
   ResolvedConfig,
   SheetActions,
   StacksheetConfig,
@@ -15,6 +14,7 @@ import type {
   StacksheetProviderProps,
   StacksheetSnapshot,
 } from "./types";
+
 type StoreState<TMap extends object> = StacksheetSnapshot<TMap> & SheetActions<TMap>;
 /**
  * Create an isolated sheet stack instance with typed store, hooks, and provider.
@@ -64,10 +64,9 @@ export const createStacksheet = <TMap extends object>(
     return ctx;
   };
   // ── Provider ────────────────────────────────
-  const EMPTY_SHEETS = {} as ContentMap<TMap>;
   const providerValue = { config: resolved, store };
   const StacksheetProvider = ({
-    sheets = EMPTY_SHEETS,
+    sheets,
     children,
     classNames,
     layout,

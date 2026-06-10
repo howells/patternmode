@@ -12,6 +12,40 @@ import type { ScrollFrameAxis, ScrollFrameProps } from "./scroll-frame-types";
 import { defaultControlAxis, shouldRenderFade, supportsAxis } from "./scroll-frame-utils";
 import { ScrollFrameViewport } from "./scroll-frame-viewport";
 
+const SCROLL_FRAME_FADE_EDGES = ["start", "end"] as const;
+
+const getFadeAxes = (axes: ScrollFrameProps["axes"]): ScrollFrameAxis[] => {
+  if (axes === "both") {
+    return ["vertical", "horizontal"];
+  }
+  return [axes ?? "vertical"];
+};
+
+const ScrollFrameFades = ({ axes, fades }: Pick<ScrollFrameProps, "axes" | "fades">) =>
+  getFadeAxes(axes).map((axis) =>
+    SCROLL_FRAME_FADE_EDGES.map((edge) =>
+      shouldRenderFade(fades, axis, edge) ? (
+        <ScrollFrameFade axis={axis} edge={edge} key={`${axis}-${edge}`} />
+      ) : null,
+    ),
+  );
+
+const ScrollFrameScrollbars = ({ axes }: Pick<ScrollFrameProps, "axes">) => (
+  <>
+    {supportsAxis(axes ?? "vertical", "vertical") ? (
+      <ScrollFrameScrollbar orientation="vertical">
+        <ScrollFrameThumb />
+      </ScrollFrameScrollbar>
+    ) : null}
+    {supportsAxis(axes ?? "vertical", "horizontal") ? (
+      <ScrollFrameScrollbar orientation="horizontal">
+        <ScrollFrameThumb />
+      </ScrollFrameScrollbar>
+    ) : null}
+    {axes === "both" ? <ScrollFrameCorner /> : null}
+  </>
+);
+
 const ScrollFrameBase = ({
   axes = "vertical",
   children,
@@ -33,7 +67,6 @@ const ScrollFrameBase = ({
   const controlAxis = controlConfig.axis ?? defaultControlAxis(axes);
   const visibility =
     controlConfig.visibility ?? controlVisibility ?? (controlsEnabled ? "auto" : "hidden");
-  const fadeAxes: ScrollFrameAxis[] = axes === "both" ? ["vertical", "horizontal"] : [axes];
 
   return (
     <ScrollFrameRoot
@@ -54,24 +87,8 @@ const ScrollFrameBase = ({
       >
         {children}
       </ScrollFrameViewport>
-      {fadeAxes.map((axis) =>
-        (["start", "end"] as const).map((edge) =>
-          shouldRenderFade(fades, axis, edge) ? (
-            <ScrollFrameFade axis={axis} edge={edge} key={`${axis}-${edge}`} />
-          ) : null,
-        ),
-      )}
-      {supportsAxis(axes, "vertical") ? (
-        <ScrollFrameScrollbar orientation="vertical">
-          <ScrollFrameThumb />
-        </ScrollFrameScrollbar>
-      ) : null}
-      {supportsAxis(axes, "horizontal") ? (
-        <ScrollFrameScrollbar orientation="horizontal">
-          <ScrollFrameThumb />
-        </ScrollFrameScrollbar>
-      ) : null}
-      {axes === "both" ? <ScrollFrameCorner /> : null}
+      <ScrollFrameFades axes={axes} fades={fades} />
+      <ScrollFrameScrollbars axes={axes} />
       {controlsEnabled ? <ScrollFrameNext axis={controlAxis} visibility={visibility} /> : null}
     </ScrollFrameRoot>
   );

@@ -86,7 +86,9 @@ export const StatusDemo = () => {
           <button
             aria-pressed={step === "null"}
             className="status-demo-state-item"
-            onClick={() => dispatch({ step: "null", type: "set-step" })}
+            onClick={() => {
+              dispatch({ step: "null", type: "set-step" });
+            }}
             type="button"
           >
             <StatusMark
@@ -105,7 +107,9 @@ export const StatusDemo = () => {
               aria-pressed={step === v}
               className="status-demo-state-item"
               key={v}
-              onClick={() => dispatch({ step: v, type: "set-step" })}
+              onClick={() => {
+                dispatch({ step: v, type: "set-step" });
+              }}
               type="button"
             >
               <StatusMark
@@ -126,7 +130,9 @@ export const StatusDemo = () => {
       <div className="status-demo-cell status-demo-cell--full status-demo-controls">
         <OptionBar
           label="Variant"
-          onChange={(nextVariant) => dispatch({ type: "set-variant", variant: nextVariant })}
+          onChange={(nextVariant) => {
+            dispatch({ type: "set-variant", variant: nextVariant });
+          }}
           options={[
             { label: "fill", value: "fill" as const },
             { label: "border", value: "border" as const },

@@ -1,5 +1,25 @@
 import type { SnapPoint } from "./types";
-const SNAP_POINT_RE = /^(\d+(?:\.\d+)?)(px|rem|em|vh|%)$/u;
+
+const SNAP_POINT_RE = /^(?<value>\d+(?:\.\d+)?)(?<unit>px|rem|em|vh|%)$/u;
+
+const getRootFontSize = (): number =>
+  typeof document === "undefined"
+    ? 16
+    : Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+const resolveUnitPx = (value: number, unit: string, viewportHeight: number): number => {
+  if (unit === "px") {
+    return value;
+  }
+  if (unit === "rem" || unit === "em") {
+    return value * getRootFontSize();
+  }
+  if (unit === "vh" || unit === "%") {
+    return (value / 100) * viewportHeight;
+  }
+  return 0;
+};
+
 /**
  * Resolve a snap point value to pixels given the viewport height.
  * - number 0-1: fraction of viewport (0.5 → 50% of vh)
@@ -11,32 +31,13 @@ const resolveSnapPointPx = (point: SnapPoint, viewportHeight: number): number =>
     return point <= 1 ? point * viewportHeight : point;
   }
   if (typeof point === "string") {
-    const match = point.match(SNAP_POINT_RE);
-    if (!match?.[1]) {
+    const match = SNAP_POINT_RE.exec(point);
+    const rawValue = match?.groups?.value;
+    const unit = match?.groups?.unit;
+    if (rawValue === undefined || unit === undefined) {
       return 0;
     }
-    const [, rawValue, unit] = match;
-    const value = Number.parseFloat(rawValue);
-    switch (unit) {
-      case "px": {
-        return value;
-      }
-      case "rem":
-      case "em": {
-        const fontSize =
-          typeof document === "undefined"
-            ? 16
-            : Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-        return value * fontSize;
-      }
-      case "vh":
-      case "%": {
-        return (value / 100) * viewportHeight;
-      }
-      default: {
-        return 0;
-      }
-    }
+    return resolveUnitPx(Number.parseFloat(rawValue), unit, viewportHeight);
   }
   return 0;
 };

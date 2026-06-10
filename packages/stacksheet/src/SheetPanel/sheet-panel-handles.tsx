@@ -1,6 +1,7 @@
 import { m } from "motion/react";
 import type { CSSProperties } from "react";
 import type { Side } from "../types";
+
 export const BottomHandle = ({ onDismiss }: { onDismiss?: () => void }) => (
   <button
     aria-label="Dismiss"

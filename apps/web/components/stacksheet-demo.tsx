@@ -20,9 +20,12 @@ const { StacksheetProvider, useSheet, useStacksheetState } = createStacksheet<De
 });
 
 const OverviewSheet = ({ title }: { title: string }) => {
-  const { close, push } = useSheet();
+  const sheet = useSheet();
   const pushFlowSheet = () => {
-    push("Flow", `flow-${Date.now()}`, { action: "Push" });
+    sheet.push("Flow", `flow-${Date.now()}`, { action: "Push" });
+  };
+  const closeSheet = () => {
+    sheet.close();
   };
 
   return (
@@ -34,7 +37,7 @@ const OverviewSheet = ({ title }: { title: string }) => {
         <button onClick={pushFlowSheet} type="button">
           Push next
         </button>
-        <button onClick={close} type="button">
+        <button onClick={closeSheet} type="button">
           Close
         </button>
       </div>
@@ -43,12 +46,12 @@ const OverviewSheet = ({ title }: { title: string }) => {
 };
 
 const FlowSheet = ({ action }: { action: string }) => {
-  const { navigate, push } = useSheet();
+  const sheet = useSheet();
   const pushMotionConfigSheet = () => {
-    push("Config", `config-${Date.now()}`, { category: "Motion" });
+    sheet.push("Config", `config-${Date.now()}`, { category: "Motion" });
   };
   const navigateToLayoutConfigSheet = () => {
-    navigate("Config", `config-${Date.now()}`, { category: "Layout" });
+    sheet.navigate("Config", `config-${Date.now()}`, { category: "Layout" });
   };
 
   return (
@@ -71,9 +74,12 @@ const FlowSheet = ({ action }: { action: string }) => {
 };
 
 const ConfigSheet = ({ category }: { category: string }) => {
-  const { close, replace } = useSheet();
+  const sheet = useSheet();
   const replaceWithFlowSheet = () => {
-    replace("Flow", `flow-${Date.now()}`, { action: "Replace" });
+    sheet.replace("Flow", `flow-${Date.now()}`, { action: "Replace" });
+  };
+  const closeSheet = () => {
+    sheet.close();
   };
 
   return (
@@ -90,7 +96,7 @@ const ConfigSheet = ({ category }: { category: string }) => {
         <button onClick={replaceWithFlowSheet} type="button">
           Replace
         </button>
-        <button onClick={close} type="button">
+        <button onClick={closeSheet} type="button">
           Close stack
         </button>
       </div>
@@ -105,13 +111,13 @@ const sheets = {
 };
 
 const Launcher = () => {
-  const { open, push } = useSheet();
+  const sheet = useSheet();
   const { stack } = useStacksheetState();
   const openOverviewSheet = () => {
-    open("Overview", "overview", { title: "Typed sheet" });
+    sheet.open("Overview", "overview", { title: "Typed sheet" });
   };
   const pushBehaviorConfigSheet = () => {
-    push("Config", `config-${Date.now()}`, { category: "Behavior" });
+    sheet.push("Config", `config-${Date.now()}`, { category: "Behavior" });
   };
 
   return (

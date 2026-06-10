@@ -99,11 +99,11 @@ const getRootStyle = ({
     ...style,
   };
 
-  if (color) {
+  if (color !== undefined && color !== "") {
     rootStyle["--patternmode-status-color"] = color;
   }
 
-  if (trackColor) {
+  if (trackColor !== undefined && trackColor !== "") {
     rootStyle["--patternmode-status-track"] = trackColor;
   }
 
@@ -121,18 +121,21 @@ const StatusFillSweep = ({
   const [renderedProgress, setRenderedProgress] = useReducer(setProgress, progress);
 
   useEffect(() => {
+    const cancelFillAnimation = () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
     const duration = getFillMotionDuration(motion, hasReducedMotion);
     const startProgress = renderedProgressRef.current;
     const progressDelta = progress - startProgress;
 
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
+    cancelFillAnimation();
 
     if (duration === 0 || progressDelta === 0) {
       renderedProgressRef.current = progress;
       setRenderedProgress(progress);
-      return;
+      return cancelFillAnimation;
     }
 
     const startTime = performance.now();
@@ -155,11 +158,7 @@ const StatusFillSweep = ({
 
     animationFrameRef.current = requestAnimationFrame(tick);
 
-    return () => {
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
+    return cancelFillAnimation;
   }, [hasReducedMotion, motion, progress]);
 
   return (
@@ -264,11 +263,12 @@ export const StatusMark = ({
   const hasReducedMotion = Boolean(reducedMotion);
   const state = resolveStatusProgress({ status, value });
   const rootStyle = getRootStyle({ color, size, style, trackColor });
+  const hasLabel = label !== undefined && label !== "";
 
   return (
     <span
       {...props}
-      aria-hidden={label ? undefined : true}
+      aria-hidden={hasLabel ? undefined : true}
       aria-label={label}
       className={joinClassNames("patternmode-status-mark", className)}
       data-motion={motion === false ? "false" : motion}
@@ -277,7 +277,7 @@ export const StatusMark = ({
       data-status={state.status}
       data-tone={tone}
       data-variant={variant}
-      role={label ? "img" : undefined}
+      role={hasLabel ? "img" : undefined}
       style={rootStyle}
     >
       <LazyMotion features={domMax}>

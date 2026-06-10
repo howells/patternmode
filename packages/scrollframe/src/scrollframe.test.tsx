@@ -7,9 +7,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ScrollFrame } from "./index";
 
 class ResizeObserverMock {
-  observe = vi.fn();
-  disconnect = vi.fn();
-  unobserve = vi.fn();
+  observe = vi.fn<(target: Element) => void>();
+  disconnect = vi.fn<() => void>();
+  unobserve = vi.fn<(target: Element) => void>();
 }
 
 beforeEach(() => {
@@ -57,7 +57,7 @@ describe("ScrollFrame", () => {
   });
 
   it("updates edge state and moves by a page step", () => {
-    const scrollBy = vi.fn();
+    const scrollBy = vi.fn<(options: ScrollToOptions) => void>();
 
     render(
       <ScrollFrame
@@ -139,7 +139,7 @@ describe("ScrollFrame", () => {
   });
 
   it("allows chip buttons to start drag scroll and suppresses the resulting click", () => {
-    const handleClick = vi.fn();
+    const handleClick = vi.fn<() => void>();
 
     render(
       <ScrollFrame aria-label="Materials" axes="horizontal" dragScroll>
@@ -178,7 +178,7 @@ describe("ScrollFrame", () => {
   });
 
   it("preserves chip button clicks when pointer movement stays below the drag threshold", () => {
-    const handleClick = vi.fn();
+    const handleClick = vi.fn<() => void>();
 
     render(
       <ScrollFrame aria-label="Materials" axes="horizontal" dragScroll={{ activationDistance: 8 }}>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { RefObject } from "react";
 import type { ResolvedConfig } from "./types";
+
 export const usePanelHeight = (
   panelRef: RefObject<HTMLDivElement | null>,
   hasSnapPoints: boolean,
@@ -8,17 +9,19 @@ export const usePanelHeight = (
   const [height, setHeight] = useState(0);
   useEffect(() => {
     const el = panelRef.current;
-    if (!(el && hasSnapPoints)) {
-      return;
+    let observer: ResizeObserver | undefined;
+    if (el !== null && hasSnapPoints) {
+      setHeight(el.offsetHeight);
+      observer = new ResizeObserver(([entry]) => {
+        if (entry) {
+          setHeight(entry.contentRect.height);
+        }
+      });
+      observer.observe(el);
     }
-    setHeight(el.offsetHeight);
-    const observer = new ResizeObserver(([entry]) => {
-      if (entry) {
-        setHeight(entry.contentRect.height);
-      }
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer?.disconnect();
+    };
   }, [panelRef, hasSnapPoints]);
   return height;
 };
@@ -30,15 +33,19 @@ export const useViewportHeight = (active: boolean): number => {
     typeof window === "undefined" ? undefined : getViewportHeight(),
   );
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
+    const update = () => {
+      setHeight(getViewportHeight());
+    };
+    const canListen = typeof window !== "undefined";
+    if (canListen) {
+      window.addEventListener("resize", update);
+      window.visualViewport?.addEventListener("resize", update);
     }
-    const update = () => setHeight(getViewportHeight());
-    window.addEventListener("resize", update);
-    window.visualViewport?.addEventListener("resize", update);
     return () => {
-      window.removeEventListener("resize", update);
-      window.visualViewport?.removeEventListener("resize", update);
+      if (canListen) {
+        window.removeEventListener("resize", update);
+        window.visualViewport?.removeEventListener("resize", update);
+      }
     };
   }, []);
   return active ? (height ?? 0) : 0;
@@ -49,14 +56,19 @@ export const useBodyScale = (
   prefersReducedMotion: boolean,
 ) => {
   useEffect(() => {
-    if (!config.shouldScaleBackground || prefersReducedMotion) {
-      return;
-    }
     const wrapper = document.querySelector("[data-stacksheet-wrapper]");
-    if (!(wrapper && wrapper instanceof HTMLElement)) {
-      return;
-    }
-    if (isOpen) {
+    const resetWrapper = () => {
+      if (wrapper instanceof HTMLElement) {
+        wrapper.style.transform = "";
+        wrapper.style.borderRadius = "";
+        wrapper.style.transition = "";
+        wrapper.style.overflow = "";
+        wrapper.style.transformOrigin = "";
+      }
+    };
+    const canScale =
+      config.shouldScaleBackground && !prefersReducedMotion && wrapper instanceof HTMLElement;
+    if (canScale && isOpen) {
       const scale = config.scaleBackgroundAmount;
       wrapper.style.transition =
         "transform 500ms cubic-bezier(0.32, 0.72, 0, 1), border-radius 500ms cubic-bezier(0.32, 0.72, 0, 1)";
@@ -64,16 +76,20 @@ export const useBodyScale = (
       wrapper.style.borderRadius = "8px";
       wrapper.style.overflow = "hidden";
       wrapper.style.transformOrigin = "center top";
-      return;
+      return resetWrapper;
     }
-    wrapper.style.transform = "";
-    wrapper.style.borderRadius = "";
     const handleEnd = () => {
-      wrapper.style.transition = "";
-      wrapper.style.overflow = "";
-      wrapper.style.transformOrigin = "";
+      resetWrapper();
     };
-    wrapper.addEventListener("transitionend", handleEnd, { once: true });
-    return () => wrapper.removeEventListener("transitionend", handleEnd);
+    if (canScale) {
+      wrapper.style.transform = "";
+      wrapper.style.borderRadius = "";
+      wrapper.addEventListener("transitionend", handleEnd, { once: true });
+    }
+    return () => {
+      if (wrapper instanceof HTMLElement) {
+        wrapper.removeEventListener("transitionend", handleEnd);
+      }
+    };
   }, [isOpen, config.shouldScaleBackground, config.scaleBackgroundAmount, prefersReducedMotion]);
 };

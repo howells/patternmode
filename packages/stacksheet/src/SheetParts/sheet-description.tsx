@@ -2,10 +2,12 @@ import { Slot } from "@radix-ui/react-slot";
 import { useEffect } from "react";
 import { useSheetPanel } from "../panel-context";
 import type { SheetPartProps } from "./sheet-part-types";
+
 export const SheetDescription = ({ asChild, className, style, children }: SheetPartProps) => {
   const { panelId, registerDescription } = useSheetPanel();
   useEffect(() => registerDescription(), [registerDescription]);
-  const Comp = asChild ? Slot : "p";
+  const isAsChild = asChild === true;
+  const Comp = isAsChild ? Slot : "p";
   return (
     <Comp className={className} id={`${panelId}-desc`} style={style}>
       {children}

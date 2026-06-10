@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -78,7 +78,7 @@ export function AccentColorField() {
 
 export default function HaloPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="A round saturation/lightness picker with the little hue smile arc from Materia."
       title="Halo"
     >
@@ -90,6 +90,6 @@ export default function HaloPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={haloApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

@@ -32,7 +32,9 @@ export const ApertoSingle = ({
         <ApertoContent className={classNames?.content} {...getDescriptionProps(media)}>
           <ApertoExpandedMedia item={media} renderImage={renderImage} renderVideo={renderVideo} />
           <ApertoTitle>{title}</ApertoTitle>
-          {media.description ? <ApertoDescription>{media.description}</ApertoDescription> : null}
+          {media.description === undefined || media.description === "" ? null : (
+            <ApertoDescription>{media.description}</ApertoDescription>
+          )}
           <ApertoClose aria-label="Close" className={classNames?.closeButton} type="button" />
         </ApertoContent>
       </ApertoPortal>

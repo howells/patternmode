@@ -132,7 +132,7 @@ const ApertoContent = ({
         dragElastic={0}
         dragMomentum={false}
         dragSnapToOrigin
-        layout={contentLayoutId ? true : undefined}
+        layout={contentLayoutId === undefined || contentLayoutId === "" ? undefined : true}
         layoutId={contentLayoutId}
         onDrag={isDismissible ? handleDrag : undefined}
         onDragEnd={isDismissible ? handleDragEnd : undefined}

@@ -21,17 +21,19 @@ export const PanelInnerContent = ({
   headerClassName: string | undefined;
 }) => {
   if (isComposable) {
-    return shouldRender && Content ? <Content {...data} /> : null;
+    return shouldRender && Content !== undefined ? <Content {...data} /> : null;
   }
+  const customHeader =
+    renderHeader !== undefined && renderHeader !== false ? renderHeader : undefined;
 
   return (
     <>
-      {renderHeader ? (
-        renderHeader(headerProps)
-      ) : (
+      {customHeader === undefined ? (
         <DefaultHeader {...headerProps} className={headerClassName} />
+      ) : (
+        customHeader(headerProps)
       )}
-      {shouldRender && Content && (
+      {shouldRender && Content !== undefined && (
         <div
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
           data-stacksheet-no-drag=""

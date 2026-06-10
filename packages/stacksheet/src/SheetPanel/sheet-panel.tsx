@@ -1,6 +1,6 @@
 import { m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { MutableRefObject, ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 
 import type { DragState } from "../Drag/drag-types";
 import { useDrag } from "../Drag/use-drag";
@@ -39,10 +39,18 @@ const getPanelAriaLabel = (item: SheetPanelProps["item"], fallbackLabel: string)
 const getPanelHoverProps = (enabled: boolean, setIsHovered: (value: boolean) => void) =>
   enabled
     ? {
-        onBlur: () => setIsHovered(false),
-        onFocus: () => setIsHovered(true),
-        onMouseEnter: () => setIsHovered(true),
-        onMouseLeave: () => setIsHovered(false),
+        onBlur: () => {
+          setIsHovered(false);
+        },
+        onFocus: () => {
+          setIsHovered(true);
+        },
+        onMouseEnter: () => {
+          setIsHovered(true);
+        },
+        onMouseLeave: () => {
+          setIsHovered(false);
+        },
       }
     : {};
 
@@ -102,9 +110,9 @@ const getOptionalBottomHandle = (show: boolean, onDismiss: () => void): ReactNod
   show ? <BottomHandle onDismiss={onDismiss} /> : null;
 
 const completeOpeningAnimation = (
-  hasEnteredRef: MutableRefObject<boolean>,
+  hasEnteredRef: RefObject<boolean>,
   isTop: boolean,
-  onOpenCompleteRef: MutableRefObject<(() => void) | undefined>,
+  onOpenCompleteRef: RefObject<(() => void) | undefined>,
 ) => {
   if (isTop && !hasEnteredRef.current) {
     hasEnteredRef.current = true;
@@ -112,56 +120,41 @@ const completeOpeningAnimation = (
   }
 };
 
-export const SheetPanel = ({
-  item,
-  index,
-  depth,
-  isTop,
-  isNested,
-  side,
-  config,
-  classNames,
-  Content,
-  shouldRender,
-  pop,
-  close,
-  swipeClose,
-  swipePop,
-  snapHeights,
-  activeSnapIndex,
-  onSnap,
-  layout,
-  renderHeader,
-  slideFrom,
-  slideTarget,
-  spring,
-  stackSpring,
-  prefersReducedMotion,
-}: SheetPanelProps) => {
-  const panelRef = useRef<HTMLDivElement>(null);
+const useOpeningCompletion = (isTop: boolean, onOpenComplete: (() => void) | undefined) => {
   const hasEnteredRef = useRef(false);
-  const onOpenCompleteRef = useRef(config.onOpenComplete);
-  const [dragState, setDragState] = useState<DragState>({
-    isDragging: false,
-    offset: 0,
-  });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
-
-  const transform = getStackTransform(depth, config.stacking);
-  const panelStyles = getPanelStyles(side, config, index);
+  const onOpenCompleteRef = useRef(onOpenComplete);
 
   if (!isTop && hasEnteredRef.current) {
     hasEnteredRef.current = false;
   }
   useEffect(() => {
-    onOpenCompleteRef.current = config.onOpenComplete;
-  }, [config.onOpenComplete]);
+    onOpenCompleteRef.current = onOpenComplete;
+  }, [onOpenComplete]);
 
-  const handleAnimationComplete = () => {
+  return () => {
     completeOpeningAnimation(hasEnteredRef, isTop, onOpenCompleteRef);
   };
+};
+
+const useSheetPanelDrag = (
+  {
+    activeSnapIndex,
+    config,
+    isNested,
+    isTop,
+    onSnap,
+    prefersReducedMotion,
+    side,
+    snapHeights,
+    swipeClose,
+    swipePop,
+  }: SheetPanelProps,
+  panelRef: RefObject<HTMLDivElement | null>,
+): DragState => {
+  const [dragState, setDragState] = useState<DragState>({
+    isDragging: false,
+    offset: 0,
+  });
 
   useDrag(
     panelRef,
@@ -181,13 +174,19 @@ export const SheetPanel = ({
     setDragState,
   );
 
-  const ariaLabel = getPanelAriaLabel(item, config.ariaLabel);
+  return dragState;
+};
 
-  const panelId = `stacksheet-${item.id}`;
+const useSheetPanelContext = (
+  { close, isNested, isTop, pop, side }: SheetPanelProps,
+  panelId: string,
+) => {
   const [hasDescription, setHasDescription] = useState(false);
   const registerDescription = () => {
     setHasDescription(true);
-    return () => setHasDescription(false);
+    return () => {
+      setHasDescription(false);
+    };
   };
   const panelContext = getPanelContext({
     close,
@@ -199,6 +198,46 @@ export const SheetPanel = ({
     registerDescription,
     side,
   });
+
+  return { hasDescription, panelContext };
+};
+
+const useSheetPanelModel = (props: SheetPanelProps) => {
+  const {
+    item,
+    index,
+    depth,
+    isTop,
+    isNested,
+    side,
+    config,
+    classNames,
+    pop,
+    close,
+    snapHeights,
+    activeSnapIndex,
+    layout,
+    renderHeader,
+    slideFrom,
+    slideTarget,
+    spring,
+    stackSpring,
+  } = props;
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
+
+  const transform = getStackTransform(depth, config.stacking);
+  const panelStyles = getPanelStyles(side, config, index);
+
+  const handleAnimationComplete = useOpeningCompletion(isTop, config.onOpenComplete);
+  const dragState = useSheetPanelDrag(props, panelRef);
+
+  const ariaLabel = getPanelAriaLabel(item, config.ariaLabel);
+
+  const panelId = `stacksheet-${item.id}`;
+  const { hasDescription, panelContext } = useSheetPanelContext(props, panelId);
 
   const panelLayout = resolvePanelLayout(layout, renderHeader);
   const isComposable = panelLayout === "composable";
@@ -249,6 +288,52 @@ export const SheetPanel = ({
   const hoverProps = getPanelHoverProps(showSideHandle, setIsHovered);
   const inactivePanelProps = getInactivePanelProps(isTop);
 
+  return {
+    animateTarget,
+    ariaProps,
+    bottomHandle,
+    handleAnimationComplete,
+    headerProps,
+    hoverProps,
+    inactivePanelProps,
+    initialRadius,
+    isComposable,
+    panelContext,
+    panelRef,
+    panelStyle,
+    resolvedSlideFrom,
+    sideHandle,
+  };
+};
+
+export const SheetPanel = (props: SheetPanelProps) => {
+  const {
+    item,
+    isTop,
+    config,
+    classNames,
+    Content,
+    shouldRender,
+    renderHeader,
+    prefersReducedMotion,
+  } = props;
+  const {
+    animateTarget,
+    ariaProps,
+    bottomHandle,
+    handleAnimationComplete,
+    headerProps,
+    hoverProps,
+    inactivePanelProps,
+    initialRadius,
+    isComposable,
+    panelContext,
+    panelRef,
+    panelStyle,
+    resolvedSlideFrom,
+    sideHandle,
+  } = useSheetPanelModel(props);
+
   const panelContent = (
     <m.div
       animate={animateTarget}
@@ -284,7 +369,7 @@ export const SheetPanel = ({
         {bottomHandle}
         <PanelInnerContent
           Content={Content}
-          data={item.data as Record<string, unknown>}
+          data={item.data}
           headerClassName={classNames.header || undefined}
           headerProps={headerProps}
           isComposable={isComposable}

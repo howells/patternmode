@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -237,7 +237,7 @@ function PalettePreview() {
 
 export default function SwatchPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Color, gradient, image, and weighted palette swatches with selection, remove, unavailable, and contrast-aware states."
       title="Swatch"
     >
@@ -249,6 +249,6 @@ export default function SwatchPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={swatchApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

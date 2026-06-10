@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useId, useLayoutEffect, useReducer, useRef } from "react";
-import type { CSSProperties, KeyboardEvent } from "react";
+import type { CSSProperties, Dispatch, KeyboardEvent } from "react";
 
 import { ApertoContent } from "../aperto-content";
 import { ApertoDescription } from "../aperto-description";
@@ -15,11 +15,26 @@ import { ApertoExpandedMediaStage } from "../expanded-media-stage";
 import type { NavigationDirection } from "../expanded-media-stage";
 import { ApertoMediaTransitionClone } from "../media-transition";
 import { rectFromElement } from "../media-transition-utils";
+import type { ApertoMediaTransition } from "../media-transition-utils";
 import { getDescriptionProps, getMediaLabel } from "../media-utils";
-import type { ApertoClassNames } from "../types";
+import type {
+  ApertoClassNames,
+  ApertoMediaItem,
+  NavigationMotionPresetName,
+  RenderImage,
+  RenderVideo,
+} from "../types";
 import { apertoGroupReducer, getInitialGroupState } from "./aperto-group-state";
+import type { ApertoGroupAction, ApertoGroupState } from "./aperto-group-state";
 import { shouldIgnoreKeyboardNavigationTarget } from "./aperto-keyboard";
 import type { ApertoGroupProps } from "./aperto-types";
+
+type ApertoExpandedMediaStyle = CSSProperties & {
+  "--aperto-expanded-aspect-ratio"?: string;
+  "--aperto-expanded-aspect-ratio-height"?: number;
+  "--aperto-expanded-aspect-ratio-width"?: number;
+};
+type ApertoGroupDispatch = Dispatch<ApertoGroupAction>;
 
 const ApertoMediaNavigationButtons = ({
   classNames,
@@ -60,45 +75,160 @@ const ApertoMediaNavigationButtons = ({
   );
 };
 
-export const ApertoGroup = ({
-  children,
+const useThumbnailMap = () => {
+  const thumbnailRefs = useRef<Map<number, HTMLButtonElement> | null>(null);
+  thumbnailRefs.current ??= new Map();
+  return thumbnailRefs.current;
+};
+
+const getExpandedMediaStyle = (
+  activeMedia: ApertoMediaItem | undefined,
+): ApertoExpandedMediaStyle | undefined => {
+  if (
+    activeMedia === undefined ||
+    activeMedia.width === undefined ||
+    activeMedia.height === undefined
+  ) {
+    return undefined;
+  }
+
+  return {
+    "--aperto-expanded-aspect-ratio": `${activeMedia.width} / ${activeMedia.height}`,
+    "--aperto-expanded-aspect-ratio-height": activeMedia.height,
+    "--aperto-expanded-aspect-ratio-width": activeMedia.width,
+  };
+};
+
+const ApertoGroupPortal = ({
+  activeMedia,
   classNames,
-  dismissible,
-  index: controlledIndex,
-  initialIndex = 0,
-  media,
-  motion: motionProp,
-  navigationMotion = "glide",
-  onIndexChange,
+  expandedMediaStyle,
+  handleCloseAutoFocus,
+  handleContentKeyDown,
+  handleMediaTransitionComplete,
+  hasNavigation,
+  index,
+  mediaLength,
+  navigationDirection,
+  navigationMotion,
   renderImage,
   renderVideo,
-}: ApertoGroupProps) => {
-  const generatedId = useId();
-  const [state, dispatch] = useReducer(apertoGroupReducer, initialIndex, getInitialGroupState);
-  const isControlled = controlledIndex !== undefined;
-  const index = isControlled ? controlledIndex : state.internalIndex;
-  const activeMedia = media[index] ?? media[0];
-  const expandedMediaRef = useRef<HTMLDivElement | null>(null);
-  const thumbnailRefs = useRef<Map<number, HTMLButtonElement> | null>(null);
-  if (thumbnailRefs.current === null) {
-    thumbnailRefs.current = new Map();
+  setExpandedMediaNode,
+  startClose,
+  transition,
+  goToNext,
+  goToPrevious,
+}: {
+  activeMedia: ApertoMediaItem | undefined;
+  classNames: ApertoClassNames | undefined;
+  expandedMediaStyle: ApertoExpandedMediaStyle | undefined;
+  goToNext: () => void;
+  goToPrevious: () => void;
+  handleCloseAutoFocus: (event: Event) => void;
+  handleContentKeyDown: ((event: KeyboardEvent<HTMLDivElement>) => void) | undefined;
+  handleMediaTransitionComplete: () => void;
+  hasNavigation: boolean;
+  index: number;
+  mediaLength: number;
+  navigationDirection: NavigationDirection;
+  navigationMotion: NavigationMotionPresetName;
+  renderImage: RenderImage | undefined;
+  renderVideo: RenderVideo | undefined;
+  setExpandedMediaNode: (node: HTMLDivElement | null) => void;
+  startClose: () => void;
+  transition: ApertoMediaTransition | null;
+}) => {
+  if (activeMedia === undefined) {
+    return null;
   }
-  const thumbnailMap = thumbnailRefs.current;
-  const sharedLayoutIdForIndex = (nextIndex: number) =>
-    `aperto-group-${generatedId}-${nextIndex}-shared`;
-  const sharedLayoutId = sharedLayoutIdForIndex(state.layoutSourceIndex);
+
+  return (
+    <ApertoPortal>
+      <ApertoOverlay className={classNames?.overlay} fadeOut={transition?.phase === "closing"} />
+      <ApertoContent
+        className={classNames?.content}
+        data-aperto-transition={transition?.phase}
+        onCloseAutoFocus={handleCloseAutoFocus}
+        onKeyDown={handleContentKeyDown}
+        sharedLayoutId={false}
+        {...getDescriptionProps(activeMedia)}
+      >
+        <div data-slot="aperto-media" ref={setExpandedMediaNode} style={expandedMediaStyle}>
+          <ApertoExpandedMediaStage
+            direction={navigationDirection}
+            index={index}
+            item={activeMedia}
+            navigationMotion={navigationMotion}
+            renderImage={renderImage}
+            renderVideo={renderVideo}
+          />
+          <ApertoMediaNavigationButtons
+            classNames={classNames}
+            enabled={hasNavigation}
+            onNext={goToNext}
+            onPrevious={goToPrevious}
+          />
+        </div>
+        <ApertoTitle>{activeMedia.title ?? getMediaLabel(activeMedia)}</ApertoTitle>
+        {activeMedia.description === undefined || activeMedia.description === "" ? null : (
+          <ApertoDescription>{activeMedia.description}</ApertoDescription>
+        )}
+        {hasNavigation ? (
+          <div className={classNames?.counter} data-slot="aperto-counter">
+            {index + 1} / {mediaLength}
+          </div>
+        ) : null}
+        <button
+          aria-label="Close"
+          className={classNames?.closeButton}
+          data-slot="aperto-close"
+          onClick={startClose}
+          type="button"
+        >
+          <X aria-hidden="true" size={17} strokeWidth={2} />
+        </button>
+      </ApertoContent>
+      <ApertoMediaTransitionClone
+        onComplete={handleMediaTransitionComplete}
+        renderImage={renderImage}
+        renderVideo={renderVideo}
+        transition={transition}
+      />
+    </ApertoPortal>
+  );
+};
+
+const useApertoMediaLifecycle = ({
+  activeMedia,
+  dispatch,
+  index,
+  media,
+  onIndexChange,
+  state,
+}: {
+  activeMedia: ApertoMediaItem | undefined;
+  dispatch: ApertoGroupDispatch;
+  index: number;
+  media: ApertoMediaItem[];
+  onIndexChange: ApertoGroupProps["onIndexChange"];
+  state: ApertoGroupState;
+}) => {
+  const expandedMediaRef = useRef<HTMLDivElement | null>(null);
+  const thumbnailMap = useThumbnailMap();
+
   const setExpandedMediaNode = (node: HTMLDivElement | null) => {
     expandedMediaRef.current = node;
-    if (node) {
-      const targetRect = rectFromElement(node);
-      if (targetRect) {
-        dispatch({ rect: targetRect, type: "complete-opening-target" });
-      }
+    if (node === null) {
+      return;
+    }
+    const targetRect = rectFromElement(node);
+    if (targetRect !== null) {
+      dispatch({ rect: targetRect, type: "complete-opening-target" });
     }
   };
 
   const registerThumbnail = (thumbIndex: number, node: HTMLButtonElement | null) => {
-    if (node) {
+    if (node !== null) {
       thumbnailMap.set(thumbIndex, node);
       return;
     }
@@ -108,30 +238,25 @@ export const ApertoGroup = ({
   useLayoutEffect(() => {
     if (
       state.mediaTransition?.phase !== "opening" ||
-      state.mediaTransition.to ||
-      !expandedMediaRef.current
+      state.mediaTransition.to !== undefined ||
+      expandedMediaRef.current === null
     ) {
       return;
     }
 
     const targetRect = rectFromElement(expandedMediaRef.current);
-    if (targetRect) {
+    if (targetRect !== null) {
       dispatch({ rect: targetRect, type: "complete-opening-target" });
     }
-  }, [state.mediaTransition]);
-
-  const setIndex = (nextIndex: number) => {
-    if (!isControlled) {
-      dispatch({ index: nextIndex, type: "set-index" });
-    }
-    onIndexChange?.(nextIndex);
-  };
+  }, [dispatch, state.mediaTransition]);
 
   const openAtIndex = (thumbIndex: number) => {
     const sourceRect = rectFromElement(thumbnailMap.get(thumbIndex) ?? null);
-    const item = media[thumbIndex];
+    const item = media[thumbIndex] ?? null;
     const transition =
-      sourceRect && item ? { from: sourceRect, item, phase: "opening" as const } : null;
+      sourceRect === null || item === null
+        ? null
+        : { from: sourceRect, item, phase: "opening" as const };
 
     dispatch({ index: thumbIndex, transition, type: "open-at-index" });
     onIndexChange?.(thumbIndex);
@@ -144,19 +269,13 @@ export const ApertoGroup = ({
 
     const sourceRect = rectFromElement(expandedMediaRef.current);
     const targetRect = rectFromElement(thumbnailMap.get(index) ?? null);
-
-    if (!activeMedia || !sourceRect || !targetRect) {
+    if (activeMedia === undefined || sourceRect === null || targetRect === null) {
       dispatch({ type: "close-without-transition" });
       return;
     }
 
     dispatch({
-      transition: {
-        from: sourceRect,
-        item: activeMedia,
-        phase: "closing",
-        to: targetRect,
-      },
+      transition: { from: sourceRect, item: activeMedia, phase: "closing", to: targetRect },
       type: "start-close",
     });
   };
@@ -164,6 +283,42 @@ export const ApertoGroup = ({
   const handleCloseAutoFocus = (event: Event) => {
     event.preventDefault();
     thumbnailMap.get(index)?.focus({ preventScroll: true });
+  };
+
+  return { handleCloseAutoFocus, openAtIndex, registerThumbnail, setExpandedMediaNode, startClose };
+};
+
+const useApertoGroupController = ({
+  classNames,
+  index: controlledIndex,
+  initialIndex = 0,
+  media,
+  onIndexChange,
+  renderImage,
+  renderVideo,
+}: Omit<ApertoGroupProps, "children" | "dismissible" | "motion" | "navigationMotion">) => {
+  const generatedId = useId();
+  const [state, dispatch] = useReducer(apertoGroupReducer, initialIndex, getInitialGroupState);
+  const isControlled = controlledIndex !== undefined;
+  const index = isControlled ? controlledIndex : state.internalIndex;
+  const activeMedia = media[index] ?? media[0];
+  const lifecycle = useApertoMediaLifecycle({
+    activeMedia,
+    dispatch,
+    index,
+    media,
+    onIndexChange,
+    state,
+  });
+  const sharedLayoutIdForIndex = (nextIndex: number) =>
+    `aperto-group-${generatedId}-${nextIndex}-shared`;
+  const sharedLayoutId = sharedLayoutIdForIndex(state.layoutSourceIndex);
+
+  const setIndex = (nextIndex: number) => {
+    if (!isControlled) {
+      dispatch({ index: nextIndex, type: "set-index" });
+    }
+    onIndexChange?.(nextIndex);
   };
 
   const handleMediaTransitionComplete = () => {
@@ -176,7 +331,7 @@ export const ApertoGroup = ({
       return;
     }
 
-    startClose();
+    lifecycle.startClose();
   };
 
   const value = {
@@ -184,8 +339,8 @@ export const ApertoGroup = ({
     index,
     media,
     open: state.open,
-    openAtIndex,
-    registerThumbnail,
+    openAtIndex: lifecycle.openAtIndex,
+    registerThumbnail: lifecycle.registerThumbnail,
     renderImage,
     renderVideo,
     setIndex,
@@ -224,81 +379,80 @@ export const ApertoGroup = ({
       goToNext();
     }
   };
-  const expandedMediaStyle = ((): CSSProperties | undefined => {
-    if (!activeMedia?.width || !activeMedia.height) {
-      return undefined;
-    }
+  const expandedMediaStyle = getExpandedMediaStyle(activeMedia);
 
-    return {
-      "--aperto-expanded-aspect-ratio": `${activeMedia.width} / ${activeMedia.height}`,
-      "--aperto-expanded-aspect-ratio-height": activeMedia.height,
-      "--aperto-expanded-aspect-ratio-width": activeMedia.width,
-    } as CSSProperties;
-  })();
+  return {
+    activeMedia,
+    expandedMediaStyle,
+    goToNext,
+    goToPrevious,
+    handleCloseAutoFocus: lifecycle.handleCloseAutoFocus,
+    handleContentKeyDown,
+    handleMediaTransitionComplete,
+    handleOpenChange,
+    hasNavigation,
+    index,
+    setExpandedMediaNode: lifecycle.setExpandedMediaNode,
+    startClose: lifecycle.startClose,
+    state,
+    value,
+  };
+};
+
+export const ApertoGroup = ({
+  children,
+  classNames,
+  dismissible,
+  index,
+  initialIndex,
+  media,
+  motion: motionProp,
+  navigationMotion = "glide",
+  onIndexChange,
+  renderImage,
+  renderVideo,
+}: ApertoGroupProps) => {
+  const controller = useApertoGroupController({
+    classNames,
+    index,
+    initialIndex,
+    media,
+    onIndexChange,
+    renderImage,
+    renderVideo,
+  });
 
   return (
-    <ApertoGroupContext.Provider value={value}>
+    <ApertoGroupContext.Provider value={controller.value}>
       <ApertoRoot
         dismissible={dismissible}
         motion={motionProp}
-        onOpenChange={handleOpenChange}
-        open={state.open}
+        onOpenChange={controller.handleOpenChange}
+        open={controller.state.open}
       >
         {children}
-        {activeMedia ? (
-          <ApertoPortal>
-            <ApertoOverlay className={classNames?.overlay} fadeOut={state.closing} />
-            <ApertoContent
-              className={classNames?.content}
-              data-aperto-transition={state.mediaTransition?.phase}
-              onCloseAutoFocus={handleCloseAutoFocus}
-              onKeyDown={hasNavigation ? handleContentKeyDown : undefined}
-              sharedLayoutId={false}
-              {...getDescriptionProps(activeMedia)}
-            >
-              <div data-slot="aperto-media" ref={setExpandedMediaNode} style={expandedMediaStyle}>
-                <ApertoExpandedMediaStage
-                  direction={state.navigationDirection}
-                  index={index}
-                  item={activeMedia}
-                  navigationMotion={navigationMotion}
-                  renderImage={renderImage}
-                  renderVideo={renderVideo}
-                />
-                <ApertoMediaNavigationButtons
-                  classNames={classNames}
-                  enabled={hasNavigation}
-                  onNext={goToNext}
-                  onPrevious={goToPrevious}
-                />
-              </div>
-              <ApertoTitle>{activeMedia.title ?? getMediaLabel(activeMedia)}</ApertoTitle>
-              {activeMedia.description ? (
-                <ApertoDescription>{activeMedia.description}</ApertoDescription>
-              ) : null}
-              {hasNavigation ? (
-                <div className={classNames?.counter} data-slot="aperto-counter">
-                  {index + 1} / {media.length}
-                </div>
-              ) : null}
-              <button
-                aria-label="Close"
-                className={classNames?.closeButton}
-                data-slot="aperto-close"
-                onClick={startClose}
-                type="button"
-              >
-                <X aria-hidden="true" size={17} strokeWidth={2} />
-              </button>
-            </ApertoContent>
-            <ApertoMediaTransitionClone
-              onComplete={handleMediaTransitionComplete}
-              renderImage={renderImage}
-              renderVideo={renderVideo}
-              transition={state.mediaTransition}
-            />
-          </ApertoPortal>
-        ) : null}
+        <ApertoGroupPortal
+          activeMedia={controller.activeMedia}
+          classNames={classNames}
+          expandedMediaStyle={controller.expandedMediaStyle}
+          goToNext={controller.goToNext}
+          goToPrevious={controller.goToPrevious}
+          handleCloseAutoFocus={controller.handleCloseAutoFocus}
+          handleContentKeyDown={
+            controller.hasNavigation ? controller.handleContentKeyDown : undefined
+          }
+          handleMediaTransitionComplete={controller.handleMediaTransitionComplete}
+          hasNavigation={controller.hasNavigation}
+          index={controller.index}
+          mediaLength={media.length}
+          navigationDirection={controller.state.navigationDirection}
+          navigationMotion={navigationMotion}
+          renderImage={renderImage}
+          renderVideo={renderVideo}
+          setExpandedMediaNode={controller.setExpandedMediaNode}
+          startClose={controller.startClose}
+          transition={controller.state.mediaTransition}
+        />
       </ApertoRoot>
     </ApertoGroupContext.Provider>
   );

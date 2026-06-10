@@ -38,7 +38,7 @@ describe("resolveConfig", () => {
   });
 
   it("resolves responsive side with partial override", () => {
-    const config = resolveConfig({ side: { desktop: "left" } as never });
+    const config = resolveConfig({ side: { desktop: "left" } });
     expect(config.side.desktop).toBe("left");
     expect(config.side.mobile).toBe("bottom");
   });

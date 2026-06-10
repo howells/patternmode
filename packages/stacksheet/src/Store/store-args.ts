@@ -1,25 +1,48 @@
 import type { SheetPresentationOptions } from "../types";
 import type { AnyComponent, ResolvedItem } from "./store-types";
 
-declare const process:
-  | undefined
-  | {
-      env?: {
-        NODE_ENV?: string;
+declare global {
+  var process:
+    | undefined
+    | {
+        env?: {
+          NODE_ENV?: string;
+        };
       };
-    };
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null;
+
+export const toRecord = (value: unknown): Record<string, unknown> => (isRecord(value) ? value : {});
+
+export const isComponent = (value: unknown): value is AnyComponent => typeof value === "function";
+
+const getComponentName = (component: AnyComponent): string | undefined => {
+  const name = component.displayName ?? component.name;
+  return name === "" ? undefined : name;
+};
+
+const getNodeEnv = (): string | undefined => globalThis.process?.env?.NODE_ENV;
+
+export const getStringArg = (value: unknown, name: string): string => {
+  if (typeof value !== "string") {
+    throw new TypeError(`Expected ${name} to be a string.`);
+  }
+  return value;
+};
 
 export const resolvePresentationOptions = (
   value: unknown,
 ): SheetPresentationOptions | undefined => {
-  if (!(value && typeof value === "object")) {
+  if (!isRecord(value)) {
     return undefined;
   }
-  const candidate = value as SheetPresentationOptions;
-  if (candidate.ariaLabel !== undefined && typeof candidate.ariaLabel !== "string") {
+  const { ariaLabel } = value;
+  if (ariaLabel !== undefined && typeof ariaLabel !== "string") {
     return undefined;
   }
-  return candidate;
+  return ariaLabel === undefined ? {} : { ariaLabel };
 };
 /**
  * Dev-mode warning: detect likely inline arrow functions passed as ad-hoc components.
@@ -31,18 +54,18 @@ export const warnInlineComponent = (
   componentRegistry: Map<AnyComponent, string>,
   warnedNames: Set<string>,
 ): void => {
-  if (process === undefined || process?.env?.NODE_ENV === "production") {
+  if (getNodeEnv() === "production") {
     return;
   }
-  const name = component.displayName || component.name;
-  if (!name) {
+  const name = getComponentName(component);
+  if (name === undefined) {
     return;
   }
   if (warnedNames.has(name)) {
     return;
   }
   for (const [existing, key] of componentRegistry) {
-    const existingName = existing.displayName || existing.name;
+    const existingName = getComponentName(existing);
     if (existingName === name) {
       warnedNames.add(name);
       console.warn(
@@ -55,6 +78,25 @@ export const warnInlineComponent = (
       return;
     }
   }
+};
+
+export const registerComponent = (
+  component: AnyComponent,
+  componentRegistry: Map<AnyComponent, string>,
+  componentMap: Map<string, AnyComponent>,
+  getNextKey: () => string,
+  warnedNames: Set<string>,
+): string => {
+  const existingKey = componentRegistry.get(component);
+  if (existingKey !== undefined) {
+    return existingKey;
+  }
+
+  warnInlineComponent(component, componentRegistry, warnedNames);
+  const nextKey = getNextKey();
+  componentRegistry.set(component, nextKey);
+  componentMap.set(nextKey, component);
+  return nextKey;
 };
 /**
  * If `first` is a function (component), register it and return { type, id, data }.
@@ -70,34 +112,33 @@ export const resolveArgs = (
   third: unknown,
   fourth?: unknown,
 ): ResolvedItem => {
-  if (typeof first === "function") {
-    const component = first as AnyComponent;
-    let typeKey = componentRegistry.get(component);
-    if (!typeKey) {
-      warnInlineComponent(component, componentRegistry, warnedNames);
-      typeKey = getNextKey();
-      componentRegistry.set(component, typeKey);
-      componentMap.set(typeKey, component);
-    }
+  if (isComponent(first)) {
+    const typeKey = registerComponent(
+      first,
+      componentRegistry,
+      componentMap,
+      getNextKey,
+      warnedNames,
+    );
     if (typeof second === "string") {
       return {
         ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
-        data: (third ?? {}) as Record<string, unknown>,
+        data: toRecord(third),
         id: second,
         type: typeKey,
       };
     }
     return {
       ariaLabel: resolvePresentationOptions(third)?.ariaLabel,
-      data: (second ?? {}) as Record<string, unknown>,
+      data: toRecord(second),
       id: crypto.randomUUID(),
       type: typeKey,
     };
   }
   return {
     ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
-    data: (third ?? {}) as Record<string, unknown>,
-    id: second as string,
-    type: first as string,
+    data: toRecord(third),
+    id: getStringArg(second, "sheet id"),
+    type: getStringArg(first, "sheet type"),
   };
 };

@@ -1,10 +1,10 @@
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import path from "node:path";
 
 const root = process.cwd();
-const packDir = join(root, ".pack");
-const fixtureDir = join(packDir, "next-consumer");
+const packDir = path.join(root, ".pack");
+const fixtureDir = path.join(packDir, "next-consumer");
 const packages = [
   { name: "@patternmode/system", tarballPrefix: "patternmode-system-" },
   { name: "@patternmode/stacksheet", tarballPrefix: "patternmode-stacksheet-" },
@@ -19,6 +19,11 @@ const packages = [
   { name: "@patternmode/tags", tarballPrefix: "patternmode-tags-" },
 ];
 
+/**
+ * @param {string} command Command to execute.
+ * @param {readonly string[]} args Command arguments.
+ * @param {import("node:child_process").ExecFileSyncOptions} [options] Extra exec options.
+ */
 const run = (command, args, options = {}) => {
   execFileSync(command, args, {
     cwd: root,
@@ -34,29 +39,41 @@ for (const pkg of packages) {
   run("pnpm", ["--filter", pkg.name, "pack", "--pack-destination", packDir]);
 }
 
-const tarballs = Object.fromEntries(
-  packages.map((pkg) => {
-    const tarball = readdirSync(packDir).find((file) => file.startsWith(pkg.tarballPrefix));
-    if (!tarball) {
-      throw new Error(`Expected tarball was not created for ${pkg.name}.`);
-    }
-    return [pkg.name, tarball];
-  }),
-);
+/** @type {Record<string, string>} */
+const tarballs = {};
+for (const pkg of packages) {
+  const tarball = readdirSync(packDir).find((file) => file.startsWith(pkg.tarballPrefix));
+  if (tarball === undefined) {
+    throw new Error(`Expected tarball was not created for ${pkg.name}.`);
+  }
+  tarballs[pkg.name] = tarball;
+}
+
+/**
+ * @param {string} packageName Package name.
+ * @returns {string} Absolute tarball path.
+ */
+const getTarballPath = (packageName) => {
+  const tarball = tarballs[packageName];
+  if (typeof tarball !== "string") {
+    throw new TypeError(`Missing tarball for ${packageName}.`);
+  }
+  return path.resolve(packDir, tarball);
+};
 const tarballDependencies = {
-  "@patternmode/aperto": `file:${resolve(packDir, tarballs["@patternmode/aperto"])}`,
-  "@patternmode/deck": `file:${resolve(packDir, tarballs["@patternmode/deck"])}`,
-  "@patternmode/scrollframe": `file:${resolve(packDir, tarballs["@patternmode/scrollframe"])}`,
-  "@patternmode/stacksheet": `file:${resolve(packDir, tarballs["@patternmode/stacksheet"])}`,
-  "@patternmode/status": `file:${resolve(packDir, tarballs["@patternmode/status"])}`,
-  "@patternmode/swatch": `file:${resolve(packDir, tarballs["@patternmode/swatch"])}`,
-  "@patternmode/system": `file:${resolve(packDir, tarballs["@patternmode/system"])}`,
-  "@patternmode/tags": `file:${resolve(packDir, tarballs["@patternmode/tags"])}`,
+  "@patternmode/aperto": `file:${getTarballPath("@patternmode/aperto")}`,
+  "@patternmode/deck": `file:${getTarballPath("@patternmode/deck")}`,
+  "@patternmode/scrollframe": `file:${getTarballPath("@patternmode/scrollframe")}`,
+  "@patternmode/stacksheet": `file:${getTarballPath("@patternmode/stacksheet")}`,
+  "@patternmode/status": `file:${getTarballPath("@patternmode/status")}`,
+  "@patternmode/swatch": `file:${getTarballPath("@patternmode/swatch")}`,
+  "@patternmode/system": `file:${getTarballPath("@patternmode/system")}`,
+  "@patternmode/tags": `file:${getTarballPath("@patternmode/tags")}`,
 };
 
-mkdirSync(join(fixtureDir, "app"), { recursive: true });
+mkdirSync(path.join(fixtureDir, "app"), { recursive: true });
 writeFileSync(
-  join(fixtureDir, "package.json"),
+  path.join(fixtureDir, "package.json"),
   JSON.stringify(
     {
       dependencies: {
@@ -86,9 +103,9 @@ writeFileSync(
     2,
   ),
 );
-writeFileSync(join(fixtureDir, "next.config.mjs"), "export default {};\n");
+writeFileSync(path.join(fixtureDir, "next.config.mjs"), "export default {};\n");
 writeFileSync(
-  join(fixtureDir, "tsconfig.json"),
+  path.join(fixtureDir, "tsconfig.json"),
   JSON.stringify(
     {
       compilerOptions: {
@@ -114,11 +131,11 @@ writeFileSync(
   ),
 );
 writeFileSync(
-  join(fixtureDir, "next-env.d.ts"),
+  path.join(fixtureDir, "next-env.d.ts"),
   '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n',
 );
 writeFileSync(
-  join(fixtureDir, "app", "layout.tsx"),
+  path.join(fixtureDir, "app", "layout.tsx"),
   `import type { ReactNode } from "react";
 import "@patternmode/aperto/styles.css";
 import "@patternmode/deck/styles.css";
@@ -134,7 +151,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 `,
 );
 writeFileSync(
-  join(fixtureDir, "app", "page.tsx"),
+  path.join(fixtureDir, "app", "page.tsx"),
   `import { Demo } from "./demo";
 
 export default function Page() {
@@ -143,7 +160,7 @@ export default function Page() {
 `,
 );
 writeFileSync(
-  join(fixtureDir, "app", "demo.tsx"),
+  path.join(fixtureDir, "app", "demo.tsx"),
   `"use client";
 
 import { Aperto, type ApertoMediaItem } from "@patternmode/aperto";
@@ -189,8 +206,8 @@ export function Demo() {
 `,
 );
 
-if (existsSync(join(fixtureDir, "node_modules"))) {
-  rmSync(join(fixtureDir, "node_modules"), { force: true, recursive: true });
+if (existsSync(path.join(fixtureDir, "node_modules"))) {
+  rmSync(path.join(fixtureDir, "node_modules"), { force: true, recursive: true });
 }
 
 execFileSync("pnpm", ["install", "--ignore-workspace", "--no-lockfile"], {
@@ -200,7 +217,7 @@ execFileSync("pnpm", ["install", "--ignore-workspace", "--no-lockfile"], {
 execFileSync("pnpm", ["typecheck"], { cwd: fixtureDir, stdio: "inherit" });
 execFileSync("pnpm", ["build"], { cwd: fixtureDir, stdio: "inherit" });
 
-cpSync(join(fixtureDir, ".next"), join(packDir, "next-consumer-build"), {
+cpSync(path.join(fixtureDir, ".next"), path.join(packDir, "next-consumer-build"), {
   force: true,
   recursive: true,
 });

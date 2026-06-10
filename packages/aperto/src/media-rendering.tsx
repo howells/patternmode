@@ -31,7 +31,7 @@ export const ApertoThumbnailMedia = ({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) => {
+}): ReactNode => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: "",
@@ -64,7 +64,7 @@ export const ApertoExpandedMedia = ({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) => {
+}): ReactNode => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: item.alt,
@@ -98,7 +98,7 @@ export const ApertoTransitionMedia = ({
   item: ApertoMediaItem;
   renderImage?: RenderImage;
   renderVideo?: RenderVideo;
-}) => {
+}): ReactNode => {
   if (item.type === "image") {
     const imageProps: Parameters<RenderImage>[0] = {
       alt: item.alt,

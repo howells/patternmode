@@ -14,6 +14,9 @@ import { useState } from "react";
 import { OptionBar } from "./option-bar";
 
 export type CatalogMediaItem = ApertoMediaItem;
+type ApertoDemoStyle = CSSProperties & {
+  "--aperto-radius"?: string;
+};
 
 export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
   const [columns, setColumns] = useState(3);
@@ -22,8 +25,10 @@ export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
   const [radius, setRadius] = useState(6);
   const visibleMedia = columns === 2 ? media.slice(0, 4) : media;
   const firstVisibleSrc = visibleMedia[0]?.src;
+  const apertoStyle: ApertoDemoStyle = { "--aperto-radius": `${radius}px` };
   const renderApertoImage: RenderImage = ({ alt, item, src, variant }) => {
     const isLeadImage = variant === "expanded" || item.src === firstVisibleSrc;
+    const imageSrc = typeof src === "string" ? src : item.src;
 
     return (
       <Image
@@ -32,14 +37,14 @@ export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
         fill
         loading={isLeadImage || variant === "thumbnail" ? "eager" : "lazy"}
         sizes={variant === "thumbnail" ? "(max-width: 640px) 50vw, 320px" : "90vw"}
-        src={String(src)}
+        src={imageSrc}
       />
     );
   };
 
   return (
     <div className="aperto-demo">
-      <div style={{ "--aperto-radius": `${radius}px` } as CSSProperties}>
+      <div style={apertoStyle}>
         <Aperto.Group
           classNames={{ thumbnail: "aperto-thumb" }}
           key={columns}

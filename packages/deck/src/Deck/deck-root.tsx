@@ -4,7 +4,7 @@ import { joinClassNames } from "@patternmode/system";
 import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
 import type { PanInfo } from "motion/react";
 import { useId, useReducer } from "react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
 
 import {
   getAdvanceDecision,
@@ -16,7 +16,6 @@ import {
 import type {
   AdvanceDirection,
   DeckAdvanceEvent,
-  DeckCardElement,
   DeckItem,
   DeckMode,
   DeckRenderOverlayState,
@@ -57,11 +56,33 @@ interface DeckRenderedCardProps {
   item: DeckItem;
   lastDirection: AdvanceDirection | null;
   peekOffset: number;
-  reduceMotion: boolean | null;
+  reduceMotion: boolean;
   renderOverlay: DeckRootProps["renderOverlay"];
   rotation: number;
   scaleStep: number;
   visibleCount: number;
+}
+
+interface DeckRenderedCardsProps {
+  activeIndex: number;
+  cardsLength: number;
+  disabled: boolean;
+  dragElastic: number;
+  dragOffset: number;
+  dragProgress: number;
+  exitCustom: { direction: AdvanceDirection | null; velocity: number };
+  handleDrag: (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  isDragging: boolean;
+  lastDirection: AdvanceDirection | null;
+  mode: DeckMode;
+  peekOffset: number;
+  reduceMotion: boolean;
+  renderOverlay: DeckRootProps["renderOverlay"];
+  rotation: number;
+  scaleStep: number;
+  visibleCards: DeckItem[];
+  visualBaseIndex: number;
 }
 
 interface DeckState {
@@ -89,6 +110,8 @@ type DeckAction =
       type: "reset-drag";
     };
 
+type DeckDispatch = (action: DeckAction) => void;
+
 const getAbsoluteVisualIndex = (
   mode: DeckMode,
   visualBaseIndex: number,
@@ -96,10 +119,12 @@ const getAbsoluteVisualIndex = (
   depth: number,
 ) => (mode === "cycle" ? visualBaseIndex : activeIndex) + depth;
 
+const withDefault = <T,>(value: T | undefined, fallback: T): T => value ?? fallback;
+
 const getCardRotationValue = (
   active: boolean,
   isDragging: boolean,
-  reduceMotion: boolean | null,
+  reduceMotion: boolean,
   dragOffset: number,
   idleRotate: number,
 ) => {
@@ -116,7 +141,7 @@ const getCardRotationValue = (
 const getCardDepthMotion = (
   active: boolean,
   isDragging: boolean,
-  reduceMotion: boolean | null,
+  reduceMotion: boolean,
   depth: number,
   dragProgress: number,
   peekOffset: number,
@@ -150,16 +175,13 @@ const getRotateTransition = (active: boolean, isDragging: boolean) => {
   };
 };
 
-const getWhileDrag = (draggable: boolean, reduceMotion: boolean | null) => {
-  if (!draggable) {
-    return;
-  }
-
-  return {
-    cursor: "grabbing",
-    scale: reduceMotion ? 1 : 1.02,
-  };
-};
+const getWhileDrag = (draggable: boolean, reduceMotion: boolean) =>
+  draggable
+    ? {
+        cursor: "grabbing",
+        scale: reduceMotion ? 1 : 1.02,
+      }
+    : undefined;
 
 const createDeckState = (defaultIndex: number): DeckState => ({
   dragOffset: 0,
@@ -221,6 +243,113 @@ const getDeckRootDataProps = (disabled: boolean, exhausted: boolean) => ({
   "data-empty": exhausted ? "true" : undefined,
 });
 
+const useDeckInteractions = ({
+  activeCard,
+  activeIndex,
+  allowedDirections,
+  cards,
+  controlled,
+  disabled,
+  dispatch,
+  distanceThreshold,
+  mode,
+  onAdvance,
+  onAdvanceEnd,
+  onExhausted,
+  onIndexChange,
+  onKeyDown,
+  velocityThreshold,
+}: {
+  activeCard: DeckItem | undefined;
+  activeIndex: number;
+  allowedDirections: AdvanceDirection[];
+  cards: DeckItem[];
+  controlled: boolean;
+  disabled: boolean;
+  dispatch: DeckDispatch;
+  distanceThreshold: number;
+  mode: DeckMode;
+  onAdvance: DeckRootProps["onAdvance"];
+  onAdvanceEnd: DeckRootProps["onAdvanceEnd"];
+  onExhausted: DeckRootProps["onExhausted"];
+  onIndexChange: DeckRootProps["onIndexChange"];
+  onKeyDown: DeckRootProps["onKeyDown"];
+  velocityThreshold: number;
+}) => {
+  const commitAdvance = (direction: AdvanceDirection, velocity = 0) => {
+    if (disabled || activeCard === undefined) {
+      return;
+    }
+
+    const nextIndex = getNextDeckIndex(activeIndex, cards.length, mode);
+    const event: DeckAdvanceEvent = {
+      direction,
+      index: activeIndex,
+      itemId: activeCard.id,
+      mode,
+      nextIndex,
+    };
+
+    dispatch({
+      controlled,
+      direction,
+      mode,
+      nextIndex,
+      type: "advance",
+      velocity,
+    });
+    onAdvance?.(event);
+    onIndexChange?.(nextIndex);
+    onAdvanceEnd?.(event);
+
+    if (mode === "finite" && nextIndex >= cards.length) {
+      onExhausted?.();
+    }
+  };
+
+  const handleDrag = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    dispatch({ offset: info.offset.x, type: "drag" });
+  };
+
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    dispatch({ type: "reset-drag" });
+
+    const target = event.currentTarget;
+    const decision = getAdvanceDecision({
+      allowedDirections,
+      distanceThreshold,
+      offsetX: info.offset.x,
+      velocityThreshold,
+      velocityX: info.velocity.x,
+      width: target instanceof HTMLElement ? target.offsetWidth : 1,
+    });
+
+    if (decision.accepted) {
+      commitAdvance(decision.direction, info.velocity.x);
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+
+    if (event.defaultPrevented || disabled) {
+      return;
+    }
+
+    if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
+      event.preventDefault();
+      commitAdvance("left");
+    }
+
+    if (event.key === "ArrowRight" && allowedDirections.includes("right")) {
+      event.preventDefault();
+      commitAdvance("right");
+    }
+  };
+
+  return { handleDrag, handleDragEnd, handleKeyDown };
+};
+
 const DeckRenderedCard = ({
   activeIndex,
   depth,
@@ -242,7 +371,7 @@ const DeckRenderedCard = ({
   visibleCount,
 }: DeckRenderedCardProps) => {
   const active = depth === 0;
-  const card = item.element as DeckCardElement;
+  const card = item.element;
   const cardProps = card.props;
   const cardStyle = {
     ...cardProps.style,
@@ -323,38 +452,105 @@ const DeckRenderedCard = ({
   );
 };
 
+const DeckRenderedCards = ({
+  activeIndex,
+  cardsLength,
+  disabled,
+  dragElastic,
+  dragOffset,
+  dragProgress,
+  exitCustom,
+  handleDrag,
+  handleDragEnd,
+  isDragging,
+  lastDirection,
+  mode,
+  peekOffset,
+  reduceMotion,
+  renderOverlay,
+  rotation,
+  scaleStep,
+  visibleCards,
+  visualBaseIndex,
+}: DeckRenderedCardsProps) => (
+  <LazyMotion features={domMax}>
+    <AnimatePresence custom={exitCustom} initial={false}>
+      {visibleCards.map((item, depth) => (
+        <DeckRenderedCard
+          activeIndex={activeIndex}
+          depth={depth}
+          disabled={disabled}
+          dragElastic={dragElastic}
+          dragOffset={dragOffset}
+          dragProgress={dragProgress}
+          exitCustom={exitCustom}
+          handleDrag={handleDrag}
+          handleDragEnd={handleDragEnd}
+          isDragging={isDragging}
+          item={item}
+          key={getDeckRenderKey(
+            item.id,
+            getAbsoluteVisualIndex(mode, visualBaseIndex, activeIndex, depth),
+            cardsLength,
+            mode,
+          )}
+          lastDirection={lastDirection}
+          peekOffset={peekOffset}
+          reduceMotion={reduceMotion}
+          renderOverlay={renderOverlay}
+          rotation={rotation}
+          scaleStep={scaleStep}
+          visibleCount={visibleCards.length}
+        />
+      ))}
+    </AnimatePresence>
+  </LazyMotion>
+);
+
 export const DeckRoot = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
-  allowedDirections = DEFAULT_DIRECTIONS,
+  allowedDirections: allowedDirectionsProp,
   children,
   className,
-  defaultIndex = 0,
-  disabled = false,
-  distanceThreshold = DEFAULT_DISTANCE_THRESHOLD,
-  dragElastic = DEFAULT_DRAG_ELASTIC,
+  defaultIndex: defaultIndexProp,
+  disabled: disabledProp,
+  distanceThreshold: distanceThresholdProp,
+  dragElastic: dragElasticProp,
   index,
-  mode = "cycle",
+  mode: modeProp,
   onExhausted,
   onIndexChange,
   onKeyDown,
   onAdvance,
   onAdvanceEnd,
-  peekOffset = DEFAULT_PEEK_OFFSET,
-  perspective = DEFAULT_PERSPECTIVE,
+  peekOffset: peekOffsetProp,
+  perspective: perspectiveProp,
   ref,
   renderOverlay,
-  rotation = DEFAULT_ROTATION,
-  scaleStep = DEFAULT_SCALE_STEP,
+  rotation: rotationProp,
+  scaleStep: scaleStepProp,
   style,
   tabIndex,
-  velocityThreshold = DEFAULT_VELOCITY_THRESHOLD,
-  visibleCount = DEFAULT_VISIBLE_COUNT,
+  velocityThreshold: velocityThresholdProp,
+  visibleCount: visibleCountProp,
   ...props
 }: DeckRootProps) => {
+  const allowedDirections = withDefault(allowedDirectionsProp, DEFAULT_DIRECTIONS);
+  const defaultIndex = withDefault(defaultIndexProp, 0);
+  const disabled = withDefault(disabledProp, false);
+  const distanceThreshold = withDefault(distanceThresholdProp, DEFAULT_DISTANCE_THRESHOLD);
+  const dragElastic = withDefault(dragElasticProp, DEFAULT_DRAG_ELASTIC);
+  const mode = withDefault(modeProp, "cycle");
+  const peekOffset = withDefault(peekOffsetProp, DEFAULT_PEEK_OFFSET);
+  const perspective = withDefault(perspectiveProp, DEFAULT_PERSPECTIVE);
+  const rotation = withDefault(rotationProp, DEFAULT_ROTATION);
+  const scaleStep = withDefault(scaleStepProp, DEFAULT_SCALE_STEP);
+  const velocityThreshold = withDefault(velocityThresholdProp, DEFAULT_VELOCITY_THRESHOLD);
+  const visibleCount = withDefault(visibleCountProp, DEFAULT_VISIBLE_COUNT);
   const generatedId = useId();
   const [state, dispatch] = useReducer(deckReducer, defaultIndex, createDeckState);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() === true;
   const controlled = index !== undefined;
   const activeIndex = controlled ? index : state.internalIndex;
   const { cards, empty } = useDeckChildren(children, generatedId);
@@ -366,83 +562,25 @@ export const DeckRoot = ({
   const dragProgress = Math.min(1, Math.abs(state.dragOffset) / BG_RESPONSE_RAMP);
 
   const exitCustom = { direction: state.lastDirection, velocity: state.exitVelocity };
+  const { handleDrag, handleDragEnd, handleKeyDown } = useDeckInteractions({
+    activeCard,
+    activeIndex,
+    allowedDirections,
+    cards,
+    controlled,
+    disabled,
+    dispatch,
+    distanceThreshold,
+    mode,
+    onAdvance,
+    onAdvanceEnd,
+    onExhausted,
+    onIndexChange,
+    onKeyDown,
+    velocityThreshold,
+  });
 
-  const commitAdvance = (direction: AdvanceDirection, velocity = 0) => {
-    if (disabled || !activeCard) {
-      return;
-    }
-
-    const nextIndex = getNextDeckIndex(activeIndex, cards.length, mode);
-    const event: DeckAdvanceEvent = {
-      direction,
-      index: activeIndex,
-      itemId: activeCard.id,
-      mode,
-      nextIndex,
-    };
-
-    dispatch({
-      controlled,
-      direction,
-      mode,
-      nextIndex,
-      type: "advance",
-      velocity,
-    });
-    onAdvance?.(event);
-
-    onIndexChange?.(nextIndex);
-    onAdvanceEnd?.(event);
-
-    if (mode === "finite" && nextIndex >= cards.length) {
-      onExhausted?.();
-    }
-  };
-
-  const handleDrag = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ offset: info.offset.x, type: "drag" });
-  };
-
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ type: "reset-drag" });
-
-    const target = event.currentTarget as HTMLElement | null;
-    const decision = getAdvanceDecision({
-      allowedDirections,
-      distanceThreshold,
-      offsetX: info.offset.x,
-      velocityThreshold,
-      velocityX: info.velocity.x,
-      width: target?.offsetWidth ?? 1,
-    });
-
-    if (decision.accepted) {
-      commitAdvance(decision.direction, info.velocity.x);
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    onKeyDown?.(event);
-
-    if (event.defaultPrevented || disabled) {
-      return;
-    }
-
-    if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
-      event.preventDefault();
-      commitAdvance("left");
-    }
-
-    if (event.key === "ArrowRight" && allowedDirections.includes("right")) {
-      event.preventDefault();
-      commitAdvance("right");
-    }
-  };
-
-  const rootStyle = {
-    ...style,
-    "--deck-perspective": `${perspective}px`,
-  } as CSSProperties;
+  const rootStyle = { ...style, "--deck-perspective": `${perspective}px` } as CSSProperties;
   const controlProps = getDeckControlProps({
     activeIndex,
     ariaLabel,
@@ -467,39 +605,28 @@ export const DeckRoot = ({
         disabled={disabled}
         onKeyDown={handleKeyDown}
       />
-      <LazyMotion features={domMax}>
-        <AnimatePresence custom={exitCustom} initial={false}>
-          {visibleCards.map((item, depth) => (
-            <DeckRenderedCard
-              activeIndex={activeIndex}
-              depth={depth}
-              disabled={disabled}
-              dragElastic={dragElastic}
-              dragOffset={state.dragOffset}
-              dragProgress={dragProgress}
-              exitCustom={exitCustom}
-              handleDrag={handleDrag}
-              handleDragEnd={handleDragEnd}
-              isDragging={isDragging}
-              item={item}
-              key={getDeckRenderKey(
-                item.id,
-                getAbsoluteVisualIndex(mode, state.visualBaseIndex, activeIndex, depth),
-                cards.length,
-                mode,
-              )}
-              lastDirection={state.lastDirection}
-              peekOffset={peekOffset}
-              reduceMotion={reduceMotion}
-              renderOverlay={renderOverlay}
-              rotation={rotation}
-              scaleStep={scaleStep}
-              visibleCount={visibleCards.length}
-            />
-          ))}
-        </AnimatePresence>
-      </LazyMotion>
-      {exhausted && empty ? empty : null}
+      <DeckRenderedCards
+        activeIndex={activeIndex}
+        cardsLength={cards.length}
+        disabled={disabled}
+        dragElastic={dragElastic}
+        dragOffset={state.dragOffset}
+        dragProgress={dragProgress}
+        exitCustom={exitCustom}
+        handleDrag={handleDrag}
+        handleDragEnd={handleDragEnd}
+        isDragging={isDragging}
+        lastDirection={state.lastDirection}
+        mode={mode}
+        peekOffset={peekOffset}
+        reduceMotion={reduceMotion}
+        renderOverlay={renderOverlay}
+        rotation={rotation}
+        scaleStep={scaleStep}
+        visibleCards={visibleCards}
+        visualBaseIndex={state.visualBaseIndex}
+      />
+      {exhausted && empty !== null ? empty : null}
     </div>
   );
 };

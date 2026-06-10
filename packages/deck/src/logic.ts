@@ -48,7 +48,13 @@ export const getVisibleDeckItems = (
   const start = normalizeIndex(index, items.length);
   return Array.from({ length: Math.min(visibleCount, items.length) }, (_, depth) => {
     const itemIndex = (start + depth) % items.length;
-    return items[itemIndex] as DeckItem;
+    const item = items[itemIndex];
+
+    if (item === undefined) {
+      throw new Error("Expected visible deck item to exist.");
+    }
+
+    return item;
   });
 };
 

@@ -13,7 +13,7 @@ export type AdvanceDirection = "left" | "right";
 
 /** Normalized child item tracked by Deck's render and advance logic. */
 export interface DeckItem {
-  element: ReactNode;
+  element: DeckCardElement;
   id: string;
 }
 

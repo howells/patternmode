@@ -1,0 +1,277 @@
+"use client";
+
+import { joinClassNames } from "@patternmode/system";
+import * as Popover from "@radix-ui/react-popover";
+import { useId, useState } from "react";
+
+import { TagSelectorContext } from "./tag-selector-context";
+import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
+import {
+  DEFAULT_SEPARATORS,
+  NO_ACTIVE_OPTION,
+  defaultFilterOption,
+  normalizeComparable,
+  normalizeTag,
+} from "./tag-selector-utils";
+import type { TagItem, TagSelectorRootProps } from "./types";
+
+const serializeTagItem = (item: TagItem): string => item.id;
+
+const getExactMatches = (options: readonly TagItem[], query: string): TagItem[] => {
+  const normalizedQuery = normalizeComparable(query);
+  if (normalizedQuery === "") {
+    return [];
+  }
+
+  return options.filter((item) => normalizeComparable(item.label) === normalizedQuery);
+};
+
+const getCommandOptions = ({
+  canCreate,
+  filteredOptions,
+  listboxId,
+  query,
+}: {
+  canCreate: boolean;
+  filteredOptions: readonly TagItem[];
+  listboxId: string;
+  query: string;
+}): CommandOption[] => {
+  const itemOptions: CommandOption[] = filteredOptions.map((item) => ({
+    id: `${listboxId}-option-${item.id}`,
+    item,
+    label: item.label,
+    type: "item",
+  }));
+
+  if (canCreate) {
+    itemOptions.push({
+      id: `${listboxId}-create`,
+      label: `Create "${normalizeTag(query)}"`,
+      type: "create",
+      value: normalizeTag(query),
+    });
+  }
+
+  return itemOptions;
+};
+
+const resolveDraftItem = async ({
+  draft,
+  onCreateItem,
+  options,
+}: {
+  draft: string;
+  onCreateItem: TagSelectorRootProps["onCreateItem"];
+  options: readonly TagItem[];
+}): Promise<TagItem | null> => {
+  const normalizedDraft = normalizeTag(draft);
+  if (normalizedDraft === "") {
+    return null;
+  }
+
+  const matches = options.filter(
+    (item) => normalizeComparable(item.label) === normalizeComparable(normalizedDraft),
+  );
+  if (matches.length === 1) {
+    const [match] = matches;
+    if (match === undefined || match.disabled === true) {
+      return null;
+    }
+    return match;
+  }
+  if (matches.length === 0 && onCreateItem !== undefined) {
+    return await onCreateItem(normalizedDraft);
+  }
+  return null;
+};
+
+const useTagSelectorRootState = (props: TagSelectorRootProps) => {
+  const {
+    "aria-label": ariaLabel,
+    disabled = false,
+    emptyMessage = "No tags found.",
+    filterOption = defaultFilterOption,
+    id,
+    name,
+    onChange,
+    onCreateItem,
+    onSearchChange,
+    options,
+    placeholder = "Select tags",
+    renderOption,
+    renderTag,
+    searchValue,
+    separators = DEFAULT_SEPARATORS,
+    serializeItem = serializeTagItem,
+    value,
+  } = props;
+  const generatedId = useId();
+  const rootId = id ?? generatedId;
+  const inputId = `${rootId}-search`;
+  const listboxId = `${rootId}-listbox`;
+  const [open, setOpen] = useState(false);
+  const [internalQuery, setInternalQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(NO_ACTIVE_OPTION);
+  const query = searchValue ?? internalQuery;
+  const selectedIds = new Set(value.map((item) => item.id));
+  const filteredOptions = options.filter((item) => filterOption(item, query));
+  const exactMatches = getExactMatches(options, query);
+  const canCreate =
+    onCreateItem !== undefined && normalizeTag(query) !== "" && exactMatches.length === 0;
+  const commandOptions = getCommandOptions({ canCreate, filteredOptions, listboxId, query });
+  const activeOption = commandOptions[activeIndex];
+
+  const updateQuery = (nextQuery: string) => {
+    if (searchValue === undefined) {
+      setInternalQuery(nextQuery);
+    }
+    onSearchChange?.(nextQuery);
+    setActiveIndex(NO_ACTIVE_OPTION);
+  };
+
+  const removeItem = (item: TagItem) => {
+    onChange(value.filter((selectedItem) => selectedItem.id !== item.id));
+  };
+
+  const resolveDrafts = async (drafts: readonly string[]): Promise<void> => {
+    if (disabled) {
+      return;
+    }
+
+    const nextValue = [...value];
+    const nextIds = new Set(nextValue.map((item) => item.id));
+    let changed = false;
+    const resolvedDrafts = await Promise.all(
+      drafts.map(async (draft) => await resolveDraftItem({ draft, onCreateItem, options })),
+    );
+
+    for (const item of resolvedDrafts) {
+      if (item === null || nextIds.has(item.id)) {
+        continue;
+      }
+      nextValue.push(item);
+      nextIds.add(item.id);
+      changed = true;
+    }
+
+    if (changed) {
+      onChange(nextValue);
+      updateQuery("");
+    }
+  };
+
+  const resolveDraft = async (draft: string): Promise<void> => {
+    await resolveDrafts([draft]);
+  };
+
+  const selectCommandOption = async (option: CommandOption): Promise<void> => {
+    if (disabled) {
+      return;
+    }
+    if (option.type === "create") {
+      await resolveDraft(option.value);
+      return;
+    }
+
+    const isSelected = selectedIds.has(option.item.id);
+    if (option.item.disabled === true && !isSelected) {
+      return;
+    }
+    onChange(
+      isSelected ? value.filter((item) => item.id !== option.item.id) : [...value, option.item],
+    );
+  };
+
+  const contextValue: TagSelectorContextValue = {
+    activeIndex,
+    activeOption,
+    ariaLabel,
+    commandOptions,
+    disabled,
+    emptyMessage,
+    filteredOptions,
+    inputId,
+    listboxId,
+    name,
+    onSearchInput: updateQuery,
+    open,
+    placeholder,
+    query,
+    removeItem,
+    renderOption,
+    renderTag,
+    resolveDraft,
+    resolveDrafts,
+    selectCommandOption,
+    separators,
+    serializeItem,
+    setActiveIndex,
+    setOpen,
+    value,
+  };
+
+  return { contextValue, rootId, setActiveIndex, setOpen };
+};
+
+const TagSelectorHiddenInputs = ({ context }: { context: TagSelectorContextValue }) => {
+  if (context.name === undefined || context.name === "") {
+    return null;
+  }
+
+  return context.value.map((item) => (
+    <input key={item.id} name={context.name} type="hidden" value={context.serializeItem(item)} />
+  ));
+};
+
+export const TagSelectorRoot = (props: TagSelectorRootProps) => {
+  const {
+    "aria-label": _ariaLabel,
+    children,
+    className,
+    disabled: _disabled,
+    emptyMessage: _emptyMessage,
+    filterOption: _filterOption,
+    id: _id,
+    name: _name,
+    onChange: _onChange,
+    onCreateItem: _onCreateItem,
+    onSearchChange: _onSearchChange,
+    options: _options,
+    placeholder: _placeholder,
+    ref,
+    renderOption: _renderOption,
+    renderTag: _renderTag,
+    searchValue: _searchValue,
+    separators: _separators,
+    serializeItem: _serializeItem,
+    value: _value,
+    ...rootProps
+  } = props;
+  const { contextValue, rootId, setActiveIndex, setOpen } = useTagSelectorRootState(props);
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      setActiveIndex(NO_ACTIVE_OPTION);
+    }
+  };
+
+  return (
+    <TagSelectorContext.Provider value={contextValue}>
+      <Popover.Root onOpenChange={handleOpenChange} open={contextValue.open}>
+        <div
+          {...rootProps}
+          className={joinClassNames("patternmode-tag-selector", className)}
+          data-disabled={contextValue.disabled ? "true" : undefined}
+          data-slot="tag-selector"
+          id={rootId}
+          ref={ref}
+        >
+          <TagSelectorHiddenInputs context={contextValue} />
+          {children}
+        </div>
+      </Popover.Root>
+    </TagSelectorContext.Provider>
+  );
+};

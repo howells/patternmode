@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, XIcon } from "../icons";
 import type { HeaderRenderProps } from "../types";
+
 export const DefaultHeader = ({
   isNested,
   onBack,

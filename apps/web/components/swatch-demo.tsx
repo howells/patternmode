@@ -93,6 +93,30 @@ const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const SwatchDemoStates = () => (
+  <div className="swatch-demo-cell">
+    <div className="swatch-demo-label">States</div>
+    <div className="swatch-demo-swatches">
+      <div className="swatch-demo-specimen">
+        <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
+        <span>Selected</span>
+      </div>
+      <div className="swatch-demo-specimen">
+        <Swatch aria-label="Default" color="#315c4b" size="xl" />
+        <span>Default</span>
+      </div>
+      <div className="swatch-demo-specimen">
+        <Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
+        <span>Raised</span>
+      </div>
+      <div className="swatch-demo-specimen">
+        <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
+        <span>Unavailable</span>
+      </div>
+    </div>
+  </div>
+);
+
 /* Demo */
 
 export const SwatchDemo = () => {
@@ -113,7 +137,9 @@ export const SwatchDemo = () => {
               aria-pressed={selected === finish.color}
               className="swatch-demo-button"
               key={finish.color}
-              onClick={() => setSelected(finish.color)}
+              onClick={() => {
+                setSelected(finish.color);
+              }}
               type="button"
             >
               <Swatch
@@ -138,7 +164,9 @@ export const SwatchDemo = () => {
               aria-pressed={selectedPalette === palette.name}
               className="swatch-demo-palette-item"
               key={palette.name}
-              onClick={() => setSelectedPalette(palette.name)}
+              onClick={() => {
+                setSelectedPalette(palette.name);
+              }}
               type="button"
             >
               <Swatch
@@ -175,28 +203,7 @@ export const SwatchDemo = () => {
         </div>
       </div>
 
-      {/* States */}
-      <div className="swatch-demo-cell">
-        <div className="swatch-demo-label">States</div>
-        <div className="swatch-demo-swatches">
-          <div className="swatch-demo-specimen">
-            <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
-            <span>Selected</span>
-          </div>
-          <div className="swatch-demo-specimen">
-            <Swatch aria-label="Default" color="#315c4b" size="xl" />
-            <span>Default</span>
-          </div>
-          <div className="swatch-demo-specimen">
-            <Swatch aria-label="Raised" color="#315c4b" raised size="xl" />
-            <span>Raised</span>
-          </div>
-          <div className="swatch-demo-specimen">
-            <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
-            <span>Unavailable</span>
-          </div>
-        </div>
-      </div>
+      <SwatchDemoStates />
 
       {/* Distribution */}
       <div className="swatch-demo-cell">

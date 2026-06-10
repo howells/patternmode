@@ -3,7 +3,7 @@ import type { SwatchColorStop } from "./swatch-types";
 const normalizeHex = (hex: string): string | null => {
   const value = hex.trim().replace(/^#/u, "");
   if (/^[\da-f]{3}$/iu.test(value)) {
-    return [...value].map((part) => part + part).join("");
+    return `${value[0]}${value[0]}${value[1]}${value[1]}${value[2]}${value[2]}`;
   }
   if (/^[\da-f]{6}$/iu.test(value)) {
     return value;
@@ -27,7 +27,7 @@ const formatPercent = (value: number): string =>
 
 export const isLightColor = (color: string): boolean => {
   const normalized = normalizeHex(color);
-  if (!normalized) {
+  if (normalized === null) {
     return false;
   }
 
@@ -41,12 +41,13 @@ export const isLightColor = (color: string): boolean => {
 export const getSwatchColorsBackground = (
   colors: SwatchColorStop[] | undefined,
 ): string | undefined => {
-  if (!colors || colors.length === 0) {
+  if (colors === undefined || colors.length === 0) {
     return undefined;
   }
 
-  if (colors.length === 1) {
-    return toColorStop(colors[0] as SwatchColorStop).color;
+  const [singleColor] = colors;
+  if (colors.length === 1 && singleColor !== undefined) {
+    return toColorStop(singleColor).color;
   }
 
   const stops = colors.map(toColorStop);

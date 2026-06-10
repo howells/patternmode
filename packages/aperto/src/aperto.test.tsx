@@ -368,7 +368,13 @@ describe("Aperto", () => {
     const changes: number[] = [];
 
     render(
-      <Aperto.Group index={1} media={media} onIndexChange={(nextIndex) => changes.push(nextIndex)}>
+      <Aperto.Group
+        index={1}
+        media={media}
+        onIndexChange={(nextIndex) => {
+          changes.push(nextIndex);
+        }}
+      >
         <Aperto.Thumbnail index={0} />
         <Aperto.Thumbnail index={1} />
       </Aperto.Group>,

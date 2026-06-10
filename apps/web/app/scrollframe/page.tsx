@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -86,7 +86,7 @@ function MaterialStrip() {
 
 export default function ScrollFramePage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Radix-backed scroll frames with reliable plumbing, eased edge fades, hidden or visible scrollbars, and overflow-aware movement controls."
       title="ScrollFrame"
     >
@@ -98,6 +98,6 @@ export default function ScrollFramePage() {
       <DocsBlock title="Core API">
         <ApiTable sections={scrollFrameApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

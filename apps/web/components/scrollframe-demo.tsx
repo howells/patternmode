@@ -68,7 +68,9 @@ export const ScrollFrameDemo = () => {
             <button
               aria-pressed={selectedChip === chip}
               key={chip}
-              onClick={() => setSelectedChip(chip)}
+              onClick={() => {
+                setSelectedChip(chip);
+              }}
               type="button"
             >
               {chip}

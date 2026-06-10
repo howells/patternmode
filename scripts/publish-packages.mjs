@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { once } from "node:events";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import path from "node:path";
 
 import { loadDotenv } from "@howells/envy/dotenv";
 
@@ -14,15 +14,16 @@ loadDotenv([".env", ".env.local"], {
   skipMissing: true,
 });
 
-const env = envSchema.parseServer(process.env);
+const processEnv = globalThis.process.env;
+const env = envSchema.parseServer(processEnv);
 
 if (isDryRun) {
   console.log("Validated publish environment: NPM_TOKEN");
   process.exit(0);
 }
 
-const tempDirectory = await mkdtemp(join(tmpdir(), "patternmode-npm-"));
-const npmConfigPath = join(tempDirectory, ".npmrc");
+const tempDirectory = await mkdtemp(path.join(tmpdir(), "patternmode-npm-"));
+const npmConfigPath = path.join(tempDirectory, ".npmrc");
 
 try {
   await writeFile(
@@ -35,13 +36,15 @@ try {
 
   const child = spawn("pnpm", ["changeset", "publish"], {
     env: {
-      ...process.env,
+      ...processEnv,
       NPM_CONFIG_USERCONFIG: npmConfigPath,
     },
     stdio: "inherit",
   });
 
-  const [exitCode] = await once(child, "close");
+  /** @type {[number | null, NodeJS.Signals | null]} */
+  const closeEvent = await once(child, "close");
+  const [exitCode] = closeEvent;
 
   if (exitCode !== 0) {
     process.exitCode = exitCode ?? 1;

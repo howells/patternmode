@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -81,7 +81,7 @@ export function ProjectDeck() {
 
 export default function DeckPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Card decks that merge cyclic stacks, finite advance flows, velocity gestures, keyboard control, and deterministic motion."
       title="Deck"
     >
@@ -93,6 +93,6 @@ export default function DeckPage() {
       <DocsBlock title="Core API">
         <ApiTable sections={deckApi} />
       </DocsBlock>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

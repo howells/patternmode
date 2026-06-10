@@ -1,4 +1,4 @@
-import { ApiTable, CodeBlock, ComponentPage, DocsBlock } from "@howells/site-ui";
+import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/site-ui";
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
@@ -91,7 +91,7 @@ export function MediaGroupExample() {
 
 export default function ApertoPage() {
   return (
-    <ComponentPage
+    <ComponentDocsShell
       description="Thumbnail-to-expanded media transitions with image, video, and keyboard navigation."
       title="Aperto"
     >
@@ -106,6 +106,6 @@ export default function ApertoPage() {
       <p className="read-more">
         Read the package README for primitive composition, media renderers, and motion presets.
       </p>
-    </ComponentPage>
+    </ComponentDocsShell>
   );
 }

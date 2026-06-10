@@ -1,7 +1,233 @@
 import { createStore } from "zustand";
+import type { StateCreator } from "zustand";
 import type { ResolvedConfig, SheetItem } from "../types";
-import { resolveArgs, resolvePresentationOptions, warnInlineComponent } from "./store-args";
+import {
+  getStringArg,
+  isComponent,
+  registerComponent,
+  resolveArgs,
+  resolvePresentationOptions,
+  toRecord,
+} from "./store-args";
 import type { AnyComponent, ResolvedItem, SheetStoreBundle, StoreState } from "./store-types";
+
+const createItem = ({ type, id, data, ariaLabel }: ResolvedItem): SheetItem => ({
+  ariaLabel,
+  data,
+  id,
+  type,
+});
+
+interface StoreInternals {
+  componentMap: Map<string, AnyComponent>;
+  componentRegistry: Map<AnyComponent, string>;
+  config: ResolvedConfig;
+  getNextKey: () => string;
+  pruneRegistry: (remainingStack: readonly SheetItem[]) => void;
+  resolve: (first: unknown, second: unknown, third: unknown, fourth?: unknown) => ResolvedItem;
+  warnedNames: Set<string>;
+}
+
+type StoreSet<TMap extends object> = Parameters<StateCreator<StoreState<TMap>>>[0];
+type StoreGet<TMap extends object> = Parameters<StateCreator<StoreState<TMap>>>[1];
+
+interface ResolvedWriters {
+  openResolved: (resolved: ResolvedItem) => void;
+  pushResolved: (resolved: ResolvedItem) => void;
+  replaceResolved: (resolved: ResolvedItem) => void;
+}
+
+const createResolvedWriters = <TMap extends object>(
+  set: StoreSet<TMap>,
+  config: ResolvedConfig,
+): ResolvedWriters => ({
+  openResolved: (resolved) => {
+    set({
+      isOpen: true,
+      stack: [createItem(resolved)],
+    });
+  },
+  pushResolved: (resolved) => {
+    set((state) => {
+      const item = createItem(resolved);
+      if (Number.isFinite(config.maxDepth) && state.stack.length >= config.maxDepth) {
+        return {
+          isOpen: true,
+          stack: [...state.stack.slice(0, -1), item],
+        };
+      }
+      return {
+        isOpen: true,
+        stack: [...state.stack, item],
+      };
+    });
+  },
+  replaceResolved: (resolved) => {
+    set((state) => {
+      const item = createItem(resolved);
+      if (state.stack.length === 0) {
+        return { isOpen: true, stack: [item] };
+      }
+      return {
+        isOpen: true,
+        stack: [...state.stack.slice(0, -1), item],
+      };
+    });
+  },
+});
+
+const createNavigate =
+  <TMap extends object>(
+    componentMap: Map<string, AnyComponent>,
+    get: StoreGet<TMap>,
+    resolve: StoreInternals["resolve"],
+    writers: ResolvedWriters,
+  ): StoreState<TMap>["navigate"] =>
+  (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+    const resolved = resolve(first, second, third, fourth);
+    const { stack } = get();
+    const top = stack.at(-1);
+    if (stack.length === 0) {
+      writers.openResolved(resolved);
+      return;
+    }
+    let isSameType = top?.type === resolved.type;
+    if (!isSameType && isComponent(first)) {
+      const topComponent = componentMap.get(top?.type ?? "");
+      isSameType = topComponent === first;
+    }
+    if (isSameType) {
+      writers.replaceResolved(resolved);
+      return;
+    }
+    writers.pushResolved(resolved);
+  };
+
+const createPop =
+  <TMap extends object>(
+    set: StoreSet<TMap>,
+    pruneRegistry: StoreInternals["pruneRegistry"],
+  ): StoreState<TMap>["pop"] =>
+  () => {
+    set((state) => {
+      if (state.stack.length <= 1) {
+        pruneRegistry([]);
+        return { isOpen: false, stack: [] };
+      }
+      const next = state.stack.slice(0, -1);
+      pruneRegistry(next);
+      return { isOpen: true, stack: next };
+    });
+  };
+
+const createRemove =
+  <TMap extends object>(
+    set: StoreSet<TMap>,
+    pruneRegistry: StoreInternals["pruneRegistry"],
+  ): StoreState<TMap>["remove"] =>
+  (id) => {
+    set((state) => {
+      const next = state.stack.filter((item) => item.id !== id);
+      if (next.length === state.stack.length) {
+        return state;
+      }
+      pruneRegistry(next);
+      return next.length === 0 ? { isOpen: false, stack: [] } : { stack: next };
+    });
+  };
+
+const createSetData =
+  <TMap extends object>(
+    set: StoreSet<TMap>,
+    resolve: StoreInternals["resolve"],
+  ): StoreState<TMap>["setData"] =>
+  (first: unknown, second?: unknown, third?: unknown) => {
+    const { id, data } = resolve(first, second, third);
+    set((state) => {
+      const index = state.stack.findIndex((item) => item.id === id);
+      const existing = state.stack[index];
+      if (existing === undefined) {
+        return state;
+      }
+      const updated = [...state.stack];
+      updated[index] = { ...existing, data };
+      return { stack: updated };
+    });
+  };
+
+const createSwap =
+  <TMap extends object>(
+    set: StoreSet<TMap>,
+    internals: Pick<
+      StoreInternals,
+      "componentMap" | "componentRegistry" | "getNextKey" | "warnedNames"
+    >,
+  ): StoreState<TMap>["swap"] =>
+  (first: unknown, second?: unknown, third?: unknown) => {
+    const type = isComponent(first)
+      ? registerComponent(
+          first,
+          internals.componentRegistry,
+          internals.componentMap,
+          internals.getNextKey,
+          internals.warnedNames,
+        )
+      : getStringArg(first, "sheet type");
+    const data = toRecord(second);
+    const ariaLabel = resolvePresentationOptions(third)?.ariaLabel;
+    set((state) => {
+      const top = state.stack.at(-1);
+      if (top === undefined) {
+        return state;
+      }
+      const newStack = [...state.stack];
+      newStack[newStack.length - 1] = {
+        ariaLabel: ariaLabel ?? top.ariaLabel,
+        data,
+        id: top.id,
+        type,
+      };
+      return { stack: newStack };
+    });
+  };
+
+const createStoreState =
+  <TMap extends object>({
+    componentMap,
+    componentRegistry,
+    config,
+    getNextKey,
+    pruneRegistry,
+    resolve,
+    warnedNames,
+  }: StoreInternals): StateCreator<StoreState<TMap>> =>
+  (set, get) => {
+    const writers = createResolvedWriters(set, config);
+
+    return {
+      close: () => {
+        pruneRegistry([]);
+        set({ isOpen: false, stack: [] });
+      },
+      isOpen: false,
+      navigate: createNavigate(componentMap, get, resolve, writers),
+      open: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+        writers.openResolved(resolve(first, second, third, fourth));
+      },
+      pop: createPop(set, pruneRegistry),
+      push: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+        writers.pushResolved(resolve(first, second, third, fourth));
+      },
+      remove: createRemove(set, pruneRegistry),
+      replace: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+        writers.replaceResolved(resolve(first, second, third, fourth));
+      },
+      setData: createSetData(set, resolve),
+      stack: [],
+      swap: createSwap(set, { componentMap, componentRegistry, getNextKey, warnedNames }),
+    };
+  };
+
 /**
  * Create an isolated Zustand store for a sheet stack instance.
  *
@@ -16,7 +242,6 @@ import type { AnyComponent, ResolvedItem, SheetStoreBundle, StoreState } from ".
 export const createSheetStore = <TMap extends object>(
   config: ResolvedConfig,
 ): SheetStoreBundle<TMap> => {
-  type Item = SheetItem<Extract<keyof TMap, string>>;
   const componentRegistry = new Map<AnyComponent, string>();
   const componentMap = new Map<string, AnyComponent>();
   // Per-instance counter (not module-level) — prevents identity leaks across instances/tests
@@ -49,150 +274,16 @@ export const createSheetStore = <TMap extends object>(
       }
     }
   };
-  const store = createStore<StoreState<TMap>>()((set, get) => {
-    // ── Internal resolved methods (no double-resolution) ──
-    const _openResolved = ({ type, id, data, ariaLabel }: ResolvedItem) => {
-      set({
-        isOpen: true,
-        stack: [{ ariaLabel, data, id, type } as Item],
-      });
-    };
-    const _pushResolved = ({ type, id, data, ariaLabel }: ResolvedItem) => {
-      set((state) => {
-        const item = { ariaLabel, data, id, type } as Item;
-        if (Number.isFinite(config.maxDepth) && state.stack.length >= config.maxDepth) {
-          return {
-            isOpen: true,
-            stack: [...state.stack.slice(0, -1), item],
-          };
-        }
-        return {
-          isOpen: true,
-          stack: [...state.stack, item],
-        };
-      });
-    };
-    const _replaceResolved = ({ type, id, data, ariaLabel }: ResolvedItem) => {
-      set((state) => {
-        const item = { ariaLabel, data, id, type } as Item;
-        if (state.stack.length === 0) {
-          return { isOpen: true, stack: [item] };
-        }
-        return {
-          isOpen: true,
-          stack: [...state.stack.slice(0, -1), item],
-        };
-      });
-    };
-    return {
-      close: () => {
-        pruneRegistry([]);
-        set({ isOpen: false, stack: [] });
-      },
-      isOpen: false,
-      navigate: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
-        const resolved = resolve(first, second, third, fourth);
-        const { stack } = get();
-        const top = stack.at(-1);
-        if (stack.length === 0) {
-          _openResolved(resolved);
-          return;
-        }
-        // For ad-hoc components, check if the top item's type maps to the same
-        // component in the registry. For string types, compare directly.
-        let isSameType = top?.type === resolved.type;
-        if (!isSameType && typeof first === "function") {
-          const topComponent = componentMap.get(top?.type ?? "");
-          isSameType = topComponent === first;
-        }
-        if (isSameType) {
-          _replaceResolved(resolved);
-          return;
-        }
-        _pushResolved(resolved);
-      },
-      open: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
-        _openResolved(resolve(first, second, third, fourth));
-      },
-      pop: () => {
-        set((state) => {
-          if (state.stack.length <= 1) {
-            pruneRegistry([]);
-            return { isOpen: false, stack: [] };
-          }
-          const next = state.stack.slice(0, -1);
-          pruneRegistry(next);
-          return { isOpen: true, stack: next };
-        });
-      },
-      push: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
-        _pushResolved(resolve(first, second, third, fourth));
-      },
-      remove: (id) => {
-        set((state) => {
-          const next = state.stack.filter((item) => item.id !== id);
-          if (next.length === state.stack.length) {
-            return state;
-          }
-          pruneRegistry(next);
-          if (next.length === 0) {
-            return { isOpen: false, stack: [] };
-          }
-          return { stack: next };
-        });
-      },
-      replace: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
-        _replaceResolved(resolve(first, second, third, fourth));
-      },
-      setData: (first: unknown, second?: unknown, third?: unknown) => {
-        // setData always has an id: (type, id, data) or (Component, id, data)
-        const { id, data } = resolve(first, second, third);
-        set((state) => {
-          const idx = state.stack.findIndex((item) => item.id === id);
-          if (idx === -1) {
-            return state;
-          }
-          const updated = [...state.stack];
-          updated[idx] = { ...updated[idx], data } as Item;
-          return { stack: updated };
-        });
-      },
-      stack: [],
-      swap: (first: unknown, second?: unknown, third?: unknown) => {
-        let type: string;
-        let data: Record<string, unknown>;
-        const ariaLabel = resolvePresentationOptions(third)?.ariaLabel;
-        if (typeof first === "function") {
-          const component = first as AnyComponent;
-          let typeKey = componentRegistry.get(component);
-          if (!typeKey) {
-            warnInlineComponent(component, componentRegistry, warnedNames);
-            typeKey = getNextKey();
-            componentRegistry.set(component, typeKey);
-            componentMap.set(typeKey, component);
-          }
-          type = typeKey;
-          data = (second ?? {}) as Record<string, unknown>;
-        } else {
-          type = first as string;
-          data = (second ?? {}) as Record<string, unknown>;
-        }
-        set((state) => {
-          const top = state.stack.at(-1);
-          if (!top) {
-            return state;
-          }
-          const newStack = [...state.stack];
-          newStack[newStack.length - 1] = {
-            ariaLabel: ariaLabel ?? top.ariaLabel,
-            data,
-            id: top.id,
-            type,
-          } as Item;
-          return { stack: newStack };
-        });
-      },
-    };
-  });
+  const store = createStore<StoreState<TMap>>()(
+    createStoreState<TMap>({
+      componentMap,
+      componentRegistry,
+      config,
+      getNextKey,
+      pruneRegistry,
+      resolve,
+      warnedNames,
+    }),
+  );
   return { componentMap, componentRegistry, store };
 };

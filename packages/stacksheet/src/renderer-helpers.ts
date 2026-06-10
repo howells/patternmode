@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { getSnapOffset } from "./snap-points";
 import type { getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
+
 export type ResolvedClassNames = Required<StacksheetClassNames>;
 const EMPTY_CLASSNAMES: ResolvedClassNames = {
   backdrop: "",

@@ -1,5 +1,10 @@
-export * from "./durations";
-export * from "./easings";
-export * from "./presets";
-export * from "./scales";
-export * from "./springs";
+export { durationMs, durations } from "./durations";
+export type { Duration } from "./durations";
+export { easings, easingsCSS } from "./easings";
+export type { Easing, EasingTuple } from "./easings";
+export { presets, shakeKeyframes } from "./presets";
+export type { Preset } from "./presets";
+export { scales } from "./scales";
+export type { Scale } from "./scales";
+export { springs } from "./springs";
+export type { SpringType } from "./springs";

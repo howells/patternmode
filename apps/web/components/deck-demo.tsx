@@ -22,7 +22,9 @@ export const DeckDemo = () => {
           className="deck-surface"
           key={mode}
           mode={mode}
-          onAdvance={({ direction }) => setLastAdvance(direction)}
+          onAdvance={({ direction }) => {
+            setLastAdvance(direction);
+          }}
           rotation={7}
           visibleCount={visibleCount}
         >

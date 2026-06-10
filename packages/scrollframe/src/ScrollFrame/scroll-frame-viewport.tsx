@@ -6,7 +6,11 @@ import type { MouseEvent, PointerEvent } from "react";
 import { useRef } from "react";
 
 import { useScrollFrame } from "./scroll-frame-context";
-import type { ScrollFrameViewportProps } from "./scroll-frame-types";
+import type {
+  ScrollFrameContextValue,
+  ScrollFrameResolvedDragScrollConfig,
+  ScrollFrameViewportProps,
+} from "./scroll-frame-types";
 import { isDragScrollIgnored, setRef, supportsAxis } from "./scroll-frame-utils";
 
 const getDragDistance = (
@@ -51,25 +55,20 @@ const clearPageSelection = () => {
   window.getSelection()?.removeAllRanges();
 };
 
-export const ScrollFrameViewport = ({
-  children,
-  className,
-  contentClassName,
-  contentStyle,
-  ref,
-  viewportRef,
-  ...props
-}: ScrollFrameViewportProps) => {
-  const context = useScrollFrame();
-  const { axes, dragScroll, registerViewport, setDragging, viewport } = context;
+const canStartDrag = (
+  event: PointerEvent<HTMLDivElement>,
+  dragScroll: ScrollFrameResolvedDragScrollConfig,
+) => event.button === 0 && !isDragScrollIgnored(event.target, dragScroll.ignoreSelector);
+
+const useDragScrollHandlers = ({
+  axes,
+  dragScroll,
+  setDragging,
+  viewport,
+}: Pick<ScrollFrameContextValue, "axes" | "dragScroll" | "setDragging" | "viewport">) => {
   const sessionRef = useRef<DragScrollSession | null>(null);
   const committedRef = useRef(false);
   const suppressClickRef = useRef(false);
-  const assignRef = (node: HTMLDivElement | null) => {
-    registerViewport(node);
-    setRef(ref, node);
-    setRef(viewportRef, node);
-  };
 
   const endDrag = () => {
     if (committedRef.current) {
@@ -80,13 +79,12 @@ export const ScrollFrameViewport = ({
   };
 
   const handlePointerDownCapture = (event: PointerEvent<HTMLDivElement>) => {
+    const activeDragScroll = dragScroll;
+    const activeViewport = viewport;
     if (
-      !(
-        dragScroll &&
-        viewport &&
-        event.button === 0 &&
-        !isDragScrollIgnored(event.target, dragScroll.ignoreSelector)
-      )
+      activeDragScroll === null ||
+      activeViewport === null ||
+      !canStartDrag(event, activeDragScroll)
     ) {
       sessionRef.current = null;
       return;
@@ -94,8 +92,8 @@ export const ScrollFrameViewport = ({
 
     sessionRef.current = {
       pointerId: event.pointerId,
-      scrollLeft: viewport.scrollLeft,
-      scrollTop: viewport.scrollTop,
+      scrollLeft: activeViewport.scrollLeft,
+      scrollTop: activeViewport.scrollTop,
       startX: event.clientX,
       startY: event.clientY,
     };
@@ -105,7 +103,14 @@ export const ScrollFrameViewport = ({
 
   const handlePointerMoveCapture = (event: PointerEvent<HTMLDivElement>) => {
     const session = sessionRef.current;
-    if (!(dragScroll && viewport && session && event.pointerId === session.pointerId)) {
+    if (
+      !(
+        dragScroll !== null &&
+        viewport !== null &&
+        session !== null &&
+        event.pointerId === session.pointerId
+      )
+    ) {
       return;
     }
 
@@ -157,6 +162,37 @@ export const ScrollFrameViewport = ({
     event.stopPropagation();
   };
 
+  return {
+    handleClickCapture,
+    handlePointerDownCapture,
+    handlePointerEndCapture,
+    handlePointerMoveCapture,
+  };
+};
+
+export const ScrollFrameViewport = ({
+  children,
+  className,
+  contentClassName,
+  contentStyle,
+  ref,
+  viewportRef,
+  ...props
+}: ScrollFrameViewportProps) => {
+  const context = useScrollFrame();
+  const { axes, dragScroll, registerViewport, setDragging, viewport } = context;
+  const {
+    handleClickCapture,
+    handlePointerDownCapture,
+    handlePointerEndCapture,
+    handlePointerMoveCapture,
+  } = useDragScrollHandlers({ axes, dragScroll, setDragging, viewport });
+  const assignRef = (node: HTMLDivElement | null) => {
+    registerViewport(node);
+    setRef(ref, node);
+    setRef(viewportRef, node);
+  };
+
   return (
     <RadixScrollArea.Viewport
       {...props}
@@ -167,7 +203,7 @@ export const ScrollFrameViewport = ({
     >
       <div
         className={joinClassNames("patternmode-scrollframe__content", contentClassName)}
-        data-scrollframe-drag-surface={dragScroll ? "" : undefined}
+        data-scrollframe-drag-surface={dragScroll === null ? undefined : ""}
         data-slot="scrollframe-content"
         data-testid="scrollframe-content"
         onClickCapture={handleClickCapture}

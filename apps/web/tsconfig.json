@@ -1,7 +1,6 @@
 {
   "extends": "@howells/typescript-config/nextjs",
   "compilerOptions": {
-    "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./*"]

@@ -1,11 +1,12 @@
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
+
 const buildStyles = () => {
-  const dir = mkdtempSync(join(tmpdir(), "stacksheet-css-"));
-  const outFile = join(dir, "styles.css");
+  const dir = mkdtempSync(path.join(tmpdir(), "stacksheet-css-"));
+  const outFile = path.join(dir, "styles.css");
   try {
     execFileSync(
       "pnpm",

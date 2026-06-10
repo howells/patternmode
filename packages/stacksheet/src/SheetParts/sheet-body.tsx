@@ -7,8 +7,9 @@ import {
 } from "@radix-ui/react-scroll-area";
 import { Slot } from "@radix-ui/react-slot";
 import type { SheetPartProps } from "./sheet-part-types";
+
 export const SheetBody = ({ asChild, className, style, children }: SheetPartProps) => {
-  if (asChild) {
+  if (asChild === true) {
     // `relative min-h-0 flex-1` is structural for the panel flex layout.
     return (
       <Slot

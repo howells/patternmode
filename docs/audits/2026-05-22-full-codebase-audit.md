@@ -25,32 +25,32 @@
 - **Suspicious boundary files:** 1 file, `packages/aperto/src/aperto-content.tsx`.
 - **Suspicious + long overlap:** 0.
 
-| File | LOC | Why flagged |
-|---|---:|---|
-| `packages/scrollframe/src/scrollframe.tsx` | 661 | Compound component, context, measurement, controls, and rendering in one file |
-| `packages/stacksheet/src/sheet-panel.tsx` | 528 | Panel focus, drag, layout, aria, header, handle, and animation concerns |
-| `packages/aperto/src/aperto.tsx` | 480 | Single Media Transition and Media Group orchestration plus Media Navigation/rendering |
-| `packages/deck/src/deck.tsx` | 449 | Child parsing, state, keyboard, drag, stacking, and rendering |
-| `packages/stacksheet/src/use-drag.ts` | 413 | Complex gesture pipeline, but cohesive and well commented |
+| File                                       | LOC | Why flagged                                                                           |
+| ------------------------------------------ | --: | ------------------------------------------------------------------------------------- |
+| `packages/scrollframe/src/scrollframe.tsx` | 661 | Compound component, context, measurement, controls, and rendering in one file         |
+| `packages/stacksheet/src/sheet-panel.tsx`  | 528 | Panel focus, drag, layout, aria, header, handle, and animation concerns               |
+| `packages/aperto/src/aperto.tsx`           | 480 | Single Media Transition and Media Group orchestration plus Media Navigation/rendering |
+| `packages/deck/src/deck.tsx`               | 449 | Child parsing, state, keyboard, drag, stacking, and rendering                         |
+| `packages/stacksheet/src/use-drag.ts`      | 413 | Complex gesture pipeline, but cohesive and well commented                             |
 
 ## Scorecard: 11/18 — Developing
 
 Security posture is not included in the denominator because the full security reviewer was intentionally skipped by the readiness gate.
 
-| # | Axis | Score | Rationale |
-|---|---:|:---:|---|
-| 1 | Security Posture | -- | Lightweight dependency and secret scans were clean; no sensitive surface was detected. |
-| 2 | Performance | 2/3 | Build output is small and effects clean up, but permanent `will-change` and large client components leave room for tuning. |
-| 3 | Architecture | 2/3 | Package boundaries are clean, but several compound components carry multiple responsibilities in long files. |
-| 4 | Code Quality | 2/3 | Typecheck and lint are clean; noisy tests, `any` escape hatches, and dead-code signals keep this below excellent. |
-| 5 | Test Health | 2/3 | Unit/integration coverage exists and passes, but consumer smoke coverage is incomplete for published packages. |
-| 6 | Resilience | 2/3 | Modal/focus behavior is considered, but primitive dialog composition can emit accessibility warnings. |
-| 7 | Operations | 1/3 | Local checks pass and packaging smoke exists, but no CI/deploy automation was detected. |
-| | **Total** | **11/18** | **Developing** |
+| #   |             Axis |   Score   | Rationale                                                                                                                  |
+| --- | ---------------: | :-------: | -------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Security Posture |    --     | Lightweight dependency and secret scans were clean; no sensitive surface was detected.                                     |
+| 2   |      Performance |    2/3    | Build output is small and effects clean up, but permanent `will-change` and large client components leave room for tuning. |
+| 3   |     Architecture |    2/3    | Package boundaries are clean, but several compound components carry multiple responsibilities in long files.               |
+| 4   |     Code Quality |    2/3    | Typecheck and lint are clean; noisy tests, `any` escape hatches, and dead-code signals keep this below excellent.          |
+| 5   |      Test Health |    2/3    | Unit/integration coverage exists and passes, but consumer smoke coverage is incomplete for published packages.             |
+| 6   |       Resilience |    2/3    | Modal/focus behavior is considered, but primitive dialog composition can emit accessibility warnings.                      |
+| 7   |       Operations |    1/3    | Local checks pass and packaging smoke exists, but no CI/deploy automation was detected.                                    |
+|     |        **Total** | **11/18** | **Developing**                                                                                                             |
 
-| Bonus | Score | Rationale |
-|---|:---:|---|
-| Accessibility | +2/3 | Mostly semantic primitives with labels and reduced-motion handling, with dialog-title warnings and small touch targets to address. |
+| Bonus         | Score | Rationale                                                                                                                          |
+| ------------- | :---: | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Accessibility | +2/3  | Mostly semantic primitives with labels and reduced-motion handling, with dialog-title warnings and small touch targets to address. |
 
 ## Executive Summary
 
@@ -140,11 +140,11 @@ No must-fix findings were confirmed.
 
 **Why:** The repo is publishing multiple component packages, so package metadata and consumer fixtures need to cover the real public surface.
 
-| # | Severity | File | Issue | Flagged by |
-|---|---|---|---|---|
-| 1 | Medium | `packages/stacksheet/package.json:7` | CSS export is paired with `"sideEffects": false` | architecture-engineer |
-| 2 | Medium | `scripts/smoke-tarballs.mjs:27` | Smoke test omits three public packages | test-quality-engineer |
-| 3 | Low | `packages/stacksheet/src/renderer-helpers.ts:43` | Unused exported symbols need public-API triage | senior-engineer |
+| #   | Severity | File                                             | Issue                                            | Flagged by            |
+| --- | -------- | ------------------------------------------------ | ------------------------------------------------ | --------------------- |
+| 1   | Medium   | `packages/stacksheet/package.json:7`             | CSS export is paired with `"sideEffects": false` | architecture-engineer |
+| 2   | Medium   | `scripts/smoke-tarballs.mjs:27`                  | Smoke test omits three public packages           | test-quality-engineer |
+| 3   | Low      | `packages/stacksheet/src/renderer-helpers.ts:43` | Unused exported symbols need public-API triage   | senior-engineer       |
 
 **Suggested approach:** Fix the metadata first, then expand the tarball fixture to import all public package entries and CSS exports. Re-run `pnpm smoke:tarballs`.
 
@@ -152,11 +152,11 @@ No must-fix findings were confirmed.
 
 **Why:** The high-level components mostly handle accessibility, but primitive and default-control paths still expose avoidable friction.
 
-| # | Severity | File | Issue | Flagged by |
-|---|---|---|---|---|
-| 1 | Medium | `packages/aperto/src/aperto-content.tsx:153` | Primitive dialog content can miss title/description wiring | accessibility-engineer |
-| 2 | Low | `packages/stacksheet/src/sheet-panel.tsx:61` | Default icon buttons are below 44px touch-target guidance | accessibility-engineer |
-| 3 | Low | `packages/deck/src/deck.test.tsx:16` | Test output includes expected React/Radix warnings | test-quality-engineer |
+| #   | Severity | File                                         | Issue                                                      | Flagged by             |
+| --- | -------- | -------------------------------------------- | ---------------------------------------------------------- | ---------------------- |
+| 1   | Medium   | `packages/aperto/src/aperto-content.tsx:153` | Primitive dialog content can miss title/description wiring | accessibility-engineer |
+| 2   | Low      | `packages/stacksheet/src/sheet-panel.tsx:61` | Default icon buttons are below 44px touch-target guidance  | accessibility-engineer |
+| 3   | Low      | `packages/deck/src/deck.test.tsx:16`         | Test output includes expected React/Radix warnings         | test-quality-engineer  |
 
 **Suggested approach:** Make tests warning-free while updating the primitive dialog examples. Then adjust Stacksheet hit areas with CSS or structural spans and cover them with component tests.
 
@@ -164,23 +164,23 @@ No must-fix findings were confirmed.
 
 **Why:** The long source files are still functional, but they are the main future-change risk.
 
-| # | Severity | File | Issue | Flagged by |
-|---|---|---|---|---|
-| 1 | Medium | `packages/deck/src/deck.tsx:413` | Child parsing silently ignores wrapped cards | daniel-product-engineer |
-| 2 | Medium | `packages/scrollframe/src/scrollframe.tsx:243` | Multiple long compound components are becoming change hotspots | architecture-engineer |
-| 3 | Low | `packages/deck/src/styles.css:14` | Permanent `will-change` may over-promote layers | performance-engineer |
+| #   | Severity | File                                           | Issue                                                          | Flagged by              |
+| --- | -------- | ---------------------------------------------- | -------------------------------------------------------------- | ----------------------- |
+| 1   | Medium   | `packages/deck/src/deck.tsx:413`               | Child parsing silently ignores wrapped cards                   | daniel-product-engineer |
+| 2   | Medium   | `packages/scrollframe/src/scrollframe.tsx:243` | Multiple long compound components are becoming change hotspots | architecture-engineer   |
+| 3   | Low      | `packages/deck/src/styles.css:14`              | Permanent `will-change` may over-promote layers                | performance-engineer    |
 
 **Suggested approach:** Start with Deck because it has a concrete public API edge, then split ScrollFrame/SheetPanel/Aperto only behind existing tests. Keep decomposition behavior-preserving.
 
 <details>
 <summary>Dismissed findings (4 items)</summary>
 
-| Finding | Reviewer | Reason Dismissed |
-|---|---|---|
-| Missing full security hardening | security gate | No sensitive surface or production signal in this development-stage checkout. |
-| `packages/aperto/styles.css` unused | knip | Build script uses package-root `styles.css` as Tailwind input, so this is not confirmed dead code. |
-| Package-level `@howells/lint` devDependency unused | knip | Lint scripts call `howells-biome`; this is tooling/bin usage, not an import. |
-| Console output in scripts | debug-log scan | Script status output is intentional and not shipped runtime debug logging. |
+| Finding                                            | Reviewer       | Reason Dismissed                                                                                   |
+| -------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------- |
+| Missing full security hardening                    | security gate  | No sensitive surface or production signal in this development-stage checkout.                      |
+| `packages/aperto/styles.css` unused                | knip           | Build script uses package-root `styles.css` as Tailwind input, so this is not confirmed dead code. |
+| Package-level `@howells/lint` devDependency unused | knip           | Lint scripts call `howells-biome`; this is tooling/bin usage, not an import.                       |
+| Console output in scripts                          | debug-log scan | Script status output is intentional and not shipped runtime debug logging.                         |
 
 </details>
 

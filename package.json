@@ -9,9 +9,9 @@
     "clean": "turbo run clean --continue=always && turbo clean",
     "dev": "turbo run dev --filter=@howells/patternmode-web",
     "env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
-    "format": "howells-ox-fix .",
-    "lint": "turbo run lint && howells-ox-check scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-check",
-    "lint:fix": "turbo run lint:fix && howells-ox-fix scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-fix",
+    "format": "howells-fix .",
+    "lint": "turbo run lint && howells-check scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-check",
+    "lint:fix": "turbo run lint:fix && howells-fix scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-fix",
     "prepare": "howells-husky",
     "publish:packages": "node scripts/publish-packages.mjs",
     "smoke:tarballs": "node scripts/smoke-tarballs.mjs",
@@ -21,25 +21,20 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7",
-    "@howells/envy": "^0.3.7",
-    "@howells/husky": "^0.1.0",
-    "@howells/lint": "^0.2.1",
-    "@howells/typescript-config": "^0.1.2",
-    "turbo": "2.9.14",
-    "typescript": "^6.0.3",
-    "zod": "^4.4.3"
+    "@howells/envy": "catalog:",
+    "@howells/husky": "catalog:",
+    "@howells/lint": "catalog:",
+    "@howells/typescript-config": "catalog:",
+    "lint-staged": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "zod": "catalog:"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": "howells-ox-fix",
-    "*.{json,jsonc}": "howells-oxfmt --write"
+    "*.{js,ts,jsx,tsx,json,jsonc,css}": "howells-fix"
   },
   "engines": {
     "node": ">=24.15.0 <25"
   },
-  "packageManager": "pnpm@11.5.2",
-  "pnpm": {
-    "overrides": {
-      "postcss": "^8.5.15"
-    }
-  }
+  "packageManager": "pnpm@11.5.2"
 }

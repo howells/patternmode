@@ -50,7 +50,7 @@ describe("resolveSnapPoints", () => {
   });
 
   it("filters out zero/invalid values", () => {
-    expect(resolveSnapPoints([0, "invalid" as never, 300], vh)).toEqual([300]);
+    expect(resolveSnapPoints([0, "invalid", 300], vh)).toEqual([300]);
   });
 
   it("handles mixed types", () => {

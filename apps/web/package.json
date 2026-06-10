@@ -7,8 +7,8 @@
     "build": "next build",
     "clean": "rm -rf .next .turbo",
     "dev": "next dev",
-    "lint": "howells-ox-check .",
-    "lint:fix": "howells-ox-fix .",
+    "lint": "howells-check .",
+    "lint:fix": "howells-fix .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -21,16 +21,16 @@
     "@patternmode/status": "workspace:*",
     "@patternmode/swatch": "workspace:*",
     "@patternmode/tags": "workspace:*",
-    "next": "^16.2.6",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@howells/lint": "^0.2.1",
-    "@howells/typescript-config": "^0.1.2",
-    "@types/node": "^24.10.3",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.3"
+    "@howells/lint": "catalog:",
+    "@howells/typescript-config": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
   }
 }
