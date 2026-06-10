@@ -38,6 +38,14 @@ export const getSwatchSizeVariableStyle = (
 export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
   background?: string;
   color?: string;
+  /**
+   * How multiple `colors` blend: `"step"` renders hard bands, `"smooth"`
+   * renders a continuous OKLab-interpolated ramp. Ignored by
+   * `texture="atmosphere"`.
+   *
+   * Default `"step"`.
+   */
+  blend?: "smooth" | "step";
   colors?: SwatchColorStop[];
   /**
    * Atmosphere density (0 = diffuse wash, 1 = dense pools). Only applies when

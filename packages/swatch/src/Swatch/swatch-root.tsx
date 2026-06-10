@@ -56,13 +56,17 @@ const SwatchContent = ({
 
 const getSwatchFill = ({
   background,
+  blend,
   color,
   colors,
   density,
   gravity,
   texture,
-}: Pick<SwatchProps, "background" | "color" | "colors" | "density" | "gravity" | "texture">) => {
-  const colorsBackground = getSwatchColorsBackground(colors);
+}: Pick<
+  SwatchProps,
+  "background" | "blend" | "color" | "colors" | "density" | "gravity" | "texture"
+>) => {
+  const colorsBackground = getSwatchColorsBackground(colors, blend);
   const atmosphereBackground =
     texture === "atmosphere"
       ? getSwatchAtmosphereBackground(colors, { density, gravity })
@@ -172,6 +176,7 @@ export const Swatch = ({
   "aria-label": ariaLabel,
   asChild = false,
   background,
+  blend = "step",
   children,
   className,
   color,
@@ -198,6 +203,7 @@ export const Swatch = ({
 }: SwatchProps) => {
   const { colorsBackground, fill } = getSwatchFill({
     background,
+    blend,
     color,
     colors,
     density,

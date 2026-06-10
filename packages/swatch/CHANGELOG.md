@@ -1,5 +1,17 @@
 # @patternmode/swatch
 
+## 0.10.2
+
+### Patch Changes
+
+- Swatch gains a `blend` prop for multi-color fills: `"step"` (default, the existing hard bands) or `"smooth"`, which renders the colors as a continuous OKLab-interpolated gradient ramp — for surfaces that represent bounded regions of color rather than discrete swatches.
+
+## 0.10.1
+
+### Patch Changes
+
+- Distribution segment selection is now a pin, not a frame: the selected segment shows a small white ring with its own color through the middle — the same gesture as the bar's drag handles — instead of a hard 2px accent inset that read as a box.
+
 ## 0.10.0
 
 ### Minor Changes

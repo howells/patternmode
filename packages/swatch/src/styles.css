@@ -246,9 +246,27 @@
     box-shadow: inset 1px 0 0 rgb(255 255 255 / 60%);
   }
 
+  /* Selection is a pin, not a frame: a small white ring centered on the
+     segment with its own color showing through — the same gesture as the
+     bar's drag handles, halo's handles, and briolette's facet pin. */
   .patternmode-distribution-bar__segment[data-selected="true"] {
-    box-shadow: inset 0 0 0 2px var(--accent, #315c4b);
+    position: relative;
     z-index: 2;
+  }
+
+  .patternmode-distribution-bar__segment[data-selected="true"]::after {
+    border: 2px solid var(--surface, #fff);
+    border-radius: 999px;
+    box-shadow:
+      0 1px 4px rgb(17 24 39 / 28%),
+      inset 0 0 0 1px rgb(17 24 39 / 12%);
+    content: "";
+    height: 0.62rem;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.62rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

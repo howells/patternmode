@@ -40,6 +40,7 @@ export const isLightColor = (color: string): boolean => {
 
 export const getSwatchColorsBackground = (
   colors: SwatchColorStop[] | undefined,
+  blend: "smooth" | "step" = "step",
 ): string | undefined => {
   if (colors === undefined || colors.length === 0) {
     return undefined;
@@ -51,6 +52,17 @@ export const getSwatchColorsBackground = (
   }
 
   const stops = colors.map(toColorStop);
+
+  /* Smooth blend: one position per stop, interpolated in OKLab so ramps
+     read as a continuous region of color rather than discrete bands. */
+  if (blend === "smooth") {
+    const parts = stops.map((stop, index) => {
+      const position = stops.length === 1 ? 0 : (index / (stops.length - 1)) * 100;
+      return `${stop.color} ${formatPercent(position)}`;
+    });
+    return `linear-gradient(in oklab 90deg, ${parts.join(", ")})`;
+  }
+
   const weights = stops.map((stop) => getRatioWeight(stop.ratio));
   const rawTotal = weights.reduce((sum, ratio) => sum + ratio, 0);
   const useEqualWeights = rawTotal <= 0;
