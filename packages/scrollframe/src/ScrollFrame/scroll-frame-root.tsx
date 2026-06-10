@@ -18,6 +18,7 @@ import type {
 } from "./scroll-frame-types";
 import {
   defaultControlAxis,
+  edgeStateEqual,
   getAxisState,
   getPageStep,
   getReducedMotionPreference,
@@ -85,7 +86,15 @@ const useMeasuredViewport = () => {
     if (node === null) {
       return;
     }
-    setEdgeState(readEdgeState(node));
+    // Bail out when the metrics are unchanged. `readEdgeState` allocates a
+    // fresh object every call, so a plain `setEdgeState(readEdgeState(node))`
+    // always changes the reference and forces a render — and because the
+    // ResizeObserver fires on the very layout changes a render can cause, that
+    // turns into an unbounded loop (seen with an always-on, centered horizontal
+    // scrollbar pegging the renderer at 100% CPU). Returning the previous
+    // reference lets React skip the render and break the cycle.
+    const next = readEdgeState(node);
+    setEdgeState((previous) => (edgeStateEqual(previous, next) ? previous : next));
   };
   const measureRef = useRef(measure);
   measureRef.current = measure;

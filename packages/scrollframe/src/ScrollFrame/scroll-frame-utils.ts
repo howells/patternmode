@@ -7,6 +7,7 @@ import type {
   ScrollFrameAxisState,
   ScrollFrameDragScrollConfig,
   ScrollFrameEdge,
+  ScrollFrameEdgeState,
   ScrollFrameFadeConfig,
   ScrollFrameFadeEdges,
   ScrollFrameResolvedDragScrollConfig,
@@ -113,6 +114,22 @@ export const getAxisState = (node: HTMLDivElement, axis: ScrollFrameAxis): Scrol
     scrollable,
   };
 };
+
+const axisStateEqual = (a: ScrollFrameAxisState, b: ScrollFrameAxisState): boolean =>
+  a.atEnd === b.atEnd && a.atStart === b.atStart && a.scrollable === b.scrollable;
+
+/**
+ * Structural equality for two edge-state snapshots.
+ *
+ * `getAxisState` allocates a fresh object on every measurement, so a naive
+ * `setState(readEdgeState(node))` always changes the reference and forces a
+ * render even when nothing moved. Paired with a ResizeObserver — whose callback
+ * fires on the very layout changes a render can cause — that turns into an
+ * unbounded render loop (observed with an always-on, centered horizontal
+ * scrollbar). Callers gate `setState` on this so identical metrics are a no-op.
+ */
+export const edgeStateEqual = (a: ScrollFrameEdgeState, b: ScrollFrameEdgeState): boolean =>
+  axisStateEqual(a.horizontal, b.horizontal) && axisStateEqual(a.vertical, b.vertical);
 
 export const getReducedMotionPreference = (): boolean => {
   if (typeof window === "undefined" || window.matchMedia === undefined) {

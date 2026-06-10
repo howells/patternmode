@@ -2,6 +2,8 @@
 
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { Profiler } from "react";
+import type { ProfilerOnRenderCallback } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ScrollFrame } from "./index";
@@ -41,6 +43,35 @@ describe("ScrollFrame", () => {
     expect(viewport).toHaveAttribute("data-slot", "scrollframe-viewport");
     expect(screen.getByTestId("scrollframe-fade-vertical-start")).toBeInTheDocument();
     expect(screen.getByTestId("scrollframe-fade-vertical-end")).toBeInTheDocument();
+  });
+
+  it("does not commit further updates when a measurement reports unchanged metrics", () => {
+    const onRender = vi.fn<ProfilerOnRenderCallback>();
+
+    render(
+      <Profiler id="scrollframe" onRender={onRender}>
+        <ScrollFrame aria-label="Stable" axes="horizontal" scrollbars="hidden">
+          <span>Item</span>
+        </ScrollFrame>
+      </Profiler>,
+    );
+
+    const settledCommits = onRender.mock.calls.length;
+
+    // The viewport reports the same (zero) geometry on every measurement, so a
+    // burst of measurements — here via scroll events, the same `measure` path
+    // the ResizeObserver uses — must not commit any further updates. Before the
+    // fix each measurement allocated a fresh edge-state object, so every one
+    // forced a commit; in a real browser that commit's layout change re-fired
+    // the observer, looping unbounded at 100% CPU.
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    for (let i = 0; i < 20; i += 1) {
+      act(() => {
+        fireEvent.scroll(viewport);
+      });
+    }
+
+    expect(onRender.mock.calls.length).toBe(settledCommits);
   });
 
   it("supports both axes and keeps hidden scrollbar plumbing mounted", () => {
