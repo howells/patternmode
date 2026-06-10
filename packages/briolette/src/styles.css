@@ -1,0 +1,86 @@
+@layer components {
+  .patternmode-briolette {
+    border: 0;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+    vertical-align: top;
+    width: max-content;
+  }
+
+  .patternmode-briolette__stage {
+    border-radius: 999px;
+    line-height: 0;
+  }
+
+  .patternmode-briolette__stage:focus-visible {
+    outline: 2px solid var(--accent, #315c4b);
+    outline-offset: 6px;
+  }
+
+  .patternmode-briolette__svg {
+    cursor: grab;
+    display: block;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .patternmode-briolette__svg[data-dragging] {
+    cursor: grabbing;
+  }
+
+  .patternmode-briolette__face {
+    stroke: var(--patternmode-briolette-seam, #fff);
+    stroke-linejoin: round;
+    stroke-width: 1.25;
+    transition: fill 240ms linear;
+  }
+
+  .patternmode-briolette__face[data-selected] {
+    stroke-width: 2.5;
+  }
+
+  .patternmode-briolette__pin {
+    pointer-events: none;
+    stroke: var(--patternmode-briolette-seam, #fff);
+    stroke-width: 2.5;
+  }
+
+  .patternmode-briolette__hint {
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .patternmode-briolette__value {
+    color: var(--muted, #77756d);
+    font-family: var(
+      --mono,
+      "SFMono-Regular",
+      "SF Mono",
+      Consolas,
+      "Liberation Mono",
+      Menlo,
+      monospace
+    );
+    font-size: 0.75rem;
+    line-height: 1;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-briolette__face {
+      transition: none;
+    }
+  }
+}
