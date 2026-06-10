@@ -10,9 +10,11 @@ import {
   BRIOLETTE_MAX_DEPTH,
   BRIOLETTE_MIN_DELTA,
   BRIOLETTE_NEIGHBORHOOD_DELTA,
+  BRIOLETTE_TRAVEL_ANGLE,
   brioletteColorDistance,
   brioletteNeighborhoodDelta,
   brioletteUniverseColor,
+  nextBrioletteDepth,
 } from "./briolette-colors";
 import {
   buildBrioletteFaces,
@@ -418,6 +420,44 @@ describe("BriolettePicker", () => {
     }
     // The anchored facet carries the supplied hex exactly; no onChange echo.
     expect(anchored.getAttribute("fill")).toBe("#7a9c8b");
+    expect(container.querySelector(".patternmode-briolette__pin")).not.toBeNull();
+    expect(onChange).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it("refines near the anchor, travels far from it, and respects maxDepth", () => {
+    // First selection always opens at depth 1.
+    expect(nextBrioletteDepth(null, 0.2)).toBe(1);
+    expect(nextBrioletteDepth(null, Math.PI)).toBe(1);
+    // Near clicks refine one level deeper, capped at the sphere's maximum.
+    expect(nextBrioletteDepth(1, 0.4)).toBe(2);
+    expect(nextBrioletteDepth(6, 0.4)).toBe(6);
+    // Far clicks travel — a fresh depth-1 neighborhood, never a tighter one.
+    expect(nextBrioletteDepth(4, BRIOLETTE_TRAVEL_ANGLE)).toBe(1);
+    expect(nextBrioletteDepth(4, Math.PI / 2)).toBe(1);
+    // Hosts can cap refinement shallower; the cap is clamped to sane bounds.
+    expect(nextBrioletteDepth(2, 0.4, 2)).toBe(2);
+    expect(nextBrioletteDepth(1, 0.4, 99)).toBe(2);
+    expect(nextBrioletteDepth(1, 0.4, 0)).toBe(1);
+  });
+
+  it("anchors a value already present at mount", () => {
+    // The URL-restore case: the picker mounts with a controlled value and
+    // must pin it like any external change, not absorb it as the baseline.
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      addEventListener: () => {},
+      matches: true,
+      media: query,
+      removeEventListener: () => {},
+    }));
+    const onChange = vi.fn<(value: string | null) => void>();
+    const { container } = render(<BriolettePicker onChange={onChange} value="#8d4220" />);
+
+    const anchored = container.querySelector("polygon[data-selected]");
+    if (!anchored) {
+      throw new Error("expected the mount-time value to anchor a facet");
+    }
+    expect(anchored.getAttribute("fill")).toBe("#8d4220");
     expect(container.querySelector(".patternmode-briolette__pin")).not.toBeNull();
     expect(onChange).not.toHaveBeenCalled();
     vi.unstubAllGlobals();

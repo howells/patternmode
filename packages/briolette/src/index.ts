@@ -4,11 +4,13 @@ export {
   BRIOLETTE_MAX_DEPTH,
   BRIOLETTE_NEIGHBORHOOD_DELTA,
   BRIOLETTE_TAILOFF_EXPONENT,
+  BRIOLETTE_TRAVEL_ANGLE,
   brioletteColorDistance,
   brioletteNeighborColor,
   brioletteNeighborhoodDelta,
   brioletteUniverseColor,
   nearestBrioletteFace,
+  nextBrioletteDepth,
 } from "./briolette-colors";
 export type { BrioletteView } from "./briolette-colors";
 export {

@@ -13,6 +13,7 @@ import {
   buildBriolettePalette,
   BRIOLETTE_MAX_DEPTH,
   nearestBrioletteFace,
+  nextBrioletteDepth,
 } from "./briolette-colors";
 import type { BrioletteView } from "./briolette-colors";
 import {
@@ -62,6 +63,15 @@ export interface BriolettePickerProps extends BriolettePickerRootProps {
    * @default "Color"
    */
   label?: string;
+  /**
+   * Deepest refinement level reachable by clicking near the anchor. Each
+   * level tightens the neighborhood spread by {@link BRIOLETTE_DEPTH_FALLOFF};
+   * hosts wanting a broader, harder-to-get-lost-in sphere can cap it low.
+   * Clamped to 1..{@link BRIOLETTE_MAX_DEPTH}.
+   *
+   * @default BRIOLETTE_MAX_DEPTH
+   */
+  maxDepth?: number;
   /** Called with the facet's hex color on selection, or `null` when unset. */
   onChange: (value: string | null) => void;
   /**
@@ -148,7 +158,10 @@ const useExternalValueAnchor = (
   setSelection: (update: (current: BrioletteSelection | null) => BrioletteSelection | null) => void,
   centerOn: (center: BrioletteVec3) => void,
 ) => {
-  const [anchoredValue, setAnchoredValue] = useState(value);
+  /* Starts at null — not `value` — so a value already present at mount
+     (e.g. restored from a URL) anchors exactly like a later external
+     change would, instead of being silently absorbed as the baseline. */
+  const [anchoredValue, setAnchoredValue] = useState<string | null>(null);
   const pendingCenterRef = useRef<BrioletteVec3 | null>(null);
 
   if (value !== anchoredValue) {
@@ -554,6 +567,7 @@ export const BriolettePicker = ({
   density = "base",
   label = "Color",
   onChange,
+  maxDepth = BRIOLETTE_MAX_DEPTH,
   seamColor,
   seamOpacity = 1,
   showValue = true,
@@ -603,20 +617,39 @@ export const BriolettePicker = ({
       return;
     }
 
+    /* Refine or travel: clicks near the anchor zoom one level deeper; far
+       clicks open a fresh depth-1 neighborhood around the new color, so
+       exploring outward never tightens the spread. */
+    const clickedFace = faces[faceIndex];
+    const anchorFace = activeView ? faces[activeView.anchorFaceIndex] : undefined;
+    const angleFromAnchor =
+      clickedFace && anchorFace
+        ? Math.acos(
+            Math.min(
+              1,
+              Math.max(
+                -1,
+                clickedFace.center.x * anchorFace.center.x +
+                  clickedFace.center.y * anchorFace.center.y +
+                  clickedFace.center.z * anchorFace.center.z,
+              ),
+            ),
+          )
+        : Math.PI;
+
     setSelection({
       faceCount: faces.length,
       view: {
         anchorFaceIndex: faceIndex,
         anchorHex: hex,
-        depth: activeView ? Math.min(activeView.depth + 1, BRIOLETTE_MAX_DEPTH) : 1,
+        depth: nextBrioletteDepth(activeView?.depth ?? null, angleFromAnchor, maxDepth),
       },
     });
     setAnchoredValue(hex);
     onChange(hex);
 
-    const anchorFace = faces[faceIndex];
-    if (anchorFace) {
-      rotation.centerOn(anchorFace.center);
+    if (clickedFace) {
+      rotation.centerOn(clickedFace.center);
     }
   };
 

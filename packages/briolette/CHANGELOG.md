@@ -1,5 +1,11 @@
 # @patternmode/briolette
 
+## 0.3.0
+
+### Minor Changes
+
+- Two selection fixes. A controlled value present at mount (e.g. restored from a URL) now anchors and centers its facet exactly like a later external change, instead of being absorbed as the baseline. And clicking far from the current anchor now travels — opening a fresh depth-1 neighborhood around the new color — instead of refining deeper, so exploring outward never tightens the spread; near clicks still refine. New `maxDepth` prop caps refinement depth, and `nextBrioletteDepth` / `BRIOLETTE_TRAVEL_ANGLE` are exported.
+
 ## 0.2.0
 
 ### Minor Changes

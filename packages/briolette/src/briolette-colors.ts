@@ -47,6 +47,32 @@ export const BRIOLETTE_DEPTH_FALLOFF = 0.62;
 /** Deepest refinement level — beyond this, facets become indistinguishable. */
 export const BRIOLETTE_MAX_DEPTH = 6;
 
+/**
+ * Geodesic angle (radians) beyond which a facet click *travels* — opening a
+ * fresh depth-1 neighborhood around the clicked color — instead of refining
+ * deeper. Without this, every click tightens the spread, so exploring away
+ * from an anchor is indistinguishable from zooming into it and the sphere
+ * traps you in one corner of color space.
+ */
+export const BRIOLETTE_TRAVEL_ANGLE = 1;
+
+/**
+ * Depth for the next selection: near clicks refine (one level deeper, capped
+ * at `maxDepth`), far clicks travel (back to depth 1). `currentDepth` is null
+ * when nothing is selected yet.
+ */
+export const nextBrioletteDepth = (
+  currentDepth: number | null,
+  angleFromAnchor: number,
+  maxDepth: number = BRIOLETTE_MAX_DEPTH,
+): number => {
+  if (currentDepth === null || angleFromAnchor >= BRIOLETTE_TRAVEL_ANGLE) {
+    return 1;
+  }
+  const cap = Math.max(1, Math.min(maxDepth, BRIOLETTE_MAX_DEPTH));
+  return Math.min(currentDepth + 1, cap);
+};
+
 const MIN_LIGHTNESS = 0.34;
 const MAX_LIGHTNESS = 0.82;
 const MIN_CHROMA = 0.03;
