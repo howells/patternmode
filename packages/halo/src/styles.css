@@ -76,6 +76,13 @@
   .patternmode-halo-picker__arc {
     inset: 0;
     overflow: visible;
+    /*
+     * The arc svg overlays the whole stage, including the round pad beneath
+     * it. A blank svg root still hit-tests like any box, so without this it
+     * swallows the pad's pointer events. The arc path and handle re-enable
+     * their own hits below.
+     */
+    pointer-events: none;
     position: absolute;
     touch-action: none;
   }
