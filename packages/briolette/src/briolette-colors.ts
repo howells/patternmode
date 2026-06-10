@@ -3,7 +3,7 @@ import { fitOklabToSrgbGamut } from "@instruments/colorscope/embedding";
 import { hexToOklab, oklabDistance } from "@instruments/colorscope/math";
 
 import type { BrioletteFace, BrioletteVec3 } from "./briolette-geometry";
-import { normalizeBrioletteVec } from "./briolette-geometry";
+import { normalizeBrioletteVec, quatFromAxisAngle, rotateBrioletteVec } from "./briolette-geometry";
 
 /**
  * The active refinement view. `null` means the sphere shows the full
@@ -228,10 +228,19 @@ export const brioletteNeighborColor = (
   );
 };
 
+const COLLISION_ESCAPE_ATTEMPTS = 6;
+const COLLISION_ESCAPE_TURN = 0.12;
+
 /**
  * Compute the hex color of every facet for the current view — the full
  * universe when `view` is `null`, otherwise the neighborhood around the
  * anchored selection.
+ *
+ * Every facet is guaranteed a distinct hex: in tight gamut corners (near
+ * white or black) the chroma fit can land two facets on the same gamut-wall
+ * color, so collisions deterministically retry with the facet's bearing
+ * rotated a few degrees around the anchor — same distance, different hue,
+ * different wall point.
  */
 export const buildBriolettePalette = (
   faces: readonly BrioletteFace[],
@@ -243,18 +252,31 @@ export const buildBriolettePalette = (
 
   const anchorDirection = faces[view.anchorFaceIndex]?.center ?? { x: 0, y: 0, z: 1 };
   const delta = brioletteNeighborhoodDelta(view.depth);
+  const used = new Set<string>([view.anchorHex]);
 
-  return faces.map((face) =>
-    face.index === view.anchorFaceIndex
-      ? view.anchorHex
-      : brioletteNeighborColor(
-          face.center,
-          anchorDirection,
-          view.anchorHex,
-          delta,
-          face.index % 2 === 0 ? 1 : -1,
-        ),
-  );
+  return faces.map((face) => {
+    if (face.index === view.anchorFaceIndex) {
+      return view.anchorHex;
+    }
+
+    const chromaSign = face.index % 2 === 0 ? 1 : -1;
+    let hex = brioletteNeighborColor(
+      face.center,
+      anchorDirection,
+      view.anchorHex,
+      delta,
+      chromaSign,
+    );
+    for (let attempt = 1; used.has(hex) && attempt <= COLLISION_ESCAPE_ATTEMPTS; attempt += 1) {
+      const nudged = rotateBrioletteVec(
+        quatFromAxisAngle(anchorDirection, COLLISION_ESCAPE_TURN * attempt),
+        face.center,
+      );
+      hex = brioletteNeighborColor(nudged, anchorDirection, view.anchorHex, delta, chromaSign);
+    }
+    used.add(hex);
+    return hex;
+  });
 };
 
 /**
@@ -268,4 +290,24 @@ export const brioletteColorDistance = (a: string, b: string): number => {
     return 0;
   }
   return oklabDistance(left, right);
+};
+
+/**
+ * The facet whose at-rest universe color is perceptually closest to `hex` —
+ * where an externally supplied value anchors its neighborhood.
+ */
+export const nearestBrioletteFace = (
+  faces: readonly BrioletteFace[],
+  hex: string,
+): BrioletteFace | undefined => {
+  let best: BrioletteFace | undefined;
+  let bestDistance = Number.POSITIVE_INFINITY;
+  for (const face of faces) {
+    const distance = brioletteColorDistance(hex, brioletteUniverseColor(face.center));
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = face;
+    }
+  }
+  return best;
 };

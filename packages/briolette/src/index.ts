@@ -8,19 +8,24 @@ export {
   brioletteNeighborColor,
   brioletteNeighborhoodDelta,
   brioletteUniverseColor,
+  nearestBrioletteFace,
 } from "./briolette-colors";
 export type { BrioletteView } from "./briolette-colors";
 export {
+  BRIOLETTE_DENSITIES,
   buildBrioletteFaces,
   BRIOLETTE_FRONT,
   BRIOLETTE_RADIUS,
   BRIOLETTE_VIEWBOX_SIZE,
+  mapBrioletteParents,
+  morphBrioletteFaces,
   orientationFacingFront,
   projectBrioletteFaces,
   quatSlerp,
   rotateBrioletteOrientation,
 } from "./briolette-geometry";
 export type {
+  BrioletteDensity,
   BrioletteFace,
   BrioletteProjectedFace,
   BrioletteQuat,

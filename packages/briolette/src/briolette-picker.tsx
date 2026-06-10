@@ -9,22 +9,53 @@ import type {
 } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 
-import { buildBriolettePalette, BRIOLETTE_MAX_DEPTH } from "./briolette-colors";
+import {
+  buildBriolettePalette,
+  BRIOLETTE_MAX_DEPTH,
+  nearestBrioletteFace,
+} from "./briolette-colors";
 import type { BrioletteView } from "./briolette-colors";
 import {
-  buildBrioletteFaces,
   BRIOLETTE_VIEWBOX_SIZE,
   orientationFacingFront,
   projectBrioletteFaces,
   quatSlerp,
   rotateBrioletteOrientation,
 } from "./briolette-geometry";
-import type { BrioletteProjectedFace, BrioletteQuat, BrioletteVec3 } from "./briolette-geometry";
+import type {
+  BrioletteDensity,
+  BrioletteFace,
+  BrioletteProjectedFace,
+  BrioletteQuat,
+  BrioletteVec3,
+} from "./briolette-geometry";
+import { facesForDensity, useBrioletteMorph } from "./briolette-morph";
+import type { BrioletteMorphLayers } from "./briolette-morph";
+
+declare module "react" {
+  interface CSSProperties {
+    "--patternmode-briolette-color"?: string;
+    "--patternmode-briolette-facet"?: string;
+    "--patternmode-briolette-seam"?: string;
+    "--patternmode-briolette-seam-opacity"?: string;
+    "--patternmode-briolette-seam-width"?: string;
+  }
+}
 
 type BriolettePickerRootProps = Omit<ComponentPropsWithoutRef<"div">, "onChange">;
 type BriolettePointerEvent = PointerEvent<SVGSVGElement>;
 
 export interface BriolettePickerProps extends BriolettePickerRootProps {
+  /**
+   * Facet density of the sphere: `"coarse"` is 20 facets, `"base"` is 80,
+   * `"fine"` is 180, `"brilliant"` is 320. Finer cuts offer more colors per
+   * view at the cost of smaller click targets; seam width scales down as
+   * density rises. Changing the cut animates — the finer geometry grows out
+   * of (or collapses back into) the coarser one.
+   *
+   * @default "base"
+   */
+  density?: BrioletteDensity;
   /**
    * Accessible name for the sphere stage.
    *
@@ -33,6 +64,19 @@ export interface BriolettePickerProps extends BriolettePickerRootProps {
   label?: string;
   /** Called with the facet's hex color on selection, or `null` when unset. */
   onChange: (value: string | null) => void;
+  /**
+   * Seam color between facets. Falls back to the
+   * `--patternmode-briolette-seam` CSS variable, then white.
+   */
+  seamColor?: string;
+  /**
+   * Seam visibility from `0` (a seamless gem) to `1` (full seams). Facet
+   * strokes blend between the facet's own fill and the seam color, so edges
+   * stay crack-free at every opacity.
+   *
+   * @default 1
+   */
+  seamOpacity?: number;
   /**
    * Whether to show the selected hex value underneath the sphere.
    *
@@ -59,9 +103,81 @@ const INERTIA_REST_SPEED = 0.000_02;
 const MAX_FRAME_MS = 64;
 const CENTER_TWEEN_MS = 520;
 
-const BRIOLETTE_FACES = buildBrioletteFaces();
+/** Finer cuts get more delicate seams. */
+const SEAM_WIDTHS: Record<BrioletteDensity, number> = {
+  base: 1.25,
+  brilliant: 0.75,
+  coarse: 1.5,
+  fine: 1,
+};
 
 const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
+
+const BrioletteHint = ({ id }: { id: string }) => (
+  <span className="patternmode-briolette__hint" id={id}>
+    Drag or use arrow keys to spin. Select a facet to refine the colors around it. Select the pinned
+    facet again to clear.
+  </span>
+);
+
+const BrioletteValue = ({ value }: { value: string | null }) => (
+  <output aria-live="polite" className="patternmode-briolette__value">
+    {value ?? "—"}
+  </output>
+);
+
+const ignoreFaceClick = () => {
+  // Selection pauses for the few hundred ms of a cut morph.
+};
+
+interface BrioletteSelection {
+  faceCount: number;
+  view: BrioletteView;
+}
+
+/**
+ * Makes the value prop fully controllable: a hex supplied from outside (not
+ * from a facet click) re-anchors the neighborhood around the facet whose
+ * universe color is nearest, and glides it to the center. Adjusted during
+ * render; the glide itself runs after commit.
+ */
+const useExternalValueAnchor = (
+  value: string | null,
+  faces: BrioletteFace[],
+  selection: BrioletteSelection | null,
+  setSelection: (update: (current: BrioletteSelection | null) => BrioletteSelection | null) => void,
+  centerOn: (center: BrioletteVec3) => void,
+) => {
+  const [anchoredValue, setAnchoredValue] = useState(value);
+  const pendingCenterRef = useRef<BrioletteVec3 | null>(null);
+
+  if (value !== anchoredValue) {
+    setAnchoredValue(value);
+    if (value !== null && value !== selection?.view.anchorHex) {
+      const anchorFace = nearestBrioletteFace(faces, value);
+      if (anchorFace) {
+        setSelection((current) => ({
+          faceCount: faces.length,
+          view: {
+            anchorFaceIndex: anchorFace.index,
+            anchorHex: value,
+            depth: current?.faceCount === faces.length ? current.view.depth : 1,
+          },
+        }));
+        pendingCenterRef.current = anchorFace.center;
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (pendingCenterRef.current) {
+      centerOn(pendingCenterRef.current);
+      pendingCenterRef.current = null;
+    }
+  });
+
+  return setAnchoredValue;
+};
 
 interface BrioletteTween {
   duration: number;
@@ -82,11 +198,19 @@ const prefersReducedMotion = (): boolean =>
   typeof window.matchMedia === "function" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const getRootStyle = (value: string | null, style: CSSProperties | undefined): CSSProperties =>
-  ({
-    "--patternmode-briolette-color": value ?? "transparent",
-    ...style,
-  }) as CSSProperties;
+const getRootStyle = (
+  value: string | null,
+  seamColor: string | undefined,
+  seamOpacity: number,
+  seamWidth: number,
+  style: CSSProperties | undefined,
+): CSSProperties => ({
+  "--patternmode-briolette-color": value ?? "transparent",
+  "--patternmode-briolette-seam-opacity": String(Math.min(Math.max(seamOpacity, 0), 1)),
+  "--patternmode-briolette-seam-width": String(seamWidth),
+  ...(seamColor === undefined ? null : { "--patternmode-briolette-seam": seamColor }),
+  ...style,
+});
 
 const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) => {
   const isInViewportRef = useRef(true);
@@ -374,6 +498,7 @@ const BrioletteFacets = ({
             onFaceClick(face.index);
           }}
           points={face.points}
+          style={{ "--patternmode-briolette-facet": palette[face.index] }}
         />
       ))}
       {pinned ? (
@@ -389,36 +514,86 @@ const BrioletteFacets = ({
   );
 };
 
+const BrioletteMorphSphere = ({
+  layers,
+  orientation,
+}: {
+  layers: BrioletteMorphLayers;
+  orientation: BrioletteQuat;
+}) => (
+  <>
+    <g>
+      <BrioletteFacets
+        onFaceClick={ignoreFaceClick}
+        palette={layers.under.palette}
+        pinHex={undefined}
+        projected={projectBrioletteFaces(layers.under.faces, orientation)}
+        selectedIndex={undefined}
+      />
+    </g>
+    <g>
+      <BrioletteFacets
+        onFaceClick={ignoreFaceClick}
+        palette={layers.over.palette}
+        pinHex={undefined}
+        projected={projectBrioletteFaces(layers.over.faces, orientation, layers.over.cull)}
+        selectedIndex={undefined}
+      />
+    </g>
+  </>
+);
+
 /**
- * A spinnable geodesic color sphere. At rest the 80 facets span the whole
+ * A spinnable geodesic color sphere. At rest the facets span the whole
  * color universe; selecting a facet repaints the sphere with that color's
  * nearest neighbors, and selecting the pinned facet again unsets it.
  */
 export const BriolettePicker = ({
   "aria-label": ariaLabel,
   className,
+  density = "base",
   label = "Color",
   onChange,
+  seamColor,
+  seamOpacity = 1,
   showValue = true,
   size = 280,
   style,
   value,
   ...props
 }: BriolettePickerProps) => {
-  const [view, setView] = useState<BrioletteView | null>(null);
+  const [selection, setSelection] = useState<BrioletteSelection | null>(null);
   const rotation = useBrioletteRotation(value === null);
   const hintId = useId();
+  const faces = facesForDensity(density);
+  const setAnchoredValue = useExternalValueAnchor(
+    value,
+    faces,
+    selection,
+    setSelection,
+    rotation.centerOn,
+  );
 
   // External resets (form clears, programmatic unset) collapse back to the
-  // universe by derivation — the stored view only applies while a value is set.
-  const activeView = value === null ? null : view;
+  // universe by derivation — the stored view only applies while a value is
+  // set, and only for the density it was selected at.
+  const activeView =
+    value === null || selection?.faceCount !== faces.length ? null : selection.view;
 
-  const palette = buildBriolettePalette(BRIOLETTE_FACES, activeView);
-  const projected = projectBrioletteFaces(BRIOLETTE_FACES, rotation.orientation);
+  const palette = buildBriolettePalette(faces, activeView);
+  const projected = projectBrioletteFaces(faces, rotation.orientation);
+
+  // Cut changes animate: the coarser cut sits beneath while the finer cut
+  // grows over it (or shrinks away), every vertex interpolated on the sphere.
+  const morphLayers = useBrioletteMorph(density, palette, prefersReducedMotion());
+  const isMorphing = morphLayers !== null;
 
   const selectFace = (faceIndex: number) => {
+    if (isMorphing) {
+      return;
+    }
     if (activeView && activeView.anchorFaceIndex === faceIndex) {
-      setView(null);
+      setSelection(null);
       onChange(null);
       return;
     }
@@ -428,14 +603,18 @@ export const BriolettePicker = ({
       return;
     }
 
-    setView({
-      anchorFaceIndex: faceIndex,
-      anchorHex: hex,
-      depth: activeView ? Math.min(activeView.depth + 1, BRIOLETTE_MAX_DEPTH) : 1,
+    setSelection({
+      faceCount: faces.length,
+      view: {
+        anchorFaceIndex: faceIndex,
+        anchorHex: hex,
+        depth: activeView ? Math.min(activeView.depth + 1, BRIOLETTE_MAX_DEPTH) : 1,
+      },
     });
+    setAnchoredValue(hex);
     onChange(hex);
 
-    const anchorFace = BRIOLETTE_FACES[faceIndex];
+    const anchorFace = faces[faceIndex];
     if (anchorFace) {
       rotation.centerOn(anchorFace.center);
     }
@@ -443,7 +622,7 @@ export const BriolettePicker = ({
 
   const clearSelection = () => {
     if (activeView) {
-      setView(null);
+      setSelection(null);
       onChange(null);
     }
   };
@@ -460,7 +639,7 @@ export const BriolettePicker = ({
       {...props}
       className={["patternmode-briolette", className].filter(Boolean).join(" ")}
       data-slot="briolette-picker"
-      style={getRootStyle(value, style)}
+      style={getRootStyle(value, seamColor, seamOpacity, SEAM_WIDTHS[density], style)}
     >
       {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- the application-role stage is the keyboard surface for rotating and selecting. */}
       <div
@@ -488,28 +667,25 @@ export const BriolettePicker = ({
           style={{ height: size, width: size }}
           viewBox={`0 0 ${BRIOLETTE_VIEWBOX_SIZE} ${BRIOLETTE_VIEWBOX_SIZE}`}
         >
-          <BrioletteFacets
-            onFaceClick={(faceIndex) => {
-              if (rotation.isClickGesture()) {
-                selectFace(faceIndex);
-              }
-            }}
-            palette={palette}
-            pinHex={activeView?.anchorHex}
-            projected={projected}
-            selectedIndex={activeView?.anchorFaceIndex}
-          />
+          {morphLayers ? (
+            <BrioletteMorphSphere layers={morphLayers} orientation={rotation.orientation} />
+          ) : (
+            <BrioletteFacets
+              onFaceClick={(faceIndex) => {
+                if (rotation.isClickGesture()) {
+                  selectFace(faceIndex);
+                }
+              }}
+              palette={palette}
+              pinHex={activeView?.anchorHex}
+              projected={projected}
+              selectedIndex={activeView?.anchorFaceIndex}
+            />
+          )}
         </svg>
       </div>
-      <span className="patternmode-briolette__hint" id={hintId}>
-        Drag or use arrow keys to spin. Select a facet to refine the colors around it. Select the
-        pinned facet again to clear.
-      </span>
-      {showValue ? (
-        <output aria-live="polite" className="patternmode-briolette__value">
-          {value ?? "—"}
-        </output>
-      ) : null}
+      <BrioletteHint id={hintId} />
+      {showValue ? <BrioletteValue value={value} /> : null}
     </div>
   );
 };

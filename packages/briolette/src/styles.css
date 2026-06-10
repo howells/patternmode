@@ -34,14 +34,28 @@
   }
 
   .patternmode-briolette__face {
-    stroke: var(--patternmode-briolette-seam, #fff);
+    /*
+     * Seam visibility blends the stroke between the seam color and the
+     * facet's own fill. The stroke stays opaque at every opacity, covering
+     * the sub-pixel antialiasing cracks between adjacent polygons that a
+     * transparent stroke would expose.
+     */
+    stroke: color-mix(
+      in oklab,
+      var(--patternmode-briolette-seam, #fff)
+        calc(var(--patternmode-briolette-seam-opacity, 1) * 100%),
+      var(--patternmode-briolette-facet, transparent)
+    );
     stroke-linejoin: round;
-    stroke-width: 1.25;
-    transition: fill 240ms linear;
+    stroke-width: var(--patternmode-briolette-seam-width, 1.25);
+    transition:
+      fill 240ms linear,
+      stroke 240ms linear,
+      stroke-width 240ms linear;
   }
 
   .patternmode-briolette__face[data-selected] {
-    stroke-width: 2.5;
+    stroke-width: calc(var(--patternmode-briolette-seam-width, 1.25) * 2);
   }
 
   .patternmode-briolette__pin {

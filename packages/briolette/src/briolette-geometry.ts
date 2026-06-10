@@ -51,9 +51,6 @@ export const normalizeBrioletteVec = (v: BrioletteVec3): BrioletteVec3 => {
   return { x: v.x / length, y: v.y / length, z: v.z / length };
 };
 
-const midpoint = (a: BrioletteVec3, b: BrioletteVec3): BrioletteVec3 =>
-  normalizeBrioletteVec({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, z: (a.z + b.z) / 2 });
-
 const centroid = (a: BrioletteVec3, b: BrioletteVec3, c: BrioletteVec3): BrioletteVec3 =>
   normalizeBrioletteVec({ x: a.x + b.x + c.x, y: a.y + b.y + c.y, z: a.z + b.z + c.z });
 
@@ -95,12 +92,51 @@ const ICOSAHEDRON_FACES: [number, number, number][] = [
   [9, 8, 1],
 ];
 
+/** Facet density tokens mapped to geodesic subdivision frequency. */
+export const BRIOLETTE_DENSITIES = {
+  base: 2,
+  brilliant: 4,
+  coarse: 1,
+  fine: 3,
+} as const;
+
+/** Facet density of the sphere: 20, 80, 180, or 320 facets. */
+export type BrioletteDensity = keyof typeof BRIOLETTE_DENSITIES;
+
+/** Barycentric grid point on base triangle (a, b, c), pushed onto the sphere. */
+const gridPoint = (
+  a: BrioletteVec3,
+  b: BrioletteVec3,
+  c: BrioletteVec3,
+  row: number,
+  column: number,
+  frequency: number,
+): BrioletteVec3 => {
+  const wa = (frequency - row) / frequency;
+  const wb = (row - column) / frequency;
+  const wc = column / frequency;
+  return normalizeBrioletteVec({
+    x: a.x * wa + b.x * wb + c.x * wc,
+    y: a.y * wa + b.y * wb + c.y * wc,
+    z: a.z * wa + b.z * wb + c.z * wc,
+  });
+};
+
 /**
- * Build the frequency-2 geodesic icosahedron: each of the 20 base triangles
- * splits into 4, with every vertex pushed onto the unit sphere — 80 facets.
+ * Build a geodesic icosahedron at the given subdivision frequency: each of
+ * the 20 base triangles splits into `frequency²` sub-triangles, with every
+ * vertex pushed onto the unit sphere — 20, 80, 180, or 320 facets for
+ * frequencies 1–4.
  */
-export const buildBrioletteFaces = (): BrioletteFace[] => {
+export const buildBrioletteFaces = (frequency = 2): BrioletteFace[] => {
   const faces: BrioletteFace[] = [];
+  const pushFace = (vertices: [BrioletteVec3, BrioletteVec3, BrioletteVec3]) => {
+    faces.push({
+      center: centroid(vertices[0], vertices[1], vertices[2]),
+      index: faces.length,
+      vertices,
+    });
+  };
 
   for (const [ai, bi, ci] of ICOSAHEDRON_FACES) {
     const a = ICOSAHEDRON_VERTICES[ai];
@@ -109,22 +145,22 @@ export const buildBrioletteFaces = (): BrioletteFace[] => {
     if (!a || !b || !c) {
       continue;
     }
-    const ab = midpoint(a, b);
-    const bc = midpoint(b, c);
-    const ca = midpoint(c, a);
-    const triangles: [BrioletteVec3, BrioletteVec3, BrioletteVec3][] = [
-      [a, ab, ca],
-      [ab, b, bc],
-      [ca, bc, c],
-      [ab, bc, ca],
-    ];
 
-    for (const vertices of triangles) {
-      faces.push({
-        center: centroid(vertices[0], vertices[1], vertices[2]),
-        index: faces.length,
-        vertices,
-      });
+    for (let row = 0; row < frequency; row += 1) {
+      for (let column = 0; column <= row; column += 1) {
+        pushFace([
+          gridPoint(a, b, c, row, column, frequency),
+          gridPoint(a, b, c, row + 1, column, frequency),
+          gridPoint(a, b, c, row + 1, column + 1, frequency),
+        ]);
+        if (column < row) {
+          pushFace([
+            gridPoint(a, b, c, row, column, frequency),
+            gridPoint(a, b, c, row + 1, column + 1, frequency),
+            gridPoint(a, b, c, row, column + 1, frequency),
+          ]);
+        }
+      }
     }
   }
 
@@ -265,12 +301,13 @@ const round = (value: number) => Math.round(value * 100) / 100;
 export const projectBrioletteFaces = (
   faces: readonly BrioletteFace[],
   orientation: BrioletteQuat,
+  minDepth = BACKFACE_DEPTH,
 ): BrioletteProjectedFace[] => {
   const projected: BrioletteProjectedFace[] = [];
 
   for (const face of faces) {
     const rotatedCenter = rotateBrioletteVec(orientation, face.center);
-    if (rotatedCenter.z < BACKFACE_DEPTH) {
+    if (rotatedCenter.z < minDepth) {
       continue;
     }
 
@@ -291,4 +328,64 @@ export const projectBrioletteFaces = (
   }
 
   return projected.toSorted((a, b) => a.depth - b.depth);
+};
+
+/**
+ * Map every facet of a finer cut to its parent facet on a coarser cut — the
+ * coarse facet whose centroid is nearest. Used to animate between cuts:
+ * fine facets grow out of (or collapse into) their parent's centroid.
+ */
+export const mapBrioletteParents = (
+  fineFaces: readonly BrioletteFace[],
+  coarseFaces: readonly BrioletteFace[],
+): number[] =>
+  fineFaces.map((fine) => {
+    let bestIndex = 0;
+    let bestDot = -2;
+    for (const coarse of coarseFaces) {
+      const dot =
+        fine.center.x * coarse.center.x +
+        fine.center.y * coarse.center.y +
+        fine.center.z * coarse.center.z;
+      if (dot > bestDot) {
+        bestDot = dot;
+        bestIndex = coarse.index;
+      }
+    }
+    return bestIndex;
+  });
+
+const lerpOnSphere = (from: BrioletteVec3, to: BrioletteVec3, t: number): BrioletteVec3 =>
+  normalizeBrioletteVec({
+    x: from.x + (to.x - from.x) * t,
+    y: from.y + (to.y - from.y) * t,
+    z: from.z + (to.z - from.z) * t,
+  });
+
+/**
+ * Morph a finer cut against its parent map: at `growth` 0 every facet is
+ * collapsed to its parent's centroid on the sphere surface; at 1 it sits in
+ * its final position. Interpolation stays on the sphere, so growing facets
+ * tile over the coarser cut beneath them like crystal growth.
+ */
+export const morphBrioletteFaces = (
+  fineFaces: readonly BrioletteFace[],
+  parentCenters: readonly BrioletteVec3[],
+  growth: number,
+): BrioletteFace[] => {
+  if (growth >= 1) {
+    return [...fineFaces];
+  }
+  return fineFaces.map((face, index) => {
+    const origin = parentCenters[index] ?? face.center;
+    return {
+      center: lerpOnSphere(origin, face.center, growth),
+      index: face.index,
+      vertices: [
+        lerpOnSphere(origin, face.vertices[0], growth),
+        lerpOnSphere(origin, face.vertices[1], growth),
+        lerpOnSphere(origin, face.vertices[2], growth),
+      ],
+    };
+  });
 };

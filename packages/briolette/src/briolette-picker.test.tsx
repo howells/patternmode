@@ -16,6 +16,8 @@ import {
 } from "./briolette-colors";
 import {
   buildBrioletteFaces,
+  mapBrioletteParents,
+  morphBrioletteFaces,
   orientationFacingFront,
   projectBrioletteFaces,
 } from "./briolette-geometry";
@@ -30,12 +32,30 @@ afterEach(() => {
 });
 
 describe("briolette geometry", () => {
-  it("builds an 80-facet geodesic with unit centroids", () => {
+  it("builds an 80-facet geodesic with unit centroids by default", () => {
     const faces = buildBrioletteFaces();
 
     expect(faces).toHaveLength(80);
     for (const face of faces) {
       expect(Math.hypot(face.center.x, face.center.y, face.center.z)).toBeCloseTo(1, 6);
+    }
+  });
+
+  it("builds every density with the expected facet count and unit centroids", () => {
+    for (const [frequency, count] of [
+      [1, 20],
+      [2, 80],
+      [3, 180],
+      [4, 320],
+    ] as const) {
+      const faces = buildBrioletteFaces(frequency);
+      expect(faces).toHaveLength(count);
+      for (const face of faces) {
+        expect(Math.hypot(face.center.x, face.center.y, face.center.z)).toBeCloseTo(1, 6);
+        expect(face.vertices).toHaveLength(3);
+      }
+      // Indices stay dense and ordered for palette parity and view anchoring.
+      expect(faces.map((face) => face.index)).toEqual(faces.map((_, i) => i));
     }
   });
 
@@ -47,6 +67,37 @@ describe("briolette geometry", () => {
     expect(projected.length).toBeLessThan(faces.length);
     const depths = projected.map((face) => face.depth);
     expect(depths).toEqual(depths.toSorted((a, b) => a - b));
+  });
+
+  it("maps finer facets onto nesting parents and morphs between them on-sphere", () => {
+    const coarse = buildBrioletteFaces(1);
+    const fine = buildBrioletteFaces(2);
+    const parents = mapBrioletteParents(fine, coarse);
+
+    expect(parents).toHaveLength(fine.length);
+    // Frequency 1→2 nests perfectly: every coarse facet owns exactly 4 children.
+    const childCounts = new Map<number, number>();
+    for (const parent of parents) {
+      expect(parent).toBeGreaterThanOrEqual(0);
+      expect(parent).toBeLessThan(coarse.length);
+      childCounts.set(parent, (childCounts.get(parent) ?? 0) + 1);
+    }
+    expect([...childCounts.values()].every((count) => count === 4)).toBe(true);
+
+    const centers = parents.map((p) => coarse[p]?.center ?? { x: 0, y: 0, z: 1 });
+    const collapsed = morphBrioletteFaces(fine, centers, 0);
+    const expanded = morphBrioletteFaces(fine, centers, 1);
+    for (const [i, face] of collapsed.entries()) {
+      // At growth 0 every vertex sits at the parent centroid, still on-sphere.
+      const origin = centers[i] ?? { x: 0, y: 0, z: 1 };
+      for (const vertex of face.vertices) {
+        expect(Math.hypot(vertex.x, vertex.y, vertex.z)).toBeCloseTo(1, 6);
+        expect(
+          Math.hypot(vertex.x - origin.x, vertex.y - origin.y, vertex.z - origin.z),
+        ).toBeLessThan(0.000_001);
+      }
+    }
+    expect(expanded[0]?.vertices).toEqual(fine[0]?.vertices);
   });
 
   it("computes an orientation that brings any facet to the view axis", () => {
@@ -244,6 +295,66 @@ describe("BriolettePicker", () => {
     expect(screen.getByRole("status")).toHaveTextContent("—");
   });
 
+  it("renders more facets as density rises", () => {
+    const counts: Record<string, number> = {};
+    for (const density of ["coarse", "base", "fine"] as const) {
+      const { container, unmount } = render(
+        <BriolettePicker density={density} onChange={() => {}} value={null} />,
+      );
+      counts[density] = container.querySelectorAll("polygon[data-face-index]").length;
+      unmount();
+    }
+
+    expect(counts.coarse).toBeGreaterThan(0);
+    expect(counts.base).toBeGreaterThan(counts.coarse ?? 0);
+    expect(counts.fine).toBeGreaterThan(counts.base ?? 0);
+  });
+
+  it("exposes seam controls as CSS variables on the root", () => {
+    const { container } = render(
+      <BriolettePicker onChange={() => {}} seamColor="#1d1d1b" seamOpacity={0.4} value={null} />,
+    );
+
+    const root = container.querySelector<HTMLDivElement>("[data-slot='briolette-picker']");
+    if (!root) {
+      throw new Error("expected the picker root");
+    }
+    expect(root.style.getPropertyValue("--patternmode-briolette-seam-opacity")).toBe("0.4");
+    expect(root.style.getPropertyValue("--patternmode-briolette-seam")).toBe("#1d1d1b");
+    expect(root.style.getPropertyValue("--patternmode-briolette-seam-width")).toBe("1.25");
+  });
+
+  it("clamps seam opacity into 0..1 and keeps facets stroke-blendable", () => {
+    const { container } = render(
+      <BriolettePicker onChange={() => {}} seamOpacity={4} value={null} />,
+    );
+
+    const root = container.querySelector<HTMLDivElement>("[data-slot='briolette-picker']");
+    expect(root?.style.getPropertyValue("--patternmode-briolette-seam-opacity")).toBe("1");
+    const facet = container.querySelector<SVGPolygonElement>("polygon[data-face-index]");
+    expect(facet?.style.getPropertyValue("--patternmode-briolette-facet")).toMatch(HEX_PATTERN);
+  });
+
+  it("drops a stale selection pin when density changes mid-selection", () => {
+    const onChange = vi.fn<(value: string | null) => void>();
+    const { container, rerender } = render(
+      <BriolettePicker density="base" onChange={onChange} value={null} />,
+    );
+
+    const facet = container.querySelector<SVGPolygonElement>("polygon[data-face-index]");
+    if (!facet) {
+      throw new Error("expected a facet polygon");
+    }
+    fireEvent.click(facet);
+    const hex = onChange.mock.calls[0]?.[0] ?? null;
+
+    rerender(<BriolettePicker density="fine" onChange={onChange} value={hex} />);
+
+    // The value survives, but no facet claims the pin on the new geometry.
+    expect(container.querySelector("polygon[data-selected]")).toBeNull();
+    expect(screen.getByRole("status")).toHaveTextContent(hex ?? "");
+  });
+
   it("selects a facet color and unsets when the same facet is clicked again", () => {
     const onChange = vi.fn<(value: string | null) => void>();
     const { container, rerender } = render(<BriolettePicker onChange={onChange} value={null} />);
@@ -285,6 +396,31 @@ describe("BriolettePicker", () => {
     fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
 
     expect(onChange).toHaveBeenLastCalledWith(null);
+  });
+
+  it("re-anchors around an externally supplied value", () => {
+    // Reduced motion makes the centering glide snap, so the anchored facet
+    // is front-facing synchronously.
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      addEventListener: () => {},
+      matches: true,
+      media: query,
+      removeEventListener: () => {},
+    }));
+    const onChange = vi.fn<(value: string | null) => void>();
+    const { container, rerender } = render(<BriolettePicker onChange={onChange} value={null} />);
+
+    rerender(<BriolettePicker onChange={onChange} value="#7a9c8b" />);
+
+    const anchored = container.querySelector("polygon[data-selected]");
+    if (!anchored) {
+      throw new Error("expected the external value to anchor a facet");
+    }
+    // The anchored facet carries the supplied hex exactly; no onChange echo.
+    expect(anchored.getAttribute("fill")).toBe("#7a9c8b");
+    expect(container.querySelector(".patternmode-briolette__pin")).not.toBeNull();
+    expect(onChange).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
   });
 
   it("selects the front-most facet with Enter", () => {
