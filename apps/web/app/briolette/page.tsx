@@ -13,11 +13,12 @@ export const metadata: Metadata = {
 const brioletteApi: ApiSection[] = [
   {
     description:
-      "Controlled hex picker rendered as a spinnable 80-facet geodesic sphere. Selecting a facet glides it to the center and repaints the sphere with similar but distinct OKLab neighbors — hue rotates around the anchor, lightness shifts into its headroom, chroma swings with distance, and neutral anchors bloom into tints. Selecting the pinned facet again unsets the value.",
+      "Controlled hex picker rendered as a spinnable geodesic sphere. Selecting a facet glides it to the center and repaints the sphere with similar but distinct OKLab neighbors — hue rotates around the anchor, lightness shifts into its headroom, chroma swings with distance, and neutral anchors bloom into tints. Selecting the pinned facet again unsets the value.",
     name: "BriolettePicker",
     props: [
       {
-        description: "Controlled hex color value, or null when nothing is selected.",
+        description:
+          "Controlled hex color value, or null when nothing is selected. Supplying a hex from outside re-anchors the sphere around the nearest facet and glides it to center.",
         name: "value",
         type: "string | null",
       },
@@ -25,6 +26,25 @@ const brioletteApi: ApiSection[] = [
         description: "Called with the facet's hex color on selection, or null when unset.",
         name: "onChange",
         type: "(value: string | null) => void",
+      },
+      {
+        defaultValue: '"base"',
+        description:
+          "Facet density of the sphere — coarse is 20 facets, base is 80, fine is 180, brilliant is 320. Changing the cut animates: the finer geometry grows out of the coarser one. Seam width scales with the cut.",
+        name: "density",
+        type: '"coarse" | "base" | "fine" | "brilliant"',
+      },
+      {
+        defaultValue: "1",
+        description:
+          "Seam visibility from 0 (a seamless gem) to 1 (full seams). Strokes blend toward each facet's own fill, so edges stay crack-free at every opacity.",
+        name: "seamOpacity",
+        type: "number",
+      },
+      {
+        description: "Seam color between facets. Defaults to the canvas white.",
+        name: "seamColor",
+        type: "string",
       },
       {
         defaultValue: '"Color"',

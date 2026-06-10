@@ -107,6 +107,9 @@ importers:
       '@howells/site-ui':
         specifier: workspace:*
         version: link:../../packages/site-ui
+      '@instruments/colorscope':
+        specifier: ^2.0.1
+        version: 2.0.1(sharp@0.34.5)
       '@patternmode/aperto':
         specifier: workspace:*
         version: link:../../packages/aperto

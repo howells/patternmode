@@ -1242,77 +1242,65 @@ button {
 /* ── Briolette demo ────────────────────────────── */
 
 .briolette-demo {
-  background: var(--border-soft);
+  align-items: center;
+  background: var(--surface);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
-  display: grid;
-  gap: 1px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
   left: -120px;
-  overflow: hidden;
+  padding: 48px 36px 36px;
   position: relative;
   width: calc(100% + 240px);
 }
 
-.briolette-demo-cell {
-  background: var(--surface);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 0;
-  padding: 36px;
+.briolette-demo-swatch {
+  anchor-name: --briolette-swatch;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
 }
 
-.briolette-demo-picker {
-  align-items: center;
-  justify-content: center;
+.briolette-demo-swatch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-.briolette-demo-readout {
-  justify-content: center;
-}
-
-.briolette-demo-label {
-  color: var(--quiet);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.briolette-demo dl {
-  display: grid;
-  gap: 10px;
-  margin: 0;
-}
-
-.briolette-demo dl div {
-  display: grid;
-  gap: 6px;
-  grid-template-columns: 42px minmax(0, 1fr);
-}
-
-.briolette-demo dt {
-  color: var(--quiet);
-  font-size: 0.68rem;
-}
-
-.briolette-demo dd {
+.briolette-demo-hex {
   color: var(--muted);
   font-family: var(--mono);
   font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 7ch;
+}
+
+.briolette-demo-halo {
+  background: transparent;
+  border: 0;
+  inset: auto;
+  justify-self: anchor-center;
   margin: 0;
+  overflow: visible;
+  padding: 0;
+  position: absolute;
+  position-anchor: --briolette-swatch;
+  top: calc(anchor(bottom) + 12px);
+}
+
+.briolette-demo-controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
   .briolette-demo {
-    grid-template-columns: 1fr;
     left: 0;
+    padding: 32px 20px 24px;
     width: 100%;
-  }
-
-  .briolette-demo-cell {
-    padding: 24px;
   }
 }
 

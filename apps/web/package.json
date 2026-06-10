@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@howells/site-ui": "workspace:*",
+    "@instruments/colorscope": "^2.0.1",
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
     "@patternmode/deck": "workspace:*",
