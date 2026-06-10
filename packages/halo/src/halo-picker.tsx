@@ -4,22 +4,17 @@ import type { ComponentPropsWithoutRef, CSSProperties, PointerEvent, RefObject }
 import { useId, useRef } from "react";
 
 import {
+  getHaloGeometry,
   getHaloHueHandlePosition,
   getHaloPadHandlePosition,
-  HALO_ARC_PATH,
   HALO_ARC_STROKE_WIDTH,
-  HALO_CENTER_X,
-  HALO_CENTER_Y,
-  HALO_HEIGHT,
   HALO_PAD_RADIUS,
   HALO_PAD_SIZE,
-  HALO_VIEWBOX,
-  HALO_WIDTH,
   hslToHex,
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./halo-utils";
-import type { HaloColor } from "./halo-utils";
+import type { HaloColor, HaloGeometry, HaloPlacement } from "./halo-utils";
 
 type HaloPickerRootProps = Omit<ComponentPropsWithoutRef<"fieldset">, "onChange" | "value">;
 type HaloPadPointerEvent = PointerEvent<HTMLDivElement>;
@@ -35,7 +30,14 @@ export interface HaloPickerProps extends HaloPickerRootProps {
   /** Called whenever the pad or hue arc changes the HSL value. */
   onChange: (value: HaloColor) => void;
   /**
-   * Whether to show the computed hex value underneath the wheel.
+   * Which side of the pad the hue arc sits on. The value readout follows
+   * the arc: it renders above the wheel for `"top"`, below otherwise.
+   *
+   * @default "bottom"
+   */
+  placement?: HaloPlacement;
+  /**
+   * Whether to show the computed hex value alongside the wheel.
    *
    * @default true
    */
@@ -118,6 +120,7 @@ const HaloPad = ({
 );
 
 const HaloHueArc = ({
+  geometry,
   hex,
   hue,
   hueGradientId,
@@ -128,6 +131,7 @@ const HaloHueArc = ({
   onPointerUp,
   svgRef,
 }: {
+  geometry: HaloGeometry;
   hex: string;
   hue: number;
   hueGradientId: string;
@@ -157,10 +161,16 @@ const HaloHueArc = ({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       ref={svgRef}
-      viewBox={HALO_VIEWBOX}
+      viewBox={geometry.viewBox}
     >
       <defs>
-        <linearGradient id={hueGradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+        <linearGradient
+          id={hueGradientId}
+          x1="0%"
+          x2={geometry.gradientAxis === "horizontal" ? "100%" : "0%"}
+          y1="0%"
+          y2={geometry.gradientAxis === "horizontal" ? "0%" : "100%"}
+        >
           <stop offset="0%" stopColor="#ff3b30" />
           <stop offset="16%" stopColor="#ff9500" />
           <stop offset="33%" stopColor="#ffcc00" />
@@ -172,7 +182,7 @@ const HaloHueArc = ({
       </defs>
       <path
         className="patternmode-halo-picker__arc-path"
-        d={HALO_ARC_PATH}
+        d={geometry.arcPath}
         stroke={`url(#${hueGradientId})`}
         strokeWidth={HALO_ARC_STROKE_WIDTH}
       />
@@ -192,6 +202,7 @@ export const HaloPicker = ({
   className,
   label = "Color",
   onChange,
+  placement = "bottom",
   showValue = true,
   style,
   value,
@@ -202,11 +213,12 @@ export const HaloPicker = ({
   const padRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const hueGradientId = useId();
+  const geometry = getHaloGeometry(placement);
   const hex = hslToHex(value.h, value.s, value.l);
   const padHandle = getHaloPadHandlePosition(value.s, value.l);
-  const hueHandle = getHaloHueHandlePosition(value.h);
-  const padLeft = HALO_CENTER_X - HALO_PAD_RADIUS;
-  const padTop = HALO_CENTER_Y - HALO_PAD_RADIUS;
+  const hueHandle = getHaloHueHandlePosition(value.h, placement);
+  const padLeft = geometry.centerX - HALO_PAD_RADIUS;
+  const padTop = geometry.centerY - HALO_PAD_RADIUS;
   const rootStyle = getRootStyle(value.h, hex, style);
 
   const updatePad = (clientX: number, clientY: number) => {
@@ -224,7 +236,10 @@ export const HaloPicker = ({
       return;
     }
 
-    onChange({ ...value, h: pointerToHaloHue(clientX, clientY, svg.getBoundingClientRect()) });
+    onChange({
+      ...value,
+      h: pointerToHaloHue(clientX, clientY, svg.getBoundingClientRect(), placement),
+    });
   };
 
   const onPadPointerDown = (event: HaloPadPointerEvent) => {
@@ -265,17 +280,23 @@ export const HaloPicker = ({
     isHueDraggingRef.current = false;
   };
 
+  const valueOutput = showValue ? (
+    <output className="patternmode-halo-picker__value">{hex}</output>
+  ) : null;
+
   return (
     <fieldset
       {...props}
       className={["patternmode-halo-picker", className].filter(Boolean).join(" ")}
+      data-placement={placement}
       data-slot="halo-picker"
       style={rootStyle}
     >
       <legend className="patternmode-halo-picker__legend">{label}</legend>
+      {placement === "top" ? valueOutput : null}
       <div
         className="patternmode-halo-picker__stage"
-        style={{ height: HALO_HEIGHT, width: HALO_WIDTH }}
+        style={{ height: geometry.height, width: geometry.width }}
       >
         <HaloPad
           hex={hex}
@@ -292,6 +313,7 @@ export const HaloPicker = ({
         />
 
         <HaloHueArc
+          geometry={geometry}
           hex={hex}
           hue={value.h}
           hueGradientId={hueGradientId}
@@ -305,7 +327,7 @@ export const HaloPicker = ({
           svgRef={svgRef}
         />
       </div>
-      {showValue ? <output className="patternmode-halo-picker__value">{hex}</output> : null}
+      {placement === "top" ? null : valueOutput}
     </fieldset>
   );
 };

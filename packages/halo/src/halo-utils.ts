@@ -5,30 +5,115 @@ export interface HaloColor {
   s: number;
 }
 
+/** Which side of the pad the hue arc (and value readout) sits on. */
+export type HaloPlacement = "bottom" | "left" | "right" | "top";
+
 export const HALO_PAD_SIZE = 104;
 export const HALO_PAD_RADIUS = HALO_PAD_SIZE / 2;
 export const HALO_ARC_GAP = 8;
 export const HALO_ARC_RADIUS = HALO_PAD_RADIUS + HALO_ARC_GAP;
 export const HALO_ARC_STROKE_WIDTH = 8;
-export const HALO_ARC_START_DEG = 10;
-export const HALO_ARC_END_DEG = 170;
-export const HALO_WIDTH = 2 * (HALO_ARC_RADIUS + HALO_ARC_STROKE_WIDTH / 2) + 2;
-export const HALO_CENTER_X = HALO_WIDTH / 2;
-export const HALO_CENTER_Y = HALO_PAD_RADIUS + HALO_ARC_STROKE_WIDTH / 2 + 1;
-export const HALO_HEIGHT = HALO_CENTER_Y + HALO_ARC_RADIUS + HALO_ARC_STROKE_WIDTH / 2 + 2;
-export const HALO_VIEWBOX = `0 0 ${HALO_WIDTH} ${HALO_HEIGHT}`;
 
-const HALO_ARC_SPAN_DEG = HALO_ARC_END_DEG - HALO_ARC_START_DEG;
-const startRad = (HALO_ARC_START_DEG * Math.PI) / 180;
-const endRad = (HALO_ARC_END_DEG * Math.PI) / 180;
-const arcStartX = HALO_CENTER_X + HALO_ARC_RADIUS * Math.cos(startRad);
-const arcStartY = HALO_CENTER_Y + HALO_ARC_RADIUS * Math.sin(startRad);
-const arcEndX = HALO_CENTER_X + HALO_ARC_RADIUS * Math.cos(endRad);
-const arcEndY = HALO_CENTER_Y + HALO_ARC_RADIUS * Math.sin(endRad);
+/* Stage box anatomy: the axis parallel to the arc spans the full arc
+   diameter; the perpendicular axis is shallow on the pad side and deep on
+   the arc side. Rotating the placement swaps which edges get which. */
+const HALO_ARC_EXTENT = HALO_ARC_RADIUS + HALO_ARC_STROKE_WIDTH / 2;
+const HALO_FULL_SPAN = 2 * HALO_ARC_EXTENT + 2;
+const HALO_NEAR_DEPTH = HALO_PAD_RADIUS + HALO_ARC_STROKE_WIDTH / 2 + 1;
+const HALO_DEEP_DEPTH = HALO_NEAR_DEPTH + HALO_ARC_EXTENT + 2;
 
-export const HALO_ARC_PATH =
-  `M ${arcStartX} ${arcStartY} ` +
-  `A ${HALO_ARC_RADIUS} ${HALO_ARC_RADIUS} 0 0 1 ${arcEndX} ${arcEndY}`;
+export interface HaloGeometry {
+  arcEndDeg: number;
+  arcPath: string;
+  arcStartDeg: number;
+  centerX: number;
+  centerY: number;
+  /** Axis the hue gradient should run along for this placement. */
+  gradientAxis: "horizontal" | "vertical";
+  height: number;
+  viewBox: string;
+  width: number;
+}
+
+const HALO_ARC_SPAN_DEG = 160;
+
+const buildArcPath = (centerX: number, centerY: number, startDeg: number, endDeg: number) => {
+  const startRad = (startDeg * Math.PI) / 180;
+  const endRad = (endDeg * Math.PI) / 180;
+  const startX = centerX + HALO_ARC_RADIUS * Math.cos(startRad);
+  const startY = centerY + HALO_ARC_RADIUS * Math.sin(startRad);
+  const endX = centerX + HALO_ARC_RADIUS * Math.cos(endRad);
+  const endY = centerY + HALO_ARC_RADIUS * Math.sin(endRad);
+  return `M ${startX} ${startY} A ${HALO_ARC_RADIUS} ${HALO_ARC_RADIUS} 0 0 1 ${endX} ${endY}`;
+};
+
+const buildGeometry = (
+  placement: HaloPlacement,
+  arcStartDeg: number,
+  width: number,
+  height: number,
+  centerX: number,
+  centerY: number,
+): HaloGeometry => ({
+  arcEndDeg: arcStartDeg + HALO_ARC_SPAN_DEG,
+  arcPath: buildArcPath(centerX, centerY, arcStartDeg, arcStartDeg + HALO_ARC_SPAN_DEG),
+  arcStartDeg,
+  centerX,
+  centerY,
+  gradientAxis: placement === "left" || placement === "right" ? "vertical" : "horizontal",
+  height,
+  viewBox: `0 0 ${width} ${height}`,
+  width,
+});
+
+const HALO_GEOMETRIES: Record<HaloPlacement, HaloGeometry> = {
+  bottom: buildGeometry(
+    "bottom",
+    10,
+    HALO_FULL_SPAN,
+    HALO_DEEP_DEPTH,
+    HALO_FULL_SPAN / 2,
+    HALO_NEAR_DEPTH,
+  ),
+  left: buildGeometry(
+    "left",
+    100,
+    HALO_DEEP_DEPTH,
+    HALO_FULL_SPAN,
+    HALO_DEEP_DEPTH - HALO_NEAR_DEPTH,
+    HALO_FULL_SPAN / 2,
+  ),
+  right: buildGeometry(
+    "right",
+    280,
+    HALO_DEEP_DEPTH,
+    HALO_FULL_SPAN,
+    HALO_NEAR_DEPTH,
+    HALO_FULL_SPAN / 2,
+  ),
+  top: buildGeometry(
+    "top",
+    190,
+    HALO_FULL_SPAN,
+    HALO_DEEP_DEPTH,
+    HALO_FULL_SPAN / 2,
+    HALO_DEEP_DEPTH - HALO_NEAR_DEPTH,
+  ),
+};
+
+export const getHaloGeometry = (placement: HaloPlacement = "bottom"): HaloGeometry =>
+  HALO_GEOMETRIES[placement];
+
+/* Legacy bottom-placement constants, kept for callers that predate
+   `placement`. They are the "bottom" geometry by another name. */
+export const HALO_ARC_START_DEG = HALO_GEOMETRIES.bottom.arcStartDeg;
+export const HALO_ARC_END_DEG = HALO_GEOMETRIES.bottom.arcEndDeg;
+export const HALO_WIDTH = HALO_GEOMETRIES.bottom.width;
+export const HALO_HEIGHT = HALO_GEOMETRIES.bottom.height;
+export const HALO_CENTER_X = HALO_GEOMETRIES.bottom.centerX;
+export const HALO_CENTER_Y = HALO_GEOMETRIES.bottom.centerY;
+export const HALO_VIEWBOX = HALO_GEOMETRIES.bottom.viewBox;
+export const HALO_ARC_PATH = HALO_GEOMETRIES.bottom.arcPath;
 
 export const clampValue = (value: number, min: number, max: number): number =>
   Math.min(max, Math.max(min, value));
@@ -91,12 +176,19 @@ export const clampPointToCircle = (
   return { x: x * scale, y: y * scale };
 };
 
-export const hueToHaloAngle = (hue: number): number =>
-  HALO_ARC_START_DEG + (normalizeHue(hue) / 360) * HALO_ARC_SPAN_DEG;
+export const hueToHaloAngle = (hue: number, placement: HaloPlacement = "bottom"): number =>
+  getHaloGeometry(placement).arcStartDeg + (normalizeHue(hue) / 360) * HALO_ARC_SPAN_DEG;
 
-export const haloAngleToHue = (angleDeg: number): number => {
-  const clamped = clampValue(angleDeg, HALO_ARC_START_DEG, HALO_ARC_END_DEG);
-  return ((clamped - HALO_ARC_START_DEG) / HALO_ARC_SPAN_DEG) * 360;
+export const haloAngleToHue = (angleDeg: number, placement: HaloPlacement = "bottom"): number => {
+  const { arcStartDeg } = getHaloGeometry(placement);
+  /* Unwrap relative to the arc's start so placements whose span crosses 0°
+     (right: 280°–440°) read continuously. Pointers in the gap snap to the
+     nearer end of the arc. */
+  const delta = (((angleDeg - arcStartDeg) % 360) + 360) % 360;
+  if (delta <= HALO_ARC_SPAN_DEG) {
+    return (delta / HALO_ARC_SPAN_DEG) * 360;
+  }
+  return delta - HALO_ARC_SPAN_DEG < 360 - delta ? 360 : 0;
 };
 
 export const getHaloPadHandlePosition = (
@@ -117,11 +209,15 @@ export const getHaloPadHandlePosition = (
   };
 };
 
-export const getHaloHueHandlePosition = (hue: number): { x: number; y: number } => {
-  const angleRad = (hueToHaloAngle(hue) * Math.PI) / 180;
+export const getHaloHueHandlePosition = (
+  hue: number,
+  placement: HaloPlacement = "bottom",
+): { x: number; y: number } => {
+  const { centerX, centerY } = getHaloGeometry(placement);
+  const angleRad = (hueToHaloAngle(hue, placement) * Math.PI) / 180;
   return {
-    x: HALO_CENTER_X + HALO_ARC_RADIUS * Math.cos(angleRad),
-    y: HALO_CENTER_Y + HALO_ARC_RADIUS * Math.sin(angleRad),
+    x: centerX + HALO_ARC_RADIUS * Math.cos(angleRad),
+    y: centerY + HALO_ARC_RADIUS * Math.sin(angleRad),
   };
 };
 
@@ -142,13 +238,19 @@ export const pointerToHaloPad = (
   };
 };
 
-export const pointerToHaloHue = (clientX: number, clientY: number, svgRect: DOMRect): number => {
+export const pointerToHaloHue = (
+  clientX: number,
+  clientY: number,
+  svgRect: DOMRect,
+  placement: HaloPlacement = "bottom",
+): number => {
+  const { centerX, centerY } = getHaloGeometry(placement);
   const localX = clientX - svgRect.left;
   const localY = clientY - svgRect.top;
-  const dx = localX - HALO_CENTER_X;
-  const dy = localY - HALO_CENTER_Y;
+  const dx = localX - centerX;
+  const dy = localY - centerY;
   const angleRad = Math.atan2(dy, dx);
   const angleDeg = (angleRad * 180) / Math.PI;
   const normalizedDeg = angleDeg < 0 ? angleDeg + 360 : angleDeg;
-  return haloAngleToHue(normalizedDeg);
+  return haloAngleToHue(normalizedDeg, placement);
 };

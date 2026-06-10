@@ -5,10 +5,13 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
+  getHaloGeometry,
   getHaloHueHandlePosition,
   getHaloPadHandlePosition,
   HaloPicker,
+  haloAngleToHue,
   hslToHex,
+  hueToHaloAngle,
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./index";
@@ -39,6 +42,27 @@ describe("HaloPicker utilities", () => {
 
     const svgRect = new DOMRect(0, 0, 128, 128);
     expect(pointerToHaloHue(128, 78, svgRect)).toBeGreaterThan(0);
+  });
+
+  it("rotates the arc geometry per placement", () => {
+    expect(getHaloGeometry("bottom").arcStartDeg).toBe(10);
+    expect(getHaloGeometry("top").arcStartDeg).toBe(190);
+    expect(getHaloGeometry("left").arcStartDeg).toBe(100);
+    expect(getHaloGeometry("right").arcStartDeg).toBe(280);
+
+    /* Top/bottom share one stage box; left/right are its transpose. */
+    const bottom = getHaloGeometry("bottom");
+    const left = getHaloGeometry("left");
+    expect([left.width, left.height]).toEqual([bottom.height, bottom.width]);
+
+    expect(hueToHaloAngle(0, "top")).toBe(190);
+    expect(hueToHaloAngle(360, "top")).toBe(190);
+    expect(haloAngleToHue(350, "top")).toBe(360);
+    /* The right placement's span crosses 0° and must read continuously. */
+    expect(haloAngleToHue(0, "right")).toBeCloseTo((80 / 160) * 360);
+    /* Pointers in the gap snap to the nearer arc end. */
+    expect(haloAngleToHue(270, "right")).toBe(0);
+    expect(haloAngleToHue(90, "right")).toBe(360);
   });
 });
 
@@ -72,5 +96,28 @@ describe("HaloPicker", () => {
     fireEvent.pointerDown(pad, { clientX: 62, clientY: 72, pointerId: 1 });
 
     expect(onChange).toHaveBeenCalledWith({ h: 16, l: 50, s: 50 });
+  });
+
+  it("moves the pad and value readout when the arc is placed on top", () => {
+    render(
+      <HaloPicker aria-label="Accent color" onChange={() => {}} placement="top" value={value} />,
+    );
+
+    const picker = screen.getByRole("group", { name: "Accent color" });
+    expect(picker).toHaveAttribute("data-placement", "top");
+
+    const geometry = getHaloGeometry("top");
+    const pad = screen.getByTestId("halo-picker-pad");
+    expect(pad.style.top).toBe(`${geometry.centerY - 52}px`);
+
+    /* The readout follows the arc to the top: it precedes the stage. */
+    const output = screen.getByText("#d69e8a");
+    const stage = pad.parentElement;
+    if (stage === null) {
+      throw new Error("stage missing");
+    }
+    const position = output.compareDocumentPosition(stage);
+    // eslint-disable-next-line no-bitwise -- compareDocumentPosition returns a bitmask
+    expect((position & Node.DOCUMENT_POSITION_FOLLOWING) > 0).toBe(true);
   });
 });

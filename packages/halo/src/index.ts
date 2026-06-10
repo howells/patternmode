@@ -2,6 +2,7 @@ export { HaloPicker, type HaloPickerProps } from "./halo-picker";
 export {
   clampPointToCircle,
   clampValue,
+  getHaloGeometry,
   getHaloHueHandlePosition,
   getHaloPadHandlePosition,
   haloAngleToHue,
@@ -24,4 +25,6 @@ export {
   pointerToHaloHue,
   pointerToHaloPad,
   type HaloColor,
+  type HaloGeometry,
+  type HaloPlacement,
 } from "./halo-utils";
