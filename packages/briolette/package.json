@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/briolette",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "description": "A spinnable geodesic color sphere whose facets refine around each selection.",
   "keywords": [
