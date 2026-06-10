@@ -1,5 +1,11 @@
 # @patternmode/scrollframe
 
+## 0.2.1
+
+### Patch Changes
+
+- Fix an unbounded render loop in ScrollFrame. `readEdgeState` allocated a fresh object on every measurement, so each ResizeObserver/scroll measurement forced a render even when the scroll metrics were unchanged — and because the observer fires on the very layout changes a render can cause, this could spin the renderer at 100% CPU (reproducible with an always-on, centered horizontal scrollbar). Edge-state updates now bail out when the measured metrics are identical.
+
 ## 0.2.0
 
 ### Minor Changes
