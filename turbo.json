@@ -13,15 +13,6 @@
     },
     "dev": {
       "dependsOn": ["^build"],
-      "with": [
-        "@patternmode/stacksheet#dev",
-        "@patternmode/aperto#dev",
-        "@patternmode/deck#dev",
-        "@patternmode/swatch#dev",
-        "@patternmode/scrollframe#dev",
-        "@patternmode/status#dev",
-        "@patternmode/tags#dev"
-      ],
       "cache": false,
       "persistent": true
     },

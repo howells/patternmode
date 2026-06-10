@@ -7,7 +7,7 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "clean": "turbo run clean --continue=always && turbo clean",
-    "dev": "turbo run dev --filter=@howells/patternmode-web",
+    "dev": "pnpm --filter @howells/patternmode-web dev",
     "env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
     "format": "howells-fix .",
     "lint": "turbo run lint && howells-check scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-check",
@@ -31,8 +31,7 @@
     "zod": "catalog:"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,jsonc,css}": "howells-fix",
-    "!(package).json": "howells-fix"
+    "*.{js,ts,jsx,tsx,json,jsonc,css}": "node scripts/lint-staged-fix.mjs"
   },
   "engines": {
     "node": ">=24.15.0 <25"
