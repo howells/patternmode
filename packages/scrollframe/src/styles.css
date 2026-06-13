@@ -13,12 +13,14 @@
     max-width: inherit;
     min-height: 0;
     min-width: 0;
-    overscroll-behavior: contain;
+    overscroll-behavior-x: auto;
+    overscroll-behavior-y: auto;
     scrollbar-gutter: stable;
     width: 100%;
   }
 
   .patternmode-scrollframe[data-axis-vertical="true"] > .patternmode-scrollframe__viewport {
+    overscroll-behavior-y: contain;
     overflow-y: auto;
   }
 
@@ -27,6 +29,7 @@
   }
 
   .patternmode-scrollframe[data-axis-horizontal="true"] > .patternmode-scrollframe__viewport {
+    overscroll-behavior-x: contain;
     overflow-x: auto;
   }
 
