@@ -47,7 +47,22 @@
   }
 
   .patternmode-scrollframe__content {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /*
+   * Intrinsic sizing is only wanted on the scrollable axis: a vertical frame
+   * must keep its content's full height, a horizontal frame its full width.
+   * Applying min-content to the cross axis would let a non-shrinking child
+   * widen (or heighten) the content box past the panel and clip the trailing
+   * edge under the cross-axis `overflow: hidden`.
+   */
+  .patternmode-scrollframe[data-axis-vertical="true"] .patternmode-scrollframe__content {
     min-height: min-content;
+  }
+
+  .patternmode-scrollframe[data-axis-horizontal="true"] .patternmode-scrollframe__content {
     min-width: min-content;
   }
 

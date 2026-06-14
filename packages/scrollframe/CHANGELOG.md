@@ -1,5 +1,11 @@
 # @patternmode/scrollframe
 
+## 0.2.2
+
+### Patch Changes
+
+- Stop clipping the trailing edge of vertical (or horizontal) frames. `.patternmode-scrollframe__content` set `min-width: min-content` and `min-height: min-content` on both axes, so a non-shrinking child on the cross axis (e.g. a flex header label that doesn't truncate) widened the content box past the panel and clipped right-aligned content under the cross-axis `overflow: hidden`. Intrinsic sizing is now scoped to the scrollable axis only — vertical frames keep `min-height: min-content`, horizontal frames keep `min-width: min-content`, and the cross axis is free to shrink to the panel.
+
 ## 0.2.1
 
 ### Patch Changes
