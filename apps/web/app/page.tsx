@@ -77,59 +77,61 @@ const components: CatalogEntry[] = [
 const CATALOG_ICONS: Record<string, ReactNode> = {
   Aperto: (
     <>
-      <rect height="9" rx="2" width="9" x="14" y="24" />
-      <rect height="12" rx="2.5" width="12" x="22" y="14" />
+      <rect height="9" rx="1.5" width="9" x="14" y="25" />
+      <rect height="12" rx="2" width="12" x="23" y="13" />
     </>
   ),
-  Briolette: <path d="M24 12 33 22 24 36 15 22ZM15 22h18M19 22l5-10 5 10M24 22v14" />,
+  Briolette: (
+    <path d="M24 10L36.1 17L36.1 31L24 38L11.9 31L11.9 17ZM31 24L27.5 30L20.5 30L17 24L20.5 18L27.5 18ZM31 24L36.1 31M31 24L36.1 17M27.5 18L36.1 17M27.5 18L24 10M20.5 18L24 10M20.5 18L11.9 17M17 24L11.9 17M17 24L11.9 31M20.5 30L11.9 31M20.5 30L24 38M27.5 30L24 38M27.5 30L36.1 31" />
+  ),
   Deck: (
     <>
-      <rect height="17" rx="2.5" width="15" x="14" y="17" />
-      <rect height="17" rx="2.5" width="15" x="19" y="15" />
+      <rect height="17" rx="2" width="15" x="14" y="17" />
+      <rect height="17" rx="2" width="15" x="19" y="15" />
     </>
   ),
   Halo: (
     <>
-      <circle cx="24" cy="22" r="9" />
-      <path d="M16 30.5a10 10 0 0 0 16 0" />
-      <circle cx="27.5" cy="18.5" fill="currentColor" r="1.3" stroke="none" />
+      <circle cx="24" cy="23" r="8.5" />
+      <path d="M24 34A11 11 0 0 0 35 23" />
+      <circle cx="30" cy="17" fill="currentColor" r="1.4" stroke="none" />
     </>
   ),
   Parquet: (
     <>
-      <rect height="20" rx="2.5" width="20" x="14" y="14" />
-      <path d="M24 14v20M24 24h10" />
+      <rect height="20" rx="2" width="20" x="14" y="14" />
+      <path d="M22 14v20M22 25h12" />
     </>
   ),
   ScrollFrame: (
     <>
-      <rect height="20" rx="3" width="20" x="14" y="14" />
-      <path d="M18 21h12M18 26h12M18 31h7" />
+      <rect height="20" rx="2" width="20" x="14" y="14" />
+      <path d="M18 19h12M18 24h12M18 29h7" />
     </>
   ),
   Stacksheet: (
     <>
-      <path d="M18 17h12" />
-      <rect height="15" rx="3" width="20" x="14" y="21" />
+      <path d="M14 18.5a2.5 2.5 0 0 1 2.5-2.5h15a2.5 2.5 0 0 1 2.5 2.5" />
+      <rect height="15" rx="2" width="24" x="12" y="21" />
       <path d="M21 25h6" />
     </>
   ),
   Status: (
     <>
-      <path d="M24 15a9 9 0 1 1-8 4.7" />
+      <path d="M24 15a9 9 0 1 1-9 9" />
       <circle cx="24" cy="15" fill="currentColor" r="1.2" stroke="none" />
     </>
   ),
   Swatch: (
     <>
-      <rect height="18" rx="3" width="20" x="14" y="15" />
-      <path d="M22 15v18M28 15v18" />
+      <rect height="18" rx="2" width="20" x="14" y="15" />
+      <path d="M23 15v18M29 15v18" />
     </>
   ),
   Tags: (
     <>
-      <rect height="7" rx="3.5" width="20" x="14" y="18" />
-      <rect height="7" rx="3.5" width="13" x="14" y="27" />
+      <rect height="7" rx="2.5" width="20" x="14" y="17" />
+      <rect height="7" rx="2.5" width="13" x="14" y="26" />
     </>
   ),
 };
