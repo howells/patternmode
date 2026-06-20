@@ -8,6 +8,9 @@ import { ART_PALETTES } from "@/lib/art-palettes";
 
 const ROTATION_MS = 5200;
 const MAX_SLOTS = Math.max(...ART_PALETTES.map((palette) => palette.colors.length));
+// A tile must clear this much of the mosaic (percent) before it earns a label.
+const LABEL_MIN_WIDTH = 20;
+const LABEL_MIN_HEIGHT = 14;
 
 export const ParquetArtDemo = () => {
   const [index, setIndex] = useState(0);
@@ -28,32 +31,34 @@ export const ParquetArtDemo = () => {
 
   return (
     <div className="parquet-art">
-      <header className="parquet-art-header">
-        <span className="parquet-art-artist">{art.artist}</span>
-        <span className="parquet-art-title">{art.title}</span>
-        <span className="parquet-art-year">{art.year}</span>
-      </header>
-
       <div className="parquet-art-body">
         <figure className="parquet-art-figure">
-          <Image
-            alt={`${art.title} — ${art.artist}`}
-            fill
-            sizes="(max-width: 640px) 90vw, 340px"
-            src={art.image}
-          />
+          {ART_PALETTES.map((palette, imageIndex) => (
+            <Image
+              alt=""
+              className="parquet-art-image"
+              data-active={imageIndex === index ? "" : undefined}
+              fill
+              key={palette.image}
+              priority={imageIndex === 0}
+              sizes="(max-width: 640px) 90vw, 360px"
+              src={palette.image}
+            />
+          ))}
         </figure>
 
         <div className="parquet-art-mosaic">
           <Parquet
-            aspectRatio={1.36}
+            aspectRatio={1}
             colors={art.colors}
-            renderTile={(tile, meta) => (
-              <span className="parquet-art-chip" data-light={meta.isLight ? "" : undefined}>
-                <span className="parquet-art-hex">{tile.color.toUpperCase()}</span>
-                <span className="parquet-art-name">{tile.label}</span>
-              </span>
-            )}
+            renderTile={(tile, meta) =>
+              meta.width >= LABEL_MIN_WIDTH && meta.height >= LABEL_MIN_HEIGHT ? (
+                <span className="parquet-art-chip" data-light={meta.isLight ? "" : undefined}>
+                  <span className="parquet-art-hex">{tile.color.toUpperCase()}</span>
+                  <span className="parquet-art-name">{tile.label}</span>
+                </span>
+              ) : null
+            }
             slotCount={MAX_SLOTS}
           />
         </div>

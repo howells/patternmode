@@ -13,12 +13,16 @@ export interface ParquetTile extends WeightedColorSegment {
 
 /** Context passed to a {@link ParquetProps.renderTile} override. */
 export interface ParquetTileMeta {
+  /** Tile height as a percentage of the mosaic (0–100); useful for size-aware content. */
+  height: number;
   /** True when the tile color reads as light, so a dark foreground is legible. */
   isLight: boolean;
   /** The tile's share of the distribution total, 0–100. */
   percent: number;
   /** Zero-based slot index; the largest weight always occupies slot 0. */
   slot: number;
+  /** Tile width as a percentage of the mosaic (0–100); useful for size-aware content. */
+  width: number;
 }
 
 export interface ParquetProps {

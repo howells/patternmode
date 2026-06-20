@@ -103,9 +103,11 @@ export const Parquet = ({
         }
 
         const meta: ParquetTileMeta = {
+          height: slot.height,
           isLight: slot.isLight,
           percent: slot.percent,
           slot: index,
+          width: slot.width,
         };
 
         let content = null;

@@ -44,7 +44,7 @@ render no tile.
 
 With `showLabels`, each tile shows its `label` and derived percentage on hover,
 with a foreground color chosen for contrast (via colorscope's perceptual
-lightness). Pass `renderTile(tile, { percent, isLight, slot })` to replace the
+lightness). Pass `renderTile(tile, { percent, isLight, slot, width, height })` to replace the
 label content entirely.
 
 ## Props

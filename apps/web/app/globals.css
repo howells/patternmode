@@ -1625,35 +1625,23 @@ button {
 
 /* Parquet art showcase — painting + extracted palette */
 .parquet-art {
-  @apply flex flex-col gap-5 rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-7;
-}
-
-.parquet-art-header {
-  @apply flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-[color:var(--border-soft)] pb-[14px];
-}
-
-.parquet-art-artist {
-  @apply text-[1.05rem] font-medium text-[color:var(--accent)];
-}
-
-.parquet-art-title {
-  @apply text-[1.05rem];
-}
-
-.parquet-art-year {
-  @apply font-[family-name:var(--mono)] text-[0.85rem] tabular-nums text-[color:var(--muted)];
+  @apply flex flex-col gap-4 rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-7;
 }
 
 .parquet-art-body {
-  @apply grid grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] items-start gap-[18px] max-sm:grid-cols-[1fr];
+  @apply grid grid-cols-2 items-start gap-[18px] max-sm:grid-cols-1;
 }
 
 .parquet-art-figure {
   @apply relative m-0 aspect-square overflow-hidden rounded-md border border-[color:var(--border-soft)] bg-[#ece9e3];
 }
 
-.parquet-art-figure img {
-  @apply block h-full w-full object-cover;
+.parquet-art-image {
+  @apply object-cover opacity-0 transition-opacity duration-[900ms] ease-in-out;
+}
+
+.parquet-art-image[data-active] {
+  @apply opacity-100;
 }
 
 .parquet-art-mosaic {
@@ -1681,7 +1669,7 @@ button {
 }
 
 .parquet-art-footer {
-  @apply flex items-center justify-between gap-3;
+  @apply flex flex-col items-center gap-2;
 }
 
 .parquet-art-dots {
@@ -1701,5 +1689,5 @@ button {
 }
 
 .parquet-art-credit {
-  @apply font-[family-name:var(--mono)] text-[0.7rem] text-[color:var(--muted)];
+  @apply font-[family-name:var(--mono)] text-[0.6rem] text-[color:var(--muted)] opacity-80;
 }
