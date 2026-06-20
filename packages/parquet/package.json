@@ -58,10 +58,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@howells/motion": "workspace:*",
     "@instruments/colorscope": "^3.5.0",
-    "@patternmode/system": "workspace:*",
-    "motion": "catalog:"
+    "@patternmode/system": "workspace:*"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",

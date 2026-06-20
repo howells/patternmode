@@ -1,9 +1,7 @@
 "use client";
 
-import { springs } from "@howells/motion";
 import { hexLightness } from "@instruments/colorscope/math";
 import { joinClassNames } from "@patternmode/system";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "motion/react";
 import { useMemo } from "react";
 
 import { packSquarified } from "./parquet-packing";
@@ -35,6 +33,9 @@ const sanitizeWeight = (value: number): number => (Number.isFinite(value) && val
  * A proportional color mosaic. Each tile's area encodes its weight; the largest
  * weight always occupies slot 0, so changing `colors` morphs the biggest tile to
  * the new biggest tile rather than teleporting.
+ *
+ * The morph is a CSS transition on the tiles' percentage geometry — reliable
+ * across percentage layout values where a JS animation library is not.
  */
 export const Parquet = ({
   colors,
@@ -46,9 +47,6 @@ export const Parquet = ({
   showLabels = false,
   slotCount,
 }: ParquetProps) => {
-  const prefersReduced = useReducedMotion() === true;
-  const animated = !(disableMotion || prefersReduced);
-
   const slots = useMemo<Slot[]>(() => {
     const layoutHeight = LAYOUT_WIDTH / aspectRatio;
     const rects = packSquarified(
@@ -82,72 +80,67 @@ export const Parquet = ({
   }, [colors, aspectRatio, gap]);
 
   const count = slotCount ?? slots.length;
-  const transition = animated ? springs.soft : { duration: 0 };
 
   return (
-    <LazyMotion features={domAnimation}>
-      <div
-        className={joinClassNames("patternmode-parquet", className)}
-        style={{ aspectRatio: `${aspectRatio}` }}
-      >
-        {Array.from({ length: count }, (_, index) => {
-          const slot = slots[index];
+    <div
+      className={joinClassNames("patternmode-parquet", className)}
+      data-static={disableMotion ? "" : undefined}
+      style={{ aspectRatio: `${aspectRatio}` }}
+    >
+      {Array.from({ length: count }, (_, index) => {
+        const slot = slots[index];
+        const key = `slot-${index}`;
 
-          if (!slot) {
-            return (
-              <m.div
-                animate={{ opacity: 0, scale: 0 }}
-                aria-hidden="true"
-                className="patternmode-parquet__tile"
-                key={`slot-${index}`}
-                transition={transition}
-              />
-            );
-          }
-
-          const position = {
-            backgroundColor: slot.color,
-            height: `${slot.height}%`,
-            left: `${slot.left}%`,
-            top: `${slot.top}%`,
-            width: `${slot.width}%`,
-          };
-          const meta: ParquetTileMeta = {
-            isLight: slot.isLight,
-            percent: slot.percent,
-            slot: index,
-          };
-
-          let content = null;
-          if (renderTile) {
-            content = renderTile(slot.tile, meta);
-          } else if (showLabels) {
-            content = (
-              <div className="patternmode-parquet__label">
-                {slot.tile.label === undefined ? null : (
-                  <span className="patternmode-parquet__label-name">{slot.tile.label}</span>
-                )}
-                <span className="patternmode-parquet__label-percent">
-                  {Math.round(slot.percent)}%
-                </span>
-              </div>
-            );
-          }
-
+        if (!slot) {
           return (
-            <m.div
-              animate={{ ...position, opacity: 1, scale: 1 }}
+            <div
+              aria-hidden="true"
               className="patternmode-parquet__tile"
-              data-light={slot.isLight ? "" : undefined}
-              initial={animated ? { ...position, opacity: 0, scale: 0.85 } : false}
-              key={`slot-${index}`}
-              transition={transition}
-            >
-              {content}
-            </m.div>
+              key={key}
+              style={{ opacity: 0 }}
+            />
           );
-        })}
-      </div>
-    </LazyMotion>
+        }
+
+        const meta: ParquetTileMeta = {
+          isLight: slot.isLight,
+          percent: slot.percent,
+          slot: index,
+        };
+
+        let content = null;
+        if (renderTile) {
+          content = renderTile(slot.tile, meta);
+        } else if (showLabels) {
+          content = (
+            <div className="patternmode-parquet__label">
+              {slot.tile.label === undefined ? null : (
+                <span className="patternmode-parquet__label-name">{slot.tile.label}</span>
+              )}
+              <span className="patternmode-parquet__label-percent">
+                {Math.round(slot.percent)}%
+              </span>
+            </div>
+          );
+        }
+
+        return (
+          <div
+            className="patternmode-parquet__tile"
+            data-light={slot.isLight ? "" : undefined}
+            key={key}
+            style={{
+              backgroundColor: slot.color,
+              height: `${slot.height}%`,
+              left: `${slot.left}%`,
+              top: `${slot.top}%`,
+              width: `${slot.width}%`,
+            }}
+          >
+            {content}
+          </div>
+        );
+      })}
+    </div>
   );
 };

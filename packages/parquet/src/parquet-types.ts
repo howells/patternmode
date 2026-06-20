@@ -31,7 +31,7 @@ export interface ParquetProps {
   aspectRatio?: number;
   /** Optional className merged onto the mosaic container. */
   className?: string;
-  /** Disables enter and morph animation. `prefers-reduced-motion` also disables it. */
+  /** Disables the morph transition. `prefers-reduced-motion` also disables it. */
   disableMotion?: boolean;
   /** Gap between tiles, in the mosaic's internal layout units (≈ percent of width). Default `10`. */
   gap?: number;

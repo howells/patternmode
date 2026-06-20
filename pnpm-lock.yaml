@@ -421,18 +421,12 @@ importers:
 
   packages/parquet:
     dependencies:
-      '@howells/motion':
-        specifier: workspace:*
-        version: link:../motion
       '@instruments/colorscope':
         specifier: ^3.5.0
         version: 3.5.0(sharp@0.34.5)
       '@patternmode/system':
         specifier: workspace:*
         version: link:../system
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'

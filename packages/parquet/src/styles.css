@@ -11,6 +11,16 @@
     display: flex;
     overflow: hidden;
     position: absolute;
+    transition:
+      left 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      top 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 320ms ease;
+  }
+
+  .patternmode-parquet[data-static] .patternmode-parquet__tile {
+    transition: none;
   }
 
   .patternmode-parquet__label {
@@ -46,5 +56,11 @@
     font-size: 0.5625rem;
     font-variant-numeric: tabular-nums;
     opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .patternmode-parquet__tile {
+    transition: none;
   }
 }

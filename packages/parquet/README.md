@@ -20,14 +20,14 @@ export function Example() {
 }
 ```
 
-`Parquet` is **controlled**: it renders one distribution and plays a spring morph
-whenever `colors` changes. Rotation, in-view gating, and surrounding stats are the
+`Parquet` is **controlled**: it renders one distribution and morphs (a CSS
+transition on the tiles' geometry) whenever `colors` changes. Rotation, in-view gating, and surrounding stats are the
 consumer's responsibility — pass a new `colors` array to animate to a new palette.
 
 ## Tiles and slots
 
 Tiles are assigned to **slots** by descending area, so the largest weight always
-occupies slot 0. When the palette changes, slot 0 springs from the old biggest
+occupies slot 0. When the palette changes, slot 0 morphs from the old biggest
 tile to the new biggest tile instead of teleporting. Set `slotCount` to keep a
 fixed number of slots when morphing between palettes of different lengths —
 extra slots collapse to nothing.
