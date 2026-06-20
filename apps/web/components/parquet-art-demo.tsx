@@ -64,25 +64,22 @@ export const ParquetArtDemo = () => {
         </div>
       </div>
 
-      <footer className="parquet-art-footer">
-        <div aria-label="Artwork" className="parquet-art-dots" role="tablist">
-          {ART_PALETTES.map((palette, dotIndex) => (
-            <button
-              aria-label={palette.title}
-              aria-selected={dotIndex === index}
-              className="parquet-art-dot"
-              data-active={dotIndex === index ? "" : undefined}
-              key={palette.image}
-              onClick={() => {
-                setIndex(dotIndex);
-              }}
-              role="tab"
-              type="button"
-            />
-          ))}
-        </div>
-        <span className="parquet-art-credit">{art.credit}</span>
-      </footer>
+      <div aria-label="Artwork" className="parquet-art-dots" role="tablist">
+        {ART_PALETTES.map((palette, dotIndex) => (
+          <button
+            aria-label={palette.title}
+            aria-selected={dotIndex === index}
+            className="parquet-art-dot"
+            data-active={dotIndex === index ? "" : undefined}
+            key={palette.image}
+            onClick={() => {
+              setIndex(dotIndex);
+            }}
+            role="tab"
+            type="button"
+          />
+        ))}
+      </div>
     </div>
   );
 };

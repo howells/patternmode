@@ -1668,12 +1668,8 @@ button {
   @apply text-[0.62rem] opacity-[0.78];
 }
 
-.parquet-art-footer {
-  @apply flex flex-col items-center gap-2;
-}
-
 .parquet-art-dots {
-  @apply flex gap-2;
+  @apply flex justify-center gap-2;
 }
 
 .parquet-art-dot {
@@ -1686,8 +1682,4 @@ button {
 
 .parquet-art-dot:focus-visible {
   @apply outline-2 outline-offset-[3px] outline-[color:var(--accent)];
-}
-
-.parquet-art-credit {
-  @apply font-[family-name:var(--mono)] text-[0.6rem] text-[color:var(--muted)] opacity-80;
 }
