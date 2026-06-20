@@ -1,6 +1,7 @@
 "use client";
 
 import { Parquet } from "@patternmode/parquet";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { ART_PALETTES } from "@/lib/art-palettes";
@@ -35,8 +36,12 @@ export const ParquetArtDemo = () => {
 
       <div className="parquet-art-body">
         <figure className="parquet-art-figure">
-          {/* biome-ignore lint/performance/noImgElement: static public-domain asset, no optimization needed */}
-          <img alt={`${art.title} — ${art.artist}`} src={art.image} />
+          <Image
+            alt={`${art.title} — ${art.artist}`}
+            fill
+            sizes="(max-width: 640px) 90vw, 340px"
+            src={art.image}
+          />
         </figure>
 
         <div className="parquet-art-mosaic">

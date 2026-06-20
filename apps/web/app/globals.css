@@ -1725,6 +1725,7 @@ button {
   border-radius: 6px;
   margin: 0;
   overflow: hidden;
+  position: relative;
 }
 
 .parquet-art-figure img {

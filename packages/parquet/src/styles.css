@@ -1,66 +1,41 @@
-@layer components {
-  .patternmode-parquet {
-    border-radius: 0.5rem;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-  }
+@reference "tailwindcss";
 
-  .patternmode-parquet__tile {
-    align-items: flex-end;
-    display: flex;
-    overflow: hidden;
-    position: absolute;
-    transition:
-      left 620ms cubic-bezier(0.22, 1, 0.36, 1),
-      top 620ms cubic-bezier(0.22, 1, 0.36, 1),
-      width 620ms cubic-bezier(0.22, 1, 0.36, 1),
-      height 620ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 320ms ease;
-  }
+.patternmode-parquet {
+  @apply relative w-full overflow-hidden rounded-lg;
+}
 
-  .patternmode-parquet[data-static] .patternmode-parquet__tile {
-    transition: none;
-  }
+.patternmode-parquet__tile {
+  @apply absolute flex items-end overflow-hidden;
+  @apply transition-[left,top,width,height,opacity] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)];
+}
 
-  .patternmode-parquet__label {
-    color: rgb(255 255 255 / 72%);
-    font-family: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
-    opacity: 0;
-    padding: 0.5rem;
-    pointer-events: none;
-    transition: opacity 150ms ease;
-    width: 100%;
-  }
+.patternmode-parquet[data-static] .patternmode-parquet__tile {
+  @apply transition-none;
+}
 
-  .patternmode-parquet__tile[data-light] .patternmode-parquet__label {
-    color: rgb(0 0 0 / 62%);
-  }
+.patternmode-parquet__label {
+  @apply pointer-events-none w-full p-2 font-mono text-white/[0.72] opacity-0 transition-opacity duration-150;
+}
 
-  .patternmode-parquet__tile:hover .patternmode-parquet__label,
-  .patternmode-parquet__tile:focus-within .patternmode-parquet__label {
-    opacity: 1;
-  }
+.patternmode-parquet__tile[data-light] .patternmode-parquet__label {
+  @apply text-black/[0.62];
+}
 
-  .patternmode-parquet__label-name {
-    display: block;
-    font-size: 0.625rem;
-    line-height: 1.15;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.patternmode-parquet__tile:hover .patternmode-parquet__label,
+.patternmode-parquet__tile:focus-within .patternmode-parquet__label {
+  @apply opacity-100;
+}
 
-  .patternmode-parquet__label-percent {
-    display: block;
-    font-size: 0.5625rem;
-    font-variant-numeric: tabular-nums;
-    opacity: 0.7;
-  }
+.patternmode-parquet__label-name {
+  @apply block overflow-hidden text-ellipsis whitespace-nowrap text-[0.625rem] leading-[1.15];
+}
+
+.patternmode-parquet__label-percent {
+  @apply block text-[0.5625rem] tabular-nums opacity-70;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .patternmode-parquet__tile {
-    transition: none;
+    @apply transition-none;
   }
 }
