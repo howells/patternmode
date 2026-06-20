@@ -1,5 +1,13 @@
 # @patternmode/scrollframe
 
+## 0.2.3
+
+### Patch Changes
+
+- 8141b17: Make ScrollFrame overscroll containment axis-aware so horizontal-only frames do not block vertical page scroll chaining.
+- Updated dependencies [2aa9530]
+  - @patternmode/system@0.3.0
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @patternmode/tags
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [2aa9530]
+- Updated dependencies [8141b17]
+  - @patternmode/system@0.3.0
+  - @patternmode/scrollframe@0.2.3
+
 ## 0.2.1
 
 ### Patch Changes

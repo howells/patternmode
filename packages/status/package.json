@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/status",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Animated discrete status marks for Patternmode interfaces.",
   "keywords": [

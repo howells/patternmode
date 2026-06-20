@@ -1,5 +1,30 @@
 # @patternmode/swatch
 
+## 0.10.3
+
+### Patch Changes
+
+- 2aa9530: Add `@patternmode/parquet`: a controlled, proportional color mosaic. Each tile's
+  area encodes its weight via a squarified treemap, and the layout re-tiles and
+  morphs (largest weight always holds the first slot) whenever the palette
+  changes — the two-dimensional, read-only counterpart to Swatch's
+  `DistributionBar`. Labels are contrast-aware via colorscope, with a `renderTile`
+  override.
+
+  Introduces a shared `WeightedColorSegment` (`{ color, value, label? }`) in
+  `@patternmode/system` that both Parquet tiles and Swatch distribution segments
+  build on; `DistributionBarSegment` now extends it (a non-breaking change).
+
+- b8e0048: Use `@instruments/colorscope` for color math instead of hand-rolled helpers, and
+  upgrade colorscope to `^3.5.0` (the previously pinned `2.0.1` was deprecated).
+  Swatch now derives light/dark tone from perceptual OKLab lightness and builds
+  atmosphere alpha via colorscope conversion; Halo delegates its HSL→hex
+  conversion to colorscope while keeping its defensive input clamping. Halo and
+  atmosphere output are unchanged; only swatch tone selection on borderline colors
+  may shift to the perceptual model.
+- Updated dependencies [2aa9530]
+  - @patternmode/system@0.3.0
+
 ## 0.10.2
 
 ### Patch Changes
