@@ -114,10 +114,10 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
     case "Halo": {
       return (
         <div className="preview-halo" aria-hidden="true">
-          <span className="preview-halo-pad" />
-          <svg fill="none" viewBox="0 0 128 128">
-            <path d="M 122 75 A 58 58 0 0 1 14 75" />
-            <circle cx="122" cy="75" r="6" />
+          <svg fill="none" viewBox="0 0 120 120">
+            <circle className="preview-halo-pad" cx="60" cy="54" r="34" />
+            <path className="preview-halo-arc" d="M98.6 60.8A39.2 39.2 0 0 1 21.4 60.8" />
+            <circle className="preview-halo-thumb" cx="92.1" cy="76.5" r="4" />
           </svg>
         </div>
       );

@@ -685,43 +685,31 @@ button {
   width: 32px;
 }
 
-/* Halo preview — round pad and hue smile */
-.preview-halo {
-  height: 112px;
-  position: relative;
-  width: 128px;
+/* Halo preview — round pad with a hugging hue smile arc */
+.preview-halo svg {
+  display: block;
+  filter: drop-shadow(0 4px 16px rgba(29, 29, 27, 0.08));
+  height: 116px;
+  overflow: visible;
+  width: 116px;
 }
 
 .preview-halo-pad {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: 999px;
-  box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
-  display: block;
-  height: 74px;
-  left: 50%;
-  position: absolute;
-  top: 8px;
-  transform: translateX(-50%);
-  width: 74px;
+  fill: var(--surface);
+  stroke: var(--border-soft);
+  stroke-width: 1;
 }
 
-.preview-halo svg {
-  inset: 0;
-  overflow: visible;
-  position: absolute;
-}
-
-.preview-halo path {
+.preview-halo-arc {
   stroke: var(--quiet);
   stroke-linecap: round;
-  stroke-width: 8;
+  stroke-width: 5.2;
 }
 
-.preview-halo circle {
-  fill: var(--ink);
-  stroke: white;
-  stroke-width: 2;
+.preview-halo-thumb {
+  fill: var(--surface);
+  stroke: var(--quiet);
+  stroke-width: 1.5;
 }
 
 /* Briolette preview — faceted color sphere */
