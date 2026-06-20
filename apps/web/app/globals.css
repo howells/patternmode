@@ -1615,3 +1615,61 @@ button {
     overflow-x: auto;
   }
 }
+
+/* Parquet preview — proportional color mosaic */
+.preview-parquet svg {
+  display: block;
+  filter: drop-shadow(0 4px 16px rgba(29, 29, 27, 0.08));
+  height: 96px;
+  width: 96px;
+}
+
+.parquet-demo {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 36px;
+}
+
+.parquet-demo-stage {
+  max-width: 460px;
+  width: 100%;
+}
+
+.parquet-demo-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.parquet-demo-dot {
+  background: var(--border-soft);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 6px;
+  padding: 0;
+  transition:
+    width 200ms ease,
+    background 200ms ease;
+  width: 6px;
+}
+
+.parquet-demo-dot[data-active] {
+  background: var(--accent);
+  width: 22px;
+}
+
+.parquet-demo-dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.parquet-demo-controls {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

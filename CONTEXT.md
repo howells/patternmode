@@ -639,6 +639,36 @@ _Avoid_: Making Tag Selector the source of truth for all available tags
 The shadcn-compatible styling base that **Tag** extends.
 _Avoid_: Treating Badge as the canonical Patternmode concept
 
+### Parquet
+
+**Parquet**:
+A two-dimensional, read-only display of a **Weighted Visual Distribution** in which each segment's rendered **area** encodes its weight.
+_Avoid_: Treegrid, Treemap, or Bin Packing as the canonical term — those name the implementation, not the pattern
+
+**Tile**:
+One packed rectangle inside a **Parquet**, representing a single weighted color whose area is proportional to its **Distribution Value**.
+_Avoid_: Cell or Box as the canonical term
+
+**Weighted Color Segment**:
+The shared `{ color, value, label? }` input describing one weighted color, used by both **Parquet** **Tiles** and Swatch **Distribution Segments**.
+_Avoid_: Defining a separate per-component color-weight shape that drifts from the distribution vocabulary
+
+**Squarified Packing**:
+The layout strategy that arranges **Tiles** to keep each one as close to square as possible for the available space.
+_Avoid_: Treating tile order or aspect as arbitrary, or as a regular grid
+
+**Tile Slot**:
+A fixed positional position in a **Parquet**, assigned by descending area so the largest weight always occupies the first slot.
+_Avoid_: Keying tiles by color identity when morphing between unrelated distributions
+
+**Distribution Morph**:
+The spring transition a **Parquet** plays when its distribution changes, animating each **Tile Slot** from its old rectangle to its new one.
+_Avoid_: Re-mounting tiles or cross-fading the whole **Parquet** on data change
+
+**Tile Label**:
+Optional text shown over a **Tile** (typically the color name and **Derived Distribution Percentage**), with foreground color chosen for contrast against the tile.
+_Avoid_: Rendering labels as permanent chrome rather than an on-demand affordance
+
 ## Relationships
 
 ### Aperto
@@ -830,6 +860,17 @@ _Avoid_: Treating Badge as the canonical Patternmode concept
 - Disabled state belongs to the current selector interaction, not to universal Tag Item availability.
 - **Tag Selection Serialization** uses **Tag Item Identity** by default.
 - **Tag Selection Order** follows the controlled value order.
+
+### Parquet
+
+- A **Parquet** is a read-only, two-dimensional rendering of a **Weighted Visual Distribution**; **Distribution Bar** is its one-dimensional, editable counterpart.
+- A **Parquet** and a **Distribution Bar** can be driven by the same data because both accept the shared **Weighted Color Segment** shape.
+- The **Weighted Color Segment** type lives in `@patternmode/system`; both `@patternmode/swatch` and `@patternmode/parquet` import it, and Swatch's **Distribution Segment** extends it by adding a required `id`.
+- A **Parquet** is **controlled**: it renders one distribution and plays a **Distribution Morph** whenever its segments change. Rotation, in-view gating, and surrounding stats belong to the consumer.
+- **Tiles** are assigned to **Tile Slots** by descending area, so the largest weight always animates from the first slot to the first slot across a **Distribution Morph**.
+- **Squarified Packing** is computed in an abstract coordinate space and rendered as percentages, so a **Parquet** is responsive within a consumer-supplied aspect ratio.
+- **Tile Labels** are opt-in; the default renders the color name and **Derived Distribution Percentage** with a contrast-aware foreground, and a `renderTile` override may replace the label content entirely.
+- `@patternmode/parquet` inlines its own **Distribution Morph** spring rather than depending on `@howells/motion`, matching the per-package motion-token pattern.
 - New selections append to the end of **Tag Selection Order**.
 - A **Tag Option Catalog** is controlled by consumer state.
 - **Tag Selector** controls selection interaction, not **Tag Option Catalog** ownership.

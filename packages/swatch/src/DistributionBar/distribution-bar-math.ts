@@ -1,10 +1,11 @@
-/** Weighted segment used by DistributionBar and DistributionDisplay. */
-export interface DistributionBarSegment {
-  color: string;
+import type { WeightedColorSegment } from "@patternmode/system";
+
+/**
+ * Weighted segment used by DistributionBar and DistributionDisplay. Extends the
+ * shared {@link WeightedColorSegment} with a required stable `id` for editing.
+ */
+export interface DistributionBarSegment extends WeightedColorSegment {
   id: string;
-  label?: string;
-  /** Relative weight, not a persisted percentage. Invalid or negative values render as 0. */
-  value: number;
 }
 
 /** Segment metadata update; weight changes happen through boundary movement. */

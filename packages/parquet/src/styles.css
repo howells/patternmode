@@ -1,0 +1,50 @@
+@layer components {
+  .patternmode-parquet {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .patternmode-parquet__tile {
+    align-items: flex-end;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .patternmode-parquet__label {
+    color: rgb(255 255 255 / 72%);
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+    opacity: 0;
+    padding: 0.5rem;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+    width: 100%;
+  }
+
+  .patternmode-parquet__tile[data-light] .patternmode-parquet__label {
+    color: rgb(0 0 0 / 62%);
+  }
+
+  .patternmode-parquet__tile:hover .patternmode-parquet__label,
+  .patternmode-parquet__tile:focus-within .patternmode-parquet__label {
+    opacity: 1;
+  }
+
+  .patternmode-parquet__label-name {
+    display: block;
+    font-size: 0.625rem;
+    line-height: 1.15;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .patternmode-parquet__label-percent {
+    display: block;
+    font-size: 0.5625rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.7;
+  }
+}

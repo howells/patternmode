@@ -220,3 +220,17 @@ export const getObjectSizingStyle = (sizing: ObjectSizing = {}): ObjectSizingSty
   objectPosition: sizing.position ?? "center",
   width: toCssSize(sizing.width) ?? "100%",
 });
+
+/**
+ * One weighted color in a distribution — the shared input shape behind both
+ * Swatch's Distribution Segments and Parquet's Tiles. The same array can drive a
+ * one-dimensional `DistributionBar` and a two-dimensional `Parquet`.
+ */
+export interface WeightedColorSegment {
+  /** Any CSS color string. */
+  color: string;
+  /** Relative weight, not a persisted percentage. Invalid or negative values are treated as 0. */
+  value: number;
+  /** Optional human-readable label for the color. */
+  label?: string;
+}

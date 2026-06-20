@@ -18,6 +18,7 @@
     "@patternmode/briolette": "workspace:*",
     "@patternmode/deck": "workspace:*",
     "@patternmode/halo": "workspace:*",
+    "@patternmode/parquet": "workspace:*",
     "@patternmode/scrollframe": "workspace:*",
     "@patternmode/stacksheet": "workspace:*",
     "@patternmode/status": "workspace:*",
