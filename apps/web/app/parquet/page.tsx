@@ -2,7 +2,7 @@ import { ApiTable, CodeBlock, ComponentDocsShell, DocsBlock } from "@howells/sit
 import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
-import { ParquetDemo } from "@/components/parquet-demo";
+import { ParquetArtDemo } from "@/components/parquet-art-demo";
 
 export const metadata: Metadata = {
   description:
@@ -84,7 +84,7 @@ export default function ParquetPage() {
       description="A two-dimensional, read-only view of a weighted color distribution — the proportional-area counterpart to a distribution bar. The largest weight always holds the first slot, so changing the palette morphs the biggest tile to the new biggest tile."
       title="Parquet"
     >
-      <ParquetDemo />
+      <ParquetArtDemo />
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/parquet</CodeBlock>
         <CodeBlock>{parquetExample}</CodeBlock>

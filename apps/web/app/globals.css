@@ -1673,3 +1673,145 @@ button {
   display: flex;
   justify-content: center;
 }
+
+/* Parquet art showcase — painting + extracted palette */
+.parquet-art {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+}
+
+.parquet-art-header {
+  align-items: baseline;
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding-bottom: 14px;
+}
+
+.parquet-art-artist {
+  color: var(--accent);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.parquet-art-title {
+  font-size: 1.05rem;
+}
+
+.parquet-art-year {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.parquet-art-body {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+}
+
+.parquet-art-figure {
+  aspect-ratio: 1;
+  background: #ece9e3;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.parquet-art-figure img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.parquet-art-mosaic {
+  width: 100%;
+}
+
+.parquet-art-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  left: 0;
+  line-height: 1.25;
+  padding: 9px 11px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+}
+
+.parquet-art-chip[data-light] {
+  color: rgb(0 0 0 / 64%);
+}
+
+.parquet-art-chip:not([data-light]) {
+  color: rgb(255 255 255 / 86%);
+}
+
+.parquet-art-hex {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.01em;
+}
+
+.parquet-art-name {
+  font-size: 0.62rem;
+  opacity: 0.78;
+}
+
+.parquet-art-footer {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.parquet-art-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.parquet-art-dot {
+  background: var(--border-soft);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 6px;
+  padding: 0;
+  transition:
+    width 200ms ease,
+    background 200ms ease;
+  width: 6px;
+}
+
+.parquet-art-dot[data-active] {
+  background: var(--accent);
+  width: 22px;
+}
+
+.parquet-art-dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.parquet-art-credit {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+@media (max-width: 640px) {
+  .parquet-art-body {
+    grid-template-columns: 1fr;
+  }
+}
