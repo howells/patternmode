@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 :root {
   --background: #fbfbf9;
   --border: #e3e1dc;
@@ -1618,201 +1620,86 @@ button {
 
 /* Parquet preview — proportional color mosaic */
 .preview-parquet svg {
-  display: block;
-  filter: drop-shadow(0 4px 16px rgba(29, 29, 27, 0.08));
-  height: 96px;
-  width: 96px;
-}
-
-.parquet-demo {
-  align-items: center;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  padding: 36px;
-}
-
-.parquet-demo-stage {
-  max-width: 460px;
-  width: 100%;
-}
-
-.parquet-demo-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.parquet-demo-dot {
-  background: var(--border-soft);
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  height: 6px;
-  padding: 0;
-  transition:
-    width 200ms ease,
-    background 200ms ease;
-  width: 6px;
-}
-
-.parquet-demo-dot[data-active] {
-  background: var(--accent);
-  width: 22px;
-}
-
-.parquet-demo-dot:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.parquet-demo-controls {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+  @apply block h-24 w-24 drop-shadow-[0_4px_16px_rgba(29,29,27,0.08)];
 }
 
 /* Parquet art showcase — painting + extracted palette */
 .parquet-art {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 28px;
+  @apply flex flex-col gap-5 rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-7;
 }
 
 .parquet-art-header {
-  align-items: baseline;
-  border-bottom: 1px solid var(--border-soft);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  padding-bottom: 14px;
+  @apply flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-[color:var(--border-soft)] pb-[14px];
 }
 
 .parquet-art-artist {
-  color: var(--accent);
-  font-size: 1.05rem;
-  font-weight: 500;
+  @apply text-[1.05rem] font-medium text-[color:var(--accent)];
 }
 
 .parquet-art-title {
-  font-size: 1.05rem;
+  @apply text-[1.05rem];
 }
 
 .parquet-art-year {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-variant-numeric: tabular-nums;
+  @apply font-[family-name:var(--mono)] text-[0.85rem] tabular-nums text-[color:var(--muted)];
 }
 
 .parquet-art-body {
-  align-items: start;
-  display: grid;
-  gap: 18px;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  @apply grid grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] items-start gap-[18px] max-sm:grid-cols-[1fr];
 }
 
 .parquet-art-figure {
-  aspect-ratio: 1;
-  background: #ece9e3;
-  border: 1px solid var(--border-soft);
-  border-radius: 6px;
-  margin: 0;
-  overflow: hidden;
-  position: relative;
+  @apply relative m-0 aspect-square overflow-hidden rounded-md border border-[color:var(--border-soft)] bg-[#ece9e3];
 }
 
 .parquet-art-figure img {
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
+  @apply block h-full w-full object-cover;
 }
 
 .parquet-art-mosaic {
-  width: 100%;
+  @apply w-full;
 }
 
 .parquet-art-chip {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  left: 0;
-  line-height: 1.25;
-  padding: 9px 11px;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
+  @apply pointer-events-none absolute top-0 left-0 flex flex-col gap-px px-[11px] py-[9px] leading-tight;
 }
 
 .parquet-art-chip[data-light] {
-  color: rgb(0 0 0 / 64%);
+  @apply text-black/[0.64];
 }
 
 .parquet-art-chip:not([data-light]) {
-  color: rgb(255 255 255 / 86%);
+  @apply text-white/[0.86];
 }
 
 .parquet-art-hex {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.01em;
+  @apply font-[family-name:var(--mono)] text-[0.62rem] tracking-[0.01em];
 }
 
 .parquet-art-name {
-  font-size: 0.62rem;
-  opacity: 0.78;
+  @apply text-[0.62rem] opacity-[0.78];
 }
 
 .parquet-art-footer {
-  align-items: center;
-  display: flex;
-  gap: 12px;
-  justify-content: space-between;
+  @apply flex items-center justify-between gap-3;
 }
 
 .parquet-art-dots {
-  display: flex;
-  gap: 8px;
+  @apply flex gap-2;
 }
 
 .parquet-art-dot {
-  background: var(--border-soft);
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  height: 6px;
-  padding: 0;
-  transition:
-    width 200ms ease,
-    background 200ms ease;
-  width: 6px;
+  @apply h-1.5 w-1.5 cursor-pointer rounded-full border-0 bg-[var(--border-soft)] p-0 transition-[width,background] duration-200 ease-[ease];
 }
 
 .parquet-art-dot[data-active] {
-  background: var(--accent);
-  width: 22px;
+  @apply w-[22px] bg-[var(--accent)];
 }
 
 .parquet-art-dot:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  @apply outline-2 outline-offset-[3px] outline-[color:var(--accent)];
 }
 
 .parquet-art-credit {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.7rem;
-}
-
-@media (max-width: 640px) {
-  .parquet-art-body {
-    grid-template-columns: 1fr;
-  }
+  @apply font-[family-name:var(--mono)] text-[0.7rem] text-[color:var(--muted)];
 }
