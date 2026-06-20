@@ -1,5 +1,6 @@
 "use client";
 
+import { easings } from "@howells/motion";
 import { getSizeVariableStyle, joinClassNames } from "@patternmode/system";
 import { useEffect, useReducer, useRef } from "react";
 import type { CSSProperties } from "react";
@@ -35,10 +36,10 @@ const getTransition = (motion: StatusMarkMotion, reducedMotion: boolean): Transi
   }
 
   if (motion === "snap") {
-    return { duration: 0.16, ease: [0.22, 1, 0.36, 1] as const };
+    return { duration: 0.16, ease: easings.snappy };
   }
 
-  return { duration: 0.28, ease: [0.4, 0, 0.2, 1] as const };
+  return { duration: 0.28, ease: easings.smooth };
 };
 
 const getFillMotionDuration = (motion: StatusMarkMotion, reducedMotion: boolean) => {

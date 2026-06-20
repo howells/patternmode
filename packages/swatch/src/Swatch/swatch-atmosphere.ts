@@ -1,3 +1,5 @@
+import { hexToRgb, rgbToHex } from "@instruments/colorscope/convert";
+
 import type { SwatchColorStop } from "./swatch-types";
 
 export interface SwatchAtmosphereOptions {
@@ -34,24 +36,13 @@ const POOLS: readonly (readonly [number, number, number, number, number])[] = [
 const clamp = (value: number, min: number, max: number): number =>
   Math.min(max, Math.max(min, value));
 
-const normalizeHex = (color: string): string | null => {
-  const value = color.trim().replace(/^#/u, "");
-  if (/^[\da-f]{3}$/iu.test(value)) {
-    return `${value[0]}${value[0]}${value[1]}${value[1]}${value[2]}${value[2]}`;
-  }
-  if (/^[\da-f]{6}$/iu.test(value)) {
-    return value;
-  }
-  return null;
-};
-
 const withAlpha = (color: string, alpha: number): string => {
-  const hex = normalizeHex(color);
-  if (hex !== null) {
+  const rgb = hexToRgb(color);
+  if (rgb !== null) {
     const suffix = Math.round(clamp(alpha, 0, 255))
       .toString(16)
       .padStart(2, "0");
-    return `#${hex}${suffix}`;
+    return `${rgbToHex(rgb.r, rgb.g, rgb.b)}${suffix}`;
   }
   const percent = Math.round((clamp(alpha, 0, 255) / 255) * 100);
   return `color-mix(in srgb, ${color} ${percent}%, transparent)`;

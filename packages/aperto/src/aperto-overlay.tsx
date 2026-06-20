@@ -6,7 +6,7 @@ import type { Transition } from "motion/react";
 import type { CSSProperties, Ref } from "react";
 
 import { useApertoContext } from "./context";
-import { easings } from "./motion-tokens";
+import { easings } from "@howells/motion";
 
 export interface ApertoOverlayProps {
   className?: string;

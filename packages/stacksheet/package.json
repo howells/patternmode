@@ -57,6 +57,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@howells/motion": "workspace:*",
     "@patternmode/system": "workspace:*",
     "@radix-ui/react-portal": "^1.1.10",
     "@radix-ui/react-scroll-area": "^1.2.10",

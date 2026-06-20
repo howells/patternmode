@@ -55,6 +55,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@instruments/colorscope": "^3.5.0",
     "@patternmode/system": "workspace:*",
     "@radix-ui/react-slot": "catalog:",
     "motion": "catalog:"

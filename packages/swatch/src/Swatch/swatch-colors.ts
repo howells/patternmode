@@ -1,15 +1,9 @@
+import { hexLightness } from "@instruments/colorscope/math";
+
 import type { SwatchColorStop } from "./swatch-types";
 
-const normalizeHex = (hex: string): string | null => {
-  const value = hex.trim().replace(/^#/u, "");
-  if (/^[\da-f]{3}$/iu.test(value)) {
-    return `${value[0]}${value[0]}${value[1]}${value[1]}${value[2]}${value[2]}`;
-  }
-  if (/^[\da-f]{6}$/iu.test(value)) {
-    return value;
-  }
-  return null;
-};
+/** Perceptual (OKLab) lightness above which a swatch reads as "light". */
+const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
 
 const toColorStop = (stop: SwatchColorStop): { color: string; ratio?: number } =>
   typeof stop === "string" ? { color: stop } : stop;
@@ -26,16 +20,8 @@ const formatPercent = (value: number): string =>
   `${Number.isInteger(value) ? value : Number(value.toFixed(2))}%`;
 
 export const isLightColor = (color: string): boolean => {
-  const normalized = normalizeHex(color);
-  if (normalized === null) {
-    return false;
-  }
-
-  const red = Number.parseInt(normalized.slice(0, 2), 16);
-  const green = Number.parseInt(normalized.slice(2, 4), 16);
-  const blue = Number.parseInt(normalized.slice(4, 6), 16);
-  const luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
-  return luminance > 0.62;
+  const lightness = hexLightness(color);
+  return Number.isFinite(lightness) && lightness > LIGHT_LIGHTNESS_THRESHOLD;
 };
 
 export const getSwatchColorsBackground = (

@@ -1,16 +1,30 @@
+import { springs as motionSprings } from "@howells/motion";
+
 import type { SpringConfig } from "./types";
+
+/** Strips the shared token's `type: "spring"` down to Stacksheet's numeric SpringConfig. */
+const toSpringConfig = (spring: {
+  damping: number;
+  mass: number;
+  stiffness: number;
+}): SpringConfig => ({
+  damping: spring.damping,
+  mass: spring.mass,
+  stiffness: spring.stiffness,
+});
 
 /**
  * Spring presets inspired by iOS animation feel.
  *
- * - `subtle` — Barely noticeable bounce, professional.
- * - `snappy` — Quick, responsive for interactions.
- * - `stiff` — Very quick, controlled. Panels, drawers. **(default)**
+ * - `subtle` — Barely noticeable bounce, professional. (shared @howells/motion token)
+ * - `snappy` — Quick, responsive for interactions. (shared @howells/motion token)
+ * - `stiff` — Very quick, controlled. Panels, drawers. **(default)** Intentional
+ *   fork: damping 40 (tighter than the shared `stiff`) for drawer control.
  */
 export const springs = {
-  snappy: { damping: 28, mass: 0.8, stiffness: 400 },
+  snappy: toSpringConfig(motionSprings.snappy),
   stiff: { damping: 40, mass: 1, stiffness: 400 },
-  subtle: { damping: 30, mass: 1, stiffness: 300 },
-} as const satisfies Record<string, SpringConfig>;
+  subtle: toSpringConfig(motionSprings.subtle),
+} satisfies Record<string, SpringConfig>;
 
 export type SpringPreset = keyof typeof springs;

@@ -1,3 +1,5 @@
+import { hslToHex as colorscopeHslToHex } from "@instruments/colorscope/math";
+
 /** HSL value used by HaloPicker. */
 export interface HaloColor {
   h: number;
@@ -123,44 +125,17 @@ export const normalizeHue = (hue: number): number => {
   return normalized < 0 ? normalized + 360 : normalized;
 };
 
-const toHexPart = (value: number): string => Math.round(value).toString(16).padStart(2, "0");
-
-export const hslToHex = (hue: number, saturation: number, lightness: number): string => {
-  const h = normalizeHue(hue) / 360;
-  const s = clampValue(saturation, 0, 100) / 100;
-  const l = clampValue(lightness, 0, 100) / 100;
-
-  if (s === 0) {
-    const gray = l * 255;
-    return `#${toHexPart(gray)}${toHexPart(gray)}${toHexPart(gray)}`;
-  }
-
-  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-  const p = 2 * l - q;
-  const hueToRgb = (t: number) => {
-    let next = t;
-    if (next < 0) {
-      next += 1;
-    }
-    if (next > 1) {
-      next -= 1;
-    }
-    if (next < 1 / 6) {
-      return p + (q - p) * 6 * next;
-    }
-    if (next < 1 / 2) {
-      return q;
-    }
-    if (next < 2 / 3) {
-      return p + (q - p) * (2 / 3 - next) * 6;
-    }
-    return p;
-  };
-
-  return `#${toHexPart(hueToRgb(h + 1 / 3) * 255)}${toHexPart(
-    hueToRgb(h) * 255,
-  )}${toHexPart(hueToRgb(h - 1 / 3) * 255)}`;
-};
+/**
+ * Convert an HSL value to a hex string. The HSL→hex conversion is delegated to
+ * colorscope; Halo keeps its defensive hue normalization and 0–100 clamping
+ * because colorscope assumes inputs are already in range.
+ */
+export const hslToHex = (hue: number, saturation: number, lightness: number): string =>
+  colorscopeHslToHex(
+    normalizeHue(hue),
+    clampValue(saturation, 0, 100),
+    clampValue(lightness, 0, 100),
+  );
 
 export const clampPointToCircle = (
   x: number,

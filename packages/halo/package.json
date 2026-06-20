@@ -54,6 +54,9 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@instruments/colorscope": "^3.5.0"
+  },
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",

@@ -1,12 +1,12 @@
-import { durations, easings, springs } from "./motion-tokens";
+import { durations, easings, springs } from "@howells/motion";
 import type { DragSpringConfig, MotionPreset, MotionPresetName, MotionVariants } from "./types";
 
 /**
  * Motion presets — each bundles transition timing AND drag physics
  * so "snappy" feels snappy everywhere: open, close, and drag.
  *
- * Curves and springs are local copies of the Howells motion tokens so the
- * published package has no private workspace runtime dependencies.
+ * Curves and springs come from the shared @howells/motion tokens so motion
+ * feel stays consistent across the catalog.
  */
 export const PRESETS: Record<MotionPresetName, MotionPreset> = {
   bouncy: {
