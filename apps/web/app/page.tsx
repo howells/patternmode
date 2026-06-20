@@ -1,5 +1,6 @@
 import { PageShell } from "@howells/site-ui";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   description: "Component catalog for Patternmode interface primitives.",
@@ -71,123 +72,87 @@ const components: CatalogEntry[] = [
   },
 ];
 
-const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
-  switch (title) {
-    case "Stacksheet": {
-      return (
-        <div className="preview-stacksheet" aria-hidden="true">
-          <div className="preview-panel" />
-          <div className="preview-panel" />
-          <div className="preview-panel" />
-        </div>
-      );
-    }
-    case "Deck": {
-      return (
-        <div className="preview-deck" aria-hidden="true">
-          <div className="preview-deck-card" />
-          <div className="preview-deck-card" />
-          <div className="preview-deck-card" />
-        </div>
-      );
-    }
-    case "Swatch": {
-      return (
-        <div className="preview-swatch-set" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Status": {
-      return (
-        <div className="preview-status-set" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Halo": {
-      return (
-        <div className="preview-halo" aria-hidden="true">
-          <span className="preview-halo-pad" />
-          <svg fill="none" viewBox="0 0 128 128">
-            <path d="M 122 75 A 58 58 0 0 1 14 75" />
-            <circle cx="122" cy="75" r="6" />
-          </svg>
-        </div>
-      );
-    }
-    case "Briolette": {
-      return (
-        <div className="preview-briolette" aria-hidden="true">
-          <svg viewBox="0 0 128 128">
-            <polygon fill="#9eb8aa" points="92,64 78,88.2 112.5,92" />
-            <polygon fill="#8ba99a" points="78,88.2 112.5,92 64,120" />
-            <polygon fill="#aac3b4" points="78,88.2 50,88.2 64,120" />
-            <polygon fill="#93ad9f" points="50,88.2 64,120 15.5,92" />
-            <polygon fill="#b9cec1" points="50,88.2 36,64 15.5,92" />
-            <polygon fill="#87a395" points="36,64 15.5,92 15.5,36" />
-            <polygon fill="#a3bcae" points="36,64 50,39.8 15.5,36" />
-            <polygon fill="#c2d4c8" points="50,39.8 15.5,36 64,8" />
-            <polygon fill="#90aa9c" points="50,39.8 78,39.8 64,8" />
-            <polygon fill="#b0c7b9" points="78,39.8 64,8 112.5,36" />
-            <polygon fill="#9cb6a8" points="78,39.8 92,64 112.5,36" />
-            <polygon fill="#85a194" points="92,64 112.5,36 112.5,92" />
-            <polygon fill="#a6bfb0" points="92,64 78,88.2 50,88.2 36,64 50,39.8 78,39.8" />
-          </svg>
-        </div>
-      );
-    }
-    case "ScrollFrame": {
-      return (
-        <div className="preview-scroll-area" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Tags": {
-      return (
-        <div className="preview-tags" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      );
-    }
-    case "Parquet": {
-      return (
-        <div className="preview-parquet" aria-hidden="true">
-          <svg viewBox="0 0 128 128">
-            <rect x="3" y="3" width="60" height="122" rx="2.5" fill="#c2703e" />
-            <rect x="67" y="3" width="58" height="60" rx="2.5" fill="#e8b4b8" />
-            <rect x="67" y="67" width="28" height="58" rx="2.5" fill="#7a4a32" />
-            <rect x="99" y="67" width="26" height="58" rx="2.5" fill="#dcc4a0" />
-          </svg>
-        </div>
-      );
-    }
-    default: {
-      return (
-        <div className="preview-aperto" aria-hidden="true">
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-          <div className="preview-thumb" />
-        </div>
-      );
-    }
-  }
+// One minimal monochrome glyph per component, drawn on a shared 48×48 grid so
+// every icon shares stroke weight, optical size, and alignment.
+const CATALOG_ICONS: Record<string, ReactNode> = {
+  Aperto: (
+    <>
+      <rect x="14" y="25" width="10" height="9" rx="1.5" />
+      <rect x="23" y="14" width="13" height="13" rx="2.5" />
+    </>
+  ),
+  Briolette: (
+    <>
+      <path d="M24 12 33 21 24 36 15 21Z" />
+      <path d="M15 21h18M19 21l5-9 5 9M24 21v15" />
+    </>
+  ),
+  Deck: (
+    <>
+      <rect height="19" rx="2.5" transform="rotate(-11 22 24)" width="13" x="16" y="15" />
+      <rect height="20" rx="2.5" width="14" x="19" y="14" />
+    </>
+  ),
+  Halo: (
+    <>
+      <circle cx="24" cy="20.5" r="8" />
+      <path d="M14.5 30.5a12 12 0 0 0 19 0" />
+      <circle cx="33.5" cy="30.5" fill="currentColor" r="1.6" stroke="none" />
+    </>
+  ),
+  Parquet: (
+    <>
+      <rect height="24" rx="2.5" width="24" x="12" y="12" />
+      <path d="M23 12v24M23 24h13" />
+    </>
+  ),
+  ScrollFrame: (
+    <>
+      <rect height="22" rx="3" width="22" x="13" y="13" />
+      <path d="M17 19.5h9M17 24h9M17 28.5h6M30.5 18v8" />
+    </>
+  ),
+  Stacksheet: (
+    <>
+      <path d="M19 14h10M16.5 18h15" />
+      <rect height="13" rx="2.5" width="22" x="13" y="22" />
+    </>
+  ),
+  Status: (
+    <>
+      <path d="M24 15a9 9 0 1 1-8.5 6" />
+      <circle cx="24" cy="15" fill="currentColor" r="1.5" stroke="none" />
+    </>
+  ),
+  Swatch: (
+    <>
+      <circle cx="17" cy="24" r="4.2" />
+      <circle cx="24" cy="24" r="4.2" />
+      <circle cx="31" cy="24" r="4.2" />
+    </>
+  ),
+  Tags: (
+    <>
+      <path d="M16 16.5h8.5l9.5 7.5-9.5 7.5H16a1.5 1.5 0 0 1-1.5-1.5v-12a1.5 1.5 0 0 1 1.5-1.5z" />
+      <circle cx="19.5" cy="20.5" r="1.5" />
+    </>
+  ),
 };
+
+const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => (
+  <svg
+    aria-hidden="true"
+    className="catalog-icon"
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={1.5}
+    viewBox="0 0 48 48"
+  >
+    {CATALOG_ICONS[title] ?? <rect height="22" rx="3" width="22" x="13" y="13" />}
+  </svg>
+);
 
 const CatalogCard = ({ description, href, title }: CatalogEntry) => (
   <a className="catalog-card" href={href}>
