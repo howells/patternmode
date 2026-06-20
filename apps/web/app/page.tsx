@@ -89,8 +89,8 @@ const CATALOG_ICONS: Record<string, ReactNode> = {
   ),
   Deck: (
     <>
-      <rect height="19" rx="2.5" transform="rotate(-11 22 24)" width="13" x="16" y="15" />
-      <rect height="20" rx="2.5" width="14" x="19" y="14" />
+      <rect height="18" rx="2.5" width="15" x="15" y="16" />
+      <rect height="18" rx="2.5" width="15" x="19" y="15" />
     </>
   ),
   Halo: (
