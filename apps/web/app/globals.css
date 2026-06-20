@@ -579,7 +579,7 @@ button {
 /* ── Unified catalog icon ──────────────────── */
 
 .catalog-icon {
-  @apply size-16 text-[color:var(--muted)] transition-[color,transform] duration-300;
+  @apply size-20 text-[color:var(--muted)] transition-[color,transform] duration-300;
 }
 
 /* Placeholder card */

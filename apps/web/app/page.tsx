@@ -72,69 +72,129 @@ const components: CatalogEntry[] = [
   },
 ];
 
-// One minimal monochrome glyph per component, drawn on a shared 48×48 grid so
-// every icon shares stroke weight, optical size, and alignment.
+// One bespoke monochrome glyph per component on a shared 48×48 grid: each pairs
+// outline structure with a tonal fill and a small solid accent, true to what the
+// component actually renders. Tints use currentColor at reduced opacity.
 const CATALOG_ICONS: Record<string, ReactNode> = {
   Aperto: (
     <>
-      <rect x="14" y="25" width="10" height="9" rx="1.5" />
-      <rect x="23" y="14" width="13" height="13" rx="2.5" />
+      <rect
+        fill="currentColor"
+        height="10"
+        opacity="0.5"
+        rx="2"
+        stroke="none"
+        width="10"
+        x="13"
+        y="24"
+      />
+      <rect height="16" rx="3" width="16" x="20" y="14" />
     </>
   ),
   Briolette: (
     <>
-      <path d="M24 12 33 21 24 36 15 21Z" />
-      <path d="M15 21h18M19 21l5-9 5 9M24 21v15" />
+      <path d="M19 21l5-9 5 9z" fill="currentColor" opacity="0.18" stroke="none" />
+      <path d="M24 12 33 21 24 36 15 21ZM15 21h18M19 21l5-9 5 9M24 21v15" />
     </>
   ),
   Deck: (
     <>
-      <rect height="18" rx="2.5" width="15" x="15" y="16" />
+      <rect
+        fill="currentColor"
+        height="17"
+        opacity="0.22"
+        rx="2.5"
+        stroke="none"
+        width="15"
+        x="14"
+        y="17"
+      />
       <rect height="18" rx="2.5" width="15" x="19" y="15" />
     </>
   ),
   Halo: (
     <>
-      <circle cx="24" cy="20.5" r="8" />
-      <path d="M14.5 30.5a12 12 0 0 0 19 0" />
-      <circle cx="33.5" cy="30.5" fill="currentColor" r="1.6" stroke="none" />
+      <circle cx="24" cy="21" r="8" />
+      <circle cx="27" cy="18" fill="currentColor" r="2" stroke="none" />
+      <path d="M15 30a11 11 0 0 0 18 0" />
     </>
   ),
   Parquet: (
     <>
-      <rect height="24" rx="2.5" width="24" x="12" y="12" />
-      <path d="M23 12v24M23 24h13" />
+      <path
+        d="M15.5 13H23V27H13V15.5A2.5 2.5 0 0 1 15.5 13Z"
+        fill="currentColor"
+        opacity="0.55"
+        stroke="none"
+      />
+      <path
+        d="M23 24H35V32.5A2.5 2.5 0 0 1 32.5 35H23Z"
+        fill="currentColor"
+        opacity="0.28"
+        stroke="none"
+      />
+      <rect height="22" rx="2.5" width="22" x="13" y="13" />
+      <path d="M23 13v22M13 27h10M23 24h12" />
     </>
   ),
   ScrollFrame: (
     <>
+      <rect
+        fill="currentColor"
+        height="4.5"
+        opacity="0.16"
+        rx="2"
+        stroke="none"
+        width="20"
+        x="14"
+        y="14"
+      />
       <rect height="22" rx="3" width="22" x="13" y="13" />
-      <path d="M17 19.5h9M17 24h9M17 28.5h6M30.5 18v8" />
+      <path d="M17 21h9M17 25.5h9M17 30h6" />
+      <path d="M31 19v7" opacity="0.6" />
     </>
   ),
   Stacksheet: (
     <>
-      <path d="M19 14h10M16.5 18h15" />
-      <rect height="13" rx="2.5" width="22" x="13" y="22" />
+      <path d="M18 16h12" opacity="0.4" />
+      <rect height="15" rx="3" width="22" x="13" y="20" />
+      <rect fill="currentColor" height="1.6" rx="0.8" stroke="none" width="6" x="21" y="23.5" />
     </>
   ),
   Status: (
     <>
-      <path d="M24 15a9 9 0 1 1-8.5 6" />
-      <circle cx="24" cy="15" fill="currentColor" r="1.5" stroke="none" />
+      <path d="M24 24 24 18A6 6 0 1 1 18 24Z" fill="currentColor" stroke="none" />
+      <circle cx="24" cy="24" r="9" />
     </>
   ),
   Swatch: (
     <>
-      <circle cx="17" cy="24" r="4.2" />
-      <circle cx="24" cy="24" r="4.2" />
-      <circle cx="31" cy="24" r="4.2" />
+      <rect
+        fill="currentColor"
+        height="20"
+        opacity="0.35"
+        stroke="none"
+        width="6.5"
+        x="23"
+        y="14"
+      />
+      <rect height="20" rx="3" width="22" x="13" y="14" />
+      <path d="M23 14v20M29.5 14v20" />
     </>
   ),
   Tags: (
     <>
-      <path d="M16 16.5h8.5l9.5 7.5-9.5 7.5H16a1.5 1.5 0 0 1-1.5-1.5v-12a1.5 1.5 0 0 1 1.5-1.5z" />
-      <circle cx="19.5" cy="20.5" r="1.5" />
+      <rect
+        fill="currentColor"
+        height="10"
+        opacity="0.3"
+        rx="5"
+        stroke="none"
+        width="13"
+        x="13"
+        y="19"
+      />
+      <rect height="10" rx="5" width="9.5" x="27.5" y="19" />
     </>
   ),
 };
@@ -147,7 +207,7 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => (
     stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
-    strokeWidth={1.5}
+    strokeWidth={1.75}
     viewBox="0 0 48 48"
   >
     {CATALOG_ICONS[title] ?? <rect height="22" rx="3" width="22" x="13" y="13" />}
