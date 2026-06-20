@@ -72,129 +72,64 @@ const components: CatalogEntry[] = [
   },
 ];
 
-// One bespoke monochrome glyph per component on a shared 48×48 grid: each pairs
-// outline structure with a tonal fill and a small solid accent, true to what the
-// component actually renders. Tints use currentColor at reduced opacity.
+// One distilled, single-weight line glyph per component on a shared 48×48 grid,
+// true to what the component renders. Pure line, no fills — quiet and precise.
 const CATALOG_ICONS: Record<string, ReactNode> = {
   Aperto: (
     <>
-      <rect
-        fill="currentColor"
-        height="10"
-        opacity="0.5"
-        rx="2"
-        stroke="none"
-        width="10"
-        x="13"
-        y="24"
-      />
-      <rect height="16" rx="3" width="16" x="20" y="14" />
+      <rect height="9" rx="2" width="9" x="14" y="24" />
+      <rect height="12" rx="2.5" width="12" x="22" y="14" />
     </>
   ),
-  Briolette: (
-    <>
-      <path d="M19 21l5-9 5 9z" fill="currentColor" opacity="0.18" stroke="none" />
-      <path d="M24 12 33 21 24 36 15 21ZM15 21h18M19 21l5-9 5 9M24 21v15" />
-    </>
-  ),
+  Briolette: <path d="M24 12 33 22 24 36 15 22ZM15 22h18M19 22l5-10 5 10M24 22v14" />,
   Deck: (
     <>
-      <rect
-        fill="currentColor"
-        height="17"
-        opacity="0.22"
-        rx="2.5"
-        stroke="none"
-        width="15"
-        x="14"
-        y="17"
-      />
-      <rect height="18" rx="2.5" width="15" x="19" y="15" />
+      <rect height="17" rx="2.5" width="15" x="14" y="17" />
+      <rect height="17" rx="2.5" width="15" x="19" y="15" />
     </>
   ),
   Halo: (
     <>
-      <circle cx="24" cy="21" r="8" />
-      <circle cx="27" cy="18" fill="currentColor" r="2" stroke="none" />
-      <path d="M15 30a11 11 0 0 0 18 0" />
+      <circle cx="24" cy="22" r="9" />
+      <path d="M16 30.5a10 10 0 0 0 16 0" />
+      <circle cx="27.5" cy="18.5" fill="currentColor" r="1.3" stroke="none" />
     </>
   ),
   Parquet: (
     <>
-      <path
-        d="M15.5 13H23V27H13V15.5A2.5 2.5 0 0 1 15.5 13Z"
-        fill="currentColor"
-        opacity="0.55"
-        stroke="none"
-      />
-      <path
-        d="M23 24H35V32.5A2.5 2.5 0 0 1 32.5 35H23Z"
-        fill="currentColor"
-        opacity="0.28"
-        stroke="none"
-      />
-      <rect height="22" rx="2.5" width="22" x="13" y="13" />
-      <path d="M23 13v22M13 27h10M23 24h12" />
+      <rect height="20" rx="2.5" width="20" x="14" y="14" />
+      <path d="M24 14v20M24 24h10" />
     </>
   ),
   ScrollFrame: (
     <>
-      <rect
-        fill="currentColor"
-        height="4.5"
-        opacity="0.16"
-        rx="2"
-        stroke="none"
-        width="20"
-        x="14"
-        y="14"
-      />
-      <rect height="22" rx="3" width="22" x="13" y="13" />
-      <path d="M17 21h9M17 25.5h9M17 30h6" />
-      <path d="M31 19v7" opacity="0.6" />
+      <rect height="20" rx="3" width="20" x="14" y="14" />
+      <path d="M18 21h12M18 26h12M18 31h7" />
     </>
   ),
   Stacksheet: (
     <>
-      <path d="M18 16h12" opacity="0.4" />
-      <rect height="15" rx="3" width="22" x="13" y="20" />
-      <rect fill="currentColor" height="1.6" rx="0.8" stroke="none" width="6" x="21" y="23.5" />
+      <path d="M18 17h12" />
+      <rect height="15" rx="3" width="20" x="14" y="21" />
+      <path d="M21 25h6" />
     </>
   ),
   Status: (
     <>
-      <path d="M24 24 24 18A6 6 0 1 1 18 24Z" fill="currentColor" stroke="none" />
-      <circle cx="24" cy="24" r="9" />
+      <path d="M24 15a9 9 0 1 1-8 4.7" />
+      <circle cx="24" cy="15" fill="currentColor" r="1.2" stroke="none" />
     </>
   ),
   Swatch: (
     <>
-      <rect
-        fill="currentColor"
-        height="20"
-        opacity="0.35"
-        stroke="none"
-        width="6.5"
-        x="23"
-        y="14"
-      />
-      <rect height="20" rx="3" width="22" x="13" y="14" />
-      <path d="M23 14v20M29.5 14v20" />
+      <rect height="18" rx="3" width="20" x="14" y="15" />
+      <path d="M22 15v18M28 15v18" />
     </>
   ),
   Tags: (
     <>
-      <rect
-        fill="currentColor"
-        height="10"
-        opacity="0.3"
-        rx="5"
-        stroke="none"
-        width="13"
-        x="13"
-        y="19"
-      />
-      <rect height="10" rx="5" width="9.5" x="27.5" y="19" />
+      <rect height="7" rx="3.5" width="20" x="14" y="18" />
+      <rect height="7" rx="3.5" width="13" x="14" y="27" />
     </>
   ),
 };
@@ -207,10 +142,10 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => (
     stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
-    strokeWidth={1.75}
+    strokeWidth={1.1}
     viewBox="0 0 48 48"
   >
-    {CATALOG_ICONS[title] ?? <rect height="22" rx="3" width="22" x="13" y="13" />}
+    {CATALOG_ICONS[title] ?? <rect height="20" rx="3" width="20" x="14" y="14" />}
   </svg>
 );
 
@@ -236,7 +171,7 @@ const PlaceholderCard = () => (
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="1.2"
+        strokeWidth="1.1"
         viewBox="0 0 24 24"
         width="24"
       >
