@@ -701,14 +701,14 @@ button {
 }
 
 .preview-halo-arc {
-  stroke: var(--quiet);
+  stroke: var(--surface);
   stroke-linecap: round;
   stroke-width: 5.2;
 }
 
 .preview-halo-thumb {
   fill: var(--surface);
-  stroke: var(--quiet);
+  stroke: var(--border-soft);
   stroke-width: 1.5;
 }
 
