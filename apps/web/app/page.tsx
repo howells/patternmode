@@ -168,10 +168,10 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
       return (
         <div className="preview-parquet" aria-hidden="true">
           <svg viewBox="0 0 128 128">
-            <rect x="3" y="3" width="60" height="122" rx="2.5" fill="#e4e1db" />
-            <rect x="67" y="3" width="58" height="60" rx="2.5" fill="#f4f2ed" />
-            <rect x="67" y="67" width="28" height="58" rx="2.5" fill="#d4d0c8" />
-            <rect x="99" y="67" width="26" height="58" rx="2.5" fill="#ece9e3" />
+            <rect x="3" y="3" width="60" height="122" rx="2.5" fill="#ffffff" />
+            <rect x="67" y="3" width="58" height="60" rx="2.5" fill="#f3f0ea" />
+            <rect x="67" y="67" width="28" height="58" rx="2.5" fill="#e9e5df" />
+            <rect x="99" y="67" width="26" height="58" rx="2.5" fill="#faf8f4" />
           </svg>
         </div>
       );

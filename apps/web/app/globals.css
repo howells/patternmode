@@ -693,10 +693,8 @@ button {
 }
 
 .preview-halo-pad {
-  background:
-    linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent),
-    #aaa69e;
-  border: 1px solid rgb(17 24 39 / 12%);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
   border-radius: 999px;
   box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
   display: block;
@@ -735,7 +733,7 @@ button {
 }
 
 .preview-briolette polygon {
-  fill: var(--surface-soft);
+  fill: var(--surface);
   stroke: var(--border);
   stroke-linejoin: round;
   stroke-width: 1.5;
@@ -754,21 +752,19 @@ button {
 
 .preview-status-set span {
   aspect-ratio: 1;
-  border: 2px solid var(--quiet);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
   border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(29, 29, 27, 0.08);
   display: block;
   position: relative;
   width: 28px;
 }
 
-.preview-status-set span:nth-child(1) {
-  border-color: color-mix(in srgb, var(--ink) 18%, transparent);
-}
-
 .preview-status-set span:nth-child(2)::after,
 .preview-status-set span:nth-child(3)::after,
 .preview-status-set span:nth-child(4)::after {
-  background: var(--ink);
+  background: var(--muted);
   border-radius: 999px;
   content: "";
   inset: 5px;
@@ -1626,6 +1622,11 @@ button {
 /* Parquet preview — proportional color mosaic */
 .preview-parquet svg {
   @apply block h-24 w-24 drop-shadow-[0_4px_16px_rgba(29,29,27,0.08)];
+}
+
+.preview-parquet rect {
+  stroke: var(--border-soft);
+  stroke-width: 1.2;
 }
 
 /* Parquet art showcase — painting + extracted palette */
