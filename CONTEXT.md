@@ -653,6 +653,14 @@ _Avoid_: Cell or Box as the canonical term
 The shared `{ color, value, label? }` input describing one weighted color, used by both **Parquet** **Tiles** and Swatch **Distribution Segments**.
 _Avoid_: Defining a separate per-component color-weight shape that drifts from the distribution vocabulary
 
+**Distribution Normalization**:
+The shared derivation that turns raw **Distribution Values** into sanitized weights, their total, and **Derived Distribution Percentages**, owning one invariant: non-finite or negative values become 0. Whether a zero weight is dropped, and any equal-weight fallback when there is no signal, stay with each consumer.
+_Avoid_: Re-deriving sanitization, totals, or percentages independently per component, or letting the shared derivation decide whether a zero weight is dropped
+
+**Light Color**:
+A color whose perceptual (OKLab) lightness sits above a single shared threshold, so contrast treatment is decided the same way wherever a **Weighted Color Segment** is rendered.
+_Avoid_: Re-implementing the lightness threshold per component, or deciding contrast from sRGB brightness
+
 **Squarified Packing**:
 The layout strategy that arranges **Tiles** to keep each one as close to square as possible for the available space.
 _Avoid_: Treating tile order or aspect as arbitrary, or as a regular grid
@@ -866,6 +874,9 @@ _Avoid_: Rendering labels as permanent chrome rather than an on-demand affordanc
 - A **Parquet** is a read-only, two-dimensional rendering of a **Weighted Visual Distribution**; **Distribution Bar** is its one-dimensional, editable counterpart.
 - A **Parquet** and a **Distribution Bar** can be driven by the same data because both accept the shared **Weighted Color Segment** shape.
 - The **Weighted Color Segment** type lives in `@patternmode/system`; both `@patternmode/swatch` and `@patternmode/parquet` import it, and Swatch's **Distribution Segment** extends it by adding a required `id`.
+- **Distribution Normalization** lives in `@patternmode/system` alongside the **Weighted Color Segment** type; both **Parquet** and Swatch's **Distribution Bar** derive their total and **Derived Distribution Percentages** through it instead of re-deriving them.
+- **Distribution Normalization** treats non-finite or negative **Distribution Values** as 0 but never drops a zero: **Parquet** filters zero-weight **Tiles**, while a **Distribution Bar** keeps an identity-bearing **Distribution Segment** at zero width.
+- The **Light Color** decision is shared by **Parquet** **Tiles** and **Swatch** so the same color earns the same contrast treatment in both.
 - A **Parquet** is **controlled**: it renders one distribution and plays a **Distribution Morph** whenever its segments change. Rotation, in-view gating, and surrounding stats belong to the consumer.
 - **Tiles** are assigned to **Tile Slots** by descending area, so the largest weight always animates from the first slot to the first slot across a **Distribution Morph**.
 - **Squarified Packing** is computed in an abstract coordinate space and rendered as percentages, so a **Parquet** is responsive within a consumer-supplied aspect ratio.

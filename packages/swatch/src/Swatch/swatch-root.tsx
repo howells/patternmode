@@ -1,9 +1,9 @@
-import { getObjectSizingStyle, joinClassNames } from "@patternmode/system";
+import { getObjectSizingStyle, isLightColor, joinClassNames } from "@patternmode/system";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from "react";
 
 import { getSwatchAtmosphereBackground } from "./swatch-atmosphere";
-import { getSwatchColorsBackground, isLightColor } from "./swatch-colors";
+import { getSwatchColorsBackground } from "./swatch-colors";
 import { getSwatchSizeVariableStyle } from "./swatch-types";
 import type { SwatchProps } from "./swatch-types";
 

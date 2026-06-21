@@ -1,28 +1,16 @@
-import { hexLightness } from "@instruments/colorscope/math";
+import { sanitizeWeight } from "@patternmode/system";
 
 import type { SwatchColorStop } from "./swatch-types";
-
-/** Perceptual (OKLab) lightness above which a swatch reads as "light". */
-const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
 
 const toColorStop = (stop: SwatchColorStop): { color: string; ratio?: number } =>
   typeof stop === "string" ? { color: stop } : stop;
 
-const getRatioWeight = (ratio: number | undefined): number => {
-  if (ratio === undefined) {
-    return 1;
-  }
-
-  return Number.isFinite(ratio) ? Math.max(0, ratio) : 0;
-};
+/** Missing ratios default to equal weight; finite/negative handling is shared. */
+const getRatioWeight = (ratio: number | undefined): number =>
+  ratio === undefined ? 1 : sanitizeWeight(ratio);
 
 const formatPercent = (value: number): string =>
   `${Number.isInteger(value) ? value : Number(value.toFixed(2))}%`;
-
-export const isLightColor = (color: string): boolean => {
-  const lightness = hexLightness(color);
-  return Number.isFinite(lightness) && lightness > LIGHT_LIGHTNESS_THRESHOLD;
-};
 
 export const getSwatchColorsBackground = (
   colors: SwatchColorStop[] | undefined,

@@ -2,7 +2,7 @@
   "name": "@patternmode/system",
   "version": "0.3.0",
   "private": false,
-  "description": "Shared Patternmode sizing, responsive, object sizing, and composition utilities.",
+  "description": "Shared Patternmode sizing, object sizing, composition, and weighted-distribution utilities.",
   "keywords": [
     "design-system",
     "object-fit",
@@ -46,6 +46,9 @@
     "prepack": "pnpm build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@instruments/colorscope": "^3.5.0"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",

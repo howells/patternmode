@@ -1,3 +1,4 @@
+import { sanitizeWeight } from "@patternmode/system";
 import type { WeightedColorSegment } from "@patternmode/system";
 
 /**
@@ -13,8 +14,6 @@ export type DistributionBarSegmentUpdate = Partial<Omit<DistributionBarSegment, 
   value?: never;
 };
 
-const sanitizeValue = (value: number): number => (Number.isFinite(value) ? Math.max(0, value) : 0);
-
 const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
@@ -22,7 +21,7 @@ const roundValue = (value: number): number => Number(value.toFixed(1));
 
 /** Sums sanitized segment weights, treating invalid or negative values as 0. */
 export const getDistributionTotal = (segments: DistributionBarSegment[]): number =>
-  segments.reduce((sum, segment) => sum + sanitizeValue(segment.value), 0);
+  segments.reduce((sum, segment) => sum + sanitizeWeight(segment.value), 0);
 
 /** Returns the percentage position of the boundary after `boundaryIndex`. */
 export const getDistributionBoundaryPercent = (
@@ -36,7 +35,7 @@ export const getDistributionBoundaryPercent = (
 
   const boundaryValue = segments
     .slice(0, boundaryIndex + 1)
-    .reduce((sum, segment) => sum + sanitizeValue(segment.value), 0);
+    .reduce((sum, segment) => sum + sanitizeWeight(segment.value), 0);
   return roundValue((boundaryValue / total) * 100);
 };
 
@@ -59,10 +58,10 @@ export const moveDistributionBoundary = (
     return segments;
   }
 
-  const pairTotal = sanitizeValue(left.value) + sanitizeValue(right.value);
+  const pairTotal = sanitizeWeight(left.value) + sanitizeWeight(right.value);
   const clampedMin = Math.max(0, Math.min(minValue, pairTotal / 2));
   const nextLeft = clamp(
-    sanitizeValue(left.value) + deltaValue,
+    sanitizeWeight(left.value) + deltaValue,
     clampedMin,
     pairTotal - clampedMin,
   );
@@ -94,7 +93,7 @@ export const removeDistributionSegment = (
   }
 
   const remaining = segments.filter((segment) => segment.id !== segmentId);
-  const removedValue = sanitizeValue(removed.value);
+  const removedValue = sanitizeWeight(removed.value);
   const remainingTotal = getDistributionTotal(remaining);
   if (remainingTotal <= 0) {
     const equalValue = removedValue / remaining.length;
@@ -112,7 +111,8 @@ export const removeDistributionSegment = (
     }
 
     const nextValue = roundValue(
-      sanitizeValue(segment.value) + (removedValue * sanitizeValue(segment.value)) / remainingTotal,
+      sanitizeWeight(segment.value) +
+        (removedValue * sanitizeWeight(segment.value)) / remainingTotal,
     );
     assignedValue += nextValue;
     return { ...segment, value: nextValue };

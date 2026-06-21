@@ -1,3 +1,10 @@
+export {
+  type DerivedDistribution,
+  deriveDistribution,
+  isLightColor,
+  sanitizeWeight,
+} from "./weighted-distribution";
+
 export const PATTERNMODE_SIZES = ["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"] as const;
 
 /** Shared size token names used by Patternmode primitives. */

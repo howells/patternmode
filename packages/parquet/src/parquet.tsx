@@ -1,7 +1,6 @@
 "use client";
 
-import { hexLightness } from "@instruments/colorscope/math";
-import { joinClassNames } from "@patternmode/system";
+import { deriveDistribution, isLightColor, joinClassNames } from "@patternmode/system";
 import { useMemo } from "react";
 
 import { packSquarified } from "./parquet-packing";
@@ -11,8 +10,6 @@ import type { ParquetProps, ParquetTile, ParquetTileMeta } from "./parquet-types
 const LAYOUT_WIDTH = 1000;
 const DEFAULT_ASPECT = 4 / 3;
 const DEFAULT_GAP = 10;
-/** Perceptual (OKLab) lightness above which a tile reads as "light". */
-const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
 
 interface Slot {
   area: number;
@@ -26,8 +23,6 @@ interface Slot {
   top: number;
   width: number;
 }
-
-const sanitizeWeight = (value: number): number => (Number.isFinite(value) && value > 0 ? value : 0);
 
 /**
  * A proportional color mosaic. Each tile's area encodes its weight; the largest
@@ -49,11 +44,9 @@ export const Parquet = ({
 }: ParquetProps) => {
   const slots = useMemo<Slot[]>(() => {
     const layoutHeight = LAYOUT_WIDTH / aspectRatio;
-    const rects = packSquarified(
-      colors.map((tile) => tile.value),
-      { gap, height: layoutHeight, width: LAYOUT_WIDTH },
-    );
-    const total = colors.reduce((sum, tile) => sum + sanitizeWeight(tile.value), 0);
+    const values = colors.map((tile) => tile.value);
+    const rects = packSquarified(values, { gap, height: layoutHeight, width: LAYOUT_WIDTH });
+    const { percentages } = deriveDistribution(values);
 
     return rects
       .map((rect): Slot | null => {
@@ -61,15 +54,14 @@ export const Parquet = ({
         if (tile === undefined) {
           return null;
         }
-        const lightness = hexLightness(tile.color);
         return {
           area: rect.w * rect.h,
           color: tile.color,
           height: (rect.h / layoutHeight) * 100,
           id: tile.id ?? `index-${rect.index}`,
-          isLight: Number.isFinite(lightness) && lightness > LIGHT_LIGHTNESS_THRESHOLD,
+          isLight: isLightColor(tile.color),
           left: (rect.x / LAYOUT_WIDTH) * 100,
-          percent: total > 0 ? (sanitizeWeight(tile.value) / total) * 100 : 0,
+          percent: percentages[rect.index] ?? 0,
           tile,
           top: (rect.y / layoutHeight) * 100,
           width: (rect.w / LAYOUT_WIDTH) * 100,

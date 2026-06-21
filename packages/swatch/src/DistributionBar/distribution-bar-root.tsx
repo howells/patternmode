@@ -1,4 +1,4 @@
-import { joinClassNames } from "@patternmode/system";
+import { joinClassNames, sanitizeWeight } from "@patternmode/system";
 import { domMax, LazyMotion, m } from "motion/react";
 import type { PanInfo } from "motion/react";
 import type { CSSProperties, HTMLAttributes, KeyboardEvent } from "react";
@@ -103,21 +103,13 @@ interface DistributionBarHandleProps {
 type DistributionSegmentStyle = CSSProperties &
   Partial<Record<`--${string}`, number | string | undefined>>;
 
-const getRenderableDistributionValue = (value: number): number =>
-  Number.isFinite(value) ? Math.max(0, value) : 0;
-
-const getDerivedDistributionPercentage = (value: number, total: number): number => {
-  if (!(total > 0 && Number.isFinite(value))) {
-    return 0;
-  }
-
-  return Math.round((Math.max(0, value) / total) * 100);
-};
+const getDerivedDistributionPercentage = (value: number, total: number): number =>
+  total > 0 ? Math.round((sanitizeWeight(value) / total) * 100) : 0;
 
 const getDistributionDisplayTotal = (
   segments: DistributionBarSegment[],
   emptyValue: number,
-): number => getDistributionTotal(segments) + getRenderableDistributionValue(emptyValue);
+): number => getDistributionTotal(segments) + sanitizeWeight(emptyValue);
 
 const getDistributionDisplayAccessibleLabel = (
   segments: DistributionBarSegment[],
@@ -147,8 +139,7 @@ const DistributionSegments = ({
     {segments.map((segment) => {
       const segmentStyle = {
         "--patternmode-distribution-segment-color": segment.color,
-        width:
-          total > 0 ? `${(getRenderableDistributionValue(segment.value) / total) * 100}%` : "0%",
+        width: total > 0 ? `${(sanitizeWeight(segment.value) / total) * 100}%` : "0%",
       } satisfies DistributionSegmentStyle;
       const isSelected = selectedSegmentId === segment.id;
 
@@ -184,8 +175,7 @@ const DistributionSegments = ({
         aria-hidden="true"
         className="patternmode-distribution-bar__segment patternmode-distribution-bar__segment--empty"
         style={{
-          width:
-            total > 0 ? `${(getRenderableDistributionValue(emptyValue) / total) * 100}%` : "0%",
+          width: total > 0 ? `${(sanitizeWeight(emptyValue) / total) * 100}%` : "0%",
         }}
       />
     ) : null}

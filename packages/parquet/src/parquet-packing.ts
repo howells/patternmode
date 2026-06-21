@@ -7,6 +7,8 @@
  * to percentages so a Parquet stays responsive within any aspect ratio.
  */
 
+import { sanitizeWeight } from "@patternmode/system";
+
 /** A packed rectangle for one input weight, in abstract coordinate space. */
 export interface PackedRect {
   /** Index into the original weights array. */
@@ -128,10 +130,6 @@ const layoutStrip = (entries: Entry[], rect: Rect, gap: number, out: PackedRect[
 
   layoutStrip(entries.slice(row.length), remaining, gap, out);
 };
-
-/** Treats non-finite or negative weights as 0. */
-const sanitizeWeight = (weight: number): number =>
-  Number.isFinite(weight) && weight > 0 ? weight : 0;
 
 /**
  * Packs `weights` into a `width` × `height` rectangle, insetting each tile by
