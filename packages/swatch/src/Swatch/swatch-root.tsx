@@ -191,7 +191,6 @@ export const Swatch = ({
   onRemove,
   raised = false,
   removeLabel,
-  role: _role,
   selected = false,
   shape = "circle",
   showRing = true,

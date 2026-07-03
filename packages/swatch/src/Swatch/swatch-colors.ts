@@ -28,10 +28,24 @@ export const getSwatchColorsBackground = (
   const stops = colors.map(toColorStop);
 
   /* Smooth blend: one position per stop, interpolated in OKLab so ramps
-     read as a continuous region of color rather than discrete bands. */
+     read as a continuous region of color rather than discrete bands. Each
+     stop sits at the cumulative midpoint of its ratio share (a 90/10 palette
+     centers at 45% and 95%), so weighted palettes still read proportionally.
+     Equal, missing, or all-zero ratios fall back to even spacing. */
   if (blend === "smooth") {
+    const weights = stops.map((stop) => getRatioWeight(stop.ratio));
+    const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
+    const useEvenSpacing = weightTotal <= 0 || weights.every((weight) => weight === weights[0]);
+    let cursor = 0;
     const parts = stops.map((stop, index) => {
-      const position = stops.length === 1 ? 0 : (index / (stops.length - 1)) * 100;
+      let position: number;
+      if (useEvenSpacing) {
+        position = stops.length === 1 ? 0 : (index / (stops.length - 1)) * 100;
+      } else {
+        const share = ((weights[index] ?? 0) / weightTotal) * 100;
+        position = cursor + share / 2;
+        cursor += share;
+      }
       return `${stop.color} ${formatPercent(position)}`;
     });
     return `linear-gradient(in oklab 90deg, ${parts.join(", ")})`;

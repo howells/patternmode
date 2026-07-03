@@ -9,6 +9,7 @@ import type {
   PointerEvent as ReactPointerEvent,
   SVGProps,
 } from "react";
+import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -104,6 +105,16 @@ vi.mock("motion/react", () => {
 });
 
 const CheckIcon = (props: SVGProps<SVGSVGElement>) => <svg data-testid="check-icon" {...props} />;
+
+const ControlledDistributionBar = () => {
+  const [segments, setSegments] = useState<DistributionBarSegment[]>([
+    { color: "#315c4b", id: "woody", label: "Woody", value: 60 },
+    { color: "#d9a441", id: "citrus", label: "Citrus", value: 40 },
+  ]);
+  return (
+    <DistributionBar aria-label="Scent distribution" onChange={setSegments} segments={segments} />
+  );
+};
 
 afterEach(() => {
   cleanup();
@@ -331,6 +342,26 @@ describe("Swatch", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it("applies light tone metadata for non-hex color formats", () => {
+    render(<Swatch aria-label="Paper" color="white" />);
+    expect(screen.getByLabelText("Paper")).toHaveAttribute("data-tone", "light");
+  });
+
+  it("applies a consumer-provided role to the rendered wrapper", () => {
+    render(<Swatch aria-label="Preview" color="#315c4b" role="img" />);
+    expect(screen.getByRole("img", { name: "Preview" })).toHaveClass("patternmode-swatch");
+
+    render(
+      <Swatch
+        aria-label="Removable"
+        color="#315c4b"
+        onRemove={vi.fn<() => void>()}
+        role="listitem"
+      />,
+    );
+    expect(screen.getByRole("listitem", { name: "Removable" })).toHaveClass("patternmode-swatch");
+  });
+
   it("keeps the child's own content alongside the swatch fill layers", () => {
     render(
       <Swatch asChild color="#315c4b">
@@ -522,7 +553,7 @@ describe("DistributionBar", () => {
 
     const group = screen.getByRole("group", { name: "Finish distribution" });
     const track = group.querySelector(".patternmode-distribution-bar__track");
-    const handle = screen.getByRole("button", {
+    const handle = screen.getByRole("slider", {
       name: "Adjust Evergreen and Saffron distribution",
     });
     if (!track) {
@@ -539,6 +570,73 @@ describe("DistributionBar", () => {
       { color: "#d9a441", id: "saffron", label: "Saffron", value: 20 },
       { color: "#9b3d32", id: "oxblood", label: "Oxblood", value: 22 },
     ]);
+  });
+
+  it("exposes slider semantics on boundary handles", () => {
+    render(
+      <DistributionBar
+        aria-label="Scent distribution"
+        onChange={vi.fn<(segments: DistributionBarSegment[]) => void>()}
+        segments={[
+          { color: "#315c4b", id: "woody", label: "Woody", value: 60 },
+          { color: "#d9a441", id: "citrus", label: "Citrus", value: 40 },
+        ]}
+      />,
+    );
+
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Woody and Citrus distribution",
+    });
+    expect(handle).toHaveAttribute("aria-valuemin", "0");
+    expect(handle).toHaveAttribute("aria-valuemax", "100");
+    expect(handle).toHaveAttribute("aria-valuenow", "60");
+    expect(handle).toHaveAttribute("aria-valuetext", "Woody 60%, Citrus 40%");
+    expect(handle).toHaveAttribute("aria-orientation", "horizontal");
+  });
+
+  it("updates aria-valuenow when arrow keys move the boundary", async () => {
+    const user = userEvent.setup();
+    render(<ControlledDistributionBar />);
+
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Woody and Citrus distribution",
+    });
+
+    await user.keyboard("{Tab}");
+    expect(handle).toHaveFocus();
+
+    await user.keyboard("{ArrowRight}");
+    expect(handle).toHaveAttribute("aria-valuenow", "61");
+    expect(handle).toHaveAttribute("aria-valuetext", "Woody 61%, Citrus 39%");
+
+    await user.keyboard("{ArrowLeft}{ArrowLeft}");
+    expect(handle).toHaveAttribute("aria-valuenow", "59");
+    expect(handle).toHaveAttribute("aria-valuetext", "Woody 59%, Citrus 41%");
+  });
+
+  it("marks the bar with data-dragging while a handle drag is active", () => {
+    render(
+      <DistributionBar
+        aria-label="Finish distribution"
+        onChange={vi.fn<(segments: DistributionBarSegment[]) => void>()}
+        segments={[
+          { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 60 },
+          { color: "#d9a441", id: "saffron", label: "Saffron", value: 40 },
+        ]}
+      />,
+    );
+
+    const group = screen.getByRole("group", { name: "Finish distribution" });
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Evergreen and Saffron distribution",
+    });
+    expect(group).not.toHaveAttribute("data-dragging");
+
+    fireEvent.pointerDown(handle);
+    expect(group).toHaveAttribute("data-dragging", "true");
+
+    fireEvent.pointerUp(handle);
+    expect(group).not.toHaveAttribute("data-dragging");
   });
 
   it("renders derived percentages in the legend for weighted values", () => {

@@ -169,6 +169,14 @@
     }
   }
 
+  /* Touch surfaces have no hover to reveal the remove affordance — keep it
+     visible so removal stays discoverable. */
+  @media (hover: none) {
+    .patternmode-swatch__remove {
+      opacity: 1;
+    }
+  }
+
   .patternmode-swatch__remove:focus-visible {
     outline: 2px solid var(--accent, #315c4b);
     outline-offset: 2px;
@@ -229,6 +237,12 @@
     min-width: 0;
     padding: 0;
     transition: width 480ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* Live Distribution Adjustment: while a handle drag is active the segments
+     must track the pointer directly — the settle transition would lag it. */
+  .patternmode-distribution-bar[data-dragging="true"] .patternmode-distribution-bar__segment {
+    transition: none;
   }
 
   /* Selectable segments (DistributionDisplay with onSegmentSelect) */

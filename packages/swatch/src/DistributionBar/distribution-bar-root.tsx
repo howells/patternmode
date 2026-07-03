@@ -2,7 +2,7 @@ import { joinClassNames, sanitizeWeight } from "@patternmode/system";
 import { domMax, LazyMotion, m } from "motion/react";
 import type { PanInfo } from "motion/react";
 import type { CSSProperties, HTMLAttributes, KeyboardEvent } from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   getDistributionBoundaryPercent,
   getDistributionTotal,
@@ -93,6 +93,8 @@ interface DistributionSummaryLegendProps {
 
 interface DistributionBarHandleProps {
   "aria-label": string;
+  "aria-valuenow": number;
+  "aria-valuetext": string;
   boundaryPercent: number;
   onDrag: (info: PanInfo) => void;
   onDragEnd: (info: PanInfo) => void;
@@ -242,6 +244,8 @@ const DistributionSummaryLegend = ({
 
 const DistributionBarHandle = ({
   "aria-label": ariaLabel,
+  "aria-valuenow": ariaValueNow,
+  "aria-valuetext": ariaValueText,
   boundaryPercent,
   onDrag,
   onDragEnd,
@@ -251,6 +255,11 @@ const DistributionBarHandle = ({
   <LazyMotion features={domMax}>
     <m.button
       aria-label={ariaLabel}
+      aria-orientation="horizontal"
+      aria-valuemax={100}
+      aria-valuemin={0}
+      aria-valuenow={ariaValueNow}
+      aria-valuetext={ariaValueText}
       className="patternmode-distribution-bar__handle"
       drag="x"
       dragElastic={0}
@@ -264,7 +273,9 @@ const DistributionBarHandle = ({
       }}
       onDragStart={onDragStart}
       onKeyDown={onKeyDown}
+      role="slider"
       style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
+      tabIndex={0}
       transformTemplate={() => "none"}
       type="button"
     />
@@ -352,6 +363,7 @@ export const DistributionBar = ({
 }: DistributionBarProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const dragStartSegmentsRef = useRef<DistributionBarSegment[] | null>(null);
+  const [dragging, setDragging] = useState(false);
   const total = getDistributionTotal(segments);
 
   const moveBoundary = (boundaryIndex: number, deltaValue: number, sourceSegments = segments) => {
@@ -360,6 +372,7 @@ export const DistributionBar = ({
 
   const handleDragStart = () => {
     dragStartSegmentsRef.current = segments;
+    setDragging(true);
   };
 
   const handleDrag = (boundaryIndex: number, info: PanInfo) => {
@@ -376,6 +389,7 @@ export const DistributionBar = ({
   const handleDragEnd = (boundaryIndex: number, info: PanInfo) => {
     handleDrag(boundaryIndex, info);
     dragStartSegmentsRef.current = null;
+    setDragging(false);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, boundaryIndex: number) => {
@@ -394,6 +408,7 @@ export const DistributionBar = ({
       {...props}
       aria-label={ariaLabel}
       className={joinClassNames("patternmode-distribution-bar", className)}
+      data-dragging={dragging ? "true" : undefined}
       data-slot="distribution-bar"
     >
       <div className="patternmode-distribution-bar__track" ref={trackRef}>
@@ -404,9 +419,20 @@ export const DistributionBar = ({
           const label = `Adjust ${segment.label ?? segment.id} and ${
             nextSegment?.label ?? nextSegment?.id
           } distribution`;
+          const leftValue = sanitizeWeight(segment.value);
+          const rightValue = sanitizeWeight(nextSegment?.value ?? 0);
+          const pairTotal = leftValue + rightValue;
+          /* Slider value: the left segment's share of the adjacent pair, so
+             arrow keys and drags read as moving weight between neighbours. */
+          const leftShare = pairTotal > 0 ? Math.round((leftValue / pairTotal) * 100) : 0;
+          const valueText = `${segment.label ?? segment.id} ${leftShare}%, ${
+            nextSegment?.label ?? nextSegment?.id
+          } ${100 - leftShare}%`;
           return (
             <DistributionBarHandle
               aria-label={label}
+              aria-valuenow={leftShare}
+              aria-valuetext={valueText}
               boundaryPercent={boundaryPercent}
               key={`${segment.id}-${nextSegment?.id ?? "end"}`}
               onDrag={(info) => {
