@@ -1,9 +1,17 @@
 "use client";
 
-import type { ComponentPropsWithoutRef, CSSProperties, PointerEvent, RefObject } from "react";
+import type {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  CSSProperties,
+  KeyboardEvent,
+  PointerEvent,
+  RefObject,
+} from "react";
 import { useId, useRef } from "react";
 
 import {
+  clampValue,
   getHaloGeometry,
   getHaloHueHandlePosition,
   getHaloPadHandlePosition,
@@ -11,6 +19,7 @@ import {
   HALO_PAD_RADIUS,
   HALO_PAD_SIZE,
   hslToHex,
+  normalizeHue,
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./halo-utils";
@@ -19,6 +28,13 @@ import type { HaloColor, HaloGeometry, HaloPlacement } from "./halo-utils";
 type HaloPickerRootProps = Omit<ComponentPropsWithoutRef<"fieldset">, "onChange" | "value">;
 type HaloPadPointerEvent = PointerEvent<HTMLDivElement>;
 type HaloHuePointerEvent = PointerEvent<SVGSVGElement>;
+
+const PAD_KEY_STEP = 1;
+const PAD_KEY_STEP_LARGE = 10;
+/* The pad's pointer range: saturation spans fully, lightness keeps the
+   3..97 clamp of `pointerToHaloPad` so keyboard and pointer agree. */
+const PAD_LIGHTNESS_MIN = 3;
+const PAD_LIGHTNESS_MAX = 97;
 
 export interface HaloPickerProps extends HaloPickerRootProps {
   /**
@@ -61,6 +77,41 @@ const releasePointerCapture = (event: PointerEvent<HTMLElement | SVGSVGElement>)
   }
 };
 
+/** Arrow-key adjustment for the pad: S left/right, L up/down, Shift for 10×. */
+const padColorForKey = (
+  event: KeyboardEvent<HTMLDivElement>,
+  value: HaloColor,
+): HaloColor | null => {
+  const step = event.shiftKey ? PAD_KEY_STEP_LARGE : PAD_KEY_STEP;
+  let { l, s } = value;
+  switch (event.key) {
+    case "ArrowLeft": {
+      s -= step;
+      break;
+    }
+    case "ArrowRight": {
+      s += step;
+      break;
+    }
+    case "ArrowUp": {
+      l += step;
+      break;
+    }
+    case "ArrowDown": {
+      l -= step;
+      break;
+    }
+    default: {
+      return null;
+    }
+  }
+  return {
+    ...value,
+    l: clampValue(l, PAD_LIGHTNESS_MIN, PAD_LIGHTNESS_MAX),
+    s: clampValue(s, 0, 100),
+  };
+};
+
 const getRootStyle = (hue: number, hex: string, style: CSSProperties | undefined): CSSProperties =>
   ({
     "--patternmode-halo-color": hex,
@@ -68,8 +119,11 @@ const getRootStyle = (hue: number, hex: string, style: CSSProperties | undefined
     ...style,
   }) as CSSProperties;
 
+/* oxlint-disable jsx-a11y/prefer-tag-over-role, react-doctor/prefer-tag-over-role -- the pad is a two-axis control; no native input covers saturation and lightness at once. */
 const HaloPad = ({
   hex,
+  lightness,
+  onKeyDown,
   onPointerCancel,
   onPointerDown,
   onPointerMove,
@@ -78,8 +132,11 @@ const HaloPad = ({
   padLeft,
   padRef,
   padTop,
+  saturation,
 }: {
   hex: string;
+  lightness: number;
+  onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
   onPointerCancel: () => void;
   onPointerDown: (event: HaloPadPointerEvent) => void;
   onPointerMove: (event: HaloPadPointerEvent) => void;
@@ -88,22 +145,31 @@ const HaloPad = ({
   padLeft: number;
   padRef: RefObject<HTMLDivElement | null>;
   padTop: number;
+  saturation: number;
 }) => (
   <div
+    aria-label="Saturation and lightness"
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={Math.round(saturation)}
+    aria-valuetext={`Saturation ${Math.round(saturation)}%, Lightness ${Math.round(lightness)}%`}
     className="patternmode-halo-picker__pad"
     data-slot="halo-picker-pad"
     data-testid="halo-picker-pad"
+    onKeyDown={onKeyDown}
     onPointerCancel={onPointerCancel}
     onPointerDown={onPointerDown}
     onPointerMove={onPointerMove}
     onPointerUp={onPointerUp}
     ref={padRef}
+    role="slider"
     style={{
       height: HALO_PAD_SIZE,
       left: padLeft,
       top: padTop,
       width: HALO_PAD_SIZE,
     }}
+    tabIndex={0}
   >
     <span className="patternmode-halo-picker__pad-hue" />
     <span className="patternmode-halo-picker__pad-white" />
@@ -118,6 +184,7 @@ const HaloPad = ({
     />
   </div>
 );
+/* oxlint-enable jsx-a11y/prefer-tag-over-role, react-doctor/prefer-tag-over-role */
 
 const HaloHueArc = ({
   geometry,
@@ -125,6 +192,7 @@ const HaloHueArc = ({
   hue,
   hueGradientId,
   hueHandle,
+  onHueChange,
   onPointerCancel,
   onPointerDown,
   onPointerMove,
@@ -136,6 +204,7 @@ const HaloHueArc = ({
   hue: number;
   hueGradientId: string;
   hueHandle: { x: number; y: number };
+  onHueChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onPointerCancel: () => void;
   onPointerDown: (event: HaloHuePointerEvent) => void;
   onPointerMove: (event: HaloHuePointerEvent) => void;
@@ -149,7 +218,7 @@ const HaloHueArc = ({
       className="patternmode-halo-picker__arc-input"
       max={360}
       min={0}
-      readOnly
+      onChange={onHueChange}
       type="range"
       value={Math.round(hue)}
     />
@@ -243,6 +312,10 @@ export const HaloPicker = ({
   };
 
   const onPadPointerDown = (event: HaloPadPointerEvent) => {
+    // Only the primary button commits a color — not a right-click.
+    if (event.button !== 0) {
+      return;
+    }
     event.preventDefault();
     setPointerCapture(event);
     isPadDraggingRef.current = true;
@@ -250,7 +323,9 @@ export const HaloPicker = ({
   };
 
   const onPadPointerMove = (event: HaloPadPointerEvent) => {
-    if (!(isPadDraggingRef.current || event.buttons === 1)) {
+    /* Pointer capture already delivers every move of a legitimate drag here,
+       so drags that started elsewhere are ignored. */
+    if (!isPadDraggingRef.current) {
       return;
     }
     updatePad(event.clientX, event.clientY);
@@ -261,7 +336,19 @@ export const HaloPicker = ({
     isPadDraggingRef.current = false;
   };
 
+  const onPadKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const next = padColorForKey(event, value);
+    if (next) {
+      event.preventDefault();
+      onChange(next);
+    }
+  };
+
   const onHuePointerDown = (event: HaloHuePointerEvent) => {
+    // Only the primary button commits a color — not a right-click.
+    if (event.button !== 0) {
+      return;
+    }
     event.preventDefault();
     setPointerCapture(event);
     isHueDraggingRef.current = true;
@@ -269,10 +356,16 @@ export const HaloPicker = ({
   };
 
   const onHuePointerMove = (event: HaloHuePointerEvent) => {
-    if (!(isHueDraggingRef.current || event.buttons === 1)) {
+    /* Pointer capture already delivers every move of a legitimate drag here,
+       so drags that started elsewhere are ignored. */
+    if (!isHueDraggingRef.current) {
       return;
     }
     updateHue(event.clientX, event.clientY);
+  };
+
+  const onHueInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange({ ...value, h: normalizeHue(Number(event.currentTarget.value)) });
   };
 
   const onHuePointerUp = (event: HaloHuePointerEvent) => {
@@ -300,6 +393,8 @@ export const HaloPicker = ({
       >
         <HaloPad
           hex={hex}
+          lightness={value.l}
+          onKeyDown={onPadKeyDown}
           onPointerCancel={() => {
             isPadDraggingRef.current = false;
           }}
@@ -310,6 +405,7 @@ export const HaloPicker = ({
           padLeft={padLeft}
           padRef={padRef}
           padTop={padTop}
+          saturation={value.s}
         />
 
         <HaloHueArc
@@ -318,6 +414,7 @@ export const HaloPicker = ({
           hue={value.h}
           hueGradientId={hueGradientId}
           hueHandle={hueHandle}
+          onHueChange={onHueInputChange}
           onPointerCancel={() => {
             isHueDraggingRef.current = false;
           }}

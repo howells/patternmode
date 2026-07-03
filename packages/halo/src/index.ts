@@ -1,3 +1,5 @@
+"use client";
+
 export { HaloPicker, type HaloPickerProps } from "./halo-picker";
 export {
   clampPointToCircle,

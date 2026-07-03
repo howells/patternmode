@@ -37,8 +37,10 @@
     touch-action: none;
   }
 
+  /* The hue slider is a visually hidden range input, so its focus ring is
+     drawn on the arc svg that follows it. */
   .patternmode-halo-picker__pad:focus-visible,
-  .patternmode-halo-picker__arc:focus-visible {
+  .patternmode-halo-picker__arc-input:focus-visible + .patternmode-halo-picker__arc {
     outline: 2px solid var(--accent, #315c4b);
     outline-offset: 3px;
   }

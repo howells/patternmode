@@ -57,12 +57,17 @@ describe("HaloPicker utilities", () => {
 
     expect(hueToHaloAngle(0, "top")).toBe(190);
     expect(hueToHaloAngle(360, "top")).toBe(190);
-    expect(haloAngleToHue(350, "top")).toBe(360);
     /* The right placement's span crosses 0° and must read continuously. */
     expect(haloAngleToHue(0, "right")).toBeCloseTo((80 / 160) * 360);
-    /* Pointers in the gap snap to the nearer arc end. */
+  });
+
+  it("emits the canonical 0 instead of 360 at the arc's red end", () => {
+    /* Both arc ends are the same red; consumers must see one canonical hue
+       and `aria-valuenow` must stay within 0..359. */
+    expect(haloAngleToHue(350, "top")).toBe(0);
+    /* Pointers in the gap snap to the nearer arc end — red either way. */
     expect(haloAngleToHue(270, "right")).toBe(0);
-    expect(haloAngleToHue(90, "right")).toBe(360);
+    expect(haloAngleToHue(90, "right")).toBe(0);
   });
 });
 
@@ -96,6 +101,79 @@ describe("HaloPicker", () => {
     fireEvent.pointerDown(pad, { clientX: 62, clientY: 72, pointerId: 1 });
 
     expect(onChange).toHaveBeenCalledWith({ h: 16, l: 50, s: 50 });
+  });
+
+  it("ignores non-primary pointerdown on the pad and arc", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+
+    const pad = screen.getByTestId("halo-picker-pad");
+    fireEvent.pointerDown(pad, { button: 2, buttons: 2, clientX: 62, clientY: 72, pointerId: 1 });
+
+    const arc = pad.parentElement?.querySelector("svg");
+    if (!arc) {
+      throw new Error("expected the hue arc svg");
+    }
+    fireEvent.pointerDown(arc, { button: 2, buttons: 2, clientX: 64, clientY: 120, pointerId: 1 });
+
+    // A right-click must not commit a color.
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("changes hue through the range input", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+
+    fireEvent.change(screen.getByRole("slider", { name: "Hue" }), { target: { value: "200" } });
+
+    expect(onChange).toHaveBeenCalledWith({ h: 200, l: 69, s: 48 });
+  });
+
+  it("normalizes a hue of 360 from the range input to the canonical 0", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+
+    fireEvent.change(screen.getByRole("slider", { name: "Hue" }), { target: { value: "360" } });
+
+    expect(onChange).toHaveBeenCalledWith({ h: 0, l: 69, s: 48 });
+  });
+
+  it("adjusts saturation and lightness from the keyboard on the pad", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+
+    const pad = screen.getByRole("slider", { name: "Saturation and lightness" });
+    expect(pad).toHaveAttribute("tabindex", "0");
+    expect(pad).toHaveAttribute("aria-valuenow", "48");
+    expect(pad).toHaveAttribute("aria-valuetext", "Saturation 48%, Lightness 69%");
+
+    fireEvent.keyDown(pad, { key: "ArrowRight" });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 69, s: 49 });
+
+    fireEvent.keyDown(pad, { key: "ArrowLeft", shiftKey: true });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 69, s: 38 });
+
+    fireEvent.keyDown(pad, { key: "ArrowUp" });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 70, s: 48 });
+
+    fireEvent.keyDown(pad, { key: "ArrowDown", shiftKey: true });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 59, s: 48 });
+  });
+
+  it("clamps keyboard adjustments to the pad's pointer range", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(
+      <HaloPicker aria-label="Accent color" onChange={onChange} value={{ h: 16, l: 96, s: 99 }} />,
+    );
+
+    const pad = screen.getByRole("slider", { name: "Saturation and lightness" });
+
+    fireEvent.keyDown(pad, { key: "ArrowRight", shiftKey: true });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 96, s: 100 });
+
+    // Lightness keeps the pad's 3..97 pointer clamp.
+    fireEvent.keyDown(pad, { key: "ArrowUp", shiftKey: true });
+    expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 97, s: 99 });
   });
 
   it("moves the pad and value readout when the arc is placed on top", () => {

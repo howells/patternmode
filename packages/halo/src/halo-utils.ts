@@ -161,9 +161,13 @@ export const haloAngleToHue = (angleDeg: number, placement: HaloPlacement = "bot
      nearer end of the arc. */
   const delta = (((angleDeg - arcStartDeg) % 360) + 360) % 360;
   if (delta <= HALO_ARC_SPAN_DEG) {
-    return (delta / HALO_ARC_SPAN_DEG) * 360;
+    /* The arc's far end is the same red as its start — emit the canonical 0
+       so consumers see one red and `aria-valuenow` stays within 0..359. */
+    return normalizeHue((delta / HALO_ARC_SPAN_DEG) * 360);
   }
-  return delta - HALO_ARC_SPAN_DEG < 360 - delta ? 360 : 0;
+  /* Pointers in the gap snap to the nearer arc end; both ends are red, so
+     either way the canonical hue is 0. */
+  return 0;
 };
 
 export const getHaloPadHandlePosition = (
