@@ -8,6 +8,8 @@ export interface SheetPanelContextValue {
   close: () => void;
   /** Whether a Sheet.Description is mounted inside this panel */
   hasDescription: boolean;
+  /** Whether a Sheet.Title is mounted inside this panel */
+  hasTitle: boolean;
   /** Whether the stack has more than one sheet */
   isNested: boolean;
   /** Whether this is the top (active) sheet */
@@ -16,6 +18,8 @@ export interface SheetPanelContextValue {
   panelId: string;
   /** Called by Sheet.Description on mount to register its presence */
   registerDescription: () => () => void;
+  /** Called by Sheet.Title on mount to register its presence */
+  registerTitle: () => () => void;
   /** Current resolved side (left/right/bottom) */
   side: Side;
 }

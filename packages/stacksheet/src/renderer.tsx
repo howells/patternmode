@@ -236,10 +236,13 @@ const useDismissalEffects = ({
   useEffect(() => {
     const shouldListen = isOpen && config.closeOnEscape && config.dismissible;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        dismissFromEscape({ closeReasonRef, rawClose, rawPop, stackLengthRef });
+      // An inner layer (popover, select, menu) already consumed this Escape —
+      // don't also pop the sheet.
+      if (e.key !== "Escape" || e.defaultPrevented) {
+        return;
       }
+      e.preventDefault();
+      dismissFromEscape({ closeReasonRef, rawClose, rawPop, stackLengthRef });
     };
     if (shouldListen) {
       document.addEventListener("keydown", handleKeyDown);
@@ -252,7 +255,11 @@ const useDismissalEffects = ({
   }, [isOpen, config.closeOnEscape, config.dismissible, rawPop, rawClose, closeReasonRef]);
   useEffect(() => {
     const CloseWatcherConstructor = globalThis.CloseWatcher;
-    const shouldListen = isOpen && config.dismissible && CloseWatcherConstructor !== undefined;
+    // CloseWatcher cannot distinguish Escape from other close requests (e.g.
+    // the Android back gesture), so gating on `closeOnEscape` conservatively
+    // disables back-gesture dismissal too when Escape dismissal is turned off.
+    const shouldListen =
+      isOpen && config.closeOnEscape && config.dismissible && CloseWatcherConstructor !== undefined;
     let watcher: InstanceType<NonNullable<typeof CloseWatcherConstructor>> | undefined;
     const handleClose = () => {
       dismissFromEscape({ closeReasonRef, rawClose, rawPop, stackLengthRef });
@@ -267,7 +274,7 @@ const useDismissalEffects = ({
         watcher.destroy();
       }
     };
-  }, [isOpen, config.dismissible, rawPop, rawClose, closeReasonRef]);
+  }, [isOpen, config.closeOnEscape, config.dismissible, rawPop, rawClose, closeReasonRef]);
 };
 
 /**

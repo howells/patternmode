@@ -1,5 +1,5 @@
 import { m } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 
 import type { DragState } from "../Drag/drag-types";
@@ -72,24 +72,30 @@ const getHeaderProps = ({
 const getPanelContext = ({
   close,
   hasDescription,
+  hasTitle,
   isNested,
   isTop,
   panelId,
   pop,
   registerDescription,
+  registerTitle,
   side,
 }: Pick<SheetPanelProps, "close" | "isNested" | "isTop" | "pop" | "side"> & {
   hasDescription: boolean;
+  hasTitle: boolean;
   panelId: string;
   registerDescription: () => () => void;
+  registerTitle: () => () => void;
 }) => ({
   back: pop,
   close,
   hasDescription,
+  hasTitle,
   isNested,
   isTop,
   panelId,
   registerDescription,
+  registerTitle,
   side,
 });
 
@@ -182,24 +188,53 @@ const useSheetPanelContext = (
   panelId: string,
 ) => {
   const [hasDescription, setHasDescription] = useState(false);
-  const registerDescription = () => {
+  const [hasTitle, setHasTitle] = useState(false);
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Description effects from re-running on every drag re-render.
+  const registerDescription = useCallback(() => {
     setHasDescription(true);
     return () => {
       setHasDescription(false);
     };
-  };
-  const panelContext = getPanelContext({
-    close,
-    hasDescription,
-    isNested,
-    isTop,
-    panelId,
-    pop,
-    registerDescription,
-    side,
-  });
+  }, []);
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Title effects from re-running on every drag re-render.
+  const registerTitle = useCallback(() => {
+    setHasTitle(true);
+    return () => {
+      setHasTitle(false);
+    };
+  }, []);
+  // Memoized so drag-driven re-renders don't churn the context value (and
+  // with it every Sheet.* consumer's effects).
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the panel context is a new object on every pointermove re-render.
+  const panelContext = useMemo(
+    () =>
+      getPanelContext({
+        close,
+        hasDescription,
+        hasTitle,
+        isNested,
+        isTop,
+        panelId,
+        pop,
+        registerDescription,
+        registerTitle,
+        side,
+      }),
+    [
+      close,
+      hasDescription,
+      hasTitle,
+      isNested,
+      isTop,
+      panelId,
+      pop,
+      registerDescription,
+      registerTitle,
+      side,
+    ],
+  );
 
-  return { hasDescription, panelContext };
+  return { hasDescription, hasTitle, panelContext };
 };
 
 const useSheetPanelModel = (props: SheetPanelProps) => {
@@ -237,7 +272,7 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   const ariaLabel = getPanelAriaLabel(item, config.ariaLabel);
 
   const panelId = `stacksheet-${item.id}`;
-  const { hasDescription, panelContext } = useSheetPanelContext(props, panelId);
+  const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(props, panelId);
 
   const panelLayout = resolvePanelLayout(layout, renderHeader);
   const isComposable = panelLayout === "composable";
@@ -247,14 +282,15 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
 
   const headerProps = getHeaderProps({ close, isNested, pop, side });
 
-  const ariaProps = buildAriaProps(
-    isTop,
-    config.modal,
-    isComposable,
+  const ariaProps = buildAriaProps({
     ariaLabel,
-    panelId,
     hasDescription,
-  );
+    hasTitle,
+    isComposable,
+    isModal: config.modal,
+    isTop,
+    panelId,
+  });
 
   const transition = buildPanelTransition(dragState.isDragging, isTop, spring, stackSpring);
 

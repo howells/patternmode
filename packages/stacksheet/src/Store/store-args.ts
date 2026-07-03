@@ -25,6 +25,18 @@ const getComponentName = (component: AnyComponent): string | undefined => {
 
 const getNodeEnv = (): string | undefined => globalThis.process?.env?.NODE_ENV;
 
+/**
+ * Generate a unique sheet id. `crypto.randomUUID` is only available in
+ * secure contexts, so fall back to a timestamp + random suffix on
+ * non-secure origins (e.g. plain-HTTP LAN dev servers).
+ */
+export const generateSheetId = (): string => {
+  if (typeof globalThis.crypto?.randomUUID === "function") {
+    return globalThis.crypto.randomUUID();
+  }
+  return `sheet-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+};
+
 export const getStringArg = (value: unknown, name: string): string => {
   if (typeof value !== "string") {
     throw new TypeError(`Expected ${name} to be a string.`);
@@ -131,7 +143,7 @@ export const resolveArgs = (
     return {
       ariaLabel: resolvePresentationOptions(third)?.ariaLabel,
       data: toRecord(second),
-      id: crypto.randomUUID(),
+      id: generateSheetId(),
       type: typeKey,
     };
   }

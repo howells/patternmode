@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { resolveConfig } from "./config";
 import { createSheetStore } from "./store";
 
@@ -46,6 +46,22 @@ describe("createSheetStore", () => {
       expect(state.isOpen).toBe(true);
       expect(state.stack).toHaveLength(1);
       expect(state.stack[0]?.data).toEqual({ title: "Test" });
+    });
+    it("falls back to a generated id when crypto.randomUUID is unavailable", () => {
+      // crypto.randomUUID only exists in secure contexts — plain-HTTP LAN
+      // dev servers must not throw.
+      vi.stubGlobal("crypto", {});
+      try {
+        const { store } = makeStore();
+        store.getState().open(SheetA, {});
+        store.getState().push(SheetB, {});
+        const [first, second] = store.getState().stack;
+        expect(first?.id).toMatch(/^sheet-/u);
+        expect(second?.id).toMatch(/^sheet-/u);
+        expect(first?.id).not.toBe(second?.id);
+      } finally {
+        vi.unstubAllGlobals();
+      }
     });
     it("stores per-sheet presentation options separately from data", () => {
       const { store } = makeStore();

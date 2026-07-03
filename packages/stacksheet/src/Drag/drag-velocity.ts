@@ -1,0 +1,48 @@
+/** A single pointer sample recorded during a drag gesture. */
+export interface VelocitySample {
+  /** Drag offset in the dismiss direction (px) at sample time */
+  offset: number;
+  /** Timestamp in ms (Date.now()) */
+  time: number;
+}
+
+/** Sliding window (ms) of samples used to compute release velocity. */
+export const VELOCITY_WINDOW_MS = 100;
+
+/** Upper bound on retained samples — plenty for a 100ms window at 120Hz. */
+const MAX_SAMPLES = 20;
+
+/**
+ * Append a pointer sample, pruning entries that fall outside the sliding
+ * window (plus a hard cap as a memory guard). Mutates and returns `samples`.
+ */
+export const appendVelocitySample = (
+  samples: VelocitySample[],
+  sample: VelocitySample,
+): VelocitySample[] => {
+  samples.push(sample);
+  const cutoff = sample.time - VELOCITY_WINDOW_MS;
+  while (samples.length > MAX_SAMPLES || (samples.length > 2 && (samples[0]?.time ?? 0) < cutoff)) {
+    samples.shift();
+  }
+  return samples;
+};
+
+/**
+ * Compute release velocity (px/ms, positive = dismiss direction) from the
+ * samples recorded within the sliding window before `releaseTime`.
+ *
+ * Using only recent samples means a pause followed by a flick reports the
+ * flick's velocity — not the whole-gesture average, which would dilute it
+ * to near zero.
+ */
+export const getReleaseVelocity = (samples: VelocitySample[], releaseTime: number): number => {
+  const cutoff = releaseTime - VELOCITY_WINDOW_MS;
+  const recent = samples.filter((sample) => sample.time >= cutoff);
+  const [first] = recent;
+  const last = recent.at(-1);
+  if (first === undefined || last === undefined || last.time <= first.time) {
+    return 0;
+  }
+  return (last.offset - first.offset) / (last.time - first.time);
+};

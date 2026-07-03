@@ -141,7 +141,11 @@ export interface StacksheetConfig {
   showOverlay?: boolean;
   /** Sheet slide-from side. Default: { desktop: "right", mobile: "bottom" } */
   side?: SideConfig;
-  /** Currently active snap point index (controlled). */
+  /**
+   * Initial snap point index. Resolved once at `createStacksheet()` and
+   * cannot be changed after creation — when set, it pins the active snap
+   * point. Use `onSnapPointChange` to observe user-driven snap changes.
+   */
   snapPointIndex?: number;
 
   // ── Snap points (bottom sheets only) ────────

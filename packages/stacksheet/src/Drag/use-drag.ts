@@ -10,24 +10,33 @@ import {
   isInteractiveElement,
 } from "./drag-geometry";
 import type { DragConfig, DragState } from "./drag-types";
+import { appendVelocitySample, getReleaseVelocity } from "./drag-velocity";
+import type { VelocitySample } from "./drag-velocity";
 
 type DragCommit = "drag" | "none";
 
 interface DragRefs {
   committedRef: RefObject<DragCommit | null>;
   offsetRef: RefObject<number>;
+  samplesRef: RefObject<VelocitySample[]>;
   scrollTargetRef: RefObject<Element | null>;
   startRef: RefObject<{
-    time: number;
     x: number;
     y: number;
   } | null>;
 }
 
-const resetDragRefs = ({ committedRef, offsetRef, scrollTargetRef, startRef }: DragRefs) => {
+const resetDragRefs = ({
+  committedRef,
+  offsetRef,
+  samplesRef,
+  scrollTargetRef,
+  startRef,
+}: DragRefs) => {
   startRef.current = null;
   committedRef.current = null;
   offsetRef.current = 0;
+  samplesRef.current = [];
   scrollTargetRef.current = null;
 };
 
@@ -63,12 +72,13 @@ const createDragHandlers = ({
       return;
     }
     refs.scrollTargetRef.current = isHandle ? null : findScrollableAncestor(target, axis);
-    refs.startRef.current = { time: Date.now(), x: e.clientX, y: e.clientY };
+    refs.startRef.current = { x: e.clientX, y: e.clientY };
     refs.committedRef.current = null;
     refs.offsetRef.current = 0;
-    if (e.currentTarget instanceof HTMLElement) {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    }
+    refs.samplesRef.current = [{ offset: 0, time: Date.now() }];
+    // Pointer capture is deferred until the gesture commits as a drag —
+    // capturing here would retarget plain taps away from non-native
+    // clickable children (e.g. ARIA-pattern buttons), swallowing their clicks.
   };
   const handlePointerMove = (e: PointerEvent) => {
     if (refs.startRef.current === null) {
@@ -86,6 +96,11 @@ const createDragHandlers = ({
         refs.startRef.current = null;
         return;
       }
+      // The gesture is now a real drag — capture so the panel keeps
+      // receiving pointer events even when the pointer leaves it.
+      if (e.currentTarget instanceof HTMLElement) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      }
     }
     if (refs.committedRef.current !== "drag") {
       return;
@@ -95,6 +110,7 @@ const createDragHandlers = ({
     const clampedOffset =
       directional >= 0 ? directional : -Math.sqrt(Math.abs(directional)) * RUBBER_BAND_FACTOR;
     refs.offsetRef.current = clampedOffset;
+    appendVelocitySample(refs.samplesRef.current, { offset: clampedOffset, time: Date.now() });
     onDragUpdate({ isDragging: true, offset: clampedOffset });
     e.preventDefault();
   };
@@ -104,8 +120,10 @@ const createDragHandlers = ({
       return;
     }
     const offset = Math.max(0, refs.offsetRef.current);
-    const elapsed = Date.now() - refs.startRef.current.time;
-    const velocity = elapsed > 0 ? offset / elapsed : 0;
+    // Release velocity comes from a sliding window of recent samples, so a
+    // pause followed by a flick still dismisses (a whole-gesture average
+    // would dilute the flick to near zero).
+    const velocity = getReleaseVelocity(refs.samplesRef.current, Date.now());
     resetDragRefs(refs);
     const panelSize = getPanelDimension(panelRef.current, axis);
     if (config.snapHeights.length > 0) {
@@ -164,13 +182,13 @@ export const useDrag = (
   const startRef = useRef<{
     x: number;
     y: number;
-    time: number;
   } | null>(null);
   const committedRef = useRef<DragCommit | null>(null);
   const offsetRef = useRef(0);
+  const samplesRef = useRef<VelocitySample[]>([]);
   const scrollTargetRef = useRef<Element | null>(null);
   const { axis, sign } = getDismissAxis(config.side);
-  const refs = { committedRef, offsetRef, scrollTargetRef, startRef };
+  const refs = { committedRef, offsetRef, samplesRef, scrollTargetRef, startRef };
   const { handlePointerCancel, handlePointerDown, handlePointerMove, handlePointerUp } =
     createDragHandlers({ axis, config, onDragUpdate, panelRef, refs, sign });
   const handlersRef = useRef({

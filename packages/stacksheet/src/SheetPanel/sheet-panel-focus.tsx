@@ -64,7 +64,9 @@ export const ModalFocusTrap = ({
           }
           return document.body;
         },
-        initialFocus: false,
+        // Focus the panel element itself (it has tabIndex={-1}) so screen
+        // readers announce the dialog when it opens.
+        initialFocus: () => fallbackRef.current ?? undefined,
         returnFocusOnDeactivate: true,
       }}
       paused={paused}

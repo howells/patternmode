@@ -29,15 +29,63 @@ describe("renderer helpers", () => {
   });
 
   it("builds ARIA props only for the top panel", () => {
-    expect(buildAriaProps(false, true, true, "Sheet", "panel-1", true)).toEqual({});
-    expect(buildAriaProps(true, true, true, "Sheet", "panel-1", true)).toEqual({
+    expect(
+      buildAriaProps({
+        ariaLabel: "Sheet",
+        hasDescription: true,
+        hasTitle: true,
+        isComposable: true,
+        isModal: true,
+        isTop: false,
+        panelId: "panel-1",
+      }),
+    ).toEqual({});
+    expect(
+      buildAriaProps({
+        ariaLabel: "Sheet",
+        hasDescription: true,
+        hasTitle: true,
+        isComposable: true,
+        isModal: true,
+        isTop: true,
+        panelId: "panel-1",
+      }),
+    ).toEqual({
       "aria-describedby": "panel-1-desc",
       "aria-labelledby": "panel-1-title",
       "aria-modal": "true",
       role: "dialog",
     });
-    expect(buildAriaProps(true, false, false, "Sheet", "panel-1", false)).toEqual({
+    expect(
+      buildAriaProps({
+        ariaLabel: "Sheet",
+        hasDescription: false,
+        hasTitle: false,
+        isComposable: false,
+        isModal: false,
+        isTop: true,
+        panelId: "panel-1",
+      }),
+    ).toEqual({
       "aria-label": "Sheet",
+      role: "dialog",
+    });
+  });
+
+  it("falls back to aria-label when a composable sheet has no Sheet.Title", () => {
+    expect(
+      buildAriaProps({
+        ariaLabel: "Filters",
+        hasDescription: false,
+        hasTitle: false,
+        isComposable: true,
+        isModal: true,
+        isTop: true,
+        panelId: "panel-1",
+      }),
+    ).toEqual({
+      "aria-label": "Filters",
+      "aria-modal": "true",
       role: "dialog",
     });
   });

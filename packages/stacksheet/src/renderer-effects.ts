@@ -50,6 +50,14 @@ export const useViewportHeight = (active: boolean): number => {
   }, []);
   return active ? (height ?? 0) : 0;
 };
+const BODY_SCALE_TRANSITION =
+  "transform 500ms cubic-bezier(0.32, 0.72, 0, 1), border-radius 500ms cubic-bezier(0.32, 0.72, 0, 1)";
+/** Fallback delay (transition duration + margin) if `transitionend` never fires. */
+const BODY_SCALE_RESET_FALLBACK_MS = 600;
+
+/** Cancels a pending un-scale reset when the sheet reopens mid-animation. */
+let cancelPendingBodyScaleReset: (() => void) | undefined;
+
 export const useBodyScale = (
   config: ResolvedConfig,
   isOpen: boolean,
@@ -57,39 +65,57 @@ export const useBodyScale = (
 ) => {
   useEffect(() => {
     const wrapper = document.querySelector("[data-stacksheet-wrapper]");
-    const resetWrapper = () => {
-      if (wrapper instanceof HTMLElement) {
-        wrapper.style.transform = "";
-        wrapper.style.borderRadius = "";
-        wrapper.style.transition = "";
-        wrapper.style.overflow = "";
-        wrapper.style.transformOrigin = "";
-      }
-    };
     const canScale =
       config.shouldScaleBackground && !prefersReducedMotion && wrapper instanceof HTMLElement;
-    if (canScale && isOpen) {
-      const scale = config.scaleBackgroundAmount;
-      wrapper.style.transition =
-        "transform 500ms cubic-bezier(0.32, 0.72, 0, 1), border-radius 500ms cubic-bezier(0.32, 0.72, 0, 1)";
-      wrapper.style.transform = `scale(${scale})`;
-      wrapper.style.borderRadius = "8px";
-      wrapper.style.overflow = "hidden";
-      wrapper.style.transformOrigin = "center top";
-      return resetWrapper;
-    }
-    const handleEnd = () => {
-      resetWrapper();
-    };
-    if (canScale) {
-      wrapper.style.transform = "";
-      wrapper.style.borderRadius = "";
-      wrapper.addEventListener("transitionend", handleEnd, { once: true });
+    const scalable = canScale && isOpen ? wrapper : null;
+    if (scalable !== null) {
+      cancelPendingBodyScaleReset?.();
+      scalable.style.transition = BODY_SCALE_TRANSITION;
+      scalable.style.transform = `scale(${config.scaleBackgroundAmount})`;
+      scalable.style.borderRadius = "8px";
+      scalable.style.overflow = "hidden";
+      scalable.style.transformOrigin = "center top";
     }
     return () => {
-      if (wrapper instanceof HTMLElement) {
-        wrapper.removeEventListener("transitionend", handleEnd);
+      if (scalable === null) {
+        return;
       }
+      // Closing (or unmounting): re-assert the transition so the un-scale
+      // animates, clear the transform, and only remove the remaining inline
+      // styles once the transition actually ends (with a timeout fallback).
+      scalable.style.transition = BODY_SCALE_TRANSITION;
+      scalable.style.transform = "";
+      scalable.style.borderRadius = "";
+      const controller = new AbortController();
+      const { signal } = controller;
+      const finish = () => {
+        controller.abort();
+        cancelPendingBodyScaleReset = undefined;
+        scalable.style.transition = "";
+        scalable.style.overflow = "";
+        scalable.style.transformOrigin = "";
+      };
+      scalable.addEventListener(
+        "transitionend",
+        (event) => {
+          if (event.target === scalable && event.propertyName === "transform") {
+            finish();
+          }
+        },
+        { signal },
+      );
+      const timeoutId = setTimeout(() => {
+        if (!signal.aborted) {
+          finish();
+        }
+      }, BODY_SCALE_RESET_FALLBACK_MS);
+      signal.addEventListener("abort", () => {
+        clearTimeout(timeoutId);
+      });
+      cancelPendingBodyScaleReset = () => {
+        controller.abort();
+        cancelPendingBodyScaleReset = undefined;
+      };
     };
   }, [isOpen, config.shouldScaleBackground, config.scaleBackgroundAmount, prefersReducedMotion]);
 };

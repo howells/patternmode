@@ -19,14 +19,23 @@ export const resolveClassNames = (cn?: StacksheetClassNames): ResolvedClassNames
     panel: cn.panel ?? "",
   };
 };
-export const buildAriaProps = (
-  isTop: boolean,
-  isModal: boolean,
-  isComposable: boolean,
-  ariaLabel: string,
-  panelId: string,
-  hasDescription: boolean,
-): Record<string, string | undefined> => {
+export const buildAriaProps = ({
+  ariaLabel,
+  hasDescription,
+  hasTitle,
+  isComposable,
+  isModal,
+  isTop,
+  panelId,
+}: {
+  ariaLabel: string;
+  hasDescription: boolean;
+  hasTitle: boolean;
+  isComposable: boolean;
+  isModal: boolean;
+  isTop: boolean;
+  panelId: string;
+}): Record<string, string | undefined> => {
   if (!isTop) {
     return {};
   }
@@ -35,7 +44,14 @@ export const buildAriaProps = (
     props["aria-modal"] = "true";
   }
   if (isComposable) {
-    props["aria-labelledby"] = `${panelId}-title`;
+    // Only reference the title element when a Sheet.Title is actually
+    // mounted — otherwise fall back to the sheet's aria-label so the
+    // dialog is never left with a dangling aria-labelledby.
+    if (hasTitle) {
+      props["aria-labelledby"] = `${panelId}-title`;
+    } else {
+      props["aria-label"] = ariaLabel;
+    }
     if (hasDescription) {
       props["aria-describedby"] = `${panelId}-desc`;
     }

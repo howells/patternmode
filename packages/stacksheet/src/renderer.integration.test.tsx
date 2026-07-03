@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
@@ -44,6 +44,39 @@ const AnimatePresence = vi.hoisted(() => ({ children }: { children: ReactNode })
   <>{children}</>
 ));
 const NestedSheet = () => <p>Nested sheet content</p>;
+const PlainSheet = () => <Sheet.Body>Plain body</Sheet.Body>;
+const EscapeConsumerSheet = () => (
+  <input
+    aria-label="Inner field"
+    onKeyDown={(e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+      }
+    }}
+  />
+);
+class MockCloseWatcher {
+  static instances: MockCloseWatcher[] = [];
+  destroyed = false;
+  private readonly listeners = new Set<() => void>();
+  constructor() {
+    MockCloseWatcher.instances.push(this);
+  }
+  addEventListener(_type: "close", listener: () => void) {
+    this.listeners.add(listener);
+  }
+  removeEventListener(_type: "close", listener: () => void) {
+    this.listeners.delete(listener);
+  }
+  destroy() {
+    this.destroyed = true;
+  }
+  requestClose() {
+    for (const listener of this.listeners) {
+      listener();
+    }
+  }
+}
 const DetailsSheet = () => (
   <>
     <Sheet.Header>
@@ -194,5 +227,141 @@ describe("SheetRenderer integration", () => {
     expect(dialog).toHaveAttribute("aria-labelledby");
     expect(dialog).toHaveAttribute("aria-describedby");
     expect(screen.getByRole("button", { name: "Close" })).toHaveClass("min-h-11", "min-w-11");
+  });
+  it("labels a composable sheet without a Sheet.Title via its ariaLabel option", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet<{
+      plain: Record<string, never>;
+    }>();
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open("plain", "plain", {}, { ariaLabel: "Plain filters" });
+          }}
+          type="button"
+        >
+          Open plain
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider layout="composable" sheets={{ plain: PlainSheet }}>
+        <Controls />
+      </StacksheetProvider>,
+    );
+    await user.click(screen.getByRole("button", { name: "Open plain" }));
+    const dialog = screen.getByRole("dialog", { name: "Plain filters" });
+    expect(dialog).toHaveAttribute("aria-label", "Plain filters");
+    expect(dialog).not.toHaveAttribute("aria-labelledby");
+  });
+});
+
+describe("SheetRenderer escape dismissal", () => {
+  const renderEscapeSheet = (config?: Parameters<typeof createStacksheet>[0]) => {
+    const { StacksheetProvider, useSheet } = createStacksheet<{
+      escape: Record<string, never>;
+    }>(config);
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open("escape", "escape", {}, { ariaLabel: "Escape sheet" });
+          }}
+          type="button"
+        >
+          Open sheet
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider sheets={{ escape: EscapeConsumerSheet }}>
+        <Controls />
+      </StacksheetProvider>,
+    );
+  };
+  it("closes the sheet when Escape is pressed", async () => {
+    const user = userEvent.setup();
+    renderEscapeSheet();
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    expect(screen.getByRole("dialog", { name: "Escape sheet" })).toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+  it("leaves the sheet open when an inner element already consumed Escape", async () => {
+    const user = userEvent.setup();
+    renderEscapeSheet();
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    await user.click(screen.getByRole("textbox", { name: "Inner field" }));
+    await user.keyboard("{Escape}");
+    expect(screen.getByRole("dialog", { name: "Escape sheet" })).toBeInTheDocument();
+  });
+  it("ignores Escape when closeOnEscape is false", async () => {
+    const user = userEvent.setup();
+    renderEscapeSheet({ closeOnEscape: false });
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    await user.keyboard("{Escape}");
+    expect(screen.getByRole("dialog", { name: "Escape sheet" })).toBeInTheDocument();
+  });
+});
+
+describe("SheetRenderer CloseWatcher", () => {
+  beforeEach(() => {
+    MockCloseWatcher.instances = [];
+    vi.stubGlobal("CloseWatcher", MockCloseWatcher);
+  });
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+  const renderWatcherSheet = (config?: Parameters<typeof createStacksheet>[0]) => {
+    const { StacksheetProvider, useSheet } = createStacksheet<{
+      watched: Record<string, never>;
+    }>(config);
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open("watched", "watched", {}, { ariaLabel: "Watched sheet" });
+          }}
+          type="button"
+        >
+          Open sheet
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider sheets={{ watched: NestedSheet }}>
+        <Controls />
+      </StacksheetProvider>,
+    );
+  };
+  it("creates a CloseWatcher while open and dismisses when it fires", async () => {
+    const user = userEvent.setup();
+    renderWatcherSheet();
+    expect(MockCloseWatcher.instances).toHaveLength(0);
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    expect(MockCloseWatcher.instances).toHaveLength(1);
+    act(() => {
+      MockCloseWatcher.instances[0]?.requestClose();
+    });
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(MockCloseWatcher.instances[0]?.destroyed).toBe(true);
+  });
+  it("does not create a CloseWatcher when closeOnEscape is false", async () => {
+    const user = userEvent.setup();
+    renderWatcherSheet({ closeOnEscape: false });
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    expect(screen.getByRole("dialog", { name: "Watched sheet" })).toBeInTheDocument();
+    expect(MockCloseWatcher.instances).toHaveLength(0);
+  });
+  it("does not create a CloseWatcher when the sheet is not dismissible", async () => {
+    const user = userEvent.setup();
+    renderWatcherSheet({ dismissible: false });
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+    expect(screen.getByRole("dialog", { name: "Watched sheet" })).toBeInTheDocument();
+    expect(MockCloseWatcher.instances).toHaveLength(0);
   });
 });
