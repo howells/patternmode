@@ -1,5 +1,15 @@
 # @patternmode/status
 
+## 0.2.2
+
+### Patch Changes
+
+- 9902338: Treat `NaN` `value` input as unknown progress (`status="null"`) instead of
+  snapping it to the known-zero Empty step.
+- Updated dependencies [f35ca73]
+- Updated dependencies [094bdf0]
+  - @patternmode/system@0.4.0
+
 ## 0.2.1
 
 ### Patch Changes
