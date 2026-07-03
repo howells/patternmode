@@ -54,6 +54,7 @@ const ScrollFrameBase = ({
   controls = false,
   controlVisibility,
   dragScroll,
+  fadeMode = "color",
   fades = true,
   ref,
   scrollbars = "auto",
@@ -74,6 +75,8 @@ const ScrollFrameBase = ({
       axes={axes}
       controlVisibility={visibility}
       dragScroll={dragScroll}
+      fadeMode={fadeMode}
+      fades={fades}
       ref={ref}
       scrollbars={scrollbars}
     >
@@ -87,7 +90,7 @@ const ScrollFrameBase = ({
       >
         {children}
       </ScrollFrameViewport>
-      <ScrollFrameFades axes={axes} fades={fades} />
+      {fadeMode === "mask" ? null : <ScrollFrameFades axes={axes} fades={fades} />}
       <ScrollFrameScrollbars axes={axes} />
       {controlsEnabled ? <ScrollFrameNext axis={controlAxis} visibility={visibility} /> : null}
     </ScrollFrameRoot>

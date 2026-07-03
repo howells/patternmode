@@ -1,3 +1,32 @@
+/*
+ * Mask-mode ramp sizes. Registered so the 0px ↔ fade-size collapse at the
+ * scroll edges interpolates (the mask-mode counterpart of the painted fades'
+ * opacity transition). @property must sit outside @layer.
+ */
+@property --patternmode-scrollframe-mask-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-left {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-right {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
 @layer components {
   .patternmode-scrollframe {
     --patternmode-scrollframe-fade-color: var(--surface, #fff);
@@ -95,7 +124,66 @@
     width: max-content;
   }
 
-  /* ── Fades ──────────────────────────────────── */
+  /* ── Fades: mask mode ───────────────────────── */
+
+  /*
+   * The viewport masks its own content at the scroll edges, so the true
+   * backdrop shows through — no painted color to mismatch. Each edge's ramp
+   * length is set inline by the viewport (0px when rested at that edge,
+   * fade-size otherwise); a collapsed ramp degenerates to a hard stop at the
+   * boundary, so both gradient layers stay valid and the vertical/horizontal
+   * layers can always be intersected regardless of which axes are enabled.
+   * Ramp easing mirrors the painted fades' --_fade-stops.
+   */
+  .patternmode-scrollframe__viewport[data-fade-mode="mask"] {
+    --_mask-vertical: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgb(0 0 0 / 0.02) calc(var(--patternmode-scrollframe-mask-top) * 0.09),
+      rgb(0 0 0 / 0.08) calc(var(--patternmode-scrollframe-mask-top) * 0.18),
+      rgb(0 0 0 / 0.18) calc(var(--patternmode-scrollframe-mask-top) * 0.29),
+      rgb(0 0 0 / 0.32) calc(var(--patternmode-scrollframe-mask-top) * 0.42),
+      rgb(0 0 0 / 0.52) calc(var(--patternmode-scrollframe-mask-top) * 0.58),
+      rgb(0 0 0 / 0.72) calc(var(--patternmode-scrollframe-mask-top) * 0.74),
+      black var(--patternmode-scrollframe-mask-top),
+      black calc(100% - var(--patternmode-scrollframe-mask-bottom)),
+      rgb(0 0 0 / 0.72) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.74),
+      rgb(0 0 0 / 0.52) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.58),
+      rgb(0 0 0 / 0.32) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.42),
+      rgb(0 0 0 / 0.18) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.29),
+      rgb(0 0 0 / 0.08) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.18),
+      rgb(0 0 0 / 0.02) calc(100% - var(--patternmode-scrollframe-mask-bottom) * 0.09),
+      transparent 100%
+    );
+    --_mask-horizontal: linear-gradient(
+      to right,
+      transparent 0,
+      rgb(0 0 0 / 0.02) calc(var(--patternmode-scrollframe-mask-left) * 0.09),
+      rgb(0 0 0 / 0.08) calc(var(--patternmode-scrollframe-mask-left) * 0.18),
+      rgb(0 0 0 / 0.18) calc(var(--patternmode-scrollframe-mask-left) * 0.29),
+      rgb(0 0 0 / 0.32) calc(var(--patternmode-scrollframe-mask-left) * 0.42),
+      rgb(0 0 0 / 0.52) calc(var(--patternmode-scrollframe-mask-left) * 0.58),
+      rgb(0 0 0 / 0.72) calc(var(--patternmode-scrollframe-mask-left) * 0.74),
+      black var(--patternmode-scrollframe-mask-left),
+      black calc(100% - var(--patternmode-scrollframe-mask-right)),
+      rgb(0 0 0 / 0.72) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.74),
+      rgb(0 0 0 / 0.52) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.58),
+      rgb(0 0 0 / 0.32) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.42),
+      rgb(0 0 0 / 0.18) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.29),
+      rgb(0 0 0 / 0.08) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.18),
+      rgb(0 0 0 / 0.02) calc(100% - var(--patternmode-scrollframe-mask-right) * 0.09),
+      transparent 100%
+    );
+    mask-composite: intersect;
+    mask-image: var(--_mask-vertical), var(--_mask-horizontal);
+    transition:
+      --patternmode-scrollframe-mask-top 140ms ease,
+      --patternmode-scrollframe-mask-bottom 140ms ease,
+      --patternmode-scrollframe-mask-left 140ms ease,
+      --patternmode-scrollframe-mask-right 140ms ease;
+  }
+
+  /* ── Fades: painted (color mode) ────────────── */
 
   .patternmode-scrollframe__fade {
     --_fade-stops:
@@ -263,6 +351,10 @@
 
   @media (prefers-reduced-motion: reduce) {
     .patternmode-scrollframe__fade {
+      transition: none;
+    }
+
+    .patternmode-scrollframe__viewport[data-fade-mode="mask"] {
       transition: none;
     }
 

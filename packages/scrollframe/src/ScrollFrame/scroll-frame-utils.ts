@@ -101,6 +101,72 @@ export const shouldRenderFade = (
   return edges === "both" || edges === edge;
 };
 
+export interface ScrollFrameMaskVars {
+  "--patternmode-scrollframe-mask-bottom": string;
+  "--patternmode-scrollframe-mask-left": string;
+  "--patternmode-scrollframe-mask-right": string;
+  "--patternmode-scrollframe-mask-top": string;
+}
+
+const MASK_EDGE_SIZE = "var(--patternmode-scrollframe-fade-size)";
+
+const getMaskEdgeSize = (
+  axes: ScrollFrameAxes,
+  edgeState: ScrollFrameEdgeState,
+  fades: ScrollFrameFadeConfig,
+  axis: ScrollFrameAxis,
+  edge: ScrollFrameEdge,
+): string => {
+  if (!supportsAxis(axes, axis) || !shouldRenderFade(fades, axis, edge)) {
+    return "0px";
+  }
+  const state = edgeState[axis];
+  const atEdge = edge === "start" ? state.atStart : state.atEnd;
+  return state.scrollable && !atEdge ? MASK_EDGE_SIZE : "0px";
+};
+
+/**
+ * Measured mask-ramp sizes for a viewport in `"mask"` fade mode.
+ *
+ * Mirrors the painted fades' visibility rules: a ramp collapses to `0px` when
+ * its edge is unreachable (axis disabled, edge excluded by `fades`, content
+ * not scrollable) or currently rested against.
+ */
+export const getMaskVars = (
+  axes: ScrollFrameAxes,
+  edgeState: ScrollFrameEdgeState,
+  fades: ScrollFrameFadeConfig,
+): ScrollFrameMaskVars => ({
+  "--patternmode-scrollframe-mask-bottom": getMaskEdgeSize(
+    axes,
+    edgeState,
+    fades,
+    "vertical",
+    "end",
+  ),
+  "--patternmode-scrollframe-mask-left": getMaskEdgeSize(
+    axes,
+    edgeState,
+    fades,
+    "horizontal",
+    "start",
+  ),
+  "--patternmode-scrollframe-mask-right": getMaskEdgeSize(
+    axes,
+    edgeState,
+    fades,
+    "horizontal",
+    "end",
+  ),
+  "--patternmode-scrollframe-mask-top": getMaskEdgeSize(
+    axes,
+    edgeState,
+    fades,
+    "vertical",
+    "start",
+  ),
+});
+
 export const getAxisState = (node: HTMLDivElement, axis: ScrollFrameAxis): ScrollFrameAxisState => {
   const max =
     axis === "vertical"

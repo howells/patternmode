@@ -11,7 +11,7 @@ import type {
   ScrollFrameResolvedDragScrollConfig,
   ScrollFrameViewportProps,
 } from "./scroll-frame-types";
-import { isDragScrollIgnored, setRef, supportsAxis } from "./scroll-frame-utils";
+import { getMaskVars, isDragScrollIgnored, setRef, supportsAxis } from "./scroll-frame-utils";
 
 const getDragDistance = (
   offset: { x: number; y: number },
@@ -176,11 +176,13 @@ export const ScrollFrameViewport = ({
   contentClassName,
   contentStyle,
   ref,
+  style,
   viewportRef,
   ...props
 }: ScrollFrameViewportProps) => {
   const context = useScrollFrame();
-  const { axes, dragScroll, registerViewport, setDragging, viewport } = context;
+  const { axes, dragScroll, edgeState, fadeMode, fades, registerViewport, setDragging, viewport } =
+    context;
   const {
     handleClickCapture,
     handlePointerDownCapture,
@@ -192,14 +194,17 @@ export const ScrollFrameViewport = ({
     setRef(ref, node);
     setRef(viewportRef, node);
   };
+  const maskStyle = fadeMode === "mask" ? getMaskVars(axes, edgeState, fades) : undefined;
 
   return (
     <RadixScrollArea.Viewport
       {...props}
       className={joinClassNames("patternmode-scrollframe__viewport", className)}
+      data-fade-mode={fadeMode === "mask" ? "mask" : undefined}
       data-slot="scrollframe-viewport"
       data-testid="scrollframe-viewport"
       ref={assignRef}
+      style={maskStyle === undefined ? style : { ...maskStyle, ...style }}
     >
       <div
         className={joinClassNames("patternmode-scrollframe__content", contentClassName)}

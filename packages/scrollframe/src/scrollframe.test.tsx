@@ -45,6 +45,89 @@ describe("ScrollFrame", () => {
     expect(screen.getByTestId("scrollframe-fade-vertical-end")).toBeInTheDocument();
   });
 
+  it("masks the viewport instead of painting fades in mask fade mode", () => {
+    render(
+      <ScrollFrame aria-label="Frosted" fadeMode="mask">
+        <p>One</p>
+        <p>Two</p>
+      </ScrollFrame>,
+    );
+
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    expect(viewport).toHaveAttribute("data-fade-mode", "mask");
+    expect(screen.queryByTestId("scrollframe-fade-vertical-start")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("scrollframe-fade-vertical-end")).not.toBeInTheDocument();
+
+    // Unmeasured content is not scrollable, so every ramp starts collapsed.
+    expect(viewport.style.getPropertyValue("--patternmode-scrollframe-mask-top")).toBe("0px");
+    expect(viewport.style.getPropertyValue("--patternmode-scrollframe-mask-bottom")).toBe("0px");
+  });
+
+  it("collapses mask ramps at the measured scroll edges", () => {
+    render(
+      <ScrollFrame aria-label="Masked" fadeMode="mask">
+        <div>Content</div>
+      </ScrollFrame>,
+    );
+
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    Object.defineProperties(viewport, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 300 },
+      scrollTop: { configurable: true, value: 0, writable: true },
+    });
+
+    const ramp = (edge: "top" | "bottom") =>
+      viewport.style.getPropertyValue(`--patternmode-scrollframe-mask-${edge}`);
+
+    act(() => {
+      fireEvent.scroll(viewport);
+    });
+
+    // At the start: nothing behind the top edge, content beyond the bottom.
+    expect(ramp("top")).toBe("0px");
+    expect(ramp("bottom")).toBe("var(--patternmode-scrollframe-fade-size)");
+
+    viewport.scrollTop = 100;
+    act(() => {
+      fireEvent.scroll(viewport);
+    });
+    expect(ramp("top")).toBe("var(--patternmode-scrollframe-fade-size)");
+    expect(ramp("bottom")).toBe("var(--patternmode-scrollframe-fade-size)");
+
+    viewport.scrollTop = 200;
+    act(() => {
+      fireEvent.scroll(viewport);
+    });
+    expect(ramp("top")).toBe("var(--patternmode-scrollframe-fade-size)");
+    expect(ramp("bottom")).toBe("0px");
+  });
+
+  it("keeps excluded edges collapsed when mask fades are limited", () => {
+    render(
+      <ScrollFrame aria-label="End only" fadeMode="mask" fades="end">
+        <div>Content</div>
+      </ScrollFrame>,
+    );
+
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    Object.defineProperties(viewport, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 300 },
+      scrollTop: { configurable: true, value: 100, writable: true },
+    });
+
+    act(() => {
+      fireEvent.scroll(viewport);
+    });
+
+    // Mid-scroll with both edges reachable, but only the end edge is enabled.
+    expect(viewport.style.getPropertyValue("--patternmode-scrollframe-mask-top")).toBe("0px");
+    expect(viewport.style.getPropertyValue("--patternmode-scrollframe-mask-bottom")).toBe(
+      "var(--patternmode-scrollframe-fade-size)",
+    );
+  });
+
   it("does not commit further updates when a measurement reports unchanged metrics", () => {
     const onRender = vi.fn<ProfilerOnRenderCallback>();
 

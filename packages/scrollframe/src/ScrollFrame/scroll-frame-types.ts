@@ -10,6 +10,7 @@ import type {
 
 export const SCROLL_FRAME_AXES = ["vertical", "horizontal", "both"] as const;
 export const SCROLL_FRAME_EDGES = ["start", "end"] as const;
+export const SCROLL_FRAME_FADE_MODES = ["color", "mask"] as const;
 export const SCROLL_FRAME_SCROLLBARS = ["auto", "always", "hover", "hidden"] as const;
 export const SCROLL_FRAME_CONTROL_VISIBILITY = ["auto", "disabled", "hidden"] as const;
 
@@ -18,6 +19,17 @@ export type ScrollFrameAxes = (typeof SCROLL_FRAME_AXES)[number];
 export type ScrollFrameEdge = (typeof SCROLL_FRAME_EDGES)[number];
 export type ScrollFrameScrollbarVisibility = (typeof SCROLL_FRAME_SCROLLBARS)[number];
 export type ScrollFrameControlVisibility = (typeof SCROLL_FRAME_CONTROL_VISIBILITY)[number];
+
+/**
+ * How scroll-edge fades render.
+ *
+ * `"color"` paints a `fadeColor` gradient over the content — right when the
+ * frame sits on a solid surface. `"mask"` fades the scrolling content itself
+ * to transparent, so whatever is behind the frame shows through — right for
+ * translucent, blurred, image, or otherwise non-uniform backdrops that a
+ * painted color can never match.
+ */
+export type ScrollFrameFadeMode = (typeof SCROLL_FRAME_FADE_MODES)[number];
 
 /** Fade placement for scroll-edge gradients. `true` renders both edges. */
 export type ScrollFrameFadeEdges = "none" | "start" | "end" | "both" | boolean;
@@ -126,6 +138,13 @@ export interface ScrollFrameProps extends Omit<
   /** Enables click-and-drag scrolling on the viewport. */
   dragScroll?: boolean | ScrollFrameDragScrollConfig;
   fadeColor?: string;
+  /**
+   * Fade rendering strategy. `"mask"` fades the content itself instead of
+   * painting a color over it, so non-uniform backdrops show through.
+   *
+   * Default `"color"`.
+   */
+  fadeMode?: ScrollFrameFadeMode;
   fadeSize?: number | string;
   /**
    * Scroll-edge fades. `true` renders both edges on enabled axes.
@@ -165,7 +184,21 @@ export interface ScrollFrameRootProps extends Omit<
   /** Enables click-and-drag scrolling for registered viewports. */
   dragScroll?: boolean | ScrollFrameDragScrollConfig;
   fadeColor?: string;
+  /**
+   * Fade rendering strategy. In `"mask"` mode registered viewports mask their
+   * own content at the scroll edges; painted `Fade` children are unnecessary.
+   *
+   * Default `"color"`.
+   */
+  fadeMode?: ScrollFrameFadeMode;
   fadeSize?: number | string;
+  /**
+   * Edges masked in `"mask"` fade mode. Ignored in `"color"` mode, where
+   * painted fades are composed as `Fade` children instead.
+   *
+   * Default `true` (both edges on enabled axes).
+   */
+  fades?: ScrollFrameFadeConfig;
   scrollbars?: ScrollFrameScrollbarVisibility;
   /** Scroll behavior used by context movement helpers. */
   scrollBehavior?: ScrollFrameScrollBehavior;
@@ -212,6 +245,9 @@ export interface ScrollFrameContextValue {
   controlVisibility: ScrollFrameControlVisibility;
   dragScroll: ScrollFrameResolvedDragScrollConfig | null;
   edgeState: ScrollFrameEdgeState;
+  fadeMode: ScrollFrameFadeMode;
+  /** Edges masked by registered viewports when `fadeMode` is `"mask"`. */
+  fades: ScrollFrameFadeConfig;
   isDragging: boolean;
   registerViewport: (node: HTMLDivElement | null) => void;
   scrollbars: ScrollFrameScrollbarVisibility;

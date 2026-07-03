@@ -1,7 +1,10 @@
+"use client";
+
 export {
   SCROLL_FRAME_AXES,
   SCROLL_FRAME_CONTROL_VISIBILITY,
   SCROLL_FRAME_EDGES,
+  SCROLL_FRAME_FADE_MODES,
   SCROLL_FRAME_SCROLLBARS,
   ScrollFrame,
   type ScrollFrameAxes,
@@ -16,6 +19,7 @@ export {
   type ScrollFrameEdgeState,
   type ScrollFrameFadeConfig,
   type ScrollFrameFadeEdges,
+  type ScrollFrameFadeMode,
   type ScrollFrameFadeProps,
   type ScrollFrameMovementControlProps,
   type ScrollFrameProps,
