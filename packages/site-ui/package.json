@@ -5,21 +5,28 @@
   "type": "module",
   "exports": {
     ".": "./src/index.tsx",
-    "./client": "./src/segmented-control.tsx",
     "./segmented-control": "./src/segmented-control.tsx"
   },
   "scripts": {
     "clean": "rm -rf .turbo",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "jsdom": "catalog:",
     "react": "catalog:",
-    "typescript": "catalog:"
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "^19.0.0"
