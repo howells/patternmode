@@ -39,6 +39,6 @@ export const presets = {
  * />
  * ```
  */
-export const shakeKeyframes = [0, -6, 6, -4, 4, 0];
+export const shakeKeyframes: readonly number[] = Object.freeze([0, -6, 6, -4, 4, 0]);
 
 export type Preset = keyof typeof presets;

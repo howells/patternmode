@@ -21,14 +21,16 @@ export const durations = {
   snappy: 0.22,
 } as const;
 
-/** Duration tokens in milliseconds for CSS/Tailwind usage. */
-export const durationMs = {
-  instant: 0,
-  moderate: 400,
-  normal: 250,
-  quick: 120,
-  slow: 1000,
-  snappy: 220,
-} as const;
-
 export type Duration = keyof typeof durations;
+
+const toMs = (seconds: number): number => Math.round(seconds * 1000);
+
+/** Duration tokens in milliseconds for CSS/Tailwind usage. Derived from `durations`. */
+export const durationMs: Record<Duration, number> = {
+  instant: toMs(durations.instant),
+  moderate: toMs(durations.moderate),
+  normal: toMs(durations.normal),
+  quick: toMs(durations.quick),
+  slow: toMs(durations.slow),
+  snappy: toMs(durations.snappy),
+};
