@@ -72,7 +72,8 @@ export interface StatusMarkProps extends Omit<HTMLAttributes<HTMLSpanElement>, "
   trackColor?: string;
   /**
    * Numeric progress input. Values are clamped from 0 to 100 and snapped to the
-   * nearest discrete visual step: 0, 25, 50, 75, or 100.
+   * nearest discrete visual step: 0, 25, 50, 75, or 100. `NaN` is treated as
+   * unknown progress, the same as `status="null"`.
    */
   value?: number;
   /**
@@ -101,7 +102,7 @@ const PROGRESS_STEP: Record<StatusMarkProgressValue, Exclude<StatusMarkProgressS
 };
 
 const snapProgress = (value: number | undefined): StatusMarkProgressValue => {
-  if (value === undefined || Number.isNaN(value)) {
+  if (value === undefined) {
     return 0;
   }
 
@@ -143,6 +144,13 @@ export const resolveStatusProgress = ({
     return {
       progress: STEP_PROGRESS[status],
       status,
+    };
+  }
+
+  if (value !== undefined && Number.isNaN(value)) {
+    return {
+      progress: null,
+      status: "null",
     };
   }
 

@@ -68,6 +68,13 @@ describe("resolveStatusProgress", () => {
     });
   });
 
+  it("treats NaN values as unknown progress instead of empty", () => {
+    expect(resolveStatusProgress({ value: Number.NaN })).toEqual({
+      progress: null,
+      status: "null",
+    });
+  });
+
   it("keeps null progress distinct from zero progress", () => {
     expect(resolveStatusProgress({ status: "null", value: 100 })).toEqual({
       progress: null,

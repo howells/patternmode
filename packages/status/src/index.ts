@@ -1,3 +1,5 @@
+"use client";
+
 export { StatusMark } from "./status-mark";
 export {
   STATUS_MARK_MOTIONS,
