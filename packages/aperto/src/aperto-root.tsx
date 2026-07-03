@@ -30,6 +30,7 @@ export interface ApertoRootProps extends Omit<
 
 const ApertoRoot = ({
   children,
+  defaultOpen,
   dismissible = true,
   layoutId: layoutIdProp,
   motion: motionProp = "smooth",
@@ -44,7 +45,7 @@ const ApertoRoot = ({
   const shouldReduce = reduceMotionProp ?? systemReducedMotion;
 
   // Uncontrolled state fallback
-  const [internalOpen, setInternalOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen ?? false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 

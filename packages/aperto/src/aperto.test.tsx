@@ -33,6 +33,34 @@ describe("Aperto", () => {
     expect(screen.getByText("A warm sunrise over a quiet mountain ridge.")).toBeInTheDocument();
   });
 
+  it("renders primitive content through the portal when defaultOpen is set", () => {
+    render(
+      <Aperto.Primitive.Root defaultOpen>
+        <Aperto.Primitive.Portal>
+          <Aperto.Primitive.Content aria-describedby={undefined}>
+            <Aperto.Primitive.Title>Opened by default</Aperto.Primitive.Title>
+          </Aperto.Primitive.Content>
+        </Aperto.Primitive.Portal>
+      </Aperto.Primitive.Root>,
+    );
+
+    expect(screen.getByRole("dialog", { name: "Opened by default" })).toBeInTheDocument();
+  });
+
+  it("keeps primitive portal content closed until opened when defaultOpen is not set", () => {
+    render(
+      <Aperto.Primitive.Root>
+        <Aperto.Primitive.Portal>
+          <Aperto.Primitive.Content aria-describedby={undefined}>
+            <Aperto.Primitive.Title>Closed by default</Aperto.Primitive.Title>
+          </Aperto.Primitive.Content>
+        </Aperto.Primitive.Portal>
+      </Aperto.Primitive.Root>,
+    );
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
   it("opens the represented media item from a thumbnail inside a group", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem[] = [

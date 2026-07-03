@@ -1,5 +1,5 @@
 import { m } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useApertoContext } from "./context";
 import { ApertoTransitionMedia } from "./media-rendering";
@@ -19,11 +19,19 @@ export const ApertoMediaTransitionClone = ({
   transition: ApertoMediaTransition | null;
 }) => {
   const ctx = useApertoContext();
+  // Hold the latest onComplete in a ref so parent re-renders (which recreate the
+  // callback) do not restart the completion countdown mid-transition.
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  });
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
     if (transition?.to !== undefined) {
-      timer = setTimeout(onComplete, transitionDurationMs(ctx.preset.transition));
+      timer = setTimeout(() => {
+        onCompleteRef.current();
+      }, transitionDurationMs(ctx.preset.transition));
     }
 
     return () => {
@@ -31,7 +39,7 @@ export const ApertoMediaTransitionClone = ({
         clearTimeout(timer);
       }
     };
-  }, [ctx.preset.transition, onComplete, transition]);
+  }, [ctx.preset.transition, transition]);
 
   if (transition?.to === undefined) {
     return null;
@@ -48,7 +56,7 @@ export const ApertoMediaTransitionClone = ({
         overflow: "hidden",
         pointerEvents: "none",
         position: "fixed",
-        zIndex: 30,
+        zIndex: "var(--patternmode-aperto-clone-z, 1002)",
       }}
       transition={ctx.preset.transition}
     >

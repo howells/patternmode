@@ -8,6 +8,8 @@ export interface ApertoGroupState {
   mediaTransition: ApertoMediaTransition | null;
   navigationDirection: NavigationDirection;
   open: boolean;
+  /** Index of the thumbnail that opened the Media Transition; focus returns here on close. */
+  openerIndex: number | null;
 }
 
 export type ApertoGroupAction =
@@ -31,6 +33,7 @@ export const getInitialGroupState = (initialIndex: number): ApertoGroupState => 
   mediaTransition: null,
   navigationDirection: 0,
   open: false,
+  openerIndex: null,
 });
 
 export const apertoGroupReducer = (
@@ -75,13 +78,16 @@ export const apertoGroupReducer = (
         mediaTransition: action.transition,
         navigationDirection: 0,
         open: true,
+        openerIndex: action.index,
       };
     }
     case "set-index": {
       return { ...state, internalIndex: action.index };
     }
     case "set-open": {
-      return action.open ? { ...state, closing: false, open: true } : { ...state, open: false };
+      return action.open
+        ? { ...state, closing: false, open: true, openerIndex: state.internalIndex }
+        : { ...state, open: false };
     }
     case "start-close": {
       return {

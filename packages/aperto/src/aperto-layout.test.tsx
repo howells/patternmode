@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useEffect, useRef } from "react";
 import type { HTMLAttributes, ReactNode, Ref } from "react";
@@ -153,10 +153,12 @@ describe("Aperto layout projection", () => {
   it("centers primitive content by default", () => {
     render(
       <Aperto.Primitive.Root defaultOpen>
-        <Aperto.Primitive.Content aria-describedby={undefined}>
-          <Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
-          Centered content
-        </Aperto.Primitive.Content>
+        <Aperto.Primitive.Portal>
+          <Aperto.Primitive.Content aria-describedby={undefined}>
+            <Aperto.Primitive.Title>Centered panel</Aperto.Primitive.Title>
+            Centered content
+          </Aperto.Primitive.Content>
+        </Aperto.Primitive.Portal>
       </Aperto.Primitive.Root>,
     );
 
@@ -170,10 +172,12 @@ describe("Aperto layout projection", () => {
   it("can leave primitive content positioning to the caller", () => {
     render(
       <Aperto.Primitive.Root defaultOpen>
-        <Aperto.Primitive.Content aria-describedby={undefined} placement="none">
-          <Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
-          Custom content
-        </Aperto.Primitive.Content>
+        <Aperto.Primitive.Portal>
+          <Aperto.Primitive.Content aria-describedby={undefined} placement="none">
+            <Aperto.Primitive.Title>Unpositioned panel</Aperto.Primitive.Title>
+            Custom content
+          </Aperto.Primitive.Content>
+        </Aperto.Primitive.Portal>
       </Aperto.Primitive.Root>,
     );
 
@@ -382,6 +386,115 @@ describe("Aperto layout projection", () => {
     expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
 
     focusSpy.mockRestore();
+  });
+
+  it("returns focus to the opener thumbnail after navigating to another media item", async () => {
+    const user = userEvent.setup();
+    const media: ApertoMediaItem[] = [
+      {
+        alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
+        title: "Studio table",
+        type: "image",
+      },
+      {
+        alt: "A quiet reading nook",
+        src: "/second-large.jpg",
+        title: "Soft afternoon",
+        type: "image",
+      },
+      {
+        alt: "A garden passage",
+        src: "/third-large.jpg",
+        title: "Garden passage",
+        type: "image",
+      },
+    ];
+
+    render(
+      <Aperto.Group media={media}>
+        <Aperto.Thumbnail index={0} />
+        <Aperto.Thumbnail index={1} />
+        <Aperto.Thumbnail index={2} />
+      </Aperto.Group>,
+    );
+
+    const openerThumbnail = screen.getByRole("button", {
+      name: "Open Studio table",
+    });
+
+    await user.click(openerThumbnail);
+    await user.click(screen.getByRole("button", { name: "Next media" }));
+    await user.click(screen.getByRole("button", { name: "Next media" }));
+    expect(screen.getByRole("dialog", { name: "Garden passage" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Close" }));
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(document.activeElement).toBe(openerThumbnail);
+  });
+
+  it("completes the media transition when the parent re-renders mid-flight", () => {
+    vi.useFakeTimers();
+    try {
+      const media: ApertoMediaItem[] = [
+        {
+          alt: "Ceramic vessels on linen",
+          src: "/first-large.jpg",
+          title: "Studio table",
+          type: "image",
+        },
+      ];
+      // Each call recreates the onIndexChange identity, mimicking a parent re-render.
+      const renderGroup = () => (
+        <Aperto.Group media={media} onIndexChange={() => {}}>
+          <Aperto.Thumbnail index={0} />
+        </Aperto.Group>
+      );
+
+      const view = render(renderGroup());
+
+      fireEvent.click(screen.getByRole("button", { name: "Open Studio table" }));
+      expect(document.querySelector('[data-slot="aperto-transition-media"]')).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+      view.rerender(renderGroup());
+      act(() => {
+        vi.advanceTimersByTime(160);
+      });
+
+      expect(
+        document.querySelector('[data-slot="aperto-transition-media"]'),
+      ).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("layers the transition clone above the overlay and content", async () => {
+    const user = userEvent.setup();
+    const media: ApertoMediaItem[] = [
+      {
+        alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
+        title: "Studio table",
+        type: "image",
+      },
+    ];
+
+    render(
+      <Aperto.Group media={media}>
+        <Aperto.Thumbnail index={0} />
+      </Aperto.Group>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open Studio table" }));
+
+    const clone = document.querySelector('[data-slot="aperto-transition-media"]');
+    expect(clone).toBeInTheDocument();
+    expect(clone).toHaveStyle({ zIndex: "var(--patternmode-aperto-clone-z, 1002)" });
   });
 
   it("sizes expanded grouped media from the active item aspect ratio", async () => {

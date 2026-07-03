@@ -282,7 +282,12 @@ const useApertoMediaLifecycle = ({
 
   const handleCloseAutoFocus = (event: Event) => {
     event.preventDefault();
-    thumbnailMap.get(index)?.focus({ preventScroll: true });
+    // Focus Return: restore focus to the Thumbnail that opened the Media
+    // Transition, falling back to the active thumbnail if it unmounted.
+    const openerThumbnail =
+      state.openerIndex === null ? undefined : thumbnailMap.get(state.openerIndex);
+    const target = openerThumbnail ?? thumbnailMap.get(index);
+    target?.focus({ preventScroll: true });
   };
 
   return { handleCloseAutoFocus, openAtIndex, registerThumbnail, setExpandedMediaNode, startClose };
