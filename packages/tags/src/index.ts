@@ -1,3 +1,5 @@
+"use client";
+
 export { Badge, Tag, TagSelector } from "./tags";
 export type {
   BadgeProps,

@@ -2,13 +2,14 @@
 
 import { joinClassNames } from "@patternmode/system";
 import * as Popover from "@radix-ui/react-popover";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import { TagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import {
   DEFAULT_SEPARATORS,
   NO_ACTIVE_OPTION,
+  dedupeDrafts,
   defaultFilterOption,
   normalizeComparable,
   normalizeTag,
@@ -121,6 +122,8 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     onCreateItem !== undefined && normalizeTag(query) !== "" && exactMatches.length === 0;
   const commandOptions = getCommandOptions({ canCreate, filteredOptions, listboxId, query });
   const activeOption = commandOptions[activeIndex];
+  const latestValueRef = useRef(value);
+  latestValueRef.current = value;
 
   const updateQuery = (nextQuery: string) => {
     if (searchValue === undefined) {
@@ -139,12 +142,14 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
       return;
     }
 
-    const nextValue = [...value];
+    const uniqueDrafts = dedupeDrafts(drafts);
+    const resolvedDrafts = await Promise.all(
+      uniqueDrafts.map(async (draft) => await resolveDraftItem({ draft, onCreateItem, options })),
+    );
+
+    const nextValue = [...latestValueRef.current];
     const nextIds = new Set(nextValue.map((item) => item.id));
     let changed = false;
-    const resolvedDrafts = await Promise.all(
-      drafts.map(async (draft) => await resolveDraftItem({ draft, onCreateItem, options })),
-    );
 
     for (const item of resolvedDrafts) {
       if (item === null || nextIds.has(item.id)) {

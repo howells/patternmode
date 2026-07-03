@@ -14,6 +14,24 @@ export const splitPastedTags = (value: string): string[] =>
     return tag === "" ? [] : [tag];
   });
 
+/** Drops empty drafts and drafts whose normalized comparable label already appeared. */
+export const dedupeDrafts = (drafts: readonly string[]): string[] => {
+  const seen = new Set<string>();
+
+  return drafts.filter((draft) => {
+    const comparableDraft = normalizeComparable(draft);
+    if (comparableDraft === "" || seen.has(comparableDraft)) {
+      return false;
+    }
+    seen.add(comparableDraft);
+    return true;
+  });
+};
+
+/** True when a key commits the current search draft (Enter or a configured separator). */
+export const isCommitKey = (key: string, separators: readonly string[]): boolean =>
+  key === "Enter" || separators.includes(key);
+
 export const defaultFilterOption = (item: TagItem, query: string): boolean =>
   item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 

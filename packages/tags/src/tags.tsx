@@ -10,7 +10,7 @@ import type { ClipboardEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode
 import { useTagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import { TagSelectorRoot } from "./tag-selector-root";
-import { getNextIndex, getPreviousIndex, splitPastedTags } from "./tag-selector-utils";
+import { getNextIndex, getPreviousIndex, isCommitKey, splitPastedTags } from "./tag-selector-utils";
 import type {
   BadgeProps,
   BadgeVariant,
@@ -281,13 +281,17 @@ const TagSelectorSearch = ({
       return;
     }
 
+    if (event.nativeEvent.isComposing && isCommitKey(event.key, context.separators)) {
+      return;
+    }
+
     if (event.key === "Enter" && context.activeOption !== undefined) {
       event.preventDefault();
       await context.selectCommandOption(context.activeOption);
       return;
     }
 
-    if (event.key === "Enter" || context.separators.includes(event.key)) {
+    if (isCommitKey(event.key, context.separators)) {
       event.preventDefault();
       await context.resolveDraft(context.query);
       return;
@@ -331,6 +335,8 @@ const TagSelectorSearch = ({
       aria-activedescendant={context.activeOption?.id}
       aria-autocomplete="list"
       aria-controls={context.listboxId}
+      // eslint-disable-next-line jsx-a11y/role-supports-aria-props, react-doctor/role-supports-aria-props -- the explicit combobox role below makes aria-expanded valid.
+      aria-expanded={context.open}
       aria-label={searchLabel}
       className={joinClassNames("patternmode-tag-selector__search", className)}
       disabled={context.disabled}
@@ -341,6 +347,8 @@ const TagSelectorSearch = ({
       onKeyDown={handleKeyDown}
       onPaste={handlePaste}
       ref={setRefs}
+      // eslint-disable-next-line react-doctor/no-redundant-roles -- a bare text input is a textbox, not a combobox; the role is required for listbox popup semantics.
+      role="combobox"
       type="text"
       value={context.query}
     />
@@ -379,7 +387,12 @@ const TagSelectorOption = ({ item, option }: { item?: TagItem; option?: CommandO
     option ??
     (item === undefined
       ? undefined
-      : { id: item.id, item, label: item.label, type: "item" as const });
+      : {
+          id: `${context.listboxId}-option-${item.id}`,
+          item,
+          label: item.label,
+          type: "item" as const,
+        });
 
   if (resolvedOption === undefined) {
     return null;
@@ -455,13 +468,22 @@ const TagSelectorEmpty = ({ className, ref, ...emptyProps }: TagSelectorEmptyPro
 
 const TagSelectorList = ({ children, className, ref, ...listProps }: TagSelectorListProps) => {
   const context = useTagSelectorContext();
-  let listChildren = children ?? <TagSelectorEmpty>{context.emptyMessage}</TagSelectorEmpty>;
+  const activeOptionId = context.activeOption?.id;
 
-  if (context.commandOptions.length > 0) {
-    listChildren = context.commandOptions.map((option) => (
-      <TagSelectorOption key={option.id} option={option} />
-    ));
-  }
+  useEffect(() => {
+    if (activeOptionId === undefined) {
+      return;
+    }
+    // eslint-disable-next-line unicorn/prefer-query-selector -- ids from useId contain ":" which is invalid inside a CSS selector.
+    document.getElementById(activeOptionId)?.scrollIntoView({ block: "nearest" });
+  }, [activeOptionId]);
+
+  const generatedChildren =
+    context.commandOptions.length > 0 ? (
+      context.commandOptions.map((option) => <TagSelectorOption key={option.id} option={option} />)
+    ) : (
+      <TagSelectorEmpty>{context.emptyMessage}</TagSelectorEmpty>
+    );
 
   return (
     <div
@@ -470,8 +492,10 @@ const TagSelectorList = ({ children, className, ref, ...listProps }: TagSelector
       data-slot="tag-selector-list"
       id={context.listboxId}
       ref={ref}
+      // eslint-disable-next-line jsx-a11y/prefer-tag-over-role, react-doctor/prefer-tag-over-role -- datalist/select cannot host interactive custom option buttons; this is a composite combobox listbox.
+      role="listbox"
     >
-      {listChildren}
+      {children ?? generatedChildren}
     </div>
   );
 };
@@ -494,9 +518,7 @@ const TagSelectorBase = (props: TagSelectorProps): ReactElement => {
           <TagSelectorTrigger className={triggerClassName} placeholder={placeholder} />
           <TagSelectorContent className={contentClassName}>
             <TagSelectorSearch placeholder={searchPlaceholder} />
-            <TagSelectorList>
-              <TagSelectorEmpty>{emptyMessage}</TagSelectorEmpty>
-            </TagSelectorList>
+            <TagSelectorList />
           </TagSelectorContent>
         </>
       )}

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -18,6 +18,8 @@ class ResizeObserverMock {
 
 beforeEach(() => {
   vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+  // jsdom does not implement scrollIntoView; the active option effect calls it.
+  Element.prototype.scrollIntoView = vi.fn<(options?: ScrollIntoViewOptions) => void>();
 });
 
 afterEach(() => {
@@ -114,7 +116,7 @@ describe("TagSelector", () => {
     expect(
       container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
     ).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Search Project tags" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Search Project tags" })).toBeInTheDocument();
   });
 
   it("keeps selected options visible and toggles them by id", async () => {
@@ -148,7 +150,7 @@ describe("TagSelector", () => {
     render(<ControlledTagSelector onCreateItem={onCreateItem} />);
 
     await user.click(screen.getByRole("button", { name: "Project tags" }));
-    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "a");
+    await user.type(screen.getByRole("combobox", { name: "Search Project tags" }), "a");
 
     const optionTexts = screen
       .getAllByRole("option")
@@ -173,7 +175,7 @@ describe("TagSelector", () => {
     render(<ControlledTagSelector onCreateItem={onCreateItem} />);
 
     await user.click(screen.getByRole("button", { name: "Project tags" }));
-    const search = screen.getByRole("textbox", { name: "Search Project tags" });
+    const search = screen.getByRole("combobox", { name: "Search Project tags" });
 
     await user.type(search, "Accessible{Enter}");
     expect(onCreateItem).not.toHaveBeenCalled();
@@ -242,7 +244,7 @@ describe("TagSelector", () => {
     expect(screen.getByText("Custom option Keyboard first")).toBeInTheDocument();
     expect(screen.queryByText("Custom option Accessible")).not.toBeInTheDocument();
 
-    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "s");
+    await user.type(screen.getByRole("combobox", { name: "Search Project tags" }), "s");
     expect(onSearchChange).toHaveBeenCalled();
   });
 
@@ -252,7 +254,7 @@ describe("TagSelector", () => {
     render(<ControlledTagSelector />);
 
     await user.click(screen.getByRole("button", { name: "Project tags" }));
-    await user.type(screen.getByRole("textbox", { name: "Search Project tags" }), "locked");
+    await user.type(screen.getByRole("combobox", { name: "Search Project tags" }), "locked");
     expect(screen.getByRole("option", { name: "Locked" })).toBeDisabled();
   });
 
@@ -273,7 +275,9 @@ describe("TagSelector", () => {
           <TagSelector.Content>
             <TagSelector.Search />
             <TagSelector.List>
-              <TagSelector.Empty>No tags</TagSelector.Empty>
+              {options.map((item) => (
+                <TagSelector.Option item={item} key={item.id} />
+              ))}
             </TagSelector.List>
           </TagSelector.Content>
         </TagSelector.Root>
@@ -283,10 +287,164 @@ describe("TagSelector", () => {
     render(<ComposableExample />);
 
     await user.click(screen.getByRole("button", { name: "Project tags" }));
-    await user.click(screen.getByRole("option", { name: "Accessible" }));
+    await user.keyboard("{ArrowDown}");
+
+    const activeOption = screen.getByRole("option", { name: "Accessible" });
+    expect(activeOption).toHaveAttribute("data-active", "true");
+    expect(screen.getByRole("combobox", { name: "Search Project tags" })).toHaveAttribute(
+      "aria-activedescendant",
+      activeOption.id,
+    );
+
+    await user.click(activeOption);
 
     expect(
       within(screen.getByRole("button", { name: "Project tags" })).getByText("Accessible"),
     ).toBeInTheDocument();
+  });
+
+  it("announces the option list as a listbox controlled by a combobox search", async () => {
+    const user = userEvent.setup();
+
+    render(<ControlledTagSelector />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+
+    const listbox = screen.getByRole("listbox");
+    expect(listbox).toHaveAttribute("data-slot", "tag-selector-list");
+
+    const search = screen.getByRole("combobox", { name: "Search Project tags" });
+    expect(search).toHaveAttribute("aria-expanded", "true");
+    expect(search).toHaveAttribute("aria-controls", listbox.id);
+
+    const listedOptions = within(listbox).getAllByRole("option");
+    expect(listedOptions.length).toBeGreaterThan(0);
+    expect(listedOptions[0]).toHaveAttribute("aria-selected", "false");
+  });
+
+  it("lets consumer-provided TagSelector.List children replace the generated options", async () => {
+    const user = userEvent.setup();
+
+    const ComposableExample = () => {
+      const [value, setValue] = useState<TagItem[]>([]);
+
+      return (
+        <TagSelector.Root
+          aria-label="Project tags"
+          onChange={setValue}
+          options={options}
+          value={value}
+        >
+          <TagSelector.Trigger placeholder="Pick tags" />
+          <TagSelector.Content>
+            <TagSelector.Search />
+            <TagSelector.List>
+              <TagSelector.Option item={getOption(2)} />
+            </TagSelector.List>
+          </TagSelector.Content>
+        </TagSelector.Root>
+      );
+    };
+
+    render(<ComposableExample />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+
+    const consumerOption = screen.getByRole("option", { name: "Keyboard first" });
+    expect(consumerOption).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: "Accessible" })).not.toBeInTheDocument();
+
+    const listbox = screen.getByRole("listbox");
+    expect(consumerOption).toHaveAttribute("id", `${listbox.id}-option-keyboard`);
+  });
+
+  it("keeps selections made while an async onCreateItem is resolving", async () => {
+    const user = userEvent.setup();
+    const resolvers: (() => void)[] = [];
+    const onCreateItem = vi.fn<(label: string) => Promise<TagItem>>(
+      async (label) =>
+        // eslint-disable-next-line promise/avoid-new -- a deferred promise keeps creation in flight while the user selects another option.
+        await new Promise<TagItem>((resolve) => {
+          resolvers.push(() => {
+            resolve({ id: label.toLowerCase(), label });
+          });
+        }),
+    );
+
+    render(<ControlledTagSelector onCreateItem={onCreateItem} />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    await user.paste("Indoor, Outdoor");
+    expect(onCreateItem).toHaveBeenCalledTimes(2);
+
+    await user.click(screen.getByRole("option", { name: "Accessible" }));
+    const trigger = screen.getByRole("button", { name: "Project tags" });
+    expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
+
+    for (const resolveCreate of resolvers) {
+      resolveCreate();
+    }
+
+    expect(await within(trigger).findByText("Indoor")).toBeInTheDocument();
+    expect(within(trigger).getByText("Outdoor")).toBeInTheDocument();
+    expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
+  });
+
+  it("dedupes pasted duplicate labels before creating items", async () => {
+    const user = userEvent.setup();
+    let createdCount = 0;
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => {
+      createdCount += 1;
+      return { id: `created-${createdCount}`, label };
+    });
+
+    render(<ControlledTagSelector name="tags" onCreateItem={onCreateItem} />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    await user.paste("Indoor, indoor, INDOOR, Outdoor");
+
+    expect(onCreateItem).toHaveBeenCalledTimes(2);
+    expect(onCreateItem).toHaveBeenCalledWith("Indoor");
+    expect(onCreateItem).toHaveBeenCalledWith("Outdoor");
+    expect(screen.getAllByDisplayValue(/created-/u)).toHaveLength(2);
+  });
+
+  it("ignores Enter and separator commits during IME composition", async () => {
+    const user = userEvent.setup();
+    const onCreateItem = vi.fn<(label: string) => TagItem>((label) => ({
+      id: label.toLowerCase(),
+      label,
+    }));
+
+    render(<ControlledTagSelector onCreateItem={onCreateItem} />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+    const search = screen.getByRole("combobox", { name: "Search Project tags" });
+    await user.type(search, "kanji");
+
+    fireEvent.keyDown(search, { isComposing: true, key: "Enter" });
+    fireEvent.keyDown(search, { isComposing: true, key: "," });
+    expect(onCreateItem).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(search, { key: "Enter" });
+    await waitFor(() => {
+      expect(onCreateItem).toHaveBeenCalledWith("kanji");
+    });
+  });
+
+  it("scrolls the active option into view during keyboard navigation", async () => {
+    const user = userEvent.setup();
+
+    render(<ControlledTagSelector />);
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
+
+    const firstOption = screen.getByRole("option", { name: "Accessible" });
+    const scrollIntoView = vi.fn<(options?: ScrollIntoViewOptions) => void>();
+    firstOption.scrollIntoView = scrollIntoView;
+
+    await user.keyboard("{ArrowDown}");
+
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: "nearest" });
   });
 });
