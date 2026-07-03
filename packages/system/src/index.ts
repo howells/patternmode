@@ -117,7 +117,7 @@ export const CONTAINER_PREFIX = {
   xs: "@xs:",
 } as const satisfies Record<Breakpoint, string>;
 
-export const isResponsiveValue = <T>(
+export const isResponsiveValue = <T extends number | string>(
   value: ResponsiveValue<T> | undefined,
 ): value is Partial<Record<Breakpoint, T>> & { base?: T } =>
   value !== undefined && value !== null && typeof value === "object" && !Array.isArray(value);

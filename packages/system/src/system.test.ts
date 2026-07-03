@@ -7,6 +7,7 @@ import {
   getPatternmodeSizeValue,
   getResponsiveClasses,
   getSizeVariableStyle,
+  isResponsiveValue,
   joinClassNames,
   PATTERNMODE_SIZES,
   toCssSize,
@@ -53,6 +54,16 @@ describe("Patternmode system utilities", () => {
       "size-6",
       "@md:size-8",
     ]);
+  });
+
+  it("classifies breakpoint maps but not plain token values as responsive", () => {
+    expect(isResponsiveValue({ base: "sm", md: "lg" })).toBe(true);
+    expect(isResponsiveValue<number>({ base: 4 })).toBe(true);
+    expect(isResponsiveValue("sm")).toBe(false);
+    expect(isResponsiveValue(4)).toBe(false);
+    expect(isResponsiveValue()).toBe(false);
+    // @ts-expect-error -- arbitrary object types are not valid responsive tokens
+    isResponsiveValue<Date>(new Date());
   });
 
   it("returns object sizing styles with full-cover defaults", () => {
