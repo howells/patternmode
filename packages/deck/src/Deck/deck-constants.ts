@@ -10,6 +10,9 @@ export const DEFAULT_PERSPECTIVE = 1000;
 export const DEFAULT_DRAG_ELASTIC = 0.9;
 export const DEFAULT_DIRECTIONS: AdvanceDirection[] = ["left", "right"];
 
+/** Card width assumed when the active card cannot be measured (e.g. jsdom). */
+export const FALLBACK_CARD_WIDTH = 320;
+
 export const DRAG_TILT_MAX = 15;
 export const DRAG_TILT_RAMP = 250;
 export const DRAG_INFLUENCE_RAMP = 80;

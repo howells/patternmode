@@ -27,15 +27,17 @@ export const useDeckChildren = (children: ReactNode, generatedId: string): DeckC
   let warnedUnsupportedChild = false;
 
   const collectDeckChildren = (node: ReactNode) => {
-    Children.forEach(node, (child, childIndex) => {
+    Children.forEach(node, (child) => {
       if (isFragmentElement(child)) {
         collectDeckChildren(child.props.children);
         return;
       }
 
       if (isDeckCardElement(child)) {
+        // Generated ids use the running card count so keyless cards in
+        // sibling fragments never collide on a shared per-fragment index.
         const id =
-          child.key === null ? `${generatedId}-${childIndex}` : child.key.replace(/^\.\$/u, "");
+          child.key === null ? `${generatedId}-${cards.length}` : child.key.replace(/^\.\$/u, "");
         cards.push({ element: child, id });
         return;
       }

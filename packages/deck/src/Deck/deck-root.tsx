@@ -2,20 +2,12 @@
 
 import { joinClassNames } from "@patternmode/system";
 import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
-import type { PanInfo } from "motion/react";
 import { useId, useReducer } from "react";
-import type { CSSProperties, KeyboardEvent } from "react";
+import type { CSSProperties } from "react";
 
-import {
-  getAdvanceDecision,
-  getDeckRenderKey,
-  getNextDeckIndex,
-  getVisibleDeckItems,
-  resolveCardRotation,
-} from "../logic";
+import { getDeckRenderKey, getVisibleDeckItems, resolveCardRotation } from "../logic";
 import type {
   AdvanceDirection,
-  DeckAdvanceEvent,
   DeckItem,
   DeckMode,
   DeckRenderOverlayState,
@@ -41,6 +33,8 @@ import {
 import { DeckEmpty } from "./deck-empty";
 import { cardExitVariants } from "./deck-motion";
 import { useDeckChildren } from "./use-deck-children";
+import { createDeckState, deckReducer, useDeckInteractions } from "./use-deck-interactions";
+import type { DeckInteractions } from "./use-deck-interactions";
 
 interface DeckRenderedCardProps {
   activeIndex: number;
@@ -50,8 +44,7 @@ interface DeckRenderedCardProps {
   dragOffset: number;
   dragProgress: number;
   exitCustom: { direction: AdvanceDirection | null; velocity: number };
-  handleDrag: (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
-  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  interactions: DeckInteractions;
   isDragging: boolean;
   item: DeckItem;
   lastDirection: AdvanceDirection | null;
@@ -71,8 +64,7 @@ interface DeckRenderedCardsProps {
   dragOffset: number;
   dragProgress: number;
   exitCustom: { direction: AdvanceDirection | null; velocity: number };
-  handleDrag: (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
-  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  interactions: DeckInteractions;
   isDragging: boolean;
   lastDirection: AdvanceDirection | null;
   mode: DeckMode;
@@ -84,33 +76,6 @@ interface DeckRenderedCardsProps {
   visibleCards: DeckItem[];
   visualBaseIndex: number;
 }
-
-interface DeckState {
-  dragOffset: number;
-  exitVelocity: number;
-  internalIndex: number;
-  lastDirection: AdvanceDirection | null;
-  visualBaseIndex: number;
-}
-
-type DeckAction =
-  | {
-      type: "advance";
-      controlled: boolean;
-      direction: AdvanceDirection;
-      mode: DeckMode;
-      nextIndex: number;
-      velocity: number;
-    }
-  | {
-      type: "drag";
-      offset: number;
-    }
-  | {
-      type: "reset-drag";
-    };
-
-type DeckDispatch = (action: DeckAction) => void;
 
 const getAbsoluteVisualIndex = (
   mode: DeckMode,
@@ -183,33 +148,6 @@ const getWhileDrag = (draggable: boolean, reduceMotion: boolean) =>
       }
     : undefined;
 
-const createDeckState = (defaultIndex: number): DeckState => ({
-  dragOffset: 0,
-  exitVelocity: 0,
-  internalIndex: defaultIndex,
-  lastDirection: null,
-  visualBaseIndex: defaultIndex,
-});
-
-const deckReducer = (state: DeckState, action: DeckAction): DeckState => {
-  if (action.type === "drag") {
-    return { ...state, dragOffset: action.offset };
-  }
-
-  if (action.type === "reset-drag") {
-    return { ...state, dragOffset: 0 };
-  }
-
-  return {
-    ...state,
-    dragOffset: 0,
-    exitVelocity: action.velocity,
-    internalIndex: action.controlled ? state.internalIndex : action.nextIndex,
-    lastDirection: action.direction,
-    visualBaseIndex: action.mode === "cycle" ? state.visualBaseIndex + 1 : action.nextIndex,
-  };
-};
-
 const getDeckControlProps = ({
   ariaLabel,
   ariaLabelledBy,
@@ -243,113 +181,6 @@ const getDeckRootDataProps = (disabled: boolean, exhausted: boolean) => ({
   "data-empty": exhausted ? "true" : undefined,
 });
 
-const useDeckInteractions = ({
-  activeCard,
-  activeIndex,
-  allowedDirections,
-  cards,
-  controlled,
-  disabled,
-  dispatch,
-  distanceThreshold,
-  mode,
-  onAdvance,
-  onAdvanceEnd,
-  onExhausted,
-  onIndexChange,
-  onKeyDown,
-  velocityThreshold,
-}: {
-  activeCard: DeckItem | undefined;
-  activeIndex: number;
-  allowedDirections: AdvanceDirection[];
-  cards: DeckItem[];
-  controlled: boolean;
-  disabled: boolean;
-  dispatch: DeckDispatch;
-  distanceThreshold: number;
-  mode: DeckMode;
-  onAdvance: DeckRootProps["onAdvance"];
-  onAdvanceEnd: DeckRootProps["onAdvanceEnd"];
-  onExhausted: DeckRootProps["onExhausted"];
-  onIndexChange: DeckRootProps["onIndexChange"];
-  onKeyDown: DeckRootProps["onKeyDown"];
-  velocityThreshold: number;
-}) => {
-  const commitAdvance = (direction: AdvanceDirection, velocity = 0) => {
-    if (disabled || activeCard === undefined) {
-      return;
-    }
-
-    const nextIndex = getNextDeckIndex(activeIndex, cards.length, mode);
-    const event: DeckAdvanceEvent = {
-      direction,
-      index: activeIndex,
-      itemId: activeCard.id,
-      mode,
-      nextIndex,
-    };
-
-    dispatch({
-      controlled,
-      direction,
-      mode,
-      nextIndex,
-      type: "advance",
-      velocity,
-    });
-    onAdvance?.(event);
-    onIndexChange?.(nextIndex);
-    onAdvanceEnd?.(event);
-
-    if (mode === "finite" && nextIndex >= cards.length) {
-      onExhausted?.();
-    }
-  };
-
-  const handleDrag = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ offset: info.offset.x, type: "drag" });
-  };
-
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    dispatch({ type: "reset-drag" });
-
-    const target = event.currentTarget;
-    const decision = getAdvanceDecision({
-      allowedDirections,
-      distanceThreshold,
-      offsetX: info.offset.x,
-      velocityThreshold,
-      velocityX: info.velocity.x,
-      width: target instanceof HTMLElement ? target.offsetWidth : 1,
-    });
-
-    if (decision.accepted) {
-      commitAdvance(decision.direction, info.velocity.x);
-    }
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    onKeyDown?.(event);
-
-    if (event.defaultPrevented || disabled) {
-      return;
-    }
-
-    if (event.key === "ArrowLeft" && allowedDirections.includes("left")) {
-      event.preventDefault();
-      commitAdvance("left");
-    }
-
-    if (event.key === "ArrowRight" && allowedDirections.includes("right")) {
-      event.preventDefault();
-      commitAdvance("right");
-    }
-  };
-
-  return { handleDrag, handleDragEnd, handleKeyDown };
-};
-
 const DeckRenderedCard = ({
   activeIndex,
   depth,
@@ -358,8 +189,7 @@ const DeckRenderedCard = ({
   dragOffset,
   dragProgress,
   exitCustom,
-  handleDrag,
-  handleDragEnd,
+  interactions,
   isDragging,
   item,
   lastDirection,
@@ -396,6 +226,21 @@ const DeckRenderedCard = ({
     peekOffset,
     scaleStep,
   );
+  const consumerRef = cardProps.ref;
+  const attachCardRef = (node: HTMLDivElement | null) => {
+    // Track the mounted active card so drag gestures can measure its width.
+    // Never clear on `null`: an exiting clone unmounts after its replacement
+    // has attached and must not clobber the live reference.
+    if (active && node !== null) {
+      interactions.activeCardRef.current = node;
+    }
+
+    if (typeof consumerRef === "function") {
+      consumerRef(node);
+    } else if (consumerRef !== null && consumerRef !== undefined) {
+      consumerRef.current = node;
+    }
+  };
 
   return (
     <m.div
@@ -424,9 +269,12 @@ const DeckRenderedCard = ({
         timeConstant: 350,
       }}
       exit="exit"
+      inert={active ? undefined : true}
       initial={false}
-      onDrag={draggable ? handleDrag : undefined}
-      onDragEnd={draggable ? handleDragEnd : undefined}
+      onDrag={draggable ? interactions.handleDrag : undefined}
+      onDragEnd={draggable ? interactions.handleDragEnd : undefined}
+      onDragStart={draggable ? interactions.handleDragStart : undefined}
+      ref={attachCardRef}
       style={cardStyle}
       transition={{
         default: {
@@ -460,8 +308,7 @@ const DeckRenderedCards = ({
   dragOffset,
   dragProgress,
   exitCustom,
-  handleDrag,
-  handleDragEnd,
+  interactions,
   isDragging,
   lastDirection,
   mode,
@@ -474,7 +321,11 @@ const DeckRenderedCards = ({
   visualBaseIndex,
 }: DeckRenderedCardsProps) => (
   <LazyMotion features={domMax}>
-    <AnimatePresence custom={exitCustom} initial={false}>
+    <AnimatePresence
+      custom={exitCustom}
+      initial={false}
+      onExitComplete={interactions.handleExitComplete}
+    >
       {visibleCards.map((item, depth) => (
         <DeckRenderedCard
           activeIndex={activeIndex}
@@ -484,8 +335,7 @@ const DeckRenderedCards = ({
           dragOffset={dragOffset}
           dragProgress={dragProgress}
           exitCustom={exitCustom}
-          handleDrag={handleDrag}
-          handleDragEnd={handleDragEnd}
+          interactions={interactions}
           isDragging={isDragging}
           item={item}
           key={getDeckRenderKey(
@@ -562,7 +412,7 @@ export const DeckRoot = ({
   const dragProgress = Math.min(1, Math.abs(state.dragOffset) / BG_RESPONSE_RAMP);
 
   const exitCustom = { direction: state.lastDirection, velocity: state.exitVelocity };
-  const { handleDrag, handleDragEnd, handleKeyDown } = useDeckInteractions({
+  const interactions = useDeckInteractions({
     activeCard,
     activeIndex,
     allowedDirections,
@@ -603,7 +453,7 @@ export const DeckRoot = ({
         {...controlProps}
         className="patternmode-deck__control"
         disabled={disabled}
-        onKeyDown={handleKeyDown}
+        onKeyDown={interactions.handleKeyDown}
       />
       <DeckRenderedCards
         activeIndex={activeIndex}
@@ -613,8 +463,7 @@ export const DeckRoot = ({
         dragOffset={state.dragOffset}
         dragProgress={dragProgress}
         exitCustom={exitCustom}
-        handleDrag={handleDrag}
-        handleDragEnd={handleDragEnd}
+        interactions={interactions}
         isDragging={isDragging}
         lastDirection={state.lastDirection}
         mode={mode}
