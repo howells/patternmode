@@ -1,5 +1,25 @@
 # @patternmode/parquet
 
+## 0.1.1
+
+### Patch Changes
+
+- f35ca73: Add a shared **Distribution Normalization** to `@patternmode/system`: `sanitizeWeight`,
+  `deriveDistribution` (sanitized weights, total, and unrounded percentages), and
+  `isLightColor` (the perceptual OKLab contrast decision, owning the single lightness
+  threshold). Parquet and Swatch's Distribution Bar now derive their total, percentages,
+  and light treatment through this one module instead of each re-implementing the math, so
+  the same weighted color reads the same way in one and two dimensions.
+
+  Zero-weight handling stays caller policy: Parquet drops zero-weight Tiles, while a
+  Distribution Bar keeps an identity-bearing Distribution Segment at zero width. No public
+  API or behavior change for either consumer. `@patternmode/system` now depends on
+  `@instruments/colorscope` for the lightness math.
+
+- Updated dependencies [f35ca73]
+- Updated dependencies [094bdf0]
+  - @patternmode/system@0.4.0
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/swatch",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "private": false,
   "description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
   "keywords": [

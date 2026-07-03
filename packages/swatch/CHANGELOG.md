@@ -1,5 +1,51 @@
 # @patternmode/swatch
 
+## 0.10.4
+
+### Patch Changes
+
+- f35ca73: Add a shared **Distribution Normalization** to `@patternmode/system`: `sanitizeWeight`,
+  `deriveDistribution` (sanitized weights, total, and unrounded percentages), and
+  `isLightColor` (the perceptual OKLab contrast decision, owning the single lightness
+  threshold). Parquet and Swatch's Distribution Bar now derive their total, percentages,
+  and light treatment through this one module instead of each re-implementing the math, so
+  the same weighted color reads the same way in one and two dimensions.
+
+  Zero-weight handling stays caller policy: Parquet drops zero-weight Tiles, while a
+  Distribution Bar keeps an identity-bearing Distribution Segment at zero width. No public
+  API or behavior change for either consumer. `@patternmode/system` now depends on
+  `@instruments/colorscope` for the lightness math.
+
+- 30a30af: Component review fixes for Swatch and DistributionBar.
+
+  - `blend="smooth"` now respects `ratio` weights: each stop is positioned at
+    the cumulative midpoint of its ratio share (a 90/10 palette centers at 45%
+    and 95%) while keeping OKLab interpolation, so a Weighted Palette Swatch
+    reads proportionally in smooth mode. Equal, missing, or all-zero ratios
+    fall back to the previous even spacing.
+  - Swatch tone detection now understands more color formats via
+    `@patternmode/system`'s shared `isLightColor` (see the system changeset) —
+    light fills in `rgb()`/`hsl()`/`oklch()`/named forms no longer render an
+    invisible selected check.
+  - A consumer-provided `role` is now applied to the rendered Swatch wrapper
+    instead of being silently dropped.
+  - DistributionBar boundary handles expose slider semantics: `role="slider"`,
+    `aria-valuemin`/`aria-valuemax`, `aria-valuenow` (the left segment's share
+    of the adjacent pair), an `aria-valuetext` like "Woody 60%, Citrus 40%",
+    and `aria-orientation="horizontal"`.
+  - The DistributionBar root sets `data-dragging` while a handle drag is
+    active and segment width transitions are disabled under it, so Live
+    Distribution Adjustment tracks the pointer instead of fighting the 480ms
+    settle transition.
+  - The Swatch Remove Affordance is now visible under `@media (hover: none)`
+    so touch users can discover removal.
+  - Packaging: the `"use client"` directive survives into `dist/index.mjs`, so
+    the package imports cleanly from React Server Components.
+
+- Updated dependencies [f35ca73]
+- Updated dependencies [094bdf0]
+  - @patternmode/system@0.4.0
+
 ## 0.10.3
 
 ### Patch Changes

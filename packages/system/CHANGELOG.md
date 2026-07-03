@@ -1,5 +1,32 @@
 # @patternmode/system
 
+## 0.4.0
+
+### Minor Changes
+
+- f35ca73: Add a shared **Distribution Normalization** to `@patternmode/system`: `sanitizeWeight`,
+  `deriveDistribution` (sanitized weights, total, and unrounded percentages), and
+  `isLightColor` (the perceptual OKLab contrast decision, owning the single lightness
+  threshold). Parquet and Swatch's Distribution Bar now derive their total, percentages,
+  and light treatment through this one module instead of each re-implementing the math, so
+  the same weighted color reads the same way in one and two dimensions.
+
+  Zero-weight handling stays caller policy: Parquet drops zero-weight Tiles, while a
+  Distribution Bar keeps an identity-bearing Distribution Segment at zero width. No public
+  API or behavior change for either consumer. `@patternmode/system` now depends on
+  `@instruments/colorscope` for the lightness math.
+
+### Patch Changes
+
+- 094bdf0: Constrain `isResponsiveValue`'s generic to `number | string` so arbitrary
+  object values can no longer be misclassified as responsive breakpoint maps,
+  and declare `"sideEffects": false` for better tree-shaking.
+
+  `isLightColor` now parses `rgb()`/`rgba()` (comma and space syntax),
+  `hsl()`/`hsla()`, `oklab()`/`oklch()` (via the leading L channel), and the
+  named colors `white`, `black`, and `transparent`, all through the same
+  perceptual OKLab lightness threshold. Unknown formats still read as dark.
+
 ## 0.3.0
 
 ### Minor Changes
