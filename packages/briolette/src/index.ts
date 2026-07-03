@@ -1,3 +1,5 @@
+"use client";
+
 export {
   buildBriolettePalette,
   BRIOLETTE_DEPTH_FALLOFF,

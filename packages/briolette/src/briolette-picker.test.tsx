@@ -383,6 +383,46 @@ describe("BriolettePicker", () => {
     expect(onChange).toHaveBeenLastCalledWith(null);
   });
 
+  it("only starts a drag session for the primary button", () => {
+    render(<BriolettePicker onChange={() => {}} value={null} />);
+    const sphere = screen.getByTestId("briolette-sphere");
+
+    // A right-click must not begin a rotation the context menu never ends.
+    fireEvent.pointerDown(sphere, { button: 2, buttons: 2, clientX: 10, clientY: 10 });
+    expect(sphere).not.toHaveAttribute("data-dragging");
+
+    fireEvent.pointerDown(sphere, { button: 0, buttons: 1, clientX: 10, clientY: 10 });
+    expect(sphere).toHaveAttribute("data-dragging");
+  });
+
+  it("ends the drag session when a move arrives with no button held", () => {
+    render(<BriolettePicker onChange={() => {}} value={null} />);
+    const sphere = screen.getByTestId("briolette-sphere");
+
+    fireEvent.pointerDown(sphere, { button: 0, buttons: 1, clientX: 10, clientY: 10 });
+    expect(sphere).toHaveAttribute("data-dragging");
+
+    // A missed pointerup must not leave the sphere rotating on hover.
+    fireEvent.pointerMove(sphere, { buttons: 0, clientX: 40, clientY: 40 });
+    expect(sphere).not.toHaveAttribute("data-dragging");
+  });
+
+  it("focuses the keyboard surface on pointerdown", () => {
+    render(<BriolettePicker onChange={() => {}} value={null} />);
+    const stage = screen.getByRole("application");
+
+    fireEvent.pointerDown(screen.getByTestId("briolette-sphere"), {
+      button: 0,
+      buttons: 1,
+      clientX: 10,
+      clientY: 10,
+    });
+
+    // preventDefault on pointerdown suppresses native click-to-focus, so the
+    // picker focuses the stage itself — arrow keys work right after a click.
+    expect(stage).toHaveFocus();
+  });
+
   it("clears the selection with Escape", () => {
     const onChange = vi.fn<(value: string | null) => void>();
     const { container, rerender } = render(<BriolettePicker onChange={onChange} value={null} />);
@@ -398,6 +438,41 @@ describe("BriolettePicker", () => {
     fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
 
     expect(onChange).toHaveBeenLastCalledWith(null);
+  });
+
+  it("consumes Escape only while a selection exists", () => {
+    const onChange = vi.fn<(value: string | null) => void>();
+    const onHostKeyDown = vi.fn<() => void>();
+    const { container, rerender } = render(
+      // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- stands in for a host dialog listening for Escape.
+      <div onKeyDown={onHostKeyDown}>
+        <BriolettePicker onChange={onChange} value={null} />
+      </div>,
+    );
+
+    // No selection: Escape passes through to the host (e.g. closes a dialog).
+    fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
+    expect(onHostKeyDown).toHaveBeenCalledTimes(1);
+    expect(onChange).not.toHaveBeenCalled();
+
+    const facet = container.querySelector("polygon[data-face-index]");
+    if (!facet) {
+      throw new Error("expected a facet polygon");
+    }
+    fireEvent.click(facet);
+    const hex = onChange.mock.calls[0]?.[0] ?? null;
+    rerender(
+      // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- stands in for a host dialog listening for Escape.
+      <div onKeyDown={onHostKeyDown}>
+        <BriolettePicker onChange={onChange} value={hex} />
+      </div>,
+    );
+
+    // With a selection: Escape clears it and stops there — one press must not
+    // clear the color *and* close a containing dialog.
+    fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    expect(onHostKeyDown).toHaveBeenCalledTimes(1);
   });
 
   it("re-anchors around an externally supplied value", () => {

@@ -41,16 +41,17 @@ morphs are disabled, leaving only direct manipulation.
 
 ## API
 
-| Prop          | Type                                          | Default   | Description                                                                            |
-| ------------- | --------------------------------------------- | --------- | -------------------------------------------------------------------------------------- |
-| `value`       | `string \| null`                              | —         | Controlled hex color value.                                                            |
-| `onChange`    | `(value: string \| null) => void`             | —         | Selection and unset callback.                                                          |
-| `density`     | `"coarse" \| "base" \| "fine" \| "brilliant"` | `"base"`  | Facet count: 20, 80, 180, or 320. Cut changes animate; seam width scales with the cut. |
-| `seamOpacity` | `number`                                      | `1`       | Seam visibility, `0` (seamless gem) to `1`. Crack-free at every opacity.               |
-| `seamColor`   | `string`                                      | white     | Seam color between facets.                                                             |
-| `label`       | `string`                                      | `"Color"` | Accessible name for the sphere stage.                                                  |
-| `showValue`   | `boolean`                                     | `true`    | Shows the hex output beneath the sphere.                                               |
-| `size`        | `number`                                      | `280`     | Rendered sphere size in pixels.                                                        |
+| Prop          | Type                                          | Default               | Description                                                                                                                           |
+| ------------- | --------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`       | `string \| null`                              | —                     | Controlled hex color value.                                                                                                           |
+| `onChange`    | `(value: string \| null) => void`             | —                     | Selection and unset callback.                                                                                                         |
+| `density`     | `"coarse" \| "base" \| "fine" \| "brilliant"` | `"base"`              | Facet count: 20, 80, 180, or 320. Cut changes animate; seam width scales with the cut.                                                |
+| `maxDepth`    | `number`                                      | `BRIOLETTE_MAX_DEPTH` | Deepest refinement level reachable by clicking near the anchor. Clamped to `1..BRIOLETTE_MAX_DEPTH`; cap it low for a broader sphere. |
+| `seamOpacity` | `number`                                      | `1`                   | Seam visibility, `0` (seamless gem) to `1`. Crack-free at every opacity.                                                              |
+| `seamColor`   | `string`                                      | white                 | Seam color between facets.                                                                                                            |
+| `label`       | `string`                                      | `"Color"`             | Accessible name for the sphere stage.                                                                                                 |
+| `showValue`   | `boolean`                                     | `true`                | Shows the hex output beneath the sphere.                                                                                              |
+| `size`        | `number`                                      | `280`                 | Rendered sphere size in pixels.                                                                                                       |
 
 Geometry and palette helpers (`buildBrioletteFaces`, `projectBrioletteFaces`,
 `buildBriolettePalette`, `brioletteUniverseColor`, `brioletteNeighborColor`) are exported

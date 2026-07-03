@@ -1,13 +1,7 @@
 "use client";
 
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-  PointerEvent,
-  RefObject,
-} from "react";
-import { useEffect, useId, useRef, useState } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties, KeyboardEvent, PointerEvent } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import {
   buildBriolettePalette,
@@ -20,7 +14,6 @@ import {
   BRIOLETTE_VIEWBOX_SIZE,
   orientationFacingFront,
   projectBrioletteFaces,
-  quatSlerp,
   rotateBrioletteOrientation,
 } from "./briolette-geometry";
 import type {
@@ -32,6 +25,8 @@ import type {
 } from "./briolette-geometry";
 import { facesForDensity, useBrioletteMorph } from "./briolette-morph";
 import type { BrioletteMorphLayers } from "./briolette-morph";
+import { prefersReducedMotion, useIdleMotion, useViewportPresence } from "./briolette-motion";
+import type { BrioletteTween } from "./briolette-motion";
 
 declare module "react" {
   interface CSSProperties {
@@ -106,11 +101,6 @@ export interface BriolettePickerProps extends BriolettePickerRootProps {
 const DRAG_RADIANS_PER_PIXEL = 0.008;
 const KEYBOARD_STEP = Math.PI / 15;
 const CLICK_MOVEMENT_LIMIT = 6;
-const IDLE_YAW_PER_MS = 0.000_07;
-const IDLE_PITCH_PER_MS = 0.000_013;
-const INERTIA_DECAY_PER_FRAME = 0.94;
-const INERTIA_REST_SPEED = 0.000_02;
-const MAX_FRAME_MS = 64;
 const CENTER_TWEEN_MS = 520;
 
 /** Finer cuts get more delicate seams. */
@@ -120,8 +110,6 @@ const SEAM_WIDTHS: Record<BrioletteDensity, number> = {
   coarse: 1.5,
   fine: 1,
 };
-
-const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
 
 const BrioletteHint = ({ id }: { id: string }) => (
   <span className="patternmode-briolette__hint" id={id}>
@@ -192,24 +180,12 @@ const useExternalValueAnchor = (
   return setAnchoredValue;
 };
 
-interface BrioletteTween {
-  duration: number;
-  elapsed: number;
-  from: BrioletteQuat;
-  to: BrioletteQuat;
-}
-
 /** Friendly three-quarter starting orientation. */
 const INITIAL_ORIENTATION: BrioletteQuat = rotateBrioletteOrientation(
   { w: 1, x: 0, y: 0, z: 0 },
   -0.55,
   0.42,
 );
-
-const prefersReducedMotion = (): boolean =>
-  typeof window !== "undefined" &&
-  typeof window.matchMedia === "function" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const getRootStyle = (
   value: string | null,
@@ -224,107 +200,6 @@ const getRootStyle = (
   ...(seamColor === undefined ? null : { "--patternmode-briolette-seam": seamColor }),
   ...style,
 });
-
-const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) => {
-  const isInViewportRef = useRef(true);
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    const observer =
-      stage && typeof IntersectionObserver === "function"
-        ? new IntersectionObserver(([entry]) => {
-            isInViewportRef.current = entry?.isIntersecting ?? true;
-          })
-        : null;
-    if (stage && observer) {
-      observer.observe(stage);
-    }
-    return () => {
-      observer?.disconnect();
-    };
-  }, [stageRef]);
-
-  return isInViewportRef;
-};
-
-interface BrioletteMotionRefs {
-  isInViewportRef: RefObject<boolean>;
-  isPointerActiveRef: RefObject<boolean>;
-  tweenRef: RefObject<BrioletteTween | null>;
-  velocityRef: RefObject<{ pitch: number; yaw: number }>;
-}
-
-/**
- * The single animation loop: a centering tween takes priority, then release
- * inertia, then idle drift. Drift pauses while a selection is active so the
- * pinned facet stays put; reduced motion opts out of all autonomous motion.
- */
-const useIdleMotion = (
-  refs: BrioletteMotionRefs,
-  setOrientation: (update: (q: BrioletteQuat) => BrioletteQuat) => void,
-  isDriftEnabled: boolean,
-) => {
-  useEffect(() => {
-    let frame = 0;
-    if (prefersReducedMotion() || typeof requestAnimationFrame !== "function") {
-      return () => {
-        // No animation scheduled under reduced motion.
-      };
-    }
-
-    let last = performance.now();
-    const tick = (now: number) => {
-      const elapsed = Math.min(now - last, MAX_FRAME_MS);
-      last = now;
-
-      const tween = refs.tweenRef.current;
-      if (tween) {
-        tween.elapsed += elapsed;
-        const t = Math.min(tween.elapsed / tween.duration, 1);
-        setOrientation(() => quatSlerp(tween.from, tween.to, easeOutCubic(t)));
-        if (t >= 1) {
-          refs.tweenRef.current = null;
-        }
-      } else if (
-        !refs.isPointerActiveRef.current &&
-        refs.isInViewportRef.current &&
-        !document.hidden
-      ) {
-        const velocity = refs.velocityRef.current;
-        if (Math.hypot(velocity.yaw, velocity.pitch) > INERTIA_REST_SPEED) {
-          setOrientation((q) =>
-            rotateBrioletteOrientation(q, velocity.yaw * elapsed, velocity.pitch * elapsed),
-          );
-          const decay = INERTIA_DECAY_PER_FRAME ** (elapsed / 16);
-          velocity.yaw *= decay;
-          velocity.pitch *= decay;
-        } else {
-          velocity.yaw = 0;
-          velocity.pitch = 0;
-          if (isDriftEnabled) {
-            setOrientation((q) =>
-              rotateBrioletteOrientation(q, IDLE_YAW_PER_MS * elapsed, IDLE_PITCH_PER_MS * elapsed),
-            );
-          }
-        }
-      }
-
-      frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  }, [
-    refs.isInViewportRef,
-    refs.isPointerActiveRef,
-    refs.tweenRef,
-    refs.velocityRef,
-    setOrientation,
-    isDriftEnabled,
-  ]);
-};
 
 const useBrioletteRotation = (isDriftEnabled: boolean) => {
   const [orientation, setOrientation] = useState<BrioletteQuat>(INITIAL_ORIENTATION);
@@ -367,7 +242,15 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
   };
 
   const onPointerDown = (event: BriolettePointerEvent) => {
+    // Only the primary button starts a drag session — a right-click would
+    // otherwise begin a rotation the context menu never ends.
+    if (event.button !== 0) {
+      return;
+    }
     event.preventDefault();
+    /* preventDefault suppresses click-to-focus, so focus the keyboard
+       surface ourselves — "drag or use arrow keys" must work after a click. */
+    stageRef.current?.focus({ preventScroll: true });
     tweenRef.current = null;
     isPointerActiveRef.current = true;
     velocityRef.current = { pitch: 0, yaw: 0 };
@@ -380,8 +263,30 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     setIsDragging(true);
   };
 
+  const endPointer = (event: BriolettePointerEvent) => {
+    if (
+      "hasPointerCapture" in event.currentTarget &&
+      event.currentTarget.hasPointerCapture(event.pointerId)
+    ) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    isPointerActiveRef.current = false;
+    setIsDragging(false);
+    if (prefersReducedMotion()) {
+      velocityRef.current = { pitch: 0, yaw: 0 };
+    }
+  };
+
   const onPointerMove = (event: BriolettePointerEvent) => {
     if (!isPointerActiveRef.current) {
+      return;
+    }
+    /* If the primary button is no longer held, a pointerup was missed
+       (e.g. released outside before capture) — end the session instead of
+       leaving the sphere rotating on hover. */
+    // eslint-disable-next-line no-bitwise -- event.buttons is a bitmask; bit 0 is the primary button.
+    if ((event.buttons & 1) === 0) {
+      endPointer(event);
       return;
     }
 
@@ -398,6 +303,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     // would retarget the click event away from the facet polygons.
     if (
       pointer.movement > CLICK_MOVEMENT_LIMIT &&
+      "setPointerCapture" in event.currentTarget &&
       !event.currentTarget.hasPointerCapture(event.pointerId)
     ) {
       event.currentTarget.setPointerCapture(event.pointerId);
@@ -410,17 +316,6 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     const velocity = velocityRef.current;
     velocity.yaw = velocity.yaw * 0.7 + (yaw / elapsed) * 0.3;
     velocity.pitch = velocity.pitch * 0.7 + (pitch / elapsed) * 0.3;
-  };
-
-  const endPointer = (event: BriolettePointerEvent) => {
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-    isPointerActiveRef.current = false;
-    setIsDragging(false);
-    if (prefersReducedMotion()) {
-      velocityRef.current = { pitch: 0, yaw: 0 };
-    }
   };
 
   const isClickGesture = () => pointerRef.current.movement <= CLICK_MOVEMENT_LIMIT;
@@ -440,6 +335,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
 
 interface BrioletteKeyActions {
   clearSelection: () => void;
+  hasSelection: boolean;
   rotateBy: (yaw: number, pitch: number) => void;
   selectFront: () => void;
 }
@@ -473,7 +369,14 @@ const handleBrioletteKey = (event: KeyboardEvent<HTMLDivElement>, actions: Briol
       break;
     }
     case "Escape": {
-      actions.clearSelection();
+      /* Escape is consumed only when it clears a selection — otherwise it
+         must reach a containing dialog. Consuming it stops the same press
+         from clearing the color *and* closing the host. */
+      if (actions.hasSelection) {
+        event.preventDefault();
+        event.stopPropagation();
+        actions.clearSelection();
+      }
       break;
     }
     default:
@@ -594,7 +497,10 @@ export const BriolettePicker = ({
   const activeView =
     value === null || selection?.faceCount !== faces.length ? null : selection.view;
 
-  const palette = buildBriolettePalette(faces, activeView);
+  /* Memoized: idle drift re-renders every frame, and rebuilding the palette
+     (320 OKLab conversions at `density="brilliant"`) is orientation-free. */
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the palette rebuilds at 60fps.
+  const palette = useMemo(() => buildBriolettePalette(faces, activeView), [faces, activeView]);
   const projected = projectBrioletteFaces(faces, rotation.orientation);
 
   // Cut changes animate: the coarser cut sits beneath while the finer cut
@@ -681,7 +587,12 @@ export const BriolettePicker = ({
         aria-roledescription="color sphere"
         className="patternmode-briolette__stage"
         onKeyDown={(event) => {
-          handleBrioletteKey(event, { clearSelection, rotateBy: rotation.rotateBy, selectFront });
+          handleBrioletteKey(event, {
+            clearSelection,
+            hasSelection: activeView !== null,
+            rotateBy: rotation.rotateBy,
+            selectFront,
+          });
         }}
         ref={rotation.stageRef}
         role="application"
