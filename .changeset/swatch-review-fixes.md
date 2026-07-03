@@ -9,12 +9,10 @@ Component review fixes for Swatch and DistributionBar.
   and 95%) while keeping OKLab interpolation, so a Weighted Palette Swatch
   reads proportionally in smooth mode. Equal, missing, or all-zero ratios
   fall back to the previous even spacing.
-- Swatch tone detection (`isLightColor`) now parses `rgb()`/`rgba()` (comma
-  and space syntax), `hsl()`/`hsla()` (converted to RGB so saturated hues
-  resolve correctly), `oklch()`/`oklab()` (via the L channel), and the named
-  colors `white`, `black`, and `transparent` — light fills in those formats
-  no longer render an invisible selected check. Unknown formats keep the
-  dark default.
+- Swatch tone detection now understands more color formats via
+  `@patternmode/system`'s shared `isLightColor` (see the system changeset) —
+  light fills in `rgb()`/`hsl()`/`oklch()`/named forms no longer render an
+  invisible selected check.
 - A consumer-provided `role` is now applied to the rendered Swatch wrapper
   instead of being silently dropped.
 - DistributionBar boundary handles expose slider semantics: `role="slider"`,

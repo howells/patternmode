@@ -61,7 +61,42 @@ describe("isLightColor", () => {
     expect(isLightColor("#222222")).toBe(false);
   });
 
+  it("detects light and dark tones for 3-digit hex", () => {
+    expect(isLightColor("#fff")).toBe(true);
+    expect(isLightColor("#1d1d1b")).toBe(false);
+  });
+
+  it("parses rgb() and rgba() in comma and space syntax", () => {
+    expect(isLightColor("rgb(255, 255, 255)")).toBe(true);
+    expect(isLightColor("rgb(20 20 20)")).toBe(false);
+    expect(isLightColor("rgba(250, 250, 250, 0.9)")).toBe(true);
+    expect(isLightColor("rgb(90% 90% 90% / 0.5)")).toBe(true);
+  });
+
+  it("resolves hsl() and hsla() through perceptual lightness", () => {
+    expect(isLightColor("hsl(0, 0%, 95%)")).toBe(true);
+    expect(isLightColor("hsl(220 60% 20%)")).toBe(false);
+    // Same HSL lightness, opposite perceptual tone: vivid yellow vs vivid blue.
+    expect(isLightColor("hsla(60, 100%, 50%, 1)")).toBe(true);
+    expect(isLightColor("hsl(240, 100%, 50%)")).toBe(false);
+  });
+
+  it("uses the L channel directly for oklch() and oklab()", () => {
+    expect(isLightColor("oklch(0.85 0.1 150)")).toBe(true);
+    expect(isLightColor("oklch(90% 0.05 120)")).toBe(true);
+    expect(isLightColor("oklab(40% 0.1 0.1)")).toBe(false);
+    expect(isLightColor("oklab(0.3 0 0)")).toBe(false);
+  });
+
+  it("resolves the named colors white, black, and transparent", () => {
+    expect(isLightColor("white")).toBe(true);
+    expect(isLightColor("WHITE")).toBe(true);
+    expect(isLightColor("black")).toBe(false);
+    expect(isLightColor("transparent")).toBe(false);
+  });
+
   it("returns false for colors that cannot be parsed", () => {
     expect(isLightColor("not-a-color")).toBe(false);
+    expect(isLightColor("var(--surface)")).toBe(false);
   });
 });

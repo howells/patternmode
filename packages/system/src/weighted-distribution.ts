@@ -1,4 +1,4 @@
-import { hexLightness } from "@instruments/colorscope/math";
+import { hexLightness, hslToRgb, rgbToOklab } from "@instruments/colorscope/math";
 
 /**
  * Shared logic for rendering weighted color segments — the one place that owns
@@ -48,13 +48,102 @@ export const deriveDistribution = (values: number[]): DerivedDistribution => {
 /** Perceptual (OKLab) lightness above which a color reads as "light". */
 const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
 
+const NAMED_COLOR_LIGHTNESS: Record<string, boolean> = {
+  black: false,
+  transparent: false,
+  white: true,
+};
+
+/**
+ * Splits a CSS color function body into channel tokens, accepting both the
+ * legacy comma syntax and the modern space syntax. Alpha (after `/` or as a
+ * fourth comma argument) is ignored — tone only depends on the channels.
+ */
+const getColorFunctionChannels = (color: string, names: readonly string[]): string[] | null => {
+  const match = /^(?<name>[a-z]+)\(\s*(?<body>[^)]+?)\s*\)$/iu.exec(color.trim());
+  if (match === null) {
+    return null;
+  }
+
+  const { body = "", name = "" } = match.groups ?? {};
+  if (!names.includes(name.toLowerCase())) {
+    return null;
+  }
+
+  const channels = (body.split("/")[0] ?? "").split(/[\s,]+/u).filter(Boolean);
+  return channels.length >= 3 ? channels.slice(0, 3) : null;
+};
+
+/** Parses a channel token against its full-scale value; percentages map to it. */
+const parseChannel = (token: string, scale: number): number | null => {
+  const value = Number.parseFloat(token);
+  if (!Number.isFinite(value)) {
+    return null;
+  }
+
+  return token.endsWith("%") ? (value / 100) * scale : value;
+};
+
+const getRgbFunctionLightness = (color: string): number | null => {
+  const channels = getColorFunctionChannels(color, ["rgb", "rgba"]);
+  if (channels === null) {
+    return null;
+  }
+
+  const [red, green, blue] = channels.map((token) => parseChannel(token, 255));
+  if (red === null || green === null || blue === null) {
+    return null;
+  }
+
+  return rgbToOklab(red ?? 0, green ?? 0, blue ?? 0).L;
+};
+
+const getHslFunctionLightness = (color: string): number | null => {
+  const channels = getColorFunctionChannels(color, ["hsl", "hsla"]);
+  if (channels === null) {
+    return null;
+  }
+
+  const hue = Number.parseFloat(channels[0] ?? "");
+  const saturation = parseChannel(channels[1] ?? "", 100);
+  const lightness = parseChannel(channels[2] ?? "", 100);
+  if (!Number.isFinite(hue) || saturation === null || lightness === null) {
+    return null;
+  }
+
+  const rgb = hslToRgb(hue, saturation, lightness);
+  return rgbToOklab(rgb.r, rgb.g, rgb.b).L;
+};
+
+/** `oklab()`/`oklch()` lead with the perceptual L channel; use it directly. */
+const getOkFunctionLightness = (color: string): number | null => {
+  const channels = getColorFunctionChannels(color, ["oklab", "oklch"]);
+  if (channels === null) {
+    return null;
+  }
+
+  return parseChannel(channels[0] ?? "", 1);
+};
+
 /**
  * Whether a color reads as light, by perceptual (OKLab) lightness above a
  * single shared threshold — so contrast treatment (e.g. dark foreground over a
  * light fill) is decided the same way wherever a weighted color is rendered.
- * Returns `false` for colors colorscope cannot parse.
+ * Parses hex, `rgb()`/`rgba()`, `hsl()`/`hsla()`, `oklab()`/`oklch()`, and the
+ * named colors `white`/`black`/`transparent`; returns `false` for anything it
+ * cannot parse.
  */
 export const isLightColor = (color: string): boolean => {
-  const lightness = hexLightness(color);
+  const named = NAMED_COLOR_LIGHTNESS[color.trim().toLowerCase()];
+  if (named !== undefined) {
+    return named;
+  }
+
+  // Function syntaxes first: hexLightness coerces anything non-hex to 0.
+  const lightness =
+    getRgbFunctionLightness(color) ??
+    getHslFunctionLightness(color) ??
+    getOkFunctionLightness(color) ??
+    hexLightness(color);
   return Number.isFinite(lightness) && lightness > LIGHT_LIGHTNESS_THRESHOLD;
 };
