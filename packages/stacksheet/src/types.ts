@@ -62,6 +62,16 @@ export interface SheetItem<TType extends string = string> {
 export type Side = "left" | "right" | "bottom";
 export type StacksheetLayout = "classic" | "composable";
 
+/**
+ * Placement of the auto drag handle on a bottom sheet.
+ * - `inside` — pill inside the top edge (default)
+ * - `outside` — pill floated above the sheet, on the backdrop
+ *
+ * Side sheets are unaffected: their handle always sits on the interior-facing
+ * edge regardless of this setting.
+ */
+export type HandlePosition = "inside" | "outside";
+
 export interface ResponsiveSide {
   desktop: Side;
   mobile: Side;
@@ -113,6 +123,11 @@ export interface StacksheetConfig {
 
   /** Enable drag-driven dismissal. Default: true */
   drag?: boolean;
+  /**
+   * Placement of the bottom sheet's auto drag handle. Default: "inside".
+   * Side sheets always place their handle on the interior-facing edge.
+   */
+  handle?: HandlePosition;
   /** Lock body scroll when open. Default: true */
   lockScroll?: boolean;
   /** Maximum stack depth. Default: Infinity (unlimited) */
@@ -184,6 +199,7 @@ export interface ResolvedConfig {
   closeThreshold: number;
   dismissible: boolean;
   drag: boolean;
+  handle: HandlePosition;
   lockScroll: boolean;
   maxDepth: number;
   maxWidth: string;

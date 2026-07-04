@@ -65,6 +65,18 @@ describe("resolveConfig", () => {
     expect(config.stacking.renderThreshold).toBe(3);
   });
 
+  // ── Handle defaults ──────────────────────────
+
+  it("defaults handle to inside", () => {
+    const config = resolveConfig();
+    expect(config.handle).toBe("inside");
+  });
+
+  it("passes through handle config", () => {
+    const config = resolveConfig({ handle: "outside" });
+    expect(config.handle).toBe("outside");
+  });
+
   // ── Snap point defaults ──────────────────────
 
   it("defaults snapPoints to empty array", () => {

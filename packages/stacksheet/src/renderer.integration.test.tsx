@@ -463,3 +463,81 @@ describe("SheetRenderer keyboard repositioning", () => {
     expect(dialog.style.maxHeight).toBe("85dvh");
   });
 });
+
+const BodySheet = () => <p>Body</p>;
+
+const stubMatchMedia = () => {
+  const matchMedia = vi.fn<(query: string) => MediaQueryList>().mockImplementation((query) => ({
+    addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
+    addListener: vi.fn<MediaQueryList["addListener"]>(),
+    dispatchEvent: vi.fn<MediaQueryList["dispatchEvent"]>(),
+    matches: false,
+    media: query,
+    onchange: null,
+    removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
+    removeListener: vi.fn<MediaQueryList["removeListener"]>(),
+  }));
+  Object.defineProperty(window, "matchMedia", { configurable: true, value: matchMedia });
+};
+
+const openSheet = async (config?: Parameters<typeof createStacksheet>[0]) => {
+  const user = userEvent.setup();
+  const { StacksheetProvider, useSheet } = createStacksheet<{ s: Record<string, never> }>(config);
+  const Controls = () => {
+    const { open } = useSheet();
+    return (
+      <button
+        onClick={() => {
+          open("s", "s", {}, { ariaLabel: "Sheet" });
+        }}
+        type="button"
+      >
+        Open
+      </button>
+    );
+  };
+  render(
+    <StacksheetProvider sheets={{ s: BodySheet }}>
+      <Controls />
+    </StacksheetProvider>,
+  );
+  await user.click(screen.getByRole("button", { name: "Open" }));
+};
+
+describe("SheetRenderer handle placement", () => {
+  beforeEach(() => {
+    stubMatchMedia();
+  });
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("renders the bottom handle inside the top edge by default", async () => {
+    await openSheet({ side: "bottom" });
+    const handle = screen.getByRole("button", { name: "Dismiss" });
+    expect(handle.className).toContain("top-0");
+    // Nested inside the overflow-hidden content wrapper.
+    expect(handle.parentElement?.className).toContain("overflow-hidden");
+  });
+
+  it("floats the bottom handle above the sheet when handle is 'outside'", async () => {
+    await openSheet({ handle: "outside", side: "bottom" });
+    const handle = screen.getByRole("button", { name: "Dismiss" });
+    const dialog = screen.getByRole("dialog", { name: "Sheet" });
+    expect(handle.className).toContain("bottom-full");
+    // Hoisted to the panel level so the content wrapper can't clip it.
+    expect(handle.parentElement).toBe(dialog);
+  });
+
+  it("places the side handle on the interior edge of a right sheet by default", async () => {
+    await openSheet({ side: "right" });
+    const handle = screen.getByRole("button", { name: "Dismiss" });
+    expect(handle.style.right).toBe("100%");
+  });
+
+  it("places the side handle on the interior edge of a left sheet by default", async () => {
+    await openSheet({ side: "left" });
+    const handle = screen.getByRole("button", { name: "Dismiss" });
+    expect(handle.style.left).toBe("100%");
+  });
+});

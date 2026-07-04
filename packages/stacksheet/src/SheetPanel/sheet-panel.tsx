@@ -24,7 +24,7 @@ import {
   getStackOffset,
   getStackTransform,
 } from "../stacking";
-import type { HeaderRenderProps } from "../types";
+import type { HandlePosition, HeaderRenderProps } from "../types";
 import { PanelInnerContent } from "./sheet-panel-content";
 import { ModalFocusTrap } from "./sheet-panel-focus";
 import { BottomHandle, SideHandle } from "./sheet-panel-handles";
@@ -112,8 +112,11 @@ const getOptionalSideHandle = ({
 }): ReactNode =>
   show ? <SideHandle isHovered={isHovered} onDismiss={onDismiss} side={side} /> : null;
 
-const getOptionalBottomHandle = (show: boolean, onDismiss: () => void): ReactNode =>
-  show ? <BottomHandle onDismiss={onDismiss} /> : null;
+const getOptionalBottomHandle = (
+  show: boolean,
+  onDismiss: () => void,
+  position: HandlePosition,
+): ReactNode => (show ? <BottomHandle onDismiss={onDismiss} position={position} /> : null);
 
 const completeOpeningAnimation = (
   hasEnteredRef: RefObject<boolean>,
@@ -332,7 +335,10 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     show: showSideHandle,
     side,
   });
-  const bottomHandle = getOptionalBottomHandle(showBottomHandle, dismiss);
+  const bottomHandle = getOptionalBottomHandle(showBottomHandle, dismiss, config.handle);
+  // Outside handles must render above the overflow-hidden content wrapper, so
+  // the panel places them at the panel level rather than inside it.
+  const bottomHandleOutside = showBottomHandle && config.handle === "outside";
   const hoverProps = getPanelHoverProps(showSideHandle, setIsHovered);
   const inactivePanelProps = getInactivePanelProps(isTop);
 
@@ -340,6 +346,7 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     animateTarget,
     ariaProps,
     bottomHandle,
+    bottomHandleOutside,
     handleAnimationComplete,
     headerProps,
     hoverProps,
@@ -369,6 +376,7 @@ export const SheetPanel = (props: SheetPanelProps) => {
     animateTarget,
     ariaProps,
     bottomHandle,
+    bottomHandleOutside,
     handleAnimationComplete,
     headerProps,
     hoverProps,
@@ -413,8 +421,9 @@ export const SheetPanel = (props: SheetPanelProps) => {
       {...ariaProps}
     >
       {sideHandle}
+      {bottomHandleOutside ? bottomHandle : null}
       <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit]">
-        {bottomHandle}
+        {bottomHandleOutside ? null : bottomHandle}
         <PanelInnerContent
           Content={Content}
           data={item.data}
