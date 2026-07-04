@@ -124,6 +124,15 @@ export interface StacksheetConfig {
 
   /** Modal mode — overlay + scroll lock + focus trap. Default: true */
   modal?: boolean;
+  /**
+   * Lift mobile bottom sheets above the on-screen keyboard when a field inside
+   * them is focused, instead of relying on the browser's native
+   * scroll-into-view. Mobile bottom sheets only. Default: true
+   *
+   * Note: this repositions the whole sheet; it does not scroll a focused field
+   * that sits deep inside an internally-scrolling sheet body into view.
+   */
+  repositionInputs?: boolean;
   /** Called when the last panel's exit animation completes (stack fully closed) */
   onCloseComplete?: (reason: CloseReason) => void;
   /** Called when the top panel's entrance animation completes */
@@ -179,6 +188,7 @@ export interface ResolvedConfig {
   maxDepth: number;
   maxWidth: string;
   modal: boolean;
+  repositionInputs: boolean;
   onCloseComplete?: (reason: CloseReason) => void;
   onOpenComplete?: () => void;
   onSnapPointChange?: (index: number) => void;

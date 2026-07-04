@@ -250,6 +250,7 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     pop,
     close,
     snapHeights,
+    keyboardInset,
     activeSnapIndex,
     layout,
     renderHeader,
@@ -278,7 +279,18 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   const isComposable = panelLayout === "composable";
   const hasPanelClass = classNames.panel !== "";
   const dragOffset = getDragTransform(side, dragState.offset);
-  const panelStyle = buildPanelStyle(panelStyles, isTop, hasPanelClass, dragState.isDragging);
+  // Only the top bottom-sheet reacts to the keyboard (background panels are
+  // inert and can't hold focus). Clamp height only when there are no snap
+  // points — snap sheets already track the shrunk visual viewport.
+  const activeKeyboardInset = isTop && side === "bottom" ? keyboardInset : 0;
+  const panelStyle = buildPanelStyle(
+    panelStyles,
+    isTop,
+    hasPanelClass,
+    dragState.isDragging,
+    activeKeyboardInset,
+    snapHeights.length === 0,
+  );
 
   const headerProps = getHeaderProps({ close, isNested, pop, side });
 

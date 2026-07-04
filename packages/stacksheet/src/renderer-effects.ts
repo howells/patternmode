@@ -50,6 +50,89 @@ export const useViewportHeight = (active: boolean): number => {
   }, []);
   return active ? (height ?? 0) : 0;
 };
+
+/** Input types that don't summon the on-screen keyboard. */
+const NON_TEXT_INPUT_TYPES = new Set([
+  "button",
+  "checkbox",
+  "color",
+  "file",
+  "hidden",
+  "image",
+  "radio",
+  "range",
+  "reset",
+  "submit",
+]);
+
+/** True for elements whose focus raises the on-screen keyboard. */
+const isEditableElement = (el: Element | null): boolean => {
+  if (!(el instanceof HTMLElement)) {
+    return false;
+  }
+  if (el.isContentEditable) {
+    return true;
+  }
+  if (el instanceof HTMLTextAreaElement) {
+    return true;
+  }
+  if (el instanceof HTMLInputElement) {
+    return !NON_TEXT_INPUT_TYPES.has(el.type);
+  }
+  return false;
+};
+
+/**
+ * Height (px) the on-screen keyboard occupies while a field inside `containerRef`
+ * is focused, else `0`. Derived from the gap between the layout viewport and the
+ * (keyboard-shrunk) visual viewport.
+ *
+ * Focus-gated so unrelated `visualViewport` changes — Android URL-bar collapse,
+ * pinch-zoom — don't move the sheet. rAF-throttled because iOS fires many resize
+ * events over the keyboard's open animation.
+ */
+export const useKeyboardInset = (
+  active: boolean,
+  containerRef: RefObject<HTMLElement | null>,
+): number => {
+  const [inset, setInset] = useState(0);
+  useEffect(() => {
+    const canListen = active && typeof window !== "undefined";
+    const container = containerRef.current;
+    const viewport = canListen ? window.visualViewport : undefined;
+    let frame = 0;
+    let scheduled = false;
+    const measure = () => {
+      const focused = isEditableElement(document.activeElement);
+      const visibleHeight = viewport?.height ?? window.innerHeight;
+      setInset(focused ? Math.max(0, window.innerHeight - visibleHeight) : 0);
+    };
+    const schedule = () => {
+      if (scheduled) {
+        return;
+      }
+      scheduled = true;
+      frame = window.requestAnimationFrame(() => {
+        scheduled = false;
+        measure();
+      });
+    };
+    if (canListen) {
+      container?.addEventListener("focusin", schedule);
+      container?.addEventListener("focusout", schedule);
+      viewport?.addEventListener("resize", schedule, { passive: true });
+    }
+    return () => {
+      if (frame !== 0) {
+        window.cancelAnimationFrame(frame);
+      }
+      container?.removeEventListener("focusin", schedule);
+      container?.removeEventListener("focusout", schedule);
+      viewport?.removeEventListener("resize", schedule);
+    };
+  }, [active, containerRef]);
+  return active ? inset : 0;
+};
 const BODY_SCALE_TRANSITION =
   "transform 500ms cubic-bezier(0.32, 0.72, 0, 1), border-radius 500ms cubic-bezier(0.32, 0.72, 0, 1)";
 /** Fallback delay (transition duration + margin) if `transitionend` never fires. */

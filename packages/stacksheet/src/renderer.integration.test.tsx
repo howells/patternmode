@@ -365,3 +365,101 @@ describe("SheetRenderer CloseWatcher", () => {
     expect(MockCloseWatcher.instances).toHaveLength(0);
   });
 });
+
+const FieldSheet = () => <input aria-label="Message" />;
+
+// jsdom has no ResizeObserver; the snap-point path constructs one. A function
+// expression (not an arrow) so `new ResizeObserver()` can construct it.
+const ResizeObserverStub = function ResizeObserverStub() {
+  return {
+    disconnect: vi.fn<() => void>(),
+    observe: vi.fn<() => void>(),
+    unobserve: vi.fn<() => void>(),
+  };
+};
+
+const setViewport = (innerHeight: number, visualHeight: number) => {
+  Object.defineProperty(window, "innerHeight", { configurable: true, value: innerHeight });
+  const viewport = Object.assign(new EventTarget(), { height: visualHeight });
+  Object.defineProperty(window, "visualViewport", { configurable: true, value: viewport });
+};
+
+const focusField = () => {
+  const field = screen.getByLabelText("Message");
+  act(() => {
+    field.focus();
+    field.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+  });
+};
+
+describe("SheetRenderer keyboard repositioning", () => {
+  beforeEach(() => {
+    // Synchronous rAF so the keyboard-inset throttle resolves within `act`.
+    vi.stubGlobal("requestAnimationFrame", (paint: FrameRequestCallback) => {
+      paint(0);
+      return 1;
+    });
+    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    vi.stubGlobal("ResizeObserver", ResizeObserverStub);
+    // 300px keyboard: layout viewport 900, visual viewport 600.
+    setViewport(900, 600);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    Reflect.deleteProperty(window, "visualViewport");
+  });
+
+  const openBottomSheet = async (config?: Parameters<typeof createStacksheet>[0]) => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet<{ field: Record<string, never> }>({
+      side: "bottom",
+      ...config,
+    });
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open("field", "field", {}, { ariaLabel: "Field sheet" });
+          }}
+          type="button"
+        >
+          Open
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider sheets={{ field: FieldSheet }}>
+        <Controls />
+      </StacksheetProvider>,
+    );
+    await user.click(screen.getByRole("button", { name: "Open" }));
+  };
+
+  it("lifts the bottom sheet above the keyboard when a field is focused", async () => {
+    await openBottomSheet();
+    const dialog = screen.getByRole("dialog", { name: "Field sheet" });
+    expect(dialog.style.bottom).toBe("0px");
+    focusField();
+    expect(dialog.style.bottom).toBe("300px");
+    expect(dialog.style.maxHeight).toBe("calc(85dvh - 300px)");
+  });
+
+  it("stays put when repositionInputs is disabled", async () => {
+    await openBottomSheet({ repositionInputs: false });
+    const dialog = screen.getByRole("dialog", { name: "Field sheet" });
+    focusField();
+    expect(dialog.style.bottom).toBe("0px");
+    expect(dialog.style.maxHeight).toBe("85dvh");
+  });
+
+  it("lifts snap-point sheets but leaves their height to the snap system", async () => {
+    await openBottomSheet({ snapPoints: [0.5, 0.9] });
+    const dialog = screen.getByRole("dialog", { name: "Field sheet" });
+    focusField();
+    expect(dialog.style.bottom).toBe("300px");
+    // No maxHeight clamp — snap heights already track the shrunk viewport.
+    expect(dialog.style.maxHeight).toBe("85dvh");
+  });
+});

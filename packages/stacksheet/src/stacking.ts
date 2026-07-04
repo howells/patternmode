@@ -1,5 +1,12 @@
 import type { CSSProperties } from "react";
 import type { ResolvedConfig, Side, StackingConfig } from "./types";
+
+/**
+ * Resting height of a bottom sheet. `dvh` tracks the dynamic viewport on iOS
+ * Safari (accounts for browser chrome). Shared so the keyboard-inset `calc()`
+ * in `buildPanelStyle` can't drift from the panel's base height.
+ */
+export const BOTTOM_SHEET_HEIGHT = "85dvh";
 // ── Depth transforms ────────────────────────────
 export interface StackTransform {
   borderRadius: number;
@@ -135,10 +142,10 @@ export const getPanelStyles = (
       ...base,
       bottom: 0,
       // dvh tracks the dynamic viewport on iOS Safari (accounts for browser chrome).
-      height: "85dvh",
+      height: BOTTOM_SHEET_HEIGHT,
       left: 0,
       // borderRadius is animated via Motion's animate prop for scale correction
-      maxHeight: "85dvh",
+      maxHeight: BOTTOM_SHEET_HEIGHT,
       right: 0,
     };
   }

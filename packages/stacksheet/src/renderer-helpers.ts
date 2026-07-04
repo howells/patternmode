@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getSnapOffset } from "./snap-points";
+import { BOTTOM_SHEET_HEIGHT } from "./stacking";
 import type { getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
 
@@ -100,8 +101,19 @@ export const buildPanelStyle = (
   isTop: boolean,
   hasPanelClass: boolean,
   isDragging: boolean,
+  keyboardInset: number,
+  clampHeight: boolean,
 ): CSSProperties => ({
   ...panelStyles,
+  // Lift the sheet above the on-screen keyboard. `bottom` (not the Motion `y`
+  // transform) so drag/snap math is untouched. Height is clamped only for
+  // non-snap sheets — snap sheets already resize off the shrunk visual viewport.
+  ...(keyboardInset > 0
+    ? {
+        bottom: keyboardInset,
+        ...(clampHeight ? { maxHeight: `calc(${BOTTOM_SHEET_HEIGHT} - ${keyboardInset}px)` } : {}),
+      }
+    : {}),
   pointerEvents: isTop ? "auto" : "none",
   ...(isTop ? {} : { contain: "layout style paint" }),
   ...(isDragging ? { transition: "none" } : {}),

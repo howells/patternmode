@@ -6,7 +6,7 @@ import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import { useResolvedSide } from "./media";
-import { useBodyScale, useViewportHeight } from "./renderer-effects";
+import { useBodyScale, useKeyboardInset, useViewportHeight } from "./renderer-effects";
 import { resolveClassNames } from "./renderer-helpers";
 import { SheetPanel } from "./sheet-panel";
 import { resolveSnapPoints } from "./snap-points";
@@ -155,6 +155,15 @@ const useSnapState = (
   return { activeSnapIndex, handleSnap, snapHeights };
 };
 
+const usePanelKeyboardInset = (config: ResolvedConfig, isOpen: boolean, side: Side) => {
+  const panelWrapperRef = useRef<HTMLDivElement>(null);
+  const keyboardInset = useKeyboardInset(
+    isOpen && side === "bottom" && config.repositionInputs,
+    panelWrapperRef,
+  );
+  return { keyboardInset, panelWrapperRef };
+};
+
 const useCloseControls = (rawClose: () => void, rawPop: () => void) => {
   const closeReasonRef = useRef<CloseReason>("programmatic");
   const closeWith = (reason: CloseReason) => {
@@ -299,6 +308,7 @@ export const SheetRenderer = <TMap extends object>({
   const classNames = resolveClassNames(classNamesProp);
   const { activeSnapIndex, handleSnap, snapHeights } = useSnapState(config, isOpen, side, stack);
   const { close, closeReasonRef, closeWith, pop, popWith } = useCloseControls(rawClose, rawPop);
+  const { panelWrapperRef, keyboardInset } = usePanelKeyboardInset(config, isOpen, side);
   useBodyScale(config, isOpen, prefersReducedMotion);
   useFocusRestore(isOpen);
   useDismissalEffects({
@@ -354,7 +364,7 @@ export const SheetRenderer = <TMap extends object>({
         </AnimatePresence>
       )}
 
-      <RemoveScroll enabled={shouldLockScroll} forwardProps>
+      <RemoveScroll enabled={shouldLockScroll} forwardProps ref={panelWrapperRef}>
         <div
           className="pointer-events-none fixed inset-0 overflow-hidden"
           style={{ zIndex: config.zIndex + 1 }}
@@ -379,6 +389,7 @@ export const SheetRenderer = <TMap extends object>({
                   isTop={isTop}
                   item={item}
                   key={item.id}
+                  keyboardInset={keyboardInset}
                   layout={layout}
                   onSnap={handleSnap}
                   pop={pop}

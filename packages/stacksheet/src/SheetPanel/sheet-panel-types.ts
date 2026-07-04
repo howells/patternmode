@@ -21,6 +21,8 @@ export interface SheetPanelProps {
   isNested: boolean;
   isTop: boolean;
   item: SheetItem;
+  /** On-screen keyboard height (px) to lift bottom sheets above; 0 when inactive. */
+  keyboardInset: number;
   layout?: StacksheetLayout;
   onSnap: (index: number) => void;
   pop: () => void;

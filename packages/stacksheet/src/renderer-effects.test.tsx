@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { resolveConfig } from "./config";
-import { useBodyScale } from "./renderer-effects";
+import { useBodyScale, useKeyboardInset } from "./renderer-effects";
 
 const mountWrapper = (): HTMLDivElement => {
   const wrapper = document.createElement("div");
@@ -76,5 +76,108 @@ describe("useBodyScale", () => {
     renderBodyScale(true);
     expect(wrapper.style.transform).toBe("");
     expect(wrapper.style.transition).toBe("");
+  });
+});
+
+type ViewportStub = EventTarget & { height: number };
+
+const setVisualViewport = (height: number): ViewportStub => {
+  const viewport: ViewportStub = Object.assign(new EventTarget(), { height });
+  Object.defineProperty(window, "visualViewport", {
+    configurable: true,
+    value: viewport,
+  });
+  return viewport;
+};
+
+const focus = (el: HTMLElement) => {
+  act(() => {
+    el.focus();
+    el.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+  });
+};
+
+describe("useKeyboardInset", () => {
+  let container: HTMLDivElement;
+  let field: HTMLInputElement;
+
+  const renderInset = (active = true) => {
+    const ref = { current: container };
+    return renderHook(({ isActive }: { isActive: boolean }) => useKeyboardInset(isActive, ref), {
+      initialProps: { isActive: active },
+    });
+  };
+
+  beforeEach(() => {
+    // Synchronous rAF so the throttle resolves within `act` deterministically.
+    vi.stubGlobal("requestAnimationFrame", (paint: FrameRequestCallback) => {
+      paint(0);
+      return 1;
+    });
+    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 900 });
+    container = document.createElement("div");
+    field = document.createElement("input");
+    container.append(field);
+    document.body.append(container);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    Reflect.deleteProperty(window, "visualViewport");
+    document.body.innerHTML = "";
+  });
+
+  it("reports the keyboard height while an editable field is focused", () => {
+    setVisualViewport(600);
+    const { result } = renderInset();
+    focus(field);
+    expect(result.current).toBe(300);
+  });
+
+  it("returns 0 when nothing editable is focused, even if the viewport shrank", () => {
+    const viewport = setVisualViewport(600);
+    const { result } = renderInset();
+    act(() => {
+      viewport.dispatchEvent(new Event("resize"));
+    });
+    expect(result.current).toBe(0);
+  });
+
+  it("ignores focus on inputs that don't summon a keyboard", () => {
+    setVisualViewport(600);
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    container.append(checkbox);
+    const { result } = renderInset();
+    focus(checkbox);
+    expect(result.current).toBe(0);
+  });
+
+  it("stays at 0 when inactive, even with a focused field and shrunk viewport", () => {
+    setVisualViewport(600);
+    const { result } = renderInset(false);
+    focus(field);
+    expect(result.current).toBe(0);
+  });
+
+  it("clears back to 0 when the field blurs", () => {
+    setVisualViewport(600);
+    const { result } = renderInset();
+    focus(field);
+    expect(result.current).toBe(300);
+    act(() => {
+      field.blur();
+      field.dispatchEvent(new FocusEvent("focusout", { bubbles: true }));
+    });
+    expect(result.current).toBe(0);
+  });
+
+  it("does not throw when visualViewport is unavailable", () => {
+    Reflect.deleteProperty(window, "visualViewport");
+    const { result } = renderInset();
+    focus(field);
+    // Falls back to innerHeight − innerHeight = 0 instead of crashing.
+    expect(result.current).toBe(0);
   });
 });

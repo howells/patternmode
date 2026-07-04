@@ -32,6 +32,7 @@ const DEFAULT_CONFIG: Omit<ResolvedConfig, "side" | "spring" | "stacking"> = {
   maxDepth: Number.POSITIVE_INFINITY,
   maxWidth: "90vw",
   modal: true,
+  repositionInputs: true,
   scaleBackgroundAmount: 0.97,
   shouldScaleBackground: false,
   showOverlay: true,
