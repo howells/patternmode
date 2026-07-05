@@ -766,39 +766,23 @@ button {
 /* ── Component page header ─────────────────── */
 
 .back-link {
-  align-items: center;
-  color: var(--muted);
-  display: inline-flex;
-  font-size: 0.875rem;
-  gap: 5px;
-  text-decoration: none;
-  transition: color 140ms ease;
+  @apply inline-flex items-center gap-[5px] text-sm text-[color:var(--muted)] no-underline transition-colors duration-[140ms];
 }
 
 .back-link:hover {
-  color: var(--ink);
+  @apply text-[color:var(--ink)];
 }
 
 .component-header {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @apply flex flex-col gap-5;
 }
 
 .component-header h1 {
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.25;
-  margin: 0;
+  @apply m-0 text-sm font-medium leading-[1.25] tracking-normal;
 }
 
 .component-header p {
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.65;
-  margin: 6px 0 0;
-  max-width: 62ch;
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted)];
 }
 
 /* ── Deck demo ─────────────────────────────── */
