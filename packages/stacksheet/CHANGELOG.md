@@ -5,7 +5,6 @@
 ### Minor Changes
 
 - 6db8aae: Keyboard-aware bottom sheets, handle placement, and a lighter default chrome.
-
   - **`repositionInputs`** (default `true`): when a field inside a mobile bottom
     sheet is focused, the sheet clears the on-screen keyboard instead of relying
     on the browser's native scroll-into-view. Plain sheets stay anchored at the
@@ -31,7 +30,6 @@
 ### Patch Changes
 
 - fd7e708: Accessibility, dismissal, and drag fixes from the component review:
-
   - Respect `closeOnEscape: false` on Chromium — the CloseWatcher is no longer created when Escape dismissal is disabled (this also disables Android back-gesture dismissal in that configuration, since CloseWatcher cannot distinguish sources).
   - Ignore Escape presses already consumed by an inner layer (popover, select) instead of also dismissing the sheet, and only `preventDefault()` when the sheet actually dismisses.
   - Animate the background un-scale on close — the `shouldScaleBackground` close path previously snapped back instantly; it now transitions out with a `transitionend` listener plus timeout fallback.
