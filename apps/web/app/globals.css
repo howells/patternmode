@@ -59,6 +59,16 @@ button {
   font: inherit;
 }
 
+/* iOS Safari auto-zooms on focus when an input's font-size is under 16px.
+   Keep the 14px scale on desktop; lift form fields to 16px on touch. */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    @apply text-base;
+  }
+}
+
 .sr-only {
   @apply sr-only;
 }
@@ -306,9 +316,10 @@ button {
 
 .sheet-form input,
 .sheet-form textarea {
-  /* Before the @apply so the utility's text-sm wins over the shorthand. */
+  /* Before the @apply so the utility's text-sm wins over the shorthand.
+     pointer-coarse lifts to 16px so iOS Safari doesn't auto-zoom on focus. */
   font: inherit;
-  @apply w-full rounded-lg border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-[9px] text-sm text-[color:var(--ink)];
+  @apply w-full rounded-lg border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-[9px] text-sm text-[color:var(--ink)] pointer-coarse:text-base;
 }
 
 .sheet-form input:focus-visible,
