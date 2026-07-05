@@ -3,6 +3,7 @@ import type { ApiSection } from "@howells/site-ui";
 import type { Metadata } from "next";
 
 import { StacksheetDemo } from "@/components/stacksheet-demo";
+import { StacksheetExamples } from "@/components/stacksheet-examples";
 
 export const metadata: Metadata = {
   description: "Typed Sheet Stacks with push, navigate, replace, and composable Sheet Parts.",
@@ -73,6 +74,9 @@ export default function StacksheetPage() {
       title="Stacksheet"
     >
       <StacksheetDemo />
+      <DocsBlock title="Examples">
+        <StacksheetExamples />
+      </DocsBlock>
       <DocsBlock title="Install">
         <CodeBlock install>npm install @patternmode/stacksheet</CodeBlock>
         <CodeBlock>{stacksheetExample}</CodeBlock>
