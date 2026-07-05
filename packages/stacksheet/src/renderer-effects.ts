@@ -85,11 +85,13 @@ const isEditableElement = (el: Element | null): boolean => {
 /**
  * Height (px) the on-screen keyboard occupies while a field inside `containerRef`
  * is focused, else `0`. Derived from the gap between the layout viewport and the
- * (keyboard-shrunk) visual viewport.
+ * (keyboard-shrunk, possibly panned) visual viewport.
  *
- * Focus-gated so unrelated `visualViewport` changes — Android URL-bar collapse,
- * pinch-zoom — don't move the sheet. rAF-throttled because iOS fires many resize
- * events over the keyboard's open animation.
+ * Focus-gated to fields *inside the container* so unrelated `visualViewport`
+ * changes — Android URL-bar collapse, or typing into the page behind a
+ * non-modal sheet — don't move the sheet, and zero while pinch-zoomed since a
+ * shrunk visual viewport then isn't a keyboard. rAF-throttled because iOS
+ * fires many resize events over the keyboard's open animation.
  */
 export const useKeyboardInset = (
   active: boolean,
@@ -103,9 +105,15 @@ export const useKeyboardInset = (
     let frame = 0;
     let scheduled = false;
     const measure = () => {
-      const focused = isEditableElement(document.activeElement);
+      const el = document.activeElement;
+      const focused = isEditableElement(el) && container !== null && container.contains(el);
+      // Pinch-zoom also shrinks the visual viewport; that's not a keyboard.
+      const zoomed = (viewport?.scale ?? 1) > 1;
       const visibleHeight = viewport?.height ?? window.innerHeight;
-      setInset(focused ? Math.max(0, window.innerHeight - visibleHeight) : 0);
+      // The keyboard occupies the gap below the visual viewport: layout height
+      // minus the viewport's pan offset (iOS scrolls it down) minus its height.
+      const gap = window.innerHeight - (viewport?.offsetTop ?? 0) - visibleHeight;
+      setInset(focused && !zoomed ? Math.max(0, gap) : 0);
     };
     const schedule = () => {
       if (scheduled) {
@@ -121,6 +129,11 @@ export const useKeyboardInset = (
       container?.addEventListener("focusin", schedule);
       container?.addEventListener("focusout", schedule);
       viewport?.addEventListener("resize", schedule, { passive: true });
+      // offsetTop changes as iOS pans the visual viewport while the keyboard is up.
+      viewport?.addEventListener("scroll", schedule, { passive: true });
+      // Re-measure on (re)activation — state persists across sheet close/reopen,
+      // so a stale inset from the last session must be cleared.
+      schedule();
     }
     return () => {
       if (frame !== 0) {
@@ -129,6 +142,7 @@ export const useKeyboardInset = (
       container?.removeEventListener("focusin", schedule);
       container?.removeEventListener("focusout", schedule);
       viewport?.removeEventListener("resize", schedule);
+      viewport?.removeEventListener("scroll", schedule);
     };
   }, [active, containerRef]);
   return active ? inset : 0;

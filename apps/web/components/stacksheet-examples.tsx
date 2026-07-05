@@ -99,9 +99,9 @@ const ComposableContent = () => (
     <Sheet.Handle />
     <Sheet.Close />
     <Sheet.Body>
-      <div className="p-6">
-        <Sheet.Title className="font-medium">Composable</Sheet.Title>
-        <Sheet.Description className="mt-1.5 text-[color:var(--muted)]">
+      <div className="sheet-panel-content">
+        <Sheet.Title>Composable</Sheet.Title>
+        <Sheet.Description>
           Built from Sheet Parts — a floating close, no header bar.
         </Sheet.Description>
       </div>

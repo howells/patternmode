@@ -103,18 +103,29 @@ describe("renderer helpers", () => {
   });
 
   it("adds fallback panel styles when no class name is supplied", () => {
-    expect(buildPanelStyle({ zIndex: 2 }, true, false, true)).toEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, true, false, true, 0, true)).toEqual({
       background: "var(--background, #fff)",
       borderColor: "var(--border, transparent)",
       pointerEvents: "auto",
       transition: "none",
       zIndex: 2,
     });
-    expect(buildPanelStyle({ zIndex: 2 }, false, true, false)).toEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, false, true, false, 0, true)).toEqual({
       contain: "layout style paint",
       pointerEvents: "none",
       zIndex: 2,
     });
+  });
+
+  it("lifts the panel above the keyboard, clamping height only when asked", () => {
+    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 300, true)).toMatchObject({
+      bottom: 300,
+      maxHeight: "calc(85dvh - 300px)",
+    });
+    const unclamped = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, false);
+    expect(unclamped).toMatchObject({ bottom: 300 });
+    expect(unclamped).not.toHaveProperty("maxHeight");
+    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 0, true)).not.toHaveProperty("bottom");
   });
 
   it("builds transition objects for dragging and stacked panels", () => {

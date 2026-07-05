@@ -75,6 +75,7 @@ button {
 .product-heading h2,
 .docs-header h3,
 .api-section-header h4,
+.sheet-panel-content h2,
 .sheet-panel-content h3,
 .stacksheet-copy h3 {
   @apply m-0 text-sm font-medium leading-[1.25] tracking-normal;
@@ -296,36 +297,23 @@ button {
 }
 
 .sheet-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 16px 0 4px;
+  @apply mx-0 mt-4 mb-1 flex flex-col gap-2.5;
 }
 
 .sheet-form label {
-  color: var(--muted);
-  display: flex;
-  flex-direction: column;
-  font-size: 0.875rem;
-  gap: 5px;
+  @apply flex flex-col gap-[5px] text-sm text-[color:var(--muted)];
 }
 
 .sheet-form input,
 .sheet-form textarea {
-  background: var(--surface-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: 8px;
-  color: var(--ink);
+  /* Before the @apply so the utility's text-sm wins over the shorthand. */
   font: inherit;
-  font-size: 0.875rem;
-  padding: 9px 11px;
-  width: 100%;
+  @apply w-full rounded-lg border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-[9px] text-sm text-[color:var(--ink)];
 }
 
 .sheet-form input:focus-visible,
 .sheet-form textarea:focus-visible {
-  border-color: var(--accent);
-  outline: none;
+  @apply border-[color:var(--accent)] outline-none;
 }
 
 .docs-block {

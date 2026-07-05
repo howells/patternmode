@@ -79,10 +79,13 @@ describe("useBodyScale", () => {
   });
 });
 
-type ViewportStub = EventTarget & { height: number };
+type ViewportStub = EventTarget & { height: number; offsetTop?: number; scale?: number };
 
-const setVisualViewport = (height: number): ViewportStub => {
-  const viewport: ViewportStub = Object.assign(new EventTarget(), { height });
+const setVisualViewport = (
+  height: number,
+  extras: { offsetTop?: number; scale?: number } = {},
+): ViewportStub => {
+  const viewport: ViewportStub = Object.assign(new EventTarget(), { height, ...extras });
   Object.defineProperty(window, "visualViewport", {
     configurable: true,
     value: viewport,
@@ -178,6 +181,45 @@ describe("useKeyboardInset", () => {
     const { result } = renderInset();
     focus(field);
     // Falls back to innerHeight − innerHeight = 0 instead of crashing.
+    expect(result.current).toBe(0);
+  });
+
+  it("clears a stale inset when reactivated after the keyboard closed", () => {
+    setVisualViewport(600);
+    const { result, rerender } = renderInset();
+    focus(field);
+    expect(result.current).toBe(300);
+    // Sheet closes while the keyboard is up; state keeps the old 300.
+    rerender({ isActive: false });
+    act(() => {
+      field.blur();
+      field.dispatchEvent(new FocusEvent("focusout", { bubbles: true }));
+    });
+    // Reopen: the activation measure must reset the stale value.
+    rerender({ isActive: true });
+    expect(result.current).toBe(0);
+  });
+
+  it("ignores editable fields focused outside the container", () => {
+    setVisualViewport(600);
+    const outside = document.createElement("input");
+    document.body.append(outside);
+    const { result } = renderInset();
+    focus(outside);
+    expect(result.current).toBe(0);
+  });
+
+  it("subtracts the visual viewport's pan offset from the inset", () => {
+    setVisualViewport(600, { offsetTop: 50 });
+    const { result } = renderInset();
+    focus(field);
+    expect(result.current).toBe(250);
+  });
+
+  it("treats a pinch-zoomed viewport as no keyboard", () => {
+    setVisualViewport(600, { scale: 2 });
+    const { result } = renderInset();
+    focus(field);
     expect(result.current).toBe(0);
   });
 });
