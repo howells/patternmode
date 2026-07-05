@@ -5,10 +5,12 @@
 Keyboard-aware bottom sheets, handle placement, and a lighter default chrome.
 
 - **`repositionInputs`** (default `true`): when a field inside a mobile bottom
-  sheet is focused, the sheet lifts above the on-screen keyboard via a CSS
-  `bottom` offset instead of relying on the browser's native scroll-into-view.
-  Focus-gated and rAF-throttled; snap-point sheets lift but keep their
-  viewport-driven sizing.
+  sheet is focused, the sheet clears the on-screen keyboard instead of relying
+  on the browser's native scroll-into-view. Plain sheets stay anchored at the
+  bottom and pad their content up — the panel surface extends under the
+  keyboard so no backdrop gap shows above iOS Safari's floating chrome.
+  Snap-point sheets lift via `bottom` and keep their viewport-driven sizing.
+  Focus-gated (fields inside the sheet only) and rAF-throttled.
 - **`handle: "inside" | "outside"`** (default `"inside"`): `"outside"` floats
   the bottom sheet's drag handle above the panel on the backdrop.
 - **Header bar removed.** Classic mode now renders floating corner controls

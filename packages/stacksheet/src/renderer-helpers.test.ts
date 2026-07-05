@@ -117,15 +117,18 @@ describe("renderer helpers", () => {
     });
   });
 
-  it("lifts the panel above the keyboard, clamping height only when asked", () => {
-    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 300, true)).toMatchObject({
-      bottom: 300,
-      maxHeight: "calc(85dvh - 300px)",
-    });
-    const unclamped = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, false);
-    expect(unclamped).toMatchObject({ bottom: 300 });
-    expect(unclamped).not.toHaveProperty("maxHeight");
-    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 0, true)).not.toHaveProperty("bottom");
+  it("clears the keyboard by padding plain sheets and lifting snap sheets", () => {
+    // Plain sheet: surface stays anchored at bottom 0, content pads up.
+    const padded = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, true);
+    expect(padded).toMatchObject({ paddingBottom: 300 });
+    expect(padded).not.toHaveProperty("bottom");
+    // Snap sheet: lifted, viewport-driven sizing untouched.
+    const lifted = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, false);
+    expect(lifted).toMatchObject({ bottom: 300 });
+    expect(lifted).not.toHaveProperty("paddingBottom");
+    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 0, true)).not.toHaveProperty(
+      "paddingBottom",
+    );
   });
 
   it("builds transition objects for dragging and stacked panels", () => {

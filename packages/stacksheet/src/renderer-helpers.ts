@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { getSnapOffset } from "./snap-points";
-import { BOTTOM_SHEET_HEIGHT } from "./stacking";
 import type { getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
 
@@ -96,24 +95,31 @@ const SHADOW_LG =
   "0px 8px 24px 0px rgba(0,0,0,0.06), 0px 24px 48px 0px rgba(0,0,0,0.04), 0px 48px 96px 0px rgba(0,0,0,0.03)";
 export const getShadow = (isNested: boolean): string => (isNested ? SHADOW_SM : SHADOW_LG);
 
+/**
+ * Clear the on-screen keyboard. Plain sheets stay anchored at bottom: 0 and
+ * pad their content up instead — the panel surface extends under the keyboard
+ * (and iOS Safari's floating URL-pill chrome), so no backdrop gap ever shows
+ * between sheet and keyboard, and measurement error hides behind the keyboard.
+ * Snap sheets are transform-anchored, so they lift via `bottom` (not the
+ * Motion `y` transform) and keep their viewport-driven sizing untouched.
+ */
+const getKeyboardClearance = (keyboardInset: number, padForKeyboard: boolean): CSSProperties => {
+  if (keyboardInset <= 0) {
+    return {};
+  }
+  return padForKeyboard ? { paddingBottom: keyboardInset } : { bottom: keyboardInset };
+};
+
 export const buildPanelStyle = (
   panelStyles: CSSProperties,
   isTop: boolean,
   hasPanelClass: boolean,
   isDragging: boolean,
   keyboardInset: number,
-  clampHeight: boolean,
+  padForKeyboard: boolean,
 ): CSSProperties => ({
   ...panelStyles,
-  // Lift the sheet above the on-screen keyboard. `bottom` (not the Motion `y`
-  // transform) so drag/snap math is untouched. Height is clamped only for
-  // non-snap sheets — snap sheets already resize off the shrunk visual viewport.
-  ...(keyboardInset > 0
-    ? {
-        bottom: keyboardInset,
-        ...(clampHeight ? { maxHeight: `calc(${BOTTOM_SHEET_HEIGHT} - ${keyboardInset}px)` } : {}),
-      }
-    : {}),
+  ...getKeyboardClearance(keyboardInset, padForKeyboard),
   pointerEvents: isTop ? "auto" : "none",
   ...(isTop ? {} : { contain: "layout style paint" }),
   ...(isDragging ? { transition: "none" } : {}),

@@ -437,13 +437,15 @@ describe("SheetRenderer keyboard repositioning", () => {
     await user.click(screen.getByRole("button", { name: "Open" }));
   };
 
-  it("lifts the bottom sheet above the keyboard when a field is focused", async () => {
+  it("pads the bottom sheet's content above the keyboard when a field is focused", async () => {
     await openBottomSheet();
     const dialog = screen.getByRole("dialog", { name: "Field sheet" });
-    expect(dialog.style.bottom).toBe("0px");
+    expect(dialog.style.paddingBottom).toBe("");
     focusField();
-    expect(dialog.style.bottom).toBe("300px");
-    expect(dialog.style.maxHeight).toBe("calc(85dvh - 300px)");
+    // Surface stays anchored at the bottom; content pads up past the keyboard.
+    expect(dialog.style.bottom).toBe("0px");
+    expect(dialog.style.paddingBottom).toBe("300px");
+    expect(dialog.style.maxHeight).toBe("85dvh");
   });
 
   it("stays put when repositionInputs is disabled", async () => {
@@ -451,7 +453,7 @@ describe("SheetRenderer keyboard repositioning", () => {
     const dialog = screen.getByRole("dialog", { name: "Field sheet" });
     focusField();
     expect(dialog.style.bottom).toBe("0px");
-    expect(dialog.style.maxHeight).toBe("85dvh");
+    expect(dialog.style.paddingBottom).toBe("");
   });
 
   it("lifts snap-point sheets but leaves their height to the snap system", async () => {

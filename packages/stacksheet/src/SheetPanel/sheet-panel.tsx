@@ -283,8 +283,8 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   const hasPanelClass = classNames.panel !== "";
   const dragOffset = getDragTransform(side, dragState.offset);
   // Only the top bottom-sheet reacts to the keyboard (background panels are
-  // inert and can't hold focus). Clamp height only when there are no snap
-  // points — snap sheets already track the shrunk visual viewport.
+  // inert and can't hold focus). Plain sheets pad content above the keyboard;
+  // snap sheets lift instead — they already track the shrunk visual viewport.
   const activeKeyboardInset = isTop && side === "bottom" ? keyboardInset : 0;
   const panelStyle = buildPanelStyle(
     panelStyles,
