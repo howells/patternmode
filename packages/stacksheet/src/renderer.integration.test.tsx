@@ -468,6 +468,13 @@ describe("SheetRenderer keyboard repositioning", () => {
 
 const BodySheet = () => <p>Body</p>;
 
+const ComposableSheet = () => (
+  <>
+    <Sheet.Handle />
+    <Sheet.Body>Body</Sheet.Body>
+  </>
+);
+
 const stubMatchMedia = () => {
   const matchMedia = vi.fn<(query: string) => MediaQueryList>().mockImplementation((query) => ({
     addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
@@ -541,5 +548,32 @@ describe("SheetRenderer handle placement", () => {
     await openSheet({ side: "left" });
     const handle = screen.getByRole("button", { name: "Dismiss" });
     expect(handle.style.left).toBe("100%");
+  });
+
+  it("suppresses the auto handle in composable layout so Sheet.Handle isn't doubled", async () => {
+    const user = userEvent.setup();
+    const { StacksheetProvider, useSheet } = createStacksheet<{ s: Record<string, never> }>({
+      side: "bottom",
+    });
+    const Controls = () => {
+      const { open } = useSheet();
+      return (
+        <button
+          onClick={() => {
+            open("s", "s", {}, { ariaLabel: "Sheet" });
+          }}
+          type="button"
+        >
+          Open
+        </button>
+      );
+    };
+    render(
+      <StacksheetProvider layout="composable" sheets={{ s: ComposableSheet }}>
+        <Controls />
+      </StacksheetProvider>,
+    );
+    await user.click(screen.getByRole("button", { name: "Open" }));
+    expect(document.querySelectorAll("[data-stacksheet-handle]")).toHaveLength(1);
   });
 });

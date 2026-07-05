@@ -19,6 +19,7 @@ Keyboard-aware bottom sheets, handle placement, and a lighter default chrome.
   floats in the panel corner by default. `classNames.header` is deprecated and
   ignored.
 - `Sheet.Handle` is side-aware: it renders nothing on left/right sheets, whose
-  handle lives on the interior-facing edge.
+  handle lives on the interior-facing edge. The auto bottom handle no longer
+  renders in composable layout — `Sheet.Handle` owns the pill there.
 - The panel container no longer shows a focus outline when focused
   programmatically on open.

@@ -327,7 +327,9 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
 
   const initialRadius = getInitialRadius(side);
   const showSideHandle = isTop && side !== "bottom";
-  const showBottomHandle = isTop && side === "bottom";
+  // Composable layouts own their chrome — Sheet.Handle renders the pill, so
+  // the auto handle would duplicate it.
+  const showBottomHandle = isTop && side === "bottom" && !isComposable;
   const dismiss = isNested ? pop : close;
   const sideHandle = getOptionalSideHandle({
     isHovered,
