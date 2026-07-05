@@ -1,23 +1,5 @@
 @reference "tailwindcss";
 
-/* Design tokens as first-class Tailwind utilities (text-ink, bg-surface-soft,
-   border-border-soft, text-accent, rounded-token, …). The :root block below
-   keeps the legacy --ink/--muted names working for existing declarations. */
-@theme {
-  --color-background: #fbfbf9;
-  --color-border: #e3e1dc;
-  --color-border-soft: #eeece7;
-  --color-code-background: #f2f1ed;
-  --color-code-border: #e5e2da;
-  --color-ink: #1d1d1b;
-  --color-muted: #77756d;
-  --color-surface: #ffffff;
-  --color-surface-soft: #f6f5f1;
-  --color-accent: #315c4b;
-  --color-accent-soft: #e1ebe5;
-  --radius-token: 8px;
-}
-
 :root {
   --background: #fbfbf9;
   --border: #e3e1dc;
@@ -104,7 +86,7 @@ button {
 .sheet-panel-content p,
 .stacksheet-copy p,
 .read-more {
-  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-muted;
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted)];
 }
 
 .link-set {
@@ -112,7 +94,7 @@ button {
 }
 
 .link-set a {
-  @apply text-sm text-muted;
+  @apply text-sm text-[color:var(--muted)];
 }
 
 .product-section {
@@ -120,11 +102,11 @@ button {
 }
 
 .product-heading {
-  @apply border-t border-border pt-6;
+  @apply border-t border-[color:var(--border)] pt-6;
 }
 
 .demo-block {
-  @apply rounded-token border border-border-soft bg-surface p-[18px];
+  @apply rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-[18px];
 }
 
 .demo-controls {
@@ -136,25 +118,25 @@ button {
 }
 
 .segmented-field > span {
-  @apply text-sm text-muted;
+  @apply text-sm text-[color:var(--muted)];
 }
 
 .segmented-control {
-  @apply flex gap-0.5 rounded-full border border-border-soft bg-surface-soft p-0.5;
+  @apply flex gap-0.5 rounded-full border border-[color:var(--border-soft)] bg-[var(--surface-soft)] p-0.5;
 }
 
 .segmented-control button {
-  @apply min-h-[26px] cursor-pointer rounded-full border-0 bg-transparent px-2.5 text-sm leading-none text-muted transition-[background,color] duration-[140ms];
+  @apply min-h-[26px] cursor-pointer rounded-full border-0 bg-transparent px-2.5 text-sm leading-none text-[color:var(--muted)] transition-[background,color] duration-[140ms];
 }
 
 .segmented-control button[aria-pressed="true"] {
-  @apply bg-ink text-white;
+  @apply bg-[var(--ink)] text-white;
 }
 
 .segmented-control button:focus-visible,
 .demo-button-row button:focus-visible,
 .sheet-action-row button:focus-visible {
-  @apply outline-2 outline-offset-2 outline-accent;
+  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
 }
 
 .aperto-demo {
@@ -182,106 +164,67 @@ button {
 }
 
 .option-bar-label {
-  @apply float-left mr-1 py-1 text-sm leading-none text-muted;
+  @apply float-left mr-1 py-1 text-sm leading-none text-[color:var(--muted)];
 }
 
 .option-bar-item {
-  @apply cursor-pointer rounded border-0 bg-transparent px-1.5 py-1 text-sm leading-none text-muted transition-colors duration-[120ms];
+  @apply cursor-pointer rounded border-0 bg-transparent px-1.5 py-1 text-sm leading-none text-[color:var(--muted)] transition-colors duration-[120ms];
 }
 
 .option-bar-item[aria-pressed="true"] {
-  color: var(--ink);
-  font-weight: 500;
+  @apply font-medium text-[color:var(--ink)];
 }
 
 .option-bar-item:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  @apply outline-2 outline-offset-1 outline-[color:var(--accent)];
 }
 
 .stacksheet-surface {
-  align-items: stretch;
-  display: grid;
-  gap: 18px;
-  grid-template-columns: minmax(180px, 0.82fr) 1fr;
-  min-height: 260px;
+  @apply grid min-h-[260px] items-stretch gap-[18px] [grid-template-columns:minmax(180px,0.82fr)_1fr];
 }
 
 .stack-preview {
+  @apply relative min-h-[240px] overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)];
   background: linear-gradient(135deg, rgba(49, 92, 75, 0.08), transparent 56%), var(--surface-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  min-height: 240px;
-  overflow: hidden;
-  position: relative;
 }
 
 .stack-preview div {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 32px rgba(29, 29, 27, 0.08);
-  height: 58%;
-  position: absolute;
-  right: 24px;
-  top: 46px;
-  width: 58%;
+  @apply absolute top-[46px] right-6 h-[58%] w-[58%] rounded-[var(--radius)] border border-[color:var(--border)] bg-[rgba(255,255,255,0.92)] shadow-[0_12px_32px_rgba(29,29,27,0.08)];
 }
 
 .stack-preview div:nth-child(2) {
-  right: 42px;
-  top: 64px;
+  @apply top-[64px] right-[42px];
 }
 
 .stack-preview div:nth-child(3) {
-  right: 60px;
-  top: 82px;
+  @apply top-[82px] right-[60px];
 }
 
 .stacksheet-copy {
-  align-self: center;
+  @apply self-center;
 }
 
 .demo-button-row,
 .sheet-action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
+  @apply mt-[18px] flex flex-wrap gap-2;
 }
 
 .demo-button-row button,
 .sheet-action-row button {
-  background: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: 7px;
-  color: white;
-  cursor: pointer;
-  font-size: 0.875rem;
-  min-height: 34px;
-  padding: 0 12px;
-  transition:
-    background 140ms ease,
-    border-color 140ms ease,
-    color 140ms ease;
+  @apply min-h-[34px] cursor-pointer rounded-[7px] border border-[color:var(--ink)] bg-[var(--ink)] px-3 text-sm text-white transition-[background,border-color,color] duration-[140ms];
 }
 
 .demo-button-row button + button,
 .sheet-action-row button + button {
-  background: transparent;
-  border-color: var(--border);
-  color: var(--ink);
+  @apply border-[color:var(--border)] bg-transparent text-[color:var(--ink)];
 }
 
 .demo-button-row button:disabled {
-  cursor: not-allowed;
-  opacity: 0.42;
+  @apply cursor-not-allowed opacity-[0.42];
 }
 
 .demo-state {
-  color: var(--muted);
-  font-size: 0.875rem;
-  margin: 14px 0 0;
+  @apply mx-0 mt-[14px] mb-0 text-sm text-[color:var(--muted)];
 }
 
 .stacksheet-backdrop {
@@ -289,7 +232,7 @@ button {
 }
 
 .stacksheet-panel {
-  @apply border border-border-soft bg-surface shadow-[0_18px_60px_rgba(29,29,27,0.18)];
+  @apply border border-[color:var(--border-soft)] bg-[var(--surface)] shadow-[0_18px_60px_rgba(29,29,27,0.18)];
 }
 
 .sheet-panel-content {
@@ -297,7 +240,7 @@ button {
 }
 
 .sheet-kicker {
-  @apply m-0 mb-2 text-sm text-accent;
+  @apply m-0 mb-2 text-sm text-[color:var(--accent)];
 }
 
 .sheet-list {
@@ -305,7 +248,7 @@ button {
 }
 
 .sheet-list span {
-  @apply rounded-[7px] border border-border-soft bg-surface-soft px-3 py-2.5 text-sm text-muted;
+  @apply rounded-[7px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2.5 text-sm text-[color:var(--muted)];
 }
 
 .stacksheet-examples {
@@ -313,35 +256,35 @@ button {
 }
 
 .stacksheet-group-label {
-  @apply m-0 mb-0.5 text-sm font-medium text-muted;
+  @apply m-0 mb-0.5 text-sm font-medium text-[color:var(--muted)];
 }
 
 .stacksheet-group-rows {
-  @apply flex flex-col border-b border-border-soft;
+  @apply flex flex-col border-b border-[color:var(--border-soft)];
 }
 
 .stacksheet-row {
-  @apply flex w-full cursor-pointer items-baseline gap-4 border-0 border-t border-border-soft bg-transparent px-2 py-[13px] text-left text-inherit transition-[background] duration-[140ms] max-sm:flex-wrap max-sm:gap-x-3 max-sm:gap-y-1;
+  @apply flex w-full cursor-pointer items-baseline gap-4 border-0 border-t border-[color:var(--border-soft)] bg-transparent px-2 py-[13px] text-left text-inherit transition-[background] duration-[140ms] max-sm:flex-wrap max-sm:gap-x-3 max-sm:gap-y-1;
 }
 
 .stacksheet-row:hover {
-  @apply bg-surface-soft;
+  @apply bg-[var(--surface-soft)];
 }
 
 .stacksheet-row:focus-visible {
-  @apply outline-2 outline-offset-[-2px] outline-accent;
+  @apply outline-2 outline-offset-[-2px] outline-[color:var(--accent)];
 }
 
 .stacksheet-row-name {
-  @apply min-w-[156px] shrink-0 grow-0 text-sm font-medium text-ink max-sm:min-w-0 max-sm:flex-1;
+  @apply min-w-[156px] shrink-0 grow-0 text-sm font-medium text-[color:var(--ink)] max-sm:min-w-0 max-sm:flex-1;
 }
 
 .stacksheet-row-desc {
-  @apply flex-1 text-sm text-muted max-sm:order-3 max-sm:basis-full;
+  @apply flex-1 text-sm text-[color:var(--muted)] max-sm:order-3 max-sm:basis-full;
 }
 
 .stacksheet-row-open {
-  @apply ml-auto inline-flex shrink-0 grow-0 items-center gap-1 text-sm text-accent;
+  @apply ml-auto inline-flex shrink-0 grow-0 items-center gap-1 text-sm text-[color:var(--accent)];
 }
 
 .stacksheet-row-open svg {
@@ -392,21 +335,11 @@ button {
 }
 
 .docs-header {
-  border-top: 1px solid var(--border-soft);
-  padding-top: 20px;
+  @apply border-t border-[color:var(--border-soft)] pt-5;
 }
 
 .code-block {
-  background: var(--code-background);
-  border: 1px solid var(--code-border);
-  border-radius: var(--radius);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.875rem;
-  line-height: 1.7;
-  margin: 0;
-  overflow-x: auto;
-  padding: 16px 18px;
+  @apply m-0 overflow-x-auto rounded-[var(--radius)] border border-[color:var(--code-border)] bg-[var(--code-background)] px-[18px] py-4 font-[family-name:var(--mono)] text-sm leading-[1.7] text-[color:var(--ink)];
   -webkit-overflow-scrolling: touch;
 }
 
@@ -415,152 +348,99 @@ button {
 }
 
 .code-block-install {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: #f6f4ee;
+  @apply border-[color:var(--ink)] bg-[var(--ink)] text-[#f6f4ee];
 }
 
 .api-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @apply flex flex-col gap-5;
 }
 
 .api-section {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  overflow: hidden;
+  @apply overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)];
 }
 
 .api-section-header {
-  padding: 16px 18px;
+  @apply px-[18px] py-4;
 }
 
 .api-section-header p {
-  margin-top: 4px;
+  @apply mt-1;
 }
 
 .prop-list {
-  border-top: 1px solid var(--border-soft);
-  margin: 0;
+  @apply m-0 border-t border-[color:var(--border-soft)];
 }
 
 .prop-row {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: minmax(120px, 0.45fr) 1fr;
-  padding: 14px 18px;
+  @apply grid gap-3 px-[18px] py-[14px] [grid-template-columns:minmax(120px,0.45fr)_1fr];
 }
 
 .prop-row + .prop-row {
-  border-top: 1px solid var(--border-soft);
+  @apply border-t border-[color:var(--border-soft)];
 }
 
 .prop-row dt {
-  color: var(--ink);
-  font-size: 0.875rem;
+  @apply text-sm text-[color:var(--ink)];
 }
 
 .prop-row dd {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
+  @apply m-0 flex flex-wrap gap-2;
 }
 
 .prop-row code,
 .api-section-header code {
-  background: var(--surface-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: 5px;
-  font-family: var(--mono);
-  font-size: 0.875rem;
-  padding: 2px 5px;
+  @apply rounded-[5px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[5px] py-0.5 font-[family-name:var(--mono)] text-sm;
 }
 
 .prop-type,
 .prop-default {
-  background: var(--surface-soft);
-  border-radius: 999px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.875rem;
-  padding: 3px 7px;
+  @apply rounded-full bg-[var(--surface-soft)] px-[7px] py-[3px] font-[family-name:var(--mono)] text-sm text-[color:var(--muted)];
 }
 
 .prop-description {
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  width: 100%;
+  @apply w-full text-sm leading-normal text-[color:var(--muted)];
 }
 
 .read-more {
-  margin-top: -6px;
+  @apply -mt-1.5;
 }
 
 /* ── Catalog homepage ──────────────────────── */
 
 .site-shell:has(.catalog-grid) {
-  gap: 40px;
+  @apply gap-10;
 }
 
 .catalog-intro {
-  max-width: 420px;
+  @apply max-w-[420px];
 }
 
 .catalog-intro h1 {
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.25;
-  margin: 0;
+  @apply m-0 text-sm font-medium leading-[1.25] tracking-normal;
 }
 
 .catalog-intro p {
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.65;
-  margin: 6px 0 0;
+  @apply mx-0 mt-1.5 mb-0 text-sm leading-[1.65] text-[color:var(--muted)];
 }
 
 .catalog-grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(2, 1fr);
+  @apply grid grid-cols-2 gap-4;
 }
 
 .catalog-card {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  text-decoration: none;
-  transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+  @apply flex flex-col overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] no-underline transition-[border-color,box-shadow] duration-[180ms];
 }
 
 .catalog-card-body {
-  padding: 16px 18px 18px;
+  @apply px-[18px] pt-4 pb-[18px];
 }
 
 .catalog-card-body h2 {
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.25;
-  margin: 0;
+  @apply m-0 text-sm font-medium leading-[1.25] tracking-normal;
 }
 
 .catalog-card-body p {
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.55;
-  margin: 5px 0 0;
+  @apply mx-0 mt-[5px] mb-0 text-sm leading-[1.55] text-[color:var(--muted)];
 }
 
 .catalog-card-preview {
