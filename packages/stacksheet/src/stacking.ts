@@ -132,6 +132,9 @@ export const getPanelStyles = (
   const base: CSSProperties = {
     display: "flex",
     flexDirection: "column",
+    // The panel is focused programmatically on open (to move focus into the
+    // dialog); it's not a keyboard tab stop, so suppress the container ring.
+    outline: "none",
     position: "fixed",
     transformOrigin: getTransformOrigin(side),
     willChange: "transform",

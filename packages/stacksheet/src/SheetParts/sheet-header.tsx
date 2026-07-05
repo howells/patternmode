@@ -6,10 +6,8 @@ export const SheetHeader = ({ asChild, className, style, children }: SheetPartPr
   const isAsChild = asChild === true;
   const Comp = isAsChild ? Slot : "header";
   // Keep `shrink-0` even on asChild; without it, header collapses in a
-  // flex-column panel layout. Drop the rest because it is decorative.
-  const defaults = isAsChild
-    ? "shrink-0"
-    : "flex h-14 shrink-0 items-center justify-between border-b px-6";
+  // flex-column panel layout. No bar, no divider — just a minimal top region.
+  const defaults = isAsChild ? "shrink-0" : "flex shrink-0 items-center justify-between gap-3";
   return (
     <Comp className={joinClassNames(defaults, className)} style={style}>
       {children}

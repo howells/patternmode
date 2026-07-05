@@ -15,7 +15,7 @@ export const SheetClose = ({
   const Comp = isAsChild ? Slot : "button";
   const defaults = isAsChild
     ? undefined
-    : "flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 hover:opacity-100";
+    : "absolute right-2 top-2 z-20 flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-50 transition-opacity duration-150 hover:opacity-100";
   return (
     <Comp
       aria-label={children === undefined || children === null ? "Close" : undefined}

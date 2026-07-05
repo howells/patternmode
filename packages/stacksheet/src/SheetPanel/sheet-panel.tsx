@@ -427,7 +427,6 @@ export const SheetPanel = (props: SheetPanelProps) => {
         <PanelInnerContent
           Content={Content}
           data={item.data}
-          headerClassName={classNames.header || undefined}
           headerProps={headerProps}
           isComposable={isComposable}
           renderHeader={renderHeader}

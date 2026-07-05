@@ -10,7 +10,6 @@ export const PanelInnerContent = ({
   data,
   renderHeader,
   headerProps,
-  headerClassName,
 }: {
   isComposable: boolean;
   shouldRender: boolean;
@@ -18,7 +17,6 @@ export const PanelInnerContent = ({
   data: Record<string, unknown>;
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
   headerProps: HeaderRenderProps;
-  headerClassName: string | undefined;
 }) => {
   if (isComposable) {
     return shouldRender && Content !== undefined ? <Content {...data} /> : null;
@@ -28,11 +26,7 @@ export const PanelInnerContent = ({
 
   return (
     <>
-      {customHeader === undefined ? (
-        <DefaultHeader {...headerProps} className={headerClassName} />
-      ) : (
-        customHeader(headerProps)
-      )}
+      {customHeader === undefined ? <DefaultHeader {...headerProps} /> : customHeader(headerProps)}
       {shouldRender && Content !== undefined && (
         <div
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"

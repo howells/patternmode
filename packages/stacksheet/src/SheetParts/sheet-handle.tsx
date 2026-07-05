@@ -9,7 +9,13 @@ export const SheetHandle = ({
   style,
   children,
 }: SheetOptionalContentPartProps) => {
-  const { close, back, isNested } = useSheetPanel();
+  const { close, back, isNested, side } = useSheetPanel();
+  // The grab pill is a top-of-sheet, drag-down affordance — it only belongs on
+  // a bottom sheet. Side sheets drag horizontally, so a horizontal pill at the
+  // top reads as wrong; render nothing rather than misplaced chrome.
+  if (side !== "bottom") {
+    return null;
+  }
   const dismiss = isNested ? back : close;
   const isAsChild = asChild === true;
   const Comp = isAsChild ? Slot : "button";
