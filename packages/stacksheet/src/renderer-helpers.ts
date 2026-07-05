@@ -4,10 +4,11 @@ import { BOTTOM_SHEET_HEIGHT } from "./stacking";
 import type { getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
 
-export type ResolvedClassNames = Required<StacksheetClassNames>;
+// `header` is deprecated (the header bar is gone) and intentionally dropped
+// from the resolved shape — nothing applies it anymore.
+export type ResolvedClassNames = Required<Omit<StacksheetClassNames, "header">>;
 const EMPTY_CLASSNAMES: ResolvedClassNames = {
   backdrop: "",
-  header: "",
   panel: "",
 };
 export const resolveClassNames = (cn?: StacksheetClassNames): ResolvedClassNames => {
@@ -16,7 +17,6 @@ export const resolveClassNames = (cn?: StacksheetClassNames): ResolvedClassNames
   }
   return {
     backdrop: cn.backdrop ?? "",
-    header: cn.header ?? "",
     panel: cn.panel ?? "",
   };
 };

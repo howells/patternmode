@@ -18,13 +18,18 @@ describe("renderer helpers", () => {
   it("resolves missing class names to empty strings", () => {
     expect(resolveClassNames()).toEqual({
       backdrop: "",
-      header: "",
       panel: "",
     });
     expect(resolveClassNames({ panel: "panel" })).toEqual({
       backdrop: "",
-      header: "",
       panel: "panel",
+    });
+  });
+
+  it("ignores the deprecated header class name", () => {
+    expect(resolveClassNames({ header: "legacy" })).toEqual({
+      backdrop: "",
+      panel: "",
     });
   });
 

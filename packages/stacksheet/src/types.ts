@@ -22,7 +22,11 @@ export type SnapPoint = number | string;
 export interface StacksheetClassNames {
   /** Applied to backdrop overlay */
   backdrop?: string;
-  /** Applied to the header bar */
+  /**
+   * @deprecated The header bar was removed — classic mode now renders
+   * floating corner controls instead, so this class is never applied.
+   * Style headers you build yourself in composable mode directly.
+   */
   header?: string;
   /** Applied to each panel container */
   panel?: string;
