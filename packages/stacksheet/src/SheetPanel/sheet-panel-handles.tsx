@@ -13,7 +13,9 @@ export const BottomHandle = ({
   <button
     aria-label="Dismiss"
     className={joinClassNames(
-      "absolute inset-x-0 z-10 flex w-full cursor-grab touch-none items-center justify-center border-none bg-transparent",
+      // text-inherit matters: the pill is bg-current/15, and without it the
+      // button falls back to the UA color — iOS Safari's system blue.
+      "absolute inset-x-0 z-10 flex w-full cursor-grab touch-none items-center justify-center border-none bg-transparent text-inherit",
       // `outside` floats the pill above the sheet on the backdrop; `inside`
       // tucks it just below the top edge.
       position === "outside" ? "bottom-full pt-1 pb-2" : "top-0 pt-2.5 pb-2",
