@@ -832,135 +832,67 @@ button {
 /* ── Swatch demo ───────────────────────────── */
 
 .swatch-demo {
-  background: var(--border-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  display: grid;
-  gap: 1px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  left: -120px;
-  overflow: hidden;
-  position: relative;
-  width: calc(100% + 240px);
+  @apply relative left-[-120px] grid w-[calc(100%+240px)] gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--border-soft)] [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)] max-md:left-0 max-md:w-full max-md:[grid-template-columns:1fr];
 }
 
 .swatch-demo-cell {
-  background: var(--surface);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 36px;
+  @apply flex flex-col gap-4 bg-[var(--surface)] p-9 max-md:p-6;
 }
 
 .swatch-demo-cell--full {
-  grid-column: 1 / -1;
+  @apply col-span-full max-md:[grid-column:1];
 }
 
 .swatch-demo-label {
-  color: var(--muted);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  @apply text-sm font-medium tracking-[0.06em] text-[color:var(--muted)] uppercase;
 }
 
 .swatch-demo-swatches {
-  align-items: center;
-  border: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin: 0;
-  padding: 0;
+  @apply m-0 flex flex-wrap items-center gap-4 border-0 p-0;
 }
 
 .swatch-demo-button {
-  background: transparent;
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  line-height: 0;
-  padding: 0;
-  transition: transform 120ms ease;
+  @apply cursor-pointer rounded-full border-0 bg-transparent p-0 leading-none transition-transform duration-[120ms];
 }
 
 .swatch-demo-button:hover {
-  transform: scale(1.1);
+  @apply scale-110;
 }
 
 .swatch-demo-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
 }
 
 .swatch-demo-palette-grid {
-  display: flex;
-  gap: 16px;
+  @apply flex gap-4 max-md:flex-wrap;
 }
 
 .swatch-demo-palette-item {
-  align-items: center;
-  background: transparent;
-  border: 0;
-  border-radius: var(--radius);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
-  transition: background 120ms ease;
+  @apply flex cursor-pointer flex-col items-center gap-2 rounded-[var(--radius)] border-0 bg-transparent p-0 transition-[background] duration-[120ms];
 }
 
 .swatch-demo-palette-item:hover {
-  background: color-mix(in srgb, var(--border-soft) 40%, transparent);
+  @apply bg-[color-mix(in_srgb,var(--border-soft)_40%,transparent)];
 }
 
 .swatch-demo-palette-item:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
 }
 
 .swatch-demo-palette-item span {
-  color: var(--muted);
-  font-size: 0.875rem;
-  font-weight: 500;
+  @apply text-sm font-medium text-[color:var(--muted)];
 }
 
 .swatch-demo-palette-item[aria-pressed="true"] span {
-  color: var(--foreground);
+  @apply text-[color:var(--foreground)];
 }
 
 .swatch-demo-specimen {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @apply flex flex-col items-center gap-2;
 }
 
 .swatch-demo-specimen > span:not([data-slot="swatch"]) {
-  color: var(--muted);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .swatch-demo {
-    grid-template-columns: 1fr;
-    left: 0;
-    width: 100%;
-  }
-
-  .swatch-demo-cell {
-    padding: 24px;
-  }
-
-  .swatch-demo-cell--full {
-    grid-column: 1;
-  }
-
-  .swatch-demo-palette-grid {
-    flex-wrap: wrap;
-  }
+  @apply text-sm font-medium text-[color:var(--muted)];
 }
 
 /* ── Halo demo ─────────────────────────────── */
