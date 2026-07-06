@@ -29,6 +29,24 @@ export const rectFromElement = (element: Element | null): ApertoRect | null => {
   };
 };
 
+/**
+ * The rect the shared element actually flies from/to on the thumbnail side.
+ *
+ * Thumbnails commonly wrap the media in extra chrome (captions, badges), so
+ * measuring the trigger itself would fly the clone from the whole card —
+ * visibly distorting the media's aspect in flight. Measure the media instead:
+ * an explicit `[data-aperto-media-source]`, else the first `img`/`video`,
+ * falling back to the trigger.
+ */
+export const rectFromTrigger = (trigger: Element | null): ApertoRect | null => {
+  if (!trigger) {
+    return null;
+  }
+
+  const media = trigger.querySelector("[data-aperto-media-source], img, video");
+  return rectFromElement(media ?? trigger);
+};
+
 export const rectTarget = (rect: ApertoRect): TargetAndTransition => ({
   height: rect.height,
   left: rect.left,

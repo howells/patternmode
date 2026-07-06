@@ -9,6 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 
 import { Aperto } from "./index";
+import { rectFromTrigger } from "./media-transition-utils";
 import type { ApertoMediaItem } from "./index";
 
 const unmountedLayoutIds = vi.hoisted((): string[] => []);
@@ -556,7 +557,85 @@ describe("Aperto layout projection", () => {
         document.querySelector(
           '[data-slot="aperto-transition-media"] [aria-label="Optimized render"]',
         ),
-      ).toHaveAttribute("data-renderer", "expanded");
+      ).toHaveAttribute("data-renderer", "thumbnail");
     });
+  });
+
+  it("flies the transition clone with the thumbnail source, not the unloaded full-size source", async () => {
+    const user = userEvent.setup();
+    const media: ApertoMediaItem[] = [
+      {
+        alt: "Swatch",
+        height: 1200,
+        src: "/swatch-1600.jpg",
+        thumbnailSrc: "/swatch-400.jpg",
+        title: "Swatch",
+        type: "image",
+        width: 1200,
+      },
+    ];
+
+    render(
+      <Aperto.Group
+        media={media}
+        renderImage={({ alt, src, variant }) => (
+          <svg aria-label={alt ?? ""} data-renderer={variant} data-src={String(src)} />
+        )}
+      >
+        <Aperto.Thumbnail index={0} />
+      </Aperto.Group>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open Swatch" }));
+
+    // The clone shows the pixels already decoded on screen (the thumbnail);
+    // the full-size asset loads in the expanded view underneath it.
+    await waitFor(() => {
+      expect(
+        document.querySelector('[data-slot="aperto-transition-media"] [aria-label="Swatch"]'),
+      ).toHaveAttribute("data-src", "/swatch-400.jpg");
+    });
+  });
+});
+
+const stubRect = (element: Element, x: number, y: number, w: number, h: number) => {
+  element.getBoundingClientRect = () => new DOMRect(x, y, w, h);
+};
+
+describe("rectFromTrigger", () => {
+  it("measures the media inside the trigger, not the whole card", () => {
+    const trigger = document.createElement("button");
+    const figure = document.createElement("div");
+    const img = document.createElement("img");
+    const caption = document.createElement("div");
+    figure.append(img);
+    trigger.append(figure);
+    trigger.append(caption);
+
+    stubRect(trigger, 0, 0, 120, 160);
+    stubRect(img, 4, 8, 120, 120);
+
+    expect(rectFromTrigger(trigger)).toEqual({ height: 120, left: 4, top: 8, width: 120 });
+  });
+
+  it("prefers an explicit data-aperto-media-source element", () => {
+    const trigger = document.createElement("button");
+    const source = document.createElement("div");
+    source.dataset.apertoMediaSource = "";
+    const decoy = document.createElement("img");
+    trigger.append(source);
+    trigger.append(decoy);
+
+    stubRect(source, 1, 2, 90, 90);
+    stubRect(decoy, 0, 0, 10, 10);
+
+    expect(rectFromTrigger(trigger)).toEqual({ height: 90, left: 1, top: 2, width: 90 });
+  });
+
+  it("falls back to the trigger when it holds no media", () => {
+    const trigger = document.createElement("button");
+    stubRect(trigger, 3, 4, 60, 50);
+
+    expect(rectFromTrigger(trigger)).toEqual({ height: 50, left: 3, top: 4, width: 60 });
   });
 });

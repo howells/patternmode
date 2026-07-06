@@ -104,8 +104,16 @@ export const ApertoTransitionMedia = ({
       alt: item.alt,
       height: item.height,
       item,
-      src: item.src,
-      variant: "expanded",
+      // The clone flies with the thumbnail's pixels — they are already decoded
+      // and on screen, so the shared element stays seamless in flight. Using
+      // the full-size `src` here makes the morph pop to a blank/half-loaded
+      // frame whenever the expanded asset differs from the thumbnail and has
+      // not finished loading yet. `variant: "thumbnail"` matters for the same
+      // reason: consumers key srcset/sizes off the variant, and only the
+      // thumbnail variant reproduces the exact URL the browser already has in
+      // cache.
+      src: item.thumbnailSrc ?? item.src,
+      variant: "thumbnail",
       width: item.width,
     };
     return (renderImage ?? renderDefaultImage)(imageProps);

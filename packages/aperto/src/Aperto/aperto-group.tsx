@@ -14,7 +14,7 @@ import { ApertoTitle } from "../aperto-title";
 import { ApertoExpandedMediaStage } from "../expanded-media-stage";
 import type { NavigationDirection } from "../expanded-media-stage";
 import { ApertoMediaTransitionClone } from "../media-transition";
-import { rectFromElement } from "../media-transition-utils";
+import { rectFromElement, rectFromTrigger } from "../media-transition-utils";
 import type { ApertoMediaTransition } from "../media-transition-utils";
 import { getDescriptionProps, getMediaLabel } from "../media-utils";
 import type {
@@ -251,7 +251,8 @@ const useApertoMediaLifecycle = ({
   }, [dispatch, state.mediaTransition]);
 
   const openAtIndex = (thumbIndex: number) => {
-    const sourceRect = rectFromElement(thumbnailMap.get(thumbIndex) ?? null);
+    // Fly from the media inside the trigger, not the whole card (see rectFromTrigger).
+    const sourceRect = rectFromTrigger(thumbnailMap.get(thumbIndex) ?? null);
     const item = media[thumbIndex] ?? null;
     const transition =
       sourceRect === null || item === null
@@ -268,7 +269,7 @@ const useApertoMediaLifecycle = ({
     }
 
     const sourceRect = rectFromElement(expandedMediaRef.current);
-    const targetRect = rectFromElement(thumbnailMap.get(index) ?? null);
+    const targetRect = rectFromTrigger(thumbnailMap.get(index) ?? null);
     if (activeMedia === undefined || sourceRect === null || targetRect === null) {
       dispatch({ type: "close-without-transition" });
       return;

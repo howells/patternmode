@@ -18,8 +18,11 @@
   @apply block size-full object-cover;
 }
 
-[data-slot="aperto-trigger"][data-aperto-active] > img,
-[data-slot="aperto-trigger"][data-aperto-active] > video {
+/* Descendant (not child) selectors: thumbnails often nest the media inside
+   caption/badge chrome, and the origin media must vacate while the clone is
+   in flight regardless of wrapper depth. */
+[data-slot="aperto-trigger"][data-aperto-active] img,
+[data-slot="aperto-trigger"][data-aperto-active] video {
   @apply invisible;
 }
 
@@ -28,22 +31,36 @@
 }
 
 [data-slot="aperto-content"] {
-  @apply fixed z-[1001] flex h-fit max-h-[min(90vh,920px)] w-fit max-w-[min(92vw,1200px)] flex-col items-center justify-center gap-3 overflow-visible rounded-[var(--aperto-radius,0.5rem)] p-0 text-white outline-none;
+  /* Overridable panel height cap. The media sizing below derives its budget
+     from this same var, so panel and media can never disagree. */
+  --aperto-panel-max-h: min(90vh, 920px);
+  @apply fixed z-[1001] flex h-fit max-h-[var(--aperto-panel-max-h)] w-fit max-w-[min(92vw,1200px)] flex-col items-center justify-center gap-3 overflow-visible rounded-[var(--aperto-radius,0.5rem)] p-0 text-white outline-none;
   overscroll-behavior: contain;
 }
 
 [data-slot="aperto-content"] > img,
 [data-slot="aperto-content"] > video,
 [data-slot="aperto-content"] > [data-slot="aperto-media"] {
-  @apply block rounded-[var(--aperto-radius,0.5rem)];
+  /* The media's real vertical budget: the viewport allowance AND the panel's
+     own max-height minus room for the caption stack (title / description /
+     counter, tunable via --aperto-caption-allowance). Folding the panel cap
+     into the budget — and refusing to flex-shrink — is what keeps the
+     declared aspect-ratio honest: without it, a capped panel shrinks the
+     media's height while the width formula holds, silently distorting the
+     box (a 1:1 item renders visibly non-square). */
+  --aperto-media-max-h: min(
+    calc(100dvh - 8rem),
+    calc(var(--aperto-panel-max-h, min(90vh, 920px)) - var(--aperto-caption-allowance, 6rem))
+  );
+  @apply block shrink-0 rounded-[var(--aperto-radius,0.5rem)];
   aspect-ratio: var(--aperto-expanded-aspect-ratio, 3 / 2);
   height: auto;
-  max-height: calc(100dvh - 8rem);
+  max-height: var(--aperto-media-max-h);
   max-width: 90vw;
   width: min(
     var(--aperto-expanded-width, 76vw),
     calc(
-      (100dvh - 8rem) *
+      var(--aperto-media-max-h) *
         (
           var(--aperto-expanded-aspect-ratio-width, 3) /
             var(--aperto-expanded-aspect-ratio-height, 2)
@@ -168,9 +185,24 @@
   [data-slot="aperto-content"] > img,
   [data-slot="aperto-content"] > video,
   [data-slot="aperto-content"] > [data-slot="aperto-media"] {
-    max-height: calc(100dvh - 12rem);
+    /* Same budget model as desktop, with the tighter mobile viewport
+       allowance — and the item's real aspect ratio, not a hardcoded 3:2. */
+    --aperto-media-max-h: min(
+      calc(100dvh - 12rem),
+      calc(var(--aperto-panel-max-h, min(90vh, 920px)) - var(--aperto-caption-allowance, 6rem))
+    );
+    max-height: var(--aperto-media-max-h);
     max-width: calc(100vw - 2rem);
-    width: min(calc(100vw - 2rem), calc((100dvh - 12rem) * 1.5));
+    width: min(
+      calc(100vw - 2rem),
+      calc(
+        var(--aperto-media-max-h) *
+          (
+            var(--aperto-expanded-aspect-ratio-width, 3) /
+              var(--aperto-expanded-aspect-ratio-height, 2)
+          )
+      )
+    );
   }
 
   [data-slot="aperto-title"],
