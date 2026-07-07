@@ -20,6 +20,9 @@ beforeEach(() => {
   vi.stubGlobal("ResizeObserver", ResizeObserverMock);
   // jsdom does not implement scrollIntoView; the active option effect calls it.
   Element.prototype.scrollIntoView = vi.fn<(options?: ScrollIntoViewOptions) => void>();
+  // jsdom lacks the Web Animations API; Base UI's ScrollArea viewport (used by
+  // the selected-tags ScrollFrame) calls getAnimations() from a scroll timer.
+  Element.prototype.getAnimations = vi.fn<() => Animation[]>(() => []);
 });
 
 afterEach(() => {
@@ -117,6 +120,11 @@ describe("TagSelector", () => {
       container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
     ).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Search Project tags" })).toBeInTheDocument();
+    // Base UI's Popover popup defaults to role="dialog"; the combobox pattern
+    // requires it stripped so the popup is a plain container.
+    const content = container.ownerDocument.querySelector('[data-slot="tag-selector-content"]');
+    expect(content).not.toBeNull();
+    expect(content).not.toHaveAttribute("role", "dialog");
   });
 
   it("keeps selected options visible and toggles them by id", async () => {

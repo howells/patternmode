@@ -1,6 +1,6 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import { m } from "motion/react";
 import type { Transition } from "motion/react";
 import type { CSSProperties, Ref } from "react";
@@ -32,18 +32,24 @@ const ApertoOverlay = ({ className, fadeOut, ref, style }: ApertoOverlayProps) =
   const transition = ctx.reduceMotion ? OVERLAY_TRANSITION_REDUCED : OVERLAY_TRANSITION;
 
   return (
-    <Dialog.Overlay asChild forceMount>
-      <m.div
-        animate={{ opacity: fadeOut === true ? 0 : 1 }}
-        className={className}
-        data-slot="aperto-overlay"
-        exit={{ opacity: 0 }}
-        initial={{ opacity: 0 }}
-        ref={ref}
-        style={style}
-        transition={transition}
-      />
-    </Dialog.Overlay>
+    // `hidden={false}` neutralises Base UI's `hidden: !mounted` so the backdrop
+    // stays visible while Motion fades it out on close (Motion animations are
+    // invisible to Base UI's `getAnimations()`-based unmount detection).
+    <Dialog.Backdrop
+      hidden={false}
+      render={
+        <m.div
+          animate={{ opacity: fadeOut === true ? 0 : 1 }}
+          className={className}
+          data-slot="aperto-overlay"
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          ref={ref}
+          style={style}
+          transition={transition}
+        />
+      }
+    />
   );
 };
 

@@ -82,7 +82,7 @@ const swatchApi: ApiSection[] = [
         type: "boolean",
       },
       {
-        description: "Adds a hover/focus remove affordance. Not supported with asChild.",
+        description: "Adds a hover/focus remove affordance. Not supported with render.",
         name: "onRemove",
         type: "() => void",
       },
@@ -92,11 +92,10 @@ const swatchApi: ApiSection[] = [
         type: "string",
       },
       {
-        defaultValue: "false",
         description:
-          "Merges the swatch styling, fill, and data attributes onto a single child element (Radix Slot) instead of rendering an own wrapper. Use when the swatch must be an interactive element such as a button cell.",
-        name: "asChild",
-        type: "boolean",
+          "Renders the swatch styling, fill, and data attributes through a provided element (Base UI render prop) instead of an own wrapper. Use when the swatch must be an interactive element such as a button cell; keep the element childless and pass content as children.",
+        name: "render",
+        type: "ReactElement | ((props, state) => ReactElement)",
       },
     ],
   },

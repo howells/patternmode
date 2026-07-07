@@ -1,16 +1,16 @@
-import { Slot } from "@radix-ui/react-slot";
 import { useEffect } from "react";
 import { useSheetPanel } from "../panel-context";
+import { SheetPartElement } from "./sheet-part-element";
 import type { SheetPartProps } from "./sheet-part-types";
 
-export const SheetDescription = ({ asChild, className, style, children }: SheetPartProps) => {
+export const SheetDescription = ({ render, className, style, children }: SheetPartProps) => {
   const { panelId, registerDescription } = useSheetPanel();
   useEffect(() => registerDescription(), [registerDescription]);
-  const isAsChild = asChild === true;
-  const Comp = isAsChild ? Slot : "p";
   return (
-    <Comp className={className} id={`${panelId}-desc`} style={style}>
-      {children}
-    </Comp>
+    <SheetPartElement
+      defaultTagName="p"
+      props={{ children, className, id: `${panelId}-desc`, style }}
+      render={render}
+    />
   );
 };

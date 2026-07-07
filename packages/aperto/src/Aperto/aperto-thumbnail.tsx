@@ -22,7 +22,7 @@ export const ApertoThumbnail = ({ children, className, index }: ApertoThumbnailP
       onClick={() => {
         group.openAtIndex(index);
       }}
-      ref={(node) => {
+      ref={(node: HTMLButtonElement | null) => {
         group.registerThumbnail(index, node);
       }}
       sharedLayoutId={false}

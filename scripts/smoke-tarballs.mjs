@@ -210,10 +210,18 @@ if (existsSync(path.join(fixtureDir, "node_modules"))) {
   rmSync(path.join(fixtureDir, "node_modules"), { force: true, recursive: true });
 }
 
-execFileSync("pnpm", ["install", "--ignore-workspace", "--no-lockfile"], {
-  cwd: fixtureDir,
-  stdio: "inherit",
-});
+execFileSync(
+  "pnpm",
+  // `--config.strict-dep-builds=false` keeps an ignored native build script
+  // (e.g. sharp, pulled in transitively by Next) a warning instead of a hard
+  // error — the standalone fixture doesn't inherit the workspace's approved
+  // builds, and those scripts aren't needed to typecheck/build the consumer.
+  ["install", "--ignore-workspace", "--no-lockfile", "--config.strict-dep-builds=false"],
+  {
+    cwd: fixtureDir,
+    stdio: "inherit",
+  },
+);
 execFileSync("pnpm", ["typecheck"], { cwd: fixtureDir, stdio: "inherit" });
 execFileSync("pnpm", ["build"], { cwd: fixtureDir, stdio: "inherit" });
 

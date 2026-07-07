@@ -1,5 +1,4 @@
-import type * as RadixScrollArea from "@radix-ui/react-scroll-area";
-import type { ComponentPropsWithoutRef, Ref } from "react";
+import type { Ref } from "react";
 
 import type {
   ScrollFrameAxes,
@@ -11,7 +10,6 @@ import type {
   ScrollFrameFadeConfig,
   ScrollFrameFadeEdges,
   ScrollFrameResolvedDragScrollConfig,
-  ScrollFrameScrollbarVisibility,
 } from "./scroll-frame-types";
 
 const DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR =
@@ -27,15 +25,6 @@ export const setRef = <T>(ref: Ref<T> | undefined, value: T | null): void => {
     return;
   }
   ref.current = value;
-};
-
-export const resolveRadixType = (
-  scrollbars: ScrollFrameScrollbarVisibility,
-): ComponentPropsWithoutRef<typeof RadixScrollArea.Root>["type"] => {
-  if (scrollbars === "hidden") {
-    return "always";
-  }
-  return scrollbars === "auto" ? "scroll" : scrollbars;
 };
 
 export const supportsAxis = (axes: ScrollFrameAxes, axis: ScrollFrameAxis): boolean =>

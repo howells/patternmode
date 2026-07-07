@@ -2,7 +2,19 @@ import { FocusTrap } from "focus-trap-react";
 import type { ReactNode, RefObject } from "react";
 import { useSyncExternalStore } from "react";
 
+// Selectors matched against the focused element to detect when a layer stacked
+// on top of the sheet (a nested dialog/popover) has focus, so the sheet's own
+// focus trap pauses instead of yanking focus back.
 const LAYERED_MODAL_SELECTORS = [
+  // Base UI dialogs (e.g. aperto) mark the open popup with `data-open`.
+  '[role="dialog"][data-open]',
+  '[role="alertdialog"][data-open]',
+  // Base UI wraps every floating layer in focus guards.
+  "[data-base-ui-focus-guard]",
+  // Patternmode popovers whose popup intentionally strips `role="dialog"` to
+  // host a combobox/listbox pattern (tags), so they are not caught above.
+  '[data-slot="tag-selector-content"]',
+  // Third-party Radix content nested inside a sheet still emits these.
   '[role="dialog"][data-state="open"]',
   '[role="alertdialog"][data-state="open"]',
   "[data-radix-popper-content-wrapper]",

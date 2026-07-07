@@ -7,16 +7,17 @@ import type {
   SVGProps,
 } from "react";
 
+import type { RenderProp } from "./render";
+
 export type BadgeVariant = "default" | "secondary" | "destructive" | "outline" | "ghost" | "link";
 
 /** Shadcn-compatible badge wrapper used by Tag and TagSelector. */
 export interface BadgeProps extends ComponentProps<"span"> {
   /**
-   * Render through Radix Slot so the child element receives badge props.
-   *
-   * Default `false`.
+   * Render the badge styling through a provided element (Base UI render prop)
+   * instead of the default `<span>`.
    */
-  asChild?: boolean;
+  render?: RenderProp;
   /**
    * Shadcn-compatible badge variant.
    *
@@ -32,7 +33,7 @@ export type TagTone = "neutral" | "accent" | "success" | "warning" | "danger" | 
 type TagIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 /** Props for a single visual tag, optionally removable or selectable. */
-export interface TagProps extends Omit<BadgeProps, "asChild" | "color"> {
+export interface TagProps extends Omit<BadgeProps, "render" | "color"> {
   children: ReactNode;
   disabled?: boolean;
   icon?: TagIcon;

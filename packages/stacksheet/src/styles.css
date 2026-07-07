@@ -2,9 +2,6 @@
 @import "tailwindcss/utilities" source(none);
 @source "./**/*.{ts,tsx}";
 
-/* Radix ScrollArea uses display:table on the viewport inner div for horizontal
-   content sizing. Stacksheet panels only scroll vertically, so override to
-   block to prevent content from expanding beyond the panel width. */
-[data-stacksheet-no-drag] [data-radix-scroll-area-viewport] > div {
-  display: block !important;
-}
+/* Base UI's ScrollArea Viewport renders a plain scrolling div with no inner
+   wrapper element, so the Radix `display:table` horizontal-sizing workaround
+   this file used to carry is no longer needed. */

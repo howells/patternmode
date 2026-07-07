@@ -1,10 +1,10 @@
-import { Portal } from "@radix-ui/react-portal";
 import { createContext, use } from "react";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import { resolveConfig } from "./config";
 import { SheetRenderer } from "./renderer";
+import { SheetPortal } from "./sheet-portal";
 import { createSheetStore } from "./store";
 import type {
   ResolvedConfig,
@@ -74,7 +74,7 @@ export const createStacksheet = <TMap extends object>(
   }: StacksheetProviderProps<TMap>) => (
     <StoreContext.Provider value={providerValue}>
       {children}
-      <Portal asChild={false}>
+      <SheetPortal>
         <SheetRenderer<TMap>
           classNames={classNames}
           componentMap={componentMap}
@@ -84,7 +84,7 @@ export const createStacksheet = <TMap extends object>(
           sheets={sheets}
           store={store}
         />
-      </Portal>
+      </SheetPortal>
     </StoreContext.Provider>
   );
   // ── Hooks ───────────────────────────────────

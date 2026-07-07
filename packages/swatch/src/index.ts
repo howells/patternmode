@@ -19,7 +19,7 @@ export {
   SWATCH_SIZES,
   SWATCH_TEXTURES,
   Swatch,
-  type SwatchAsChildProps,
+  type SwatchRenderProps,
   type SwatchAtmosphereOptions,
   type SwatchColorStop,
   type SwatchDefaultProps,

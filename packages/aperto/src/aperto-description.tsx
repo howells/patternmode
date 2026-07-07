@@ -1,6 +1,6 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import type { ComponentPropsWithRef } from "react";
 
 const ApertoDescription = ({ ref, ...props }: ComponentPropsWithRef<typeof Dialog.Description>) => (

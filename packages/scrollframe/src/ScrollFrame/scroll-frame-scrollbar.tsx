@@ -1,37 +1,43 @@
 "use client";
 
+import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames } from "@patternmode/system";
-import * as RadixScrollArea from "@radix-ui/react-scroll-area";
 import type { ComponentPropsWithRef } from "react";
 
 import { useScrollFrame } from "./scroll-frame-context";
+
+export interface ScrollFrameScrollbarProps extends ComponentPropsWithRef<"div"> {
+  orientation?: "horizontal" | "vertical";
+}
 
 export const ScrollFrameScrollbar = ({
   className,
   orientation,
   ref,
   ...props
-}: ComponentPropsWithRef<typeof RadixScrollArea.Scrollbar>) => {
+}: ScrollFrameScrollbarProps) => {
   const { axes, scrollbars } = useScrollFrame();
   const resolvedOrientation = orientation ?? (axes === "horizontal" ? "horizontal" : "vertical");
+  // `hidden` and `always` keep the scrollbar mounted regardless of overflow
+  // (mirrors the old Radix `type="always"` mapping and the mounted-plumbing
+  // contract); `auto` and `hover` let Base UI mount it only when there is
+  // overflow, with CSS revealing it on scroll / hover.
+  const keepMounted = scrollbars === "hidden" || scrollbars === "always";
   return (
-    <RadixScrollArea.Scrollbar
+    <ScrollArea.Scrollbar
       {...props}
       className={joinClassNames("patternmode-scrollframe__scrollbar", className)}
       data-hidden={scrollbars === "hidden" ? "true" : undefined}
       data-slot="scrollframe-scrollbar"
+      keepMounted={keepMounted}
       orientation={resolvedOrientation}
       ref={ref}
     />
   );
 };
 
-export const ScrollFrameThumb = ({
-  className,
-  ref,
-  ...props
-}: ComponentPropsWithRef<typeof RadixScrollArea.Thumb>) => (
-  <RadixScrollArea.Thumb
+export const ScrollFrameThumb = ({ className, ref, ...props }: ComponentPropsWithRef<"div">) => (
+  <ScrollArea.Thumb
     {...props}
     className={joinClassNames("patternmode-scrollframe__thumb", className)}
     data-slot="scrollframe-thumb"
@@ -39,4 +45,6 @@ export const ScrollFrameThumb = ({
   />
 );
 
-export const ScrollFrameCorner = RadixScrollArea.Corner;
+export const ScrollFrameCorner = ({ ref, ...props }: ComponentPropsWithRef<"div">) => (
+  <ScrollArea.Corner {...props} ref={ref} />
+);

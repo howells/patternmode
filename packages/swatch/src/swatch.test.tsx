@@ -281,11 +281,15 @@ describe("Swatch", () => {
     expect(screen.queryByRole("button")).toBeNull();
   });
 
-  it("renders the child element when asChild is set", () => {
+  it("renders through the render element", () => {
     render(
-      <Swatch aria-label="Cell" asChild color="#315c4b" shape="block" size="lg">
-        <button aria-label="Cell" data-testid="cell" type="button" />
-      </Swatch>,
+      <Swatch
+        aria-label="Cell"
+        color="#315c4b"
+        render={<button aria-label="Cell" data-testid="cell" type="button" />}
+        shape="block"
+        size="lg"
+      />,
     );
 
     const cell = screen.getByTestId("cell");
@@ -303,11 +307,14 @@ describe("Swatch", () => {
     expect(screen.queryByRole("figure")).toBeNull();
   });
 
-  it("merges the child's own className while keeping precedence", () => {
+  it("merges the render element's own className while keeping precedence", () => {
     render(
-      <Swatch aria-label="Cell" asChild className="swatch-extra" color="#315c4b">
-        <button aria-label="Cell" className="cell-button" type="button" />
-      </Swatch>,
+      <Swatch
+        aria-label="Cell"
+        className="swatch-extra"
+        color="#315c4b"
+        render={<button aria-label="Cell" className="cell-button" type="button" />}
+      />,
     );
 
     const cell = screen.getByRole("button", { name: "Cell" });
@@ -316,11 +323,14 @@ describe("Swatch", () => {
     expect(cell).toHaveClass("cell-button");
   });
 
-  it("omits the scrim through the child when flat", () => {
+  it("omits the scrim through the render element when flat", () => {
     render(
-      <Swatch aria-label="Cell" asChild color="#315c4b" flat>
-        <button aria-label="Cell" type="button" />
-      </Swatch>,
+      <Swatch
+        aria-label="Cell"
+        color="#315c4b"
+        flat
+        render={<button aria-label="Cell" type="button" />}
+      />,
     );
 
     const cell = screen.getByRole("button", { name: "Cell" });
@@ -328,14 +338,16 @@ describe("Swatch", () => {
     expect(cell.querySelector(".patternmode-swatch__scrim")).toBeNull();
   });
 
-  it("forwards interaction to the slotted child element", async () => {
+  it("forwards interaction to the render element", async () => {
     const user = userEvent.setup();
     const onClick = vi.fn<() => void>();
 
     render(
-      <Swatch aria-label="Cell" asChild color="#315c4b">
-        <button aria-label="Cell" onClick={onClick} type="button" />
-      </Swatch>,
+      <Swatch
+        aria-label="Cell"
+        color="#315c4b"
+        render={<button aria-label="Cell" onClick={onClick} type="button" />}
+      />,
     );
 
     await user.click(screen.getByRole("button", { name: "Cell" }));
@@ -362,18 +374,31 @@ describe("Swatch", () => {
     expect(screen.getByRole("listitem", { name: "Removable" })).toHaveClass("patternmode-swatch");
   });
 
-  it("keeps the child's own content alongside the swatch fill layers", () => {
+  it("keeps the render element's content alongside the swatch fill layers", () => {
     render(
-      <Swatch asChild color="#315c4b">
-        <button type="button">
-          <span data-testid="cell-label">A1</span>
-        </button>
+      <Swatch color="#315c4b" render={<button aria-label="Cell" type="button" />}>
+        <span data-testid="cell-label">A1</span>
       </Swatch>,
     );
 
     expect(screen.getByTestId("cell-label")).toHaveTextContent("A1");
     const cell = screen.getByRole("button");
     expect(cell.querySelector(".patternmode-swatch__fill")).not.toBeNull();
+  });
+
+  it("warns when the render element carries its own children", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    render(
+      <Swatch color="#315c4b" render={<button type="button">A1</button>}>
+        {undefined}
+      </Swatch>,
+    );
+
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("render` element has its own children"),
+    );
+    warn.mockRestore();
   });
 });
 

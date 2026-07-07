@@ -1,12 +1,12 @@
 "use client";
 
+import { Popover } from "@base-ui/react/popover";
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { joinClassNames } from "@patternmode/system";
-import * as Popover from "@radix-ui/react-popover";
-import { Slot } from "@radix-ui/react-slot";
 import { useEffect, useRef } from "react";
 import type { ClipboardEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
 
+import { useRender } from "./render";
 import { useTagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
 import { TagSelectorRoot } from "./tag-selector-root";
@@ -41,17 +41,20 @@ const getTagVariant = (variant: BadgeVariant | undefined, tone?: TagTone) =>
   variant ?? (tone === undefined ? "secondary" : TONE_VARIANT_MAP[tone]);
 
 export const Badge = (props: BadgeProps): ReactElement => {
-  const { asChild = false, className, variant = DEFAULT_BADGE_VARIANT, ...badgeProps } = props;
-  const Comp = asChild ? Slot : "span";
+  const { render, className, variant = DEFAULT_BADGE_VARIANT, ...badgeProps } = props;
 
-  return (
-    <Comp
-      data-slot="badge"
-      data-variant={variant}
-      className={joinClassNames("patternmode-badge", className)}
-      {...badgeProps}
-    />
-  );
+  return useRender({
+    defaultTagName: "span",
+    props: {
+      // Defaults first so consumer props (e.g. Tag's `data-slot="tag"`) win,
+      // matching the previous `{...badgeProps}`-last spread order.
+      "data-slot": "badge",
+      "data-variant": variant,
+      ...badgeProps,
+      className: joinClassNames("patternmode-badge", className),
+    },
+    render,
+  });
 };
 
 export const Tag = (props: TagProps): ReactElement => {
@@ -141,70 +144,72 @@ const TagSelectorTrigger = ({
   };
 
   return (
-    <Popover.Trigger asChild>
-      <button
-        {...triggerProps}
-        aria-controls={context.open ? context.listboxId : undefined}
-        aria-disabled={context.disabled}
-        aria-expanded={context.open}
-        aria-haspopup="listbox"
-        aria-label={label}
-        className={joinClassNames("patternmode-tag-selector__trigger", className)}
-        onClick={handleTriggerClick}
-        onKeyDown={handleKeyDown}
-        data-slot="tag-selector-trigger"
-        ref={ref}
-        tabIndex={context.disabled ? undefined : (tabIndex ?? 0)}
-        type="button"
+    <Popover.Trigger
+      render={
+        <button
+          {...triggerProps}
+          aria-controls={context.open ? context.listboxId : undefined}
+          aria-disabled={context.disabled}
+          aria-expanded={context.open}
+          aria-haspopup="listbox"
+          aria-label={label}
+          className={joinClassNames("patternmode-tag-selector__trigger", className)}
+          onClick={handleTriggerClick}
+          onKeyDown={handleKeyDown}
+          data-slot="tag-selector-trigger"
+          ref={ref}
+          tabIndex={context.disabled ? undefined : (tabIndex ?? 0)}
+          type="button"
+        />
+      }
+    >
+      <ScrollFrame
+        axes="horizontal"
+        className="patternmode-tag-selector__scroll"
+        contentClassName="patternmode-tag-selector__scroll-content"
+        controls={false}
+        data-testid="tag-selector-selected-scroll"
+        fades="end"
+        scrollbars="hidden"
       >
-        <ScrollFrame
-          axes="horizontal"
-          className="patternmode-tag-selector__scroll"
-          contentClassName="patternmode-tag-selector__scroll-content"
-          controls={false}
-          data-testid="tag-selector-selected-scroll"
-          fades="end"
-          scrollbars="hidden"
-        >
-          {context.value.length > 0 ? (
-            context.value.map((item) => {
-              const removeProps = {
-                "aria-label": `Remove ${item.label}`,
-                disabled: context.disabled,
-                onClick: (event: MouseEvent<HTMLButtonElement>) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  if (!context.disabled) {
-                    context.removeItem(item);
-                  }
-                },
-                type: "button" as const,
-              };
+        {context.value.length > 0 ? (
+          context.value.map((item) => {
+            const removeProps = {
+              "aria-label": `Remove ${item.label}`,
+              disabled: context.disabled,
+              onClick: (event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault();
+                event.stopPropagation();
+                if (!context.disabled) {
+                  context.removeItem(item);
+                }
+              },
+              type: "button" as const,
+            };
 
-              return (
-                <span className="patternmode-tag-selector__selected-item" key={item.id}>
-                  {context.renderTag ? (
-                    context.renderTag({
-                      disabled: context.disabled,
-                      item,
-                      removeProps,
-                      selected: true,
-                    })
-                  ) : (
-                    <Tag disabled={context.disabled} size="sm" variant={item.variant}>
-                      {item.label}
-                    </Tag>
-                  )}
-                </span>
-              );
-            })
-          ) : (
-            <span className="patternmode-tag-selector__placeholder">
-              {placeholder ?? context.placeholder}
-            </span>
-          )}
-        </ScrollFrame>
-      </button>
+            return (
+              <span className="patternmode-tag-selector__selected-item" key={item.id}>
+                {context.renderTag ? (
+                  context.renderTag({
+                    disabled: context.disabled,
+                    item,
+                    removeProps,
+                    selected: true,
+                  })
+                ) : (
+                  <Tag disabled={context.disabled} size="sm" variant={item.variant}>
+                    {item.label}
+                  </Tag>
+                )}
+              </span>
+            );
+          })
+        ) : (
+          <span className="patternmode-tag-selector__placeholder">
+            {placeholder ?? context.placeholder}
+          </span>
+        )}
+      </ScrollFrame>
     </Popover.Trigger>
   );
 };
@@ -217,14 +222,19 @@ const TagSelectorContent = ({
   ...contentProps
 }: TagSelectorContentProps) => (
   <Popover.Portal>
-    <Popover.Content
-      {...contentProps}
-      align={align}
-      className={joinClassNames("patternmode-tag-selector__content", className)}
-      data-slot="tag-selector-content"
-      ref={ref}
-      sideOffset={sideOffset}
-    />
+    <Popover.Positioner align={align} sideOffset={sideOffset}>
+      <Popover.Popup
+        {...contentProps}
+        className={joinClassNames("patternmode-tag-selector__content", className)}
+        data-slot="tag-selector-content"
+        ref={ref}
+        // Base UI's Popup defaults to role="dialog"; passing role={undefined}
+        // strips it (Base UI's prop merge honours the explicit undefined) so the
+        // hand-built combobox/listbox pattern inside isn't wrapped in a dialog.
+        // oxlint-disable-next-line jsx-a11y/aria-role, react-doctor/aria-role -- role is intentionally removed, not set to an invalid value.
+        role={undefined}
+      />
+    </Popover.Positioner>
   </Popover.Portal>
 );
 

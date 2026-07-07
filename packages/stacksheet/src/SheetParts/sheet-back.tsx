@@ -1,11 +1,11 @@
 import { joinClassNames } from "@patternmode/system";
-import { Slot } from "@radix-ui/react-slot";
 import { ArrowLeftIcon } from "../icons";
 import { useSheetPanel } from "../panel-context";
+import { SheetPartElement } from "./sheet-part-element";
 import type { SheetOptionalContentPartProps } from "./sheet-part-types";
 
 export const SheetBack = ({
-  asChild,
+  render,
   className,
   style,
   children,
@@ -14,20 +14,21 @@ export const SheetBack = ({
   if (!isNested) {
     return null;
   }
-  const isAsChild = asChild === true;
-  const Comp = isAsChild ? Slot : "button";
-  const defaults = isAsChild
+  const defaults = render
     ? undefined
     : "flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 hover:opacity-100";
   return (
-    <Comp
-      aria-label={children === undefined || children === null ? "Back" : undefined}
-      className={joinClassNames(defaults, className)}
-      onClick={back}
-      style={style}
-      type={isAsChild ? undefined : "button"}
-    >
-      {children ?? <ArrowLeftIcon />}
-    </Comp>
+    <SheetPartElement
+      defaultTagName="button"
+      props={{
+        "aria-label": children === undefined || children === null ? "Back" : undefined,
+        children: children ?? <ArrowLeftIcon />,
+        className: joinClassNames(defaults, className),
+        onClick: back,
+        style,
+        type: render ? undefined : "button",
+      }}
+      render={render}
+    />
   );
 };

@@ -53,19 +53,19 @@ export const BrioletteDemo = () => {
       </div>
       <div className="briolette-demo-controls">
         <Swatch
-          asChild
           color={color ?? undefined}
+          render={
+            <button
+              aria-label="Fine-tune the current color"
+              className="briolette-demo-swatch"
+              popoverTarget="briolette-demo-halo"
+              type="button"
+            />
+          }
           shape="circle"
           size="sm"
           unavailable={color === null}
-        >
-          <button
-            aria-label="Fine-tune the current color"
-            className="briolette-demo-swatch"
-            popoverTarget="briolette-demo-halo"
-            type="button"
-          />
-        </Swatch>
+        />
         <output className="briolette-demo-hex">{color ?? "—"}</output>
         <OptionBar label="Cut" onChange={setDensity} options={DENSITY_OPTIONS} value={density} />
         <OptionBar

@@ -57,11 +57,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "@howells/motion": "workspace:*",
     "@patternmode/system": "workspace:*",
-    "@radix-ui/react-portal": "^1.1.10",
-    "@radix-ui/react-scroll-area": "^1.2.10",
-    "@radix-ui/react-slot": "catalog:",
     "focus-trap-react": "^12.0.1",
     "motion": "catalog:",
     "react-remove-scroll": "^2.7.2",

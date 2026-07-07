@@ -139,8 +139,6 @@ describe("ScrollFrame", () => {
       </Profiler>,
     );
 
-    const settledCommits = onRender.mock.calls.length;
-
     // The viewport reports the same (zero) geometry on every measurement, so a
     // burst of measurements — here via scroll events, the same `measure` path
     // the ResizeObserver uses — must not commit any further updates. Before the
@@ -148,6 +146,15 @@ describe("ScrollFrame", () => {
     // forced a commit; in a real browser that commit's layout change re-fired
     // the observer, looping unbounded at 100% CPU.
     const viewport = screen.getByTestId("scrollframe-viewport");
+
+    // Base UI's ScrollArea flips its own `data-scrolling` state on the first
+    // scroll (one bounded commit); warm past it so the assertion measures only
+    // ScrollFrame's measurement guard, not Base UI's scroll-state toggle.
+    act(() => {
+      fireEvent.scroll(viewport);
+    });
+    const settledCommits = onRender.mock.calls.length;
+
     for (let i = 0; i < 20; i += 1) {
       act(() => {
         fireEvent.scroll(viewport);
@@ -168,6 +175,37 @@ describe("ScrollFrame", () => {
     expect(root).toHaveAttribute("data-axes", "both");
     expect(root).toHaveAttribute("data-scrollbar-visibility", "hidden");
     expect(root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]')).toHaveLength(2);
+    // Hidden mode flags the scrollbar so CSS collapses it while the plumbing
+    // (and its measurement) stays mounted.
+    for (const scrollbar of root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]') ?? []) {
+      expect(scrollbar).toHaveAttribute("data-hidden", "true");
+    }
+  });
+
+  it("reflects the scrollbars mode on the root and keeps `always` plumbing mounted", () => {
+    const { rerender } = render(
+      <ScrollFrame axes="both" scrollbars="always">
+        <div>Content</div>
+      </ScrollFrame>,
+    );
+
+    let root = screen.getByTestId("scrollframe-viewport").parentElement;
+    expect(root).toHaveAttribute("data-scrollbar-visibility", "always");
+    // `always` keeps both scrollbars mounted regardless of overflow, and does
+    // not flag them hidden.
+    const alwaysScrollbars = root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]');
+    expect(alwaysScrollbars).toHaveLength(2);
+    expect(alwaysScrollbars?.[0]).not.toHaveAttribute("data-hidden");
+
+    for (const mode of ["auto", "hover"] as const) {
+      rerender(
+        <ScrollFrame axes="both" scrollbars={mode}>
+          <div>Content</div>
+        </ScrollFrame>,
+      );
+      root = screen.getByTestId("scrollframe-viewport").parentElement;
+      expect(root).toHaveAttribute("data-scrollbar-visibility", mode);
+    }
   });
 
   it("updates edge state and moves by a page step", () => {

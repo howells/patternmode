@@ -1,16 +1,16 @@
 import { joinClassNames } from "@patternmode/system";
-import { Slot } from "@radix-ui/react-slot";
+import { SheetPartElement } from "./sheet-part-element";
 import type { SheetPartProps } from "./sheet-part-types";
 
-export const SheetHeader = ({ asChild, className, style, children }: SheetPartProps) => {
-  const isAsChild = asChild === true;
-  const Comp = isAsChild ? Slot : "header";
-  // Keep `shrink-0` even on asChild; without it, header collapses in a
+export const SheetHeader = ({ render, className, style, children }: SheetPartProps) => {
+  // Keep `shrink-0` even in render mode; without it, the header collapses in a
   // flex-column panel layout. No bar, no divider — just a minimal top region.
-  const defaults = isAsChild ? "shrink-0" : "flex shrink-0 items-center justify-between gap-3";
+  const defaults = render ? "shrink-0" : "flex shrink-0 items-center justify-between gap-3";
   return (
-    <Comp className={joinClassNames(defaults, className)} style={style}>
-      {children}
-    </Comp>
+    <SheetPartElement
+      defaultTagName="header"
+      props={{ children, className: joinClassNames(defaults, className), style }}
+      render={render}
+    />
   );
 };

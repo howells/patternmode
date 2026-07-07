@@ -1,6 +1,6 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import { domMax, LayoutGroup, LazyMotion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";

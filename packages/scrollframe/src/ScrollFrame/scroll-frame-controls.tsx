@@ -1,10 +1,10 @@
 "use client";
 
 import { joinClassNames } from "@patternmode/system";
-import { Slot } from "@radix-ui/react-slot";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { MouseEvent } from "react";
 
+import { useRender } from "../render";
 import { useScrollFrame } from "./scroll-frame-context";
 import type {
   ScrollFrameEdge,
@@ -29,7 +29,7 @@ const getControlIcon = (direction: ScrollFrameEdge) =>
   );
 
 const ScrollFrameMovementControl = ({
-  asChild,
+  render,
   axis,
   children,
   className,
@@ -41,7 +41,7 @@ const ScrollFrameMovementControl = ({
   ...props
 }: ScrollFrameMovementControlProps & { direction: ScrollFrameEdge }) => {
   const { axes, controlVisibility, edgeState, scrollByStep } = useScrollFrame();
-  const isAsChild = asChild === true;
+  const isRendered = render !== undefined;
   const resolvedAxis = axis ?? defaultControlAxis(axes);
   const resolvedVisibility = visibility ?? controlVisibility;
   const axisState = edgeState[resolvedAxis];
@@ -49,34 +49,38 @@ const ScrollFrameMovementControl = ({
   const hidden =
     resolvedVisibility === "hidden" || (resolvedVisibility === "auto" && movementBlocked);
   const controlDisabled = disabled === true || movementBlocked;
-  const Comp = isAsChild ? Slot : "button";
   const label = getControlLabel(props["aria-label"], direction);
+
+  // `useRender` must run unconditionally, so build the element before the
+  // early return and gate rendering on `hidden` afterwards.
+  const element = useRender({
+    defaultTagName: "button",
+    props: {
+      ...props,
+      "aria-disabled": isRendered && controlDisabled ? true : props["aria-disabled"],
+      "aria-label": label,
+      children: children ?? getControlIcon(direction),
+      className: joinClassNames("patternmode-scrollframe__control", className),
+      "data-axis": resolvedAxis,
+      "data-direction": direction,
+      "data-slot": "scrollframe-control",
+      disabled: isRendered ? undefined : controlDisabled,
+      onClick: (event: MouseEvent<HTMLButtonElement>) => {
+        onClick?.(event);
+        if (!event.defaultPrevented && !controlDisabled) {
+          scrollByStep(direction, resolvedAxis);
+        }
+      },
+      type: isRendered ? undefined : (type ?? "button"),
+    },
+    render,
+  });
 
   if (hidden) {
     return null;
   }
 
-  return (
-    <Comp
-      {...props}
-      aria-disabled={isAsChild && controlDisabled ? true : props["aria-disabled"]}
-      aria-label={label}
-      className={joinClassNames("patternmode-scrollframe__control", className)}
-      data-axis={resolvedAxis}
-      data-direction={direction}
-      data-slot="scrollframe-control"
-      disabled={isAsChild ? undefined : controlDisabled}
-      onClick={(event: MouseEvent<HTMLButtonElement>) => {
-        onClick?.(event);
-        if (!event.defaultPrevented && !controlDisabled) {
-          scrollByStep(direction, resolvedAxis);
-        }
-      }}
-      type={isAsChild ? undefined : (type ?? "button")}
-    >
-      {children ?? getControlIcon(direction)}
-    </Comp>
-  );
+  return element;
 };
 
 export const ScrollFramePrevious = (props: ScrollFrameMovementControlProps) => (

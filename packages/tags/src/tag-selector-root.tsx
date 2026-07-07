@@ -1,7 +1,7 @@
 "use client";
 
+import { Popover } from "@base-ui/react/popover";
 import { joinClassNames } from "@patternmode/system";
-import * as Popover from "@radix-ui/react-popover";
 import { useId, useRef, useState } from "react";
 
 import { TagSelectorContext } from "./tag-selector-context";

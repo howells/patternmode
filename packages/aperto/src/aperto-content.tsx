@@ -1,10 +1,10 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import { m, useMotionValue, useSpring, useTransform } from "motion/react";
 import type { MotionStyle, PanInfo } from "motion/react";
 import { useState } from "react";
-import type { ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef, CSSProperties } from "react";
 
 import { useApertoContext } from "./context";
 import {
@@ -20,9 +20,12 @@ import { getDragSpring, resolvePreset } from "./presets";
 import type { DismissibleConfig, MotionPresetName } from "./types";
 
 export interface ApertoContentProps extends Omit<
-  ComponentPropsWithRef<typeof Dialog.Content>,
-  "asChild" | "forceMount"
+  ComponentPropsWithRef<typeof Dialog.Popup>,
+  "render" | "hidden" | "className" | "style"
 > {
+  /** Constrained to a plain string/object (Base UI's function forms aren't used). */
+  className?: string;
+  style?: CSSProperties;
   /** Motion preset override for this content panel, independent of the root preset. */
   motion?: MotionPresetName;
   /** Built-in positioning strategy. Use "none" for custom primitive compositions. */
@@ -123,26 +126,34 @@ const ApertoContent = ({
   };
 
   return (
-    <Dialog.Content asChild forceMount {...props}>
-      <m.div
-        className={className}
-        data-slot="aperto-content"
-        drag={isDismissible}
-        dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
-        dragElastic={0}
-        dragMomentum={false}
-        dragSnapToOrigin
-        layout={contentLayoutId === undefined || contentLayoutId === "" ? undefined : true}
-        layoutId={contentLayoutId}
-        onDrag={isDismissible ? handleDrag : undefined}
-        onDragEnd={isDismissible ? handleDragEnd : undefined}
-        ref={ref}
-        style={motionStyle}
-        transition={resolved.transition}
-      >
-        {children}
-      </m.div>
-    </Dialog.Content>
+    // `hidden={false}` neutralises Base UI's `hidden: !mounted` so the content
+    // stays visible while Motion plays the drag-dismiss / shared-layout exit on
+    // close (Motion animations are invisible to Base UI's `getAnimations()`
+    // unmount detection); `AnimatePresence` in the portal owns the real unmount.
+    <Dialog.Popup
+      className={className}
+      hidden={false}
+      ref={ref}
+      render={
+        <m.div
+          data-slot="aperto-content"
+          drag={isDismissible}
+          dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
+          dragElastic={0}
+          dragMomentum={false}
+          dragSnapToOrigin
+          layout={contentLayoutId === undefined || contentLayoutId === "" ? undefined : true}
+          layoutId={contentLayoutId}
+          onDrag={isDismissible ? handleDrag : undefined}
+          onDragEnd={isDismissible ? handleDragEnd : undefined}
+          style={motionStyle}
+          transition={resolved.transition}
+        >
+          {children}
+        </m.div>
+      }
+      {...props}
+    />
   );
 };
 

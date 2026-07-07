@@ -1,4 +1,3 @@
-import type * as RadixScrollArea from "@radix-ui/react-scroll-area";
 import type {
   ButtonHTMLAttributes,
   ComponentPropsWithRef,
@@ -7,6 +6,8 @@ import type {
   ReactNode,
   Ref,
 } from "react";
+
+import type { RenderProp } from "../render";
 
 export const SCROLL_FRAME_AXES = ["vertical", "horizontal", "both"] as const;
 export const SCROLL_FRAME_EDGES = ["start", "end"] as const;
@@ -114,10 +115,7 @@ export interface ScrollFrameResolvedDragScrollConfig {
   ignoreSelector: string;
 }
 
-export interface ScrollFrameProps extends Omit<
-  ComponentPropsWithRef<typeof RadixScrollArea.Root>,
-  "type"
-> {
+export interface ScrollFrameProps extends ComponentPropsWithRef<"div"> {
   /**
    * Enabled scroll axes.
    *
@@ -153,7 +151,8 @@ export interface ScrollFrameProps extends Omit<
    */
   fades?: ScrollFrameFadeConfig;
   /**
-   * Scrollbar visibility while keeping Radix scroll plumbing mounted.
+   * Scrollbar visibility. `"hidden"` and `"always"` keep the scroll plumbing
+   * mounted; `"auto"` and `"hover"` reveal the scrollbar on scroll / hover.
    *
    * Default `"auto"`.
    */
@@ -162,16 +161,13 @@ export interface ScrollFrameProps extends Omit<
   scrollBehavior?: ScrollFrameScrollBehavior;
   scrollStep?: ScrollFrameScrollStep;
   viewportClassName?: string;
-  /** Ref for the underlying Radix viewport element. */
+  /** Ref for the underlying viewport element. */
   viewportRef?: Ref<HTMLDivElement>;
   viewportStyle?: CSSProperties;
 }
 
 /** Low-level root props for custom ScrollFrame compositions. */
-export interface ScrollFrameRootProps extends Omit<
-  ComponentPropsWithRef<typeof RadixScrollArea.Root>,
-  "type"
-> {
+export interface ScrollFrameRootProps extends ComponentPropsWithRef<"div"> {
   /**
    * Enabled scroll axes.
    *
@@ -206,15 +202,13 @@ export interface ScrollFrameRootProps extends Omit<
 }
 
 /** Viewport props for custom ScrollFrame compositions. */
-export interface ScrollFrameViewportProps extends ComponentPropsWithRef<
-  typeof RadixScrollArea.Viewport
-> {
+export interface ScrollFrameViewportProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
   /** Class applied to the inner content wrapper, not the viewport. */
   contentClassName?: string;
   /** Style applied to the inner content wrapper, not the viewport. */
   contentStyle?: CSSProperties;
-  /** Ref for the underlying Radix viewport element. */
+  /** Ref for the underlying viewport element. */
   viewportRef?: Ref<HTMLDivElement>;
 }
 
@@ -228,8 +222,8 @@ export interface ScrollFrameFadeProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** Props for compound previous/next movement controls. */
 export interface ScrollFrameMovementControlProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Render the control as the child element while preserving behavior. */
-  asChild?: boolean;
+  /** Render the control through a provided element while preserving behavior. */
+  render?: RenderProp;
   /** Axis moved by this control. Defaults to the root's control axis. */
   axis?: ScrollFrameAxis;
   /**

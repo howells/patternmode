@@ -1,14 +1,14 @@
 import { joinClassNames } from "@patternmode/system";
-import { Slot } from "@radix-ui/react-slot";
+import { SheetPartElement } from "./sheet-part-element";
 import type { SheetPartProps } from "./sheet-part-types";
 
-export const SheetFooter = ({ asChild, className, style, children }: SheetPartProps) => {
-  const isAsChild = asChild === true;
-  const Comp = isAsChild ? Slot : "footer";
-  const defaults = isAsChild ? "shrink-0" : "flex shrink-0 items-center gap-2 border-t px-6 py-3";
+export const SheetFooter = ({ render, className, style, children }: SheetPartProps) => {
+  const defaults = render ? "shrink-0" : "flex shrink-0 items-center gap-2 border-t px-6 py-3";
   return (
-    <Comp className={joinClassNames(defaults, className)} style={style}>
-      {children}
-    </Comp>
+    <SheetPartElement
+      defaultTagName="footer"
+      props={{ children, className: joinClassNames(defaults, className), style }}
+      render={render}
+    />
   );
 };

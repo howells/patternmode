@@ -5,13 +5,13 @@ import type { Metadata } from "next";
 import { ScrollFrameDemo } from "@/components/scrollframe-demo";
 
 export const metadata: Metadata = {
-  description: "Radix-backed scroll frames with eased edge fades and movement controls.",
+  description: "Base UI-backed scroll frames with eased edge fades and movement controls.",
   title: "ScrollFrame | Patternmode",
 };
 
 const scrollFrameApi: ApiSection[] = [
   {
-    description: "Radix-based scroll container with measured fades and movement controls.",
+    description: "Base UI-backed scroll container with measured fades and movement controls.",
     name: "ScrollFrame",
     props: [
       {
@@ -38,7 +38,8 @@ const scrollFrameApi: ApiSection[] = [
       },
       {
         defaultValue: '"auto"',
-        description: "Controls scrollbar visibility while keeping Radix scroll plumbing mounted.",
+        description:
+          "Controls scrollbar visibility; hidden and always keep the scroll plumbing mounted.",
         name: "scrollbars",
         type: '"auto" | "always" | "hover" | "hidden"',
       },
@@ -87,7 +88,7 @@ function MaterialStrip() {
 export default function ScrollFramePage() {
   return (
     <ComponentDocsShell
-      description="Radix-backed scroll frames with reliable plumbing, eased edge fades, hidden or visible scrollbars, and overflow-aware movement controls."
+      description="Base UI-backed scroll frames with reliable plumbing, eased edge fades, hidden or visible scrollbars, and overflow-aware movement controls."
       title="ScrollFrame"
     >
       <ScrollFrameDemo />

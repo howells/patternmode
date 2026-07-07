@@ -241,6 +241,7 @@
     padding: 2px;
     touch-action: none;
     user-select: none;
+    transition: opacity 150ms ease;
   }
 
   .patternmode-scrollframe__scrollbar[data-orientation="vertical"] {
@@ -250,6 +251,24 @@
   .patternmode-scrollframe__scrollbar[data-orientation="horizontal"] {
     flex-direction: column;
     height: 10px;
+  }
+
+  /* `always` (default) leaves the scrollbar visible. Base UI has no `type`
+     prop, so `auto` and `hover` visibility are driven here from the scrollbar's
+     `data-scrolling` / `data-hovering` state. Base UI keeps `data-scrolling`
+     for ~500ms after a scroll stops, which stands in for Radix's hide delay. */
+  .patternmode-scrollframe[data-scrollbar-visibility="auto"] .patternmode-scrollframe__scrollbar,
+  .patternmode-scrollframe[data-scrollbar-visibility="hover"] .patternmode-scrollframe__scrollbar {
+    opacity: 0;
+  }
+
+  .patternmode-scrollframe[data-scrollbar-visibility="auto"]
+    .patternmode-scrollframe__scrollbar[data-scrolling],
+  .patternmode-scrollframe[data-scrollbar-visibility="hover"]
+    .patternmode-scrollframe__scrollbar[data-hovering],
+  .patternmode-scrollframe[data-scrollbar-visibility="hover"]
+    .patternmode-scrollframe__scrollbar[data-scrolling] {
+    opacity: 1;
   }
 
   .patternmode-scrollframe__scrollbar[data-hidden="true"] {

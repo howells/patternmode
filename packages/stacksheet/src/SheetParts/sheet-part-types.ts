@@ -1,14 +1,16 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import type { RenderProp } from "../render";
+
 export interface SheetPartProps {
-  asChild?: boolean;
+  render?: RenderProp;
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }
 
 export interface SheetOptionalContentPartProps {
-  asChild?: boolean;
+  render?: RenderProp;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;

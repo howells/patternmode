@@ -55,10 +55,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "@patternmode/scrollframe": "workspace:*",
-    "@patternmode/system": "workspace:*",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-slot": "catalog:"
+    "@patternmode/system": "workspace:*"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",

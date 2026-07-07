@@ -1,7 +1,7 @@
 "use client";
 
+import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames } from "@patternmode/system";
-import * as RadixScrollArea from "@radix-ui/react-scroll-area";
 import type { MouseEvent, PointerEvent } from "react";
 import { useRef } from "react";
 
@@ -197,7 +197,7 @@ export const ScrollFrameViewport = ({
   const maskStyle = fadeMode === "mask" ? getMaskVars(axes, edgeState, fades) : undefined;
 
   return (
-    <RadixScrollArea.Viewport
+    <ScrollArea.Viewport
       {...props}
       className={joinClassNames("patternmode-scrollframe__viewport", className)}
       data-fade-mode={fadeMode === "mask" ? "mask" : undefined}
@@ -220,6 +220,6 @@ export const ScrollFrameViewport = ({
       >
         {children}
       </div>
-    </RadixScrollArea.Viewport>
+    </ScrollArea.Viewport>
   );
 };

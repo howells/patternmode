@@ -55,9 +55,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "@patternmode/system": "workspace:*",
-    "@radix-ui/react-scroll-area": "^1.2.10",
-    "@radix-ui/react-slot": "catalog:",
     "lucide-react": "catalog:"
   },
   "devDependencies": {

@@ -23,7 +23,7 @@ export {
   SWATCH_SIZE_VALUES,
   SWATCH_SIZES,
   SWATCH_TEXTURES,
-  type SwatchAsChildProps,
+  type SwatchRenderProps,
   type SwatchColorStop,
   type SwatchDefaultProps,
   type SwatchProps,

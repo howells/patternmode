@@ -45,8 +45,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "@howells/motion": "workspace:*",
-    "@radix-ui/react-dialog": "^1.1.15",
     "lucide-react": "catalog:",
     "motion": "catalog:"
   },

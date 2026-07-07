@@ -1,6 +1,6 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import { X } from "lucide-react";
 import type { ComponentPropsWithRef } from "react";
 

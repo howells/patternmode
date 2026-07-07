@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const tagsApi: ApiSection[] = [
   {
-    description: "Shadcn-compatible badge base with variant and asChild support.",
+    description: "Shadcn-compatible badge base with variant and render support.",
     name: "Badge",
     props: [
       {
@@ -22,10 +22,9 @@ const tagsApi: ApiSection[] = [
         type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
       },
       {
-        defaultValue: "false",
-        description: "Renders the badge styles onto a child via Radix Slot.",
-        name: "asChild",
-        type: "boolean",
+        description: "Renders the badge styles through a provided element (Base UI render prop).",
+        name: "render",
+        type: "ReactElement | ((props, state) => ReactElement)",
       },
     ],
   },

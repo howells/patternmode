@@ -1,7 +1,7 @@
 "use client";
 
+import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames, toCssSize } from "@patternmode/system";
-import * as RadixScrollArea from "@radix-ui/react-scroll-area";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, RefObject } from "react";
 
@@ -23,7 +23,6 @@ import {
   getPageStep,
   getReducedMotionPreference,
   resolveDragScrollConfig,
-  resolveRadixType,
   supportsAxis,
 } from "./scroll-frame-utils";
 
@@ -203,7 +202,7 @@ export const ScrollFrameRoot = ({
 
   return (
     <ScrollFrameContext.Provider value={context}>
-      <RadixScrollArea.Root
+      <ScrollArea.Root
         {...props}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
@@ -219,10 +218,9 @@ export const ScrollFrameRoot = ({
         ref={ref}
         role={getRootRole(role, ariaLabel, ariaLabelledBy)}
         style={rootStyle}
-        type={resolveRadixType(scrollbars)}
       >
         {children}
-      </RadixScrollArea.Root>
+      </ScrollArea.Root>
     </ScrollFrameContext.Provider>
   );
 };

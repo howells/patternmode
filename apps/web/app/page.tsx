@@ -59,7 +59,7 @@ const components: CatalogEntry[] = [
     title: "Status",
   },
   {
-    description: "Radix-backed scroll containers with eased fades and movement controls.",
+    description: "Base UI-backed scroll containers with eased fades and movement controls.",
     href: "/scrollframe",
     title: "ScrollFrame",
   },

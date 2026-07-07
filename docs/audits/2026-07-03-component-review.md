@@ -9,7 +9,7 @@ Severity: **H** high / **M** medium / **L** low.
 1. **H — `"use client"` is stripped from published bundles.** Verified zero occurrences in
    `dist/index.mjs` for **scrollframe, swatch, tags, deck, status, briolette, halo** — every
    client package except stacksheet. tsdown only preserves the directive when it sits on the
-   *entry module*; per-file directives are dropped. Stacksheet's `src/index.ts:1` is the working
+   _entry module_; per-file directives are dropped. Stacksheet's `src/index.ts:1` is the working
    in-repo pattern to copy (or add a tsdown banner). This is why foolscap needs a re-export shim
    for scrollframe. Failure: any RSC import of these packages crashes at the first hook.
 2. **M — `motion` is a regular dependency, not a peer** (aperto, stacksheet, deck, swatch).
@@ -29,7 +29,7 @@ Severity: **H** high / **M** medium / **L** low.
 ## aperto
 
 - **H — Focus Return violates CONTEXT.md after navigation.** `Aperto/aperto-group.tsx:283-286`
-  focuses the *current* index's thumbnail on close; the opener index is never stored. Open #1,
+  focuses the _current_ index's thumbnail on close; the opener index is never stored. Open #1,
   arrow to #5, ESC → focus lands on thumbnail 5 (or `body` if unmounted).
 - **H — Media-transition clone renders behind the overlay.** `media-transition.tsx:51` hardcodes
   `zIndex: 30`; shipped overlay is `z-[1000]` (`styles.css:27`). The open animation plays dimmed
@@ -124,7 +124,7 @@ Severity: **H** high / **M** medium / **L** low.
 - **M — `preventDefault()` on pointerdown blocks click-to-focus**, so "drag or use arrow keys"
   only works after tabbing.
 - **L — Selection commits before controlled parent accepts; reduced-motion sampled once;
-  Escape doesn't stop propagation (clears color *and* closes host dialog); selection unannounced
+  Escape doesn't stop propagation (clears color _and_ closes host dialog); selection unannounced
   when `showValue={false}`; dead `quatAngleBetween`.**
 
 ## halo

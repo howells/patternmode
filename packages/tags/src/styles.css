@@ -226,8 +226,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    max-height: min(18rem, var(--radix-popover-content-available-height));
-    min-width: var(--radix-popover-trigger-width);
+    max-height: min(18rem, var(--available-height));
+    min-width: var(--anchor-width);
     overflow: hidden;
     padding: 0.375rem;
     z-index: 50;

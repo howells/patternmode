@@ -1,7 +1,9 @@
 import { getObjectSizingStyle, isLightColor, joinClassNames } from "@patternmode/system";
-import { Slot, Slottable } from "@radix-ui/react-slot";
+import { isValidElement } from "react";
 import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from "react";
 
+import { useRender } from "../render";
+import type { RenderProp } from "../render";
 import { getSwatchAtmosphereBackground } from "./swatch-atmosphere";
 import { getSwatchColorsBackground } from "./swatch-colors";
 import { getSwatchSizeVariableStyle } from "./swatch-types";
@@ -172,9 +174,62 @@ const RemovableSwatch = ({
   );
 };
 
+interface SwatchElementProps {
+  ariaLabel: string | undefined;
+  className: string | undefined;
+  content: ReactNode;
+  dataProps: ReturnType<typeof getSwatchDataProps>;
+  props: HTMLAttributes<HTMLElement>;
+  render: RenderProp | undefined;
+  rootStyle: SwatchRootStyle;
+}
+
+// Renders the swatch through `render` (or a default `<figure>`) via Base UI's
+// `useRender`. Isolated into its own component so the `useRender` hook is
+// always called unconditionally, regardless of which branch `Swatch` takes.
+const SwatchElement = ({
+  ariaLabel,
+  className,
+  content,
+  dataProps,
+  props,
+  render,
+  rootStyle,
+}: SwatchElementProps) =>
+  useRender({
+    defaultTagName: "figure",
+    props: {
+      ...props,
+      ...dataProps,
+      "aria-label": ariaLabel,
+      children: content,
+      className: joinClassNames("patternmode-swatch", className),
+      style: rootStyle,
+    },
+    render,
+  });
+
+const warnOnRenderChildren = (render: RenderProp) => {
+  if (!isValidElement(render)) {
+    return;
+  }
+  const { props } = render;
+  if (
+    typeof props === "object" &&
+    props !== null &&
+    "children" in props &&
+    props.children !== undefined &&
+    props.children !== null
+  ) {
+    console.warn(
+      "Swatch `render` element has its own children, which override the swatch fill layers. " +
+        "Keep the `render` element childless and pass swatch content as `<Swatch>…</Swatch>` children.",
+    );
+  }
+};
+
 export const Swatch = ({
   "aria-label": ariaLabel,
-  asChild = false,
   background,
   blend = "step",
   children,
@@ -191,6 +246,7 @@ export const Swatch = ({
   onRemove,
   raised = false,
   removeLabel,
+  render,
   selected = false,
   shape = "circle",
   showRing = true,
@@ -246,22 +302,31 @@ export const Swatch = ({
       selected={selected}
       unavailable={unavailable}
     >
-      {asChild ? undefined : children}
+      {render ? undefined : children}
     </SwatchContent>
   );
 
-  if (asChild) {
+  if (render !== undefined) {
+    warnOnRenderChildren(render);
+    // In `render` mode the swatch fill layers and the consumer's content are
+    // composed side by side inside the rendered element (matching the old
+    // Slot + Slottable behaviour), so children render unwrapped rather than
+    // inside the media frame.
     return (
-      <Slot
-        {...props}
-        {...dataProps}
-        aria-label={ariaLabel}
-        className={joinClassNames("patternmode-swatch", className)}
-        style={rootStyle}
-      >
-        {swatchContent}
-        <Slottable>{children}</Slottable>
-      </Slot>
+      <SwatchElement
+        ariaLabel={ariaLabel}
+        className={className}
+        content={
+          <>
+            {swatchContent}
+            {children}
+          </>
+        }
+        dataProps={dataProps}
+        props={props}
+        render={render}
+        rootStyle={rootStyle}
+      />
     );
   }
 
@@ -282,14 +347,14 @@ export const Swatch = ({
   }
 
   return (
-    <figure
-      {...props}
-      {...dataProps}
-      aria-label={ariaLabel}
-      className={joinClassNames("patternmode-swatch", className)}
-      style={rootStyle}
-    >
-      {swatchContent}
-    </figure>
+    <SwatchElement
+      ariaLabel={ariaLabel}
+      className={className}
+      content={swatchContent}
+      dataProps={dataProps}
+      props={props}
+      render={undefined}
+      rootStyle={rootStyle}
+    />
   );
 };

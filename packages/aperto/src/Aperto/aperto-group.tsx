@@ -103,7 +103,7 @@ const ApertoGroupPortal = ({
   activeMedia,
   classNames,
   expandedMediaStyle,
-  handleCloseAutoFocus,
+  finalFocus,
   handleContentKeyDown,
   handleMediaTransitionComplete,
   hasNavigation,
@@ -122,9 +122,9 @@ const ApertoGroupPortal = ({
   activeMedia: ApertoMediaItem | undefined;
   classNames: ApertoClassNames | undefined;
   expandedMediaStyle: ApertoExpandedMediaStyle | undefined;
+  finalFocus: () => HTMLElement | null;
   goToNext: () => void;
   goToPrevious: () => void;
-  handleCloseAutoFocus: (event: Event) => void;
   handleContentKeyDown: ((event: KeyboardEvent<HTMLDivElement>) => void) | undefined;
   handleMediaTransitionComplete: () => void;
   hasNavigation: boolean;
@@ -148,7 +148,7 @@ const ApertoGroupPortal = ({
       <ApertoContent
         className={classNames?.content}
         data-aperto-transition={transition?.phase}
-        onCloseAutoFocus={handleCloseAutoFocus}
+        finalFocus={finalFocus}
         onKeyDown={handleContentKeyDown}
         sharedLayoutId={false}
         {...getDescriptionProps(activeMedia)}
@@ -281,17 +281,17 @@ const useApertoMediaLifecycle = ({
     });
   };
 
-  const handleCloseAutoFocus = (event: Event) => {
-    event.preventDefault();
-    // Focus Return: restore focus to the Thumbnail that opened the Media
-    // Transition, falling back to the active thumbnail if it unmounted.
+  // Focus Return target for Base UI's `finalFocus`: the Thumbnail that opened
+  // the Media Transition, falling back to the active thumbnail if it unmounted.
+  // Base UI's FloatingFocusManager focuses the returned element with
+  // `preventScroll: true`, matching the previous manual `onCloseAutoFocus`.
+  const finalFocus = (): HTMLElement | null => {
     const openerThumbnail =
       state.openerIndex === null ? undefined : thumbnailMap.get(state.openerIndex);
-    const target = openerThumbnail ?? thumbnailMap.get(index);
-    target?.focus({ preventScroll: true });
+    return openerThumbnail ?? thumbnailMap.get(index) ?? null;
   };
 
-  return { handleCloseAutoFocus, openAtIndex, registerThumbnail, setExpandedMediaNode, startClose };
+  return { finalFocus, openAtIndex, registerThumbnail, setExpandedMediaNode, startClose };
 };
 
 const useApertoGroupController = ({
@@ -390,9 +390,9 @@ const useApertoGroupController = ({
   return {
     activeMedia,
     expandedMediaStyle,
+    finalFocus: lifecycle.finalFocus,
     goToNext,
     goToPrevious,
-    handleCloseAutoFocus: lifecycle.handleCloseAutoFocus,
     handleContentKeyDown,
     handleMediaTransitionComplete,
     handleOpenChange,
@@ -441,9 +441,9 @@ export const ApertoGroup = ({
           activeMedia={controller.activeMedia}
           classNames={classNames}
           expandedMediaStyle={controller.expandedMediaStyle}
+          finalFocus={controller.finalFocus}
           goToNext={controller.goToNext}
           goToPrevious={controller.goToPrevious}
-          handleCloseAutoFocus={controller.handleCloseAutoFocus}
           handleContentKeyDown={
             controller.hasNavigation ? controller.handleContentKeyDown : undefined
           }

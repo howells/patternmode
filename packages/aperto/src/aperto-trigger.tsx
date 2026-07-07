@@ -1,6 +1,6 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui/react/dialog";
 import { m } from "motion/react";
 import type { ComponentPropsWithRef } from "react";
 
@@ -42,21 +42,28 @@ const ApertoTrigger = ({
     sharedLayoutId === false ? undefined : (sharedLayoutId ?? `${ctx.layoutId}-shared`);
 
   return (
-    <Dialog.Trigger asChild ref={ref} {...props}>
-      <m.button
-        data-aperto-active={shouldRaise ? "" : undefined}
-        data-slot="aperto-trigger"
-        key={layoutId ?? "unshared"}
-        layout
-        layoutCrossfade={false}
-        layoutId={layoutId}
-        style={{ zIndex }}
-        transition={resolved.transition}
-        type="button"
-      >
-        {children}
-      </m.button>
-    </Dialog.Trigger>
+    // `key` sits on the Trigger (not the render element, which Base UI re-clones)
+    // so a changing shared `layoutId` still remounts the Motion button and
+    // resets its layout animation.
+    <Dialog.Trigger
+      key={layoutId ?? "unshared"}
+      ref={ref}
+      render={
+        <m.button
+          data-aperto-active={shouldRaise ? "" : undefined}
+          data-slot="aperto-trigger"
+          layout
+          layoutCrossfade={false}
+          layoutId={layoutId}
+          style={{ zIndex }}
+          transition={resolved.transition}
+          type="button"
+        >
+          {children}
+        </m.button>
+      }
+      {...props}
+    />
   );
 };
 

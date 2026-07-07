@@ -1,6 +1,8 @@
 import { PATTERNMODE_SIZE_VALUES, PATTERNMODE_SIZES } from "@patternmode/system";
 import type { ObjectFit } from "@patternmode/system";
-import type { ComponentType, HTMLAttributes, ReactElement, ReactNode, SVGProps } from "react";
+import type { ComponentType, HTMLAttributes, ReactNode, SVGProps } from "react";
+
+import type { RenderProp } from "../render";
 
 export const SWATCH_SIZES = [...PATTERNMODE_SIZES, "4xl", "5xl", "6xl", "7xl"] as const;
 
@@ -32,7 +34,7 @@ export const getSwatchSizeVariableStyle = (
 /**
  * Visual and behavioural props shared by every Swatch rendering mode. These
  * map deterministically to the fill, scrim, shape, and size treatment
- * regardless of whether the swatch renders its own wrapper or an `asChild`
+ * regardless of whether the swatch renders its own wrapper or a `render`
  * element.
  */
 export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
@@ -127,13 +129,7 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
  * (`<figure>`, or `<fieldset>` when `onRemove` is set).
  */
 export interface SwatchDefaultProps extends SwatchSharedProps {
-  /**
-   * Render the swatch styling onto a provided child element instead of an
-   * own wrapper. See {@link SwatchAsChildProps}.
-   *
-   * Default `false`.
-   */
-  asChild?: false;
+  render?: undefined;
   /**
    * Optional media rendered inside the swatch frame.
    *
@@ -149,22 +145,26 @@ export interface SwatchDefaultProps extends SwatchSharedProps {
 }
 
 /**
- * `asChild` Swatch props: the swatch merges its className, style (size/fill
- * CSS variables), data attributes, and other props onto the single React
- * element passed as `children`, rendering through it (Radix Slot pattern)
- * instead of emitting its own wrapper. Use this when the swatch must *be* an
- * interactive element, such as a `<button>` cell in a color matrix.
+ * `render` Swatch props: the swatch merges its className, style (size/fill
+ * CSS variables), data attributes, and other props onto the element passed via
+ * `render`, rendering through it (Base UI render-prop pattern) instead of
+ * emitting its own wrapper. Use this when the swatch must *be* an interactive
+ * element, such as a `<button>` cell in a color matrix.
+ *
+ * The `render` element must be childless — put the swatch's content in
+ * `children`, e.g. `<Swatch render={<button type="button" />}>A1</Swatch>`.
+ * Children on the `render` element itself would override the swatch's own fill
+ * layers.
  *
  * `onRemove` is unsupported in this mode — its remove affordance cannot be
- * composed into an arbitrary slotted element. Wrap a default Swatch instead
+ * composed into an arbitrary rendered element. Wrap a default Swatch instead
  * when a remove control is required.
  */
-export interface SwatchAsChildProps extends SwatchSharedProps {
-  asChild: true;
-  /** The single element the swatch styling is merged onto and rendered through. */
-  children: ReactElement;
+export interface SwatchRenderProps extends SwatchSharedProps {
+  render: RenderProp;
+  children?: ReactNode;
   onRemove?: never;
   removeLabel?: never;
 }
 
-export type SwatchProps = SwatchDefaultProps | SwatchAsChildProps;
+export type SwatchProps = SwatchDefaultProps | SwatchRenderProps;
