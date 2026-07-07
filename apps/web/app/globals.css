@@ -843,7 +843,7 @@ button {
 }
 
 .swatch-demo-label {
-  @apply text-sm font-medium tracking-[0.06em] text-[color:var(--muted)] uppercase;
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
 }
 
 .swatch-demo-swatches {
@@ -913,11 +913,7 @@ button {
 }
 
 .halo-demo-label {
-  @apply text-sm font-medium tracking-[0.06em] text-[color:var(--muted)] uppercase;
-}
-
-.halo-demo-chip {
-  @apply h-[72px] w-[72px] rounded-full border border-[rgb(17_24_39_/_12%)] shadow-[0_4px_16px_rgba(29,29,27,0.08)];
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
 }
 
 .halo-demo dl {
@@ -947,8 +943,10 @@ button {
   anchor-name: --briolette-swatch;
 }
 
+/* The swatch already ships a focus ring; keep this override light so the two
+   don't stack into a heavy halo around the small circular trigger. */
 .briolette-demo-swatch:focus-visible {
-  @apply outline-2 outline-offset-[3px] outline-[color:var(--accent)];
+  @apply outline-1 outline-offset-2 outline-[color:var(--accent)];
 }
 
 .briolette-demo-hex {
@@ -1079,7 +1077,7 @@ button {
 }
 
 .tags-demo-label {
-  @apply text-sm font-medium tracking-normal text-[color:var(--muted)] uppercase;
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
 }
 
 .tags-demo-note {
@@ -1217,7 +1215,7 @@ button {
 }
 
 .parquet-art-chip {
-  @apply pointer-events-none absolute top-0 left-0 flex flex-col gap-px px-[11px] py-[9px] leading-tight;
+  @apply pointer-events-none absolute top-0 left-0 flex max-w-full flex-col gap-px px-2 py-1.5 leading-tight;
 }
 
 .parquet-art-chip[data-light] {
@@ -1229,11 +1227,15 @@ button {
 }
 
 .parquet-art-hex {
-  @apply font-[family-name:var(--mono)] text-sm tracking-[0.01em];
+  @apply max-w-full overflow-hidden text-[0.6875rem] tracking-[0.01em] text-ellipsis whitespace-nowrap font-[family-name:var(--mono)];
 }
 
 .parquet-art-name {
-  @apply text-sm opacity-[0.78];
+  @apply max-w-full overflow-hidden text-[0.6875rem] text-ellipsis whitespace-nowrap opacity-[0.78];
+}
+
+.parquet-art-nav {
+  @apply flex items-center justify-center gap-3;
 }
 
 .parquet-art-dots {
@@ -1250,4 +1252,22 @@ button {
 
 .parquet-art-dot:focus-visible {
   @apply outline-2 outline-offset-[3px] outline-[color:var(--accent)];
+}
+
+/* Reusable previous/next navigation control (see components/nav-button.tsx),
+   echoing Aperto's circular chevron affordance for light-surface contexts. */
+.nav-button {
+  @apply grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full border border-[color:var(--border-soft)] bg-[var(--surface)] p-0 text-[color:var(--muted)] transition-[background-color,border-color,color] duration-150 ease-out;
+}
+
+.nav-button:hover {
+  @apply border-[color:var(--border)] bg-[var(--surface-soft)] text-[color:var(--ink)];
+}
+
+.nav-button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
+}
+
+.nav-button:disabled {
+  @apply cursor-not-allowed opacity-40;
 }

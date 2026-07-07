@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { ART_PALETTES } from "@/lib/art-palettes";
+import { NavButton } from "./nav-button";
 
 const ROTATION_MS = 5200;
 const MAX_SLOTS = Math.max(...ART_PALETTES.map((palette) => palette.colors.length));
@@ -23,6 +24,13 @@ export const ParquetArtDemo = () => {
       clearInterval(timer);
     };
   }, []);
+
+  const goToPrevious = () => {
+    setIndex((prev) => (prev - 1 + ART_PALETTES.length) % ART_PALETTES.length);
+  };
+  const goToNext = () => {
+    setIndex((prev) => (prev + 1) % ART_PALETTES.length);
+  };
 
   const art = ART_PALETTES[index] ?? ART_PALETTES[0];
   if (art === undefined) {
@@ -64,21 +72,25 @@ export const ParquetArtDemo = () => {
         </div>
       </div>
 
-      <div aria-label="Artwork" className="parquet-art-dots" role="tablist">
-        {ART_PALETTES.map((palette, dotIndex) => (
-          <button
-            aria-label={palette.title}
-            aria-selected={dotIndex === index}
-            className="parquet-art-dot"
-            data-active={dotIndex === index ? "" : undefined}
-            key={palette.image}
-            onClick={() => {
-              setIndex(dotIndex);
-            }}
-            role="tab"
-            type="button"
-          />
-        ))}
+      <div className="parquet-art-nav">
+        <NavButton direction="previous" label="Previous artwork" onClick={goToPrevious} />
+        <div aria-label="Artwork" className="parquet-art-dots" role="tablist">
+          {ART_PALETTES.map((palette, dotIndex) => (
+            <button
+              aria-label={palette.title}
+              aria-selected={dotIndex === index}
+              className="parquet-art-dot"
+              data-active={dotIndex === index ? "" : undefined}
+              key={palette.image}
+              onClick={() => {
+                setIndex(dotIndex);
+              }}
+              role="tab"
+              type="button"
+            />
+          ))}
+        </div>
+        <NavButton direction="next" label="Next artwork" onClick={goToNext} />
       </div>
     </div>
   );

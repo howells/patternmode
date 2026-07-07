@@ -2,6 +2,7 @@
 
 import { HaloPicker, hslToHex } from "@patternmode/halo";
 import type { HaloColor } from "@patternmode/halo";
+import { Swatch } from "@patternmode/swatch";
 import { useState } from "react";
 
 const startingColor: HaloColor = { h: 16, l: 69, s: 48 };
@@ -17,7 +18,7 @@ export const HaloDemo = () => {
       </div>
       <div className="halo-demo-cell halo-demo-readout">
         <div className="halo-demo-label">Current</div>
-        <div className="halo-demo-chip" style={{ backgroundColor: hex }} />
+        <Swatch aria-label={`Current color ${hex}`} color={hex} size="4xl" />
         <dl>
           <div>
             <dt>Hex</dt>
