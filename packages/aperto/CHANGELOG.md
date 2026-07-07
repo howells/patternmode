@@ -1,5 +1,31 @@
 # @patternmode/aperto
 
+## 1.0.0
+
+### Major Changes
+
+- 5985325: Migrate from Radix UI to Base UI (`@base-ui/react`). Radix is in maintenance; Base UI is its successor. This also removes the Radix Dialog types that previously leaked into Aperto's published `.d.ts`.
+
+  The public component names are unchanged — `Aperto.Overlay` is now backed by Base UI's Dialog `Backdrop`, and `Aperto.Content` by its `Popup`, but the compound API is the same.
+
+  **Breaking changes:**
+
+  - **`asChild` → `render`** on `Aperto.Trigger`, `Aperto.Overlay`, and `Aperto.Content` (used internally to compose Motion elements). If you compose these with the function form of `render`, spread every prop from the first argument (including `ref`).
+  - **`forceMount` is replaced by `keepMounted`** on `Aperto.Portal`, following Base UI's Dialog API.
+  - **`onOpenChange`** now receives Base UI's `(open, eventDetails)` signature. The extra `eventDetails` argument is additive; existing one-argument handlers keep working.
+  - **Data attribute change.** Base UI emits `data-open` / `data-closed` instead of Radix's `data-state="open"`; the internal `data-radix-*` attributes are gone. Update any styling or selectors that relied on them.
+
+  **Note for Motion:** Aperto's exit animations and shared-element morph are driven by Motion, whose animations are invisible to Base UI's `getAnimations()`-based unmount detection. Aperto handles this internally (`keepMounted` portal + a `hidden` override so the content stays visible while Motion plays the exit); no consumer action is required.
+
+### Patch Changes
+
+- eb6d04e: Shared-element integrity: honour the declared aspect ratio, and make the flight seamless.
+
+  - The expanded media box no longer flex-shrinks inside a height-capped panel (which silently distorted the declared `width`/`height` ratio — a 1:1 item rendered visibly non-square). Its size budget now derives from the panel's own cap minus a caption allowance, on desktop and mobile, and the mobile branch uses the item's real ratio instead of a hardcoded 3:2. New tuning vars: `--aperto-panel-max-h`, `--aperto-caption-allowance`.
+  - The transition clone flies from/to the media inside the trigger (an explicit `[data-aperto-media-source]`, else the first `img`/`video`), not the whole thumbnail card — captions and badges inside `Aperto.Thumbnail` no longer distort the morph's shape.
+  - The clone renders `thumbnailSrc` with `variant: "thumbnail"`, so consumer `renderImage` implementations reproduce the exact cache-hot URL already on screen; the morph never pops to a blank frame while the full-size asset loads.
+  - Origin media now hides during flight at any nesting depth inside the trigger (descendant selectors, was direct-child only).
+
 ## 0.2.2
 
 ### Patch Changes
