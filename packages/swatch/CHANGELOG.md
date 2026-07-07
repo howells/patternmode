@@ -41,7 +41,6 @@
   `@instruments/colorscope` for the lightness math.
 
 - 30a30af: Component review fixes for Swatch and DistributionBar.
-
   - `blend="smooth"` now respects `ratio` weights: each stop is positioned at
     the cumulative midpoint of its ratio share (a 90/10 palette centers at 45%
     and 95%) while keeping OKLab interpolation, so a Weighted Palette Swatch

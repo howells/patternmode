@@ -21,7 +21,6 @@
   If you use the function form of `render`, spread every prop from the first argument (including `ref`) onto your element or its wiring is silently lost.
 
   Other changes:
-
   - The body scroll area now emits Base UI's ScrollArea DOM. Its viewport no longer carries a `data-radix-scroll-area-viewport` attribute or the Radix inner `display:table` wrapper — restyle any selectors that targeted those.
   - Scrollbar visibility is now CSS-driven from `data-hovering` / `data-scrolling`.
   - The internal focus-trap now also recognises Base UI overlays (`data-base-ui-focus-guard`, `[data-open]` dialogs) layered on top of a sheet; the Radix selectors are kept for third-party Radix content.
@@ -56,7 +55,6 @@
 ### Patch Changes
 
 - fd7e708: Accessibility, dismissal, and drag fixes from the component review:
-
   - Respect `closeOnEscape: false` on Chromium — the CloseWatcher is no longer created when Escape dismissal is disabled (this also disables Android back-gesture dismissal in that configuration, since CloseWatcher cannot distinguish sources).
   - Ignore Escape presses already consumed by an inner layer (popover, select) instead of also dismissing the sheet, and only `preventDefault()` when the sheet actually dismisses.
   - Animate the background un-scale on close — the `shouldScaleBackground` close path previously snapped back instantly; it now transitions out with a `transitionend` listener plus timeout fallback.
