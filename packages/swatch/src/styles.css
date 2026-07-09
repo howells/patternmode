@@ -53,14 +53,14 @@
   .patternmode-swatch[data-raised="true"] {
     box-shadow:
       0 1px 2px rgb(17 24 39 / 10%),
-      0 0 0 2px var(--surface, #fff);
+      0 0 0 2px var(--card, #fff);
   }
 
   .patternmode-swatch[data-selected="true"][data-show-ring="true"] {
     box-shadow:
       0 1px 2px rgb(17 24 39 / 10%),
-      0 0 0 2px var(--surface, #fff),
-      0 0 0 4px var(--accent, #315c4b);
+      0 0 0 2px var(--card, #fff),
+      0 0 0 4px var(--ring, #315c4b);
   }
 
   .patternmode-swatch[data-unavailable="true"] {
@@ -131,7 +131,7 @@
     background: transparent;
     border: 0;
     border-radius: 999px;
-    color: var(--surface, #fff);
+    color: var(--card, #fff);
     cursor: pointer;
     display: inline-flex;
     height: 2.75rem;
@@ -146,7 +146,7 @@
   }
 
   .patternmode-swatch__remove::before {
-    background: var(--ink, #1d1d1b);
+    background: var(--foreground, #1d1d1b);
     border-radius: inherit;
     content: "";
     height: 1.25rem;
@@ -165,7 +165,7 @@
     }
 
     .patternmode-swatch__remove:hover::before {
-      background: var(--accent, #315c4b);
+      background: var(--ring, #315c4b);
     }
   }
 
@@ -178,7 +178,7 @@
   }
 
   .patternmode-swatch__remove:focus-visible {
-    outline: 2px solid var(--accent, #315c4b);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: 2px;
   }
 
@@ -221,7 +221,7 @@
   }
 
   .patternmode-distribution-bar__segments {
-    border: 1px solid var(--border-soft, rgb(17 24 39 / 12%));
+    border: 1px solid var(--border-subtle, rgb(17 24 39 / 12%));
     border-radius: var(--patternmode-distribution-radius, 999px);
     display: flex;
     height: 100%;
@@ -251,7 +251,7 @@
   }
 
   button.patternmode-distribution-bar__segment:focus-visible {
-    outline: 2px solid var(--accent, #315c4b);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: -2px;
     z-index: 2;
   }
@@ -269,7 +269,7 @@
   }
 
   .patternmode-distribution-bar__segment[data-selected="true"]::after {
-    border: 2px solid var(--surface, #fff);
+    border: 2px solid var(--card, #fff);
     border-radius: 999px;
     box-shadow:
       0 1px 4px rgb(17 24 39 / 28%),
@@ -290,13 +290,13 @@
   }
 
   .patternmode-distribution-bar__segment--empty {
-    background-color: var(--surface-soft, #f7f5f0);
+    background-color: var(--muted, #f7f5f0);
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
       transparent 3px,
-      var(--border-soft, rgb(17 24 39 / 12%)) 3px,
-      var(--border-soft, rgb(17 24 39 / 12%)) 4px
+      var(--border-subtle, rgb(17 24 39 / 12%)) 3px,
+      var(--border-subtle, rgb(17 24 39 / 12%)) 4px
     );
   }
 
@@ -317,7 +317,7 @@
   }
 
   .patternmode-distribution-bar__handle::before {
-    background: var(--surface, #fff);
+    background: var(--card, #fff);
     border-radius: 999px;
     box-shadow:
       0 1px 4px rgb(17 24 39 / 18%),
@@ -331,7 +331,7 @@
   }
 
   .patternmode-distribution-bar__handle:focus-visible {
-    outline: 2px solid var(--accent, #315c4b);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: -4px;
   }
 
@@ -352,7 +352,7 @@
 
   .patternmode-distribution-bar__legend > span {
     align-items: center;
-    color: var(--muted, #595853);
+    color: var(--muted-foreground, #595853);
     display: inline-flex;
     font-size: 0.68rem;
     font-weight: 500;
@@ -368,15 +368,15 @@
   }
 
   .patternmode-distribution-bar__swatch--empty {
-    background-color: var(--surface-soft, #f7f5f0);
+    background-color: var(--muted, #f7f5f0);
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
       transparent 2px,
-      var(--border-soft, rgb(17 24 39 / 12%)) 2px,
-      var(--border-soft, rgb(17 24 39 / 12%)) 3px
+      var(--border-subtle, rgb(17 24 39 / 12%)) 2px,
+      var(--border-subtle, rgb(17 24 39 / 12%)) 3px
     );
-    box-shadow: inset 0 0 0 1px var(--border-soft, rgb(17 24 39 / 12%));
+    box-shadow: inset 0 0 0 1px var(--border-subtle, rgb(17 24 39 / 12%));
   }
 
   @media (prefers-reduced-motion: reduce) {

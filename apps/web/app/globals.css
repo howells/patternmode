@@ -7,10 +7,10 @@
   --code-background: #f2f1ed;
   --code-border: #e5e2da;
   --ink: #1d1d1b;
-  --muted: #77756d;
+  --muted-foreground: #77756d;
   --surface: #ffffff;
   --surface-soft: #f6f5f1;
-  --accent: #315c4b;
+  --ring: #315c4b;
   --accent-soft: #e1ebe5;
   --radius: 8px;
   --mono: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
@@ -97,7 +97,7 @@ button {
 .sheet-panel-content p,
 .stacksheet-copy p,
 .read-more {
-  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted)];
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
 }
 
 .link-set {
@@ -105,7 +105,7 @@ button {
 }
 
 .link-set a {
-  @apply text-sm text-[color:var(--muted)];
+  @apply text-sm text-[color:var(--muted-foreground)];
 }
 
 .product-section {
@@ -129,7 +129,7 @@ button {
 }
 
 .segmented-field > span {
-  @apply text-sm text-[color:var(--muted)];
+  @apply text-sm text-[color:var(--muted-foreground)];
 }
 
 .segmented-control {
@@ -137,7 +137,7 @@ button {
 }
 
 .segmented-control button {
-  @apply min-h-[26px] cursor-pointer rounded-full border-0 bg-transparent px-2.5 text-sm leading-none text-[color:var(--muted)] transition-[background,color] duration-[140ms];
+  @apply min-h-[26px] cursor-pointer rounded-full border-0 bg-transparent px-2.5 text-sm leading-none text-[color:var(--muted-foreground)] transition-[background,color] duration-[140ms];
 }
 
 .segmented-control button[aria-pressed="true"] {
@@ -147,7 +147,7 @@ button {
 .segmented-control button:focus-visible,
 .demo-button-row button:focus-visible,
 .sheet-action-row button:focus-visible {
-  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
 }
 
 .aperto-demo {
@@ -175,11 +175,11 @@ button {
 }
 
 .option-bar-label {
-  @apply float-left mr-1 py-1 text-sm leading-none text-[color:var(--muted)];
+  @apply float-left mr-1 py-1 text-sm leading-none text-[color:var(--muted-foreground)];
 }
 
 .option-bar-item {
-  @apply cursor-pointer rounded border-0 bg-transparent px-1.5 py-1 text-sm leading-none text-[color:var(--muted)] transition-colors duration-[120ms];
+  @apply cursor-pointer rounded border-0 bg-transparent px-1.5 py-1 text-sm leading-none text-[color:var(--muted-foreground)] transition-colors duration-[120ms];
 }
 
 .option-bar-item[aria-pressed="true"] {
@@ -187,7 +187,7 @@ button {
 }
 
 .option-bar-item:focus-visible {
-  @apply outline-2 outline-offset-1 outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-1 outline-[color:var(--ring)];
 }
 
 .stacksheet-surface {
@@ -235,7 +235,7 @@ button {
 }
 
 .demo-state {
-  @apply mx-0 mt-[14px] mb-0 text-sm text-[color:var(--muted)];
+  @apply mx-0 mt-[14px] mb-0 text-sm text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-backdrop {
@@ -251,7 +251,7 @@ button {
 }
 
 .sheet-kicker {
-  @apply m-0 mb-2 text-sm text-[color:var(--accent)];
+  @apply m-0 mb-2 text-sm text-[color:var(--ring)];
 }
 
 .sheet-list {
@@ -259,7 +259,7 @@ button {
 }
 
 .sheet-list span {
-  @apply rounded-[7px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2.5 text-sm text-[color:var(--muted)];
+  @apply rounded-[7px] border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-3 py-2.5 text-sm text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-examples {
@@ -267,7 +267,7 @@ button {
 }
 
 .stacksheet-group-label {
-  @apply m-0 mb-0.5 text-sm font-medium text-[color:var(--muted)];
+  @apply m-0 mb-0.5 text-sm font-medium text-[color:var(--muted-foreground)];
 }
 
 .stacksheet-group-rows {
@@ -283,7 +283,7 @@ button {
 }
 
 .stacksheet-row:focus-visible {
-  @apply outline-2 outline-offset-[-2px] outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-[-2px] outline-[color:var(--ring)];
 }
 
 .stacksheet-row-name {
@@ -291,11 +291,11 @@ button {
 }
 
 .stacksheet-row-desc {
-  @apply flex-1 text-sm text-[color:var(--muted)] max-sm:order-3 max-sm:basis-full;
+  @apply flex-1 text-sm text-[color:var(--muted-foreground)] max-sm:order-3 max-sm:basis-full;
 }
 
 .stacksheet-row-open {
-  @apply ml-auto inline-flex shrink-0 grow-0 items-center gap-1 text-sm text-[color:var(--accent)];
+  @apply ml-auto inline-flex shrink-0 grow-0 items-center gap-1 text-sm text-[color:var(--ring)];
 }
 
 .stacksheet-row-open svg {
@@ -311,7 +311,7 @@ button {
 }
 
 .sheet-form label {
-  @apply flex flex-col gap-[5px] text-sm text-[color:var(--muted)];
+  @apply flex flex-col gap-[5px] text-sm text-[color:var(--muted-foreground)];
 }
 
 .sheet-form input,
@@ -324,7 +324,7 @@ button {
 
 .sheet-form input:focus-visible,
 .sheet-form textarea:focus-visible {
-  @apply border-[color:var(--accent)] outline-none;
+  @apply border-[color:var(--ring)] outline-none;
 }
 
 .docs-block {
@@ -393,11 +393,11 @@ button {
 
 .prop-type,
 .prop-default {
-  @apply rounded-full bg-[var(--surface-soft)] px-[7px] py-[3px] font-[family-name:var(--mono)] text-sm text-[color:var(--muted)];
+  @apply rounded-full bg-[var(--surface-soft)] px-[7px] py-[3px] font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
 }
 
 .prop-description {
-  @apply w-full text-sm leading-normal text-[color:var(--muted)];
+  @apply w-full text-sm leading-normal text-[color:var(--muted-foreground)];
 }
 
 .read-more {
@@ -419,7 +419,7 @@ button {
 }
 
 .catalog-intro p {
-  @apply mx-0 mt-1.5 mb-0 text-sm leading-[1.65] text-[color:var(--muted)];
+  @apply mx-0 mt-1.5 mb-0 text-sm leading-[1.65] text-[color:var(--muted-foreground)];
 }
 
 .catalog-grid {
@@ -439,7 +439,7 @@ button {
 }
 
 .catalog-card-body p {
-  @apply mx-0 mt-[5px] mb-0 text-sm leading-[1.55] text-[color:var(--muted)];
+  @apply mx-0 mt-[5px] mb-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
 }
 
 .catalog-card-preview {
@@ -628,7 +628,7 @@ button {
 .preview-status-set span:nth-child(2)::after,
 .preview-status-set span:nth-child(3)::after,
 .preview-status-set span:nth-child(4)::after {
-  background: var(--muted);
+  background: var(--muted-foreground);
   border-radius: 999px;
   content: "";
   inset: 5px;
@@ -751,21 +751,21 @@ button {
 .catalog-card-preview-placeholder {
   background: var(--surface-soft);
   border-bottom-style: dashed;
-  color: var(--muted);
+  color: var(--muted-foreground);
 }
 
 .catalog-card-placeholder .catalog-card-body h2 {
-  color: var(--muted);
+  color: var(--muted-foreground);
 }
 
 .catalog-card-placeholder .catalog-card-body p {
-  color: var(--muted);
+  color: var(--muted-foreground);
 }
 
 /* ── Component page header ─────────────────── */
 
 .back-link {
-  @apply inline-flex items-center gap-[5px] text-sm text-[color:var(--muted)] no-underline transition-colors duration-[140ms];
+  @apply inline-flex items-center gap-[5px] text-sm text-[color:var(--muted-foreground)] no-underline transition-colors duration-[140ms];
 }
 
 .back-link:hover {
@@ -781,7 +781,7 @@ button {
 }
 
 .component-header p {
-  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted)];
+  @apply mx-0 mt-1.5 mb-0 max-w-[62ch] text-sm leading-[1.65] text-[color:var(--muted-foreground)];
 }
 
 /* ── Deck demo ─────────────────────────────── */
@@ -817,7 +817,7 @@ button {
 
 .deck-empty-state p,
 .deck-demo-state {
-  @apply mx-0 mt-2 mb-0 text-sm leading-[1.6] text-[color:var(--muted)];
+  @apply mx-0 mt-2 mb-0 text-sm leading-[1.6] text-[color:var(--muted-foreground)];
 }
 
 .deck-empty-state {
@@ -843,7 +843,7 @@ button {
 }
 
 .swatch-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
 }
 
 .swatch-demo-swatches {
@@ -859,7 +859,7 @@ button {
 }
 
 .swatch-demo-button:focus-visible {
-  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
 }
 
 .swatch-demo-palette-grid {
@@ -875,15 +875,15 @@ button {
 }
 
 .swatch-demo-palette-item:focus-visible {
-  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
 }
 
 .swatch-demo-palette-item span {
-  @apply text-sm font-medium text-[color:var(--muted)];
+  @apply text-sm font-medium text-[color:var(--muted-foreground)];
 }
 
 .swatch-demo-palette-item[aria-pressed="true"] span {
-  @apply text-[color:var(--foreground)];
+  @apply text-[color:var(--ink)];
 }
 
 .swatch-demo-specimen {
@@ -891,7 +891,7 @@ button {
 }
 
 .swatch-demo-specimen > span:not([data-slot="swatch"]) {
-  @apply text-sm font-medium text-[color:var(--muted)];
+  @apply text-sm font-medium text-[color:var(--muted-foreground)];
 }
 
 /* ── Halo demo ─────────────────────────────── */
@@ -913,7 +913,7 @@ button {
 }
 
 .halo-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
 }
 
 .halo-demo dl {
@@ -925,11 +925,11 @@ button {
 }
 
 .halo-demo dt {
-  @apply text-sm text-[color:var(--muted)];
+  @apply text-sm text-[color:var(--muted-foreground)];
 }
 
 .halo-demo dd {
-  @apply m-0 font-[family-name:var(--mono)] text-sm text-[color:var(--muted)];
+  @apply m-0 font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
 }
 
 /* ── Briolette demo ────────────────────────────── */
@@ -946,11 +946,11 @@ button {
 /* The swatch already ships a focus ring; keep this override light so the two
    don't stack into a heavy halo around the small circular trigger. */
 .briolette-demo-swatch:focus-visible {
-  @apply outline-1 outline-offset-2 outline-[color:var(--accent)];
+  @apply outline-1 outline-offset-2 outline-[color:var(--ring)];
 }
 
 .briolette-demo-hex {
-  @apply min-w-[7ch] font-[family-name:var(--mono)] text-sm tabular-nums text-[color:var(--muted)];
+  @apply min-w-[7ch] font-[family-name:var(--mono)] text-sm tabular-nums text-[color:var(--muted-foreground)];
 }
 
 .briolette-demo-halo {
@@ -997,7 +997,7 @@ button {
 }
 
 .status-demo-state-item span {
-  @apply font-[family-name:var(--mono)] text-sm leading-none text-[color:var(--muted)] transition-colors duration-[140ms];
+  @apply font-[family-name:var(--mono)] text-sm leading-none text-[color:var(--muted-foreground)] transition-colors duration-[140ms];
 }
 
 .status-demo-state-item[aria-pressed="true"] span {
@@ -1009,7 +1009,7 @@ button {
 }
 
 .status-demo-state-item:focus-visible {
-  @apply rounded outline-2 outline-offset-4 outline-[color:var(--accent)];
+  @apply rounded outline-2 outline-offset-4 outline-[color:var(--ring)];
 }
 
 .status-demo-controls {
@@ -1043,11 +1043,11 @@ button {
 }
 
 .scrollframe-demo-row span {
-  @apply font-[family-name:var(--mono)] text-sm text-[color:var(--muted)];
+  @apply font-[family-name:var(--mono)] text-sm text-[color:var(--muted-foreground)];
 }
 
 .scrollframe-demo-row p {
-  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted)];
+  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
 }
 
 .scrollframe-demo-strip {
@@ -1059,7 +1059,7 @@ button {
 }
 
 .scrollframe-demo-chips button {
-  @apply inline-flex rounded-full border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-2 text-sm leading-none whitespace-nowrap text-[color:var(--muted)];
+  @apply inline-flex rounded-full border border-[color:var(--border-soft)] bg-[var(--surface-soft)] px-[11px] py-2 text-sm leading-none whitespace-nowrap text-[color:var(--muted-foreground)];
 }
 
 .scrollframe-demo-chips button[aria-pressed="true"] {
@@ -1077,11 +1077,11 @@ button {
 }
 
 .tags-demo-label {
-  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted)] uppercase;
+  @apply text-[0.6875rem] font-medium tracking-[0.08em] text-[color:var(--muted-foreground)] uppercase;
 }
 
 .tags-demo-note {
-  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted)];
+  @apply m-0 text-sm leading-[1.55] text-[color:var(--muted-foreground)];
 }
 
 .tags-demo-row {
@@ -1110,14 +1110,14 @@ button {
   .segmented-control button:hover,
   .demo-button-row button:hover,
   .sheet-action-row button:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--ring);
+    color: var(--ring);
   }
 
   .demo-button-row button:first-child:hover,
   .sheet-action-row button:first-child:hover {
-    background: var(--accent);
-    border-color: var(--accent);
+    background: var(--ring);
+    border-color: var(--ring);
     color: white;
   }
 
@@ -1247,17 +1247,17 @@ button {
 }
 
 .parquet-art-dot[data-active] {
-  @apply w-[22px] bg-[var(--accent)];
+  @apply w-[22px] bg-[var(--ring)];
 }
 
 .parquet-art-dot:focus-visible {
-  @apply outline-2 outline-offset-[3px] outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-[3px] outline-[color:var(--ring)];
 }
 
 /* Reusable previous/next navigation control (see components/nav-button.tsx),
    echoing Aperto's circular chevron affordance for light-surface contexts. */
 .nav-button {
-  @apply grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full border border-[color:var(--border-soft)] bg-[var(--surface)] p-0 text-[color:var(--muted)] transition-[background-color,border-color,color] duration-150 ease-out;
+  @apply grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full border border-[color:var(--border-soft)] bg-[var(--surface)] p-0 text-[color:var(--muted-foreground)] transition-[background-color,border-color,color] duration-150 ease-out;
 }
 
 .nav-button:hover {
@@ -1265,7 +1265,7 @@ button {
 }
 
 .nav-button:focus-visible {
-  @apply outline-2 outline-offset-2 outline-[color:var(--accent)];
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
 }
 
 .nav-button:disabled {

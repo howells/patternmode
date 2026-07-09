@@ -17,7 +17,7 @@
   }
 
   .patternmode-briolette__stage:focus-visible {
-    outline: 2px solid var(--accent, #315c4b);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: 6px;
   }
 
@@ -77,7 +77,7 @@
   }
 
   .patternmode-briolette__value {
-    color: var(--muted, #77756d);
+    color: var(--muted-foreground, #77756d);
     font-family: var(
       --mono,
       "SFMono-Regular",
