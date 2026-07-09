@@ -16,6 +16,11 @@
       "cache": false,
       "persistent": true
     },
+    "@patternmode/theme#build": {
+      "dependsOn": ["^build"],
+      "env": ["REGISTRY_BASE_URL", "VERCEL"],
+      "outputs": ["dist/**"]
+    },
     "lint": {},
     "lint:fix": {
       "cache": false

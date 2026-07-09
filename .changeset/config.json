@@ -5,7 +5,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "ignore": ["@howells/patternmode-web", "@howells/site-ui"],
+  "ignore": ["@howells/patternmode-web", "@howells/site-ui", "@patternmode/theme"],
   "linked": [],
   "privatePackages": {
     "tag": false,
