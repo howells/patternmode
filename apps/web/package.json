@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "node scripts/copy-registry.mjs && next build",
     "clean": "rm -rf .next .turbo",
-    "dev": "next dev",
+    "dev": "node scripts/copy-registry.mjs && next dev",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
     "typecheck": "tsc --noEmit"
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
+    "@patternmode/theme": "workspace:*",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
