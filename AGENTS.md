@@ -34,6 +34,25 @@
 - `pnpm publish:packages` and `pnpm version-packages` - release operations; ask first.
 - `pnpm smoke:tarballs` - package tarball smoke checks.
 
+## Registry & Token Rules
+
+- Component CSS reads the standard shadcn theme variable vocabulary with patternmode hex
+  values as fallbacks (e.g. `var(--foreground, #1d1d1b)`) — never reintroduce the old
+  `--ink` / `--muted` / `--surface` / `--surface-soft` / `--accent-soft` / `--border-soft` /
+  `--quiet`-era names. `pnpm check:tokens` (`scripts/check-tokens.mjs`, part of `pnpm check`)
+  enforces the vocabulary and fails on any `var(--name)` outside the allowlist.
+- `scripts/build-registry.mjs` hard-codes two per-package lookup tables that must be updated
+  when adding a package to the registry: `CSS_STYLE` (style A inline / B `styles.css` + import
+  / C none) and `STRIP_GLOBAL_DECLARATIONS` (packages whose vendored source needs `declare
+global` blocks stripped, e.g. stacksheet). Add a new `@patternmode/*` component to
+  `COMPONENT_PACKAGES` and `CSS_STYLE`; add it to `STRIP_GLOBAL_DECLARATIONS` too if it ships
+  ambient type declarations.
+- Rebuild the registry: `pnpm --filter @patternmode/theme build` (writes
+  `packages/theme/dist/registry`).
+- Re-sync the preview app against the freshly built registry: `pnpm --filter
+@howells/patternmode-preview sync` (also runs automatically before `dev`/`build` in
+  `apps/preview`).
+
 ## Repo-Specific Rules
 
 - Aperto is not just a lightbox; Deck is the canonical term over CardStack; Stacksheet owns sheet navigation vocabulary.

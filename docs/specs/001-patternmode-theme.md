@@ -189,3 +189,11 @@ Both address forms are exercised in the acceptance test. Result: site renders in
 - [ ] Theme JSON contains only standard shadcn token names — verified by a small script that diffs emitted cssVar keys against the known shadcn token list (not by eye)
 - [ ] Registry served from the patternmode web deployment; `npx shadcn add @patternmode/theme` works via namespace config
 - [ ] Existing `@patternmode/*` packages and `apps/web` styling are byte-for-byte unaffected by phases 1–3
+
+## Amendments
+
+- **Component distribution moved from non-goals into scope.** "Distributing `@patternmode/*` components via the shadcn registry" (listed above under Non-goals) shipped — see `docs/specs/002-component-registry.md`. `scripts/build-registry.mjs` now vendors the ten `@patternmode/*` component packages plus `system`/`motion` as registry items alongside this spec's theme.
+- **Production domain resolved.** The registry's public domain (left as an open question above) is `https://patternmode.com`.
+- **`--destructive-foreground` dropped** from `cssVars.light`/`.dark` to match shadcn's current stock default, rather than shipping the bespoke paper-on-brick / charcoal-on-lifted-brick pairing drafted above.
+- **Shadows moved from `cssVars.theme` into `cssVars.light`/`.dark`.** They're mode-dependent (ink-tinted in light, pure black at higher alpha in dark, per the Shadows table above), so a single `theme`-scoped value was never correct; the `@theme` block described in Architecture no longer carries them.
+- **The `@theme inline` shadow-variable map was removed** from `packages/theme/registry/theme/theme.css`. shadcn's `update-css` step auto-derives the same `@theme inline` mapping from the `shadow-*`/`font-*` keys already present in `cssVars`, and shipping the mapping explicitly crashed `shadcn add` on self-referential custom properties — see spec 002's Defects found & fixed.
