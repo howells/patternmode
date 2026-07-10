@@ -1353,3 +1353,27 @@
   inherits: false;
   initial-value: 0px;
 }
+
+@property --patternmode-scrollframe-mask-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-left {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --patternmode-scrollframe-mask-right {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}

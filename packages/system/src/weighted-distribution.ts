@@ -60,12 +60,15 @@ const NAMED_COLOR_LIGHTNESS: Record<string, boolean> = {
  * fourth comma argument) is ignored — tone only depends on the channels.
  */
 const getColorFunctionChannels = (color: string, names: readonly string[]): string[] | null => {
-  const match = /^(?<name>[a-z]+)\(\s*(?<body>[^)]+?)\s*\)$/iu.exec(color.trim());
+  // Indexed groups, not named: vendored copies of this file must compile
+  // under consumer tsconfigs targeting ES2017 (named groups need ES2018+).
+  // eslint-disable-next-line prefer-named-capture-group -- ES2017 portability
+  const match = /^([a-z]+)\(\s*([^)]+?)\s*\)$/iu.exec(color.trim());
   if (match === null) {
     return null;
   }
 
-  const { body = "", name = "" } = match.groups ?? {};
+  const [, name = "", body = ""] = match;
   if (!names.includes(name.toLowerCase())) {
     return null;
   }
