@@ -41,7 +41,7 @@
      drawn on the arc svg that follows it. */
   .patternmode-halo-picker__pad:focus-visible,
   .patternmode-halo-picker__arc-input:focus-visible + .patternmode-halo-picker__arc {
-    outline: 2px solid var(--accent, #315c4b);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: 3px;
   }
 
@@ -114,7 +114,7 @@
   }
 
   .patternmode-halo-picker__value {
-    color: var(--muted, #77756d);
+    color: var(--muted-foreground, #77756d);
     font-family: var(
       --mono,
       "SFMono-Regular",

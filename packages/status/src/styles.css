@@ -15,12 +15,12 @@
   }
 
   .patternmode-status-mark[data-tone="accent"] {
-    --patternmode-status-color: var(--accent, #315c4b);
+    --patternmode-status-color: var(--ring, #315c4b);
     --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
   }
 
   .patternmode-status-mark[data-tone="muted"] {
-    --patternmode-status-color: var(--muted, #77756d);
+    --patternmode-status-color: var(--muted-foreground, #77756d);
     --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
   }
 

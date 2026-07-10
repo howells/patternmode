@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:tokens",
     "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:tokens": "node scripts/check-tokens.mjs",
     "clean": "turbo run clean --continue=always && turbo clean",
     "dev": "pnpm --filter @howells/patternmode-web dev",
     "env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
@@ -26,8 +27,10 @@
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
     "lint-staged": "catalog:",
+    "postcss": "^8.5.6",
     "turbo": "catalog:",
     "typescript": "catalog:",
+    "yaml": "^2.8.0",
     "zod": "catalog:"
   },
   "lint-staged": {
