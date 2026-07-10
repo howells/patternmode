@@ -101,6 +101,25 @@ const CSS_STYLE = new Map([
   ["tags", "A"],
 ]);
 
+/**
+ * Packages whose vendored sources must have top-level `declare global` blocks
+ * that declare `process` removed during staging. stacksheet ships a minimal
+ * ambient `var process` typing so its source typechecks in browser contexts
+ * without the `@types/node` package; vendored into a consumer Next.js app
+ * where `@types/node` IS in scope (almost always, transitively), that
+ * declaration collides with the Node one and TypeScript fails with TS2403 —
+ * no consumer tsconfig setting can avoid it. The block is type-only, so
+ * stripping it leaves runtime
+ * behavior unchanged. Only `process` blocks are stripped: stacksheet's other
+ * ambient declaration (`var CloseWatcher`, a Chromium-120+ API that no TS DOM
+ * lib declares) is load-bearing for consumers and must stay, or every
+ * consumer's typecheck breaks with TS7017 at the `globalThis.CloseWatcher`
+ * usage. The build fails loudly if a listed package no longer contains any
+ * process-declaring block, so a future stacksheet refactor can't silently
+ * change staging semantics.
+ */
+const STRIP_GLOBAL_DECLARATIONS = new Set(["stacksheet"]);
+
 /** Absolute path to each style-B package's source CSS file. */
 const STYLE_B_CSS = new Map([
   ["aperto", path.join(repoRoot, "packages", "aperto", "styles.css")],
@@ -111,41 +130,14 @@ const STYLE_B_CSS = new Map([
  * Canonical shadcn theme-variable names permitted in `cssVars.light`/`.dark`.
  * Any other key must start with `shadow-`. Used by --check.
  */
-const CANONICAL_CSS_VARS = new Set([
-  "accent",
-  "accent-foreground",
-  "background",
-  "border",
-  "card",
-  "card-foreground",
-  "chart-1",
-  "chart-2",
-  "chart-3",
-  "chart-4",
-  "chart-5",
-  "destructive",
-  "destructive-foreground",
-  "foreground",
-  "input",
-  "muted",
-  "muted-foreground",
-  "popover",
-  "popover-foreground",
-  "primary",
-  "primary-foreground",
-  "radius",
-  "ring",
-  "secondary",
-  "secondary-foreground",
-  "sidebar",
-  "sidebar-accent",
-  "sidebar-accent-foreground",
-  "sidebar-border",
-  "sidebar-foreground",
-  "sidebar-primary",
-  "sidebar-primary-foreground",
-  "sidebar-ring",
-]);
+const CANONICAL_CSS_VARS = new Set(
+  `background foreground card card-foreground popover popover-foreground primary
+   primary-foreground secondary secondary-foreground muted muted-foreground accent
+   accent-foreground destructive destructive-foreground border input ring radius
+   chart-1 chart-2 chart-3 chart-4 chart-5 sidebar sidebar-foreground sidebar-primary
+   sidebar-primary-foreground sidebar-accent sidebar-accent-foreground sidebar-border
+   sidebar-ring`.split(/\s+/u),
+);
 
 /** Every item name the registry must emit, in index order. */
 const EXPECTED_ITEM_NAMES = ["theme", "font-inter", "system", "motion", ...COMPONENT_PACKAGES];
@@ -516,6 +508,84 @@ const assertNoInternalSpecifiers = (content, label) => {
 };
 
 /**
+ * Find the line index of the closing brace that balances the first `{` at or
+ * after `startIndex`, or -1 when the block never closes.
+ * @param {string[]} lines Source lines.
+ * @param {number} startIndex Line index where the block opens.
+ * @returns {number} Closing line index, or -1.
+ */
+const findBraceBlockEnd = (lines, startIndex) => {
+  let depth = 0;
+  let sawBrace = false;
+  for (let scan = startIndex; scan < lines.length; scan += 1) {
+    for (const char of lines[scan]) {
+      if (char === "{") {
+        depth += 1;
+        sawBrace = true;
+      } else if (char === "}") {
+        depth -= 1;
+      }
+    }
+    if (sawBrace && depth === 0) {
+      return scan;
+    }
+  }
+  return -1;
+};
+
+/** Matches a `process` variable declaration inside a `declare global` body. */
+const GLOBAL_PROCESS_DECLARATION = /\b(?:var|let|const)\s+process\b/u;
+
+/**
+ * Remove top-level `declare global { ... }` blocks whose body declares
+ * `process` — plus any `//` comment lines attached directly above them — from
+ * a source file, located by content rather than line numbers. Only `process`
+ * blocks collide with the `@types/node` typings in consumer apps (TS2403);
+ * all other
+ * declare-global blocks (e.g. stacksheet's `var CloseWatcher`) are left
+ * intact, comments included, because consumers need them — no TS lib ships
+ * those declarations. See {@link STRIP_GLOBAL_DECLARATIONS}. The stripped
+ * blocks are type-only, so runtime behavior is unchanged.
+ * @param {string} source Raw source text.
+ * @param {string} fileLabel Human-readable file label for errors.
+ * @returns {{ content: string; strippedCount: number }} Stripped source and block count.
+ */
+const stripGlobalProcessDeclarations = (source, fileLabel) => {
+  const lines = source.split("\n");
+  let strippedCount = 0;
+  for (let index = 0; index < lines.length; index += 1) {
+    if (!lines[index].startsWith("declare global")) {
+      continue;
+    }
+    const endIndex = findBraceBlockEnd(lines, index);
+    if (endIndex === -1) {
+      throw new Error(`unterminated declare global block in ${fileLabel}`);
+    }
+    const body = lines.slice(index, endIndex + 1).join("\n");
+    if (!GLOBAL_PROCESS_DECLARATION.test(body)) {
+      index = endIndex;
+      continue;
+    }
+    let startIndex = index;
+    while (startIndex > 0 && lines[startIndex - 1].trimStart().startsWith("//")) {
+      startIndex -= 1;
+    }
+    lines.splice(startIndex, endIndex - startIndex + 1);
+    const atBlankPair =
+      startIndex > 0 &&
+      startIndex < lines.length &&
+      lines[startIndex - 1].trim() === "" &&
+      lines[startIndex].trim() === "";
+    if (atBlankPair) {
+      lines.splice(startIndex, 1);
+    }
+    strippedCount += 1;
+    index = startIndex - 1;
+  }
+  return { content: lines.join("\n"), strippedCount };
+};
+
+/**
  * Transform a source file for staging: rewrite specifiers, prepend a
  * provenance comment (after a leading `"use client";` directive, if any), and
  * optionally inject a stylesheet import.
@@ -639,14 +709,22 @@ const buildComponentItem = (name, stagingDir, ws, baseUrl) => {
   const srcDir = path.join(repoRoot, "packages", name, "src");
   const { dependencies, registryDependencies } = splitDependencies(manifest, ws, baseUrl);
   const style = CSS_STYLE.get(name);
+  const stripGlobals = STRIP_GLOBAL_DECLARATIONS.has(name);
+  let strippedGlobals = 0;
 
   /** @type {RegistryFile[]} */
   const files = [];
   for (const file of collectSourceFiles(srcDir)) {
     const relative = path.relative(srcDir, file).split(path.sep).join("/");
     const target = `components/patternmode/${name}/${relative}`;
+    let raw = readFileSync(file, "utf-8");
+    if (stripGlobals) {
+      const stripped = stripGlobalProcessDeclarations(raw, target);
+      raw = stripped.content;
+      strippedGlobals += stripped.strippedCount;
+    }
     const content = stageSource(
-      readFileSync(file, "utf-8"),
+      raw,
       sourceVersion,
       target,
       style === "B" && relative === "index.ts",
@@ -656,6 +734,13 @@ const buildComponentItem = (name, stagingDir, ws, baseUrl) => {
       target,
       type: "registry:component",
     });
+  }
+
+  if (stripGlobals && strippedGlobals === 0) {
+    throw new Error(
+      `expected at least one process-declaring declare global block in packages/${name}/src but found none; ` +
+        `if ${name} no longer ships an ambient process typing, remove it from STRIP_GLOBAL_DECLARATIONS.`,
+    );
   }
 
   /** @type {RegistryItem} */
