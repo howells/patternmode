@@ -1,5 +1,6 @@
 "use client";
 
+import { prefersReducedMotion } from "@howells/motion";
 import type { ComponentPropsWithoutRef, CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
@@ -25,7 +26,7 @@ import type {
 } from "./briolette-geometry";
 import { facesForDensity, useBrioletteMorph } from "./briolette-morph";
 import type { BrioletteMorphLayers } from "./briolette-morph";
-import { prefersReducedMotion, useIdleMotion, useViewportPresence } from "./briolette-motion";
+import { useIdleMotion, useViewportPresence } from "./briolette-motion";
 import type { BrioletteTween } from "./briolette-motion";
 
 declare module "react" {

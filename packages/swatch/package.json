@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
-    "@instruments/colorscope": "^3.5.0",
+    "@instruments/colorscope": "^3.7.1",
     "@patternmode/system": "workspace:*",
     "motion": "catalog:"
   },

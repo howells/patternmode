@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
+    "@howells/motion": "workspace:*",
     "@patternmode/system": "workspace:*",
     "lucide-react": "catalog:"
   },

@@ -4,6 +4,7 @@ export { easings, easingsCSS } from "./easings";
 export type { Easing, EasingTuple } from "./easings";
 export { presets, shakeKeyframes } from "./presets";
 export type { Preset } from "./presets";
+export { prefersReducedMotion } from "./reduced-motion";
 export { scales } from "./scales";
 export type { Scale } from "./scales";
 export { springs } from "./springs";

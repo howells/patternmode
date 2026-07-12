@@ -55,7 +55,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@instruments/colorscope": "^3.5.0"
+    "@instruments/colorscope": "^3.7.1"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",

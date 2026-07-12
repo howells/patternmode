@@ -187,13 +187,6 @@ const axisStateEqual = (a: ScrollFrameAxisState, b: ScrollFrameAxisState): boole
 export const edgeStateEqual = (a: ScrollFrameEdgeState, b: ScrollFrameEdgeState): boolean =>
   axisStateEqual(a.horizontal, b.horizontal) && axisStateEqual(a.vertical, b.vertical);
 
-export const getReducedMotionPreference = (): boolean => {
-  if (typeof window === "undefined" || window.matchMedia === undefined) {
-    return false;
-  }
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-};
-
 export const getPageStep = (node: HTMLDivElement, axis: ScrollFrameAxis): number => {
   const size = axis === "vertical" ? node.clientHeight : node.clientWidth;
   return Math.max(1, size * 0.85);

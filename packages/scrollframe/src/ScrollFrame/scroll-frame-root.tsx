@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@base-ui/react/scroll-area";
+import { prefersReducedMotion } from "@howells/motion";
 import { joinClassNames, toCssSize } from "@patternmode/system";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, RefObject } from "react";
@@ -21,7 +22,6 @@ import {
   edgeStateEqual,
   getAxisState,
   getPageStep,
-  getReducedMotionPreference,
   resolveDragScrollConfig,
   supportsAxis,
 } from "./scroll-frame-utils";
@@ -32,7 +32,7 @@ type ScrollFrameRootStyle = CSSProperties & {
 };
 
 const getDefaultScrollBehavior = (): ScrollFrameScrollBehavior =>
-  getReducedMotionPreference() ? "auto" : "smooth";
+  prefersReducedMotion() ? "auto" : "smooth";
 
 const readEdgeState = (node: HTMLDivElement): ScrollFrameEdgeState => ({
   horizontal: getAxisState(node, "horizontal"),

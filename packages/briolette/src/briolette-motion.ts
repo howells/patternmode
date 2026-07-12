@@ -14,11 +14,6 @@ const MAX_FRAME_MS = 64;
 
 const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
 
-export const prefersReducedMotion = (): boolean =>
-  typeof window !== "undefined" &&
-  typeof window.matchMedia === "function" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 /** An in-flight centering glide toward a target orientation. */
 export interface BrioletteTween {
   duration: number;

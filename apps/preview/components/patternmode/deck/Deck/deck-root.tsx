@@ -18,6 +18,10 @@ import { DeckCard } from "./deck-card";
 import {
   BG_RESPONSE_FACTOR,
   BG_RESPONSE_RAMP,
+  CARD_DEFAULT_SPRING,
+  CARD_ROTATE_SPRING,
+  CARD_SCALE_SPRING,
+  CARD_Y_SPRING,
   DEFAULT_DIRECTIONS,
   DEFAULT_DISTANCE_THRESHOLD,
   DEFAULT_DRAG_ELASTIC,
@@ -134,11 +138,7 @@ const getRotateTransition = (active: boolean, isDragging: boolean) => {
     return { duration: 0 };
   }
 
-  return {
-    damping: 25,
-    stiffness: 400,
-    type: "spring" as const,
-  };
+  return CARD_ROTATE_SPRING;
 };
 
 const getWhileDrag = (draggable: boolean, reduceMotion: boolean) =>
@@ -278,19 +278,11 @@ const DeckRenderedCard = ({
       ref={attachCardRef}
       style={cardStyle}
       transition={{
-        default: {
-          damping: 28,
-          stiffness: 320,
-          type: "spring",
-        },
+        default: CARD_DEFAULT_SPRING,
         opacity: { duration: 0.2, ease: "easeOut" },
         rotate: getRotateTransition(active, isDragging),
-        scale: {
-          damping: 28,
-          stiffness: 350,
-          type: "spring",
-        },
-        y: { damping: 28, stiffness: 300, type: "spring" },
+        scale: CARD_SCALE_SPRING,
+        y: CARD_Y_SPRING,
       }}
       variants={cardExitVariants}
       whileDrag={getWhileDrag(draggable, reduceMotion)}
