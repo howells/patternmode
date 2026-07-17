@@ -9,7 +9,7 @@
 
 Daniel maintains multiple personal sites (agentsurface, patternmode, scaffold, and more to come) that have independently converged on the same visual language — but each implements it with bespoke, non-portable CSS: Fumadocs `--fd-*` overrides in two, hand-rolled `:root` tokens in patternmode's web app. Starting a new site means re-deriving the aesthetic by hand, and the implementations have drifted (dark mode in two, shadows in one, three font-loading strategies).
 
-Patternmode is already the UI-library home (`@patternmode/*` component packages, Turborepo, npm publishing) — but it has no canonical *theme* artifact, and its own web app's tokens are app-local.
+Patternmode is already the UI-library home (`@patternmode/*` component packages, Turborepo, npm publishing) — but it has no canonical _theme_ artifact, and its own web app's tokens are app-local.
 
 ## Goal
 
@@ -36,15 +36,15 @@ npx shadcn@latest add @patternmode/theme
 
 ## Decisions made (with rationale)
 
-| Decision | Choice | Rationale |
-|---|---|---|
-| Basis | Patternmode-canonical | It's the UI-library home; its `:root` values already dominated the synthesis. Scaffold contributes dark mode, agentsurface typography details |
-| Placement | Inside patternmode monorepo | One design-system brand, one registry, one domain; reuses existing publishing machinery. howellsui repo abandoned |
-| Distribution | Self-hosted shadcn registry | Canonical shadcn mechanism; works for projects that don't exist yet |
-| Scope | Tokens only | Maximum portability; stock components stay upgradeable |
-| Shadows | Soft ink-tinted (patternmode's) | Flat-by-default survives, but shadcn popovers/dialogs need elevation; ink-tinted shadows keep it "lifted paper," not generic grey |
-| Dark mode | Warm charcoal + sage (scaffold's) | Tonal continuity with warm-paper light mode — one material, two lights |
-| Fonts | Inter bundled via `next/font` file | Turnkey for Next.js sites (all current sites are Next); theme cssVars still work standalone if the file is skipped |
+| Decision     | Choice                             | Rationale                                                                                                                                     |
+| ------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Basis        | Patternmode-canonical              | It's the UI-library home; its `:root` values already dominated the synthesis. Scaffold contributes dark mode, agentsurface typography details |
+| Placement    | Inside patternmode monorepo        | One design-system brand, one registry, one domain; reuses existing publishing machinery. howellsui repo abandoned                             |
+| Distribution | Self-hosted shadcn registry        | Canonical shadcn mechanism; works for projects that don't exist yet                                                                           |
+| Scope        | Tokens only                        | Maximum portability; stock components stay upgradeable                                                                                        |
+| Shadows      | Soft ink-tinted (patternmode's)    | Flat-by-default survives, but shadcn popovers/dialogs need elevation; ink-tinted shadows keep it "lifted paper," not generic grey             |
+| Dark mode    | Warm charcoal + sage (scaffold's)  | Tonal continuity with warm-paper light mode — one material, two lights                                                                        |
+| Fonts        | `font-inter` registry item         | Pinned `@fontsource-variable/inter`, self-hosted & subset-split (no Google/rsms); cssVars still work standalone via `var(--font-inter, …)`    |
 
 ## The token set
 
@@ -52,61 +52,61 @@ Patternmode's `:root` translated into standard shadcn vocabulary; gaps filled as
 
 ### Light (`:root`)
 
-| Token | Value | Source |
-|---|---|---|
-| `--background` | `#fbfbf9` | patternmode `--background` |
-| `--foreground` | `#1d1d1b` | patternmode `--ink` |
-| `--card` / `--popover` | `#ffffff` | patternmode `--surface` |
-| `--card-foreground` / `--popover-foreground` | `#1d1d1b` | ink |
-| `--primary` | `#1d1d1b` | near-black buttons (all three sites) |
-| `--primary-foreground` | `#fbfbf9` | paper on ink |
-| `--secondary` / `--muted` | `#f6f5f1` | patternmode `--surface-soft` |
-| `--secondary-foreground` | `#1d1d1b` | ink |
-| `--muted-foreground` | `#77756d` | patternmode `--muted` |
-| `--accent` | `#e1ebe5` | patternmode `--accent-soft` (hover washes) |
-| `--accent-foreground` | `#1d3d30` | deepened pine for contrast on the wash |
-| `--destructive` | `#a4413a` | new; warm brick tuned to palette temperature |
-| `--destructive-foreground` | `#fbfbf9` | paper on brick |
-| `--border` / `--input` | `#e3e1dc` | patternmode `--border` |
-| `--ring` | `#315c4b` | **patternmode `--accent` — the signature focus color** |
-| `--radius` | `0.5rem` | patternmode `--radius: 8px` |
-| `--chart-1…5` | pine-anchored ramp | derived; tuned in preview |
-| `--sidebar-*` | paper/ink/pine mappings | mirrors main surface tokens |
+| Token                                        | Value                   | Source                                                 |
+| -------------------------------------------- | ----------------------- | ------------------------------------------------------ |
+| `--background`                               | `#fbfbf9`               | patternmode `--background`                             |
+| `--foreground`                               | `#1d1d1b`               | patternmode `--ink`                                    |
+| `--card` / `--popover`                       | `#ffffff`               | patternmode `--surface`                                |
+| `--card-foreground` / `--popover-foreground` | `#1d1d1b`               | ink                                                    |
+| `--primary`                                  | `#1d1d1b`               | near-black buttons (all three sites)                   |
+| `--primary-foreground`                       | `#fbfbf9`               | paper on ink                                           |
+| `--secondary` / `--muted`                    | `#f6f5f1`               | patternmode `--surface-soft`                           |
+| `--secondary-foreground`                     | `#1d1d1b`               | ink                                                    |
+| `--muted-foreground`                         | `#77756d`               | patternmode `--muted`                                  |
+| `--accent`                                   | `#e1ebe5`               | patternmode `--accent-soft` (hover washes)             |
+| `--accent-foreground`                        | `#1d3d30`               | deepened pine for contrast on the wash                 |
+| `--destructive`                              | `#a4413a`               | new; warm brick tuned to palette temperature           |
+| `--destructive-foreground`                   | `#fbfbf9`               | paper on brick                                         |
+| `--border` / `--input`                       | `#e3e1dc`               | patternmode `--border`                                 |
+| `--ring`                                     | `#315c4b`               | **patternmode `--accent` — the signature focus color** |
+| `--radius`                                   | `0.5rem`                | patternmode `--radius: 8px`                            |
+| `--chart-1…5`                                | pine-anchored ramp      | derived; tuned in preview                              |
+| `--sidebar-*`                                | paper/ink/pine mappings | mirrors main surface tokens                            |
 
 ### Dark (`.dark`)
 
-| Token | Value | Source |
-|---|---|---|
-| `--background` | `#161614` | scaffold warm charcoal |
-| `--foreground` | `#e8e6e1` | scaffold warm off-white |
-| `--card` / `--popover` | `#1d1d1b` | scaffold dark surface |
-| `--primary` | `#e8e6e1` | inverted ink |
-| `--primary-foreground` | `#161614` | |
-| `--secondary` / `--muted` | `#232321` | scaffold surface-soft |
-| `--muted-foreground` | `#a3a199` | scaffold warm grey |
-| `--accent` | `#24352d` | scaffold dark pine wash |
-| `--accent-foreground` | `#a9c7b8` | lightened sage |
-| `--border` / `--input` | `#34332f` | scaffold dark border |
-| `--ring` | `#7fa896` | **sage — dark-mode signature** |
-| `--destructive` | `#c96f68` | lifted brick for dark bg |
+| Token                      | Value     | Source                                                |
+| -------------------------- | --------- | ----------------------------------------------------- |
+| `--background`             | `#161614` | scaffold warm charcoal                                |
+| `--foreground`             | `#e8e6e1` | scaffold warm off-white                               |
+| `--card` / `--popover`     | `#1d1d1b` | scaffold dark surface                                 |
+| `--primary`                | `#e8e6e1` | inverted ink                                          |
+| `--primary-foreground`     | `#161614` |                                                       |
+| `--secondary` / `--muted`  | `#232321` | scaffold surface-soft                                 |
+| `--muted-foreground`       | `#a3a199` | scaffold warm grey                                    |
+| `--accent`                 | `#24352d` | scaffold dark pine wash                               |
+| `--accent-foreground`      | `#a9c7b8` | lightened sage                                        |
+| `--border` / `--input`     | `#34332f` | scaffold dark border                                  |
+| `--ring`                   | `#7fa896` | **sage — dark-mode signature**                        |
+| `--destructive`            | `#c96f68` | lifted brick for dark bg                              |
 | `--destructive-foreground` | `#161614` | charcoal on lifted brick (verify contrast in preview) |
 
 ### Fonts (`@theme` / theme vars)
 
-- `--font-sans`: `var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif`
+- `--font-sans`: `var(--font-inter, Inter), ui-sans-serif, system-ui, sans-serif` — the `var()` fallback means the theme renders correctly even when `font-inter` is skipped
 - `--font-mono`: `ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace` (patternmode's `--mono`)
-- Bundled `lib/fonts.ts` registry file: `next/font/google` Inter (variable), exposing `--font-inter`. OpenType features (`"liga" 1, "calt" 1, "cv11" 1` — agentsurface's Inter tuning) applied via the item's `css` field.
+- `font-inter` bundles the pinned `@fontsource-variable/inter@^5.2.8` npm dependency and imports its `opsz.css` + `opsz-italic.css` entrypoints (weight 100–900 plus the optical-size axis, true italic — parity with rsms InterVariable), exposing `--font-inter` without any Google Fonts or rsms request. The fontsource CSS is subset-split by `unicode-range` (latin, latin-ext, greek, cyrillic, vietnamese), so a browser downloads only the scripts a page renders. OpenType features (`"cpsp"`, `"cv01"`, `"cv02"`, `"cv11"`) are applied via the theme's base CSS.
 - Monospace stays a **system stack** — a design voice (technical data, eyebrows, code), not a loaded font. Matches all three sources.
 
 ### Shadows
 
 Ink-tinted, patternmode's observed values, mapped to Tailwind v4 shadow vars:
 
-| Token | Light | Dark |
-|---|---|---|
-| `--shadow-xs` | `0 1px 2px rgba(29,29,27,0.06)` | `0 1px 2px rgba(0,0,0,0.20)` |
-| `--shadow-sm` | `0 2px 8px rgba(29,29,27,0.06)` | `0 2px 8px rgba(0,0,0,0.22)` |
-| `--shadow-md` | `0 4px 16px rgba(29,29,27,0.08)` | `0 4px 16px rgba(0,0,0,0.28)` |
+| Token         | Light                             | Dark                           |
+| ------------- | --------------------------------- | ------------------------------ |
+| `--shadow-xs` | `0 1px 2px rgba(29,29,27,0.06)`   | `0 1px 2px rgba(0,0,0,0.20)`   |
+| `--shadow-sm` | `0 2px 8px rgba(29,29,27,0.06)`   | `0 2px 8px rgba(0,0,0,0.22)`   |
+| `--shadow-md` | `0 4px 16px rgba(29,29,27,0.08)`  | `0 4px 16px rgba(0,0,0,0.28)`  |
 | `--shadow-lg` | `0 12px 32px rgba(29,29,27,0.08)` | `0 12px 32px rgba(0,0,0,0.32)` |
 | `--shadow-xl` | `0 18px 60px rgba(29,29,27,0.18)` | `0 18px 60px rgba(0,0,0,0.45)` |
 
@@ -127,16 +127,18 @@ patternmode/                        # existing monorepo
 │       └── …                       # stock shadcn init + @patternmode/theme applied
 ├── packages/
 │   ├── theme/                      # NEW: registry source — the design-language source of truth
-│   │   ├── registry.json           # shadcn build manifest
-│   │   └── registry/patternmode/theme/
-│   │       ├── theme.css           # authored base-layer rules (font features)
-│   │       └── fonts.ts            # next/font Inter → --font-inter
+│   │   └── registry/
+│   │       ├── theme/
+│   │       │   ├── item.json        # authored registry:theme item (cssVars)
+│   │       │   └── theme.css        # authored base-layer rules (font features)
+│   │       └── font-inter/
+│   │           └── item.json        # registry:item bundling @fontsource-variable/inter
 │   ├── swatch/ …                   # existing component packages (unchanged)
 │   └── system/                     # existing sizing utilities (unchanged; NOT the token home)
 └── docs/specs/001-patternmode-theme.md
 ```
 
-- **Registry item `@patternmode/theme`**: `type: registry:theme` carrying `cssVars.light`, `cssVars.dark`, `cssVars.theme` (fonts, radius, shadows), plus the `fonts.ts` file.
+- **Registry item `@patternmode/theme`**: `type: registry:theme` carrying `cssVars.light`, `cssVars.dark`, `cssVars.theme` (fonts, radius, shadows).
 - **Base-layer CSS ships via the item's `css` field**, not as a consumer-imported file. Font-feature rules are authored in `theme.css` for readability; `shadcn build` compiles them into the item's `css` field so the CLI merges them into the consumer's global stylesheet automatically — no manual import, preserving the zero-manual-edit definition of done.
 - **Build**: `npx shadcn build` in `packages/theme`, output to `apps/web/public/r/`. The existing web deployment serves the JSON — the registry rides the catalog site's domain.
 - **Preview app is separate from `apps/web` by necessity**: web's `globals.css` already defines `--background`, `--border`, `--radius`, `--accent` with app-local meanings — the same names shadcn uses. Installing the theme into web would collide. `apps/preview` is a clean stock-shadcn app rendering every component under the theme, with a light/dark toggle; it is the QA surface for token tuning and can be exposed as a route/subdomain of the public site later.
@@ -197,3 +199,4 @@ Both address forms are exercised in the acceptance test. Result: site renders in
 - **`--destructive-foreground` dropped** from `cssVars.light`/`.dark` to match shadcn's current stock default, rather than shipping the bespoke paper-on-brick / charcoal-on-lifted-brick pairing drafted above.
 - **Shadows moved from `cssVars.theme` into `cssVars.light`/`.dark`.** They're mode-dependent (ink-tinted in light, pure black at higher alpha in dark, per the Shadows table above), so a single `theme`-scoped value was never correct; the `@theme` block described in Architecture no longer carries them.
 - **The `@theme inline` shadow-variable map was removed** from `packages/theme/registry/theme/theme.css`. shadcn's `update-css` step auto-derives the same `@theme inline` mapping from the `shadow-*`/`font-*` keys already present in `cssVars`, and shipping the mapping explicitly crashed `shadcn add` on self-referential custom properties — see spec 002's Defects found & fixed.
+- **`font-inter` re-mechanised from `registry:font`/Google to `registry:item` bundling (2026-07-16).** The item dropped shadcn's Google-provider `registry:font` shape — whose only CLI behavior (rewriting `layout.tsx`) never applied cleanly — for a `registry:item` that pins `@fontsource-variable/inter@^5.2.8`, imports its `opsz.css` + `opsz-italic.css` (opsz axis + true italic), and sets `cssVars.theme.font-inter`; the fontsource CSS is subset-split so consumers download only the scripts they render. Font loading now flows through the standard cssVars/css merge into the consumer's globals.css, so `apps/preview` consumes the font exactly as any external site does — `next/font` is gone from the repo. The theme's `font-sans` gained a `var(--font-inter, Inter)` fallback, replacing the invalid bare `var(--font-inter)`, so the theme is genuinely standalone when `font-inter` is skipped.

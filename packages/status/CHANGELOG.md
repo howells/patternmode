@@ -1,5 +1,16 @@
 # @patternmode/status
 
+## 0.3.1
+
+### Patch Changes
+
+- Republish. The 0.3.0 tarball was cut with `npm publish`, which does not rewrite pnpm's `workspace:*` and `catalog:` protocols, so its manifest shipped `"@howells/motion": "workspace:*"`, `"@patternmode/system": "workspace:*"` and `"motion": "catalog:"` — unresolvable for anyone installing it. 0.3.0 is deprecated; this release carries the same code with a correct manifest.
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+  - @patternmode/system@0.5.0
+  - @howells/motion@0.2.0
+
 ## 0.3.0
 
 ### Minor Changes

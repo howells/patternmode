@@ -643,7 +643,26 @@ const buildThemeItem = (baseUrl) => {
 };
 
 /**
- * Read the hand-authored `font-inter` item verbatim.
+ * Assert every npm dependency on a hand-authored item carries a version range.
+ *
+ * Hand-authored items bypass `splitDependencies`/`resolveRange`, so nothing
+ * else pins them; an unpinned name would ship to consumers unversioned.
+ * @param {RegistryItem} item Hand-authored registry item.
+ * @returns {void}
+ */
+const assertPinnedDependencies = (item) => {
+  for (const dep of item.dependencies ?? []) {
+    const at = dep.lastIndexOf("@");
+    if (at <= 0 || at === dep.length - 1) {
+      throw new Error(
+        `${item.name} dependency "${dep}" must be pinned as name@range (hand-authored items bypass catalog resolution)`,
+      );
+    }
+  }
+};
+
+/**
+ * Read the hand-authored `font-inter` item verbatim, enforcing pinned dependencies.
  * @returns {RegistryItem} The font registry item.
  */
 const readFontItem = () => {
@@ -651,6 +670,7 @@ const readFontItem = () => {
   if (!isRegistryItem(parsed)) {
     throw new Error("font-inter item.json is not a registry item");
   }
+  assertPinnedDependencies(parsed);
   return parsed;
 };
 

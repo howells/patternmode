@@ -16,6 +16,8 @@ import path from "node:path";
  *   3. Run `shadcn add` against the served registry, overwriting the vendored
  *      files under components/patternmode and lib/patternmode.
  *   4. Restore the provenance headers shadcn's `add` transform strips on write.
+ *   5. Drop the duplicate `@property` blocks shadcn's css merge re-appends on
+ *      every run into app/globals.css.
  */
 
 const nodeProcess = globalThis.process;
@@ -193,16 +195,44 @@ const restoreProvenanceHeaders = () => {
 };
 
 /**
- * Re-format the two preview-owned files that shadcn rewrites on every `add`.
+ * Drop repeated identical top-level `@property` blocks from app/globals.css.
  *
- * shadcn re-emits `app/globals.css` (theme merge) and `app/layout.tsx` (font
- * wiring) in its own formatting each run, which fails the repo formatter. This
- * normalizes only those app files back to house style — the vendored registry
- * output is untouched.
+ * shadcn's css merge dedupes `@import`/`@plugin` at-rules but appends non-empty
+ * at-rules unconditionally, so the scrollframe item's `@property` registrations
+ * accumulate one copy per `add`. Keeps the first occurrence of each block.
+ * @returns {void}
+ */
+const dedupeAppendedAtRules = () => {
+  const cssPath = path.join(previewDir, "app", "globals.css");
+  const css = readFileSync(cssPath, "utf-8");
+  const seen = new Set();
+  const deduped = css
+    .replaceAll(/@property\s+--[\w-]+\s*\{[^{}]*\}\n?/gu, (block) => {
+      const key = block.trim();
+      if (seen.has(key)) {
+        return "";
+      }
+      seen.add(key);
+      return block;
+    })
+    .replaceAll(/\n{3,}/gu, "\n\n");
+  if (deduped !== css) {
+    writeFileSync(cssPath, deduped, "utf-8");
+  }
+};
+
+/**
+ * Re-format the preview-owned stylesheet that shadcn rewrites on every `add`.
+ *
+ * shadcn re-emits `app/globals.css` (cssVars/css merge) in its own formatting
+ * each run, which fails the repo formatter. This normalizes it back to house
+ * style — the vendored registry output is untouched. `app/layout.tsx` is no
+ * longer touched: shadcn's font wiring only fires for `registry:font` items,
+ * and `font-inter` is a plain `registry:item` now.
  * @returns {void}
  */
 const formatShadcnTouchedAppFiles = () => {
-  execFileSync("pnpm", ["exec", "oxfmt", "app/globals.css", "app/layout.tsx"], {
+  execFileSync("pnpm", ["exec", "oxfmt", "app/globals.css"], {
     cwd: previewDir,
     stdio: "inherit",
   });
@@ -219,6 +249,11 @@ const main = async () => {
   try {
     await runShadcnAdd();
     restoreProvenanceHeaders();
+    // Format before deduping so freshly-appended @property blocks (shadcn's
+    // 4-space style) byte-match the existing 2-space ones; format again to
+    // collapse the blank lines the dedupe leaves behind.
+    formatShadcnTouchedAppFiles();
+    dedupeAppendedAtRules();
     formatShadcnTouchedAppFiles();
   } finally {
     server.close();
