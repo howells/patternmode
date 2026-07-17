@@ -27,3 +27,27 @@ zero progress.
 The default `variant="fill"` renders a filled progress mark. Use
 `variant="border"` for an outline progress arc. `color` controls active progress,
 while `trackColor` controls inactive and placeholder structure.
+
+## Theming
+
+The mark reads its colours from the standard shadcn theme variables — `--ring`
+for `tone="accent"`, `--muted-foreground` for `tone="muted"` — and falls back to
+built-in defaults when the host defines neither.
+
+The inactive track is derived: it is the active colour tinted 12% toward the
+ground the mark sits on. That ground is `--patternmode-status-surface`, which
+resolves from `--background` and falls back to `white`.
+
+A themed UI therefore needs no wiring in either light or dark mode. Set the
+property yourself when the host has no `--background`, or when a mark sits on a
+raised surface rather than the canvas:
+
+```css
+.panel .patternmode-status-mark {
+  --patternmode-status-surface: var(--card);
+}
+```
+
+The track must stay quieter than the arc, so it has to be tinted toward the
+surface behind it — a track tinted toward white on a dark ground outshines the
+arc and every mark reads full. `trackColor` still overrides this per instance.

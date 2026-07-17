@@ -2,7 +2,27 @@
   .patternmode-status-mark {
     --patternmode-status-size: 2rem;
     --patternmode-status-color: oklch(0.29 0.018 92);
-    --patternmode-status-track: oklch(0.9 0.012 88);
+    /*
+     * The ground the inactive track is tinted toward.
+     *
+     * The track's job is to stay quieter than the arc, which means tinting it
+     * toward whatever the mark sits ON. Tinting toward white is only correct
+     * while that surface is white: on a dark ground a white-tinted track
+     * outshines the arc and every mark reads full, whatever its progress.
+     *
+     * So the ground is a variable. It resolves to the shadcn canvas token when
+     * the host defines one — which makes a themed UI correct in light and dark
+     * with no extra wiring — and falls back to white otherwise, so an unthemed
+     * light UI renders exactly as before. A UI that uses neither can set this
+     * property directly, and a mark on a raised surface can point it at that
+     * surface instead (e.g. `--patternmode-status-surface: var(--card)`).
+     */
+    --patternmode-status-surface: var(--background, white);
+    --patternmode-status-track: color-mix(
+      in oklch,
+      var(--patternmode-status-color) 12%,
+      var(--patternmode-status-surface)
+    );
     align-items: center;
     color: var(--patternmode-status-color);
     display: inline-flex;
@@ -16,12 +36,10 @@
 
   .patternmode-status-mark[data-tone="accent"] {
     --patternmode-status-color: var(--ring, #315c4b);
-    --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
   }
 
   .patternmode-status-mark[data-tone="muted"] {
     --patternmode-status-color: var(--muted-foreground, #77756d);
-    --patternmode-status-track: color-mix(in oklch, var(--patternmode-status-color) 12%, white);
   }
 
   .patternmode-status-mark__svg {
