@@ -1,5 +1,12 @@
 # @patternmode/deck
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [c105cb1]
+  - @patternmode/system@0.4.1
+
 ## 0.3.2
 
 ### Patch Changes

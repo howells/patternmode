@@ -1,5 +1,11 @@
 # @patternmode/system
 
+## 0.4.1
+
+### Patch Changes
+
+- c105cb1: Replace regex named capture groups with indexed groups so vendored copies compile under consumer TypeScript configs targeting ES2017 (named groups require ES2018+). No behavior change.
+
 ## 0.4.0
 
 ### Minor Changes
