@@ -26,6 +26,23 @@ Also: `npm view <pkg> version` served a stale `1.0.0` for swatch straight after
 publishing. `npm view <pkg> dist-tags` showed the correct `2.0.0`. Don't panic at
 a stale read; check dist-tags.
 
+**Verify registry ACCESS anonymously after publishing, not just that the version
+exists.** colorscope shipped a package as `--access restricted` tonight; their
+publish gate diffed the tarball byte-perfectly three times and never noticed,
+breaking materialgraph's and materialdesk's CI *including versions they hadn't
+touched*. The artefact was correct and the visibility was wrong — a gate that
+checks the thing you thought of. Note `npm view <pkg> --json | .private` reads
+the **package.json field**, not the registry access level, so it does not catch
+this. The real check is an unauthenticated fetch:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}' -H 'Authorization:' \
+  https://registry.npmjs.org/@patternmode/swatch/2.0.0     # want 200
+```
+
+Run for this release across swatch, scrollframe, stacksheet, aperto and
+`@howells/motion` — **all 200, all genuinely public.**
+
 ---
 
 ## 1. Release state
