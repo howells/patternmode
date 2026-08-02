@@ -1,5 +1,27 @@
 # @patternmode/briolette
 
+## 0.5.0
+
+### Minor Changes
+
+- ae67cf0: `@instruments/colorscope` moves from a regular dependency to a **required peer dependency**.
+
+  Briolette previously installed its own copy of `@instruments/colorscope`, so an app using colorscope directly resolved two copies. Briolette now shares the host application's single instance.
+
+  **Consumers must declare `@instruments/colorscope` themselves**, satisfying `^3.7.1`. pnpm 8+ and npm 7+ auto-install missing peers, so most installs will succeed without changes; Yarn will warn or fail. Apps already depending on colorscope directly need no new dependency, only to confirm their version satisfies the range.
+
+  Briolette imports `fitOklabToSrgbGamut` from `@instruments/colorscope/embedding`, so the `^3.7.1` floor is a real API requirement rather than a nominal one.
+
+### Patch Changes
+
+- ae67cf0: Read `--font-mono` instead of `--mono` for the numeric readout's font stack.
+
+  `--mono` is not part of the shadcn or Tailwind theme vocabulary; `--font-mono` is, and Tailwind v4 already defines it. Briolette's readout now picks up a host application's mono stack with no configuration.
+
+  The fallback font list is unchanged, so nothing renders differently out of the box. **Consumers who set `--mono` to style the readout must set `--font-mono` instead.**
+
+  This token escaped the earlier vocabulary migration because it is written as a multi-line `var()` call, which the repository's token check could not see. That check has been fixed in the same change.
+
 ## 0.4.1
 
 ### Patch Changes

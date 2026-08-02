@@ -1,5 +1,25 @@
 # @patternmode/swatch
 
+## 2.0.0
+
+### Major Changes
+
+- ae67cf0: `@instruments/colorscope` moves from a regular dependency to a **required peer dependency**.
+
+  Swatch previously installed its own copy of `@instruments/colorscope`, which meant an app that also used colorscope directly resolved two copies — Swatch's, floating on its own caret, and the app's. Swatch now shares the host application's single instance.
+
+  **Consumers must declare `@instruments/colorscope` themselves**, satisfying `^3.7.1`. pnpm 8+ and npm 7+ auto-install missing peers, so most installs will succeed without changes; Yarn will warn or fail. Apps already depending on colorscope directly need no new dependency, only to confirm their version satisfies the range.
+
+  This is released as a major because it transfers a dependency responsibility to consumers and changes which colorscope version executes at runtime: Swatch now runs the host's copy rather than one it controlled.
+
+### Patch Changes
+
+- ae67cf0: Read the standard `--border` theme variable instead of `--border-subtle`.
+
+  `--border-subtle` was the one custom property in Patternmode's CSS vocabulary that is not part of the shadcn theme token set, so a consumer wiring up a stock shadcn theme got every other Swatch colour themed and this one silently falling back to a hardcoded hex. It now reads `--border`, which shadcn defines.
+
+  Fallback values are unchanged, so nothing renders differently out of the box. **Consumers who set `--border-subtle` to theme Swatch must set `--border` instead** — and if they already define `--border` for shadcn, Swatch now picks it up with no configuration.
+
 ## 1.1.1
 
 ### Patch Changes

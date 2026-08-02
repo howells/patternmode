@@ -1,5 +1,32 @@
 # @patternmode/tags
 
+## 2.0.0
+
+### Major Changes
+
+- ae67cf0: Re-release the theme variable rename as a major.
+
+  The move to shadcn's theme variable vocabulary was previously staged as a minor. It is a breaking change: its own notes tell consumers who set the old custom properties that they must migrate, and a consumer who themed Tags through the old names gets the package's built-in fallbacks instead once it lands.
+
+  Shipping that on a minor meant any consumer on a `^1.0.0` caret absorbed it silently on their next install, for reasons unrelated to this package. That is the failure it is most important to avoid, so it ships as a major and consumers upgrade deliberately.
+
+  Two of the renames are worth reading carefully, because the old name survives with a different meaning rather than failing loudly:
+  - **`--muted`** previously meant muted _foreground_ (text). It now means a muted _surface_.
+  - **`--accent`** previously meant the accent colour. Tags no longer reads it at all — set `--ring` instead.
+
+  Old values are preserved as `var()` fallbacks, so nothing renders differently out of the box. Consumers already using shadcn's variables pick Tags up with no configuration.
+
+### Patch Changes
+
+- ae67cf0: Read the standard `--border` theme variable instead of `--border-subtle`.
+
+  `--border-subtle` was the one custom property in Patternmode's CSS vocabulary that is not part of the shadcn theme token set, so a consumer wiring up a stock shadcn theme got every other Tags colour themed and this one silently falling back to a hardcoded hex. It now reads `--border`, which shadcn defines.
+
+  Fallback values are unchanged, so nothing renders differently out of the box. **Consumers who set `--border-subtle` to theme Tags must set `--border` instead** — and if they already define `--border` for shadcn, Tags now picks it up with no configuration.
+
+- Updated dependencies [ae67cf0]
+  - @patternmode/scrollframe@2.0.0
+
 ## 1.1.1
 
 ### Patch Changes
