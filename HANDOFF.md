@@ -479,6 +479,25 @@ this session, leave it out of any commit.
 
 ## 8. Next-session board
 
+**Almost everything on this board was closed out after it was written.** What
+actually remains:
+
+1. **materia's visual pass** — the scrollframe upgrade is **done and committed**
+   in materia as `3ff43ee3e` (not pushed; their repo, their call). Typecheck,
+   lint and 366 tests pass. **The browser verification is NOT done**: port 4310
+   was held by a production-mode `next start` from another session, which cannot
+   carry the changes. materia has it. The shot that matters is the fade
+   **mid-scroll, not at rest** — a settled row hides the hard edge `fadeColor`
+   produced on translucent surfaces.
+2. **rulework re-vendoring** — `stacksheet@2.0.4` now carries both the layerless
+   fix and the layer-order declaration, and reaches them via neither, because
+   they consume vendored tarballs (§4). They have **deliberately declined** the
+   upgrade; do not chase it.
+3. **materialdesk's roadmap answer** — deferred to their next session, recorded
+   in their own HANDOFF.
+
+### Closed this session (kept for the audit trail)
+
 1. **Get Daniel's ruling on §5** (majors vs minors for the theme rename). Blocks
    everything below.
 2. **Fix the CHANGELOG formatting** (§7), then commit the peer + token work.
