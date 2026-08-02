@@ -932,7 +932,27 @@ discounted the flattering reading: `packages/ui` arrived as a wholesale import o
 materia's design system, so no registry was ever evaluated. Timing and
 inheritance, not rejection.
 
-**Upstream note:** `@instruments/colorscope@3.13.1` is published (adds a throw on
+**Upstream note — the peer move's first concrete payoff.**
+`@instruments/colorscope@3.17.0` fixes unclamped HSL input in `hslToRgb`
+(covering `hslToHex` and `getOklabLightness`): hue now wraps into 0–360,
+saturation/lightness clamp to 0–100, non-finite throws. Reported by
+materialdesk, relayed as an unverified lead, confirmed and fixed by colorscope.
+
+Two of the failures were worse than the malformed `#ff-7f00` strings originally
+described, and **neither was greppable**: `hslToHex(400,100,50)` returned a
+magenta because the hue-sector chain is a series of `< 60` / `< 120` comparisons
+that an unwrapped 400 falls straight through, and `hslToHex(120,-50,50)`
+returned a well-formed *purple* where clamping gives grey. No error, no
+malformed output — just a confidently wrong colour.
+
+**Why this matters here:** swatch, briolette and halo peer-depend on colorscope
+as of this release. The fix therefore arrives **once**, through the host
+application's resolution, the moment a consumer moves to 3.17.0. Had those
+packages still bundled their own copies, each would have needed its own clamp
+wrapper or its own version bump. `^3.7.1` admits 3.17.0, so no floor change is
+needed.
+
+**Superseded note:** `@instruments/colorscope@3.13.1` was published (adds a throw on
 non-OKLCh input to `getFamilyOwnership`, previously returned "red" for
 everything). Nothing in 3.13.x touches patternmode's surface; the `^3.7.1` peer
 floor is unaffected.
