@@ -9,10 +9,10 @@ installs every tarball and builds clean with the peer dependencies resolving.
 Commits: `ae67cf0f` (the work) → `fd61d048` (version bump) → `4f0c468d`
 (vendored registry stamps) → `4672f3e5` (publish preconditions).
 
-Committed and pushed with `--no-verify`: `pnpm lint` fails on
-`scripts/build-registry.mjs` (max-lines 608/600), a file byte-identical to HEAD
-that predates this session. **Still failing — see §7.** Every other gate passes
-by exit code.
+**Every gate passes by exit code**: typecheck, test, build, lint, check:tokens,
+check:boundaries. The `scripts/build-registry.mjs` max-lines failure that had
+`main` red *before* this session is fixed (see §7). Earlier commits used
+`--no-verify` while it was still red; later ones did not need to.
 
 **Publish note for next time:** the first `changeset publish` run failed on
 `@patternmode/aperto` and `@patternmode/swatch` with a `DTS Build error` and a
@@ -65,7 +65,7 @@ all changesets consumed — do not re-run it.**
 | `@patternmode/tags` | — | **2.0.0** | theme rename, re-cut as major |
 | `@patternmode/briolette` | 0.3.2 | **0.5.0** | peer + theme (0.x: minor is breaking) |
 | `@patternmode/halo` | 0.2.2 | **0.4.0** | peer + theme (same) |
-| `@patternmode/stacksheet` | 2.0.0 | **2.0.3** | layerless-utilities fix |
+| `@patternmode/stacksheet` | 2.0.0 | **2.0.4** | layerless-utilities fix, then `@layer` order declaration |
 | `@patternmode/system` | 0.4.0 | **0.5.0** | |
 | `@howells/motion` | 0.1.0 | **0.2.0** | dependency of five packages |
 | `@patternmode/deck` | — | 0.3.4 | |
@@ -83,7 +83,7 @@ handles this — motion is `private: false`, is not in the changeset `ignore` li
 and publishes in topological order — but if publishing is ever done by hand,
 motion goes before anything that depends on it.
 
-**`pnpm smoke:tarballs` currently FAILS, and this is expected pre-publish:**
+**`pnpm smoke:tarballs` PASSES.** It was red before publishing, for the reason below — which is exactly what makes it evidence rather than a tautology:
 
 ```
 ERR_PNPM_NO_MATCHING_VERSION  No matching version found for @howells/motion@0.2.0
@@ -135,7 +135,8 @@ caught at the correct line and exits 1.
 The full token vocabulary is now stock shadcn/Tailwind:
 `--background --foreground --card --muted --muted-foreground --ring --border --font-mono`.
 
-**Live defect in published `@patternmode/stacksheet` — found, fixed, unreleased.**
+**Live defect in published `@patternmode/stacksheet` — found, fixed, SHIPPED in
+2.0.3, with the follow-on `@layer` order declaration in 2.0.4.**
 `src/styles.css` imported `tailwindcss/utilities` on its own. Tailwind v4's layer
 declaration lives in its **main entry**, so the utilities shipped **layerless** —
 and a layerless declaration outranks every rule in a named layer regardless of
@@ -255,45 +256,22 @@ old names; their `--color-surface-0/1/2` ladder is a separate namespace).
 | **colorscope** | briolette, halo, scrollframe, swatch | `^0.3.2`, `^0.2.2`, `^1.0.0` | Only affected consumer. Bridges `--cs-*` tokens onto patternmode's names in `apps/web/app/global.css`. |
 | **materia** | scrollframe | exact `0.1.4` | Stale by a major. Pin is drift, not a scar (see §6). |
 
-### rulework consumes vendored tarballs, NOT npm — publishing does not reach them
+### rulework: MIGRATED to the registry (was vendored tarballs)
 
-**The npm version table above does not describe what every consumer runs.**
-rulework pins every patternmode dependency to a tarball by path:
+**Historical, resolved the same session.** rulework used to pin every patternmode
+dependency to a vendored tarball by path, which meant published fixes could not
+reach them at all and their pins named versions that were never published
+(`scrollframe-1.1.0`, `tags-1.1.1`). That also fully explained the stacksheet
+2.0.1-vs-2.0.2 artifact divergence in §2: a vendored tarball is a snapshot of
+whatever the source was when someone packed it, with no link back to a commit.
 
-```
-apps/web      @patternmode/scrollframe  file:../../vendor/patternmode/patternmode-scrollframe-1.1.0.tgz
-              @patternmode/stacksheet   file:../../vendor/patternmode/patternmode-stacksheet-2.0.2.tgz
-              @patternmode/tags         file:../../vendor/patternmode/patternmode-tags-1.1.1.tgz
-packages/ui   @patternmode/scrollframe  (same tarball)
-```
+**They migrated off it** (commit `727a176`): `vendor/` deleted, tarball overrides
+removed, everything resolved from npm. Every consumer in the estate is now on the
+registry, so the version table in §1 describes what everyone actually runs.
 
-Checked across every consuming repo: **rulework is the only one that vendors.**
-Everyone else resolves from the registry.
-
-**Three consequences, all of which caught me out:**
-
-1. **A published fix does not reach them.** `stacksheet@2.0.3` fixes the defect
-   *they reported*, and it will not arrive on any range — not because it is a
-   major, but because there is no registry edge at all. A human must build a
-   tarball, drop it in `vendor/`, and move the pin. **Do not count a defect
-   closed estate-wide on the strength of a publish.**
-2. **They run versions that were never published.** `scrollframe-1.1.0.tgz` and
-   `tags-1.1.1.tgz` do not exist on npm — those numbers were superseded by the
-   2.0.0 re-cut before shipping. They are phantom builds that live only in that
-   folder.
-3. **This fully explains the §2 artifact mystery.** A vendored tarball is a
-   snapshot of whatever the source was when someone packed it, with no version
-   identity beyond its filename and no link back to a commit.
-   `patternmode-stacksheet-2.0.1.tgz` and `-2.0.2.tgz` sit side by side, packed
-   seven hours apart on the same day. Not a stale-dist incident — the expected
-   behaviour of the mechanism. **Close that investigation.**
-
-rulework's choice to vendor predates the packages being published and is theirs
-to revisit deliberately, not something patternmode should push. **They have
-explicitly declined the upgrade for now** — everything consumer-visible is a
-major, `scrollframe` and `stacksheet` are load-bearing in a shell they rebuilt
-today, and they are already immune to the defect that motivated it. Logged on
-their side as separate work. Do not chase it.
+**Kept as a standing caution:** before reasoning about blast radius from npm
+versions, confirm each consumer actually resolves from npm. For one evening, one
+of them did not, and nothing in a registry-shaped view could see it.
 
 ### colorscope's post-migration bridge (agreed, six lines)
 
@@ -489,10 +467,25 @@ actually remains:
    carry the changes. materia has it. The shot that matters is the fade
    **mid-scroll, not at rest** — a settled row hides the hard edge `fadeColor`
    produced on translucent surfaces.
-2. **rulework re-vendoring** — `stacksheet@2.0.4` now carries both the layerless
-   fix and the layer-order declaration, and reaches them via neither, because
-   they consume vendored tarballs (§4). They have **deliberately declined** the
-   upgrade; do not chase it.
+2. ~~**rulework re-vendoring**~~ — **CLOSED. rulework migrated off vendored
+   tarballs onto the registry** (their commit `727a176`), deleted `vendor/`, and
+   dropped the root `pnpm.overrides` that pinned `@howells/motion` and
+   `@patternmode/system` to tarballs. **Patternmode's override surface in that
+   consumer is now zero, and §4's "publishing does not reach them" no longer
+   applies.** They took all seven majors at once: full gate green, 2,998 tests,
+   plus browser verification (37 row-action slots, 0 drawn at rest, clean
+   console). That is the strongest validation this release got.
+
+   They also replaced a source pin that asserted the *old, partly-broken*
+   stacksheet output with one asserting `.opacity-0` sits in a utilities block
+   and `@layer components{` is absent — **a consumer-side guard against a
+   package-side defect no patternmode gate can see.** Worth copying the idea.
+
+   One residue: their store still holds the old
+   `@patternmode+stacksheet@file+vendor+…-2.0.2.tgz` entry beside the registry
+   one. Resolution is correct (`^2.0.4`); `pnpm store prune` clears it. **This
+   bit me** — I measured that stale path first and briefly concluded they were
+   unpatched.
 3. **materialdesk's roadmap answer** — deferred to their next session, recorded
    in their own HANDOFF.
 
