@@ -345,6 +345,36 @@ If a consuming repo ever reds on a `@patternmode/*` publish, **the fix is adding
 the scope to its exclude list, never pinning a version.** materia is already
 compliant (`@howells/*`, `@instruments/*`, `@patternmode/*` all present).
 
+**Do version-suffixed exemptions actually work? Per pnpm 11.5.2's source, YES.**
+materialgraph raised the hypothesis that `pkg@1.2.3` entries never match and are
+silently dead no-ops — which would mean the third-party pins in the list above
+never worked and whatever they unblocked passed because the age had simply
+elapsed. Read the matcher in
+`~/.cache/node/corepack/v1/pnpm/11.5.2/dist/pnpm.mjs`:
+
+```js
+function isExcluded(policy, name, version) {
+  const result = policy(name);
+  if (result === true) return true;                        // name-only → every version
+  if (Array.isArray(result) && result.includes(version))   // version-suffixed → that exact version
+    return true;
+  return false;
+}
+```
+
+`parseVersionPolicyRule` splits on the last `@`, parses the suffix via
+`parseExactVersionsUnion`, and throws `NAME_PATTERN_IN_VERSION_UNION` if a `*`
+name is combined with a version union. So version suffixes are a supported,
+exact-match feature, not inert.
+
+**Caveat — this is source reading, not a live experiment.** An attempt to
+demonstrate it empirically (scratch repo, `minimumReleaseAge: 99999999`, an old
+dependency) failed to trigger the gate *at all*, even with no exclusions, so it
+could not distinguish the cases. Probably cached/offline resolution skipping the
+registry metadata check. **The experiment proved nothing and should not be cited
+as if it did.** If certainty matters, reproduce with a genuinely fresh store and
+a recently-published package.
+
 **Carets defeat exact pins.** A regular dependency on a caret floats
 independently of the host's pin: a host can pin a package exactly and still get a
 different version underneath it via a component package's own copy. This is the
