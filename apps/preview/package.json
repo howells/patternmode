@@ -15,7 +15,7 @@
   "dependencies": {
     "@base-ui/react": "catalog:",
     "@fontsource-variable/inter": "^5.2.8",
-    "@instruments/colorscope": "^3.7.1",
+    "@instruments/colorscope": "^3.17.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "focus-trap-react": "^12.0.2",

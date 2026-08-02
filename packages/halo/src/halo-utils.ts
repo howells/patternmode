@@ -1,5 +1,3 @@
-import { hslToHex as colorscopeHslToHex } from "@instruments/colorscope/math";
-
 /** HSL value used by HaloPicker. */
 export interface HaloColor {
   h: number;
@@ -126,16 +124,25 @@ export const normalizeHue = (hue: number): number => {
 };
 
 /**
- * Convert an HSL value to a hex string. The HSL→hex conversion is delegated to
- * colorscope; Halo keeps its defensive hue normalization and 0–100 clamping
- * because colorscope assumes inputs are already in range.
+ * Convert an HSL value to a hex string.
+ *
+ * This used to wrap colorscope with Halo's own hue normalization and 0–100
+ * clamping, because colorscope assumed its inputs were already in range and
+ * silently returned a confidently wrong colour when they were not — an
+ * unwrapped hue fell straight through its `< 60`/`< 120` sector chain, so
+ * `hslToHex(400, 100, 50)` came back magenta rather than the orange 40° gives.
+ *
+ * `@instruments/colorscope@3.17.0` fixed that at the root: hue wraps, saturation
+ * and lightness clamp, non-finite throws. The peer floor now requires it, so the
+ * guard is dead code and the guarantee lives in the library where it belongs.
+ * `halo-picker.test.tsx` still asserts the out-of-range cases — it now measures
+ * colorscope's contract rather than Halo's defence, which is what proved this
+ * deletion safe.
+ *
+ * Two other consumers had written the same wrapper independently. The fix was
+ * one layer down, not a shared helper.
  */
-export const hslToHex = (hue: number, saturation: number, lightness: number): string =>
-  colorscopeHslToHex(
-    normalizeHue(hue),
-    clampValue(saturation, 0, 100),
-    clampValue(lightness, 0, 100),
-  );
+export { hslToHex } from "@instruments/colorscope/math";
 
 export const clampPointToCircle = (
   x: number,

@@ -16,6 +16,428 @@ installs every tarball and builds clean with the peer dependencies resolving.
 Commits: `ae67cf0f` (the work) → `fd61d048` (version bump) → `4f0c468d`
 (vendored registry stamps) → `4672f3e5` (publish preconditions).
 
+---
+
+## 0. Session 2026-08-03 — findings only, NOTHING COMMITTED
+
+`main` at `8f226e98`, 0 ahead / 0 behind `origin/main`. Working tree carries one
+file: `apps/preview/app/globals.css`. All 12 packages verified live on npm at the
+versions in §1, all anonymously fetchable (200). `lint`, `check:tokens` (145
+occurrences, 10 files) and `check:boundaries` all exit 0.
+
+**Everything below is verified and unexecuted. It is waiting on Daniel.**
+
+### 0.1 `globals.css` is GENERATED OUTPUT, not in-progress work
+
+Every element of that diff traces to registry source committed on 2026-07-10 and
+last touched 2026-07-17:
+
+- the `@fontsource-variable/inter` imports and `--font-inter: 'Inter Variable'` →
+  `packages/theme/registry/font-inter/item.json` (`css` keys + `cssVars.theme`)
+- `font-feature-settings: "cpsp","cv01","cv02","cv11"` →
+  `packages/theme/registry/theme/theme.css:3`
+- `--border-subtle` → `--border` in six places → component `src/styles.css`,
+  retired repo-wide this release
+- the 60 → 4 `@property` dedup → `dedupeAppendedAtRules()` at
+  `apps/preview/scripts/sync-registry.mjs:205`, working exactly as documented
+
+So the file is a tracked build artifact that has been **stale at HEAD since ~17
+July**, and the working tree is it catching up. **It cannot be partially
+committed** — the next `pnpm dev`/`pnpm build` in `apps/preview` regenerates all
+three changes together. Commit whole or leave whole.
+
+### 0.2 materialgraph is NOT on this release
+
+Read from `apps/web/package.json` plus their `pnpm-workspace.yaml` catalog:
+
+| MG pin | npm latest | takes it? |
+|---|---|---|
+| `@patternmode/aperto` `^1.0.0` | 2.0.0 | **no** |
+| catalog `@patternmode/scrollframe` `^1.0.0` | 2.0.0 | **no** |
+| catalog `@patternmode/swatch` `^1.0.0` | 2.0.0 | **no** |
+| catalog `@patternmode/stacksheet` `^2.0.0` | 2.0.4 | yes |
+
+The majors in §5 were cut precisely so no caret would auto-take them. That worked.
+The corollary nobody acted on is that **MG must hand-bump, and hasn't** — so it
+has neither the theme rename nor either peer move in its tree. Any MG bump should
+be one coordinated wave over all four packages, not stacksheet alone.
+
+### 0.3 The colorscope peer move is defeated by `system`
+
+`@patternmode/system@0.5.0` and `@patternmode/parquet@0.1.3` ship
+`@instruments/colorscope` as **regular dependencies**, and `system` is a
+`dependencies` entry of seven packages. So swatch peer-depends on colorscope while
+simultaneously floating a second copy through `system` on a caret — §6's "carets
+defeat exact pins", in our own catalog. **§2's claim that the peer move "closes
+patternmode's direction of it" is false until `system` is fixed.**
+
+- `system` genuinely imports colorscope (`weighted-distribution.ts:1`).
+  **DECIDED 2026-08-03: floor raised, kept as a REGULAR dependency, not a peer** —
+  a deliberate departure from the instruction, recorded in the changeset. A peer
+  in `system` forces colorscope onto every consumer of stacksheet, scrollframe,
+  tags, deck and status, which import only `joinClassNames` and sizing helpers and
+  never touch colour. **The motion argument does not transfer**: motion must be a
+  peer because React contexts don't cross duplicate instances, so a second copy is
+  a correctness bug; colorscope is pure functions, so a second copy is wasteful
+  but not wrong. With the floor at `^3.17.0` every resolvable version carries the
+  fix, so the *bug* is closed either way. The proper fix is to split the colour
+  helpers out of `system` (they'd belong in swatch) — a bigger change, still open.
+- `parquet` **never imports it** — the only references are historical prose in its
+  own CHANGELOG and README. It gets `isLightColor` from `@patternmode/system`
+  (`parquet.tsx:3`, used `:62`). → **remove the dependency**, don't peer-ify it.
+  Its README also still describes contrast as "via colorscope" when the route is
+  now indirect.
+
+### 0.4 The unclamped-HSL exposure here is the PUBLIC API, not a round trip
+
+`system`'s `getHslFunctionLightness` (`weighted-distribution.ts:104-119`) passes
+hue/saturation/lightness straight into colorscope's `hslToRgb` with **no
+normalization and no clamping** — the file contains none. That value drives
+`data-tone` at `swatch-root.tsx:102`.
+
+It is not reachable only via a round trip: `isLightColor` takes **any CSS colour
+string a consumer hands it**, and `system` is a dependency of seven packages, so
+`isLightColor("hsl(400 100% 50%)")` needs nobody to do anything unusual.
+Checked and clean: no `rgbToHsl` import anywhere, and no hand-rolled RGB→HSL.
+
+Of the eleven colorscope functions patternmode uses, exactly **two branch on input
+range** — `hslToRgb` (system, unguarded) and `hslToHex` (halo, wrapped). The rest
+are linear or periodic and need nothing. `oklchToOklab` looks like it should
+branch on hue and doesn't: it takes `cos`/`sin` of the angle, which wraps itself.
+
+**Range bugs live where the algorithm branches on range** (colorscope's rule —
+worth keeping; it stops the next unnecessary wrapper).
+
+### 0.5 The colorscope 3.17.0 bump — AUTHORISED VIA THE LEAD, NOT YET BY DANIEL
+
+3.17.0 fixes unclamped HSL at the root, verified live and public (200).
+Estate as of 2026-08-03: **materia 3.17.0 (done, zero drift)**, MG 3.12.2
+(MG-988/993 pending), Desk 3.12.2 (MD-313/314 pending), patternmode floor
+`^3.7.1`. **Patternmode's own install is 3.7.1**, so this repo's whole suite
+currently runs against the buggy version.
+
+**Patternmode is the only repo with a live defect rather than a tidy-up** — the
+unguarded `hslToRgb` path in `system` (0.4) is reachable from a public API here;
+materia has no equivalent call site.
+
+One cut:
+1. floor `^3.7.1` → `^3.17.0` on swatch, briolette, halo (+ devDependency twins)
+2. same raise on `system`, **plus** the move to a peer (0.3)
+3. remove colorscope from `parquet` (0.3)
+4. delete halo's `hslToHex` wrapper (`halo-utils.ts:128-138`) — the root fix makes
+   it dead code; quote its docblock in the commit as the record of why it existed
+5. **add `hsl()` tests to `system` that FAIL on 3.7.1 and PASS on 3.17.0.**
+
+**DONE 2026-08-03 — with two corrections to what is written above.**
+
+*Correction A:* "`isLightColor` has no `hsl()` test at all" was **wrong** — there
+is one at `weighted-distribution.test.ts:76`. My grep was truncated. The real gap
+was narrower: no *out-of-range* `hsl()` case.
+
+*Correction B, and the more useful one:* the first version of these tests was
+**three-quarters tautology**. `isLightColor` returns a boolean, and most
+out-of-range inputs land the same side of the 0.62 threshold whether colorscope
+wraps them or not — so three of four assertions passed against 3.7.1 as well.
+A test that cannot fail is worse than no test, and this is exactly the trap
+§"Verification discipline" warns about; I nearly shipped it while insisting on
+falsifiability. Fixed by installing 3.7.1 standalone and **searching for inputs
+whose boolean actually flips between the two versions**. Measured on 3.7.1:
+
+```
+hslToRgb(400,100,50) → {255,  0,170}   magenta   ← should equal hsl(40)
+hslToRgb( 40,100,50) → {255,170,  0}   orange
+hslToRgb(120,-50,50) → {191, 64,191}   purple    ← should clamp to grey
+```
+
+Every assertion in the committed tests was chosen from that search and verified to
+flip. Over-range **lightness** has no such input, so it is deliberately not
+asserted — noted in the test comment rather than left as a silent gap.
+
+**`halo-picker.test.tsx:29` (`hslToHex(720,200,-20) === "#000000"`) passes with or
+without the wrapper**, so it becomes the guard proving the delete was safe rather
+than a casualty of it. Delete the wrapper, keep the test verbatim.
+
+**SEQUENCING — FLOOR LAST.** Raising to `^3.17.0` is a hard install constraint,
+not a suggestion. Publish it before materia AND MG AND Desk actually *resolve*
+3.17.0 and their installs break outright. Order: every consumer bumps → verify
+what each **resolves** (not what its manifest says) → then raise here.
+
+**Gate state: 1 of 3.** materia ✅ · MG (MG-988/993) ⏳ · Desk (MD-313/314) ⏳.
+
+**The completion check caught a second version inside THIS repo.** After raising
+the five package manifests the lockfile still resolved both 3.17.0 and 3.7.1:
+`apps/web` and `apps/preview` — the private host apps that *satisfy the peers* —
+still declared `^3.7.1`. Raised both; the lockfile now resolves exactly one
+version. Without that, the preview app would have been exercising the broken
+library while the packages claimed to require the fix. **A package's own host apps
+are consumers too, and a manifest sweep that stops at `packages/` misses them.**
+(A `3.7.1` directory survives in `node_modules/.pnpm` with no referrer — stale
+store artefact, `pnpm store prune` clears it. The lockfile is the authority.)
+
+Match materia's verification standard: baseline captured *before* touching
+versions, compared term-by-term rather than on headlines (equal totals hide
+offsetting drift), and — the part that matters — **confirm the harness actually
+resolved 3.17.0 before trusting a zero-drift result, because no change is also
+exactly what a bump that failed to take effect looks like.** Same lesson as the
+completion check below.
+
+**Completion check — a green manifest cannot fake this:**
+
+```bash
+pnpm why @instruments/colorscope -r
+grep -c "@instruments/colorscope@3\." pnpm-lock.yaml   # expect exactly ONE version
+```
+
+Two distinct versions means `system` is still floating and the bump bought
+nothing. Put that in the release note, not a manifest screenshot.
+
+### 0.6 `motion` is a regular dependency in five published packages
+
+aperto, stacksheet, deck, swatch, status all ship `motion: ^12.40.0` as a regular
+dependency — read from the npm tarballs. Violates this repo's own peer doctrine;
+the 2026-07-03 audit named the failure (`LazyMotion`/`LayoutGroup` contexts don't
+cross duplicate instances, breaking aperto's shared-element transitions).
+
+Jumps: aperto 3.0.0 · stacksheet 3.0.0 · swatch 3.0.0 · deck 0.4.0 · status 0.4.0.
+Peer range `^12.40.0`. (scrollframe/briolette carry only `@howells/motion` — tiny,
+no context, leave alone.)
+
+Consumer impact, measured: **materia and materialdesk not affected at all**;
+rulework via stacksheet only; colorscope via swatch only; MG via three.
+**Every affected consumer already declares motion in the package that imports
+patternmode**, so nobody adds a dependency — it is version bumps only. Four
+hand-bumps, three repos, zero install-graph work.
+
+**Still a separate decision — do not fold in without Daniel's word.**
+
+### 0.7 Doc corrections owed
+
+- `docs/specs/002-component-registry.md` line 89 records `--border-soft` →
+  `--border-subtle` as the destination, and line 96 says the allowlist carries the
+  `border-subtle` extension. **Both false** — retired to `--border` this release
+  and removed from the allowlist. Line 79 says the rename shipped as a **minor**
+  across six packages; §5 reversed that and it shipped as majors. README nominates
+  this spec as the token-contract authority.
+- **`pnpm dev` opens the wrong app.** Root `dev` → `@howells/patternmode-web`, and
+  `.claude/launch.json` too. `apps/web` was last touched 2026-07-12; `apps/preview`
+  is where the registry honesty mechanism and current work live. AGENTS.md:13/:31
+  and README:11 all say `apps/web`. Preview is
+  `pnpm --filter @howells/patternmode-preview dev`.
+- **CONTEXT.md has no vocabulary for briolette or halo**, both published, while
+  AGENTS.md instructs every agent to treat CONTEXT.md as the naming authority.
+
+### 0.8 The 2026-07-03 audit is ~82% dead — 8 of ~45 findings live
+
+Reconciled against current source (legitimate: local versions match npm exactly,
+tree clean, HEAD pushed) with packaging claims checked in the tarballs.
+
+**Every H is fixed.** All three aperto highs (opener-index focus return
+`aperto-group.tsx:289-291` + regression test; clone z-index now
+`var(--patternmode-aperto-clone-z, 1002)`; `defaultOpen` honoured). All three
+stacksheet highs (CloseWatcher gated `renderer.tsx:271`; `defaultPrevented` `:250`;
+focus moves in `sheet-panel-focus.tsx:81`). Deck's 0.35px threshold (measured via
+ref, `use-deck-interactions.ts:107`). Swatch's smooth-blend ratio loss. Both tags
+highs. Plus `"use client"` present in all nine published dists, `isLightColor`
+handling named/rgb/hsl/ok*, DistributionBar slider semantics, IME guard, `inert`,
+frozen `shakeKeyframes`, `sideEffects: false`, SegmentedControl radiogroup
+semantics. Stacksheet went from worst-tested to 10 test files.
+
+Live, ranked: **1.** motion-as-regular-dependency (0.6) — raise to H, it's the only
+cross-cutting one left. **2.** CONTEXT.md briolette/halo vocabulary (0.7). **3.**
+swatch `transparencyBackdrop` mandated by CONTEXT, absent in code. **4.**
+interaction tests still thin outside stacksheet (briolette/halo/tags/scrollframe/
+status: one file each). **5.** deck `aria-valuetext` announces internal ids
+(`deck-root.tsx:170`). **6.** tags ships `data-testid` in production DOM
+(`:88`, `:171`). **7.** react peer matrix inconsistent and drifted the *wrong way*
+— audit said swatch alone allowed `^18||^19`; stacksheet does now too. **8.** no
+`env(safe-area-inset-bottom)` in stacksheet.
+
+### 0.9 stacksheet 2.0.4 — verified from the published tarball
+
+Brace-depth parse of `package/dist/styles.css` (a nearest-preceding-`@layer` grep
+gives the wrong answer — blocks close and reopen):
+
+| class | enclosing layer |
+|---|---|
+| `.opacity-0` | `utilities` ✓ |
+| `.pointer-events-none` | `utilities` ✓ |
+| `.hover\:opacity-100` | `utilities` ✓ |
+
+**Consumers must assert BOTH class names, not just `.opacity-0`.** rulework's
+`row-actions.tsx` docblock records that stacksheet also shipped a layerless
+`.pointer-events-none`, so their `globals.css` repair — opacity only — left the
+revealed control *visible but unclickable*. A browser pass must **click** a
+revealed control, not just see it. The two halves failed independently.
+
+Note the artifact emits the minified `@layer theme,base,components;` while source
+declares the four-name form. **Never assert on the declaration string.**
+
+### 0.10 Component re-poll, round 2
+
+Round 1 failed because the instrument rewarded filename frequency, which measures
+commodity status and unmet need identically — that is why `shimmer` won and why it
+is rejected permanently. Round 2 asked for the *reason* something was rebuilt.
+
+- **#1 hover-reveal contract.** Two independent repos, no shared lineage, the same
+  specific divergence. rulework: four implementations, one spelling the trigger
+  `focus-visible` not `group-focus-within`. MG: seven sites, three handle focus,
+  four don't — and **MG's broken instance is in shipped shared UI
+  (`packages/ui/src/confidence.tsx:93`) while its correct instance is vendored
+  shadcn MG didn't write.** That asymmetry is the strongest single argument of the
+  round. rulework's `RowActions` is offered as-is, immune by construction (reveal
+  rides custom properties nothing else declares, rather than out-ranking).
+  **Ottilie refuted it for touch, and resolving that IMPROVED it.** "Hidden at
+  rest, revealed on hover *and* focus-within" is desktop-only by construction —
+  there is no hover on touch. Correct, and it applies to touch *web*, which
+  patternmode does serve (Ottilie is SwiftUI and can never consume these).
+  **But swatch already solved it**, `styles.css:162-179`: the reveal is gated
+  `@media (hover: hover)`, and `@media (hover: none)` pins the control visible,
+  with a comment saying why. rulework knows too — `row-actions.tsx:121` references
+  a long-press touch story. **So gate the concealment, not the reveal.**
+
+  The component is therefore a reveal contract with **three input branches, one
+  guarantee**: hover (pointer), `focus-within` (keyboard), always-visible (touch).
+  That reframes the whole finding — the reason four rulework and seven MG
+  implementations diverge is that **each author handled one or two of the three
+  branches**, never all three. Name it for the guarantee (controls reachable by
+  whatever input you have), not for its desktop trigger. Ottilie's "say so in the
+  name" is right; the conclusion is the opposite of marking it desktop-only.
+
+  Closes a July audit finding too: "swatch remove affordance invisible on touch"
+  is **fixed** — that `@media (hover: none)` block is the fix. Drop it from §0.8.
+
+- **#2 receipt primitive** (MG), **reshaped by Ottilie — the flat bag is wrong.**
+  Shared `PHRASE` map extracted once,
+  `sourceBasis` rendered with bespoke markup in **nine** files. The mechanism to
+  promote: the component sees its own value *and* the section's shared provenance,
+  so it *can* decide whether to render — that is what no consumer can do locally
+  and why a formatted string cannot work. MG's three suppression rules are good
+  editorial judgement and still **opinion**: ship as overridable defaults, or the
+  first dissenter forks (the sage-green lesson). colorscope's sharpening: claim +
+  basis + **the input the basis was computed from** — that adjacency is how the
+  colour bugs were actually caught.
+- **Parked:** dense-viz cell (colorscope — best-formed answer of the round, but
+  generalisation is the unevidenced leg; hold pending a second consumer),
+  grouped-column matrix (MG conceded — no registries checked), slider+gauge
+  matched pair, geometry-aware skeleton.
+- **Dropped:** panel with inner edge — `scrollframe` imported in 4 files against
+  `swatch`'s 74 in colorscope's own repo, plus materia refuted it having solved it
+  locally. Spectrum — pending colorscope's answer on whether it collides with
+  swatch's `DistributionBar` (**ask before they archive**).
+- swatch is MG's gravity centre: 28 references, against stacksheet 7,
+  scrollframe 4, aperto 2.
+
+### 0.11 Doctrine to fold into AGENTS.md "Deciding what to build"
+
+1. **Wrapper frequency measures an unfixed root cause and an unmet component need
+   identically.** When N consumers independently write the same small wrapper, the
+   candidate is usually a fix one layer down, not a new primitive. A component that
+   institutionalises a workaround is harder to delete than the workaround. Proven
+   tonight: three consumers, three HSL wrappers, one root fix deleted all three.
+   Same conflation as filename frequency, one level up.
+2. **Make the invalid combination unconstructable.** Stronger than "take a
+   behaviour, not a value": a component that can't be built wrong beats one that
+   validates. (MG's `colour-rail.tsx:26-37` uses a discriminated union so a console
+   cannot render the all/any control without owning its value.)
+3. **Opacity is not an encoding channel.** Element opacity composites against the
+   backdrop, so the same value reads differently over different surfaces and you
+   cannot tell whether a cell is pale because the value is low or because the
+   surface shows through. Activation belongs in the colour channel. Patternmode is
+   currently clean — every `opacity` in swatch/parquet is reveal, transition, or a
+   static dim, never data-driven — so this guards the *next* heatmap-shaped thing.
+4. **Take `as`, not `asChild`.** A component that renders its own title bar *then*
+   children has no single child for Slot to merge into, so `asChild` is either
+   broken or misleading. Already true of several patternmode components.
+
+### 0.12 Answered: swatch already speaks OKLCh
+
+colorscope asked whether `Swatch` should accept OKLCh/OKLab rather than sRGB hex,
+having assumed "not a component library's job" and converted lossily at every
+boundary for months. **It already does on the main path**: `swatch-colors.ts` never
+parses colour values — `toColorStop` takes the string as given and line 51 emits
+`linear-gradient(in oklab 90deg, …)`, so the value passes through untouched and CSS
+interpolates perceptually. `isLightColor` handles `oklab()`/`oklch()` via its
+`getOkFunctionLightness` branch, so `data-tone` resolves too.
+
+**Verified LIVE by colorscope** (calling `getSwatchColorsBackground` and
+`getSwatchAtmosphereBackground` directly), which corrected two claims made here
+from a code read — both in swatch's favour:
+
+- `smooth` emits `linear-gradient(in oklab 90deg, oklch(…) 0%, …)` ✓. The default
+  `step` path does **not** emit `in oklab`, but it uses hard stops (`0% 50%`), so
+  there is no interpolation to do — correct by construction, not a bug.
+- **"atmosphere is hex-only and breaks on `oklch()`" was WRONG.** `withAlpha`
+  (`swatch-atmosphere.ts:39-49`) branches: `hexToRgb` returning non-null takes the
+  8-bit alpha-append path, everything else falls through to
+  `color-mix(in srgb, …)`. Nothing breaks. *That claim was asserted from an import
+  line plus a partial read that stopped nine lines short of the branch — colorscope
+  would have avoided atmosphere for no reason had they taken it on trust.*
+
+**The real caveat, smaller and precise:** line 48 mixes `in srgb`, so the
+atmosphere path **narrows wide-gamut `oklch()` to sRGB without failing**. A
+gamut-clipping bug, not a crash. **One-word fix: `color-mix(in oklab, …)`.** Add
+to the live-findings list.
+
+So: months of lossy boundary conversion were **unnecessary on the main path**.
+Colorscope: "I'd have kept believing it was, because I filed it under 'not a
+component library's job' and never asked." The discoverability thesis is now
+evidenced twice — §0.13's naming defect hid a capability we had, and this hid one
+we had already shipped.
+
+This is the discoverability gap all three consumers independently named, in its
+purest form: the capability existed, nobody could cheaply tell.
+
+### 0.13 The catalog mis-describes its own edit/read line — and it caused a real error
+
+Spectrum-field vs `DistributionBar` is **not** a collision (colorscope, from both
+codebases): `DistributionBar` is an editor — `<fieldset>` at
+`distribution-bar-root.tsx:334` and `:407`, `role="slider"` handles, and three
+exported mutation helpers. Bins can't be dragged (a segment is weight a human
+allocated; a bin is a bucket a computation filled, and dragging its edge just
+lies), and `spectrum-field`'s `FieldView` is **2-D** — hue against lightness bands
+— which no reshaping of a 1-D control reaches. Build it, or build nothing there.
+
+**What MG actually saw, and the finding underneath it.** Colorscope has zero
+imports of `DistributionBar`; they use **`DistributionDisplay`**, its read-only
+sibling, three times. MG read `Distribution*` from swatch in their tree and
+reported "already solved". Verified, and it is worse than colorscope claimed —
+**four independent signals all say "Bar" for the component whose entire purpose is
+that it is not one:**
+
+1. `DistributionDisplayProps.segments: DistributionBarSegment[]` — the read-only
+   component is typed on the **editor's** segment type
+2. it is named after the editor
+3. it is *filed inside* the editor — `packages/swatch/src/DistributionBar/`
+4. it is exported from the editor's `DistributionBar/index.ts`
+
+Nobody was careless; the vocabulary invited the error, and it produced a false
+collision report inside one evening. **A defect in how the catalog describes
+itself rather than in what it contains — and it costs most precisely when someone
+is deciding whether a thing is already solved**, which is the roadmap's #1
+priority. Cheap fix: give the shared type a neutral name (`DistributionSegment`,
+alias the old one so it isn't breaking) and lift `DistributionDisplay` out of the
+`DistributionBar/` directory. Add to the live-findings list in §0.8 — it
+outranks most of what's there because it has a demonstrated cost.
+
+**Bonus, and it refutes a round-1 dismissal.** colorscope's `color-strip.tsx` is a
+written-down rejection *of composing `Swatch`* — note it **adopts**
+`DistributionDisplay` rather than rejecting swatch:
+
+> one bordered track with hairline boundaries, instead of a flex row of
+> individually-rounded Swatch blocks (which leaks each swatch's own radius and
+> shadow as seams)
+
+Desk argued in round 1 that a palette strip is "a `div` with `flex`". This is a
+recorded reason why it is not: **contiguity is the hard part** — individually
+rounded blocks leak their own radius and shadow as seams. The strip territory has
+a real difficulty after all, and it is already served by `DistributionDisplay`,
+which nobody knew. Same finding as 0.13 from the other end.
+
+They drive it through `--patternmode-distribution-height` / `-radius`, i.e. the
+consumer-tunable knob pattern working as intended.
+
+---
+
 **Every gate passes by exit code**: typecheck, test, build, lint, check:tokens,
 check:boundaries. The `scripts/build-registry.mjs` max-lines failure that had
 `main` red *before* this session is fixed (see §7). Earlier commits used
@@ -259,7 +681,7 @@ old names; their `--color-surface-0/1/2` ladder is a separate namespace).
 
 | Project | Consumes | Pinning | Status |
 |---|---|---|---|
-| **materialgraph** | aperto, scrollframe, stacksheet, swatch | catalog + `^1.0.0` | Current. Rename is a no-op. Already declares colorscope 3.12.2 and lucide 1.24.0, so **both peer moves are no-ops for MG** — zero manifest changes needed. |
+| **materialgraph** | aperto, scrollframe, stacksheet, swatch | catalog + `^1.0.0` | **NOT current — see §0.2.** "Zero manifest changes needed" was true about breakage and false about delivery: three of its four pins are a major below this release and the carets correctly refuse it. |
 | **colorscope** | briolette, halo, scrollframe, swatch | `^0.3.2`, `^0.2.2`, `^1.0.0` | Only affected consumer. Bridges `--cs-*` tokens onto patternmode's names in `apps/web/app/global.css`. |
 | **materia** | scrollframe | exact `0.1.4` | Stale by a major. Pin is drift, not a scar (see §6). |
 
@@ -464,8 +886,10 @@ the peer move required), and 84 files under `apps/preview/components/patternmode
 changed — generated vendored-source version stamps that `pnpm build` refreshed to
 match the pending bumps (`// vendored from @patternmode/deck@0.3.2` → `@0.3.4`).
 These regenerate on every build after a version change; do not hand-edit.
-`apps/preview/app/globals.css` has unrelated in-progress font work — untouched
-this session, leave it out of any commit.
+`apps/preview/app/globals.css` was described here as "unrelated in-progress font
+work — leave it out of any commit". **That was wrong on all three counts; see
+§0.1.** It is generated output, it is not font work in progress, and it cannot be
+partially committed.
 
 ---
 

@@ -58,7 +58,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@instruments/colorscope": "^3.7.1",
     "@patternmode/system": "workspace:*"
   },
   "devDependencies": {
