@@ -8,7 +8,15 @@ allowBuilds:
 overrides:
   postcss: ^8.5.15
 minimumReleaseAgeExclude:
-  - "@howells/lint@0.5.0"
+  # First-party scopes are exempt BY NAME, never by version. We publish these
+  # ourselves, so a release-age gate only delays our own work — and a per-version
+  # entry silently expires the moment we ship the next one. Never add
+  # `@scope/pkg@x.y.z` for one of ours; the name covers every future release.
+  - "@howells/*"
+  - "@instruments/*"
+  - "@patternmode/*"
+  # Third-party pins below are per-version on purpose: they are transient
+  # unblocks for a specific release, and should lapse rather than persist.
   - "@next/env@16.2.9"
   - "@next/swc-darwin-arm64@16.2.9"
   - "@next/swc-darwin-x64@16.2.9"
@@ -26,7 +34,6 @@ minimumReleaseAgeExclude:
   - "@turbo/windows-arm64@2.9.17"
   - "next@16.2.9"
   - "turbo@2.9.17"
-  - "@instruments/colorscope@3.5.0"
 catalog:
   "@howells/envy": "^0.3.7"
   "@howells/husky": "^0.1.1"

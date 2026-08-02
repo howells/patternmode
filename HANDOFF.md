@@ -331,6 +331,20 @@ coordination point for the consuming ecosystem and requires version moves to be
 announced there first. Their incident tally this week includes a stale-dist
 publish and two version-drift phantom bugs.
 
+**First-party packages are exempt from release-age gates BY NAME, never by
+version** (ecosystem-wide policy, 2026-08-02). `@instruments/*`, `@howells/*` and
+`@patternmode/*` go in every consuming repo's `minimumReleaseAgeExclude` as
+scope patterns. **Patternmode was violating this and is now fixed** — it had
+`@howells/lint@0.5.0` and `@instruments/colorscope@3.5.0` as per-version entries,
+the second already stale against the `^3.7.1` the repo now requires. That is the
+failure mode the policy exists to prevent: a per-version exemption silently
+expires the moment the package ships again. Third-party pins in that list stay
+per-version deliberately, since they are transient unblocks that should lapse.
+
+If a consuming repo ever reds on a `@patternmode/*` publish, **the fix is adding
+the scope to its exclude list, never pinning a version.** materia is already
+compliant (`@howells/*`, `@instruments/*`, `@patternmode/*` all present).
+
 **Carets defeat exact pins.** A regular dependency on a caret floats
 independently of the host's pin: a host can pin a package exactly and still get a
 different version underneath it via a component package's own copy. This is the
