@@ -238,10 +238,45 @@ old names; their `--color-surface-0/1/2` ladder is a separate namespace).
 | **colorscope** | briolette, halo, scrollframe, swatch | `^0.3.2`, `^0.2.2`, `^1.0.0` | Only affected consumer. Bridges `--cs-*` tokens onto patternmode's names in `apps/web/app/global.css`. |
 | **materia** | scrollframe | exact `0.1.4` | Stale by a major. Pin is drift, not a scar (see §6). |
 
-**rulework** (`~/Sites/rulework`) is also a consumer — root, `packages/ui`,
-`apps/storybook`, `apps/web` — and has **not been contacted**. Its session's cwd
-is `~/Sites`, not the project, which is why it was missed initially. Daniel wants
-it introduced to the full set *after* publishing.
+### rulework consumes vendored tarballs, NOT npm — publishing does not reach them
+
+**The npm version table above does not describe what every consumer runs.**
+rulework pins every patternmode dependency to a tarball by path:
+
+```
+apps/web      @patternmode/scrollframe  file:../../vendor/patternmode/patternmode-scrollframe-1.1.0.tgz
+              @patternmode/stacksheet   file:../../vendor/patternmode/patternmode-stacksheet-2.0.2.tgz
+              @patternmode/tags         file:../../vendor/patternmode/patternmode-tags-1.1.1.tgz
+packages/ui   @patternmode/scrollframe  (same tarball)
+```
+
+Checked across every consuming repo: **rulework is the only one that vendors.**
+Everyone else resolves from the registry.
+
+**Three consequences, all of which caught me out:**
+
+1. **A published fix does not reach them.** `stacksheet@2.0.3` fixes the defect
+   *they reported*, and it will not arrive on any range — not because it is a
+   major, but because there is no registry edge at all. A human must build a
+   tarball, drop it in `vendor/`, and move the pin. **Do not count a defect
+   closed estate-wide on the strength of a publish.**
+2. **They run versions that were never published.** `scrollframe-1.1.0.tgz` and
+   `tags-1.1.1.tgz` do not exist on npm — those numbers were superseded by the
+   2.0.0 re-cut before shipping. They are phantom builds that live only in that
+   folder.
+3. **This fully explains the §2 artifact mystery.** A vendored tarball is a
+   snapshot of whatever the source was when someone packed it, with no version
+   identity beyond its filename and no link back to a commit.
+   `patternmode-stacksheet-2.0.1.tgz` and `-2.0.2.tgz` sit side by side, packed
+   seven hours apart on the same day. Not a stale-dist incident — the expected
+   behaviour of the mechanism. **Close that investigation.**
+
+rulework's choice to vendor predates the packages being published and is theirs
+to revisit deliberately, not something patternmode should push. **They have
+explicitly declined the upgrade for now** — everything consumer-visible is a
+major, `scrollframe` and `stacksheet` are load-bearing in a shell they rebuilt
+today, and they are already immune to the defect that motivated it. Logged on
+their side as separate work. Do not chase it.
 
 ### colorscope's post-migration bridge (agreed, six lines)
 
