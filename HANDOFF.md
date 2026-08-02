@@ -41,8 +41,31 @@ all changesets consumed — do not re-run it.**
 | `@patternmode/deck` | — | 0.3.4 |
 | `@patternmode/parquet` | — | 0.1.3 |
 
-Publish with `pnpm publish:packages` (`scripts/publish-packages.mjs`).
-`pnpm smoke:tarballs` exists and is worth running first.
+Publish with `pnpm publish:packages` (`scripts/publish-packages.mjs`, which runs
+`pnpm changeset publish`). Requires `NPM_TOKEN` in `.env`/`.env.local`; validate
+with `node scripts/publish-packages.mjs --dry-run`.
+
+**`@howells/motion@0.2.0` must publish, and it must go first.** It is a
+dependency of aperto, briolette, scrollframe, stacksheet and status, its npm
+latest is **0.1.0**, and the local 0.2.0 is unpublished. `changeset publish`
+handles this — motion is `private: false`, is not in the changeset `ignore` list,
+and publishes in topological order — but if publishing is ever done by hand,
+motion goes before anything that depends on it.
+
+**`pnpm smoke:tarballs` currently FAILS, and this is expected pre-publish:**
+
+```
+ERR_PNPM_NO_MATCHING_VERSION  No matching version found for @howells/motion@0.2.0
+  while installing the dependencies of @patternmode/aperto@2.0.0
+  The latest release of @howells/motion is "0.1.0".
+```
+
+The fixture installs the local `.pack/*.tgz` tarballs but resolves their
+*dependencies* from npm, so it cannot pass until motion 0.2.0 exists there. This
+predates this session's work (motion 0.2.0 came from the inherited
+`changeset version` run). **Re-run the smoke test after publishing** — that is
+when it becomes a real signal. If it still fails then, something is genuinely
+wrong.
 
 ---
 
