@@ -1,3 +1,18 @@
+/* Declare Tailwind's canonical layer order, and do it FIRST — a `@layer` statement
+   is permitted before `@import`, and the position is load-bearing: emitted after
+   the layer blocks it has no effect, because a layer is registered the first time
+   it is seen and a later statement cannot move one that already exists.
+
+   This sheet is the only Patternmode package that opens `utilities`, which makes
+   it the only one that can invert a consumer's cascade. Loaded before the app's
+   Tailwind entry it would register `utilities` early and leave the app's
+   `components` appended *after* it, so component styles would beat utilities.
+   Declaring the order here fixes that wherever the sheet lands, and is a no-op
+   when the app declares the order first, since first declaration wins.
+   (Packages that only open `components` cannot cause this: registering
+   `components` early still leaves `utilities` last.) */
+@layer theme, base, components, utilities;
+
 @import "tailwindcss/theme" theme(reference) source(none);
 /* `layer(utilities)` is load-bearing. Tailwind's layer declaration lives in its
    main entry, so importing `utilities` on its own emits these rules layerless —
