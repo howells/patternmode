@@ -292,7 +292,11 @@ colorscope has agreed to do this themselves; do not patch their repo.
 
 ---
 
-## 5. OPEN DECISION — blocks the release
+## 5. RESOLVED — the sequencing decision (kept for rationale)
+
+**Outcome: one cut, all majors, published. materialgraph endorsed it independently
+after accepting their own plan would have broken colorscope; both affected
+consumers accepted the cost and have migrated.** The reasoning below is why.
 
 materialgraph and colorscope gave incompatible sequencing instructions.
 
@@ -315,7 +319,10 @@ change; briolette/halo are 0.x where minor is already the breaking channel).
 Then no caret auto-takes anything, both consumers upgrade deliberately, and one
 cut satisfies both. Cost: four majors in a day, every consumer bumps by hand.
 
-**Awaiting Daniel's call.** Not actioned.
+**Decided and shipped**: scrollframe 2.0.0, tags 2.0.0, swatch 2.0.0, aperto
+2.0.0, briolette 0.5.0, halo 0.4.0. No consumer absorbed a breaking change on a
+caret. rulework then took all seven at once with a green gate and 2,998 tests,
+which is the proof the shape was right.
 
 ---
 
