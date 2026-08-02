@@ -426,8 +426,21 @@ session time today.
 
 Passing: `typecheck`, `test`, `build`, `check:boundaries`, `check:tokens`.
 
-**`pnpm lint` still fails, but for a reason that predates this session and is
-not fixable as a quick win.**
+**`pnpm lint` NOW PASSES.** Every gate is green: typecheck, test, build, lint,
+check:tokens, check:boundaries — all exit 0.
+
+The `scripts/build-registry.mjs` max-lines failure (608/600) that had `main` red
+before this session is **fixed**: its hard-coded configuration moved to
+`scripts/build-registry-config.mjs` (the part a human edits when adding a package
+or changing a CSS strategy; the builder itself is machinery). Registry output is
+**byte-identical** after the split, verified via `git status` on
+`packages/theme`. One wrinkle worth knowing: the `LibPackage` typedef moved with
+the config, so the builder re-imports it via
+`@typedef {import("./build-registry-config.mjs").LibPackage}` — a JSDoc typedef
+does not cross a module boundary with the value it describes.
+
+**Historical note (resolved):** the section below described this as unfixable at
+wind-down. It was fixed.
 
 The **CHANGELOG formatting blocker is now CLEARED.** Eight
 `packages/*/CHANGELOG.md` files (output of the inherited `changeset version`
