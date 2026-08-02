@@ -1,5 +1,21 @@
 # @patternmode/scrollframe
 
+## 1.1.1
+
+### Patch Changes
+
+- f7463da: Replace the local hand-rolled reduced-motion checks with the shared
+  `prefersReducedMotion()` adapter from `@howells/motion`. ScrollFrame drops its
+  `getReducedMotionPreference` helper and Briolette drops its internal
+  `prefersReducedMotion`, so both now resolve the one-shot preference through one seam.
+  Briolette's live reduced-motion media-query subscription inside `useIdleMotion` is
+  unchanged — that is the reactive concept, not the one-shot check.
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+  - @patternmode/system@0.5.0
+  - @howells/motion@0.2.0
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/swatch",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "Color, gradient, image, and palette swatch primitives for Patternmode interfaces.",
   "keywords": [
@@ -56,13 +56,13 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
-    "@instruments/colorscope": "^3.7.1",
     "@patternmode/system": "workspace:*",
     "motion": "catalog:"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
+    "@instruments/colorscope": "^3.7.1",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -79,6 +79,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
+    "@instruments/colorscope": "^3.7.1",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },

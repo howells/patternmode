@@ -42,7 +42,6 @@ const ALLOWLIST = new Set([
   "sidebar-accent-foreground",
   "sidebar-border",
   "sidebar-ring",
-  "border-subtle",
 ]);
 
 const ALLOWED_PREFIXES = ["font-", "shadow-", "spacing", "tw-"];
@@ -170,7 +169,7 @@ const isAllowed = (name, packageDefined) =>
   RUNTIME_PROVIDED.has(name) ||
   CONSUMER_TUNABLE.has(name);
 
-const varPattern = /var\(--(?<name>[a-zA-Z0-9-]+)/gu;
+const varPattern = /var\(\s*--(?<name>[a-zA-Z0-9-]+)/gu;
 
 const violations = [];
 let fileCount = 0;
@@ -181,18 +180,20 @@ for (const [packageName, files] of cssFilesByPackage) {
 
   for (const file of files) {
     fileCount += 1;
-    const lines = readFileSync(file, "utf-8").split("\n");
+    // Scanned whole-file rather than line by line: the formatter wraps long
+    // `var(…)` calls so the name can sit on the line after its `var(`, and a
+    // per-line match silently skips those references.
+    const source = readFileSync(file, "utf-8");
 
-    for (const [index, line] of lines.entries()) {
-      for (const match of line.matchAll(varPattern)) {
-        const name = match.groups?.name;
-        if (name === undefined || name === "") {
-          continue;
-        }
-        occurrenceCount += 1;
-        if (!isAllowed(name, packageDefined)) {
-          violations.push(`${path.relative(root, file)}:${index + 1}  var(--${name})`);
-        }
+    for (const match of source.matchAll(varPattern)) {
+      const name = match.groups?.name;
+      if (name === undefined || name === "") {
+        continue;
+      }
+      occurrenceCount += 1;
+      if (!isAllowed(name, packageDefined)) {
+        const line = source.slice(0, match.index).split("\n").length;
+        violations.push(`${path.relative(root, file)}:${line}  var(--${name})`);
       }
     }
   }

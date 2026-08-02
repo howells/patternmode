@@ -1,5 +1,15 @@
 # @patternmode/stacksheet
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+  - @patternmode/system@0.5.0
+  - @howells/motion@0.2.0
+
 ## 2.0.1
 
 ### Patch Changes

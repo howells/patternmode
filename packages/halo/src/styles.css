@@ -116,7 +116,7 @@
   .patternmode-halo-picker__value {
     color: var(--muted-foreground, #77756d);
     font-family: var(
-      --mono,
+      --font-mono,
       "SFMono-Regular",
       "SF Mono",
       Consolas,

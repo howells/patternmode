@@ -38,7 +38,7 @@
 
   .patternmode-badge[data-variant="secondary"] {
     --patternmode-badge-background: var(--muted, #f6f5f1);
-    --patternmode-badge-border: var(--border-subtle, #eeece7);
+    --patternmode-badge-border: var(--border, #eeece7);
     --patternmode-badge-color: var(--foreground, #1d1d1b);
   }
 
@@ -220,7 +220,7 @@
 
   .patternmode-tag-selector__content {
     background: var(--card, #fff);
-    border: 1px solid var(--border-subtle, #eeece7);
+    border: 1px solid var(--border, #eeece7);
     border-radius: var(--radius, 8px);
     box-shadow: 0 14px 34px rgb(17 24 39 / 14%);
     display: flex;

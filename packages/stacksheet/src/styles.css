@@ -1,5 +1,11 @@
 @import "tailwindcss/theme" theme(reference) source(none);
-@import "tailwindcss/utilities" source(none);
+/* `layer(utilities)` is load-bearing. Tailwind's layer declaration lives in its
+   main entry, so importing `utilities` on its own emits these rules layerless —
+   and a layerless declaration outranks every rule in a named layer regardless of
+   specificity. Without it this sheet's `.opacity-0` beats a consumer's
+   `group-hover:opacity-100` in `@layer utilities`, silently breaking any
+   hover-revealed control in an app that loads it. */
+@import "tailwindcss/utilities" layer(utilities) source(none);
 @source "./**/*.{ts,tsx}";
 
 /* Base UI's ScrollArea Viewport renders a plain scrolling div with no inner

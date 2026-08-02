@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/deck",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": false,
   "description": "Composable Deck primitives with finite and cyclic advance modes for React.",
   "keywords": [

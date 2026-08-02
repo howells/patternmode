@@ -1,5 +1,15 @@
 # @patternmode/parquet
 
+## 0.1.3
+
+### Patch Changes
+
+- f7463da: Align the `@instruments/colorscope` dependency range to `^3.7.1` repo-wide (matches
+  the resolved version; fixes the workspace range-consistency check).
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+  - @patternmode/system@0.5.0
+
 ## 0.1.2
 
 ### Patch Changes

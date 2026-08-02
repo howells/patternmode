@@ -292,9 +292,6 @@ importers:
       '@howells/motion':
         specifier: workspace:*
         version: link:../motion
-      lucide-react:
-        specifier: 'catalog:'
-        version: 1.17.0(react@19.2.7)
       motion:
         specifier: 'catalog:'
         version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -329,6 +326,9 @@ importers:
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.17.0(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -353,9 +353,6 @@ importers:
       '@howells/motion':
         specifier: workspace:*
         version: link:../motion
-      '@instruments/colorscope':
-        specifier: ^3.7.1
-        version: 3.7.1(sharp@0.34.5)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -363,6 +360,9 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
+      '@instruments/colorscope':
+        specifier: ^3.7.1
+        version: 3.7.1(sharp@0.34.5)
       '@tailwindcss/cli':
         specifier: ^4.3.0
         version: 4.3.0
@@ -465,10 +465,6 @@ importers:
         version: 4.1.8(@types/node@25.9.2)(jsdom@29.1.1)(vite@8.0.14(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.0))
 
   packages/halo:
-    dependencies:
-      '@instruments/colorscope':
-        specifier: ^3.7.1
-        version: 3.7.1(sharp@0.34.5)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -476,6 +472,9 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
+      '@instruments/colorscope':
+        specifier: ^3.7.1
+        version: 3.7.1(sharp@0.34.5)
       '@tailwindcss/cli':
         specifier: ^4.3.0
         version: 4.3.0
@@ -831,9 +830,6 @@ importers:
       '@base-ui/react':
         specifier: 'catalog:'
         version: 1.6.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      '@instruments/colorscope':
-        specifier: ^3.7.1
-        version: 3.7.1(sharp@0.34.5)
       '@patternmode/system':
         specifier: workspace:*
         version: link:../system
@@ -847,6 +843,9 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
+      '@instruments/colorscope':
+        specifier: ^3.7.1
+        version: 3.7.1(sharp@0.34.5)
       '@tailwindcss/cli':
         specifier: ^4.3.0
         version: 4.3.0

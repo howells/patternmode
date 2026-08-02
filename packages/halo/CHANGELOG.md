@@ -1,5 +1,12 @@
 # @patternmode/halo
 
+## 0.3.1
+
+### Patch Changes
+
+- f7463da: Align the `@instruments/colorscope` dependency range to `^3.7.1` repo-wide (matches
+  the resolved version; fixes the workspace range-consistency check).
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/system",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": false,
   "description": "Shared Patternmode sizing, object sizing, composition, and weighted-distribution utilities.",
   "keywords": [

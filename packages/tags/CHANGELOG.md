@@ -1,5 +1,15 @@
 # @patternmode/tags
 
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+- Updated dependencies [f7463da]
+  - @patternmode/scrollframe@1.1.1
+  - @patternmode/system@0.5.0
+
 ## 1.1.0
 
 ### Minor Changes

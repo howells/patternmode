@@ -1,5 +1,12 @@
 # @patternmode/aperto
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [f7463da]
+  - @howells/motion@0.2.0
+
 ## 1.0.0
 
 ### Major Changes

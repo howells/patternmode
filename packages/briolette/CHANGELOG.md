@@ -1,5 +1,20 @@
 # @patternmode/briolette
 
+## 0.4.1
+
+### Patch Changes
+
+- f7463da: Replace the local hand-rolled reduced-motion checks with the shared
+  `prefersReducedMotion()` adapter from `@howells/motion`. ScrollFrame drops its
+  `getReducedMotionPreference` helper and Briolette drops its internal
+  `prefersReducedMotion`, so both now resolve the one-shot preference through one seam.
+  Briolette's live reduced-motion media-query subscription inside `useIdleMotion` is
+  unchanged — that is the reactive concept, not the one-shot check.
+- f7463da: Align the `@instruments/colorscope` dependency range to `^3.7.1` repo-wide (matches
+  the resolved version; fixes the workspace range-consistency check).
+- Updated dependencies [f7463da]
+  - @howells/motion@0.2.0
+
 ## 0.4.0
 
 ### Minor Changes
