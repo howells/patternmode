@@ -797,10 +797,24 @@ is plausibly: *a stream of typed events with per-event states
 affordance that does not imply linear progress* — with ambient-vs-sequential left
 to the consumer, because it is a product decision.
 
-**Their actual gap is not a component, and it may outrank everything above.**
-Desk has **three separate local `hslToHex` implementations while importing a
-canonical one from a library that provides it** — including a file that imports
-the canonical version and then exports its own. Their diagnosis:
+**Their actual gap is not a component — but the evidence thinned when they
+re-measured it, and they said so unprompted.** Desk first reported *three* local
+`hslToHex` implementations while importing a canonical one, including a file
+importing the canonical version then exporting its own. **Corrected by them: it
+is two, and the most rhetorically useful example was innocent.**
+`color-wheel-utils.ts` is a three-line sanitizing wrapper that calls
+`@instruments/colorscope/math`'s `hslToHex` after normalising hue and clamping —
+because the library's version does not clamp, and out-of-range input yields
+malformed non-hex strings like `#ff-7f00` that render as nothing. That is a
+consumer correctly identifying a real gap and guarding it, not duplication.
+
+So Desk's case is now the **weakest** of the three converging routes, not the
+sharpest. Two genuine reimplementations still support the conclusion, but their
+own framing does less work than when they first offered it — and note their case
+turned out to be *genuinely missing* (the clamping), which is the **other** branch
+of materia's distinction. **materia's version — check whether a capability is
+genuinely missing or merely undiscoverable — is the better-founded statement of
+the same point.** Their diagnosis, still worth keeping:
 
 > Not "no component existed", but "the right thing was one import away and got
 > rebuilt anyway because nobody could cheaply tell what the library already
