@@ -766,6 +766,54 @@ Patternmode currently reads `--muted-foreground` and has no middle rung. **Answe
 this when the release ships** — it interacts with their three-rung typography
 ladder above.
 
+### materialdesk's answer — it challenges the top two rankings
+
+Delivered after their wind-down, checked against their tree rather than guessed.
+
+**Palette strip (#1): the ranking survives, but the component named does not.**
+Desk has six components in this territory (`swatch`, `swatch-group`,
+`swatch-fan`, `swatch-selector`, `color-palette`, plus `vision/color-swatch.ts`).
+They warned this might be materia's lineage imported wholesale. **Checked by
+hashing: all five shared files are byte-identical to materia's — one lineage,
+not six data points.** Same trap as `shimmer`, caught the same way.
+
+MG's independent count (MG + materia + colorscope) still stands at three
+lineages, so the *territory* is real. But Desk's substantive point is the useful
+one: **a plain strip of colour rectangles is a `div` with `flex`.** The parts
+with behaviour a registry cannot supply are the **fan** (overlap geometry) and
+the **selector** (selection state). If a strip ranked #1, that is the scan
+measuring territory rather than difficulty. Build the fan and the selector, or
+build nothing here.
+
+**Tool-call timeline (#2): the shape is unsettled, not unserved — which is a
+reason NOT to build it yet.** Desk has five different answers to "show the user
+the agent is working": `thinking-orb` (ambient, non-linear), `thinking-trace`
+(expandable detail), `agent-thinking-disclosure` (progressive reveal),
+`narration-band` (running narration), `stepper` (discrete stages). **One team
+produced all five and converged on nothing.** A canonical "timeline" would serve
+none of them and get wrapped rather than used. The narrower primitive underneath
+is plausibly: *a stream of typed events with per-event states
+(pending/running/done/failed), collapsible detail, and a "still working"
+affordance that does not imply linear progress* — with ambient-vs-sequential left
+to the consumer, because it is a product decision.
+
+**Their actual gap is not a component, and it may outrank everything above.**
+Desk has **three separate local `hslToHex` implementations while importing a
+canonical one from a library that provides it** — including a file that imports
+the canonical version and then exports its own. Their diagnosis:
+
+> Not "no component existed", but "the right thing was one import away and got
+> rebuilt anyway because nobody could cheaply tell what the library already
+> covered."
+
+**Proposal: ship a per-component "what this already handles" line** — capability,
+not prop docs. Desk argues this would prevent more reinvention than any single
+component on the list, and it converges with materia's independent caution
+(check whether a capability is genuinely missing or merely *undiscoverable*
+before building) and with rulework's discriminator (the *reason* something was
+rebuilt is the finding). **Three consumers, three routes, one conclusion:
+patternmode's discoverability is a bigger gap than its component coverage.**
+
 **Preconditions on any of the above** (MG, and they match what landed tonight):
 subpath exports, peer dependencies for anything identity-bearing or heavy, and
 colorscope's client-safe CI guard pattern from day one. MG would eventually like
