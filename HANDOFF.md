@@ -2,6 +2,13 @@
 
 Written 2026-08-02. Assumes you have this repo and nothing else.
 
+**Durable knowledge now lives in `AGENTS.md`** — publish discipline, dependency
+conventions, the CSS layer rules, verification discipline and the promotion test
+for new components. Read that first; it is what a cold session needs. **This file
+is session state**: what shipped, what is parked and why, and the reasoning
+behind decisions that are already made. Where the two overlap, `AGENTS.md` is
+the instruction and this is the evidence.
+
 **STATUS: SHIPPED.** Committed, pushed to `origin/main`, published to npm, tags
 pushed. `pnpm smoke:tarballs` passes end-to-end — a real Next.js consumer
 installs every tarball and builds clean with the peer dependencies resolving.
