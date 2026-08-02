@@ -455,6 +455,30 @@ this session, leave it out of any commit.
 
 ---
 
+## 7a. Working practice (standing, from Daniel)
+
+**`/foreman` for ALL implementation.** The main loop plans, specs and reviews;
+subagents write the production code. Route by tier — taste (judgment-heavy),
+heavy (spec-complete but interlocking), grunt (mechanical). The escape hatch is
+narrow: trivial diffs, or work where writing the spec costs more than the diff.
+
+**Keep `HANDOFF.md` updated continuously as you work** — every landed item, every
+parked item *with its blocker* — so a restart begins at the right line rather
+than re-deriving state. This session was restarted once mid-flight; the handoff
+is why it resumed cleanly.
+
+**Deviation recorded, for honesty rather than ceremony.** Foreman was used for
+the peer-dependency batch and the `--border-subtle` retirement. It was **not**
+used for the `check-tokens` whole-file fix (defensible — kernel logic the skill
+says the main loop keeps), nor for the `--font-mono` rename (a subagent hit a
+session limit; escape hatch invoked and stated). But the
+`scripts/build-registry.mjs` split and the materia scrollframe upgrade were both
+substantial and mechanical, and **should have been delegated.** They were done
+inline under time pressure, which is not a justification. Both are verified and
+correct; the process was wrong, not the result.
+
+---
+
 ## 8. Next-session board
 
 **Almost everything on this board was closed out after it was written.** What
