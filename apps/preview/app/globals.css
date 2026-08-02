@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource-variable/inter/opsz.css";
+@import "@fontsource-variable/inter/opsz-italic.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -118,9 +120,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter, Inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-inter: var(--font-inter);
+  --font-inter: "Inter Variable", sans-serif;
   --shadow-xl: var(--shadow-xl);
   --shadow-lg: var(--shadow-lg);
   --shadow-md: var(--shadow-md);
@@ -137,10 +139,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings:
-      "liga" 1,
-      "calt" 1,
-      "cv11" 1;
+    font-feature-settings: "cpsp", "cv01", "cv02", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -359,7 +358,7 @@
     touch-action: none;
   }
   .patternmode-distribution-bar__segments {
-    border: 1px solid var(--border-subtle, rgb(17 24 39 / 12%));
+    border: 1px solid var(--border, rgb(17 24 39 / 12%));
     border-radius: var(--patternmode-distribution-radius, 999px);
     display: flex;
     height: 100%;
@@ -413,8 +412,8 @@
       45deg,
       transparent,
       transparent 3px,
-      var(--border-subtle, rgb(17 24 39 / 12%)) 3px,
-      var(--border-subtle, rgb(17 24 39 / 12%)) 4px
+      var(--border, rgb(17 24 39 / 12%)) 3px,
+      var(--border, rgb(17 24 39 / 12%)) 4px
     );
   }
   .patternmode-distribution-bar__handle {
@@ -475,10 +474,10 @@
       45deg,
       transparent,
       transparent 2px,
-      var(--border-subtle, rgb(17 24 39 / 12%)) 2px,
-      var(--border-subtle, rgb(17 24 39 / 12%)) 3px
+      var(--border, rgb(17 24 39 / 12%)) 2px,
+      var(--border, rgb(17 24 39 / 12%)) 3px
     );
-    box-shadow: inset 0 0 0 1px var(--border-subtle, rgb(17 24 39 / 12%));
+    box-shadow: inset 0 0 0 1px var(--border, rgb(17 24 39 / 12%));
   }
   .patternmode-deck {
     perspective: var(--deck-perspective, 1000px);
@@ -808,7 +807,7 @@
   }
   .patternmode-badge[data-variant="secondary"] {
     --patternmode-badge-background: var(--muted, #f6f5f1);
-    --patternmode-badge-border: var(--border-subtle, #eeece7);
+    --patternmode-badge-border: var(--border, #eeece7);
     --patternmode-badge-color: var(--foreground, #1d1d1b);
   }
   .patternmode-badge[data-variant="destructive"] {
@@ -962,7 +961,7 @@
   }
   .patternmode-tag-selector__content {
     background: var(--card, #fff);
-    border: 1px solid var(--border-subtle, #eeece7);
+    border: 1px solid var(--border, #eeece7);
     border-radius: var(--radius, 8px);
     box-shadow: 0 14px 34px rgb(17 24 39 / 14%);
     display: flex;
@@ -1064,342 +1063,6 @@
     padding: 0.75rem 0.625rem;
     text-align: center;
   }
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-top {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-bottom {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-left {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --patternmode-scrollframe-mask-right {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
 }
 
 @property --patternmode-scrollframe-mask-top {
