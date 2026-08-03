@@ -33,6 +33,15 @@ the widened notes above §1.
 Commits: `c55e9be6` (the change) → `becf50cb` (preview stylesheet resync) →
 `184434cd` (version packages).
 
+**ALSO BUILT: `@patternmode/verge` 0.1.0** (`6ad024f5`) — the reveal contract, the
+#1 candidate from the re-poll (§0.10). Committed with a changeset, wired into the
+registry (`COMPONENT_PACKAGES`, `CSS_STYLE` "B", `STYLE_B_CSS`), `pnpm check`
+green. **Not pushed, not published, and NOT YET VERIFIED IN A BROWSER** — jsdom
+applies no stylesheet, so the visual half is unproven. The two checks, which
+failed independently in rulework's app and so must be run separately: tabbing to
+a control must make it **clickable**, not merely visible; and on a touch surface
+the controls must be visible at rest. See §0.14.
+
 **Everything else in this section is a finding, not work done.** It is waiting on
 Daniel or on another repo.
 
@@ -98,6 +107,22 @@ patternmode's direction of it" is false until `system` is fixed.**
   but not wrong. With the floor at `^3.17.0` every resolvable version carries the
   fix, so the *bug* is closed either way. The proper fix is to split the colour
   helpers out of `system` (they'd belong in swatch) — a bigger change, still open.
+
+  **RESOLVED 2026-08-03, in favour of keeping it a regular dependency.** MG ran
+  the falsifiable check after taking `system@0.6.0` and it returned **one line**:
+
+  ```
+  $ grep -o "@instruments/colorscope@3\.[0-9.]*" pnpm-lock.yaml | sort -u
+  @instruments/colorscope@3.17.0
+  $ pnpm why @instruments/colorscope -r
+  Found 1 version of @instruments/colorscope
+  ```
+
+  Before the bump MG resolved 3.12.2 alongside 3.17.0; the stale copy was
+  `system@0.4.0`'s own `^3.5.0`. Raising the floor collapsed it. **Dependency
+  kind was never the lever — the stale floor was.** The `system` peer move is
+  not owed and should not be cut. (MG PR #392, 465 tests green; the theme rename
+  was a no-op there, as the impact analysis predicted.)
 - `parquet` **never imports it** — the only references are historical prose in its
   own CHANGELOG and README. It gets `isLightColor` from `@patternmode/system`
   (`parquet.tsx:3`, used `:62`). → **remove the dependency**, don't peer-ify it.
@@ -483,6 +508,42 @@ as half-right: the tick is uninformative, but there is genuinely nothing to lint
 *Method note:* an exact-match diff also flagged `shadow-xs/sm/md/lg/xl` as
 defined-but-not-allowed. False positive — they pass via `ALLOWED_PREFIXES`
 (`check-tokens.mjs:47`). The prefix rules have to be applied before comparing.
+
+### 0.14 `@patternmode/verge` — built, unpushed, unverified in a browser
+
+The #1 re-poll candidate, built 2026-08-03 (`6ad024f5`). Three triggers, one
+guarantee: hover (pointer), `:focus-within` (keyboard), always-visible (touch).
+
+**Two bugs found by reading the artifact rather than the exit code** — worth
+keeping, because both builds exited 0:
+
+- The first CSS used negative "correction" rules to scope nesting, and they were
+  **mutually destructive**: hovering an unfocused row matched
+  `:not(:focus-within)` and re-hid it. Replaced with **inheritance** — the root
+  holds the state, a nested root shadows it for its own subtree. No `@scope`, no
+  complex `:not()`, both of which drop the whole rule when unsupported and would
+  leave controls permanently invisible.
+- `@apply duration-[--patternmode-verge-duration]` compiled to
+  `transition-duration: --patternmode-verge-duration` — a **bare custom-property
+  name as a value**, which browsers drop. The transition would have silently run
+  at the 150ms default with the wrong easing. Correct Tailwind v4 form is
+  `duration-(--var)` with parentheses. **Tailwind drops utilities it cannot
+  resolve without failing the build**, so `@apply` output has to be read.
+
+**Finding about the existing catalog: `parquet` and `aperto` ship their component
+rules LAYERLESS** — the same class fixed in stacksheet 2.0.4. Verge declares
+`@layer theme, base, components, utilities;` instead.
+
+**And AGENTS.md's layer rule is incomplete.** It says packages that only open
+`@layer components` need no declaration, because "registering `components` early
+still leaves `utilities` last". True but insufficient: it also leaves `components`
+registered *before* the host's `theme` and `base`, so a base reset outranks the
+component rules. Verified in the emitted CSS. The §"CSS layers" bullet should say
+any package that opens *any* layer declares the full order.
+
+*Also confirmed general, not a stacksheet quirk:* Tailwind minifies the four-name
+declaration (here to `@layer theme,base;` … `@layer utilities;`). **Never assert
+on the declaration text** — parse layer containment by brace depth.
 
 ### 0.11 Doctrine to fold into AGENTS.md "Deciding what to build"
 
