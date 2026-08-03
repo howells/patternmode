@@ -295,9 +295,6 @@ importers:
       '@howells/motion':
         specifier: workspace:*
         version: link:../motion
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -332,6 +329,9 @@ importers:
       lucide-react:
         specifier: 'catalog:'
         version: 1.17.0(react@19.2.7)
+      motion:
+        specifier: 'catalog:'
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -414,9 +414,6 @@ importers:
       '@patternmode/system':
         specifier: workspace:*
         version: link:../system
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -448,6 +445,9 @@ importers:
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      motion:
+        specifier: 'catalog:'
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -708,9 +708,6 @@ importers:
       focus-trap-react:
         specifier: ^12.0.2
         version: 12.0.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-remove-scroll:
         specifier: ^2.7.2
         version: 2.7.2(@types/react@19.2.17)(react@19.2.7)
@@ -748,6 +745,9 @@ importers:
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      motion:
+        specifier: 'catalog:'
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -775,9 +775,6 @@ importers:
       '@patternmode/system':
         specifier: workspace:*
         version: link:../system
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -806,6 +803,9 @@ importers:
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      motion:
+        specifier: 'catalog:'
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -833,9 +833,6 @@ importers:
       '@patternmode/system':
         specifier: workspace:*
         version: link:../system
-      motion:
-        specifier: 'catalog:'
-        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -870,6 +867,9 @@ importers:
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      motion:
+        specifier: 'catalog:'
+        version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: 'catalog:'
         version: 19.2.7
