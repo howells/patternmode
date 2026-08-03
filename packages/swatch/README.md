@@ -71,10 +71,96 @@ import Image from "next/image";
 </Swatch>;
 ```
 
-Use `DistributionBar` as a sibling primitive when a weighted visual distribution should be edited with draggable boundary handles.
+## Distributions: two components, and they are not interchangeable
 
-Distribution segment values are weights, not persisted percentages. The bar renders segment widths proportionally and its legend displays derived percentages.
+Use `DistributionBar` when a human allocates the weights and must be able to
+change them: it renders a `<fieldset>` with `role="slider"` boundary handles that
+drag and answer arrow keys.
 
-For external segment controls, keep `segments` controlled and pass the next value to `onChange`. The package also exports `moveDistributionBoundary`, `updateDistributionSegment`, and `removeDistributionSegment` so custom controls can move handles, change segment metadata, or remove a segment without duplicating the bar math. `updateDistributionSegment` does not change distribution values.
+Use **`DistributionDisplay`** when the weights were computed — a bin a
+calculation filled rather than a share someone assigned. It draws the same
+contiguous track and legend and nothing else. Dragging the edge of a computed bin
+just lies about what the number is, which is why the read-only one exists rather
+than being the editor with its handles hidden.
+
+```tsx
+import { DistributionDisplay } from "@patternmode/swatch";
+
+<DistributionDisplay
+  aria-label="Colour distribution"
+  emptyLabel="unclassified"
+  emptyValue={12}
+  legend="summary"
+  segments={[
+    { id: "evergreen", color: "#315c4b", label: "Evergreen", value: 48 },
+    { id: "saffron", color: "#d9a441", label: "Saffron", value: 30 },
+  ]}
+/>;
+```
+
+One bordered track with hairline boundaries, not a flex row of individually
+rounded `Swatch` blocks — contiguity is the hard part, and separate blocks leak
+each swatch's own radius and shadow as seams.
+
+- `legend` — `"segments"` (default, one entry per segment), `"summary"`
+  (assigned vs unassigned percentages), or `false`.
+- `emptyValue` / `emptyLabel` — unassigned weight, drawn as a muted remainder and
+  included in the derived percentages.
+- `onSegmentSelect` + `selectedSegmentId` — makes each segment a button and rings
+  the selected one. Selection is not editing; the element only becomes a
+  `<fieldset>` when it becomes interactive.
+- Height and corner radius come from `--patternmode-distribution-height` and
+  `--patternmode-distribution-radius`.
+
+Distribution segment values are weights, not persisted percentages. Both
+components render segment widths proportionally and their legends display derived
+percentages.
+
+For external segment controls, keep `segments` controlled and pass the next value
+to `onChange`. `updateDistributionSegment` does not change distribution values.
+
+## Exports
+
+Everything the package ships. If it is not here, it is not public.
+
+### Components
+
+| | |
+| --- | --- |
+| `Swatch` | Colour, gradient, image and palette swatch. `SwatchProps` is the union of `SwatchDefaultProps` (own `<figure>`) and `SwatchRenderProps` (`asChild`). |
+| `DistributionBar` | The **editor** — draggable, keyboard-adjustable boundary handles. `DistributionBarProps`. |
+| `DistributionDisplay` | The **read-only** strip. `DistributionDisplayProps`. |
+
+### Distribution helpers
+
+Pure functions over a segment list, so custom controls do not duplicate the bar
+math. All return a new array; none mutate.
+
+| | |
+| --- | --- |
+| `getDistributionTotal(segments)` | Sum of sanitised weights; invalid or negative values count as 0. |
+| `getDistributionBoundaryPercent(segments, boundaryIndex)` | Percentage position of the boundary after `boundaryIndex`. |
+| `moveDistributionBoundary(segments, boundaryIndex, deltaValue, minValue)` | Moves weight between two adjacent segments, preserving their sum and holding each side above `minValue`. |
+| `updateDistributionSegment(segments, segmentId, update)` | Changes segment metadata (label, colour). Cannot change `value` — the type forbids it. |
+| `removeDistributionSegment(segments, segmentId)` | Removes a segment and redistributes its weight proportionally across the rest. |
+
+### Swatch helpers
+
+| | |
+| --- | --- |
+| `getSwatchColorsBackground(colors, blend?)` | The CSS background a palette produces. `blend` is `"step"` (default, hard boundaries) or `"smooth"` (interpolated in OKLab). Returns `undefined` for an empty palette. |
+| `getSwatchAtmosphereBackground(colors, options?)` | The soft layered-radial "atmosphere" fill — overlapping elliptical pools rather than a flat or linear ramp. `SwatchAtmosphereOptions`: `density` (0 diffuse → 1 dense, default 0.5) and `gravity` (-1 sinks → 1 rises, default 0). |
+| `getSwatchSizeVariableStyle(size, variableName?)` | The inline style object setting `--patternmode-swatch-size` for a size token, for framing something Swatch does not render itself. |
+
+### Constants and types
+
+`SWATCH_SIZES`, `SWATCH_SIZE_VALUES`, `SWATCH_SHAPES`, `SWATCH_TEXTURES` — the
+allowed token lists, with `SwatchSize`, `SwatchShape`, `SwatchTexture` derived
+from them, plus `SwatchColorStop` and `SwatchSharedProps`.
+
+`DistributionSegment` and `DistributionSegmentUpdate` are the segment types.
+`DistributionBarSegment` and `DistributionBarSegmentUpdate` are their former
+names, kept as identical-shape aliases — prefer the neutral ones, since the
+segment belongs to both components rather than to the editor.
 
 Import `@patternmode/swatch/styles.css` once in your app.
