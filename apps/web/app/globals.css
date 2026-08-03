@@ -461,7 +461,8 @@ button {
 .preview-halo,
 .preview-status-set,
 .preview-scroll-area,
-.preview-tags {
+.preview-tags,
+.preview-verge {
   transition: transform 300ms ease;
 }
 
@@ -1101,8 +1102,15 @@ button {
   .catalog-card:not(.catalog-card-placeholder):hover .preview-halo,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-status-set,
   .catalog-card:not(.catalog-card-placeholder):hover .preview-scroll-area,
-  .catalog-card:not(.catalog-card-placeholder):hover .preview-tags {
+  .catalog-card:not(.catalog-card-placeholder):hover .preview-tags,
+  .catalog-card:not(.catalog-card-placeholder):hover .preview-verge {
     transform: translateY(-3px);
+  }
+
+  /* The verge card demonstrates verge: pointing at it reveals the controls the
+     resting rows were already holding space for. */
+  .catalog-card:not(.catalog-card-placeholder):hover .preview-verge-dot {
+    opacity: 1;
   }
 }
 
@@ -1270,4 +1278,91 @@ button {
 
 .nav-button:disabled {
   @apply cursor-not-allowed opacity-40;
+}
+
+/* ── Verge demo ─────────────────────────────── */
+
+/* One bordered panel, rows separated by hairlines only — no card-in-card. The
+   row itself takes no hover treatment: verge's entire contribution is the
+   slot's opacity, and tinting the row would smuggle in a change verge does not
+   make. Exactly one thing moves. */
+/* 30px, not the 1.75rem default: `slots` reserves n x slot-size, but n controls
+   also carry (n-1) x 2px of gap between them, so the default under-reserves and
+   the column stays 4px ragged. Retuned through the documented knob rather than
+   by forking the component. */
+.verge-demo-list {
+  --patternmode-verge-slot-size: 30px;
+
+  @apply m-0 list-none overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-0;
+}
+
+.verge-demo-row {
+  @apply flex min-h-[52px] items-center gap-4 px-4 py-2.5;
+}
+
+.verge-demo-row + .verge-demo-row {
+  @apply border-t border-[color:var(--border-soft)];
+}
+
+/* Grows to fill the row, so the slot's reserved width is what decides where the
+   name truncates. Without this nothing pushes against the reservation and the
+   alignment control below would change nothing visible. */
+.verge-demo-text {
+  @apply grid min-w-0 flex-1 gap-0.5;
+}
+
+.verge-demo-name {
+  @apply truncate text-sm leading-[1.35] text-[color:var(--ink)];
+}
+
+.verge-demo-trigger {
+  @apply truncate text-[13px] leading-[1.35] text-[color:var(--muted-foreground)];
+}
+
+.verge-demo-action {
+  @apply relative grid size-7 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent p-0 text-[color:var(--muted-foreground)] outline-none transition-colors duration-[140ms];
+}
+
+.verge-demo-action:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+}
+
+/* 28px visually, 48px to a thumb. Dropped on fine pointers, where the padded
+   area is not needed and would overlap its neighbour. */
+.verge-demo-action-hit {
+  @apply pointer-events-auto absolute top-1/2 left-1/2 size-[max(100%,3rem)] -translate-1/2;
+}
+
+@media (pointer: fine) {
+  .verge-demo-action-hit {
+    @apply hidden;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .verge-demo-action:hover {
+    @apply bg-[var(--surface-soft)] text-[color:var(--ink)];
+  }
+}
+
+/* Verge preview — the card is itself a verge: the middle row shows its
+   controls, the outer two hold the space and reveal on card hover. */
+.preview-verge {
+  @apply flex w-[46%] flex-col gap-[7px];
+}
+
+.preview-verge-row {
+  @apply flex items-center gap-1.5 rounded-[3px] border border-[color:var(--border-soft)] bg-[var(--surface)] px-1.5 py-[7px];
+}
+
+.preview-verge-row::before {
+  @apply mr-auto block h-[3px] w-[42%] rounded-full bg-[color:var(--border)] content-[''];
+}
+
+.preview-verge-dot {
+  @apply block size-[5px] rounded-full bg-[color:var(--muted-foreground)] opacity-0 transition-opacity duration-[200ms];
+}
+
+.preview-verge-row:nth-child(2) .preview-verge-dot {
+  @apply opacity-100;
 }

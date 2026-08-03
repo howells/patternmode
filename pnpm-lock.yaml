@@ -246,6 +246,9 @@ importers:
       '@patternmode/tags':
         specifier: workspace:*
         version: link:../../packages/tags
+      '@patternmode/verge':
+        specifier: workspace:*
+        version: link:../../packages/verge
       next:
         specifier: 'catalog:'
         version: 16.2.9(react-dom@19.2.7(react@19.2.7))(react@19.2.7)

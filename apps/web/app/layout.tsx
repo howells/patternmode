@@ -12,6 +12,7 @@ import "@patternmode/parquet/styles.css";
 import "@patternmode/scrollframe/styles.css";
 import "@patternmode/status/styles.css";
 import "@patternmode/tags/styles.css";
+import "@patternmode/verge/styles.css";
 
 export const metadata: Metadata = {
   description: "Minimal catalog for Howells UI tools.",

@@ -89,14 +89,31 @@
    * of the two failures, so that is the direction to fail in.
    */
   .patternmode-verge {
-    --patternmode-verge-duration: 120ms;
-    --patternmode-verge-easing: cubic-bezier(0.2, 0, 0, 1);
-    /* One control's worth of reserved width, used by the `slots` prop. */
-    --patternmode-verge-slot-size: 1.75rem;
     @apply flex shrink-0 items-center justify-end gap-0.5;
     @apply [opacity:var(--patternmode-verge-reveal,1)];
     @apply [pointer-events:var(--patternmode-verge-events,auto)];
-    @apply transition-opacity duration-(--patternmode-verge-duration) ease-(--patternmode-verge-easing);
+
+    /*
+     * The theming knobs carry their defaults as `var()` fallbacks at the point
+     * of use, and are deliberately NOT declared on this element.
+     *
+     * They used to be, and it made all three inert: a declaration on the
+     * element always beats a value inherited from an ancestor, so a consumer
+     * setting `--patternmode-verge-duration` on `:root` — or on the list that
+     * owns the rows, which is the obvious place — was silently overridden by
+     * this rule. The README promised retuning without forking and the CSS
+     * quietly refused it. `--patternmode-verge-slot-size` is read the same way
+     * from `verge.tsx`, which already had the fallback and never saw it fire.
+     *
+     * Written as plain declarations rather than `@apply`: Tailwind's
+     * `duration-(--var)` shorthand takes no fallback, and its arbitrary-value
+     * form needs the commas inside `cubic-bezier()` escaped. Tailwind drops
+     * utilities it cannot resolve *without failing the build*, so the shorthand
+     * would have silently reverted the transition to defaults.
+     */
+    transition-property: opacity;
+    transition-duration: var(--patternmode-verge-duration, 120ms);
+    transition-timing-function: var(--patternmode-verge-easing, cubic-bezier(0.2, 0, 0, 1));
   }
 
   /*

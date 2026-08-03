@@ -69,7 +69,28 @@ const components: CatalogEntry[] = [
     href: "/tags",
     title: "Tags",
   },
+  {
+    description:
+      "Row controls that rest hidden and reveal on hover, on focus, and always on touch — with no layout shift.",
+    href: "/verge",
+    title: "Verge",
+  },
 ];
+
+/**
+ * The card is itself a verge: the middle row draws its controls, the outer two
+ * hold the space for theirs and reveal them when the card is pointed at.
+ */
+const VergePreview = () => (
+  <div className="preview-verge" aria-hidden="true">
+    {[0, 1, 2].map((row) => (
+      <div className="preview-verge-row" key={row}>
+        <span className="preview-verge-dot" />
+        <span className="preview-verge-dot" />
+      </div>
+    ))}
+  </div>
+);
 
 const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
   switch (title) {
@@ -163,6 +184,9 @@ const CatalogPreview = ({ title }: Pick<CatalogEntry, "title">) => {
           <span />
         </div>
       );
+    }
+    case "Verge": {
+      return <VergePreview />;
     }
     case "Parquet": {
       return (

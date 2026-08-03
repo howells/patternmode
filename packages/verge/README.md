@@ -92,7 +92,17 @@ The reserved area holding the controls.
 
 ## Theming
 
-Every knob is a custom property, so retune without forking:
+Every knob is a custom property, so retune without forking. Set them anywhere
+above the slot — `:root`, or the list that owns the rows — and they inherit;
+verge declares none of them on the slot itself, so nothing shadows your value.
+
+```css
+.finish-list {
+  /* One control's 28px plus the 2px gap between two of them, so `slots`
+     reserves exactly what n controls occupy. */
+  --patternmode-verge-slot-size: 30px;
+}
+```
 
 | Property                        | Default                      |                                              |
 | ------------------------------- | ---------------------------- | -------------------------------------------- |
