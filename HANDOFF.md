@@ -33,14 +33,34 @@ the widened notes above §1.
 Commits: `c55e9be6` (the change) → `becf50cb` (preview stylesheet resync) →
 `184434cd` (version packages).
 
-**ALSO BUILT: `@patternmode/verge` 0.1.0** (`6ad024f5`) — the reveal contract, the
-#1 candidate from the re-poll (§0.10). Committed with a changeset, wired into the
-registry (`COMPONENT_PACKAGES`, `CSS_STYLE` "B", `STYLE_B_CSS`), `pnpm check`
-green. **Not pushed, not published, and NOT YET VERIFIED IN A BROWSER** — jsdom
-applies no stylesheet, so the visual half is unproven. The two checks, which
-failed independently in rulework's app and so must be run separately: tabbing to
-a control must make it **clickable**, not merely visible; and on a touch surface
-the controls must be visible at rest. See §0.14.
+**ALSO SHIPPED: `@patternmode/verge` — new package, now at 0.1.1.** The reveal
+contract; the #1 candidate from the re-poll (§0.10). Built, browser-verified,
+published, pushed, tagged. Wired into the registry (`COMPONENT_PACKAGES`,
+`CSS_STYLE` "B", `STYLE_B_CSS` — note the third map is **not** mentioned in
+AGENTS.md and the build fails loudly without it).
+
+- `6ad024f5` build · `75963bbf` version 0.1.0 · `436cfb87` the 0.1.1 fix
+- **0.1.1 is the version to adopt.** 0.1.0 ships a 2px control gap that is wrong
+  on touch — see §0.14.
+
+**Adoption state.** MG has filed **MG-998** (ready-for-agent; starts at
+`packages/ui/src/confidence.tsx:93`, the shipped-shared-UI site that misses focus,
+plus three ProductCell instances; the vendored shadcn sidebar stays). It also
+satisfies MG-993's browser-pass follow-up. **rulework has NOT been contacted — it
+is outside the MG session's channel and Daniel owns that relay.** The message:
+verge is their `RowActions` generalised, built citing their docblock, adding the
+touch branch theirs lacks (theirs reaches touch only via the `visible` prop);
+their `slots`/`visible` props carry over with their semantics. materia and Desk
+were told to adopt only if the shape fits.
+
+**STANDING MANDATE, estate-wide, from Daniel (2026-08-03):** every UI change gets
+a `/chiaroscuro` pass **invoked, not referenced**, plus live browser verification
+— light *and* dark, narrow viewport, and **interact**, because visibility and
+clickability fail independently. Screenshots as evidence. The bar is "the most
+sexy, tasteful software you have ever made". This lands hardest here because the
+registry's output is every other repo's visual baseline, and **defaults are what
+get filmed** — mechanism in the component, opinion in the tokens, but the default
+rendering must be gorgeous.
 
 **Everything else in this section is a finding, not work done.** It is waiting on
 Daniel or on another repo.
@@ -509,10 +529,48 @@ as half-right: the tick is uninformative, but there is genuinely nothing to lint
 defined-but-not-allowed. False positive — they pass via `ALLOWED_PREFIXES`
 (`check-tokens.mjs:47`). The prefix rules have to be applied before comparing.
 
-### 0.14 `@patternmode/verge` — built, unpushed, unverified in a browser
+### 0.14 `@patternmode/verge` — SHIPPED at 0.1.1, browser-verified
 
-The #1 re-poll candidate, built 2026-08-03 (`6ad024f5`). Three triggers, one
-guarantee: hover (pointer), `:focus-within` (keyboard), always-visible (touch).
+The #1 re-poll candidate. Three triggers, one guarantee: hover (pointer),
+`:focus-within` (keyboard), always-visible (touch). **Take 0.1.1, not 0.1.0.**
+
+**Browser-verified, and the evidence is the point** — jsdom applies no stylesheet,
+so none of this could be proven by the unit tests:
+
+- a **real pointer click** on a revealed control fires its handler. *First attempt
+  failed and it was my method:* clicking at coordinates without moving there first
+  never triggers hover, so the control was still `pointer-events: none`. Move,
+  then click — the order a user does it in.
+- hit-testing proves the pair independently: the centre of a revealed button
+  returns the button; a hidden one passes **through** to the row. Invisible is
+  genuinely unclickable, visible is genuinely clickable.
+- three hold states visible at once on adjacent rows — one held by focus, one by
+  hover, one at rest.
+- dark mode is a true no-op: scanning verge's parsed rules for any colour property
+  returns **zero**. Correct for a behaviour primitive.
+- at 390px the long row name truncates and the control column holds, because the
+  slot is `shrink-0`.
+- all four conditional branches parse in the page: `(hover: hover)`,
+  `(hover: none)`, `(pointer: coarse)`, `(prefers-reduced-motion: reduce)`.
+
+**The chiaroscuro pass found a defect the component itself created (fixed in
+0.1.1).** On touch there is no hover, so verge reveals the controls permanently —
+correct, and it leaves two 28px controls **2px apart, always on, under a thumb**.
+Measured, not guessed. The touch reveal creates the exposure, so the correction
+belongs in the component: coarse pointers get an 8px gap, gated on
+`pointer: coarse` rather than `hover: none` because it concerns the *precision of
+the input*, not the availability of hover. Fine-pointer spacing unchanged.
+
+**What verge cannot fix, now stated in its README with a worked example:** the
+48×48px minimum hit area for the controls themselves (`interactions.md`). Verge
+reserves the slot; it does not own the button. Keep the control visually small
+and expand its hit area on coarse pointers only.
+
+*Measurement trap, because it looks exactly like the defect we hunt:* reading
+computed `opacity` synchronously after `.focus()` returns `0` with
+`pointer-events: auto` — apparently visible-but-unclickable. It is the 120ms
+transition mid-flight; `pointer-events` flips instantly, `opacity` animates.
+**Re-read after the transition before concluding.**
 
 **Two bugs found by reading the artifact rather than the exit code** — worth
 keeping, because both builds exited 0:
@@ -729,6 +787,28 @@ opposite of the case above. Both settled within a minute.
 first moments after a publish. Reconcile two before concluding anything** — the
 per-version document and `dist-tags` — and treat a disagreement as "wait and
 re-read", never as a failed publish.
+
+**A FIRST-EVER PUBLISH OF A NEW PACKAGE NAME IS NOT INSTALLABLE WHEN
+`changeset publish` REPORTS SUCCESS.** Found publishing verge 0.1.0. For ~2.5
+minutes the per-version document and the tarball served **200 anonymously** while
+the *packument* (`/@patternmode/<name>`) returned `{"error":"Not found"}` — so
+`npm install` failed with **E404** against a package that was complete, public
+and correctly built. Authenticated and cache-busted reads 404'd identically, so
+it was neither an access problem nor a CDN cache: the package index had not been
+created yet.
+
+**This is the window where every check in this file passes and the announcement
+is still wrong.** The anonymous-200 check — the one that catches the
+`--access restricted` trap — passes throughout it.
+
+> **For a first-ever publish, poll until a real `npm install` succeeds before
+> announcing.** Version bumps to existing packages do not have this problem; the
+> index already exists.
+
+Same class again on the 0.1.1 patch: a warm `npm install` served the *cached*
+0.1.0 while the registry already reported 0.1.1 as latest. Verify with a fresh
+directory and `--prefer-online`, and assert on the installed
+`package.json` version rather than on the command exiting 0.
 
 **Verify registry ACCESS anonymously after publishing, not just that the version
 exists.** colorscope shipped a package as `--access restricted` tonight; their
