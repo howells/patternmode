@@ -1,16 +1,16 @@
 export {
-  DistributionBar,
-  type DistributionBarProps,
   type DistributionBarSegment,
   type DistributionBarSegmentUpdate,
-  DistributionDisplay,
-  type DistributionDisplayProps,
+  type DistributionSegment,
+  type DistributionSegmentUpdate,
   getDistributionBoundaryPercent,
   getDistributionTotal,
   moveDistributionBoundary,
   removeDistributionSegment,
   updateDistributionSegment,
-} from "./DistributionBar";
+} from "./Distribution";
+export { DistributionBar, type DistributionBarProps } from "./DistributionBar";
+export { DistributionDisplay, type DistributionDisplayProps } from "./DistributionDisplay";
 export {
   getSwatchAtmosphereBackground,
   type SwatchAtmosphereOptions,

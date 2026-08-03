@@ -8,6 +8,8 @@ export {
   type DistributionBarSegmentUpdate,
   DistributionDisplay,
   type DistributionDisplayProps,
+  type DistributionSegment,
+  type DistributionSegmentUpdate,
   getDistributionBoundaryPercent,
   getDistributionTotal,
   getSwatchAtmosphereBackground,

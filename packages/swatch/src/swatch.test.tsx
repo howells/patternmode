@@ -26,7 +26,7 @@ import {
   Swatch,
   updateDistributionSegment,
 } from "./index";
-import type { DistributionBarSegment, SwatchSize } from "./index";
+import type { DistributionSegment, SwatchSize } from "./index";
 
 interface MockPanInfo {
   offset: {
@@ -107,7 +107,7 @@ vi.mock("motion/react", () => {
 const CheckIcon = (props: SVGProps<SVGSVGElement>) => <svg data-testid="check-icon" {...props} />;
 
 const ControlledDistributionBar = () => {
-  const [segments, setSegments] = useState<DistributionBarSegment[]>([
+  const [segments, setSegments] = useState<DistributionSegment[]>([
     { color: "#315c4b", id: "woody", label: "Woody", value: 60 },
     { color: "#d9a441", id: "citrus", label: "Citrus", value: 40 },
   ]);
@@ -487,7 +487,7 @@ describe("DistributionBar", () => {
 
   it("renders selectable segments and emits the chosen segment", async () => {
     const user = userEvent.setup();
-    const onSegmentSelect = vi.fn<(segment: DistributionBarSegment) => void>();
+    const onSegmentSelect = vi.fn<(segment: DistributionSegment) => void>();
     render(
       <DistributionDisplay
         aria-label="Selectable finish distribution"
@@ -531,7 +531,7 @@ describe("DistributionBar", () => {
 
   it("renders adjustable boundary handles and emits updated values", async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn<(segments: DistributionBarSegment[]) => void>();
+    const onChange = vi.fn<(segments: DistributionSegment[]) => void>();
 
     render(
       <DistributionBar
@@ -562,7 +562,7 @@ describe("DistributionBar", () => {
   });
 
   it("emits updated segment values while a boundary handle is dragged", () => {
-    const onChange = vi.fn<(segments: DistributionBarSegment[]) => void>();
+    const onChange = vi.fn<(segments: DistributionSegment[]) => void>();
 
     render(
       <DistributionBar
@@ -601,7 +601,7 @@ describe("DistributionBar", () => {
     render(
       <DistributionBar
         aria-label="Scent distribution"
-        onChange={vi.fn<(segments: DistributionBarSegment[]) => void>()}
+        onChange={vi.fn<(segments: DistributionSegment[]) => void>()}
         segments={[
           { color: "#315c4b", id: "woody", label: "Woody", value: 60 },
           { color: "#d9a441", id: "citrus", label: "Citrus", value: 40 },
@@ -643,7 +643,7 @@ describe("DistributionBar", () => {
     render(
       <DistributionBar
         aria-label="Finish distribution"
-        onChange={vi.fn<(segments: DistributionBarSegment[]) => void>()}
+        onChange={vi.fn<(segments: DistributionSegment[]) => void>()}
         segments={[
           { color: "#315c4b", id: "evergreen", label: "Evergreen", value: 60 },
           { color: "#d9a441", id: "saffron", label: "Saffron", value: 40 },

@@ -1,45 +1,18 @@
 import { joinClassNames, sanitizeWeight } from "@patternmode/system";
 import { domMax, LazyMotion, m } from "motion/react";
 import type { PanInfo } from "motion/react";
-import type { CSSProperties, HTMLAttributes, KeyboardEvent } from "react";
+import type { HTMLAttributes, KeyboardEvent } from "react";
 import { useRef, useState } from "react";
 import {
   getDistributionBoundaryPercent,
   getDistributionTotal,
   moveDistributionBoundary,
-} from "./distribution-bar-math";
-import type { DistributionBarSegment } from "./distribution-bar-math";
-
-export interface DistributionDisplayProps extends Omit<
-  HTMLAttributes<HTMLElement>,
-  "role" | "onSelect"
-> {
-  /** Label used in summary legends for assigned segment weight. */
-  assignedLabel?: string;
-  /** Label used when `emptyValue` contributes unassigned weight. */
-  emptyLabel?: string;
-  /**
-   * Extra unassigned weight included in derived percentage calculations.
-   *
-   * Default `0`.
-   */
-  emptyValue?: number;
-  /**
-   * Legend style for the read-only display.
-   *
-   * Default `"segments"`.
-   */
-  legend?: "segments" | "summary" | false;
-  /**
-   * When provided, each segment renders as a button and selecting one
-   * invokes this callback. Pair with `selectedSegmentId` to mark a segment
-   * as selected (renders a ring). Read-only by default.
-   */
-  onSegmentSelect?: (segment: DistributionBarSegment) => void;
-  segments: DistributionBarSegment[];
-  /** Id of the selected segment — renders a ring on that segment. */
-  selectedSegmentId?: string;
-}
+} from "../Distribution/distribution-math";
+import type { DistributionSegment } from "../Distribution/distribution-math";
+import {
+  DistributionSegmentLegend,
+  DistributionSegments,
+} from "../Distribution/distribution-parts";
 
 export interface DistributionBarProps extends Omit<
   HTMLAttributes<HTMLFieldSetElement>,
@@ -58,37 +31,15 @@ export interface DistributionBarProps extends Omit<
    */
   minValue?: number;
   /** Receives the full next segment list after drag or keyboard boundary moves. */
-  onChange?: (segments: DistributionBarSegment[]) => void;
+  onChange?: (segments: DistributionSegment[]) => void;
   /** Weighted segments; displayed percentages are derived from their total. */
-  segments: DistributionBarSegment[];
+  segments: DistributionSegment[];
   /**
    * Keyboard adjustment amount for boundary handles.
    *
    * Default `1`.
    */
   step?: number;
-}
-
-interface DistributionSegmentsProps {
-  emptyValue?: number;
-  onSegmentSelect?: (segment: DistributionBarSegment) => void;
-  segments: DistributionBarSegment[];
-  selectedSegmentId?: string;
-  total: number;
-}
-
-interface DistributionSegmentLegendProps {
-  emptyLabel?: string;
-  emptyValue?: number;
-  segments: DistributionBarSegment[];
-  total: number;
-}
-
-interface DistributionSummaryLegendProps {
-  assignedLabel: string;
-  emptyLabel: string;
-  emptyValue: number;
-  total: number;
 }
 
 interface DistributionBarHandleProps {
@@ -101,146 +52,6 @@ interface DistributionBarHandleProps {
   onDragStart: () => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }
-
-type DistributionSegmentStyle = CSSProperties &
-  Partial<Record<`--${string}`, number | string | undefined>>;
-
-const getDerivedDistributionPercentage = (value: number, total: number): number =>
-  total > 0 ? Math.round((sanitizeWeight(value) / total) * 100) : 0;
-
-const getDistributionDisplayTotal = (
-  segments: DistributionBarSegment[],
-  emptyValue: number,
-): number => getDistributionTotal(segments) + sanitizeWeight(emptyValue);
-
-const getDistributionDisplayAccessibleLabel = (
-  segments: DistributionBarSegment[],
-  emptyValue: number,
-  emptyLabel: string,
-  total: number,
-): string => {
-  const segmentLabels = segments.map(
-    (segment) =>
-      `${segment.label ?? segment.id} ${getDerivedDistributionPercentage(segment.value, total)}%`,
-  );
-  if (emptyValue > 0) {
-    segmentLabels.push(`${emptyLabel} ${getDerivedDistributionPercentage(emptyValue, total)}%`);
-  }
-
-  return segmentLabels.join(", ");
-};
-
-const DistributionSegments = ({
-  emptyValue = 0,
-  onSegmentSelect,
-  segments,
-  selectedSegmentId,
-  total,
-}: DistributionSegmentsProps) => (
-  <div className="patternmode-distribution-bar__segments">
-    {segments.map((segment) => {
-      const segmentStyle = {
-        "--patternmode-distribution-segment-color": segment.color,
-        width: total > 0 ? `${(sanitizeWeight(segment.value) / total) * 100}%` : "0%",
-      } satisfies DistributionSegmentStyle;
-      const isSelected = selectedSegmentId === segment.id;
-
-      if (onSegmentSelect) {
-        return (
-          <button
-            aria-label={`${segment.label ?? segment.id} ${getDerivedDistributionPercentage(segment.value, total)}%`}
-            aria-pressed={isSelected}
-            className="patternmode-distribution-bar__segment"
-            data-selected={isSelected ? "true" : undefined}
-            key={segment.id}
-            onClick={() => {
-              onSegmentSelect(segment);
-            }}
-            style={segmentStyle}
-            type="button"
-          />
-        );
-      }
-
-      return (
-        <div
-          aria-hidden="true"
-          className="patternmode-distribution-bar__segment"
-          data-selected={isSelected ? "true" : undefined}
-          key={segment.id}
-          style={segmentStyle}
-        />
-      );
-    })}
-    {emptyValue > 0 ? (
-      <div
-        aria-hidden="true"
-        className="patternmode-distribution-bar__segment patternmode-distribution-bar__segment--empty"
-        style={{
-          width: total > 0 ? `${(sanitizeWeight(emptyValue) / total) * 100}%` : "0%",
-        }}
-      />
-    ) : null}
-  </div>
-);
-
-const DistributionSegmentLegend = ({
-  emptyLabel,
-  emptyValue = 0,
-  segments,
-  total,
-}: DistributionSegmentLegendProps) => (
-  <div className="patternmode-distribution-bar__legend">
-    {segments.map((segment) => {
-      const segmentStyle = {
-        "--patternmode-distribution-segment-color": segment.color,
-        backgroundColor: undefined,
-      } satisfies DistributionSegmentStyle;
-
-      return (
-        <span key={segment.id}>
-          <span
-            aria-hidden="true"
-            className="patternmode-distribution-bar__swatch"
-            style={segmentStyle}
-          />
-          {segment.label ?? segment.id} {getDerivedDistributionPercentage(segment.value, total)}%
-        </span>
-      );
-    })}
-    {emptyValue > 0 && emptyLabel !== undefined && emptyLabel !== "" ? (
-      <span>
-        <span
-          aria-hidden="true"
-          className="patternmode-distribution-bar__swatch patternmode-distribution-bar__swatch--empty"
-        />
-        {emptyLabel} {getDerivedDistributionPercentage(emptyValue, total)}%
-      </span>
-    ) : null}
-  </div>
-);
-
-const DistributionSummaryLegend = ({
-  assignedLabel,
-  emptyLabel,
-  emptyValue,
-  total,
-}: DistributionSummaryLegendProps) => {
-  const emptyPercentage = getDerivedDistributionPercentage(emptyValue, total);
-
-  return (
-    <div className="patternmode-distribution-bar__legend">
-      <span>
-        {Math.max(0, 100 - emptyPercentage)}% {assignedLabel}
-      </span>
-      {emptyValue > 0 ? (
-        <span>
-          {emptyPercentage}% {emptyLabel}
-        </span>
-      ) : null}
-    </div>
-  );
-};
 
 const DistributionBarHandle = ({
   "aria-label": ariaLabel,
@@ -282,75 +93,6 @@ const DistributionBarHandle = ({
   </LazyMotion>
 );
 
-export const DistributionDisplay = ({
-  "aria-label": ariaLabel,
-  assignedLabel = "assigned",
-  className,
-  emptyLabel = "unassigned",
-  emptyValue = 0,
-  legend = "segments",
-  onSegmentSelect,
-  segments,
-  selectedSegmentId,
-  ...props
-}: DistributionDisplayProps) => {
-  const total = getDistributionDisplayTotal(segments, emptyValue);
-  const interactive = Boolean(onSegmentSelect);
-  const accessibleLabel =
-    ariaLabel ?? getDistributionDisplayAccessibleLabel(segments, emptyValue, emptyLabel, total);
-
-  const content = (
-    <>
-      <div className="patternmode-distribution-bar__track">
-        <DistributionSegments
-          emptyValue={emptyValue}
-          onSegmentSelect={onSegmentSelect}
-          segments={segments}
-          selectedSegmentId={selectedSegmentId}
-          total={total}
-        />
-      </div>
-      {legend === "segments" ? (
-        <DistributionSegmentLegend
-          emptyLabel={emptyLabel}
-          emptyValue={emptyValue}
-          segments={segments}
-          total={total}
-        />
-      ) : null}
-      {legend === "summary" ? (
-        <DistributionSummaryLegend
-          assignedLabel={assignedLabel}
-          emptyLabel={emptyLabel}
-          emptyValue={emptyValue}
-          total={total}
-        />
-      ) : null}
-    </>
-  );
-  const sharedClassName = joinClassNames("patternmode-distribution-display", className);
-
-  return interactive ? (
-    <fieldset
-      {...props}
-      aria-label={accessibleLabel}
-      className={sharedClassName}
-      data-slot="distribution-display"
-    >
-      {content}
-    </fieldset>
-  ) : (
-    <figure
-      {...props}
-      aria-label={accessibleLabel}
-      className={sharedClassName}
-      data-slot="distribution-display"
-    >
-      {content}
-    </figure>
-  );
-};
-
 export const DistributionBar = ({
   "aria-label": ariaLabel,
   className,
@@ -362,7 +104,7 @@ export const DistributionBar = ({
   ...props
 }: DistributionBarProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const dragStartSegmentsRef = useRef<DistributionBarSegment[] | null>(null);
+  const dragStartSegmentsRef = useRef<DistributionSegment[] | null>(null);
   const [dragging, setDragging] = useState(false);
   const total = getDistributionTotal(segments);
 
