@@ -86,20 +86,22 @@ below is now in one of exactly two states.** There is no third pile.
 | **verge has a catalog page** (Daniel, mid-session) | `/verge` in `apps/web` plus the eleventh catalog card. It was the one shipped component with no page. See §0.15. |
 | **verge's theming knobs were inert** | Found by the mandated browser pass, not by a gate. All three were declared on `.patternmode-verge` and read on the same element, so an ancestor's value never won. Fixed; `patch` changeset filed. §0.15. |
 
-**DANIEL-GATED — sketched, verified, deliberately NOT applied:**
+**THE MOTION→PEER ROUND IS DONE AND PUBLISHED (§0.6).** Daniel approved it
+explicitly on 2026-08-03. See §0.16 for what shipped and what each consumer
+still owes.
+
+**DANIEL-GATED — still not applied:**
 
 | | |
 |---|---|
-| The motion→peer round (§0.6) | Five majors across three consumer repos. Question sent to Daniel; §0.6 holds the full measurement. **Do not fold it in without his word.** |
 | `@howells/lint@1.2.0` (§0.10a) | Context for a future bump, not a task. Left exactly as written. |
+| **colorscope's bump** | **Deliberately not done — see §0.16.** Their swatch pin spans two majors and the second one needs their own `--cs-*` bridge applied atomically. §4 says do not patch their repo, and that still stands. |
 
 **Not a task, kept as evidence:** everything else in §0 is a recorded finding.
 
-Three changesets are pending: swatch `minor` + `patch`, verge `patch`.
-**Nothing has been published this pass** — the npm versions in §1 are still what
-consumers resolve, so verge on npm is still 0.1.1 with the inert knobs. The
-adoption message tells rulework to retune `--patternmode-verge-slot-size`; that
-only works from 0.1.2. **Publish before relaying, or say so in the relay.**
+**Everything is published.** Six packages went out on 2026-08-03 — see §0.16 for
+the version set and the verification. No changesets are pending; `.changeset/`
+holds only `config.json`.
 
 `lint`, `typecheck` and `test` green across all 29 turbo tasks;
 `check:boundaries` clean; `check:tokens` clean at 12 files / 147 occurrences
@@ -666,6 +668,68 @@ any package that opens *any* layer declares the full order.
 declaration (here to `@layer theme,base;` … `@layer utilities;`). **Never assert
 on the declaration text** — parse layer containment by brace depth.
 
+### 0.16 SHIPPED — the motion→peer round, published
+
+Daniel approved §0.6 explicitly on 2026-08-03: "execute §0.6 as sketched."
+`motion` moved from `dependencies` to `peerDependencies` at `^12.40.0` in
+aperto, stacksheet, swatch, deck and status, each with a devDependency added so
+the package still builds and tests itself. One commit per package: `474a001b`,
+`705d7884`, `e4c81cbd`, `8fd44074`, `bfd41cba`.
+
+**scrollframe and briolette were correctly left alone.** They carry only
+`@howells/motion` — which, checked this time rather than assumed, has **no
+dependency on `motion` and does not import it**. So there is no second path for
+motion to float through, and the peer move genuinely closes the duplication.
+This is the check §0.3 shows we got wrong for colorscope-through-`system`; it
+was run properly here.
+
+**Published set (2026-08-03), all verified anonymously — `dist-tags.latest`
+matches and an unauthenticated fetch of each exact version returns 200:**
+
+| Package | Version |
+|---|---|
+| `@patternmode/aperto` | **3.0.0** |
+| `@patternmode/stacksheet` | **3.0.0** |
+| `@patternmode/swatch` | **4.0.0** |
+| `@patternmode/deck` | **0.4.0** |
+| `@patternmode/status` | **0.4.0** |
+| `@patternmode/verge` | **0.1.2** |
+
+The published manifests were read, not just the publish log: all five carry
+`peerDependencies.motion: ^12.40.0` with `dependencies.motion` **absent**.
+
+**Two version notes worth keeping.** swatch is 4.0.0, not §0.6's 3.0.0 — that
+section predates the colorscope wave that already took swatch to 3.0.0. And
+**deck and status were forced to 0.4.0**: `changeset version` promotes a major
+on a 0.x package to 1.0.0, which would have announced the two least-exercised
+packages in the catalog (§0.8: "one test file each") as stable APIs, which
+nobody decided to claim and which cannot be withdrawn once published. 0.4.0 was
+the approved artefact; 1.0.0 would have been the deviation. The caret property
+§5 protects holds either way — `^0.3.5` refuses both.
+
+**Evidence the round did what it was for.** Aperto's shared-element transitions
+were verified still working in a browser after the move: frames caught the morph
+**interpolating in both directions** — mid-expansion at ~718px between the grid
+slot and screen centre, fully expanded, then mid-collapse at ~487px shrinking
+back toward its thumbnail. A split `LayoutGroup` hard-cuts; it never produces an
+intermediate box at an intermediate position. `pnpm smoke:tarballs` passes
+**post-publish**, which is the only point at which it is evidence.
+
+*Method note, because it cost four probes and nearly produced a false alarm:*
+**aperto animates a clone, so measure the clone.** Sampling the largest
+`img`/`video` box reads one constant width from the first frame and looks
+exactly like a hard cut. The frames are the evidence; those probes were not.
+
+#### Consumer status — what each repo owes
+
+| Repo | State |
+|---|---|
+| **materialgraph** | **PR #406 open**, `chore/patternmode-motion-peer`. aperto `^3.0.0`, stacksheet `^3.0.0`, swatch `^4.0.0`. One motion instance resolved, typecheck 28/28. Branch + PR only, by instruction — MG has several active sessions. Someone must merge it. |
+| **rulework** | Committed on the local branch **`chore/patternmode-stacksheet-3`** (`ff09716`): stacksheet `^2.0.4` → `^3.0.0`. One motion instance, typecheck 14/14. **rulework has no git remote**, so there is no PR to open — it needs a local merge. Its working tree was dirty with another session's work throughout, which is why this went to a branch and not to `main`. |
+| **colorscope** | **Nothing done, deliberately.** Their swatch pin is `^2.0.0` — going to `^4.0.0` crosses *two* majors, and the first of them carries the theme rename that requires their six-line `--cs-*` bridge applied **as one atomic edit alongside the bump** (§4). Bumping without it drops their UI to patternmode's sage-green defaults. §4 records that colorscope agreed to do this themselves and says **do not patch their repo**; that still stands. They are also behind on briolette (`^0.5.0` → 0.6.0) and halo (`^0.4.0` → 0.5.0), which carry the same rename and the same requirement. **This is theirs to run, not a loose end on our side.** |
+
+`@instruments/colorscope`'s own consumers are unaffected by this round.
+
 ### 0.15 DONE — verge's catalog page, and what the browser pass caught
 
 Daniel asked mid-session for verge to get "a proper page like the other
@@ -965,6 +1029,13 @@ Run for this release across swatch, scrollframe, stacksheet, aperto and
 ---
 
 ## 1. Release state
+
+> **SUPERSEDED TWICE — this table describes 2026-08-02 and is kept for its
+> rationale, not as the current truth.** The colorscope `^3.17.0` wave (§0) and
+> then the motion→peer round (§0.16) both landed after it. For what is live on
+> npm right now, read **§0.16**. Every version below marked "now live" has since
+> been overtaken except `scrollframe` (2.0.1), `tags` (2.0.1), `system` (0.6.0),
+> `parquet` (0.1.4), `briolette` (0.6.0) and `halo` (0.5.0).
 
 `.changeset/` held no pending changesets at session start, but a `changeset version`
 run was already applied and **uncommitted** — version bumps plus CHANGELOG edits
