@@ -1,5 +1,31 @@
 # @patternmode/verge
 
+## 0.1.1
+
+### Patch Changes
+
+- Separate the controls on coarse pointers, and name the hit-area obligation
+
+  Found by a design pass over the shipped component rather than by a bug report.
+
+  On touch, verge makes the controls **permanently visible**, because there is no
+  hover to reveal them. That is correct, and it has a consequence the first release
+  did not answer: the 2px resting gap is right for a mouse — where the controls
+  appear only while pointed at and the cursor is precise — but on touch it leaves
+  two always-on tap targets a thumb cannot reliably separate. Measured in a
+  browser: 28px controls, 2px apart, permanently visible.
+
+  The touch reveal is what creates the exposure, so the correction belongs in the
+  component rather than in every consumer. Coarse pointers now get an 8px gap.
+  Gated on `pointer: coarse` rather than `hover: none`, because this is about the
+  precision of the input rather than the availability of hover; the fine-pointer
+  gap is unchanged.
+
+  What this cannot fix, and the README now says so with a worked example: the
+  48×48px minimum hit area for the controls themselves. Verge reserves the slot, it
+  does not own the button. Keep the control visually small and expand its hit area
+  on coarse pointers only.
+
 ## 0.1.0
 
 ### Minor Changes

@@ -35,13 +35,42 @@ So you don't rebuild something that is one import away:
 |                      |                                                                                                                                                                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Keyboard**         | Tabbing into the row reveals the slot, via `:focus-within` on the root. Children stay in the tab order at rest, which is what lets focus arrive at all.                                                                                           |
-| **Touch**            | No hover exists, so nothing hides. Handled with `@media (hover: none)`, not a tap handler.                                                                                                                                                        |
+| **Touch**            | No hover exists, so nothing hides. Handled with `@media (hover: none)`, not a tap handler. Controls also get a wider gap on coarse pointers, because permanently-visible controls 2px apart are not separable by a thumb.                         |
 | **Open menus**       | A slot holding an open menu, popover or disclosure stays revealed — `[data-popup-open]`, `[data-state="open"]` and `[aria-expanded="true"]` are all recognised, so the `···` does not vanish when the pointer travels to the menu it just opened. |
 | **Layout stability** | Only `opacity` and `pointer-events` change. The slot occupies its space at rest and revealed alike.                                                                                                                                               |
 | **Nesting**          | Roots may nest. A nested root shadows its ancestor's state for its own subtree, so pointing at an outer row does not reveal an inner row's controls.                                                                                              |
 | **Column alignment** | `slots={n}` reserves _n_ controls' worth of width so rows carrying different numbers of controls still align on one axis.                                                                                                                         |
 | **Reduced motion**   | The transition is dropped under `prefers-reduced-motion: reduce`.                                                                                                                                                                                 |
 | **Semantic parents** | `as` renders the real element, so a row inside a `<ul>` can be an `<li>` and a cell can be a `<td>`.                                                                                                                                              |
+
+## What you must handle: touch hit areas
+
+On a touch surface verge makes the controls **permanently visible**, because
+there is no hover to reveal them. That is the correct behaviour, and it hands you
+an obligation: those controls are now always under a thumb, so each needs a
+**48×48px minimum hit area**.
+
+Verge reserves the slot; it does not own your button, so it cannot do this for
+you. Keep the control visually small and expand its hit area on coarse pointers
+only:
+
+```tsx
+<button className="relative size-7">
+  <span
+    className="pointer-fine:hidden absolute top-1/2 left-1/2 size-[max(100%,3rem)] -translate-1/2"
+    aria-hidden="true"
+  />
+  <Icon className="size-4" />
+</button>
+```
+
+`3rem` is 48px; `pointer-fine:hidden` drops the padded area on mouse and
+trackpad where it is not needed. Define the variant once if your project does not
+have it:
+
+```css
+@custom-variant pointer-fine (@media (pointer: fine));
+```
 
 ## Parts
 

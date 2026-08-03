@@ -130,6 +130,30 @@
     }
   }
 
+  /*
+   * Coarse pointers get real separation between controls.
+   *
+   * The 2px resting gap is right for a mouse, where the controls appear only
+   * while pointed at and the cursor is precise. On touch the branch above makes
+   * them permanently visible, which turns a tidy 2px gap into two adjacent
+   * always-on tap targets a thumb cannot reliably tell apart. The touch reveal
+   * is what creates the exposure, so the spacing correction belongs here rather
+   * than in every consumer.
+   *
+   * Gated on `pointer: coarse` rather than `hover: none` because this is about
+   * the precision of the input, not the availability of hover.
+   *
+   * What this CANNOT fix, and consumers must: the 48x48px minimum hit area for
+   * the controls themselves. Verge reserves the slot; it does not own the
+   * button. Keep the control visually small and expand its hit area on coarse
+   * pointers — see the README.
+   */
+  @media (pointer: coarse) {
+    .patternmode-verge {
+      @apply gap-2;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .patternmode-verge {
       @apply transition-none;
