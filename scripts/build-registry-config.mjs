@@ -25,6 +25,7 @@ export const COMPONENT_PACKAGES = [
   "status",
   "swatch",
   "tags",
+  "verge",
 ];
 
 /**
@@ -92,6 +93,7 @@ export const CSS_STYLE = new Map([
   ["status", "A"],
   ["swatch", "A"],
   ["tags", "A"],
+  ["verge", "B"],
 ]);
 
 /**
@@ -117,6 +119,7 @@ export const STRIP_GLOBAL_DECLARATIONS = new Set(["stacksheet"]);
 export const STYLE_B_CSS = new Map([
   ["aperto", path.join(repoRoot, "packages", "aperto", "styles.css")],
   ["parquet", path.join(repoRoot, "packages", "parquet", "src", "styles.css")],
+  ["verge", path.join(repoRoot, "packages", "verge", "src", "styles.css")],
 ]);
 
 /**

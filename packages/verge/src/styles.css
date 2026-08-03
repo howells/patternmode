@@ -1,0 +1,138 @@
+/*
+ * Declare Tailwind's canonical layer order first, and do it before anything
+ * opens a layer — position is load-bearing, because a layer is registered the
+ * first time it is seen and a later statement cannot move one that already
+ * exists.
+ *
+ * Without this, a sheet that opens `components` before the host's Tailwind
+ * entry runs registers `components` first, and the host's own
+ * `theme`/`base`/`utilities` are then appended *after* it — so a `base` reset
+ * would outrank these component rules. `utilities` staying last is not
+ * sufficient on its own; the whole order has to be pinned.
+ *
+ * This is a no-op when the app declares the order first, since first
+ * declaration wins.
+ */
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+/*
+ * Rules live in `@layer components` deliberately. A layerless declaration beats
+ * every rule in a named layer regardless of specificity, so shipping this sheet
+ * unlayered would let it win against a consumer's own `utilities` — the exact
+ * defect that once made patternmode's `.opacity-0` override consuming apps'
+ * hover reveals. In `components`, a consumer's utilities still sort after us and
+ * can retune anything here.
+ */
+@layer components {
+  /*
+   * The container the slot listens to — a row, a card, a list item.
+   *
+   * It contributes no appearance, only the reveal state its descendants
+   * inherit. That inheritance is also how nesting is solved: rows nest (a
+   * section band contains item rows; an expanded row contains an editor with
+   * its own slot), and a nested root re-declares these properties on itself, so
+   * its subtree reads *its* state rather than its ancestor's. An inherited
+   * value is the weakest thing in the cascade, so the nearest root always wins
+   * for the slots beneath it — no `:not()`, no `@scope`, no named groups, and
+   * nothing that stops working when a selector feature is unsupported.
+   */
+  .patternmode-verge-root {
+    --patternmode-verge-reveal: 0;
+    --patternmode-verge-events: none;
+    @apply relative;
+  }
+
+  /*
+   * Pointer reveal — declared only where hover is a real input, so a touch
+   * device never enters the hidden state at all.
+   */
+  @media (hover: hover) {
+    .patternmode-verge-root:hover {
+      --patternmode-verge-reveal: 1;
+      --patternmode-verge-events: auto;
+    }
+  }
+
+  /*
+   * Keyboard reveal. Not an enhancement — a control only a mouse can summon is
+   * a control keyboard users do not have.
+   *
+   * `:focus-within` rather than `:focus-visible`: the slot must open when
+   * anything *inside* it takes focus, and `:focus-visible` never fires on the
+   * slot because the slot is not the focus target, its children are. Spelling
+   * this wrong is the defect that recurs — it reveals the overflow menu two
+   * elements away but not the checkbox beside it.
+   */
+  .patternmode-verge-root:focus-within {
+    --patternmode-verge-reveal: 1;
+    --patternmode-verge-events: auto;
+  }
+
+  /*
+   * The reserved slot.
+   *
+   * At rest it is transparent and out of the pointer's way, but it still
+   * occupies its space and its children are still in the tab order. That
+   * ordering is the whole mechanism: a slot hidden with `display: none` or
+   * `visibility: hidden` cannot be reached by Tab, so focus can never arrive to
+   * reveal it, and the keyboard path closes on itself.
+   *
+   * State rides `--patternmode-verge-*` custom properties rather than utility
+   * class names. A consuming app cannot collide with these, so the resting
+   * state cannot be beaten by an unrelated rule that happens to declare
+   * `opacity: 0` — immunity by construction rather than by out-ranking.
+   *
+   * The `var()` fallbacks mean a slot used without a root renders permanently
+   * visible rather than permanently hidden. An unreachable control is the worse
+   * of the two failures, so that is the direction to fail in.
+   */
+  .patternmode-verge {
+    --patternmode-verge-duration: 120ms;
+    --patternmode-verge-easing: cubic-bezier(0.2, 0, 0, 1);
+    /* One control's worth of reserved width, used by the `slots` prop. */
+    --patternmode-verge-slot-size: 1.75rem;
+    @apply flex shrink-0 items-center justify-end gap-0.5;
+    @apply [opacity:var(--patternmode-verge-reveal,1)];
+    @apply [pointer-events:var(--patternmode-verge-events,auto)];
+    @apply transition-opacity duration-(--patternmode-verge-duration) ease-(--patternmode-verge-easing);
+  }
+
+  /*
+   * Held open regardless of pointer or focus. Declared on the slot itself, so
+   * it beats the value inherited from the root.
+   *
+   * - `data-visible` — the explicit escape hatch, for state CSS cannot see.
+   * - an open menu, popover or disclosure the slot owns. Without this the `···`
+   *   a menu belongs to vanishes the moment the pointer travels to the menu it
+   *   just opened, because the pointer has left the row.
+   */
+  .patternmode-verge[data-visible],
+  .patternmode-verge:has([data-popup-open]),
+  .patternmode-verge:has([data-state="open"]),
+  .patternmode-verge:has([aria-expanded="true"]) {
+    --patternmode-verge-reveal: 1;
+    --patternmode-verge-events: auto;
+  }
+
+  /*
+   * Touch. There is no hover on a touch surface, so a slot that waits for one
+   * waits forever. Nothing may hide where nothing can point.
+   *
+   * This is the branch hand-rolled implementations miss, because it is
+   * invisible on the machine they were written on.
+   */
+  @media (hover: none) {
+    .patternmode-verge {
+      --patternmode-verge-reveal: 1;
+      --patternmode-verge-events: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-verge {
+      @apply transition-none;
+    }
+  }
+}
