@@ -69,15 +69,41 @@ registry's output is every other repo's visual baseline, and **defaults are what
 get filmed** — mechanism in the component, opinion in the tokens, but the default
 rendering must be gorgeous.
 
-**Everything else in this section is a finding, not work done.** It is waiting on
-Daniel or on another repo.
+### 0.0 CLOSE-OUT PASS, 2026-08-03 (later) — read this first
 
-`main` at `8f226e98`, 0 ahead / 0 behind `origin/main`. Working tree carries one
-file: `apps/preview/app/globals.css`. All 12 packages verified live on npm at the
-versions in §1, all anonymously fetchable (200). `lint`, `check:tokens` (145
-occurrences, 10 files) and `check:boundaries` all exit 0.
+A follow-up session was opened with one mandate: no loose threads. **Every item
+below is now in one of exactly two states.** There is no third pile.
 
-**Everything below is verified and unexecuted. It is waiting on Daniel.**
+**CLOSED — committed, verified, nothing owed:**
+
+| | |
+|---|---|
+| The rulework verge message | `docs/rulework-verge-adoption.md`. Daniel relays it; **do not contact rulework directly.** Supersedes "drafted in pane output". |
+| MG-998 | The issue names verge 0.1.1 and carries the 0.1.0 warning. Nothing owed from here. |
+| `check:tokens` derives its vocabulary (§0.10b) | The allowlist is now the union of the theme item's `cssVars`, so an allowlisted-but-undefined name is unwriteable rather than fixed once. `packages/theme/registry/*.css` is now scanned too. Proved by probe: `var(--destructive-foreground)` passed before, fails now. |
+| `DistributionDisplay` lifted out of the editor (§0.13) | Own module; new neutral `DistributionSegment` types with the old names kept as identical-shape aliases; shared parts in a neutral `Distribution` module. Non-breaking, `minor` changeset filed. |
+| swatch README (§0.13) | All 30 exports documented, verified mechanically. `patch` changeset filed. |
+
+**DANIEL-GATED — sketched, verified, deliberately NOT applied:**
+
+| | |
+|---|---|
+| The motion→peer round (§0.6) | Five majors across three consumer repos. Question sent to Daniel; §0.6 holds the full measurement. **Do not fold it in without his word.** |
+| `@howells/lint@1.2.0` (§0.10a) | Context for a future bump, not a task. Left exactly as written. |
+
+**Not a task, kept as evidence:** everything else in §0 is a recorded finding.
+
+Two changesets are pending for swatch (`minor` + `patch`). **Nothing has been
+published this pass** — the npm versions in §1 are still what consumers resolve.
+
+`lint`, `typecheck` and `test` green across all 29 turbo tasks;
+`check:boundaries` clean; `check:tokens` clean at 12 files / 147 occurrences
+(was 10 / 145 — verge added one file, theme's registry CSS the other).
+
+---
+
+**Everything below §0.0 is a finding, not work done**, unless it carries a DONE
+marker. It is waiting on Daniel or on another repo.
 
 ### 0.1 `globals.css` is GENERATED OUTPUT, not in-progress work
 
@@ -276,7 +302,13 @@ rulework via stacksheet only; colorscope via swatch only; MG via three.
 patternmode**, so nobody adds a dependency — it is version bumps only. Four
 hand-bumps, three repos, zero install-graph work.
 
-**Still a separate decision — do not fold in without Daniel's word.**
+**Still a separate decision — do not fold in without Daniel's word.** The
+question was put to him on 2026-08-03 and is unanswered as of this writing: the
+five packages ship their own copy of the animation library instead of using the
+app's, which silently breaks aperto's shared-element transitions when a consumer
+ends up with two copies; fixing it costs five major version bumps and four
+hand-bumps across three repos, and no consumer has to add a dependency. **Nothing
+here has been applied.** If the answer is yes, this section is the whole plan.
 
 ### 0.7 Doc corrections owed
 
@@ -319,6 +351,12 @@ status: one file each). **5.** deck `aria-valuetext` announces internal ids
 (`:88`, `:171`). **7.** react peer matrix inconsistent and drifted the *wrong way*
 — audit said swatch alone allowed `^18||^19`; stacksheet does now too. **8.** no
 `env(safe-area-inset-bottom)` in stacksheet.
+
+**Two findings were nominated for this list and closed instead of joining it**
+(2026-08-03): the token gate checking spelling rather than existence (§0.10b) and
+the `DistributionDisplay` naming/filing defect plus swatch's README omission
+(§0.13). **#1 (motion) is the only cross-cutting one left, and it is
+Daniel-gated, not unowned** — see §0.6.
 
 ### 0.9 stacksheet 2.0.4 — verified from the published tarball
 
@@ -493,7 +531,20 @@ with the preset decisions being the real content.
 age gate will neither delay this adoption nor catch a bad release of it. Not a
 reason to avoid it; a reason not to treat that gate as a safety net here.
 
-### 0.10b `check:tokens` verifies spelling, not existence
+### 0.10b DONE — `check:tokens` verified spelling, not existence
+
+**Fixed 2026-08-03 in `616ce393`.** The allowlist is derived from
+`packages/theme/registry/theme/item.json`'s `cssVars` (union of all three
+blocks — `radius` is legitimately light-only), and the derivation throws rather
+than degrading if the theme is missing or empty. The gate also now walks
+`packages/theme/registry/*.css`, which had no `src/` and so was the one file
+shipping base CSS into every consumer while being exempt from the gate.
+Green at 12 files / 147 occurrences, and a probe reference to
+`var(--destructive-foreground)` — which passed before — now fails it.
+`radius`-in-light-only stands as documented working behaviour. The original
+finding follows, unedited.
+
+
 
 Looked at `packages/theme` on Daniel's ask, after noticing it lints 0 files.
 
@@ -670,7 +721,31 @@ we had already shipped.
 This is the discoverability gap all three consumers independently named, in its
 purest form: the capability existed, nobody could cheaply tell.
 
-### 0.13 The catalog mis-describes its own edit/read line — and it caused a real error
+### 0.13 DONE — the catalog mis-described its own edit/read line
+
+**Both halves fixed 2026-08-03.** `bdcee777` (README, cheaper half, went first as
+the finding recommended) and `fbce40b2` (the rename/move):
+
+- `DistributionSegment` / `DistributionSegmentUpdate` are the segment types now,
+  named for the shape rather than for the editor. `DistributionBarSegment` and
+  `DistributionBarSegmentUpdate` are kept as identical-shape aliases, so **this
+  is not breaking**. They are deliberately **not** tagged `@deprecated`: the tag
+  fires the repo's `no-deprecated` rule on the barrels that have to re-export
+  them for the alias to reach a consumer at all, and suppressing a rule to keep
+  a tag is the wrong trade.
+- `DistributionDisplay` has its own module and barrel. The parts both components
+  draw moved to a neutral `Distribution` module alongside the math.
+- **No runtime, DOM, class-name or prop change.** The
+  `patternmode-distribution-bar__*` class names are the published styling
+  contract — consumers target them — so renaming them would be a breaking change
+  for a naming problem the module boundary already solves.
+- swatch's README documents all 30 exports; 0 absent, checked mechanically.
+
+`minor` + `patch` changesets filed; **not published**. The wider README drift
+across the other nine packages (counts below) is still open and still carries the
+instrument caveat. The original finding follows, unedited.
+
+
 
 Spectrum-field vs `DistributionBar` is **not** a collision (colorscope, from both
 codebases): `DistributionBar` is an editor — `<fieldset>` at
