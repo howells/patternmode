@@ -327,6 +327,147 @@ is rejected permanently. Round 2 asked for the *reason* something was rebuilt.
 - swatch is MG's gravity centre: 28 references, against stacksheet 7,
   scrollframe 4, aperto 2.
 
+### 0.10a SCHEDULED, NOT STARTED — adopt `@howells/lint@1.2.0`
+
+Estate-wide, announced by Daniel via the rulework session and relayed late (the
+original relay was lost to a session that didn't survive a resume). **Keep this
+cut separate from the queued `system` major — do not fold them.**
+
+Current state, surveyed 2026-08-03:
+
+- catalog is `"@howells/lint": "^0.5.0"` (`pnpm-workspace.yaml:40`), installed
+  0.5.0 — so this is **0.5.0 → 1.2.0**, a major jump.
+- `.node-version` is already `24.15.0` ✓ no change needed.
+- Only three config files exist: root `oxlint.config.ts`, root `oxfmt.config.ts`,
+  and `apps/preview/oxlint.config.ts`. The new shape wants a small per-package
+  `oxlint.config.ts` extending a preset.
+- Lint scripts today: 15 × `howells-check .` and 1 × `howells-check .
+  --no-error-on-unmatched-pattern`. New shape is `howells-check src`.
+
+**Preset map — 11 react, 3 core, 2 next** (classified by React dependency and
+`.tsx` count, not guessed). Confirms "most should be `react`, not `next`":
+
+| preset | packages |
+|---|---|
+| `react` | aperto, briolette, deck, halo, parquet, scrollframe, site-ui, stacksheet, status, swatch, tags |
+| `core` | motion, system, theme — zero React dependency, zero `.tsx` |
+| `next` | `apps/preview`, `apps/web` |
+
+Dep lane: ultracite 7.10.0, oxlint 1.76.0 (**hard-paired with oxlint-tsgolint
+7.0.2001**), oxfmt 0.61.0, react-doctor 0.9.3 + oxc-parser 0.142.0, biome 2.5.6
+frozen.
+
+**Two deliberate holds — do NOT raise them:** eslint 9.39.5 (the github plugin's
+`import`/`jsx-a11y` transitive peers don't admit 10) and TypeScript 6.0.3
+(`@typescript-eslint` caps `<6.1.0`).
+
+Preset change to know about: ultracite split Next's react-doctor rules into an
+opt-in preset, now wired explicitly. Named function declarations are allowed
+**only** for Next's mandated default exports.
+
+**Daniel's standard: fix the findings properly — no override blocks, no
+allow-lists.** That is why this is scheduled work rather than a drive-by.
+
+#### THE TRAP — the preset split fails silently in the safe-looking direction
+
+Found by Desk. ultracite moved Next's react-doctor rules into an **opt-in**
+preset. A config that extends `next` and nothing else will, after the bump,
+**stop applying those rules with no signal at all** — the config file is
+unchanged, the lane exits 0, and it is linting *less* than before. A bump that
+appears to succeed while quietly checking fewer things is invisible unless you
+diff the **effective rule set**, not the config.
+
+That compounds here, because most packages should move `next` → `react`: we cross
+a preset change and a behaviour change in the same cut.
+
+#### BASELINE CAPTURED 2026-08-03, BEFORE ANY BUMP — this is the evidence
+
+oxlint prints its own effective rule count. Captured with
+`pnpm exec turbo run lint --force` (`--force` matters; a cached lane prints the
+old line). **Every one of the 16 targets currently resolves 805 rules**, because
+all of them except `apps/preview` use the single root `oxlint.config.ts`:
+
+```
+805 rules — motion, system, theme, site-ui, aperto, briolette, deck, halo,
+            parquet, scrollframe, stacksheet, status, swatch, tags,
+            apps/preview, apps/web
+```
+
+File counts at capture: stacksheet 55, preview 103, web 32, aperto 29, deck 14,
+scrollframe 14, swatch 13, tags 9, motion 8, briolette 8, parquet 7, halo 5,
+status 5, system 5, site-ui 3, **theme 0** (it matches no lintable files today —
+worth a glance during adoption, since a package that lints nothing passes
+everything).
+
+**How to read the after-numbers.** A drop is not automatically the trap:
+
+- `motion`, `system`, `theme` moving to `core` **should** drop below 805. Intended.
+- `apps/preview` and `apps/web` on `next`, and the eleven `react` packages,
+  **must not silently lose the react-doctor rules.** If their count falls without
+  a preset change explaining it, that is the trap firing — investigate before
+  accepting a green run.
+
+This is the same discipline as tonight's `hsl()` tests: a lane that exits 0 while
+checking less is the lint equivalent of an assertion that cannot fail. **The
+baseline could only be taken before the bump, which is why it was taken tonight
+rather than left to the adopter.**
+
+#### Sizing, and one thing not to lean on
+
+Desk was **already in the prescribed shape**, so for them it is a bump plus the
+preset question rather than a migration; materia is half-migrated and has the
+destination inside its own repo as a worked example. Patternmode is close to the
+shape too — catalog dev-dep ✓, `.node-version` ✓, root `turbo run lint &&
+howells-workspace-check` ✓ — so the announcement is likely bigger than the work,
+with the preset decisions being the real content.
+
+`@howells/*` is in `minimumReleaseAgeExclude` **by design**, so the supply-chain
+age gate will neither delay this adoption nor catch a bad release of it. Not a
+reason to avoid it; a reason not to treat that gate as a safety net here.
+
+### 0.10b `check:tokens` verifies spelling, not existence
+
+Looked at `packages/theme` on Daniel's ask, after noticing it lints 0 files.
+
+**The structural finding: the token gate and the theme are two independent lists
+of the same vocabulary, and nothing reconciles them.** `scripts/check-tokens.mjs`
+hand-maintains an `ALLOWLIST` of 33 exact names (plus the `font-`, `shadow-`,
+`spacing`, `tw-` prefixes); `packages/theme/registry/theme/item.json` defines 37
+`light` and 36 `dark` custom properties. Neither is derived from the other.
+
+Live instance, harmless today: **`destructive-foreground` is allowlisted but the
+theme never defines it** — in either mode. A component writing
+`var(--destructive-foreground, …)` would pass `check:tokens` and then render from
+its hex fallback forever. Nothing uses it, so nothing is broken; but that is
+precisely the `--border-subtle` shape this release just retired, and the gate
+cannot catch it because **it checks spelling, not existence.**
+
+Fix that makes the class unwriteable rather than fixed once: derive the allowlist
+from the theme's `cssVars` keys, or add a reconciliation step asserting the two
+agree. Add to the live-findings list.
+
+Two smaller notes from the same pass:
+
+- **`radius` is defined under `light` but not `dark`.** Works because light is the
+  base and dark overrides it, but the dark block alone is not a complete theme.
+- **`theme.css` is outside `check:tokens`.** The gate walks
+  `packages/*/src/**.css` (plus a special case for aperto's root `styles.css`) and
+  `packages/theme` has no `src/` — its CSS lives at
+  `registry/theme/theme.css`. It contains no `var(--…)` today so nothing is
+  missed, but the file that ships base CSS into every consumer is structurally
+  exempt from the vocabulary gate.
+
+**The 0-file lint result is correct, not a defect.** `packages/theme` holds no JS
+or TS at all — README, `package.json`, two registry JSON files and an 8-line CSS
+file; its generator lives at repo root by design (spec 002). Its lint script is
+the only one in the repo carrying `--no-error-on-unmatched-pattern`, so this was
+already known. Retracting the earlier "green tick carrying no information" framing
+as half-right: the tick is uninformative, but there is genuinely nothing to lint.
+
+*Method note:* an exact-match diff also flagged `shadow-xs/sm/md/lg/xl` as
+defined-but-not-allowed. False positive — they pass via `ALLOWED_PREFIXES`
+(`check-tokens.mjs:47`). The prefix rules have to be applied before comparing.
+
 ### 0.11 Doctrine to fold into AGENTS.md "Deciding what to build"
 
 1. **Wrapper frequency measures an unfixed root cause and an unmet component need

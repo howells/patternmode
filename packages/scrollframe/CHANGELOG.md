@@ -1,5 +1,12 @@
 # @patternmode/scrollframe
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [c55e9be]
+  - @patternmode/system@0.6.0
+
 ## 2.0.0
 
 ### Major Changes
