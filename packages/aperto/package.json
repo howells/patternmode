@@ -46,8 +46,7 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
-    "@howells/motion": "workspace:*",
-    "motion": "catalog:"
+    "@howells/motion": "workspace:*"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",
@@ -61,6 +60,7 @@
     "concurrently": "^9.2.1",
     "jsdom": "catalog:",
     "lucide-react": "catalog:",
+    "motion": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
@@ -70,6 +70,7 @@
   },
   "peerDependencies": {
     "lucide-react": "^1.17.0",
+    "motion": "^12.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
