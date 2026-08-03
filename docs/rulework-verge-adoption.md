@@ -116,9 +116,16 @@ touching ~20 call sites. Your props carry over with their semantics unchanged:
 
 Three things to check while migrating:
 
-1. **Easing.** Verge defaults to `120ms` / `cubic-bezier(0.2, 0, 0, 1)`. Your
-   `transition-micro` is 120ms on `--ease-settle`. If those curves differ,
-   retune once via `--patternmode-verge-easing` rather than forking.
+1. **Easing — and take 0.1.2 if you intend to retune anything.** Verge defaults
+   to `120ms` / `cubic-bezier(0.2, 0, 0, 1)`. Your `transition-micro` is 120ms
+   on `--ease-settle`. If those curves differ, retune via
+   `--patternmode-verge-easing` rather than forking — **but in 0.1.1 and
+   earlier that does nothing.** All three knobs were declared on the slot
+   element and read on the same element, and an element's own declaration beats
+   an inherited one, so setting them on `:root` or on the owning list was
+   silently overridden. Fixed in **0.1.2**, where the defaults live as `var()`
+   fallbacks at the point of use and the knobs inherit from anywhere above the
+   slot. 0.1.1 is fine if you take the defaults; 0.1.2 if you don't.
 2. **`as`, not `asChild`.** Both parts render their own element and then their
    children, so there is no single child for a Slot to merge into. `as` also
    covers the case that motivates it: a row inside a real `<ul>` must be an

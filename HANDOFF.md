@@ -83,6 +83,8 @@ below is now in one of exactly two states.** There is no third pile.
 | `check:tokens` derives its vocabulary (§0.10b) | The allowlist is now the union of the theme item's `cssVars`, so an allowlisted-but-undefined name is unwriteable rather than fixed once. `packages/theme/registry/*.css` is now scanned too. Proved by probe: `var(--destructive-foreground)` passed before, fails now. |
 | `DistributionDisplay` lifted out of the editor (§0.13) | Own module; new neutral `DistributionSegment` types with the old names kept as identical-shape aliases; shared parts in a neutral `Distribution` module. Non-breaking, `minor` changeset filed. |
 | swatch README (§0.13) | All 30 exports documented, verified mechanically. `patch` changeset filed. |
+| **verge has a catalog page** (Daniel, mid-session) | `/verge` in `apps/web` plus the eleventh catalog card. It was the one shipped component with no page. See §0.15. |
+| **verge's theming knobs were inert** | Found by the mandated browser pass, not by a gate. All three were declared on `.patternmode-verge` and read on the same element, so an ancestor's value never won. Fixed; `patch` changeset filed. §0.15. |
 
 **DANIEL-GATED — sketched, verified, deliberately NOT applied:**
 
@@ -93,8 +95,11 @@ below is now in one of exactly two states.** There is no third pile.
 
 **Not a task, kept as evidence:** everything else in §0 is a recorded finding.
 
-Two changesets are pending for swatch (`minor` + `patch`). **Nothing has been
-published this pass** — the npm versions in §1 are still what consumers resolve.
+Three changesets are pending: swatch `minor` + `patch`, verge `patch`.
+**Nothing has been published this pass** — the npm versions in §1 are still what
+consumers resolve, so verge on npm is still 0.1.1 with the inert knobs. The
+adoption message tells rulework to retune `--patternmode-verge-slot-size`; that
+only works from 0.1.2. **Publish before relaying, or say so in the relay.**
 
 `lint`, `typecheck` and `test` green across all 29 turbo tasks;
 `check:boundaries` clean; `check:tokens` clean at 12 files / 147 occurrences
@@ -660,6 +665,54 @@ any package that opens *any* layer declares the full order.
 *Also confirmed general, not a stacksheet quirk:* Tailwind minifies the four-name
 declaration (here to `@layer theme,base;` … `@layer utilities;`). **Never assert
 on the declaration text** — parse layer containment by brace depth.
+
+### 0.15 DONE — verge's catalog page, and what the browser pass caught
+
+Daniel asked mid-session for verge to get "a proper page like the other
+components". It was the one shipped component with none. `apps/web/app/verge/`
+plus `apps/web/components/verge-demo.tsx` and the eleventh catalog card.
+Commit `774afa0c`.
+
+**Two things the mandated browser pass caught that no gate could.** This is the
+section to point at when someone asks why the pass is mandatory.
+
+1. **verge's three theming knobs were inert.** `--patternmode-verge-slot-size`,
+   `-duration` and `-easing` were declared on `.patternmode-verge` and read on
+   the same element. An element's own declaration always beats an inherited
+   one, so a consumer setting them on `:root` — or on the list that owns the
+   rows, which is the obvious place — was silently overridden. The README
+   promised "retune without forking" and the CSS refused it; `verge.tsx:92`
+   already read the slot size through a `var()` fallback and had never seen it
+   fire. Found because the demo set the knob on the list and the measured slot
+   width did not change. Defaults now live as `var()` fallbacks at the point of
+   use. Written as plain declarations, not `@apply` — Tailwind's
+   `duration-(--var)` takes no fallback, and **Tailwind drops utilities it
+   cannot resolve without failing the build**, the same trap §0.14 records. The
+   emitted stylesheet was read, not the exit code.
+2. **A control that changed nothing was built and then deleted.** A `slots`
+   aligned/ragged toggle looked obviously useful and measured as inert: the
+   slot is `justify-end`, so the controls' right edge lands on the same axis
+   either way, and the row text is content-width so nothing pushed against the
+   reservation. Cut. The reason is recorded in the demo's own docblock so the
+   next session does not rebuild it.
+
+**Evidence captured** (localhost:3000, and the point is that both halves fail
+independently): a hovered row measures `opacity: 1` / `pointer-events: auto`
+with a hit-test at the control centre returning the **BUTTON**; a resting row
+measures `opacity: 0` / `pointer-events: none` with the hit-test passing
+**through** to the row. Keyboard `.focus()` on a control in an unhovered row
+settles to `opacity: 1` and is hit-testable — and reproduced §0.14's
+mid-transition trap (`opacity` still 0 while `pointer-events` already `auto`)
+before re-reading. Row text left edge identical across all three rows: **no
+layout shift**. After the knob fix all three slots measure 90px on the same
+left edge. Verge's shipped CSS still contains **0 colour properties**.
+
+*`apps/web` has zero dark-mode hooks — it is light-only by design, so the
+mandate's dark pass has nothing to check on this surface. Stated as a measured
+fact, not a skip.* Narrow viewport checked at 400px: rows hold, the control
+column holds. Note a narrow desktop window still reports `pointer: fine`, so
+the resting rows stay hidden — correct, and the same viewport-vs-pointer axis
+error called out in rulework's vendored sidebar.
 
 ### 0.11 Doctrine to fold into AGENTS.md "Deciding what to build"
 
