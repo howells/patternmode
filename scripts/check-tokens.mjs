@@ -4,45 +4,61 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 
 /**
- * Names allowed inside `var(--NAME…)` references in component package CSS.
- * Mirrors the shadcn theme variable vocabulary, plus Tailwind's own
- * internal custom properties (font-*, shadow-*, spacing, tw-*).
+ * Names allowed inside `var(--NAME…)` references in component package CSS,
+ * **derived from the theme that actually defines them** rather than restated
+ * here.
+ *
+ * A hand-maintained copy of this list checks spelling, not existence: a name
+ * could sit in the allowlist while the theme defined it nowhere, and a
+ * component referencing it would pass the gate and then render from its hex
+ * fallback forever. That was live — `destructive-foreground` was allowlisted
+ * and defined in neither mode — and it is the same shape as the
+ * `--border-subtle` name this repo retired. Deriving makes the class
+ * unwriteable instead of fixing one instance.
+ *
+ * The union of all three `cssVars` blocks is taken, not the intersection:
+ * `light` is the base and `dark` overrides it, so `radius` legitimately
+ * appears only under `light`.
+ *
+ * @returns {Set<string>} Every custom property name the theme defines.
  */
-const ALLOWLIST = new Set([
-  "background",
-  "foreground",
-  "card",
-  "card-foreground",
-  "popover",
-  "popover-foreground",
-  "primary",
-  "primary-foreground",
-  "secondary",
-  "secondary-foreground",
-  "muted",
-  "muted-foreground",
-  "accent",
-  "accent-foreground",
-  "destructive",
-  "destructive-foreground",
-  "border",
-  "input",
-  "ring",
-  "radius",
-  "chart-1",
-  "chart-2",
-  "chart-3",
-  "chart-4",
-  "chart-5",
-  "sidebar",
-  "sidebar-foreground",
-  "sidebar-primary",
-  "sidebar-primary-foreground",
-  "sidebar-accent",
-  "sidebar-accent-foreground",
-  "sidebar-border",
-  "sidebar-ring",
-]);
+const themeDefinedNames = () => {
+  const itemPath = path.join(root, "packages/theme/registry/theme/item.json");
+  if (!existsSync(itemPath)) {
+    throw new Error(
+      `Theme registry item not found at ${path.relative(root, itemPath)}. The token gate derives its vocabulary from it and cannot run without it.`,
+    );
+  }
+
+  const item = JSON.parse(readFileSync(itemPath, "utf-8"));
+  const cssVars = item.cssVars;
+  if (typeof cssVars !== "object" || cssVars === null) {
+    throw new Error(
+      `${path.relative(root, itemPath)} declares no \`cssVars\`. The token gate has no vocabulary to check against.`,
+    );
+  }
+
+  /** @type {Set<string>} */
+  const names = new Set();
+  for (const block of Object.values(cssVars)) {
+    if (typeof block !== "object" || block === null) {
+      continue;
+    }
+    for (const name of Object.keys(block)) {
+      names.add(name);
+    }
+  }
+
+  if (names.size === 0) {
+    throw new Error(
+      `${path.relative(root, itemPath)} defines zero custom properties. Refusing to run a gate that would pass everything.`,
+    );
+  }
+
+  return names;
+};
+
+const ALLOWLIST = themeDefinedNames();
 
 const ALLOWED_PREFIXES = ["font-", "shadow-", "spacing", "tw-"];
 
@@ -111,6 +127,14 @@ for (const packageName of packageNames) {
     if (existsSync(apertoStyles)) {
       files.push(apertoStyles);
     }
+  }
+  // `theme` has no `src/` — its generator lives at repo root by design
+  // (spec 002) and its CSS ships from the registry directory. Without this the
+  // one file that injects base CSS into every consumer is the only one exempt
+  // from the vocabulary gate. It references nothing today; the point is that it
+  // cannot start to unnoticed.
+  if (packageName === "theme") {
+    files.push(...walk(path.join(packagesDir, "theme", "registry"), /\.css$/u));
   }
   if (files.length > 0) {
     cssFilesByPackage.set(packageName, files);
