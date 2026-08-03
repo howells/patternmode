@@ -4,6 +4,17 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 
 /**
+ * @param {unknown} value Parsed registry item.
+ * @returns {value is { cssVars: Record<string, unknown> }} Whether it carries a `cssVars` object.
+ */
+const hasCssVars = (value) =>
+  typeof value === "object" &&
+  value !== null &&
+  "cssVars" in value &&
+  typeof value.cssVars === "object" &&
+  value.cssVars !== null;
+
+/**
  * Names allowed inside `var(--NAME…)` references in component package CSS,
  * **derived from the theme that actually defines them** rather than restated
  * here.
@@ -30,17 +41,17 @@ const themeDefinedNames = () => {
     );
   }
 
+  /** @type {unknown} */
   const item = JSON.parse(readFileSync(itemPath, "utf-8"));
-  const cssVars = item.cssVars;
-  if (typeof cssVars !== "object" || cssVars === null) {
+  if (!hasCssVars(item)) {
     throw new Error(
-      `${path.relative(root, itemPath)} declares no \`cssVars\`. The token gate has no vocabulary to check against.`,
+      `${path.relative(root, itemPath)} declares no \`cssVars\` object. The token gate has no vocabulary to check against.`,
     );
   }
 
   /** @type {Set<string>} */
   const names = new Set();
-  for (const block of Object.values(cssVars)) {
+  for (const block of Object.values(item.cssVars)) {
     if (typeof block !== "object" || block === null) {
       continue;
     }

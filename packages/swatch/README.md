@@ -125,32 +125,32 @@ Everything the package ships. If it is not here, it is not public.
 
 ### Components
 
-| | |
-| --- | --- |
-| `Swatch` | Colour, gradient, image and palette swatch. `SwatchProps` is the union of `SwatchDefaultProps` (own `<figure>`) and `SwatchRenderProps` (`asChild`). |
-| `DistributionBar` | The **editor** — draggable, keyboard-adjustable boundary handles. `DistributionBarProps`. |
-| `DistributionDisplay` | The **read-only** strip. `DistributionDisplayProps`. |
+|                       |                                                                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Swatch`              | Colour, gradient, image and palette swatch. `SwatchProps` is the union of `SwatchDefaultProps` (own `<figure>`) and `SwatchRenderProps` (`asChild`). |
+| `DistributionBar`     | The **editor** — draggable, keyboard-adjustable boundary handles. `DistributionBarProps`.                                                            |
+| `DistributionDisplay` | The **read-only** strip. `DistributionDisplayProps`.                                                                                                 |
 
 ### Distribution helpers
 
 Pure functions over a segment list, so custom controls do not duplicate the bar
 math. All return a new array; none mutate.
 
-| | |
-| --- | --- |
-| `getDistributionTotal(segments)` | Sum of sanitised weights; invalid or negative values count as 0. |
-| `getDistributionBoundaryPercent(segments, boundaryIndex)` | Percentage position of the boundary after `boundaryIndex`. |
+|                                                                           |                                                                                                          |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `getDistributionTotal(segments)`                                          | Sum of sanitised weights; invalid or negative values count as 0.                                         |
+| `getDistributionBoundaryPercent(segments, boundaryIndex)`                 | Percentage position of the boundary after `boundaryIndex`.                                               |
 | `moveDistributionBoundary(segments, boundaryIndex, deltaValue, minValue)` | Moves weight between two adjacent segments, preserving their sum and holding each side above `minValue`. |
-| `updateDistributionSegment(segments, segmentId, update)` | Changes segment metadata (label, colour). Cannot change `value` — the type forbids it. |
-| `removeDistributionSegment(segments, segmentId)` | Removes a segment and redistributes its weight proportionally across the rest. |
+| `updateDistributionSegment(segments, segmentId, update)`                  | Changes segment metadata (label, colour). Cannot change `value` — the type forbids it.                   |
+| `removeDistributionSegment(segments, segmentId)`                          | Removes a segment and redistributes its weight proportionally across the rest.                           |
 
 ### Swatch helpers
 
-| | |
-| --- | --- |
-| `getSwatchColorsBackground(colors, blend?)` | The CSS background a palette produces. `blend` is `"step"` (default, hard boundaries) or `"smooth"` (interpolated in OKLab). Returns `undefined` for an empty palette. |
+|                                                   |                                                                                                                                                                                                                                    |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getSwatchColorsBackground(colors, blend?)`       | The CSS background a palette produces. `blend` is `"step"` (default, hard boundaries) or `"smooth"` (interpolated in OKLab). Returns `undefined` for an empty palette.                                                             |
 | `getSwatchAtmosphereBackground(colors, options?)` | The soft layered-radial "atmosphere" fill — overlapping elliptical pools rather than a flat or linear ramp. `SwatchAtmosphereOptions`: `density` (0 diffuse → 1 dense, default 0.5) and `gravity` (-1 sinks → 1 rises, default 0). |
-| `getSwatchSizeVariableStyle(size, variableName?)` | The inline style object setting `--patternmode-swatch-size` for a size token, for framing something Swatch does not render itself. |
+| `getSwatchSizeVariableStyle(size, variableName?)` | The inline style object setting `--patternmode-swatch-size` for a size token, for framing something Swatch does not render itself.                                                                                                 |
 
 ### Constants and types
 
