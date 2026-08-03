@@ -637,6 +637,33 @@ alias the old one so it isn't breaking) and lift `DistributionDisplay` out of th
 `DistributionBar/` directory. Add to the live-findings list in §0.8 — it
 outranks most of what's there because it has a demonstrated cost.
 
+**A SECOND mechanism hides the same component: it is not in the README either.**
+Checked after colorscope shipped 3.18.0 having discovered their own published API
+docs had not been regenerated since before 3.13.0 — so npm was actively denying
+that six shipped functions existed. Same question asked of this catalog:
+**`swatch`'s README omits `DistributionDisplay`**, along with
+`getSwatchColorsBackground`, `getSwatchAtmosphereBackground`,
+`getDistributionTotal` and six more.
+
+So the component two consumers could not find is hidden **twice over** — named
+after its opposite and filed inside it (above), *and* absent from the document a
+consumer would check first. Fixing the README is the cheaper half and should go
+first.
+
+The wider drift is real and worse than the 2026-07-03 audit recorded (it named
+swatch, briolette and halo; it is nearly every package). Rough counts of exports
+never mentioned in their own README: stacksheet 28, aperto 25, halo 23,
+briolette 21, deck 17, tags 14, swatch 10, status 7, scrollframe 5, system 3.
+Only `parquet` is clean.
+
+*Instrument caveat, stated because the count is the weak part:* the check treats
+any export name absent from the README text as undocumented, so it counts
+type-only exports and namespaced re-exports as misses (verge's own
+`VergeRoot`/`VergeSlot` are documented as `Verge.Root`/`Verge.Slot` and still
+flagged). **Treat the list as a place to look, not a defect count** — the same
+error the filename scan made in §0.10. The `DistributionDisplay` case was
+confirmed by reading the README, not by trusting the number.
+
 **Bonus, and it refutes a round-1 dismissal.** colorscope's `color-strip.tsx` is a
 written-down rejection *of composing `Swatch`* — note it **adopts**
 `DistributionDisplay` rather than rejecting swatch:
