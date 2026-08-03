@@ -46,12 +46,19 @@ AGENTS.md and the build fails loudly without it).
 **Adoption state.** MG has filed **MG-998** (ready-for-agent; starts at
 `packages/ui/src/confidence.tsx:93`, the shipped-shared-UI site that misses focus,
 plus three ProductCell instances; the vendored shadcn sidebar stays). It also
-satisfies MG-993's browser-pass follow-up. **rulework has NOT been contacted — it
-is outside the MG session's channel and Daniel owns that relay.** The message:
-verge is their `RowActions` generalised, built citing their docblock, adding the
-touch branch theirs lacks (theirs reaches touch only via the `visible` prop);
-their `slots`/`visible` props carry over with their semantics. materia and Desk
-were told to adopt only if the shape fits.
+satisfies MG-993's browser-pass follow-up. **Nothing is owed to MG from here** —
+the issue names 0.1.1 and carries the 0.1.0 warning, confirmed 2026-08-03.
+
+**rulework: the message is written, and Daniel relays it.** It lives at
+**`docs/rulework-verge-adoption.md`** — a durable file, not pane output. It names
+0.1.1 and why 0.1.0 is wrong, the contract verge encodes, where each of
+rulework's four implementations stands today (three already consolidated onto
+their own `revealAtRest`; the vendored shadcn `sidebar.tsx:573` is the outlier,
+still on raw `md:opacity-0` class names), the `RowActions`-as-wrapper migration
+shape with the prop mapping, the 48×48 hit-area obligation verge cannot
+discharge, and the two independent browser checks. **Do not contact rulework
+directly — it is outside this session's channel.** materia and Desk were told to
+adopt only if the shape fits.
 
 **STANDING MANDATE, estate-wide, from Daniel (2026-08-03):** every UI change gets
 a `/chiaroscuro` pass **invoked, not referenced**, plus live browser verification
