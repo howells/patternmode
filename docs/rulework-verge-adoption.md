@@ -8,22 +8,29 @@ by that repo's session, not summarised.
 
 ## What this is
 
-`@patternmode/verge@0.1.1` is your `RowActions` generalised and published. It was
+`@patternmode/verge@0.1.2` is your `RowActions` generalised and published. It was
 built by reading `packages/ui/src/components/row-actions.tsx` in your tree — its
 docblock is cited in verge's own source and README, including the finding that
 one of your four implementations spelled the second trigger `focus-visible`
 instead of `focus-within` and so revealed the overflow menu two elements away but
 not the checkbox beside it. That is the defect verge exists to make unwriteable.
 
-**Take 0.1.1. Not 0.1.0.** 0.1.0 ships a 2px gap between controls on coarse
-pointers. On touch verge makes controls permanently visible (there is no hover to
-wait for), so 0.1.0 leaves two 28px controls 2px apart, always on, under a thumb.
-0.1.1 gives coarse pointers an 8px gap, gated on `pointer: coarse` rather than
-`hover: none` because it concerns the precision of the input, not the
-availability of hover. Fine-pointer spacing is unchanged.
+**Take 0.1.2.** Both earlier versions have a defect you would hit:
+
+- **0.1.0** ships a 2px gap between controls on coarse pointers. On touch verge
+  makes controls permanently visible (there is no hover to wait for), so that is
+  two 28px controls 2px apart, always on, under a thumb. 0.1.1 gives coarse
+  pointers an 8px gap, gated on `pointer: coarse` rather than `hover: none`
+  because it concerns the precision of the input, not the availability of hover.
+- **0.1.1** has all three theming knobs inert. They were declared on the slot
+  element and read on the same element, and an element's own declaration beats an
+  inherited one — so setting `--patternmode-verge-slot-size`, `-duration` or
+  `-easing` on `:root` or on the list that owns the rows did nothing at all.
+  0.1.2 moves the defaults to `var()` fallbacks at the point of use, so the knobs
+  inherit from anywhere above the slot.
 
 ```bash
-pnpm add @patternmode/verge@^0.1.1
+pnpm add @patternmode/verge@^0.1.2
 ```
 
 ```tsx
@@ -116,16 +123,10 @@ touching ~20 call sites. Your props carry over with their semantics unchanged:
 
 Three things to check while migrating:
 
-1. **Easing — and take 0.1.2 if you intend to retune anything.** Verge defaults
-   to `120ms` / `cubic-bezier(0.2, 0, 0, 1)`. Your `transition-micro` is 120ms
-   on `--ease-settle`. If those curves differ, retune via
-   `--patternmode-verge-easing` rather than forking — **but in 0.1.1 and
-   earlier that does nothing.** All three knobs were declared on the slot
-   element and read on the same element, and an element's own declaration beats
-   an inherited one, so setting them on `:root` or on the owning list was
-   silently overridden. Fixed in **0.1.2**, where the defaults live as `var()`
-   fallbacks at the point of use and the knobs inherit from anywhere above the
-   slot. 0.1.1 is fine if you take the defaults; 0.1.2 if you don't.
+1. **Easing.** Verge defaults to `120ms` / `cubic-bezier(0.2, 0, 0, 1)`. Your
+   `transition-micro` is 120ms on `--ease-settle`. If those curves differ, set
+   `--patternmode-verge-easing` on the list that owns the rows rather than
+   forking. On 0.1.2 that inherits and works; on 0.1.1 it was silently ignored.
 2. **`as`, not `asChild`.** Both parts render their own element and then their
    children, so there is no single child for a Slot to merge into. `as` also
    covers the case that motivates it: a row inside a real `<ul>` must be an
