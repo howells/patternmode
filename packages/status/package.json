@@ -57,8 +57,7 @@
   },
   "dependencies": {
     "@howells/motion": "workspace:*",
-    "@patternmode/system": "workspace:*",
-    "motion": "catalog:"
+    "@patternmode/system": "workspace:*"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",
@@ -70,6 +69,7 @@
     "@types/react-dom": "catalog:",
     "concurrently": "^9.2.1",
     "jsdom": "catalog:",
+    "motion": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
@@ -78,6 +78,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
+    "motion": "^12.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
