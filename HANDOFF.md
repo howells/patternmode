@@ -18,7 +18,23 @@ Commits: `ae67cf0f` (the work) → `fd61d048` (version bump) → `4f0c468d`
 
 ---
 
-## 0. Session 2026-08-03 — findings only, NOTHING COMMITTED
+## 0. Session 2026-08-03
+
+**SHIPPED: the colorscope `^3.17.0` floor raise.** Ten packages published and
+verified — swatch **3.0.0**, system **0.6.0**, briolette **0.6.0**, halo
+**0.5.0**, parquet **0.1.4**, stacksheet **2.0.5**, scrollframe **2.0.1**, tags
+**2.0.1**, deck **0.3.5**, status **0.3.2**. (Five carry the change; five are
+dependents of `system`.) `dist-tags.latest` matches and an anonymous fetch of each
+exact version returns 200 — all genuinely public. `pnpm smoke:tarballs` passes
+post-publish, which is the only point at which it is evidence. `main` at
+`184434cd`, pushed, all ten tags on the remote. Publish did not go cleanly — see
+the widened notes above §1.
+
+Commits: `c55e9be6` (the change) → `becf50cb` (preview stylesheet resync) →
+`184434cd` (version packages).
+
+**Everything else in this section is a finding, not work done.** It is waiting on
+Daniel or on another repo.
 
 `main` at `8f226e98`, 0 ahead / 0 behind `origin/main`. Working tree carries one
 file: `apps/preview/app/globals.css`. All 12 packages verified live on npm at the
@@ -592,9 +608,39 @@ real defect. **Re-running `pnpm publish:packages` published exactly the two that
 failed and skipped the rest** — changeset publish is safely idempotent here. If
 it happens again, just run it twice.
 
+**CONFIRMED AGAIN 2026-08-03, and both notes above need widening.** The
+contention failure recurred on the colorscope release — 7 published, swatch, tags
+and parquet failed on the prepack build. Re-running worked, as recorded. Two
+things the note did not cover:
+
+- **Build the failures in isolation before re-running.** The advice "just run it
+  twice" is right for contention and wrong for a real defect, and the two are
+  indistinguishable from the error. All three built clean standalone (`exit 0`),
+  which is what justified the re-run. Cheap, and it is the only thing separating
+  "known flake" from "we just shipped a broken package".
+- **The second run crashed AFTER succeeding.** `TypeError: Cannot read properties
+  of undefined (reading 'includes')` in changesets' own
+  `isAlreadyPublishedError` — it threw while *parsing* a registry response, with
+  every publish already landed. So a non-zero exit does not mean nothing shipped.
+  **On any failed `changeset publish`, read the registry before believing the exit
+  code.** Consequence here: three git tags were never created (swatch, tags,
+  parquet) because the crash pre-empted tagging. Check
+  `git tag --points-at HEAD` against the published set and add any missing ones by
+  hand before pushing.
+
 Also: `npm view <pkg> version` served a stale `1.0.0` for swatch straight after
-publishing. `npm view <pkg> dist-tags` showed the correct `2.0.0`. Don't panic at
-a stale read; check dist-tags.
+publishing. `npm view <pkg> dist-tags` showed the correct `2.0.0`.
+
+**That rule was too specific and it misfired in reverse on 2026-08-03.** Straight
+after publishing, `dist-tags.latest` still read `0.1.3` for parquet and `2.0.0`
+for tags, while the **exact-version document** returned 200 with a real tarball —
+i.e. *dist-tags was the stale read and the per-version fetch was correct*, the
+opposite of the case above. Both settled within a minute.
+
+**The durable rule is narrower: any single registry read can be stale in the
+first moments after a publish. Reconcile two before concluding anything** — the
+per-version document and `dist-tags` — and treat a disagreement as "wait and
+re-read", never as a failed publish.
 
 **Verify registry ACCESS anonymously after publishing, not just that the version
 exists.** colorscope shipped a package as `--access restricted` tonight; their
