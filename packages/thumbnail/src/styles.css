@@ -1,0 +1,153 @@
+/*
+ * Declare Tailwind's canonical layer order first, and do it before anything
+ * opens a layer — position is load-bearing, because a layer is registered the
+ * first time it is seen and a later statement cannot move one that already
+ * exists.
+ *
+ * This is a no-op when the app declares the order first, since first
+ * declaration wins.
+ */
+@layer theme, base, components, utilities;
+
+@reference "tailwindcss";
+
+/*
+ * Rules live in `@layer components` deliberately. A layerless declaration beats
+ * every rule in a named layer regardless of specificity, so shipping this sheet
+ * unlayered would let it win against a consumer's own `utilities`. In
+ * `components`, a consumer's utilities still sort after us and can retune
+ * anything here.
+ */
+@layer components {
+  /*
+   * The frame.
+   *
+   * A photograph with an edge drawn *inside* it reads as a window onto the
+   * image; the same photograph inside an outer border reads as a form field
+   * containing one. That distinction is the entire component — everything else
+   * here exists to make the inset edge survive contact with a real image.
+   *
+   * `position: relative` and `overflow: hidden` are structural, not cosmetic:
+   * the edge is painted by an overlay pseudo-element (see below) which needs a
+   * containing block, and a `border-radius` on this box does nothing to a child
+   * `<img>` unless the box clips.
+   */
+  .patternmode-thumbnail {
+    /*
+     * The frame colour, and the one knob most consumers will touch.
+     *
+     * Deliberately a *transparent* black rather than a theme border colour. It
+     * has to sit over whatever the photograph happens to be, and a solid token
+     * either disappears against a dark image or draws a hard line across a pale
+     * one. A translucent edge darkens whatever is underneath it by the same
+     * proportion everywhere, which is why the effect holds across a whole grid
+     * of unrelated pictures.
+     *
+     * The default follows `prefers-color-scheme` rather than `light-dark()`,
+     * because `light-dark()` silently resolves to light unless the host has
+     * declared `color-scheme`, and a package cannot assume that. A host with a
+     * class-based theme (`.dark`, `[data-theme]`) should set this property on
+     * its own theme selector instead — that is the supported path, and it beats
+     * the media query without either fighting the other.
+     */
+    --patternmode-thumbnail-frame: rgb(0 0 0 / 0.1);
+
+    /*
+     * The lift, applied only under `data-raised`.
+     *
+     * One soft, tight, downward layer. Not a card shadow: a thumbnail sitting
+     * in a dense row is not a floating object, and anything larger than this
+     * turns a list of pictures into a list of cards.
+     */
+    --patternmode-thumbnail-lift: 0 1px 2px -1px rgb(0 0 0 / 0.12);
+
+    --patternmode-thumbnail-radius: 3px;
+    --patternmode-thumbnail-size: 2rem;
+
+    border-radius: var(--patternmode-thumbnail-radius);
+    display: inline-block;
+    flex-shrink: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .patternmode-thumbnail {
+      /*
+       * A light edge on a dark ground, for the same reason the light theme uses
+       * a dark one: the frame must read as a shadow falling inside the opening,
+       * and on a dark surface the thing that reads that way is a highlight.
+       * Black-on-dark is simply invisible, which is the failure mode a fixed
+       * value would ship.
+       */
+      --patternmode-thumbnail-frame: rgb(255 255 255 / 0.12);
+      --patternmode-thumbnail-lift: 0 1px 2px -1px rgb(0 0 0 / 0.5);
+    }
+  }
+
+  /*
+   * The edge itself, as an overlay rather than as a shadow on this box.
+   *
+   * `box-shadow: inset` on the frame is painted *behind* its children, so an
+   * `<img>` that fills the box hides it completely — the effect appears to work
+   * in a skeleton state and then vanishes the moment a real photograph loads.
+   * That is the bug this pseudo-element exists to make impossible: it paints
+   * above the media, always.
+   *
+   * `border-radius: inherit` keeps the edge on the corner curve when a consumer
+   * retunes the radius, and `pointer-events: none` keeps it out of the way of
+   * whatever the frame is wrapped in — very often a link or a popover trigger.
+   */
+  .patternmode-thumbnail::after {
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--patternmode-thumbnail-frame);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  /*
+   * Square by default, at the size the caller asked for.
+   *
+   * Opt-out rather than opt-in: a thumbnail is a stamp of fixed footprint in a
+   * row or a grid, and a picture that sizes itself is the thing that makes a
+   * list ragged. `data-sized="false"` hands sizing back to the caller, for the
+   * one case that genuinely needs it — a preview whose height follows the
+   * photograph's own aspect ratio.
+   */
+  .patternmode-thumbnail[data-sized="true"] {
+    aspect-ratio: 1;
+    height: var(--patternmode-thumbnail-size);
+    width: var(--patternmode-thumbnail-size);
+  }
+
+  .patternmode-thumbnail[data-raised="true"] {
+    box-shadow: var(--patternmode-thumbnail-lift);
+  }
+
+  /*
+   * The media fills the frame and is clipped by it.
+   *
+   * `display: block` kills the inline baseline gap that otherwise leaves a
+   * few stray pixels under the picture — the reason a "1px border" so often
+   * measures 4px at the bottom.
+   */
+  .patternmode-thumbnail > :where(img, video, canvas, svg, picture) {
+    display: block;
+    height: 100%;
+    object-fit: var(--patternmode-thumbnail-fit, cover);
+    object-position: var(--patternmode-thumbnail-position, center);
+    width: 100%;
+  }
+
+  /*
+   * An unsized frame takes its box from the media, so the media must not then
+   * be told to fill a box that does not exist yet.
+   */
+  .patternmode-thumbnail[data-sized="false"] > :where(img, video, canvas, svg, picture) {
+    height: auto;
+    width: 100%;
+  }
+}

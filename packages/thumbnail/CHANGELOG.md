@@ -1,0 +1,1 @@
+# @patternmode/thumbnail
