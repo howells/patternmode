@@ -123,6 +123,11 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
   respectively until the cascade-layer patch, which made them unoverridable by any consumer
   utility at any specificity. Tailwind's own `*,::before,::after,::backdrop` block of
   `--tw-*` initialisers is legitimately layerless — do not "fix" it.
+- **`check:layers` walks `packages/*/dist/styles.css` AND `packages/\*/registry/**`**, because
+`theme.css`reaches every consumer through the registry rather than through a`dist/`.
+A gate that only knows about build output is blind to exactly the file installed into
+everybody — the same blind spot `check-tokens.mjs` had. If a package ever ships CSS by a
+  third route, add it here too.
 - Importing `tailwindcss/utilities` on its own emits rules **layerless**, and a layerless
   declaration outranks every rule in a named layer regardless of specificity. Always
   `layer(utilities)`.

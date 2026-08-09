@@ -89,19 +89,55 @@ const findLayerlessRules = (css) => {
   return layerless;
 };
 
+/**
+ * @param {string} directory Directory to walk.
+ * @returns {string[]} Every `.css` file beneath it.
+ */
+const collectStylesheets = (directory) => {
+  if (!existsSync(directory)) {
+    return [];
+  }
+  /** @type {string[]} */
+  const found = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      found.push(...collectStylesheets(full));
+      continue;
+    }
+    if (entry.name.endsWith(".css")) {
+      found.push(full);
+    }
+  }
+  return found;
+};
+
 /** @type {string[]} */
-const failures = [];
-let scanned = 0;
+const stylesheets = [];
 
 for (const entry of readdirSync(packagesDirectory, { withFileTypes: true })) {
   if (!entry.isDirectory()) {
     continue;
   }
-  const stylesheet = path.join(packagesDirectory, entry.name, "dist", "styles.css");
-  if (!existsSync(stylesheet)) {
-    continue;
+  const built = path.join(packagesDirectory, entry.name, "dist", "styles.css");
+  if (existsSync(built)) {
+    stylesheets.push(built);
   }
+  /*
+   * The registry ships CSS that is not a package build output — `theme.css`
+   * lands in every consumer through the registry rather than through a
+   * `dist/`, so a gate that only walks `dist/styles.css` would never see it.
+   * That is the same blind spot `check-tokens.mjs` had (HANDOFF §0.10b): the
+   * one file installed into everybody was the one file exempt from the check.
+   */
+  stylesheets.push(...collectStylesheets(path.join(packagesDirectory, entry.name, "registry")));
+}
 
+/** @type {string[]} */
+const failures = [];
+let scanned = 0;
+
+for (const stylesheet of stylesheets) {
   scanned += 1;
   const layerless = findLayerlessRules(stripComments(readFileSync(stylesheet, "utf-8")));
   if (layerless.length === 0) {
