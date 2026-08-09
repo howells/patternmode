@@ -44,7 +44,7 @@
     "dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --noEmit false --watch --preserveWatchOutput",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
-    "prepack": "pnpm build",
+    "prepack": "node ../../scripts/prepack-build.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },

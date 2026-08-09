@@ -22,6 +22,35 @@ if (isDryRun) {
   process.exit(0);
 }
 
+/**
+ * Build every publishable package before handing over to changesets.
+ *
+ * `changeset publish` runs up to ten `pnpm publish` processes at once and each
+ * one triggers `prepack`, so without this the release is ten unordered builds
+ * racing over each other's `dist/`. Turbo builds in dependency order instead,
+ * and `PATTERNMODE_SKIP_PREPACK_BUILD` stops `prepack` undoing it — see
+ * `scripts/prepack-build.mjs`.
+ *
+ * @returns {Promise<void>} Resolves once the workspace has built.
+ */
+const buildWorkspacePackages = async () => {
+  const build = spawn("pnpm", ["turbo", "run", "build", "--filter=./packages/*"], {
+    stdio: "inherit",
+  });
+
+  /** @type {[number | null, NodeJS.Signals | null]} */
+  const buildClose = await once(build, "close");
+  const [buildExitCode] = buildClose;
+
+  if (buildExitCode !== 0) {
+    throw new Error(
+      `Workspace build failed with exit code ${buildExitCode ?? 1}; nothing published.`,
+    );
+  }
+};
+
+await buildWorkspacePackages();
+
 const tempDirectory = await mkdtemp(path.join(tmpdir(), "patternmode-npm-"));
 const npmConfigPath = path.join(tempDirectory, ".npmrc");
 
@@ -38,6 +67,7 @@ try {
     env: {
       ...processEnv,
       NPM_CONFIG_USERCONFIG: npmConfigPath,
+      PATTERNMODE_SKIP_PREPACK_BUILD: "1",
     },
     stdio: "inherit",
   });

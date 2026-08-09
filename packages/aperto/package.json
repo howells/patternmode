@@ -40,7 +40,7 @@
     "dev:styles": "tailwindcss -i styles.css -o dist/styles.css --watch",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
-    "prepack": "pnpm build",
+    "prepack": "node ../../scripts/prepack-build.mjs",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit"
   },

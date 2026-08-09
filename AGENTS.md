@@ -63,9 +63,24 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
 
 - `pnpm publish:packages` runs `changeset publish`. **Announce version moves to the
   materialgraph coordination session before publishing.**
-- **`changeset publish` is idempotent on partial failure.** Parallel prepack builds can
-  crash a DTS worker (`Worker.emit` trace) and fail one or two packages while the rest
-  succeed. Just re-run it — it publishes exactly what is missing. Do not hand-publish.
+- **`changeset publish` is idempotent on partial failure.** Just re-run it — it publishes
+  exactly what is missing. Do not hand-publish.
+- **A release no longer builds inside `prepack`.** `changeset publish` runs up to ten
+  `pnpm publish` processes at once, so `prepack` used to mean ten unordered builds racing
+  over each other's `dist/`. `scripts/publish-packages.mjs` now builds every package
+  through turbo in dependency order first and sets `PATTERNMODE_SKIP_PREPACK_BUILD=1`, which
+  `scripts/prepack-build.mjs` honours. **Nothing else suppresses those builds** — `pnpm`
+  reads `ignore-scripts` only from its own `--ignore-scripts` flag, not from an `.npmrc`
+  (user or project) and not from `npm_config_ignore_scripts`; all three were measured.
+- **The race that fix removes does not look like a race.** `tsdown` builds with
+  `clean: true`, so a package empties its `dist/` and rewrites `index.mjs` in milliseconds
+  while `tsc --emitDeclarationOnly` takes seconds to put the `.d.ts` files back. A dependent
+  compiling in that window resolves the workspace dependency to **JavaScript with no
+  types** and infers them from the bundle, so a default like `fades = true` becomes
+  `fades: boolean` and the dependent fails on **its own source** with a plausible type
+  error. It builds clean in isolation, which reads as contention. Before calling any
+  publish failure a flake, check whether the failing package depends on another package in
+  the same release.
 - **Check `npm view <pkg> dist-tags`, not `npm view <pkg> version`** — the latter serves
   stale reads straight after publishing.
 - **Verify registry access anonymously**, not just that the version exists. `npm view --json`
