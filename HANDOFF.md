@@ -67,6 +67,25 @@ this script already writes for the token), not from a project `.npmrc`, and not
 from `npm_config_ignore_scripts`. Do not re-derive this; the wrapper script is
 the only lever.
 
+### −1.1a Why `main` keeps going red on lint after a release
+
+Found twice in one session, so it is mechanical rather than bad luck.
+`changeset version` writes a `CHANGELOG.md` that `howells-check` rejects, and
+**the pre-commit hook cannot fix it**: root `package.json`'s `lint-staged` glob is
+`*.{js,ts,jsx,tsx,json,jsonc,css}` — no `md` — while each package's `lint` script
+is `howells-check .`, which *does* format-check markdown. So every release commits
+a file the next `pnpm check` fails on, and turbo's lint cache hides it until
+something forces a re-run.
+
+**Run `pnpm exec howells-fix <pkg>/CHANGELOG.md` after `pnpm version-packages`**,
+before committing the bump.
+
+Not fixed here, deliberately: adding `md` to the glob would make the hook
+reformat every markdown file it touches, and **this file and `README.md` are both
+currently unformatted** (they sit outside `pnpm check`, which only walks
+`packages/*`). That is a decision about whether root docs join the formatter, not
+a drive-by during a publish.
+
 ### −1.2 Halo: eager capture is correct there, but a different bug was live
 
 The audit question was whether `halo`'s `setPointerCapture` in

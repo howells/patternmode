@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/halo",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": false,
   "description": "A round saturation/lightness color picker with a compact hue arc.",
   "keywords": [
