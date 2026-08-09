@@ -65,9 +65,16 @@
     --patternmode-thumbnail-size: 2rem;
 
     border-radius: var(--patternmode-thumbnail-radius);
-    display: inline-block;
+    /*
+     * `inline-flex`, not `inline-block`. A flex container establishes no inline
+     * formatting context, so the frame cannot pick up the baseline gap that
+     * otherwise leaves a few stray pixels under the picture — the reason a "1px
+     * edge" so often measures 4px along the bottom. Structural rather than a
+     * `line-height: 0`, so it holds for whatever `children` turns out to be and
+     * not only for the elements the block rules below happen to name.
+     */
+    display: inline-flex;
     flex-shrink: 0;
-    line-height: 0;
     overflow: hidden;
     position: relative;
   }
@@ -130,9 +137,9 @@
   /*
    * The media fills the frame and is clipped by it.
    *
-   * `display: block` kills the inline baseline gap that otherwise leaves a
-   * few stray pixels under the picture — the reason a "1px border" so often
-   * measures 4px at the bottom.
+   * `display: block` rather than the replaced element's inline default, so a
+   * caller who reaches past the frame to style the media cannot reintroduce the
+   * baseline gap the frame's own `inline-flex` already rules out.
    */
   .patternmode-thumbnail > :where(img, video, canvas, svg, picture) {
     display: block;
