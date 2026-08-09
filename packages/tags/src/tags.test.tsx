@@ -77,6 +77,17 @@ const ControlledTagSelector = ({
   );
 };
 
+/* ScrollFrame owns its own `data-slot` and spreads consumer props before
+   setting it, so a `data-slot` passed in from here would be silently dropped.
+   The class is the published styling contract, so query that instead. */
+const bySelectedScroll = (): HTMLElement => {
+  const element = document.querySelector<HTMLElement>(".patternmode-tag-selector__scroll");
+  if (!element) {
+    throw new Error("expected the selected-tag scroll region");
+  }
+  return element;
+};
+
 describe("TagSelector", () => {
   it("uses the shadcn badge base and lets tags extend badge variants", () => {
     render(
@@ -107,10 +118,7 @@ describe("TagSelector", () => {
 
     const trigger = screen.getByRole("button", { name: "Project tags" });
     expect(trigger).toHaveAttribute("data-slot", "tag-selector-trigger");
-    expect(within(trigger).getByTestId("tag-selector-selected-scroll")).toHaveAttribute(
-      "data-slot",
-      "scrollframe",
-    );
+    expect(bySelectedScroll()).toHaveAttribute("data-slot", "scrollframe");
     expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
     expect(within(trigger).getByText("Command menu")).toBeInTheDocument();
 

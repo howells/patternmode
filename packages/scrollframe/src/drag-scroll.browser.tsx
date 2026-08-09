@@ -42,7 +42,7 @@ const Counter = () => {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <output data-testid="activations">{count}</output>
+      <output data-slot="activations">{count}</output>
       <Rail
         onActivate={() => {
           setCount((value) => value + 1);

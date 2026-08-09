@@ -277,7 +277,6 @@ export const ScrollFrameViewport = ({
       className={joinClassNames("patternmode-scrollframe__viewport", className)}
       data-fade-mode={fadeMode === "mask" ? "mask" : undefined}
       data-slot="scrollframe-viewport"
-      data-testid="scrollframe-viewport"
       ref={assignRef}
       style={maskStyle === undefined ? style : { ...maskStyle, ...style }}
     >
@@ -285,7 +284,6 @@ export const ScrollFrameViewport = ({
         className={joinClassNames("patternmode-scrollframe__content", contentClassName)}
         data-scrollframe-drag-surface={dragScroll === null ? undefined : ""}
         data-slot="scrollframe-content"
-        data-testid="scrollframe-content"
         onClickCapture={handleClickCapture}
         onPointerCancelCapture={handlePointerEndCapture}
         onPointerDownCapture={handlePointerDownCapture}

@@ -76,24 +76,24 @@ Each generated item is built from real package source with these transforms appl
 
 ## Token contract
 
-Component packages read the **standard shadcn theme variable vocabulary** — not a bespoke `@patternmode/*` or `--sc-*` namespace — with each component's original hex value preserved as the `var(...)` fallback. This was a rename from the project's earlier ad hoc token names, shipped as a `minor` version bump (`briolette`, `halo`, `scrollframe`, `status`, `swatch`, `tags`) because the old names were public theming hooks consumers may have set directly:
+Component packages read the **standard shadcn theme variable vocabulary** — not a bespoke `@patternmode/*` or `--sc-*` namespace — with each component's original hex value preserved as the `var(...)` fallback. This was a rename from the project's earlier ad hoc token names, shipped as **major** version bumps (`briolette`, `halo`, `scrollframe`, `status`, `swatch`, `tags`) because the old names were public theming hooks consumers may have set directly, and a caret must not carry a consumer across them:
 
-| Old name         | New name                                                                     |
-| ---------------- | ---------------------------------------------------------------------------- |
-| `--ink`          | `--foreground`                                                               |
-| `--muted`        | `--muted-foreground`                                                         |
-| `--accent`       | `--ring`                                                                     |
-| `--accent-soft`  | `--accent`                                                                   |
-| `--surface`      | `--card`                                                                     |
-| `--surface-soft` | `--muted`                                                                    |
-| `--border-soft`  | `--border-subtle` (patternmode extension — opt-in, not a stock shadcn token) |
-| `--quiet`        | `--muted-foreground`                                                         |
+| Old name         | New name             |
+| ---------------- | -------------------- |
+| `--ink`          | `--foreground`       |
+| `--muted`        | `--muted-foreground` |
+| `--accent`       | `--ring`             |
+| `--accent-soft`  | `--accent`           |
+| `--surface`      | `--card`             |
+| `--surface-soft` | `--muted`            |
+| `--border-soft`  | `--border`           |
+| `--quiet`        | `--muted-foreground` |
 
 Nothing renders differently out of the box — the hex fallbacks are unchanged — but a consumer already using shadcn's own theme variables now themes these components automatically, with no bespoke overrides required.
 
 `scripts/check-tokens.mjs` (`pnpm check:tokens`, part of `pnpm check`) enforces this vocabulary: it scans every `var(--name)` reference in each package's CSS (and quoted `"--name":` inline-style keys in its `src/**/*.{ts,tsx}`) and fails if `--name` isn't in one of:
 
-- the canonical shadcn token set (`--background`, `--ring`, `--sidebar-*`, …) plus Tailwind's own custom properties (`font-*`, `shadow-*`, `spacing`, `tw-*`) and the `border-subtle` extension,
+- the canonical shadcn token set (`--background`, `--ring`, `--sidebar-*`, …) plus Tailwind's own custom properties (`font-*`, `shadow-*`, `spacing`, `tw-*`),
 - `patternmode-*` (any patternmode-namespaced extension),
 - a name the _same_ package defines itself (its own CSS declarations or inline-style keys — e.g. deck's `--deck-perspective`),
 - runtime-provided (`available-height`, `anchor-width` — injected by Base UI anchor positioning for tags' popover; never defined in CSS), or

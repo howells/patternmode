@@ -34,7 +34,6 @@ export const ScrollFrameFade = ({
       data-edge={edge}
       data-hidden={hidden ? "true" : "false"}
       data-slot="scrollframe-fade"
-      data-testid={`scrollframe-fade-${axis}-${edge}`}
       style={fadeStyle}
     />
   );

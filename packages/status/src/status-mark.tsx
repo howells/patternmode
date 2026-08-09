@@ -166,7 +166,7 @@ const StatusFillSweep = ({
     <path
       className="patternmode-status-mark__fill-sweep"
       d={getFillPath(renderedProgress, radius)}
-      data-testid="status-mark-fill-sweep"
+      data-slot="status-mark-fill-sweep"
     />
   );
 };
@@ -203,7 +203,7 @@ const StatusMarkSvg = ({
         className="patternmode-status-mark__track patternmode-status-mark__track--null"
         cx="12"
         cy="12"
-        data-testid="status-mark-null"
+        data-slot="status-mark-null"
         r={STATUS_MARK_RADIUS}
       />
     ) : (
@@ -214,7 +214,7 @@ const StatusMarkSvg = ({
               className="patternmode-status-mark__disc"
               cx="12"
               cy="12"
-              data-testid="status-mark-fill"
+              data-slot="status-mark-fill"
               r={BORDERLESS_STATUS_MARK_RADIUS}
             />
             <StatusFillSweep
@@ -230,7 +230,7 @@ const StatusMarkSvg = ({
             className="patternmode-status-mark__track"
             cx="12"
             cy="12"
-            data-testid="status-mark-border"
+            data-slot="status-mark-border"
             r={STATUS_MARK_RADIUS}
           />
         ) : null}

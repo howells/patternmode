@@ -85,7 +85,6 @@ export const Tag = (props: TagProps): ReactElement => {
       data-selected={selected ? "true" : undefined}
       data-size={size}
       data-slot="tag"
-      data-testid="patternmode-tag"
       variant={getTagVariant(variant, legacyTone)}
     >
       {Icon === undefined ? null : (
@@ -168,7 +167,6 @@ const TagSelectorTrigger = ({
         className="patternmode-tag-selector__scroll"
         contentClassName="patternmode-tag-selector__scroll-content"
         controls={false}
-        data-testid="tag-selector-selected-scroll"
         fades="end"
         scrollbars="hidden"
       >

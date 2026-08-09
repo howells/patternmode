@@ -23,6 +23,17 @@ afterEach(() => {
 
 const value = { h: 16, l: 69, s: 48 };
 
+/* The shipped components expose `data-slot`, not `data-testid` — test hooks do
+   not belong in a consumer's production DOM. Fixtures local to this file still
+   use `data-testid`, so the two are queried differently on purpose. */
+const bySlot = (slot: string): HTMLElement => {
+  const element = document.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
+  if (!element) {
+    throw new Error(`expected an element with [data-slot="${slot}"]`);
+  }
+  return element;
+};
+
 describe("HaloPicker utilities", () => {
   it("converts HSL values to clamped hex colors", () => {
     expect(hslToHex(16, 48, 69)).toBe("#d69e8a");
@@ -85,7 +96,7 @@ describe("HaloPicker", () => {
     const onChange = vi.fn<(value: HaloColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
-    const pad = screen.getByTestId("halo-picker-pad");
+    const pad = bySlot("halo-picker-pad");
     vi.spyOn(pad, "getBoundingClientRect").mockReturnValue({
       bottom: 124,
       height: 104,
@@ -107,7 +118,7 @@ describe("HaloPicker", () => {
     const onChange = vi.fn<(value: HaloColor) => void>();
     render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
 
-    const pad = screen.getByTestId("halo-picker-pad");
+    const pad = bySlot("halo-picker-pad");
     fireEvent.pointerDown(pad, { button: 2, buttons: 2, clientX: 62, clientY: 72, pointerId: 1 });
 
     const arc = pad.parentElement?.querySelector("svg");
@@ -176,7 +187,7 @@ describe("HaloPicker", () => {
   it("focuses the pad on pointerdown, so the keyboard still works after a click", () => {
     render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
 
-    const pad = screen.getByTestId("halo-picker-pad");
+    const pad = bySlot("halo-picker-pad");
     expect(pad).not.toHaveFocus();
 
     fireEvent.pointerDown(pad, { clientX: 62, clientY: 72, pointerId: 1 });
@@ -191,7 +202,7 @@ describe("HaloPicker", () => {
   it("focuses the hue range input on arc pointerdown, since the arc is aria-hidden", () => {
     render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
 
-    const arc = screen.getByTestId("halo-picker-pad").parentElement?.querySelector("svg");
+    const arc = bySlot("halo-picker-pad").parentElement?.querySelector("svg");
     if (!arc) {
       throw new Error("expected the hue arc svg");
     }
@@ -206,7 +217,7 @@ describe("HaloPicker", () => {
   it("captures the pointer on pointerdown, which closes both controls to interactive children", () => {
     render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
 
-    const pad = screen.getByTestId("halo-picker-pad");
+    const pad = bySlot("halo-picker-pad");
     const setPadCapture = vi.fn<(pointerId: number) => void>();
     Object.defineProperty(pad, "setPointerCapture", { configurable: true, value: setPadCapture });
 
@@ -252,7 +263,7 @@ describe("HaloPicker", () => {
     expect(picker).toHaveAttribute("data-placement", "top");
 
     const geometry = getHaloGeometry("top");
-    const pad = screen.getByTestId("halo-picker-pad");
+    const pad = bySlot("halo-picker-pad");
     expect(pad.style.top).toBe(`${geometry.centerY - 52}px`);
 
     /* The readout follows the arc to the top: it precedes the stage. */

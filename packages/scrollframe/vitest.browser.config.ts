@@ -14,6 +14,9 @@ export default defineConfig({
       enabled: true,
       headless: true,
       instances: [{ browser: "chromium" }],
+      /* The components ship `data-slot`, never `data-testid` — test hooks do
+         not belong in a consumer's DOM. Point the locators at the real one. */
+      locators: { testIdAttribute: "data-slot" },
       provider: playwright(),
     },
     include: ["src/**/*.browser.tsx"],

@@ -33,6 +33,17 @@ afterEach(() => {
   cleanup();
 });
 
+/* The shipped components expose `data-slot`, not `data-testid` — test hooks do
+   not belong in a consumer's production DOM. Fixtures local to this file still
+   use `data-testid`, so the two are queried differently on purpose. */
+const bySlot = (slot: string): Element => {
+  const element = document.querySelector(`[data-slot="${slot}"]`);
+  if (!element) {
+    throw new Error(`expected an element with [data-slot="${slot}"]`);
+  }
+  return element;
+};
+
 describe("briolette geometry", () => {
   it("builds an 80-facet geodesic with unit centroids by default", () => {
     const faces = buildBrioletteFaces();
@@ -293,7 +304,7 @@ describe("BriolettePicker", () => {
     render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
 
     expect(screen.getByRole("application", { name: "Accent color" })).toBeInTheDocument();
-    expect(screen.getByTestId("briolette-sphere")).toBeInTheDocument();
+    expect(bySlot("briolette-sphere")).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("—");
   });
 
@@ -311,7 +322,7 @@ describe("BriolettePicker", () => {
     render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
 
     const stage = screen.getByRole("application", { name: "Accent color" });
-    const sphere = screen.getByTestId("briolette-sphere");
+    const sphere = bySlot("briolette-sphere");
     expect(stage).not.toHaveFocus();
 
     fireEvent.pointerDown(sphere, { button: 0, clientX: 40, clientY: 40, pointerId: 1 });
@@ -322,7 +333,7 @@ describe("BriolettePicker", () => {
   it("does not capture the pointer on pointerdown, so facet clicks still land", () => {
     render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
 
-    const sphere = screen.getByTestId("briolette-sphere");
+    const sphere = bySlot("briolette-sphere");
     const setPointerCapture = vi.fn<(pointerId: number) => void>();
     Object.defineProperty(sphere, "setPointerCapture", {
       configurable: true,
@@ -432,7 +443,7 @@ describe("BriolettePicker", () => {
 
   it("only starts a drag session for the primary button", () => {
     render(<BriolettePicker onChange={() => {}} value={null} />);
-    const sphere = screen.getByTestId("briolette-sphere");
+    const sphere = bySlot("briolette-sphere");
 
     // A right-click must not begin a rotation the context menu never ends.
     fireEvent.pointerDown(sphere, { button: 2, buttons: 2, clientX: 10, clientY: 10 });
@@ -444,7 +455,7 @@ describe("BriolettePicker", () => {
 
   it("ends the drag session when a move arrives with no button held", () => {
     render(<BriolettePicker onChange={() => {}} value={null} />);
-    const sphere = screen.getByTestId("briolette-sphere");
+    const sphere = bySlot("briolette-sphere");
 
     fireEvent.pointerDown(sphere, { button: 0, buttons: 1, clientX: 10, clientY: 10 });
     expect(sphere).toHaveAttribute("data-dragging");
@@ -458,7 +469,7 @@ describe("BriolettePicker", () => {
     render(<BriolettePicker onChange={() => {}} value={null} />);
     const stage = screen.getByRole("application");
 
-    fireEvent.pointerDown(screen.getByTestId("briolette-sphere"), {
+    fireEvent.pointerDown(bySlot("briolette-sphere"), {
       button: 0,
       buttons: 1,
       clientX: 10,

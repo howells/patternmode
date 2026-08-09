@@ -52,6 +52,19 @@ afterEach(() => {
   cleanup();
 });
 
+/* The shipped components expose `data-slot`, not `data-testid` — test hooks do
+   not belong in a consumer's production DOM. Fixtures local to this file still
+   use `data-testid`, so the two are queried differently on purpose. */
+const querySlot = (slot: string): Element | null => document.querySelector(`[data-slot="${slot}"]`);
+
+const bySlot = (slot: string): Element => {
+  const element = document.querySelector(`[data-slot="${slot}"]`);
+  if (!element) {
+    throw new Error(`expected an element with [data-slot="${slot}"]`);
+  }
+  return element;
+};
+
 describe("resolveStatusProgress", () => {
   it("snaps numeric values to discrete progress steps", () => {
     expect(resolveStatusProgress({ value: -20 })).toEqual({
@@ -106,29 +119,29 @@ describe("StatusMark", () => {
   it("renders null progress as the same dashed placeholder in every variant", () => {
     const { rerender } = render(<StatusMark label="Null" status="null" />);
 
-    expect(screen.getByTestId("status-mark-null")).toHaveAttribute("r", "8");
-    expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-null")).toHaveAttribute("r", "8");
+    expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
+    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
 
     rerender(<StatusMark label="Null" status="null" variant="border" />);
 
-    expect(screen.getByTestId("status-mark-null")).toHaveAttribute("r", "8");
-    expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-null")).toHaveAttribute("r", "8");
+    expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
+    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
   });
 
   it("renders filled sweep layer by default", () => {
     render(<StatusMark label="Three quarters complete" value={75} />);
 
-    expect(screen.getByTestId("status-mark-fill")).toBeInTheDocument();
-    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
-    expect(screen.getByTestId("status-mark-fill-sweep")).toBeInTheDocument();
+    expect(bySlot("status-mark-fill")).toBeInTheDocument();
+    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-fill-sweep")).toBeInTheDocument();
   });
 
   it("renders precise filled sweep geometry for half and full progress", () => {
     const { unmount } = render(<StatusMark label="Half complete" value={50} />);
 
-    expect(screen.getByTestId("status-mark-fill-sweep")).toHaveAttribute(
+    expect(bySlot("status-mark-fill-sweep")).toHaveAttribute(
       "d",
       "M12 12 L12 3.0999999999999996 A8.9 8.9 0 0 1 12 20.9 Z",
     );
@@ -136,7 +149,7 @@ describe("StatusMark", () => {
     unmount();
     render(<StatusMark label="Complete" value={100} />);
 
-    expect(screen.getByTestId("status-mark-fill-sweep")).toHaveAttribute(
+    expect(bySlot("status-mark-fill-sweep")).toHaveAttribute(
       "d",
       "M3.0999999999999996 12 a8.9 8.9 0 1 0 17.8 0 a8.9 8.9 0 1 0 -17.8 0",
     );
@@ -146,15 +159,15 @@ describe("StatusMark", () => {
     const { rerender } = render(<StatusMark label="Filled" value={75} />);
 
     expect(screen.getByRole("img", { name: "Filled" })).toHaveAttribute("data-variant", "fill");
-    expect(screen.queryByTestId("status-mark-border")).not.toBeInTheDocument();
-    expect(screen.getByTestId("status-mark-fill")).toBeInTheDocument();
-    expect(screen.getByTestId("status-mark-fill")).toHaveAttribute("r", "8.9");
+    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-fill")).toBeInTheDocument();
+    expect(bySlot("status-mark-fill")).toHaveAttribute("r", "8.9");
 
     rerender(<StatusMark label="Bordered" value={75} variant="border" />);
 
     expect(screen.getByRole("img", { name: "Bordered" })).toHaveAttribute("data-variant", "border");
-    expect(screen.getByTestId("status-mark-border")).toBeInTheDocument();
-    expect(screen.queryByTestId("status-mark-fill")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-border")).toBeInTheDocument();
+    expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
   });
 
   it("accepts instance-level colors", () => {

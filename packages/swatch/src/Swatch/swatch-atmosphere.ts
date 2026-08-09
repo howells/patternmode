@@ -45,7 +45,13 @@ const withAlpha = (color: string, alpha: number): string => {
     return `${rgbToHex(rgb.r, rgb.g, rgb.b)}${suffix}`;
   }
   const percent = Math.round((clamp(alpha, 0, 255) / 255) * 100);
-  return `color-mix(in srgb, ${color} ${percent}%, transparent)`;
+  /* Mix in oklab, not srgb. This branch takes every non-hex colour, including
+     the `oklch()` values a wide-gamut consumer passes — and `in srgb` narrows
+     those to the sRGB gamut on the way through, silently. Nothing throws and
+     the swatch still renders; it just renders a duller colour than the one it
+     was given. The hex branch above is already sRGB by construction, so this
+     is the only path where the gamut is live. */
+  return `color-mix(in oklab, ${color} ${percent}%, transparent)`;
 };
 
 export const getSwatchAtmosphereBackground = (

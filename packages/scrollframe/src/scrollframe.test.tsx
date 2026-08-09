@@ -31,6 +31,26 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+/* The shipped components expose `data-slot`, not `data-testid` — test hooks do
+   not belong in a consumer's production DOM. Fixtures local to this file still
+   use `data-testid`, so the two are queried differently on purpose. */
+const bySlot = (slot: string): HTMLElement => {
+  const element = document.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
+  if (!element) {
+    throw new Error(`expected an element with [data-slot="${slot}"]`);
+  }
+  return element;
+};
+
+/* Fades are identified by the semantic attributes they already ship —
+   `data-axis` and `data-edge` — rather than a synthesised test id. The old
+   `data-testid="scrollframe-fade-vertical-start"` encoded exactly this and put
+   it in every consumer's DOM to do it. */
+const queryFade = (axis: string, edge: string): HTMLElement | null =>
+  document.querySelector<HTMLElement>(
+    `[data-slot="scrollframe-fade"][data-axis="${axis}"][data-edge="${edge}"]`,
+  );
+
 describe("ScrollFrame", () => {
   it("renders a named Radix-backed scroll region with fades and plumbing", () => {
     render(
@@ -46,10 +66,10 @@ describe("ScrollFrame", () => {
     expect(region).toHaveAttribute("data-axis-vertical", "true");
     expect(region).toHaveAttribute("data-slot", "scrollframe");
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     expect(viewport).toHaveAttribute("data-slot", "scrollframe-viewport");
-    expect(screen.getByTestId("scrollframe-fade-vertical-start")).toBeInTheDocument();
-    expect(screen.getByTestId("scrollframe-fade-vertical-end")).toBeInTheDocument();
+    expect(queryFade("vertical", "start")).toBeInTheDocument();
+    expect(queryFade("vertical", "end")).toBeInTheDocument();
   });
 
   it("masks the viewport instead of painting fades in mask fade mode", () => {
@@ -60,10 +80,10 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     expect(viewport).toHaveAttribute("data-fade-mode", "mask");
-    expect(screen.queryByTestId("scrollframe-fade-vertical-start")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("scrollframe-fade-vertical-end")).not.toBeInTheDocument();
+    expect(queryFade("vertical", "start")).not.toBeInTheDocument();
+    expect(queryFade("vertical", "end")).not.toBeInTheDocument();
 
     // Unmeasured content is not scrollable, so every ramp starts collapsed.
     expect(viewport.style.getPropertyValue("--patternmode-scrollframe-mask-top")).toBe("0px");
@@ -77,7 +97,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     Object.defineProperties(viewport, {
       clientHeight: { configurable: true, value: 100 },
       scrollHeight: { configurable: true, value: 300 },
@@ -117,7 +137,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     Object.defineProperties(viewport, {
       clientHeight: { configurable: true, value: 100 },
       scrollHeight: { configurable: true, value: 300 },
@@ -152,7 +172,7 @@ describe("ScrollFrame", () => {
     // fix each measurement allocated a fresh edge-state object, so every one
     // forced a commit; in a real browser that commit's layout change re-fired
     // the observer, looping unbounded at 100% CPU.
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
 
     // Base UI's ScrollArea flips its own `data-scrolling` state on the first
     // scroll (one bounded commit); warm past it so the assertion measures only
@@ -178,7 +198,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const root = screen.getByTestId("scrollframe-viewport").parentElement;
+    const root = bySlot("scrollframe-viewport").parentElement;
     expect(root).toHaveAttribute("data-axes", "both");
     expect(root).toHaveAttribute("data-scrollbar-visibility", "hidden");
     expect(root?.querySelectorAll('[data-slot="scrollframe-scrollbar"]')).toHaveLength(2);
@@ -196,7 +216,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    let root = screen.getByTestId("scrollframe-viewport").parentElement;
+    let root = bySlot("scrollframe-viewport").parentElement;
     expect(root).toHaveAttribute("data-scrollbar-visibility", "always");
     // `always` keeps both scrollbars mounted regardless of overflow, and does
     // not flag them hidden.
@@ -210,7 +230,7 @@ describe("ScrollFrame", () => {
           <div>Content</div>
         </ScrollFrame>,
       );
-      root = screen.getByTestId("scrollframe-viewport").parentElement;
+      root = bySlot("scrollframe-viewport").parentElement;
       expect(root).toHaveAttribute("data-scrollbar-visibility", mode);
     }
   });
@@ -228,7 +248,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     const root = screen.getByRole("region", { name: "Scrollable" });
     Object.defineProperties(viewport, {
       clientHeight: { configurable: true, value: 100 },
@@ -266,8 +286,8 @@ describe("ScrollFrame", () => {
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
-    const viewport = screen.getByTestId("scrollframe-viewport");
-    const content = screen.getByTestId("scrollframe-content");
+    const viewport = bySlot("scrollframe-viewport");
+    const content = bySlot("scrollframe-content");
     Object.defineProperties(viewport, {
       clientWidth: { configurable: true, value: 100 },
       scrollLeft: { configurable: true, value: 40, writable: true },
@@ -310,8 +330,8 @@ describe("ScrollFrame", () => {
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
-    const viewport = screen.getByTestId("scrollframe-viewport");
-    const content = screen.getByTestId("scrollframe-content");
+    const viewport = bySlot("scrollframe-viewport");
+    const content = bySlot("scrollframe-content");
     const button = screen.getByRole("button", { name: "Granite" });
     Object.defineProperties(viewport, {
       clientWidth: { configurable: true, value: 100 },
@@ -349,8 +369,8 @@ describe("ScrollFrame", () => {
     );
 
     const root = screen.getByRole("region", { name: "Materials" });
-    const viewport = screen.getByTestId("scrollframe-viewport");
-    const content = screen.getByTestId("scrollframe-content");
+    const viewport = bySlot("scrollframe-viewport");
+    const content = bySlot("scrollframe-content");
     const button = screen.getByRole("button", { name: "Granite" });
     Object.defineProperties(viewport, {
       clientWidth: { configurable: true, value: 100 },
@@ -384,8 +404,8 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
-    const content = screen.getByTestId("scrollframe-content");
+    const viewport = bySlot("scrollframe-viewport");
+    const content = bySlot("scrollframe-content");
     const link = screen.getByRole("link", { name: "One" });
     const setPointerCapture = vi.fn<(pointerId: number) => void>();
     Object.defineProperties(viewport, {
@@ -418,7 +438,7 @@ describe("ScrollFrame", () => {
     );
 
     const root = screen.getByRole("region", { name: "Winners" });
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     const link = screen.getByRole("link", { name: "One" });
     Object.defineProperties(viewport, {
       clientWidth: { configurable: true, value: 100 },
@@ -449,7 +469,7 @@ describe("ScrollFrame", () => {
       </ScrollFrame>,
     );
 
-    const viewport = screen.getByTestId("scrollframe-viewport");
+    const viewport = bySlot("scrollframe-viewport");
     const button = screen.getByRole("button", { name: "One" });
     Object.defineProperties(viewport, {
       clientWidth: { configurable: true, value: 100 },
@@ -481,8 +501,8 @@ describe("ScrollFrame", () => {
     );
 
     const root = screen.getByRole("region", { name: "Actions" });
-    const viewport = screen.getByTestId("scrollframe-viewport");
-    const content = screen.getByTestId("scrollframe-content");
+    const viewport = bySlot("scrollframe-viewport");
+    const content = bySlot("scrollframe-content");
     const input = screen.getByRole("textbox", { name: "Search" });
     const ignored = screen.getByText("Selectable label");
     Object.defineProperties(viewport, {

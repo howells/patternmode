@@ -24,7 +24,7 @@ const Harness = () => {
   const [color, setColor] = useState<HaloColor>({ h: 16, l: 69, s: 48 });
   return (
     <div>
-      <output data-testid="readout">{`${Math.round(color.h)} ${Math.round(color.s)} ${Math.round(color.l)}`}</output>
+      <output data-slot="readout">{`${Math.round(color.h)} ${Math.round(color.s)} ${Math.round(color.l)}`}</output>
       <HaloPicker aria-label="Accent color" onChange={setColor} value={color} />
     </div>
   );

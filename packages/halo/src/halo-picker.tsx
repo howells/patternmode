@@ -170,7 +170,6 @@ const HaloPad = ({
     aria-valuetext={`Saturation ${Math.round(saturation)}%, Lightness ${Math.round(lightness)}%`}
     className="patternmode-halo-picker__pad"
     data-slot="halo-picker-pad"
-    data-testid="halo-picker-pad"
     onKeyDown={onKeyDown}
     onPointerCancel={onPointerCancel}
     onPointerDown={onPointerDown}
