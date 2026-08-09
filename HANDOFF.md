@@ -93,6 +93,35 @@ table-separator padding, one comment moved to its own line inside a fenced code
 block), verified by stripping punctuation from both revisions and diffing the
 prose. The widened gate was proved able to fail before being trusted.
 
+### −1.1b CONFIRMED DOWNSTREAM — scrollframe 2.0.2 fixed the bug where it was found
+
+The capture bug was found in Architizer, where no thumbnail in any awards rail
+opened. Architizer has now adopted **2.0.2 and verified it against the symptom**
+(their commit `b149b0b`), which closes the loop this session opened:
+
+- **Resolved, not declared.** `apps/web` links `@patternmode+scrollframe@2.0.2`
+  and `grep setPointerCapture` over the _linked package's shipped `dist`_ returns
+  nothing — so the fix is in the build being served, not merely in a version
+  string. A stale 2.0.1 survives in their pnpm store, unreferenced; same store
+  artefact §0.5 records here.
+- **Verified with a real pointer.** Press-and-release on a thumbnail opens the
+  project; a genuine drag scrolls and opens nothing. Both halves, because they
+  fail independently — a fix that killed the drag would also "fix" the click.
+
+**They also cleared the `data-testid` → `data-slot` change for release.** They
+grepped their `apps` and `packages` for `scrollframe-viewport`,
+`scrollframe-content` and `scrollframe-fade` and found **zero** hits in tests or
+source. The one known downstream consumer of ScrollFrame needs no migration, so
+that patch can ship without one.
+
+_One caution they offered that does NOT apply here, checked rather than filed:_
+`next build` replaces `.next` under a running `next start`, after which the
+server answers on the port but serves 500s for every chunk — indistinguishable
+from a broken deploy without comparing the server's start time to
+`.next/BUILD_ID`'s mtime. `scripts/smoke-tarballs.mjs` only ever runs
+`next build` and never starts a server, so this harness cannot hit it. Worth
+knowing if that ever changes.
+
 ### −1.2 Halo: eager capture is correct there, but a different bug was live
 
 The audit question was whether `halo`'s `setPointerCapture` in
