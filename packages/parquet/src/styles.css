@@ -1,41 +1,61 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Parquet only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
+@layer theme, base, components, utilities;
+
 @reference "tailwindcss";
 
-.patternmode-parquet {
-  @apply relative w-full overflow-hidden rounded-lg;
-}
+/* Everything below is inside `components` on purpose. These rules shipped
+   layerless until 0.1.5, and a layerless declaration outranks every rule in a
+   named layer regardless of specificity — so a consumer could not override any
+   of it with their own utilities, whatever they tried. Same defect stacksheet
+   carried until 2.0.4. Do not hoist a rule out of this block. */
+@layer components {
+  .patternmode-parquet {
+    @apply relative w-full overflow-hidden rounded-lg;
+  }
 
-.patternmode-parquet__tile {
-  @apply absolute flex items-end overflow-hidden;
-  @apply transition-[left,top,width,height,opacity] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)];
-}
-
-.patternmode-parquet[data-static] .patternmode-parquet__tile {
-  @apply transition-none;
-}
-
-.patternmode-parquet__label {
-  @apply pointer-events-none w-full p-2 font-mono text-white/[0.72] opacity-0 transition-opacity duration-150;
-}
-
-.patternmode-parquet__tile[data-light] .patternmode-parquet__label {
-  @apply text-black/[0.62];
-}
-
-.patternmode-parquet__tile:hover .patternmode-parquet__label,
-.patternmode-parquet__tile:focus-within .patternmode-parquet__label {
-  @apply opacity-100;
-}
-
-.patternmode-parquet__label-name {
-  @apply block overflow-hidden text-ellipsis whitespace-nowrap text-[0.625rem] leading-[1.15];
-}
-
-.patternmode-parquet__label-percent {
-  @apply block text-[0.5625rem] tabular-nums opacity-70;
-}
-
-@media (prefers-reduced-motion: reduce) {
   .patternmode-parquet__tile {
+    @apply absolute flex items-end overflow-hidden;
+    @apply transition-[left,top,width,height,opacity] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)];
+  }
+
+  .patternmode-parquet[data-static] .patternmode-parquet__tile {
     @apply transition-none;
+  }
+
+  .patternmode-parquet__label {
+    @apply pointer-events-none w-full p-2 font-mono text-white/[0.72] opacity-0 transition-opacity duration-150;
+  }
+
+  .patternmode-parquet__tile[data-light] .patternmode-parquet__label {
+    @apply text-black/[0.62];
+  }
+
+  .patternmode-parquet__tile:hover .patternmode-parquet__label,
+  .patternmode-parquet__tile:focus-within .patternmode-parquet__label {
+    @apply opacity-100;
+  }
+
+  .patternmode-parquet__label-name {
+    @apply block overflow-hidden text-ellipsis whitespace-nowrap text-[0.625rem] leading-[1.15];
+  }
+
+  .patternmode-parquet__label-percent {
+    @apply block text-[0.5625rem] tabular-nums opacity-70;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-parquet__tile {
+      @apply transition-none;
+    }
   }
 }

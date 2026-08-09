@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:tokens",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:layers && pnpm check:tokens",
     "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:layers": "node scripts/check-layers.mjs",
     "check:tokens": "node scripts/check-tokens.mjs",
     "clean": "turbo run clean --continue=always && turbo clean",
     "dev": "pnpm --filter @howells/patternmode-web dev",

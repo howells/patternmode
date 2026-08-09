@@ -113,8 +113,16 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
   `components` appended _after_ `utilities`. Those packages must declare
   `@layer theme, base, components, utilities;` **before their `@import`s** — position is
   load-bearing; emitted after the layer blocks it does nothing.
-- Packages that only open `@layer components` need no declaration: registering `components`
-  early still leaves `utilities` last. Do not churn them.
+- **Every package that opens any layer declares the full order**, including ones that only
+  open `components`. They cannot invert a consumer's utilities, but registering `components`
+  early leaves it ahead of the host's `theme` and `base`, so a base reset outranks the
+  component rules. (This supersedes the older "packages that only open `components` need no
+  declaration" — true about `utilities`, wrong about `base`.)
+- **Never ship a style rule outside a layer.** Verify it in the built artifact by brace
+  depth, not by reading the source: `aperto` and `parquet` shipped 51 and 12 layerless rules
+  respectively until the cascade-layer patch, which made them unoverridable by any consumer
+  utility at any specificity. Tailwind's own `*,::before,::after,::backdrop` block of
+  `--tw-*` initialisers is legitimately layerless — do not "fix" it.
 - Importing `tailwindcss/utilities` on its own emits rules **layerless**, and a layerless
   declaration outranks every rule in a named layer regardless of specificity. Always
   `layer(utilities)`.

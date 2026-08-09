@@ -1,237 +1,257 @@
+/* Declare Tailwind's canonical layer order FIRST — before `@reference`. A
+   `@layer` statement is permitted there and the position is load-bearing: a
+   layer is registered the first time it is seen and a later statement cannot
+   move one that already exists, so emitted after the layer block it does
+   nothing. This is a no-op when the app declares the order first, since first
+   declaration wins.
+
+   Aperto only opens `components`, so it cannot invert a consumer's utilities
+   the way a sheet opening `utilities` can. It declares the order anyway,
+   because registering `components` early would otherwise leave it ahead of the
+   host's `theme` and `base`, and a base reset would then outrank these rules. */
+@layer theme, base, components, utilities;
+
 @reference "tailwindcss";
 
-[data-slot="aperto-trigger"] {
-  @apply relative block overflow-hidden rounded-[var(--aperto-radius,0.5rem)] border-0 bg-transparent p-0 text-left shadow-none outline-none;
-  @apply cursor-zoom-in transition-[filter,transform] duration-200 ease-out;
-}
-
-[data-slot="aperto-trigger"]:hover {
-  @apply brightness-[0.96];
-}
-
-[data-slot="aperto-trigger"]:focus-visible {
-  @apply ring-2 ring-white/80 ring-offset-2 ring-offset-black;
-}
-
-[data-slot="aperto-trigger"] > img,
-[data-slot="aperto-trigger"] > video {
-  @apply block size-full object-cover;
-}
-
-/* Descendant (not child) selectors: thumbnails often nest the media inside
-   caption/badge chrome, and the origin media must vacate while the clone is
-   in flight regardless of wrapper depth. */
-[data-slot="aperto-trigger"][data-aperto-active] img,
-[data-slot="aperto-trigger"][data-aperto-active] video {
-  @apply invisible;
-}
-
-[data-slot="aperto-overlay"] {
-  @apply fixed inset-0 z-[1000] bg-black/80;
-}
-
-[data-slot="aperto-content"] {
-  /* Overridable panel height cap. The media sizing below derives its budget
-     from this same var, so panel and media can never disagree. */
-  --aperto-panel-max-h: min(90vh, 920px);
-  @apply fixed z-[1001] flex h-fit max-h-[var(--aperto-panel-max-h)] w-fit max-w-[min(92vw,1200px)] flex-col items-center justify-center gap-3 overflow-visible rounded-[var(--aperto-radius,0.5rem)] p-0 text-white outline-none;
-  overscroll-behavior: contain;
-}
-
-[data-slot="aperto-content"] > img,
-[data-slot="aperto-content"] > video,
-[data-slot="aperto-content"] > [data-slot="aperto-media"] {
-  /* The media's real vertical budget: the viewport allowance AND the panel's
-     own max-height minus room for the caption stack (title / description /
-     counter, tunable via --aperto-caption-allowance). Folding the panel cap
-     into the budget — and refusing to flex-shrink — is what keeps the
-     declared aspect-ratio honest: without it, a capped panel shrinks the
-     media's height while the width formula holds, silently distorting the
-     box (a 1:1 item renders visibly non-square). */
-  --aperto-media-max-h: min(
-    calc(100dvh - 8rem),
-    calc(var(--aperto-panel-max-h, min(90vh, 920px)) - var(--aperto-caption-allowance, 6rem))
-  );
-  @apply block shrink-0 rounded-[var(--aperto-radius,0.5rem)];
-  aspect-ratio: var(--aperto-expanded-aspect-ratio, 3 / 2);
-  height: auto;
-  max-height: var(--aperto-media-max-h);
-  max-width: 90vw;
-  width: min(
-    var(--aperto-expanded-width, 76vw),
-    calc(
-      var(--aperto-media-max-h) *
-        (
-          var(--aperto-expanded-aspect-ratio-width, 3) /
-            var(--aperto-expanded-aspect-ratio-height, 2)
-        )
-    ),
-    1000px,
-    90vw
-  );
-}
-
-[data-slot="aperto-media"] {
-  @apply relative overflow-hidden;
-}
-
-[data-slot="aperto-media"] > img,
-[data-slot="aperto-media"] > video,
-[data-slot="aperto-media-stage"] > img,
-[data-slot="aperto-media-stage"] > video,
-[data-slot="aperto-transition-media"] > img,
-[data-slot="aperto-transition-media"] > video {
-  @apply block size-full;
-}
-
-[data-slot="aperto-media-stage"] {
-  @apply absolute inset-0;
-}
-
-[data-slot="aperto-content"][data-aperto-transition] [data-slot="aperto-media-stage"],
-[data-slot="aperto-transition-media"] {
-  will-change: opacity, transform;
-}
-
-/* Hide all children during shared-element transition; disable interaction while invisible */
-[data-slot="aperto-content"][data-aperto-transition] > * {
-  @apply pointer-events-none opacity-0;
-}
-
-/* Fade controls in after transition completes */
-@keyframes aperto-control-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+/* Everything below is inside `components` on purpose. These rules shipped
+   layerless until 3.0.1, and a layerless declaration outranks every rule in a
+   named layer regardless of specificity — so a consumer could not override any
+   of it with their own utilities, whatever they tried. Same defect stacksheet
+   carried until 2.0.4. Do not hoist a rule out of this block. */
+@layer components {
+  [data-slot="aperto-trigger"] {
+    @apply relative block overflow-hidden rounded-[var(--aperto-radius,0.5rem)] border-0 bg-transparent p-0 text-left shadow-none outline-none;
+    @apply cursor-zoom-in transition-[filter,transform] duration-200 ease-out;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  [data-slot="aperto-trigger"]:hover {
+    @apply brightness-[0.96];
   }
-}
 
-[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-close"],
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-media"]
-  > [data-slot="aperto-previous-button"],
-[data-slot="aperto-content"]:not([data-aperto-transition])
-  > [data-slot="aperto-media"]
-  > [data-slot="aperto-next-button"] {
-  animation: aperto-control-in 0.35s cubic-bezier(0.25, 0.1, 0.12, 1) 0.08s both;
-}
-
-[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-title"],
-[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-description"],
-[data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-counter"] {
-  animation: aperto-control-in 0.4s cubic-bezier(0.25, 0.1, 0.12, 1) 0.18s both;
-}
-
-[data-slot="aperto-title"] {
-  @apply max-w-[60ch] text-center text-[13px] font-medium leading-snug text-white/90;
-}
-
-[data-slot="aperto-description"] {
-  @apply -mt-1.5 max-w-[60ch] text-center text-[13px] leading-snug text-white/60;
-}
-
-[data-slot="aperto-close"],
-[data-slot="aperto-previous-button"],
-[data-slot="aperto-next-button"] {
-  @apply absolute z-10 grid size-8 place-items-center rounded-full border-0 bg-white/10 text-white/70 transition-[background,color] duration-150 ease-out;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  [data-slot="aperto-close"]:hover,
-  [data-slot="aperto-previous-button"]:hover,
-  [data-slot="aperto-next-button"]:hover {
-    @apply bg-white/20 text-white;
+  [data-slot="aperto-trigger"]:focus-visible {
+    @apply ring-2 ring-white/80 ring-offset-2 ring-offset-black;
   }
-}
 
-[data-slot="aperto-close"]:focus-visible,
-[data-slot="aperto-previous-button"]:focus-visible,
-[data-slot="aperto-next-button"]:focus-visible {
-  @apply outline-none ring-2 ring-white/60;
-}
+  [data-slot="aperto-trigger"] > img,
+  [data-slot="aperto-trigger"] > video {
+    @apply block size-full object-cover;
+  }
 
-[data-slot="aperto-close"] {
-  @apply right-3 top-3;
-}
+  /* Descendant (not child) selectors: thumbnails often nest the media inside
+     caption/badge chrome, and the origin media must vacate while the clone is
+     in flight regardless of wrapper depth. */
+  [data-slot="aperto-trigger"][data-aperto-active] img,
+  [data-slot="aperto-trigger"][data-aperto-active] video {
+    @apply invisible;
+  }
 
-[data-slot="aperto-previous-button"] {
-  @apply left-3 top-1/2 -translate-y-1/2;
-}
+  [data-slot="aperto-overlay"] {
+    @apply fixed inset-0 z-[1000] bg-black/80;
+  }
 
-[data-slot="aperto-next-button"] {
-  @apply right-3 top-1/2 -translate-y-1/2;
-}
-
-[data-slot="aperto-close"] > svg,
-[data-slot="aperto-previous-button"] > svg,
-[data-slot="aperto-next-button"] > svg {
-  @apply pointer-events-none size-4;
-}
-
-[data-slot="aperto-counter"] {
-  @apply rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white/50;
-}
-
-@media (max-width: 560px) {
   [data-slot="aperto-content"] {
-    @apply gap-2;
-    max-width: calc(100vw - 1rem);
+    /* Overridable panel height cap. The media sizing below derives its budget
+       from this same var, so panel and media can never disagree. */
+    --aperto-panel-max-h: min(90vh, 920px);
+    @apply fixed z-[1001] flex h-fit max-h-[var(--aperto-panel-max-h)] w-fit max-w-[min(92vw,1200px)] flex-col items-center justify-center gap-3 overflow-visible rounded-[var(--aperto-radius,0.5rem)] p-0 text-white outline-none;
+    overscroll-behavior: contain;
   }
 
   [data-slot="aperto-content"] > img,
   [data-slot="aperto-content"] > video,
   [data-slot="aperto-content"] > [data-slot="aperto-media"] {
-    /* Same budget model as desktop, with the tighter mobile viewport
-       allowance — and the item's real aspect ratio, not a hardcoded 3:2. */
+    /* The media's real vertical budget: the viewport allowance AND the panel's
+       own max-height minus room for the caption stack (title / description /
+       counter, tunable via --aperto-caption-allowance). Folding the panel cap
+       into the budget — and refusing to flex-shrink — is what keeps the
+       declared aspect-ratio honest: without it, a capped panel shrinks the
+       media's height while the width formula holds, silently distorting the
+       box (a 1:1 item renders visibly non-square). */
     --aperto-media-max-h: min(
-      calc(100dvh - 12rem),
+      calc(100dvh - 8rem),
       calc(var(--aperto-panel-max-h, min(90vh, 920px)) - var(--aperto-caption-allowance, 6rem))
     );
+    @apply block shrink-0 rounded-[var(--aperto-radius,0.5rem)];
+    aspect-ratio: var(--aperto-expanded-aspect-ratio, 3 / 2);
+    height: auto;
     max-height: var(--aperto-media-max-h);
-    max-width: calc(100vw - 2rem);
+    max-width: 90vw;
     width: min(
-      calc(100vw - 2rem),
+      var(--aperto-expanded-width, 76vw),
       calc(
         var(--aperto-media-max-h) *
           (
             var(--aperto-expanded-aspect-ratio-width, 3) /
               var(--aperto-expanded-aspect-ratio-height, 2)
           )
-      )
+      ),
+      1000px,
+      90vw
     );
   }
 
-  [data-slot="aperto-title"],
+  [data-slot="aperto-media"] {
+    @apply relative overflow-hidden;
+  }
+
+  [data-slot="aperto-media"] > img,
+  [data-slot="aperto-media"] > video,
+  [data-slot="aperto-media-stage"] > img,
+  [data-slot="aperto-media-stage"] > video,
+  [data-slot="aperto-transition-media"] > img,
+  [data-slot="aperto-transition-media"] > video {
+    @apply block size-full;
+  }
+
+  [data-slot="aperto-media-stage"] {
+    @apply absolute inset-0;
+  }
+
+  [data-slot="aperto-content"][data-aperto-transition] [data-slot="aperto-media-stage"],
+  [data-slot="aperto-transition-media"] {
+    will-change: opacity, transform;
+  }
+
+  /* Hide all children during shared-element transition; disable interaction while invisible */
+  [data-slot="aperto-content"][data-aperto-transition] > * {
+    @apply pointer-events-none opacity-0;
+  }
+
+  /* Fade controls in after transition completes */
+  @keyframes aperto-control-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-close"],
+  [data-slot="aperto-content"]:not([data-aperto-transition])
+    > [data-slot="aperto-media"]
+    > [data-slot="aperto-previous-button"],
+  [data-slot="aperto-content"]:not([data-aperto-transition])
+    > [data-slot="aperto-media"]
+    > [data-slot="aperto-next-button"] {
+    animation: aperto-control-in 0.35s cubic-bezier(0.25, 0.1, 0.12, 1) 0.08s both;
+  }
+
+  [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-title"],
+  [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-description"],
+  [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-counter"] {
+    animation: aperto-control-in 0.4s cubic-bezier(0.25, 0.1, 0.12, 1) 0.18s both;
+  }
+
+  [data-slot="aperto-title"] {
+    @apply max-w-[60ch] text-center text-[13px] font-medium leading-snug text-white/90;
+  }
+
   [data-slot="aperto-description"] {
-    max-width: calc(100vw - 2rem);
+    @apply -mt-1.5 max-w-[60ch] text-center text-[13px] leading-snug text-white/60;
   }
 
   [data-slot="aperto-close"],
   [data-slot="aperto-previous-button"],
   [data-slot="aperto-next-button"] {
-    @apply size-11;
-    touch-action: manipulation;
+    @apply absolute z-10 grid size-8 place-items-center rounded-full border-0 bg-white/10 text-white/70 transition-[background,color] duration-150 ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    [data-slot="aperto-close"]:hover,
+    [data-slot="aperto-previous-button"]:hover,
+    [data-slot="aperto-next-button"]:hover {
+      @apply bg-white/20 text-white;
+    }
+  }
+
+  [data-slot="aperto-close"]:focus-visible,
+  [data-slot="aperto-previous-button"]:focus-visible,
+  [data-slot="aperto-next-button"]:focus-visible {
+    @apply outline-none ring-2 ring-white/60;
   }
 
   [data-slot="aperto-close"] {
-    @apply right-2 top-2;
+    @apply right-3 top-3;
   }
 
   [data-slot="aperto-previous-button"] {
-    @apply left-2;
+    @apply left-3 top-1/2 -translate-y-1/2;
   }
 
   [data-slot="aperto-next-button"] {
-    @apply right-2;
+    @apply right-3 top-1/2 -translate-y-1/2;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  [data-slot="aperto-content"]:not([data-aperto-transition]) > * {
-    animation: none !important;
+  [data-slot="aperto-close"] > svg,
+  [data-slot="aperto-previous-button"] > svg,
+  [data-slot="aperto-next-button"] > svg {
+    @apply pointer-events-none size-4;
+  }
+
+  [data-slot="aperto-counter"] {
+    @apply rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white/50;
+  }
+
+  @media (max-width: 560px) {
+    [data-slot="aperto-content"] {
+      @apply gap-2;
+      max-width: calc(100vw - 1rem);
+    }
+
+    [data-slot="aperto-content"] > img,
+    [data-slot="aperto-content"] > video,
+    [data-slot="aperto-content"] > [data-slot="aperto-media"] {
+      /* Same budget model as desktop, with the tighter mobile viewport
+         allowance — and the item's real aspect ratio, not a hardcoded 3:2. */
+      --aperto-media-max-h: min(
+        calc(100dvh - 12rem),
+        calc(var(--aperto-panel-max-h, min(90vh, 920px)) - var(--aperto-caption-allowance, 6rem))
+      );
+      max-height: var(--aperto-media-max-h);
+      max-width: calc(100vw - 2rem);
+      width: min(
+        calc(100vw - 2rem),
+        calc(
+          var(--aperto-media-max-h) *
+            (
+              var(--aperto-expanded-aspect-ratio-width, 3) /
+                var(--aperto-expanded-aspect-ratio-height, 2)
+            )
+        )
+      );
+    }
+
+    [data-slot="aperto-title"],
+    [data-slot="aperto-description"] {
+      max-width: calc(100vw - 2rem);
+    }
+
+    [data-slot="aperto-close"],
+    [data-slot="aperto-previous-button"],
+    [data-slot="aperto-next-button"] {
+      @apply size-11;
+      touch-action: manipulation;
+    }
+
+    [data-slot="aperto-close"] {
+      @apply right-2 top-2;
+    }
+
+    [data-slot="aperto-previous-button"] {
+      @apply left-2;
+    }
+
+    [data-slot="aperto-next-button"] {
+      @apply right-2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot="aperto-content"]:not([data-aperto-transition]) > * {
+      animation: none !important;
+    }
   }
 }
