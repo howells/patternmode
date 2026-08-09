@@ -17,6 +17,7 @@ interface SwatchContentProps {
   Icon: SwatchProps["icon"];
   mediaStyle: CSSProperties;
   selected: boolean;
+  transparencyBackdrop: boolean;
   unavailable: boolean;
 }
 
@@ -37,9 +38,14 @@ const SwatchContent = ({
   Icon,
   mediaStyle,
   selected,
+  transparencyBackdrop,
   unavailable,
 }: SwatchContentProps) => (
   <>
+    {/* Behind the fill on purpose: a translucent fill has to composite over it. */}
+    {transparencyBackdrop ? (
+      <span aria-hidden="true" className="patternmode-swatch__backdrop" />
+    ) : null}
     <span aria-hidden="true" className="patternmode-swatch__fill" />
     {children !== undefined && children !== null ? (
       <span className="patternmode-swatch__media" style={mediaStyle}>
@@ -114,6 +120,7 @@ const getSwatchDataProps = ({
   shape,
   showRing,
   size,
+  transparencyBackdrop,
   unavailable,
 }: {
   flat: boolean;
@@ -123,6 +130,7 @@ const getSwatchDataProps = ({
   shape: SwatchProps["shape"];
   showRing: boolean;
   size: SwatchProps["size"];
+  transparencyBackdrop: boolean;
   unavailable: boolean;
 }) => ({
   "data-flat": flat ? "true" : undefined,
@@ -133,6 +141,7 @@ const getSwatchDataProps = ({
   "data-size": size,
   "data-slot": "swatch",
   "data-tone": lightTone,
+  "data-transparency-backdrop": transparencyBackdrop ? "true" : undefined,
   "data-unavailable": unavailable ? "true" : undefined,
 });
 
@@ -253,6 +262,7 @@ export const Swatch = ({
   size = "base",
   style,
   texture,
+  transparencyBackdrop = false,
   unavailable = false,
   ...props
 }: SwatchProps) => {
@@ -291,6 +301,7 @@ export const Swatch = ({
     shape,
     showRing,
     size,
+    transparencyBackdrop,
     unavailable,
   });
 
@@ -300,6 +311,7 @@ export const Swatch = ({
       Icon={Icon}
       mediaStyle={mediaStyle}
       selected={selected}
+      transparencyBackdrop={transparencyBackdrop}
       unavailable={unavailable}
     >
       {render ? undefined : children}

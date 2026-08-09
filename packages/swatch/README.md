@@ -33,6 +33,34 @@ export function Example() {
 
 Use `color` for a solid fill, `background` for a CSS background value, or `colors` for weighted palette stops. `Swatch` remains representation-only: compose selection around it, or pass `onRemove` when the swatch should expose its built-in remove request affordance.
 
+## Transparent values
+
+A partially transparent fill composites against whatever is behind it, so on a
+white page a 40% colour renders as a pale solid — indistinguishable from a
+lighter opaque colour, or from an empty swatch. Pass `transparencyBackdrop` to
+put a chequerboard behind the fill so the transparency reads as transparency:
+
+```tsx
+<Swatch aria-label="Overlay tint" color="rgb(49 92 75 / 40%)" transparencyBackdrop />
+```
+
+**It is an explicit declaration, never inferred.** Alpha cannot be detected
+across everything a swatch accepts — a gradient, a `color-mix()`, a CSS variable
+or child media can all carry alpha the component cannot see — so a swatch that
+guessed would be right sometimes and silently wrong the rest of the time. You
+know whether your value is transparent; say so.
+
+Three knobs, each read at the point of use, so setting them on any ancestor works:
+
+| Custom property                       | Default             | Effect                |
+| ------------------------------------- | ------------------- | --------------------- |
+| `--patternmode-swatch-backdrop-size`  | `8px`               | Chequer square size   |
+| `--patternmode-swatch-backdrop-color` | `var(--border, …)`  | Chequer colour        |
+| `--patternmode-swatch-backdrop-base`  | `var(--card, #fff)` | The surface behind it |
+
+The two colour defaults come from the theme, so the backdrop follows a dark mode
+without any work from you.
+
 ## Rendering as a child element
 
 By default `Swatch` renders its own `<figure>` wrapper. Pass `asChild` to render

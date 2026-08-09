@@ -73,6 +73,7 @@
     box-shadow: none;
   }
 
+  .patternmode-swatch__backdrop,
   .patternmode-swatch__fill,
   .patternmode-swatch__media,
   .patternmode-swatch__scrim {
@@ -80,6 +81,23 @@
     inset: 0;
     overflow: hidden;
     position: absolute;
+  }
+
+  /* The transparency backdrop sits behind the fill so a translucent Visual
+     Value composites over it and reads as transparent rather than as white or
+     as absence. Both knobs are read at the point of use with a fallback, so a
+     consumer can set them on any ancestor — declaring a default on this element
+     would beat an inherited value and make them inert. */
+  .patternmode-swatch__backdrop {
+    background-color: var(--patternmode-swatch-backdrop-base, var(--card, #fff));
+    background-image: conic-gradient(
+      var(--patternmode-swatch-backdrop-color, var(--border, #dcdcdc)) 0deg 90deg,
+      transparent 90deg 180deg,
+      var(--patternmode-swatch-backdrop-color, var(--border, #dcdcdc)) 180deg 270deg,
+      transparent 270deg
+    );
+    background-size: var(--patternmode-swatch-backdrop-size, 8px)
+      var(--patternmode-swatch-backdrop-size, 8px);
   }
 
   .patternmode-swatch__fill {

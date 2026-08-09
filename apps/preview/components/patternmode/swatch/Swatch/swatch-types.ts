@@ -118,6 +118,21 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
    */
   texture?: SwatchTexture;
   /**
+   * Renders a visible backdrop behind the fill so a partially transparent
+   * Visual Value reads as transparent rather than as white or as absence.
+   *
+   * Opt in explicitly. CSS alpha cannot be detected reliably across every
+   * accepted value — a gradient, a `color-mix()`, a CSS variable or child
+   * media can all carry alpha the component cannot see — so this is a
+   * declaration by the caller, not an inference.
+   *
+   * Tune it with `--patternmode-swatch-backdrop-size` and
+   * `--patternmode-swatch-backdrop-color`.
+   *
+   * Default `false`.
+   */
+  transparencyBackdrop?: boolean;
+  /**
    * Marks the swatch as unavailable.
    *
    * Default `false`.

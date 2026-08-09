@@ -113,6 +113,22 @@ const SwatchDemoStates = () => (
         <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
         <span>Unavailable</span>
       </div>
+      {/* The pair is the point: the same 40% color with and without a backdrop.
+          Without one it reads as a pale solid, which is indistinguishable from
+          a lighter opaque color. */}
+      <div className="swatch-demo-specimen">
+        <Swatch aria-label="Translucent, no backdrop" color="rgb(49 92 75 / 40%)" size="xl" />
+        <span>40%, bare</span>
+      </div>
+      <div className="swatch-demo-specimen">
+        <Swatch
+          aria-label="Translucent on a backdrop"
+          color="rgb(49 92 75 / 40%)"
+          size="xl"
+          transparencyBackdrop
+        />
+        <span>40%, backdrop</span>
+      </div>
     </div>
   </div>
 );

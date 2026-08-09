@@ -1063,6 +1063,26 @@
     padding: 0.75rem 0.625rem;
     text-align: center;
   }
+  .patternmode-swatch__backdrop,
+  .patternmode-swatch__fill,
+  .patternmode-swatch__media,
+  .patternmode-swatch__scrim {
+    border-radius: inherit;
+    inset: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+  .patternmode-swatch__backdrop {
+    background-color: var(--patternmode-swatch-backdrop-base, var(--card, #fff));
+    background-image: conic-gradient(
+      var(--patternmode-swatch-backdrop-color, var(--border, #dcdcdc)) 0deg 90deg,
+      transparent 90deg 180deg,
+      var(--patternmode-swatch-backdrop-color, var(--border, #dcdcdc)) 180deg 270deg,
+      transparent 270deg
+    );
+    background-size: var(--patternmode-swatch-backdrop-size, 8px)
+      var(--patternmode-swatch-backdrop-size, 8px);
+  }
 }
 
 @property --patternmode-scrollframe-mask-top {
