@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 
+import { setTimeout as sleep } from "node:timers/promises";
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { Profiler } from "react";
@@ -16,6 +17,12 @@ class ResizeObserverMock {
 
 beforeEach(() => {
   vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+  // jsdom implements no Web Animations API, and base-ui's scroll area calls
+  // `getAnimations()` from a timer of its own. Any test that waits long enough
+  // for that timer to fire hits it, which has nothing to do with the frame.
+  if (typeof Element.prototype.getAnimations !== "function") {
+    Element.prototype.getAnimations = () => [];
+  }
 });
 
 afterEach(() => {
@@ -360,6 +367,108 @@ describe("ScrollFrame", () => {
 
     expect(root).not.toHaveAttribute("data-dragging", "true");
     expect(viewport.scrollLeft).toBe(20);
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("never captures the pointer, so plain clicks still activate links inside the frame", () => {
+    // Capturing retargets the gesture — including the compatibility `mouseup`
+    // and `click` — at the capturing element. A click delivered to the scroll
+    // container never activates the element under the cursor, so every link in
+    // a drag-scrollable frame went dead: press, release, nothing, with nothing
+    // thrown and nothing prevented. The old unit tests missed it because they
+    // dispatch `click` at the target directly, which is exactly what the
+    // browser stops doing under capture.
+    render(
+      <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
+        <a href="/projects/one">One</a>
+      </ScrollFrame>,
+    );
+
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    const content = screen.getByTestId("scrollframe-content");
+    const link = screen.getByRole("link", { name: "One" });
+    const setPointerCapture = vi.fn<(pointerId: number) => void>();
+    Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
+      scrollLeft: { configurable: true, value: 0, writable: true },
+      scrollWidth: { configurable: true, value: 300 },
+    });
+    Object.defineProperties(content, {
+      setPointerCapture: { configurable: true, value: setPointerCapture },
+    });
+
+    act(() => {
+      fireEvent.pointerDown(link, { button: 0, clientX: 0, pointerId: 1 });
+      fireEvent(window, new PointerEvent("pointermove", { clientX: -40, pointerId: 1 }));
+      fireEvent(window, new PointerEvent("pointerup", { pointerId: 1 }));
+    });
+
+    expect(setPointerCapture).not.toHaveBeenCalled();
+  });
+
+  it("commits a drag from moves that land outside the frame", () => {
+    // The deciding move of a drag begun near the edge lands outside the
+    // element, so an element-bound move handler never sees it and the drag
+    // never starts. Window-level tracking is what makes edge drags possible
+    // without reaching for pointer capture.
+    render(
+      <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
+        <a href="/projects/one">One</a>
+      </ScrollFrame>,
+    );
+
+    const root = screen.getByRole("region", { name: "Winners" });
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    const link = screen.getByRole("link", { name: "One" });
+    Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
+      scrollLeft: { configurable: true, value: 120, writable: true },
+      scrollWidth: { configurable: true, value: 300 },
+    });
+
+    act(() => {
+      fireEvent.pointerDown(link, { button: 0, clientX: 0, pointerId: 1 });
+      // Never touches the frame again — every move is on window.
+      fireEvent(window, new PointerEvent("pointermove", { clientX: -60, pointerId: 1 }));
+    });
+
+    expect(root).toHaveAttribute("data-dragging", "true");
+    expect(viewport.scrollLeft).toBe(180);
+  });
+
+  it("stops suppressing clicks once the gesture is over", async () => {
+    // The flag used to be cleared only by a click arriving. A drag that ended
+    // without producing one left it set, and the next unrelated click anywhere
+    // in the frame was swallowed.
+    const handleClick = vi.fn<() => void>();
+    render(
+      <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
+        <button onClick={handleClick} type="button">
+          One
+        </button>
+      </ScrollFrame>,
+    );
+
+    const viewport = screen.getByTestId("scrollframe-viewport");
+    const button = screen.getByRole("button", { name: "One" });
+    Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, value: 100 },
+      scrollLeft: { configurable: true, value: 120, writable: true },
+      scrollWidth: { configurable: true, value: 300 },
+    });
+
+    act(() => {
+      fireEvent.pointerDown(button, { button: 0, clientX: 0, pointerId: 1 });
+      fireEvent(window, new PointerEvent("pointermove", { clientX: -60, pointerId: 1 }));
+      fireEvent(window, new PointerEvent("pointerup", { pointerId: 1 }));
+      // The drag produced no click at all.
+    });
+    // Let the macrotask that clears the suppression flag run.
+    await act(async () => {
+      await sleep(0);
+    });
+
+    fireEvent.click(button);
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 

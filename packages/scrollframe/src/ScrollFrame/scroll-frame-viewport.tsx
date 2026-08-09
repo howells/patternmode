@@ -3,7 +3,7 @@
 import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames } from "@patternmode/system";
 import type { MouseEvent, PointerEvent } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { useScrollFrame } from "./scroll-frame-context";
 import type {
@@ -69,10 +69,56 @@ const useDragScrollHandlers = ({
   const sessionRef = useRef<DragScrollSession | null>(null);
   const committedRef = useRef(false);
   const suppressClickRef = useRef(false);
+  const detachRef = useRef<(() => void) | null>(null);
+  // The move handler is recreated every render and closes over `axes`,
+  // `dragScroll` and `viewport`; the window listener must always call the
+  // current one rather than the one captured when the gesture began.
+  const trackRef = useRef<(event: globalThis.PointerEvent) => void>(() => {
+    // Replaced on every render; only a no-op before the first one.
+  });
+  const endRef = useRef<() => void>(() => {
+    // As above.
+  });
+
+  const detachWindowTracking = () => {
+    detachRef.current?.();
+    detachRef.current = null;
+  };
+
+  const attachWindowTracking = () => {
+    detachWindowTracking();
+    if (typeof window === "undefined") {
+      return;
+    }
+    const onMove = (event: globalThis.PointerEvent) => {
+      trackRef.current(event);
+    };
+    const onEnd = () => {
+      endRef.current();
+    };
+    window.addEventListener("pointermove", onMove, { capture: true });
+    window.addEventListener("pointerup", onEnd, { capture: true });
+    window.addEventListener("pointercancel", onEnd, { capture: true });
+    detachRef.current = () => {
+      window.removeEventListener("pointermove", onMove, { capture: true });
+      window.removeEventListener("pointerup", onEnd, { capture: true });
+      window.removeEventListener("pointercancel", onEnd, { capture: true });
+    };
+  };
 
   const endDrag = () => {
+    detachWindowTracking();
     if (committedRef.current) {
       setDragging(false);
+      // The click that follows a drag has not been dispatched yet, so the
+      // suppression flag has to outlive this call — but only just. Clearing it
+      // on a macrotask lets the trailing click (dispatched synchronously after
+      // pointerup) still be swallowed, while making sure a gesture that never
+      // produces a click cannot leave the flag set and eat somebody else's
+      // click minutes later.
+      setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 0);
     }
     sessionRef.current = null;
     committedRef.current = false;
@@ -98,10 +144,29 @@ const useDragScrollHandlers = ({
       startY: event.clientY,
     };
     committedRef.current = false;
-    event.currentTarget.setPointerCapture?.(event.pointerId);
+    // Pointer capture is deliberately never taken.
+    //
+    // Capturing retargets the whole gesture — including the compatibility
+    // `mouseup` and `click` — at the capturing element. A click delivered to
+    // the scroll container instead of the element under the cursor never
+    // activates that element, so every link and button inside a
+    // drag-scrollable frame silently stops working: press an anchor, release,
+    // nothing happens, nothing thrown, nothing prevented.
+    //
+    // Capture was there to keep the gesture alive when the cursor leaves the
+    // frame. Window-level listeners do that without touching event targeting,
+    // and they also cover the case capture never did: a drag that begins
+    // within the activation distance of the edge and pulls straight out, where
+    // the deciding move lands outside the element and the drag never starts.
+    attachWindowTracking();
   };
 
-  const handlePointerMoveCapture = (event: PointerEvent<HTMLDivElement>) => {
+  /**
+   * Runs for every move in the gesture, whether the cursor is still inside the
+   * frame or not. Takes the DOM event rather than React's synthetic one so the
+   * window listener and the element handler can share it.
+   */
+  const trackDrag = (event: globalThis.PointerEvent | PointerEvent<HTMLDivElement>) => {
     const session = sessionRef.current;
     if (
       !(
@@ -146,10 +211,7 @@ const useDragScrollHandlers = ({
     event.preventDefault();
   };
 
-  const handlePointerEndCapture = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerId === sessionRef.current?.pointerId) {
-      event.currentTarget.releasePointerCapture?.(event.pointerId);
-    }
+  const handlePointerEndCapture = () => {
     endDrag();
   };
 
@@ -157,16 +219,28 @@ const useDragScrollHandlers = ({
     if (!suppressClickRef.current) {
       return;
     }
-    suppressClickRef.current = false;
+    // Left set until the macrotask scheduled in `endDrag`, so a gesture that
+    // ends without producing a click cannot strand it.
     event.preventDefault();
     event.stopPropagation();
   };
+
+  // Window listeners call through refs so they always run the current closure,
+  // and so a component unmounting mid-gesture cannot leave them attached.
+  trackRef.current = trackDrag;
+  endRef.current = endDrag;
+  useEffect(
+    () => () => {
+      detachWindowTracking();
+    },
+    [],
+  );
 
   return {
     handleClickCapture,
     handlePointerDownCapture,
     handlePointerEndCapture,
-    handlePointerMoveCapture,
+    handlePointerMoveCapture: trackDrag,
   };
 };
 
