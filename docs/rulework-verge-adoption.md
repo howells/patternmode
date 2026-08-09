@@ -48,15 +48,15 @@ registry, so this is one dependency line, not an install-graph change.
 One rule, three triggers, one guarantee — the same rule
 `docs/design/specs/design-deferral.md` § "The hover contract" already states:
 
-| | |
-|---|---|
-| **Pointer** | `@media (hover: hover)` + `:hover` on the root. Declared only where hover is a real input, so a touch device never enters the hidden state at all. |
-| **Keyboard** | `:focus-within` on the root, unconditionally. Not `:focus-visible` — the slot is never the focus target, its children are. |
-| **Touch** | `@media (hover: none)` holds the slot revealed. Nothing may hide where nothing can point. |
-| **Open menus** | `[data-popup-open]`, `[data-state="open"]` **and `[aria-expanded="true"]`** all hold the slot open, so the `···` does not vanish when the pointer travels to the menu it just opened. |
-| **Layout** | Only `opacity` and `pointer-events` change. Identical geometry at rest and revealed. |
-| **Nesting** | Solved by inheritance, not by named groups. A nested root re-declares the properties on itself, so its subtree reads its own state. An inherited value is the weakest thing in the cascade, so the nearest root always wins. |
-| **Reduced motion** | Transition dropped under `prefers-reduced-motion: reduce`. |
+|                    |                                                                                                                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pointer**        | `@media (hover: hover)` + `:hover` on the root. Declared only where hover is a real input, so a touch device never enters the hidden state at all.                                                                           |
+| **Keyboard**       | `:focus-within` on the root, unconditionally. Not `:focus-visible` — the slot is never the focus target, its children are.                                                                                                   |
+| **Touch**          | `@media (hover: none)` holds the slot revealed. Nothing may hide where nothing can point.                                                                                                                                    |
+| **Open menus**     | `[data-popup-open]`, `[data-state="open"]` **and `[aria-expanded="true"]`** all hold the slot open, so the `···` does not vanish when the pointer travels to the menu it just opened.                                        |
+| **Layout**         | Only `opacity` and `pointer-events` change. Identical geometry at rest and revealed.                                                                                                                                         |
+| **Nesting**        | Solved by inheritance, not by named groups. A nested root re-declares the properties on itself, so its subtree reads its own state. An inherited value is the weakest thing in the cascade, so the nearest root always wins. |
+| **Reduced motion** | Transition dropped under `prefers-reduced-motion: reduce`.                                                                                                                                                                   |
 
 Two implementation choices you will recognise, because they came from you:
 
@@ -87,12 +87,12 @@ The audit found four sharing no code. Three have already been consolidated onto
 `revealAtRest` (`packages/ui/src/components/row-actions.tsx:76`) and are correct
 on pointer and keyboard:
 
-| Site | State | Migrate to |
-|---|---|---|
-| `packages/ui/src/components/row-actions.tsx:151` — rows | on `revealAtRest`, named group `group/row-actions` | `Verge.Root` + `Verge.Slot` (keep `RowActions` as the wrapper — see below) |
-| `packages/ui/src/components/panel-toggle.tsx:258` — panel headers | on `revealAtRest`, `group/panel-header` | `Verge.Root` on the header, `Verge.Slot` on the toggle rail |
-| `packages/ui/src/components/surface-toolbar.tsx:192` — search qualifiers | on `revealAtRest`, plus a `group-data-filled` trigger | `Verge.Slot` **with `visible={filled}`** — verge has no `data-filled` concept, and this is exactly what `visible` is for |
-| `packages/ui/src/components/sidebar.tsx:573` — vendored shadcn menu action | **still on raw class names**: `md:opacity-0` + `group-hover/menu-item:opacity-100` + `group-focus-within/menu-item:opacity-100` | leave it, or migrate — see below |
+| Site                                                                       | State                                                                                                                           | Migrate to                                                                                                               |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `packages/ui/src/components/row-actions.tsx:151` — rows                    | on `revealAtRest`, named group `group/row-actions`                                                                              | `Verge.Root` + `Verge.Slot` (keep `RowActions` as the wrapper — see below)                                               |
+| `packages/ui/src/components/panel-toggle.tsx:258` — panel headers          | on `revealAtRest`, `group/panel-header`                                                                                         | `Verge.Root` on the header, `Verge.Slot` on the toggle rail                                                              |
+| `packages/ui/src/components/surface-toolbar.tsx:192` — search qualifiers   | on `revealAtRest`, plus a `group-data-filled` trigger                                                                           | `Verge.Slot` **with `visible={filled}`** — verge has no `data-filled` concept, and this is exactly what `visible` is for |
+| `packages/ui/src/components/sidebar.tsx:573` — vendored shadcn menu action | **still on raw class names**: `md:opacity-0` + `group-hover/menu-item:opacity-100` + `group-focus-within/menu-item:opacity-100` | leave it, or migrate — see below                                                                                         |
 
 `sidebar.tsx:573` is the outlier and the one worth looking at. It is the
 class-name form the layerless `.opacity-0` beat, and its touch story is
@@ -114,12 +114,12 @@ everywhere at once.
 **Keep `RowActions` as your name.** Reimplement its body over verge rather than
 touching ~20 call sites. Your props carry over with their semantics unchanged:
 
-| Yours | Verge |
-|---|---|
-| `slots?: number` | `slots?: number` — identical meaning. Width per control is `--patternmode-verge-slot-size`, default `1.75rem` = 28px, which is your `SLOT_WIDTH` exactly. |
-| `visible?: boolean` | `visible?: boolean` — identical meaning, including the "not an escape hatch for this row matters more" rule, which is in verge's own JSDoc. |
+| Yours                                              | Verge                                                                                                                                                                                                                                            |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `slots?: number`                                   | `slots?: number` — identical meaning. Width per control is `--patternmode-verge-slot-size`, default `1.75rem` = 28px, which is your `SLOT_WIDTH` exactly.                                                                                        |
+| `visible?: boolean`                                | `visible?: boolean` — identical meaning, including the "not an escape hatch for this row matters more" rule, which is in verge's own JSDoc.                                                                                                      |
 | `rowActionsGroup = "group/row-actions"` on the row | `<Verge.Root as="div">` (or `as="li"` / `as="tr"`) wrapping the row. Verge uses inheritance, so there is no group class to apply — the root **is** the mechanism. Do not reach for the raw `.patternmode-verge-root` class name; it is internal. |
-| `revealAtRest` exported for non-row surfaces | `Verge.Slot` — same idea, now a component. The reason you exported it (panel rails, search qualifiers, one contract spelled once) is the reason verge exists. |
+| `revealAtRest` exported for non-row surfaces       | `Verge.Slot` — same idea, now a component. The reason you exported it (panel rails, search qualifiers, one contract spelled once) is the reason verge exists.                                                                                    |
 
 Three things to check while migrating:
 

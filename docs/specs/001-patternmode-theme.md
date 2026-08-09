@@ -36,15 +36,15 @@ npx shadcn@latest add @patternmode/theme
 
 ## Decisions made (with rationale)
 
-| Decision     | Choice                             | Rationale                                                                                                                                     |
-| ------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Basis        | Patternmode-canonical              | It's the UI-library home; its `:root` values already dominated the synthesis. Scaffold contributes dark mode, agentsurface typography details |
-| Placement    | Inside patternmode monorepo        | One design-system brand, one registry, one domain; reuses existing publishing machinery. howellsui repo abandoned                             |
-| Distribution | Self-hosted shadcn registry        | Canonical shadcn mechanism; works for projects that don't exist yet                                                                           |
-| Scope        | Tokens only                        | Maximum portability; stock components stay upgradeable                                                                                        |
-| Shadows      | Soft ink-tinted (patternmode's)    | Flat-by-default survives, but shadcn popovers/dialogs need elevation; ink-tinted shadows keep it "lifted paper," not generic grey             |
-| Dark mode    | Warm charcoal + sage (scaffold's)  | Tonal continuity with warm-paper light mode — one material, two lights                                                                        |
-| Fonts        | `font-inter` registry item         | Pinned `@fontsource-variable/inter`, self-hosted & subset-split (no Google/rsms); cssVars still work standalone via `var(--font-inter, …)`    |
+| Decision     | Choice                            | Rationale                                                                                                                                     |
+| ------------ | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Basis        | Patternmode-canonical             | It's the UI-library home; its `:root` values already dominated the synthesis. Scaffold contributes dark mode, agentsurface typography details |
+| Placement    | Inside patternmode monorepo       | One design-system brand, one registry, one domain; reuses existing publishing machinery. howellsui repo abandoned                             |
+| Distribution | Self-hosted shadcn registry       | Canonical shadcn mechanism; works for projects that don't exist yet                                                                           |
+| Scope        | Tokens only                       | Maximum portability; stock components stay upgradeable                                                                                        |
+| Shadows      | Soft ink-tinted (patternmode's)   | Flat-by-default survives, but shadcn popovers/dialogs need elevation; ink-tinted shadows keep it "lifted paper," not generic grey             |
+| Dark mode    | Warm charcoal + sage (scaffold's) | Tonal continuity with warm-paper light mode — one material, two lights                                                                        |
+| Fonts        | `font-inter` registry item        | Pinned `@fontsource-variable/inter`, self-hosted & subset-split (no Google/rsms); cssVars still work standalone via `var(--font-inter, …)`    |
 
 ## The token set
 

@@ -127,7 +127,7 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
   speculatively, before a drag threshold, kills them all with nothing thrown, nothing
   prevented and nothing in the console. `stacksheet`'s `use-drag` and `briolette` capture
   after the drag commits; `scrollframe` did not, and shipped dead links downstream (2.0.2).
-- **Where capture on pointerdown *is* correct, the captured element may never contain an
+- **Where capture on pointerdown _is_ correct, the captured element may never contain an
   interactive descendant.** `halo`'s pad and arc commit a colour on pointerdown, so capturing
   there is honest — but measured in a browser, a button placed inside the pad receives
   `pointerdown` and then loses both `pointerup` and `click` to the pad. Their children are

@@ -11,8 +11,8 @@
     "dev": "pnpm --filter @howells/patternmode-web dev",
     "env:check": "envy check local --schema ./scripts/release-env/schema.mjs --from .env.local",
     "format": "howells-fix .",
-    "lint": "turbo run lint && howells-check scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-check",
-    "lint:fix": "turbo run lint:fix && howells-fix scripts oxlint.config.ts oxfmt.config.ts && howells-workspace-fix",
+    "lint": "turbo run lint && howells-check scripts oxlint.config.ts oxfmt.config.ts *.md docs && howells-workspace-check",
+    "lint:fix": "turbo run lint:fix && howells-fix scripts oxlint.config.ts oxfmt.config.ts *.md docs && howells-workspace-fix",
     "prepare": "howells-husky",
     "publish:packages": "node scripts/publish-packages.mjs",
     "smoke:tarballs": "node scripts/smoke-tarballs.mjs",
@@ -34,7 +34,7 @@
     "zod": "catalog:"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,jsonc,css}": "node scripts/lint-staged-fix.mjs"
+    "*.{js,ts,jsx,tsx,json,jsonc,css,md}": "node scripts/lint-staged-fix.mjs"
   },
   "engines": {
     "node": ">=24.15.0 <25"
