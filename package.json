@@ -17,6 +17,7 @@
     "publish:packages": "node scripts/publish-packages.mjs",
     "smoke:tarballs": "node scripts/smoke-tarballs.mjs",
     "test": "turbo run test",
+    "test:browser": "turbo run test:browser --filter=./packages/*",
     "typecheck": "turbo run typecheck",
     "version-packages": "changeset version"
   },

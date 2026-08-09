@@ -14,3 +14,7 @@ test-results
 .arc/
 .vercel
 apps/web/public/r/
+
+# vitest browser mode writes these on a failing assertion
+.vitest-attachments
+__screenshots__

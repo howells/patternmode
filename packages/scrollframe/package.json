@@ -52,6 +52,7 @@
     "lint:fix": "howells-fix .",
     "prepack": "node ../../scripts/prepack-build.mjs",
     "test": "vitest run",
+    "test:browser": "vitest run --config vitest.browser.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -68,14 +69,18 @@
     "@testing-library/react": "^16.3.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
     "concurrently": "^9.2.1",
     "jsdom": "catalog:",
+    "playwright": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
     "tsdown": "^0.22.0",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {
     "react": "^19.0.0",

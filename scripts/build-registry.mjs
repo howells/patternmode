@@ -350,7 +350,18 @@ const collectSourceFiles = (dir) => {
     if (!/\.(?:ts|tsx)$/u.test(entry.name)) {
       continue;
     }
-    if (/\.test\.[^.]+$/u.test(entry.name) || /\.integration\.test\.[^.]+$/u.test(entry.name)) {
+    /*
+     * Tests never ship to a consumer. `.browser.tsx` is here because it does
+     * NOT end in `.test.tsx` — that is deliberate, so vitest's default include
+     * skips it under jsdom — which also means it slipped past a filter written
+     * only for `.test.`, and got vendored into `apps/preview`, where its
+     * `vitest/browser` import failed the Next build.
+     */
+    if (
+      /\.test\.[^.]+$/u.test(entry.name) ||
+      /\.integration\.test\.[^.]+$/u.test(entry.name) ||
+      /\.browser\.[^.]+$/u.test(entry.name)
+    ) {
       continue;
     }
     files.push(full);

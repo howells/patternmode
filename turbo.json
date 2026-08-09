@@ -29,6 +29,10 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "test:browser": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
     "typecheck": {
       "dependsOn": ["^build"]
     }

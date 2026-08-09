@@ -166,26 +166,54 @@ attributed to the file, with all 18 tests still reporting as passed.** `tags` an
 `aperto` already stub it. `swatch` uses only `merge-props`/`use-render`, no
 scroll area, so it is genuinely not at risk.
 
-### −1.4 OPEN — a real browser test harness is not built, and should be considered
+### −1.4 DONE — the browser harness exists, as `pnpm test:browser`
 
-Everything above about capture, focus and click delivery was proved in a browser
-by hand and is guarded in jsdom only by proxy. That is the honest state: the
-proxies would have caught this bug class, but they assert the mechanism rather
-than the user-visible outcome, and nothing in CI opens a browser.
+Daniel approved it on 2026-08-09, scoped to a **separate gate**. Vitest browser
+mode on Playwright Chromium, run by `pnpm test:browser`, deliberately **not** part
+of `pnpm check` — the ordinary gate stays free of browser binaries so nobody is
+blocked by a missing one. Run it before releasing `scrollframe` or `halo`.
 
-The candidates are the interaction surfaces where the browser decides something
-jsdom does not model: `scrollframe` drag-scroll, `halo` and `briolette` pointer
-gestures, `stacksheet` drag dismissal, `aperto`'s shared-element transitions
-(§0.16 already verified those by hand for the same reason), and `verge`'s three
-reveal branches (§0.14, also hand-verified). **Five separate sessions have now
-reached for a browser because jsdom could not answer** — that recurrence is the
-argument, not any one bug.
+Catalogued: `@vitest/browser`, `@vitest/browser-playwright`, `playwright`,
+`vitest-browser-react`. The `vitest` catalog moved `^4.1.8` → `^4.1.10` because
+the browser packages resolve 4.1.10 and vitest warns loudly about mixed versions.
+One-time setup per machine:
+`pnpm --filter @patternmode/scrollframe exec playwright install chromium`.
 
-Not started, and deliberately not started unprompted: it is a dependency and CI
-decision, not a drive-by. Concretely it means `@vitest/browser` plus `playwright`
-as devDependencies and a `playwright install chromium` step — neither is in the
-tree today, so every contributor's install grows by a browser binary. That is
-Daniel's call, not a session's.
+**What is covered, and it is the outcome rather than the mechanism.**
+`scrollframe` asserts that a real click on a button inside a drag-scrollable
+frame activates it, that a real drag scrolls without activating anything, and
+that the click after a drag still works. `halo` asserts that clicking the pad and
+then pressing ArrowRight moves the colour. Both were proved against the real
+defects: reintroduce the 2.0.0 capture bug and the browser suite fails with
+`expected +0 to be 1` — the handler never ran — while the jsdom suite fails on
+`setPointerCapture` was called. Two layers, two different sentences, same bug.
+
+**Three mechanics worth knowing before adding more.**
+
+- **The files are `src/**/_.browser.tsx`, never `_.test.tsx`.** That keeps them
+out of vitest's default include so `pnpm test`never runs them under jsdom, and
+each`tsconfig.json`excludes them so they cannot reach`dist`.
+- **`scripts/build-registry.mjs` had to learn about them.** Its filter matched
+  `.test.` only, so the first version of these tests was **vendored into
+  `apps/preview`** and failed its Next build on a `vitest/browser` import. The
+  filter now excludes `.browser.` too. Any future test-file naming scheme has to
+  clear the same three hurdles: vitest's include, tsconfig, and the registry.
+- **`pnpm test:browser` is filtered to `./packages/*`.** Without it, turbo
+  schedules the `build` dependency for every workspace project and a browser test
+  run ends up building the preview app's Next bundle.
+
+**Deliberately not covered: halo's hue arc.** Its keyboard surface is a 1×1
+visually hidden input Playwright refuses to click, and the arc is a stroked path
+whose bounding-box centre is empty space with the pad sitting behind it — a
+centre-click would land on the pad and pass for the wrong reason. Hitting the
+stroke needs hard-coded coordinates that break the first time the geometry is
+retuned. It stays asserted in jsdom plus a hand check, with the reason written in
+the test file so nobody re-adds it as a flaky test.
+
+Still uncovered, and still hand-verified only: `briolette` pointer gestures,
+`stacksheet` drag dismissal, `aperto`'s shared-element transitions (§0.16),
+`verge`'s three reveal branches (§0.14). The harness is there now, so adding
+them is a test-writing job rather than an infrastructure decision.
 
 ### −1.5 OPEN — `CONTEXT.md` has no vocabulary for four published components
 

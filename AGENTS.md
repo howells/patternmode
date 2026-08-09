@@ -138,6 +138,30 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
   arrived by pointer. Capture is not the cause; measured both ways. `briolette` had this
   right, `halo` did not until 2026-08-09.
 
+## Browser tests
+
+- **`pnpm test:browser` is a separate gate and is NOT part of `pnpm check`.** It runs Vitest
+  browser mode on Playwright Chromium, so it needs a browser binary
+  (`pnpm --filter @patternmode/scrollframe exec playwright install chromium`). `pnpm check`
+  stays browser-free on purpose: nobody should be blocked from the ordinary gate by a
+  missing binary. **Run it before releasing any package whose behaviour depends on where
+  the browser delivers an event** — today `scrollframe` and `halo`.
+- **Browser tests are `src/**/_.browser.tsx`, never `_.test.tsx`.** The name keeps them out
+of vitest's default include, so `pnpm test`never tries them under jsdom. Each package's`tsconfig.json`excludes them so they cannot reach`dist`, and
+`scripts/build-registry.mjs`skips them so they cannot be vendored into`apps/preview`—
+that last one is not hypothetical; the first version of these tests shipped into the
+preview app and failed its Next build on a`vitest/browser` import.
+- **They assert the outcome; the jsdom tests assert the mechanism.** Keep both. The jsdom
+  test localises a failure and runs in milliseconds; the browser test is the only one that
+  answers "can a user click this". Reintroducing the 2.0.0 capture bug fails the jsdom
+  suite with `setPointerCapture` was called, and the browser suite with `expected +0 to be
+1` — the handler never ran.
+- **A browser test that needs hard-coded coordinates should not be written.** Halo's hue arc
+  is deliberately uncovered: its keyboard surface is a 1×1 visually hidden input Playwright
+  refuses to click, and the arc is a stroked path whose bounding-box centre is empty space
+  with the pad behind it, so a centre-click would pass for the wrong reason. It is asserted
+  in jsdom and verified by hand instead, with the reason written in the test file.
+
 ## Verification discipline
 
 - **A unit test cannot detect a bug about where an event is delivered.** `fireEvent.click(target)`
