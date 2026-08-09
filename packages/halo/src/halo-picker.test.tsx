@@ -160,6 +160,73 @@ describe("HaloPicker", () => {
     expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 59, s: 48 });
   });
 
+  /*
+   * These assert the contract rather than the outcome, deliberately.
+   *
+   * jsdom dispatches whatever event you ask it to, so a test that fires
+   * `click` at a target proves only that the test fired it — which is exactly
+   * how a pointer-capture bug shipped in scrollframe past a green suite. The
+   * browser is the thing that decides where a click lands, and it is the part
+   * jsdom does not model. So assert the input that decides the browser's
+   * behaviour: whether focus moved, and whether capture was taken.
+   *
+   * Verified in a real browser on 2026-08-09: click the pad, press
+   * ArrowRight, and the saturation moves. Before the focus call it did not.
+   */
+  it("focuses the pad on pointerdown, so the keyboard still works after a click", () => {
+    render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
+
+    const pad = screen.getByTestId("halo-picker-pad");
+    expect(pad).not.toHaveFocus();
+
+    fireEvent.pointerDown(pad, { clientX: 62, clientY: 72, pointerId: 1 });
+
+    // `onPadPointerDown` calls preventDefault, which suppresses the
+    // compatibility mousedown and with it the default action that moves focus.
+    // Without an explicit focus the pad's arrow keys are unreachable by anyone
+    // who arrived with a pointer.
+    expect(pad).toHaveFocus();
+  });
+
+  it("focuses the hue range input on arc pointerdown, since the arc is aria-hidden", () => {
+    render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
+
+    const arc = screen.getByTestId("halo-picker-pad").parentElement?.querySelector("svg");
+    if (!arc) {
+      throw new Error("expected the hue arc svg");
+    }
+    const hueInput = screen.getByRole("slider", { name: "Hue" });
+    expect(hueInput).not.toHaveFocus();
+
+    fireEvent.pointerDown(arc, { clientX: 64, clientY: 120, pointerId: 1 });
+
+    expect(hueInput).toHaveFocus();
+  });
+
+  it("captures the pointer on pointerdown, which closes both controls to interactive children", () => {
+    render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
+
+    const pad = screen.getByTestId("halo-picker-pad");
+    const setPadCapture = vi.fn<(pointerId: number) => void>();
+    Object.defineProperty(pad, "setPointerCapture", { configurable: true, value: setPadCapture });
+
+    fireEvent.pointerDown(pad, { clientX: 62, clientY: 72, pointerId: 4 });
+
+    /*
+     * Capturing this early is safe here and unsafe in a drag-scroll container,
+     * and the difference is whether the element already knows the gesture is
+     * its own. The pad commits a color on pointerdown, so it does.
+     *
+     * The price is permanent: capture retargets the rest of the gesture,
+     * including the click, at the capturing element, so any interactive
+     * descendant stops being activatable. Measured in a browser — a button
+     * inside the pad receives pointerdown and then loses both pointerup and
+     * click to the pad. The children below are decorative for that reason.
+     */
+    expect(setPadCapture).toHaveBeenCalledWith(4);
+    expect(pad.querySelectorAll("a, button, input, select, textarea, [tabindex]")).toHaveLength(0);
+  });
+
   it("clamps keyboard adjustments to the pad's pointer range", () => {
     const onChange = vi.fn<(value: HaloColor) => void>();
     render(

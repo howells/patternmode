@@ -119,8 +119,39 @@ global` blocks stripped, e.g. stacksheet). Both live in `build-registry-config.m
   declaration outranks every rule in a named layer regardless of specificity. Always
   `layer(utilities)`.
 
+## Pointer interaction
+
+- **Capture on pointerdown only if the element already owns the gesture.** `setPointerCapture`
+  retargets the rest of the gesture — including the compatibility mouseup and the click — at
+  the capturing element, so every clickable descendant stops being activatable. Capturing
+  speculatively, before a drag threshold, kills them all with nothing thrown, nothing
+  prevented and nothing in the console. `stacksheet`'s `use-drag` and `briolette` capture
+  after the drag commits; `scrollframe` did not, and shipped dead links downstream (2.0.2).
+- **Where capture on pointerdown *is* correct, the captured element may never contain an
+  interactive descendant.** `halo`'s pad and arc commit a colour on pointerdown, so capturing
+  there is honest — but measured in a browser, a button placed inside the pad receives
+  `pointerdown` and then loses both `pointerup` and `click` to the pad. Their children are
+  decorative on purpose.
+- **A control whose gesture starts with `preventDefault()` must focus itself.** Preventing
+  the default on pointerdown suppresses the compatibility mousedown, and with it the action
+  that moves focus — so a `role="slider"` with arrow keys becomes unreachable to anyone who
+  arrived by pointer. Capture is not the cause; measured both ways. `briolette` had this
+  right, `halo` did not until 2026-08-09.
+
 ## Verification discipline
 
+- **A unit test cannot detect a bug about where an event is delivered.** `fireEvent.click(target)`
+  proves only that the test dispatched it; deciding which element a real click activates is
+  precisely the part jsdom does not model, which is how every scrollframe test stayed green
+  through the capture bug. Assert the **input to the browser's decision** — was capture taken,
+  did focus move — and confirm the outcome in a browser. Say in the test which one it is.
+- **jsdom implements neither `getAnimations` nor `ResizeObserver`, and base-ui couples them.**
+  Its scroll-area viewport effect needs a `ResizeObserver` before it schedules the timeout
+  that calls `viewport.getAnimations({ subtree: true })` — so a test without the observer
+  never reaches it and looks fine, and adding the observer (the obvious thing to do when
+  testing scroll behaviour) makes it throw. It surfaces as an **unhandled error attributed to
+  the file**, with every test in it still reporting as passed. Stub both together:
+  `scrollframe`, `tags`, `aperto` and `stacksheet` do.
 - **A gate that only checks what you thought of is not a gate.** Prove a check can fail
   before trusting that it passes — `check-tokens.mjs` once scanned line-by-line and was
   blind to formatter-wrapped `var(\n  --name,`, reporting "clean" while unable to fail.

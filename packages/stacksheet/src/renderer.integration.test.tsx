@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { setTimeout as sleep } from "node:timers/promises";
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -133,6 +134,54 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
 });
+
+/*
+ * `Sheet.Body` is a base-ui ScrollArea, and its viewport effect schedules a
+ * 0ms timeout that calls `viewport.getAnimations({ subtree: true })`. jsdom
+ * implements no Web Animations API, so that call is a TypeError.
+ *
+ * The two stubs are coupled, which is the part worth writing down: the effect
+ * needs a `ResizeObserver` to get as far as scheduling the timeout, so a test
+ * without one never reaches `getAnimations` and looks fine. Stub the observer
+ * — the obvious thing to do when testing scroll behaviour — and the timeout
+ * fires. It surfaces as an *unhandled* error attributed to the file rather
+ * than to the test, which is why it is worth naming here.
+ *
+ * Measured 2026-08-09: with the observer stubbed and this stub removed, this
+ * test fails with `TypeError: viewport.getAnimations is not a function`.
+ */
+const ResizeObserverForScrollArea = function ResizeObserverForScrollArea() {
+  return {
+    disconnect: vi.fn<() => void>(),
+    observe: vi.fn<() => void>(),
+    unobserve: vi.fn<() => void>(),
+  };
+};
+
+describe("Sheet.Body scroll area", () => {
+  beforeEach(() => {
+    vi.stubGlobal("ResizeObserver", ResizeObserverForScrollArea);
+    if (typeof Element.prototype.getAnimations !== "function") {
+      Element.prototype.getAnimations = () => [];
+    }
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("survives base-ui's post-mount animation pass", async () => {
+    render(<Sheet.Body>Scrollable body</Sheet.Body>);
+
+    // Long enough for base-ui's 0ms timeout to run.
+    await act(async () => {
+      await sleep(50);
+    });
+
+    expect(screen.getByText("Scrollable body")).toBeInTheDocument();
+  });
+});
+
 describe("SheetRenderer integration", () => {
   it("makes the pushed Nested Sheet active, then backs out and closes the Sheet Stack", async () => {
     const user = userEvent.setup();

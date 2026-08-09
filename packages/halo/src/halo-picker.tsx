@@ -62,6 +62,21 @@ export interface HaloPickerProps extends HaloPickerRootProps {
   value: HaloColor;
 }
 
+/*
+ * Capture on pointerdown is safe here, and the reason is worth stating because
+ * the same call in a drag-scroll container shipped a silent bug: capture
+ * retargets the rest of the gesture — including the compatibility mouseup and
+ * click — at the capturing element, so any clickable descendant stops being
+ * activatable. Capture speculatively, before knowing whether a drag will
+ * happen, and every button inside dies with no error and nothing in the console.
+ *
+ * The pad and the arc both commit a color on pointerdown, so by the time they
+ * capture, the gesture has already begun — there is no speculation. The price
+ * is that neither may ever contain an interactive descendant: measured in a
+ * browser, a button inside the pad receives `pointerdown` and then loses both
+ * `pointerup` and `click` to the pad, so its handler never runs. Their children
+ * are decorative today. Keep it that way.
+ */
 const setPointerCapture = (event: PointerEvent<HTMLElement | SVGSVGElement>) => {
   if ("setPointerCapture" in event.currentTarget) {
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -192,6 +207,7 @@ const HaloHueArc = ({
   hue,
   hueGradientId,
   hueHandle,
+  hueInputRef,
   onHueChange,
   onPointerCancel,
   onPointerDown,
@@ -204,6 +220,7 @@ const HaloHueArc = ({
   hue: number;
   hueGradientId: string;
   hueHandle: { x: number; y: number };
+  hueInputRef: RefObject<HTMLInputElement | null>;
   onHueChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onPointerCancel: () => void;
   onPointerDown: (event: HaloHuePointerEvent) => void;
@@ -219,6 +236,7 @@ const HaloHueArc = ({
       max={360}
       min={0}
       onChange={onHueChange}
+      ref={hueInputRef}
       type="range"
       value={Math.round(hue)}
     />
@@ -281,6 +299,7 @@ export const HaloPicker = ({
   const isHueDraggingRef = useRef(false);
   const padRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const hueInputRef = useRef<HTMLInputElement>(null);
   const hueGradientId = useId();
   const geometry = getHaloGeometry(placement);
   const hex = hslToHex(value.h, value.s, value.l);
@@ -317,6 +336,12 @@ export const HaloPicker = ({
       return;
     }
     event.preventDefault();
+    /* `preventDefault` above suppresses the compatibility mousedown, and with it
+       the default action that moves focus — so without this the pad advertises
+       arrow-key adjustment through `role="slider"` and `tabIndex={0}` that a
+       user can never reach after clicking it. Pointer capture is not the cause;
+       an uncaptured `preventDefault` loses focus the same way. */
+    event.currentTarget.focus();
     setPointerCapture(event);
     isPadDraggingRef.current = true;
     updatePad(event.clientX, event.clientY);
@@ -350,6 +375,10 @@ export const HaloPicker = ({
       return;
     }
     event.preventDefault();
+    /* The arc itself is `aria-hidden` and unfocusable, so its keyboard
+       affordance is the visually hidden range input beside it. Focus that
+       instead, for the same reason the pad focuses itself. */
+    hueInputRef.current?.focus();
     setPointerCapture(event);
     isHueDraggingRef.current = true;
     updateHue(event.clientX, event.clientY);
@@ -414,6 +443,7 @@ export const HaloPicker = ({
           hue={value.h}
           hueGradientId={hueGradientId}
           hueHandle={hueHandle}
+          hueInputRef={hueInputRef}
           onHueChange={onHueInputChange}
           onPointerCancel={() => {
             isHueDraggingRef.current = false;

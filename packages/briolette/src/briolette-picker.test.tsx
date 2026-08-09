@@ -297,6 +297,53 @@ describe("BriolettePicker", () => {
     expect(screen.getByRole("status")).toHaveTextContent("—");
   });
 
+  /*
+   * Briolette already focuses the stage itself on pointerdown, and halo's
+   * matching picker did not until 2026-08-09 — the same author, the same
+   * `preventDefault`, one control that kept its keyboard and one that lost it.
+   * Guarding it here so the divergence cannot reopen from this side.
+   *
+   * `toHaveFocus` is the right assertion because the browser decides focus,
+   * and it is the piece jsdom does model. Where the browser's decision is not
+   * modelled — which element a click activates — assert capture instead.
+   */
+  it("focuses the stage on pointerdown, so arrow keys work after a drag", () => {
+    render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
+
+    const stage = screen.getByRole("application", { name: "Accent color" });
+    const sphere = screen.getByTestId("briolette-sphere");
+    expect(stage).not.toHaveFocus();
+
+    fireEvent.pointerDown(sphere, { button: 0, clientX: 40, clientY: 40, pointerId: 1 });
+
+    expect(stage).toHaveFocus();
+  });
+
+  it("does not capture the pointer on pointerdown, so facet clicks still land", () => {
+    render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
+
+    const sphere = screen.getByTestId("briolette-sphere");
+    const setPointerCapture = vi.fn<(pointerId: number) => void>();
+    Object.defineProperty(sphere, "setPointerCapture", {
+      configurable: true,
+      value: setPointerCapture,
+    });
+
+    fireEvent.pointerDown(sphere, { button: 0, clientX: 40, clientY: 40, pointerId: 2 });
+
+    /*
+     * The sphere is full of clickable facets, so capturing before the rotation
+     * commits would retarget every facet's click at the sphere and select
+     * nothing — the shape of the bug scrollframe shipped. Capture belongs
+     * after the drag threshold, never on pointerdown.
+     *
+     * The focus assertion is what stops this from passing vacuously: a
+     * `not.toHaveBeenCalled` is also satisfied by a handler that never ran.
+     */
+    expect(screen.getByRole("application", { name: "Accent color" })).toHaveFocus();
+    expect(setPointerCapture).not.toHaveBeenCalled();
+  });
+
   it("renders more facets as density rises", () => {
     const counts: Record<string, number> = {};
     for (const density of ["coarse", "base", "fine"] as const) {

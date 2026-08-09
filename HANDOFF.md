@@ -18,7 +18,145 @@ Commits: `ae67cf0f` (the work) → `fd61d048` (version bump) → `4f0c468d`
 
 ---
 
-## 0. Session 2026-08-03
+## −1. Session 2026-08-09 — the release finished, and one bug of the same class
+
+**SHIPPED: `@patternmode/tags@2.0.2`.** The release that failed on 2026-08-08 is
+complete. Published, `dist-tags.latest` is `2.0.2`, an unauthenticated fetch of
+the exact version returns **200**, the git tag exists and is pushed, and
+`pnpm smoke:tarballs` passes **post-publish**. Announced to the materialgraph
+coordination session before publishing, per AGENTS.md.
+
+*Two corrections to the brief this session started from.* There was **no git tag
+for `@patternmode/tags@2.0.2`** — the tag list stopped at 2.0.1, so it was
+genuinely un-released rather than half-released, and finishing it was a plain
+publish. And `main` was **already red on lint** at HEAD: two `CHANGELOG.md` files
+carried a stray blank line that `howells-check` rejects. Turbo's lint cache hid
+it; `--force` showed it. Fixed in the same commit.
+
+### −1.1 The tags publish failure was not the DTS-worker flake
+
+Reproduced **3 times out of 3** before touching anything, which is what
+disqualified the "just run it twice" advice AGENTS.md carried.
+
+`changeset publish` runs up to **ten** `pnpm publish` processes concurrently
+(`NPM_PUBLISH_CONCURRENCY_LIMIT = 10`, read from the installed changesets), and
+each triggers `prepack`. `tsdown` builds with `clean: true`, so a package empties
+its `dist/` and rewrites `index.mjs` within ~20ms, while
+`tsc --emitDeclarationOnly` takes seconds to put the `.d.ts` files back. Anything
+compiling in that window resolves the workspace dependency to **JavaScript with
+no types** and infers them from the bundle. `ScrollFrameRoot`'s `fades = true`
+default infers as `fades: boolean`, so tags fails on **its own**
+`fades="end"` with `TS2322` and exits `ELIFECYCLE`.
+
+**That is why it reads as contention**: the error names the dependent's own
+source, the dependent builds clean in isolation, and nothing mentions the
+dependency. Deleting the whole `dist/` gives an honest `TS2307` instead — it is
+specifically the JS-without-types state that lies.
+
+**Fix.** `scripts/publish-packages.mjs` now runs
+`turbo run build --filter=./packages/*` first (topological, so it cannot race)
+and sets `PATTERNMODE_SKIP_PREPACK_BUILD=1`; every package's `prepack` is now
+`node ../../scripts/prepack-build.mjs`, which honours it and otherwise builds as
+before. Verified both ways: 14 packages publishing concurrently after a clean
+`dist` wipe all exit 0, and the same run without the guard still fails on tags.
+
+**Nothing else suppresses prepack — three routes were measured and rejected.**
+`pnpm publish` honours `ignore-scripts` **only** from its own `--ignore-scripts`
+flag, which changesets does not pass. Not from the userconfig `.npmrc` (the one
+this script already writes for the token), not from a project `.npmrc`, and not
+from `npm_config_ignore_scripts`. Do not re-derive this; the wrapper script is
+the only lever.
+
+### −1.2 Halo: eager capture is correct there, but a different bug was live
+
+The audit question was whether `halo`'s `setPointerCapture` in
+`onPadPointerDown` carries scrollframe's bug. **It does not, and the reason is
+the general rule** (now in AGENTS.md): the pad and arc commit a colour *on
+pointerdown*, so capture is taken once the gesture is already theirs, not
+speculatively. `stacksheet` and `briolette` capture after their drag commits.
+Only scrollframe captured on the chance of a drag.
+
+Verified in a browser rather than by reading, and the browser found things the
+read did not:
+
+- **The retargeting is real and reproducible here too.** A button injected into
+  the pad logs `pointerdown target=BUTTON`, then the pad takes capture, and both
+  `pointerup` and `click` arrive **at the pad**. The button's handler fires
+  **zero** times. So the pad and arc are permanently closed to interactive
+  children — recorded in a comment at the capture helper and asserted in a test.
+  Their children are decorative today; that is load-bearing, not incidental.
+- **A live defect, unrelated to capture: neither control took focus.** Clicking
+  the pad left `activeElement` on `BODY`, so `ArrowRight` did nothing — while the
+  pad advertises arrow keys through `role="slider"` and `tabIndex={0}`. Same for
+  the arc, whose keyboard surface is its visually hidden range input. Cause
+  isolated with two probe elements: **`preventDefault()` on pointerdown, not the
+  capture** — a probe that captures without preventing focuses fine, one that
+  prevents does not. Fixed; `patch` changeset filed, **not published**.
+- **`briolette` already had this fix, with a comment saying why.** Same author,
+  same `preventDefault`, one picker kept its keyboard and its sibling lost it.
+  Guarded from briolette's side now too so the divergence cannot reopen.
+
+*Method note, because it cost several probes:* the built-in Chrome click tool
+delivered only `pointermove` — no `pointerdown`, `pointerup` or `click` reached
+the page at all, which looks exactly like the dead-click bug being hunted. It was
+the tool. `agent-browser mouse move/down/up` produces real CDP pointer events and
+was used for everything above. **A negative result from an instrument you have
+not verified is not evidence.** Separately, one "pad drag does nothing" reading
+was **my coordinate, not a bug** — the pad is `border-radius: 999px` and Chrome
+hit-tests the rounded shape, so a point 54px from a 52px-radius centre lands on
+the stage behind it.
+
+### −1.3 The test gap, and what the new tests actually claim
+
+Every scrollframe test passed throughout the capture bug because they dispatch
+`click` at the target — the exact delivery a browser stops making once capture is
+held. **A unit test that simulates the click it wants cannot detect that the
+browser would deliver it elsewhere.**
+
+So the tests added here assert the *input to the browser's decision*, never the
+outcome, and each says so in a comment: capture taken or not, focus moved or not.
+
+| Package | State |
+|---|---|
+| `stacksheet` | **Already had the full treatment** — `use-drag.test.tsx` asserts no capture on pointerdown, none inside the dead zone, none off-axis, and exactly one once the drag commits. Nothing owed. |
+| `briolette` | Added: focuses the stage on pointerdown, and does **not** capture on pointerdown. The capture assertion also asserts focus, because `not.toHaveBeenCalled` is equally satisfied by a handler that never ran. |
+| `halo` | Added: pad focuses itself, arc focuses its range input, and capture **is** taken — paired with an assertion that the pad holds zero interactive descendants, which is the condition making that safe. |
+
+Every new assertion was proved able to fail by removing the fix and watching it
+go red, then restored.
+
+**The `getAnimations` gap is worse than "other base-ui packages may need the same
+stub", and the shape is the finding.** jsdom implements neither
+`getAnimations` nor `ResizeObserver`, and base-ui's scroll-area viewport effect
+**couples them**: it needs a `ResizeObserver` before it schedules the timeout
+that calls `viewport.getAnimations({ subtree: true })`. A test without the
+observer never reaches the call and looks fine. Add the observer — the obvious
+move when testing scroll behaviour — and it throws. `stacksheet` renders a
+base-ui ScrollArea in `Sheet.Body` **and already stubs `ResizeObserver`** in its
+keyboard-repositioning block, so it was one test away. It now has both stubs plus
+a test that exercises the path, and removing the stub reproduces
+`TypeError: viewport.getAnimations is not a function` — **as an unhandled error
+attributed to the file, with all 18 tests still reporting as passed.** `tags` and
+`aperto` already stub it. `swatch` uses only `merge-props`/`use-render`, no
+scroll area, so it is genuinely not at risk.
+
+### −1.4 OPEN — a real browser test harness is not built, and should be considered
+
+Everything above about capture, focus and click delivery was proved in a browser
+by hand and is guarded in jsdom only by proxy. That is the honest state: the
+proxies would have caught this bug class, but they assert the mechanism rather
+than the user-visible outcome, and nothing in CI opens a browser.
+
+The candidates are the interaction surfaces where the browser decides something
+jsdom does not model: `scrollframe` drag-scroll, `halo` and `briolette` pointer
+gestures, `stacksheet` drag dismissal, `aperto`'s shared-element transitions
+(§0.16 already verified those by hand for the same reason), and `verge`'s three
+reveal branches (§0.14, also hand-verified). **Five separate sessions have now
+reached for a browser because jsdom could not answer** — that recurrence is the
+argument, not any one bug.
+
+Not started, and deliberately not started unprompted: it is a dependency and CI
+decision, not a drive-by.
 
 **SHIPPED: the colorscope `^3.17.0` floor raise.** Ten packages published and
 verified — swatch **3.0.0**, system **0.6.0**, briolette **0.6.0**, halo
