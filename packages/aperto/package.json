@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/aperto",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Opinionated, styled thumbnail-to-expanded media transitions for React.",
   "homepage": "https://github.com/howells/patternmode/tree/main/packages/aperto#readme",
   "bugs": {

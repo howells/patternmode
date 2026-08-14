@@ -1,5 +1,12 @@
 # @patternmode/deck
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.7.0
+
 ## 0.4.0
 
 ### Major Changes

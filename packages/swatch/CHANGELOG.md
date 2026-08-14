@@ -1,5 +1,48 @@
 # @patternmode/swatch
 
+## 4.1.0
+
+### Minor Changes
+
+- Accept colorscope 4 alongside 3, and stop `system` bundling its own copy
+
+  `@instruments/colorscope` 4.0.0 changes how colours are assigned to families:
+  tans, oaks, corks and camels that used to be classified as orange are now
+  brown or beige. None of these packages classify colours — they use `/math`,
+  `/convert`, `/embedding` and `/extraction` only — so all four work unchanged
+  on either major, and the peer ranges now say so.
+
+  `@patternmode/system` carried colorscope as a regular dependency rather than a
+  peer, so it floated its own private copy regardless of what the host
+  application pinned, with nothing in a lockfile diff to draw attention to it. A
+  host on colorscope 4 was silently running colorscope 3 inside `system`. It is
+  now a peer dependency, matching how `swatch`, `halo` and `briolette` already
+  declared it.
+
+  Hosts must provide `@instruments/colorscope` themselves. Every current
+  consumer already does.
+
+- b512eb0: Adds `transparencyBackdrop` — a visible backdrop behind the fill so a transparent Visual Value reads as transparent.
+
+  A partially transparent fill composites against whatever is behind it, so on a white page a 40% colour renders as a pale solid, indistinguishable from a lighter opaque colour or from an empty swatch. `transparencyBackdrop` puts a chequerboard behind it.
+
+  CONTEXT.md has named this concept and this prop since the Swatch vocabulary was written; the code never had it.
+
+  **Explicit, never inferred.** Alpha cannot be detected across everything a swatch accepts — a gradient, a `color-mix()`, a CSS variable or child media can all carry alpha the component cannot see — so a swatch that guessed would be right sometimes and silently wrong the rest of the time. The domain language already said as much: "depending only on automatic CSS alpha detection" is the thing to avoid.
+
+  Three custom properties tune it — `--patternmode-swatch-backdrop-size`, `-color` and `-base` — all read at the point of use with a `var()` fallback, so a consumer can set them on any ancestor. Declaring defaults on the element itself would have beaten an inherited value and made them inert, which is exactly how verge's knobs failed. The colour defaults resolve through `--border` and `--card`, so the backdrop follows a dark theme with no work.
+
+### Patch Changes
+
+- d419a31: Atmosphere texture no longer narrows wide-gamut colors to sRGB.
+
+  `withAlpha` has two branches: hex colors take an 8-bit alpha suffix, and everything else falls through to `color-mix`. That second branch mixed `in srgb`, which is the path every `oklch()` and `oklab()` value takes — so a consumer passing wide-gamut colors got them clipped to the sRGB gamut on the way through. Nothing threw and the swatch still rendered; it just rendered a duller color than the one it was handed. Now mixes `in oklab`.
+
+  The hex branch is sRGB by construction, so this was the only path where the gamut was live. Swatch's main color path already passes values through untouched and interpolates in oklab.
+
+- Updated dependencies
+  - @patternmode/system@0.7.0
+
 ## 4.0.0
 
 ### Major Changes

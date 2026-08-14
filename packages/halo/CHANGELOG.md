@@ -1,5 +1,37 @@
 # @patternmode/halo
 
+## 0.6.0
+
+### Minor Changes
+
+- Accept colorscope 4 alongside 3, and stop `system` bundling its own copy
+
+  `@instruments/colorscope` 4.0.0 changes how colours are assigned to families:
+  tans, oaks, corks and camels that used to be classified as orange are now
+  brown or beige. None of these packages classify colours — they use `/math`,
+  `/convert`, `/embedding` and `/extraction` only — so all four work unchanged
+  on either major, and the peer ranges now say so.
+
+  `@patternmode/system` carried colorscope as a regular dependency rather than a
+  peer, so it floated its own private copy regardless of what the host
+  application pinned, with nothing in a lockfile diff to draw attention to it. A
+  host on colorscope 4 was silently running colorscope 3 inside `system`. It is
+  now a peer dependency, matching how `swatch`, `halo` and `briolette` already
+  declared it.
+
+  Hosts must provide `@instruments/colorscope` themselves. Every current
+  consumer already does.
+
+### Patch Changes
+
+- d419a31: `data-testid` no longer ships in the rendered DOM; `data-slot` is the hook.
+
+  Five packages emitted test hooks into every consumer's production markup. In halo, scrollframe and tags the attribute sat directly beside a `data-slot` carrying the same value, so it was pure duplication. In briolette and status there was no slot at all, so those elements now gain the `data-slot` they should always have had: `briolette-sphere`, `status-mark-fill`, `status-mark-border`, `status-mark-fill-sweep`, `status-mark-null`.
+
+  ScrollFrame's fade parts lose `data-testid="scrollframe-fade-<axis>-<edge>"`, which only ever restated the `data-axis` and `data-edge` attributes they already carry — query those instead.
+
+  **If you select any of these in your own tests, switch to `data-slot`.** It is the documented convention across this catalog and the one to rely on. `@patternmode/tags` is the single case with no direct replacement: the selected-tag scroll region passed its hook through to `ScrollFrame`, which sets its own `data-slot` after spreading consumer props, so the value never survived to the DOM. Target `.patternmode-tag-selector__scroll`, which is part of the published styling contract.
+
 ## 0.5.1
 
 ### Patch Changes

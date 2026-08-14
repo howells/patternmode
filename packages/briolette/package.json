@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/briolette",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": false,
   "description": "A spinnable geodesic color sphere whose facets refine around each selection.",
   "keywords": [
@@ -62,7 +62,7 @@
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
-    "@instruments/colorscope": "^3.17.0",
+    "@instruments/colorscope": "^4.0.0",
     "@tailwindcss/cli": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -79,7 +79,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@instruments/colorscope": "^3.17.0",
+    "@instruments/colorscope": "^3.17.0 || ^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
