@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/stacksheet",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": false,
   "description": "Typed, animated sheet stack system. Zustand store + Motion animations with Apple-style depth stacking.",
   "keywords": [

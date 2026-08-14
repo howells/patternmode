@@ -1,5 +1,12 @@
 # @patternmode/stacksheet
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.7.0
+
 ## 3.0.0
 
 ### Major Changes

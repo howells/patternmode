@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/thumbnail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "A framed image — an inset hairline and an optional whisper of lift, so a photograph reads as a window rather than as a form field containing one.",
   "keywords": [
