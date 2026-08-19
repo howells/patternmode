@@ -230,6 +230,12 @@ describe("SheetRenderer integration", () => {
     );
     await user.click(screen.getByRole("button", { name: "Open root" }));
     expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
+    const scrollRegion = screen
+      .getByText("Root sheet content")
+      .closest('[aria-label="Sheet content"]');
+    expect(scrollRegion).toHaveAttribute("aria-label", "Sheet content");
+    expect(scrollRegion).toHaveRole("region");
+    expect(scrollRegion).toHaveAttribute("tabindex", "0");
     await user.click(screen.getByRole("button", { name: "Open nested" }));
     expect(screen.getByRole("dialog", { name: "Nested sheet" })).toBeInTheDocument();
     expect(screen.queryByRole("dialog", { name: "Root sheet" })).not.toBeInTheDocument();

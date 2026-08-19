@@ -28,12 +28,15 @@ export const PanelInnerContent = ({
     <>
       {customHeader === undefined ? <DefaultHeader {...headerProps} /> : customHeader(headerProps)}
       {shouldRender && Content !== undefined && (
-        <div
+        <section
+          aria-label="Sheet content"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
           data-stacksheet-no-drag=""
+          // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex, react-doctor/no-noninteractive-tabindex -- axe requires keyboard access to this overflow scroll region.
+          tabIndex={0}
         >
           <Content {...data} />
-        </div>
+        </section>
       )}
     </>
   );
