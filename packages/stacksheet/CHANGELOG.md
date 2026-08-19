@@ -1,5 +1,12 @@
 # @patternmode/stacksheet
 
+## 3.0.2
+
+### Patch Changes
+
+- 714b5ed: Make classic-layout sheet content keyboard-focusable and give its scroll region
+  an accessible name.
+
 ## 3.0.1
 
 ### Patch Changes
