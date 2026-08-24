@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/system",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": false,
   "description": "Shared Patternmode sizing, object sizing, composition, and weighted-distribution utilities.",
   "keywords": [
@@ -51,14 +51,14 @@
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
-    "@instruments/colorscope": "^4.0.0",
+    "@instruments/colorscope": "^7.0.0",
     "concurrently": "^9.2.1",
     "tsdown": "^0.22.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@instruments/colorscope": "^3.17.0 || ^4.0.0"
+    "@instruments/colorscope": ">=3.17.0"
   },
   "engines": {
     "node": ">=20"

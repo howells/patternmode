@@ -1,5 +1,37 @@
 # @patternmode/halo
 
+## 0.6.1
+
+### Patch Changes
+
+- Accept any colorscope from 3.17.0 up, rather than naming each major.
+
+  The peer was `^3.17.0 || ^4.0.0`, so a consumer on colorscope 7 could not
+  install these packages without a resolver putting a second, older copy of
+  colorscope in the tree beside the one it actually uses. That is what happened
+  in Samplize, which is on 7.0.0, and it blocked adoption of both `swatch` and
+  `parquet` - the latter declares no colorscope peer of its own but reaches it
+  through `system`.
+
+  Naming each major means this range goes stale on every colorscope release and
+  gets fixed after it has already cost someone a day. It was last widened for
+  colorscope 4 in #2. The four packages between them import five functions -
+  `hexLightness`, `hslToRgb`, `rgbToOklab`, `hslToHex`, `hexToOklab`,
+  `oklabDistance` from `/math`, `hexToRgb`, `rgbToHex`, `oklabToHex`,
+  `oklchToOklab` from `/convert`, and `fitOklabToSrgbGamut` from `/embedding` -
+  and every one of those has the same signature in 7.0.0 as in 4.0.0, checked
+  declaration by declaration. None of them touch `/match`, which is where
+  colorscope 7's breaking change lives - and `/match` is precisely the submodule
+  Samplize's own catalogue depends on, for `perceptualBand` and `ProximityBand`.
+  So an open range here and a pinned 7.0.0 there coexist by construction rather
+  than by luck. Anyone later reaching a patternmode package into `/match` is
+  giving that up, and should widen this range back to named majors when they do.
+
+  So the range states the real contract: these are primitive colour conversions
+  and they have not moved since 3.17.0. The dev dependency moves to `^7.0.0` in
+  all four packages, so the suite runs against the version consumers are on
+  rather than one three majors behind.
+
 ## 0.6.0
 
 ### Minor Changes

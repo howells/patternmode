@@ -1,5 +1,12 @@
 # @patternmode/parquet
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.7.1
+
 ## 0.1.5
 
 ### Patch Changes

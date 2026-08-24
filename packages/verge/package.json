@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/verge",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "A reserved slot whose controls rest hidden and reveal on hover, focus, or touch — with no layout shift.",
   "keywords": [
