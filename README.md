@@ -38,12 +38,24 @@ the update/versioning story.
 
 ## Releasing
 
-Publishing is **Trusted Publishing**: the Release workflow proves this repo's
-identity to npm over OIDC and npm mints a short-lived token for that one
-publish. There is no npm token in this repo, in Actions secrets, or on a laptop,
-and no 2FA prompt to answer.
+There are two ways to publish and they share everything except how they
+authenticate.
 
-Versioning stays local, publishing does not:
+**Trusted Publishing, the intended path.** The Release workflow proves this
+repo's identity to npm over OIDC and npm mints a short-lived token for that one
+publish. No credential is stored anywhere. It needs the one-time per-package
+setup below, and until every package has it, a package without it fails its own
+publish while the rest go through.
+
+**A local token, the fallback.** `NPM_TOKEN` in `.env.local`, then
+`NPM_CONFIG_USERCONFIG=<npmrc with the token> pnpm release`. This is what shipped
+the 24 August release, because the trusted publisher setup was not in place yet.
+Note the trap it cost an evening: the account is on `auth-and-writes`, so a
+classic **Publish** token authenticates and then refuses to write. It has to be a
+classic **Automation** token or a granular access token. `npm whoami` succeeding
+proves nothing about whether a token can publish.
+
+Versioning stays local either way:
 
 1. `pnpm changeset` to describe the change.
 2. `pnpm version-packages` to apply the bumps and write the changelogs.
@@ -53,7 +65,8 @@ Versioning stays local, publishing does not:
 `scripts/release.mjs` sorts the workspace into dependency order, skips whatever
 the registry already has, packs each package with pnpm and hands the tarball to
 npm. Re-running after a partial failure is safe, which matters because
-unpublishing is unavailable after 72 hours.
+unpublishing is unavailable after 72 hours. It is the same script both ways -
+only the authentication differs.
 
 **pnpm packs and npm publishes, deliberately.** Ten of these packages depend on
 another through the `workspace:*` protocol, and only pnpm rewrites that to a real
