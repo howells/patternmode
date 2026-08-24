@@ -1,0 +1,75 @@
+name: Release
+
+# Publishes to npm with Trusted Publishing: GitHub Actions proves this repo's
+# identity over OIDC and npm mints a short-lived token for the one publish.
+# There is no npm token in this repo, in Actions secrets, or on anyone's laptop,
+# and no 2FA prompt to answer.
+#
+# Releasing means: `pnpm version-packages` locally, review the bumps and the
+# changelogs, commit, push to main, then run this. It publishes only what the
+# registry does not already have, so re-running after a partial failure is safe.
+#
+# One-time setup PER PACKAGE, on npmjs.com -> package -> Settings ->
+# Trusted publisher:
+#   Organization or user : howells
+#   Repository           : patternmode
+#   Workflow filename    : release.yml
+#   Environment          : (leave empty)
+#
+# Fourteen packages need that, once each: every @patternmode/* package plus
+# @howells/motion. A package without it fails its publish and the rest still
+# go, so a missed one is a re-run rather than a broken release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Pack and verify without publishing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write # required: lets npm verify this workflow over OIDC
+
+jobs:
+  release:
+    name: Publish changed packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      # Trusted Publishing needs npm >= 11.5.1. Node 24.15 ships a new enough
+      # npm today; pinning the major keeps that true if the base image drifts.
+      - run: npm install -g npm@^11
+
+      - run: pnpm install --frozen-lockfile
+
+      # The full gate: build, typecheck, lint, test, and the boundary, cascade
+      # layer and token checks. A release that skips this is how a broken
+      # publish happens, and unpublishing is unavailable after 72 hours.
+      - run: pnpm check
+
+      # scripts/release.mjs sorts the workspace into dependency order, skips
+      # what the registry already has, packs each package with pnpm so the
+      # workspace: protocol resolves, and hands the tarball to npm. The build
+      # above is reused rather than repeated - see scripts/prepack-build.mjs for
+      # why fourteen concurrent prepack builds are worth avoiding.
+      - name: Pack and publish
+        run: node scripts/release.mjs ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # Prove the release is installable rather than assuming it. A leaked
+      # workspace: protocol is guarded before publish, but reading the published
+      # metadata back is what proves the guard worked.
+      - name: Verify published metadata
+        if: ${{ !inputs.dry_run }}
+        run: node scripts/verify-release.mjs

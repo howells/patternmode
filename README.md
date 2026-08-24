@@ -36,14 +36,44 @@ installed components pick up any shadcn-compatible theme automatically. See
 `docs/specs/002-component-registry.md` for the vendoring pipeline, the token contract, and
 the update/versioning story.
 
-## Release Environment
+## Releasing
 
-Package publishing uses `@howells/envy` to validate local release secrets before
-running Changesets.
+Publishing is **Trusted Publishing**: the Release workflow proves this repo's
+identity to npm over OIDC and npm mints a short-lived token for that one
+publish. There is no npm token in this repo, in Actions secrets, or on a laptop,
+and no 2FA prompt to answer.
 
-- Store `NPM_TOKEN` in `.env.local`.
-- Run `pnpm env:check` to validate the local release environment.
-- Run `pnpm publish:packages` to publish with a temporary npm config.
+Versioning stays local, publishing does not:
 
-The publish wrapper only reports env key names and deletes the temporary npm
-config after Changesets exits.
+1. `pnpm changeset` to describe the change.
+2. `pnpm version-packages` to apply the bumps and write the changelogs.
+3. Review, commit, push to `main`.
+4. Run the **Release** workflow (`workflow_dispatch`, with a `dry_run` input).
+
+`scripts/release.mjs` sorts the workspace into dependency order, skips whatever
+the registry already has, packs each package with pnpm and hands the tarball to
+npm. Re-running after a partial failure is safe, which matters because
+unpublishing is unavailable after 72 hours.
+
+**pnpm packs and npm publishes, deliberately.** Ten of these packages depend on
+another through the `workspace:*` protocol, and only pnpm rewrites that to a real
+version when it packs - `npm pack` ships the literal string and the release is
+uninstallable. But pnpm has no OIDC support, so it cannot authenticate. Each half
+does the thing it can do. `scripts/verify-release.mjs` then reads every published
+package back off the registry, because a leaked `workspace:` range publishes
+without error and only fails for the first stranger who installs it.
+
+### One-time setup per package
+
+On npmjs.com, package → Settings → Trusted publisher:
+
+| Field                | Value         |
+| -------------------- | ------------- |
+| Organization or user | `howells`     |
+| Repository           | `patternmode` |
+| Workflow filename    | `release.yml` |
+| Environment          | leave empty   |
+
+Every publishable package needs it once. A package without it fails its own
+publish while the rest go through, so a missed one costs a re-run rather than a
+broken release.
