@@ -36,7 +36,7 @@ minimumReleaseAgeExclude:
   - "turbo@2.9.17"
 catalog:
   "@howells/envy": "^0.3.7"
-  "@howells/husky": "^0.1.1"
+  "@howells/husky": "^0.2.0"
   "@howells/lint": "^0.5.0"
   "@howells/typescript-config": "^0.1.6"
   "@base-ui/react": "^1.6.0"
