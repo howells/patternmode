@@ -13,8 +13,8 @@ catalogs:
       specifier: ^0.3.7
       version: 0.3.7
     '@howells/husky':
-      specifier: ^0.1.1
-      version: 0.1.1
+      specifier: ^0.2.0
+      version: 0.2.0
     '@howells/lint':
       specifier: ^0.5.0
       version: 0.5.0
@@ -94,7 +94,7 @@ importers:
         version: 0.3.7(zod@4.4.3)
       '@howells/husky':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.2.0
       '@howells/lint':
         specifier: 'catalog:'
         version: 0.5.0(jiti@2.7.0)
@@ -1785,8 +1785,9 @@ packages:
     peerDependencies:
       zod: ^4.0.0
 
-  '@howells/husky@0.1.1':
-    resolution: {integrity: sha512-i4fqyYjwBfbZtwxeRlLHiC8okmJDLwjdROgDbv75tOnN64KS9yyE8Un5E/ey08IZMnC/JJC1sSMhoaXPsWX3Ug==}
+  '@howells/husky@0.2.0':
+    resolution: {integrity: sha512-IQsA6B8iwMj9/Ap+rIbiTZ/mnsgi/b0+zmaPsgMNz2cTsrgF6V/nu6c/R7QwZMadFPVoKNouJGklvJlTUMxq9Q==}
+    engines: {node: '>=24.15.0'}
     hasBin: true
 
   '@howells/lint@0.5.0':
@@ -7277,7 +7278,7 @@ snapshots:
       dotenv: 17.4.2
       zod: 4.4.3
 
-  '@howells/husky@0.1.1':
+  '@howells/husky@0.2.0':
     dependencies:
       husky: 9.1.7
       lint-staged: 16.4.0
