@@ -26,9 +26,15 @@ A catalog of focused React interface components, each named for the interaction 
 - `pnpm dev` - web demo.
 - `pnpm check` - typecheck, lint, test, build, boundary check, and `check:tokens`.
 - `pnpm test` / `pnpm typecheck` / `pnpm lint` - individual workspace gates.
-- `pnpm version-packages` versions changesets locally; the GitHub Release workflow publishes reviewed versions with npm Trusted Publishing.
+- `pnpm version-packages` versions changesets; `pnpm release` publishes the reviewed versions from this machine.
 - `pnpm smoke:tarballs` - package tarball smoke checks.
 - Use Arc for public API changes or component refactors. Mastra isn't relevant to this catalog.
+
+## Checks and deploys run locally
+
+- There are no GitHub Actions in this repo and nothing runs in CI. Every check, build, release and deploy happens on this machine.
+- Run `pnpm check` before pushing. Nothing downstream will catch what it would have caught.
+- Deploy the site from the repo root with `vercel pull --yes --environment=production && vercel build --prod && vercel deploy --prebuilt --prod`.
 
 ## Registry and tokens
 
@@ -39,12 +45,15 @@ A catalog of focused React interface components, each named for the interaction 
 
 ## Publishing
 
-- The GitHub Release workflow runs `scripts/release.mjs`: pnpm packs in dependency order and npm publishes through OIDC Trusted Publishing. Announce version moves to the materialgraph coordination session when coordinating a release.
-- **The Release workflow is idempotent on partial failure.** Re-run it; it publishes only missing versions. Do not hand-publish.
-- **A release no longer builds inside `prepack`.** `changeset publish` runs up to ten `pnpm publish` processes at once, so `prepack` used to mean ten unordered builds racing over each other's `dist/`. `scripts/publish-packages.mjs` now builds every package through turbo in dependency order first and sets `PATTERNMODE_SKIP_PREPACK_BUILD=1`, which `scripts/prepack-build.mjs` honours. **Nothing else suppresses those builds** - `pnpm` reads `ignore-scripts` only from its own `--ignore-scripts` flag, not from an `.npmrc` (user or project) and not from `npm_config_ignore_scripts`. All three were measured.
+- **Releases are published from this machine.** The sequence is `pnpm version-packages`, review the bumps and changelogs, commit, `pnpm check`, then `pnpm release` (`node scripts/release.mjs`, or `--dry-run` to pack and verify without publishing). It packs each package with pnpm in dependency order so the `workspace:` protocol resolves, then hands each tarball to npm. Announce version moves to the materialgraph coordination session when coordinating a release.
+- **npm must already be authenticated**: an `npm login` session or an `NPM_TOKEN` in the environment. The script passes no credential of its own. Trusted Publishing is gone with the workflow, so if a package on npmjs.com is still set to require it, switch that package back to accepting a token before releasing.
+- **`pnpm release` is idempotent on partial failure.** Re-run it; it checks the registry first and publishes only missing versions.
+- **Run `pnpm check` before `pnpm release`, not instead of it.** The release script sets `PATTERNMODE_SKIP_PREPACK_BUILD=1` and reuses whatever is in `dist/`, so a release off a stale or missing build publishes a stale or missing build.
+- **A release no longer builds inside `prepack`.** `changeset publish` runs up to ten `pnpm publish` processes at once, so `prepack` used to mean ten unordered builds racing over each other's `dist/`. `pnpm check` builds every package through turbo in dependency order first, and `scripts/release.mjs` sets `PATTERNMODE_SKIP_PREPACK_BUILD=1`, which `scripts/prepack-build.mjs` honours. **Nothing else suppresses those builds** - `pnpm` reads `ignore-scripts` only from its own `--ignore-scripts` flag, not from an `.npmrc` (user or project) and not from `npm_config_ignore_scripts`. All three were measured.
 - **The race that fix removes does not look like a race.** `tsdown` builds with `clean: true`, so a package empties its `dist/` and rewrites `index.mjs` in milliseconds while `tsc --emitDeclarationOnly` takes seconds to put the `.d.ts` files back. A dependent compiling in that window resolves the workspace dependency to **JavaScript with no types** and infers them from the bundle, so a default like `fades = true` becomes `fades: boolean` and the dependent fails on **its own source** with a plausible type error. It builds clean in isolation, which reads as contention. Before calling any publish failure a flake, check whether the failing package depends on another package in the same release.
 - **Check `npm view <pkg> dist-tags`, not `npm view <pkg> version`** - the latter serves stale reads straight after publishing.
 - **Verify registry access anonymously**, not just that the version exists. `npm view --json` `.private` reads the _package.json field_, not the registry access level, so it won't catch a package published `--access restricted`: `curl -s -o /dev/null -w '%{http_code}' -H 'Authorization:' https://registry.npmjs.org/<pkg>/<version>` - want 200.
+- After publishing, run `node scripts/verify-release.mjs` to read the published metadata back and prove the release is installable.
 - `pnpm smoke:tarballs` builds a real Next.js consumer against the packed tarballs. It resolves _dependencies_ from npm, so it legitimately fails before a release that includes a new version of an internal dependency. Re-run it after publishing.
 
 ## Dependency conventions

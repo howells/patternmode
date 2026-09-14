@@ -9,11 +9,10 @@ import { z } from "zod";
  * rather than start its own. Absent everywhere else, so an ordinary `pnpm pack`
  * still builds.
  *
- * There is deliberately no npm credential in this file. Publishing is Trusted
- * Publishing over OIDC from `.github/workflows/release.yml`, so the token this
- * schema used to validate does not exist any more - not here, not in Actions
- * secrets, not on a laptop. If you find yourself adding one back, the release
- * has gone wrong somewhere upstream.
+ * There is deliberately no npm credential in this file. `scripts/release.mjs`
+ * passes none either; npm reads the logged-in user or an `NPM_TOKEN` already in
+ * the environment. If you find yourself adding one back, the release has gone
+ * wrong somewhere upstream.
  */
 export const prepackEnvSchema = defineEnv({
   server: {

@@ -7,12 +7,9 @@ import { REPO_ROOT, inDependencyOrder, readPublishablePackages } from "./workspa
 /**
  * Publish every workspace package the registry does not already have.
  *
- * Authentication is Trusted Publishing: GitHub Actions proves this repo's
- * identity over OIDC and npm mints a short-lived token for the one publish.
- * There is no npm token in this repo, in Actions secrets, or on a laptop, and
- * no 2FA prompt to answer. That is the whole reason this script exists rather
- * than `changeset publish`: changesets shells out to `pnpm publish`, and pnpm
- * has no OIDC support, so it cannot do Trusted Publishing at all.
+ * This runs on a laptop, not in CI. Authentication is whatever npm already has:
+ * an `npm login` session or an `NPM_TOKEN` in the environment. Nothing here
+ * reads a GitHub identity, so there is no OIDC step and no Trusted Publishing.
  *
  * **pnpm packs, npm publishes, and the split is not incidental.** Ten of these
  * packages depend on another through the `workspace:*` protocol. Only pnpm
@@ -21,8 +18,8 @@ import { REPO_ROOT, inDependencyOrder, readPublishablePackages } from "./workspa
  * pnpm, which gets the dependencies right, and the tarball is handed to npm,
  * which gets the authentication right.
  *
- * Versioning stays with changesets and stays local: `pnpm version-packages`,
- * review, commit, then run this from the Release workflow.
+ * Versioning stays with changesets: `pnpm version-packages`, review, commit,
+ * then `pnpm check`, then run this.
  */
 
 const isDryRun = globalThis.process.argv.includes("--dry-run");
@@ -100,7 +97,7 @@ const pack = async (entry) => {
   const destination = globalThis.process.env.RUNNER_TEMP ?? tmpdir();
   const output = await run("pnpm", ["pack", "--pack-destination", destination], {
     cwd: entry.directory,
-    // The workflow has already built the workspace through turbo in dependency
+    // `pnpm check` has already built the workspace through turbo in dependency
     // order. Without this, fourteen prepack builds race each other over the
     // same dist/ directories - see scripts/prepack-build.mjs.
     env: { ...globalThis.process.env, PATTERNMODE_SKIP_PREPACK_BUILD: "1" },
@@ -142,10 +139,9 @@ for (const entry of packages) {
     continue;
   }
 
-  // No credential is passed here on purpose. npm reads the workflow's OIDC
-  // identity out of the Actions environment and mints its own short-lived
-  // token; anything this script supplied would be a secret that did not need
-  // to exist.
+  // No credential is passed here on purpose. npm reads the logged-in user or
+  // the token already in the environment; a secret plumbed through this script
+  // would be one more copy of something npm can already find.
   await run("npm", ["publish", tarball, "--access", "public"]);
   console.log(`   published ${entry.name}@${entry.version}`);
   published += 1;

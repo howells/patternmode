@@ -50,6 +50,17 @@ export const ChannelSlider = <Value extends ChannelValue = number>({
     "--patternmode-channel-size": SWATCH_SIZE_VALUES[size],
     ...style,
   };
+  const min = props.min ?? 0;
+  const max = props.max ?? 100;
+  const share = (value: number) =>
+    max <= min ? "0" : String(Math.min(1, Math.max(0, (value - min) / (max - min))));
+  const rangeTrack = (
+    values: readonly number[],
+  ): CSSProperties & Record<`--${string}`, string> => ({
+    "--patternmode-channel-end": share(values[1] ?? max),
+    "--patternmode-channel-start": share(values[0] ?? min),
+    position: "absolute",
+  });
 
   return (
     <Slider.Root
@@ -68,9 +79,13 @@ export const ChannelSlider = <Value extends ChannelValue = number>({
         render={(controlProps, { values, dragging, activeThumbIndex }) => (
           <div {...controlProps}>
             <Slider.Track
-              className="pm-channel-track"
+              className={
+                values.length === 2
+                  ? "pm-channel-track pm-channel-track--range"
+                  : "pm-channel-track"
+              }
               data-slot="channel-track"
-              style={{ position: "absolute" }}
+              style={values.length === 2 ? rangeTrack(values) : { position: "absolute" }}
             />
             {values.length === 2 && (
               <Slider.Indicator

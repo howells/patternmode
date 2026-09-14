@@ -41,55 +41,39 @@ the update/versioning story.
 
 ## Releasing
 
-There are two ways to publish and they share everything except how they
-authenticate.
-
-**Trusted Publishing, the intended path.** The Release workflow proves this
-repo's identity to npm over OIDC and npm mints a short-lived token for that one
-publish. No credential is stored anywhere. It needs the one-time per-package
-setup below, and until every package has it, a package without it fails its own
-publish while the rest go through.
-
-**A local token, the fallback.** `NPM_TOKEN` in `.env.local`, then
-`NPM_CONFIG_USERCONFIG=<npmrc with the token> pnpm release`. This is what shipped
-the 24 August release, because the trusted publisher setup was not in place yet.
-Note the trap it cost an evening: the account is on `auth-and-writes`, so a
-classic **Publish** token authenticates and then refuses to write. It has to be a
-classic **Automation** token or a granular access token. `npm whoami` succeeding
-proves nothing about whether a token can publish.
-
-Versioning stays local either way:
+Releases are published from this machine. There are no GitHub Actions in this
+repo and nothing runs in CI, so every check, build, release and deploy happens
+locally.
 
 1. `pnpm changeset` to describe the change.
 2. `pnpm version-packages` to apply the bumps and write the changelogs.
-3. Review, commit, push to `main`.
-4. Run the **Release** workflow (`workflow_dispatch`, with a `dry_run` input).
+3. Review and commit.
+4. `pnpm check` - the full gate, and the only one there is.
+5. `pnpm release` (add `--dry-run` to pack and verify without publishing).
+6. `node scripts/verify-release.mjs` to read every published package back.
 
 `scripts/release.mjs` sorts the workspace into dependency order, skips whatever
 the registry already has, packs each package with pnpm and hands the tarball to
 npm. Re-running after a partial failure is safe, which matters because
-unpublishing is unavailable after 72 hours. It is the same script both ways -
-only the authentication differs.
+unpublishing is unavailable after 72 hours.
+
+**The npm session has to be able to write.** The script passes no credential; npm
+uses the logged-in user or an `NPM_TOKEN` in the environment
+(`NPM_CONFIG_USERCONFIG=<npmrc with the token> pnpm release`). Note the trap it
+cost an evening: the account is on `auth-and-writes`, so a classic **Publish**
+token authenticates and then refuses to write. It has to be a classic
+**Automation** token or a granular access token, and `npm whoami` succeeding
+proves nothing about whether a token can publish. An interactive `npm login`
+session works but will ask for a one-time password per publish.
 
 **pnpm packs and npm publishes, deliberately.** Ten of these packages depend on
 another through the `workspace:*` protocol, and only pnpm rewrites that to a real
 version when it packs - `npm pack` ships the literal string and the release is
-uninstallable. But pnpm has no OIDC support, so it cannot authenticate. Each half
-does the thing it can do. `scripts/verify-release.mjs` then reads every published
-package back off the registry, because a leaked `workspace:` range publishes
-without error and only fails for the first stranger who installs it.
+uninstallable. Each half does the thing it can do.
+`scripts/verify-release.mjs` reads every published package back off the registry,
+because a leaked `workspace:` range publishes without error and only fails for
+the first stranger who installs it.
 
-### One-time setup per package
-
-On npmjs.com, package → Settings → Trusted publisher:
-
-| Field                | Value         |
-| -------------------- | ------------- |
-| Organization or user | `howells`     |
-| Repository           | `patternmode` |
-| Workflow filename    | `release.yml` |
-| Environment          | leave empty   |
-
-Every publishable package needs it once. A package without it fails its own
-publish while the rest go through, so a missed one costs a re-run rather than a
-broken release.
+**Trusted Publishing is retired along with the workflow.** If a package on
+npmjs.com still has a trusted publisher configured and set to required, a token
+publish is rejected; clear that setting on the package before releasing.
