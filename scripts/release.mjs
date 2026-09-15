@@ -128,7 +128,14 @@ let published = 0;
 let skipped = 0;
 
 for (const entry of packages) {
-  if (await alreadyPublished(entry)) {
+  const isOnRegistry = await alreadyPublished(entry);
+
+  // A dry run packs even a version the registry already has. Packing is where
+  // the workspace: protocol guard lives, and skipping it means a rehearsal of a
+  // release with nothing new in it checks nothing at all - it prints fifteen
+  // "already published" lines and exits green having packed no tarball. A real
+  // run still skips, because re-publishing is what would fail.
+  if (isOnRegistry && !isDryRun) {
     console.log(`= ${entry.name}@${entry.version} already on the registry, skipping`);
     skipped += 1;
     continue;
@@ -138,7 +145,10 @@ for (const entry of packages) {
   const tarball = await pack(entry);
 
   if (isDryRun) {
-    console.log(`   dry run: would publish ${tarball}`);
+    const note = isOnRegistry
+      ? "already published, packed to check it still packs"
+      : "would publish";
+    console.log(`   dry run: ${note} ${tarball}`);
     continue;
   }
 
