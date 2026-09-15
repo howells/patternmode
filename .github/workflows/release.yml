@@ -1,0 +1,89 @@
+# The only GitHub Actions workflow in this repository, and the only thing it does
+# is publish to npm. Checks, builds and deploys run locally; nothing here runs on
+# push, on pull request, or on a schedule.
+#
+# It exists because npm will not let a package be published unattended from a
+# developer machine. Trusted publishing (OIDC) is the one path that needs no
+# token and no one-time code, and it only works from a hosted CI runner.
+#
+# Renaming this file breaks publishing: npm's trusted publisher configuration
+# names the workflow by filename, and every package in packages/ names this one.
+name: Publish
+
+# A release here is not a single version. `pnpm version-packages` bumps whatever
+# the changesets cover, so one release can ship fourteen packages at fourteen
+# different versions, and there is no one number a tag could carry. The trigger
+# is therefore the act of releasing rather than a version: tag the release
+# commit `release-<something>` to leave a record in the repo, or run it by hand.
+on:
+  push:
+    tags:
+      - "release-*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Run every check and pack every tarball, but do not publish
+        type: boolean
+        default: false
+
+# id-token is what npm exchanges for publish rights. Nothing here writes to the
+# repository.
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.15.0
+          cache: pnpm
+
+      # Trusted publishing needs npm 11.5.1 or later. Node 24.15 already ships
+      # 11.12.1, so assert rather than reinstall: a global npm install is a
+      # moving part that buys nothing and can itself fail.
+      - name: Check npm can do trusted publishing
+        run: |
+          set -euo pipefail
+          have=$(npm --version)
+          need=11.5.1
+          if [ "$(printf '%s\n%s\n' "$need" "$have" | sort -V | head -1)" != "$need" ]; then
+            echo "::error::npm $have predates trusted publishing (need >= $need)"
+            exit 1
+          fi
+          echo "npm $have"
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # `pnpm check` builds every package through turbo in dependency order, and
+      # scripts/release.mjs then packs with PATTERNMODE_SKIP_PREPACK_BUILD=1 and
+      # reuses those dist directories. Running the release without this step
+      # publishes whatever happens to be in dist, which on a fresh runner is
+      # nothing. It has to be the same job for the same reason: dist does not
+      # survive to another one.
+      - name: Check
+        run: pnpm check
+
+      - name: Release
+        run: pnpm release ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # Reads every published package back off the registry and proves it is
+      # installable. The failure it guards against is silent: a package whose
+      # dependency still reads `workspace:*` installs from the repo, packs
+      # without complaint, publishes without error, and only fails for the first
+      # stranger who runs npm install.
+      - name: Verify the release off the registry
+        if: ${{ !inputs.dry_run }}
+        run: node scripts/verify-release.mjs

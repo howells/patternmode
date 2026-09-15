@@ -7,9 +7,12 @@ import { REPO_ROOT, inDependencyOrder, readPublishablePackages } from "./workspa
 /**
  * Publish every workspace package the registry does not already have.
  *
- * This runs on a laptop, not in CI. Authentication is whatever npm already has:
- * an `npm login` session or an `NPM_TOKEN` in the environment. Nothing here
- * reads a GitHub identity, so there is no OIDC step and no Trusted Publishing.
+ * This runs in GitHub Actions, not on a laptop. Authentication is trusted
+ * publishing over OIDC: npm exchanges the workflow's id-token for publish
+ * rights, so no credential exists here to pass and none is passed. It will not
+ * work from a developer machine, which is the point - npm is removing every
+ * unattended local publishing path, and granular tokens lose the ability to
+ * publish at all in January 2027.
  *
  * **pnpm packs, npm publishes, and the split is not incidental.** Ten of these
  * packages depend on another through the `workspace:*` protocol. Only pnpm
@@ -139,10 +142,15 @@ for (const entry of packages) {
     continue;
   }
 
-  // No credential is passed here on purpose. npm reads the logged-in user or
-  // the token already in the environment; a secret plumbed through this script
-  // would be one more copy of something npm can already find.
-  await run("npm", ["publish", tarball, "--access", "public"]);
+  // No credential is passed here on purpose: npm exchanges the workflow's
+  // OIDC id-token for publish rights, and there is nothing on the runner to
+  // pass.
+  //
+  // `--provenance` is explicit because npm documents trusted publishing as
+  // attaching provenance by itself and it does not. Measured as a controlled
+  // pair on @howells/lint: same account, same mechanism, the flag is what
+  // attaches the attestation. Dropping it loses provenance silently.
+  await run("npm", ["publish", tarball, "--access", "public", "--provenance"]);
   console.log(`   published ${entry.name}@${entry.version}`);
   published += 1;
 }
