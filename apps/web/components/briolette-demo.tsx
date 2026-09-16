@@ -62,7 +62,7 @@ export const BrioletteDemo = () => {
               type="button"
             />
           }
-          shape="circle"
+          variant="circle"
           size="sm"
           unavailable={color === null}
         />

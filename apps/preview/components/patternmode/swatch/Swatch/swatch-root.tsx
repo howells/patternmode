@@ -118,7 +118,7 @@ const getSwatchDataProps = ({
   lightTone,
   raised,
   selected,
-  shape,
+  variant,
   showRing,
   size,
   transparencyBackdrop,
@@ -128,7 +128,7 @@ const getSwatchDataProps = ({
   lightTone: "dark" | "light";
   raised: boolean;
   selected: boolean;
-  shape: SwatchProps["shape"];
+  variant: SwatchProps["variant"];
   showRing: boolean;
   size: SwatchProps["size"];
   transparencyBackdrop: boolean;
@@ -137,13 +137,13 @@ const getSwatchDataProps = ({
   "data-flat": flat ? "true" : undefined,
   "data-raised": raised ? "true" : undefined,
   "data-selected": selected ? "true" : undefined,
-  "data-shape": shape,
   "data-show-ring": showRing ? "true" : "false",
   "data-size": size,
   "data-slot": "swatch",
   "data-tone": lightTone,
   "data-transparency-backdrop": transparencyBackdrop ? "true" : undefined,
   "data-unavailable": unavailable ? "true" : undefined,
+  "data-variant": variant,
 });
 
 const RemovableSwatch = ({
@@ -258,7 +258,7 @@ export const Swatch = ({
   removeLabel,
   render,
   selected = false,
-  shape = "circle",
+  variant = "circle",
   showRing = true,
   size = "base",
   style,
@@ -299,11 +299,11 @@ export const Swatch = ({
     lightTone,
     raised,
     selected,
-    shape,
     showRing,
     size,
     transparencyBackdrop,
     unavailable,
+    variant,
   });
 
   const swatchContent = (

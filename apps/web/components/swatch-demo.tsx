@@ -191,7 +191,7 @@ export const SwatchDemo = () => {
                   ? { background: palette.background }
                   : { colors: [...palette.colors] })}
                 selected={selectedPalette === palette.name}
-                shape="pill"
+                variant="pill"
                 showRing={selectedPalette === palette.name}
                 size="xl"
               />
@@ -210,7 +210,7 @@ export const SwatchDemo = () => {
               <Swatch
                 aria-label={gradient.name}
                 background={gradient.background}
-                shape="square"
+                variant="square"
                 size="xl"
               />
               <span>{gradient.name}</span>

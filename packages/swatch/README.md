@@ -15,7 +15,7 @@ export function Example() {
           { color: "#315c4b", ratio: 60 },
           { color: "#e1ebe5", ratio: 40 },
         ]}
-        shape="pill"
+        variant="pill"
         size="2xl"
       />
       <DistributionBar
@@ -75,7 +75,7 @@ Use this when the swatch must _be_ an interactive element, such as a `<button>`
 cell in a color matrix:
 
 ```tsx
-<Swatch asChild color="#315c4b" flat shape="block" size="lg">
+<Swatch asChild color="#315c4b" flat variant="block" size="lg">
   <button onClick={() => select("#315c4b")} type="button" />
 </Swatch>
 ```
@@ -94,7 +94,7 @@ child:
 import { Swatch } from "@patternmode/swatch";
 import Image from "next/image";
 
-<Swatch aria-label="Oak veneer" objectFit="cover" shape="square" size="4xl">
+<Swatch aria-label="Oak veneer" objectFit="cover" variant="square" size="4xl">
   <Image alt="" fill sizes="4.5rem" src="/finishes/oak.jpg" />
 </Swatch>;
 ```
@@ -182,8 +182,8 @@ math. All return a new array; none mutate.
 
 ### Constants and types
 
-`SWATCH_SIZES`, `SWATCH_SIZE_VALUES`, `SWATCH_SHAPES`, `SWATCH_TEXTURES` — the
-allowed token lists, with `SwatchSize`, `SwatchShape`, `SwatchTexture` derived
+`SWATCH_SIZES`, `SWATCH_SIZE_VALUES`, `SWATCH_VARIANTS`, `SWATCH_TEXTURES` — the
+allowed token lists, with `SwatchSize`, `SwatchVariant`, `SwatchTexture` derived
 from them, plus `SwatchColorStop` and `SwatchSharedProps`.
 
 `DistributionSegment` and `DistributionSegmentUpdate` are the segment types.

@@ -21,7 +21,7 @@ import {
   getSwatchColorsBackground,
   moveDistributionBoundary,
   removeDistributionSegment,
-  SWATCH_SHAPES,
+  SWATCH_VARIANTS,
   SWATCH_SIZES,
   Swatch,
   updateDistributionSegment,
@@ -127,7 +127,7 @@ describe("Swatch", () => {
     const swatch = screen.getByLabelText("Olive");
     expect(swatch).toHaveClass("patternmode-swatch");
     expect(swatch).toHaveAttribute("data-slot", "swatch");
-    expect(swatch).toHaveAttribute("data-shape", "circle");
+    expect(swatch).toHaveAttribute("data-variant", "circle");
     expect(swatch).toHaveAttribute("data-size", "base");
     expect(swatch).toHaveAttribute("data-tone", "dark");
     expect(swatch).toHaveStyle({ "--patternmode-swatch-fill": "#315c4b" });
@@ -229,10 +229,10 @@ describe("Swatch", () => {
     });
   });
 
-  it("renders a block-shaped swatch that fills its container", () => {
-    expect(SWATCH_SHAPES).toContain("block");
-    render(<Swatch aria-label="Band" color="#315c4b" shape="block" />);
-    expect(screen.getByLabelText("Band")).toHaveAttribute("data-shape", "block");
+  it("renders a block swatch that fills its container", () => {
+    expect(SWATCH_VARIANTS).toContain("block");
+    render(<Swatch aria-label="Band" color="#315c4b" variant="block" />);
+    expect(screen.getByLabelText("Band")).toHaveAttribute("data-variant", "block");
   });
 
   it("builds a layered radial atmosphere from color stops", () => {
@@ -269,7 +269,7 @@ describe("Swatch", () => {
   });
 
   it("omits the scrim for a flat swatch so the fill reads as the exact color", () => {
-    const { container } = render(<Swatch aria-label="Cell" color="#315c4b" flat shape="block" />);
+    const { container } = render(<Swatch aria-label="Cell" color="#315c4b" flat variant="block" />);
     const swatch = screen.getByLabelText("Cell");
     expect(swatch).toHaveAttribute("data-flat", "true");
     expect(container.querySelector(".patternmode-swatch__scrim")).toBeNull();
@@ -287,7 +287,7 @@ describe("Swatch", () => {
         aria-label="Cell"
         color="#315c4b"
         render={<button aria-label="Cell" data-testid="cell" type="button" />}
-        shape="block"
+        variant="block"
         size="lg"
       />,
     );
@@ -296,7 +296,7 @@ describe("Swatch", () => {
     expect(cell.tagName).toBe("BUTTON");
     expect(cell).toHaveClass("patternmode-swatch");
     expect(cell).toHaveAttribute("data-slot", "swatch");
-    expect(cell).toHaveAttribute("data-shape", "block");
+    expect(cell).toHaveAttribute("data-variant", "block");
     expect(cell).toHaveAttribute("data-size", "lg");
     expect(cell).toHaveStyle({
       "--patternmode-swatch-fill": "#315c4b",

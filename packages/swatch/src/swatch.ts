@@ -19,7 +19,7 @@ export { getSwatchColorsBackground } from "./Swatch/swatch-colors";
 export { Swatch } from "./Swatch/swatch-root";
 export {
   getSwatchSizeVariableStyle,
-  SWATCH_SHAPES,
+  SWATCH_VARIANTS,
   SWATCH_SIZE_VALUES,
   SWATCH_SIZES,
   SWATCH_TEXTURES,
@@ -27,7 +27,7 @@ export {
   type SwatchColorStop,
   type SwatchDefaultProps,
   type SwatchProps,
-  type SwatchShape,
+  type SwatchVariant,
   type SwatchSharedProps,
   type SwatchSize,
   type SwatchTexture,
