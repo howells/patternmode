@@ -44,7 +44,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "oxfmt": "0.66.0",
+    "oxfmt": "0.67.0",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   }
