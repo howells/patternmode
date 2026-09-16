@@ -117,8 +117,8 @@ catalogs:
       specifier: 0.2.3
       version: 0.2.3
     '@howells/lint':
-      specifier: ^3.2.5
-      version: 3.2.5
+      specifier: ^3.3.2
+      version: 3.3.2
     '@howells/typescript-config':
       specifier: 0.1.6
       version: 0.1.6
@@ -178,7 +178,7 @@ catalogs:
       version: 2.3.0
     zod:
       specifier: ^4.4.3
-      version: 4.4.3
+      version: 4.6.5
 
 overrides:
   postcss: ^8.5.15
@@ -192,13 +192,13 @@ importers:
         version: 3.0.2
       '@howells/envy':
         specifier: 'catalog:'
-        version: 0.3.7(zod@4.4.3)
+        version: 0.3.7(zod@4.6.5)
       '@howells/husky':
         specifier: 'catalog:'
         version: 0.2.3
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -222,7 +222,7 @@ importers:
         version: 2.9.0
       zod:
         specifier: 'catalog:'
-        version: 4.4.3
+        version: 4.6.5
 
   apps/preview:
     dependencies:
@@ -240,7 +240,7 @@ importers:
         version: 0.7.1
       cn:
         specifier: ^0.2.5
-        version: 0.2.5
+        version: 0.2.6
       focus-trap-react:
         specifier: ^12.0.2
         version: 12.0.2(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -274,7 +274,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/motion':
         specifier: workspace:*
         version: link:../../packages/motion
@@ -386,7 +386,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -423,7 +423,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -484,7 +484,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -545,7 +545,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -612,7 +612,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -666,7 +666,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -732,7 +732,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -754,7 +754,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -818,7 +818,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -878,7 +878,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -936,7 +936,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -997,7 +997,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1055,7 +1055,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1112,7 +1112,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1146,7 +1146,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1197,7 +1197,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/motion':
         specifier: workspace:*
         version: link:../motion
@@ -1246,7 +1246,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1301,7 +1301,7 @@ importers:
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
-        version: 3.2.5
+        version: 3.3.2
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.6
@@ -1856,8 +1856,8 @@ packages:
     engines: {node: '>=24.15.0'}
     hasBin: true
 
-  '@howells/lint@3.2.5':
-    resolution: {integrity: sha512-DsfXKW+ftjMXslFvjtKnqFwrbomFbSD0yP1eZKHOMCx3SpRFyenrCBQb+8hsDz+mQFnKWyQ8sURDtiiNck8FtQ==}
+  '@howells/lint@3.3.2':
+    resolution: {integrity: sha512-2LeN0eA7fBpvfniglMFg1425GDV+v7uEuo3FJOKdmKTCTPX31keqIBIED6iEMrNsx37bAMCgMJAq+jH8gimnlg==}
     engines: {node: '>=24.15.0'}
     hasBin: true
 
@@ -6806,9 +6806,6 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.4.3:
-    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
-
   zod@4.6.5:
     resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
 
@@ -7353,17 +7350,17 @@ snapshots:
     dependencies:
       hono: 4.12.28
 
-  '@howells/envy@0.3.7(zod@4.4.3)':
+  '@howells/envy@0.3.7(zod@4.6.5)':
     dependencies:
       dotenv: 17.4.2
-      zod: 4.4.3
+      zod: 4.6.5
 
   '@howells/husky@0.2.3':
     dependencies:
       husky: 9.1.7
       lint-staged: 16.4.0
 
-  '@howells/lint@3.2.5':
+  '@howells/lint@3.3.2':
     dependencies:
       '@howells/neon': 0.2.0
       '@manypkg/cli': 0.25.1
@@ -11671,8 +11668,6 @@ snapshots:
       zod: 3.25.76
 
   zod@3.25.76: {}
-
-  zod@4.4.3: {}
 
   zod@4.6.5: {}
 
