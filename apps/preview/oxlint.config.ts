@@ -1,4 +1,5 @@
 import { compatibleNext } from "../../oxlint.compat.ts";
+import { componentSourceOverride } from "@howells/lint/oxlint/shadcn";
 
 /**
  * Mirrors the repo-root oxlint config (the Howells Next.js preset) and adds one
@@ -13,23 +14,12 @@ import { compatibleNext } from "../../oxlint.compat.ts";
 export default {
   extends: [compatibleNext],
   ignorePatterns: ["components/ui/**"],
-  overrides: [
-    {
-      // The vendored design-system components forward unrecognised props to
-      // the shadcn component they wrap: `const { className, ...rest } = props`
-      // and then `<Badge {...rest} />`. `require-static-classes` reports the
-      // rest element because it cannot see that `className` was destructured
-      // out of it, so no call site can carry an unchecked class through. The
-      // rule is unsatisfiable for a forwarding wrapper, which is what every
-      // component in this tree is.
-      //
-      // The scope is deliberately this tree only. Call sites outside it keep
-      // the rule, which is where a className the linter cannot read is a real
-      // problem rather than an artefact of the wrapper shape.
-      files: ["components/patternmode/**"],
-      rules: { "shadcn/require-static-classes": "off" },
-    },
-  ],
+  // `components/patternmode` is the vendored design-system tree: every file
+  // is a forwarding wrapper around a shadcn component. The shared override
+  // stops the shadcn call-site rules there, including
+  // `require-static-classes`, which cannot read a wrapper that destructures
+  // `className` out and spreads the rest. Call sites outside it keep the rules.
+  overrides: [componentSourceOverride(["components/patternmode/**"])],
   // `joinClassNames` is this repo's class-merging helper. The shadcn rules
   // recognise `cn`, `clsx`, `classNames`, `twMerge` and `cva` out of the box,
   // so without this every call reads as a className the linter cannot check
