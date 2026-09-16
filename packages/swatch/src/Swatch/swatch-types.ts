@@ -14,12 +14,12 @@ export const SWATCH_SIZE_VALUES = {
   "7xl": "6rem",
 } as const satisfies Record<SwatchSize, string>;
 
-export const SWATCH_SHAPES = ["circle", "pill", "square", "block"] as const;
+export const SWATCH_VARIANTS = ["circle", "pill", "square", "block"] as const;
 
 export const SWATCH_TEXTURES = ["atmosphere"] as const;
 
 export type SwatchSize = (typeof SWATCH_SIZES)[number];
-export type SwatchShape = (typeof SWATCH_SHAPES)[number];
+export type SwatchVariant = (typeof SWATCH_VARIANTS)[number];
 export type SwatchTexture = (typeof SWATCH_TEXTURES)[number];
 export type SwatchColorStop = string | { color: string; ratio?: number };
 type SwatchIcon = ComponentType<SVGProps<SVGSVGElement>>;
@@ -93,11 +93,11 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
    */
   selected?: boolean;
   /**
-   * Rendered swatch shape.
+   * Rendered swatch silhouette.
    *
    * Default `"circle"`.
    */
-  shape?: SwatchShape;
+  variant?: SwatchVariant;
   /**
    * Whether selected swatches render their ring treatment.
    *

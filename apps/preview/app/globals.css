@@ -177,15 +177,15 @@
   .patternmode-swatch[data-tone="light"] {
     color: #1d1d1b;
   }
-  .patternmode-swatch[data-shape="pill"] {
+  .patternmode-swatch[data-variant="pill"] {
     --patternmode-swatch-radius: 999px;
     aspect-ratio: auto;
     width: calc(var(--patternmode-swatch-size) * 3);
   }
-  .patternmode-swatch[data-shape="square"] {
+  .patternmode-swatch[data-variant="square"] {
     --patternmode-swatch-radius: 7px;
   }
-  .patternmode-swatch[data-shape="block"] {
+  .patternmode-swatch[data-variant="block"] {
     --patternmode-swatch-radius: 0.25rem;
     aspect-ratio: auto;
     display: block;

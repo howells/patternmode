@@ -40,7 +40,7 @@ const swatchApi: ApiSection[] = [
       {
         defaultValue: '"circle"',
         description: "Controls the rendered silhouette.",
-        name: "shape",
+        name: "variant",
         type: '"circle" | "pill" | "square" | "block"',
       },
       {
@@ -212,7 +212,7 @@ function PalettePreview() {
           { color: "#315c4b", ratio: 60 },
           { color: "#e1ebe5", ratio: 40 },
         ]}
-        shape="pill"
+        variant="pill"
         size="2xl"
       />
       <DistributionBar
