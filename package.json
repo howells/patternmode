@@ -28,6 +28,7 @@
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
     "lint-staged": "catalog:",
+    "oxfmt": "0.67.0",
     "oxlint-tsgolint": "7.0.2001",
     "postcss": "8.5.28",
     "turbo": "catalog:",

@@ -205,6 +205,9 @@ importers:
       lint-staged:
         specifier: 'catalog:'
         version: 17.5.0
+      oxfmt:
+        specifier: 0.67.0
+        version: 0.67.0
       oxlint-tsgolint:
         specifier: 7.0.2001
         version: 7.0.2001
