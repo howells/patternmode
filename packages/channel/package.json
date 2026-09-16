@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/channel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Gradient channel sliders with glass thumbs and Swatch sizing.",
   "keywords": [
