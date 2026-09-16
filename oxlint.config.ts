@@ -1,5 +1,5 @@
-import { compatibleNext } from "./oxlint.compat.ts";
+import next from "@howells/lint/oxlint/next";
 
 export default {
-  extends: [compatibleNext],
+  extends: [next],
 };
