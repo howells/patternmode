@@ -165,8 +165,8 @@ catalogs:
       specifier: ^0.7.1
       version: 0.7.1
     cn:
-      specifier: ^0.2.5
-      version: 0.2.6
+      specifier: ^0.3.0
+      version: 0.3.0
     concurrently:
       specifier: 10.0.5
       version: 10.0.5
@@ -306,7 +306,7 @@ importers:
         version: 0.7.1
       cn:
         specifier: 'catalog:'
-        version: 0.2.6
+        version: 0.3.0
       focus-trap-react:
         specifier: ^12.0.2
         version: 12.0.2(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -4590,6 +4590,11 @@ packages:
 
   cn@0.2.6:
     resolution: {integrity: sha512-+i4L0zUGgRcEnhsxueVrP7iBGxBx5iD0WOTYg1MwFEu2ZyCmH5Ov2V1cul2Ht5UchRQQgftCf4be/RxspuW6QQ==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  cn@0.3.0:
+    resolution: {integrity: sha512-qRoU0ARrZD3Bbj1wKFftEKxPjSnzTEdFkf22NVhW+zU9D/wajhoP+qUZ5DChhhSOBCH1onV12hrmGqfu1+5Z2Q==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -9310,6 +9315,8 @@ snapshots:
   cn@0.2.5: {}
 
   cn@0.2.6: {}
+
+  cn@0.3.0: {}
 
   code-block-writer@13.0.3: {}
 
