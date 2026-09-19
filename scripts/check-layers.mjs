@@ -127,8 +127,8 @@ for (const entry of readdirSync(packagesDirectory, { withFileTypes: true })) {
    * The registry ships CSS that is not a package build output — `theme.css`
    * lands in every consumer through the registry rather than through a
    * `dist/`, so a gate that only walks `dist/styles.css` would never see it.
-   * That is the same blind spot `check-tokens.mjs` had (HANDOFF §0.10b): the
-   * one file installed into everybody was the one file exempt from the check.
+   * That is the same blind spot `check-tokens.mjs` had: the one file installed
+   * into everybody was the one file exempt from the check.
    */
   stylesheets.push(...collectStylesheets(path.join(packagesDirectory, entry.name, "registry")));
 }

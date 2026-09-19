@@ -36,8 +36,8 @@ npx shadcn add https://patternmode.com/r/theme.json
 Component CSS reads the standard shadcn theme variable vocabulary (`--foreground`,
 `--muted-foreground`, `--ring`, …) with each package's original hex values as fallbacks, so
 installed components pick up any shadcn-compatible theme automatically. See
-`docs/specs/002-component-registry.md` for the vendoring pipeline, the token contract, and
-the update/versioning story.
+[docs/library-contract.md](docs/library-contract.md) for the vendoring pipeline, the token
+contract, and the dependency conventions.
 
 ## Releasing
 
