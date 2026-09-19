@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "node ../../scripts/build-registry.mjs",
-    "clean": "rm -rf dist .staging .turbo",
     "lint": "howells-check . --no-error-on-unmatched-pattern",
-    "lint:fix": "howells-fix . --no-error-on-unmatched-pattern"
+    "lint:fix": "howells-fix . --no-error-on-unmatched-pattern",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@howells/lint": "catalog:",
@@ -24,6 +24,7 @@
     "@patternmode/swatch": "workspace:*",
     "@patternmode/system": "workspace:*",
     "@patternmode/tags": "workspace:*",
-    "shadcn": "4.21.0"
+    "shadcn": "catalog:",
+    "vitest": "catalog:"
   }
 }

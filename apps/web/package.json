@@ -5,16 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/copy-registry.mjs && next build",
-    "clean": "rm -rf .next .turbo",
     "dev": "node scripts/copy-registry.mjs && next dev",
     "lint": "howells-check .",
     "lint:fix": "howells-fix .",
     "typecheck": "../../node_modules/.bin/tsc --noEmit"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/inter": "catalog:",
     "@howells/site-ui": "workspace:*",
-    "@instruments/colorscope": "^7.0.0",
+    "@instruments/colorscope": "catalog:",
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
     "@patternmode/channel": "workspace:*",
@@ -36,7 +35,7 @@
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
     "@patternmode/theme": "workspace:*",
-    "@tailwindcss/postcss": "4.3.3",
+    "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

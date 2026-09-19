@@ -20,10 +20,10 @@
 
 ## Browser tests
 
-- `pnpm test:browser` is a separate gate and is not part of `pnpm check`. It runs Vitest
+- `pnpm e2e` is a separate lane and is not part of `pnpm test`. It runs Vitest
   browser mode on Playwright Chromium, so it needs a browser binary
   (`pnpm --filter @patternmode/scrollframe exec playwright install chromium`).
-  `pnpm check` stays browser-free so a missing binary can't block the ordinary gate.
+  `pnpm test` stays browser-free so a missing binary can't block the ordinary run.
   Run the browser gate before releasing any package whose behaviour depends on where
   the browser delivers an event - today `scrollframe` and `halo`.
 - Browser tests are named `src/**/*.browser.tsx`, never `*.test.tsx`. The name keeps

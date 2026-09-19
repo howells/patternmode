@@ -1,6 +1,8 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
+import { expect, it } from "vitest";
+
 /**
  * Fails when a published stylesheet contains a style rule outside every cascade
  * layer.
@@ -16,9 +18,12 @@ import path from "node:path";
  * Reads the built CSS, never the source: a nearest-preceding-`@layer` grep gives
  * the wrong answer because layer blocks close and reopen, and Tailwind minifies
  * the four-name declaration, so the declaration text is not assertable either.
+ *
+ * This lives in `@patternmode/theme` because theme depends on every component
+ * package, so turbo builds all of them before this test runs.
  */
 
-const root = process.cwd();
+const root = path.resolve(import.meta.dirname, "../../..");
 const packagesDirectory = path.join(root, "packages");
 
 /**
@@ -112,58 +117,50 @@ const collectStylesheets = (directory) => {
   return found;
 };
 
-/** @type {string[]} */
-const stylesheets = [];
+/** @returns {string[]} Every stylesheet a consumer receives. */
+const publishedStylesheets = () => {
+  /** @type {string[]} */
+  const stylesheets = [];
 
-for (const entry of readdirSync(packagesDirectory, { withFileTypes: true })) {
-  if (!entry.isDirectory()) {
-    continue;
-  }
-  const built = path.join(packagesDirectory, entry.name, "dist", "styles.css");
-  if (existsSync(built)) {
-    stylesheets.push(built);
-  }
-  /*
-   * The registry ships CSS that is not a package build output — `theme.css`
-   * lands in every consumer through the registry rather than through a
-   * `dist/`, so a gate that only walks `dist/styles.css` would never see it.
-   * That is the same blind spot `check-tokens.mjs` had: the one file installed
-   * into everybody was the one file exempt from the check.
-   */
-  stylesheets.push(...collectStylesheets(path.join(packagesDirectory, entry.name, "registry")));
-}
-
-/** @type {string[]} */
-const failures = [];
-let scanned = 0;
-
-for (const stylesheet of stylesheets) {
-  scanned += 1;
-  const layerless = findLayerlessRules(stripComments(readFileSync(stylesheet, "utf-8")));
-  if (layerless.length === 0) {
-    continue;
+  for (const entry of readdirSync(packagesDirectory, { withFileTypes: true })) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+    const built = path.join(packagesDirectory, entry.name, "dist", "styles.css");
+    if (existsSync(built)) {
+      stylesheets.push(built);
+    }
+    /*
+     * The registry ships CSS that is not a package build output — `theme.css`
+     * lands in every consumer through the registry rather than through a
+     * `dist/`, so a check that only walks `dist/styles.css` would never see it.
+     * That is the same blind spot the token vocabulary check had: the one file
+     * installed into everybody was the one file exempt from it.
+     */
+    stylesheets.push(...collectStylesheets(path.join(packagesDirectory, entry.name, "registry")));
   }
 
-  failures.push(
-    `${path.relative(root, stylesheet)} — ${layerless.length} layerless style rule(s):`,
-    ...layerless.slice(0, 8).map((prelude) => `    ${prelude.slice(0, 100)}`),
-    ...(layerless.length > 8 ? [`    …and ${layerless.length - 8} more`] : []),
-  );
-}
+  return stylesheets;
+};
 
-if (scanned === 0) {
-  console.error("No built stylesheets found. Run the build before check:layers.");
-  process.exit(1);
-}
+it("ships no style rule outside a cascade layer", () => {
+  const stylesheets = publishedStylesheets();
 
-if (failures.length > 0) {
-  console.error("Layerless style rules found in published CSS:\n");
-  console.error(failures.join("\n"));
-  console.error(
-    "\nA layerless rule outranks every rule in a named layer regardless of specificity,",
-  );
-  console.error("so a consumer cannot override it. Wrap the rules in `@layer components`.");
-  process.exit(1);
-}
+  // A pass over nothing is not a pass: without built CSS this would approve
+  // every stylesheet in the workspace.
+  expect(stylesheets.length).toBeGreaterThan(0);
 
-console.log(`Cascade layers are clean. (${scanned} stylesheets)`);
+  /** @type {Record<string, string[]>} */
+  const layerlessByStylesheet = {};
+  for (const stylesheet of stylesheets) {
+    const layerless = findLayerlessRules(stripComments(readFileSync(stylesheet, "utf-8")));
+    if (layerless.length > 0) {
+      layerlessByStylesheet[path.relative(root, stylesheet)] = layerless;
+    }
+  }
+
+  // A layerless rule outranks every rule in a named layer regardless of
+  // specificity, so a consumer cannot override it. Wrap the rules in
+  // `@layer components`.
+  expect(layerlessByStylesheet).toEqual({});
+});

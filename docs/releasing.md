@@ -30,7 +30,8 @@ is what attaches the attestation, and dropping it loses provenance silently.
 
 ## Build ordering
 
-`pnpm check` runs in the same job immediately before the release, and that isn't ceremony.
+The typecheck, lint, build and test run happens in the same job immediately before the
+release, and that isn't ceremony.
 `scripts/release.mjs` sets `PATTERNMODE_SKIP_PREPACK_BUILD=1` and reuses whatever is in
 `dist/`, which on a fresh runner starts empty, so splitting the two into separate jobs
 would publish empty packages. Nothing else suppresses those builds: `pnpm` reads
@@ -59,7 +60,7 @@ isolation.
 - The workflow runs `node scripts/verify-release.mjs` after publishing, which reads the
   published metadata back off the registry and proves the release is installable. Run it
   by hand only when investigating.
-- `pnpm smoke:tarballs` builds a real Next.js consumer against the packed tarballs. It
+- `pnpm e2e:consumer` builds a real Next.js consumer against the packed tarballs. It
   resolves dependencies from npm, so it legitimately fails before a release that includes
   a new version of an internal dependency. Re-run it afterwards.
 - Confirm a consumer actually resolves from npm before reasoning about blast radius, and

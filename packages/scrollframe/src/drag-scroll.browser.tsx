@@ -10,7 +10,7 @@
  * they are faster and they localise a failure. These say whether a user can
  * click the thing.
  *
- * Run with `pnpm test:browser`. Not part of `pnpm check`, which stays free of
+ * Run with `pnpm e2e`. Not part of `pnpm test`, which stays free of
  * browser binaries — see AGENTS.md "Browser tests".
  */
 import { page, userEvent } from "vitest/browser";

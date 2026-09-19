@@ -67,14 +67,19 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # `pnpm check` builds every package through turbo in dependency order, and
+      # `pnpm build` builds every package through turbo in dependency order, and
       # scripts/release.mjs then packs with PATTERNMODE_SKIP_PREPACK_BUILD=1 and
       # reuses those dist directories. Running the release without this step
       # publishes whatever happens to be in dist, which on a fresh runner is
       # nothing. It has to be the same job for the same reason: dist does not
       # survive to another one.
-      - name: Check
-        run: pnpm check
+      - name: Typecheck, lint, build and test
+        run: |
+          set -euo pipefail
+          pnpm typecheck
+          pnpm lint
+          pnpm build
+          pnpm test
 
       - name: Release
         run: pnpm release ${{ inputs.dry_run && '--dry-run' || '' }}

@@ -1,7 +1,20 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
-const root = path.resolve(import.meta.dirname, "..");
+import { expect, it } from "vitest";
+
+/**
+ * Every `var(--NAME)` in package CSS must name a custom property the theme
+ * defines or the owning package defines itself. A name that exists nowhere
+ * renders from its hex fallback forever, silently.
+ *
+ * The vocabulary is derived from the theme registry item rather than restated
+ * here, so the class of "allowlisted but defined nowhere" cannot be written.
+ *
+ * This lives in `@patternmode/theme` because theme owns that registry item.
+ */
+
+const root = path.resolve(import.meta.dirname, "../../..");
 
 /**
  * @param {unknown} value Parsed registry item.
@@ -37,7 +50,7 @@ const themeDefinedNames = () => {
   const itemPath = path.join(root, "packages/theme/registry/theme/item.json");
   if (!existsSync(itemPath)) {
     throw new Error(
-      `Theme registry item not found at ${path.relative(root, itemPath)}. The token gate derives its vocabulary from it and cannot run without it.`,
+      `Theme registry item not found at ${path.relative(root, itemPath)}. This check derives its vocabulary from it and cannot run without it.`,
     );
   }
 
@@ -45,7 +58,7 @@ const themeDefinedNames = () => {
   const item = JSON.parse(readFileSync(itemPath, "utf-8"));
   if (!hasCssVars(item)) {
     throw new Error(
-      `${path.relative(root, itemPath)} declares no \`cssVars\` object. The token gate has no vocabulary to check against.`,
+      `${path.relative(root, itemPath)} declares no \`cssVars\` object. This check has no vocabulary to check against.`,
     );
   }
 
@@ -62,7 +75,7 @@ const themeDefinedNames = () => {
 
   if (names.size === 0) {
     throw new Error(
-      `${path.relative(root, itemPath)} defines zero custom properties. Refusing to run a gate that would pass everything.`,
+      `${path.relative(root, itemPath)} defines zero custom properties. Refusing to run a check that would pass everything.`,
     );
   }
 
@@ -234,11 +247,10 @@ for (const [packageName, files] of cssFilesByPackage) {
   }
 }
 
-if (violations.length > 0) {
-  console.error(violations.join("\n"));
-  process.exit(1);
-}
-
-console.log(
-  `Token vocabulary is clean. (${fileCount} files, ${occurrenceCount} var(--…) occurrences)`,
-);
+it("references only custom properties the theme or the owning package defines", () => {
+  // A pass over nothing is not a pass: with no CSS scanned this would approve
+  // every name in the workspace.
+  expect(fileCount).toBeGreaterThan(0);
+  expect(occurrenceCount).toBeGreaterThan(0);
+  expect(violations).toEqual([]);
+});

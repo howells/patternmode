@@ -22,7 +22,7 @@ import { REPO_ROOT, inDependencyOrder, readPublishablePackages } from "./workspa
  * which gets the authentication right.
  *
  * Versioning stays with changesets: `pnpm version-packages`, review, commit,
- * then `pnpm check`, then run this.
+ * then `pnpm typecheck && pnpm lint && pnpm build && pnpm test`, then run this.
  */
 
 const isDryRun = globalThis.process.argv.includes("--dry-run");
@@ -100,7 +100,7 @@ const pack = async (entry) => {
   const destination = globalThis.process.env.RUNNER_TEMP ?? tmpdir();
   const output = await run("pnpm", ["pack", "--pack-destination", destination], {
     cwd: entry.directory,
-    // `pnpm check` has already built the workspace through turbo in dependency
+    // `pnpm build` has already built the workspace through turbo in dependency
     // order. Without this, fourteen prepack builds race each other over the
     // same dist/ directories - see scripts/prepack-build.mjs.
     env: { ...globalThis.process.env, PATTERNMODE_SKIP_PREPACK_BUILD: "1" },

@@ -21,9 +21,11 @@ code lives in `apps/web` and `apps/preview`; packages own their public APIs and 
 
 ## Commands
 
-- `pnpm dev` - web demo. `pnpm check` - typecheck, lint, test, build, boundaries, layers,
-  tokens.
-- `pnpm test:browser` - a separate gate, needs a Chromium binary.
+- `pnpm dev` - web demo. `pnpm prepush` - typecheck and lint. `pnpm test` - every test,
+  including the cascade-layer, token-vocabulary and package-boundary assertions, which
+  `@patternmode/theme` owns because it depends on every component package.
+- `pnpm e2e` - browser tests, needs a Chromium binary. `pnpm e2e:consumer` - builds a real
+  Next.js consumer against the packed tarballs.
 - Deploy the site from the root:
   `vercel pull --yes --environment=production && vercel build --prod && vercel deploy --prebuilt --prod`.
 

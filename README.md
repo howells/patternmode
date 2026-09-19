@@ -48,7 +48,7 @@ locally.
 1. `pnpm changeset` to describe the change.
 2. `pnpm version-packages` to apply the bumps and write the changelogs.
 3. Review and commit.
-4. `pnpm check` - the full gate, and the only one there is.
+4. `pnpm typecheck && pnpm lint && pnpm build && pnpm test` - the full gate.
 5. `pnpm release` (add `--dry-run` to pack and verify without publishing).
 6. `node scripts/verify-release.mjs` to read every published package back.
 

@@ -8,7 +8,7 @@
  * and only a browser decides whether `preventDefault` on pointerdown suppresses
  * the focus that the keyboard then depends on.
  *
- * Run with `pnpm test:browser`. Not part of `pnpm check`, which stays free of
+ * Run with `pnpm e2e`. Not part of `pnpm test`, which stays free of
  * browser binaries — see AGENTS.md "Browser tests".
  */
 import { useState } from "react";

@@ -2,7 +2,7 @@ import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
 
 /**
- * Browser tests, run by `pnpm test:browser`.
+ * Browser tests, run by `pnpm e2e`.
  *
  * `*.browser.tsx` deliberately does not match vitest's default `*.test.*`
  * include, so `pnpm test` never tries to run these under jsdom, and the

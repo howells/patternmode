@@ -1,7 +1,18 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
-const root = process.cwd();
+import { expect, it } from "vitest";
+
+/**
+ * A published package must not reference a private workspace package, by import
+ * or by name: the reference resolves in the repo and breaks for the first
+ * stranger who installs the tarball.
+ *
+ * This lives in `@patternmode/theme` because theme depends on every component
+ * package, so it sees the whole published surface.
+ */
+
+const root = path.resolve(import.meta.dirname, "../../..");
 
 /**
  * @typedef {{
@@ -74,7 +85,6 @@ const walk = (dir) => {
   return files;
 };
 
-const failures = [];
 const manifests = workspaceManifests().map(({ manifestPath, packagePath }) => ({
   manifestPath,
   packageJson: readPackageJson(path.join(root, manifestPath)),
@@ -87,33 +97,29 @@ const publicPackages = manifests.filter(
     packagePath.startsWith("packages/") && packageJson.private !== true,
 );
 
-const forbiddenInPublicPackages = privatePackages.flatMap(({ packageJson, packagePath }) => [
-  packageJson.name,
-  packagePath,
-]);
+it("has private packages to police and public packages to police them in", () => {
+  expect(privatePackages.length).toBeGreaterThan(0);
+  expect(publicPackages.length).toBeGreaterThan(0);
+});
 
-for (const { manifestPath, packageJson } of privatePackages) {
-  if (packageJson.private !== true) {
-    failures.push(`${manifestPath} must stay private.`);
-  }
-}
+it("keeps every private workspace surface out of published source", () => {
+  const forbidden = privatePackages.flatMap(({ packageJson, packagePath }) => [
+    packageJson.name,
+    packagePath,
+  ]);
 
-for (const { packagePath } of publicPackages) {
-  for (const file of walk(path.join(root, packagePath, "src"))) {
-    const source = readFileSync(file, "utf-8");
-    for (const forbidden of forbiddenInPublicPackages) {
-      if (source.includes(forbidden)) {
-        failures.push(
-          `${path.relative(root, file)} imports or references forbidden private surface: ${forbidden}`,
-        );
+  /** @type {string[]} */
+  const references = [];
+  for (const { packagePath } of publicPackages) {
+    for (const file of walk(path.join(root, packagePath, "src"))) {
+      const source = readFileSync(file, "utf-8");
+      for (const name of forbidden) {
+        if (source.includes(name)) {
+          references.push(`${path.relative(root, file)} references ${name}`);
+        }
       }
     }
   }
-}
 
-if (failures.length > 0) {
-  console.error(failures.join("\n"));
-  process.exit(1);
-}
-
-console.log("Package boundaries are clean.");
+  expect(references).toEqual([]);
+});

@@ -16,7 +16,7 @@ published registry JSON served from `apps/web/public/r`.
 ## Why it's private
 
 `private: true` is a hard invariant. This package is **never published to npm** — it is
-distributed exclusively via the self-hosted shadcn registry. `scripts/check-boundaries.mjs`
+distributed exclusively via the self-hosted shadcn registry. `test/package-boundaries.test.mjs`
 crashes on a public package without a `src/` directory, so this package must stay private.
 
 ## Why it devDepends on every component package

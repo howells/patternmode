@@ -5,7 +5,7 @@
 Component CSS reads the shadcn theme variable vocabulary with patternmode hex values as
 fallbacks, e.g. `var(--foreground, #1d1d1b)`. Never reintroduce the older `--ink` /
 `--muted` / `--surface` / `--surface-soft` / `--accent-soft` / `--border-soft` / `--quiet`
-names. `pnpm check:tokens` (`scripts/check-tokens.mjs`, part of `pnpm check`) enforces the
+names. `packages/theme/test/token-vocabulary.test.mjs`, run by `pnpm test`, enforces the
 vocabulary and fails on any `var(--name)` outside the allowlist.
 
 `scripts/build-registry-config.mjs` hard-codes two per-package lookup tables that must be

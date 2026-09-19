@@ -1,7 +1,8 @@
 # CSS cascade layers
 
 Every package that ships CSS takes part in a consumer's cascade, so the rules below
-are load-bearing. `pnpm check:layers` (`scripts/check-layers.mjs`) enforces them.
+are load-bearing. `packages/theme/test/cascade-layers.test.mjs`, run by `pnpm test`,
+enforces them.
 
 - A layer is registered the first time it is seen, and a later `@layer …;` can't move
   one that already exists. A package sheet loaded before the app's Tailwind entry
@@ -19,6 +20,6 @@ are load-bearing. `pnpm check:layers` (`scripts/check-layers.mjs`) enforces them
   layerless; leave it alone.
 - Importing `tailwindcss/utilities` on its own emits rules layerless. Always
   `layer(utilities)`.
-- `check:layers` walks `packages/*/dist/styles.css` **and** `packages/*/registry/**`,
+- The test walks `packages/*/dist/styles.css` **and** `packages/*/registry/**`,
   because `theme.css` reaches every consumer through the registry rather than through a
   `dist/`. If a package ever ships CSS by a third route, teach the check about it too.

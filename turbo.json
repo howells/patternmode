@@ -3,23 +3,24 @@
   "ui": "stream",
   "globalDependencies": ["**/.env", "**/.env.local"],
   "tasks": {
+    "@patternmode/theme#build": {
+      "dependsOn": ["^build"],
+      "env": ["REGISTRY_BASE_URL", "VERCEL"],
+      "outputs": ["dist/**"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
-    },
-    "clean": {
-      "cache": false
     },
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
-    "@patternmode/theme#build": {
-      "dependsOn": ["^build"],
-      "env": ["REGISTRY_BASE_URL", "VERCEL"],
-      "outputs": ["dist/**"]
+    "e2e": {
+      "dependsOn": ["build"],
+      "outputs": []
     },
     "lint": {},
     "lint:fix": {
@@ -27,10 +28,6 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "test:browser": {
-      "dependsOn": ["build"],
       "outputs": []
     },
     "typecheck": {
