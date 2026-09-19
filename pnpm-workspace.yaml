@@ -39,7 +39,7 @@ catalog:
   "@changesets/cli": "3.0.2"
   "@fontsource-variable/inter": "^5.2.8"
   "@howells/envy": "0.3.7"
-  "@howells/husky": "0.2.3"
+  "@howells/husky": "^0.2.5"
   "@howells/lint": "^3.3.2"
   "@howells/typescript-config": "0.1.6"
   "@instruments/colorscope": "^7.0.0"
