@@ -36,7 +36,7 @@ const processEnv = globalThis.process.env;
  */
 
 /**
- * @typedef {{ name: string; version: string; description?: string; dependencies?: Record<string, string> }} Manifest
+ * @typedef {{ name: string; version: string; description?: string; dependencies?: Record<string, string>; peerDependencies?: Record<string, string> }} Manifest
  */
 
 /**
@@ -323,7 +323,7 @@ const splitDependencies = (manifest, ws, baseUrl) => {
   // Peers are runtime imports too. A vendored copy has no package manifest to
   // declare them, so the registry item must, or the install passes and the
   // typecheck fails.
-  const runtime = { ...(manifest.peerDependencies ?? {}), ...(manifest.dependencies ?? {}) };
+  const runtime = { ...manifest.peerDependencies, ...manifest.dependencies };
   for (const [name, range] of Object.entries(runtime)) {
     if (range.startsWith("workspace:") || ws.versions.has(name)) {
       const registryName = INTERNAL_REGISTRY.get(name);
