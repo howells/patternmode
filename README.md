@@ -17,21 +17,28 @@ canonical typography, colour roles, spacing, and application recipes.
 The old Patternmode UI system, Storybook, playground, transition package, and
 longform docs were intentionally retired during the catalog migration.
 
-## shadcn registry
+## Installing
 
-Patternmode also self-hosts a [shadcn registry](https://ui.shadcn.com/docs/registry) at
-`https://patternmode.com/r/{name}.json`, serving the theme and every `@patternmode/*`
-component as vendored, CLI-installed source rather than an npm dependency — consumers
-own and can edit the code they install.
+Components are npm packages. Install the ones a repo needs and pin them once in the
+workspace catalog, so fixes arrive as upgrades:
 
 ```bash
-# namespace (add once to components.json):
-#   { "registries": { "@patternmode": "https://patternmode.com/r/{name}.json" } }
-npx shadcn add @patternmode/theme @patternmode/swatch
+pnpm add @patternmode/stacksheet @patternmode/swatch @howells/motion
+```
 
-# raw URL — no components.json config needed
+The theme is different: it ships through a self-hosted
+[shadcn registry](https://ui.shadcn.com/docs/registry) at
+`https://patternmode.com/r/{name}.json`, because it has to land in the app's own
+`globals.css` and font setup.
+
+```bash
 npx shadcn add https://patternmode.com/r/theme.json
 ```
+
+The registry also serves every component as vendored source, for the rare repo that needs
+to edit one. Add the namespace once to `components.json`
+(`{ "registries": { "@patternmode": "https://patternmode.com/r/{name}.json" } }`) and
+`npx shadcn add @patternmode/swatch`. A vendored copy no longer receives fixes.
 
 Component CSS reads the standard shadcn theme variable vocabulary (`--foreground`,
 `--muted-foreground`, `--ring`, …) with each package's original hex values as fallbacks, so
