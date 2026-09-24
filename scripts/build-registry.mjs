@@ -308,7 +308,7 @@ const resolveRange = (name, range, ws) => {
  */
 
 /**
- * Split a package's runtime dependencies into external npm `dependencies`
+ * Split a package's runtime dependencies (regular and peer) into external npm `dependencies`
  * (as `name@range` strings) and internal `registryDependencies` (as URLs).
  * @param {Manifest} manifest Package manifest.
  * @param {Workspace} ws Workspace context.
@@ -320,7 +320,11 @@ const splitDependencies = (manifest, ws, baseUrl) => {
   const dependencies = [];
   /** @type {string[]} */
   const registryDependencies = [];
-  for (const [name, range] of Object.entries(manifest.dependencies ?? {})) {
+  // Peers are runtime imports too. A vendored copy has no package manifest to
+  // declare them, so the registry item must, or the install passes and the
+  // typecheck fails.
+  const runtime = { ...(manifest.peerDependencies ?? {}), ...(manifest.dependencies ?? {}) };
+  for (const [name, range] of Object.entries(runtime)) {
     if (range.startsWith("workspace:") || ws.versions.has(name)) {
       const registryName = INTERNAL_REGISTRY.get(name);
       if (registryName === undefined) {
