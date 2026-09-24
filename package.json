@@ -22,6 +22,7 @@
     "@howells/husky": "catalog:",
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
+    "@types/node": "catalog:",
     "lint-staged": "catalog:",
     "oxfmt": "catalog:",
     "oxlint-tsgolint": "catalog:",
