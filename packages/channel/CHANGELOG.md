@@ -1,14 +1,5 @@
 # @patternmode/channel
 
-## 0.2.2
-
-### Patch Changes
-
-- f45a3e1: Update @base-ui/react to the latest release.
-- Updated dependencies [f45a3e1]
-- Updated dependencies [e33cdec]
-  - @patternmode/swatch@5.1.0
-
 ## 0.2.1
 
 ### Patch Changes
