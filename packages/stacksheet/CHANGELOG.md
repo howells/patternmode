@@ -1,5 +1,11 @@
 # @patternmode/stacksheet
 
+## 3.0.6
+
+### Patch Changes
+
+- f45a3e1: Update @base-ui/react, focus-trap-react and zustand to the latest release.
+
 ## 3.0.5
 
 ### Patch Changes

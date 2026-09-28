@@ -1,5 +1,15 @@
 # @patternmode/swatch
 
+## 5.1.0
+
+### Minor Changes
+
+- e33cdec: Add `edge`: a hairline drawn just inside the swatch's boundary, over the fill, so a pale colour keeps its outline on a pale page. Tune it with `--patternmode-swatch-edge`.
+
+### Patch Changes
+
+- f45a3e1: Update @base-ui/react to the latest release.
+
 ## 5.0.0
 
 ### Major Changes

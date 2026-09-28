@@ -1,5 +1,13 @@
 # @patternmode/tags
 
+## 2.0.6
+
+### Patch Changes
+
+- f45a3e1: Update @base-ui/react to the latest release.
+- Updated dependencies [f45a3e1]
+  - @patternmode/scrollframe@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes

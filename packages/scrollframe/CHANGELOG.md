@@ -1,5 +1,11 @@
 # @patternmode/scrollframe
 
+## 2.0.6
+
+### Patch Changes
+
+- f45a3e1: Update @base-ui/react and lucide-react to the latest release.
+
 ## 2.0.5
 
 ### Patch Changes

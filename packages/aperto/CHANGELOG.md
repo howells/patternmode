@@ -1,5 +1,11 @@
 # @patternmode/aperto
 
+## 3.0.4
+
+### Patch Changes
+
+- f45a3e1: Update @base-ui/react to the latest release.
+
 ## 3.0.3
 
 ### Patch Changes

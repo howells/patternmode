@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/scrollframe",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "private": false,
   "description": "A Radix-based scroll frame with measured fades and movement controls.",
   "keywords": [
