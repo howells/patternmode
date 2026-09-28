@@ -73,6 +73,18 @@
     box-shadow: none;
   }
 
+  /* Edge: a hairline inside the boundary, drawn over the fill and any media so
+     a pale color keeps its outline on a pale page. Translucent, so it reads on
+     light fills and vanishes into dark ones. */
+  .patternmode-swatch[data-edge="true"]::after {
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--patternmode-swatch-edge, rgb(0 0 0 / 10%));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
   .patternmode-swatch__backdrop,
   .patternmode-swatch__fill,
   .patternmode-swatch__media,

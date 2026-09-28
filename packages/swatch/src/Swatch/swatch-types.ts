@@ -57,6 +57,15 @@ export interface SwatchSharedProps extends HTMLAttributes<HTMLElement> {
    */
   density?: number;
   /**
+   * Draw a hairline just inside the edge, over the fill. A pale color on a
+   * pale page otherwise has no boundary at all; the line is a translucent
+   * dark so it lifts pale fills and disappears into dark ones. Tune it with
+   * `--patternmode-swatch-edge`.
+   *
+   * Default `false`.
+   */
+  edge?: boolean;
+  /**
    * Render a precise, flat color block: no top-to-bottom scrim gradient and
    * no drop shadow. Use for data visualisation where the fill must read as
    * the exact color value.

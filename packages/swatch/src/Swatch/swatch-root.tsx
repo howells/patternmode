@@ -113,6 +113,7 @@ const getSwatchTone = ({
 };
 
 const getSwatchDataProps = ({
+  edge,
   flat,
   lightTone,
   raised,
@@ -123,6 +124,7 @@ const getSwatchDataProps = ({
   transparencyBackdrop,
   unavailable,
 }: {
+  edge: boolean;
   flat: boolean;
   lightTone: "dark" | "light";
   raised: boolean;
@@ -133,6 +135,7 @@ const getSwatchDataProps = ({
   transparencyBackdrop: boolean;
   unavailable: boolean;
 }) => ({
+  "data-edge": edge ? "true" : undefined,
   "data-flat": flat ? "true" : undefined,
   "data-raised": raised ? "true" : undefined,
   "data-selected": selected ? "true" : undefined,
@@ -246,6 +249,7 @@ export const Swatch = ({
   color,
   colors,
   density,
+  edge = false,
   flat = false,
   gravity,
   icon: Icon,
@@ -294,6 +298,7 @@ export const Swatch = ({
     position: objectPosition,
   });
   const dataProps = getSwatchDataProps({
+    edge,
     flat,
     lightTone,
     raised,
