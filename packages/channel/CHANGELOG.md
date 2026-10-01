@@ -1,5 +1,12 @@
 # @patternmode/channel
 
+## 0.2.4
+
+### Patch Changes
+
+- A range's undimmed stretch now ends in a round cap around each thumb instead of a straight edge beside it.
+- 5add3d1: Update @base-ui/react to the latest release.
+
 ## 0.2.1
 
 ### Patch Changes
