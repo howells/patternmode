@@ -1086,6 +1086,14 @@
     background-size: var(--patternmode-swatch-backdrop-size, 8px)
       var(--patternmode-swatch-backdrop-size, 8px);
   }
+  .patternmode-swatch[data-edge="true"]::after {
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--patternmode-swatch-edge, rgb(0 0 0 / 10%));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
 }
 
 @property --patternmode-scrollframe-mask-top {
