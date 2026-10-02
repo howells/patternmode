@@ -1,4 +1,4 @@
-import { compatibleNext } from "../../oxlint.compat.ts";
+import next from "@howells/lint/oxlint/next";
 import { componentSourceOverride } from "@howells/lint/oxlint/shadcn";
 
 /**
@@ -12,7 +12,7 @@ import { componentSourceOverride } from "@howells/lint/oxlint/shadcn";
  * generator regressions visible.
  */
 export default {
-  extends: [compatibleNext],
+  extends: [next],
   ignorePatterns: ["components/ui/**"],
   // `components/patternmode` is the vendored design-system tree: every file
   // is a forwarding wrapper around a shadcn component. The shared override

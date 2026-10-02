@@ -3,7 +3,8 @@
 import { useId, useRef } from "react";
 import type { KeyboardEvent } from "react";
 
-const getOptionKey = (value: number | string) => `${typeof value}:${String(value)}`;
+const getOptionKey = (option: { label: string; value: number | string }) =>
+  `${option.label}:${String(option.value)}`;
 
 export const SegmentedControl = <T extends string | number>({
   label,
@@ -50,7 +51,7 @@ export const SegmentedControl = <T extends string | number>({
           return (
             <button
               aria-checked={checked}
-              key={getOptionKey(option.value)}
+              key={getOptionKey(option)}
               onClick={() => {
                 onChange(option.value);
               }}

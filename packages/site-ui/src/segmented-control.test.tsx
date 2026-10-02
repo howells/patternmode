@@ -28,33 +28,38 @@ const ControlledDensity = ({ onChange }: { onChange: (value: string) => void }) 
   );
 };
 
-afterEach(() => {
-  cleanup();
-});
+const renderDensity = () =>
+  render(
+    <SegmentedControl
+      label="Density"
+      onChange={() => {}}
+      options={[
+        { label: "Compact", value: "compact" },
+        { label: "Cozy", value: "cozy" },
+        { label: "Spacious", value: "spacious" },
+      ]}
+      value="cozy"
+    />,
+  );
 
-describe("SegmentedControl", () => {
-  it("renders a labelled radiogroup with checked state and roving tabindex", () => {
-    render(
-      <SegmentedControl
-        label="Density"
-        onChange={() => {}}
-        options={[
-          { label: "Compact", value: "compact" },
-          { label: "Cozy", value: "cozy" },
-          { label: "Spacious", value: "spacious" },
-        ]}
-        value="cozy"
-      />,
-    );
+describe(SegmentedControl, () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-    const group = screen.getByRole("radiogroup", { name: "Density" });
-    const radios = screen.getAllByRole("radio");
+  it("renders a labelled radiogroup with the selected option checked", () => {
+    renderDensity();
 
-    expect(group).toBeInTheDocument();
-    expect(radios).toHaveLength(3);
+    expect(screen.getByRole("radiogroup", { name: "Density" })).toBeInTheDocument();
+    expect(screen.getAllByRole("radio")).toHaveLength(3);
     expect(screen.getByRole("radio", { name: "Cozy" })).toHaveAttribute("aria-checked", "true");
-    expect(screen.getByRole("radio", { name: "Cozy" })).toHaveAttribute("tabindex", "0");
     expect(screen.getByRole("radio", { name: "Compact" })).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("gives only the selected option a tab stop", () => {
+    renderDensity();
+
+    expect(screen.getByRole("radio", { name: "Cozy" })).toHaveAttribute("tabindex", "0");
     expect(screen.getByRole("radio", { name: "Compact" })).toHaveAttribute("tabindex", "-1");
     expect(screen.getByRole("radio", { name: "Spacious" })).toHaveAttribute("tabindex", "-1");
   });
@@ -80,7 +85,7 @@ describe("SegmentedControl", () => {
     expect(onChange).toHaveBeenCalledWith("cozy");
   });
 
-  it("moves selection and focus with arrow keys, wrapping at the edges", async () => {
+  it("moves selection, focus and the tab stop with an arrow key", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn<(value: string) => void>();
 
@@ -93,8 +98,16 @@ describe("SegmentedControl", () => {
     expect(screen.getByRole("radio", { name: "Spacious" })).toHaveFocus();
     expect(screen.getByRole("radio", { name: "Spacious" })).toHaveAttribute("tabindex", "0");
     expect(screen.getByRole("radio", { name: "Cozy" })).toHaveAttribute("tabindex", "-1");
+  });
 
-    await user.keyboard("{ArrowRight}");
+  it("wraps at both edges", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn<(value: string) => void>();
+
+    render(<ControlledDensity onChange={onChange} />);
+
+    screen.getByRole("radio", { name: "Cozy" }).focus();
+    await user.keyboard("{ArrowRight}{ArrowRight}");
 
     expect(onChange).toHaveBeenLastCalledWith("compact");
     expect(screen.getByRole("radio", { name: "Compact" })).toHaveFocus();
