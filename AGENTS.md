@@ -1,45 +1,16 @@
-# Patternmode
+# patternmode
 
-A catalogue of focused React interface components, each named for the interaction pattern
-it implements rather than for its implementation. Every package in `packages/` is published
-and versioned independently: `aperto`, `briolette`, `deck`, `halo`, `parquet`,
-`scrollframe`, `stacksheet`, `status`, `swatch`, `system`, `tags`, `theme`, `thumbnail`,
-`verge`, plus `@howells/motion` and `@howells/site-ui`.
+Documentation, specifications, decisions and outstanding work live in Linear (howells, PAT).
 
-This is a shared library, so a breaking change here lands in someone else's app.
-`@patternmode/swatch` and `@patternmode/scrollframe` alone are consumed by routerbase,
-materialgraph, materia, colorscope, litmus, candor, architizer, rulework, materialsinuse,
-fieldportrait, foolscap, motif and colophon. Treat a public API change as a release
-decision: explain it and its migration impact first, then add a changeset.
+- [patternmode — project documentation](https://linear.app/howells/document/patternmode-project-documentation-decfff4bc8c9)
 
-## Language
+```sh
+pnpm dev
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm build
+pnpm prepush
+```
 
-Use the product terms in `CONTEXT.md` - Aperto, Deck, Stacksheet, Media Transition, Sheet
-Stack - and search it before renaming anything. Aperto isn't just a lightbox, Deck is
-canonical over CardStack, Stacksheet owns the sheet-navigation vocabulary. App and demo
-code lives in `apps/web` and `apps/preview`; packages own their public APIs and tests.
-
-## Commands
-
-- `pnpm dev` - web demo. `pnpm prepush` - typecheck and lint. `pnpm test` - every test,
-  including the cascade-layer, token-vocabulary and package-boundary assertions, which
-  `@patternmode/theme` owns because it depends on every component package.
-- `pnpm e2e` - browser tests, needs a Chromium binary. `pnpm e2e:consumer` - builds a real
-  Next.js consumer against the packed tarballs.
-- Deploy the site from the root:
-  `vercel pull --yes --environment=production && vercel build --prod && vercel deploy --prebuilt --prod`.
-
-## More
-
-- [docs/style.md](docs/style.md) - canonical composition guide;
-  `packages/theme/registry` owns the portable tokens and body base. Apply typography
-  recipes in app code, not shared component internals.
-- [docs/library-contract.md](docs/library-contract.md) - registry and token rules,
-  dependency conventions, and the test for what belongs here.
-- [docs/cascade-layers.md](docs/cascade-layers.md) - the layer rules every CSS package
-  must follow.
-- [docs/pointer-interaction.md](docs/pointer-interaction.md) - pointer capture, focus, and
-  the browser test gate.
-- [docs/releasing.md](docs/releasing.md) - release sequence, trusted publishers, build
-  ordering, verification.
-- Linear: team PAT (howells).
+Read the linked operating rules and domain definitions before editing. Keep one writer per checkout; preserve existing work. Put plans, handoffs and evidence on the owning Linear issue. Do not add local documentation or task reports. Instruments and Ground are the documentation exceptions.
