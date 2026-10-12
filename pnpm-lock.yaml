@@ -126,8 +126,8 @@ catalogs:
       specifier: ^3.5.1
       version: 3.5.1
     '@howells/typescript-config':
-      specifier: 0.1.6
-      version: 0.1.6
+      specifier: 0.1.8
+      version: 0.1.8
     '@instruments/colorscope':
       specifier: ^9.3.0
       version: 9.3.0
@@ -264,7 +264,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.2
@@ -349,7 +349,7 @@ importers:
         version: link:../../packages/motion
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@patternmode/deck':
         specifier: workspace:*
         version: link:../../packages/deck
@@ -458,7 +458,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@patternmode/theme':
         specifier: workspace:*
         version: link:../../packages/theme
@@ -495,7 +495,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -556,7 +556,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@instruments/colorscope':
         specifier: 'catalog:'
         version: 9.3.0(sharp@0.35.4(@types/node@26.6.2))
@@ -617,7 +617,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -684,7 +684,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -738,7 +738,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@instruments/colorscope':
         specifier: 'catalog:'
         version: 9.3.0(sharp@0.35.4(@types/node@26.6.2))
@@ -804,7 +804,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       concurrently:
         specifier: 'catalog:'
         version: 10.0.5
@@ -826,7 +826,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -890,7 +890,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -950,7 +950,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@testing-library/jest-dom':
         specifier: 'catalog:'
         version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.1)
@@ -1008,7 +1008,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1069,7 +1069,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1127,7 +1127,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@instruments/colorscope':
         specifier: 'catalog:'
         version: 9.3.0(sharp@0.35.4(@types/node@26.6.2))
@@ -1184,7 +1184,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@instruments/colorscope':
         specifier: 'catalog:'
         version: 9.3.0(sharp@0.35.4(@types/node@26.6.2))
@@ -1218,7 +1218,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1321,7 +1321,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1376,7 +1376,7 @@ importers:
         version: 3.5.1
       '@howells/typescript-config':
         specifier: 'catalog:'
-        version: 0.1.6
+        version: 0.1.8
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1786,8 +1786,9 @@ packages:
       pg:
         optional: true
 
-  '@howells/typescript-config@0.1.6':
-    resolution: {integrity: sha512-oZkchm5DCCfzWOGoowP/NlXlHKyj1UBYFYZRtbz4F9/dQOhfAkcoINvcuB2DbxuIrx9XB5/PR2z0XtX5N/au0Q==}
+  '@howells/typescript-config@0.1.8':
+    resolution: {integrity: sha512-e/VMw9IJwL/ktF2eXrQGJeaE/pzTbeZ0zz9vjQYLf/4ljsad5JU67bKK00qB3iAPuw+Crt8HgSZS2W4F5cnB+A==}
+    engines: {node: '>=24.15.0'}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -6936,7 +6937,7 @@ snapshots:
 
   '@howells/neon@0.2.0': {}
 
-  '@howells/typescript-config@0.1.6': {}
+  '@howells/typescript-config@0.1.8': {}
 
   '@img/colour@1.1.0':
     optional: true
