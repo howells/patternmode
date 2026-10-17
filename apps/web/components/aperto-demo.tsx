@@ -18,6 +18,8 @@ type ApertoDemoStyle = CSSProperties & {
   "--aperto-radius"?: string;
 };
 
+const isUrl = (value: string | Blob | undefined): value is string => typeof value === "string";
+
 export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
   const [columns, setColumns] = useState(3);
   const [easing, setEasing] = useState<MotionPresetName>("smooth");
@@ -28,7 +30,7 @@ export const ApertoDemo = ({ media }: { media: CatalogMediaItem[] }) => {
   const apertoStyle: ApertoDemoStyle = { "--aperto-radius": `${radius}px` };
   const renderApertoImage: RenderImage = ({ alt, item, src, variant }) => {
     const isLeadImage = variant === "expanded" || item.src === firstVisibleSrc;
-    const imageSrc = typeof src === "string" ? src : item.src;
+    const imageSrc = isUrl(src) ? src : item.src;
 
     return (
       <Image

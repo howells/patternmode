@@ -11,9 +11,9 @@ const dest = path.join(root, "apps/web/public/r");
  */
 const jsonFilesIn = (dir) =>
   existsSync(dir)
-    ? readdirSync(dir, { withFileTypes: true })
-        .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
-        .map((entry) => entry.name)
+    ? readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+        entry.isFile() && entry.name.endsWith(".json") ? [entry.name] : [],
+      )
     : [];
 
 const registryFiles = jsonFilesIn(source);

@@ -140,10 +140,14 @@ const layoutStrip = (entries: Entry[], rect: Rect, gap: number, out: PackedRect[
 export const packSquarified = (weights: number[], options: PackOptions): PackedRect[] => {
   const { width, height, gap } = options;
 
-  const entries = weights
-    .map((weight, index) => ({ area: sanitizeWeight(weight), index }))
-    .filter((entry) => entry.area > 0)
-    .toSorted((a, b) => b.area - a.area);
+  const entries: { area: number; index: number }[] = [];
+  for (const [index, weight] of weights.entries()) {
+    const area = sanitizeWeight(weight);
+    if (area > 0) {
+      entries.push({ area, index });
+    }
+  }
+  entries.sort((a, b) => b.area - a.area);
 
   if (entries.length === 0 || width <= 0 || height <= 0) {
     return [];

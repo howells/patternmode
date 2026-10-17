@@ -42,6 +42,7 @@ export const Parquet = ({
   showLabels = false,
   slotCount,
 }: ParquetProps) => {
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the squarified packing reruns on every render.
   const slots = useMemo<Slot[]>(() => {
     const layoutHeight = LAYOUT_WIDTH / aspectRatio;
     const values = colors.map((tile) => tile.value);

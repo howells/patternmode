@@ -15,13 +15,13 @@ const overlaps = (a: PackedRect, b: PackedRect): boolean => {
   );
 };
 
-describe("packSquarified", () => {
+describe(packSquarified, () => {
   it("returns no rectangles for an empty input", () => {
-    expect(packSquarified([], { gap: 0, height: 100, width: 100 })).toEqual([]);
+    expect(packSquarified([], { gap: 0, height: 100, width: 100 })).toStrictEqual([]);
   });
 
   it("returns no rectangles for non-positive dimensions", () => {
-    expect(packSquarified([1, 2], { gap: 4, height: 100, width: 0 })).toEqual([]);
+    expect(packSquarified([1, 2], { gap: 4, height: 100, width: 0 })).toStrictEqual([]);
   });
 
   it("fills the whole rectangle with a single weight", () => {
@@ -72,6 +72,6 @@ describe("packSquarified", () => {
       height: 100,
       width: 100,
     });
-    expect(rects.map((rect) => rect.index).toSorted((a, b) => a - b)).toEqual([0, 4]);
+    expect(rects.map((rect) => rect.index).toSorted((a, b) => a - b)).toStrictEqual([0, 4]);
   });
 });

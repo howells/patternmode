@@ -7,8 +7,6 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Parquet } from "./index";
 import type { ParquetTile } from "./parquet-types";
 
-afterEach(cleanup);
-
 const palette: ParquetTile[] = [
   { color: "#c2703e", label: "Terracotta", value: 0.5 },
   { color: "#2d5a27", label: "Forest", value: 0.3 },
@@ -18,7 +16,9 @@ const palette: ParquetTile[] = [
 const tiles = (container: HTMLElement): NodeListOf<Element> =>
   container.querySelectorAll(".patternmode-parquet__tile");
 
-describe("Parquet", () => {
+describe(Parquet, () => {
+  afterEach(cleanup);
+
   it("renders one tile per positive-weight color", () => {
     const { container } = render(<Parquet colors={palette} disableMotion />);
     expect(tiles(container)).toHaveLength(3);
