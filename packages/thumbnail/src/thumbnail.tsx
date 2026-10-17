@@ -7,7 +7,9 @@ import type { CSSProperties } from "react";
 import type { ThumbnailProps } from "./thumbnail-types";
 
 /** Numbers are pixels; strings pass through as written. */
-const toCssSize = (value: CssSize): string => (typeof value === "number" ? `${value}px` : value);
+const isPixelCount = (value: CssSize): value is number => typeof value === "number";
+
+const toCssSize = (value: CssSize): string => (isPixelCount(value) ? `${value}px` : value);
 
 /**
  * A framed image.
@@ -77,13 +79,18 @@ export const Thumbnail = ({
    * `var()` default in the sheet anyway. Writing it keeps the two spellings from
    * drifting apart.
    */
-  const frameStyle: CSSProperties = {
-    ...(size === null ? {} : { "--patternmode-thumbnail-size": toCssSize(size) }),
-    ...(radius === undefined ? {} : { "--patternmode-thumbnail-radius": toCssSize(radius) }),
-    ...(position === undefined ? {} : { "--patternmode-thumbnail-position": position }),
-    "--patternmode-thumbnail-fit": fit,
-    ...style,
-  } as CSSProperties;
+  const frameVariables: Record<string, string> = {};
+  if (size !== null) {
+    frameVariables["--patternmode-thumbnail-size"] = toCssSize(size);
+  }
+  if (radius !== undefined) {
+    frameVariables["--patternmode-thumbnail-radius"] = toCssSize(radius);
+  }
+  if (position !== undefined) {
+    frameVariables["--patternmode-thumbnail-position"] = position;
+  }
+  frameVariables["--patternmode-thumbnail-fit"] = fit;
+  const frameStyle: CSSProperties = { ...frameVariables, ...style };
 
   return (
     <span

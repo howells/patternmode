@@ -38,9 +38,11 @@ export const PATTERNMODE_SIZE_PIXELS = {
 export const getPatternmodeSizeValue = (size: PatternmodeSize): string =>
   PATTERNMODE_SIZE_VALUES[size];
 
+const isPixelCount = (value: CssSize | undefined): value is number => typeof value === "number";
+
 /** Converts numeric size values to pixel strings while preserving CSS strings. */
 export const toCssSize = (value: CssSize | undefined): string | undefined => {
-  if (typeof value === "number") {
+  if (isPixelCount(value)) {
     return `${value}px`;
   }
   return value;
@@ -50,7 +52,7 @@ export const toCssSize = (value: CssSize | undefined): string | undefined => {
 export const getSizeVariableStyle = (
   size: PatternmodeSize,
   variableName = "--patternmode-size",
-): Record<string, string> => ({
+) => ({
   [variableName]: getPatternmodeSizeValue(size),
 });
 

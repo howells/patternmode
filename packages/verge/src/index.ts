@@ -1,4 +1,5 @@
 "use client";
 
-export { Verge, VergeRoot, VergeSlot } from "./verge";
+export { Verge } from "./verge-parts";
+export { VergeRoot, VergeSlot } from "./verge";
 export type { VergeRootProps, VergeSlotProps } from "./verge-types";

@@ -11,11 +11,11 @@ import {
 
 describe("Patternmode system utilities", () => {
   it("exposes the shared component size scale", () => {
-    expect(PATTERNMODE_SIZES).toEqual(["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"]);
+    expect(PATTERNMODE_SIZES).toStrictEqual(["2xs", "xs", "sm", "base", "lg", "xl", "2xl", "3xl"]);
     expect(getPatternmodeSizeValue("2xs")).toBe("1rem");
     expect(getPatternmodeSizeValue("base")).toBe("2rem");
     expect(getPatternmodeSizeValue("3xl")).toBe("4rem");
-    expect(getSizeVariableStyle("lg", "--patternmode-swatch-size")).toEqual({
+    expect(getSizeVariableStyle("lg", "--patternmode-swatch-size")).toStrictEqual({
       "--patternmode-swatch-size": "2.5rem",
     });
   });
@@ -32,7 +32,7 @@ describe("Patternmode system utilities", () => {
   });
 
   it("returns object sizing styles with full-cover defaults", () => {
-    expect(getObjectSizingStyle()).toEqual({
+    expect(getObjectSizingStyle()).toStrictEqual({
       height: "100%",
       objectFit: "cover",
       objectPosition: "center",
@@ -45,7 +45,7 @@ describe("Patternmode system utilities", () => {
         position: "top left",
         width: 32,
       }),
-    ).toEqual({
+    ).toStrictEqual({
       height: "4rem",
       objectFit: "contain",
       objectPosition: "top left",

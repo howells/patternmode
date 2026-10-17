@@ -48,11 +48,11 @@ export const deriveDistribution = (values: number[]): DerivedDistribution => {
 /** Perceptual (OKLab) lightness above which a color reads as "light". */
 const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
 
-const NAMED_COLOR_LIGHTNESS: Record<string, boolean> = {
-  black: false,
-  transparent: false,
-  white: true,
-};
+const NAMED_COLOR_LIGHTNESS = new Map([
+  ["black", false],
+  ["transparent", false],
+  ["white", true],
+]);
 
 /**
  * Splits a CSS color function body into channel tokens, accepting both the
@@ -79,6 +79,7 @@ const getColorFunctionChannels = (color: string, names: readonly string[]): stri
 
 /** Parses a channel token against its full-scale value; percentages map to it. */
 const parseChannel = (token: string, scale: number): number | null => {
+  // oxlint-disable-next-line unicorn/prefer-number-coercion -- parseFloat reads the leading number and ignores a trailing unit such as `%`, which Number() turns into NaN.
   const value = Number.parseFloat(token);
   if (!Number.isFinite(value)) {
     return null;
@@ -107,6 +108,7 @@ const getHslFunctionLightness = (color: string): number | null => {
     return null;
   }
 
+  // oxlint-disable-next-line unicorn/prefer-number-coercion -- parseFloat accepts an angle unit such as `120deg` and an empty token is NaN; Number() rejects the unit and turns "" into 0.
   const hue = Number.parseFloat(channels[0] ?? "");
   const saturation = parseChannel(channels[1] ?? "", 100);
   const lightness = parseChannel(channels[2] ?? "", 100);
@@ -137,7 +139,7 @@ const getOkFunctionLightness = (color: string): number | null => {
  * cannot parse.
  */
 export const isLightColor = (color: string): boolean => {
-  const named = NAMED_COLOR_LIGHTNESS[color.trim().toLowerCase()];
+  const named = NAMED_COLOR_LIGHTNESS.get(color.trim().toLowerCase());
   if (named !== undefined) {
     return named;
   }

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { deriveDistribution, isLightColor, sanitizeWeight } from "./weighted-distribution";
 
-describe("sanitizeWeight", () => {
+describe(sanitizeWeight, () => {
   it("keeps positive weights, including fractions", () => {
     expect(sanitizeWeight(3)).toBe(3);
     expect(sanitizeWeight(0.25)).toBe(0.25);
@@ -17,12 +17,12 @@ describe("sanitizeWeight", () => {
   });
 });
 
-describe("deriveDistribution", () => {
+describe(deriveDistribution, () => {
   it("derives sanitized weights, total, and unrounded percentages", () => {
     const { sanitized, total, percentages } = deriveDistribution([1, 3]);
-    expect(sanitized).toEqual([1, 3]);
+    expect(sanitized).toStrictEqual([1, 3]);
     expect(total).toBe(4);
-    expect(percentages).toEqual([25, 75]);
+    expect(percentages).toStrictEqual([25, 75]);
   });
 
   it("leaves percentages unrounded", () => {
@@ -32,13 +32,13 @@ describe("deriveDistribution", () => {
 
   it("sanitizes invalid weights without dropping them (drop is caller policy)", () => {
     const { sanitized, total, percentages } = deriveDistribution([2, -1, Number.NaN, 2]);
-    expect(sanitized).toEqual([2, 0, 0, 2]);
+    expect(sanitized).toStrictEqual([2, 0, 0, 2]);
     expect(total).toBe(4);
-    expect(percentages).toEqual([50, 0, 0, 50]);
+    expect(percentages).toStrictEqual([50, 0, 0, 50]);
   });
 
   it("returns zeros for an all-zero distribution (equal-weight fallback is caller policy)", () => {
-    expect(deriveDistribution([0, 0])).toEqual({
+    expect(deriveDistribution([0, 0])).toStrictEqual({
       percentages: [0, 0],
       sanitized: [0, 0],
       total: 0,
@@ -46,11 +46,11 @@ describe("deriveDistribution", () => {
   });
 
   it("handles the empty distribution", () => {
-    expect(deriveDistribution([])).toEqual({ percentages: [], sanitized: [], total: 0 });
+    expect(deriveDistribution([])).toStrictEqual({ percentages: [], sanitized: [], total: 0 });
   });
 });
 
-describe("isLightColor", () => {
+describe(isLightColor, () => {
   it("treats high perceptual lightness as light", () => {
     expect(isLightColor("#ffffff")).toBe(true);
     expect(isLightColor("#f5f5f5")).toBe(true);

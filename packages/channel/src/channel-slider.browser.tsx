@@ -1,33 +1,16 @@
-import { useState } from "react";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { describe, expect, it, vi } from "vitest";
 import { ChannelSlider } from "./index";
+import { ControlledChannelSlider } from "./controlled-channel-slider.browser-fixture";
 import "../dist/styles.css";
 
 const background = "linear-gradient(to right, white, black)";
 
 describe("ChannelSlider in the browser", () => {
   it("hands focus from a real track click to keyboard input and commits changes", async () => {
-    const commit = vi.fn();
-    const Harness = () => {
-      const [value, setValue] = useState(10);
-      return (
-        <div style={{ width: 400 }}>
-          <ChannelSlider
-            label="Lightness"
-            background={background}
-            size="xl"
-            value={value}
-            onValueChange={setValue}
-            onValueCommitted={(nextValue) => {
-              commit(nextValue);
-            }}
-          />
-        </div>
-      );
-    };
-    await render(<Harness />);
+    const commit = vi.fn<(value: number) => void>();
+    await render(<ControlledChannelSlider background={background} onCommit={commit} />);
     // This checks browser event delivery; dispatching fireEvent.click would bypass it.
     await userEvent.click(page.getByTestId("channel-control"));
     const input = page.getByRole("slider", { name: "Lightness" }).element();

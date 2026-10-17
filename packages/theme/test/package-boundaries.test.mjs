@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { expect, it } from "vitest";
 
+import { isPackageJson } from "./json-guards";
+
 /**
  * A published package must not reference a private workspace package, by import
  * or by name: the reference resolves in the repo and breaks for the first
@@ -14,19 +16,7 @@ import { expect, it } from "vitest";
 
 const root = path.resolve(import.meta.dirname, "../../..");
 
-/**
- * @typedef {{
- *   name: string;
- *   private?: boolean;
- * }} PackageJson
- */
-
-/**
- * @param {unknown} value Value to test.
- * @returns {value is PackageJson} Whether the value is a package manifest.
- */
-const isPackageJson = (value) =>
-  typeof value === "object" && value !== null && "name" in value && typeof value.name === "string";
+/** @typedef {import("./json-guards").PackageJson} PackageJson */
 
 /**
  * @param {string} filePath Manifest file path.

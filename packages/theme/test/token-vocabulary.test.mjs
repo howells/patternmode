@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { expect, it } from "vitest";
 
+import { hasCssVars, isObject } from "./json-guards";
+
 /**
  * Every `var(--NAME)` in package CSS must name a custom property the theme
  * defines or the owning package defines itself. A name that exists nowhere
@@ -15,17 +17,6 @@ import { expect, it } from "vitest";
  */
 
 const root = path.resolve(import.meta.dirname, "../../..");
-
-/**
- * @param {unknown} value Parsed registry item.
- * @returns {value is { cssVars: Record<string, unknown> }} Whether it carries a `cssVars` object.
- */
-const hasCssVars = (value) =>
-  typeof value === "object" &&
-  value !== null &&
-  "cssVars" in value &&
-  typeof value.cssVars === "object" &&
-  value.cssVars !== null;
 
 /**
  * Names allowed inside `var(--NAME…)` references in component package CSS,
@@ -65,7 +56,7 @@ const themeDefinedNames = () => {
   /** @type {Set<string>} */
   const names = new Set();
   for (const block of Object.values(item.cssVars)) {
-    if (typeof block !== "object" || block === null) {
+    if (!isObject(block)) {
       continue;
     }
     for (const name of Object.keys(block)) {

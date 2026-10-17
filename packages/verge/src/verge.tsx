@@ -85,6 +85,8 @@ export const VergeSlot = <TElement extends ElementType = "div">({
   ...props
 }: VergeSlotProps<TElement>) => {
   const Tag = as ?? "div";
+  // SAFETY: `style` comes from the props of the polymorphic element, and every element
+  // type that accepts a `style` prop takes React's CSSProperties object.
   const reservedStyle =
     slots === undefined
       ? style
@@ -102,15 +104,4 @@ export const VergeSlot = <TElement extends ElementType = "div">({
       {...props}
     />
   );
-};
-
-/**
- * Composable parts for the reveal contract.
- *
- * Named for what it guarantees — the controls are reachable by whatever input
- * you have — rather than for hover, which is only one of its three triggers.
- */
-export const Verge = {
-  Root: VergeRoot,
-  Slot: VergeSlot,
 };

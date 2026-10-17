@@ -8,8 +8,6 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { Thumbnail } from "./index";
 
-afterEach(cleanup);
-
 /*
  * Read from `import.meta.dirname` rather than from `new URL(…, import.meta.url)`.
  * Under the jsdom environment `import.meta.url` is an `http://localhost` URL, not
@@ -61,7 +59,9 @@ describe("the frame's edge", () => {
   });
 });
 
-describe("Thumbnail", () => {
+describe(Thumbnail, () => {
+  afterEach(cleanup);
+
   it("renders an image from src, with the alt it was given", () => {
     render(<Thumbnail alt="A green velvet chair" src="/thumb.jpg" />);
     expect(screen.getByRole("img", { name: "A green velvet chair" })).toHaveAttribute(
