@@ -15,22 +15,6 @@ class ResizeObserverMock {
   unobserve = vi.fn<(target: Element) => void>();
 }
 
-beforeEach(() => {
-  vi.stubGlobal("ResizeObserver", ResizeObserverMock);
-  // jsdom implements no Web Animations API, and base-ui's scroll area calls
-  // `getAnimations()` from a timer of its own. Any test that waits long enough
-  // for that timer to fire hits it, which has nothing to do with the frame.
-  if (typeof Element.prototype.getAnimations !== "function") {
-    Element.prototype.getAnimations = () => [];
-  }
-});
-
-afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
-  vi.restoreAllMocks();
-});
-
 /* The shipped components expose `data-slot`, not `data-testid` — test hooks do
    not belong in a consumer's production DOM. Fixtures local to this file still
    use `data-testid`, so the two are queried differently on purpose. */
@@ -46,12 +30,30 @@ const bySlot = (slot: string): HTMLElement => {
    `data-axis` and `data-edge` — rather than a synthesised test id. The old
    `data-testid="scrollframe-fade-vertical-start"` encoded exactly this and put
    it in every consumer's DOM to do it. */
+const FADE_SIZE = "var(--patternmode-scrollframe-fade-size)";
+
 const queryFade = (axis: string, edge: string): HTMLElement | null =>
   document.querySelector<HTMLElement>(
     `[data-slot="scrollframe-fade"][data-axis="${axis}"][data-edge="${edge}"]`,
   );
 
-describe("ScrollFrame", () => {
+describe(ScrollFrame, () => {
+  beforeEach(() => {
+    vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+    // jsdom implements no Web Animations API, and base-ui's scroll area calls
+    // `getAnimations()` from a timer of its own. Any test that waits long enough
+    // for that timer to fire hits it, which has nothing to do with the frame.
+    if (!("getAnimations" in Element.prototype)) {
+      Element.prototype.getAnimations = () => [];
+    }
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
   it("renders a named Radix-backed scroll region with fades and plumbing", () => {
     render(
       <ScrollFrame aria-label="Updates">
@@ -65,9 +67,17 @@ describe("ScrollFrame", () => {
     expect(region).toHaveAttribute("data-axes", "vertical");
     expect(region).toHaveAttribute("data-axis-vertical", "true");
     expect(region).toHaveAttribute("data-slot", "scrollframe");
+  });
 
-    const viewport = bySlot("scrollframe-viewport");
-    expect(viewport).toHaveAttribute("data-slot", "scrollframe-viewport");
+  it("renders a viewport and both vertical fades by default", () => {
+    render(
+      <ScrollFrame aria-label="Updates">
+        <p>One</p>
+        <p>Two</p>
+      </ScrollFrame>,
+    );
+
+    expect(bySlot("scrollframe-viewport")).toHaveAttribute("data-slot", "scrollframe-viewport");
     expect(queryFade("vertical", "start")).toBeInTheDocument();
     expect(queryFade("vertical", "end")).toBeInTheDocument();
   });
@@ -106,28 +116,26 @@ describe("ScrollFrame", () => {
 
     const ramp = (edge: "top" | "bottom") =>
       viewport.style.getPropertyValue(`--patternmode-scrollframe-mask-${edge}`);
+    const ramps = () => [ramp("top"), ramp("bottom")];
 
     act(() => {
       fireEvent.scroll(viewport);
     });
 
     // At the start: nothing behind the top edge, content beyond the bottom.
-    expect(ramp("top")).toBe("0px");
-    expect(ramp("bottom")).toBe("var(--patternmode-scrollframe-fade-size)");
+    expect(ramps()).toStrictEqual(["0px", FADE_SIZE]);
 
     viewport.scrollTop = 100;
     act(() => {
       fireEvent.scroll(viewport);
     });
-    expect(ramp("top")).toBe("var(--patternmode-scrollframe-fade-size)");
-    expect(ramp("bottom")).toBe("var(--patternmode-scrollframe-fade-size)");
+    expect(ramps()).toStrictEqual([FADE_SIZE, FADE_SIZE]);
 
     viewport.scrollTop = 200;
     act(() => {
       fireEvent.scroll(viewport);
     });
-    expect(ramp("top")).toBe("var(--patternmode-scrollframe-fade-size)");
-    expect(ramp("bottom")).toBe("0px");
+    expect(ramps()).toStrictEqual([FADE_SIZE, "0px"]);
   });
 
   it("keeps excluded edges collapsed when mask fades are limited", () => {
@@ -188,7 +196,7 @@ describe("ScrollFrame", () => {
       });
     }
 
-    expect(onRender.mock.calls.length).toBe(settledCommits);
+    expect(onRender).toHaveBeenCalledTimes(settledCommits);
   });
 
   it("supports both axes and keeps hidden scrollbar plumbing mounted", () => {
@@ -300,15 +308,25 @@ describe("ScrollFrame", () => {
     });
 
     expect(root).toHaveAttribute("data-drag-scroll", "true");
-    expect(root).not.toHaveAttribute("data-dragging", "true");
-    expect(viewport.scrollLeft).toBe(40);
+    expect({
+      dragging: root.dataset.dragging,
+      left: viewport.scrollLeft,
+    }).toStrictEqual({
+      dragging: undefined,
+      left: 40,
+    });
 
     act(() => {
       fireEvent.pointerMove(content, { clientX: -12, pointerId: 1 });
     });
 
-    expect(root).toHaveAttribute("data-dragging", "true");
-    expect(viewport.scrollLeft).toBe(52);
+    expect({
+      dragging: root.dataset.dragging,
+      left: viewport.scrollLeft,
+    }).toStrictEqual({
+      dragging: "true",
+      left: 52,
+    });
 
     act(() => {
       fireEvent.pointerUp(content, { pointerId: 1 });
@@ -387,7 +405,7 @@ describe("ScrollFrame", () => {
 
     expect(root).not.toHaveAttribute("data-dragging", "true");
     expect(viewport.scrollLeft).toBe(20);
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(handleClick).toHaveBeenCalledOnce();
   });
 
   it("never captures the pointer, so plain clicks still activate links inside the frame", () => {
@@ -400,7 +418,7 @@ describe("ScrollFrame", () => {
     // browser stops doing under capture.
     render(
       <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
-        <a href="/projects/one">One</a>
+        <a href="#one">One</a>
       </ScrollFrame>,
     );
 
@@ -433,7 +451,7 @@ describe("ScrollFrame", () => {
     // without reaching for pointer capture.
     render(
       <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll={{ activationDistance: 8 }}>
-        <a href="/projects/one">One</a>
+        <a href="#one">One</a>
       </ScrollFrame>,
     );
 
@@ -489,7 +507,7 @@ describe("ScrollFrame", () => {
     });
 
     fireEvent.click(button);
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(handleClick).toHaveBeenCalledOnce();
   });
 
   it("does not start drag scroll from form controls or explicitly ignored content", () => {

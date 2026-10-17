@@ -8,7 +8,11 @@ import {
   ScrollFrameScrollbar,
   ScrollFrameThumb,
 } from "./scroll-frame-scrollbar";
-import type { ScrollFrameAxis, ScrollFrameProps } from "./scroll-frame-types";
+import type {
+  ScrollFrameAxis,
+  ScrollFrameControlsConfig,
+  ScrollFrameProps,
+} from "./scroll-frame-types";
 import { defaultControlAxis, shouldRenderFade, supportsAxis } from "./scroll-frame-utils";
 import { ScrollFrameViewport } from "./scroll-frame-viewport";
 
@@ -46,6 +50,10 @@ const ScrollFrameScrollbars = ({ axes }: Pick<ScrollFrameProps, "axes">) => (
   </>
 );
 
+const isControlsConfig = (
+  controls: boolean | ScrollFrameControlsConfig | undefined,
+): controls is ScrollFrameControlsConfig => typeof controls === "object";
+
 const ScrollFrameBase = ({
   axes = "vertical",
   children,
@@ -63,7 +71,7 @@ const ScrollFrameBase = ({
   viewportStyle,
   ...props
 }: ScrollFrameProps) => {
-  const controlConfig = typeof controls === "object" ? controls : {};
+  const controlConfig = isControlsConfig(controls) ? controls : {};
   const controlsEnabled = controls !== false;
   const controlAxis = controlConfig.axis ?? defaultControlAxis(axes);
   const visibility =

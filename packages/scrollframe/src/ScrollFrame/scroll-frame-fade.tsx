@@ -18,11 +18,11 @@ export const ScrollFrameFade = ({
   const { edgeState } = useScrollFrame();
   const axisState = edgeState[axis];
   const hidden = !axisState.scrollable || axisState[edge === "start" ? "atStart" : "atEnd"];
-  const fadeStyle = {
+  const fadeVariables = {
     "--patternmode-scrollframe-fade-color": color,
     "--patternmode-scrollframe-fade-size": toCssSize(size),
-    ...style,
-  } as CSSProperties;
+  };
+  const fadeStyle: CSSProperties = { ...fadeVariables, ...style };
 
   return (
     <span

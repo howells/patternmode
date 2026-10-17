@@ -14,43 +14,11 @@
  * browser binaries — see AGENTS.md "Browser tests".
  */
 import { page, userEvent } from "vitest/browser";
-import { useState } from "react";
 import { render } from "vitest-browser-react";
 import { describe, expect, it } from "vitest";
 
-import { ScrollFrame } from "./index";
+import { Counter } from "./drag-scroll-counter.browser-fixture";
 import "../dist/styles.css";
-
-const Rail = ({ onActivate }: { onActivate: () => void }) => (
-  <ScrollFrame aria-label="Winners" axes="horizontal" dragScroll style={{ width: "240px" }}>
-    <div style={{ display: "flex", gap: "8px", width: "900px" }}>
-      {["one", "two", "three", "four", "five", "six"].map((name) => (
-        <button
-          key={name}
-          onClick={onActivate}
-          style={{ flex: "0 0 140px", height: "80px" }}
-          type="button"
-        >
-          {name}
-        </button>
-      ))}
-    </div>
-  </ScrollFrame>
-);
-
-const Counter = () => {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <output data-slot="activations">{count}</output>
-      <Rail
-        onActivate={() => {
-          setCount((value) => value + 1);
-        }}
-      />
-    </div>
-  );
-};
 
 const activations = () => Number(page.getByTestId("activations").element().textContent ?? "-1");
 

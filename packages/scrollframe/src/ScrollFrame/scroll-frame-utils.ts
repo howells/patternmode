@@ -1,4 +1,4 @@
-import type { Ref } from "react";
+import type { Ref, RefCallback } from "react";
 
 import type {
   ScrollFrameAxes,
@@ -16,11 +16,13 @@ const DEFAULT_DRAG_SCROLL_IGNORE_SELECTOR =
   "input, textarea, select, option, [contenteditable], [data-scrollframe-no-drag]";
 const DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE = 8;
 
+const isRefCallback = <T>(ref: Ref<T>): ref is RefCallback<T> => typeof ref === "function";
+
 export const setRef = <T>(ref: Ref<T> | undefined, value: T | null): void => {
   if (ref === undefined || ref === null) {
     return;
   }
-  if (typeof ref === "function") {
+  if (isRefCallback(ref)) {
     ref(value);
     return;
   }
@@ -33,14 +35,18 @@ export const supportsAxis = (axes: ScrollFrameAxes, axis: ScrollFrameAxis): bool
 export const defaultControlAxis = (axes: ScrollFrameAxes): ScrollFrameAxis =>
   axes === "horizontal" ? "horizontal" : "vertical";
 
+const isDragScrollConfig = (
+  dragScroll: boolean | ScrollFrameDragScrollConfig,
+): dragScroll is ScrollFrameDragScrollConfig => typeof dragScroll === "object";
+
 export const resolveDragScrollConfig = (
   dragScroll: boolean | ScrollFrameDragScrollConfig | undefined,
 ): ScrollFrameResolvedDragScrollConfig | null => {
-  if (dragScroll !== true && typeof dragScroll !== "object") {
+  if (dragScroll === undefined || dragScroll === false) {
     return null;
   }
 
-  const config = typeof dragScroll === "object" ? dragScroll : {};
+  const config = isDragScrollConfig(dragScroll) ? dragScroll : {};
   return {
     activationDistance: config.activationDistance ?? DEFAULT_DRAG_SCROLL_ACTIVATION_DISTANCE,
     axis: config.axis ?? "auto",
@@ -74,6 +80,11 @@ const normalizeFadeEdges = (
   return fadeEdges;
 };
 
+type ScrollFrameFadeAxes = Partial<Record<ScrollFrameAxis, ScrollFrameFadeEdges>>;
+
+const isFadeAxes = (fades: ScrollFrameFadeConfig): fades is ScrollFrameFadeAxes =>
+  typeof fades === "object";
+
 export const shouldRenderFade = (
   fades: ScrollFrameFadeConfig | undefined,
   axis: ScrollFrameAxis,
@@ -82,7 +93,7 @@ export const shouldRenderFade = (
   if (fades === false || fades === "none") {
     return false;
   }
-  if (fades !== undefined && typeof fades === "object") {
+  if (fades !== undefined && isFadeAxes(fades)) {
     const axisEdges = normalizeFadeEdges(fades[axis]);
     return axisEdges === "both" || axisEdges === edge;
   }
