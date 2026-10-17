@@ -4,7 +4,7 @@ import { setTimeout as sleep } from "node:timers/promises";
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useEffect } from "react";
+import { createElement, Fragment, useEffect } from "react";
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -41,10 +41,6 @@ const stripMotionProps = vi.hoisted(
     }: MotionDivProps | MotionButtonProps) =>
       props,
 );
-const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
-const AnimatePresence = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-));
 const NestedSheet = () => <p>Nested sheet content</p>;
 const PlainSheet = () => <Sheet.Body>Plain body</Sheet.Body>;
 const EscapeConsumerSheet = () => (
@@ -90,10 +86,13 @@ const DetailsSheet = () => (
   </>
 );
 
-vi.mock("focus-trap-react", () => ({
-  FocusTrap: ({ children }: { children: ReactNode }) => <>{children}</>,
+// oxlint-disable-next-line anti-slop/no-module-mocking -- jsdom has no layout, so the real focus trap finds no tabbable element and throws; the stand-in renders its children unchanged.
+vi.mock(import("focus-trap-react"), () => ({
+  FocusTrap: ({ children }: { children: ReactNode }) => createElement(Fragment, null, children),
 }));
-vi.mock("motion/react", () => {
+// oxlint-disable-next-line anti-slop/no-module-mocking -- the real motion components animate with timers; the stand-ins render plain elements and call onAnimationComplete once, and LazyMotion and domMax stay real.
+vi.mock(import("motion/react"), async (importOriginal) => {
+  const actual = await importOriginal();
   const MotionDiv = ({ ref, ...props }: MotionDivProps) => {
     useEffect(() => {
       props.onAnimationComplete?.();
@@ -102,21 +101,21 @@ vi.mock("motion/react", () => {
   };
   const motionComponents = {
     button: ({ ref, ...props }: MotionButtonProps) => (
-      <button ref={ref} {...stripMotionProps(props)} />
+      <button ref={ref} type="button" {...stripMotionProps(props)} />
     ),
     div: MotionDiv,
   };
   return {
-    AnimatePresence,
-    LazyMotion,
-    domMax: {},
+    ...actual,
+    AnimatePresence: ({ children }: { children: ReactNode }) =>
+      createElement(Fragment, null, children),
     m: motionComponents,
     motion: motionComponents,
     useReducedMotion: () => false,
   };
 });
 
-beforeEach(() => {
+const stubMatchMedia = () => {
   const matchMedia = vi.fn<(query: string) => MediaQueryList>().mockImplementation((query) => ({
     addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
     addListener: vi.fn<MediaQueryList["addListener"]>(),
@@ -127,14 +126,8 @@ beforeEach(() => {
     removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
     removeListener: vi.fn<MediaQueryList["removeListener"]>(),
   }));
-  Object.defineProperty(window, "matchMedia", {
-    configurable: true,
-    value: matchMedia,
-  });
-});
-afterEach(() => {
-  cleanup();
-});
+  Object.defineProperty(window, "matchMedia", { configurable: true, value: matchMedia });
+};
 
 /*
  * `Sheet.Body` is a base-ui ScrollArea, and its viewport effect schedules a
@@ -161,13 +154,16 @@ const ResizeObserverForScrollArea = function ResizeObserverForScrollArea() {
 
 describe("Sheet.Body scroll area", () => {
   beforeEach(() => {
+    stubMatchMedia();
     vi.stubGlobal("ResizeObserver", ResizeObserverForScrollArea);
-    if (typeof Element.prototype.getAnimations !== "function") {
-      Element.prototype.getAnimations = () => [];
-    }
+    Object.defineProperty(Element.prototype, "getAnimations", {
+      configurable: true,
+      value: () => [],
+    });
   });
 
   afterEach(() => {
+    cleanup();
     vi.unstubAllGlobals();
   });
 
@@ -184,8 +180,14 @@ describe("Sheet.Body scroll area", () => {
 });
 
 describe("SheetRenderer integration", () => {
-  it("makes the pushed Nested Sheet active, then backs out and closes the Sheet Stack", async () => {
-    const user = userEvent.setup();
+  beforeEach(() => {
+    stubMatchMedia();
+  });
+  afterEach(() => {
+    cleanup();
+  });
+
+  const renderNestedStack = () => {
     const { StacksheetProvider, useSheet } = createStacksheet<{
       root: Record<string, never>;
       nested: Record<string, never>;
@@ -229,6 +231,11 @@ describe("SheetRenderer integration", () => {
         <Controls />
       </StacksheetProvider>,
     );
+  };
+
+  it("labels the root Sheet content as a focusable region", async () => {
+    const user = userEvent.setup();
+    renderNestedStack();
     await user.click(screen.getByRole("button", { name: "Open root" }));
     expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
     const scrollRegion = screen
@@ -237,13 +244,25 @@ describe("SheetRenderer integration", () => {
     expect(scrollRegion).toHaveAttribute("aria-label", "Sheet content");
     expect(scrollRegion).toHaveRole("region");
     expect(scrollRegion).toHaveAttribute("tabindex", "0");
+  });
+
+  it("makes the pushed Nested Sheet the Active Sheet", async () => {
+    const user = userEvent.setup();
+    renderNestedStack();
+    await user.click(screen.getByRole("button", { name: "Open root" }));
     await user.click(screen.getByRole("button", { name: "Open nested" }));
     expect(screen.getByRole("dialog", { name: "Nested sheet" })).toBeInTheDocument();
     expect(screen.queryByRole("dialog", { name: "Root sheet" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Open nested" })).not.toBeInTheDocument();
-    const backButton = screen.getByRole("button", { name: "Back" });
-    expect(backButton).toHaveClass("min-h-11", "min-w-11");
-    await user.click(backButton);
+    expect(screen.getByRole("button", { name: "Back" })).toHaveClass("min-h-11", "min-w-11");
+  });
+
+  it("backs out of the Nested Sheet and closes the Sheet Stack", async () => {
+    const user = userEvent.setup();
+    renderNestedStack();
+    await user.click(screen.getByRole("button", { name: "Open root" }));
+    await user.click(screen.getByRole("button", { name: "Open nested" }));
+    await user.click(screen.getByRole("button", { name: "Back" }));
     expect(screen.getByRole("dialog", { name: "Root sheet" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open nested" })).toBeInTheDocument();
     const closeButton = screen.getByRole("button", { name: "Close" });
@@ -251,6 +270,7 @@ describe("SheetRenderer integration", () => {
     await user.click(closeButton);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
+
   it("links composable Sheet Title and Description to the Active Sheet dialog", async () => {
     const user = userEvent.setup();
     const { StacksheetProvider, useSheet } = createStacksheet<{
@@ -284,6 +304,7 @@ describe("SheetRenderer integration", () => {
     expect(dialog).toHaveAttribute("aria-describedby");
     expect(screen.getByRole("button", { name: "Close" })).toHaveClass("min-h-11", "min-w-11");
   });
+
   it("labels a composable sheet without a Sheet.Title via its ariaLabel option", async () => {
     const user = userEvent.setup();
     const { StacksheetProvider, useSheet } = createStacksheet<{
@@ -315,6 +336,13 @@ describe("SheetRenderer integration", () => {
 });
 
 describe("SheetRenderer escape dismissal", () => {
+  beforeEach(() => {
+    stubMatchMedia();
+  });
+  afterEach(() => {
+    cleanup();
+  });
+
   const renderEscapeSheet = (config?: Parameters<typeof createStacksheet>[0]) => {
     const { StacksheetProvider, useSheet } = createStacksheet<{
       escape: Record<string, never>;
@@ -338,6 +366,7 @@ describe("SheetRenderer escape dismissal", () => {
       </StacksheetProvider>,
     );
   };
+
   it("closes the sheet when Escape is pressed", async () => {
     const user = userEvent.setup();
     renderEscapeSheet();
@@ -346,6 +375,7 @@ describe("SheetRenderer escape dismissal", () => {
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
+
   it("leaves the sheet open when an inner element already consumed Escape", async () => {
     const user = userEvent.setup();
     renderEscapeSheet();
@@ -354,6 +384,7 @@ describe("SheetRenderer escape dismissal", () => {
     await user.keyboard("{Escape}");
     expect(screen.getByRole("dialog", { name: "Escape sheet" })).toBeInTheDocument();
   });
+
   it("ignores Escape when closeOnEscape is false", async () => {
     const user = userEvent.setup();
     renderEscapeSheet({ closeOnEscape: false });
@@ -365,10 +396,12 @@ describe("SheetRenderer escape dismissal", () => {
 
 describe("SheetRenderer CloseWatcher", () => {
   beforeEach(() => {
+    stubMatchMedia();
     MockCloseWatcher.instances = [];
     vi.stubGlobal("CloseWatcher", MockCloseWatcher);
   });
   afterEach(() => {
+    cleanup();
     vi.unstubAllGlobals();
   });
   const renderWatcherSheet = (config?: Parameters<typeof createStacksheet>[0]) => {
@@ -394,6 +427,7 @@ describe("SheetRenderer CloseWatcher", () => {
       </StacksheetProvider>,
     );
   };
+
   it("creates a CloseWatcher while open and dismisses when it fires", async () => {
     const user = userEvent.setup();
     renderWatcherSheet();
@@ -406,6 +440,7 @@ describe("SheetRenderer CloseWatcher", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(MockCloseWatcher.instances[0]?.destroyed).toBe(true);
   });
+
   it("does not create a CloseWatcher when closeOnEscape is false", async () => {
     const user = userEvent.setup();
     renderWatcherSheet({ closeOnEscape: false });
@@ -413,6 +448,7 @@ describe("SheetRenderer CloseWatcher", () => {
     expect(screen.getByRole("dialog", { name: "Watched sheet" })).toBeInTheDocument();
     expect(MockCloseWatcher.instances).toHaveLength(0);
   });
+
   it("does not create a CloseWatcher when the sheet is not dismissible", async () => {
     const user = userEvent.setup();
     renderWatcherSheet({ dismissible: false });
@@ -450,6 +486,7 @@ const focusField = () => {
 
 describe("SheetRenderer keyboard repositioning", () => {
   beforeEach(() => {
+    stubMatchMedia();
     // Synchronous rAF so the keyboard-inset throttle resolves within `act`.
     vi.stubGlobal("requestAnimationFrame", (paint: FrameRequestCallback) => {
       paint(0);
@@ -462,6 +499,7 @@ describe("SheetRenderer keyboard repositioning", () => {
   });
 
   afterEach(() => {
+    cleanup();
     vi.unstubAllGlobals();
     Reflect.deleteProperty(window, "visualViewport");
   });
@@ -530,20 +568,6 @@ const ComposableSheet = () => (
     <Sheet.Body>Body</Sheet.Body>
   </>
 );
-
-const stubMatchMedia = () => {
-  const matchMedia = vi.fn<(query: string) => MediaQueryList>().mockImplementation((query) => ({
-    addEventListener: vi.fn<MediaQueryList["addEventListener"]>(),
-    addListener: vi.fn<MediaQueryList["addListener"]>(),
-    dispatchEvent: vi.fn<MediaQueryList["dispatchEvent"]>(),
-    matches: false,
-    media: query,
-    onchange: null,
-    removeEventListener: vi.fn<MediaQueryList["removeEventListener"]>(),
-    removeListener: vi.fn<MediaQueryList["removeListener"]>(),
-  }));
-  Object.defineProperty(window, "matchMedia", { configurable: true, value: matchMedia });
-};
 
 const openSheet = async (config?: Parameters<typeof createStacksheet>[0]) => {
   const user = userEvent.setup();

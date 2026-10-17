@@ -17,18 +17,18 @@ import {
 
 describe("renderer helpers", () => {
   it("resolves missing class names to empty strings", () => {
-    expect(resolveClassNames()).toEqual({
+    expect(resolveClassNames()).toStrictEqual({
       backdrop: "",
       panel: "",
     });
-    expect(resolveClassNames({ panel: "panel" })).toEqual({
+    expect(resolveClassNames({ panel: "panel" })).toStrictEqual({
       backdrop: "",
       panel: "panel",
     });
   });
 
   it("ignores the deprecated header class name", () => {
-    expect(resolveClassNames({ header: "legacy" })).toEqual({
+    expect(resolveClassNames({ header: "legacy" })).toStrictEqual({
       backdrop: "",
       panel: "",
     });
@@ -45,7 +45,7 @@ describe("renderer helpers", () => {
         isTop: false,
         panelId: "panel-1",
       }),
-    ).toEqual({});
+    ).toStrictEqual({});
     expect(
       buildAriaProps({
         ariaLabel: "Sheet",
@@ -56,7 +56,7 @@ describe("renderer helpers", () => {
         isTop: true,
         panelId: "panel-1",
       }),
-    ).toEqual({
+    ).toStrictEqual({
       "aria-describedby": "panel-1-desc",
       "aria-labelledby": "panel-1-title",
       "aria-modal": "true",
@@ -72,7 +72,7 @@ describe("renderer helpers", () => {
         isTop: true,
         panelId: "panel-1",
       }),
-    ).toEqual({
+    ).toStrictEqual({
       "aria-label": "Sheet",
       role: "dialog",
     });
@@ -89,7 +89,7 @@ describe("renderer helpers", () => {
         isTop: true,
         panelId: "panel-1",
       }),
-    ).toEqual({
+    ).toStrictEqual({
       "aria-label": "Filters",
       "aria-modal": "true",
       role: "dialog",
@@ -97,21 +97,21 @@ describe("renderer helpers", () => {
   });
 
   it("maps drag offset to the active side", () => {
-    expect(getDragTransform("right", 14)).toEqual({ x: 14 });
-    expect(getDragTransform("left", 14)).toEqual({ x: -14 });
-    expect(getDragTransform("bottom", 14)).toEqual({ y: 14 });
-    expect(getDragTransform("right", 0)).toEqual({});
+    expect(getDragTransform("right", 14)).toStrictEqual({ x: 14 });
+    expect(getDragTransform("left", 14)).toStrictEqual({ x: -14 });
+    expect(getDragTransform("bottom", 14)).toStrictEqual({ y: 14 });
+    expect(getDragTransform("right", 0)).toStrictEqual({});
   });
 
   it("adds fallback panel styles when no class name is supplied", () => {
-    expect(buildPanelStyle({ zIndex: 2 }, true, false, true, 0, true)).toEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, true, false, true, 0, true)).toStrictEqual({
       background: "var(--background, #fff)",
       borderColor: "var(--border, transparent)",
       pointerEvents: "auto",
       transition: "none",
       zIndex: 2,
     });
-    expect(buildPanelStyle({ zIndex: 2 }, false, true, false, 0, true)).toEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, false, true, false, 0, true)).toStrictEqual({
       contain: "layout style paint",
       pointerEvents: "none",
       zIndex: 2,
@@ -133,7 +133,7 @@ describe("renderer helpers", () => {
   });
 
   it("builds transition objects for dragging and stacked panels", () => {
-    expect(buildPanelTransition(true, true, { type: "spring" }, { type: "tween" })).toEqual({
+    expect(buildPanelTransition(true, true, { type: "spring" }, { type: "tween" })).toStrictEqual({
       duration: 0,
       type: "tween",
     });
@@ -158,18 +158,18 @@ describe("renderer helpers", () => {
     vi.stubGlobal("window", { innerHeight: 720 });
     expect(getBottomSlideDistance(0)).toBe(720);
     vi.unstubAllGlobals();
-    expect(resolveSlideFrom("right", { x: 100 }, 300)).toEqual({ x: 100 });
-    expect(resolveSlideFrom("bottom", { y: 100 }, 300)).toEqual({ y: 300 });
+    expect(resolveSlideFrom("right", { x: 100 }, 300)).toStrictEqual({ x: 100 });
+    expect(resolveSlideFrom("bottom", { y: 100 }, 300)).toStrictEqual({ y: 300 });
   });
 
   it("returns side-specific initial radius and nested shadows", () => {
-    expect(getInitialRadius("bottom")).toEqual({
+    expect(getInitialRadius("bottom")).toStrictEqual({
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
     });
-    expect(getInitialRadius("left")).toEqual({ borderRadius: 0 });
+    expect(getInitialRadius("left")).toStrictEqual({ borderRadius: 0 });
     expect(getShadow(true)).toContain("6px 12px");
     expect(getShadow(false)).toContain("48px 96px");
   });

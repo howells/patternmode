@@ -19,10 +19,10 @@ const defaultStacking: StackingConfig = {
   scaleStep: 0.04,
 };
 
-describe("getStackTransform", () => {
+describe(getStackTransform, () => {
   it("returns identity transform at depth 0", () => {
     const result = getStackTransform(0, defaultStacking);
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       borderRadius: 0,
       offset: 0,
       opacity: 1,
@@ -32,7 +32,7 @@ describe("getStackTransform", () => {
 
   it("returns identity for negative depth", () => {
     const result = getStackTransform(-1, defaultStacking);
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       borderRadius: 0,
       offset: 0,
       opacity: 1,
@@ -82,10 +82,10 @@ describe("getStackTransform", () => {
   });
 });
 
-describe("getAnimatedBorderRadius", () => {
+describe(getAnimatedBorderRadius, () => {
   it("returns top corners for bottom panel at depth 0", () => {
     const result = getAnimatedBorderRadius("bottom", 0, defaultStacking);
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       borderTopLeftRadius: 16,
@@ -95,7 +95,7 @@ describe("getAnimatedBorderRadius", () => {
 
   it("returns stacking radius for bottom panel at depth > 0", () => {
     const result = getAnimatedBorderRadius("bottom", 1, defaultStacking);
-    expect(result).toEqual({
+    expect(result).toStrictEqual({
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       borderTopLeftRadius: 12,
@@ -105,67 +105,67 @@ describe("getAnimatedBorderRadius", () => {
 
   it("returns 0 border radius for right panel at depth 0", () => {
     const result = getAnimatedBorderRadius("right", 0, defaultStacking);
-    expect(result).toEqual({ borderRadius: 0 });
+    expect(result).toStrictEqual({ borderRadius: 0 });
   });
 
   it("returns stacking radius for right panel at depth > 0", () => {
     const result = getAnimatedBorderRadius("right", 1, defaultStacking);
-    expect(result).toEqual({ borderRadius: 12 });
+    expect(result).toStrictEqual({ borderRadius: 12 });
   });
 
   it("returns stacking radius for left panel at depth > 0", () => {
     const result = getAnimatedBorderRadius("left", 2, defaultStacking);
-    expect(result).toEqual({ borderRadius: 12 });
+    expect(result).toStrictEqual({ borderRadius: 12 });
   });
 });
 
-describe("getSlideFrom", () => {
+describe(getSlideFrom, () => {
   it("returns x:100% for right side", () => {
-    expect(getSlideFrom("right")).toEqual({ x: "100%" });
+    expect(getSlideFrom("right")).toStrictEqual({ x: "100%" });
   });
 
   it("returns x:-100% for left side", () => {
-    expect(getSlideFrom("left")).toEqual({ x: "-100%" });
+    expect(getSlideFrom("left")).toStrictEqual({ x: "-100%" });
   });
 
   it("returns y:100% for bottom side", () => {
-    expect(getSlideFrom("bottom")).toEqual({ y: "100%" });
+    expect(getSlideFrom("bottom")).toStrictEqual({ y: "100%" });
   });
 
   it("defaults to right for unknown side", () => {
-    expect(getSlideFrom("unknown")).toEqual({ x: "100%" });
+    expect(getSlideFrom("unknown")).toStrictEqual({ x: "100%" });
   });
 });
 
-describe("getSlideTarget", () => {
+describe(getSlideTarget, () => {
   it("returns zeroed position", () => {
-    expect(getSlideTarget()).toEqual({ x: 0, y: 0 });
+    expect(getSlideTarget()).toStrictEqual({ x: 0, y: 0 });
   });
 });
 
-describe("getStackOffset", () => {
+describe(getStackOffset, () => {
   it("returns empty object for zero offset", () => {
-    expect(getStackOffset("right", 0)).toEqual({});
+    expect(getStackOffset("right", 0)).toStrictEqual({});
   });
 
   it("returns negative x for right side", () => {
-    expect(getStackOffset("right", 16)).toEqual({ x: -16 });
+    expect(getStackOffset("right", 16)).toStrictEqual({ x: -16 });
   });
 
   it("returns positive x for left side", () => {
-    expect(getStackOffset("left", 16)).toEqual({ x: 16 });
+    expect(getStackOffset("left", 16)).toStrictEqual({ x: 16 });
   });
 
   it("returns negative y for bottom side", () => {
-    expect(getStackOffset("bottom", 16)).toEqual({ y: -16 });
+    expect(getStackOffset("bottom", 16)).toStrictEqual({ y: -16 });
   });
 
   it("returns empty for unknown side with offset", () => {
-    expect(getStackOffset("unknown", 10)).toEqual({});
+    expect(getStackOffset("unknown", 10)).toStrictEqual({});
   });
 });
 
-describe("getPanelStyles", () => {
+describe(getPanelStyles, () => {
   const mockConfig: ResolvedConfig = {
     ...resolveConfig(),
     maxWidth: "90vw",
@@ -175,30 +175,36 @@ describe("getPanelStyles", () => {
 
   it("positions bottom panel with left/right/bottom anchors", () => {
     const styles = getPanelStyles("bottom", mockConfig, 0);
-    expect(styles.position).toBe("fixed");
-    expect(styles.left).toBe(0);
-    expect(styles.right).toBe(0);
-    expect(styles.bottom).toBe(0);
-    expect(styles.maxHeight).toBe("85dvh");
+    expect(styles).toMatchObject({
+      bottom: 0,
+      left: 0,
+      maxHeight: "85dvh",
+      position: "fixed",
+      right: 0,
+    });
   });
 
   it("positions right panel with top/right/bottom anchors and width", () => {
     const styles = getPanelStyles("right", mockConfig, 0);
-    expect(styles.position).toBe("fixed");
-    expect(styles.top).toBe(0);
-    expect(styles.right).toBe(0);
-    expect(styles.bottom).toBe(0);
-    expect(styles.width).toBe(420);
-    expect(styles.maxWidth).toBe("90vw");
+    expect(styles).toMatchObject({
+      bottom: 0,
+      maxWidth: "90vw",
+      position: "fixed",
+      right: 0,
+      top: 0,
+      width: 420,
+    });
   });
 
   it("positions left panel with top/left/bottom anchors and width", () => {
     const styles = getPanelStyles("left", mockConfig, 0);
-    expect(styles.position).toBe("fixed");
-    expect(styles.top).toBe(0);
-    expect(styles.left).toBe(0);
-    expect(styles.bottom).toBe(0);
-    expect(styles.width).toBe(420);
+    expect(styles).toMatchObject({
+      bottom: 0,
+      left: 0,
+      position: "fixed",
+      top: 0,
+      width: 420,
+    });
   });
 
   it("increments zIndex by index", () => {
@@ -212,6 +218,8 @@ describe("getPanelStyles", () => {
 
   it("sets willChange to transform", () => {
     const styles = getPanelStyles("right", mockConfig, 0);
-    expect(styles.willChange).toBe("transform");
+    expect(styles).toMatchObject({
+      willChange: "transform",
+    });
   });
 });

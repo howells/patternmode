@@ -22,7 +22,7 @@ const renderBodyScale = (prefersReducedMotion = false) => {
   );
 };
 
-describe("useBodyScale", () => {
+describe(useBodyScale, () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -45,17 +45,14 @@ describe("useBodyScale", () => {
     rerender({ isOpen: false });
     // Un-scale in flight: transform cleared while the transition is retained
     // so the change animates rather than snapping.
-    expect(wrapper.style.transform).toBe("");
+    expect(wrapper.style).toMatchObject({ overflow: "hidden", transform: "" });
     expect(wrapper.style.transition).not.toBe("");
-    expect(wrapper.style.overflow).toBe("hidden");
     // Timeout fallback clears the remaining inline styles even if
     // transitionend never fires.
     act(() => {
       vi.advanceTimersByTime(700);
     });
-    expect(wrapper.style.transition).toBe("");
-    expect(wrapper.style.overflow).toBe("");
-    expect(wrapper.style.transformOrigin).toBe("");
+    expect(wrapper.style).toMatchObject({ overflow: "", transformOrigin: "", transition: "" });
   });
 
   it("clears the remaining styles when the un-scale transition ends", () => {
@@ -100,7 +97,7 @@ const focus = (el: HTMLElement) => {
   });
 };
 
-describe("useKeyboardInset", () => {
+describe(useKeyboardInset, () => {
   let container: HTMLDivElement;
   let field: HTMLInputElement;
 

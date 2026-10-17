@@ -24,16 +24,19 @@ import {
   getStackOffset,
   getStackTransform,
 } from "../stacking";
-import type { HandlePosition, HeaderRenderProps } from "../types";
+import type { HandlePosition, HeaderRenderProps, SheetData } from "../types";
 import { PanelInnerContent } from "./sheet-panel-content";
 import { ModalFocusTrap } from "./sheet-panel-focus";
 import { BottomHandle, SideHandle } from "./sheet-panel-handles";
 import { resolvePanelLayout } from "./sheet-panel-layout";
 import type { SheetPanelProps } from "./sheet-panel-types";
 
+const hasLegacyAriaLabel = (data: SheetData): data is { __ariaLabel: string } =>
+  "__ariaLabel" in data && typeof data.__ariaLabel === "string";
+
 const getPanelAriaLabel = (item: SheetPanelProps["item"], fallbackLabel: string): string =>
   item.ariaLabel ??
-  (typeof item.data?.__ariaLabel === "string" ? item.data.__ariaLabel : undefined) ??
+  (hasLegacyAriaLabel(item.data) ? item.data.__ariaLabel : undefined) ??
   fallbackLabel;
 
 const getPanelHoverProps = (enabled: boolean, setIsHovered: (value: boolean) => void) =>
@@ -133,9 +136,11 @@ const useOpeningCompletion = (isTop: boolean, onOpenComplete: (() => void) | und
   const hasEnteredRef = useRef(false);
   const onOpenCompleteRef = useRef(onOpenComplete);
 
-  if (!isTop && hasEnteredRef.current) {
-    hasEnteredRef.current = false;
-  }
+  useEffect(() => {
+    if (!isTop) {
+      hasEnteredRef.current = false;
+    }
+  }, [isTop]);
   useEffect(() => {
     onOpenCompleteRef.current = onOpenComplete;
   }, [onOpenComplete]);

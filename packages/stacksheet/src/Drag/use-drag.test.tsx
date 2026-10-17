@@ -54,11 +54,11 @@ const setupDragPanel = (config: DragConfig): Harness => {
   return { onDragUpdate, panel, pointerEvent, setPointerCapture };
 };
 
-afterEach(() => {
-  document.body.innerHTML = "";
-});
-
 describe("useDrag pointer capture", () => {
+  afterEach(() => {
+    document.body.innerHTML = "";
+  });
+
   it("does not capture the pointer on pointerdown, so plain taps keep their clicks", () => {
     const config = buildConfig();
     const { pointerEvent, setPointerCapture } = setupDragPanel(config);
@@ -82,11 +82,11 @@ describe("useDrag pointer capture", () => {
     const { onDragUpdate, pointerEvent, setPointerCapture } = setupDragPanel(buildConfig());
     pointerEvent("pointerdown", 100, 100);
     pointerEvent("pointermove", 130, 100);
-    expect(setPointerCapture).toHaveBeenCalledTimes(1);
+    expect(setPointerCapture).toHaveBeenCalledOnce();
     expect(setPointerCapture).toHaveBeenCalledWith(7);
     expect(onDragUpdate).toHaveBeenCalledWith({ isDragging: true, offset: 30 });
     pointerEvent("pointermove", 160, 100);
-    expect(setPointerCapture).toHaveBeenCalledTimes(1);
+    expect(setPointerCapture).toHaveBeenCalledOnce();
   });
 
   it("does not capture the pointer for an off-axis gesture", () => {
@@ -104,6 +104,6 @@ describe("useDrag pointer capture", () => {
     pointerEvent("pointermove", 130, 100);
     pointerEvent("pointermove", 250, 100);
     pointerEvent("pointerup", 250, 100);
-    expect(config.onClose).toHaveBeenCalledTimes(1);
+    expect(config.onClose).toHaveBeenCalledOnce();
   });
 });

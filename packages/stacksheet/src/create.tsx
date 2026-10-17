@@ -64,7 +64,8 @@ export const createStacksheet = <TMap extends object>(
     return ctx;
   };
   // ── Provider ────────────────────────────────
-  const providerValue = { config: resolved, store };
+  // Built once per instance and frozen, so every render hands consumers the same object.
+  const providerValue = Object.freeze({ config: resolved, store });
   const StacksheetProvider = ({
     sheets,
     children,

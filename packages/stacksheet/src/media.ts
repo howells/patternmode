@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import type { ResolvedConfig, Side } from "./types";
 /**
  * Returns true when viewport width is at or below the breakpoint.
  * SSR-safe: defaults to false (desktop).
  */
 export const useIsMobile = (breakpoint: number): boolean => {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-    setIsMobile(mql.matches);
-    const handler = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
-    };
-    mql.addEventListener("change", handler);
-    return () => {
-      mql.removeEventListener("change", handler);
-    };
-  }, [breakpoint]);
-  return isMobile;
+  const query = `(max-width: ${breakpoint - 1}px)`;
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable subscribe keeps useSyncExternalStore from resubscribing on every render.
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mql = window.matchMedia(query);
+      mql.addEventListener("change", onChange);
+      return () => {
+        mql.removeEventListener("change", onChange);
+      };
+    },
+    [query],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
 };
 /** Resolve the current side from config + viewport. */
 export const useResolvedSide = (config: ResolvedConfig): Side => {

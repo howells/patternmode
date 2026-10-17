@@ -19,13 +19,17 @@ const buildStyles = () => {
   }
 };
 describe("styles.css", () => {
-  it("ships Stacksheet utilities without Tailwind Preflight or theme globals", () => {
+  it("ships the Stacksheet utilities", () => {
     const css = buildStyles();
     expect(css).toContain(".h-8{height:calc(var(--spacing,.25rem) * 8)}");
     expect(css).toContain(".min-h-11{min-height:calc(var(--spacing,.25rem) * 11)}");
     expect(css).toContain(".min-w-11{min-width:calc(var(--spacing,.25rem) * 11)}");
     expect(css).toContain(".px-4{padding-inline:calc(var(--spacing,.25rem) * 4)}");
     expect(css).toContain(".rounded-md{border-radius:var(--radius-md,.375rem)}");
+  });
+
+  it("ships no Tailwind Preflight or theme globals", () => {
+    const css = buildStyles();
     expect(css).not.toContain(":root,:host");
     expect(css).not.toContain("box-sizing:border-box");
     expect(css).not.toContain("border-color:currentcolor");

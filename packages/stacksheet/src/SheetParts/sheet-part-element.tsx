@@ -1,6 +1,18 @@
-import type { JSX } from "react";
+import type { CSSProperties, JSX, ReactNode } from "react";
 import { useRender } from "../render";
 import type { RenderProp } from "../render";
+
+/** The attributes the sheet parts pass to the element they render. */
+export interface SheetPartElementProps extends Record<string, unknown> {
+  "aria-label"?: string;
+  children?: ReactNode;
+  className?: string;
+  "data-stacksheet-handle"?: string;
+  id?: string;
+  onClick?: () => void;
+  style?: CSSProperties;
+  type?: "button";
+}
 
 /**
  * Renders a sheet part through `render` (or its default tag) via Base UI's
@@ -13,6 +25,6 @@ export const SheetPartElement = ({
   render,
 }: {
   defaultTagName: keyof JSX.IntrinsicElements;
-  props: Record<string, unknown>;
+  props: SheetPartElementProps;
   render: RenderProp | undefined;
 }) => useRender({ defaultTagName, props, render });

@@ -5,36 +5,38 @@ import { resolveConfig } from "./config";
 const onSnapPointChange = () => {};
 const onCloseComplete = (_reason: string) => {};
 
-describe("resolveConfig", () => {
+describe(resolveConfig, () => {
   it("returns all defaults when called with no args", () => {
     const config = resolveConfig();
-    expect(config.maxDepth).toBe(Number.POSITIVE_INFINITY);
-    expect(config.closeOnEscape).toBe(true);
-    expect(config.closeOnBackdrop).toBe(true);
-    expect(config.showOverlay).toBe(true);
-    expect(config.lockScroll).toBe(true);
-    expect(config.width).toBe(420);
-    expect(config.maxWidth).toBe("90vw");
-    expect(config.breakpoint).toBe(768);
-    expect(config.zIndex).toBe(100);
-    expect(config.ariaLabel).toBe("Sheet dialog");
-    expect(config.drag).toBe(true);
-    expect(config.closeThreshold).toBe(0.25);
-    expect(config.velocityThreshold).toBe(0.5);
-    expect(config.dismissible).toBe(true);
-    expect(config.modal).toBe(true);
-    expect(config.shouldScaleBackground).toBe(false);
-    expect(config.scaleBackgroundAmount).toBe(0.97);
+    expect(config).toMatchObject({
+      ariaLabel: "Sheet dialog",
+      breakpoint: 768,
+      closeOnBackdrop: true,
+      closeOnEscape: true,
+      closeThreshold: 0.25,
+      dismissible: true,
+      drag: true,
+      lockScroll: true,
+      maxDepth: Number.POSITIVE_INFINITY,
+      maxWidth: "90vw",
+      modal: true,
+      scaleBackgroundAmount: 0.97,
+      shouldScaleBackground: false,
+      showOverlay: true,
+      velocityThreshold: 0.5,
+      width: 420,
+      zIndex: 100,
+    });
   });
 
   it("resolves responsive side defaults", () => {
     const config = resolveConfig();
-    expect(config.side).toEqual({ desktop: "right", mobile: "bottom" });
+    expect(config.side).toStrictEqual({ desktop: "right", mobile: "bottom" });
   });
 
   it("resolves string side to both desktop and mobile", () => {
     const config = resolveConfig({ side: "left" });
-    expect(config.side).toEqual({ desktop: "left", mobile: "left" });
+    expect(config.side).toStrictEqual({ desktop: "left", mobile: "left" });
   });
 
   it("resolves responsive side with partial override", () => {
@@ -81,7 +83,7 @@ describe("resolveConfig", () => {
 
   it("defaults snapPoints to empty array", () => {
     const config = resolveConfig();
-    expect(config.snapPoints).toEqual([]);
+    expect(config.snapPoints).toStrictEqual([]);
   });
 
   it("defaults snapToSequentialPoints to false", () => {
@@ -91,7 +93,7 @@ describe("resolveConfig", () => {
 
   it("passes through snapPoints config", () => {
     const config = resolveConfig({ snapPoints: [0.3, 0.6, 1] });
-    expect(config.snapPoints).toEqual([0.3, 0.6, 1]);
+    expect(config.snapPoints).toStrictEqual([0.3, 0.6, 1]);
   });
 
   it("passes through snap callbacks", () => {
@@ -132,11 +134,13 @@ describe("resolveConfig", () => {
       width: 500,
       zIndex: 200,
     });
-    expect(config.maxDepth).toBe(3);
-    expect(config.closeOnEscape).toBe(false);
-    expect(config.width).toBe(500);
-    expect(config.zIndex).toBe(200);
-    expect(config.drag).toBe(false);
-    expect(config.modal).toBe(false);
+    expect(config).toMatchObject({
+      closeOnEscape: false,
+      drag: false,
+      maxDepth: 3,
+      modal: false,
+      width: 500,
+      zIndex: 200,
+    });
   });
 });

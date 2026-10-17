@@ -4,64 +4,64 @@ import { findSnapTarget, getSnapOffset, resolveSnapPoints } from "./snap-points"
 
 // ── resolveSnapPoints ──────────────────────────
 
-describe("resolveSnapPoints", () => {
+describe(resolveSnapPoints, () => {
   // Viewport height.
   const vh = 800;
 
   it("returns empty array for no snap points", () => {
-    expect(resolveSnapPoints([], vh)).toEqual([]);
+    expect(resolveSnapPoints([], vh)).toStrictEqual([]);
   });
 
   it("resolves fractions (0-1) to viewport height", () => {
-    expect(resolveSnapPoints([0.5], vh)).toEqual([400]);
-    expect(resolveSnapPoints([0.25, 0.75], vh)).toEqual([200, 600]);
+    expect(resolveSnapPoints([0.5], vh)).toStrictEqual([400]);
+    expect(resolveSnapPoints([0.25, 0.75], vh)).toStrictEqual([200, 600]);
   });
 
   it("resolves 1 as full viewport", () => {
-    expect(resolveSnapPoints([1], vh)).toEqual([800]);
+    expect(resolveSnapPoints([1], vh)).toStrictEqual([800]);
   });
 
   it("passes through pixel values (>1) directly", () => {
-    expect(resolveSnapPoints([300], vh)).toEqual([300]);
-    expect(resolveSnapPoints([150, 500], vh)).toEqual([150, 500]);
+    expect(resolveSnapPoints([300], vh)).toStrictEqual([300]);
+    expect(resolveSnapPoints([150, 500], vh)).toStrictEqual([150, 500]);
   });
 
   it("resolves px strings", () => {
-    expect(resolveSnapPoints(["148px"], vh)).toEqual([148]);
+    expect(resolveSnapPoints(["148px"], vh)).toStrictEqual([148]);
   });
 
   it("resolves vh strings", () => {
-    expect(resolveSnapPoints(["50vh"], vh)).toEqual([400]);
+    expect(resolveSnapPoints(["50vh"], vh)).toStrictEqual([400]);
   });
 
   it("resolves % strings", () => {
-    expect(resolveSnapPoints(["25%"], vh)).toEqual([200]);
+    expect(resolveSnapPoints(["25%"], vh)).toStrictEqual([200]);
   });
 
   it("sorts results ascending", () => {
-    expect(resolveSnapPoints([0.8, 0.3, 0.5], vh)).toEqual([240, 400, 640]);
+    expect(resolveSnapPoints([0.8, 0.3, 0.5], vh)).toStrictEqual([240, 400, 640]);
   });
 
   it("deduplicates within 1px tolerance", () => {
     // 0.5 * 800 = 400, and 400px = 400 — should deduplicate
-    expect(resolveSnapPoints([0.5, 400], vh)).toEqual([400]);
+    expect(resolveSnapPoints([0.5, 400], vh)).toStrictEqual([400]);
     // 399px and 400px are within 1px — should deduplicate
-    expect(resolveSnapPoints([399, 400], vh)).toEqual([399]);
+    expect(resolveSnapPoints([399, 400], vh)).toStrictEqual([399]);
   });
 
   it("filters out zero/invalid values", () => {
-    expect(resolveSnapPoints([0, "invalid", 300], vh)).toEqual([300]);
+    expect(resolveSnapPoints([0, "invalid", 300], vh)).toStrictEqual([300]);
   });
 
   it("handles mixed types", () => {
     const result = resolveSnapPoints([0.3, 500, "148px"], vh);
-    expect(result).toEqual([148, 240, 500]);
+    expect(result).toStrictEqual([148, 240, 500]);
   });
 });
 
 // ── findSnapTarget ─────────────────────────────
 
-describe("findSnapTarget", () => {
+describe(findSnapTarget, () => {
   // Panel height 600px, snap points at 200, 400, 600 (ascending heights)
   const snapHeights = [200, 400, 600];
   const panelHeight = 600;
@@ -111,7 +111,7 @@ describe("findSnapTarget", () => {
 
 // ── getSnapOffset ──────────────────────────────
 
-describe("getSnapOffset", () => {
+describe(getSnapOffset, () => {
   const snapHeights = [200, 400, 600];
   const panelHeight = 600;
 

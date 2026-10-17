@@ -11,7 +11,7 @@ const buildSamples = (entries: [time: number, offset: number][]): VelocitySample
   return samples;
 };
 
-describe("getReleaseVelocity", () => {
+describe(getReleaseVelocity, () => {
   it("computes velocity from a steady drag", () => {
     // 100px over 100ms → 1 px/ms
     const samples = buildSamples([
@@ -60,7 +60,7 @@ describe("getReleaseVelocity", () => {
   });
 });
 
-describe("appendVelocitySample", () => {
+describe(appendVelocitySample, () => {
   it("prunes samples that fall outside the sliding window", () => {
     const samples = buildSamples([
       [0, 0],
@@ -70,7 +70,7 @@ describe("appendVelocitySample", () => {
       [540, 70],
     ]);
     expect(samples.every((sample) => sample.time >= 540 - VELOCITY_WINDOW_MS)).toBe(true);
-    expect(samples.map((sample) => sample.offset)).toEqual([50, 60, 70]);
+    expect(samples.map((sample) => sample.offset)).toStrictEqual([50, 60, 70]);
   });
 
   it("caps retained samples as a memory guard", () => {

@@ -1,8 +1,23 @@
 import type { StoreApi } from "zustand";
 
-import type { SheetActions, SheetContentComponent, StacksheetSnapshot } from "../types";
+import type { SheetActions, SheetContentComponent, SheetData, StacksheetSnapshot } from "../types";
 
-export type AnyComponent = SheetContentComponent<Record<string, unknown>>;
+export type AnyComponent = SheetContentComponent;
+
+/**
+ * One positional argument of `open`, `push`, `replace`, `navigate`, `setData`
+ * and `swap`: a content component, a data payload or presentation options (all
+ * objects), or a sheet type key or id (a string).
+ */
+export type SheetArg = SheetData | string | undefined;
+
+/** The positional form every sheet command takes before its arguments are parsed. */
+export type SheetCall = (
+  first: SheetArg,
+  second?: SheetArg,
+  third?: SheetArg,
+  fourth?: SheetArg,
+) => void;
 
 export type StoreState<TMap extends object> = StacksheetSnapshot<TMap> & SheetActions<TMap>;
 
@@ -18,7 +33,7 @@ export interface SheetStoreBundle<TMap extends object> {
 /** Pre-resolved args — skips resolveArgs entirely */
 export interface ResolvedItem {
   ariaLabel?: string;
-  data: Record<string, unknown>;
+  data: SheetData;
   id: string;
   type: string;
 }

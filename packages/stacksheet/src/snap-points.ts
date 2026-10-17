@@ -8,7 +8,8 @@ const SNAP_POINT_RE = /^(\d+(?:\.\d+)?)(px|rem|em|vh|%)$/u;
 const getRootFontSize = (): number =>
   typeof document === "undefined"
     ? 16
-    : Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+    : // oxlint-disable-next-line unicorn/prefer-number-coercion -- the computed font size is a length such as "16px"; parseFloat reads the number and ignores the unit, which Number() turns into NaN.
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 const resolveUnitPx = (value: number, unit: string, viewportHeight: number): number => {
   if (unit === "px") {
@@ -29,18 +30,22 @@ const resolveUnitPx = (value: number, unit: string, viewportHeight: number): num
  * - number > 1: pixel value (300 → 300px)
  * - string: parsed via regex for CSS unit support
  */
+const isSnapNumber = (point: SnapPoint): point is number => typeof point === "number";
+
+const isSnapString = (point: SnapPoint): point is string => typeof point === "string";
+
 const resolveSnapPointPx = (point: SnapPoint, viewportHeight: number): number => {
-  if (typeof point === "number") {
+  if (isSnapNumber(point)) {
     return point <= 1 ? point * viewportHeight : point;
   }
-  if (typeof point === "string") {
+  if (isSnapString(point)) {
     const match = SNAP_POINT_RE.exec(point);
     const rawValue = match?.[1];
     const unit = match?.[2];
     if (rawValue === undefined || unit === undefined) {
       return 0;
     }
-    return resolveUnitPx(Number.parseFloat(rawValue), unit, viewportHeight);
+    return resolveUnitPx(Number(rawValue), unit, viewportHeight);
   }
   return 0;
 };

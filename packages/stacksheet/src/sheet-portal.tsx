@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 /**
@@ -9,11 +9,17 @@ import { createPortal } from "react-dom";
  * effect so server render and first client render agree (no hydration
  * mismatch).
  */
+const subscribeToNothing = () => () => {
+  // The client never changes after mount, so there is nothing to subscribe to.
+};
+
 export const SheetPortal = ({ children }: { children: ReactNode }): ReactNode => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // False on the server and during hydration, true once the client has mounted.
+  const mounted = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
   if (!mounted || typeof document === "undefined") {
     return null;
   }

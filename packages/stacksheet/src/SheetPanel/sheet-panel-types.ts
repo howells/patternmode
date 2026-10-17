@@ -1,3 +1,4 @@
+import type { Transition } from "motion/react";
 import type { ComponentType, ReactNode } from "react";
 
 import type { ResolvedClassNames } from "../renderer-helpers";
@@ -5,6 +6,7 @@ import type { SlideValues } from "../stacking";
 import type {
   HeaderRenderProps,
   ResolvedConfig,
+  SheetData,
   SheetItem,
   Side,
   StacksheetLayout,
@@ -12,7 +14,7 @@ import type {
 
 export interface SheetPanelProps {
   activeSnapIndex: number;
-  Content: ComponentType<Record<string, unknown>> | undefined;
+  Content: ComponentType<SheetData> | undefined;
   classNames: ResolvedClassNames;
   close: () => void;
   config: ResolvedConfig;
@@ -33,8 +35,8 @@ export interface SheetPanelProps {
   slideFrom: SlideValues;
   slideTarget: SlideValues;
   snapHeights: number[];
-  spring: Record<string, unknown>;
-  stackSpring: Record<string, unknown>;
+  spring: Transition;
+  stackSpring: Transition;
   swipeClose: () => void;
   swipePop: () => void;
 }

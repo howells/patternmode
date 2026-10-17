@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 
-import type { HeaderRenderProps } from "../types";
+import type { HeaderRenderProps, SheetData } from "../types";
 import { DefaultHeader } from "./default-header";
 
 export const PanelInnerContent = ({
@@ -13,8 +13,8 @@ export const PanelInnerContent = ({
 }: {
   isComposable: boolean;
   shouldRender: boolean;
-  Content: ComponentType<Record<string, unknown>> | undefined;
-  data: Record<string, unknown>;
+  Content: ComponentType<SheetData> | undefined;
+  data: SheetData;
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
   headerProps: HeaderRenderProps;
 }) => {

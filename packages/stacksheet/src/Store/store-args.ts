@@ -1,5 +1,5 @@
-import type { SheetPresentationOptions } from "../types";
-import type { AnyComponent, ResolvedItem } from "./store-types";
+import type { SheetData, SheetPresentationOptions } from "../types";
+import type { AnyComponent, ResolvedItem, SheetArg } from "./store-types";
 
 declare global {
   var process:
@@ -11,12 +11,17 @@ declare global {
       };
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
+const isString = (value: SheetArg): value is string => typeof value === "string";
+
+const isSheetData = (value: SheetArg): value is SheetData =>
   typeof value === "object" && value !== null;
 
-export const toRecord = (value: unknown): Record<string, unknown> => (isRecord(value) ? value : {});
+const hasAriaLabel = (value: SheetData): value is { ariaLabel: string } =>
+  "ariaLabel" in value && typeof value.ariaLabel === "string";
 
-export const isComponent = (value: unknown): value is AnyComponent => typeof value === "function";
+export const toSheetData = (value: SheetArg): SheetData => (isSheetData(value) ? value : {});
+
+export const isComponent = (value: SheetArg): value is AnyComponent => typeof value === "function";
 
 const getComponentName = (component: AnyComponent): string | undefined => {
   const name = component.displayName ?? component.name;
@@ -31,30 +36,29 @@ const getNodeEnv = (): string | undefined => globalThis.process?.env?.NODE_ENV;
  * non-secure origins (e.g. plain-HTTP LAN dev servers).
  */
 export const generateSheetId = (): string => {
-  if (typeof globalThis.crypto?.randomUUID === "function") {
+  if (globalThis.crypto?.randomUUID !== undefined) {
     return globalThis.crypto.randomUUID();
   }
   return `sheet-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 };
 
-export const getStringArg = (value: unknown, name: string): string => {
-  if (typeof value !== "string") {
+export const getStringArg = (value: SheetArg, name: string): string => {
+  if (!isString(value)) {
     throw new TypeError(`Expected ${name} to be a string.`);
   }
   return value;
 };
 
 export const resolvePresentationOptions = (
-  value: unknown,
+  value: SheetArg,
 ): SheetPresentationOptions | undefined => {
-  if (!isRecord(value)) {
+  if (!isSheetData(value)) {
     return undefined;
   }
-  const { ariaLabel } = value;
-  if (ariaLabel !== undefined && typeof ariaLabel !== "string") {
-    return undefined;
+  if (!("ariaLabel" in value) || value.ariaLabel === undefined) {
+    return {};
   }
-  return ariaLabel === undefined ? {} : { ariaLabel };
+  return hasAriaLabel(value) ? { ariaLabel: value.ariaLabel } : undefined;
 };
 /**
  * Dev-mode warning: detect likely inline arrow functions passed as ad-hoc components.
@@ -119,10 +123,10 @@ export const resolveArgs = (
   componentMap: Map<string, AnyComponent>,
   getNextKey: () => string,
   warnedNames: Set<string>,
-  first: unknown,
-  second: unknown,
-  third: unknown,
-  fourth?: unknown,
+  first: SheetArg,
+  second: SheetArg,
+  third: SheetArg,
+  fourth?: SheetArg,
 ): ResolvedItem => {
   if (isComponent(first)) {
     const typeKey = registerComponent(
@@ -132,24 +136,24 @@ export const resolveArgs = (
       getNextKey,
       warnedNames,
     );
-    if (typeof second === "string") {
+    if (isString(second)) {
       return {
         ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
-        data: toRecord(third),
+        data: toSheetData(third),
         id: second,
         type: typeKey,
       };
     }
     return {
       ariaLabel: resolvePresentationOptions(third)?.ariaLabel,
-      data: toRecord(second),
+      data: toSheetData(second),
       id: generateSheetId(),
       type: typeKey,
     };
   }
   return {
     ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
-    data: toRecord(third),
+    data: toSheetData(third),
     id: getStringArg(second, "sheet id"),
     type: getStringArg(first, "sheet type"),
   };

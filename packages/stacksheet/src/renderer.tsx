@@ -17,6 +17,7 @@ import type {
   HeaderRenderProps,
   ResolvedConfig,
   SheetActions,
+  SheetData,
   Side,
   StacksheetClassNames,
   StacksheetLayout,
@@ -72,17 +73,22 @@ const getMotionSpring = (prefersReducedMotion: boolean, config: ResolvedConfig) 
         type: "spring" as const,
       } as const);
 
-const getBackdropStyle = (config: ResolvedConfig, hasBackdropClass: boolean): CSSProperties => ({
-  cursor: config.closeOnBackdrop && config.dismissible ? "pointer" : undefined,
-  willChange: "opacity",
-  zIndex: config.zIndex,
-  ...(hasBackdropClass ? {} : { background: "var(--overlay, rgba(0, 0, 0, 0.15))" }),
-});
+const getBackdropStyle = (config: ResolvedConfig, hasBackdropClass: boolean): CSSProperties => {
+  const style: CSSProperties = {
+    cursor: config.closeOnBackdrop && config.dismissible ? "pointer" : undefined,
+    willChange: "opacity",
+    zIndex: config.zIndex,
+  };
+  if (!hasBackdropClass) {
+    style.background = "var(--overlay, rgba(0, 0, 0, 0.15))";
+  }
+  return style;
+};
 
 interface SheetRendererProps<TMap extends object> {
   classNames?: StacksheetClassNames;
   /** Ad-hoc component map (type key → component) */
-  componentMap: Map<string, ComponentType<Record<string, unknown>>>;
+  componentMap: Map<string, ComponentType<SheetData>>;
   config: ResolvedConfig;
   layout?: StacksheetLayout;
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
@@ -90,13 +96,13 @@ interface SheetRendererProps<TMap extends object> {
   store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
 }
 
-const isContentComponent = (content: unknown): content is ComponentType<Record<string, unknown>> =>
+const isContentComponent = (content: unknown): content is ComponentType<SheetData> =>
   typeof content === "function";
 
 const getStaticContent = <TMap extends object>(
   sheets: ContentMap<TMap> | undefined,
   type: string,
-): ComponentType<Record<string, unknown>> | undefined => {
+): ComponentType<SheetData> | undefined => {
   if (sheets === undefined) {
     return undefined;
   }
