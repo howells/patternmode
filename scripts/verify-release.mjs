@@ -85,27 +85,38 @@ const packages = await readPublishablePackages();
 /** @type {string[]} */
 const failures = [];
 
-for (const entry of packages) {
-  const specifier = `${entry.name}@${entry.version}`;
-  /** @type {string | null} */
-  let raw = null;
-
-  // A fresh publish takes a moment to reach the read path, so a miss here means
-  // "not yet", not "not published". Retry before believing it.
-  for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
-    try {
-      raw = await run("npm", ["view", specifier, "dependencies", "--json"]);
-      break;
-    } catch {
-      if (attempt === ATTEMPTS) {
-        break;
-      }
-      console.log(`   registry has not caught up on ${specifier} (attempt ${attempt}), waiting`);
-      await sleep(WAIT_MS);
+/**
+ * Read one published version's dependencies off the registry.
+ *
+ * A fresh publish takes a moment to reach the read path, so a miss means "not
+ * yet", not "not published". Each miss waits and tries again before it is believed.
+ *
+ * @param {string} specifier The `name@version` to read.
+ * @param {number} attempt Which attempt this is, counting from 1.
+ * @returns {Promise<string | null>} The registry's answer, or null when every attempt missed.
+ */
+const readWithRetry = async (specifier, attempt = 1) => {
+  try {
+    return await run("npm", ["view", specifier, "dependencies", "--json"]);
+  } catch {
+    if (attempt >= ATTEMPTS) {
+      return null;
     }
+    console.log(`   registry has not caught up on ${specifier} (attempt ${attempt}), waiting`);
+    await sleep(WAIT_MS);
+    return await readWithRetry(specifier, attempt + 1);
   }
+};
 
-  if (raw === null) {
+const specifiers = packages.map((entry) => `${entry.name}@${entry.version}`);
+const answers = await Promise.all(
+  specifiers.map(async (specifier) => await readWithRetry(specifier)),
+);
+
+for (const [index, specifier] of specifiers.entries()) {
+  const raw = answers[index];
+
+  if (raw === undefined || raw === null) {
     failures.push(`${specifier} is not readable from the registry`);
     continue;
   }

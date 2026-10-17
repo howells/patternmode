@@ -64,7 +64,7 @@ for (const pkg of packages) {
  */
 const getTarballPath = (packageName) => {
   const tarball = tarballs[packageName];
-  if (typeof tarball !== "string") {
+  if (tarball === undefined) {
     throw new TypeError(`Missing tarball for ${packageName}.`);
   }
   return path.resolve(packDir, tarball);

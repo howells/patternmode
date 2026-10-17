@@ -41,6 +41,41 @@ const manifestSchema = z.object({
  */
 
 /**
+ * Read one directory as a package: null when it has no manifest, nothing
+ * to publish when it is private, an error when it is publishable but incomplete.
+ *
+ * @param {string} directory Absolute path to a directory under a package root.
+ * @returns {Promise<Package | null>} The package, or null when it is not publishable.
+ */
+const readPackage = async (directory) => {
+  /** @type {string} */
+  let raw;
+
+  try {
+    raw = await readFile(path.join(directory, "package.json"), "utf-8");
+  } catch {
+    // A directory under packages/ with no package.json is not a package.
+    // One that has a malformed manifest still throws, below.
+    return null;
+  }
+
+  const manifest = manifestSchema.parse(JSON.parse(raw));
+  if (manifest.private) {
+    return null;
+  }
+
+  if (manifest.name === undefined || manifest.version === undefined) {
+    throw new Error(`${directory}/package.json is publishable but has no name or version.`);
+  }
+
+  const workspaceDependencies = Object.entries(manifest.dependencies)
+    .filter(([, range]) => range.startsWith("workspace:"))
+    .map(([dependency]) => dependency);
+
+  return { directory, name: manifest.name, version: manifest.version, workspaceDependencies };
+};
+
+/**
  * Every publishable package in the workspace.
  *
  * A package is publishable when it is not marked `private`, which is the same
@@ -50,52 +85,19 @@ const manifestSchema = z.object({
  * @returns {Promise<Package[]>} Every non-private workspace package.
  */
 export const readPublishablePackages = async () => {
-  /** @type {Package[]} */
-  const packages = [];
+  const groups = await Promise.all(
+    PACKAGE_DIRECTORIES.map(async (parent) => {
+      const entries = await readdir(path.join(REPO_ROOT, parent), { withFileTypes: true });
+      const found = await Promise.all(
+        entries
+          .filter((entry) => entry.isDirectory())
+          .map(async (entry) => await readPackage(path.join(REPO_ROOT, parent, entry.name))),
+      );
+      return found.filter((entry) => entry !== null);
+    }),
+  );
 
-  for (const parent of PACKAGE_DIRECTORIES) {
-    const entries = await readdir(path.join(REPO_ROOT, parent), { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (!entry.isDirectory()) {
-        continue;
-      }
-
-      const directory = path.join(REPO_ROOT, parent, entry.name);
-      /** @type {string} */
-      let raw;
-
-      try {
-        raw = await readFile(path.join(directory, "package.json"), "utf-8");
-      } catch {
-        // A directory under packages/ with no package.json is not a package.
-        // One that has a malformed manifest still throws, below.
-        continue;
-      }
-
-      const manifest = manifestSchema.parse(JSON.parse(raw));
-      if (manifest.private) {
-        continue;
-      }
-
-      if (manifest.name === undefined || manifest.version === undefined) {
-        throw new Error(`${directory}/package.json is publishable but has no name or version.`);
-      }
-
-      const workspaceDependencies = Object.entries(manifest.dependencies)
-        .filter(([, range]) => range.startsWith("workspace:"))
-        .map(([dependency]) => dependency);
-
-      packages.push({
-        directory,
-        name: manifest.name,
-        version: manifest.version,
-        workspaceDependencies,
-      });
-    }
-  }
-
-  return packages;
+  return groups.flat();
 };
 
 /**

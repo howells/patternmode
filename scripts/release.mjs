@@ -124,12 +124,14 @@ const pack = async (entry) => {
 const packages = inDependencyOrder(await readPublishablePackages());
 console.log(`Release order: ${packages.map((entry) => entry.name).join(", ")}\n`);
 
-let published = 0;
-let skipped = 0;
-
-for (const entry of packages) {
-  const isOnRegistry = await alreadyPublished(entry);
-
+/**
+ * Pack and publish one package, or skip it when the registry already has it.
+ *
+ * @param {import("./workspace-packages.mjs").Package} entry The package to release.
+ * @param {boolean} isOnRegistry Whether the registry already has this version.
+ * @returns {Promise<"published" | "skipped" | "rehearsed">} What happened to it.
+ */
+const release = async (entry, isOnRegistry) => {
   // A dry run packs even a version the registry already has. Packing is where
   // the workspace: protocol guard lives, and skipping it means a rehearsal of a
   // release with nothing new in it checks nothing at all - it prints fifteen
@@ -137,8 +139,7 @@ for (const entry of packages) {
   // run still skips, because re-publishing is what would fail.
   if (isOnRegistry && !isDryRun) {
     console.log(`= ${entry.name}@${entry.version} already on the registry, skipping`);
-    skipped += 1;
-    continue;
+    return "skipped";
   }
 
   console.log(`-> packing ${entry.name}@${entry.version}`);
@@ -149,7 +150,7 @@ for (const entry of packages) {
       ? "already published, packed to check it still packs"
       : "would publish";
     console.log(`   dry run: ${note} ${tarball}`);
-    continue;
+    return "rehearsed";
   }
 
   // No credential is passed here on purpose: npm exchanges the workflow's
@@ -162,7 +163,22 @@ for (const entry of packages) {
   // attaches the attestation. Dropping it loses provenance silently.
   await run("npm", ["publish", tarball, "--access", "public", "--provenance"]);
   console.log(`   published ${entry.name}@${entry.version}`);
-  published += 1;
+  return "published";
+};
+
+const onRegistry = await Promise.all(packages.map(async (entry) => await alreadyPublished(entry)));
+
+let published = 0;
+let skipped = 0;
+
+for (const [index, entry] of packages.entries()) {
+  // oxlint-disable-next-line eslint/no-await-in-loop -- packages publish one at a time in dependency order, so a dependent never reaches the registry before what it resolves.
+  const outcome = await release(entry, onRegistry[index] === true);
+  if (outcome === "published") {
+    published += 1;
+  } else if (outcome === "skipped") {
+    skipped += 1;
+  }
 }
 
 console.log(`\n${published} published, ${skipped} already on the registry.`);

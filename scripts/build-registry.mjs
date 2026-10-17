@@ -11,6 +11,7 @@ import {
 import path from "node:path";
 import { parse as parseCss } from "postcss";
 import { parse as parseYaml } from "yaml";
+import { z } from "zod";
 import {
   COMPONENT_PACKAGES,
   LIB_PACKAGES,
@@ -68,35 +69,27 @@ const processEnv = globalThis.process.env;
  * }} RegistryItem
  */
 
+const recordSchema = z.record(z.string(), z.unknown());
+const manifestSchema = z.object({ name: z.string(), version: z.string() });
+const registryItemSchema = z.object({ name: z.string(), type: z.string() });
+
 /**
  * @param {unknown} value Candidate value.
  * @returns {value is Record<string, unknown>} Whether the value is a non-null object.
  */
-const isPlainRecord = (value) => typeof value === "object" && value !== null;
+const isPlainRecord = (value) => recordSchema.safeParse(value).success;
 
 /**
  * @param {unknown} value Candidate value.
  * @returns {value is Manifest} Whether the value is a package manifest.
  */
-const isManifest = (value) =>
-  typeof value === "object" &&
-  value !== null &&
-  "name" in value &&
-  typeof value.name === "string" &&
-  "version" in value &&
-  typeof value.version === "string";
+const isManifest = (value) => manifestSchema.safeParse(value).success;
 
 /**
  * @param {unknown} value Candidate value.
  * @returns {value is RegistryItem} Whether the value is a registry item.
  */
-const isRegistryItem = (value) =>
-  typeof value === "object" &&
-  value !== null &&
-  "name" in value &&
-  typeof value.name === "string" &&
-  "type" in value &&
-  typeof value.type === "string";
+const isRegistryItem = (value) => registryItemSchema.safeParse(value).success;
 
 /**
  * @param {string} filePath Absolute path to a JSON file.
@@ -128,10 +121,12 @@ const readManifest = (name) => {
 const asStringRecord = (value) => {
   /** @type {Record<string, string>} */
   const out = {};
-  if (typeof value === "object" && value !== null) {
-    for (const [key, entry] of Object.entries(value)) {
-      if (typeof entry === "string") {
-        out[key] = entry;
+  const record = recordSchema.safeParse(value);
+  if (record.success) {
+    for (const [key, entry] of Object.entries(record.data)) {
+      const text = z.string().safeParse(entry);
+      if (text.success) {
+        out[key] = text.data;
       }
     }
   }
@@ -144,10 +139,12 @@ const asStringRecord = (value) => {
  * @param {string} key Property key.
  * @returns {unknown} The property value, if any.
  */
-const propAt = (value, key) =>
-  (typeof value === "object" && value !== null ? Object.entries(value) : []).find(
+const propAt = (value, key) => {
+  const record = recordSchema.safeParse(value);
+  return (record.success ? Object.entries(record.data) : []).find(
     ([entryKey]) => entryKey === key,
   )?.[1];
+};
 
 /**
  * Convert plain CSS text into the shadcn registry-item `css` object form.
@@ -262,9 +259,9 @@ const loadWorkspace = () => {
   }
   /** @type {Record<string, Record<string, string>>} */
   const catalogs = {};
-  const rawCatalogs = propAt(workspace, "catalogs");
-  if (typeof rawCatalogs === "object" && rawCatalogs !== null) {
-    for (const [name, entry] of Object.entries(rawCatalogs)) {
+  const rawCatalogs = recordSchema.safeParse(propAt(workspace, "catalogs"));
+  if (rawCatalogs.success) {
+    for (const [name, entry] of Object.entries(rawCatalogs.data)) {
       catalogs[name] = asStringRecord(entry);
     }
   }
@@ -827,7 +824,7 @@ const checkNoLeaks = (items, failures) => {
     /** @type {string[]} */
     const blobs = [];
     for (const file of item.files ?? []) {
-      if (typeof file.content === "string") {
+      if (file.content !== undefined) {
         blobs.push(file.content);
       }
     }
