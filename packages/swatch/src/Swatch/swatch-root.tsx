@@ -222,17 +222,11 @@ const SwatchElement = ({
   });
 
 const warnOnRenderChildren = (render: RenderProp) => {
-  if (!isValidElement(render)) {
+  if (!isValidElement<{ children?: ReactNode }>(render)) {
     return;
   }
   const { props } = render;
-  if (
-    typeof props === "object" &&
-    props !== null &&
-    "children" in props &&
-    props.children !== undefined &&
-    props.children !== null
-  ) {
+  if (props.children !== undefined && props.children !== null) {
     console.warn(
       "Swatch `render` element has its own children, which override the swatch fill layers. " +
         "Keep the `render` element childless and pass swatch content as `<Swatch>…</Swatch>` children.",

@@ -1,5 +1,6 @@
 import { hexToRgb, rgbToHex } from "@instruments/colorscope/convert";
 
+import { isColorString } from "./swatch-colors";
 import type { SwatchColorStop } from "./swatch-types";
 
 export interface SwatchAtmosphereOptions {
@@ -68,7 +69,7 @@ export const getSwatchAtmosphereBackground = (
   const reach = Math.round(50 + (1 - density) * 15);
 
   const layers = colors.map((stop, index) => {
-    const color = typeof stop === "string" ? stop : stop.color;
+    const color = isColorString(stop) ? stop : stop.color;
     const pool = POOLS[index % POOLS.length];
     if (pool === undefined) {
       throw new Error("Expected atmosphere pool to exist.");

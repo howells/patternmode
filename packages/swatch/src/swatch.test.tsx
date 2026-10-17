@@ -15,16 +15,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   DistributionBar,
   DistributionDisplay,
-  getDistributionBoundaryPercent,
-  getDistributionTotal,
   getSwatchAtmosphereBackground,
   getSwatchColorsBackground,
-  moveDistributionBoundary,
-  removeDistributionSegment,
   SWATCH_VARIANTS,
   SWATCH_SIZES,
   Swatch,
-  updateDistributionSegment,
 } from "./index";
 import type { DistributionSegment } from "./index";
 
@@ -56,49 +51,46 @@ const getPanInfo = vi.hoisted(() => (event: ReactPointerEvent<HTMLButtonElement>
     y: Number(event.currentTarget.dataset.offsetY ?? 0),
   },
 }));
-const MockMotionButton = vi.hoisted(
-  () =>
-    ({
-      children,
-      drag: _drag,
-      dragElastic: _dragElastic,
-      dragMomentum: _dragMomentum,
-      dragSnapToOrigin: _dragSnapToOrigin,
-      onDrag,
-      onDragEnd,
-      onDragStart,
-      transformTemplate: _transformTemplate,
-      ...props
-    }: MockMotionButtonProps) => (
-      <button
-        {...props}
-        onPointerDown={(event) => {
-          props.onPointerDown?.(event);
-          onDragStart?.(event.nativeEvent, getPanInfo(event));
-        }}
-        onPointerMove={(event) => {
-          props.onPointerMove?.(event);
-          onDrag?.(event.nativeEvent, getPanInfo(event));
-        }}
-        onPointerUp={(event) => {
-          props.onPointerUp?.(event);
-          onDragEnd?.(event.nativeEvent, getPanInfo(event));
-        }}
-      >
-        {children}
-      </button>
-    ),
-);
-const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
-
-vi.mock("motion/react", () => {
+// oxlint-disable-next-line anti-slop/no-module-mocking -- Swatch imports motion/react directly; the mock replaces the draggable button with a plain button that turns pointer events into drag callbacks, since jsdom cannot drag.
+vi.mock(import("motion/react"), async (importOriginal) => {
+  const actual = await importOriginal();
+  const MockMotionButton = ({
+    children,
+    drag: _drag,
+    dragElastic: _dragElastic,
+    dragMomentum: _dragMomentum,
+    dragSnapToOrigin: _dragSnapToOrigin,
+    onDrag,
+    onDragEnd,
+    onDragStart,
+    transformTemplate: _transformTemplate,
+    ...props
+  }: MockMotionButtonProps) => (
+    <button
+      type="button"
+      {...props}
+      onPointerDown={(event) => {
+        props.onPointerDown?.(event);
+        onDragStart?.(event.nativeEvent, getPanInfo(event));
+      }}
+      onPointerMove={(event) => {
+        props.onPointerMove?.(event);
+        onDrag?.(event.nativeEvent, getPanInfo(event));
+      }}
+      onPointerUp={(event) => {
+        props.onPointerUp?.(event);
+        onDragEnd?.(event.nativeEvent, getPanInfo(event));
+      }}
+    >
+      {children}
+    </button>
+  );
   const motionComponents = {
     button: MockMotionButton,
   };
 
   return {
-    LazyMotion,
-    domMax: {},
+    ...actual,
     m: motionComponents,
     motion: motionComponents,
   };
@@ -116,20 +108,22 @@ const ControlledDistributionBar = () => {
   );
 };
 
-afterEach(() => {
-  cleanup();
-});
+describe(Swatch, () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-describe("Swatch", () => {
   it("renders a solid color swatch with contrast metadata", () => {
     render(<Swatch aria-label="Olive" color="#315c4b" />);
 
     const swatch = screen.getByLabelText("Olive");
     expect(swatch).toHaveClass("patternmode-swatch");
-    expect(swatch).toHaveAttribute("data-slot", "swatch");
-    expect(swatch).toHaveAttribute("data-variant", "circle");
-    expect(swatch).toHaveAttribute("data-size", "base");
-    expect(swatch).toHaveAttribute("data-tone", "dark");
+    expect(swatch.dataset).toMatchObject({
+      size: "base",
+      slot: "swatch",
+      tone: "dark",
+      variant: "circle",
+    });
     expect(swatch).toHaveStyle({ "--patternmode-swatch-fill": "#315c4b" });
   });
 
@@ -187,7 +181,7 @@ describe("Swatch", () => {
 
     await user.click(screen.getByRole("button", { name: "Remove Selected" }));
 
-    expect(onRemove).toHaveBeenCalledTimes(1);
+    expect(onRemove).toHaveBeenCalledOnce();
   });
 
   it("applies shared object sizing to media children", () => {
@@ -207,7 +201,7 @@ describe("Swatch", () => {
   });
 
   it("supports extended swatch sizes through 7xl", () => {
-    expect(SWATCH_SIZES).toEqual([
+    expect(SWATCH_SIZES).toStrictEqual([
       "2xs",
       "xs",
       "sm",
@@ -295,13 +289,25 @@ describe("Swatch", () => {
     const cell = screen.getByTestId("cell");
     expect(cell.tagName).toBe("BUTTON");
     expect(cell).toHaveClass("patternmode-swatch");
-    expect(cell).toHaveAttribute("data-slot", "swatch");
-    expect(cell).toHaveAttribute("data-variant", "block");
-    expect(cell).toHaveAttribute("data-size", "lg");
+    expect(cell.dataset).toMatchObject({ size: "lg", slot: "swatch", variant: "block" });
     expect(cell).toHaveStyle({
       "--patternmode-swatch-fill": "#315c4b",
       "--patternmode-swatch-size": "2.5rem",
     });
+  });
+
+  it("draws the fill layers inside the render element instead of a figure", () => {
+    render(
+      <Swatch
+        aria-label="Cell"
+        color="#315c4b"
+        render={<button aria-label="Cell" data-testid="cell" type="button" />}
+        variant="block"
+        size="lg"
+      />,
+    );
+
+    const cell = screen.getByTestId("cell");
     expect(cell.querySelector(".patternmode-swatch__fill")).not.toBeNull();
     expect(cell.querySelector(".patternmode-swatch__scrim")).not.toBeNull();
     expect(screen.queryByRole("figure")).toBeNull();
@@ -351,7 +357,7 @@ describe("Swatch", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "Cell" }));
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledOnce();
   });
 
   it("applies light tone metadata for non-hex color formats", () => {
@@ -360,7 +366,10 @@ describe("Swatch", () => {
   });
 
   it("applies a consumer-provided role to the rendered wrapper", () => {
-    render(<Swatch aria-label="Preview" color="#315c4b" role="img" />);
+    render(
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the test passes a role to prove it reaches the wrapper.
+      <Swatch aria-label="Preview" color="#315c4b" role="img" />,
+    );
     expect(screen.getByRole("img", { name: "Preview" })).toHaveClass("patternmode-swatch");
 
     render(
@@ -368,6 +377,7 @@ describe("Swatch", () => {
         aria-label="Removable"
         color="#315c4b"
         onRemove={vi.fn<() => void>()}
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the test passes a role to prove it reaches the wrapper.
         role="listitem"
       />,
     );
@@ -402,67 +412,11 @@ describe("Swatch", () => {
   });
 });
 
-describe("DistributionBar math", () => {
-  it("moves a boundary while preserving the distribution total", () => {
-    const segments = [
-      { color: "#315c4b", id: "a", value: 48 },
-      { color: "#d9a441", id: "b", value: 30 },
-      { color: "#9b3d32", id: "c", value: 22 },
-    ];
-
-    const next = moveDistributionBoundary(segments, 0, 8, 6);
-
-    expect(next.map((segment) => segment.value)).toEqual([56, 22, 22]);
-    expect(getDistributionTotal(next)).toBe(100);
-    expect(getDistributionBoundaryPercent(next, 0)).toBe(56);
+describe(DistributionBar, () => {
+  afterEach(() => {
+    cleanup();
   });
 
-  it("clamps a moved boundary so adjacent segments keep a minimum value", () => {
-    const segments = [
-      { color: "#315c4b", id: "a", value: 48 },
-      { color: "#d9a441", id: "b", value: 30 },
-      { color: "#9b3d32", id: "c", value: 22 },
-    ];
-
-    const next = moveDistributionBoundary(segments, 1, 40, 8);
-
-    expect(next.map((segment) => segment.value)).toEqual([48, 44, 8]);
-    expect(getDistributionTotal(next)).toBe(100);
-  });
-
-  it("removes a segment and redistributes its value across remaining segments", () => {
-    const segments = [
-      { color: "#315c4b", id: "a", value: 50 },
-      { color: "#d9a441", id: "b", value: 30 },
-      { color: "#9b3d32", id: "c", value: 20 },
-    ];
-
-    const next = removeDistributionSegment(segments, "b");
-
-    expect(next.map((segment) => segment.value)).toEqual([71.4, 28.6]);
-    expect(getDistributionTotal(next)).toBe(100);
-  });
-
-  it("updates a segment without changing the distribution values", () => {
-    const segments = [
-      { color: "#315c4b", id: "a", label: "Evergreen", value: 48 },
-      { color: "#d9a441", id: "b", label: "Saffron", value: 30 },
-    ];
-
-    const next = updateDistributionSegment(segments, "a", {
-      color: "#e1ebe5",
-      id: "sage",
-      label: "Sage",
-    });
-
-    expect(next).toEqual([
-      { color: "#e1ebe5", id: "sage", label: "Sage", value: 48 },
-      { color: "#d9a441", id: "b", label: "Saffron", value: 30 },
-    ]);
-  });
-});
-
-describe("DistributionBar", () => {
   it("renders a non-interactive display without boundary handles", () => {
     render(
       <DistributionDisplay

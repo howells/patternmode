@@ -84,6 +84,7 @@ const DistributionBarHandle = ({
       }}
       onDragStart={onDragStart}
       onKeyDown={onKeyDown}
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role, react-doctor/prefer-tag-over-role -- the handle is a draggable boundary control with its own keyboard handling; no native input provides this drag behaviour.
       role="slider"
       style={{ left: `calc(${boundaryPercent}% - 1.375rem)` }}
       tabIndex={0}

@@ -6,11 +6,11 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { Swatch } from "./index";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Swatch transparency backdrop", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders no backdrop unless one is asked for", () => {
     const { container } = render(<Swatch aria-label="Opaque" color="rgb(49 92 75 / 40%)" />);
 
