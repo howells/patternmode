@@ -4,7 +4,15 @@ import { Popover } from "@base-ui/react/popover";
 import { ScrollFrame } from "@patternmode/scrollframe";
 import { joinClassNames } from "@patternmode/system";
 import { useEffect, useRef } from "react";
-import type { ClipboardEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
+import type {
+  ClipboardEvent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  ReactNode,
+  Ref,
+  RefCallback,
+} from "react";
 
 import { useRender } from "./render";
 import { useTagSelectorContext } from "./tag-selector-context";
@@ -27,7 +35,6 @@ import type {
 } from "./types";
 
 const DEFAULT_BADGE_VARIANT = "default" satisfies BadgeVariant;
-const LEGACY_TONE_PROP = "tone" as const;
 const TONE_VARIANT_MAP = {
   accent: "default",
   danger: "destructive",
@@ -68,7 +75,8 @@ export const Tag = (props: TagProps): ReactElement => {
     selected = false,
     size = "base",
     variant,
-    [LEGACY_TONE_PROP]: legacyTone,
+    // oxlint-disable-next-line typescript/no-deprecated -- Tag still honours its deprecated `tone` prop until the prop is removed.
+    tone: legacyTone,
     ...tagProps
   } = props;
 
@@ -236,6 +244,10 @@ const TagSelectorContent = ({
   </Popover.Portal>
 );
 
+const isRefCallback = (
+  ref: Ref<HTMLInputElement> | undefined,
+): ref is RefCallback<HTMLInputElement> => typeof ref === "function";
+
 const TagSelectorSearch = ({
   "aria-label": ariaLabel,
   className,
@@ -260,7 +272,7 @@ const TagSelectorSearch = ({
 
   const setRefs = (node: HTMLInputElement | null) => {
     localRef.current = node;
-    if (typeof ref === "function") {
+    if (isRefCallback(ref)) {
       ref(node);
     } else if (ref !== undefined && ref !== null) {
       ref.current = node;

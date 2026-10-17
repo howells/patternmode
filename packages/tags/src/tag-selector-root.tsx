@@ -2,7 +2,7 @@
 
 import { Popover } from "@base-ui/react/popover";
 import { joinClassNames } from "@patternmode/system";
-import { useId, useRef, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 
 import { TagSelectorContext } from "./tag-selector-context";
 import type { CommandOption, TagSelectorContextValue } from "./tag-selector-context";
@@ -87,6 +87,15 @@ const resolveDraftItem = async ({
   return null;
 };
 
+/** A ref that follows the committed value, current before any awaited continuation reads it. */
+const useLatestRef = <TValue,>(value: TValue) => {
+  const ref = useRef(value);
+  useLayoutEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref;
+};
+
 const useTagSelectorRootState = (props: TagSelectorRootProps) => {
   const {
     "aria-label": ariaLabel,
@@ -122,8 +131,7 @@ const useTagSelectorRootState = (props: TagSelectorRootProps) => {
     onCreateItem !== undefined && normalizeTag(query) !== "" && exactMatches.length === 0;
   const commandOptions = getCommandOptions({ canCreate, filteredOptions, listboxId, query });
   const activeOption = commandOptions[activeIndex];
-  const latestValueRef = useRef(value);
-  latestValueRef.current = value;
+  const latestValueRef = useLatestRef(value);
 
   const updateQuery = (nextQuery: string) => {
     if (searchValue === undefined) {

@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ReactNode, Ref, SVGAttributes } from "react";
+import type { Ref, SVGAttributes } from "react";
 
 import { resolveStatusProgress, StatusMark } from "./index";
 
@@ -24,9 +24,9 @@ const stripMotionProps = vi.hoisted(
     }: MotionElementProps<TElement>) =>
       props,
 );
-const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
-
-vi.mock("motion/react", () => {
+// oxlint-disable-next-line anti-slop/no-module-mocking -- StatusMark imports motion/react directly; the mock strips animation props so jsdom reads the final SVG attributes.
+vi.mock(import("motion/react"), async (importOriginal) => {
+  const actual = await importOriginal();
   const MotionPath = ({ ref, ...props }: MotionElementProps<SVGPathElement>) => (
     <path ref={ref} {...stripMotionProps(props)} />
   );
@@ -37,8 +37,7 @@ vi.mock("motion/react", () => {
     <g ref={ref} {...stripMotionProps(props)} />
   );
   return {
-    LazyMotion,
-    domMax: {},
+    ...actual,
     m: {
       circle: MotionCircle,
       g: MotionG,
@@ -46,10 +45,6 @@ vi.mock("motion/react", () => {
     },
     useReducedMotion: () => false,
   };
-});
-
-afterEach(() => {
-  cleanup();
 });
 
 /* The shipped components expose `data-slot`, not `data-testid` — test hooks do
@@ -65,39 +60,46 @@ const bySlot = (slot: string): Element => {
   return element;
 };
 
-describe("resolveStatusProgress", () => {
+describe(resolveStatusProgress, () => {
   it("snaps numeric values to discrete progress steps", () => {
-    expect(resolveStatusProgress({ value: -20 })).toEqual({
+    expect(resolveStatusProgress({ value: -20 })).toStrictEqual({
       progress: 0,
       status: "empty",
     });
-    expect(resolveStatusProgress({ value: 38 })).toEqual({
+    expect(resolveStatusProgress({ value: 38 })).toStrictEqual({
       progress: 50,
       status: "half",
     });
-    expect(resolveStatusProgress({ value: 88 })).toEqual({
+    expect(resolveStatusProgress({ value: 88 })).toStrictEqual({
       progress: 100,
       status: "full",
     });
   });
 
   it("treats NaN values as unknown progress instead of empty", () => {
-    expect(resolveStatusProgress({ value: Number.NaN })).toEqual({
+    expect(resolveStatusProgress({ value: Number.NaN })).toStrictEqual({
       progress: null,
       status: "null",
     });
   });
 
   it("keeps null progress distinct from zero progress", () => {
-    expect(resolveStatusProgress({ status: "null", value: 100 })).toEqual({
+    expect(resolveStatusProgress({ status: "null", value: 100 })).toStrictEqual({
       progress: null,
       status: "null",
     });
-    expect(resolveStatusProgress({ status: "empty" })).toEqual({ progress: 0, status: "empty" });
+    expect(resolveStatusProgress({ status: "empty" })).toStrictEqual({
+      progress: 0,
+      status: "empty",
+    });
   });
 });
 
-describe("StatusMark", () => {
+describe(StatusMark, () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders an accessible labelled status mark", () => {
     render(<StatusMark label="Build is halfway complete" value={50} />);
 
@@ -116,19 +118,19 @@ describe("StatusMark", () => {
     expect(mark).toHaveAttribute("data-progress", "null");
   });
 
-  it("renders null progress as the same dashed placeholder in every variant", () => {
-    const { rerender } = render(<StatusMark label="Null" status="null" />);
+  it.each([
+    ["fill", undefined],
+    ["border", "border"],
+  ] as const)(
+    "renders null progress as the same dashed placeholder in the %s variant",
+    (_name, variant) => {
+      render(<StatusMark label="Null" status="null" variant={variant} />);
 
-    expect(bySlot("status-mark-null")).toHaveAttribute("r", "8");
-    expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
-    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
-
-    rerender(<StatusMark label="Null" status="null" variant="border" />);
-
-    expect(bySlot("status-mark-null")).toHaveAttribute("r", "8");
-    expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
-    expect(querySlot("status-mark-border")).not.toBeInTheDocument();
-  });
+      expect(bySlot("status-mark-null")).toHaveAttribute("r", "8");
+      expect(querySlot("status-mark-fill")).not.toBeInTheDocument();
+      expect(querySlot("status-mark-border")).not.toBeInTheDocument();
+    },
+  );
 
   it("renders filled sweep layer by default", () => {
     render(<StatusMark label="Three quarters complete" value={75} />);
@@ -155,15 +157,16 @@ describe("StatusMark", () => {
     );
   });
 
-  it("switches between fill and border variants", () => {
-    const { rerender } = render(<StatusMark label="Filled" value={75} />);
+  it("draws the fill variant with a filled disc and no border layer", () => {
+    render(<StatusMark label="Filled" value={75} />);
 
     expect(screen.getByRole("img", { name: "Filled" })).toHaveAttribute("data-variant", "fill");
     expect(querySlot("status-mark-border")).not.toBeInTheDocument();
-    expect(bySlot("status-mark-fill")).toBeInTheDocument();
     expect(bySlot("status-mark-fill")).toHaveAttribute("r", "8.9");
+  });
 
-    rerender(<StatusMark label="Bordered" value={75} variant="border" />);
+  it("draws the border variant with a border layer and no fill", () => {
+    render(<StatusMark label="Bordered" value={75} variant="border" />);
 
     expect(screen.getByRole("img", { name: "Bordered" })).toHaveAttribute("data-variant", "border");
     expect(bySlot("status-mark-border")).toBeInTheDocument();

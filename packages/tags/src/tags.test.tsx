@@ -16,21 +16,6 @@ class ResizeObserverMock {
   unobserve = vi.fn<(target: Element) => void>();
 }
 
-beforeEach(() => {
-  vi.stubGlobal("ResizeObserver", ResizeObserverMock);
-  // jsdom does not implement scrollIntoView; the active option effect calls it.
-  Element.prototype.scrollIntoView = vi.fn<(options?: ScrollIntoViewOptions) => void>();
-  // jsdom lacks the Web Animations API; Base UI's ScrollArea viewport (used by
-  // the selected-tags ScrollFrame) calls getAnimations() from a scroll timer.
-  Element.prototype.getAnimations = vi.fn<() => Animation[]>(() => []);
-});
-
-afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
-  vi.restoreAllMocks();
-});
-
 const options: TagItem[] = [
   { id: "accessible", label: "Accessible" },
   { id: "command", label: "Command menu" },
@@ -88,7 +73,30 @@ const bySelectedScroll = (): HTMLElement => {
   return element;
 };
 
-describe("TagSelector", () => {
+describe(TagSelector, () => {
+  beforeEach(() => {
+    vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+    // jsdom does not implement scrollIntoView; the active option effect calls it.
+    Object.defineProperty(Element.prototype, "scrollIntoView", {
+      configurable: true,
+      value: vi.fn<(options?: ScrollIntoViewOptions) => void>(),
+      writable: true,
+    });
+    // jsdom lacks the Web Animations API; Base UI's ScrollArea viewport (used by
+    // the selected-tags ScrollFrame) calls getAnimations() from a scroll timer.
+    Object.defineProperty(Element.prototype, "getAnimations", {
+      configurable: true,
+      value: vi.fn<() => Animation[]>(() => []),
+      writable: true,
+    });
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
   it("uses the shadcn badge base and lets tags extend badge variants", () => {
     render(
       <>
@@ -109,20 +117,24 @@ describe("TagSelector", () => {
     expect("TagsInput" in publicApi).toBe(false);
   });
 
-  it("renders selected TagItems in a ScrollFrame-backed trigger and opens popover content", async () => {
-    const user = userEvent.setup();
-
-    const { container } = render(
-      <ControlledTagSelector defaultValue={[getOption(0), getOption(1)]} />,
-    );
+  it("renders selected TagItems in a ScrollFrame-backed trigger", () => {
+    render(<ControlledTagSelector defaultValue={[getOption(0), getOption(1)]} />);
 
     const trigger = screen.getByRole("button", { name: "Project tags" });
     expect(trigger).toHaveAttribute("data-slot", "tag-selector-trigger");
     expect(bySelectedScroll()).toHaveAttribute("data-slot", "scrollframe");
     expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
     expect(within(trigger).getByText("Command menu")).toBeInTheDocument();
+  });
 
-    await user.click(trigger);
+  it("opens popover content as a plain combobox container", async () => {
+    const user = userEvent.setup();
+
+    const { container } = render(
+      <ControlledTagSelector defaultValue={[getOption(0), getOption(1)]} />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Project tags" }));
 
     expect(
       container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
@@ -241,7 +253,9 @@ describe("TagSelector", () => {
         onSearchChange={onSearchChange}
         options={options}
         renderOption={({ item, optionProps }) => (
-          <button {...optionProps}>Custom option {item.label}</button>
+          <button type="button" {...optionProps}>
+            Custom option {item.label}
+          </button>
         )}
         renderTag={({ item }) => (
           <span>
@@ -261,7 +275,7 @@ describe("TagSelector", () => {
     expect(screen.queryByText("Custom option Accessible")).not.toBeInTheDocument();
 
     await user.type(screen.getByRole("combobox", { name: "Search Project tags" }), "s");
-    expect(onSearchChange).toHaveBeenCalled();
+    expect(onSearchChange).toHaveBeenCalledWith("keys");
   });
 
   it("keeps disabled options visible but unavailable", async () => {
@@ -401,7 +415,8 @@ describe("TagSelector", () => {
       resolveCreate();
     }
 
-    expect(await within(trigger).findByText("Indoor")).toBeInTheDocument();
+    const indoor = await within(trigger).findByText("Indoor");
+    expect(indoor).toBeInTheDocument();
     expect(within(trigger).getByText("Outdoor")).toBeInTheDocument();
     expect(within(trigger).getByText("Accessible")).toBeInTheDocument();
   });
