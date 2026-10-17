@@ -17,9 +17,9 @@ const items: DeckItem[] = [
   { element: "D", id: "d" },
 ];
 
-describe("getVisibleDeckItems", () => {
+describe(getVisibleDeckItems, () => {
   it("wraps cyclic decks around the end of the list", () => {
-    expect(getVisibleDeckItems(items, 2, 3, "cycle").map((item) => item.id)).toEqual([
+    expect(getVisibleDeckItems(items, 2, 3, "cycle").map((item) => item.id)).toStrictEqual([
       "c",
       "d",
       "a",
@@ -27,15 +27,18 @@ describe("getVisibleDeckItems", () => {
   });
 
   it("stops finite decks when no more cards are available", () => {
-    expect(getVisibleDeckItems(items, 2, 3, "finite").map((item) => item.id)).toEqual(["c", "d"]);
+    expect(getVisibleDeckItems(items, 2, 3, "finite").map((item) => item.id)).toStrictEqual([
+      "c",
+      "d",
+    ]);
   });
 
   it("returns no cards for exhausted finite decks", () => {
-    expect(getVisibleDeckItems(items, 4, 3, "finite")).toEqual([]);
+    expect(getVisibleDeckItems(items, 4, 3, "finite")).toStrictEqual([]);
   });
 });
 
-describe("getNextDeckIndex", () => {
+describe(getNextDeckIndex, () => {
   it("wraps cyclic decks back to the first item", () => {
     expect(getNextDeckIndex(3, items.length, "cycle")).toBe(0);
   });
@@ -49,7 +52,7 @@ describe("getNextDeckIndex", () => {
   });
 });
 
-describe("getDeckRenderKey", () => {
+describe(getDeckRenderKey, () => {
   it("keeps finite cards keyed by stable item id", () => {
     expect(getDeckRenderKey("a", 4, items.length, "finite")).toBe("a");
   });
@@ -61,7 +64,7 @@ describe("getDeckRenderKey", () => {
   });
 });
 
-describe("getAdvanceDecision", () => {
+describe(getAdvanceDecision, () => {
   it("accepts an advance when horizontal distance crosses the threshold", () => {
     expect(
       getAdvanceDecision({
@@ -72,7 +75,7 @@ describe("getAdvanceDecision", () => {
         velocityX: 100,
         width: 300,
       }),
-    ).toEqual({ accepted: true, direction: "left" });
+    ).toStrictEqual({ accepted: true, direction: "left" });
   });
 
   it("accepts an advance when horizontal velocity crosses the threshold", () => {
@@ -85,7 +88,7 @@ describe("getAdvanceDecision", () => {
         velocityX: 650,
         width: 300,
       }),
-    ).toEqual({ accepted: true, direction: "right" });
+    ).toStrictEqual({ accepted: true, direction: "right" });
   });
 
   it("rejects advances in disallowed directions", () => {
@@ -98,11 +101,11 @@ describe("getAdvanceDecision", () => {
         velocityX: -900,
         width: 300,
       }),
-    ).toEqual({ accepted: false, direction: "left" });
+    ).toStrictEqual({ accepted: false, direction: "left" });
   });
 });
 
-describe("resolveCardRotation", () => {
+describe(resolveCardRotation, () => {
   it("returns a stable deterministic rotation for a card id", () => {
     const first = resolveCardRotation("ceramic-vessel", 8);
     const second = resolveCardRotation("ceramic-vessel", 8);
@@ -126,10 +129,10 @@ describe("resolveCardRotation", () => {
   });
 });
 
-describe("getVisualDepth", () => {
+describe(getVisualDepth, () => {
   it("maps the active card to zero depth and preserves later cards", () => {
     const visible = getVisibleDeckItems(items, 1, 3, "cycle");
-    expect(visible.map((item) => getVisualDepth(item, visible))).toEqual([0, 1, 2]);
+    expect(visible.map((item) => getVisualDepth(item, visible))).toStrictEqual([0, 1, 2]);
   });
 
   it("returns -1 when a card is not in the visible stack", () => {

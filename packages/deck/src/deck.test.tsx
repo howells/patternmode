@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Fragment } from "react";
+import { createElement, Fragment } from "react";
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -16,7 +16,7 @@ interface TestPanInfo {
 }
 
 interface TestDragHandlers {
-  onDragEnd?: (event: unknown, info: TestPanInfo) => void;
+  onDragEnd?: (event: Event, info: TestPanInfo) => void;
   onDragStart?: () => void;
 }
 
@@ -56,23 +56,34 @@ const stripMotionProps = vi.hoisted(
     }: MotionTestProps) =>
       props,
 );
-const latestExitComplete = vi.hoisted((): { current: (() => void) | undefined } => ({
+interface Holder<TValue> {
+  current: TValue;
+}
+
+const latestExitComplete = vi.hoisted((): Holder<(() => void) | undefined> => ({
   current: undefined,
 }));
-const mountedInitials = vi.hoisted((): { current: Map<string, unknown> } => ({
+const mountedInitials = vi.hoisted((): Holder<Map<string, unknown>> => ({
   current: new Map(),
 }));
-const latestDragHandlers = vi.hoisted((): { current: TestDragHandlers } => ({ current: {} }));
-const AnimatePresence = vi.hoisted(
-  () =>
-    ({ children, onExitComplete }: { children: ReactNode; onExitComplete?: () => void }) => {
-      latestExitComplete.current = onExitComplete;
-      return <>{children}</>;
-    },
-);
-const LazyMotion = vi.hoisted(() => ({ children }: { children: ReactNode }) => <>{children}</>);
+const latestDragHandlers = vi.hoisted((): Holder<TestDragHandlers> => ({ current: {} }));
+const recordDragHandlers = vi.hoisted(() => (handlers: TestDragHandlers) => {
+  latestDragHandlers.current = handlers;
+});
 
-vi.mock("motion/react", () => {
+// oxlint-disable-next-line anti-slop/no-module-mocking -- Deck imports motion/react directly; the mock strips animation props, exposes the drag handlers and reports exit completion without running animations in jsdom.
+vi.mock(import("motion/react"), async (importOriginal) => {
+  const actual = await importOriginal();
+  const AnimatePresence = ({
+    children,
+    onExitComplete,
+  }: {
+    children: ReactNode;
+    onExitComplete?: () => void;
+  }) => {
+    latestExitComplete.current = onExitComplete;
+    return createElement(Fragment, null, children);
+  };
   const MotionDiv = ({ ref, ...props }: MotionTestProps) => {
     const label = (Array.isArray(props.children) ? props.children : [props.children]).find(
       (child): child is string => typeof child === "string",
@@ -81,10 +92,10 @@ vi.mock("motion/react", () => {
       mountedInitials.current.set(label, props.initial);
     }
     if (props.onDragEnd !== undefined) {
-      latestDragHandlers.current = {
+      recordDragHandlers({
         onDragEnd: props.onDragEnd,
         onDragStart: props.onDragStart,
-      };
+      });
     }
     return <div ref={ref} {...stripMotionProps(props)} />;
   };
@@ -94,66 +105,79 @@ vi.mock("motion/react", () => {
   };
 
   return {
+    ...actual,
     AnimatePresence,
-    LazyMotion,
-    domMax: {},
     m: motionComponents,
     motion: motionComponents,
     useReducedMotion: () => false,
   };
 });
 
-beforeEach(() => {
-  mountedInitials.current.clear();
-  latestExitComplete.current = undefined;
-  latestDragHandlers.current = {};
-});
-
-afterEach(() => {
-  cleanup();
-});
-
 const dragActiveCard = (offsetX: number, velocityX = 0) => {
   act(() => {
     latestDragHandlers.current.onDragStart?.();
-    latestDragHandlers.current.onDragEnd?.(
-      {},
-      { offset: { x: offsetX, y: 0 }, velocity: { x: velocityX, y: 0 } },
-    );
+    latestDragHandlers.current.onDragEnd?.(new Event("pointerup"), {
+      offset: { x: offsetX, y: 0 },
+      velocity: { x: velocityX, y: 0 },
+    });
   });
 };
 
-describe("Deck", () => {
-  it("renders a cyclic stack and advances with the keyboard", async () => {
-    const user = userEvent.setup();
-    const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
-    const onIndexChange = vi.fn<(index: number) => void>();
+const renderCyclicDeck = () => {
+  const onAdvance = vi.fn<(event: DeckAdvanceEvent) => void>();
+  const onIndexChange = vi.fn<(index: number) => void>();
 
-    render(
-      <Deck
-        aria-label="Project cards"
-        defaultIndex={1}
-        mode="cycle"
-        onIndexChange={onIndexChange}
-        onAdvance={onAdvance}
-        visibleCount={3}
-      >
-        <Deck.Card>Alpha</Deck.Card>
-        <Deck.Card>Beta</Deck.Card>
-        <Deck.Card>Gamma</Deck.Card>
-        <Deck.Card>Delta</Deck.Card>
-      </Deck>,
-    );
+  render(
+    <Deck
+      aria-label="Project cards"
+      defaultIndex={1}
+      mode="cycle"
+      onIndexChange={onIndexChange}
+      onAdvance={onAdvance}
+      visibleCount={3}
+    >
+      <Deck.Card>Alpha</Deck.Card>
+      <Deck.Card>Beta</Deck.Card>
+      <Deck.Card>Gamma</Deck.Card>
+      <Deck.Card>Delta</Deck.Card>
+    </Deck>,
+  );
 
-    const deck = screen.getByRole("slider", { name: "Project cards" });
+  return { onAdvance, onIndexChange };
+};
+
+describe(Deck, () => {
+  beforeEach(() => {
+    mountedInitials.current.clear();
+    latestExitComplete.current = undefined;
+    latestDragHandlers.current = {};
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("renders a cyclic stack with the active card in front", () => {
+    renderCyclicDeck();
+
     expect(screen.getByText("Beta")).toHaveAttribute("data-active", "true");
     expect(screen.getByText("Beta")).not.toHaveAttribute("inert");
+    expect(screen.queryByText("Alpha")).not.toBeInTheDocument();
+  });
+
+  it("stacks the upcoming cards by depth and makes them inert", () => {
+    renderCyclicDeck();
+
     expect(screen.getByText("Gamma")).toHaveAttribute("data-depth", "1");
     expect(screen.getByText("Gamma")).toHaveAttribute("inert");
     expect(screen.getByText("Delta")).toHaveAttribute("data-depth", "2");
-    expect(screen.queryByText("Alpha")).not.toBeInTheDocument();
+  });
 
-    deck.focus();
+  it("advances a cyclic stack with the keyboard", async () => {
+    const user = userEvent.setup();
+    const { onAdvance, onIndexChange } = renderCyclicDeck();
+
+    screen.getByRole("slider", { name: "Project cards" }).focus();
     await user.keyboard("{ArrowRight}");
 
     expect(onAdvance).toHaveBeenCalledWith(
@@ -180,7 +204,7 @@ describe("Deck", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(screen.getByText("No cards left")).toBeInTheDocument();
-    expect(onExhausted).toHaveBeenCalledTimes(1);
+    expect(onExhausted).toHaveBeenCalledOnce();
   });
 
   it("respects controlled index updates", async () => {
@@ -223,7 +247,7 @@ describe("Deck", () => {
       latestExitComplete.current?.();
     });
 
-    expect(onAdvanceEnd).toHaveBeenCalledTimes(1);
+    expect(onAdvanceEnd).toHaveBeenCalledOnce();
     expect(onAdvanceEnd).toHaveBeenCalledWith(
       expect.objectContaining({ direction: "right", index: 0, nextIndex: 1 }),
     );
@@ -232,7 +256,7 @@ describe("Deck", () => {
       latestExitComplete.current?.();
     });
 
-    expect(onAdvanceEnd).toHaveBeenCalledTimes(1);
+    expect(onAdvanceEnd).toHaveBeenCalledOnce();
   });
 
   it("measures drag distance against a real card width, not a 1px fallback", () => {
@@ -251,8 +275,7 @@ describe("Deck", () => {
     expect(onAdvance).not.toHaveBeenCalled();
 
     dragActiveCard(200);
-    expect(onAdvance).toHaveBeenCalledTimes(1);
-    expect(onAdvance).toHaveBeenCalledWith(
+    expect(onAdvance).toHaveBeenCalledExactlyOnceWith(
       expect.objectContaining({ direction: "right", index: 0 }),
     );
   });

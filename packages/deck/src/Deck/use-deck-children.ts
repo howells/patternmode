@@ -27,6 +27,7 @@ export const useDeckChildren = (children: ReactNode, generatedId: string): DeckC
   let warnedUnsupportedChild = false;
 
   const collectDeckChildren = (node: ReactNode) => {
+    // oxlint-disable-next-line react/no-react-children -- Deck finds its cards and empty state by element identity, including inside fragments, arrays and iterables; Children.forEach is React's own walk of all of those.
     Children.forEach(node, (child) => {
       if (isFragmentElement(child)) {
         collectDeckChildren(child.props.children);
