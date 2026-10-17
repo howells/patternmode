@@ -41,12 +41,13 @@
      track, which is already the whole pill, so nothing has to clip past its
      own box: Chromium ignores every calc() given to overflow-clip-margin, and
      clipping the control instead cut the pill's ends off flush with the
-     thumbs. The thumbs are glass, so the veil must stop at a thumb's outer
-     edge rather than its centre, and at an endpoint it must vanish so the
-     pill's rounded end stays a ring of undimmed track around the thumb. Each
-     side scales the value's share over the track less one channel size plus
-     one inset: exact at both ends, and in between it runs at most one inset
-     under the thumb's rim, where the glass hides it. The component writes the
+     thumbs. Each veil runs to its thumb's centre and has a circle cut out of
+     its end there, half a channel size in radius, so the undimmed stretch
+     ends in the same round cap as the pill itself, one inset clear of the
+     thumb, rather than in a straight edge beside a round thumb. A thumb's
+     centre sits half a channel size in from the track's end plus the value's
+     share of the track less one channel size, so at an endpoint the cut-out
+     is the pill's own cap and the veil vanishes. The component writes the
      shares as --patternmode-channel-start and --patternmode-channel-end. */
   .pm-channel-track--range::before,
   .pm-channel-track--range::after {
@@ -55,22 +56,40 @@
     inset-block: 0;
     background: rgb(255 255 255 / 50%);
     pointer-events: none;
+    --patternmode-channel-cap: radial-gradient(
+      circle calc(var(--patternmode-channel-size) / 2) at var(--patternmode-channel-cap-at) 50%,
+      transparent calc(100% - 0.5px),
+      #000
+    );
+    -webkit-mask-image: var(--patternmode-channel-cap);
+    mask-image: var(--patternmode-channel-cap);
   }
 
   .pm-channel-track::before {
+    --patternmode-channel-cap-at: 100%;
     inset-inline-start: 0;
     width: calc(
-      var(--patternmode-channel-start, 0) *
-        (100% - var(--patternmode-channel-size) + var(--patternmode-channel-inset))
+      var(--patternmode-channel-size) / 2 + var(--patternmode-channel-start, 0) *
+        (100% - var(--patternmode-channel-size))
     );
   }
 
   .pm-channel-track::after {
+    --patternmode-channel-cap-at: 0%;
     inset-inline-end: 0;
     width: calc(
-      (1 - var(--patternmode-channel-end, 1)) *
-        (100% - var(--patternmode-channel-size) + var(--patternmode-channel-inset))
+      var(--patternmode-channel-size) / 2 + (1 - var(--patternmode-channel-end, 1)) *
+        (100% - var(--patternmode-channel-size))
     );
+  }
+
+  /* Right to left, each veil's thumb is at its other end. */
+  .pm-channel-track:dir(rtl)::before {
+    --patternmode-channel-cap-at: 0%;
+  }
+
+  .pm-channel-track:dir(rtl)::after {
+    --patternmode-channel-cap-at: 100%;
   }
 
   .pm-channel-aperture {

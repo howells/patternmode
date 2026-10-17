@@ -3,8 +3,11 @@ import { sanitizeWeight } from "@/lib/patternmode/system";
 
 import type { SwatchColorStop } from "./swatch-types";
 
+/** Whether a stop is a bare color string rather than a color with a ratio. */
+export const isColorString = (stop: SwatchColorStop): stop is string => typeof stop === "string";
+
 const toColorStop = (stop: SwatchColorStop): { color: string; ratio?: number } =>
-  typeof stop === "string" ? { color: stop } : stop;
+  isColorString(stop) ? { color: stop } : stop;
 
 /** Missing ratios default to equal weight; finite/negative handling is shared. */
 const getRatioWeight = (ratio: number | undefined): number =>

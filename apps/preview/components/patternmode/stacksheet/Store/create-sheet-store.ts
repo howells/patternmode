@@ -8,9 +8,15 @@ import {
   registerComponent,
   resolveArgs,
   resolvePresentationOptions,
-  toRecord,
+  toSheetData,
 } from "./store-args";
-import type { AnyComponent, ResolvedItem, SheetStoreBundle, StoreState } from "./store-types";
+import type {
+  AnyComponent,
+  ResolvedItem,
+  SheetArg,
+  SheetStoreBundle,
+  StoreState,
+} from "./store-types";
 
 const createItem = ({ type, id, data, ariaLabel }: ResolvedItem): SheetItem => ({
   ariaLabel,
@@ -25,7 +31,7 @@ interface StoreInternals {
   config: ResolvedConfig;
   getNextKey: () => string;
   pruneRegistry: (remainingStack: readonly SheetItem[]) => void;
-  resolve: (first: unknown, second: unknown, third: unknown, fourth?: unknown) => ResolvedItem;
+  resolve: (first: SheetArg, second: SheetArg, third: SheetArg, fourth?: SheetArg) => ResolvedItem;
   warnedNames: Set<string>;
 }
 
@@ -84,7 +90,7 @@ const createNavigate =
     resolve: StoreInternals["resolve"],
     writers: ResolvedWriters,
   ): StoreState<TMap>["navigate"] =>
-  (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+  (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
     const resolved = resolve(first, second, third, fourth);
     const { stack } = get();
     const top = stack.at(-1);
@@ -142,7 +148,7 @@ const createSetData =
     set: StoreSet<TMap>,
     resolve: StoreInternals["resolve"],
   ): StoreState<TMap>["setData"] =>
-  (first: unknown, second?: unknown, third?: unknown) => {
+  (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
     const { id, data } = resolve(first, second, third);
     set((state) => {
       const index = state.stack.findIndex((item) => item.id === id);
@@ -164,7 +170,7 @@ const createSwap =
       "componentMap" | "componentRegistry" | "getNextKey" | "warnedNames"
     >,
   ): StoreState<TMap>["swap"] =>
-  (first: unknown, second?: unknown, third?: unknown) => {
+  (first: SheetArg, second?: SheetArg, third?: SheetArg) => {
     const type = isComponent(first)
       ? registerComponent(
           first,
@@ -174,7 +180,7 @@ const createSwap =
           internals.warnedNames,
         )
       : getStringArg(first, "sheet type");
-    const data = toRecord(second);
+    const data = toSheetData(second);
     const ariaLabel = resolvePresentationOptions(third)?.ariaLabel;
     set((state) => {
       const top = state.stack.at(-1);
@@ -212,15 +218,15 @@ const createStoreState =
       },
       isOpen: false,
       navigate: createNavigate(componentMap, get, resolve, writers),
-      open: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+      open: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
         writers.openResolved(resolve(first, second, third, fourth));
       },
       pop: createPop(set, pruneRegistry),
-      push: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+      push: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
         writers.pushResolved(resolve(first, second, third, fourth));
       },
       remove: createRemove(set, pruneRegistry),
-      replace: (first: unknown, second?: unknown, third?: unknown, fourth?: unknown) => {
+      replace: (first: SheetArg, second?: SheetArg, third?: SheetArg, fourth?: SheetArg) => {
         writers.replaceResolved(resolve(first, second, third, fourth));
       },
       setData: createSetData(set, resolve),
@@ -254,7 +260,7 @@ export const createSheetStore = <TMap extends object>(
   };
   // Set of component names already warned about (avoid log spam)
   const warnedNames = new Set<string>();
-  const resolve = (first: unknown, second: unknown, third: unknown, fourth?: unknown) =>
+  const resolve = (first: SheetArg, second: SheetArg, third: SheetArg, fourth?: SheetArg) =>
     resolveArgs(
       componentRegistry,
       componentMap,

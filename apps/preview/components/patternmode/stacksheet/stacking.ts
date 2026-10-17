@@ -34,6 +34,21 @@ export const getStackTransform = (depth: number, stacking: StackingConfig): Stac
     scale: Math.max(0.5, 1 - visualDepth * stacking.scaleStep),
   };
 };
+/** A translation along either axis, in px. */
+export interface AxisOffset {
+  x?: number;
+  y?: number;
+}
+
+/** Corner radii for the animate target; side sheets set one radius, bottom sheets set the corners. */
+export interface AnimatedBorderRadius {
+  borderBottomLeftRadius?: number;
+  borderBottomRightRadius?: number;
+  borderRadius?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+}
+
 /**
  * Border radius values for the animate target.
  * Must be animated (not static CSS) so Motion applies scale correction
@@ -43,7 +58,7 @@ export const getAnimatedBorderRadius = (
   side: Side,
   depth: number,
   stacking: StackingConfig,
-): Record<string, number> => {
+): AnimatedBorderRadius => {
   if (side === "bottom") {
     const radius = depth > 0 ? stacking.radius : 16;
     return {
@@ -84,13 +99,7 @@ export const getSlideFrom = (side: string): SlideValues => {
 /** Motion animate target — the resting position. */
 export const getSlideTarget = (): SlideValues => ({ x: 0, y: 0 });
 /** Translate offset that pushes stacked panels away from the stack edge. */
-export const getStackOffset = (
-  side: string,
-  offset: number,
-): {
-  x?: number;
-  y?: number;
-} => {
+export const getStackOffset = (side: string, offset: number): AxisOffset => {
   if (offset === 0) {
     return {};
   }

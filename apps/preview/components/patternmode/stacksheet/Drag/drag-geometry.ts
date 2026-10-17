@@ -56,18 +56,19 @@ const isAtScrollEdge = (el: Element, axis: DragAxis, sign: DragSign): boolean =>
   }
   return sign === 1 ? el.scrollLeft <= 0 : el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
 };
+/** The axis a sheet is dismissed along and the direction of travel on it. */
+export interface DismissAxis {
+  axis: DragAxis;
+  sign: DragSign;
+}
+
 /**
  * Get the dismiss direction axis and sign for a given side.
  * - right panel → dismiss by dragging right (+x)
  * - left panel → dismiss by dragging left (-x)
  * - bottom panel → dismiss by dragging down (+y)
  */
-export const getDismissAxis = (
-  side: Side,
-): {
-  axis: DragAxis;
-  sign: DragSign;
-} => {
+export const getDismissAxis = (side: Side): DismissAxis => {
   switch (side) {
     case "right": {
       return { axis: "x", sign: 1 };

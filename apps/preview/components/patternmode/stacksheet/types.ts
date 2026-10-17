@@ -51,11 +51,18 @@ export interface SheetPresentationOptions {
 
 // ── Sheet item ──────────────────────────────────
 
+/**
+ * Props a sheet's content component receives. The typed `open`, `push` and
+ * `replace` overloads check each call against the content component's own props;
+ * the store keeps every payload as this common shape.
+ */
+export type SheetData = object;
+
 export interface SheetItem<TType extends string = string> {
   /** Optional per-sheet presentation metadata */
   ariaLabel?: string;
   /** Data payload passed when opening the sheet */
-  data: Record<string, unknown>;
+  data: SheetData;
   /** Unique identifier for this sheet instance */
   id: string;
   /** Sheet type key from the TMap */
@@ -230,8 +237,8 @@ export interface ResolvedConfig {
 // ── Content component types ─────────────────────
 
 /** Component rendered inside a sheet panel — receives data as spread props */
-export type SheetContentComponent<TData = unknown> = ComponentType<
-  TData extends Record<string, unknown> ? TData : Record<string, unknown>
+export type SheetContentComponent<TData = SheetData> = ComponentType<
+  TData extends SheetData ? TData : SheetData
 >;
 
 /** Map of sheet type → content component */

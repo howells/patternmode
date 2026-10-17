@@ -170,8 +170,12 @@ export default function Home() {
                   <span className="text-sm font-medium">Weekly digest</span>
                   <Switch defaultChecked />
                 </div>
-                <label className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Checkbox defaultChecked /> Notify me about breaking changes
+                <label
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                  htmlFor="notify-breaking-changes"
+                >
+                  <Checkbox defaultChecked id="notify-breaking-changes" /> Notify me about breaking
+                  changes
                 </label>
               </CardContent>
             </Card>

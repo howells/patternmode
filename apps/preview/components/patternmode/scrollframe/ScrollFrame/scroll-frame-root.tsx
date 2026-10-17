@@ -4,7 +4,7 @@
 import { ScrollArea } from "@base-ui/react/scroll-area";
 import { prefersReducedMotion } from "@/lib/patternmode/motion";
 import { joinClassNames, toCssSize } from "@/lib/patternmode/system";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, RefObject } from "react";
 
 import { DEFAULT_EDGE_STATE, ScrollFrameContext } from "./scroll-frame-context";
@@ -40,16 +40,25 @@ const readEdgeState = (node: HTMLDivElement): ScrollFrameEdgeState => ({
   vertical: getAxisState(node, "vertical"),
 });
 
+type ScrollStepFunction = Extract<ScrollFrameScrollStep, (...args: never[]) => number>;
+
+const isScrollStepNumber = (scrollStep: ScrollFrameScrollStep): scrollStep is number =>
+  typeof scrollStep === "number";
+
+const isScrollStepFunction = (
+  scrollStep: ScrollFrameScrollStep,
+): scrollStep is ScrollStepFunction => typeof scrollStep === "function";
+
 const resolveScrollDistance = (
   node: HTMLDivElement,
   scrollStep: ScrollFrameScrollStep,
   context: ScrollFrameContextValue | null,
   axis: ScrollFrameAxis,
 ) => {
-  if (typeof scrollStep === "number") {
+  if (isScrollStepNumber(scrollStep)) {
     return scrollStep;
   }
-  if (typeof scrollStep === "function" && context !== null) {
+  if (isScrollStepFunction(scrollStep) && context !== null) {
     return scrollStep(context, axis);
   }
   return getPageStep(node, axis);
@@ -97,9 +106,12 @@ const useMeasuredViewport = () => {
     setEdgeState((previous) => (edgeStateEqual(previous, next) ? previous : next));
   };
   const measureRef = useRef(measure);
-  measureRef.current = measure;
+  useLayoutEffect(() => {
+    measureRef.current = measure;
+  });
 
-  const registerViewport = (node: HTMLDivElement | null) => {
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable ref callback keeps the context value stable.
+  const registerViewport = useCallback((node: HTMLDivElement | null) => {
     viewportRef.current = node;
     setViewport(node);
     if (node !== null) {
@@ -107,7 +119,7 @@ const useMeasuredViewport = () => {
         measureRef.current();
       });
     }
-  };
+  }, []);
 
   useEffect(() => {
     const cleanupMeasure = measureRef.current;
@@ -135,26 +147,29 @@ const useMeasuredViewport = () => {
   return { edgeState, registerViewport, viewport, viewportRef };
 };
 
-const useScrollByStep =
-  (
-    axes: ScrollFrameAxes,
-    scrollBehavior: ScrollFrameScrollBehavior,
-    scrollStep: ScrollFrameScrollStep,
-    viewportRef: RefObject<HTMLDivElement | null>,
-    contextRef: RefObject<ScrollFrameContextValue | null>,
-  ) =>
-  (direction: ScrollFrameEdge, axis = defaultControlAxis(axes)) => {
-    const node = viewportRef.current;
-    if (node === null) {
-      return;
-    }
-    const rawStep = resolveScrollDistance(node, scrollStep, contextRef.current, axis);
-    const distance = direction === "end" ? rawStep : -rawStep;
-    node.scrollBy({
-      [axis === "vertical" ? "top" : "left"]: distance,
-      behavior: scrollBehavior,
-    });
-  };
+const useScrollByStep = (
+  axes: ScrollFrameAxes,
+  scrollBehavior: ScrollFrameScrollBehavior,
+  scrollStep: ScrollFrameScrollStep,
+  viewportRef: RefObject<HTMLDivElement | null>,
+  contextRef: RefObject<ScrollFrameContextValue | null>,
+) =>
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable function keeps the context value stable.
+  useCallback(
+    (direction: ScrollFrameEdge, axis = defaultControlAxis(axes)) => {
+      const node = viewportRef.current;
+      if (node === null) {
+        return;
+      }
+      const rawStep = resolveScrollDistance(node, scrollStep, contextRef.current, axis);
+      const distance = direction === "end" ? rawStep : -rawStep;
+      node.scrollBy({
+        [axis === "vertical" ? "top" : "left"]: distance,
+        behavior: scrollBehavior,
+      });
+    },
+    [axes, contextRef, scrollBehavior, scrollStep, viewportRef],
+  );
 
 export const ScrollFrameRoot = ({
   axes = "vertical",
@@ -176,29 +191,50 @@ export const ScrollFrameRoot = ({
   style,
   ...props
 }: ScrollFrameRootProps) => {
-  const [isDragging, setDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const { edgeState, registerViewport, viewport, viewportRef } = useMeasuredViewport();
   const contextRef = useRef<ScrollFrameContextValue | null>(null);
-  const resolvedDragScroll = resolveDragScrollConfig(dragScroll);
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; the resolved config is a dependency of the memoised context value.
+  const resolvedDragScroll = useMemo(() => resolveDragScrollConfig(dragScroll), [dragScroll]);
   const scrollByStep = useScrollByStep(axes, scrollBehavior, scrollStep, viewportRef, contextRef);
 
-  const context: ScrollFrameContextValue = {
-    axes,
-    controlVisibility,
-    dragScroll: resolvedDragScroll,
-    edgeState,
-    fadeMode,
-    fades,
-    isDragging,
-    registerViewport,
-    scrollBehavior,
-    scrollByStep,
-    scrollStep,
-    scrollbars,
-    setDragging,
-    viewport,
-  };
-  contextRef.current = context;
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo every root render re-renders all context consumers.
+  const context: ScrollFrameContextValue = useMemo(
+    () => ({
+      axes,
+      controlVisibility,
+      dragScroll: resolvedDragScroll,
+      edgeState,
+      fadeMode,
+      fades,
+      isDragging,
+      registerViewport,
+      scrollBehavior,
+      scrollByStep,
+      scrollStep,
+      scrollbars,
+      setDragging: setIsDragging,
+      viewport,
+    }),
+    [
+      axes,
+      controlVisibility,
+      edgeState,
+      fadeMode,
+      fades,
+      isDragging,
+      registerViewport,
+      resolvedDragScroll,
+      scrollBehavior,
+      scrollByStep,
+      scrollStep,
+      scrollbars,
+      viewport,
+    ],
+  );
+  useLayoutEffect(() => {
+    contextRef.current = context;
+  }, [context]);
   const rootStyle = getRootStyle(fadeColor, fadeSize, style);
 
   return (

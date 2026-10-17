@@ -4,7 +4,7 @@
 import { ScrollArea } from "@base-ui/react/scroll-area";
 import { joinClassNames } from "@/lib/patternmode/system";
 import type { MouseEvent, PointerEvent } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 import { useScrollFrame } from "./scroll-frame-context";
 import type {
@@ -60,6 +60,16 @@ const canStartDrag = (
   event: PointerEvent<HTMLDivElement>,
   dragScroll: ScrollFrameResolvedDragScrollConfig,
 ) => event.button === 0 && !isDragScrollIgnored(event.target, dragScroll.ignoreSelector);
+
+/** Moves the viewport to the given offsets; `null` leaves that axis where it is. */
+const scrollViewportTo = (viewport: HTMLElement, left: number | null, top: number | null) => {
+  if (left !== null) {
+    viewport.scrollLeft = left;
+  }
+  if (top !== null) {
+    viewport.scrollTop = top;
+  }
+};
 
 const useDragScrollHandlers = ({
   axes,
@@ -204,12 +214,11 @@ const useDragScrollHandlers = ({
     }
 
     clearPageSelection();
-    if (canScrollHorizontally) {
-      viewport.scrollLeft = session.scrollLeft - offset.x;
-    }
-    if (canScrollVertically) {
-      viewport.scrollTop = session.scrollTop - offset.y;
-    }
+    scrollViewportTo(
+      viewport,
+      canScrollHorizontally ? session.scrollLeft - offset.x : null,
+      canScrollVertically ? session.scrollTop - offset.y : null,
+    );
     event.preventDefault();
   };
 
@@ -229,11 +238,14 @@ const useDragScrollHandlers = ({
 
   // Window listeners call through refs so they always run the current closure,
   // and so a component unmounting mid-gesture cannot leave them attached.
-  trackRef.current = trackDrag;
-  endRef.current = endDrag;
+  useLayoutEffect(() => {
+    trackRef.current = trackDrag;
+    endRef.current = endDrag;
+  });
   useEffect(
     () => () => {
-      detachWindowTracking();
+      detachRef.current?.();
+      detachRef.current = null;
     },
     [],
   );

@@ -4,7 +4,7 @@
 import { joinClassNames } from "@/lib/patternmode/system";
 import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
 import { useEffect, useId, useReducer, useRef } from "react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, Ref, RefCallback } from "react";
 
 import { getDeckRenderKey, getVisibleDeckItems, resolveCardRotation } from "../logic";
 import type {
@@ -216,6 +216,18 @@ const getDeckRootDataProps = (disabled: boolean, exhausted: boolean) => ({
   "data-empty": exhausted ? "true" : undefined,
 });
 
+const isRefCallback = (ref: Ref<HTMLDivElement> | undefined): ref is RefCallback<HTMLDivElement> =>
+  typeof ref === "function";
+
+/** Hands a node to a callback ref or an object ref, whichever the owner supplied. */
+const assignRef = (ref: Ref<HTMLDivElement> | undefined, node: HTMLDivElement | null) => {
+  if (isRefCallback(ref)) {
+    ref(node);
+  } else if (ref !== null && ref !== undefined) {
+    ref.current = node;
+  }
+};
+
 const DeckRenderedCard = ({
   activeIndex,
   depth,
@@ -239,10 +251,8 @@ const DeckRenderedCard = ({
   const active = depth === 0;
   const card = item.element;
   const cardProps = card.props;
-  const cardStyle = {
-    ...cardProps.style,
-    "--deck-depth": depth,
-  } as CSSProperties;
+  const depthVariable = { "--deck-depth": depth };
+  const cardStyle: CSSProperties = { ...cardProps.style, ...depthVariable };
   const draggable = active && !disabled;
   const overlayState: DeckRenderOverlayState = {
     active,
@@ -269,14 +279,10 @@ const DeckRenderedCard = ({
     // Never clear on `null`: an exiting clone unmounts after its replacement
     // has attached and must not clobber the live reference.
     if (active && node !== null) {
-      interactions.activeCardRef.current = node;
+      assignRef(interactions.activeCardRef, node);
     }
 
-    if (typeof consumerRef === "function") {
-      consumerRef(node);
-    } else if (consumerRef !== null && consumerRef !== undefined) {
-      consumerRef.current = node;
-    }
+    assignRef(consumerRef, node);
   };
 
   return (
@@ -400,6 +406,7 @@ const useEnteringCardIds = (
   const shownIds = useRef<Set<string> | null>(null);
   const entering = new Set<string>();
 
+  /* oxlint-disable react/refs -- the ids shown on earlier commits decide which cards animate in, so this reads the ref during render by design and records new ids after commit. */
   if (shownIds.current === null) {
     shownIds.current = new Set(visibleCards.map((item) => item.id));
   } else if (enter !== "none") {
@@ -409,6 +416,7 @@ const useEnteringCardIds = (
       }
     }
   }
+  /* oxlint-enable react/refs */
 
   useEffect(() => {
     for (const item of visibleCards) {
@@ -543,7 +551,8 @@ export const DeckRoot = ({
     velocityThreshold,
   });
 
-  const rootStyle = { ...style, "--deck-perspective": `${perspective}px` } as CSSProperties;
+  const perspectiveVariable = { "--deck-perspective": `${perspective}px` };
+  const rootStyle: CSSProperties = { ...style, ...perspectiveVariable };
   const controlProps = getDeckControlProps({
     activeIndex,
     ariaLabel,
