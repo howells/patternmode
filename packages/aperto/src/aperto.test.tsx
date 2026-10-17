@@ -8,11 +8,11 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Aperto } from "./index";
 import type { ApertoMediaItem } from "./index";
 
-afterEach(() => {
-  cleanup();
-});
+describe(Aperto, () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-describe("Aperto", () => {
   it("opens a single media item from the default thumbnail", async () => {
     const user = userEvent.setup();
     const media: ApertoMediaItem = {
@@ -410,7 +410,7 @@ describe("Aperto", () => {
 
     await user.click(screen.getByRole("button", { name: "Open Studio table" }));
 
-    expect(changes).toEqual([0]);
+    expect(changes).toStrictEqual([0]);
     expect(screen.getByRole("dialog", { name: "Soft afternoon" })).toBeInTheDocument();
   });
 });

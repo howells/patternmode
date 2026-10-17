@@ -2,7 +2,7 @@
 
 import { Dialog } from "@base-ui/react/dialog";
 import { domMax, LayoutGroup, LazyMotion, useReducedMotion } from "motion/react";
-import { useId, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import { ApertoContext } from "./context";
@@ -28,6 +28,9 @@ export interface ApertoRootProps extends Omit<
   reduceMotion?: boolean;
 }
 
+const isPresetName = (value: MotionPresetName | MotionVariants): value is MotionPresetName =>
+  typeof value === "string";
+
 const ApertoRoot = ({
   children,
   defaultOpen,
@@ -49,30 +52,37 @@ const ApertoRoot = ({
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-  const onOpenChange = (nextOpen: boolean) => {
-    if (!isControlled) {
-      setInternalOpen(nextOpen);
-    }
-    controlledOnOpenChange?.(nextOpen);
-  };
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable handler keeps the context value stable.
+  const onOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      if (!isControlled) {
+        setInternalOpen(nextOpen);
+      }
+      controlledOnOpenChange?.(nextOpen);
+    },
+    [isControlled, controlledOnOpenChange],
+  );
 
   // Resolve global preset name
-  const globalPresetName: MotionPresetName = typeof motionProp === "string" ? motionProp : "smooth";
-  const variants: MotionVariants | undefined =
-    typeof motionProp === "object" ? motionProp : undefined;
+  const globalPresetName: MotionPresetName = isPresetName(motionProp) ? motionProp : "smooth";
+  const variants: MotionVariants | undefined = isPresetName(motionProp) ? undefined : motionProp;
 
   const presetName: MotionPresetName = shouldReduce ? "reduced" : globalPresetName;
   const preset = PRESETS[presetName];
-  const contextValue = {
-    dismissible,
-    layoutId,
-    onOpenChange,
-    open,
-    preset,
-    presetName,
-    reduceMotion: shouldReduce,
-    variants,
-  };
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo every provider render re-renders all context consumers.
+  const contextValue = useMemo(
+    () => ({
+      dismissible,
+      layoutId,
+      onOpenChange,
+      open,
+      preset,
+      presetName,
+      reduceMotion: shouldReduce,
+      variants,
+    }),
+    [dismissible, layoutId, onOpenChange, open, preset, presetName, shouldReduce, variants],
+  );
 
   return (
     <ApertoContext.Provider value={contextValue}>

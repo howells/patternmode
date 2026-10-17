@@ -55,4 +55,4 @@ export const rectTarget = (rect: ApertoRect): TargetAndTransition => ({
 });
 
 export const transitionDurationMs = (transition: Transition): number =>
-  typeof transition.duration === "number" ? transition.duration * 1000 : 450;
+  transition.duration === undefined ? 450 : transition.duration * 1000;

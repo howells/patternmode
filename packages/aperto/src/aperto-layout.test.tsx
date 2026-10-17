@@ -3,8 +3,10 @@
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useEffect, useRef } from "react";
+import { createElement, Fragment, useEffect, useLayoutEffect, useRef } from "react";
 import type { HTMLAttributes, ReactNode, Ref } from "react";
+import type * as MotionModule from "motion/react";
+import type { TargetAndTransition } from "motion/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
 
@@ -15,9 +17,9 @@ import type { ApertoMediaItem } from "./index";
 const unmountedLayoutIds = vi.hoisted((): string[] => []);
 
 type MotionTestProps = HTMLAttributes<HTMLElement> & {
-  animate?: unknown;
+  animate?: boolean | string | TargetAndTransition;
   "data-slot"?: string;
-  drag?: unknown;
+  drag?: boolean;
   dragConstraints?: unknown;
   dragElastic?: unknown;
   dragMomentum?: unknown;
@@ -37,17 +39,11 @@ type MotionTestProps = HTMLAttributes<HTMLElement> & {
 type MotionDivTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLDivElement> };
 type MotionButtonTestProps = Omit<MotionTestProps, "ref"> & { ref?: Ref<HTMLButtonElement> };
 
-const getMotionDataValue = (value: unknown): string | undefined => {
-  if (value === undefined) {
-    return undefined;
-  }
-  if (typeof value === "boolean" || typeof value === "number" || typeof value === "string") {
-    return String(value);
-  }
-  return "configured";
-};
+const getMotionDataValue = (value: boolean | undefined): string | undefined =>
+  value === undefined ? undefined : String(value);
 
-const isAnimationConfigured = (value: unknown): boolean => value !== undefined && value !== false;
+const isAnimationConfigured = (value: MotionTestProps["animate"]): boolean =>
+  value !== undefined && value !== false;
 
 const stripMotionProps = ({
   animate: _animate,
@@ -74,17 +70,17 @@ const stripMotionProps = ({
   "data-layout": layout === undefined ? undefined : String(layout),
   "data-layout-id": layoutId,
 });
-const LayoutGroupShell = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-));
-const LazyMotionShell = vi.hoisted(() => ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-));
-
-vi.mock("motion/react", () => {
+// oxlint-disable-next-line anti-slop/no-module-mocking, vitest/prefer-import-in-mock -- Aperto imports motion/react directly; the double implements only the div and button elements Aperto renders, so the full module type of an import() cannot describe it. It strips animation props, completes transitions at once and records unmounted layout ids.
+vi.mock("motion/react", async (importOriginal) => {
+  const actual = await importOriginal<typeof MotionModule>();
+  // oxlint-disable-next-line unicorn/consistent-function-scoping -- vi.mock factories run before module-level bindings exist, so the stub has to be defined inside the factory.
+  const LayoutGroupShell = ({ children }: { children?: ReactNode }) =>
+    createElement(Fragment, null, children);
   const MotionDiv = ({ ref, ...props }: MotionDivTestProps) => {
     const latestLayoutIdRef = useRef(props.layoutId);
-    latestLayoutIdRef.current = props.layoutId;
+    useLayoutEffect(() => {
+      latestLayoutIdRef.current = props.layoutId;
+    });
 
     useEffect(
       () => () => {
@@ -109,48 +105,41 @@ vi.mock("motion/react", () => {
 
   const motionComponents = {
     button: ({ ref, ...props }: MotionButtonTestProps) => (
-      <button ref={ref} {...stripMotionProps(props)} />
+      <button ref={ref} type="button" {...stripMotionProps(props)} />
     ),
     div: MotionDiv,
   };
 
   return {
+    ...actual,
     AnimatePresence: LayoutGroupShell,
     LayoutGroup: LayoutGroupShell,
-    LazyMotion: LazyMotionShell,
-    domMax: {},
     m: motionComponents,
     motion: motionComponents,
-    useMotionValue: (initial: number) => ({
-      get: () => initial,
-      set: vi.fn<(latest: number) => void>(),
-    }),
     useReducedMotion: () => false,
-    useSpring: (value: unknown) => value,
-    useTransform: () => 1,
   };
 });
 
-let consoleErrorSpy: MockInstance<typeof console.error>;
-
-beforeEach(() => {
-  consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-});
-
-afterEach(() => {
-  const consoleErrorCalls = consoleErrorSpy.mock.calls.length;
-  try {
-    if (consoleErrorCalls > 0) {
-      throw new Error(`console.error was called ${consoleErrorCalls} times.`);
-    }
-  } finally {
-    consoleErrorSpy.mockRestore();
-    cleanup();
-    unmountedLayoutIds.length = 0;
-  }
-});
-
 describe("Aperto layout projection", () => {
+  let consoleErrorSpy: MockInstance<typeof console.error>;
+
+  beforeEach(() => {
+    consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    const consoleErrorCalls = consoleErrorSpy.mock.calls.length;
+    try {
+      if (consoleErrorCalls > 0) {
+        throw new Error(`console.error was called ${consoleErrorCalls} times.`);
+      }
+    } finally {
+      consoleErrorSpy.mockRestore();
+      cleanup();
+      unmountedLayoutIds.length = 0;
+    }
+  });
+
   it("centers primitive content by default", () => {
     render(
       <Aperto.Primitive.Root defaultOpen>
@@ -602,7 +591,7 @@ const stubRect = (element: Element, x: number, y: number, w: number, h: number) 
   element.getBoundingClientRect = () => new DOMRect(x, y, w, h);
 };
 
-describe("rectFromTrigger", () => {
+describe(rectFromTrigger, () => {
   it("measures the media inside the trigger, not the whole card", () => {
     const trigger = document.createElement("button");
     const figure = document.createElement("div");
@@ -615,7 +604,7 @@ describe("rectFromTrigger", () => {
     stubRect(trigger, 0, 0, 120, 160);
     stubRect(img, 4, 8, 120, 120);
 
-    expect(rectFromTrigger(trigger)).toEqual({ height: 120, left: 4, top: 8, width: 120 });
+    expect(rectFromTrigger(trigger)).toStrictEqual({ height: 120, left: 4, top: 8, width: 120 });
   });
 
   it("prefers an explicit data-aperto-media-source element", () => {
@@ -629,13 +618,13 @@ describe("rectFromTrigger", () => {
     stubRect(source, 1, 2, 90, 90);
     stubRect(decoy, 0, 0, 10, 10);
 
-    expect(rectFromTrigger(trigger)).toEqual({ height: 90, left: 1, top: 2, width: 90 });
+    expect(rectFromTrigger(trigger)).toStrictEqual({ height: 90, left: 1, top: 2, width: 90 });
   });
 
   it("falls back to the trigger when it holds no media", () => {
     const trigger = document.createElement("button");
     stubRect(trigger, 3, 4, 60, 50);
 
-    expect(rectFromTrigger(trigger)).toEqual({ height: 50, left: 3, top: 4, width: 60 });
+    expect(rectFromTrigger(trigger)).toStrictEqual({ height: 50, left: 3, top: 4, width: 60 });
   });
 });

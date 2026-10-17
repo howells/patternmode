@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useId, useLayoutEffect, useReducer, useRef } from "react";
+import { useId, useLayoutEffect, useMemo, useReducer, useRef } from "react";
 import type { CSSProperties, Dispatch, KeyboardEvent } from "react";
 
 import { ApertoContent } from "../aperto-content";
@@ -75,11 +75,9 @@ const ApertoMediaNavigationButtons = ({
   );
 };
 
-const useThumbnailMap = () => {
-  const thumbnailRefs = useRef<Map<number, HTMLButtonElement> | null>(null);
-  thumbnailRefs.current ??= new Map();
-  return thumbnailRefs.current;
-};
+const useThumbnailMap = () =>
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the map must keep one identity for the life of the group; the library build does not run React Compiler.
+  useMemo(() => new Map<number, HTMLButtonElement>(), []);
 
 const getExpandedMediaStyle = (
   activeMedia: ApertoMediaItem | undefined,
@@ -105,7 +103,7 @@ const ApertoGroupPortal = ({
   expandedMediaStyle,
   finalFocus,
   handleContentKeyDown,
-  handleMediaTransitionComplete,
+  onMediaTransitionComplete,
   hasNavigation,
   index,
   mediaLength,
@@ -126,7 +124,7 @@ const ApertoGroupPortal = ({
   goToNext: () => void;
   goToPrevious: () => void;
   handleContentKeyDown: ((event: KeyboardEvent<HTMLDivElement>) => void) | undefined;
-  handleMediaTransitionComplete: () => void;
+  onMediaTransitionComplete: () => void;
   hasNavigation: boolean;
   index: number;
   mediaLength: number;
@@ -189,7 +187,7 @@ const ApertoGroupPortal = ({
         </button>
       </ApertoContent>
       <ApertoMediaTransitionClone
-        onComplete={handleMediaTransitionComplete}
+        onComplete={onMediaTransitionComplete}
         renderImage={renderImage}
         renderVideo={renderVideo}
         transition={transition}
@@ -447,7 +445,7 @@ export const ApertoGroup = ({
           handleContentKeyDown={
             controller.hasNavigation ? controller.handleContentKeyDown : undefined
           }
-          handleMediaTransitionComplete={controller.handleMediaTransitionComplete}
+          onMediaTransitionComplete={controller.handleMediaTransitionComplete}
           hasNavigation={controller.hasNavigation}
           index={controller.index}
           mediaLength={media.length}

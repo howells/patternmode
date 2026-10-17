@@ -34,6 +34,9 @@ export interface ApertoContentProps extends Omit<
   sharedLayoutId?: string | false;
 }
 
+const isDismissibleConfig = (value: boolean | DismissibleConfig): value is DismissibleConfig =>
+  typeof value === "object";
+
 const ApertoContent = ({
   children,
   className,
@@ -60,8 +63,9 @@ const ApertoContent = ({
   const dragSpring = getDragSpring(resolved);
   const isDismissible = ctx.dismissible !== false;
 
-  const dismissConfig: DismissibleConfig =
-    typeof ctx.dismissible === "object" ? ctx.dismissible : {};
+  const dismissConfig: DismissibleConfig = isDismissibleConfig(ctx.dismissible)
+    ? ctx.dismissible
+    : {};
   const distanceThreshold = dismissConfig.threshold ?? DEFAULT_DISTANCE_THRESHOLD;
   const velocityThreshold = dismissConfig.velocity ?? DEFAULT_VELOCITY_THRESHOLD;
 

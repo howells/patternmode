@@ -25,20 +25,14 @@
  */
 
 import { ApertoGroup, ApertoSingle, ApertoThumbnail } from "./aperto";
-import type { ApertoGroupProps, ApertoProps, ApertoThumbnailProps } from "./aperto";
 import { ApertoClose } from "./aperto-close";
 import { ApertoContent } from "./aperto-content";
-import type { ApertoContentProps } from "./aperto-content";
 import { ApertoDescription } from "./aperto-description";
 import { ApertoOverlay } from "./aperto-overlay";
-import type { ApertoOverlayProps } from "./aperto-overlay";
 import { ApertoPortal } from "./aperto-portal";
-import type { ApertoPortalProps } from "./aperto-portal";
 import { ApertoRoot } from "./aperto-root";
-import type { ApertoRootProps } from "./aperto-root";
 import { ApertoTitle } from "./aperto-title";
 import { ApertoTrigger } from "./aperto-trigger";
-import type { ApertoTriggerProps } from "./aperto-trigger";
 
 /** Lower-level compound component namespace for advanced composition. */
 const ApertoPrimitive = {
@@ -78,25 +72,19 @@ export type {
   RenderVideo,
 } from "./types";
 // Named exports for tree-shaking
-export {
-  Aperto,
-  ApertoClose,
-  ApertoContent,
-  type ApertoContentProps,
-  ApertoDescription,
-  ApertoGroup,
-  type ApertoGroupProps,
-  ApertoOverlay,
-  type ApertoOverlayProps,
-  ApertoPortal,
-  type ApertoPortalProps,
-  ApertoPrimitive,
-  type ApertoProps,
-  ApertoRoot,
-  type ApertoRootProps,
-  ApertoThumbnail,
-  type ApertoThumbnailProps,
-  ApertoTitle,
-  ApertoTrigger,
-  type ApertoTriggerProps,
-};
+export { Aperto, ApertoPrimitive };
+export { ApertoGroup, ApertoThumbnail } from "./aperto";
+export type { ApertoGroupProps, ApertoProps, ApertoThumbnailProps } from "./aperto";
+export { ApertoClose } from "./aperto-close";
+export { ApertoContent } from "./aperto-content";
+export type { ApertoContentProps } from "./aperto-content";
+export { ApertoDescription } from "./aperto-description";
+export { ApertoOverlay } from "./aperto-overlay";
+export type { ApertoOverlayProps } from "./aperto-overlay";
+export { ApertoPortal } from "./aperto-portal";
+export type { ApertoPortalProps } from "./aperto-portal";
+export { ApertoRoot } from "./aperto-root";
+export type { ApertoRootProps } from "./aperto-root";
+export { ApertoTitle } from "./aperto-title";
+export { ApertoTrigger } from "./aperto-trigger";
+export type { ApertoTriggerProps } from "./aperto-trigger";
