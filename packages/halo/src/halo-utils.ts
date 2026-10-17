@@ -144,11 +144,13 @@ export const normalizeHue = (hue: number): number => {
  */
 export { hslToHex } from "@instruments/colorscope/math";
 
-export const clampPointToCircle = (
-  x: number,
-  y: number,
-  radius: number,
-): { x: number; y: number } => {
+/** A position in the picker's pixel space. */
+export interface HaloPoint {
+  x: number;
+  y: number;
+}
+
+export const clampPointToCircle = (x: number, y: number, radius: number): HaloPoint => {
   const distance = Math.hypot(x, y);
   if (distance <= radius || distance === 0) {
     return { x, y };
@@ -177,10 +179,7 @@ export const haloAngleToHue = (angleDeg: number, placement: HaloPlacement = "bot
   return 0;
 };
 
-export const getHaloPadHandlePosition = (
-  saturation: number,
-  lightness: number,
-): { x: number; y: number } => {
+export const getHaloPadHandlePosition = (saturation: number, lightness: number): HaloPoint => {
   const rawX = (saturation / 100) * HALO_PAD_SIZE;
   const rawY = ((100 - lightness) / 100) * HALO_PAD_SIZE;
   const clamped = clampPointToCircle(
@@ -198,7 +197,7 @@ export const getHaloPadHandlePosition = (
 export const getHaloHueHandlePosition = (
   hue: number,
   placement: HaloPlacement = "bottom",
-): { x: number; y: number } => {
+): HaloPoint => {
   const { centerX, centerY } = getHaloGeometry(placement);
   const angleRad = (hueToHaloAngle(hue, placement) * Math.PI) / 180;
   return {

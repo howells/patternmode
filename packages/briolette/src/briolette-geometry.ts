@@ -21,10 +21,16 @@ export interface BrioletteFace {
   vertices: [BrioletteVec3, BrioletteVec3, BrioletteVec3];
 }
 
+/** A position in the picker's SVG viewBox. */
+export interface BrioletteScreenPoint {
+  x: number;
+  y: number;
+}
+
 /** A facet after rotation and projection, ready to render as an SVG polygon. */
 export interface BrioletteProjectedFace {
   /** Projected centroid, used to place the selection pin. */
-  center: { x: number; y: number };
+  center: BrioletteScreenPoint;
   /** Rotated centroid z — larger is closer to the viewer. */
   depth: number;
   index: number;
@@ -283,7 +289,7 @@ export const rotateBrioletteOrientation = (
     ),
   );
 
-const projectVertex = (v: BrioletteVec3): { x: number; y: number } => {
+const projectVertex = (v: BrioletteVec3): BrioletteScreenPoint => {
   const scale = BRIOLETTE_PERSPECTIVE / (BRIOLETTE_PERSPECTIVE - v.z);
   const half = BRIOLETTE_VIEWBOX_SIZE / 2;
   return {

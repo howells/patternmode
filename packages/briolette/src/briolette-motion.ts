@@ -28,7 +28,7 @@ export const useViewportPresence = (stageRef: RefObject<HTMLDivElement | null>) 
   useEffect(() => {
     const stage = stageRef.current;
     const observer =
-      stage && typeof IntersectionObserver === "function"
+      stage && typeof IntersectionObserver !== "undefined"
         ? new IntersectionObserver(([entry]) => {
             isInViewportRef.current = entry?.isIntersecting ?? true;
           })
@@ -63,7 +63,7 @@ export const useIdleMotion = (
 ) => {
   useEffect(() => {
     let frame = 0;
-    if (typeof requestAnimationFrame !== "function") {
+    if (typeof requestAnimationFrame === "undefined") {
       return () => {
         // No animation scheduled without a frame scheduler.
       };
@@ -72,7 +72,7 @@ export const useIdleMotion = (
     /* Track the media query live: enabling "reduce motion" while mounted
        must stop idle drift and inertia, not just a fresh mount. */
     const reducedMotionQuery =
-      typeof window !== "undefined" && typeof window.matchMedia === "function"
+      typeof window !== "undefined" && window.matchMedia !== undefined
         ? window.matchMedia("(prefers-reduced-motion: reduce)")
         : null;
     let isMotionReduced = reducedMotionQuery?.matches ?? false;

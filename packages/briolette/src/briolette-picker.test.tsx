@@ -29,10 +29,6 @@ const HEX_PATTERN = /^#[0-9a-f]{6}$/u;
 
 const mean = (xs: number[]) => xs.reduce((sum, x) => sum + x, 0) / Math.max(xs.length, 1);
 
-afterEach(() => {
-  cleanup();
-});
-
 /* The shipped components expose `data-slot`, not `data-testid` — test hooks do
    not belong in a consumer's production DOM. Fixtures local to this file still
    use `data-testid`, so the two are queried differently on purpose. */
@@ -68,7 +64,7 @@ describe("briolette geometry", () => {
         expect(face.vertices).toHaveLength(3);
       }
       // Indices stay dense and ordered for palette parity and view anchoring.
-      expect(faces.map((face) => face.index)).toEqual(faces.map((_, i) => i));
+      expect(faces.map((face) => face.index)).toStrictEqual(faces.map((_, i) => i));
     }
   });
 
@@ -79,7 +75,7 @@ describe("briolette geometry", () => {
     expect(projected.length).toBeGreaterThan(30);
     expect(projected.length).toBeLessThan(faces.length);
     const depths = projected.map((face) => face.depth);
-    expect(depths).toEqual(depths.toSorted((a, b) => a - b));
+    expect(depths).toStrictEqual(depths.toSorted((a, b) => a - b));
   });
 
   it("maps finer facets onto nesting parents and morphs between them on-sphere", () => {
@@ -110,7 +106,7 @@ describe("briolette geometry", () => {
         ).toBeLessThan(0.000001);
       }
     }
-    expect(expanded[0]?.vertices).toEqual(fine[0]?.vertices);
+    expect(expanded[0]?.vertices).toStrictEqual(fine[0]?.vertices);
   });
 
   it("computes an orientation that brings any facet to the view axis", () => {
@@ -299,7 +295,11 @@ describe("briolette palette", () => {
   });
 });
 
-describe("BriolettePicker", () => {
+describe(BriolettePicker, () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders the labelled sphere stage and placeholder value", () => {
     render(<BriolettePicker aria-label="Accent color" onChange={() => {}} value={null} />);
 
@@ -426,7 +426,7 @@ describe("BriolettePicker", () => {
     const { faceIndex } = facet.dataset;
     fireEvent.click(facet);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     const hex = onChange.mock.calls[0]?.[0] ?? null;
     expect(hex).toMatch(HEX_PATTERN);
 
@@ -510,7 +510,7 @@ describe("BriolettePicker", () => {
 
     // No selection: Escape passes through to the host (e.g. closes a dialog).
     fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
-    expect(onHostKeyDown).toHaveBeenCalledTimes(1);
+    expect(onHostKeyDown).toHaveBeenCalledOnce();
     expect(onChange).not.toHaveBeenCalled();
 
     const facet = container.querySelector("polygon[data-face-index]");
@@ -530,7 +530,7 @@ describe("BriolettePicker", () => {
     // clear the color *and* close a containing dialog.
     fireEvent.keyDown(screen.getByRole("application"), { key: "Escape" });
     expect(onChange).toHaveBeenLastCalledWith(null);
-    expect(onHostKeyDown).toHaveBeenCalledTimes(1);
+    expect(onHostKeyDown).toHaveBeenCalledOnce();
   });
 
   it("re-anchors around an externally supplied value", () => {
@@ -558,20 +558,22 @@ describe("BriolettePicker", () => {
     vi.unstubAllGlobals();
   });
 
-  it("refines near the anchor, travels far from it, and respects maxDepth", () => {
+  it.each([
     // First selection always opens at depth 1.
-    expect(nextBrioletteDepth(null, 0.2)).toBe(1);
-    expect(nextBrioletteDepth(null, Math.PI)).toBe(1);
+    ["opens the first selection at depth 1 near the anchor", null, 0.2, undefined, 1],
+    ["opens the first selection at depth 1 far from the anchor", null, Math.PI, undefined, 1],
     // Near clicks refine one level deeper, capped at the sphere's maximum.
-    expect(nextBrioletteDepth(1, 0.4)).toBe(2);
-    expect(nextBrioletteDepth(6, 0.4)).toBe(6);
+    ["refines one level on a near click", 1, 0.4, undefined, 2],
+    ["stops refining at the sphere's maximum", 6, 0.4, undefined, 6],
     // Far clicks travel — a fresh depth-1 neighborhood, never a tighter one.
-    expect(nextBrioletteDepth(4, BRIOLETTE_TRAVEL_ANGLE)).toBe(1);
-    expect(nextBrioletteDepth(4, Math.PI / 2)).toBe(1);
+    ["travels at the travel angle", 4, BRIOLETTE_TRAVEL_ANGLE, undefined, 1],
+    ["travels at a quarter turn", 4, Math.PI / 2, undefined, 1],
     // Hosts can cap refinement shallower; the cap is clamped to sane bounds.
-    expect(nextBrioletteDepth(2, 0.4, 2)).toBe(2);
-    expect(nextBrioletteDepth(1, 0.4, 99)).toBe(2);
-    expect(nextBrioletteDepth(1, 0.4, 0)).toBe(1);
+    ["honours a shallower host cap", 2, 0.4, 2, 2],
+    ["clamps a deeper host cap", 1, 0.4, 99, 2],
+    ["clamps a zero host cap", 1, 0.4, 0, 1],
+  ] as const)("nextBrioletteDepth %s", (_name, depth, angle, maxDepth, expected) => {
+    expect(nextBrioletteDepth(depth, angle, maxDepth)).toBe(expected);
   });
 
   it("anchors a value already present at mount", () => {
@@ -602,7 +604,7 @@ describe("BriolettePicker", () => {
 
     fireEvent.keyDown(screen.getByRole("application"), { key: "Enter" });
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
     expect(onChange.mock.calls[0]?.[0]).toMatch(HEX_PATTERN);
   });
 });

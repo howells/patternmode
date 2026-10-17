@@ -127,12 +127,17 @@ const padColorForKey = (
   };
 };
 
-const getRootStyle = (hue: number, hex: string, style: CSSProperties | undefined): CSSProperties =>
-  ({
+const getRootStyle = (
+  hue: number,
+  hex: string,
+  style: CSSProperties | undefined,
+): CSSProperties => {
+  const variables = {
     "--patternmode-halo-color": hex,
     "--patternmode-halo-hue-value": String(hue),
-    ...style,
-  }) as CSSProperties;
+  };
+  return { ...variables, ...style };
+};
 
 /* oxlint-disable jsx-a11y/prefer-tag-over-role, react-doctor/prefer-tag-over-role -- the pad is a two-axis control; no native input covers saturation and lightness at once. */
 const HaloPad = ({

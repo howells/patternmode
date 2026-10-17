@@ -2,7 +2,7 @@
 
 import { prefersReducedMotion } from "@howells/motion";
 import type { ComponentPropsWithoutRef, CSSProperties, KeyboardEvent, PointerEvent } from "react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import {
   buildBriolettePalette,
@@ -138,20 +138,19 @@ interface BrioletteSelection {
  * Makes the value prop fully controllable: a hex supplied from outside (not
  * from a facet click) re-anchors the neighborhood around the facet whose
  * universe color is nearest, and glides it to the center. Adjusted during
- * render; the glide itself runs after commit.
+ * render; the caller runs the glide to `pendingCenter` after commit.
  */
 const useExternalValueAnchor = (
   value: string | null,
   faces: BrioletteFace[],
   selection: BrioletteSelection | null,
   setSelection: (update: (current: BrioletteSelection | null) => BrioletteSelection | null) => void,
-  centerOn: (center: BrioletteVec3) => void,
 ) => {
   /* Starts at null — not `value` — so a value already present at mount
      (e.g. restored from a URL) anchors exactly like a later external
      change would, instead of being silently absorbed as the baseline. */
   const [anchoredValue, setAnchoredValue] = useState<string | null>(null);
-  const pendingCenterRef = useRef<BrioletteVec3 | null>(null);
+  const [pendingCenter, setPendingCenter] = useState<{ center: BrioletteVec3 } | null>(null);
 
   if (value !== anchoredValue) {
     setAnchoredValue(value);
@@ -166,19 +165,12 @@ const useExternalValueAnchor = (
             depth: current?.faceCount === faces.length ? current.view.depth : 1,
           },
         }));
-        pendingCenterRef.current = anchorFace.center;
+        setPendingCenter({ center: anchorFace.center });
       }
     }
   }
 
-  useEffect(() => {
-    if (pendingCenterRef.current) {
-      centerOn(pendingCenterRef.current);
-      pendingCenterRef.current = null;
-    }
-  });
-
-  return setAnchoredValue;
+  return { pendingCenter, setAnchoredValue };
 };
 
 /** Friendly three-quarter starting orientation. */
@@ -211,7 +203,9 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
   const velocityRef = useRef({ pitch: 0, yaw: 0 });
   const tweenRef = useRef<BrioletteTween | null>(null);
   const orientationRef = useRef(orientation);
-  orientationRef.current = orientation;
+  useLayoutEffect(() => {
+    orientationRef.current = orientation;
+  }, [orientation]);
   const isInViewportRef = useViewportPresence(stageRef);
 
   useIdleMotion(
@@ -229,7 +223,7 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
   const centerOn = (center: BrioletteVec3) => {
     const target = orientationFacingFront(orientationRef.current, center);
     velocityRef.current = { pitch: 0, yaw: 0 };
-    if (prefersReducedMotion() || typeof requestAnimationFrame !== "function") {
+    if (prefersReducedMotion() || typeof requestAnimationFrame === "undefined") {
       tweenRef.current = null;
       setOrientation(() => target);
       return;
@@ -481,16 +475,33 @@ export const BriolettePicker = ({
   ...props
 }: BriolettePickerProps) => {
   const [selection, setSelection] = useState<BrioletteSelection | null>(null);
-  const rotation = useBrioletteRotation(value === null);
+  const {
+    centerOn,
+    endPointer,
+    isClickGesture,
+    isDragging,
+    onPointerDown,
+    onPointerMove,
+    orientation,
+    rotateBy,
+    stageRef,
+  } = useBrioletteRotation(value === null);
   const hintId = useId();
   const faces = facesForDensity(density);
-  const setAnchoredValue = useExternalValueAnchor(
+  const { pendingCenter, setAnchoredValue } = useExternalValueAnchor(
     value,
     faces,
     selection,
     setSelection,
-    rotation.centerOn,
   );
+  const handledCenterRef = useRef<typeof pendingCenter>(null);
+  // Each external anchor makes a new pending object, so the glide runs once per anchor.
+  useEffect(() => {
+    if (pendingCenter !== null && handledCenterRef.current !== pendingCenter) {
+      handledCenterRef.current = pendingCenter;
+      centerOn(pendingCenter.center);
+    }
+  });
 
   // External resets (form clears, programmatic unset) collapse back to the
   // universe by derivation — the stored view only applies while a value is
@@ -502,7 +513,7 @@ export const BriolettePicker = ({
      (320 OKLab conversions at `density="brilliant"`) is orientation-free. */
   // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the palette rebuilds at 60fps.
   const palette = useMemo(() => buildBriolettePalette(faces, activeView), [faces, activeView]);
-  const projected = projectBrioletteFaces(faces, rotation.orientation);
+  const projected = projectBrioletteFaces(faces, orientation);
 
   // Cut changes animate: the coarser cut sits beneath while the finer cut
   // grows over it (or shrinks away), every vertex interpolated on the sphere.
@@ -556,7 +567,7 @@ export const BriolettePicker = ({
     onChange(hex);
 
     if (clickedFace) {
-      rotation.centerOn(clickedFace.center);
+      centerOn(clickedFace.center);
     }
   };
 
@@ -591,11 +602,11 @@ export const BriolettePicker = ({
           handleBrioletteKey(event, {
             clearSelection,
             hasSelection: activeView !== null,
-            rotateBy: rotation.rotateBy,
+            rotateBy,
             selectFront,
           });
         }}
-        ref={rotation.stageRef}
+        ref={stageRef}
         role="application"
         // oxlint-disable-next-line react-doctor/no-noninteractive-tabindex -- the application-role stage is the keyboard surface for rotating and selecting.
         tabIndex={0}
@@ -603,21 +614,21 @@ export const BriolettePicker = ({
         <svg
           aria-hidden="true"
           className="patternmode-briolette__svg"
-          data-dragging={rotation.isDragging || undefined}
+          data-dragging={isDragging || undefined}
           data-slot="briolette-sphere"
-          onPointerCancel={rotation.endPointer}
-          onPointerDown={rotation.onPointerDown}
-          onPointerMove={rotation.onPointerMove}
-          onPointerUp={rotation.endPointer}
+          onPointerCancel={endPointer}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endPointer}
           style={{ height: size, width: size }}
           viewBox={`0 0 ${BRIOLETTE_VIEWBOX_SIZE} ${BRIOLETTE_VIEWBOX_SIZE}`}
         >
           {morphLayers ? (
-            <BrioletteMorphSphere layers={morphLayers} orientation={rotation.orientation} />
+            <BrioletteMorphSphere layers={morphLayers} orientation={orientation} />
           ) : (
             <BrioletteFacets
               onFaceClick={(faceIndex) => {
-                if (rotation.isClickGesture()) {
+                if (isClickGesture()) {
                   selectFace(faceIndex);
                 }
               }}

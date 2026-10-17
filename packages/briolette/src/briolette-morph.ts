@@ -84,7 +84,7 @@ export const useBrioletteMorph = (
 
   const isMorphing = morph !== null;
   useEffect(() => {
-    if (!isMorphing || typeof requestAnimationFrame !== "function") {
+    if (!isMorphing || typeof requestAnimationFrame === "undefined") {
       return () => {
         // No morph in flight.
       };

@@ -11,30 +11,18 @@
  * Run with `pnpm e2e`. Not part of `pnpm test`, which stays free of
  * browser binaries — see AGENTS.md "Browser tests".
  */
-import { useState } from "react";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { describe, expect, it } from "vitest";
 
-import { HaloPicker } from "./index";
-import type { HaloColor } from "./index";
+import { ReadoutHaloPicker } from "./readout-halo-picker.browser-fixture";
 import "../dist/styles.css";
-
-const Harness = () => {
-  const [color, setColor] = useState<HaloColor>({ h: 16, l: 69, s: 48 });
-  return (
-    <div>
-      <output data-slot="readout">{`${Math.round(color.h)} ${Math.round(color.s)} ${Math.round(color.l)}`}</output>
-      <HaloPicker aria-label="Accent color" onChange={setColor} value={color} />
-    </div>
-  );
-};
 
 const readout = () => page.getByTestId("readout").element().textContent ?? "";
 
 describe("HaloPicker pointer-to-keyboard handover in a real browser", () => {
   it("keeps the pad's arrow keys working after a click", async () => {
-    await render(<Harness />);
+    await render(<ReadoutHaloPicker />);
 
     await userEvent.click(page.getByTestId("halo-picker-pad"));
     const afterClick = readout();

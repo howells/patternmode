@@ -17,10 +17,6 @@ import {
 } from "./index";
 import type { HaloColor } from "./index";
 
-afterEach(() => {
-  cleanup();
-});
-
 const value = { h: 16, l: 69, s: 48 };
 
 /* The shipped components expose `data-slot`, not `data-testid` — test hooks do
@@ -41,30 +37,31 @@ describe("HaloPicker utilities", () => {
   });
 
   it("maps saturation/lightness and hue to stable handle coordinates", () => {
-    expect(getHaloPadHandlePosition(50, 50)).toEqual({ x: 52, y: 52 });
+    expect(getHaloPadHandlePosition(50, 50)).toStrictEqual({ x: 52, y: 52 });
     const hueHandle = getHaloHueHandlePosition(0);
-    expect(typeof hueHandle.x).toBe("number");
-    expect(typeof hueHandle.y).toBe("number");
+    expect(hueHandle.x).toBeTypeOf("number");
+    expect(hueHandle.y).toBeTypeOf("number");
   });
 
   it("converts pointer positions into bounded color channels", () => {
     const padRect = new DOMRect(10, 20, 104, 104);
-    expect(pointerToHaloPad(62, 72, padRect)).toEqual({ l: 50, s: 50 });
+    expect(pointerToHaloPad(62, 72, padRect)).toStrictEqual({ l: 50, s: 50 });
 
     const svgRect = new DOMRect(0, 0, 128, 128);
     expect(pointerToHaloHue(128, 78, svgRect)).toBeGreaterThan(0);
   });
 
   it("rotates the arc geometry per placement", () => {
-    expect(getHaloGeometry("bottom").arcStartDeg).toBe(10);
-    expect(getHaloGeometry("top").arcStartDeg).toBe(190);
-    expect(getHaloGeometry("left").arcStartDeg).toBe(100);
-    expect(getHaloGeometry("right").arcStartDeg).toBe(280);
+    expect(
+      (["bottom", "top", "left", "right"] as const).map(
+        (placement) => getHaloGeometry(placement).arcStartDeg,
+      ),
+    ).toStrictEqual([10, 190, 100, 280]);
 
     /* Top/bottom share one stage box; left/right are its transpose. */
     const bottom = getHaloGeometry("bottom");
     const left = getHaloGeometry("left");
-    expect([left.width, left.height]).toEqual([bottom.height, bottom.width]);
+    expect([left.width, left.height]).toStrictEqual([bottom.height, bottom.width]);
 
     expect(hueToHaloAngle(0, "top")).toBe(190);
     expect(hueToHaloAngle(360, "top")).toBe(190);
@@ -82,7 +79,11 @@ describe("HaloPicker utilities", () => {
   });
 });
 
-describe("HaloPicker", () => {
+describe(HaloPicker, () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders the round pad, hue smile arc, and current hex output", () => {
     render(<HaloPicker aria-label="Accent color" onChange={() => {}} value={value} />);
 
@@ -149,14 +150,26 @@ describe("HaloPicker", () => {
     expect(onChange).toHaveBeenCalledWith({ h: 0, l: 69, s: 48 });
   });
 
-  it("adjusts saturation and lightness from the keyboard on the pad", () => {
-    const onChange = vi.fn<(value: HaloColor) => void>();
-    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+  it("exposes the pad as a focusable slider with its current value", () => {
+    render(
+      <HaloPicker
+        aria-label="Accent color"
+        onChange={vi.fn<(value: HaloColor) => void>()}
+        value={value}
+      />,
+    );
 
     const pad = screen.getByRole("slider", { name: "Saturation and lightness" });
     expect(pad).toHaveAttribute("tabindex", "0");
     expect(pad).toHaveAttribute("aria-valuenow", "48");
     expect(pad).toHaveAttribute("aria-valuetext", "Saturation 48%, Lightness 69%");
+  });
+
+  it("adjusts saturation and lightness from the keyboard on the pad", () => {
+    const onChange = vi.fn<(value: HaloColor) => void>();
+    render(<HaloPicker aria-label="Accent color" onChange={onChange} value={value} />);
+
+    const pad = screen.getByRole("slider", { name: "Saturation and lightness" });
 
     fireEvent.keyDown(pad, { key: "ArrowRight" });
     expect(onChange).toHaveBeenLastCalledWith({ h: 16, l: 69, s: 49 });
@@ -274,6 +287,6 @@ describe("HaloPicker", () => {
     }
     const position = output.compareDocumentPosition(stage);
     // eslint-disable-next-line no-bitwise -- compareDocumentPosition returns a bitmask
-    expect((position & Node.DOCUMENT_POSITION_FOLLOWING) > 0).toBe(true);
+    expect(position & Node.DOCUMENT_POSITION_FOLLOWING).toBeGreaterThan(0);
   });
 });

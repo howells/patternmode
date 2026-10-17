@@ -157,7 +157,7 @@ interface OklabPoint {
   b: number;
 }
 
-const rotateChroma = (anchor: OklabPoint, angle: number): { a: number; b: number } => {
+const rotateChroma = (anchor: OklabPoint, angle: number): Pick<OklabPoint, "a" | "b"> => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
   return { a: anchor.a * cos - anchor.b * sin, b: anchor.a * sin + anchor.b * cos };
