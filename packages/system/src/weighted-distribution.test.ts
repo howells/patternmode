@@ -81,24 +81,8 @@ describe(isLightColor, () => {
     expect(isLightColor("hsl(240, 100%, 50%)")).toBe(false);
   });
 
-  /*
-   * `isLightColor` hands hue/saturation/lightness straight to colorscope's
-   * `hslToRgb` without normalizing them, because as of
-   * `@instruments/colorscope@3.17.0` the library clamps and wraps at the root.
-   * These cases are the proof of that floor rather than a test of our own
-   * arithmetic. Below 3.17.0 an unwrapped hue falls through `hslToRgb`'s
-   * `< 60`/`< 120` sector chain into the final 300–360 branch, and a negative
-   * saturation is used as-is — so both return a confidently wrong colour with no
-   * error and no malformed output. They are here so a floor that silently
-   * resolves back down is caught by the suite rather than by a consumer.
-   *
-   * Every input below was chosen because it flips the boolean between 3.7.1 and
-   * 3.17.0 — verified by running both. Values that merely *look* out of range
-   * are not enough: most of them land the same side of the 0.62 threshold either
-   * way and would pass against the broken library, which is a test that cannot
-   * fail. Over-range *lightness* has no such input at all, so it is deliberately
-   * not asserted here.
-   */
+  // These inputs cross the foreground threshold if hue wrapping or saturation
+  // clamping is lost, so they protect visible contrast rather than only arithmetic.
   it("wraps out-of-range hue rather than picking the wrong hue sector", () => {
     /*
      * 400° is 40° — a light orange. Below the floor, an unwrapped hue fell past

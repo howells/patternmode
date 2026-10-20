@@ -1,5 +1,12 @@
 # @patternmode/channel
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/swatch@5.1.1
+
 ## 0.2.4
 
 ### Patch Changes

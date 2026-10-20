@@ -1,0 +1,203 @@
+/** Colour conversions using sRGB and Björn Ottosson's OKLab matrices.
+ * @see https://bottosson.github.io/posts/oklab/
+ * @see https://www.w3.org/TR/css-color-4/#color-conversion-code
+ */
+export interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
+export interface HslColor {
+  h: number;
+  s: number;
+  l: number;
+}
+
+export interface OklabColor {
+  L: number;
+  a: number;
+  b: number;
+}
+
+export interface OklchColor {
+  L: number;
+  C: number;
+  h: number;
+}
+
+const INVALID_HEX_DIGIT = /[^\da-f]/iu;
+const DEG_TO_RAD = Math.PI / 180;
+const RAD_TO_DEG = 180 / Math.PI;
+
+/** Accepts three or six hex digits, with an optional hash; invalid input is null. */
+export const hexToRgb = (hex: string): RgbColor | null => {
+  const digits = hex.startsWith("#") ? hex.slice(1) : hex;
+  if ((digits.length !== 3 && digits.length !== 6) || INVALID_HEX_DIGIT.test(digits)) {
+    return null;
+  }
+  const full = digits.length === 3 ? digits.replaceAll(/./gu, "$&$&") : digits;
+  return {
+    b: Number.parseInt(full.slice(4, 6), 16),
+    g: Number.parseInt(full.slice(2, 4), 16),
+    r: Number.parseInt(full.slice(0, 2), 16),
+  };
+};
+
+/** Encodes rounded, clamped 0–255 sRGB channels as lowercase hex. */
+export const rgbToHex = (r: number, g: number, b: number): string =>
+  `#${[r, g, b]
+    .map((value) =>
+      Math.min(255, Math.max(0, Math.round(value)))
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("")}`;
+
+/** Hue wraps in degrees; saturation and lightness clamp to 0–100. */
+export const hslToRgb = (h: number, s: number, l: number): RgbColor => {
+  if (![h, s, l].every(Number.isFinite)) {
+    throw new TypeError("HSL channels must be finite numbers.");
+  }
+  const hue = ((h % 360) + 360) % 360;
+  const saturation = Math.min(100, Math.max(0, s)) / 100;
+  const lightness = Math.min(100, Math.max(0, l)) / 100;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const secondary = chroma * (1 - Math.abs(((hue / 60) % 2) - 1));
+  const offset = lightness - chroma / 2;
+  const channels = (r: number, g: number, b: number): RgbColor => ({
+    b: Math.round((b + offset) * 255),
+    g: Math.round((g + offset) * 255),
+    r: Math.round((r + offset) * 255),
+  });
+  switch (Math.floor(hue / 60)) {
+    case 0: {
+      return channels(chroma, secondary, 0);
+    }
+    case 1: {
+      return channels(secondary, chroma, 0);
+    }
+    case 2: {
+      return channels(0, chroma, secondary);
+    }
+    case 3: {
+      return channels(0, secondary, chroma);
+    }
+    case 4: {
+      return channels(secondary, 0, chroma);
+    }
+    default: {
+      return channels(chroma, 0, secondary);
+    }
+  }
+};
+
+/** Converts HSL degrees/percentages to hex, including out-of-range normalisation. */
+export const hslToHex = (h: number, s: number, l: number): string => {
+  const rgb = hslToRgb(h, s, l);
+  return rgbToHex(rgb.r, rgb.g, rgb.b);
+};
+
+/** Converts hex to integer HSL channels, or null for invalid hex. */
+export const hexToHsl = (hex: string): HslColor | null => {
+  const rgb = hexToRgb(hex);
+  if (rgb === null) {
+    return null;
+  }
+  const r = rgb.r / 255;
+  const g = rgb.g / 255;
+  const b = rgb.b / 255;
+  const high = Math.max(r, g, b);
+  const low = Math.min(r, g, b);
+  const lightness = (high + low) / 2;
+  const difference = high - low;
+  if (difference === 0) {
+    return { h: 0, l: Math.round(lightness * 100), s: 0 };
+  }
+  let hue: number;
+  if (high === r) {
+    hue = ((g - b) / difference + (g < b ? 6 : 0)) / 6;
+  } else if (high === g) {
+    hue = ((b - r) / difference + 2) / 6;
+  } else {
+    hue = ((r - g) / difference + 4) / 6;
+  }
+  const saturation = lightness > 0.5 ? difference / (2 - high - low) : difference / (high + low);
+  return {
+    h: Math.round(hue * 360) % 360,
+    l: Math.round(lightness * 100),
+    s: Math.round(saturation * 100),
+  };
+};
+
+const decodeSrgb = (channel: number): number => {
+  const value = channel / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+};
+
+/** Converts gamma-encoded sRGB channels (0–255) to perceptual OKLab. */
+export const rgbToOklab = (red: number, green: number, blue: number): OklabColor => {
+  const r = decodeSrgb(red);
+  const g = decodeSrgb(green);
+  const b = decodeSrgb(blue);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return {
+    L: 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+    a: 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+    b: 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+  };
+};
+
+/** Invalid hex stays null, rather than acquiring a colour identity. */
+export const hexToOklab = (hex: string): OklabColor | null => {
+  const rgb = hexToRgb(hex);
+  return rgb === null ? null : rgbToOklab(rgb.r, rgb.g, rgb.b);
+};
+
+/** Invalid hex has zero lightness for the distribution contrast decision. */
+export const hexLightness = (hex: string): number => hexToOklab(hex)?.L ?? 0;
+
+/** Euclidean distance in perceptual OKLab coordinates. */
+export const oklabDistance = (left: OklabColor, right: OklabColor): number =>
+  Math.hypot(left.L - right.L, left.a - right.a, left.b - right.b);
+
+/** Linear-light RGB is deliberately unclipped so gamut checks can see overflow. */
+export const oklabToLinearRgb = (lab: OklabColor): RgbColor => {
+  const lRoot = lab.L + 0.3963377922 * lab.a + 0.2158037585 * lab.b;
+  const mRoot = lab.L - 0.1055613462 * lab.a - 0.0638541748 * lab.b;
+  const sRoot = lab.L - 0.0894841821 * lab.a - 1.291485548 * lab.b;
+  const l = lRoot ** 3;
+  const m = mRoot ** 3;
+  const s = sRoot ** 3;
+  return {
+    b: -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+    g: -1.2684380046 * l + 2.609757401 * m - 0.3413193965 * s,
+    r: 4.0767416613 * l - 3.3077115904 * m + 0.2309699291 * s,
+  };
+};
+
+const encodeSrgb = (channel: number): number => {
+  const value = Math.min(1, Math.max(0, channel));
+  const encoded = value <= 0.0031308 ? 12.92 * value : 1.055 * value ** (1 / 2.4) - 0.055;
+  return Math.round(encoded * 255);
+};
+
+/** Encodes OKLab as hex, clipping any out-of-gamut RGB channels. */
+export const oklabToHex = (lab: OklabColor): string => {
+  const rgb = oklabToLinearRgb(lab);
+  return rgbToHex(encodeSrgb(rgb.r), encodeSrgb(rgb.g), encodeSrgb(rgb.b));
+};
+
+export const oklabToOklch = (lab: OklabColor): OklchColor => {
+  const hue = Math.atan2(lab.b, lab.a) * RAD_TO_DEG;
+  return { C: Math.hypot(lab.a, lab.b), L: lab.L, h: hue < 0 ? hue + 360 : hue };
+};
+
+/** OKLCh hue is in degrees; chroma and lightness use the OKLab scale. */
+export const oklchToOklab = (lch: OklchColor): OklabColor => ({
+  L: lch.L,
+  a: lch.C * Math.cos(lch.h * DEG_TO_RAD),
+  b: lch.C * Math.sin(lch.h * DEG_TO_RAD),
+});

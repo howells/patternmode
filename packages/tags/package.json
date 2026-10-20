@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/tags",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "private": false,
   "description": "Tag and tag input primitives for Patternmode interfaces.",
   "keywords": [

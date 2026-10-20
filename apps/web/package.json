@@ -13,7 +13,6 @@
   "dependencies": {
     "@fontsource-variable/inter": "catalog:",
     "@howells/site-ui": "workspace:*",
-    "@instruments/colorscope": "catalog:",
     "@patternmode/aperto": "workspace:*",
     "@patternmode/briolette": "workspace:*",
     "@patternmode/channel": "workspace:*",
@@ -24,6 +23,7 @@
     "@patternmode/stacksheet": "workspace:*",
     "@patternmode/status": "workspace:*",
     "@patternmode/swatch": "workspace:*",
+    "@patternmode/system": "workspace:*",
     "@patternmode/tags": "workspace:*",
     "@patternmode/thumbnail": "workspace:*",
     "@patternmode/verge": "workspace:*",

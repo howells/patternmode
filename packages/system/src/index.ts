@@ -1,3 +1,22 @@
+export { fitOklabToSrgbGamut } from "./color-gamut";
+export {
+  hexLightness,
+  hexToHsl,
+  hexToOklab,
+  hexToRgb,
+  type HslColor,
+  hslToHex,
+  hslToRgb,
+  type OklabColor,
+  oklabDistance,
+  oklabToHex,
+  type OklchColor,
+  oklchToOklab,
+  type RgbColor,
+  rgbToHex,
+  rgbToOklab,
+} from "./color";
+
 export {
   type DerivedDistribution,
   deriveDistribution,

@@ -1,4 +1,4 @@
-import { hexToRgb, rgbToHex } from "@instruments/colorscope/convert";
+import { hexToRgb, rgbToHex } from "@patternmode/system";
 
 import { isColorString } from "./swatch-colors";
 import type { SwatchColorStop } from "./swatch-types";

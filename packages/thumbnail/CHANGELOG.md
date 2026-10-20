@@ -1,5 +1,12 @@
 # @patternmode/thumbnail
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.8.0
+
 ## 0.1.3
 
 ### Patch Changes

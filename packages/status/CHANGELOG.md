@@ -1,5 +1,12 @@
 # @patternmode/status
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.8.0
+
 ## 0.4.4
 
 ### Patch Changes

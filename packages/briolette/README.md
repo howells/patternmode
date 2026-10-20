@@ -3,9 +3,7 @@
 A spinnable geodesic color sphere. At rest its 80 facets span the whole color
 universe — hue around the equator, lightness pole to pole. Selecting a facet
 repaints the sphere with similar-but-distinct neighbors of that color, built
-directly in OKLab via
-[`@instruments/colorscope`](https://www.npmjs.com/package/@instruments/colorscope)
-so spacing is perceptually even: hue rotates around the anchor's azimuth,
+directly in OKLab so spacing is perceptually even: hue rotates around the anchor's azimuth,
 lightness shifts along the pole axis into whatever headroom the anchor has,
 and chroma swings with distance. Grey and near-neutral anchors bloom into a
 wheel of tints, the far hemisphere glides toward the anchor's complement, and

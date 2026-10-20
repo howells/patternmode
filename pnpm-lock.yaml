@@ -128,9 +128,6 @@ catalogs:
     '@howells/typescript-config':
       specifier: 0.1.8
       version: 0.1.8
-    '@instruments/colorscope':
-      specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-      version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
     '@tailwindcss/cli':
       specifier: 4.3.3
       version: 4.3.3
@@ -244,7 +241,6 @@ catalogs:
       version: 5.0.15
 
 overrides:
-  '@instruments/colorscope@<10.2.1': 10.2.1
   postcss: ^8.5.15
 
 importers:
@@ -302,9 +298,6 @@ importers:
       '@fontsource-variable/inter':
         specifier: ^5.3.0
         version: 5.3.0
-      '@instruments/colorscope':
-        specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       class-variance-authority:
         specifier: 'catalog:'
         version: 0.7.1
@@ -402,9 +395,6 @@ importers:
       '@howells/site-ui':
         specifier: workspace:*
         version: link:../../packages/site-ui
-      '@instruments/colorscope':
-        specifier: 'catalog:'
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       '@patternmode/aperto':
         specifier: workspace:*
         version: link:../../packages/aperto
@@ -435,6 +425,9 @@ importers:
       '@patternmode/swatch':
         specifier: workspace:*
         version: link:../../packages/swatch
+      '@patternmode/system':
+        specifier: workspace:*
+        version: link:../../packages/system
       '@patternmode/tags':
         specifier: workspace:*
         version: link:../../packages/tags
@@ -551,6 +544,9 @@ importers:
       '@howells/motion':
         specifier: workspace:*
         version: link:../motion
+      '@patternmode/system':
+        specifier: workspace:*
+        version: link:../system
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -558,9 +554,6 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
-      '@instruments/colorscope':
-        specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -733,6 +726,10 @@ importers:
         version: 5.0.1(@types/node@26.6.2)(@vitest/browser-playwright@5.0.1)(@vitest/ui@5.0.1)(jsdom@30.1.1)(vite@8.3.0(@types/node@26.6.2)(jiti@2.7.0)(yaml@2.9.1))
 
   packages/halo:
+    dependencies:
+      '@patternmode/system':
+        specifier: workspace:*
+        version: link:../system
     devDependencies:
       '@howells/lint':
         specifier: 'catalog:'
@@ -740,9 +737,6 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
-      '@instruments/colorscope':
-        specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1129,9 +1123,6 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
-      '@instruments/colorscope':
-        specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       '@tailwindcss/cli':
         specifier: 'catalog:'
         version: 4.3.3
@@ -1186,9 +1177,6 @@ importers:
       '@howells/typescript-config':
         specifier: 'catalog:'
         version: 0.1.8
-      '@instruments/colorscope':
-        specifier: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057
-        version: git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))
       concurrently:
         specifier: 'catalog:'
         version: 10.0.5
@@ -1952,15 +1940,6 @@ packages:
     engines: {node: '>=20.9.0'}
     cpu: [x64]
     os: [win32]
-
-  '@instruments/colorscope@git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057':
-    resolution: {commit: 1e5a36d493a3fde040980a4ce233e05e36788057, repo: https://github.com/materialinstruments/colorscope.git, type: git}
-    version: 10.2.1
-    peerDependencies:
-      sharp: '>=0.34.0'
-    peerDependenciesMeta:
-      sharp:
-        optional: true
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -4779,10 +4758,6 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  fuse.js@7.5.0:
-    resolution: {integrity: sha512-sQtrEfA+ez/3G0cCZecF70oqpCRttCexYUG4mUrtWL49ULUzUyxokt5kyqwtKzj1270RaKih+hcP3qLcumccow==}
-    engines: {node: '>=10'}
-
   fuzzysort@3.1.0:
     resolution: {integrity: sha512-sR9BNCjBg6LNgwvxlBd0sBABvQitkLzoVY9MYYROQVX/FvfJ4Mai9LsGhDgd8qYdds0bY77VzYd5iuB+v5rwQQ==}
 
@@ -7072,13 +7047,6 @@ snapshots:
   '@img/sharp-win32-x64@0.35.4':
     optional: true
 
-  '@instruments/colorscope@git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057(sharp@0.35.4(@types/node@26.6.2))':
-    dependencies:
-      fuse.js: 7.5.0
-      zod: 4.6.5
-    optionalDependencies:
-      sharp: 0.35.4(@types/node@26.6.2)
-
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
@@ -9323,8 +9291,6 @@ snapshots:
     optional: true
 
   function-bind@1.1.2: {}
-
-  fuse.js@7.5.0: {}
 
   fuzzysort@3.1.0: {}
 

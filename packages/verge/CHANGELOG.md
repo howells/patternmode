@@ -1,5 +1,12 @@
 # @patternmode/verge
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @patternmode/system@0.8.0
+
 ## 0.1.5
 
 ### Patch Changes

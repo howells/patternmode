@@ -1,6 +1,6 @@
 "use client";
 
-import { hexToHsl } from "@instruments/colorscope/convert";
+import { hexToHsl } from "@patternmode/system";
 import { BriolettePicker } from "@patternmode/briolette";
 import type { BrioletteDensity } from "@patternmode/briolette";
 import { HaloPicker, hslToHex } from "@patternmode/halo";

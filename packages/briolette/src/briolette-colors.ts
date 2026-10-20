@@ -1,6 +1,10 @@
-import { oklabToHex, oklchToOklab } from "@instruments/colorscope/convert";
-import { fitOklabToSrgbGamut } from "@instruments/colorscope/embedding";
-import { hexToOklab, oklabDistance } from "@instruments/colorscope/math";
+import {
+  fitOklabToSrgbGamut,
+  hexToOklab,
+  oklabDistance,
+  oklabToHex,
+  oklchToOklab,
+} from "@patternmode/system";
 
 import type { BrioletteFace, BrioletteVec3 } from "./briolette-geometry";
 import { normalizeBrioletteVec, quatFromAxisAngle, rotateBrioletteVec } from "./briolette-geometry";
@@ -165,7 +169,7 @@ const rotateChroma = (anchor: OklabPoint, angle: number): Pick<OklabPoint, "a" |
 
 /**
  * Map a facet direction to a similar-but-distinct neighbor of the anchor,
- * built directly in OKLab (via colorscope) so spacing is perceptually even.
+ * built directly in OKLab so spacing is perceptually even.
  *
  * The facet's geodesic angle from the anchor drives the tailoff: color
  * diverges quickly even near the anchor, so variety spreads evenly across the
@@ -306,8 +310,8 @@ export const buildBriolettePalette = (
 };
 
 /**
- * Perceptual OKLab distance between two hex colors, re-exported from
- * colorscope for callers that want to measure neighborhood spread.
+ * Perceptual OKLab distance between two hex colors, for callers that want
+ * to measure neighborhood spread.
  */
 export const brioletteColorDistance = (a: string, b: string): number => {
   const left = hexToOklab(a);

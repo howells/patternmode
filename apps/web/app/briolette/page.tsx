@@ -67,8 +67,7 @@ const brioletteApi: ApiSection[] = [
     ],
   },
   {
-    description:
-      "Pure geometry and palette helpers, computed with @instruments/colorscope, for custom renderers.",
+    description: "Pure geometry and perceptual colour helpers for custom renderers.",
     name: "Utilities",
     props: [
       {

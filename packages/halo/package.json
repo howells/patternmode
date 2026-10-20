@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/halo",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": false,
   "description": "A round saturation/lightness color picker with a compact hue arc.",
   "keywords": [
@@ -50,10 +50,12 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@patternmode/system": "workspace:*"
+  },
   "devDependencies": {
     "@howells/lint": "catalog:",
     "@howells/typescript-config": "catalog:",
-    "@instruments/colorscope": "git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057",
     "@tailwindcss/cli": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
@@ -74,7 +76,6 @@
     "vitest-browser-react": "catalog:"
   },
   "peerDependencies": {
-    "@instruments/colorscope": ">=3.17.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

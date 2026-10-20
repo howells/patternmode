@@ -1,0 +1,16 @@
+{
+  "name": "@howells/patternmode-art-palettes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate.ts"
+  },
+  "dependencies": {
+    "@materialinstruments/colorscope": "10.2.1",
+    "sharp": "0.35.4"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  },
+  "packageManager": "pnpm@12.3.4"
+}

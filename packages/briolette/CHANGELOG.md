@@ -1,5 +1,16 @@
 # @patternmode/briolette
 
+## 0.7.3
+
+### Patch Changes
+
+- Own the small colour maths layer within Patternmode and remove the required
+  ColorScope peer dependency. Consumers no longer need ColorScope to install these
+  components. Halo's `hslToHex` export, contrast decisions and Briolette's
+  hue-preserving gamut fitting retain their existing behaviour.
+- Updated dependencies
+  - @patternmode/system@0.8.0
+
 ## 0.7.2
 
 ### Patch Changes

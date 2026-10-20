@@ -6,7 +6,6 @@ allowBuilds:
   esbuild: true
   sharp: true
 overrides:
-  "@instruments/colorscope@<10.2.1": "10.2.1"
   postcss: ^8.5.15
 minimumReleaseAgeExclude:
   # First-party scopes are exempt BY NAME, never by version. We publish these
@@ -43,7 +42,6 @@ catalog:
   "@howells/husky": "^0.2.5"
   "@howells/lint": "^3.5.1"
   "@howells/typescript-config": "0.1.8"
-  "@instruments/colorscope": "git+https://github.com/materialinstruments/colorscope.git#1e5a36d493a3fde040980a4ce233e05e36788057"
   "@tailwindcss/cli": "4.3.3"
   "@tailwindcss/postcss": "4.3.3"
   "@testing-library/jest-dom": "7.0.1"

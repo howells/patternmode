@@ -1,4 +1,4 @@
-import { hexLightness, hslToRgb, rgbToOklab } from "@instruments/colorscope/math";
+import { hexLightness, hslToRgb, rgbToOklab } from "./color";
 
 /**
  * Shared logic for rendering weighted color segments — the one place that owns
