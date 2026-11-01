@@ -98,17 +98,17 @@ verge declares none of them on the slot itself, so nothing shadows your value.
 
 ```css
 .finish-list {
-  /* One control's 28px plus the 2px gap between two of them, so `slots`
-     reserves exactly what n controls occupy. */
-  --patternmode-verge-slot-size: 30px;
+  /* One control's width. `slots` adds the gaps between controls itself,
+     including the wider gap on coarse pointers. */
+  --patternmode-verge-slot-size: 2rem;
 }
 ```
 
-| Property                        | Default                      |                                              |
-| ------------------------------- | ---------------------------- | -------------------------------------------- |
-| `--patternmode-verge-slot-size` | `1.75rem`                    | Width one control reserves, used by `slots`. |
-| `--patternmode-verge-duration`  | `120ms`                      | Reveal transition duration.                  |
-| `--patternmode-verge-easing`    | `cubic-bezier(0.2, 0, 0, 1)` | Reveal transition easing.                    |
+| Property                        | Default                      |                                        |
+| ------------------------------- | ---------------------------- | -------------------------------------- |
+| `--patternmode-verge-slot-size` | `1.75rem`                    | Width of one control, used by `slots`. |
+| `--patternmode-verge-duration`  | `120ms`                      | Reveal transition duration.            |
+| `--patternmode-verge-easing`    | `cubic-bezier(0.2, 0, 0, 1)` | Reveal transition easing.              |
 
 ## Why opacity rather than `display: none`
 

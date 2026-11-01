@@ -57,6 +57,14 @@ describe("the frame's edge", () => {
     // curves.
     expect(styles).toMatch(/\.patternmode-thumbnail\s*\{[^}]*overflow:\s*hidden/u);
   });
+
+  it("fills the frame with the img inside a picture, not only with the picture", () => {
+    // A `<picture>` only wraps; its `<img>` is what renders. Sizing the wrapper
+    // alone leaves the photo at its intrinsic size, showing one corner of it.
+    expect(styles).toMatch(
+      /\.patternmode-thumbnail > picture > :where\(img\)\s*\{[^}]*object-fit:\s*var\(--patternmode-thumbnail-fit, cover\)/u,
+    );
+  });
 });
 
 describe(Thumbnail, () => {

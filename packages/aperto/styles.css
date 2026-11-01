@@ -151,17 +151,21 @@
     @apply -mt-1.5 max-w-[60ch] text-center text-[13px] leading-snug text-white/60;
   }
 
+  /* The controls sit on the media, so they bring their own dark scrim. A
+     white/10 disc with a white/70 icon measured 2.6:1 over a pale wall and
+     falls lower over a bright sky; over pure white this pairing still clears
+     3:1, and over dark media the icon carries it. */
   [data-slot="aperto-close"],
   [data-slot="aperto-previous-button"],
   [data-slot="aperto-next-button"] {
-    @apply absolute z-10 grid size-8 place-items-center rounded-full border-0 bg-white/10 text-white/70 transition-[background,color] duration-150 ease-out;
+    @apply absolute z-10 grid size-8 place-items-center rounded-full border-0 bg-black/50 text-white/90 transition-[background,color] duration-150 ease-out;
   }
 
   @media (hover: hover) and (pointer: fine) {
     [data-slot="aperto-close"]:hover,
     [data-slot="aperto-previous-button"]:hover,
     [data-slot="aperto-next-button"]:hover {
-      @apply bg-white/20 text-white;
+      @apply bg-black/65 text-white;
     }
   }
 
@@ -190,7 +194,8 @@
   }
 
   [data-slot="aperto-counter"] {
-    @apply rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white/50;
+    /* white/50 measured 3.8:1 over the overlay on a light page; 11px text needs 4.5. */
+    @apply rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white/70;
   }
 
   @media (max-width: 560px) {

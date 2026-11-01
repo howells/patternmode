@@ -593,6 +593,41 @@ describe(DistributionBar, () => {
     expect(handle).toHaveAttribute("aria-valuetext", "Woody 59%, Citrus 41%");
   });
 
+  it("steps with up/down arrows and ten steps with the page keys", async () => {
+    const user = userEvent.setup();
+    render(<ControlledDistributionBar />);
+
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Woody and Citrus distribution",
+    });
+    await user.keyboard("{Tab}");
+
+    await user.keyboard("{ArrowUp}");
+    expect(handle).toHaveAttribute("aria-valuenow", "61");
+    await user.keyboard("{ArrowDown}{ArrowDown}");
+    expect(handle).toHaveAttribute("aria-valuenow", "59");
+    await user.keyboard("{PageUp}");
+    expect(handle).toHaveAttribute("aria-valuenow", "69");
+    await user.keyboard("{PageDown}{PageDown}");
+    expect(handle).toHaveAttribute("aria-valuenow", "49");
+  });
+
+  it("moves the boundary as far as minValue allows with home and end", async () => {
+    const user = userEvent.setup();
+    render(<ControlledDistributionBar />);
+
+    const handle = screen.getByRole("slider", {
+      name: "Adjust Woody and Citrus distribution",
+    });
+    await user.keyboard("{Tab}");
+
+    // Unhandled, Home and End scroll the page instead of moving the boundary.
+    await user.keyboard("{End}");
+    expect(handle).toHaveAttribute("aria-valuenow", "96");
+    await user.keyboard("{Home}");
+    expect(handle).toHaveAttribute("aria-valuenow", "4");
+  });
+
   it("marks the bar with data-dragging while a handle drag is active", () => {
     render(
       <DistributionBar

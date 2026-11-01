@@ -1,3 +1,9 @@
+/* Declare the full layer order before opening `components`: registering
+   `components` first would leave it ahead of the host's `theme` and `base`,
+   so a base reset would outrank these rules. A no-op when the app declared
+   the order first. */
+@layer theme, base, components, utilities;
+
 @layer components {
   .patternmode-halo-picker {
     --patternmode-halo-color: #d99a81;
@@ -37,12 +43,26 @@
     touch-action: none;
   }
 
-  /* The hue slider is a visually hidden range input, so its focus ring is
-     drawn on the arc svg that follows it. */
-  .patternmode-halo-picker__pad:focus-visible,
-  .patternmode-halo-picker__arc-input:focus-visible + .patternmode-halo-picker__arc {
+  .patternmode-halo-picker__pad:focus-visible {
     outline: 2px solid var(--ring, #315c4b);
     outline-offset: 3px;
+  }
+
+  /* The hue slider is a visually hidden range input, so its focus ring is
+     drawn around the arc handle that follows it. An outline on the svg would
+     box the pad as well and leave it unclear which control has focus. */
+  .patternmode-halo-picker__arc-focus {
+    fill: none;
+    opacity: 0;
+    pointer-events: none;
+    stroke: var(--ring, #315c4b);
+    stroke-width: 2;
+  }
+
+  .patternmode-halo-picker__arc-input:focus-visible
+    + .patternmode-halo-picker__arc
+    .patternmode-halo-picker__arc-focus {
+    opacity: 1;
   }
 
   .patternmode-halo-picker__pad-hue,

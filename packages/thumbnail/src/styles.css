@@ -141,7 +141,12 @@
    * caller who reaches past the frame to style the media cannot reintroduce the
    * baseline gap the frame's own `inline-flex` already rules out.
    */
-  .patternmode-thumbnail > :where(img, video, canvas, svg, picture) {
+  /*
+   * A `<picture>` is only a wrapper: the `<img>` inside it is what renders, and
+   * left alone it draws at its intrinsic size and shows a corner of the photo.
+   */
+  .patternmode-thumbnail > :where(img, video, canvas, svg, picture),
+  .patternmode-thumbnail > picture > :where(img) {
     display: block;
     height: 100%;
     object-fit: var(--patternmode-thumbnail-fit, cover);
@@ -153,7 +158,8 @@
    * An unsized frame takes its box from the media, so the media must not then
    * be told to fill a box that does not exist yet.
    */
-  .patternmode-thumbnail[data-sized="false"] > :where(img, video, canvas, svg, picture) {
+  .patternmode-thumbnail[data-sized="false"] > :where(img, video, canvas, svg, picture),
+  .patternmode-thumbnail[data-sized="false"] > picture > :where(img) {
     height: auto;
     width: 100%;
   }

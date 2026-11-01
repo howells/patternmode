@@ -1,3 +1,9 @@
+/* Declare the full layer order before opening `components`: registering
+   `components` first would leave it ahead of the host's `theme` and `base`,
+   so a base reset would outrank these rules. A no-op when the app declared
+   the order first. */
+@layer theme, base, components, utilities;
+
 @layer components {
   .patternmode-briolette {
     border: 0;

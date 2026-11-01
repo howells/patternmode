@@ -89,7 +89,16 @@
    * of the two failures, so that is the direction to fail in.
    */
   .patternmode-verge {
-    @apply flex shrink-0 items-center justify-end gap-0.5;
+    /*
+     * The gap between controls, held in a property so the `slots` reservation
+     * in `verge.tsx` can count it. Internal, not a knob: it is declared here and
+     * changed only by the coarse-pointer branch below. A reservation that left
+     * the gaps out was narrower than the controls it reserved for, so a full
+     * slot overflowed it and its row's text column ended short of the others.
+     */
+    --patternmode-verge-resolved-gap: 0.125rem;
+    @apply flex shrink-0 items-center justify-end;
+    gap: var(--patternmode-verge-resolved-gap);
     @apply [opacity:var(--patternmode-verge-reveal,1)];
     @apply [pointer-events:var(--patternmode-verge-events,auto)];
 
@@ -167,7 +176,7 @@
    */
   @media (pointer: coarse) {
     .patternmode-verge {
-      @apply gap-2;
+      --patternmode-verge-resolved-gap: 0.5rem;
     }
   }
 

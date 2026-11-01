@@ -280,6 +280,45 @@ describe(ScrollFrame, () => {
     expect(scrollBy).toHaveBeenCalledWith({ behavior: "auto", top: 85 });
   });
 
+  it.each(["auto", "disabled"] as const)(
+    "hands focus to the opposite control when a focused control reaches its edge (%s)",
+    async (visibility) => {
+      render(
+        <ScrollFrame aria-label="Strip" controls={{ visibility }} scrollBehavior="auto">
+          <div>Content</div>
+        </ScrollFrame>,
+      );
+
+      const viewport = bySlot("scrollframe-viewport");
+      Object.defineProperties(viewport, {
+        clientHeight: { configurable: true, value: 100 },
+        scrollHeight: { configurable: true, value: 300 },
+        scrollTop: { configurable: true, value: 100, writable: true },
+      });
+      act(() => {
+        fireEvent.scroll(viewport);
+      });
+
+      const next = screen.getByRole("button", { name: "Scroll forward" });
+      act(() => {
+        next.focus();
+      });
+      expect(next).toHaveFocus();
+
+      // Reaching the end hides (`auto`) or disables (`disabled`) the focused
+      // control. Without a hand-off the browser drops focus to <body>.
+      viewport.scrollTop = 200;
+      act(() => {
+        fireEvent.scroll(viewport);
+      });
+      await act(async () => {
+        await Promise.resolve();
+      });
+
+      expect(screen.getByRole("button", { name: "Scroll backward" })).toHaveFocus();
+    },
+  );
+
   it("optionally drag-scrolls native scroll while preserving selection until the drag threshold", () => {
     render(
       <ScrollFrame

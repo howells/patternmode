@@ -1,3 +1,9 @@
+/* Declare the full layer order before opening `components`: registering
+   `components` first would leave it ahead of the host's `theme` and `base`,
+   so a base reset would outrank these rules. A no-op when the app declared
+   the order first. */
+@layer theme, base, components, utilities;
+
 @layer components {
   .patternmode-badge {
     align-items: center;
@@ -123,6 +129,14 @@
     white-space: nowrap;
   }
 
+  /* The label clips for its ellipsis, and a line-height-1 box ends above an
+     offset underline, so a link tag showed no underline at all. Extend the
+     clip box downward; the matching negative margin keeps the layout. */
+  .patternmode-badge[data-variant="link"] .patternmode-tag__label {
+    margin-block-end: -0.375em;
+    padding-block-end: 0.375em;
+  }
+
   .patternmode-tag__remove {
     align-items: center;
     background: transparent;
@@ -187,9 +201,12 @@
     pointer-events: none;
   }
 
+  /* A 54% border with a 12% halo measured 2.3:1 against the resting border
+     and 1.2:1 for the halo, so keyboard focus was hard to find. The halo also
+     reads the theme's ring rather than a fixed pine. */
   .patternmode-tag-selector__trigger:focus-visible {
-    border-color: color-mix(in srgb, var(--ring, #315c4b) 54%, var(--border, #e3e1dc));
-    box-shadow: 0 0 0 3px rgb(49 92 75 / 12%);
+    border-color: var(--ring, #315c4b);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring, #315c4b) 24%, transparent);
     outline: 0;
   }
 
@@ -212,7 +229,7 @@
   }
 
   .patternmode-tag-selector__placeholder {
-    color: var(--muted-foreground, #a09d93);
+    color: var(--muted-foreground, #77756d);
     font-size: 0.875rem;
     padding: 0 0.25rem;
     white-space: nowrap;
@@ -246,8 +263,16 @@
     width: 100%;
   }
 
+  /* iOS Safari zooms the page into any input under 16px when it takes focus,
+     and the selector focuses its search as soon as it opens. */
+  @media (pointer: coarse) {
+    .patternmode-tag-selector__search {
+      font-size: 1rem;
+    }
+  }
+
   .patternmode-tag-selector__search::placeholder {
-    color: var(--muted-foreground, #a09d93);
+    color: var(--muted-foreground, #77756d);
   }
 
   .patternmode-tag-selector__search:focus-visible {

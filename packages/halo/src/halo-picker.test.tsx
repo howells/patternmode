@@ -15,6 +15,7 @@ import {
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./index";
+import { getHaloHueGradient } from "./halo-utils";
 import type { HaloColor } from "./index";
 
 const value = { h: 16, l: 69, s: 48 };
@@ -67,6 +68,32 @@ describe("HaloPicker utilities", () => {
     expect(hueToHaloAngle(360, "top")).toBe(190);
     /* The right placement's span crosses 0° and must read continuously. */
     expect(haloAngleToHue(0, "right")).toBeCloseTo((80 / 160) * 360);
+  });
+
+  it("paints the hue arc with the hue each point emits, in every placement", () => {
+    /* The arc once ran its gradient left to right whatever the placement, with
+       fixed stops that were not HSL hues: on the default bottom arc, hue 240
+       parked the handle on amber and hue 120 on blue. Each stop must sit where
+       the handle for its hue sits. */
+    for (const placement of ["bottom", "top", "left", "right"] as const) {
+      const gradient = getHaloHueGradient(placement);
+      const dx = gradient.x2 - gradient.x1;
+      const dy = gradient.y2 - gradient.y1;
+      const lengthSquared = dx * dx + dy * dy;
+      const offsets = gradient.stops.map((stop) => stop.offset);
+      expect(offsets).toStrictEqual(offsets.toSorted((a, b) => a - b));
+      expect(offsets.at(0)).toBe(0);
+      expect(offsets.at(-1)).toBe(1);
+
+      /* The far end's 360 is the same red as 0, and its handle wraps to the start. */
+      for (const stop of gradient.stops.filter(({ hue }) => hue < 360)) {
+        const handle = getHaloHueHandlePosition(stop.hue, placement);
+        const projected =
+          ((handle.x - gradient.x1) * dx + (handle.y - gradient.y1) * dy) / lengthSquared;
+        expect(projected).toBeCloseTo(stop.offset, 3);
+        expect(stop.color).toBe(`hsl(${stop.hue % 360} 100% 50%)`);
+      }
+    }
   });
 
   it("emits the canonical 0 instead of 360 at the arc's red end", () => {

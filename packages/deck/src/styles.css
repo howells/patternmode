@@ -31,6 +31,22 @@
     will-change: transform, opacity;
   }
 
+  /* Keyboard focus lands on the visually hidden range control, so the ring
+     has to be drawn on what it controls: the active card. Without this, a
+     keyboard user who tabs into the deck sees no change at all. An exhausted
+     deck keeps focus on the control, so its empty state takes the ring. */
+  .patternmode-deck:has(> .patternmode-deck__control:focus-visible)
+    > :is(.patternmode-deck-card[data-active="true"], .patternmode-deck-empty) {
+    outline: 2px solid var(--ring, #315c4b);
+    outline-offset: 4px;
+  }
+
+  /* The empty wrapper is usually unstyled around a rounded child; give the
+     ring the theme radius so it does not draw square corners around it. */
+  .patternmode-deck:has(> .patternmode-deck__control:focus-visible) > .patternmode-deck-empty {
+    border-radius: var(--radius, 0.5rem);
+  }
+
   .patternmode-deck-empty {
     inset: 0;
     position: absolute;

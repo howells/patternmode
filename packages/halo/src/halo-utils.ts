@@ -221,3 +221,60 @@ export const pointerToHaloHue = (
   const normalizedDeg = angleDeg < 0 ? angleDeg + 360 : angleDeg;
   return haloAngleToHue(normalizedDeg, placement);
 };
+
+/** One stop of the hue arc's gradient, offset as a 0..1 fraction of its vector. */
+export interface HaloHueGradientStop {
+  color: string;
+  hue: number;
+  offset: number;
+}
+
+/** A user-space linear gradient that paints the hue arc with the hue each point emits. */
+export interface HaloHueGradient {
+  stops: HaloHueGradientStop[];
+  x1: number;
+  x2: number;
+  y1: number;
+  y2: number;
+}
+
+/* Stops sit 10° of hue apart, so every pair falls inside one 60° sector of the
+   HSL hexagon. Interpolating two fully saturated colours in the same sector
+   moves one sRGB channel linearly, which is exactly the hue in between; a pair
+   straddling a sector boundary would dull through a darker mid-colour. */
+const HALO_HUE_GRADIENT_STEP = 10;
+
+/**
+ * The hue arc's gradient, run from the arc's start to its end. Each stop is
+ * a true HSL hue placed where that hue's angle projects onto the chord, so the
+ * colour under the handle is the colour the picker emits. The arc spans less
+ * than 180°, so the projection is monotonic and every offset is in order.
+ */
+export const getHaloHueGradient = (placement: HaloPlacement = "bottom"): HaloHueGradient => {
+  const { arcStartDeg, centerX, centerY } = getHaloGeometry(placement);
+  const pointAt = (hue: number): HaloPoint => {
+    const angleRad = ((arcStartDeg + (hue / 360) * HALO_ARC_SPAN_DEG) * Math.PI) / 180;
+    return {
+      x: centerX + HALO_ARC_RADIUS * Math.cos(angleRad),
+      y: centerY + HALO_ARC_RADIUS * Math.sin(angleRad),
+    };
+  };
+  const start = pointAt(0);
+  const end = pointAt(360);
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const lengthSquared = dx * dx + dy * dy;
+  const stops = Array.from({ length: 360 / HALO_HUE_GRADIENT_STEP + 1 }, (_, index) => {
+    const hue = index * HALO_HUE_GRADIENT_STEP;
+    const point = pointAt(hue);
+    const offset = ((point.x - start.x) * dx + (point.y - start.y) * dy) / lengthSquared;
+    return {
+      color: `hsl(${hue % 360} 100% 50%)`,
+      /* Rounded so the server and the browser print the same attribute: their
+         trig results can differ in the last bit and break hydration. */
+      hue,
+      offset: Math.round(offset * 10_000) / 10_000,
+    };
+  });
+  return { stops, x1: start.x, x2: end.x, y1: start.y, y2: end.y };
+};

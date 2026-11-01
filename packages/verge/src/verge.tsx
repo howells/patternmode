@@ -91,7 +91,9 @@ export const VergeSlot = <TElement extends ElementType = "div">({
     slots === undefined
       ? style
       : ({
-          minInlineSize: `calc(var(--patternmode-verge-slot-size, 1.75rem) * ${slots})`,
+          // The controls plus the gaps between them, so a full slot fits its
+          // reservation at either gap (2px fine pointer, 8px coarse).
+          minInlineSize: `calc(var(--patternmode-verge-slot-size, 1.75rem) * ${slots} + var(--patternmode-verge-resolved-gap, 0px) * ${Math.max(slots - 1, 0)})`,
           ...(style as CSSProperties | undefined),
         } satisfies CSSProperties);
 

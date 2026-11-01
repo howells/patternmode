@@ -2,6 +2,7 @@
 
 import { joinClassNames } from "@patternmode/system";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useLayoutEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 
 import { useRender } from "../render";
@@ -28,6 +29,43 @@ const getControlIcon = (direction: ScrollFrameEdge) =>
     <ChevronRight aria-hidden="true" size={16} strokeWidth={2} />
   );
 
+/* Focus is lost when the control left the document or was disabled while it
+   held focus. A control still attached and enabled keeps its focus. */
+const isFocusLost = (control: HTMLElement) => {
+  if (control.isConnected && !control.matches(":disabled")) {
+    return false;
+  }
+  const active = control.ownerDocument.activeElement;
+  return active === null || active === control || active === control.ownerDocument.body;
+};
+
+/*
+ * A control that reaches its edge hides (`auto`) or disables (`disabled`). If
+ * it held focus, the browser drops focus to <body> and a keyboard user is
+ * thrown back to the top of the page. Hand focus to the frame's other enabled
+ * control, else its viewport. Deferred to a microtask so the opposite control,
+ * which may mount in the same commit, exists by then.
+ */
+const handOffFocus = (control: HTMLElement) => {
+  const root = control.closest<HTMLElement>('[data-slot="scrollframe"]');
+  if (!root) {
+    return;
+  }
+  queueMicrotask(() => {
+    if (!(root.isConnected && isFocusLost(control))) {
+      return;
+    }
+    const target =
+      [...root.querySelectorAll<HTMLElement>('[data-slot="scrollframe-control"]')].find(
+        (candidate) =>
+          candidate !== control &&
+          !candidate.matches(':disabled, [aria-disabled="true"]') &&
+          candidate.closest('[data-slot="scrollframe"]') === root,
+      ) ?? root.querySelector<HTMLElement>('[data-slot="scrollframe-viewport"]');
+    target?.focus({ preventScroll: true });
+  });
+};
+
 const ScrollFrameMovementControl = ({
   render,
   axis,
@@ -50,6 +88,32 @@ const ScrollFrameMovementControl = ({
     resolvedVisibility === "hidden" || (resolvedVisibility === "auto" && movementBlocked);
   const controlDisabled = disabled === true || movementBlocked;
   const label = getControlLabel(props["aria-label"], direction);
+  const nodeRef = useRef<HTMLElement | null>(null);
+
+  // Hidden: the node is detached while focused. React runs this cleanup
+  // before removing the node, so it can still see that it holds focus. The
+  // callback is new each render, so the cleanup also runs on re-renders that
+  // keep the node; `handOffFocus` ignores those because the control is still
+  // attached and enabled.
+  const attachRef = (node: HTMLElement | null) => {
+    nodeRef.current = node;
+    return () => {
+      nodeRef.current = null;
+      if (node !== null && node.ownerDocument.activeElement === node) {
+        handOffFocus(node);
+      }
+    };
+  };
+
+  // Disabled: a natively disabled button loses focus. A rendered control uses
+  // aria-disabled instead and keeps it, so it needs no hand-off.
+  const nativelyDisabled = !isRendered && controlDisabled;
+  useLayoutEffect(() => {
+    const node = nodeRef.current;
+    if (nativelyDisabled && node && node.ownerDocument.activeElement === node) {
+      handOffFocus(node);
+    }
+  }, [nativelyDisabled]);
 
   // `useRender` must run unconditionally, so build the element before the
   // early return and gate rendering on `hidden` afterwards.
@@ -73,6 +137,7 @@ const ScrollFrameMovementControl = ({
       },
       type: isRendered ? undefined : (type ?? "button"),
     },
+    ref: attachRef,
     render,
   });
 

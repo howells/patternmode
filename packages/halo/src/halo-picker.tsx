@@ -13,6 +13,7 @@ import { useId, useRef } from "react";
 import {
   clampValue,
   getHaloGeometry,
+  getHaloHueGradient,
   getHaloHueHandlePosition,
   getHaloPadHandlePosition,
   HALO_ARC_STROKE_WIDTH,
@@ -23,7 +24,7 @@ import {
   pointerToHaloHue,
   pointerToHaloPad,
 } from "./halo-utils";
-import type { HaloColor, HaloGeometry, HaloPlacement } from "./halo-utils";
+import type { HaloColor, HaloGeometry, HaloHueGradient, HaloPlacement } from "./halo-utils";
 
 type HaloPickerRootProps = Omit<ComponentPropsWithoutRef<"fieldset">, "onChange" | "value">;
 type HaloPadPointerEvent = PointerEvent<HTMLDivElement>;
@@ -209,6 +210,7 @@ const HaloHueArc = ({
   geometry,
   hex,
   hue,
+  hueGradient,
   hueGradientId,
   hueHandle,
   hueInputRef,
@@ -222,6 +224,7 @@ const HaloHueArc = ({
   geometry: HaloGeometry;
   hex: string;
   hue: number;
+  hueGradient: HaloHueGradient;
   hueGradientId: string;
   hueHandle: { x: number; y: number };
   hueInputRef: RefObject<HTMLInputElement | null>;
@@ -256,19 +259,16 @@ const HaloHueArc = ({
     >
       <defs>
         <linearGradient
+          gradientUnits="userSpaceOnUse"
           id={hueGradientId}
-          x1="0%"
-          x2={geometry.gradientAxis === "horizontal" ? "100%" : "0%"}
-          y1="0%"
-          y2={geometry.gradientAxis === "horizontal" ? "0%" : "100%"}
+          x1={hueGradient.x1}
+          x2={hueGradient.x2}
+          y1={hueGradient.y1}
+          y2={hueGradient.y2}
         >
-          <stop offset="0%" stopColor="#ff3b30" />
-          <stop offset="16%" stopColor="#ff9500" />
-          <stop offset="33%" stopColor="#ffcc00" />
-          <stop offset="50%" stopColor="#34c759" />
-          <stop offset="66%" stopColor="#0a84ff" />
-          <stop offset="83%" stopColor="#5856d6" />
-          <stop offset="100%" stopColor="#ff2d55" />
+          {hueGradient.stops.map((stop) => (
+            <stop key={stop.hue} offset={stop.offset} stopColor={stop.color} />
+          ))}
         </linearGradient>
       </defs>
       <path
@@ -276,6 +276,12 @@ const HaloHueArc = ({
         d={geometry.arcPath}
         stroke={`url(#${hueGradientId})`}
         strokeWidth={HALO_ARC_STROKE_WIDTH}
+      />
+      <circle
+        className="patternmode-halo-picker__arc-focus"
+        cx={hueHandle.x}
+        cy={hueHandle.y}
+        r="9.5"
       />
       <circle
         className="patternmode-halo-picker__arc-handle"
@@ -344,8 +350,10 @@ export const HaloPicker = ({
        the default action that moves focus — so without this the pad advertises
        arrow-key adjustment through `role="slider"` and `tabIndex={0}` that a
        user can never reach after clicking it. Pointer capture is not the cause;
-       an uncaptured `preventDefault` loses focus the same way. */
-    event.currentTarget.focus();
+       an uncaptured `preventDefault` loses focus the same way. Scripted focus
+       otherwise counts as keyboard focus and rings the pad under the pointer,
+       which a native slider never does when clicked. */
+    event.currentTarget.focus({ focusVisible: false });
     setPointerCapture(event);
     isPadDraggingRef.current = true;
     updatePad(event.clientX, event.clientY);
@@ -382,7 +390,7 @@ export const HaloPicker = ({
     /* The arc itself is `aria-hidden` and unfocusable, so its keyboard
        affordance is the visually hidden range input beside it. Focus that
        instead, for the same reason the pad focuses itself. */
-    hueInputRef.current?.focus();
+    hueInputRef.current?.focus({ focusVisible: false });
     setPointerCapture(event);
     isHueDraggingRef.current = true;
     updateHue(event.clientX, event.clientY);
@@ -445,6 +453,7 @@ export const HaloPicker = ({
           geometry={geometry}
           hex={hex}
           hue={value.h}
+          hueGradient={getHaloHueGradient(placement)}
           hueGradientId={hueGradientId}
           hueHandle={hueHandle}
           hueInputRef={hueInputRef}

@@ -27,6 +27,12 @@ describe("HaloPicker pointer-to-keyboard handover in a real browser", () => {
     await userEvent.click(page.getByTestId("halo-picker-pad"));
     const afterClick = readout();
 
+    /* Focused, but not ringed: a native slider shows no focus ring when it is
+       clicked, and scripted focus after `preventDefault` used to draw one. */
+    const pad = page.getByTestId("halo-picker-pad").element();
+    expect(document.activeElement).toBe(pad);
+    expect(pad.matches(":focus-visible")).toBe(false);
+
     /*
      * Before the fix this key press changed nothing: `preventDefault` in the
      * pointerdown handler suppressed the compatibility mousedown, focus stayed

@@ -116,9 +116,17 @@
     border-radius: inherit;
   }
 
+  /* The ring alone measured 2.3:1 against a near-black track and 1.2:1
+     against the glass inside it. A band of the page colour inside the ring
+     makes it two-tone, so one of its edges contrasts on any ramp. */
   .pm-channel-thumb:has(:focus-visible) .pm-channel-glass {
     outline: 2px solid var(--ring, #53736b);
     outline-offset: -2px;
+    box-shadow:
+      inset 0 0 0 4px var(--background, #fff),
+      inset -2px -2px 1px -2px rgb(255 255 255 / 70%),
+      inset 2px 2px 1px -2px rgb(255 255 255 / 70%),
+      0 0 0 1px rgb(255 255 255 / 18%);
   }
 
   .pm-channel-glass {

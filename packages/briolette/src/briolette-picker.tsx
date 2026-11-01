@@ -244,8 +244,10 @@ const useBrioletteRotation = (isDriftEnabled: boolean) => {
     }
     event.preventDefault();
     /* preventDefault suppresses click-to-focus, so focus the keyboard
-       surface ourselves — "drag or use arrow keys" must work after a click. */
-    stageRef.current?.focus({ preventScroll: true });
+       surface ourselves — "drag or use arrow keys" must work after a click.
+       Scripted focus otherwise counts as keyboard focus and rings the sphere
+       on every click, which a natively focused control never does. */
+    stageRef.current?.focus({ focusVisible: false, preventScroll: true });
     tweenRef.current = null;
     isPointerActiveRef.current = true;
     velocityRef.current = { pitch: 0, yaw: 0 };

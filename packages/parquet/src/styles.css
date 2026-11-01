@@ -32,12 +32,15 @@
     @apply transition-none;
   }
 
+  /* Solid ink, never a translucent one: over a mid-tone tile a 72% white
+     measured 2.9:1 and the dimmed percentage 2.2:1, where solid ink on the
+     same tiles clears 4:1. Hierarchy comes from the order, not from fading. */
   .patternmode-parquet__label {
-    @apply pointer-events-none w-full p-2 font-mono text-white/[0.72] opacity-0 transition-opacity duration-150;
+    @apply pointer-events-none w-full p-2 font-mono text-[0.6875rem] leading-[1.3] text-white opacity-0 transition-opacity duration-150;
   }
 
   .patternmode-parquet__tile[data-light] .patternmode-parquet__label {
-    @apply text-black/[0.62];
+    @apply text-black/[0.88];
   }
 
   .patternmode-parquet__tile:hover .patternmode-parquet__label,
@@ -45,12 +48,19 @@
     @apply opacity-100;
   }
 
+  /* A touch screen has no hover to reveal the labels with, so show them. */
+  @media (hover: none) {
+    .patternmode-parquet__label {
+      @apply opacity-100;
+    }
+  }
+
   .patternmode-parquet__label-name {
-    @apply block overflow-hidden text-ellipsis whitespace-nowrap text-[0.625rem] leading-[1.15];
+    @apply block overflow-hidden text-ellipsis whitespace-nowrap;
   }
 
   .patternmode-parquet__label-percent {
-    @apply block text-[0.5625rem] tabular-nums opacity-70;
+    @apply block tabular-nums;
   }
 
   @media (prefers-reduced-motion: reduce) {

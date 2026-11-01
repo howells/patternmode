@@ -94,6 +94,45 @@ const DistributionBarHandle = ({
   </LazyMotion>
 );
 
+/* The WAI-ARIA slider keys: arrows step, Page keys take ten steps, Home and
+   End move the boundary as far as `minValue` allows. Unhandled, Home, End and
+   the Page keys scroll the page instead. */
+const getBoundaryKeyDelta = (
+  key: string,
+  segments: DistributionSegment[],
+  boundaryIndex: number,
+  step: number,
+): number | undefined => {
+  const pairTotal =
+    sanitizeWeight(segments[boundaryIndex]?.value ?? 0) +
+    sanitizeWeight(segments[boundaryIndex + 1]?.value ?? 0);
+  switch (key) {
+    case "ArrowLeft":
+    case "ArrowDown": {
+      return -step;
+    }
+    case "ArrowRight":
+    case "ArrowUp": {
+      return step;
+    }
+    case "PageDown": {
+      return -step * 10;
+    }
+    case "PageUp": {
+      return step * 10;
+    }
+    case "Home": {
+      return -pairTotal;
+    }
+    case "End": {
+      return pairTotal;
+    }
+    default: {
+      return undefined;
+    }
+  }
+};
+
 export const DistributionBar = ({
   "aria-label": ariaLabel,
   className,
@@ -136,14 +175,12 @@ export const DistributionBar = ({
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, boundaryIndex: number) => {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      moveBoundary(boundaryIndex, -step);
+    const delta = getBoundaryKeyDelta(event.key, segments, boundaryIndex, step);
+    if (delta === undefined) {
+      return;
     }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      moveBoundary(boundaryIndex, step);
-    }
+    event.preventDefault();
+    moveBoundary(boundaryIndex, delta);
   };
 
   return (

@@ -355,9 +355,21 @@
     }
   }
 
+  /* The ring token, not the border token: a border-coloured ring measures
+     about 1.3:1 on the card and is effectively invisible. */
   .patternmode-scrollframe__control:focus-visible {
-    outline: 2px solid var(--border, #e3e1dc);
+    outline: 2px solid var(--ring, #315c4b);
     outline-offset: 2px;
+  }
+
+  /* A 32px control is a small finger target; extend the hit area to 44px on
+     coarse pointers without changing what is drawn. */
+  @media (pointer: coarse) {
+    .patternmode-scrollframe__control::before {
+      content: "";
+      inset: -6px;
+      position: absolute;
+    }
   }
 
   .patternmode-scrollframe__control:disabled,

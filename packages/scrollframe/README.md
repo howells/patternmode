@@ -35,13 +35,13 @@ Fades render at the scroll edges and hide when their edge is rested against or
 unreachable.
 
 ```tsx
-<ScrollFrame fades="end" fadeSize={26} fadeColor="var(--surface)">
+<ScrollFrame fades="end" fadeSize={26} fadeColor="var(--card)">
 ```
 
 - `fades` — `true` (both edges, default), `"start"`, `"end"`, `"none"`, or a
   per-axis map when `axes="both"`.
 - `fadeSize` — ramp length; number (px) or any CSS length. Default `2rem`.
-- `fadeColor` — the painted gradient color. Default `var(--surface, #fff)`.
+- `fadeColor` — the painted gradient color. Default `var(--card, #fff)`.
 
 ### `fadeMode="mask"`
 
@@ -95,7 +95,7 @@ painted `Fade` parts are unnecessary.
 
 Import `@patternmode/scrollframe/styles.css` once. Theme hooks:
 
-- `--surface`, `--border` — control/scrollbar chrome fallbacks
+- `--card`, `--border`, `--ring` — control chrome and focus ring fallbacks
 - `--patternmode-scrollframe-fade-color`, `--patternmode-scrollframe-fade-size`
 
 Reduced motion is honored: fade transitions disable and movement controls

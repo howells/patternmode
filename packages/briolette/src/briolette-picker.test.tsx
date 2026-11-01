@@ -468,6 +468,7 @@ describe(BriolettePicker, () => {
   it("focuses the keyboard surface on pointerdown", () => {
     render(<BriolettePicker onChange={() => {}} value={null} />);
     const stage = screen.getByRole("application");
+    const focus = vi.spyOn(stage, "focus");
 
     fireEvent.pointerDown(bySlot("briolette-sphere"), {
       button: 0,
@@ -479,6 +480,9 @@ describe(BriolettePicker, () => {
     // preventDefault on pointerdown suppresses native click-to-focus, so the
     // picker focuses the stage itself — arrow keys work right after a click.
     expect(stage).toHaveFocus();
+    // Without `focusVisible: false` Chrome counts the scripted focus as
+    // keyboard focus and rings the whole sphere on every click.
+    expect(focus).toHaveBeenCalledWith({ focusVisible: false, preventScroll: true });
   });
 
   it("clears the selection with Escape", () => {

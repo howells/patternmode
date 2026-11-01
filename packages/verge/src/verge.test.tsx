@@ -82,7 +82,20 @@ describe("Verge reveal contract", () => {
       render(<VergeSlot data-testid="slot" slots={3} />);
 
       expect(screen.getByTestId("slot")).toHaveStyle({
-        minInlineSize: "calc(var(--patternmode-verge-slot-size, 1.75rem) * 3)",
+        minInlineSize:
+          "calc(var(--patternmode-verge-slot-size, 1.75rem) * 3 + var(--patternmode-verge-resolved-gap, 0px) * 2)",
+      });
+    });
+
+    it("counts the gaps between controls, so a full slot fits its reservation", () => {
+      // Reserving n controls without the n - 1 gaps between them left a full
+      // slot wider than its reservation, so its row's text column ended short of
+      // rows with fewer controls: 4px with a fine pointer, 16px on touch.
+      render(<VergeSlot data-testid="slot" slots={1} />);
+
+      expect(screen.getByTestId("slot")).toHaveStyle({
+        minInlineSize:
+          "calc(var(--patternmode-verge-slot-size, 1.75rem) * 1 + var(--patternmode-verge-resolved-gap, 0px) * 0)",
       });
     });
 
