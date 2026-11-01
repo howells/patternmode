@@ -78,8 +78,22 @@
     stroke: var(--patternmode-status-track);
   }
 
+  /*
+   * Null and known-zero marks have no arc or sweep to carry them, so they draw
+   * in the mark's own colour rather than the track's. In the track colour they
+   * measured about 1.2:1 against the page and all but vanished. Null keeps its
+   * dashes and zero is a thin solid outline, so the two stay distinct from each
+   * other and from a full mark.
+   */
   .patternmode-status-mark__track--null {
+    stroke: currentColor;
     stroke-dasharray: 2 2.5;
+  }
+
+  .patternmode-status-mark__empty {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
   }
 
   .patternmode-status-mark__arc {

@@ -3,7 +3,7 @@
 import { Dialog } from "@base-ui/react/dialog";
 import { m, useMotionValue, useSpring, useTransform } from "motion/react";
 import type { MotionStyle, PanInfo } from "motion/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { ComponentPropsWithRef, CSSProperties } from "react";
 
 import { useApertoContext } from "./context";
@@ -48,6 +48,19 @@ const ApertoContent = ({
   ...props
 }: ApertoContentProps) => {
   const ctx = useApertoContext();
+  // On the render element, where Base UI merges it with the consumer's `ref`.
+  const popupRef = useRef<HTMLDivElement | null>(null);
+  /*
+   * Open on the close control rather than the first tabbable element. In a
+   * group that was "Previous media", so the first Enter after opening moved to
+   * another image instead of doing anything expected. Close is the one control
+   * every lightbox has, it names the way out, and the arrow keys still work
+   * from it because they are handled on the content. Without an
+   * `Aperto.Close` (or a control marked `data-slot="aperto-close"`), Base UI's
+   * default applies. Pass `initialFocus` to choose something else.
+   */
+  const focusCloseControl = (): HTMLElement | true =>
+    popupRef.current?.querySelector<HTMLElement>('[data-slot="aperto-close"]') ?? true;
   const [isDragging, setIsDragging] = useState(false);
   const resolved = resolvePreset(
     "content",
@@ -137,6 +150,7 @@ const ApertoContent = ({
     <Dialog.Popup
       className={className}
       hidden={false}
+      initialFocus={focusCloseControl}
       ref={ref}
       render={
         <m.div
@@ -150,6 +164,7 @@ const ApertoContent = ({
           layoutId={contentLayoutId}
           onDrag={isDismissible ? handleDrag : undefined}
           onDragEnd={isDismissible ? handleDragEnd : undefined}
+          ref={popupRef}
           style={motionStyle}
           transition={resolved.transition}
         >

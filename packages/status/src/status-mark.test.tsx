@@ -132,6 +132,27 @@ describe(StatusMark, () => {
     },
   );
 
+  it.each([
+    ["fill", undefined],
+    ["border", "border"],
+  ] as const)(
+    "outlines known-zero progress in the mark colour in the %s variant",
+    (_name, variant) => {
+      render(<StatusMark label="Not started" value={0} variant={variant} />);
+
+      expect(bySlot("status-mark-empty")).toHaveAttribute("r", "8.3");
+      expect(querySlot("status-mark-null")).not.toBeInTheDocument();
+      expect(querySlot("status-mark-border")).not.toBeInTheDocument();
+    },
+  );
+
+  it("drops the zero outline once progress is known to be above zero", () => {
+    render(<StatusMark label="Quarter" value={25} variant="border" />);
+
+    expect(querySlot("status-mark-empty")).not.toBeInTheDocument();
+    expect(bySlot("status-mark-border")).toBeInTheDocument();
+  });
+
   it("renders filled sweep layer by default", () => {
     render(<StatusMark label="Three quarters complete" value={75} />);
 

@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createRef } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { Aperto } from "./index";
@@ -45,6 +46,22 @@ describe(Aperto, () => {
     );
 
     expect(screen.getByRole("dialog", { name: "Opened by default" })).toBeInTheDocument();
+  });
+
+  it("passes a consumer ref on primitive content through to the dialog element", () => {
+    const ref = createRef<HTMLDivElement>();
+
+    render(
+      <Aperto.Primitive.Root defaultOpen>
+        <Aperto.Primitive.Portal>
+          <Aperto.Primitive.Content aria-describedby={undefined} ref={ref}>
+            <Aperto.Primitive.Title>With a ref</Aperto.Primitive.Title>
+          </Aperto.Primitive.Content>
+        </Aperto.Primitive.Portal>
+      </Aperto.Primitive.Root>,
+    );
+
+    expect(ref.current).toBe(screen.getByRole("dialog", { name: "With a ref" }));
   });
 
   it("keeps primitive portal content closed until opened when defaultOpen is not set", () => {
@@ -281,6 +298,74 @@ describe(Aperto, () => {
 
     expect(screen.getByRole("dialog", { name: "Studio table" })).toBeInTheDocument();
     expect(screen.getByText("1 / 2")).toBeInTheDocument();
+  });
+
+  it("opens a group on its close control, traps Tab and returns focus on Escape", async () => {
+    const user = userEvent.setup();
+    const media: ApertoMediaItem[] = [
+      {
+        alt: "Ceramic vessels on linen",
+        src: "/first-large.jpg",
+        title: "Studio table",
+        type: "image",
+      },
+      {
+        alt: "A quiet reading nook",
+        src: "/second-large.jpg",
+        title: "Soft afternoon",
+        type: "image",
+      },
+    ];
+
+    render(
+      <Aperto.Group media={media}>
+        <Aperto.Thumbnail index={0} />
+        <Aperto.Thumbnail index={1} />
+      </Aperto.Group>,
+    );
+
+    const thumbnail = screen.getByRole("button", { name: "Open Studio table" });
+    thumbnail.focus();
+    await user.keyboard("{Enter}");
+
+    const close = screen.getByRole("button", { name: "Close" });
+    await waitFor(() => {
+      expect(close).toHaveFocus();
+    });
+
+    // Close is the last control, so Tab wraps to the first and Shift+Tab back.
+    await user.tab();
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Previous media" })).toHaveFocus();
+    });
+    await user.tab({ shift: true });
+    await waitFor(() => {
+      expect(close).toHaveFocus();
+    });
+
+    await user.keyboard("{Escape}");
+    await waitFor(() => {
+      expect(thumbnail).toHaveFocus();
+    });
+  });
+
+  it("opens a single item on its close control", async () => {
+    const user = userEvent.setup();
+    const media: ApertoMediaItem = {
+      alt: "A mountain at sunrise",
+      src: "/large.jpg",
+      title: "Morning ridge",
+      type: "image",
+    };
+
+    render(<Aperto media={media} />);
+
+    screen.getByRole("button", { name: "Open Morning ridge" }).focus();
+    await user.keyboard("{Enter}");
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+    });
   });
 
   it("keeps group content mounted while switching media", async () => {

@@ -2,6 +2,12 @@ import { describe, expect, it } from "vitest";
 
 import { deriveDistribution, isLightColor, sanitizeWeight } from "./weighted-distribution";
 
+/** WCAG relative luminance of one sRGB grey channel value. */
+const greyLuminance = (channel: number) => {
+  const value = channel / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+};
+
 describe(sanitizeWeight, () => {
   it("keeps positive weights, including fractions", () => {
     expect(sanitizeWeight(3)).toBe(3);
@@ -81,6 +87,34 @@ describe(isLightColor, () => {
     expect(isLightColor("hsl(240, 100%, 50%)")).toBe(false);
   });
 
+  /*
+   * The threshold is the WCAG crossover where black and white text tie, so a
+   * grey just either side of it must pick whichever text colour actually has
+   * more contrast. #767676 is the first sRGB grey where black wins (4.62:1
+   * against 4.54:1 for white); #757575 is the last where white wins.
+   */
+  it("flips at the contrast crossover between black and white text", () => {
+    expect(isLightColor("#757575")).toBe(false);
+    expect(isLightColor("#767676")).toBe(true);
+    // Mid greys the old 0.62 threshold sent to white text, at lower contrast.
+    expect(isLightColor("#808080")).toBe(true);
+    expect(isLightColor("#858585")).toBe(true);
+  });
+
+  it("picks the higher-contrast text colour for every sRGB grey", () => {
+    for (let channel = 0; channel <= 255; channel += 1) {
+      const hex = channel.toString(16).padStart(2, "0");
+      const luminance = greyLuminance(channel);
+      const blackTextContrast = (luminance + 0.05) / 0.05;
+      const whiteTextContrast = 1.05 / (luminance + 0.05);
+
+      expect({ channel, light: isLightColor(`#${hex}${hex}${hex}`) }).toStrictEqual({
+        channel,
+        light: blackTextContrast > whiteTextContrast,
+      });
+    }
+  });
+
   // These inputs cross the foreground threshold if hue wrapping or saturation
   // clamping is lost, so they protect visible contrast rather than only arithmetic.
   it("wraps out-of-range hue rather than picking the wrong hue sector", () => {
@@ -99,9 +133,9 @@ describe(isLightColor, () => {
   });
 
   it("clamps out-of-range saturation", () => {
-    // -100% clamps to 0 — a mid grey below the threshold. Used raw it produced a
-    // saturated colour that read as light.
-    expect(isLightColor("hsl(120, -100%, 50%)")).toBe(false);
+    // -100% clamps to 0, a dark grey (#666, L 0.51) below the threshold. Used
+    // raw it produced a saturated magenta (L 0.59) that read as light.
+    expect(isLightColor("hsl(120, -100%, 40%)")).toBe(false);
   });
 
   it("uses the L channel directly for oklch() and oklab()", () => {

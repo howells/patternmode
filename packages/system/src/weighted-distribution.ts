@@ -45,8 +45,18 @@ export const deriveDistribution = (values: number[]): DerivedDistribution => {
   return { percentages, sanitized, total };
 };
 
-/** Perceptual (OKLab) lightness above which a color reads as "light". */
-const LIGHT_LIGHTNESS_THRESHOLD = 0.62;
+/**
+ * Perceptual (OKLab) lightness above which a color reads as "light", meaning
+ * black text on it out-contrasts white text.
+ *
+ * It is the WCAG contrast crossover, not a taste value. Black and white text
+ * tie where (Y + 0.05) / 0.05 = 1.05 / (Y + 0.05), so Y = sqrt(1.05 * 0.05) -
+ * 0.05 (about 0.179). For a neutral, OKLab L is the cube root of Y, which puts
+ * the crossover at L 0.5637. Above it black text has more contrast; below it
+ * white does. The previous 0.62 sat above the crossover, so mid tones between
+ * the two got white text at lower contrast than black would have had.
+ */
+const LIGHT_LIGHTNESS_THRESHOLD = Math.cbrt(Math.sqrt(1.05 * 0.05) - 0.05);
 
 const NAMED_COLOR_LIGHTNESS = new Map([
   ["black", false],

@@ -26,7 +26,12 @@ zero progress.
 
 The default `variant="fill"` renders a filled progress mark. Use
 `variant="border"` for an outline progress arc. `color` controls active progress,
-while `trackColor` controls inactive and placeholder structure.
+while `trackColor` controls the inactive track behind partial progress.
+
+Null and zero marks have no progress to show, so they draw in `color` rather
+than the track: null as a dashed ring, zero as a thin solid outline. That keeps
+them visible on the page, at the same contrast as the mark colour, while still
+reading as empty.
 
 ## Theming
 

@@ -24,6 +24,13 @@ interface MotionPartProps {
 const STATUS_MARK_RADIUS = 8;
 const STATUS_MARK_STROKE_WIDTH = 1.8;
 const BORDERLESS_STATUS_MARK_RADIUS = STATUS_MARK_RADIUS + STATUS_MARK_STROKE_WIDTH / 2;
+/*
+ * Known-zero progress is outlined in the mark's own colour, at a lighter weight
+ * than a full border ring so it reads as an empty outline rather than a closed
+ * one. The radius keeps its outer edge on the same circle as every other state.
+ */
+const EMPTY_STATUS_MARK_STROKE_WIDTH = 1.2;
+const EMPTY_STATUS_MARK_RADIUS = BORDERLESS_STATUS_MARK_RADIUS - EMPTY_STATUS_MARK_STROKE_WIDTH / 2;
 const STATUS_MARK_CENTER = 12;
 const STATUS_MARK_START_ANGLE = -90;
 const STATUS_MARK_FULL_PROGRESS = 100;
@@ -225,7 +232,7 @@ const StatusMarkSvg = ({
             />
           </>
         ) : null}
-        {variant === "border" ? (
+        {variant === "border" && state.progress > 0 ? (
           <circle
             className="patternmode-status-mark__track"
             cx="12"
@@ -239,6 +246,15 @@ const StatusMarkSvg = ({
             hasReducedMotion={hasReducedMotion}
             motion={motion}
             progress={state.progress}
+          />
+        ) : null}
+        {state.progress === 0 ? (
+          <circle
+            className="patternmode-status-mark__empty"
+            cx="12"
+            cy="12"
+            data-slot="status-mark-empty"
+            r={EMPTY_STATUS_MARK_RADIUS}
           />
         ) : null}
       </>
