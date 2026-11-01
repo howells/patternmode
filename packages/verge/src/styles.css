@@ -157,26 +157,48 @@
   }
 
   /*
-   * Coarse pointers get real separation between controls.
+   * Coarse pointers get a 48px target per control.
    *
-   * The 2px resting gap is right for a mouse, where the controls appear only
-   * while pointed at and the cursor is precise. On touch the branch above makes
-   * them permanently visible, which turns a tidy 2px gap into two adjacent
-   * always-on tap targets a thumb cannot reliably tell apart. The touch reveal
-   * is what creates the exposure, so the spacing correction belongs here rather
-   * than in every consumer.
+   * On touch the branch above makes the controls permanently visible, so each
+   * one is always under a thumb and needs a 48x48px target. Verge does not own
+   * the buttons, but it owns the slot they sit in, and two things there decide
+   * whether a thumb can separate them:
+   *
+   * 1. The gap. Controls are spaced so one control plus one gap is 48px, which
+   *    lets each control's 48px target sit beside its neighbour's instead of
+   *    overlapping it. At least 8px, for controls already wider than 40px. The
+   *    `slots` reservation counts this gap, so rows still align.
+   * 2. The hit area. A direct child control (a button, a link, or anything
+   *    with role="button") gets a transparent `::after`, centred on it and at
+   *    least 48px square, so a tap near the icon lands on the control. The
+   *    control keeps its visual size and the row keeps its height. The rules
+   *    use `:where()`, so any rule of the consumer's own wins.
    *
    * Gated on `pointer: coarse` rather than `hover: none` because this is about
    * the precision of the input, not the availability of hover.
-   *
-   * What this CANNOT fix, and consumers must: the 48x48px minimum hit area for
-   * the controls themselves. Verge reserves the slot; it does not own the
-   * button. Keep the control visually small and expand its hit area on coarse
-   * pointers — see the README.
    */
   @media (pointer: coarse) {
     .patternmode-verge {
-      --patternmode-verge-resolved-gap: 0.5rem;
+      --patternmode-verge-resolved-gap: max(
+        0.5rem,
+        calc(3rem - var(--patternmode-verge-slot-size, 1.75rem))
+      );
+    }
+
+    :where(.patternmode-verge) > :where(button, a[href], [role="button"]) {
+      position: relative;
+    }
+
+    :where(.patternmode-verge) > :where(button, a[href], [role="button"])::after {
+      /* Physical `left`, not `inset-inline-start`: the translate is physical
+         too, so a logical offset would push the area off-centre in RTL. */
+      content: "";
+      height: max(100%, 3rem);
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      translate: -50% -50%;
+      width: max(100%, 3rem);
     }
   }
 

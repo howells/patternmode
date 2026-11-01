@@ -52,6 +52,25 @@ describe(Parquet, () => {
     expect(screen.getByText("50%")).toBeInTheDocument();
   });
 
+  it("makes each built-in label reachable by keyboard and named for screen readers", () => {
+    render(
+      <Parquet colors={[...palette, { color: "#e8b4b8", value: 0.25 }]} disableMotion showLabels />,
+    );
+
+    const terracotta = screen.getByRole("img", { name: "Terracotta, 40%" });
+    expect(terracotta).toHaveAttribute("tabindex", "0");
+    // An unlabelled tile is still named by its share.
+    expect(screen.getByRole("img", { name: "20%" })).toHaveAttribute("tabindex", "0");
+  });
+
+  it("leaves tiles out of the tab order without built-in labels", () => {
+    const { container } = render(
+      <Parquet colors={palette} disableMotion renderTile={(tile) => <span>{tile.label}</span>} />,
+    );
+    expect(container.querySelector("[tabindex]")).toBeNull();
+    expect(screen.queryByRole("img")).toBeNull();
+  });
+
   it("marks light tiles for contrast", () => {
     const { container } = render(
       <Parquet colors={[{ color: "#ffffff", value: 1 }]} disableMotion />,

@@ -98,8 +98,23 @@
     padding: 0.3125rem 0.75rem;
   }
 
+  /* Selected reads as the theme's ring colour on the tag's own 1px border, so
+     a selected tag keeps the same weight and shape as the tags beside it. The
+     old inset ring in `currentColor` stacked a near-black line on top of the
+     border: it drew a 2px dark outline that matched no other variant. */
   .patternmode-tag[data-selected="true"] {
-    box-shadow: inset 0 0 0 1px currentColor;
+    --patternmode-badge-border: var(--ring, #315c4b);
+  }
+
+  /* A filled tag's background already is the ring colour, so the border alone
+     would vanish. Separate it with a card-coloured gap and an outer ring. */
+  .patternmode-tag[data-selected="true"]:is(
+      [data-variant="default"],
+      [data-variant="destructive"]
+    ) {
+    box-shadow:
+      0 0 0 1px var(--card, #fff),
+      0 0 0 2px var(--patternmode-badge-background);
   }
 
   .patternmode-tag[data-disabled="true"] {
@@ -213,6 +228,49 @@
   .patternmode-tag-selector__scroll {
     min-width: 0;
     width: 100%;
+  }
+
+  /* Says "this opens a list", which a row of chips alone does not. */
+  .patternmode-tag-selector__chevron {
+    align-items: center;
+    color: var(--muted-foreground, #77756d);
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 1.75rem;
+    justify-content: center;
+    margin-inline-start: 0.25rem;
+    transition: transform 140ms ease;
+    width: 1.25rem;
+  }
+
+  .patternmode-tag-selector__chevron svg {
+    height: 1rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+    width: 1rem;
+  }
+
+  .patternmode-tag-selector__trigger[aria-expanded="true"] .patternmode-tag-selector__chevron {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .patternmode-tag-selector__chevron {
+      transition: none;
+    }
+  }
+
+  /* On touch the remove mark takes the chip's full height, which is the
+     largest target that fits inside it. */
+  @media (pointer: coarse) {
+    .patternmode-tag-selector__remove {
+      height: 1.5rem;
+      margin-block: -0.1875rem;
+      margin-inline: -0.125rem -0.5rem;
+      width: 1.5rem;
+    }
   }
 
   .patternmode-tag-selector__scroll-content {

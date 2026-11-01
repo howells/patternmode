@@ -20,6 +20,26 @@ export function Example() {
 
 Use `mode="cycle"` for a repeating Deck, or `mode="finite"` when advanced Cards should exhaust into `Deck.Empty`.
 
+## Keyboard
+
+The Deck is one tab stop. When it has focus, the active card shows a `--ring`
+outline.
+
+| Key         | Action                                                             |
+| ----------- | ------------------------------------------------------------------ |
+| Left arrow  | Sends the active card off to the left and brings up the next one.  |
+| Right arrow | Sends the active card off to the right and brings up the next one. |
+
+Both arrows move forward through the deck; the arrow only chooses which side
+the card leaves by. A direction left out of `allowedDirections` ignores its
+arrow, and `disabled` ignores both. In `mode="finite"` the last advance shows
+`Deck.Empty`.
+
+Screen readers hear the Deck as a slider named by its `aria-label`, and each
+card as its place in the deck, such as "Card 2 of 6". Give a `Deck.Card` an
+`aria-label` to have it announced by name instead, such as "Light study, 2 of
+6"; the card is then exposed as a labelled group.
+
 ## Cards that arrive later
 
 Deck watches its children. A `Deck.Card` that appears after the first render,

@@ -104,11 +104,22 @@ export const Parquet = ({
         };
 
         let content = null;
+        let labelProps = {};
         if (renderTile) {
           content = renderTile(slot.tile, meta);
         } else if (showLabels) {
+          const percentLabel = `${Math.round(slot.percent)}%`;
+          // A label only hover could reveal would be lost to the keyboard, so
+          // each labelled tile is a tab stop that reveals it on focus, and is
+          // named for screen readers the same way it reads on screen.
+          labelProps = {
+            "aria-label":
+              slot.tile.label === undefined ? percentLabel : `${slot.tile.label}, ${percentLabel}`,
+            role: "img",
+            tabIndex: 0,
+          };
           content = (
-            <div className="patternmode-parquet__label">
+            <div aria-hidden="true" className="patternmode-parquet__label">
               {slot.tile.label === undefined ? null : (
                 <span className="patternmode-parquet__label-name">{slot.tile.label}</span>
               )}
@@ -121,6 +132,7 @@ export const Parquet = ({
 
         return (
           <div
+            {...labelProps}
             className="patternmode-parquet__tile"
             data-light={slot.isLight ? "" : undefined}
             key={key}

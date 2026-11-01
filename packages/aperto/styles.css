@@ -137,6 +137,7 @@
     animation: aperto-control-in 0.35s cubic-bezier(0.25, 0.1, 0.12, 1) 0.08s both;
   }
 
+  [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-caption"],
   [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-title"],
   [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-description"],
   [data-slot="aperto-content"]:not([data-aperto-transition]) > [data-slot="aperto-counter"] {
@@ -149,6 +150,31 @@
 
   [data-slot="aperto-description"] {
     @apply -mt-1.5 max-w-[60ch] text-center text-[13px] leading-snug text-white/60;
+  }
+
+  /* The built-in viewers group title, description and counter on one plate.
+     Bare white text over the dimmed page sat on whatever the page had there:
+     a pale paragraph in one place, a dark code block in the next, and their
+     own text showing through between the lines. The plate is the same dark
+     scrim as the controls, and the blur turns the page behind it into tone
+     rather than letters. */
+  [data-slot="aperto-caption"] {
+    @apply flex max-w-[min(60ch,100%)] flex-col items-center gap-0.5 rounded-[var(--aperto-radius,0.5rem)] bg-black/55 px-3.5 py-2 text-center shadow-[inset_0_0_0_1px_rgb(255_255_255/0.08)] backdrop-blur-md;
+  }
+
+  /* The title and description are a heading and a paragraph; a host without a
+     reset gives them block margins that would push the plate apart. */
+  [data-slot="aperto-caption"] > * {
+    @apply m-0;
+  }
+
+  [data-slot="aperto-caption"] > [data-slot="aperto-description"] {
+    @apply mt-0 text-white/75;
+  }
+
+  /* On the plate the counter is a quiet last line, not a second pill. */
+  [data-slot="aperto-caption"] > [data-slot="aperto-counter"] {
+    @apply mt-1 bg-transparent px-0 py-0 tabular-nums;
   }
 
   /* The controls sit on the media, so they bring their own dark scrim. A
@@ -226,7 +252,8 @@
     }
 
     [data-slot="aperto-title"],
-    [data-slot="aperto-description"] {
+    [data-slot="aperto-description"],
+    [data-slot="aperto-caption"] {
       max-width: calc(100vw - 2rem);
     }
 

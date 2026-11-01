@@ -41,9 +41,9 @@ export interface ThumbnailProps extends Omit<ComponentPropsWithoutRef<"span">, "
   /** `object-position`, for a crop that should not come from the centre. */
   position?: string;
   /**
-   * Lift the frame very slightly off the surface behind it.
+   * Lift the frame slightly off the surface behind it.
    *
-   * One tight downward layer, not a card shadow. Reach for it when thumbnails
+   * A short, soft drop of a few pixels, not a card shadow. Reach for it when thumbnails
    * sit on the same fill as the surface and need separating from it; leave it
    * off in a dense row, where the inset edge is already doing that job and a
    * shadow per row reads as a list of cards.

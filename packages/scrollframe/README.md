@@ -1,6 +1,6 @@
 # ScrollFrame
 
-A Radix-based scroll frame with measured fades and movement controls.
+A Base UI scroll frame with measured fades and movement controls.
 
 ScrollFrame wraps a scroll area with edge fades that know where the scroll
 actually is — each fade appears only while there is content beyond its edge —

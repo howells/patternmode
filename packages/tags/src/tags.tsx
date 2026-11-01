@@ -118,6 +118,58 @@ export const Tag = (props: TagProps): ReactElement => {
   );
 };
 
+/**
+ * A selected tag inside the trigger, drawn like a small `Tag` with a remove
+ * mark.
+ *
+ * The trigger is a `<button>`, and a button may not contain another one, so
+ * the mark is a plain `<span>` that handles pointer clicks. It is hidden from
+ * assistive technology and skipped by Tab: keyboard and screen reader users
+ * remove a tag by toggling its option in the list, or with Backspace in an
+ * empty search.
+ */
+const SelectedTagChip = ({
+  disabled,
+  item,
+  onRemove,
+}: {
+  disabled: boolean;
+  item: TagItem;
+  onRemove: () => void;
+}) => {
+  const handleRemove = (event: MouseEvent<HTMLSpanElement>) => {
+    // Keep the click from reaching the trigger, which would open the popover.
+    event.preventDefault();
+    event.stopPropagation();
+    onRemove();
+  };
+
+  return (
+    <Badge
+      className="patternmode-tag"
+      data-disabled={disabled ? "true" : undefined}
+      data-size="sm"
+      data-slot="tag"
+      variant={getTagVariant(item.variant)}
+    >
+      <span className="patternmode-tag__label">{item.label}</span>
+      {disabled ? null : (
+        <span
+          aria-hidden="true"
+          className="patternmode-tag__remove patternmode-tag-selector__remove"
+          data-slot="tag-selector-remove"
+          onClick={handleRemove}
+          title={`Remove ${item.label}`}
+        >
+          <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
+            <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" />
+          </svg>
+        </span>
+      )}
+    </Badge>
+  );
+};
+
 const TagSelectorTrigger = ({
   className,
   onClick,
@@ -203,9 +255,13 @@ const TagSelectorTrigger = ({
                     selected: true,
                   })
                 ) : (
-                  <Tag disabled={context.disabled} size="sm" variant={item.variant}>
-                    {item.label}
-                  </Tag>
+                  <SelectedTagChip
+                    disabled={context.disabled}
+                    item={item}
+                    onRemove={() => {
+                      context.removeItem(item);
+                    }}
+                  />
                 )}
               </span>
             );
@@ -216,6 +272,11 @@ const TagSelectorTrigger = ({
           </span>
         )}
       </ScrollFrame>
+      <span aria-hidden="true" className="patternmode-tag-selector__chevron">
+        <svg fill="none" viewBox="0 0 16 16">
+          <path d="M4.5 6.25 8 9.75l3.5-3.5" />
+        </svg>
+      </span>
     </Popover.Trigger>
   );
 };

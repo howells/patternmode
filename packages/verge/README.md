@@ -35,7 +35,7 @@ So you don't rebuild something that is one import away:
 |                      |                                                                                                                                                                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Keyboard**         | Tabbing into the row reveals the slot, via `:focus-within` on the root. Children stay in the tab order at rest, which is what lets focus arrive at all.                                                                                           |
-| **Touch**            | No hover exists, so nothing hides. Handled with `@media (hover: none)`, not a tap handler. Controls also get a wider gap on coarse pointers, because permanently-visible controls 2px apart are not separable by a thumb.                         |
+| **Touch**            | No hover exists, so nothing hides. Handled with `@media (hover: none)`, not a tap handler. On coarse pointers each control also gets a 48px target, spaced so neighbours do not overlap.                                                          |
 | **Open menus**       | A slot holding an open menu, popover or disclosure stays revealed — `[data-popup-open]`, `[data-state="open"]` and `[aria-expanded="true"]` are all recognised, so the `···` does not vanish when the pointer travels to the menu it just opened. |
 | **Layout stability** | Only `opacity` and `pointer-events` change. The slot occupies its space at rest and revealed alike.                                                                                                                                               |
 | **Nesting**          | Roots may nest. A nested root shadows its ancestor's state for its own subtree, so pointing at an outer row does not reveal an inner row's controls.                                                                                              |
@@ -43,16 +43,30 @@ So you don't rebuild something that is one import away:
 | **Reduced motion**   | The transition is dropped under `prefers-reduced-motion: reduce`.                                                                                                                                                                                 |
 | **Semantic parents** | `as` renders the real element, so a row inside a `<ul>` can be an `<li>` and a cell can be a `<td>`.                                                                                                                                              |
 
-## What you must handle: touch hit areas
+## Touch hit areas
 
 On a touch surface verge makes the controls **permanently visible**, because
-there is no hover to reveal them. That is the correct behaviour, and it hands you
-an obligation: those controls are now always under a thumb, so each needs a
-**48×48px minimum hit area**.
+there is no hover to reveal them. Those controls are then always under a thumb,
+so each needs a **48×48px target**. On coarse pointers verge provides it:
 
-Verge reserves the slot; it does not own your button, so it cannot do this for
-you. Keep the control visually small and expand its hit area on coarse pointers
-only:
+- **Spacing.** Controls are spaced so that one control plus one gap is 48px,
+  and never less than 8px apart. A 28px control gets a 20px gap. `slots`
+  counts the wider gap, so rows still align.
+- **Hit area.** Each direct child that is a `button`, a link (`a[href]`) or an
+  element with `role="button"` gets a transparent `::after`, centred on it and
+  at least 48px square. The control keeps its visual size and the row keeps
+  its height. The rules have zero specificity, so a rule of yours wins.
+
+Two cases are still yours:
+
+- **A control wrapped in another element**, such as a `span` around a menu
+  trigger. Verge only reaches direct children, so give the control its own
+  hit area or make it the direct child.
+- **A control that already uses `::after`.** Verge's hit area shares that
+  pseudo-element. Override it, or draw your decoration with `::before`.
+
+For those, keep the control visually small and expand its hit area on coarse
+pointers only:
 
 ```tsx
 <button className="relative size-7">

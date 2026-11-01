@@ -35,6 +35,23 @@ export function MediaGroupExample() {
 }
 ```
 
+## Keyboard
+
+Each thumbnail is a button, so Tab reaches it and Enter or Space opens it. The
+open viewer is a modal dialog. The arrow keys work while focus is inside it.
+
+| Key                           | Action                                                                                                          |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Enter or Space on a thumbnail | Opens the viewer at that item.                                                                                  |
+| Left arrow                    | Shows the previous item. `Aperto.Group` only; wraps from the first item to the last.                            |
+| Right arrow                   | Shows the next item. `Aperto.Group` only; wraps from the last item to the first.                                |
+| Tab and Shift+Tab             | Move between the Previous, Next and Close buttons.                                                              |
+| Escape                        | Closes the viewer and returns focus to the thumbnail that opened it, even after you have moved to another item. |
+
+The arrow keys do nothing while focus is in a text field, a `select`, an
+editable region, or a `video` or `audio` element, so they keep their own
+meaning there. They also ignore presses with Alt, Control or Command held.
+
 ## Optimized images
 
 Aperto's built-in image renderer uses a plain `img` so the package stays

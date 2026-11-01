@@ -8,3 +8,4 @@ Movement controls no longer lose keyboard focus, and their focus ring is visible
 - The focus ring uses `--ring` instead of `--border`, which measured about 1.3:1 against the card.
 - On touch screens the controls' tap area grows to 44px without changing how they look.
 - The README now names `--card` as the default fade colour and lists the theme tokens the controls actually read.
+- The README and the package description now say ScrollFrame is built on Base UI. They said Radix, which it no longer uses.

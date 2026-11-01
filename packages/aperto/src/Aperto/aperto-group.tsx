@@ -167,15 +167,17 @@ const ApertoGroupPortal = ({
             onPrevious={goToPrevious}
           />
         </div>
-        <ApertoTitle>{activeMedia.title ?? getMediaLabel(activeMedia)}</ApertoTitle>
-        {activeMedia.description === undefined || activeMedia.description === "" ? null : (
-          <ApertoDescription>{activeMedia.description}</ApertoDescription>
-        )}
-        {hasNavigation ? (
-          <div className={classNames?.counter} data-slot="aperto-counter">
-            {index + 1} / {mediaLength}
-          </div>
-        ) : null}
+        <div data-slot="aperto-caption">
+          <ApertoTitle>{activeMedia.title ?? getMediaLabel(activeMedia)}</ApertoTitle>
+          {activeMedia.description === undefined || activeMedia.description === "" ? null : (
+            <ApertoDescription>{activeMedia.description}</ApertoDescription>
+          )}
+          {hasNavigation ? (
+            <div className={classNames?.counter} data-slot="aperto-counter">
+              {index + 1} / {mediaLength}
+            </div>
+          ) : null}
+        </div>
         <button
           aria-label="Close"
           className={classNames?.closeButton}

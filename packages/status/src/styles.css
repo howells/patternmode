@@ -42,7 +42,16 @@
     --patternmode-status-color: var(--muted-foreground, #77756d);
   }
 
+  /*
+   * The arc and the fill paint with `currentColor`, so the colour is resolved
+   * here, on the SVG, and not only inherited from the root. The root is a
+   * `<span>`, and a mark often sits beside its own text label: a host rule such
+   * as `.legend-item span { color: … }` that is meant for that label matches the
+   * root too, and the mark would then draw in label ink instead of its colour.
+   * Only `color`, `tone` and `--patternmode-status-color` decide the colour.
+   */
   .patternmode-status-mark__svg {
+    color: var(--patternmode-status-color);
     display: block;
     height: 100%;
     overflow: visible;

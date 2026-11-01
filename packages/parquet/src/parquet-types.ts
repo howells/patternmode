@@ -44,7 +44,12 @@ export interface ParquetProps {
    * Receives the tile and its derived {@link ParquetTileMeta}.
    */
   renderTile?: (tile: ParquetTile, meta: ParquetTileMeta) => ReactNode;
-  /** Shows the built-in label (color name + percentage) on hover. */
+  /**
+   * Shows the built-in label (color name + percentage). It appears on hover and
+   * on keyboard focus, and stays shown on touch screens, which have no hover.
+   * Each labelled tile becomes a tab stop, exposed to screen readers as an
+   * image named by its label and percentage.
+   */
   showLabels?: boolean;
   /**
    * Fixed number of tile slots. Render a stable count so morphs between palettes

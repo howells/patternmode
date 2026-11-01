@@ -42,22 +42,25 @@ render no tile.
 
 ## Labels
 
-With `showLabels`, each tile shows its `label` and derived percentage on hover,
-with a foreground color chosen for contrast (via `@patternmode/system`'s
+With `showLabels`, each tile shows its `label` and derived percentage on hover
+and on keyboard focus, and always on touch screens, where there is no hover. Each
+labelled tile is a tab stop, and screen readers hear it as an image named by its
+label and percentage, such as "Terracotta, 42%". The label text uses a
+foreground color chosen for contrast (via `@patternmode/system`'s
 `isLightColor`, which resolves perceptual lightness). Pass
 `renderTile(tile, { percent, isLight, slot, width, height })` to replace the
 label content entirely.
 
 ## Props
 
-| Prop            | Type                        | Default         | Description                                  |
-| --------------- | --------------------------- | --------------- | -------------------------------------------- |
-| `colors`        | `ParquetTile[]`             | —               | Weighted colors to pack.                     |
-| `aspectRatio`   | `number`                    | `4 / 3`         | Mosaic width ÷ height.                       |
-| `gap`           | `number`                    | `10`            | Gap between tiles, in internal layout units. |
-| `slotCount`     | `number`                    | `colors.length` | Fixed slot count for stable morphs.          |
-| `showLabels`    | `boolean`                   | `false`         | Show built-in hover labels.                  |
-| `renderTile`    | `(tile, meta) => ReactNode` | —               | Custom tile content.                         |
-| `disableMotion` | `boolean`                   | `false`         | Disable enter/morph animation.               |
+| Prop            | Type                        | Default         | Description                                     |
+| --------------- | --------------------------- | --------------- | ----------------------------------------------- |
+| `colors`        | `ParquetTile[]`             | —               | Weighted colors to pack.                        |
+| `aspectRatio`   | `number`                    | `4 / 3`         | Mosaic width ÷ height.                          |
+| `gap`           | `number`                    | `10`            | Gap between tiles, in internal layout units.    |
+| `slotCount`     | `number`                    | `colors.length` | Fixed slot count for stable morphs.             |
+| `showLabels`    | `boolean`                   | `false`         | Show built-in labels on hover, focus and touch. |
+| `renderTile`    | `(tile, meta) => ReactNode` | —               | Custom tile content.                            |
+| `disableMotion` | `boolean`                   | `false`         | Disable enter/morph animation.                  |
 
 The pure `packSquarified` algorithm is also exported for custom renderers.

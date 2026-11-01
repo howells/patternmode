@@ -55,11 +55,16 @@
     /*
      * The lift, applied only under `data-raised`.
      *
-     * One soft, tight, downward layer. Not a card shadow: a thumbnail sitting
-     * in a dense row is not a floating object, and anything larger than this
-     * turns a list of pictures into a list of cards.
+     * Two short downward layers in a warm ink: a contact shadow that seats the
+     * edge, and a soft one a few pixels below that reads as the picture
+     * standing slightly off the page. Still not a card shadow: it stays within
+     * a few pixels of the frame, because a thumbnail in a dense row is not a
+     * floating object and anything larger turns a list of pictures into a list
+     * of cards. The previous single layer, `0 1px 2px -1px`, spread inwards by
+     * as much as it blurred and so drew almost nothing.
      */
-    --patternmode-thumbnail-lift: 0 1px 2px -1px rgb(0 0 0 / 0.12);
+    --patternmode-thumbnail-lift:
+      0 1px 2px rgb(29 27 22 / 0.1), 0 4px 10px -3px rgb(29 27 22 / 0.16);
 
     --patternmode-thumbnail-radius: 3px;
     --patternmode-thumbnail-size: 2rem;
@@ -89,7 +94,7 @@
        * value would ship.
        */
       --patternmode-thumbnail-frame: rgb(255 255 255 / 0.12);
-      --patternmode-thumbnail-lift: 0 1px 2px -1px rgb(0 0 0 / 0.5);
+      --patternmode-thumbnail-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 10px -3px rgb(0 0 0 / 0.55);
     }
   }
 

@@ -127,6 +127,56 @@ describe(TagSelector, () => {
     expect(within(trigger).getByText("Command menu")).toBeInTheDocument();
   });
 
+  it("removes a selected tag from its remove mark without opening the popover", async () => {
+    const user = userEvent.setup();
+
+    const { container } = render(
+      <ControlledTagSelector defaultValue={[getOption(0), getOption(1)]} />,
+    );
+
+    const trigger = screen.getByRole("button", { name: "Project tags" });
+    const removeMarks = trigger.querySelectorAll('[data-slot="tag-selector-remove"]');
+    // The trigger is a button, so each mark is a hidden span, not a nested button.
+    expect(
+      [...removeMarks].map((mark) => [mark.tagName, mark.getAttribute("aria-hidden")]),
+    ).toStrictEqual([
+      ["SPAN", "true"],
+      ["SPAN", "true"],
+    ]);
+
+    const [firstMark] = removeMarks;
+    if (firstMark === undefined) {
+      throw new Error("expected a remove mark");
+    }
+    await user.click(firstMark);
+
+    expect(within(trigger).queryByText("Accessible")).not.toBeInTheDocument();
+    expect(within(trigger).getByText("Command menu")).toBeInTheDocument();
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(
+      container.ownerDocument.querySelector('[data-slot="tag-selector-list"]'),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows a decorative dropdown chevron and no remove marks while disabled", () => {
+    render(
+      <TagSelector
+        aria-label="Locked tags"
+        disabled
+        onChange={vi.fn<(items: TagItem[]) => void>()}
+        options={options}
+        value={[getOption(0)]}
+      />,
+    );
+
+    const trigger = screen.getByRole("button", { name: "Locked tags" });
+    expect(trigger.querySelector(".patternmode-tag-selector__chevron")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    expect(trigger.querySelector('[data-slot="tag-selector-remove"]')).toBeNull();
+  });
+
   it("opens popover content as a plain combobox container", async () => {
     const user = userEvent.setup();
 

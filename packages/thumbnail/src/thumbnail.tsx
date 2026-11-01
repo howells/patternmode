@@ -15,7 +15,7 @@ const toCssSize = (value: CssSize): string => (isPixelCount(value) ? `${value}px
  * A framed image.
  *
  * The frame is an **inset** hairline — an edge drawn inside the picture rather
- * than a border drawn around it — plus, optionally, one tight downward shadow.
+ * than a border drawn around it — plus, optionally, a short, soft drop shadow.
  * The distinction is not pedantry. A photograph with an inset edge reads as a
  * window onto the image; the same photograph inside an outer border reads as a
  * form field containing one, which is how imagery ends up looking like a widget

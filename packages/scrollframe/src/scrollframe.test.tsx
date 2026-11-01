@@ -54,7 +54,7 @@ describe(ScrollFrame, () => {
     vi.restoreAllMocks();
   });
 
-  it("renders a named Radix-backed scroll region with fades and plumbing", () => {
+  it("renders a named Base UI scroll region with fades and plumbing", () => {
     render(
       <ScrollFrame aria-label="Updates">
         <p>One</p>

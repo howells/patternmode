@@ -1,6 +1,6 @@
 # @patternmode/thumbnail
 
-A framed image — an inset hairline and an optional whisper of lift.
+A framed image — an inset hairline and an optional slight lift.
 
 A photograph with an edge drawn _inside_ it reads as a window onto the image.
 The same photograph inside an outer border reads as a form field containing one.
@@ -58,18 +58,18 @@ preview whose height follows the photograph's own aspect ratio.
 | `radius`   | `number \| string`         | `3px`     |                                                                                 |
 | `fit`      | `"cover" \| "contain"`     | `"cover"` |                                                                                 |
 | `position` | `string`                   | `center`  | `object-position`, for a crop that is not from the centre.                      |
-| `raised`   | `boolean`                  | `false`   | One tight downward layer. Not a card shadow.                                    |
+| `raised`   | `boolean`                  | `false`   | A short, soft drop of a few pixels. Visible, but not a card shadow.             |
 
 ## Theming
 
 Every value is a custom property, so nothing here needs forking:
 
-| Property                         | Default                                            |
-| -------------------------------- | -------------------------------------------------- |
-| `--patternmode-thumbnail-frame`  | `rgb(0 0 0 / 0.1)`, `rgb(255 255 255 / 0.12)` dark |
-| `--patternmode-thumbnail-lift`   | `0 1px 2px -1px rgb(0 0 0 / 0.12)`                 |
-| `--patternmode-thumbnail-radius` | `3px`                                              |
-| `--patternmode-thumbnail-size`   | `2rem`                                             |
+| Property                         | Default                                                               |
+| -------------------------------- | --------------------------------------------------------------------- |
+| `--patternmode-thumbnail-frame`  | `rgb(0 0 0 / 0.1)`, `rgb(255 255 255 / 0.12)` dark                    |
+| `--patternmode-thumbnail-lift`   | `0 1px 2px rgb(29 27 22 / 0.1), 0 4px 10px -3px rgb(29 27 22 / 0.16)` |
+| `--patternmode-thumbnail-radius` | `3px`                                                                 |
+| `--patternmode-thumbnail-size`   | `2rem`                                                                |
 
 The frame colour is a **transparent** black rather than a border token on
 purpose. It sits over whatever the photograph happens to be, and a solid colour

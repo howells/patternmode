@@ -187,6 +187,38 @@ describe(Deck, () => {
     expect(screen.getByText("Gamma")).toHaveAttribute("data-active", "true");
   });
 
+  it("announces the active card by its place, never its internal id", async () => {
+    const user = userEvent.setup();
+    renderCyclicDeck();
+
+    const slider = screen.getByRole("slider", { name: "Project cards" });
+    expect(slider).toHaveAttribute("aria-valuetext", "Card 2 of 4");
+    expect(slider).toHaveValue("1");
+
+    slider.focus();
+    await user.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+
+    expect(slider).toHaveAttribute("aria-valuetext", "Card 1 of 4");
+    expect(slider).toHaveValue("0");
+  });
+
+  it("announces a labelled card by its own name", () => {
+    render(
+      <Deck aria-label="Rooms">
+        <Deck.Card aria-label="Light study" key="room-1">
+          Study
+        </Deck.Card>
+        <Deck.Card key="room-2">Hall</Deck.Card>
+      </Deck>,
+    );
+
+    expect(screen.getByRole("slider", { name: "Rooms" })).toHaveAttribute(
+      "aria-valuetext",
+      "Light study, 1 of 2",
+    );
+    expect(screen.getByRole("group", { name: "Light study" })).toHaveTextContent("Study");
+  });
+
   it("renders an empty state after a finite deck is exhausted", async () => {
     const user = userEvent.setup();
     const onExhausted = vi.fn<() => void>();

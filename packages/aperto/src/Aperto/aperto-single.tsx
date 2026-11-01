@@ -31,10 +31,12 @@ export const ApertoSingle = ({
         <ApertoOverlay className={classNames?.overlay} />
         <ApertoContent className={classNames?.content} {...getDescriptionProps(media)}>
           <ApertoExpandedMedia item={media} renderImage={renderImage} renderVideo={renderVideo} />
-          <ApertoTitle>{title}</ApertoTitle>
-          {media.description === undefined || media.description === "" ? null : (
-            <ApertoDescription>{media.description}</ApertoDescription>
-          )}
+          <div data-slot="aperto-caption">
+            <ApertoTitle>{title}</ApertoTitle>
+            {media.description === undefined || media.description === "" ? null : (
+              <ApertoDescription>{media.description}</ApertoDescription>
+            )}
+          </div>
           <ApertoClose aria-label="Close" className={classNames?.closeButton} type="button" />
         </ApertoContent>
       </ApertoPortal>
