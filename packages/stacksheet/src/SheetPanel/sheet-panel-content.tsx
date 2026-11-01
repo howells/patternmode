@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from "react";
 
 import type { HeaderRenderProps, SheetData } from "../types";
+import { SAFE_BOTTOM_PADDING } from "../stacking";
 import { DefaultHeader } from "./default-header";
 
 export const PanelInnerContent = ({
@@ -26,12 +27,12 @@ export const PanelInnerContent = ({
 
   return (
     <>
-      {customHeader === undefined ? <DefaultHeader {...headerProps} /> : customHeader(headerProps)}
+      {customHeader === undefined ? <DefaultHeader /> : customHeader(headerProps)}
       {shouldRender && Content !== undefined && (
         <section
           aria-label="Sheet content"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
-          data-stacksheet-no-drag=""
+          style={{ paddingBottom: SAFE_BOTTOM_PADDING }}
           // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex, react-doctor/no-noninteractive-tabindex -- axe requires keyboard access to this overflow scroll region.
           tabIndex={0}
         >

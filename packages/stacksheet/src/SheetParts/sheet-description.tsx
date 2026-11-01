@@ -9,7 +9,13 @@ export const SheetDescription = ({ render, className, style, children }: SheetPa
   return (
     <SheetPartElement
       defaultTagName="p"
-      props={{ children, className, id: `${panelId}-desc`, style }}
+      props={{
+        children,
+        className,
+        "data-stacksheet-description": "",
+        id: `${panelId}-desc`,
+        style,
+      }}
       render={render}
     />
   );

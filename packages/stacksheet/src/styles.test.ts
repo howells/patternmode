@@ -24,8 +24,23 @@ describe("styles.css", () => {
     expect(css).toContain(".h-8{height:calc(var(--spacing,.25rem) * 8)}");
     expect(css).toContain(".min-h-11{min-height:calc(var(--spacing,.25rem) * 11)}");
     expect(css).toContain(".min-w-11{min-width:calc(var(--spacing,.25rem) * 11)}");
-    expect(css).toContain(".px-4{padding-inline:calc(var(--spacing,.25rem) * 4)}");
+    expect(css).toContain(".px-6{padding-inline:calc(var(--spacing,.25rem) * 6)}");
     expect(css).toContain(".rounded-md{border-radius:var(--radius-md,.375rem)}");
+  });
+
+  it("ships the utilities in the components layer, beneath every app utility", () => {
+    const css = buildStyles();
+    // In \`utilities\` this sheet competed with the app's own utilities on load
+    // order, and a generic class here beat the app's responsive variants.
+    expect(css).toContain("@layer components{.");
+    expect(css).not.toMatch(/@layer utilities\{/u);
+  });
+
+  it("ships no generic classes the Panel never renders", () => {
+    const css = buildStyles();
+    for (const stray of ["hidden", "container", "transform", "transition", "visible", "resize"]) {
+      expect(css).not.toMatch(new RegExp(`[{}]\\.${stray}\\{`, "u"));
+    }
   });
 
   it("ships no Tailwind Preflight or theme globals", () => {

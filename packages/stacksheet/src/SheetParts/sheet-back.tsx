@@ -16,7 +16,7 @@ export const SheetBack = ({
   }
   const defaults = render
     ? undefined
-    : "flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 hover:opacity-100";
+    : "flex min-h-11 min-w-11 shrink-0 cursor-pointer touch-manipulation select-none items-center justify-center rounded-md border-none bg-transparent p-0 text-inherit opacity-60 transition-opacity duration-150 hover:opacity-100 active:opacity-100 [-webkit-touch-callout:none]";
   return (
     <SheetPartElement
       defaultTagName="button"
@@ -24,6 +24,7 @@ export const SheetBack = ({
         "aria-label": children === undefined || children === null ? "Back" : undefined,
         children: children ?? <ArrowLeftIcon />,
         className: joinClassNames(defaults, className),
+        "data-stacksheet-back": "",
         onClick: back,
         style,
         type: render ? undefined : "button",

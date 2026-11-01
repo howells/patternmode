@@ -1,11 +1,27 @@
-/** Elements that should never initiate a drag */
-export const INTERACTIVE_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"]);
-
-/** Dead zone in px before committing to drag vs text selection */
+/** Dead zone in px before a gesture commits as a drag; below it, a press stays a tap */
 export const DEAD_ZONE = 10;
+
+/**
+ * Movement in px after which a touch that is heading for a drag claims the
+ * gesture from the browser, so native scrolling never starts under it. It is
+ * smaller than the dead zone because the browser starts scrolling at its own,
+ * smaller slop.
+ */
+export const TOUCH_CLAIM_DISTANCE = 4;
 
 /** Max angle (degrees) from dismiss axis to qualify as drag intent */
 export const MAX_ANGLE_DEG = 35;
 
-/** Rubber-band resistance factor for dragging past resting position */
-export const RUBBER_BAND_FACTOR = 0.6;
+/** Scroll-view rubber-band constant: how far a drag past rest is allowed to follow the finger */
+export const RUBBER_BAND_CONSTANT = 0.55;
+
+/**
+ * The furthest (px) a Sheet stretches past its most open rest, however far
+ * it is pulled. Scaled by the panel's own size, the scroll-view curve lets a
+ * tall Sheet follow a long pull for hundreds of pixels, off the top of the
+ * screen; a native sheet gives a short, firm stretch.
+ */
+export const RUBBER_BAND_REACH = 120;
+
+/** How long after a drag a stray click is swallowed, unless a new press starts first */
+export const CLICK_SUPPRESSION_MS = 600;

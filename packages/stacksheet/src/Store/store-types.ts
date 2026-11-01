@@ -1,6 +1,12 @@
 import type { StoreApi } from "zustand";
 
-import type { SheetActions, SheetContentComponent, SheetData, StacksheetSnapshot } from "../types";
+import type {
+  SheetActions,
+  SheetContentComponent,
+  SheetData,
+  SheetHeight,
+  StacksheetSnapshot,
+} from "../types";
 
 export type AnyComponent = SheetContentComponent;
 
@@ -33,6 +39,7 @@ export interface SheetStoreBundle<TMap extends object> {
 /** Pre-resolved args — skips resolveArgs entirely */
 export interface ResolvedItem {
   ariaLabel?: string;
+  height?: SheetHeight;
   data: SheetData;
   id: string;
   type: string;

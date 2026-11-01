@@ -14,6 +14,7 @@ export const SheetTitle = ({ render, className, style, children }: SheetPartProp
       props={{
         children,
         className: joinClassNames(defaults, className),
+        "data-stacksheet-title": "",
         id: `${panelId}-title`,
         style,
       }}

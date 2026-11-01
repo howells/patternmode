@@ -1,8 +1,7 @@
-import type { Transition } from "motion/react";
 import type { ComponentType, ReactNode } from "react";
 
 import type { ResolvedClassNames } from "../renderer-helpers";
-import type { SlideValues } from "../stacking";
+import type { StackMotion } from "../stack-motion";
 import type {
   HeaderRenderProps,
   ResolvedConfig,
@@ -32,11 +31,9 @@ export interface SheetPanelProps {
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
   shouldRender: boolean;
   side: Side;
-  slideFrom: SlideValues;
-  slideTarget: SlideValues;
   snapHeights: number[];
-  spring: Transition;
-  stackSpring: Transition;
+  /** Motion shared by the Sheet Stack: depth beneath moving Panels, and the backdrop */
+  stackMotion: StackMotion;
   swipeClose: () => void;
   swipePop: () => void;
 }

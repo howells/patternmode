@@ -17,12 +17,14 @@ import type {
   StoreState,
 } from "./store-types";
 
-const createItem = ({ type, id, data, ariaLabel }: ResolvedItem): SheetItem => ({
-  ariaLabel,
-  data,
-  id,
-  type,
-});
+const createItem = ({ type, id, data, ariaLabel, height }: ResolvedItem): SheetItem => {
+  const item: SheetItem = { ariaLabel, data, id, type };
+  // Only set when asked for, so items stay as they were for every other Sheet.
+  if (height !== undefined) {
+    item.height = height;
+  }
+  return item;
+};
 
 interface StoreInternals {
   componentMap: Map<string, AnyComponent>;
@@ -180,19 +182,24 @@ const createSwap =
         )
       : getStringArg(first, "sheet type");
     const data = toSheetData(second);
-    const ariaLabel = resolvePresentationOptions(third)?.ariaLabel;
+    const presentation = resolvePresentationOptions(third);
     set((state) => {
       const top = state.stack.at(-1);
       if (top === undefined) {
         return state;
       }
       const newStack = [...state.stack];
-      newStack[newStack.length - 1] = {
-        ariaLabel: ariaLabel ?? top.ariaLabel,
+      const swapped: SheetItem = {
+        ariaLabel: presentation?.ariaLabel ?? top.ariaLabel,
         data,
         id: top.id,
         type,
       };
+      const height = presentation?.height ?? top.height;
+      if (height !== undefined) {
+        swapped.height = height;
+      }
+      newStack[newStack.length - 1] = swapped;
       return { stack: newStack };
     });
   };

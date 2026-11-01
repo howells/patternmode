@@ -16,7 +16,8 @@ const stacksheetApi: ApiSection[] = [
     name: "createStacksheet",
     props: [
       {
-        description: "Side, width, modal behavior, drag settings, snap points, and spring presets.",
+        description:
+          "Side, width, height, modal behavior, drag settings, snap points, and spring presets.",
         name: "config",
         type: "StacksheetConfig",
       },
@@ -30,6 +31,12 @@ const stacksheetApi: ApiSection[] = [
         description: "Returns open, push, navigate, replace, swap, pop, and close actions.",
         name: "useSheet",
         type: "Hook",
+      },
+      {
+        description:
+          'Per-Sheet options, the last argument to open, push, replace and navigate: ariaLabel, and height ("full" or "fit"; fit sizes a bottom Sheet to its content, up to 85dvh).',
+        name: "options",
+        type: "SheetPresentationOptions",
       },
     ],
   },

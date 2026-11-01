@@ -1,27 +1,35 @@
 /* Declare Tailwind's canonical layer order, and do it FIRST — a `@layer` statement
    is permitted before `@import`, and the position is load-bearing: emitted after
    the layer blocks it has no effect, because a layer is registered the first time
-   it is seen and a later statement cannot move one that already exists.
-
-   This sheet is the only Patternmode package that opens `utilities`, which makes
-   it the only one that can invert a consumer's cascade. Loaded before the app's
-   Tailwind entry it would register `utilities` early and leave the app's
-   `components` appended *after* it, so component styles would beat utilities.
-   Declaring the order here fixes that wherever the sheet lands, and is a no-op
-   when the app declares the order first, since first declaration wins.
-   (Packages that only open `components` cannot cause this: registering
-   `components` early still leaves `utilities` last.) */
+   it is seen and a later statement cannot move one that already exists. Loaded
+   before the app's own entry, this sheet would otherwise register `components`
+   ahead of the app's `theme` and `base`. First declaration wins, so this is a
+   no-op when the app declares the order first. */
 @layer theme, base, components, utilities;
 
 @import "tailwindcss/theme" theme(reference) source(none);
-/* `layer(utilities)` is load-bearing. Tailwind's layer declaration lives in its
-   main entry, so importing `utilities` on its own emits these rules layerless —
-   and a layerless declaration outranks every rule in a named layer regardless of
-   specificity. Without it this sheet's `.opacity-0` beats a consumer's
-   `group-hover:opacity-100` in `@layer utilities`, silently breaking any
-   hover-revealed control in an app that loads it. */
-@import "tailwindcss/utilities" layer(utilities) source(none);
+/* The Panel's own classes are Tailwind utilities, compiled here so that apps
+   without Tailwind get them. They ship in `components`, never `utilities`.
+
+   `utilities` was the bug: the app's utilities live in that layer too, so the
+   two sheets competed on source order alone. Whichever loaded later won, and a
+   generic class compiled here (`hidden`, `flex`) landed after the app's
+   responsive variants and beat them: `hidden sm:table-cell` stayed hidden on
+   desktop inside a Sheet. In `components` every app utility outranks every
+   rule in this sheet, at any specificity and in any load order, while the
+   Panel still beats the app's `base` resets.
+
+   `layer(...)` itself is load-bearing too: Tailwind's layer declaration lives in
+   its main entry, so importing `utilities` on its own emits these rules
+   layerless, and a layerless rule outranks everything in a named layer. */
+@import "tailwindcss/utilities" layer(components) source(none);
 @source "./**/*.{ts,tsx}";
+/* Tests mention classes the Panel never renders; don't ship them. */
+@source not "./**/*.test.{ts,tsx}";
+/* Words the scanner reads as classes from ordinary code ("hidden", "resize",
+   `style.transform`) that no Panel element carries. Shipping them would only
+   hand an app a second, unasked-for copy of its own generic utilities. */
+@source not inline("container filter hidden inline invisible outline resize static transform transition visible");
 
 /* Base UI's ScrollArea Viewport renders a plain scrolling div with no inner
    wrapper element, so the Radix `display:table` horizontal-sizing workaround

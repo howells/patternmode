@@ -17,28 +17,26 @@ export interface StackTransform {
 /**
  * Compute visual transforms for a panel at a given depth.
  * depth=0 is the top (foreground) panel.
- * Panels beyond renderThreshold are clamped to the edge position and faded out.
+ *
+ * Depth may be fractional while the panels above it move, so every output is
+ * continuous in depth: a panel recedes smoothly as a new one slides in over
+ * it, and comes forward as the one above is dragged away. Panels beyond
+ * renderThreshold stay at the edge position and fade out over the last step.
  */
 export const getStackTransform = (depth: number, stacking: StackingConfig): StackTransform => {
   if (depth <= 0) {
     return { borderRadius: 0, offset: 0, opacity: 1, scale: 1 };
   }
-  const beyondThreshold = depth >= stacking.renderThreshold;
   // Clamp visual depth so panels beyond threshold stay at the edge position
-  const visualDepth = beyondThreshold ? stacking.renderThreshold - 1 : depth;
+  const visualDepth = Math.min(depth, Math.max(0, stacking.renderThreshold - 1));
+  const fadeOut = Math.min(1, Math.max(0, stacking.renderThreshold - depth));
   return {
     borderRadius: stacking.radius,
     offset: visualDepth * stacking.offsetStep,
-    opacity: beyondThreshold ? 0 : Math.max(0, 1 - visualDepth * stacking.opacityStep),
+    opacity: Math.max(0, 1 - visualDepth * stacking.opacityStep) * fadeOut,
     scale: Math.max(0.5, 1 - visualDepth * stacking.scaleStep),
   };
 };
-/** A translation along either axis, in px. */
-export interface AxisOffset {
-  x?: number;
-  y?: number;
-}
-
 /** Corner radii for the animate target; side sheets set one radius, bottom sheets set the corners. */
 export interface AnimatedBorderRadius {
   borderBottomLeftRadius?: number;
@@ -73,50 +71,6 @@ export const getAnimatedBorderRadius = (
   }
   return { borderRadius: 0 };
 };
-// ── Slide directions ────────────────────────────
-export interface SlideValues {
-  x?: string | number;
-  y?: string | number;
-}
-/** Motion initial/exit values for sliding from the given side. */
-export const getSlideFrom = (side: string): SlideValues => {
-  switch (side) {
-    case "right": {
-      return { x: "100%" };
-    }
-    case "left": {
-      return { x: "-100%" };
-    }
-    case "bottom": {
-      return { y: "100%" };
-    }
-    default: {
-      return { x: "100%" };
-    }
-  }
-};
-/** Motion animate target — the resting position. */
-export const getSlideTarget = (): SlideValues => ({ x: 0, y: 0 });
-/** Translate offset that pushes stacked panels away from the stack edge. */
-export const getStackOffset = (side: string, offset: number): AxisOffset => {
-  if (offset === 0) {
-    return {};
-  }
-  switch (side) {
-    case "right": {
-      return { x: -offset };
-    }
-    case "left": {
-      return { x: offset };
-    }
-    case "bottom": {
-      return { y: -offset };
-    }
-    default: {
-      return {};
-    }
-  }
-};
 // ── Transform origin ────────────────────────────
 /** Opposite-side origin so stacked panels recede away from the stack edge. */
 const getTransformOrigin = (side: Side): string => {
@@ -130,15 +84,39 @@ const getTransformOrigin = (side: Side): string => {
 };
 // ── Panel positioning ───────────────────────────
 /**
+ * Safe-area insets. They read as 0 unless the page sets
+ * `viewport-fit=cover`, so they change nothing for a page that doesn't.
+ */
+const SAFE_AREA = {
+  bottom: "env(safe-area-inset-bottom, 0px)",
+  left: "env(safe-area-inset-left, 0px)",
+  right: "env(safe-area-inset-right, 0px)",
+  top: "env(safe-area-inset-top, 0px)",
+} as const;
+/**
+ * The bottom inset a bottom Sheet's content must clear. The panel runs to the
+ * screen's edge and does not pad itself: scrolling content passes under the
+ * home indicator, as on iOS, and pads its own end by this much. `Sheet.Body`
+ * and the default layout's content already do; a composable Sheet with its
+ * own scroller adds `padding-bottom: var(--stacksheet-safe-bottom)` to it.
+ */
+export const SAFE_BOTTOM = "--stacksheet-safe-bottom";
+export const SAFE_BOTTOM_PADDING = `var(${SAFE_BOTTOM}, 0px)`;
+const SAFE_BOTTOM_VALUE = { [SAFE_BOTTOM]: SAFE_AREA.bottom };
+/**
  * Fixed-position styles for a panel, accounting for side, width, and depth.
  */
 export const getPanelStyles = (
   side: Side,
   config: ResolvedConfig,
   index: number,
+  fitted = false,
 ): CSSProperties => {
   const { width, maxWidth, zIndex } = config;
   const base: CSSProperties = {
+    // Inherited: nothing tapped inside a Sheet gets the browser's grey flash.
+    // The Sheet's own controls give press feedback with `:active` instead.
+    WebkitTapHighlightColor: "transparent",
     display: "flex",
     flexDirection: "column",
     // The panel is focused programmatically on open (to move focus into the
@@ -154,20 +132,30 @@ export const getPanelStyles = (
       ...base,
       bottom: 0,
       // dvh tracks the dynamic viewport on iOS Safari (accounts for browser chrome).
-      height: BOTTOM_SHEET_HEIGHT,
+      // A fitted Sheet takes its content's height, up to the same cap.
+      height: fitted ? "auto" : BOTTOM_SHEET_HEIGHT,
       left: 0,
       // borderRadius is animated via Motion's animate prop for scale correction
       maxHeight: BOTTOM_SHEET_HEIGHT,
       right: 0,
+      // The surface runs to the bottom edge; its content clears the home
+      // indicator itself, so a background it paints reaches the edge too.
+      ...SAFE_BOTTOM_VALUE,
     };
   }
   // Left or right side panel
+  // Full-height side panels clear the notch, the home indicator and, in
+  // landscape, the sensor housing on their outer edge. All zero on desktop.
   const sideStyles: CSSProperties =
-    side === "right" ? { bottom: 0, right: 0, top: 0 } : { bottom: 0, left: 0, top: 0 };
+    side === "right"
+      ? { bottom: 0, paddingRight: SAFE_AREA.right, right: 0, top: 0 }
+      : { bottom: 0, left: 0, paddingLeft: SAFE_AREA.left, top: 0 };
   return {
     ...base,
     ...sideStyles,
     maxWidth,
+    paddingBottom: SAFE_AREA.bottom,
+    paddingTop: SAFE_AREA.top,
     width,
   };
 };

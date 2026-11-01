@@ -1,16 +1,17 @@
-import { AnimatePresence, domMax, LazyMotion, m, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, domMax, LazyMotion, m, usePresence } from "motion/react";
+import type { MotionValue } from "motion/react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { ComponentType, CSSProperties, ReactNode, RefObject } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 import type { StoreApi } from "zustand";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
-import { useResolvedSide } from "./media";
+import { usePrefersReducedMotion, useResolvedSide } from "./media";
 import { useBodyScale, useKeyboardInset, useViewportHeight } from "./renderer-effects";
 import { resolveClassNames } from "./renderer-helpers";
 import { SheetPanel } from "./sheet-panel";
 import { resolveSnapPoints } from "./snap-points";
-import { getSlideFrom, getSlideTarget } from "./stacking";
+import type { StackMotion } from "./stack-motion";
 import type {
   CloseReason,
   ContentMap,
@@ -63,18 +64,11 @@ const getActiveInternalSnapIndex = ({
     ? internalSnap.index
     : defaultSnapIndex;
 
-const getMotionSpring = (prefersReducedMotion: boolean, config: ResolvedConfig) =>
-  prefersReducedMotion
-    ? ({ duration: 0, type: "tween" as const } as const)
-    : ({
-        damping: config.spring.damping,
-        mass: config.spring.mass,
-        stiffness: config.spring.stiffness,
-        type: "spring" as const,
-      } as const);
-
 const getBackdropStyle = (config: ResolvedConfig, hasBackdropClass: boolean): CSSProperties => {
   const style: CSSProperties = {
+    // A tap on the overlay closes the stack; without this iOS and Android
+    // paint their grey tap flash over the whole screen as it fades.
+    WebkitTapHighlightColor: "transparent",
     cursor: config.closeOnBackdrop && config.dismissible ? "pointer" : undefined,
     willChange: "opacity",
     zIndex: config.zIndex,
@@ -85,6 +79,66 @@ const getBackdropStyle = (config: ResolvedConfig, hasBackdropClass: boolean): CS
   return style;
 };
 
+/** Below this the overlay is invisible, and a closing stack can unmount it. */
+const BACKDROP_GONE = 0.001;
+/** Unmount a closing overlay even if no Panel ever reports its exit. */
+const BACKDROP_EXIT_FALLBACK_MS = 1000;
+
+/**
+ * The Overlay. Its opacity is the Sheet Stack's backdrop value, so it dims in
+ * step with the first Sheet's entrance, lightens as that Sheet is dragged
+ * down, and fades out with its exit, on whatever curve the Sheet is moving on.
+ */
+const Backdrop = ({
+  className,
+  onClick,
+  opacity,
+  style,
+}: {
+  className: string;
+  onClick: (() => void) | undefined;
+  opacity: MotionValue<number>;
+  style: CSSProperties;
+}) => {
+  const [isPresent, safeToRemove] = usePresence();
+  useEffect(() => {
+    let done = isPresent;
+    const remove = () => {
+      if (!done) {
+        done = true;
+        safeToRemove?.();
+      }
+    };
+    const unsubscribe = opacity.on("change", (value) => {
+      if (value <= BACKDROP_GONE) {
+        remove();
+      }
+    });
+    const fallback = setTimeout(remove, BACKDROP_EXIT_FALLBACK_MS);
+    if (opacity.get() <= BACKDROP_GONE) {
+      remove();
+    }
+    return () => {
+      done = true;
+      unsubscribe();
+      clearTimeout(fallback);
+    };
+  }, [isPresent, opacity, safeToRemove]);
+  return (
+    <m.div
+      className={className}
+      onClick={isPresent ? onClick : undefined}
+      style={{ ...style, opacity, pointerEvents: isPresent ? undefined : "none" }}
+    />
+  );
+};
+
+const useSteppedStack = (stackMotion: StackMotion, prefersReducedMotion: boolean) => {
+  useLayoutEffect(() => {
+    stackMotion.setStepped(prefersReducedMotion);
+  }, [stackMotion, prefersReducedMotion]);
+};
+
 interface SheetRendererProps<TMap extends object> {
   classNames?: StacksheetClassNames;
   /** Ad-hoc component map (type key → component) */
@@ -93,6 +147,8 @@ interface SheetRendererProps<TMap extends object> {
   layout?: StacksheetLayout;
   renderHeader?: false | ((props: HeaderRenderProps) => ReactNode);
   sheets?: ContentMap<TMap>;
+  /** Motion shared by this Sheet Stack's Panels and overlay */
+  stackMotion: StackMotion;
   store: StoreApi<StacksheetSnapshot<TMap> & SheetActions<TMap>>;
 }
 
@@ -307,10 +363,11 @@ export const SheetRenderer = <TMap extends object>({
   classNames: classNamesProp,
   layout,
   renderHeader,
+  stackMotion,
 }: SheetRendererProps<TMap>) => {
   const { isOpen, rawClose, rawPop, stack } = useRendererStore(store);
   const side = useResolvedSide(config);
-  const prefersReducedMotion = useReducedMotion() ?? false;
+  const prefersReducedMotion = usePrefersReducedMotion();
   const classNames = resolveClassNames(classNamesProp);
   const { activeSnapIndex, handleSnap, snapHeights } = useSnapState(config, isOpen, side, stack);
   const { close, closeReasonRef, closeWith, pop, popWith } = useCloseControls(rawClose, rawPop);
@@ -325,10 +382,7 @@ export const SheetRenderer = <TMap extends object>({
     rawPop,
     stackLength: stack.length,
   });
-  const slideFrom = getSlideFrom(side);
-  const slideTarget = getSlideTarget();
-  const spring = getMotionSpring(prefersReducedMotion, config);
-  const stackSpring = spring;
+  useSteppedStack(stackMotion, prefersReducedMotion);
   const isModal = config.modal;
   const showOverlay = isModal && config.showOverlay;
   const hasBackdropClass = classNames.backdrop !== "";
@@ -350,11 +404,8 @@ export const SheetRenderer = <TMap extends object>({
       {showOverlay && (
         <AnimatePresence onExitComplete={handleBackdropExitComplete}>
           {isOpen && (
-            <m.div
-              animate={{ opacity: 1 }}
+            <Backdrop
               className={`fixed inset-0 ${classNames.backdrop || ""}`}
-              exit={{ opacity: 0 }}
-              initial={{ opacity: 0 }}
               key="stacksheet-backdrop"
               onClick={
                 config.closeOnBackdrop && config.dismissible
@@ -363,8 +414,8 @@ export const SheetRenderer = <TMap extends object>({
                     }
                   : undefined
               }
+              opacity={stackMotion.backdrop}
               style={backdropStyle}
-              transition={spring}
             />
           )}
         </AnimatePresence>
@@ -403,11 +454,8 @@ export const SheetRenderer = <TMap extends object>({
                   renderHeader={renderHeader}
                   shouldRender={shouldRender}
                   side={side}
-                  slideFrom={slideFrom}
-                  slideTarget={slideTarget}
                   snapHeights={snapHeights}
-                  spring={spring}
-                  stackSpring={stackSpring}
+                  stackMotion={stackMotion}
                   swipeClose={swipeClose}
                   swipePop={swipePop}
                 />

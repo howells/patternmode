@@ -26,8 +26,10 @@ export type {
   SheetActions,
   // Components
   SheetContentComponent,
+  SheetHeight,
   // Core types
   SheetItem,
+  SheetPresentationOptions,
   Side,
   SideConfig,
   SnapPoint,

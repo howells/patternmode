@@ -1,7 +1,5 @@
 import type { CSSProperties } from "react";
 import { getSnapOffset } from "./snap-points";
-import type { Transition } from "motion/react";
-import type { AnimatedBorderRadius, AxisOffset, getStackTransform, SlideValues } from "./stacking";
 import type { Side, StacksheetClassNames } from "./types";
 
 // `header` is deprecated (the header bar is gone) and intentionally dropped
@@ -70,25 +68,6 @@ export const buildAriaProps = ({
   }
   return props;
 };
-export const getDragTransform = (side: Side, offset: number): AxisOffset => {
-  if (offset === 0) {
-    return {};
-  }
-  switch (side) {
-    case "right": {
-      return { x: offset };
-    }
-    case "left": {
-      return { x: -offset };
-    }
-    case "bottom": {
-      return { y: offset };
-    }
-    default: {
-      return {};
-    }
-  }
-};
 export const VISUAL_TWEEN = {
   duration: 0.25,
   ease: "easeOut" as const,
@@ -118,7 +97,6 @@ export const buildPanelStyle = (
   panelStyles: CSSProperties,
   isTop: boolean,
   hasPanelClass: boolean,
-  isDragging: boolean,
   keyboardInset: number,
   padForKeyboard: boolean,
 ): CSSProperties => {
@@ -130,26 +108,11 @@ export const buildPanelStyle = (
   if (!isTop) {
     style.contain = "layout style paint";
   }
-  if (isDragging) {
-    style.transition = "none";
-  }
   if (!hasPanelClass) {
     style.background = "var(--background, #fff)";
     style.borderColor = "var(--border, transparent)";
   }
   return style;
-};
-export const buildPanelTransition = (
-  isDragging: boolean,
-  isTop: boolean,
-  spring: Transition,
-  stackSpring: Transition,
-): Transition => {
-  if (isDragging) {
-    return { duration: 0, type: "tween" as const };
-  }
-  const base = isTop ? spring : stackSpring;
-  return { ...base, borderRadius: VISUAL_TWEEN, boxShadow: VISUAL_TWEEN };
 };
 export const computeSnapYOffset = (
   side: Side,
@@ -161,59 +124,4 @@ export const computeSnapYOffset = (
     return 0;
   }
   return getSnapOffset(activeSnapIndex, snapHeights, measuredHeight);
-};
-export const getBottomSlideDistance = (measuredHeight: number): number => {
-  if (measuredHeight > 0) {
-    return measuredHeight;
-  }
-  if (typeof window !== "undefined") {
-    return window.innerHeight;
-  }
-  return 1000;
-};
-export const resolveSlideFrom = (
-  side: Side,
-  slideFrom: SlideValues,
-  measuredHeight: number,
-): SlideValues => {
-  if (side !== "bottom") {
-    return slideFrom;
-  }
-  return { y: getBottomSlideDistance(measuredHeight) };
-};
-export const buildAnimateTarget = (
-  slideTarget: SlideValues,
-  stackOffset: AxisOffset,
-  dragOffset: AxisOffset,
-  transform: ReturnType<typeof getStackTransform>,
-  animatedRadius: AnimatedBorderRadius,
-  transition: Transition,
-  snapYOffset: number,
-  isTop: boolean,
-) => {
-  const base = {
-    ...slideTarget,
-    ...stackOffset,
-    ...dragOffset,
-    ...animatedRadius,
-    boxShadow: getShadow(!isTop),
-    opacity: transform.opacity,
-    scale: transform.scale,
-    transition,
-  };
-  if (snapYOffset > 0) {
-    return { ...base, y: (dragOffset.y ?? 0) + snapYOffset };
-  }
-  return base;
-};
-export const getInitialRadius = (side: Side): AnimatedBorderRadius => {
-  if (side === "bottom") {
-    return {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-    };
-  }
-  return { borderRadius: 0 };
 };

@@ -5,6 +5,7 @@ import { useShallow } from "zustand/react/shallow";
 import { resolveConfig } from "./config";
 import { SheetRenderer } from "./renderer";
 import { SheetPortal } from "./sheet-portal";
+import { createStackMotion } from "./stack-motion";
 import { createSheetStore } from "./store";
 import type {
   ResolvedConfig,
@@ -51,6 +52,8 @@ export const createStacksheet = <TMap extends object>(
 ): StacksheetInstance<TMap> => {
   const resolved = resolveConfig(config);
   const { store, componentMap } = createSheetStore<TMap>(resolved);
+  // Like the store, one per instance: the Panels' shared depth and overlay motion.
+  const stackMotion = createStackMotion();
   // Context for the store — allows multiple instances
   const StoreContext = createContext<{
     store: StoreApi<StoreState<TMap>>;
@@ -83,6 +86,7 @@ export const createStacksheet = <TMap extends object>(
           layout={layout}
           renderHeader={renderHeader}
           sheets={sheets}
+          stackMotion={stackMotion}
           store={store}
         />
       </SheetPortal>

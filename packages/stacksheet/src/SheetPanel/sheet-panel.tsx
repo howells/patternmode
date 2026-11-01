@@ -1,35 +1,25 @@
-import { m } from "motion/react";
+import { m, usePresence } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 
-import type { DragState } from "../Drag/drag-types";
 import { useDrag } from "../Drag/use-drag";
 import { SheetPanelContext } from "../panel-context";
 import { usePanelHeight } from "../renderer-effects";
 import {
-  buildAnimateTarget,
   buildAriaProps,
   buildPanelStyle,
-  buildPanelTransition,
   computeSnapYOffset,
-  getDragTransform,
-  getInitialRadius,
   getShadow,
-  resolveSlideFrom,
   VISUAL_TWEEN,
 } from "../renderer-helpers";
-import {
-  getAnimatedBorderRadius,
-  getPanelStyles,
-  getStackOffset,
-  getStackTransform,
-} from "../stacking";
-import type { HandlePosition, HeaderRenderProps, SheetData } from "../types";
+import { getAnimatedBorderRadius, getPanelStyles } from "../stacking";
+import type { HandlePosition, HeaderRenderProps, SheetData, Side } from "../types";
 import { PanelInnerContent } from "./sheet-panel-content";
 import { ModalFocusTrap } from "./sheet-panel-focus";
 import { BottomHandle, SideHandle } from "./sheet-panel-handles";
 import { resolvePanelLayout } from "./sheet-panel-layout";
 import type { SheetPanelProps } from "./sheet-panel-types";
+import { usePanelMotion } from "./use-panel-motion";
 
 const hasLegacyAriaLabel = (data: SheetData): data is { __ariaLabel: string } =>
   "__ariaLabel" in data && typeof data.__ariaLabel === "string";
@@ -121,74 +111,38 @@ const getOptionalBottomHandle = (
   position: HandlePosition,
 ): ReactNode => (show ? <BottomHandle onDismiss={onDismiss} position={position} /> : null);
 
-const completeOpeningAnimation = (
-  hasEnteredRef: RefObject<boolean>,
-  isTop: boolean,
-  onOpenCompleteRef: RefObject<(() => void) | undefined>,
-) => {
-  if (isTop && !hasEnteredRef.current) {
-    hasEnteredRef.current = true;
-    onOpenCompleteRef.current?.();
+/**
+ * The surface a rubber-banded Panel reveals past its resting edge: a strip of
+ * the Panel's own background beyond the screen edge it is anchored to, so
+ * pulling a Sheet further open stretches it rather than lifting it off the
+ * edge and showing the page underneath.
+ */
+const getOverscrollSkirtStyle = (side: Side) => {
+  const base = { background: "inherit", pointerEvents: "none", position: "absolute" } as const;
+  if (side === "bottom") {
+    return { ...base, height: "100%", left: 0, right: 0, top: "100%" };
   }
+  return side === "right"
+    ? { ...base, bottom: 0, left: "100%", top: 0, width: "100%" }
+    : { ...base, bottom: 0, right: "100%", top: 0, width: "100%" };
 };
 
-const useOpeningCompletion = (isTop: boolean, onOpenComplete: (() => void) | undefined) => {
-  const hasEnteredRef = useRef(false);
-  const onOpenCompleteRef = useRef(onOpenComplete);
-
+/** Remember the last element focused inside the panel, to restore it when the Sheet becomes active again. */
+const useLastFocused = (panelRef: RefObject<HTMLDivElement | null>) => {
+  const lastFocused = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    if (!isTop) {
-      hasEnteredRef.current = false;
-    }
-  }, [isTop]);
-  useEffect(() => {
-    onOpenCompleteRef.current = onOpenComplete;
-  }, [onOpenComplete]);
-
-  return () => {
-    completeOpeningAnimation(hasEnteredRef, isTop, onOpenCompleteRef);
-  };
-};
-
-const useSheetPanelDrag = (
-  {
-    activeSnapIndex,
-    config,
-    isNested,
-    isTop,
-    onSnap,
-    prefersReducedMotion,
-    side,
-    snapHeights,
-    swipeClose,
-    swipePop,
-  }: SheetPanelProps,
-  panelRef: RefObject<HTMLDivElement | null>,
-): DragState => {
-  const [dragState, setDragState] = useState<DragState>({
-    isDragging: false,
-    offset: 0,
-  });
-
-  useDrag(
-    panelRef,
-    {
-      activeSnapIndex,
-      closeThreshold: config.closeThreshold,
-      enabled: isTop && config.drag && config.dismissible && !prefersReducedMotion,
-      isNested,
-      onClose: swipeClose,
-      onPop: swipePop,
-      onSnap,
-      sequential: config.snapToSequentialPoints,
-      side,
-      snapHeights,
-      velocityThreshold: config.velocityThreshold,
-    },
-    setDragState,
-  );
-
-  return dragState;
+    const panel = panelRef.current;
+    const remember = (event: FocusEvent) => {
+      if (event.target instanceof HTMLElement && event.target !== panel) {
+        lastFocused.current = event.target;
+      }
+    };
+    panel?.addEventListener("focusin", remember);
+    return () => {
+      panel?.removeEventListener("focusin", remember);
+    };
+  }, [panelRef]);
+  return lastFocused;
 };
 
 const useSheetPanelContext = (
@@ -197,23 +151,24 @@ const useSheetPanelContext = (
 ) => {
   const [hasDescription, setHasDescription] = useState(false);
   const [hasTitle, setHasTitle] = useState(false);
-  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Description effects from re-running on every drag re-render.
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Description effects from re-running on every panel re-render.
   const registerDescription = useCallback(() => {
     setHasDescription(true);
     return () => {
       setHasDescription(false);
     };
   }, []);
-  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Title effects from re-running on every drag re-render.
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; a stable identity keeps Sheet.Title effects from re-running on every panel re-render.
   const registerTitle = useCallback(() => {
     setHasTitle(true);
     return () => {
       setHasTitle(false);
     };
   }, []);
-  // Memoized so drag-driven re-renders don't churn the context value (and
-  // with it every Sheet.* consumer's effects).
-  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the panel context is a new object on every pointermove re-render.
+  // Memoized so panel re-renders (hover, Snap, keyboard) don't churn the
+  // context value and with it every Sheet.* consumer's effects. Drags no
+  // longer re-render at all.
+  // oxlint-disable-next-line react-doctor/react-compiler-no-manual-memoization -- the library build does not run React Compiler; without useMemo the panel context is a new object on every panel re-render.
   const panelContext = useMemo(
     () =>
       getPanelContext({
@@ -245,11 +200,98 @@ const useSheetPanelContext = (
   return { hasDescription, hasTitle, panelContext };
 };
 
+const getSnapGeometry = (
+  side: Side,
+  snapHeights: number[],
+  activeSnapIndex: number,
+  measuredHeight: number,
+) => ({
+  minTravel:
+    snapHeights.length > 0
+      ? computeSnapYOffset(side, snapHeights, snapHeights.length - 1, measuredHeight)
+      : 0,
+  rest: computeSnapYOffset(side, snapHeights, activeSnapIndex, measuredHeight),
+  snapTravel: (index: number) => computeSnapYOffset(side, snapHeights, index, measuredHeight),
+});
+
+/**
+ * A bottom Sheet sized to its content. Snap Points set their own heights,
+ * and side Sheets are always full height.
+ */
+const isFittedSheet = ({ config, item, side, snapHeights }: SheetPanelProps): boolean =>
+  side === "bottom" && snapHeights.length === 0 && (item.height ?? config.height) === "fit";
+
+const useSheetPanelMotion = (
+  props: SheetPanelProps,
+  panelRef: RefObject<HTMLDivElement | null>,
+  isActive: boolean,
+  presence: { isPresent: boolean; safeToRemove: (() => void) | null | undefined },
+) => {
+  const {
+    activeSnapIndex,
+    config,
+    isNested,
+    isTop,
+    onSnap,
+    prefersReducedMotion,
+    side,
+    snapHeights,
+    stackMotion,
+    swipeClose,
+    swipePop,
+  } = props;
+  const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
+  const { minTravel, rest, snapTravel } = getSnapGeometry(
+    side,
+    snapHeights,
+    activeSnapIndex,
+    measuredHeight,
+  );
+  // Drag stays on under reduced motion: it is direct manipulation, not decoration.
+  const dragEnabled = isActive && config.drag && config.dismissible;
+  const motion = usePanelMotion({
+    dragEnabled,
+    fitted: isFittedSheet(props),
+    isPresent: presence.isPresent,
+    onDismiss: isNested ? swipePop : swipeClose,
+    onEntered: () => {
+      if (isTop) {
+        config.onOpenComplete?.();
+      }
+    },
+    onSnap,
+    panelRef,
+    reduced: prefersReducedMotion,
+    rest,
+    safeToRemove: presence.safeToRemove,
+    side,
+    snapTravel,
+    spring: config.spring,
+    stack: stackMotion,
+    stacking: config.stacking,
+  });
+  useDrag(
+    panelRef,
+    {
+      activeSnapIndex,
+      closeThreshold: config.closeThreshold,
+      enabled: dragEnabled,
+      minTravel,
+      sequential: config.snapToSequentialPoints,
+      side,
+      snapHeights,
+      velocityThreshold: config.velocityThreshold,
+    },
+    motion.dragTarget,
+  );
+  return motion.style;
+};
+
 const useSheetPanelModel = (props: SheetPanelProps) => {
   const {
     item,
-    index,
     depth,
+    index,
     isTop,
     isNested,
     side,
@@ -259,46 +301,47 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     close,
     snapHeights,
     keyboardInset,
-    activeSnapIndex,
     layout,
     renderHeader,
-    slideFrom,
-    slideTarget,
-    spring,
-    stackSpring,
   } = props;
   const panelRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isPresent, safeToRemove] = usePresence();
+  // A Panel on its way out is no longer the Active Sheet: the Sheet beneath
+  // takes taps, focus and drags at once, without waiting for the exit.
+  const isActive = isTop && isPresent;
 
-  const measuredHeight = usePanelHeight(panelRef, snapHeights.length > 0);
+  const motionStyle = useSheetPanelMotion(props, panelRef, isActive, {
+    isPresent,
+    safeToRemove,
+  });
+  const lastFocused = useLastFocused(panelRef);
 
-  const transform = getStackTransform(depth, config.stacking);
-  const panelStyles = getPanelStyles(side, config, index);
-
-  const handleAnimationComplete = useOpeningCompletion(isTop, config.onOpenComplete);
-  const dragState = useSheetPanelDrag(props, panelRef);
-
+  const panelStyles = getPanelStyles(side, config, index, isFittedSheet(props));
   const ariaLabel = getPanelAriaLabel(item, config.ariaLabel);
-
   const panelId = `stacksheet-${item.id}`;
-  const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(props, panelId);
+  const { hasDescription, hasTitle, panelContext } = useSheetPanelContext(
+    { ...props, isTop: isActive },
+    panelId,
+  );
 
   const panelLayout = resolvePanelLayout(layout, renderHeader);
   const isComposable = panelLayout === "composable";
   const hasPanelClass = classNames.panel !== "";
-  const dragOffset = getDragTransform(side, dragState.offset);
   // Only the top bottom-sheet reacts to the keyboard (background panels are
   // inert and can't hold focus). Plain sheets pad content above the keyboard;
   // snap sheets lift instead — they already track the shrunk visual viewport.
   const activeKeyboardInset = isTop && side === "bottom" ? keyboardInset : 0;
-  const panelStyle = buildPanelStyle(
-    panelStyles,
-    isTop,
-    hasPanelClass,
-    dragState.isDragging,
-    activeKeyboardInset,
-    snapHeights.length === 0,
-  );
+  const panelStyle = {
+    ...buildPanelStyle(
+      panelStyles,
+      isActive,
+      hasPanelClass,
+      activeKeyboardInset,
+      snapHeights.length === 0,
+    ),
+    ...motionStyle,
+  };
 
   const headerProps = getHeaderProps({ close, isNested, pop, side });
 
@@ -308,33 +351,21 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
     hasTitle,
     isComposable,
     isModal: config.modal,
-    isTop,
+    isTop: isActive,
     panelId,
   });
 
-  const transition = buildPanelTransition(dragState.isDragging, isTop, spring, stackSpring);
+  // Corners and shadow change with whole steps of depth; scale and offset
+  // follow depth continuously through `motionStyle`.
+  const visualTarget = {
+    ...getAnimatedBorderRadius(side, depth, config.stacking),
+    boxShadow: getShadow(depth > 0),
+  };
 
-  const animatedRadius = getAnimatedBorderRadius(side, depth, config.stacking);
-  const snapYOffset = computeSnapYOffset(side, snapHeights, activeSnapIndex, measuredHeight);
-  const resolvedSlideFrom = resolveSlideFrom(side, slideFrom, measuredHeight);
-
-  const stackOffset = getStackOffset(side, transform.offset);
-  const animateTarget = buildAnimateTarget(
-    slideTarget,
-    stackOffset,
-    dragOffset,
-    transform,
-    animatedRadius,
-    transition,
-    snapYOffset,
-    isTop,
-  );
-
-  const initialRadius = getInitialRadius(side);
-  const showSideHandle = isTop && side !== "bottom";
+  const showSideHandle = isActive && side !== "bottom";
   // Composable layouts own their chrome — Sheet.Handle renders the pill, so
   // the auto handle would duplicate it.
-  const showBottomHandle = isTop && side === "bottom" && !isComposable;
+  const showBottomHandle = isActive && side === "bottom" && !isComposable;
   const dismiss = isNested ? pop : close;
   const sideHandle = getOptionalSideHandle({
     isHovered,
@@ -347,86 +378,62 @@ const useSheetPanelModel = (props: SheetPanelProps) => {
   // the panel places them at the panel level rather than inside it.
   const bottomHandleOutside = showBottomHandle && config.handle === "outside";
   const hoverProps = getPanelHoverProps(showSideHandle, setIsHovered);
-  const inactivePanelProps = getInactivePanelProps(isTop);
+  const inactivePanelProps = getInactivePanelProps(isActive);
 
   return {
-    animateTarget,
     ariaProps,
     bottomHandle,
     bottomHandleOutside,
-    handleAnimationComplete,
     headerProps,
     hoverProps,
     inactivePanelProps,
-    initialRadius,
+    isActive,
     isComposable,
+    lastFocused,
     panelContext,
     panelRef,
     panelStyle,
-    resolvedSlideFrom,
     sideHandle,
+    visualTarget,
   };
 };
 
 export const SheetPanel = (props: SheetPanelProps) => {
+  const { item, config, classNames, Content, shouldRender, renderHeader, side } = props;
   const {
-    item,
-    isTop,
-    config,
-    classNames,
-    Content,
-    shouldRender,
-    renderHeader,
-    prefersReducedMotion,
-  } = props;
-  const {
-    animateTarget,
     ariaProps,
     bottomHandle,
     bottomHandleOutside,
-    handleAnimationComplete,
     headerProps,
     hoverProps,
     inactivePanelProps,
-    initialRadius,
+    isActive,
     isComposable,
+    lastFocused,
     panelContext,
     panelRef,
     panelStyle,
-    resolvedSlideFrom,
     sideHandle,
+    visualTarget,
   } = useSheetPanelModel(props);
 
   const panelContent = (
     <m.div
-      animate={animateTarget}
+      animate={visualTarget}
       className={classNames.panel || undefined}
-      exit={{
-        ...resolvedSlideFrom,
-        boxShadow: getShadow(false),
-        opacity: 0.6,
-        transition: {
-          boxShadow: VISUAL_TWEEN,
-          duration: prefersReducedMotion ? 0 : 0.24,
-          ease: "easeOut",
-          type: "tween",
-        },
-      }}
-      initial={{
-        ...resolvedSlideFrom,
-        opacity: 0.8,
-        ...initialRadius,
-        boxShadow: getShadow(false),
-      }}
+      data-stacksheet-height={isFittedSheet(props) ? "fit" : undefined}
+      data-stacksheet-panel=""
+      initial={false}
       key={item.id}
-      onAnimationComplete={handleAnimationComplete}
       ref={panelRef}
       style={panelStyle}
-      tabIndex={isTop ? -1 : undefined}
+      tabIndex={isActive ? -1 : undefined}
+      transition={VISUAL_TWEEN}
       {...hoverProps}
       {...inactivePanelProps}
       {...ariaProps}
     >
+      <div aria-hidden="true" style={getOverscrollSkirtStyle(side)} />
       {sideHandle}
       {bottomHandleOutside ? bottomHandle : null}
       <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[inherit]">
@@ -445,7 +452,12 @@ export const SheetPanel = (props: SheetPanelProps) => {
 
   return (
     <SheetPanelContext.Provider value={panelContext}>
-      <ModalFocusTrap active={isTop} enabled={config.modal} fallbackRef={panelRef}>
+      <ModalFocusTrap
+        active={isActive}
+        enabled={config.modal}
+        fallbackRef={panelRef}
+        restoreRef={lastFocused}
+      >
         {panelContent}
       </ModalFocusTrap>
     </SheetPanelContext.Provider>

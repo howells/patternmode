@@ -145,7 +145,42 @@ function SettingsSheet() {
 }
 ```
 
+`Sheet.Header` is a navigation bar, as an iOS sheet has: one row with `Sheet.Back` at the leading edge, `Sheet.Title` centred and cut to one line, and `Sheet.Close` at the trailing edge. The edge columns are equal, so the title stays centred whether or not Back shows. Each part is placed by its data attribute, so their order in the markup doesn't matter. Keep the header to these three. Put a `Sheet.Description` at the top of `Sheet.Body`; if one is put in the header, it gets its own centred row under the bar rather than squeezing beside the buttons.
+
 For custom controls and Sheet metadata inside a Sheet, use `useSheetPanel()`.
+
+## Fitted height
+
+Bottom Sheets are 85dvh tall by default. A Sheet with little in it, such as a set of filters, can size to its content instead, still capped at 85dvh:
+
+```tsx
+open(Filters, {}, { height: "fit" });
+```
+
+Set a default for every Sheet with `createStacksheet({ height: "fit" })` and override it per Sheet with `{ height: "full" }`. The type is `SheetHeight` (`"full" | "fit"`). A fitted Sheet drags, stacks and animates like any other, and when its content grows or shrinks while it is open, the change in height animates. `height` applies to bottom Sheets without Snap Points; side Panels and snapping Sheets ignore it.
+
+## Drag and motion
+
+Bottom Sheets are dragged down to dismiss and side Panels outward. Motion runs on Motion values, so a drag never re-renders React.
+
+- **Where a drag starts.** Anywhere on the Panel, including links and buttons. A press that moves less than 10px is still a tap; once a press becomes a drag, the click that would follow it is swallowed. Text fields, selects, textareas, editable content and `draggable="true"` elements never start a drag. Mark anything else that needs its own gestures (a slider, a map, a canvas) with `data-stacksheet-no-drag`.
+- **Scrolling content.** Pulling down on scrolled content scrolls it. Once it is at the top, the pull moves the Sheet. Pulling up scrolls the content, unless the Sheet rests at a lower Snap Point, in which case it expands first.
+- **Release.** The release velocity carries into the spring, whether the Sheet dismisses, snaps or returns. A drag past the most open position stretches with a short rubber band.
+- **Closing from code.** `close()` and `pop()` send a Sheet out the way it came in, and interrupting one (pushing during a close, closing during an entrance) carries on from where the Sheet is.
+- **The stack.** Sheets beneath the top one recede and come forward continuously as it enters, is dragged and leaves. The backdrop follows the same progress.
+- **Reduced motion.** With `prefers-reduced-motion: reduce`, Sheets crossfade in place (200ms in, 150ms out) instead of sliding, and the Sheets beneath change position without travelling. Dragging still works.
+
+Panels pad their edges with `env(safe-area-inset-*)`, so add `viewport-fit=cover` to your viewport meta tag for content to clear the home indicator and notch. A bottom Sheet runs to the screen edge and leaves the home indicator to its scrolling content, which passes under it and ends clear of it. `Sheet.Body` does this for you; if you bring your own scroller, pad its content with `var(--stacksheet-safe-bottom)`.
+
+## Styling and Tailwind
+
+`styles.css` is precompiled. Its utilities ship inside `@layer components`, so in a Tailwind v4 app your own utilities (`hidden sm:table-cell`, for example) always win over the package's. Importing it is safe whether or not your app uses Tailwind.
+
+If your app uses Tailwind v4 and you would rather generate the package's classes with your own theme, skip `styles.css` and point Tailwind at the package instead:
+
+```css
+@source "../node_modules/@patternmode/stacksheet/dist";
+```
 
 ## Accessibility
 

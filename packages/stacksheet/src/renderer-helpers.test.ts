@@ -1,18 +1,12 @@
 // oxlint-disable typescript/no-deprecated -- Exercise the legacy API contract and complete MediaQueryList test doubles.
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
-  buildAnimateTarget,
   buildAriaProps,
   buildPanelStyle,
-  buildPanelTransition,
   computeSnapYOffset,
-  getBottomSlideDistance,
-  getDragTransform,
-  getInitialRadius,
   getShadow,
   resolveClassNames,
-  resolveSlideFrom,
 } from "./renderer-helpers";
 
 describe("renderer helpers", () => {
@@ -96,22 +90,14 @@ describe("renderer helpers", () => {
     });
   });
 
-  it("maps drag offset to the active side", () => {
-    expect(getDragTransform("right", 14)).toStrictEqual({ x: 14 });
-    expect(getDragTransform("left", 14)).toStrictEqual({ x: -14 });
-    expect(getDragTransform("bottom", 14)).toStrictEqual({ y: 14 });
-    expect(getDragTransform("right", 0)).toStrictEqual({});
-  });
-
   it("adds fallback panel styles when no class name is supplied", () => {
-    expect(buildPanelStyle({ zIndex: 2 }, true, false, true, 0, true)).toStrictEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, true, false, 0, true)).toStrictEqual({
       background: "var(--background, #fff)",
       borderColor: "var(--border, transparent)",
       pointerEvents: "auto",
-      transition: "none",
       zIndex: 2,
     });
-    expect(buildPanelStyle({ zIndex: 2 }, false, true, false, 0, true)).toStrictEqual({
+    expect(buildPanelStyle({ zIndex: 2 }, false, true, 0, true)).toStrictEqual({
       contain: "layout style paint",
       pointerEvents: "none",
       zIndex: 2,
@@ -120,30 +106,14 @@ describe("renderer helpers", () => {
 
   it("clears the keyboard by padding plain sheets and lifting snap sheets", () => {
     // Plain sheet: surface stays anchored at bottom 0, content pads up.
-    const padded = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, true);
+    const padded = buildPanelStyle({ zIndex: 2 }, true, true, 300, true);
     expect(padded).toMatchObject({ paddingBottom: 300 });
     expect(padded).not.toHaveProperty("bottom");
     // Snap sheet: lifted, viewport-driven sizing untouched.
-    const lifted = buildPanelStyle({ zIndex: 2 }, true, true, false, 300, false);
+    const lifted = buildPanelStyle({ zIndex: 2 }, true, true, 300, false);
     expect(lifted).toMatchObject({ bottom: 300 });
     expect(lifted).not.toHaveProperty("paddingBottom");
-    expect(buildPanelStyle({ zIndex: 2 }, true, true, false, 0, true)).not.toHaveProperty(
-      "paddingBottom",
-    );
-  });
-
-  it("builds transition objects for dragging and stacked panels", () => {
-    expect(buildPanelTransition(true, true, { type: "spring" }, { type: "tween" })).toStrictEqual({
-      duration: 0,
-      type: "tween",
-    });
-    expect(buildPanelTransition(false, false, { type: "spring" }, { type: "tween" })).toMatchObject(
-      {
-        borderRadius: { duration: 0.25, ease: "easeOut", type: "tween" },
-        boxShadow: { duration: 0.25, ease: "easeOut", type: "tween" },
-        type: "tween",
-      },
-    );
+    expect(buildPanelStyle({ zIndex: 2 }, true, true, 0, true)).not.toHaveProperty("paddingBottom");
   });
 
   it("computes snap offsets only for measured bottom sheets", () => {
@@ -153,45 +123,8 @@ describe("renderer helpers", () => {
     expect(computeSnapYOffset("bottom", [100, 300], 0, 400)).toBe(300);
   });
 
-  it("resolves bottom slide fallback distance from measurement or viewport", () => {
-    expect(getBottomSlideDistance(240)).toBe(240);
-    vi.stubGlobal("window", { innerHeight: 720 });
-    expect(getBottomSlideDistance(0)).toBe(720);
-    vi.unstubAllGlobals();
-    expect(resolveSlideFrom("right", { x: 100 }, 300)).toStrictEqual({ x: 100 });
-    expect(resolveSlideFrom("bottom", { y: 100 }, 300)).toStrictEqual({ y: 300 });
-  });
-
-  it("returns side-specific initial radius and nested shadows", () => {
-    expect(getInitialRadius("bottom")).toStrictEqual({
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-    });
-    expect(getInitialRadius("left")).toStrictEqual({ borderRadius: 0 });
+  it("returns a light shadow for covered panels and a deep one for the Active Sheet", () => {
     expect(getShadow(true)).toContain("6px 12px");
     expect(getShadow(false)).toContain("48px 96px");
-  });
-
-  it("merges animation target layers and lets snap y override base y", () => {
-    expect(
-      buildAnimateTarget(
-        { y: 100 },
-        { x: 12 },
-        { y: 8 },
-        { opacity: 0.8, scale: 0.96 },
-        { borderRadius: 16 },
-        { type: "spring" },
-        40,
-        false,
-      ),
-    ).toMatchObject({
-      borderRadius: 16,
-      opacity: 0.8,
-      scale: 0.96,
-      x: 12,
-      y: 48,
-    });
   });
 });

@@ -28,3 +28,26 @@ export const useResolvedSide = (config: ResolvedConfig): Side => {
   const isMobile = useIsMobile(config.breakpoint);
   return isMobile ? config.side.mobile : config.side.desktop;
 };
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+const subscribeToReducedMotion = (onChange: () => void) => {
+  const mql = window.matchMedia(REDUCED_MOTION_QUERY);
+  mql.addEventListener("change", onChange);
+  return () => {
+    mql.removeEventListener("change", onChange);
+  };
+};
+
+/**
+ * True while the user prefers reduced motion, following the setting live.
+ * Motion's `useReducedMotion` reads it once per mount, so a stack mounted
+ * before the setting changed would keep moving until the page reloaded.
+ * SSR-safe: false on the server.
+ */
+export const usePrefersReducedMotion = (): boolean =>
+  useSyncExternalStore(
+    subscribeToReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
+  );

@@ -49,15 +49,36 @@ const useLayeredModalFocused = (active: boolean): boolean => {
   return active && layered;
 };
 
+/**
+ * Where focus lands when a Panel becomes the Active Sheet: the element that
+ * had focus when a Push covered it (the row that opened the next Sheet), so
+ * a Pop puts focus back where the user left it; otherwise the Panel itself,
+ * so screen readers announce the dialog.
+ */
+const getInitialFocus = (
+  fallbackRef: RefObject<HTMLElement | null>,
+  restoreRef: RefObject<HTMLElement | null> | undefined,
+): HTMLElement | undefined => {
+  const panel = fallbackRef.current;
+  const restore = restoreRef?.current;
+  if (panel !== null && restore?.isConnected === true && panel.contains(restore)) {
+    return restore;
+  }
+  return panel ?? undefined;
+};
+
 export const ModalFocusTrap = ({
   enabled,
   active,
   fallbackRef,
+  restoreRef,
   children,
 }: {
   enabled: boolean;
   active: boolean;
   fallbackRef: RefObject<HTMLElement | null>;
+  /** Last element focused inside the Panel, restored when it becomes active again */
+  restoreRef?: RefObject<HTMLElement | null>;
   children: ReactNode;
 }): ReactNode => {
   const paused = useLayeredModalFocused(enabled && active);
@@ -76,10 +97,11 @@ export const ModalFocusTrap = ({
           }
           return document.body;
         },
-        // Focus the panel element itself (it has tabIndex={-1}) so screen
-        // readers announce the dialog when it opens.
-        initialFocus: () => fallbackRef.current ?? undefined,
-        returnFocusOnDeactivate: true,
+        initialFocus: () => getInitialFocus(fallbackRef, restoreRef),
+        // A covered Panel's trap deactivates on every Push. Returning focus
+        // then would throw it out to the page for a frame; the renderer
+        // restores focus to the opener when the whole stack closes instead.
+        returnFocusOnDeactivate: false,
       }}
       paused={paused}
     >

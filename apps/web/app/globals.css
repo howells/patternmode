@@ -313,6 +313,10 @@ button {
   @apply translate-x-[3px];
 }
 
+.sheet-link-list {
+  @apply flex flex-col px-4 pb-6;
+}
+
 .sheet-form {
   @apply mx-0 mt-4 mb-1 flex flex-col gap-2.5;
 }

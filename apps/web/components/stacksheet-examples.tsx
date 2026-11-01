@@ -1,7 +1,7 @@
 "use client";
 
 import { createStacksheet, Sheet, useSheetPanel } from "@patternmode/stacksheet";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import type { ReactNode } from "react";
 
 const DEMO_CLASSNAMES = {
@@ -235,6 +235,153 @@ const formExample = (
   </form.StacksheetProvider>
 );
 
+// ── Rows that open Sheets (buttons, scrolling) ────
+
+const REGIONS = [
+  "North",
+  "North East",
+  "East",
+  "South East",
+  "South",
+  "South West",
+  "West",
+  "Midlands",
+  "Wales",
+  "Scotland",
+  "Northern Ireland",
+  "London",
+  "Home Counties",
+  "Channel Islands",
+  "Isle of Man",
+  "Overseas",
+];
+
+const rows = createStacksheet<{ region: { depth: number; name: string } }>({
+  side: { desktop: "right", mobile: "bottom" },
+});
+
+const RegionSheet = ({ depth, name }: { depth: number; name: string }) => {
+  const { push } = rows.useSheet();
+  return (
+    <>
+      <Sheet.Handle />
+      <Sheet.Close />
+      <Sheet.Header className="sheet-panel-content justify-start pb-0">
+        <Sheet.Back />
+        <Sheet.Title>{name}</Sheet.Title>
+      </Sheet.Header>
+      <Sheet.Body>
+        <nav aria-label={`Regions under ${name}`} className="sheet-link-list">
+          {REGIONS.map((region) => (
+            <button
+              className="stacksheet-row"
+              key={region}
+              onClick={() => {
+                push("region", `region-${depth + 1}-${region}`, { depth: depth + 1, name: region });
+              }}
+              type="button"
+            >
+              <span className="stacksheet-row-name">{region}</span>
+              <span className="stacksheet-row-open">
+                Open
+                <OpenArrow />
+              </span>
+            </button>
+          ))}
+        </nav>
+      </Sheet.Body>
+    </>
+  );
+};
+
+const RowsRow = () => {
+  const { open } = rows.useSheet();
+  return (
+    <Row
+      description="Drag from any row; a tap still opens the next Sheet."
+      name="Rows that open Sheets"
+      onOpen={() => {
+        open("region", "region-0", { depth: 0, name: "Regions" });
+      }}
+    />
+  );
+};
+
+const rowsExample = (
+  <rows.StacksheetProvider
+    classNames={DEMO_CLASSNAMES}
+    layout="composable"
+    sheets={{ region: RegionSheet }}
+  >
+    <RowsRow />
+  </rows.StacksheetProvider>
+);
+
+// ── Fitted height ───────────────────────────────
+
+const fitted = createStacksheet({ side: "bottom" });
+
+const FiltersContent = () => {
+  const { close } = useSheetPanel();
+  const [filters, setFilters] = useState(["Region", "Rep"]);
+  return (
+    <>
+      <Sheet.Handle />
+      <Sheet.Body>
+        <div className="sheet-panel-content">
+          <Sheet.Title>Filters</Sheet.Title>
+          <div className="sheet-list">
+            {filters.map((filter) => (
+              <span key={filter}>{filter}</span>
+            ))}
+          </div>
+          <div className="sheet-action-row">
+            <button
+              onClick={() => {
+                setFilters((current) => [...current, `Filter ${current.length + 1}`]);
+              }}
+              type="button"
+            >
+              Add a filter
+            </button>
+            <button
+              disabled={filters.length === 0}
+              onClick={() => {
+                setFilters((current) => current.slice(0, -1));
+              }}
+              type="button"
+            >
+              Remove one
+            </button>
+            <button onClick={close} type="button">
+              Done
+            </button>
+          </div>
+        </div>
+      </Sheet.Body>
+    </>
+  );
+};
+
+const FittedRow = () => {
+  const { open } = fitted.useSheet();
+  return (
+    <Row
+      description="As tall as its content; a change in height animates."
+      name="Fitted height"
+      onOpen={() => {
+        open(FiltersContent, {}, { height: "fit" });
+      }}
+    />
+  );
+};
+
+const fittedExample = (
+  <fitted.StacksheetProvider classNames={DEMO_CLASSNAMES} layout="composable">
+    <FittedRow />
+  </fitted.StacksheetProvider>
+);
+
 // ── Grouped gallery ─────────────────────────────
 
 const groups: { label: string; items: { id: string; node: ReactNode }[] }[] = [
@@ -326,12 +473,14 @@ const groups: { label: string; items: { id: string; node: ReactNode }[] }[] = [
         }),
       },
       { id: "form", node: formExample },
+      { id: "fitted", node: fittedExample },
     ],
     label: "Behaviour",
   },
   {
     items: [
       { id: "nested", node: nestedExample },
+      { id: "rows", node: rowsExample },
       { id: "composable", node: composableExample },
       {
         id: "handle-outside",

@@ -43,9 +43,22 @@ export interface HeaderRenderProps {
   side: Side;
 }
 
+/**
+ * Height of a bottom Sheet.
+ * - `full` — the standard height, 85% of the dynamic viewport (default)
+ * - `fit` — as tall as its content, capped at the standard height. A change
+ *   in content height while open animates.
+ *
+ * Side Sheets are always full height, and a Sheet with Snap Points takes its
+ * heights from them.
+ */
+export type SheetHeight = "full" | "fit";
+
 export interface SheetPresentationOptions {
   /** Override the dialog aria-label for this specific sheet instance. */
   ariaLabel?: string;
+  /** Height of this Sheet when it is a bottom Sheet. Defaults to the stack's `height`. */
+  height?: SheetHeight;
 }
 
 // ── Sheet item ──────────────────────────────────
@@ -60,6 +73,8 @@ export type SheetData = object;
 export interface SheetItem<TType extends string = string> {
   /** Optional per-sheet presentation metadata */
   ariaLabel?: string;
+  /** Per-sheet bottom Sheet height, when set at open/push/replace/swap */
+  height?: SheetHeight;
   /** Data payload passed when opening the sheet */
   data: SheetData;
   /** Unique identifier for this sheet instance */
@@ -139,6 +154,12 @@ export interface StacksheetConfig {
    * Side sheets always place their handle on the interior-facing edge.
    */
   handle?: HandlePosition;
+  /**
+   * Height of bottom Sheets: `full` (85dvh) or `fit` (content height, capped
+   * at 85dvh). Override per Sheet with the `height` presentation option.
+   * Default: "full"
+   */
+  height?: SheetHeight;
   /** Lock body scroll when open. Default: true */
   lockScroll?: boolean;
   /** Maximum stack depth. Default: Infinity (unlimited) */
@@ -211,6 +232,7 @@ export interface ResolvedConfig {
   dismissible: boolean;
   drag: boolean;
   handle: HandlePosition;
+  height: SheetHeight;
   lockScroll: boolean;
   maxDepth: number;
   maxWidth: string;

@@ -7,7 +7,11 @@ export interface SheetPartElementProps extends Record<string, unknown> {
   "aria-label"?: string;
   children?: ReactNode;
   className?: string;
+  "data-stacksheet-back"?: string;
+  "data-stacksheet-close"?: string;
+  "data-stacksheet-description"?: string;
   "data-stacksheet-handle"?: string;
+  "data-stacksheet-title"?: string;
   id?: string;
   onClick?: () => void;
   style?: CSSProperties;

@@ -30,6 +30,7 @@ const DEFAULT_CONFIG: Omit<ResolvedConfig, "side" | "spring" | "stacking"> = {
   dismissible: true,
   drag: true,
   handle: "inside",
+  height: "full",
   lockScroll: true,
   maxDepth: Number.POSITIVE_INFINITY,
   maxWidth: "90vw",

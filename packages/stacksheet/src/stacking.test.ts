@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  getAnimatedBorderRadius,
-  getPanelStyles,
-  getSlideFrom,
-  getSlideTarget,
-  getStackOffset,
-  getStackTransform,
-} from "./stacking";
+import { getAnimatedBorderRadius, getPanelStyles, getStackTransform } from "./stacking";
 import { resolveConfig } from "./config";
 import type { ResolvedConfig, StackingConfig } from "./types";
 
@@ -82,6 +75,29 @@ describe(getStackTransform, () => {
   });
 });
 
+describe("getStackTransform at fractional depth", () => {
+  it("interpolates scale and offset while the panel above moves", () => {
+    const halfway = getStackTransform(0.5, defaultStacking);
+    expect(halfway.scale).toBeCloseTo(0.98);
+    expect(halfway.offset).toBeCloseTo(8);
+    expect(halfway.opacity).toBeCloseTo(0.925);
+  });
+
+  it("fades out continuously over the last step before renderThreshold", () => {
+    expect(getStackTransform(2.5, defaultStacking).opacity).toBeCloseTo(0.35);
+    expect(getStackTransform(2.5, defaultStacking).offset).toBe(32);
+  });
+
+  it("matches the integer steps at whole depths", () => {
+    for (const depth of [1, 2, 3]) {
+      const whole = getStackTransform(depth, defaultStacking);
+      const nearly = getStackTransform(depth - 1e-9, defaultStacking);
+      expect(nearly.scale).toBeCloseTo(whole.scale);
+      expect(nearly.offset).toBeCloseTo(whole.offset);
+    }
+  });
+});
+
 describe(getAnimatedBorderRadius, () => {
   it("returns top corners for bottom panel at depth 0", () => {
     const result = getAnimatedBorderRadius("bottom", 0, defaultStacking);
@@ -116,52 +132,6 @@ describe(getAnimatedBorderRadius, () => {
   it("returns stacking radius for left panel at depth > 0", () => {
     const result = getAnimatedBorderRadius("left", 2, defaultStacking);
     expect(result).toStrictEqual({ borderRadius: 12 });
-  });
-});
-
-describe(getSlideFrom, () => {
-  it("returns x:100% for right side", () => {
-    expect(getSlideFrom("right")).toStrictEqual({ x: "100%" });
-  });
-
-  it("returns x:-100% for left side", () => {
-    expect(getSlideFrom("left")).toStrictEqual({ x: "-100%" });
-  });
-
-  it("returns y:100% for bottom side", () => {
-    expect(getSlideFrom("bottom")).toStrictEqual({ y: "100%" });
-  });
-
-  it("defaults to right for unknown side", () => {
-    expect(getSlideFrom("unknown")).toStrictEqual({ x: "100%" });
-  });
-});
-
-describe(getSlideTarget, () => {
-  it("returns zeroed position", () => {
-    expect(getSlideTarget()).toStrictEqual({ x: 0, y: 0 });
-  });
-});
-
-describe(getStackOffset, () => {
-  it("returns empty object for zero offset", () => {
-    expect(getStackOffset("right", 0)).toStrictEqual({});
-  });
-
-  it("returns negative x for right side", () => {
-    expect(getStackOffset("right", 16)).toStrictEqual({ x: -16 });
-  });
-
-  it("returns positive x for left side", () => {
-    expect(getStackOffset("left", 16)).toStrictEqual({ x: 16 });
-  });
-
-  it("returns negative y for bottom side", () => {
-    expect(getStackOffset("bottom", 16)).toStrictEqual({ y: -16 });
-  });
-
-  it("returns empty for unknown side with offset", () => {
-    expect(getStackOffset("unknown", 10)).toStrictEqual({});
   });
 });
 
@@ -214,6 +184,29 @@ describe(getPanelStyles, () => {
     expect(s0.zIndex).toBe(110);
     expect(s1.zIndex).toBe(111);
     expect(s2.zIndex).toBe(112);
+  });
+
+  it("sizes a fitted bottom panel to its content under the same cap", () => {
+    const styles = getPanelStyles("bottom", mockConfig, 0, true);
+    expect(styles).toMatchObject({ height: "auto", maxHeight: "85dvh" });
+    expect(getPanelStyles("bottom", mockConfig, 0)).toMatchObject({ height: "85dvh" });
+  });
+
+  it("pads panels clear of the safe areas on the screen edges they touch", () => {
+    // A bottom Sheet runs to the edge; its scrolling content clears the inset.
+    const bottom = getPanelStyles("bottom", mockConfig, 0);
+    expect(bottom).toMatchObject({
+      "--stacksheet-safe-bottom": "env(safe-area-inset-bottom, 0px)",
+    });
+    expect(bottom).not.toHaveProperty("paddingBottom");
+    expect(getPanelStyles("right", mockConfig, 0)).toMatchObject({
+      paddingBottom: "env(safe-area-inset-bottom, 0px)",
+      paddingRight: "env(safe-area-inset-right, 0px)",
+      paddingTop: "env(safe-area-inset-top, 0px)",
+    });
+    expect(getPanelStyles("left", mockConfig, 0)).toMatchObject({
+      paddingLeft: "env(safe-area-inset-left, 0px)",
+    });
   });
 
   it("sets willChange to transform", () => {

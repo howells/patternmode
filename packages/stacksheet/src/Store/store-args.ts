@@ -1,4 +1,4 @@
-import type { SheetData, SheetPresentationOptions } from "../types";
+import type { SheetData, SheetHeight, SheetPresentationOptions } from "../types";
 import type { AnyComponent, ResolvedItem, SheetArg } from "./store-types";
 
 declare global {
@@ -18,6 +18,11 @@ const isSheetData = (value: SheetArg): value is SheetData =>
 
 const hasAriaLabel = (value: SheetData): value is { ariaLabel: string } =>
   "ariaLabel" in value && typeof value.ariaLabel === "string";
+
+const isSheetHeight = (value: unknown): value is SheetHeight => value === "full" || value === "fit";
+
+const hasHeight = (value: SheetData): value is { height: SheetHeight } =>
+  "height" in value && isSheetHeight(value.height);
 
 export const toSheetData = (value: SheetArg): SheetData => (isSheetData(value) ? value : {});
 
@@ -55,10 +60,20 @@ export const resolvePresentationOptions = (
   if (!isSheetData(value)) {
     return undefined;
   }
-  if (!("ariaLabel" in value) || value.ariaLabel === undefined) {
-    return {};
+  const options: SheetPresentationOptions = {};
+  if (hasAriaLabel(value)) {
+    options.ariaLabel = value.ariaLabel;
   }
-  return hasAriaLabel(value) ? { ariaLabel: value.ariaLabel } : undefined;
+  if (hasHeight(value)) {
+    options.height = value.height;
+  }
+  return options;
+};
+
+/** The presentation fields a resolved item carries. */
+const toPresentation = (value: SheetArg): Pick<ResolvedItem, "ariaLabel" | "height"> => {
+  const options = resolvePresentationOptions(value);
+  return { ariaLabel: options?.ariaLabel, height: options?.height };
 };
 /**
  * Dev-mode warning: detect likely inline arrow functions passed as ad-hoc components.
@@ -138,21 +153,21 @@ export const resolveArgs = (
     );
     if (isString(second)) {
       return {
-        ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
+        ...toPresentation(fourth),
         data: toSheetData(third),
         id: second,
         type: typeKey,
       };
     }
     return {
-      ariaLabel: resolvePresentationOptions(third)?.ariaLabel,
+      ...toPresentation(third),
       data: toSheetData(second),
       id: generateSheetId(),
       type: typeKey,
     };
   }
   return {
-    ariaLabel: resolvePresentationOptions(fourth)?.ariaLabel,
+    ...toPresentation(fourth),
     data: toSheetData(third),
     id: getStringArg(second, "sheet id"),
     type: getStringArg(first, "sheet type"),

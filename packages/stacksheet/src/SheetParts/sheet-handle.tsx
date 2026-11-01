@@ -19,7 +19,7 @@ export const SheetHandle = ({
   const dismiss = isNested ? back : close;
   const defaults = render
     ? undefined
-    : "flex shrink-0 cursor-grab touch-none items-center justify-center border-none bg-transparent pt-4 pb-1 text-inherit";
+    : "flex shrink-0 cursor-grab touch-none select-none active:cursor-grabbing [-webkit-touch-callout:none] items-center justify-center border-none bg-transparent pt-4 pb-1 text-inherit";
   return (
     <SheetPartElement
       defaultTagName="button"
