@@ -1,5 +1,13 @@
 # @patternmode/channel
 
+## 0.2.6
+
+### Patch Changes
+
+- e1ab95a: Keep the thumb's keyboard focus ring visible on dark ramps. On a near-black track the ring measured 2.3:1 against the track and 1.2:1 against the glass; it now has a band of the page colour inside it, so it contrasts at either end of any ramp.
+- Updated dependencies [e1ab95a]
+  - @patternmode/swatch@5.1.2
+
 ## 0.2.5
 
 ### Patch Changes
