@@ -494,8 +494,10 @@ button {
   @apply text-center text-[13px] leading-[18px] text-[color:var(--muted-foreground)];
 }
 
+/* A fieldset, so the named group needs no ARIA role: drop its default margin
+   and min-content floor so it behaves like the other demo blocks. */
 .thumbnail-demo-sizes {
-  @apply flex flex-wrap items-end justify-center gap-6;
+  @apply m-0 flex min-w-0 flex-wrap items-end justify-center gap-6;
 }
 
 .thumbnail-demo-image {
@@ -856,8 +858,11 @@ button {
   @apply h-[min(320px,72vw)] w-[min(420px,78vw)];
 }
 
+/* The theme's shadow-xs contact edge under its shadow-lg lift. Every visible
+   card carries it, so a heavier shadow compounds down the stack into a grey
+   smudge under the deck. */
 .deck-demo-card {
-  @apply min-h-full overflow-hidden rounded-lg border-0 bg-[var(--surface)] p-0 shadow-[0_22px_56px_rgba(29,29,27,0.14)];
+  @apply min-h-full overflow-hidden rounded-lg border-0 bg-[var(--surface)] p-0 shadow-[0_1px_2px_rgba(29,29,27,0.06),0_12px_32px_rgba(29,29,27,0.08)];
 }
 
 .deck-demo-card::after {
@@ -937,19 +942,28 @@ button {
 }
 
 .swatch-demo-palette-item span {
-  @apply text-sm font-medium text-[color:var(--muted-foreground)];
+  @apply text-[13px] leading-[1.3] text-[color:var(--muted-foreground)];
 }
 
 .swatch-demo-palette-item[aria-pressed="true"] span {
   @apply text-[color:var(--ink)];
 }
 
+/* Labelled specimens keep the swatch's own width on a fixed 28px gap, so every
+   swatch sits on one even pitch and the first lines up with the section label.
+   Each label centres under its swatch and may overhang it; the gap is sized so
+   the widest, "Unavailable", still clears its neighbours. Sized to the label
+   instead, the gaps changed with each word. */
+.swatch-demo-specimens {
+  @apply flex flex-wrap items-start gap-x-7 gap-y-5;
+}
+
 .swatch-demo-specimen {
-  @apply flex flex-col items-center gap-2;
+  @apply flex w-12 flex-col items-center gap-2;
 }
 
 .swatch-demo-specimen > span:not([data-slot="swatch"]) {
-  @apply text-sm font-medium text-[color:var(--muted-foreground)];
+  @apply text-[13px] leading-[1.3] whitespace-nowrap text-[color:var(--muted-foreground)];
 }
 
 /* ── Halo demo ─────────────────────────────── */
@@ -1284,12 +1298,17 @@ button {
   @apply pointer-events-none absolute top-0 left-0 flex max-w-full flex-col gap-px px-2 py-1.5 leading-tight;
 }
 
+/* Opaque black or white only. `data-light` comes from isLightColor, which
+   flips at the point where black and white text tie, so the losing side of any
+   tile still has at least 4.58:1. Any transparency spends that margin: at 64%
+   black and 86% x 78% white the chips measured as low as 3.3:1. The hex is mono
+   and the name is sans, which carries the hierarchy without fading either. */
 .parquet-art-chip[data-light] {
-  @apply text-black/[0.64];
+  @apply text-black;
 }
 
 .parquet-art-chip:not([data-light]) {
-  @apply text-white/[0.86];
+  @apply text-white;
 }
 
 .parquet-art-hex {
@@ -1297,7 +1316,7 @@ button {
 }
 
 .parquet-art-name {
-  @apply max-w-full overflow-hidden text-[0.6875rem] text-ellipsis whitespace-nowrap opacity-[0.78];
+  @apply max-w-full overflow-hidden text-[0.6875rem] text-ellipsis whitespace-nowrap;
 }
 
 .parquet-art-nav {
@@ -1344,13 +1363,7 @@ button {
    row itself takes no hover treatment: verge's entire contribution is the
    slot's opacity, and tinting the row would smuggle in a change verge does not
    make. Exactly one thing moves. */
-/* 30px, not the 1.75rem default: `slots` reserves n x slot-size, but n controls
-   also carry (n-1) x 2px of gap between them, so the default under-reserves and
-   the column stays 4px ragged. Retuned through the documented knob rather than
-   by forking the component. */
 .verge-demo-list {
-  --patternmode-verge-slot-size: 30px;
-
   @apply m-0 list-none overflow-hidden rounded-[var(--radius)] border border-[color:var(--border-soft)] bg-[var(--surface)] p-0;
 }
 
@@ -1381,8 +1394,11 @@ button {
   @apply relative grid size-7 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent p-0 text-[color:var(--muted-foreground)] outline-none transition-colors duration-[140ms];
 }
 
+/* `outline-solid` is load-bearing: the resting `outline-none` sets
+   --tw-outline-style to none, and `outline-2` alone inherits that, so the
+   ring never drew. */
 .verge-demo-action:focus-visible {
-  @apply outline-2 outline-offset-2 outline-[color:var(--ring)];
+  @apply outline-2 outline-offset-2 outline-solid outline-[color:var(--ring)];
 }
 
 /* 28px visually, 48px to a thumb. Dropped on fine pointers, where the padded

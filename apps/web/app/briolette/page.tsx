@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const brioletteApi: ApiSection[] = [
   {
     description:
-      "Controlled hex picker rendered as a spinnable geodesic sphere. Selecting a facet glides it to the center and repaints the sphere with similar but distinct OKLab neighbors — hue rotates around the anchor, lightness shifts into its headroom, chroma swings with distance, and neutral anchors bloom into tints. Selecting the pinned facet again unsets the value.",
+      "Controlled hex picker rendered as a spinnable geodesic sphere. Selecting a facet glides it to the center and repaints the sphere with similar but distinct OKLab neighbors: hue rotates around the anchor, lightness shifts into its headroom, chroma swings with distance, and neutral anchors bloom into tints. Selecting the pinned facet again unsets the value.",
     name: "BriolettePicker",
     props: [
       {
@@ -30,7 +30,7 @@ const brioletteApi: ApiSection[] = [
       {
         defaultValue: '"base"',
         description:
-          "Facet density of the sphere — coarse is 20 facets, base is 80, fine is 180, brilliant is 320. Changing the cut animates: the finer geometry grows out of the coarser one. Seam width scales with the cut.",
+          "Facet density of the sphere. Coarse is 20 facets, base is 80, fine is 180, brilliant is 320. Changing the cut animates: the finer geometry grows out of the coarser one. Seam width scales with the cut.",
         name: "density",
         type: '"coarse" | "base" | "fine" | "brilliant"',
       },

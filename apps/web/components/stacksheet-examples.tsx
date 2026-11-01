@@ -70,7 +70,7 @@ const FormContent = () => {
     <div className="sheet-panel-content">
       <p className="sheet-kicker">repositionInputs</p>
       <h3>Contact</h3>
-      <p>On mobile, focus a field — the sheet lifts above the on-screen keyboard.</p>
+      <p>On mobile, focus a field and the sheet lifts above the on-screen keyboard.</p>
       <div className="sheet-form">
         <label>
           Name
@@ -102,7 +102,7 @@ const ComposableContent = () => (
       <div className="sheet-panel-content">
         <Sheet.Title>Composable</Sheet.Title>
         <Sheet.Description>
-          Built from Sheet Parts — a floating close, no header bar.
+          Built from Sheet Parts, with a floating close and no header bar.
         </Sheet.Description>
       </div>
     </Sheet.Body>
@@ -152,7 +152,7 @@ const NestedLevel = ({ depth }: { depth: number }) => {
     <div className="sheet-panel-content">
       <p className="sheet-kicker">Level {depth}</p>
       <h3>Stacked sheet</h3>
-      <p>Push keeps the path back — each layer sits behind the next.</p>
+      <p>Push keeps the path back: each layer sits behind the next.</p>
       <div className="sheet-action-row">
         <button
           onClick={() => {
@@ -220,7 +220,7 @@ const FormRow = () => {
   const { open } = form.useSheet();
   return (
     <Row
-      description="Focus a field on mobile — the sheet clears the keyboard."
+      description="Focus a field on mobile and the sheet clears the keyboard."
       name="Form with inputs"
       onOpen={() => {
         open(FormContent, {});

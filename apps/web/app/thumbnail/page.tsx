@@ -92,14 +92,14 @@ const ThumbnailDemo = () => (
         </figure>
       ))}
     </div>
-    <div aria-label="Thumbnail sizes" className="demo-block thumbnail-demo-sizes">
+    <fieldset aria-label="Thumbnail sizes" className="demo-block thumbnail-demo-sizes">
       {[32, 48, 64, 96].map((size) => (
         <figure className="thumbnail-demo-example" key={size}>
           <Thumbnail alt="" size={size} src={image} />
           <figcaption>{size}px</figcaption>
         </figure>
       ))}
-    </div>
+    </fieldset>
     <figure className="demo-block thumbnail-demo-example">
       <Thumbnail
         alt={imageDescription}

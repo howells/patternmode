@@ -83,7 +83,7 @@ const components: CatalogEntry[] = [
   },
   {
     description:
-      "Row controls that rest hidden and reveal on hover, on focus, and always on touch — with no layout shift.",
+      "Row controls that rest hidden and reveal on hover, on focus, and always on touch, with no layout shift.",
     href: "/verge",
     title: "Verge",
   },

@@ -15,6 +15,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { extractColorsFromBuffer } from "@materialinstruments/colorscope/extraction";
 import { getColorName, getQuantizedColorName } from "@materialinstruments/colorscope/naming";
 
+import { uniqueLabels } from "./unique-labels.ts";
+
 interface Artwork {
   artist: string;
   imageId: string;
@@ -25,7 +27,7 @@ interface Artwork {
 
 const UA =
   "PatternmodeColorDemo/1.0 (https://github.com/howells/patternmode; daniel@danielhowells.com)";
-const CREDIT = "The Art Institute of Chicago — public domain";
+const CREDIT = "The Art Institute of Chicago, public domain";
 const COLORS_PER_PALETTE = 9;
 
 const ARTWORKS: Artwork[] = [
@@ -88,7 +90,7 @@ const buildPalette = async (art: Artwork) => {
   await writeFile(new URL(`${art.slug}.jpg`, artDir), buffer);
 
   const { colors } = await extractColorsFromBuffer(buffer);
-  const palette = colors.slice(0, COLORS_PER_PALETTE).map((color, index) => ({
+  const named = colors.slice(0, COLORS_PER_PALETTE).map((color, index) => ({
     color: color.hex,
     id: `${art.slug}-${index}`,
     label:
@@ -96,6 +98,8 @@ const buildPalette = async (art: Artwork) => {
       titleCase(getColorName(color.hue, color.saturation, color.lightness)),
     value: Number(color.proportion.toFixed(4)),
   }));
+  const labels = uniqueLabels(named);
+  const palette = named.map((tile, index) => ({ ...tile, label: labels[index] ?? tile.label }));
   process.stdout.write(`${palette.length} colors\n`);
 
   return {

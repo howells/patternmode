@@ -29,13 +29,13 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#6c8093",
         id: "vangogh-bedroom-2",
-        label: "Muted Blue",
+        label: "Dusty Muted Blue",
         value: 0.0962,
       },
       {
         color: "#5980a6",
         id: "vangogh-bedroom-3",
-        label: "Muted Blue",
+        label: "Rich Muted Blue",
         value: 0.0922,
       },
       {
@@ -47,7 +47,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#866913",
         id: "vangogh-bedroom-5",
-        label: "Mid Yellow",
+        label: "Dark Yellow",
         value: 0.0749,
       },
       {
@@ -69,7 +69,7 @@ export const ART_PALETTES: ArtPalette[] = [
         value: 0.0556,
       },
     ],
-    credit: "The Art Institute of Chicago — public domain",
+    credit: "The Art Institute of Chicago, public domain",
     image: "/art/vangogh-bedroom.jpg",
     title: "The Bedroom",
     year: "1889",
@@ -86,7 +86,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#4d4d4d",
         id: "seurat-grande-jatte-1",
-        label: "Mid Gray",
+        label: "Dark Gray",
         value: 0.1875,
       },
       {
@@ -132,7 +132,7 @@ export const ART_PALETTES: ArtPalette[] = [
         value: 0.0355,
       },
     ],
-    credit: "The Art Institute of Chicago — public domain",
+    credit: "The Art Institute of Chicago, public domain",
     image: "/art/seurat-grande-jatte.jpg",
     title: "A Sunday on La Grande Jatte",
     year: "1884–86",
@@ -143,25 +143,25 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#365863",
         id: "monet-water-lilies-0",
-        label: "Cool Blue",
+        label: "Dusty Cool Blue",
         value: 0.1932,
       },
       {
         color: "#5980a6",
         id: "monet-water-lilies-1",
-        label: "Muted Blue",
+        label: "Rich Muted Blue",
         value: 0.1489,
       },
       {
         color: "#6c8093",
         id: "monet-water-lilies-2",
-        label: "Muted Blue",
+        label: "Dusty Muted Blue",
         value: 0.1369,
       },
       {
         color: "#364d63",
         id: "monet-water-lilies-3",
-        label: "Deep Blue",
+        label: "Dusty Deep Blue",
         value: 0.1105,
       },
       {
@@ -173,7 +173,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#5993a6",
         id: "monet-water-lilies-5",
-        label: "Muted Blue",
+        label: "Light Muted Blue",
         value: 0.0665,
       },
       {
@@ -185,17 +185,17 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#266073",
         id: "monet-water-lilies-7",
-        label: "Cool Blue",
+        label: "Rich Cool Blue",
         value: 0.0355,
       },
       {
         color: "#264d73",
         id: "monet-water-lilies-8",
-        label: "Deep Blue",
+        label: "Rich Deep Blue",
         value: 0.0265,
       },
     ],
-    credit: "The Art Institute of Chicago — public domain",
+    credit: "The Art Institute of Chicago, public domain",
     image: "/art/monet-water-lilies.jpg",
     title: "Water Lilies",
     year: "1906",
@@ -212,7 +212,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#4d4d4d",
         id: "cezanne-apples-1",
-        label: "Mid Gray",
+        label: "Dark Gray",
         value: 0.1417,
       },
       {
@@ -224,13 +224,13 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#634d36",
         id: "cezanne-apples-3",
-        label: "Warm Brown",
+        label: "Dark Warm Brown",
         value: 0.1142,
       },
       {
         color: "#635836",
         id: "cezanne-apples-4",
-        label: "Warm Brown",
+        label: "Light Warm Brown",
         value: 0.0586,
       },
       {
@@ -248,7 +248,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#734d26",
         id: "cezanne-apples-7",
-        label: "Warm Brown",
+        label: "Rich Warm Brown",
         value: 0.0385,
       },
       {
@@ -258,7 +258,7 @@ export const ART_PALETTES: ArtPalette[] = [
         value: 0.0313,
       },
     ],
-    credit: "The Art Institute of Chicago — public domain",
+    credit: "The Art Institute of Chicago, public domain",
     image: "/art/cezanne-apples.jpg",
     title: "The Basket of Apples",
     year: "1893",
@@ -269,7 +269,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#364d63",
         id: "gauguin-day-of-the-god-0",
-        label: "Deep Blue",
+        label: "Dusty Deep Blue",
         value: 0.0763,
       },
       {
@@ -281,7 +281,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#4d4d4d",
         id: "gauguin-day-of-the-god-2",
-        label: "Mid Gray",
+        label: "Dark Gray",
         value: 0.0609,
       },
       {
@@ -299,7 +299,7 @@ export const ART_PALETTES: ArtPalette[] = [
       {
         color: "#264d73",
         id: "gauguin-day-of-the-god-5",
-        label: "Deep Blue",
+        label: "Rich Deep Blue",
         value: 0.0429,
       },
       {
@@ -321,7 +321,7 @@ export const ART_PALETTES: ArtPalette[] = [
         value: 0.0341,
       },
     ],
-    credit: "The Art Institute of Chicago — public domain",
+    credit: "The Art Institute of Chicago, public domain",
     image: "/art/gauguin-day-of-the-god.jpg",
     title: "Mahana no atua (Day of the God)",
     year: "1894",

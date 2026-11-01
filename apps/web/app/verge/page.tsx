@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const vergeApi: ApiSection[] = [
   {
     description:
-      "The container whose hover and focus state the slots read. Wrap the whole row, not just the controls — the reveal responds to the user addressing the row. Contributes no appearance of its own.",
+      "The container whose hover and focus state the slots read. Wrap the whole row, not just the controls: the reveal responds to the user addressing the row. Contributes no appearance of its own.",
     name: "Verge.Root",
     props: [
       {
@@ -37,7 +37,7 @@ const vergeApi: ApiSection[] = [
       {
         defaultValue: "false",
         description:
-          "Keeps the slot revealed regardless of pointer or focus, for state the CSS cannot see such as an action mid-flight. Not an escape hatch for one row mattering more — a control drawn on every row at rest is furniture.",
+          "Keeps the slot revealed regardless of pointer or focus, for state the CSS cannot see such as an action mid-flight. Not an escape hatch for one row mattering more - a control drawn on every row at rest is furniture.",
         name: "visible",
         type: "boolean",
       },
@@ -73,7 +73,7 @@ const hitAreaExample = `/* Verge reserves the slot; it does not own your button.
 export default function VergePage() {
   return (
     <ComponentDocsShell
-      description="A reserved slot whose controls rest hidden and reveal on hover, on focus, and always on touch — holding their space throughout, so nothing moves."
+      description="A reserved slot whose controls rest hidden and reveal on hover, on focus, and always on touch, holding their space throughout, so nothing moves."
       title="Verge"
     >
       <VergeDemo />
@@ -86,7 +86,7 @@ export default function VergePage() {
           sections={[
             {
               description:
-                "Registries ship the button, the dropdown and the tooltip — the things being revealed. None ships the contract governing when they appear, which is where hand-rolled versions drift apart.",
+                "Registries ship the button, the dropdown and the tooltip: the things being revealed. None ships the contract governing when they appear, which is where hand-rolled versions drift apart.",
               name: "The reveal contract",
               props: [
                 {

@@ -43,15 +43,33 @@ const ROWS: DemoRow[] = [
     actions: ["edit", "pin", "more"],
     held: true,
     name: "End-grain oak",
-    trigger: "Held open — what a touch screen renders",
+    trigger: "Held open, as a touch screen shows it",
   },
 ];
 
-const ICON_PATHS: Record<ActionName, string> = {
+const ICON_PATHS: Record<Exclude<ActionName, "more">, string> = {
   edit: "M4 13.5V16h2.5l7.4-7.4-2.5-2.5L4 13.5Zm11.8-6.9a.7.7 0 0 0 0-1L14.4 4.2a.7.7 0 0 0-1 0l-1.2 1.2 2.5 2.5 1.1-1.3Z",
-  more: "M5 10h.01M10 10h.01M15 10h.01",
   pin: "M10 3.5 11.9 8l4.6.4-3.5 3.1 1 4.5-4-2.4-4 2.4 1-4.5L3.5 8.4 8.1 8 10 3.5Z",
 };
+
+/*
+ * Solid dots rather than stroked zero-length segments. As 1.3px round caps the
+ * dots came out about 1px across, lighter and smaller than the outlined icons
+ * beside them. At r 1.5 each dot is 2.4px on screen and the row spans 13 units,
+ * the same as the star beside it.
+ */
+const MORE_DOTS = [5, 10, 15] as const;
+
+const ActionIcon = ({ action }: { action: ActionName }) =>
+  action === "more" ? (
+    <g fill="currentColor" stroke="none">
+      {MORE_DOTS.map((cx) => (
+        <circle cx={cx} cy={10} key={cx} r={1.5} />
+      ))}
+    </g>
+  ) : (
+    <path d={ICON_PATHS[action]} />
+  );
 
 const ICON_LABELS: Record<ActionName, string> = {
   edit: "Rename",
@@ -79,7 +97,7 @@ const RowAction = ({ action }: { action: ActionName }) => (
       viewBox="0 0 20 20"
       width="16"
     >
-      <path d={ICON_PATHS[action]} />
+      <ActionIcon action={action} />
     </svg>
   </button>
 );

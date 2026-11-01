@@ -65,7 +65,7 @@ const gradients = [
   },
   {
     background: "linear-gradient(135deg, #e1ebe5, #c4b7a3)",
-    name: "Dune",
+    name: "Lichen",
   },
 ] as const;
 
@@ -96,7 +96,7 @@ const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
 const SwatchDemoStates = () => (
   <div className="swatch-demo-cell">
     <div className="swatch-demo-label">States</div>
-    <div className="swatch-demo-swatches">
+    <div className="swatch-demo-specimens">
       <div className="swatch-demo-specimen">
         <Swatch aria-label="Selected" color="#315c4b" icon={CheckIcon} selected size="xl" />
         <span>Selected</span>
@@ -113,12 +113,12 @@ const SwatchDemoStates = () => (
         <Swatch aria-label="Unavailable" color="#315c4b" size="xl" unavailable />
         <span>Unavailable</span>
       </div>
-      {/* The pair is the point: the same 40% color with and without a backdrop.
-          Without one it reads as a pale solid, which is indistinguishable from
-          a lighter opaque color. */}
+      {/* The pair is the point: the same 40% alpha color with and without a
+          backdrop. Without one it reads as a pale solid, which is
+          indistinguishable from a lighter opaque color. */}
       <div className="swatch-demo-specimen">
         <Swatch aria-label="Translucent, no backdrop" color="rgb(49 92 75 / 40%)" size="xl" />
-        <span>40%, bare</span>
+        <span>Alpha</span>
       </div>
       <div className="swatch-demo-specimen">
         <Swatch
@@ -127,7 +127,7 @@ const SwatchDemoStates = () => (
           size="xl"
           transparencyBackdrop
         />
-        <span>40%, backdrop</span>
+        <span>Backdrop</span>
       </div>
     </div>
   </div>
@@ -204,7 +204,7 @@ export const SwatchDemo = () => {
       {/* Gradient squares */}
       <div className="swatch-demo-cell">
         <div className="swatch-demo-label">Gradients</div>
-        <div className="swatch-demo-swatches">
+        <div className="swatch-demo-specimens">
           {gradients.map((gradient) => (
             <div className="swatch-demo-specimen" key={gradient.name}>
               <Swatch

@@ -81,7 +81,7 @@ export function Palette() {
 export default function ParquetPage() {
   return (
     <ComponentDocsShell
-      description="A two-dimensional, read-only view of a weighted color distribution — the proportional-area counterpart to a distribution bar. The largest weight always holds the first slot, so changing the palette morphs the biggest tile to the new biggest tile."
+      description="A two-dimensional, read-only view of a weighted color distribution - the proportional-area counterpart to a distribution bar. The largest weight always holds the first slot, so changing the palette morphs the biggest tile to the new biggest tile."
       title="Parquet"
     >
       <ParquetArtDemo />
