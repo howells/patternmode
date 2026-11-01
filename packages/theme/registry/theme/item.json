@@ -3,12 +3,17 @@
   "name": "theme",
   "type": "registry:theme",
   "title": "Patternmode Theme",
-  "description": "The Patternmode design system theme: color tokens, typography, radii, and shadows for light and dark modes.",
-  "registryDependencies": ["__REGISTRY_BASE_URL__/r/font-inter.json"],
+  "description": "The Patternmode design system theme: color tokens, type roles, fonts, radii, and shadows for light and dark modes.",
+  "registryDependencies": [
+    "__REGISTRY_BASE_URL__/r/font-inter.json",
+    "__REGISTRY_BASE_URL__/r/font-hedvig-letters-serif.json",
+    "__REGISTRY_BASE_URL__/r/font-geist-mono.json"
+  ],
   "cssVars": {
     "theme": {
       "font-sans": "var(--font-inter, Inter), ui-sans-serif, system-ui, sans-serif",
-      "font-mono": "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+      "font-serif": "var(--font-hedvig-letters-serif, 'Hedvig Letters Serif'), ui-serif, Georgia, Cambria, 'Times New Roman', serif",
+      "font-mono": "var(--font-geist-mono, 'Geist Mono'), ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace"
     },
     "light": {
       "background": "oklch(0.9875 0.0026 106.45)",

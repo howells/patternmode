@@ -2,14 +2,13 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "font-inter",
   "type": "registry:item",
-  "dependencies": ["@fontsource-variable/inter@^5.2.8"],
+  "dependencies": ["inter-ui@^4.1.1"],
   "css": {
-    "@import \"@fontsource-variable/inter/opsz.css\"": {},
-    "@import \"@fontsource-variable/inter/opsz-italic.css\"": {}
+    "@import \"inter-ui/inter-variable.css\"": {}
   },
   "cssVars": {
     "theme": {
-      "font-inter": "'Inter Variable', sans-serif"
+      "font-inter": "InterVariable, sans-serif"
     }
   }
 }

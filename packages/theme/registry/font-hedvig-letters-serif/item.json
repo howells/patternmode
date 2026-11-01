@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-hedvig-letters-serif",
+  "type": "registry:item",
+  "dependencies": ["@fontsource-variable/hedvig-letters-serif@^5.3.1"],
+  "css": {
+    "@import \"@fontsource-variable/hedvig-letters-serif/opsz.css\"": {}
+  },
+  "cssVars": {
+    "theme": {
+      "font-hedvig-letters-serif": "'Hedvig Letters Serif Variable', serif"
+    }
+  }
+}

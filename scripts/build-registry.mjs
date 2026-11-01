@@ -22,6 +22,7 @@ import {
   STYLE_B_CSS,
   CANONICAL_CSS_VARS,
   EXPECTED_ITEM_NAMES,
+  FONT_ITEMS,
 } from "./build-registry-config.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -571,13 +572,14 @@ const assertPinnedDependencies = (item) => {
 };
 
 /**
- * Read the hand-authored `font-inter` item verbatim, enforcing pinned dependencies.
+ * Read a hand-authored font item verbatim, enforcing pinned dependencies.
+ * @param {string} name Font item directory and item name, e.g. `font-inter`.
  * @returns {RegistryItem} The font registry item.
  */
-const readFontItem = () => {
-  const parsed = readJson(path.join(registryDir, "font-inter", "item.json"));
-  if (!isRegistryItem(parsed)) {
-    throw new Error("font-inter item.json is not a registry item");
+const readFontItem = (name) => {
+  const parsed = readJson(path.join(registryDir, name, "item.json"));
+  if (!isRegistryItem(parsed) || parsed.name !== name) {
+    throw new Error(`${name} item.json is not a registry item named "${name}"`);
   }
   assertPinnedDependencies(parsed);
   return parsed;
@@ -726,7 +728,7 @@ const buildStaging = (stagingDir, ws, baseUrl) => {
   /** @type {RegistryItem[]} */
   const items = [
     buildThemeItem(baseUrl),
-    readFontItem(),
+    ...FONT_ITEMS.map((name) => readFontItem(name)),
     ...LIB_PACKAGES.map((lib) => buildLibItem(lib, stagingDir, ws, baseUrl)),
     ...COMPONENT_PACKAGES.map((name) => buildComponentItem(name, stagingDir, ws, baseUrl)),
   ];

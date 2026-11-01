@@ -139,10 +139,16 @@ export const CANONICAL_CSS_VARS = new Set(
    sidebar-ring`.split(/\s+/u),
 );
 
+/**
+ * Hand-authored font items under packages/theme/registry, read verbatim. The
+ * theme item lists each one in its registryDependencies.
+ */
+export const FONT_ITEMS = ["font-inter", "font-hedvig-letters-serif", "font-geist-mono"];
+
 /** Every item name the registry must emit, in index order. */
 export const EXPECTED_ITEM_NAMES = [
   "theme",
-  "font-inter",
+  ...FONT_ITEMS,
   "system",
   "motion",
   ...COMPONENT_PACKAGES,

@@ -11,3 +11,128 @@
     text-rendering: optimizeLegibility;
   }
 }
+
+/*
+ * Type roles. Each role owns face, size, leading and tracking; colour stays
+ * with the semantic tokens (`type-meta text-muted-foreground`). Hierarchy comes
+ * from size, serif against sans, and colour, not weight; type-label is the one
+ * role that uses weight.
+ *
+ * Leading and tracking read `--tw-leading` / `--tw-tracking` first, the way
+ * Tailwind's own `text-*` utilities do, so `leading-*` and `tracking-*` adjust a
+ * role whatever order the classes land in. Don't pair a role with a `text-<size>`
+ * or `font-<family>` utility; pick another role instead.
+ *
+ * The `type-` prefix is deliberate: stock tailwind-merge reads any unknown
+ * `text-*` class as a colour and would drop a role next to `text-muted-foreground`.
+ *
+ * Serif roles reset the Inter character variants the body applies, and pin
+ * weight 400 because Hedvig Letters Serif ships one weight. Hedvig has no
+ * tabular figures, so numbers that line up in columns use `type-data`.
+ */
+
+/* Hero headline: serif, fluid 36 to 72px. */
+@utility type-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  font-weight: 400;
+  font-feature-settings: normal;
+  font-synthesis-weight: none;
+  line-height: var(--tw-leading, 1.05);
+  letter-spacing: var(--tw-tracking, -0.02em);
+  text-wrap: balance;
+}
+
+/* Page and section titles: serif 24/32. */
+@utility type-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-feature-settings: normal;
+  font-synthesis-weight: none;
+  line-height: var(--tw-leading, 2rem);
+  letter-spacing: var(--tw-tracking, -0.01em);
+  text-wrap: balance;
+}
+
+/* Feature, panel and group headings: sans 16/24. */
+@utility type-heading {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: var(--tw-leading, 1.5rem);
+  letter-spacing: var(--tw-tracking, normal);
+}
+
+/* The paragraph under a display or title: sans, fluid 16 to 18px, about 1.6 leading. */
+@utility type-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.875rem + 0.3125vw, 1.125rem);
+  line-height: var(--tw-leading, 1.6);
+  letter-spacing: var(--tw-tracking, normal);
+  text-wrap: pretty;
+}
+
+/*
+ * One headline number in a card or stat: sans, fluid 36 to 48px. Proportional
+ * figures read tighter at this size; add `tabular-nums` to a value that ticks.
+ */
+@utility type-figure {
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 1.5rem + 1.875vw, 3rem);
+  line-height: var(--tw-leading, 1);
+  letter-spacing: var(--tw-tracking, -0.01em);
+}
+
+/*
+ * The name of an item in a dense list, card or record header, above a
+ * type-body or type-meta description: sans 14/20, weight 500. The one role
+ * that uses weight; Inter's variable axis supplies a true 500, and synthesis
+ * is off so a fallback never fakes it. Not a section heading (type-heading)
+ * or a page title (type-title).
+ */
+@utility type-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: var(--tw-font-weight, 500);
+  font-synthesis-weight: none;
+  line-height: var(--tw-leading, 1.25rem);
+  letter-spacing: var(--tw-tracking, normal);
+}
+
+/* Reading text, descriptions, dense titles: sans 14/21, the body base. */
+@utility type-body {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: var(--tw-leading, 1.3125rem);
+  letter-spacing: var(--tw-tracking, normal);
+}
+
+/* Controls, navigation, list rows, field labels: sans 13/18. */
+@utility type-ui {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: var(--tw-leading, 1.125rem);
+  letter-spacing: var(--tw-tracking, normal);
+}
+
+/* Metadata, timestamps, captions, footnotes: sans 12/16. */
+@utility type-meta {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: var(--tw-leading, 1rem);
+  letter-spacing: var(--tw-tracking, normal);
+}
+
+/*
+ * Figures, amounts, IDs and code values that line up in columns: mono 13/18,
+ * tabular. Sits on the type-ui row; the tightened tracking brings mono digits
+ * closer to Inter's width.
+ */
+@utility type-data {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-feature-settings: normal;
+  font-variant-numeric: tabular-nums;
+  line-height: var(--tw-leading, 1.125rem);
+  letter-spacing: var(--tw-tracking, -0.02em);
+}
