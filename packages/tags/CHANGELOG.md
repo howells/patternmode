@@ -1,5 +1,14 @@
 # @patternmode/tags
 
+## 2.0.9
+
+### Patch Changes
+
+- e8d30a9: The Tag Selector's active option is now easy to see. It used the same `--muted` fill as hover, about 1.1:1 against the popover, and it's the only focus indicator keyboard users get in the list. It now uses the theme's `--accent` fill and `--accent-foreground` text, with an inset hairline in `--ring` that measures 7.6:1 against the popover. Hover keeps the quieter `--muted` fill.
+- Updated dependencies [e8d30a9]
+  - @patternmode/system@0.8.1
+  - @patternmode/scrollframe@2.0.9
+
 ## 2.0.8
 
 ### Patch Changes

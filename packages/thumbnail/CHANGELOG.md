@@ -1,5 +1,12 @@
 # @patternmode/thumbnail
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [e8d30a9]
+  - @patternmode/system@0.8.1
+
 ## 0.1.5
 
 ### Patch Changes

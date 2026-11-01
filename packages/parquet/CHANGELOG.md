@@ -1,5 +1,13 @@
 # @patternmode/parquet
 
+## 0.1.10
+
+### Patch Changes
+
+- e8d30a9: Pick up the retuned `isLightColor` from `@patternmode/system`. On mid-tone colours, roughly OKLCH lightness 0.56 to 0.62, the Swatch selected icon and the Parquet light-tile flag now choose dark ink, which has more contrast there than white.
+- Updated dependencies [e8d30a9]
+  - @patternmode/system@0.8.1
+
 ## 0.1.9
 
 ### Patch Changes

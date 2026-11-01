@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/scrollframe",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": false,
   "description": "A Base UI scroll frame with measured fades and movement controls.",
   "keywords": [

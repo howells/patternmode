@@ -1,5 +1,12 @@
 # @patternmode/halo
 
+## 0.6.5
+
+### Patch Changes
+
+- Updated dependencies [e8d30a9]
+  - @patternmode/system@0.8.1
+
 ## 0.6.4
 
 ### Patch Changes

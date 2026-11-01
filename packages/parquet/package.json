@@ -1,6 +1,6 @@
 {
   "name": "@patternmode/parquet",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": false,
   "description": "A proportional color mosaic that re-tiles and morphs as a palette's weights change.",
   "keywords": [
